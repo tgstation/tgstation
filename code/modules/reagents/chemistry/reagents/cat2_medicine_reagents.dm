@@ -23,15 +23,15 @@
 	var/good_kind_of_healing = FALSE
 	switch(M.stat)
 		if(CONSCIOUS) //bad
-			thou_shall_heal = death_is_coming/100
-			M.adjustOxyLoss(1 * delta_time, TRUE)
+			thou_shall_heal = death_is_coming/50
+			M.adjustOxyLoss(2 * REM * delta_time, TRUE)
 		if(SOFT_CRIT) //meh convert
-			thou_shall_heal = round(death_is_coming/94,0.1)
-			M.adjustOxyLoss(0.5 * delta_time, TRUE)
+			thou_shall_heal = round(death_is_coming/47,0.1)
+			M.adjustOxyLoss(1 * REM * delta_time, TRUE)
 		else //no convert
-			thou_shall_heal = round(death_is_coming/90, 0.1)
+			thou_shall_heal = round(death_is_coming/45, 0.1)
 			good_kind_of_healing = TRUE
-	M.adjustBruteLoss(-thou_shall_heal * delta_time, FALSE)
+	M.adjustBruteLoss(-thou_shall_heal * REM * delta_time, FALSE)
 
 	if(good_kind_of_healing && !reaping && DT_PROB(0.00005, delta_time)) //janken with the grim reaper!
 		reaping = TRUE
@@ -86,8 +86,8 @@
 	reagent_state = SOLID
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.15*REM*delta_time)
-	M.adjustBruteLoss(-1.5*REM*delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * delta_time)
+	M.adjustBruteLoss(-3 * REM * delta_time)
 	..()
 	return TRUE
 
@@ -99,23 +99,23 @@
 	overdose_threshold = 20
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustBruteLoss(-1.125*REM*delta_time, FALSE)
-	var/ooo_youaregettingsleepy = 1.75
+	M.adjustBruteLoss(-2.25 * REM * delta_time, FALSE)
+	var/ooo_youaregettingsleepy = 3.5
 	switch(round(M.getStaminaLoss()))
 		if(10 to 40)
-			ooo_youaregettingsleepy = 1.5
+			ooo_youaregettingsleepy = 3
 		if(41 to 60)
-			ooo_youaregettingsleepy = 1.25
+			ooo_youaregettingsleepy = 2.5
 		if(61 to 200) //you really can only go to 120
-			ooo_youaregettingsleepy = 1
-	M.adjustStaminaLoss(ooo_youaregettingsleepy*REM*delta_time, FALSE)
+			ooo_youaregettingsleepy = 2
+	M.adjustStaminaLoss(ooo_youaregettingsleepy * REM * delta_time, FALSE)
 	..()
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjustStaminaLoss(3*REM*delta_time, 0)
+	M.adjustStaminaLoss(6 * REM * delta_time, 0)
 	if(M.getStaminaLoss() >= 80)
-		M.drowsyness++
+		M.drowsyness += 1 * REM * delta_time
 	if(M.getStaminaLoss() >= 100)
 		to_chat(M,"<span class='warning'>You feel more tired than you usually do, perhaps if you rest your eyes for a bit...</span>")
 		M.adjustStaminaLoss(-100, TRUE)
@@ -143,8 +143,8 @@
 	var/spammer = 0
 
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss(-1.5 * REM * delta_time)
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.2 * REM * delta_time)
+	M.adjustFireLoss(-3 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM * delta_time)
 	..()
 	return TRUE
 
@@ -165,8 +165,8 @@
 	var/message_cd = 0
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss(-1*REM*delta_time)
-	M.adjustOrganLoss(ORGAN_SLOT_EYES, 0.125*REM*delta_time)
+	M.adjustFireLoss(-2 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES, 0.25 * REM * delta_time)
 	..()
 	return TRUE
 
@@ -180,15 +180,15 @@
 
 /datum/reagent/medicine/c2/hercuri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getFireLoss() > 50)
-		M.adjustFireLoss(-1*REM*delta_time, FALSE)
+		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
 	else
-		M.adjustFireLoss(-0.625*REM*delta_time, FALSE)
-	M.adjust_bodytemperature(rand(-25,-5) * (0.5*TEMPERATURE_DAMAGE_COEFFICIENT*REM*delta_time), 50)
+		M.adjustFireLoss(-1.25 * REM * delta_time, FALSE)
+	M.adjust_bodytemperature(rand(-25,-5) * (TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time), 50)
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
-		humi.adjust_coretemperature(rand(-25,-5) * (0.5*TEMPERATURE_DAMAGE_COEFFICIENT*REM*delta_time), 50)
-	M.reagents?.chem_temp +=(-5*REM*delta_time)
-	M.adjust_fire_stacks(-0.5*delta_time)
+		humi.adjust_coretemperature(rand(-25,-5) * (TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time), 50)
+	M.reagents?.chem_temp += (-10 * REM * delta_time)
+	M.adjust_fire_stacks(-1 * REM * delta_time)
 	..()
 	. = TRUE
 
@@ -203,10 +203,10 @@
 		exposed_mob.extinguish_mob()
 
 /datum/reagent/medicine/c2/hercuri/overdose_process(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT*REM * delta_time, 50) //chilly chilly
+	M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50) //chilly chilly
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
-		humi.adjust_coretemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT*REM * delta_time, 50)
+		humi.adjust_coretemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
 	..()
 
 
@@ -222,18 +222,18 @@
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 
 /datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
-	var/oxycalc = 1.25*REM*current_cycle
+	var/oxycalc = 2.5 * REM * current_cycle
 	if(!overdosed)
-		oxycalc = min(oxycalc, M.getOxyLoss()+0.25) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
-	M.adjustOxyLoss(-oxycalc*delta_time, 0)
-	M.adjustToxLoss(oxycalc*delta_time/CONVERMOL_RATIO, 0)
-	if(prob(current_cycle) && M.losebreath)
+		oxycalc = min(oxycalc, M.getOxyLoss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
+	M.adjustOxyLoss(-oxycalc * delta_time, 0)
+	M.adjustToxLoss(oxycalc * delta_time / CONVERMOL_RATIO, 0)
+	if(DT_PROB(current_cycle / 2, delta_time) && M.losebreath)
 		M.losebreath--
 	..()
 	return TRUE
 
 /datum/reagent/medicine/c2/convermol/overdose_process(mob/living/carbon/human/M, delta_time, times_fired)
-	metabolization_rate += 1
+	metabolization_rate += 2.5 * REAGENTS_METABOLISM
 	..()
 	return TRUE
 
@@ -247,8 +247,8 @@
 	COOLDOWN_DECLARE(drowsycd)
 
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
-	M.adjustOxyLoss(-1.5*delta_time)
-	M.adjustStaminaLoss(1*delta_time)
+	M.adjustOxyLoss(-3 * REM * delta_time)
+	M.adjustStaminaLoss(2 * REM * delta_time)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		M.drowsyness += 10
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
@@ -280,25 +280,25 @@
 	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
 
 	//you're hot
-	var/toxcalc = min(round(2.5 + ((chemtemp-1000)/350), 0.05), 2.5) //max 5 tox healing a tick
+	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time //max 5 tox healing a tick
 	if(toxcalc > 0)
-		M.adjustToxLoss(-toxcalc*delta_time)
+		M.adjustToxLoss(-toxcalc)
 		healypoints += toxcalc
 
 	//and you're cold
-	var/radcalc = round((T0C-chemtemp)/12, 0.1) //max ~45 rad loss unless you've hit below 0K. if so, wow.
+	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
 	if(radcalc > 0)
 		//no cost percent healing if you are SUPER cold (on top of cost healing)
 		if(chemtemp < radbonustemp*0.1) //if you're super chilly, it takes off 25% of your current rads
-			M.radiation = round(M.radiation * (0.75**(delta_time/2)))
+			M.radiation = round(M.radiation * (0.75**(REM * delta_time)))
 		else if(chemtemp < radbonustemp)//else if you're under the chill-zone, it takes off 10% of your current rads
-			M.radiation = round(M.radiation * (0.90**(delta_time/2)))
-		M.radiation -= radcalc * delta_time
+			M.radiation = round(M.radiation * (0.90**(REM * delta_time)))
+		M.radiation -= radcalc
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
 	healypoints = round(healypoints, 0.1)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints*delta_time/5)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints / 5)
 	..()
 	return TRUE
 
@@ -313,8 +313,8 @@
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 
-	M.adjustToxLoss(-0.25 * min(medibonus, 3) * delta_time) //not great at healing but if you have nothing else it will work
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.25 * delta_time) //kills at 40u
+	M.adjustToxLoss(-0.5 * min(medibonus, 3) * REM * delta_time) //not great at healing but if you have nothing else it will work
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time) //kills at 40u
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
@@ -322,7 +322,7 @@
 		var/amount2purge = 3
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) will make it not purge medicines
 			continue
-		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
+		M.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * delta_time)
 	..()
 	return TRUE
 
@@ -357,20 +357,20 @@
 	..()
 
 /datum/reagent/medicine/c2/syriniver/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * delta_time)
-	M.adjustToxLoss(-0.5*REM*delta_time, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8 * REM * delta_time)
+	M.adjustToxLoss(-1 * REM * delta_time, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		M.reagents.remove_reagent(R.type, 0.2*delta_time)
+		M.reagents.remove_reagent(R.type, 0.4 * REM * delta_time)
 
 	..()
 	. = 1
 
 /datum/reagent/medicine/c2/syriniver/overdose_process(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.75 * delta_time)
-	M.adjust_disgust(1.5 * delta_time)
-	M.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, 0.1125 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time)
+	M.adjust_disgust(3 * REM * delta_time)
+	M.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, 0.225 * REM * delta_time)
 	..()
 	. = 1
 
@@ -384,12 +384,12 @@
 	var/datum/brain_trauma/mild/muscle_weakness/U
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.05*delta_time)
-	M.adjustToxLoss(-0.5*REM*delta_time, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * delta_time)
+	M.adjustToxLoss(-1 * REM * delta_time, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
-		M.reagents.remove_reagent(R.type, 0.1*delta_time)
+		M.reagents.remove_reagent(R.type, 0.2 * REM * delta_time)
 	..()
 	. = 1
 
@@ -404,8 +404,8 @@
 	return ..()
 
 /datum/reagent/medicine/c2/musiver/overdose_process(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.75 * delta_time)
-	M.adjust_disgust(1.5 * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time)
+	M.adjust_disgust(3 * REM * delta_time)
 	..()
 	. = 1
 
@@ -467,20 +467,20 @@
 	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
-	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.125*delta_time)
+	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time)
 	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > (H.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2)) //we cannot save someone below our lowered crit threshold.
 
-		H.adjustToxLoss(-1*REM*delta_time, 0)
-		H.adjustBruteLoss(-1*REM*delta_time, 0)
-		H.adjustFireLoss(-1*REM*delta_time, 0)
-		H.adjustOxyLoss(-3*REM*delta_time, 0)
+		H.adjustToxLoss(-2 * REM * delta_time, 0)
+		H.adjustBruteLoss(-2 * REM * delta_time, 0)
+		H.adjustFireLoss(-2 * REM * delta_time, 0)
+		H.adjustOxyLoss(-6 * REM * delta_time, 0)
 
 		H.losebreath = 0
 
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, max(volume/20, 0.5) * delta_time) // your heart is barely keeping up!
+		H.adjustOrganLoss(ORGAN_SLOT_HEART, max(volume/10, 1) * REM * delta_time) // your heart is barely keeping up!
 
-		H.Jitter(rand(0,2))
-		H.Dizzy(rand(0,2))
+		H.Jitter(rand(0, 2) * REM * delta_time)
+		H.Dizzy(rand(0, 2) * REM * delta_time)
 
 		if(DT_PROB(18, delta_time))
 			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
@@ -502,8 +502,8 @@
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)
 	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
-	H.adjustStaminaLoss(5 * delta_time)
-	H.adjustOrganLoss(ORGAN_SLOT_HEART, 5 * delta_time)
+	H.adjustStaminaLoss(10 * REM * delta_time)
+	H.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * delta_time)
 	H.set_heartattack(TRUE)
 
 

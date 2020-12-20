@@ -12,7 +12,7 @@
 		exposed_turf.AddComponent(/datum/component/thermite, reac_volume)
 
 /datum/reagent/thermite/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustFireLoss(0.5*delta_time, 0)
+	M.adjustFireLoss(1 * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -45,8 +45,8 @@
 	penetrates_skin = NONE
 
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_fire_stacks(1*delta_time)
-	M.adjustFireLoss(0.15*max(M.fire_stacks, 1)*delta_time, 0)
+	M.adjust_fire_stacks(2 * REM * delta_time)
+	M.adjustFireLoss(0.3 * max(M.fire_stacks, 1) * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -101,9 +101,9 @@
 	..()
 	if(!isplasmaman(M))
 		return
-	M.set_drugginess(15)
+	M.set_drugginess(15 * REM * delta_time)
 	if(M.hallucination < volume)
-		M.hallucination += 2.5 * delta_time
+		M.hallucination += 5 * REM * delta_time
 
 /datum/reagent/gunpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
@@ -163,8 +163,8 @@
 	exposed_mob.IgniteMob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
-	metabolizer.adjust_fire_stacks(0.5 * delta_time)
-	metabolizer.adjustFireLoss(0.15 * max(metabolizer.fire_stacks, 0.15) * delta_time, 0)
+	metabolizer.adjust_fire_stacks(1 * REM * delta_time)
+	metabolizer.adjustFireLoss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * delta_time, 0)
 	..()
 	return TRUE
 
@@ -187,7 +187,7 @@
 		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_fire_stacks(0.5 * delta_time)
+	M.adjust_fire_stacks(1 * REM * delta_time)
 	..()
 
 /datum/reagent/napalm/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -206,11 +206,11 @@
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent(/datum/reagent/oxygen))
-		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.25 * delta_time)
-		M.adjust_bodytemperature(-7.5 * delta_time)
+		M.reagents.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * delta_time)
+		M.adjust_bodytemperature(-15 * REM * delta_time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/humi = M
-			humi.adjust_coretemperature(-7.5 * delta_time)
+			humi.adjust_coretemperature(-15 * REM * delta_time)
 	..()
 
 /datum/reagent/cryostylane/expose_turf(turf/exposed_turf, reac_volume)
@@ -230,11 +230,11 @@
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(holder.has_reagent(/datum/reagent/oxygen))
-		holder.remove_reagent(/datum/reagent/oxygen, 0.25 * delta_time)
-		M.adjust_bodytemperature(7.5 * delta_time)
+		holder.remove_reagent(/datum/reagent/oxygen, 0.5 * REM * delta_time)
+		M.adjust_bodytemperature(15 * REM * delta_time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/humi = M
-			humi.adjust_coretemperature(7.5 * delta_time)
+			humi.adjust_coretemperature(15 * REM * delta_time)
 	..()
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
@@ -277,12 +277,12 @@
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isjellyperson(M))
 		shock_timer = 0 //immune to shocks
-		M.AdjustAllImmobility(-20 * delta_time)
-		M.adjustStaminaLoss(-1 * delta_time, 0)
+		M.AdjustAllImmobility(-40  *REM * delta_time)
+		M.adjustStaminaLoss(-2 * REM * delta_time, 0)
 		if(isluminescent(M))
 			var/mob/living/carbon/human/H = M
 			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(L.extract_cooldown - (10 * delta_time), 0)
+			L.extract_cooldown = max(L.extract_cooldown - (20 * REM * delta_time), 0)
 	..()
 
 /datum/reagent/firefighting_foam

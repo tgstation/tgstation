@@ -11,7 +11,8 @@
 	name = "Consumable"
 	taste_description = "generic food"
 	taste_mult = 4
-	var/nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	/// How much nutrition this reagent supplies
+	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -19,7 +20,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_nutrition(nutriment_factor*delta_time)
+			H.adjust_nutrition(nutriment_factor * REM * delta_time)
 	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * delta_time)
@@ -44,7 +45,7 @@
 	name = "Nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 7.5 * REAGENTS_METABOLISM
+	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
 	var/brute_heal = 1
@@ -107,7 +108,7 @@
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.satiety < 600)
-		M.satiety += 15 * delta_time
+		M.satiety += 30 * REM * delta_time
 	. = ..()
 
 /// The basic resource of vat growing.
@@ -115,7 +116,7 @@
 	name = "Protein"
 	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
-	nutriment_factor = 4.5 * REAGENTS_METABOLISM //45% as calorie dense as corn oil.
+	nutriment_factor = 9 * REAGENTS_METABOLISM //45% as calorie dense as corn oil.
 
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
@@ -123,7 +124,7 @@
 	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
 	taste_mult = 0.8
 	taste_description = "oil"
-	nutriment_factor = 3.5 * REAGENTS_METABOLISM //Not very healthy on its own
+	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
@@ -177,7 +178,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
@@ -195,14 +196,14 @@
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M, delta_time, times_fired)
-	M.AdjustSleeping(20 * delta_time)
+	M.AdjustSleeping(40 * REM * delta_time)
 	..()
 	. = 1
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
 	description = "A mixture of water and milk. Virus cells can use this mixture to reproduce."
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
 
@@ -215,14 +216,14 @@
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	description = "A salty sauce made from the soy plant."
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "ketchup"
 
@@ -238,24 +239,24 @@
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
-			heating = 2.5
-			if(holder.has_reagent(/datum/reagent/cryostylane))
-				holder.remove_reagent(/datum/reagent/cryostylane, 2.5 * delta_time)
-			if(isslime(M))
-				heating = LERP(2.5, 10, rand())
-		if(15 to 25)
 			heating = 5
+			if(holder.has_reagent(/datum/reagent/cryostylane))
+				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * delta_time)
 			if(isslime(M))
-				heating = LERP(5, 10, rand())
-		if(25 to 35)
-			heating = 7.5
-			if(isslime(M))
-				heating = LERP(7.5, 10, rand())
-		if(35 to INFINITY)
+				heating = rand(5, 20)
+		if(15 to 25)
 			heating = 10
 			if(isslime(M))
-				heating = LERP(10, 12.5, rand())
-	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+				heating = rand(10, 20)
+		if(25 to 35)
+			heating = 15
+			if(isslime(M))
+				heating = rand(15, 20)
+		if(35 to INFINITY)
+			heating = 20
+			if(isslime(M))
+				heating = rand(20, 25)
+	M.adjust_bodytemperature(heating * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 	..()
 
 /datum/reagent/consumable/frostoil
@@ -268,28 +269,28 @@
 	var/cooling = 0
 	switch(current_cycle)
 		if(1 to 15)
-			cooling = -5
+			cooling = -10
 			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5)
+				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * delta_time)
 			if(isslime(M))
-				cooling = -LERP(2.5, 10, rand())
+				cooling = -rand(5, 20)
 		if(15 to 25)
 			cooling = -20
 			if(isslime(M))
-				cooling = -LERP(5, 10, rand())
+				cooling = -rand(10, 20)
 		if(25 to 35)
-			cooling = -15
+			cooling = -30
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
-				cooling = -LERP(7.5, 10, rand())
+				cooling = -rand(15, 20)
 		if(35 to INFINITY)
-			cooling = -20
+			cooling = -40
 			if(prob(5))
 				M.emote("shiver")
 			if(isslime(M))
-				cooling = -LERP(10, 12.5, rand())
-	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 50)
+				cooling = -rand(20, 25)
+	M.adjust_bodytemperature(cooling * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 50)
 	..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
@@ -376,7 +377,7 @@
 	name = "Coco Powder"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
 
@@ -389,23 +390,23 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(!M.slurring)
-		M.slurring = 1
+		M.slurring = 1 * REM * delta_time
 	switch(current_cycle)
 		if(1 to 5)
-			M.Dizzy(5)
-			M.set_drugginess(30)
+			M.Dizzy(5 * REM * delta_time)
+			M.set_drugginess(30 * REM * delta_time)
 			if(DT_PROB(5, delta_time))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			M.Jitter(10)
-			M.Dizzy(10)
-			M.set_drugginess(35)
+			M.Jitter(10 * REM * delta_time)
+			M.Dizzy(10 * REM * delta_time)
+			M.set_drugginess(35 * REM * delta_time)
 			if(DT_PROB(10, delta_time))
 				M.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			M.Jitter(20)
-			M.Dizzy(20)
-			M.set_drugginess(40)
+			M.Jitter(20 * REM * delta_time)
+			M.Dizzy(20 * REM * delta_time)
+			M.set_drugginess(40 * REM * delta_time)
 			if(DT_PROB(16, delta_time))
 				M.emote(pick("twitch","giggle"))
 	..()
@@ -438,14 +439,14 @@
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(0.5 * delta_time, 0.5 * delta_time, 0)
+		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 0)
 		. = 1
 	..()
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	description = "An oil derived from various types of corn."
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
 
@@ -478,30 +479,30 @@
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
 
 /datum/reagent/consumable/nutraslop
 	name = "Nutraslop"
 	description = "Mixture of leftover prison foods served on previous days."
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#3E4A00" // rgb: 62, 74, 0
 	taste_description = "your imprisonment"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(10 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/hell_ramen
 	name = "Hell Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles on fire"
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, delta_time, times_fired)
-	target_mob.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+	target_mob.adjust_bodytemperature(10 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 	..()
 
 /datum/reagent/consumable/flour
@@ -537,7 +538,7 @@
 	name = "Rice"
 	description = "tiny nutritious grains"
 	reagent_state = SOLID
-	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "rice"
 
@@ -545,14 +546,14 @@
 	name = "Vanilla Powder"
 	description = "A fatty, bitter paste made from vanilla pods."
 	reagent_state = SOLID
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#FFFACD"
 	taste_description = "vanilla"
 
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
 	description = "It's full of protein."
-	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFB500"
 	taste_description = "egg"
 
@@ -570,14 +571,14 @@
 	taste_description = "sweet slime"
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	holder.add_reagent(/datum/reagent/consumable/sugar, 1.5 * delta_time)
+	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/honey
 	name = "Honey"
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
-	nutriment_factor = 7.5 * REAGENTS_METABOLISM
+	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
@@ -592,12 +593,12 @@
 			mytray.adjustPests(rand(1,2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	holder.add_reagent(/datum/reagent/consumable/sugar, 1.5 * delta_time)
+	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
 	if(DT_PROB(33, delta_time))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
+		M.adjustBruteLoss(-1, 0)
+		M.adjustFireLoss(-1, 0)
+		M.adjustOxyLoss(-1, 0)
+		M.adjustToxLoss(-1, 0)
 	..()
 
 /datum/reagent/consumable/honey/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -644,7 +645,7 @@
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	..()
 	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
-		M.blur_eyes(2 * delta_time)
+		M.blur_eyes(4 * REM * delta_time)
 		if(DT_PROB(5, delta_time))
 			to_chat(M, "<span class='warning'>Your eyes sting!</span>")
 			M.blind_eyes(2)
@@ -654,12 +655,12 @@
 	name = "Stabilized Nutriment"
 	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
 	reagent_state = SOLID
-	nutriment_factor = 7.5 * REAGENTS_METABOLISM
+	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
 /datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
-		M.adjust_nutrition(-1.5*nutriment_factor*delta_time)
+		M.adjust_nutrition(-3 * REM * nutriment_factor * delta_time)
 	..()
 
 ////Lavaland Flora Reagents////
@@ -673,7 +674,7 @@
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 10)
-		M.Unconscious(40, 0)
+		M.Unconscious(40 * REM * delta_time, FALSE)
 		. = 1
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 4
@@ -721,20 +722,20 @@
 	name = "Vitrium Froth"
 	description = "A bubbly paste that heals wounds of the skin."
 	color = "#d3a308"
-	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(55, delta_time))
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
+		M.adjustBruteLoss(-1, 0)
+		M.adjustFireLoss(-1, 0)
 		. = TRUE
 	..()
 
 /datum/reagent/consumable/clownstears
 	name = "Clown's Tears"
 	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
 
@@ -742,7 +743,7 @@
 /datum/reagent/consumable/liquidelectricity
 	name = "Liquid Electricity"
 	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#97ee63"
 	taste_description = "pure electricity"
 
@@ -775,14 +776,14 @@
 
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M, delta_time, times_fired)
 	if(M.disgust < 80)
-		M.adjust_disgust(5 * delta_time)
+		M.adjust_disgust(10 * REM * delta_time)
 	..()
 	. = 1
 
 /datum/reagent/consumable/secretsauce
 	name = "Secret Sauce"
 	description = "What could it be?"
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300"
 	taste_description = "indescribable"
 	quality = FOOD_AMAZING
@@ -794,14 +795,14 @@
 	color = "#BBD4D9"
 	taste_description = "mint frosting"
 	description = "These restorative peptides not only speed up wound healing, but are nutritious as well!"
-	nutriment_factor = 5 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
+	nutriment_factor = 10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
 	brute_heal = 3
 	burn_heal = 1
 
 /datum/reagent/consumable/caramel
 	name = "Caramel"
 	description = "Who would have guessed that heated sugar could be so delicious?"
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#D98736"
 	taste_mult = 2
 	taste_description = "caramel"
@@ -811,7 +812,7 @@
 	name = "Char"
 	description = "Essence of the grill. Has strange properties when overdosed."
 	reagent_state = LIQUID
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#C8C8C8"
 	taste_mult = 6
 	taste_description = "smoke"
@@ -826,7 +827,7 @@
 /datum/reagent/consumable/bbqsauce
 	name = "BBQ Sauce"
 	description = "Sweet, smoky, savory, and gets everywhere. Perfect for grilling."
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#78280A" // rgb: 120 40, 10
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
 	taste_description = "smokey sweetness"
@@ -836,7 +837,7 @@
 	description = "A great dessert for chocolate lovers."
 	color = "#800000"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "sweet chocolate"
 	glass_icon_state = "chocolatepudding"
 	glass_name = "chocolate pudding"
@@ -847,7 +848,7 @@
 	description = "A great dessert for vanilla lovers."
 	color = "#FAFAD2"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	taste_description = "sweet vanilla"
 	glass_icon_state = "vanillapudding"
 	glass_name = "vanilla pudding"
@@ -857,6 +858,6 @@
 	name = "Laughin' Syrup"
 	description = "The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
 	color = "#803280"
-	nutriment_factor = 2.5 * REAGENTS_METABOLISM
+	nutriment_factor = 5 * REAGENTS_METABOLISM
 	taste_mult = 2
 	taste_description = "fizzy sweetness"

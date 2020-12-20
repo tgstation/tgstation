@@ -1123,7 +1123,7 @@
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.jitteriness = max(M.jitteriness - (2.5*delta_time),0)
 	if(DT_PROB(55, delta_time))
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
 	if(DT_PROB(30, delta_time))
 		M.drowsyness = max(M.drowsyness, 3)
 	if(DT_PROB(5, delta_time))
@@ -1267,10 +1267,10 @@
 		exposed_mob.drowsyness += max(round(reac_volume, 1), 2)
 
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness += 1*delta_time
+	M.drowsyness += 2 * REM * delta_time
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.blood_volume = max(H.blood_volume - (5*delta_time), 0)
+		H.blood_volume = max(H.blood_volume - (10 * REM * delta_time), 0)
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 2
 		M.set_confusion(min(M.get_confusion() + 2, 5))
@@ -1295,8 +1295,8 @@
 	..()
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustStaminaLoss(-1*REM*delta_time, 0)
-	M.adjustToxLoss(0.05*REM*current_cycle*delta_time, 0) // 1 toxin damage per cycle at cycle 10
+	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
+	M.adjustToxLoss(0.1 * current_cycle * REM * delta_time, 0) // 1 toxin damage per cycle at cycle 10
 	..()
 
 /datum/reagent/nitryl
@@ -1367,9 +1367,9 @@
 
 /datum/reagent/healium/on_mob_life(mob/living/L, delta_time, times_fired)
 	. = ..()
-	L.adjustFireLoss(-1*delta_time, FALSE)
-	L.adjustToxLoss(-2.5*delta_time, FALSE)
-	L.adjustBruteLoss(-1*delta_time, FALSE)
+	L.adjustFireLoss(-2 * REM * delta_time, FALSE)
+	L.adjustToxLoss(-5 * REM * delta_time, FALSE)
+	L.adjustBruteLoss(-2 * REM * delta_time, FALSE)
 
 /datum/reagent/halon
 	name = "Halon"
@@ -1510,7 +1510,7 @@
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(tox_prob, delta_time))
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1, 0)
 		. = 1
 	..()
 
@@ -1598,7 +1598,7 @@
 	taste_mult = 1.5
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.adjustPlasma(5*delta_time)
+	C.adjustPlasma(10 * REM * delta_time)
 	..()
 
 /datum/reagent/iodine
@@ -2118,7 +2118,7 @@
 	if(L.mind)
 		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			changeling.chem_charges = max(changeling.chem_charges - (1*delta_time), 0)
+			changeling.chem_charges = max(changeling.chem_charges - (2 * REM * delta_time), 0)
 	return ..()
 
 /datum/reagent/pax/peaceborg
@@ -2138,9 +2138,9 @@
 
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.get_confusion() < 6)
-		M.set_confusion(clamp(M.get_confusion() + (1.5*delta_time), 0, 5))
+		M.set_confusion(clamp(M.get_confusion() + (3 * REM * delta_time), 0, 5))
 	if(M.dizziness < 6)
-		M.dizziness = clamp(M.dizziness + (1.5*delta_time), 0, 5)
+		M.dizziness = clamp(M.dizziness + (3 * REM * delta_time), 0, 5)
 	if(DT_PROB(10, delta_time))
 		to_chat(M, "You feel confused and disoriented.")
 	..()
@@ -2155,7 +2155,7 @@
 /datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		M.adjustStaminaLoss(5 * delta_time)
+		M.adjustStaminaLoss(10 * REM * delta_time)
 	if(DT_PROB(16, delta_time))
 		to_chat(M, "You should sit down and take a rest...")
 	..()
@@ -2362,8 +2362,8 @@
 		var/datum/wound/W = thing
 		var/obj/item/bodypart/wounded_part = W.limb
 		if(wounded_part)
-			wounded_part.heal_damage(0.125*delta_time, 0.125*delta_time)
-		M.adjustStaminaLoss(-0.125*REM*delta_time) // the more wounds, the more stamina regen
+			wounded_part.heal_damage(0.25 * REM * delta_time, 0.25 * REM * delta_time)
+		M.adjustStaminaLoss(-0.25 * REM * delta_time) // the more wounds, the more stamina regen
 	..()
 
 /datum/reagent/eldritch //unholy water, but for eldritch cultists. why couldn't they have both just used the same reagent? who knows. maybe nar'sie is considered to be too "mainstream" of a god to worship in the cultist community.
@@ -2375,19 +2375,19 @@
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(IS_HERETIC(M))
-		M.drowsyness = max(M.drowsyness - (2.5*delta_time), 0)
-		M.AdjustAllImmobility(-20*delta_time)
-		M.adjustStaminaLoss(-5*delta_time, FALSE)
-		M.adjustToxLoss(-1*delta_time, FALSE)
-		M.adjustOxyLoss(-1*delta_time, FALSE)
-		M.adjustBruteLoss(-1*delta_time, FALSE)
-		M.adjustFireLoss(-1*delta_time, FALSE)
+		M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+		M.AdjustAllImmobility(-40 * REM * delta_time)
+		M.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
+		M.adjustToxLoss(-2 * REM * delta_time, FALSE)
+		M.adjustOxyLoss(-2 * REM * delta_time, FALSE)
+		M.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 1.5 * delta_time
+			M.blood_volume += 3 * REM * delta_time
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1.5*delta_time, 150)
-		M.adjustToxLoss(1*delta_time, FALSE)
-		M.adjustFireLoss(1*delta_time, FALSE)
-		M.adjustOxyLoss(1*delta_time, FALSE)
-		M.adjustBruteLoss(1*delta_time, FALSE)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
+		M.adjustToxLoss(2 * REM * delta_time, FALSE)
+		M.adjustFireLoss(2 * REM * delta_time, FALSE)
+		M.adjustOxyLoss(2 * REM * delta_time, FALSE)
+		M.adjustBruteLoss(2 * REM * delta_time, FALSE)
 	..()
