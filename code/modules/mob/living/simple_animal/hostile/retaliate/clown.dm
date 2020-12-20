@@ -299,21 +299,91 @@
 	speed = 20
 	move_to_delay = 60
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob
-	name = "Something that was once a clown"
-	desc = "A grotesque bulging figure far mutated from it's original state."
-	icon_state = "blob"
-	icon_living = "blob"
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton
+	name = "banana glutton"
+	desc = "Something that was once a clown"
+	icon_state = "glutton"
+	icon_living = "glutton"
 	speak = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!")
 	emote_see = list("jiggles", "wobbles")
 	health = 130
 	mob_size = MOB_SIZE_LARGE
-	speed = 20
-	attack_verb_continuous = "bounces off of"
-	attack_verb_simple = "bounce off of"
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
-	attack_reagent = /datum/reagent/toxin/mindbreaker
+	speed = 1
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
+	deathsound = 'sound/misc/sadtrombone.ogg'
+	///This is the list of items we are ready to regurgitate,
+	var/list/prank_pouch = list()
+	///This ability lets you throw a single random item from your pouch.
+	var/datum/action/regurgitate/my_regurgitate
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/blob/slow
-	speed = 50
-	move_to_delay = 120
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Initialize()
+	. = ..()
+	my_regurgitate = new
+	my_regurgitate.Grant(src)
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)
+	if(!check_edible(I))
+		return ..()
+	eat_atom(I)
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/AttackingTarget(atom/attacked_target)
+	if(!check_edible(attacked_target))
+		return ..()
+	eat_atom(attacked_target)
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/UnarmedAttack(atom/A)
+	if(!check_edible(A))
+		return ..()
+	eat_atom(A)
+
+///Returns whether or not the supplied movable atom is edible.
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/check_edible(atom/movable/potential_food)
+	if(isliving(potential_food))
+		var/mob/living/living_morsel = potential_food
+		if(living_morsel.mob_size > MOB_SIZE_SMALL)
+			return FALSE
+		else
+			return TRUE
+
+	if(IS_EDIBLE(potential_food))
+		if(prank_pouch.len >= 8)
+			to_chat(src, "<span class='warning'>Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now.</span>")
+			return FALSE
+		return TRUE
+
+///This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency and the peels are retained in the pouch.
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
+	if(istype(eaten_atom, /obj/item/food/pie/cream) || istype(eaten_atom, /obj/item/food/grown/tomato) || istype(eaten_atom, /obj/item/food/meatclown))
+		eaten_atom.forceMove(src)
+		prank_pouch += eaten_atom
+
+	else if(istype(eaten_atom, /obj/item/food/grown/banana))
+		var/obj/item/food/grown/banana/banana_morsel = eaten_atom
+		adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
+		prank_pouch += banana_morsel.generate_trash(src)
+		qdel(eaten_atom)
+	else
+		qdel(eaten_atom)
+	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
+	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+
+/datum/action/regurgitate
+	name = "Regurgitate"
+	desc = "Regurgitates a single item from the depths of your pouch."
+	background_icon_state = "bg_hive"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "consume"
+	check_flags = AB_CHECK_CONSCIOUS
+
+/datum/action/regurgitate/Trigger()
+	. = ..()
+	if(!istype(owner, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton))
+		return
+	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = owner
+	if(!pouch_owner.prank_pouch.len)
+		return
+	var/obj/item/projected_morsel = pick_n_take(pouch_owner.prank_pouch)
+	//bugged_shit
+	projected_morsel.throw_at(get_step(7, owner.dir), 7, projected_morsel.throw_speed, owner)
