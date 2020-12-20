@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	name = "Oxygen"
 	rarity = 900
 	cond_rate = 0.1
-	cond_temp_max = 90 // Completely unrealistic to prevent major issues for new chemists
+	cond_temp_max = 90
 	cond_temp_min = TCMB
 	cond_type = /datum/reagent/oxygen
 	cond_heat = 6828
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	name = "Nitrogen"
 	rarity = 1000
 	cond_rate = 0.1
-	cond_temp_max = 77	// Completely unrealistic to prevent major issues for new chemists
+	cond_temp_max = 77
 	cond_temp_min = TCMB
 	cond_type = /datum/reagent/nitrogen
 	cond_heat = 5590
@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = 8
 	rarity = 500
 	cond_rate = 0.2
-	cond_temp_max = T0C + 100
+	cond_temp_max = BP_WATER
 	cond_temp_min = T0C
 	cond_type = /datum/reagent/water
 	cond_heat = 40650

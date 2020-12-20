@@ -150,7 +150,7 @@
 
 /datum/reagent/water/on_new(data)
 	. = ..()
-	AddElement(/datum/element/boilable, BP_WATER, "h2o")
+	AddElement(/datum/element/boilable, BP_WATER, /datum/gas/water_vapor)
 
 /*
  *	Water reaction to turf
@@ -730,7 +730,7 @@
 
 /datum/reagent/oxygen/on_new(data)
 	. = ..()
-	AddElement(/datum/element/boilable, BP_OXYGEN, "o2")
+	AddElement(/datum/element/boilable, BP_OXYGEN, /datum/gas/oxygen)
 
 /datum/reagent/copper
 	name = "Copper"
@@ -758,7 +758,7 @@
 
 /datum/reagent/nitrogen/on_new(data)
 	. = ..()
-	AddElement(/datum/element/boilable, BP_NITROGEN, "n2")
+	AddElement(/datum/element/boilable, BP_NITROGEN, /datum/gas/nitrogen)
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
@@ -1242,7 +1242,7 @@
 
 /datum/reagent/carbondioxide/on_new(data)
 	. = ..()
-	AddElement(/datum/element/boilable, BP_CARBON_DIOXIDE, "co2")
+	AddElement(/datum/element/boilable, BP_CARBON_DIOXIDE, /datum/gas/carbon_dioxide)
 
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
@@ -1254,7 +1254,7 @@
 
 /datum/reagent/nitrous_oxide/on_new(data)
 	. = ..()
-	AddElement(/datum/element/boilable, BP_NITROUS_OXIDE, "n2o")
+	AddElement(/datum/element/boilable, BP_NITROUS_OXIDE, /datum/gas/nitrous_oxide)
 
 /datum/reagent/nitrous_oxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

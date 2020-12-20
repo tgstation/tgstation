@@ -568,8 +568,12 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		if(cached_temp >= cond_max_temp)
 			continue
 
-		var/cond_rate = clamp(LERP(0, cond_max_rate, clamp((cond_max_temp - cached_temp) / (cond_max_temp - cond_min_temp), 0, 1)), 0, 1)
-		cond_rate = clamp(cached_gases[gas_id][MOLES] * DT_PROB_RATE(cond_rate, delta_time), 0, cached_gases[gas_id][MOLES])
+		var/cond_rate = 0
+		if(cached_temp > cond_min_temp)	/// This check exists to prevent division by zero or negative if cond_min_temp >= cond_max_temp
+			cond_rate = LERP(0, cond_max_rate, clamp((cond_max_temp - cached_temp) / (cond_max_temp - cond_min_temp), 0, 1))
+		else
+			cond_rate = cond_max_rate
+		cond_rate = clamp(cached_gases[gas_id][MOLES] * DT_PROB_RATE(clamp(cond_rate, 0, 1), delta_time), 0, cached_gases[gas_id][MOLES])
 		if(!cond_rate)
 			continue
 

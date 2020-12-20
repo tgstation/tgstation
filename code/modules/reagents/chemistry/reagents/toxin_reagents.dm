@@ -73,7 +73,7 @@
 
 /datum/reagent/toxin/plasma/on_new(data)
 	. = ..()
-	AddElement(/datum/element/boilable, BP_PLASMA, "plasma")
+	AddElement(/datum/element/boilable, BP_PLASMA, /datum/gas/plasma)
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
