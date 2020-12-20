@@ -7,11 +7,6 @@
 	layer = SIGIL_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
-	///Added for the purpose of error tracking. Since knowledge breaking can be pretty elusive, this needs it's own way of knowing what the fuck broke.
-	var/last_use_time
-	///Added for the purpose of error tracking. Since knowledge breaking can be pretty elusive, this needs it's own way of knowing what the fuck broke.
-	var/last_rite
-
 /obj/effect/eldritch/Initialize()
 	. = ..()
 	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
@@ -30,9 +25,6 @@
 	if(!is_in_use)
 		last_use = world.time
 		INVOKE_ASYNC(src, .proc/activate , user)
-	else if((world.time - last_use) > 30 SECONDS) // 30 seconds because if something didnt happen by this time we know for sure it is an error. We cannot do it instantly since stuff like PollGhosts takes like 30 seconds or something.
-		CRASH("Unterminated ritual in progress evoked by [user] in [loc] caused by [last rite]")
-		is_in_use = FALSE //Self fixing, just in case.
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -94,8 +86,6 @@
 			var/atom/atom_to_disappear = to_disappear
 			//temporary so we dont have to deal with the bs of someone picking those up when they may be deleted
 			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
-
-		last_rite = current_eldritch_knowledge.name
 
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
