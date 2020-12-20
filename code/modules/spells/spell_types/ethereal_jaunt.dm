@@ -4,7 +4,7 @@
 
 	school = "transmutation"
 	charge_max = 300
-	clothes_req = TRUE
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1

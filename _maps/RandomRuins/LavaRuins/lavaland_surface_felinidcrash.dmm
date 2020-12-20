@@ -1,0 +1,51 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/ruin/powered)
+"c" = (/turf/closed/wall/mineral/titanium,/area/ruin/powered)
+"d" = (/obj/machinery/computer/shuttle/monastery_shuttle{desc = "Was used to control this shuttle. It's broken and covered in blood and scratches. A fight took place in here."},/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"e" = (/obj/structure/chair/comfy/shuttle{dir = 4},/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"f" = (/obj/structure/cathead,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"g" = (/obj/item/light/tube/broken,/obj/effect/decal/cleanable/ash/large,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"h" = (/obj/structure/catbody,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"i" = (/obj/effect/decal/cleanable/blood/footprints,/obj/effect/decal/cleanable/blood/innards,/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/cleanable/vomit/old{desc = "Whatever happened must have been painful."},/obj/item/paper/fluff/stations/lavaland/surface/porterpaper_3,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"j" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/ruin/powered)
+"k" = (/obj/structure/chair/comfy/shuttle{desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights. There's a super deep cut across it, like a claw or a blade cut through it like butter."; dir = 8},/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"l" = (/obj/structure/chair/comfy/shuttle{dir = 4},/obj/item/storage/pod{pixel_x = -24},/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"m" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/mineral/titanium,/area/ruin/powered)
+"n" = (/obj/effect/decal/cleanable/blood/footprints,/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/obj/effect/decal/cleanable/shreds,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"o" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"p" = (/obj/structure/catleg,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"q" = (/obj/structure/chair/comfy/shuttle{dir = 8},/obj/item/radio/intercom{desc = "The intercom for the shuttle. This must have been used to send the S.O.S signal."; pixel_x = 30},/obj/effect/decal/cleanable/blood/splatter,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"r" = (/obj/effect/decal/cleanable/blood/footprints,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt/dust,/turf/open/floor/mineral/titanium/blue,/area/ruin/powered)
+"s" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"t" = (/obj/effect/decal/cleanable/blood/footprints,/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"u" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"v" = (/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"w" = (/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/ash/large,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"x" = (/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"y" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"z" = (/obj/effect/decal/cleanable/blood/footprints,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"A" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"B" = (/obj/effect/decal/cleanable/ash/large,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"C" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"D" = (/obj/structure/catarm,/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"E" = (/obj/effect/decal/cleanable/blood/footprints,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"F" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"G" = (/obj/item/paper/fluff/stations/lavaland/surface/porterpaper_2,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"H" = (/obj/item/paper/fluff/stations/lavaland/surface/porterpaper_1,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaa
+aaaabcbcbaaaaa
+aaaabbdcbaaaaa
+aaaacefgcaaaaa
+aaaabhikjaaaaa
+aaaaclnqcaaaaa
+aaaammrmmaaaaa
+aaaasGtuoaaaaa
+aaaaovwoxaaaaa
+aaaayozooaaaoa
+oaaaApooBaaooa
+aoooCooDooooaa
+aoooooEHAoooaa
+aoooFooooCooaa
+"}

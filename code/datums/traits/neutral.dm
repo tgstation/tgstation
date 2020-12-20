@@ -308,3 +308,16 @@
 	new_tongue.Insert(H)
 	qdel(old_tongue)
 	H.regenerate_icons()
+
+/datum/quirk/faux
+	name = "Faux Mask"
+	desc = "For the sake of RP, please do not use this trait. Thank you for understanding."
+
+/datum/quirk/faux/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/glasses/fox/glasses = new(get_turf(H))
+	H.put_in_hands(glasses)
+	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
+	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
+	H.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))

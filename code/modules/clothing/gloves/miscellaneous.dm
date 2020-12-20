@@ -202,3 +202,20 @@
 	name = "CentCom intern envirogloves"
 	icon_state = "internplasma"
 	inhand_icon_state = "internplasma"
+
+/obj/item/clothing/gloves/armistice
+	name = "Armistice"
+	desc = "A temporary replacement. Filled with intense magical energy, a mere swing of this arm can erase any darkness."
+	icon_state = "armistice"
+	inhand_icon_state = "armistice"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	strip_delay = 99180
+	undyeable = TRUE
+	body_parts_covered = ARMS
+	cold_protection = ARMS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	force = 1
+	damtype = BURN
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)

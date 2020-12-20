@@ -303,7 +303,7 @@
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
 
-/datum/quirk/nearsighted //t. errorage
+/datum/quirk/nearsighted //t. errorage 
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
 	value = -1

@@ -213,3 +213,10 @@
 	desc = "A formal black tuxedo. It exudes classiness."
 	icon_state = "tuxedo"
 	inhand_icon_state = "tuxedo"
+
+/obj/item/clothing/under/suit/stolen_captain_uniform
+	name = "Stolen Uniform"
+	desc = "A uniform that seems to fit you perfectly, one of the sleeves appears to be torn off."
+	icon_state = "stolen_captain_uniform"
+	inhand_icon_state = "nothing"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET

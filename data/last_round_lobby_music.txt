@@ -95,3 +95,9 @@ config/title_music/sounds/CrazyBus.ogg
 config/title_music/sounds/Lil B Station.ogg
 config/title_music/sounds/Noise channel theme.ogg
 config/title_music/sounds/Gastly.ogg
+config/title_music/sounds/Pamp radion.ogg
+config/title_music/sounds/Jupiter's Child.ogg
+config/title_music/sounds/Funny2.ogg
+config/title_music/sounds/Funny2.ogg
+config/title_music/sounds/Raceway.ogg
+config/title_music/sounds/3D Galax.ogg

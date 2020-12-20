@@ -670,7 +670,7 @@
 /obj/item/reagent_containers/food/snacks/hotdog/honker
 	name = "'Dog"
 	desc = "Make sure you've got your permit if you want to honk one of these babies."
-	throwforce = 1500
+	throwforce = 3000
 	throw_speed = 20
 	throw_range = 40
 	bitesize = 40

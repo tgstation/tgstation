@@ -265,6 +265,13 @@
 	always_place = TRUE
 	allow_duplicates = TRUE
 
+/datum/map_template/ruin/lavaland/felinidcrash
+	name = "Crashed Shuttle"
+	id = "felinidcrash"
+	description = "A crashed escape shuttle. Something violent took place here."
+	suffix = "lavaland_surface_felinidcrash.dmm"
+	unpickable = TRUE
+
 /datum/map_template/ruin/lavaland/elephant_graveyard
 	name = "Elephant Graveyard"
 	id = "Graveyard"
