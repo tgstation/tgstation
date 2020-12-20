@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import sys
 import dmi
+from hooks.merge_frontend import MergeDriver
+
 
 def images_equal(left, right):
     if left.size != right.size:
@@ -14,6 +16,7 @@ def images_equal(left, right):
             if lpixel != rpixel and (lpixel[3] != 0 or rpixel[3] != 0):
                 return False
     return True
+
 
 def states_equal(left, right):
     result = True
@@ -31,8 +34,10 @@ def states_equal(left, right):
 
     return result
 
+
 def key_of(state):
     return (state.name, state.movement)
+
 
 def dictify(sheet):
     result = {}
@@ -42,6 +47,7 @@ def dictify(sheet):
             print(f"    duplicate {k!r}")
         result[k] = state
     return result
+
 
 def three_way_merge(base, left, right):
     base_dims = base.width, base.height
@@ -145,33 +151,31 @@ def three_way_merge(base, left, right):
     merged.states = final_states
     return len(conflicts), merged
 
-def main(path, original, left, right):
-    print(f"Merging icon: {path}")
 
-    icon_orig = dmi.Dmi.from_file(original)
-    icon_left = dmi.Dmi.from_file(left)
-    icon_right = dmi.Dmi.from_file(right)
+class DmiDriver(MergeDriver):
+    driver_id = 'dmi'
 
-    trouble, merged = three_way_merge(icon_orig, icon_left, icon_right)
-    if merged:
-        merged.to_file(left)
-    if trouble:
-        print("!!! Manual merge required!")
-        if merged:
-            print("    A best-effort merge was performed. You must edit the icon and remove all")
-            print("    icon states marked with !CONFLICT!, leaving only the desired icon.")
-        else:
-            print("    The icon was totally unable to be merged, you must start with one version")
-            print("    or the other and manually resolve the conflict.")
-        print("    Information about which states conflicted is listed above.")
-    return trouble
+    def merge(self, base, left, right):
+        icon_base = dmi.Dmi.from_file(base)
+        icon_left = dmi.Dmi.from_file(left)
+        icon_right = dmi.Dmi.from_file(right)
+        trouble, merge_result = three_way_merge(icon_base, icon_left, icon_right)
+        return not trouble, merge_result
+
+    def to_file(self, outfile, merge_result):
+        merge_result.to_file(outfile)
+
+    def post_announce(self, success, merge_result):
+        if not success:
+            print("!!! Manual merge required!")
+            if merge_result:
+                print("    A best-effort merge was performed. You must edit the icon and remove all")
+                print("    icon states marked with !CONFLICT!, leaving only the desired icon.")
+            else:
+                print("    The icon was totally unable to be merged, you must start with one version")
+                print("    or the other and manually resolve the conflict.")
+            print("    Information about which states conflicted is listed above.")
+
 
 if __name__ == '__main__':
-    if len(sys.argv) != 6:
-        print("DMI merge driver called with wrong number of arguments")
-        print("    usage: merge-driver-dmi %P %O %A %B %L")
-        exit(1)
-
-    # "left" is also the file that ought to be overwritten
-    _, path, original, left, right, conflict_size_marker = sys.argv
-    exit(main(path, original, left, right))
+    exit(DmiDriver().main())

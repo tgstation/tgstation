@@ -12,10 +12,10 @@ NORTH = 1
 SOUTH = 2
 EAST = 4
 WEST = 8
-SOUTHEAST = SOUTH|EAST
-SOUTHWEST = SOUTH|WEST
-NORTHEAST = NORTH|EAST
-NORTHWEST = NORTH|WEST
+SOUTHEAST = SOUTH | EAST
+SOUTHWEST = SOUTH | WEST
+NORTHEAST = NORTH | EAST
+NORTHWEST = NORTH | WEST
 
 CARDINALS = [NORTH, SOUTH, EAST, WEST]
 DIR_ORDER = [SOUTH, NORTH, EAST, WEST, SOUTHEAST, SOUTHWEST, NORTHEAST, NORTHWEST]
@@ -33,6 +33,7 @@ DIR_NAMES = {
     '0': SOUTH,
     None: SOUTH,
 }
+
 
 class Dmi:
     version = "4.0"
@@ -134,7 +135,7 @@ class Dmi:
             comment += f"state = {escape(state.name)}\n"
             comment += f"\tdirs = {state.dirs}\n"
             comment += f"\tframes = {state.framecount}\n"
-            if state.framecount > 1 and len(state.delays): #any(x != 1 for x in state.delays):
+            if state.framecount > 1 and len(state.delays):  # any(x != 1 for x in state.delays):
                 comment += "\tdelay = " + ",".join(map(str, state.delays)) + "\n"
             if state.loop != 0:
                 comment += f"\tloop = {state.loop}\n"
@@ -174,6 +175,7 @@ class Dmi:
         if palette:
             output = output.convert('P')
         output.save(filename, 'png', optimize=True, pnginfo=pnginfo)
+
 
 class State:
     def __init__(self, dmi, name, *, loop=LOOP_UNLIMITED, rewind=False, movement=False, dirs=1):
@@ -216,10 +218,12 @@ class State:
     def get_frame(self, *args, **kwargs):
         return self.frames[self._frame_index(*args, **kwargs)]
 
+
 def escape(text):
     text = text.replace('\\', '\\\\')
     text = text.replace('"', '\\"')
     return f'"{text}"'
+
 
 def unescape(text, quote='"'):
     if text == 'null':
@@ -231,51 +235,14 @@ def unescape(text, quote='"'):
     text = text.replace('\\\\', '\\')
     return text
 
+
 def parse_num(value):
     if '.' in value:
         return float(value)
     return int(value)
 
+
 def parse_bool(value):
     if value not in ('0', '1'):
         raise ValueError(value)
     return value == '1'
-
-def _self_test():
-    # test: can we load every DMI in the tree
-    import os
-
-    count = 0
-    for dirpath, dirnames, filenames in os.walk('.'):
-        if '.git' in dirnames:
-            dirnames.remove('.git')
-        for filename in filenames:
-            if filename.endswith('.dmi'):
-                fullpath = os.path.join(dirpath, filename)
-                try:
-                    Dmi.from_file(fullpath)
-                except:
-                    print('Failed on:', fullpath)
-                    raise
-                count += 1
-
-    print(f"Successfully parsed {count} dmi files")
-
-def _usage():
-    import sys
-    print(f"Usage:")
-    print(f"    {sys.argv[0]} --test")
-    exit(1)
-
-def _main():
-    import sys
-    if len(sys.argv) < 2:
-        return _usage()
-
-    if sys.argv[1] == '--test':
-        return _self_test()
-
-    return _usage()
-
-if __name__ == '__main__':
-    _main()
