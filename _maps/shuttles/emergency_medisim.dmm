@@ -31,6 +31,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/grass,
 /area/shuttle/escape/simulation)
+"eb" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "eu" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -56,6 +62,10 @@
 "ft" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"fL" = (
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "fW" = (
 /obj/item/reagent_containers/glass/bottle/epinephrine{
@@ -147,7 +157,6 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "ht" = (
-/obj/structure/punji_sticks/spikes,
 /obj/structure/railing/corner{
 	dir = 4
 	},
@@ -259,6 +268,9 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/template_noop,
 /area/shuttle/escape)
 "kS" = (
@@ -271,7 +283,7 @@
 /obj/structure/fluff/big_chain{
 	pixel_y = 9
 	},
-/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
 /turf/open/chasm,
 /area/shuttle/escape/simulation)
 "ll" = (
@@ -457,10 +469,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape/simulation)
 "sS" = (
-/obj/structure/shuttle/engine/huge{
-	dir = 8
-	},
-/turf/template_noop,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "tP" = (
 /obj/structure/lattice/catwalk,
@@ -478,6 +487,9 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
 	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/template_noop,
 /area/shuttle/escape)
@@ -619,6 +631,9 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape/simulation)
 "Ck" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Cv" = (
@@ -630,7 +645,8 @@
 	maximum_idle = 1;
 	metal_cost = 0;
 	name = "binoculars fabricator";
-	power_used = 0
+	power_used = 0;
+	starting_amount = 25000
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape/simulation)
@@ -657,6 +673,12 @@
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"CY" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "Do" = (
 /obj/structure/flora/ausbushes/stalkybush,
@@ -866,7 +888,6 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "Kb" = (
-/obj/structure/punji_sticks/spikes,
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/sandy_dirt,
@@ -929,7 +950,6 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/shuttle/escape/simulation)
 "Ng" = (
-/obj/structure/punji_sticks/spikes,
 /obj/effect/turf_decal/sand,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/sandy_dirt,
@@ -970,6 +990,12 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
+"Ov" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "OA" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/sandy_dirt,
@@ -994,9 +1020,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Pv" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/punji_sticks/spikes,
-/obj/effect/turf_decal/sand,
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/floor/plating/grass,
 /area/shuttle/escape/simulation)
 "QC" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -1018,9 +1044,9 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	dir = 2;
-	dwidth = 26;
-	height = 6;
+	dir = 1;
+	dwidth = 6;
+	height = 26;
 	name = "Medisim emergency shuttle";
 	width = 25
 	},
@@ -1117,7 +1143,6 @@
 /turf/open/floor/plating/grass,
 /area/shuttle/escape/simulation)
 "SV" = (
-/obj/structure/punji_sticks/spikes,
 /obj/structure/railing/corner{
 	dir = 1
 	},
@@ -1217,11 +1242,25 @@
 	},
 /turf/open/floor/stone,
 /area/shuttle/escape/simulation)
+"Wb" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/fluff/big_chain{
+	pixel_y = 9
+	},
+/turf/open/chasm,
+/area/shuttle/escape/simulation)
 "Wx" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/sandy_dirt,
 /area/shuttle/escape/simulation)
+"WA" = (
+/obj/structure/closet/crate/large,
+/obj/item/clothing/suit/armor/vest/cuirass,
+/obj/item/clothing/suit/armor/vest/cuirass,
+/obj/item/clothing/suit/armor/vest/cuirass,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "WN" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/white,
@@ -1239,8 +1278,9 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/shuttle/escape/simulation)
 "Xk" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 8
+/obj/structure/closet/crate/critter,
+/mob/living/simple_animal/hostile/lizard/space{
+	name = "Horse Thief"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1254,7 +1294,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Xw" = (
-/obj/structure/punji_sticks/spikes,
 /obj/structure/railing/corner{
 	dir = 8
 	},
@@ -1394,7 +1433,7 @@ EN
 EN
 lX
 lX
-sS
+lX
 EN
 gj
 gj
@@ -1408,7 +1447,7 @@ gj
 EN
 lX
 lX
-sS
+lX
 EN
 EN
 EN
@@ -1450,9 +1489,9 @@ EN
 eu
 ho
 ku
-Ck
-Ck
-Ck
+CY
+CY
+CY
 hV
 wX
 Aw
@@ -1464,9 +1503,9 @@ Rl
 Aw
 wX
 Ua
-Ck
-Ck
-Ck
+CY
+CY
+CY
 eu
 ho
 ku
@@ -1480,8 +1519,8 @@ eX
 gj
 eX
 Xk
-Xk
-Xk
+fL
+eb
 tP
 Xv
 Xv
@@ -1493,9 +1532,9 @@ YB
 Xv
 Xv
 Va
-Xk
-Xk
-Xk
+eb
+Ov
+WA
 eX
 gj
 eX
@@ -1561,7 +1600,7 @@ aS
 Xv
 "}
 (7,1,1) = {"
-QS
+aB
 EZ
 EZ
 Xv
@@ -1587,7 +1626,7 @@ Xv
 Xv
 EZ
 EZ
-aB
+QS
 "}
 (8,1,1) = {"
 Xv
@@ -1708,7 +1747,7 @@ EN
 (12,1,1) = {"
 EN
 Xv
-Xv
+sS
 hr
 ll
 qM
@@ -1716,13 +1755,13 @@ so
 un
 HE
 Xv
-Xv
+sS
 Zx
 Rl
 Rl
 Rl
 Zx
-Xv
+sS
 Xv
 Vn
 XX
@@ -1730,7 +1769,7 @@ XX
 XX
 Cy
 in
-Xv
+sS
 Xv
 EN
 "}
@@ -2064,13 +2103,13 @@ NS
 pF
 wc
 MN
-MN
-dg
-MN
-MN
-MN
-MN
-MN
+GQ
+Pv
+GQ
+GQ
+GQ
+GQ
+GQ
 MN
 VF
 pF
@@ -2123,7 +2162,7 @@ Io
 ht
 MN
 MN
-GQ
+MN
 MN
 MN
 dg
@@ -2132,7 +2171,7 @@ MN
 MN
 Kb
 LA
-lg
+Wb
 rX
 TE
 VG
@@ -2155,7 +2194,7 @@ MN
 HR
 MN
 MP
-Pv
+gb
 gb
 MN
 yw
@@ -2203,8 +2242,8 @@ pF
 pF
 pF
 Et
-TE
 lg
+TE
 TE
 TE
 qY
@@ -2220,8 +2259,8 @@ yx
 Xq
 TE
 TE
-lg
 TE
+lg
 VG
 pF
 pF
@@ -2243,7 +2282,7 @@ MN
 MN
 MN
 MN
-GQ
+MN
 MN
 MN
 Xw
@@ -2296,13 +2335,13 @@ sH
 pF
 xi
 MN
-MN
-MN
-MN
-MN
-MN
-MN
-dg
+GQ
+GQ
+GQ
+GQ
+GQ
+GQ
+Pv
 MN
 XQ
 pF

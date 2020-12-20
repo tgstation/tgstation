@@ -4,6 +4,7 @@
 	desc = "While pretty finely crafted, surely you can find something better to use in the current year."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "bow"
+	load_sound = null
 	fire_sound = null
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
 	force = 15
@@ -27,12 +28,11 @@
 		icon_state = "bow_[drawn]"
 
 /obj/item/gun/ballistic/bow/proc/drop_arrow()
-	if(!chambered)
-		return
 	drawn = FALSE
 	chambered = magazine.get_round()
+	if(!chambered)
+		return
 	chambered.forceMove(drop_location())
-	update_icon()
 
 /obj/item/gun/ballistic/bow/chamber_round()
 	if(chambered || !magazine)
@@ -41,20 +41,23 @@
 		chambered = magazine.get_round(TRUE)
 		chambered.forceMove(src)
 
-/obj/item/gun/ballistic/bow/attackby(obj/item/A, mob/user, params)
-
-
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
-	drawn = !drawn
+	if(chambered)
+		to_chat(user, "<span clasas='notice'>You [drawn ? "release the tension on" : "draw the string on "] [src].</span>")
+		drawn = !drawn
 	update_icon()
 
 /obj/item/gun/ballistic/bow/attack_hand(mob/user)
-	. = ..()
-	if(chambered)
+	if(chambered && !drawn)
 		drop_arrow()
+		update_icon()
+	else
+		..()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(!drawn)
+		to_chat(user, "<span clasas='warning'>Without drawing the bow, the arrow uselessly falls to the ground.</span>")
+		drop_arrow()
 		return
 	drawn = FALSE
 	. = ..() //fires, removing the arrow
@@ -73,6 +76,7 @@
 /obj/item/ammo_casing/caseless/arrow
 	name = "arrow"
 	desc = "Stabby Stabman!"
+	icon_state = "arrow"
 	flags_1 = NONE
 	throwforce = 1
 	projectile_type = /obj/projectile/bullet/reusable/arrow
@@ -82,9 +86,30 @@
 
 /obj/projectile/bullet/reusable/arrow
 	name = "arrow"
-	icon_state = "arrow"
 	desc = "Ow! Get it out of me!"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
 	damage = 25
 	speed = 0.8
 	range = 25
+
+/obj/item/storage/bag/quiver
+	name = "quiver"
+	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
+	icon_state = "quiver"
+	inhand_icon_state = "quiver"
+	worn_icon_state = "harpoon_quiver"
+
+/obj/item/storage/bag/quiver/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_TINY
+	STR.max_items = 40
+	STR.max_combined_w_class = 100
+	STR.set_holdable(list(
+		/obj/item/ammo_casing/caseless/arrow
+		))
+
+/obj/item/storage/bag/quiver/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/ammo_casing/caseless/arrow(src)

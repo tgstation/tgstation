@@ -91,26 +91,40 @@
 	name = "Redfield Castle Archer"
 
 	uniform = /obj/item/clothing/under/color/red
+	belt = /obj/item/storage/bag/quiver
 	shoes = /obj/item/clothing/shoes/plate/red
-	suit = /obj/item/clothing/suit/armor/riot/knight/red
+	suit = /obj/item/clothing/suit/armor/vest/cuirass
 	gloves = /obj/item/clothing/gloves/plate/red
 	head = /obj/item/clothing/head/helmet/knight/red
-	r_hand = /obj/item/claymore
+	r_hand = /obj/item/gun/ballistic/bow
 
 /datum/outfit/medisim_blue_archer
 	name = "Bluesworth Hold Archer"
 
 	uniform = /obj/item/clothing/under/color/blue
+	belt = /obj/item/storage/bag/quiver
 	shoes = /obj/item/clothing/shoes/plate/blue
-	//suit = /obj/item/clothing/suit/armor/riot/knight/blue
+	suit = /obj/item/clothing/suit/armor/vest/cuirass
 	gloves = /obj/item/clothing/gloves/plate/blue
-	//head = /obj/item/clothing/head/helmet/knight/blue
+	head = /obj/item/clothing/head/helmet/knight/blue
 	r_hand = /obj/item/gun/ballistic/bow
-	l_hand = /obj/item/ammo_casing/caseless/arrow
 
 /obj/machinery/computer/reality_simulation
 	name = "reality simulation computer"
 	desc = "A computer calculating the medieval times. Uh, wow. Is this bad boy quantum?"
+
+/obj/item/paper/crumpled/bloody/retired_designs
+	name = "notes on cuirass design"
+	info = {"Yeah, you may as well just melt this crap back down into metal.<br>
+	<br>
+	<br>
+	What else am I supposed to say? Nanotrasen thinks these authentic cuirass models are too expensive for the simulation watchers.<br>
+	That's bullshit, but my hands are tied. But you know. If one of you cargo folk up at central command take a cuirass for yourself<br>
+	instead of throwing the damn thing out, like, I'm sure nobody would notice or care. OK, but I'm sitting here on an official<br>
+	NT shuttle encouraging you to commit spacelaw crimes. Damn, I'm bored as fuck. I'm only kidding. Melt em. See you guys soon.
+	<br>
+	<br>
+	the rest of the page is filled with various doodles of people fighting with swords."}
 
 #undef REDFIELD_TEAM
 #undef BLUESWORTH_TEAM
