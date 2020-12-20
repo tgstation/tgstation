@@ -289,7 +289,7 @@
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
 	user.visible_message("<span class='danger'>[user] begins to plant \the [src]...</span>")
-	if(do_after(user, 58SECONDS, target = user.drop_location(), progress = TRUE))
+	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
 		new /obj/structure/fluff/hedge/opaque(user.drop_location())
 		to_chat(user, "<span class='notice'>You plant \the [src].</span>")
 		qdel(src)
