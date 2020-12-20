@@ -61,6 +61,11 @@
 		trunk.linked = null
 	return ..()
 
+/obj/machinery/disposal/handle_atom_del(atom/A)
+	if(A == stored && !QDELETED(src))
+		stored = null
+		deconstruct(FALSE)
+
 /obj/machinery/disposal/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
@@ -137,10 +142,12 @@
 		target.forceMove(src)
 		if(user == target)
 			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", "<span class='notice'>You climb into [src].</span>")
+			. = TRUE
 		else
 			target.visible_message("<span class='danger'>[user] places [target] in [src].</span>", "<span class='userdanger'>[user] places you in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
+			. = TRUE
 		update_icon()
 
 /obj/machinery/disposal/relaymove(mob/living/user, direction)
@@ -160,8 +167,10 @@
 	user.forceMove(loc)
 	update_icon()
 
-// monkeys and xenos can only pull the flush lever
+// clumsy monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
+	if(ISADVANCEDTOOLUSER(user))
+		return ..()
 	if(machine_stat & BROKEN)
 		return
 	flush = !flush
@@ -421,7 +430,7 @@
 
 /obj/machinery/disposal/bin/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 //Delivery Chute
 

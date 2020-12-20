@@ -47,6 +47,16 @@
 
 	. = ..()
 
+/datum/antagonist/monkey/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	ADD_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
+/datum/antagonist/monkey/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	REMOVE_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/monkey/H in GLOB.antagonists)

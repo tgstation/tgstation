@@ -107,7 +107,7 @@
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = 750
+	custom_premium_price = PAYCHECK_HARD
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -208,7 +208,7 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	clothing_flags = LARGE_WORN_ICON
-	custom_price = 350
+	custom_price = PAYCHECK_HARD * 1.5
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
@@ -457,7 +457,7 @@
 		if(prob(10))
 			switch(rand(1,4))
 				if(1) //blood rage
-					magnification.aggressive = TRUE
+					magnification.ai_controller.blackboard[BB_MONKEY_AGRESSIVE] = TRUE
 				if(2) //brain death
 					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
 				if(3) //primal gene (gorilla)

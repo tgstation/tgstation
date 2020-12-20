@@ -6,6 +6,7 @@
 	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
+	var/t_es = p_es()
 	var/obscure_name
 
 	if(isliving(user))
@@ -19,7 +20,7 @@
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	//uniform
-	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
+	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
 		var/accessory_msg
 		if(istype(w_uniform, /obj/item/clothing/under))
@@ -29,26 +30,26 @@
 
 		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_msg]."
 	//head
-	if(head && !(obscured & ITEM_SLOT_HEAD))
+	if(head && !(obscured & ITEM_SLOT_HEAD) && !(head.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head."
 	//suit/armor
-	if(wear_suit)
+	if(wear_suit && !(wear_suit.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_suit.get_examine_string(user)]."
 		//suit/armor storage
-		if(s_store && !(obscured & ITEM_SLOT_SUITSTORE))
+		if(s_store && !(obscured & ITEM_SLOT_SUITSTORE) && !(s_store.item_flags & EXAMINE_SKIP))
 			. += "[t_He] [t_is] carrying [s_store.get_examine_string(user)] on [t_his] [wear_suit.name]."
 	//back
-	if(back)
+	if(back && !(back.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_has] [back.get_examine_string(user)] on [t_his] back."
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.item_flags & ABSTRACT))
+		if(!(I.item_flags & ABSTRACT) && !(I.item_flags & EXAMINE_SKIP))
 			. += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))]."
 
 	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES))
+	if(gloves && !(obscured & ITEM_SLOT_GLOVES) && !(gloves.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands."
 	else if(FR && length(FR.blood_DNA))
 		if(num_hands)
@@ -64,33 +65,33 @@
 			. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>"
 
 	//belt
-	if(belt)
+	if(belt && !(belt.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_has] [belt.get_examine_string(user)] about [t_his] waist."
 
 	//shoes
-	if(shoes && !(obscured & ITEM_SLOT_FEET))
+	if(shoes && !(obscured & ITEM_SLOT_FEET)  && !(shoes.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [shoes.get_examine_string(user)] on [t_his] feet."
 
 	//mask
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
+	if(wear_mask && !(obscured & ITEM_SLOT_MASK)  && !(wear_mask.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
 
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
+	if(wear_neck && !(obscured & ITEM_SLOT_NECK)  && !(wear_neck.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
 
 	//eyes
-	if(!(obscured & ITEM_SLOT_EYES))
-		if(glasses)
+	if(!(obscured & ITEM_SLOT_EYES) )
+		if(glasses  && !(glasses.item_flags & EXAMINE_SKIP))
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
 		else if(eye_color == BLOODCULT_EYE && iscultist(src) && HAS_TRAIT(src, CULT_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
 
 	//ears
-	if(ears && !(obscured & ITEM_SLOT_EARS))
+	if(ears && !(obscured & ITEM_SLOT_EARS) && !(ears.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_has] [ears.get_examine_string(user)] on [t_his] ears."
 
 	//ID
-	if(wear_id)
+	if(wear_id && !(wear_id.item_flags & EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 
 	//Status effects
@@ -280,7 +281,7 @@
 		if(appears_dead)
 			bleed_text += ", but it has pooled and is not flowing.</span></B>\n"
 		else
-			if(has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
+			if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
 				bleed_text += " incredibly quickly"
 
 			bleed_text += "!</B>\n"
@@ -291,7 +292,7 @@
 
 		msg += bleed_text.Join()
 
-	if(has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
+	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if(islist(stun_absorption))
@@ -354,6 +355,8 @@
 				if(HAS_TRAIT(src, TRAIT_DUMB))
 					msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 		if(getorgan(/obj/item/organ/brain))
+			if(ai_controller?.ai_status == AI_STATUS_ON)
+				msg += "<span class='deadsay'>[t_He] do[t_es]n't appear to be [t_him]self.</span>\n"
 			if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)

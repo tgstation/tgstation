@@ -15,7 +15,7 @@
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
-	custom_price = 150
+	custom_price = PAYCHECK_EASY * 0.5
 	sharpness = SHARP_POINTY
 
 /obj/item/reagent_containers/syringe/Initialize()
@@ -70,10 +70,7 @@
 			return
 
 	// chance of monkey retaliation
-	if(ismonkey(target) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
-		var/mob/living/carbon/monkey/M
-		M = target
-		M.retaliate(user)
+	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE, user)
 
 	switch(mode)
 		if(SYRINGE_DRAW)
@@ -160,11 +157,14 @@
 /*
  * On accidental consumption, inject the eater with 2/3rd of the syringe and reveal it
  */
-/obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
-	to_chat(M, "<span class='boldwarning'>There's a syringe in \the [source_item]!!</span>")
-	M.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
-	if(reagents?.total_volume)
-		reagents.trans_to(M, round(reagents.total_volume*(2/3)), transfered_by = user, methods = INJECT)
+/obj/item/reagent_containers/syringe/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	if(source_item)
+		to_chat(victim, "<span class='boldwarning'>There's a [src] in [source_item]!!</span>")
+	else
+		to_chat(victim, "<span class='boldwarning'>[src] injects you!</span>")
+
+	victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
+	reagents?.trans_to(victim, round(reagents.total_volume*(2/3)), transfered_by = user, methods = INJECT)
 
 	return discover_after
 

@@ -9,7 +9,7 @@
 	var/dumped = FALSE
 
 /obj/item/suspiciousphone/attack_self(mob/living/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>This device is too advanced for you!</span>")
 		return
 	if(dumped)
@@ -213,9 +213,6 @@
 	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
 	var/mob/living/bogdanoff
-
-/obj/effect/ex_act()
-	return
 
 /obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()

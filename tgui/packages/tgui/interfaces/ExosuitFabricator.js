@@ -1,10 +1,11 @@
-import { classes } from 'common/react';
 import { uniqBy } from 'common/collections';
-import { useBackend, useSharedState } from '../backend';
-import { formatSiUnit, formatMoney } from '../format';
-import { Flex, Section, Tabs, Box, Button, Fragment, ProgressBar, NumberInput, Icon, Input } from '../components';
-import { Window } from '../layouts';
+import { classes } from 'common/react';
 import { createSearch } from 'common/string';
+import { Fragment } from 'inferno';
+import { useBackend, useSharedState } from '../backend';
+import { Box, Button, Flex, Icon, Input, NumberInput, ProgressBar, Section, Tabs } from '../components';
+import { formatMoney, formatSiUnit } from '../format';
+import { Window } from '../layouts';
 
 const MATERIAL_KEYS = {
   "iron": "sheet-metal_3",

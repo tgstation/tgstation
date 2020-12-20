@@ -28,7 +28,8 @@
 	maxHealth = 150
 	health = 150
 	healable = 0
-
+	melee_damage_lower = 5
+	melee_damage_upper = 25
 	see_in_dark = 8
 
 	verb_say = "blorbles"
@@ -145,9 +146,9 @@
 	. = ..()
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
-	if(has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
-	if(has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
+	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
@@ -222,11 +223,11 @@
 		amount = -abs(amount)
 	return ..() //Heals them
 
-/mob/living/simple_animal/slime/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/slime/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	attacked += 10
 	if((Proj.damage_type == BURN))
 		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
-		Proj.on_hit(src)
+		Proj.on_hit(src, 0, piercing_hit)
 	else
 		. = ..(Proj)
 	. = . || BULLET_ACT_BLOCK

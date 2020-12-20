@@ -42,10 +42,10 @@
 	name = "Fiesta Skewer"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/food/grown/chili = 1,
 		/obj/item/food/meat/cutlet = 1,
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+		/obj/item/food/grown/corn = 1,
+		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/kebab/fiesta
 	subcategory = CAT_MEAT
@@ -56,7 +56,7 @@
 	name = "Cuban carp"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/food/grown/chili = 1,
 		/obj/item/food/carpmeat = 1
 	)
 	result = /obj/item/food/cubancarp
@@ -65,7 +65,7 @@
 /datum/crafting_recipe/food/fishandchips
 	name = "Fish and chips"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/fries = 1,
+		/obj/item/food/fries = 1,
 		/obj/item/food/carpmeat = 1
 	)
 	result = /obj/item/food/fishandchips
@@ -75,7 +75,7 @@
 	name = "Fish fingers"
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
-		/obj/item/reagent_containers/food/snacks/bun = 1,
+		/obj/item/food/bun = 1,
 		/obj/item/food/carpmeat = 1
 	)
 	result = /obj/item/food/fishfingers
@@ -84,8 +84,8 @@
 /datum/crafting_recipe/food/fishfry
 	name = "Fish fry"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
-		/obj/item/reagent_containers/food/snacks/grown/peas = 1,
+		/obj/item/food/grown/corn = 1,
+		/obj/item/food/grown/peas = 1,
 		/obj/item/food/carpmeat = 1
 	)
 	result = /obj/item/food/fishfry
@@ -95,7 +95,7 @@
 	name = "Sashimi"
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
+		/obj/item/food/spidereggs = 1,
 		/obj/item/food/carpmeat = 1
 	)
 	result = /obj/item/food/sashimi
@@ -107,7 +107,7 @@
 	name = "Spider eggs ham"
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,
-		/obj/item/reagent_containers/food/snacks/spidereggs = 1,
+		/obj/item/food/spidereggs = 1,
 		/obj/item/food/meat/cutlet/spider = 2
 	)
 	result = /obj/item/food/spidereggsham
@@ -120,7 +120,7 @@
 	reqs = list(
 		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/meat/steak = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cabbage = 2
+		/obj/item/food/grown/cabbage = 2
 	)
 	result = /obj/item/food/cornedbeef
 	subcategory = CAT_MEAT
@@ -139,8 +139,8 @@
 	name = "Enchiladas"
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 2,
-		/obj/item/reagent_containers/food/snacks/tortilla = 2
+		/obj/item/food/grown/chili = 2,
+		/obj/item/food/tortilla = 2
 	)
 	result = /obj/item/food/enchiladas
 	subcategory = CAT_MEAT
@@ -148,9 +148,9 @@
 /datum/crafting_recipe/food/stewedsoymeat
 	name = "Stewed soymeat"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/soydope = 2,
-		/obj/item/reagent_containers/food/snacks/grown/carrot = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+		/obj/item/food/soydope = 2,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/stewedsoymeat
 	subcategory = CAT_MEAT
@@ -161,7 +161,7 @@
 		/obj/item/food/meatball = 1,
 		/obj/item/food/meat/cutlet = 2
 	)
-	result = /obj/item/food/sausage
+	result = /obj/item/food/raw_sausage
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/nugget
@@ -175,8 +175,8 @@
 /datum/crafting_recipe/food/rawkhinkali
 	name = "Raw Khinkali"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/doughslice = 1,
-		/obj/item/reagent_containers/food/snacks/grown/garlic = 1,
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/meatball = 1
 	)
 	result =  /obj/item/food/rawkhinkali
@@ -185,8 +185,8 @@
 /datum/crafting_recipe/food/pigblanket
 	name = "Pig in a Blanket"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/butter = 1,
+		/obj/item/food/bun = 1,
+		/obj/item/food/butter = 1,
 		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/pigblanket
@@ -196,7 +196,7 @@
 	name = "Rat Kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/reagent_containers/food/snacks/deadmouse = 1
+		/obj/item/food/deadmouse = 1
 	)
 	result = /obj/item/food/kebab/rat
 	subcategory = CAT_MEAT
@@ -205,7 +205,7 @@
 	name = "Double Rat Kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/reagent_containers/food/snacks/deadmouse = 2
+		/obj/item/food/deadmouse = 2
 	)
 	result = /obj/item/food/kebab/rat/double
 	subcategory = CAT_MEAT
@@ -233,7 +233,7 @@
 	name = "Meat Clown"
 	reqs = list(
 		/obj/item/food/meat/steak/plain = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1
+		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/meatclown
 	subcategory = CAT_MEAT
@@ -242,8 +242,8 @@
 	name = "Lasagna"
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/cheesewedge = 2,
 		/obj/item/food/spaghetti = 1
 	)
 	result = /obj/item/food/lasagna
@@ -253,8 +253,8 @@
 	name = "Black eyed gumbo"
 	reqs = list(
 		/obj/item/food/salad/boiledrice = 1,
-		/obj/item/reagent_containers/food/snacks/grown/peas = 1,
-		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/chili = 1,
 		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/salad/gumbo

@@ -1,13 +1,13 @@
 /**
-  * Atom level proc for space ninja's glove interactions.
-  *
-  * Proc which only occurs when space ninja uses his gloves on an atom.
-  * Does nothing by default, but effects will vary.
-  * Arguments:
-  * * ninja_suit - The offending space ninja's suit.
-  * * ninja - The human mob wearing the suit.
-  * * ninja_gloves - The offending space ninja's gloves.
-  */
+ * Atom level proc for space ninja's glove interactions.
+ *
+ * Proc which only occurs when space ninja uses his gloves on an atom.
+ * Does nothing by default, but effects will vary.
+ * Arguments:
+ * * ninja_suit - The offending space ninja's suit.
+ * * ninja - The human mob wearing the suit.
+ * * ninja_gloves - The offending space ninja's gloves.
+ */
 /atom/proc/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	return INVALID_DRAIN
 
@@ -104,7 +104,7 @@
 			charge = 0
 			corrupt()
 			update_icon()
-			
+
 	return drain_total
 
 //RDCONSOLE//
@@ -163,7 +163,7 @@
 		return
 	AI_notify_hack()
 	if(do_after(ninja, 300))
-		var/announcement_pick = rand(0, 2)
+		var/announcement_pick = rand(0, 1)
 		switch(announcement_pick)
 			if(0)
 				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space.", "[command_name()] High-Priority Update")
@@ -231,7 +231,7 @@
 		else
 			drain_total += drained
 		ninja_suit.spark_system.start()
-	
+
 	return drain_total
 
 //MECH//
@@ -265,7 +265,7 @@
 
 //BORG//
 /mob/living/silicon/robot/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+	if(!ninja_suit || !ninja || !ninja_gloves || (ROLE_NINJA in faction))
 		return INVALID_DRAIN
 
 	to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
@@ -275,12 +275,11 @@
 		to_chat(src, "<span class='danger'>UPLOAD COMPLETE.  NEW CYBORG MODULE DETECTED.  INSTALLING...</span>")
 		faction = list(ROLE_NINJA)
 		bubble_icon = "syndibot"
-		lawupdate = FALSE
-		scrambledcodes = TRUE
+		UnlinkSelf()
 		ionpulse = TRUE
 		laws = new /datum/ai_laws/ninja_override()
 		module.transform_to(pick(/obj/item/robot_module/syndicate, /obj/item/robot_module/syndicate_medical, /obj/item/robot_module/saboteur))
-			
+
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return

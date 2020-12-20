@@ -47,10 +47,10 @@
 	return TRUE
 
 /**
-  * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad
-  * Arguments:
-  * * where - where the supply pod will land after grabbing the mech
-  */
+ * Spawns a special supply pod whitelisted to only accept mechs and have its drop off location be another mechpad
+ * Arguments:
+ * * where - where the supply pod will land after grabbing the mech
+ */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
 	var/obj/structure/closet/supplypod/mechpod/pod = new()
 	var/turf/target_turf = get_turf(where)

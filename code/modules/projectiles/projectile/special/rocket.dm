@@ -3,6 +3,7 @@
 	icon_state= "bolter"
 	damage = 50
 	embedding = null
+	shrapnel_type = null
 
 /obj/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
@@ -19,6 +20,7 @@
 	armour_penetration = 100
 	dismemberment = 100
 	embedding = null
+	shrapnel_type = null
 
 /obj/projectile/bullet/a84mm/on_hit(atom/target, blocked = FALSE)
 	..()
@@ -40,6 +42,7 @@
 	damage = 50
 	ricochets_max = 0 //it's a MISSILE
 	embedding = null
+	shrapnel_type = null
 
 /obj/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=0)
 	..()
@@ -57,6 +60,7 @@
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE
 	embedding = null
+	shrapnel_type = null
 	var/sturdy = list(
 	/turf/closed,
 	/obj/vehicle/sealed/mecha,

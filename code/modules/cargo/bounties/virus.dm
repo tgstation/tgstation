@@ -1,5 +1,5 @@
 /datum/bounty/virus
-	reward = 5000
+	reward = CARGO_CRATE_VALUE * 10
 	var/shipped = FALSE
 	var/stat_value = 0
 	var/stat_name = ""
@@ -11,10 +11,7 @@
 		stat_value *= -1
 	name = "Virus ([stat_name] of [stat_value])"
 	description = "Nanotrasen is interested in a virus with a [stat_name] stat of exactly [stat_value]. Central Command will pay handsomely for such a virus."
-	reward += rand(0, 4) * 500
-
-/datum/bounty/virus/completion_string()
-	return shipped ? "Shipped" : "Not Shipped"
+	reward += rand(0, 4) * CARGO_CRATE_VALUE
 
 /datum/bounty/virus/can_claim()
 	return ..() && shipped
@@ -40,12 +37,6 @@
 	if(!applies_to(O))
 		return
 	shipped = TRUE
-
-/datum/bounty/virus/compatible_with(datum/other_bounty)
-	if(!istype(other_bounty, /datum/bounty/virus))
-		return TRUE
-	var/datum/bounty/virus/V = other_bounty
-	return type != V.type || stat_value != V.stat_value
 
 
 /datum/bounty/virus/proc/accepts_virus(V)

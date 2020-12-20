@@ -41,7 +41,7 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = 750
+	custom_premium_price = PAYCHECK_HARD
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"

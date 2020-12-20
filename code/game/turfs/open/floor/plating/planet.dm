@@ -44,6 +44,7 @@
 	name = "jungle grass"
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE
+	baseturfs = /turf/open/floor/plating/dirt
 	desc = "Greener on the other side."
 	icon_state = "junglegrass"
 	base_icon_state = "junglegrass"

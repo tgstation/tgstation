@@ -439,46 +439,46 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
-	var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+	var/donktype = /obj/item/food/donkpocket
 
 /obj/item/storage/box/donkpockets/PopulateContents()
-    for(var/i in 1 to 6)
-        new donktype(src)
+	for(var/i in 1 to 6)
+		new donktype(src)
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+	STR.set_holdable(list(/obj/item/food/donkpocket))
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
 	icon_state = "donkpocketboxspicy"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
+	donktype = /obj/item/food/donkpocket/spicy
 
 /obj/item/storage/box/donkpockets/donkpocketteriyaki
 	name = "box of teriyaki-flavoured donk-pockets"
 	icon_state = "donkpocketboxteriyaki"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
+	donktype = /obj/item/food/donkpocket/teriyaki
 
 /obj/item/storage/box/donkpockets/donkpocketpizza
 	name = "box of pizza-flavoured donk-pockets"
 	icon_state = "donkpocketboxpizza"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
+	donktype = /obj/item/food/donkpocket/pizza
 
 /obj/item/storage/box/donkpockets/donkpocketgondola
 	name = "box of gondola-flavoured donk-pockets"
 	icon_state = "donkpocketboxgondola"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
+	donktype = /obj/item/food/donkpocket/gondola
 
 /obj/item/storage/box/donkpockets/donkpocketberry
 	name = "box of berry-flavoured donk-pockets"
 	icon_state = "donkpocketboxberry"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/berry
+	donktype = /obj/item/food/donkpocket/berry
 
 /obj/item/storage/box/donkpockets/donkpockethonk
 	name = "box of banana-flavoured donk-pockets"
 	icon_state = "donkpocketboxbanana"
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/honk
+	donktype = /obj/item/food/donkpocket/honk
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
@@ -693,7 +693,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
 	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
-	custom_price = 20
+	custom_price = PAYCHECK_ASSISTANT * 0.4
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -937,12 +937,12 @@
 	return ..()
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  * * P The pen used to interact with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ * * P The pen used to interact with a menu
+ */
 /obj/item/storage/box/papersack/proc/check_menu(mob/user, obj/item/pen/P)
 	if(!istype(user))
 		return FALSE
@@ -1038,7 +1038,7 @@
 /obj/item/storage/box/dishdrive
 	name = "DIY Dish Drive Kit"
 	desc = "Contains everything you need to build your own Dish Drive!"
-	custom_premium_price = 1000
+	custom_premium_price = PAYCHECK_EASY * 3
 
 /obj/item/storage/box/dishdrive/PopulateContents()
 	var/static/items_inside = list(
@@ -1160,34 +1160,34 @@
 	w_class = WEIGHT_CLASS_TINY
 	illustration = null
 	foldable = null
-	custom_price = 120
+	custom_price = PAYCHECK_EASY
 
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/chewable/bubblegum))
+	STR.set_holdable(list(/obj/item/food/chewable/bubblegum))
 	STR.max_items = 4
 
 /obj/item/storage/box/gum/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum(src)
+		new/obj/item/food/chewable/bubblegum(src)
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
 	desc = "Designed to help with nicotine addiction and oral fixation all at once without destroying your lungs in the process. Mint flavored!"
 	icon_state = "bubblegum_nicotine"
-	custom_premium_price = 275
+	custom_premium_price = PAYCHECK_EASY * 1.5
 
 /obj/item/storage/box/gum/nicotine/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine(src)
+		new/obj/item/food/chewable/bubblegum/nicotine(src)
 
 /obj/item/storage/box/gum/happiness
 	name = "HP+ gum packet"
 	desc = "A seemingly homemade packaging with an odd smell. It has a weird drawing of a smiling face sticking out its tongue."
 	icon_state = "bubblegum_happiness"
-	custom_price = 300
-	custom_premium_price = 300
+	custom_price = PAYCHECK_HARD * 3
+	custom_premium_price = PAYCHECK_HARD * 3
 
 /obj/item/storage/box/gum/happiness/Initialize()
 	. = ..()
@@ -1196,7 +1196,7 @@
 
 /obj/item/storage/box/gum/happiness/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
+		new/obj/item/food/chewable/bubblegum/happiness(src)
 
 /obj/item/storage/box/gum/bubblegum
 	name = "bubblegum gum packet"
@@ -1205,7 +1205,7 @@
 
 /obj/item/storage/box/gum/bubblegum/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum(src)
+		new/obj/item/food/chewable/bubblegum/bubblegum(src)
 
 /obj/item/storage/box/shipping
 	name = "box of shipping supplies"
@@ -1286,3 +1286,34 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
+
+/obj/item/storage/box/stabilized //every single stabilized extract from xenobiology
+	name = "box of stabilized extracts"
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/stabilized/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/slimecross/stabilized/grey=1,\
+		/obj/item/slimecross/stabilized/orange=1,\
+		/obj/item/slimecross/stabilized/purple=1,\
+		/obj/item/slimecross/stabilized/blue=1,\
+		/obj/item/slimecross/stabilized/metal=1,\
+		/obj/item/slimecross/stabilized/yellow=1,\
+		/obj/item/slimecross/stabilized/darkpurple=1,\
+		/obj/item/slimecross/stabilized/darkblue=1,\
+		/obj/item/slimecross/stabilized/silver=1,\
+		/obj/item/slimecross/stabilized/bluespace=1,\
+		/obj/item/slimecross/stabilized/sepia=1,\
+		/obj/item/slimecross/stabilized/cerulean=1,\
+		/obj/item/slimecross/stabilized/pyrite=1,\
+		/obj/item/slimecross/stabilized/red=1,\
+		/obj/item/slimecross/stabilized/green=1,\
+		/obj/item/slimecross/stabilized/pink=1,\
+		/obj/item/slimecross/stabilized/gold=1,\
+		/obj/item/slimecross/stabilized/oil=1,\
+		/obj/item/slimecross/stabilized/black=1,\
+		/obj/item/slimecross/stabilized/lightpink=1,\
+		/obj/item/slimecross/stabilized/adamantine=1,\
+		/obj/item/slimecross/stabilized/rainbow=1,\
+		)
+	generate_items_inside(items_inside,src)

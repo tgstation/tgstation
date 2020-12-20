@@ -14,6 +14,7 @@
 #define COLOR_FLOORTILE_GRAY			"#8D8B8B"
 #define COLOR_ALMOST_BLACK				"#333333"
 #define COLOR_BLACK						"#000000"
+#define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
 
 #define COLOR_RED						"#FF0000"
 #define COLOR_MOSTLY_PURE_RED			"#FF3300"
@@ -22,8 +23,8 @@
 #define COLOR_MAROON					"#800000"
 #define COLOR_VIVID_RED					"#FF3232"
 #define COLOR_LIGHT_GRAYISH_RED			"#E4C7C5"
-/// Warm but extremely diluted red. rgb(250, 130, 130)
 #define COLOR_SOFT_RED					"#FA8282"
+#define COLOR_BUBBLEGUM_RED				"#950A0A"
 
 #define COLOR_YELLOW					"#FFFF00"
 #define COLOR_VIVID_YELLOW				"#FBFF23"

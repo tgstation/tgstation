@@ -38,6 +38,7 @@
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	custom_price = PAYCHECK_HARD * 0.35
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -45,16 +46,12 @@
 	if(!istype(C))
 		return
 
+	SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user)
+
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
-
-	// chance of monkey retaliation
-	if(ismonkey(C) && prob(MONKEY_CUFF_RETALIATION_PROB))
-		var/mob/living/carbon/monkey/M
-		M = C
-		M.retaliate(user)
 
 	if(!C.handcuffed)
 		if(C.canBeHandcuffed())
@@ -336,11 +333,11 @@
 	ensnare(hit_atom)
 
 /**
-  * Attempts to legcuff someone with the bola
-  *
-  * Arguments:
-  * * C - the carbon that we will try to ensnare
-  */
+ * Attempts to legcuff someone with the bola
+ *
+ * Arguments:
+ * * C - the carbon that we will try to ensnare
+ */
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.num_legs >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
@@ -369,6 +366,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
+	custom_price = PAYCHECK_HARD * 0.35
 
 /obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
