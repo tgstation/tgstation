@@ -359,6 +359,15 @@
 /client/proc/roundend_report_file()
 	return "data/roundend_reports/[ckey].html"
 
+/**
+ * Log the round-end report as an HTML file
+ *
+ * Composits the roundend report, and saves it in two locations.
+ * The report is first saved along with the round's logs
+ * Then, the report is copied to a fixed directory specifically for 
+ * housing the server's last roundend report. In this location, 
+ * the file will be overwritten at the end of each shift.
+ */
 /datum/controller/subsystem/ticker/proc/log_roundend_report()
 	var/filename = "[GLOB.log_directory]/round_end_data.html"
 	var/list/parts = list()
