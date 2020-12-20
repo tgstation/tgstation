@@ -317,6 +317,33 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_DONK)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_DONK)
 
+/// Carpets that generate an emissive decal to augment them
+/turf/open/floor/carpet/emissive
+	name = "Emissive Carpet"
+	icon = 'icons/turf/floors/carpet_black.dmi'
+	icon_state = "carpet_black-255"
+	base_icon_state = "carpet_black"
+	floor_tile = /obj/item/stack/tile/carpet/emissive
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET)
+
+	// Emissive decal settings:
+	/// The icon used to generate the emisive overlay
+	var/emissive_icon = 'icons/turf/floors/carpet_cyan.dmi'
+	/// The base icon state for the emissive overlay
+	var/base_emissive_state = "carpet_cyan"
+	/// The color of the emissive decal
+	var/emissive_color
+	/// The alpha of the emissive decal
+	var/emissive_alpha = 100
+
+/turf/open/floor/carpet/emissive/Initialize(mapload, ...)
+	. = ..()
+	if(!emissive_icon)
+		emissive_icon = icon
+	AddElement(/datum/element/decal/smoothing, emissive_icon, base_emissive_state, dir, FALSE, emissive_color, null, null, null, alpha)
+	AddElement(/datum/element/decal/smoothing, emissive_icon, base_emissive_state, dir, FALSE, emissive_color, EMISSIVE_LAYER, EMISSIVE_PLANE, null, emissive_alpha)
+
 //*****Airless versions of all of the above.*****
 /turf/open/floor/carpet/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -346,6 +373,9 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/royalblue/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/emissive/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)

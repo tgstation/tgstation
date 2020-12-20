@@ -5,18 +5,18 @@
 	var/description
 	var/mutable_appearance/pic
 
-/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _description, _alpha=255)
+/datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _plane=FLOOR_PLANE, _description, _alpha=255)
 	. = ..()
-	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, target))
+	if(!isatom(target) || !generate_appearance(_icon, _icon_state, _dir, _layer, _plane, _color, _alpha, target))
 		return ELEMENT_INCOMPATIBLE
 	description = _description
 	cleanable = _cleanable
 
-	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
+	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlay, TRUE)
 	if(target.flags_1 & INITIALIZED_1)
 		target.update_icon() //could use some queuing here now maybe.
 	else
-		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
+		RegisterSignal(target, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE, .proc/late_update_icon, TRUE)
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
@@ -26,11 +26,12 @@
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
 
-/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha, source)
+/datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _plane, _color, _alpha, source)
 	if(!_icon || !_icon_state)
 		return FALSE
 	var/temp_image = image(_icon, null, _icon_state, _layer, _dir)
 	pic = new(temp_image)
+	pic.plane = _plane
 	pic.color = _color
 	pic.alpha = _alpha
 	return TRUE
@@ -62,7 +63,7 @@
 	if(old_dir == new_dir)
 		return
 	Detach(source)
-	source.AddElement(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, description, pic.alpha)
+	source.AddElement(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha)
 
 /datum/element/decal/proc/clean_react(datum/source, clean_types)
 	SIGNAL_HANDLER

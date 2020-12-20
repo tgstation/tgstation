@@ -242,6 +242,13 @@
 	turf_type = /turf/open/floor/carpet/donk
 	merge_type = /obj/item/stack/tile/carpet/donk
 
+/obj/item/stack/tile/carpet/emissive
+	name = "emissive carpet"
+	icon_state = "tile_carpet_black"
+	inhand_icon_state = "tile-carpet-black"
+	turf_type = /turf/open/floor/carpet/emissive
+	merge_type = /obj/item/stack/tile/carpet/emissive
+
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
 

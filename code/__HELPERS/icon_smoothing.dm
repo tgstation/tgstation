@@ -346,6 +346,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	. = smoothing_junction
 	smoothing_junction = new_junction
 	icon_state = "[base_icon_state]-[smoothing_junction]"
+	SEND_SIGNAL(src, COMSIG_ATOM_SMOOTH_BITMASK, ., new_junction)
 
 
 /turf/closed/set_smoothed_icon_state(new_junction)
