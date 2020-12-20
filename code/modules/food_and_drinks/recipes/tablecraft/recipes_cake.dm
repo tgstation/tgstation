@@ -28,7 +28,7 @@
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
 		/obj/item/reagent_containers/food/snacks/grown/citrus/lemon = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/store/cake/lemoncheese
+	result = /obj/item/food/cake/lemoncheese
 	subcategory = CAT_CAKE
 
 /datum/crafting_recipe/food/royalcheesecake
@@ -37,7 +37,7 @@
 		/obj/item/food/cake/plain = 1,
 		/obj/item/reagent_containers/food/snacks/royalcheese = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/store/cake/royalcheese
+	result = /obj/item/food/cake/royalcheese
 	subcategory = CAT_CAKE
 
 /datum/crafting_recipe/food/applecake

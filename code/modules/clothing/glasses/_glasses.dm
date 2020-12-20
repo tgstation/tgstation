@@ -531,3 +531,50 @@
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
+
+/obj/item/clothing/glasses/fox
+	name = "fox mask"
+	desc = "A mask made of soft vinyl and an unknown fibre, representing the head of a fox. It glows in your hands."
+	icon_state = "fox"
+	inhand_icon_state = "fox"
+	var/handled = FALSE
+	strip_delay = 70
+	darkness_view = 4
+
+/obj/item/clothing/glasses/fox/examine(mob/user)
+	. = ..()
+	if(in_range(src, user) || isobserver(user))
+		. += "<span class='notice'>OOC: This item is only for Wallem, don't be cringe.</span.?>"
+
+/obj/item/clothing/glasses/fox/equipped(mob/user, slot)
+	if(slot != ITEM_SLOT_EYES)
+		return
+	var/mob/living/carbon/human/hairstyling = user
+	if(user.gender == FEMALE)
+		user.gender = MALE
+		handled = TRUE
+		to_chat(user, "<span class='notice'>Your disguise is set.</span.?>")
+		hairstyling.hairstyle = "Business Hair 2"
+		hairstyling.facial_hairstyle = "Beard (Seven o Clock Shadow)"
+		hairstyling.hair_color = sanitize_hexcolor("#1E1D27")
+		hairstyling.facial_hair_color = sanitize_hexcolor("#1E1D27")
+		user.update_hair()
+		user.regenerate_icons()
+
+/obj/item/clothing/glasses/fox/dropped(mob/user)
+	if(handled)
+		var/mob/living/carbon/human/hairstyling = user
+		var/turf/T = get_turf(user)
+		if(user.gender == MALE)
+			user.gender = FEMALE
+			handled = FALSE
+			user.visible_message("<span class='boldnotice'>In a flash of light, the façade is broken!</span>", "<span class='boldwarning'>Your disguise has been revealed!</span>")
+			hairstyling.hairstyle = "Ponytail 3"
+			hairstyling.facial_hairstyle = "Shaved"
+			hairstyling.hair_color = sanitize_hexcolor("#DDDDDD")
+			hairstyling.update_hair()
+			user.regenerate_icons()
+			playsound(T, 'sound/effects/phasein.ogg', 40, TRUE)
+
+			for(var/mob/living/carbon/C in viewers(T, null))
+				C.flash_act()

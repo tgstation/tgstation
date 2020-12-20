@@ -97,3 +97,25 @@
 	description = "<span class='nicegreen'>The flowers smell amazing. You can't help but smile.</span>\n"
 	mood_change = 5
 	timeout = 4 MINUTES
+
+//all i wanna say is lobotomy corporation stole my ideas before i made them and im suing
+//before i get a lecture about how this is """broken""" theyre supposed to be four seperate things lmao
+/datum/mood_event/sabbat1
+	description = "<span class='nicegreen'>I follow his divine light. Truly, I have been saved.</span>\n"
+	mood_change = 20
+	timeout = 20 MINUTES
+
+/datum/mood_event/sabbat2
+	description = "<span class='nicegreen'>I will not fear, for he is with me. Truly, I have been saved.</span>\n"
+	mood_change = 20
+	timeout = 20 MINUTES
+
+/datum/mood_event/sabbat3
+	description = "<span class='nicegreen'>He came here to redeem me and lead the new world. Truly, I have been saved.</span>\n"
+	mood_change = 20
+	timeout = 20 MINUTES
+
+/datum/mood_event/sabbat4
+	description = "<span class='nicegreen'>He will be here soon. He will redeem us. Truly, I have been saved.</span>\n"
+	mood_change = 20
+	timeout = 20 MINUTES

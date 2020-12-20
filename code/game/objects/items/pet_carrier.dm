@@ -13,7 +13,7 @@
 	force = 5
 	attack_verb_continuous = list("bashes", "carries")
 	attack_verb_simple = list("bash", "carry")
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = 7500, /datum/material/glass = 100)

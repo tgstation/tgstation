@@ -775,3 +775,9 @@
 	inhand_icon_state = "eugene"
 	icon_state = "eugene"
 	gender = MALE
+
+/obj/item/toy/plush/goatplush
+	name = "child's poat plush"
+	icon_state = "goatplush"
+	desc = "A nice, gentle goat plushie. It looks like someone repaired it very lovingly. You're reminded of happier, more innocent days looking at this plush."
+	inhand_icon_state = "goatplush"

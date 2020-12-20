@@ -6,7 +6,7 @@
 	space_chance = 10
 	sentence_chance = 0
 	syllables = list(
-		"ggh", "g", "r", "h", "hh", "a", "aa", "aaa", "kkh", "u", "ghe"
+		"GGH", "G", "R", "H", "HH", "A", "AA", "AAA", "KKH", "U", "GHE", "GRRHAGH", "GHHRHH", "HHGKKH"
 	)
 	icon_state = "golem"
 	default_priority = 90

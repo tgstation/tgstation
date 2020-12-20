@@ -93,40 +93,44 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1.3)
 	foodtypes = GRAIN | DAIRY
 
-/obj/item/reagent_containers/food/snacks/store/cake/royalcheese
+/obj/item/food/cake/cheese/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/cheese, 5, 3)
+
+/obj/item/food/cake/royalcheese
 	name = "royal cheese cake"
 	desc = "Food fit for a god, you can almost experience what ascension is like."
 	icon_state = "royalcheesecake"
-	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/royalcheese
-	slices_num = 5
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("heaven" = 4, "divinity" = 3)
-	foodtype = GRAIN | DAIRY
+	foodtypes = GRAIN | DAIRY
 
-/obj/item/reagent_containers/food/snacks/cakeslice/royalcheese
+/obj/item/food/cake/royalcheese/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/royalcheese, 5, 3)
+
+/obj/item/food/cakeslice/royalcheese
 	name = "royal cheese cake slice"
 	desc = "A slice of heaven."
 	icon_state = "royalcheesecake_slice"
-	filling_color = "#FFFACD"
 	tastes = list("heaven" = 4, "divinity" = 3 )
-	foodtype = GRAIN | DAIRY
+	foodtypes = GRAIN | DAIRY
 
-/obj/item/reagent_containers/food/snacks/store/cake/lemoncheese
+/obj/item/food/cake/lemoncheese
 	name = "lemon cheese cake"
 	desc = "Same old classic cheesecake, but with a bit of lemon in there for some zest!"
 	icon_state = "lemoncheese"
-	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/lemoncheese
-	slices_num = 5
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 4, "cream cheese" = 3, "lemon" = 2)
-	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
-/obj/item/reagent_containers/food/snacks/cakeslice/lemoncheese
+/obj/item/food/cake/lemoncheese/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/lemoncheese, 5, 3)
+
+/obj/item/food/cakeslice/lemoncheese
 	name = "lemon cheese cake slice"
 	desc = "Slice of zesty goodness."
 	icon_state = "lemoncheese_slice"
 	tastes = list("cake" = 4, "cream cheese" = 3, "lemon" = 2)
-	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/orange
 	name = "orange cake"
@@ -477,6 +481,7 @@
 /obj/item/food/cake/brioche
 	name = "brioche cake"
 	desc = "A ring of sweet, glazed buns."
+	icon_state = "briochecake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 
 /obj/item/food/cake/brioche/MakeProcessable()

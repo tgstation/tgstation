@@ -1193,3 +1193,27 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		attack_verb_continuous = list("smacks", "pokes")
 		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = SHARP_NONE
+
+/obj/item/enochbrokensword
+	name = "Broken Forebearer"
+	desc = "Burnt by firey Mystic Eyes, while it remains only a fraction of what it once was, its purification properties are still effective. He's counting on you."
+	icon_state = "enochbrokensword"
+	inhand_icon_state = "enochbrokensword"
+	worn_icon_state = "enochbrokensword"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BELT
+	force = 100
+	throwforce = 100
+	w_class = WEIGHT_CLASS_HUGE
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	block_chance = 95
+	sharpness = SHARP_EDGED
+	max_integrity = 200
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	reach = 3
+	var/min_reach = 3

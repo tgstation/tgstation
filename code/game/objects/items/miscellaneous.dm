@@ -444,3 +444,13 @@
 	name = "poppy bouquet"
 	desc = "A bouquet of poppies. You feel loved just looking at it."
 	icon_state = "poppybouquet"
+
+/obj/item/specialphoto
+	name = "a special photo"
+	desc = "A picture of Lawrence and Guirec! They look very happy together."
+	icon_state = "specialphoto"
+
+/obj/item/guirecphoto
+	name = "picture of guirec"
+	desc = "A picture Guirec! He's beaming with joy."
+	icon_state = "guirecphoto"
