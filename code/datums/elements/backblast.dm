@@ -15,7 +15,7 @@
 	/// How far each plume of fire will fly, assuming it doesn't hit a mob
 	var/range
 
-/datum/element/backblast/Attach(datum/target, plumes = 4, angle_spread = 48, range = 8)
+/datum/element/backblast/Attach(datum/target, plumes = 4, angle_spread = 48, range = 6)
 	. = ..()
 	if(!isgun(target) || plumes < 1 || angle_spread < 1 || range < 1)
 		return ELEMENT_INCOMPATIBLE
@@ -32,7 +32,7 @@
 /datum/element/backblast/Detach(datum/source, force)
 	if(source)
 		UnregisterSignal(source, COMSIG_GUN_FIRED)
-	. = ..()
+	return ..()
 
 /// For firing multiple plumes behind us, we evenly spread out our projectiles based on the [angle_spread][/datum/element/backblast/var/angle_spread] and [number of plumes][/datum/element/backblast/var/plumes]
 /datum/element/backblast/proc/gun_fired(obj/item/gun/weapon, mob/living/user, atom/target, params, zone_override)
@@ -69,6 +69,6 @@
 	P.range = range
 	P.fired_from = weapon
 	P.firer = user // don't hit ourself that would be really annoying
-	P.permutated += user // don't hit the target we hit already with the flak
+	P.impacted = list(user = TRUE) // don't hit the target we hit already with the flak
 	P.preparePixelProjectile(target_turf, weapon)
 	P.fire()
