@@ -134,12 +134,12 @@ def _posthoc_main(driver: MergeDriver, args: typing.List[str]):
         success, merge_result = driver.merge(io_base, io_left, io_right)
         if merge_result:
             # If we got anything, write it to the working directory.
-            with open(path, 'wb') as io_output:
+            with open(os.path.join(repo.workdir, path), 'wb') as io_output:
                 driver.to_file(io_output, merge_result)
 
             if success:
                 # If we were successful, mark the conflict as resolved.
-                with open(path, 'rb') as io_readback:
+                with open(os.path.join(repo.workdir, path), 'rb') as io_readback:
                     contents = io_readback.read()
                 merged_id = repo.create_blob(contents)
                 repo.index.add(pygit2.IndexEntry(path, merged_id, left.mode))
