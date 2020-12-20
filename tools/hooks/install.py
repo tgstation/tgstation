@@ -37,35 +37,34 @@ def _find_stuff(target=None):
     return repo, hooks_dir
 
 
-def uninstall(target=None, silent=False):
+def uninstall(target=None, keep=()):
     repo, hooks_dir = _find_stuff(target)
 
     # Remove hooks
     for fname in glob.glob(os.path.join(hooks_dir, '*')):
-        if not fname.endswith('.sample'):
-            if not silent:
-                print('Removing hook:', os.path.split(fname)[1])
+        _, shortname = os.path.split(fname)
+        if not fname.endswith('.sample') and f"{shortname}.hook" not in keep:
+            print('Removing hook:', shortname)
             os.unlink(fname)
 
     # Remove merge driver configuration
     for entry in repo.config:
         match = re.match(r'^merge\.([^.]+)\.driver$', entry.name)
-        if match:
-            if not silent:
-                print('Removing merge driver:', match.group(1))
+        if match and f"{match.group(1)}.merge" not in keep:
+            print('Removing merge driver:', match.group(1))
             del repo.config[entry.name]
 
 
 def install(target=None):
-    uninstall(target, silent=True)
-
     repo, hooks_dir = _find_stuff(target)
     tools_hooks = os.path.split(__file__)[0]
 
+    keep = set()
     for full_path in glob.glob(os.path.join(tools_hooks, '*.hook')):
         _, fname = os.path.split(full_path)
         name, _ = os.path.splitext(fname)
         print('Installing hook:', name)
+        keep.add(fname)
         relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir).replace('\\', '/'))
         write_hook(os.path.join(hooks_dir, name), f'{relative_path} "$@"')
 
@@ -75,6 +74,7 @@ def install(target=None):
         _, fname = os.path.split(full_path)
         name, _ = os.path.splitext(fname)
         print('Installing merge driver:', name)
+        keep.add(fname)
         # %P: "real" path of the file, should not usually be read or modified
         # %O: ancestor's version
         # %A: current version, and also the output path
@@ -82,6 +82,8 @@ def install(target=None):
         # %L: conflict marker size
         relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir).replace('\\', '/'))
         repo.config[f"merge.{name}.driver"] = f'{relative_path} %P %O %A %B %L'
+
+    uninstall(target, keep=keep)
 
 
 def main(argv):
