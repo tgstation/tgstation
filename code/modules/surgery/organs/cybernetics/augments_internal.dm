@@ -1,15 +1,6 @@
 
 
 //[[[[BRAIN]]]]
-/obj/item/organ/cyberimp/cyberlink
-	name = "cybernetic brain link"
-	desc = "Allows for smart communication between implants."
-	icon_state = "brain_implant"
-	implant_overlay = "brain_implant_overlay"
-	slot = ORGAN_SLOT_LINK
-	w_class = WEIGHT_CLASS_TINY
-	encode_info = list(SECURITY_PROTOCOL = NT1, ENCODE_PROTOCOL = ENC2, COMPATIBILITY_PROTOCOL = ENC1, OPERATING_PROTOCOL = NTOS)
-
 
 /obj/item/organ/cyberimp/brain
 	name = "cybernetic brain implant"

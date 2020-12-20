@@ -223,3 +223,39 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_ACIDGLAND,
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
 	ORGAN_SLOT_XENO_EGGSAC,))
+
+/// Cybernetics defines
+
+#define SECURITY_PROTOCOL "sec_protocol"
+#define ENCODE_PROTOCOL "enc_protocol"
+#define OPERATING_PROTOCOL	"op_protocol"
+
+/// Security protocols
+
+///Those names mean nothing don't try to decipher these. They are defines because some cybernetics will be incompatible with eachother. treat those defines like software names.
+#define NT1 	(1<<0)
+#define NT2 	(1<<1)
+#define NTX 	(1<<2)
+#define TMSP	(1<<3)
+#define TOSP	(1<<4)
+
+
+/// Encode protocol
+
+#define ENC1 (1<<0)
+#define ENC2 (1<<1)
+#define TENN (1<<2)
+#define CSEP (1<<3)
+
+
+/// Operating protocol
+
+#define NTOS (1<<0)
+#define TGMF (1<<1)
+#define CSOF (1<<2)
+
+
+#define NT_LOWLEVEL list(SECURITY_PROTOCOL = NT1, ENCODE_PROTOCOL = ENC1, OPERATING_PROTOCOL = NTOS)
+#define NT_HIGHLEVEL list(SECURITY_PROTOCOL = NT2 & NT1, ENCODE_PROTOCOL = ENC2, OPERATING_PROTOCOL = NTOS)
+#define TG_LEVEL list(SECURITY_PROTOCOL = NTX & NT2 & NT1, ENCODE_PROTOCOL = TENN, OPERATING_PROTOCOL = TGMF)
+#define SYNDICATE_LEVEL list(SECURITY_PROTOCOL = TOSP, ENCODE_PROTOCOL = CSEP & TENN, OPERATING_PROTOCOL = CSOF)
