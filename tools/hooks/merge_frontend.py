@@ -115,6 +115,12 @@ def _posthoc_main(driver: MergeDriver, args: typing.List[str]):
     index_changed = False
     any_attempted = False
     for base, left, right in list(conflicts):
+        if not base or not left or not right:
+            # (not left) or (not right): deleted in one branch, modified in the other.
+            # (not base): added differently in both branches.
+            # In either case, there's nothing we can do for now.
+            continue
+
         path = left.path
         if not _applies_to(repo, driver, path):
             # Skip the file if it's not the right extension.
