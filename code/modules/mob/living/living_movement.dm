@@ -8,7 +8,7 @@
 	if(.)
 		return
 	if(mover.throwing)
-		return (!density || body_position == LYING_DOWN || (mover.throwing.thrower == src && !ismob(mover)))
+		return (!density || (body_position == LYING_DOWN) || (mover.throwing.thrower == src && !ismob(mover)))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover) && (mover in buckled_mobs))
@@ -57,3 +57,8 @@
 
 /mob/living/canZMove(dir, turf/target)
 	return can_zTravel(target, dir) && (movement_type & FLYING | FLOATING)
+
+/mob/living/keybind_face_direction(direction)
+	if(stat > SOFT_CRIT)
+		return
+	return ..()
