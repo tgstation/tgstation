@@ -36,7 +36,7 @@
 	// VAPOR
 	TEST_ASSERT_EQUAL(human.drowsyness, 0, "Human is drowsy at the start of testing")
 	drink.reagents.clear_reagents()
-	drink.reagents.add_reagent(/datum/reagent/nitrous_oxide, 10)
+	drink.reagents.add_reagent(/datum/reagent/nitrous_oxide, 10, reagtemp = (BP_NITROUS_OXIDE - 1))	// reagtemp is required to prevent the nitrous instantly boiling out of the container
 	drink.reagents.trans_to(human, 10, methods = VAPOR)
 	TEST_ASSERT_NOTEQUAL(human.drowsyness, 0, "Human is not drowsy after exposure to vapors")
 
