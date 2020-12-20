@@ -7,6 +7,7 @@
 # The underscore in the name is so that typing `bootstrap/node` into
 # PowerShell finds the `.bat` file first, which ensures this script executes
 # regardless of ExecutionPolicy.
+$host.ui.RawUI.WindowTitle = "starting :: node $args"
 $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
@@ -17,6 +18,7 @@ function ExtractVersion {
 			return $Line.Substring("export $Key=".Length)
 		}
 	}
+	throw "Couldn't find value for $Key in $Path"
 }
 
 # Convenience variables
@@ -33,7 +35,7 @@ $Log = "$Cache/last-command.log"
 
 # Download and unzip Node
 if (!(Test-Path $NodeExe -PathType Leaf)) {
-	Write-Output "Downloading Node $NodeVersion..."
+	$host.ui.RawUI.WindowTitle = "Downloading Node $NodeVersion..."
 	New-Item $Cache -ItemType Directory -ErrorAction silentlyContinue | Out-Null
 
 	$Archive = "$Cache/node-v$NodeVersion.zip"
@@ -45,7 +47,6 @@ if (!(Test-Path $NodeExe -PathType Leaf)) {
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($Archive, $Cache)
 
 	Remove-Item $Archive
-	Clear-Host
 }
 
 # Invoke Node with all command-line arguments
@@ -53,6 +54,7 @@ Write-Output $NodeExe | Out-File -Encoding utf8 $Log
 [System.String]::Join([System.Environment]::NewLine, $args) | Out-File -Encoding utf8 -Append $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
 $Env:PATH = "$NodeDir;$ENV:Path"  # Set PATH so that recursive calls find it
+$host.ui.RawUI.WindowTitle = "node $args"
 $ErrorActionPreference = "Continue"
 & $NodeExe $args 2>&1 | ForEach-Object {
 	"$_" | Out-File -Encoding utf8 -Append $Log
