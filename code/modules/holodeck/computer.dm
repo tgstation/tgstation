@@ -145,7 +145,7 @@
 			say("Safeties restored. Restarting...")
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating)
-/*
+
 /datum/map_template/holodeck/update_blacklist(turf/placement)
 	turf_blacklist.Cut()
 	for (var/_turf in get_affected_turfs(placement))
@@ -154,7 +154,7 @@
 			if (istype(possible_blacklist, /turf/open/floor/engine))
 				continue
 			turf_blacklist += possible_blacklist
-			*/
+
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
@@ -198,10 +198,10 @@
 				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
 				*/
 
-	//template = SSmapping.holodeck_templates[map_id]
-	//template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
+	template = SSmapping.holodeck_templates[map_id]
+	template.load(bottom_left)//this is what actually loads the holodeck simulation into the map
 
-	//spawned = template.created_atoms
+	spawned = template.created_atoms
 
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()

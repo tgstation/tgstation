@@ -11,6 +11,9 @@
 	var/restricted = FALSE
 	var/datum/parsed_map/lastparsed
 
+	should_place_on_top = FALSE
+	returns_created_atoms = TRUE
+
 	var/obj/machinery/computer/holodeck/linked
 
 /datum/map_template/holodeck/offline

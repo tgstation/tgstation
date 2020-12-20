@@ -14,6 +14,9 @@ SUBSYSTEM_DEF(atoms)
 
 	var/list/BadInitializeCalls = list()
 
+	var/list/created_atoms = list()
+	var/is_returning_atom_list = FALSE
+
 	initialized = INITIALIZATION_INSSATOMS
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
@@ -25,12 +28,14 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_REGULAR
 	return ..()
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, list/atoms_to_return = null)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
 	old_initialized = initialized
 	initialized = INITIALIZATION_INNEW_MAPLOAD
+	if (atoms_to_return)
+		is_returning_atom_list = TRUE
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
@@ -60,6 +65,12 @@ SUBSYSTEM_DEF(atoms)
 			A.LateInitialize()
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
+
+	if (is_returning_atom_list)
+		is_returning_atom_list = FALSE
+		atoms_to_return += created_atoms
+		created_atoms.Cut()
+
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
@@ -96,6 +107,9 @@ SUBSYSTEM_DEF(atoms)
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+
+	if (is_returning_atom_list)
+		created_atoms += A
 
 	return qdeleted || QDELING(A)
 

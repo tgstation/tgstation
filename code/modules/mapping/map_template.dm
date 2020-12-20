@@ -7,6 +7,12 @@
 	var/datum/parsed_map/cached_map
 	var/keep_cached_map = FALSE
 
+	var/should_place_on_top = TRUE
+
+	var/returns_created_atoms = FALSE
+	var/list/created_atoms = list()
+	var/list/turf_blacklist = list()
+
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
 		mappath = path
@@ -55,7 +61,7 @@
 				atmos_machines += A
 
 	SSmapping.reg_in_areas_in_z(areas)
-	SSatoms.InitializeAtoms(areas + turfs + atoms)
+	SSatoms.InitializeAtoms(areas + turfs + atoms, returns_created_atoms ? created_atoms : null)
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
@@ -119,7 +125,12 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
+
+	update_blacklist(T)
+
+	parsed.returns_created_atoms = returns_created_atoms
+	parsed.turf_blacklist = turf_blacklist
+	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return
 	var/list/bounds = parsed.bounds
 	if(!bounds)
@@ -130,11 +141,16 @@
 
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
+	created_atoms = parsed.created_atoms
+
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
 
 /datum/map_template/proc/post_load()
+	return
+
+/datum/map_template/proc/update_blacklist(turf/T)
 	return
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)

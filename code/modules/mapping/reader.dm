@@ -22,6 +22,10 @@
 	/// Offset bounds. Same as parsed_bounds until load().
 	var/list/bounds
 
+	var/returns_created_atoms = FALSE
+	var/list/created_atoms = list()
+	var/list/turf_blacklist = list()
+
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
 	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
@@ -185,6 +189,9 @@
 							if(!cache)
 								CRASH("Undefined model key in DMM: [model_key]")
 							build_coordinate(areaCache, cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
+							//TODO: make it impossible for turfs in blacklist to have build_coordinate called on their coordinates
+							//so that build_coordinate doesnt have to go through the entire list every time, its just figured out once
+							//might not be possible?
 
 							// only bother with bounds that actually exist
 							bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrd)
@@ -303,6 +310,11 @@
 	////////////////
 	//Instanciation
 	////////////////
+
+	for (var/_turf in turf_blacklist)
+		var/turf/turf_in_blacklist = _turf
+		if (crds == turf_in_blacklist)
+			return
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list

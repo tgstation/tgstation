@@ -1,0 +1,129 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"x" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"C" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"D" = (
+/obj/machinery/computer/arcade/amputation,
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+"I" = (
+/turf/open/floor/holofloor/basalt,
+/area/template_noop)
+
+(1,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}
+(2,1,1) = {"
+I
+I
+I
+x
+I
+I
+x
+I
+I
+I
+"}
+(3,1,1) = {"
+I
+I
+I
+D
+I
+I
+D
+I
+I
+I
+"}
+(4,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}
+(5,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}
+(6,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}
+(7,1,1) = {"
+I
+I
+I
+d
+I
+I
+d
+I
+I
+I
+"}
+(8,1,1) = {"
+I
+I
+I
+C
+I
+I
+C
+I
+I
+I
+"}
+(9,1,1) = {"
+I
+I
+I
+I
+I
+I
+I
+I
+I
+I
+"}

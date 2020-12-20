@@ -2,6 +2,7 @@
 	icon_state = "floor"
 	thermal_conductivity = 0
 	flags_1 = NONE
+	var/direction = 2
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
@@ -18,6 +19,26 @@
 /turf/open/floor/holofloor/plating
 	name = "holodeck projector floor"
 	icon_state = "engine"
+
+/turf/open/floor/holofloor/chapel
+	name = "chapel floor"
+	icon_state = "chapel"
+
+/turf/open/floor/holofloor/chapel/bottom_left
+	direction = 8
+
+/turf/open/floor/holofloor/chapel/top_right
+	direction = 4
+
+/turf/open/floor/holofloor/chapel/bottom_right
+
+/turf/open/floor/holofloor/chapel/top_left
+	direction = 1
+
+/turf/open/floor/holofloor/chapel/Initialize(mapload)
+	. = ..()
+	if (direction != 2)
+		src.setDir(direction)
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
