@@ -1,6 +1,7 @@
 python36.zip
 .
 ..\..\..
+..\..\..\mapmerge2
 
 # Uncomment to run site.main() automatically
 import site
