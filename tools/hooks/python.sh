@@ -12,5 +12,5 @@ if sys.version_info.major != 3 or sys.version_info.minor < 6:
 print(os.pathsep)
 EOF
 )
-export PYTHONPATH=tools/mapmerge2/${PATHSEP}${PYTHONPATH}
+export PYTHONPATH="tools/mapmerge2/${PATHSEP}${PYTHONPATH}"
 exec "$PY" "$@"

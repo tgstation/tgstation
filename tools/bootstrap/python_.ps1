@@ -9,6 +9,7 @@
 # The underscore in the name is so that typing `bootstrap/python` into
 # PowerShell finds the `.bat` file first, which ensures this script executes
 # regardless of ExecutionPolicy.
+$host.ui.RawUI.WindowTitle = "starting :: python $args"
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -37,7 +38,7 @@ $Log = "$Cache/last-command.log"
 
 # Download and unzip a portable version of Python
 if (!(Test-Path $PythonExe -PathType Leaf)) {
-	Write-Output "Downloading Python $PythonVersion..."
+	$host.ui.RawUI.WindowTitle = "Downloading Python $PythonVersion..."
 	New-Item $Cache -ItemType Directory -ErrorAction silentlyContinue | Out-Null
 
 	$Archive = "$Cache/python-$PythonVersion-embed.zip"
@@ -53,12 +54,11 @@ if (!(Test-Path $PythonExe -PathType Leaf)) {
 		-ErrorAction Stop
 
 	Remove-Item $Archive
-	Clear-Host
 }
 
 # Install pip
 if (!(Test-Path "$PythonDir/Scripts/pip.exe")) {
-	Write-Output "Downloading Pip..."
+	$host.ui.RawUI.WindowTitle = "Downloading Pip..."
 
 	Invoke-WebRequest "https://bootstrap.pypa.io/get-pip.py" `
 		-OutFile "$Cache/get-pip.py" `
@@ -71,12 +71,11 @@ if (!(Test-Path "$PythonDir/Scripts/pip.exe")) {
 
 	Remove-Item "$Cache/get-pip.py" `
 		-ErrorAction Stop
-	Clear-Host
 }
 
 # Use pip to install our requirements
 if (!(Test-Path "$PythonDir/requirements.txt") -or ((Get-FileHash "$Tools/requirements.txt").hash -ne (Get-FileHash "$PythonDir/requirements.txt").hash)) {
-	Write-Output "Updating dependencies..."
+	$host.ui.RawUI.WindowTitle = "Updating dependencies..."
 
 	& $PythonExe -m pip install -U pip -r "$Tools/requirements.txt"
 	if ($LASTEXITCODE -ne 0) {
@@ -84,13 +83,14 @@ if (!(Test-Path "$PythonDir/requirements.txt") -or ((Get-FileHash "$Tools/requir
 	}
 
 	Copy-Item "$Tools/requirements.txt" "$PythonDir/requirements.txt"
-	Clear-Host
+	Write-Host "`n---`n"
 }
 
 # Invoke python with all command-line arguments
 Write-Output $PythonExe | Out-File -Encoding utf8 $Log
 [System.String]::Join([System.Environment]::NewLine, $args) | Out-File -Encoding utf8 -Append $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
+$host.ui.RawUI.WindowTitle = "python $args"
 $ErrorActionPreference = "Continue"
 & $PythonExe $args 2>&1 | ForEach-Object {
 	"$_" | Out-File -Encoding utf8 -Append $Log
