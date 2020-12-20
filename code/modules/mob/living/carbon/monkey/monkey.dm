@@ -21,6 +21,8 @@
 		/obj/item/bodypart/l_leg/monkey,
 		)
 	hud_type = /datum/hud/monkey
+	melee_damage_lower = 1
+	melee_damage_upper = 3
 	ai_controller = /datum/ai_controller/monkey
 	faction = list("neutral", "monkey")
 

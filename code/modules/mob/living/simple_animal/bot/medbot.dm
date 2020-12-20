@@ -18,7 +18,7 @@
 	anchored = FALSE
 	health = 20
 	maxHealth = 20
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	status_flags = (CANPUSH | CANSTUN)
 

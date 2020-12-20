@@ -249,7 +249,9 @@
 
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/damage = rand(1, 3)
+			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+			if(!damage)
+				return
 			if(check_shields(M, damage, "the [M.name]"))
 				return FALSE
 			if(stat != DEAD)
@@ -268,7 +270,7 @@
 	if(M.a_intent == INTENT_HARM)
 		if (w_uniform)
 			w_uniform.add_fingerprint(M)
-		var/damage = prob(90) ? 20 : 0
+		var/damage = prob(90) ? rand(M.melee_damage_lower, M.melee_damage_upper) : 0
 		if(!damage)
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
 			visible_message("<span class='danger'>[M] lunges at [src]!</span>", \
@@ -309,7 +311,9 @@
 	. = ..()
 	if(!.)
 		return //successful larva bite.
-	var/damage = rand(1, 3)
+	var/damage = rand(L.melee_damage_lower, L.melee_damage_upper)
+	if(!damage)
+		return
 	if(check_shields(L, damage, "the [L.name]"))
 		return FALSE
 	if(stat != DEAD)
@@ -342,10 +346,12 @@
 	. = ..()
 	if(!.) // slime attack failed
 		return
-	var/damage = rand(5, 25)
+	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	if(!damage)
+		return
 	var/wound_mod = -45 // 25^1.4=90, 90-45=45
 	if(M.is_adult)
-		damage = rand(10, 35)
+		damage += rand(5, 10)
 		wound_mod = -90 // 35^1.4=145, 145-90=55
 
 	if(check_shields(M, damage, "the [M.name]"))
