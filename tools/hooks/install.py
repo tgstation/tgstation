@@ -66,7 +66,7 @@ def install(target=None):
         _, fname = os.path.split(full_path)
         name, _ = os.path.splitext(fname)
         print('Installing hook:', name)
-        relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir))
+        relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir).replace('\\', '/'))
         write_hook(os.path.join(hooks_dir, name), f'{relative_path} "$@"')
 
     # Use libgit2 config manipulation to set the merge driver config.
@@ -80,7 +80,7 @@ def install(target=None):
         # %A: current version, and also the output path
         # %B: other branches' version
         # %L: conflict marker size
-        relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir))
+        relative_path = shlex.quote(os.path.relpath(full_path, repo.workdir).replace('\\', '/'))
         repo.config[f"merge.{name}.driver"] = f'{relative_path} %P %O %A %B %L'
 
 
