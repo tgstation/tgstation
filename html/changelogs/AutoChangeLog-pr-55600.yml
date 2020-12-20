@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer change your body's facing direction while dead or otherwise unconscious."
