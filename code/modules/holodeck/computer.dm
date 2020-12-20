@@ -197,7 +197,6 @@
 				holo_turf.baseturfs -= _baseturf
 				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
 
-
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
@@ -216,7 +215,6 @@
 		var/atom/atoms = _atom
 
 		if (isturf(atoms)) //ssatoms
-			message_admins("[atoms.name] is being taken out of the spawned list")
 			var/turf/holo_turf = atoms
 			spawned -= holo_turf
 
