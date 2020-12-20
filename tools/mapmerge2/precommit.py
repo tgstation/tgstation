@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import os
 import pygit2
-import dmm
-from mapmerge import merge_map
+from . import dmm
+from .mapmerge import merge_map
 
 def main(repo):
     if repo.index.conflicts:

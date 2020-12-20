@@ -2,8 +2,8 @@
 import re
 import os
 import argparse
-import frontend
-from dmm import *
+from . import frontend
+from .dmm import *
 
 desc = """
 Update dmm files given update file/string.
