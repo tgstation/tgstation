@@ -657,6 +657,7 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 		'Balance/Rebalance' => -8,
 		'Tweak' => -2,
 		'Sound' => 1,
+		'Sprites' => 1,
 		'GBP: Reset' => $startingPRBalance - $oldbalance,
 	);
 
