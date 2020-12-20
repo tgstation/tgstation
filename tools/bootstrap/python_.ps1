@@ -10,6 +10,7 @@
 # PowerShell finds the `.bat` file first, which ensures this script executes
 # regardless of ExecutionPolicy.
 $ErrorActionPreference = "Stop"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function ExtractVersion {
@@ -19,6 +20,7 @@ function ExtractVersion {
 			return $Line.Substring("export $Key=".Length)
 		}
 	}
+	throw "Couldn't find value for $Key in $Path"
 }
 
 # Convenience variables
