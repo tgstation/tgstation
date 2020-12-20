@@ -40,7 +40,7 @@
 /obj/machinery/door_buttons/access_button
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_button_standby"
-	icon_state = "access_button"
+	base_icon_state = "access_button"
 	name = "access button"
 	desc = "A button used for the explicit purpose of opening an airlock."
 	var/idDoor

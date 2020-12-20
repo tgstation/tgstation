@@ -35,7 +35,7 @@
 
 /obj/item/ammo_box/Initialize()
 	. = ..()
-	if (!bullet_cost)
+	if(!bullet_cost)
 		for (var/material in custom_materials)
 			var/material_amount = custom_materials[material]
 			LAZYSET(base_cost, material, (material_amount * 0.10))
@@ -45,7 +45,6 @@
 			LAZYSET(bullet_cost, material, material_amount)
 	if(!start_empty)
 		top_off(starting=TRUE)
-	update_appearance()
 
 /**
  * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
@@ -65,7 +64,7 @@
 
 	for(var/i = max(1, stored_ammo.len), i <= max_ammo, i++)
 		stored_ammo += new round_check(src)
-	update_appearance()
+	update_ammo_count()
 
 ///gets a round from the magazine, if keep is TRUE the round will stay in the gun
 /obj/item/ammo_box/proc/get_round(keep = FALSE)
@@ -118,29 +117,39 @@
 				num_loaded++
 			if(!did_load || !multiload)
 				break
+		if(num_loaded)
+			AM.update_ammo_count()
 	if(istype(A, /obj/item/ammo_casing))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
 			user.transferItemToLoc(AC, src, TRUE)
 			num_loaded++
+			AC.update_appearance()
 
 	if(num_loaded)
 		if(!silent)
 			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-		A.update_appearance()
-		update_appearance()
+		update_ammo_count()
+
 	return num_loaded
 
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
-	if(A)
-		A.forceMove(drop_location())
-		if(!user.is_holding(src) || !user.put_in_hands(A))	//incase they're using TK
-			A.bounce_away(FALSE, NONE)
-		playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-		to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
-		update_appearance()
+	if(!A)
+		return
+
+	A.forceMove(drop_location())
+	if(!user.is_holding(src) || !user.put_in_hands(A))	//incase they're using TK
+		A.bounce_away(FALSE, NONE)
+	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
+	to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
+	update_ammo_count()
+
+/// Updates the materials and appearance of this ammo box
+/obj/item/ammo_box/proc/update_ammo_count()
+	update_custom_materials()
+	update_appearance()
 
 /obj/item/ammo_box/update_desc(updates)
 	. = ..()
@@ -156,12 +165,8 @@
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
 
-/obj/item/ammo_box/update_appearance(updates=ALL)
-	. = ..()
-	if(!length(bullet_cost))
-		return
-
-	// - [] TODO: Move this out of update_appearance
+/// Updates the amount of material in this ammo box according to how many bullets are left in it.
+/obj/item/ammo_box/proc/update_custom_materials()
 	var/temp_materials = custom_materials.Copy()
 	for(var/material in bullet_cost)
 		temp_materials[material] = (bullet_cost[material] * stored_ammo.len) + base_cost[material]
@@ -191,4 +196,4 @@
 
 /obj/item/ammo_box/magazine/handle_atom_del(atom/A)
 	stored_ammo -= A
-	update_appearance()
+	update_ammo_count()

@@ -433,12 +433,12 @@
 		set_light(0)
 
 /obj/machinery/door/airlock/update_icon_state()
+	. = ..()
 	switch(airlock_state)
 		if(AIRLOCK_OPEN, AIRLOCK_CLOSED)
 			icon_state = ""
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate" //MADNESS
-	return ..()
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
