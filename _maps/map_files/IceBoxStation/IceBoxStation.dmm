@@ -50281,6 +50281,14 @@
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"hin" = (
+/obj/effect/spawner/structure/window,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "hjZ" = (
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -55051,14 +55059,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"tqu" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "tqy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -77247,7 +77247,7 @@ aJd
 aLL
 bDe
 aOl
-tqu
+hin
 aQY
 aSk
 bml
