@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - tweak: "You can no longer use communications consoles off a station/CentCom z-level."
