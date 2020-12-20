@@ -25,7 +25,7 @@
 	return copytext(name, 1, i)
 
 // Return 1 if this holidy should be celebrated today
-/datum/holiday/proc/shouldCelebrate(dd, mm, yy, ww, ddd)
+/datum/holiday/proc/shouldCelebrate(dd, mm, yyyy, ddd)
 	if(always_celebrate)
 		return TRUE
 
@@ -105,7 +105,7 @@
 	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/birthday/greet()
-	var/game_age = text2num(time2text(world.timeofday, "YY")) - 3
+	var/game_age = text2num(time2text(world.timeofday, "YYYY")) - 2003
 	var/Fact
 	switch(game_age)
 		if(16)
@@ -126,8 +126,6 @@
 			Fact = " Happy golden anniversary!"
 		if(65)
 			Fact = " SS13 can now start thinking about retirement!"
-		if(96)
-			Fact = " Please send a time machine back to pick me up, I need to update the time formatting for this feature!" //See you later suckers
 	if(!Fact)
 		Fact = " SS13 is now [game_age] years old!"
 
@@ -308,17 +306,6 @@
 /datum/holiday/friendship/greet()
 	return "Have a magical [name]!"
 
-/datum/holiday/beer
-	name = "Beer Day"
-
-/datum/holiday/beer/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if(mm == 8 && ddd == FRIDAY && ww == 1) //First Friday in August
-		return TRUE
-	return FALSE
-
-/datum/holiday/beer/getStationPrefix()
-	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
-
 /datum/holiday/pirate
 	name = "Talk-Like-a-Pirate Day"
 	begin_day = 19
@@ -334,9 +321,9 @@
 /datum/holiday/programmers
 	name = "Programmers' Day"
 
-/datum/holiday/programmers/shouldCelebrate(dd, mm, yy, ww, ddd) //Programmer's day falls on the 2^8th day of the year
+/datum/holiday/programmers/shouldCelebrate(dd, mm, yyyy, ddd) //Programmer's day falls on the 2^8th day of the year
 	if(mm == 9)
-		if(yy/4 == round(yy/4)) //Note: Won't work right on September 12th, 2200 (at least it's a Friday!)
+		if(yyyy/4 == round(yyyy/4)) //Note: Won't work right on September 12th, 2200 (at least it's a Friday!)
 			if(dd == 12)
 				return TRUE
 		else
@@ -435,29 +422,12 @@
 	begin_month = DECEMBER
 	drone_hat = /obj/item/clothing/mask/gas/monkeymask
 
-/datum/holiday/moth
-	name = "Moth Week"
-
-/datum/holiday/moth/shouldCelebrate(dd, mm, yy, ww, ddd) //National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
-	if(mm == JULY)
-		var/week
-		if(first_day_of_month(yy, mm) >= 5)	//Friday or later start of the month means week 5 is a full week.
-			week = 5
-		else
-			week = 4
-
-		return (ww == week-1 && (ddd == SATURDAY || ddd == SUNDAY)) || ww == week
-
-
-/datum/holiday/moth/getStationPrefix()
-	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
-
 /datum/holiday/islamic
 	name = "Islamic calendar code broken"
 
-/datum/holiday/islamic/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/datum/foreign_calendar/islamic/cal = new(yy, mm, dd)
-	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
+/datum/holiday/islamic/shouldCelebrate(dd, mm, yyyy, ddd)
+	var/datum/foreign_calendar/islamic/cal = new(yyyy, mm, dd)
+	return ..(cal.dd, cal.mm, cal.yyyy, ddd)
 
 /datum/holiday/islamic/ramadan
 	name = "Start of Ramadan"
@@ -534,7 +504,7 @@
 /datum/holiday/friday_thirteenth
 	name = "Friday the 13th"
 
-/datum/holiday/friday_thirteenth/shouldCelebrate(dd, mm, yy, ww, ddd)
+/datum/holiday/friday_thirteenth/shouldCelebrate(dd, mm, yyyy, ddd)
 	if(dd == 13 && ddd == FRIDAY)
 		return TRUE
 	return FALSE
@@ -548,7 +518,7 @@
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 
-/datum/holiday/easter/shouldCelebrate(dd, mm, yy, ww, ddd)
+/datum/holiday/easter/shouldCelebrate(dd, mm, yyyy, ddd)
 	if(!begin_month)
 		current_year = text2num(time2text(world.timeofday, "YYYY"))
 		var/list/easterResults = EasterDate(current_year+year_offset)
@@ -610,9 +580,9 @@
 /datum/holiday/hebrew
 	name = "If you see this the Hebrew holiday calendar code is broken"
 
-/datum/holiday/hebrew/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/datum/foreign_calendar/hebrew/cal = new(yy, mm, dd)
-	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
+/datum/holiday/hebrew/shouldCelebrate(dd, mm, yyyy, ddd)
+	var/datum/foreign_calendar/hebrew/cal = new(yyyy, mm, dd)
+	return ..(cal.dd, cal.mm, cal.yyyy, ddd)
 
 /datum/holiday/hebrew/hanukkah
 	name = "Hanukkah"

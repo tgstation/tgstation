@@ -33,6 +33,9 @@
 	..()
 	LoseTarget()
 
+/**
+ * Proc that always is called when we want to end the beam and makes sure things are cleaned up, see beam_died()
+ */
 /obj/item/gun/medbeam/proc/LoseTarget()
 	if(active)
 		qdel(current_beam)
@@ -40,6 +43,17 @@
 		active = FALSE
 		on_beam_release(current_target)
 	current_target = null
+
+/**
+ * Proc that is only called when the beam fails due to something, so not when manually ended.
+ * manual disconnection = LoseTarget, so it can silently end
+ * automatic disconnection = beam_died, so we can give a warning message first
+ */
+/obj/item/gun/medbeam/proc/beam_died()
+	active = FALSE //skip qdelling the beam again if we're doing this proc, because
+	if(isliving(loc))
+		to_chat(loc, "<span class='warning'>You lose control of the beam!</span>")
+	LoseTarget()
 
 /obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(isliving(user))
@@ -52,15 +66,13 @@
 
 	current_target = target
 	active = TRUE
-	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+	current_beam = user.Beam(current_target, icon_state="medbeam", time = 10 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/medical)
+	RegisterSignal(current_beam, COMSIG_PARENT_QDELETING, .proc/beam_died)//this is a WAY better rangecheck than what was done before (process check)
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 
 /obj/item/gun/medbeam/process()
-
-	var/source = loc
-	if(!mounted && !isliving(source))
+	if(!mounted && !isliving(loc))
 		LoseTarget()
 		return
 
@@ -73,10 +85,8 @@
 
 	last_check = world.time
 
-	if(get_dist(source, current_target)>max_range || !los_check(source, current_target))
-		LoseTarget()
-		if(isliving(source))
-			to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
+	if(!los_check(loc, current_target))
+		qdel(current_beam)//this will give the target lost message
 		return
 
 	if(current_target)
