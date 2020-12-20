@@ -32,7 +32,11 @@
 	if(_temp < boiling_temp)
 		return NONE
 	var/datum/reagents/holder = source.holder
-	if(!(holder?.flags & (REFILLABLE|DRAINABLE|DUNKABLE)))
+	if(!holder)
+		return NONE
+	if(holder.flags & NO_REACT)
+		return NONE
+	if(!(holder.flags & (REFILLABLE|DRAINABLE|DUNKABLE)))
 		return NONE
 	var/turf/location = get_turf(holder.my_atom)
 	if(!location)
