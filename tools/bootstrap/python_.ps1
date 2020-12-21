@@ -83,7 +83,7 @@ if (!(Test-Path "$PythonDir/requirements.txt") -or ((Get-FileHash "$Tools/requir
 	}
 
 	Copy-Item "$Tools/requirements.txt" "$PythonDir/requirements.txt"
-	Write-Host "`n---`n"
+	Write-Output "`n---`n"
 }
 
 # Invoke python with all command-line arguments
@@ -92,8 +92,12 @@ Write-Output $PythonExe | Out-File -Encoding utf8 $Log
 Write-Output "---" | Out-File -Encoding utf8 -Append $Log
 $host.ui.RawUI.WindowTitle = "python $args"
 $ErrorActionPreference = "Continue"
-& $PythonExe $args 2>&1 | ForEach-Object {
-	"$_" | Out-File -Encoding utf8 -Append $Log
-	"$_" | Out-Host
+& $PythonExe -u $args 2>&1 | ForEach-Object {
+	$str = "$_"
+	if ($_.GetType() -eq [System.Management.Automation.ErrorRecord]) {
+		$str = $str.TrimEnd("`r`n")
+	}
+	$str | Out-File -Encoding utf8 -Append $Log
+	$str | Out-Host
 }
 exit $LastExitCode
