@@ -44,7 +44,7 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 		if command -v apt-get >/dev/null 2>&1; then
 			echo "Please install Python using your system's package manager:"
 			echo "    sudo apt-get install python3 python3-pip"
-		elif uname | grep -q MSYS; then
+		elif [ "$(uname -o)" = "Msys" ]; then
 			echo "Please run tools/bootstrap/python.bat instead of tools/bootstrap/python once to"
 			echo "install Python automatically, or install it from https://www.python.org/downloads/"
 			# TODO: give MSYS pacman advice?
