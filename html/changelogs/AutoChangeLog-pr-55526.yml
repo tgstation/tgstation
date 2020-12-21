@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "chaplain head cage no longer makes you bald"
