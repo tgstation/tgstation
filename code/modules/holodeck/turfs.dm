@@ -40,7 +40,7 @@
 	if (direction != 2)
 		src.setDir(direction)
 
-turf/open/floor/holofloor/white
+/turf/open/floor/holofloor/white
 	name = "white floor"
 	icon_state = "white"
 
