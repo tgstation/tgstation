@@ -116,6 +116,6 @@
 	desc = "A more commercialized version of your traditional griddle. What happened to the good old days where people griddled with passion?"
 	variant = "stand"
 
-/obj/machinery/griddle/stand/Initialize()
+/obj/machinery/griddle/stand/update_overlays()
 	. = ..()
-	add_overlay("front_bar")
+	. += "front_bar"
