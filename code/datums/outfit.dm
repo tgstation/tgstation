@@ -96,10 +96,10 @@
 	var/list/implants = null
 
 	/**
-      * Any skillchips the mob should have in their brain.
-      *
-      * Format of this list is (typepath, typepath, typepath)
-      */
+	  * Any skillchips the mob should have in their brain.
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
 	var/list/skillchips = null
 
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
