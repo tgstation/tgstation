@@ -168,12 +168,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
-///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
-/turf/proc/is_blocked_turf(exclude_mobs)
+///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi. if exclude_object is true, it will exclude the excluded_object you sent through
+/turf/proc/is_blocked_turf(exclude_mobs, excluded_object)
 	if(density)
 		return TRUE
 	for(var/i in contents)
 		var/atom/thing = i
+		if(thing == excluded_object)
+			continue
 		if(thing.density && (!exclude_mobs || !ismob(thing)))
 			return TRUE
 	return FALSE

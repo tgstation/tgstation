@@ -761,7 +761,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			bodyparts_to_add -= "waggingspines"
 
 	if(mutant_bodyparts["snout"]) //Take a closer look at that snout!
-		if((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "snout"
 
 	if(mutant_bodyparts["frills"])
@@ -1619,13 +1619,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//when in a cryo unit we suspend all natural body regulation
 	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
-	//when dead the air still effects your skin temp
-	if(humi.stat == DEAD || IS_IN_STASIS(humi))
-		body_temperature_skin(humi)
-	else //when alive do all the things
+
+	//Only stabilise core temp when alive and not in statis
+	if(humi.stat < DEAD && !IS_IN_STASIS(humi))
 		body_temperature_core(humi)
-		body_temperature_skin(humi)
-		body_temperature_alerts(humi)
+
+	//These do run in statis
+	body_temperature_skin(humi)
+	body_temperature_alerts(humi)
+
+	//Do not cause more damage in statis
+	if(!IS_IN_STASIS(humi))
 		body_temperature_damage(humi)
 
 /**

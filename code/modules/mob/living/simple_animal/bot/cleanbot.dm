@@ -15,7 +15,7 @@
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.4"
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
 	var/blood = 1
@@ -312,6 +312,8 @@
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(ismopable(A))
 		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING
