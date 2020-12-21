@@ -483,8 +483,8 @@
 		if(!double)
 			var/obj/item/clothing/glasses/godeye/double/T = /obj/item/clothing/glasses/godeye/double
 
-			src.icon_state = initial(T.icon_state)
-			src.inhand_icon_state = initial(T.inhand_icon_state)
+			icon_state = initial(T.icon_state)
+			inhand_icon_state = initial(T.inhand_icon_state)
 
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
@@ -494,9 +494,9 @@
 				if(C.glasses == src)
 					pain(C)
 
-			src.name = initial(T.name)
-			src.desc = initial(T.desc)
-			src.double = TRUE
+			name = initial(T.name)
+			desc = initial(T.desc)
+			double = TRUE
 		else
 			to_chat(user, "<span class='notice'>[W] winks at you and vanishes into the abyss, you feel really unlucky.</span>")
 		qdel(W)
@@ -505,11 +505,7 @@
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
 	// If pain/pain immunity ever implemented, check for it here.
 
-	var/verbs = "burrows"
-	if(src.double)
-		verbs = "burrow"
-
-	to_chat(victim, "<span class='userdanger'>You experience blinding pain, as [src] [verbs] into your skull.</span>")
+	to_chat(victim, "<span class='userdanger'>You experience blinding pain, as [src] [double ? "burrow" : "burrows"] into your skull.</span>")
 	victim.emote("scream")
 	victim.flash_act()
 
