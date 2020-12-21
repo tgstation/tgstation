@@ -40,6 +40,10 @@
 	if (direction != 2)
 		src.setDir(direction)
 
+turf/open/floor/holofloor/white
+	name = "white floor"
+	icon_state = "white"
+
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
 	initial_gas_mix = BURNMIX_ATMOS
