@@ -588,7 +588,7 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			toggle_all_ctf(usr)
+			toggle_id_ctf(usr, "centcom")
 		if("masspurrbation")
 			if(!check_rights(R_FUN))
 				return

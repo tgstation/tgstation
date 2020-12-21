@@ -84,8 +84,8 @@
 	name = "arrow"
 	desc = "Ow! Get it out of me!"
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
-	damage = 25
-	speed = 0.8
+	damage = 50
+	speed = 1
 	range = 25
 
 /obj/item/storage/bag/quiver

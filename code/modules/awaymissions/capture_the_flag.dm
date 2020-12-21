@@ -137,16 +137,25 @@
 	desc = "This is where a blue banner used to play capture the flag \
 		would go."
 
-/proc/toggle_all_ctf(mob/user)
+/proc/toggle_id_ctf(mob/user, activated_id, automated = FALSE)
 	var/ctf_enabled = FALSE
 	var/area/A
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		if(activated_id != CTF.game_id)
+			continue
 		ctf_enabled = CTF.toggle_ctf()
 		A = get_area(CTF)
 	for(var/obj/machinery/power/emitter/E in A)
 		E.active = ctf_enabled
-	message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
-	notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+	if(user)
+		message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+	else if(automated)
+		message_admins("CTF has finished a round and automatically restarted.")
+		notify_ghosts("CTF has automatically restarted after a round finished in [A]!",'sound/effects/ghost2.ogg')
+	else
+		message_admins("The players have spoken! Voting has enabled CTF!")
+	if(!automated)
+		notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"] in [A]!",'sound/effects/ghost2.ogg')
 
 /obj/machinery/capture_the_flag
 	name = "CTF Controller"
@@ -221,21 +230,25 @@
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		if(user.client && user.client.holder)
-			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
+			var/response = alert("Enable this CTF game?", "CTF", "Yes", "No")
 			if(response == "Yes")
-				toggle_all_ctf(user)
+				toggle_id_ctf(user, game_id)
 			return
 
 
 		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
 			to_chat(user, "<span class='warning'>CTF has been temporarily disabled by admins.</span>")
 			return
+		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+			if(CTF.game_id != game_id && CTF.ctf_enabled)
+				to_chat(user, "<span class='warning'>There is already an ongoing game in the [get_area(CTF)]!</span>")
+				return
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
 		var/remaining = CTF_REQUIRED_PLAYERS - num
 		if(remaining <= 0)
 			people_who_want_to_play.Cut()
-			toggle_all_ctf()
+			toggle_id_ctf(null, game_id)
 		else
 			to_chat(user, "<span class='notice'>CTF has been requested. [num]/[CTF_REQUIRED_PLAYERS] have readied up.</span>")
 
@@ -267,13 +280,12 @@
 		ctf_dust_old(user.mind.current)
 	spawn_team_member(new_team_member)
 
+//does not add to recently dead, because it dusts and that triggers ctf_qdelled_player
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
 	if(isliving(body) && (team in body.faction))
 		var/turf/T = get_turf(body)
 		if(ammo_type)
 			new ammo_type(T)
-		recently_dead_ckeys += body.ckey
-		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
 /obj/machinery/capture_the_flag/proc/ctf_qdelled_player(mob/living/body)

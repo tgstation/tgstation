@@ -243,9 +243,6 @@
 			message = replacetextEx(message,regex("\b[REGEX_QUOTE(key)]\b","ig"), value)
 		message = trim(message)
 		var/chosen_starting = pick(startings)
-		if(copytext(chosen_starting, -1) != "!" && message[1] != "I") //if the starter isn't a sentence of it's own, lowercase the message afterwards
-			var/rest_of_message = copytext(message, 1 + -length(message))
-			message = lowertext(message[1]) + rest_of_message
 		message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message

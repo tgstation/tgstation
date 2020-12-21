@@ -11,11 +11,11 @@
 
 /obj/machinery/capture_the_flag/medisim/Initialize(mapload)
 	. = ..()
-	start_ctf()
+	start_ctf() //both machines initialize, so both will call start_ctf instead of toggle_id_ctf calling it for both, twice.
 
 /obj/machinery/capture_the_flag/medisim/victory()
 	. = ..()
-	start_ctf()//so admins don't have to enable it again, they can just go
+	toggle_id_ctf(null, game_id, automated = TRUE)//only one machine runs the victory proc, start_ctf proc would break the other machine
 
 /obj/machinery/capture_the_flag/medisim/spawn_team_member(client/new_team_member)
 	. = ..()
