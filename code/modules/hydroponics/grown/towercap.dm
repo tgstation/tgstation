@@ -146,8 +146,8 @@
 	AddComponent(/datum/component/caltrop, 20, 30, 100, CALTROP_BYPASS_SHOES)
 
 /obj/structure/punji_sticks/spikes
-    name = "wooden spikes"
-    icon_state = "woodspike"
+	name = "wooden spikes"
+	icon_state = "woodspike"
 
 /////////BONFIRES//////////
 
