@@ -168,12 +168,12 @@
 	return ..()
 
 /**
-  * RedeemVoucher: Allows user to redeem a mining voucher for one piece of mining equipment from a menu
-  *
-  * Arguments:
-  * * redeemer The mob redeeming an equipment
-  * * voucher The mining voucher that is being used to redeem a piece of equipment
-  */
+ * Allows user to redeem a mining voucher for one set of a mining equipment
+ *
+ * * Arguments:
+ * * voucher The mining voucher that is being used to redeem the mining equipment
+ * * redeemer The mob that is redeeming the mining equipment
+ */
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
 	var/items = list(
 		"Crusher Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "crusher"),
@@ -189,23 +189,23 @@
 
 	var/drop_location = drop_location()
 	switch(selection)
-		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/storage/belt/mining/vendor(drop_location)
+		if("Crusher Kit")
+			new /obj/item/extinguisher/mini(drop_location)
+			new /obj/item/kinetic_crusher(drop_location)
+		if("Extraction and Rescue Kit")
+			new /obj/item/extraction_pack(drop_location)
+			new /obj/item/fulton_core(drop_location)
+			new /obj/item/stack/marker_beacon/thirty(drop_location)
 		if("Resonator Kit")
 			new /obj/item/extinguisher/mini(drop_location)
 			new /obj/item/resonator(drop_location)
+		if("Survival Capsule and Explorer's Webbing")
+			new /obj/item/storage/belt/mining/vendor(drop_location)
 		if("Minebot Kit")
 			new /mob/living/simple_animal/hostile/mining_drone(drop_location)
 			new /obj/item/weldingtool/hugetank(drop_location)
 			new /obj/item/clothing/head/welding(drop_location)
 			new /obj/item/borg/upgrade/modkit/minebot_passthrough(drop_location)
-		if("Extraction and Rescue Kit")
-			new /obj/item/extraction_pack(drop_location)
-			new /obj/item/fulton_core(drop_location)
-			new /obj/item/stack/marker_beacon/thirty(drop_location)
-		if("Crusher Kit")
-			new /obj/item/extinguisher/mini(drop_location)
-			new /obj/item/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
 			new /obj/item/storage/backpack/duffelbag/mining_conscript(drop_location)
 		else
@@ -215,12 +215,12 @@
 	qdel(voucher)
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * redeemer The mob interacting with a menu
-  * * voucher The mining voucher that is being used to redeem an equipment
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * * Arguments:
+ * * voucher The mining voucher that is being used to redeem a mining equipment
+ * * redeemer The mob interacting with the menu
+ */
 /obj/machinery/mineral/equipment_vendor/proc/check_menu(obj/item/mining_voucher/voucher, mob/living/redeemer)
 	if(!istype(redeemer))
 		return FALSE
