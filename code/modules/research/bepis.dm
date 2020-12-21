@@ -2,8 +2,8 @@
 
 //economics defined values, subject to change should anything be too high or low in practice.
 
-#define MACHINE_OPERATION 400*CARGO_CRATE_VALUE
-#define MACHINE_OVERLOAD 2000*CARGO_CRATE_VALUE
+#define MACHINE_OPERATION 100000
+#define MACHINE_OVERLOAD 500000
 #define MAJOR_THRESHOLD 6*CARGO_CRATE_VALUE
 #define MINOR_THRESHOLD 4*CARGO_CRATE_VALUE
 #define STANDARD_DEVIATION 2*CARGO_CRATE_VALUE
