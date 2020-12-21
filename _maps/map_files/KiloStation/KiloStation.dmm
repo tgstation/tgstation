@@ -7876,11 +7876,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/space/nearstation)
-"ans" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating/airless,
-/area/solar/port/fore)
 "ant" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
@@ -10839,11 +10834,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
-"ase" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating/airless,
-/area/solar/starboard/fore)
 "asf" = (
 /obj/machinery/power/tracker,
 /obj/effect/turf_decal/box,
@@ -84182,11 +84172,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
-"cGG" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating/airless,
-/area/solar/starboard/aft)
 "cGH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -103999,7 +103984,7 @@ ahG
 ahG
 ahG
 cjl
-ans
+cjl
 cjl
 ahG
 ahG
@@ -134668,7 +134653,7 @@ cDr
 cDr
 cDr
 ctQ
-cGG
+ctQ
 ctQ
 cDr
 cDr
@@ -137925,7 +137910,7 @@ ajH
 ajH
 ajH
 cMU
-ase
+cMU
 cMU
 ajH
 ajH
