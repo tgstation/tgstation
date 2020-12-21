@@ -1,6 +1,6 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
-	damage = 50
+	damage = 30
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
 
@@ -63,8 +63,8 @@
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
-	damage = 25
-	paralyze = 50
+	damage = 15
+	paralyze = 10
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
@@ -77,9 +77,9 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 7.5
-	wound_bonus = 5
-	bare_wound_bonus = 5
+	damage = 7
+	wound_bonus = 3
+	bare_wound_bonus = 3
 	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
