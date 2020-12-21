@@ -43,6 +43,7 @@
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
 	slot = ORGAN_SLOT_LINK
+	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/cyberlink/nt_low
