@@ -700,6 +700,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 #define PANCAKE_MAX_STACK 10
+#define PANCAKE_LORD_MAX_STACK 100
 
 /obj/item/food/pancakes
 	name = "pancake"
@@ -751,8 +752,12 @@
 			desc = "A fat stack of fluffy pancakes!"
 		if(7 to 9)
 			desc = "A grand tower of fluffy, delicious pancakes!"
-		if(PANCAKE_MAX_STACK to INFINITY)
+		if(PANCAKE_MAX_STACK)
 			desc = "A massive towering spire of fluffy, delicious pancakes. It looks like it could tumble over!"
+		if(11 to 99)
+			desc = "A completely mind bogglingly tremendous amount of fluffy and wonderful pancakes! It towers over the realm of the mortals, watching the petty squabbles of day to day from it's grandiose pile of battery goodness."
+		if(PANCAKE_LORD_MAX_STACK)
+			desc = "One hundred pancakes. Your mind begins to melt at the sight of one hundred stacked pancakes. Only a master- no, a <b>GOD</b> could stack one hundred pancakes. The amount of milk, flour, and sugar in this fluffy monstrosity would make a bovine creature drop dead, and an entire field of wheat wither."
 	. = ..()
 	if (pancakeCount)
 		for(var/obj/item/food/pancakes/ING in contents)
@@ -760,10 +765,15 @@
 		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
 
 /obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, params)
+
+	var/mortal_limits = HAS_TRAIT(user, TRAIT_PANCAKE_STACKER) ? PANCAKE_LORD_MAX_STACK : PANCAKE_MAX_STACK
+
 	if(istype(item, /obj/item/food/pancakes))
 		var/obj/item/food/pancakes/pancake = item
-		if((contents.len >= PANCAKE_MAX_STACK) || ((pancake.contents.len + contents.len) > PANCAKE_MAX_STACK))
+		if((contents.len >= mortal_limits) || ((pancake.contents.len + contents.len) > mortal_limits))
 			to_chat(user, "<span class='warning'>You can't add that many pancakes to [src]!</span>")
+			if(mortal_limits == PANCAKE_MAX_STACK)
+				to_chat(user, "<span class='notice'>You would be able to if you knew the <b>secret pancake stacking technique</b>!</span>")
 		else
 			if(!user.transferItemToLoc(pancake, src))
 				return

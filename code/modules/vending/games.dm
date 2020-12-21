@@ -26,6 +26,7 @@
 	premium = list(/obj/item/melee/skateboard/pro = 3,
 					/obj/item/clothing/shoes/wheelys/rollerskates= 3,
 					/obj/item/melee/skateboard/hoverboard = 1,
+					/obj/item/skillchip/pancake_stacking=2,
 					/obj/item/storage/box/tail_pin = 1)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = PAYCHECK_ASSISTANT
