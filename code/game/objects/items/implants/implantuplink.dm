@@ -13,10 +13,12 @@
 	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
 
 /**
-  * Callback catching if the underlying uplink component has been removed,
-  * generally by admin verbs or var editing. Implant does nothing without
-  * the component, so delete itself.
-  */
+ * Proc called when component is removed; ie. uplink component
+ *
+ * Callback catching if the underlying uplink component has been removed,
+ * generally by admin verbs or var editing. Implant does nothing without
+ * the component, so delete itself.
+ */
 /obj/item/implant/uplink/proc/_component_removal(datum/source, datum/component/component)
 	if(istype(component, /datum/component/uplink))
 		qdel(src)
