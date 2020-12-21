@@ -277,6 +277,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
+		if(obj_flags & EMAGGED) // no cheating for your maxcaps
+			attackamt = rand(5,7)
 
 		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
 			attackamt *= 100
