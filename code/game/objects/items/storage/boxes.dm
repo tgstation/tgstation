@@ -848,7 +848,7 @@
 	illustration = null
 
 /obj/item/storage/box/lethalshot/PopulateContents()
-	for(var/i in 1 to 6)
+	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
 
 /obj/item/storage/box/beanbag
