@@ -40,9 +40,21 @@ if [ "$(uname)" = "Linux" ] || [ ! -f "$PythonExe" ]; then
 	elif command -v py >/dev/null 2>&1; then
 		PythonExe="py -3"
 	else
-		echo "Please install Python from https://www.python.org/downloads/"
-		# TODO: show package manager advice for Ubuntu, Arch, MSYS2
-		# TODO: show Windows bootstrap advice for Git for Windows
+		echo
+		if command -v apt-get >/dev/null 2>&1; then
+			echo "Please install Python using your system's package manager:"
+			echo "    sudo apt-get install python3 python3-pip"
+		elif uname | grep -q MSYS; then
+			echo "Please run tools/bootstrap/python.bat instead of tools/bootstrap/python once to"
+			echo "install Python automatically, or install it from https://www.python.org/downloads/"
+			# TODO: give MSYS pacman advice?
+		elif command -v pacman >/dev/null 2>&1; then
+			echo "Please install Python using your system's package manager:"
+			echo "    sudo pacman -S python python-pip"
+		else
+			echo "Please install Python from https://www.python.org/downloads/ or using your system's package manager."
+		fi
+		echo
 		exit 1
 	fi
 
