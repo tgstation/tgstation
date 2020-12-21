@@ -250,7 +250,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	icon_state = "manifold-2";
 	dir = 4
 	},
 /obj/structure/cable,
@@ -339,7 +338,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
 	dir = 1
 	},
 /turf/open/floor/plating,
