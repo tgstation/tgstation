@@ -70,11 +70,14 @@ if [ ! -f "$PythonDir/requirements.txt" ] || [ "$(b2sum < "$Sdk/requirements.txt
 	echo "---"
 fi
 
-# Deduce the path separator
-PATHSEP=$("$PythonExe" - <<'EOF'
+# Verify version and deduce the path separator
+PythonMajor=${PythonVersion%%.*}
+PythonMinor=${PythonVersion#*.}
+PythonMinor=${PythonMinor%.*}
+PATHSEP=$("$PythonExe" - "$PythonMajor" "$PythonMinor" <<'EOF'
 import sys, os
-if sys.version_info.major != 3 or sys.version_info.minor < 6:
-	sys.stderr.write("Error: Python 3.6 or later is required, but you have:\n" + sys.version + "\n")
+if sys.version_info.major != int(sys.argv[1]) or sys.version_info.minor < int(sys.argv[2]):
+	print("Error: Python ", sys.argv[1], ".", sys.argv[2], " or later is required, but you have:\n", sys.version, sep="", file=sys.stderr)
 	exit(1)
 print(os.pathsep)
 EOF
