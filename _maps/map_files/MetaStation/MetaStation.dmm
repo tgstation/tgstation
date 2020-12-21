@@ -6534,7 +6534,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "aoy" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
