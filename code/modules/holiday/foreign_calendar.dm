@@ -10,13 +10,13 @@ by John Walker 2015, released under public domain
 */
 /datum/foreign_calendar
 	var/jd
-	var/yy
+	var/yyyy
 	var/mm
 	var/dd
 
-/datum/foreign_calendar/New(yy, mm, dd)
+/datum/foreign_calendar/New(yyyy, mm, dd)
 	if (!jd)
-		jd = gregorian_to_jd(yy, mm, dd)
+		jd = gregorian_to_jd(yyyy, mm, dd)
 	set_date(jd)
 
 /datum/foreign_calendar/proc/set_date()
@@ -53,9 +53,9 @@ by John Walker 2015, released under public domain
 
 /datum/foreign_calendar/islamic/set_date()
 	var/jd_adj = round(jd) + 0.5 // adjust julian date so it ends in .5
-	yy = round(((30 * (jd_adj - ISLAMIC_EPOCH)) + 10646) / 10631)
-	mm = min(12, CEILING(((jd - (29 + islamic_to_jd(yy, 1, 1))) / 29.5) + 1, 1))
-	dd = jd - islamic_to_jd(yy, mm, 1) + 1
+	yyyy = round(((30 * (jd_adj - ISLAMIC_EPOCH)) + 10646) / 10631)
+	mm = min(12, CEILING(((jd - (29 + islamic_to_jd(yyyy, 1, 1))) / 29.5) + 1, 1))
+	dd = jd - islamic_to_jd(yyyy, mm, 1) + 1
 
 /datum/foreign_calendar/islamic/proc/islamic_to_jd(year, month, day)
 	return day + CEILING(29.5 * (month - 1), 1) + (year - 1) * 354 + round((3 + (11 * year)) / 30) + ISLAMIC_EPOCH - 1
@@ -87,7 +87,7 @@ by John Walker 2015, released under public domain
 
 // Julian to Hebrew
 /datum/foreign_calendar/hebrew/set_date(jd)
-	if (yy && mm && dd)
+	if (yyyy && mm && dd)
 		return
 	jd = round(jd) + 0.5
 	var/count = round(((jd - HEBREW_EPOCH) * 98496) / 35975351)
@@ -98,7 +98,7 @@ by John Walker 2015, released under public domain
 	for (var/i = month; jd > hebrew_to_jd(year, i, hebrew_month_days(year, i)); i++)
 		month++
 	var/day = (jd - hebrew_to_jd(year, month, 1)) + 1
-	yy = year
+	yyyy = year
 	mm = month
 	dd = day
 

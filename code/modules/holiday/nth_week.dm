@@ -4,39 +4,30 @@
 	var/begin_week = 1
 	///Weekday of begin_week to start on.
 	var/begin_weekday = MONDAY
+	///Nth weekday of type end_weekday in end_month to end on (1 to 5, defaults to begin_week).
+	var/end_week
+	///Weekday of end_week to end on (defaults to begin_weekday).
+	var/end_weekday
 
-/datum/holiday/nth_week/shouldCelebrate(dd, mm, yy, ww, ddd)
-	// Does not support end_day or end_month. Find me a holiday that needs that and I'll add it.
-	// Same with adding an end_weekday or end_week.
-	if (mm != begin_month)
-		return FALSE
-	if (begin_weekday != ddd)
-		return FALSE
-	var/day_number = 0
-	// format of first_day_of_month proc (Monday 1 Sunday 7)
-	switch (begin_weekday)
-		if (MONDAY)
-			day_number = 1
-		if (TUESDAY)
-			day_number = 2
-		if (WEDNESDAY)
-			day_number = 3
-		if (THURSDAY)
-			day_number = 4
-		if (FRIDAY)
-			day_number = 5
-		if (SATURDAY)
-			day_number = 6
-		if (SUNDAY)
-			day_number = 7
-	var/fd = first_day_of_month(yy, mm)
-	var/weekday_diff = day_number - fd
-	if (weekday_diff < 0)
-		weekday_diff += 7
-	var/correct_day = (begin_week - 1) * 7 + weekday_diff + 1
-	if (dd == correct_day)
-		return TRUE
-	return FALSE
+/datum/holiday/nth_week/shouldCelebrate(dd, mm, yy, ddd)
+	// Does not support holidays across multiple years..
+	if (!end_month)
+		end_month = begin_month
+	if (!end_week)
+		end_week = begin_week
+	if (!end_weekday)
+		end_weekday = begin_weekday
+	// check that it's not past the last day
+	end_day = weekday_to_iso(end_weekday) - first_day_of_month(yy, end_month)
+	if (end_day < 0)
+		end_day += 7
+	end_day += (end_week - 1) * 7 + 1
+	// check that it's not past the first day
+	begin_day = weekday_to_iso(begin_weekday) - first_day_of_month(yy, begin_month)
+	if (begin_day < 0)
+		begin_day += 7
+	begin_day += (begin_week - 1) * 7 + 1
+	return ..(dd, mm, yy, ddd)
 
 /datum/holiday/nth_week/thanksgiving
 	name = "Thanksgiving in the United States"
@@ -73,8 +64,29 @@
 	begin_month = JUNE
 	begin_weekday = SUNDAY
 
-/datum/holiday/nth_week/todaytest
-	name = "First Saturday of December"
+/datum/holiday/nth_week/beer
+	name = "Beer Day"
 	begin_week = 1
-	begin_month = DECEMBER
+	begin_month = AUGUST
+	begin_weekday = FRIDAY
+
+/datum/holiday/beer/getStationPrefix()
+	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
+
+/datum/holiday/nth_week/moth
+	name = "Moth Week"
+	begin_week = 3
+	end_week = 4
+	begin_month = JULY
 	begin_weekday = SATURDAY
+	end_weekday = SUNDAY
+
+//National Moth Week falls on the last full week of July, including the saturday and sunday before. See http://nationalmothweek.org/ for precise tracking.
+/datum/holiday/nth_week/moth/shouldCelebrate(dd, mm, yyyy, ddd)
+	if(first_day_of_month(yyyy, mm) >= 5) //Friday or later start of the month means week 5 is a full week.
+		begin_week += 1
+		end_week += 1
+	return ..(dd, mm, yyyy, ddd)
+
+/datum/holiday/nth_week/moth/getStationPrefix()
+	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
