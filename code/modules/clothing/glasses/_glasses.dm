@@ -478,6 +478,12 @@
 
 		pain(user)
 
+/obj/item/clothing/glasses/godeye/dropped(mob/user)
+	. = ..()
+	// Behead someone, their "glasses" drop on the floor
+	// and thus, the god eye should no longer be sticky
+	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/clothing/glasses/godeye) && W != src && W.loc == user)
 		if(!double)
