@@ -23,7 +23,6 @@
 	if(!IS_HERETIC(user))
 		return
 	if(!is_in_use)
-		last_use = world.time
 		INVOKE_ASYNC(src, .proc/activate , user)
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
