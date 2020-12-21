@@ -49,6 +49,7 @@
 "h" = (
 /obj/structure/table/wood,
 /obj/item/clothing/mask/cigarette/pipe,
+/obj/item/book/manual/random,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "i" = (
@@ -64,6 +65,14 @@
 	dir = 4;
 	layer = 2.9
 	},
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/template_noop)
+"k" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/box/matches,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -200,6 +209,7 @@
 /area/template_noop)
 "J" = (
 /obj/structure/table/wood,
+/obj/item/book/manual/random,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
 "K" = (
@@ -349,7 +359,7 @@ x
 "}
 (5,1,1) = {"
 m
-S
+k
 S
 o
 z

@@ -13,6 +13,7 @@
 
 	should_place_on_top = FALSE
 	returns_created_atoms = TRUE
+	keep_cached_map = TRUE
 
 	var/obj/machinery/computer/holodeck/linked
 

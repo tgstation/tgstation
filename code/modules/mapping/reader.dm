@@ -309,6 +309,7 @@
 	for (var/_turf in turf_blacklist)
 		var/turf/turf_in_blacklist = _turf
 		if (crds == turf_in_blacklist) //if the given turf is blacklisted, dont do anything with it
+			turf_blacklist -= turf_in_blacklist
 			return
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile

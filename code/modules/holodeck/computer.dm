@@ -1,24 +1,25 @@
 /*
-	Map Template Holodeck
+Map Template Holodeck
 
-	Holodeck finds the location of mappedstartarea and loads offline_program in it on LateInitialize. It then loads the programs that have the
-	same holodeck_access flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this
-	flag). These program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
-	ui calls load_program() with the id of the selected program.
-	load_program() -> map_template/load() on map_template/holodeck.
-	holodeck map templates:
-	1. have an update_blacklist that doesnt allow placing on non holofloors
-	2. has should_place_on_top = FALSE, so that the baseturfs list doesnt pull a kilostation oom crash
-	3. has returns_created = TRUE, so that SSatoms gives the map template a list of spawned atoms
-	all the fancy flags and shit are added to holodeck objects in finish_spawn()
+Holodeck finds the location of mappedstartarea and loads offline_program in it on LateInitialize. It then loads the programs that have the
+same holodeck_access flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this
+flag). These program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
+ui calls load_program() with the id of the selected program.
+load_program() -> map_template/load() on map_template/holodeck.
+holodeck map templates:
+1. have an update_blacklist that doesnt allow placing on non holofloors
+2. has should_place_on_top = FALSE, so that the baseturfs list doesnt pull a kilostation oom crash
+3. has returns_created = TRUE, so that SSatoms gives the map template a list of spawned atoms
+all the fancy flags and shit are added to holodeck objects in finish_spawn()
 
-	Easiest way to add new holodeck programs:
-	1) Define new map template datums in code/modules/holodeck/holodeck_map_templates, make sure they have the access flags
-	   of the holodeck you want them to be able to load, for the onstation holodeck the flag is STATION_HOLODECK.
-	2) Create the new map templates in _maps/templates (remember theyre 9x10, and make sure they have area/noop or else it will fuck with linked)
+Easiest way to add new holodeck programs:
+1) Define new map template datums in code/modules/holodeck/holodeck_map_templates, make sure they have the access flags
+   of the holodeck you want them to be able to load, for the onstation holodeck the flag is STATION_HOLODECK.
+2) Create the new map templates in _maps/templates (remember theyre 9x10, and make sure they have area/noop or else it will fuck with linked)
+   all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /turf/open/floor/engine, or they will block future programs!
 */
 
-#define HOLODECK_CD 25
+#define HOLODECK_CD 20
 #define HOLODECK_DMG_CD 50
 
 
@@ -30,9 +31,11 @@
 	active_power_usage = 50
 
 	var/area/holodeck/linked //the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
+
 	var/area/mappedstartarea = /area/holodeck/rec_center //change this to a different area if youre making a second holodeck different from the station one
 	var/program = "holodeck_offline" //what program is loaded right now
 	var/last_program
+
 	var/offline_program = "holodeck_offline" //the default program loaded by this holodeck when spawned and when deactivated
 	var/holodeck_access = STATION_HOLODECK //what access type this holodeck has, used to specify programs for another holodeck that others cant load
 
@@ -175,6 +178,7 @@
 		current_cd = world.time + HOLODECK_CD
 		if(damaged)
 			current_cd += HOLODECK_DMG_CD
+			damaged = FALSE
 	active = (map_id != offline_program)
 	use_power = active + IDLE_POWER_USE
 	program = map_id
