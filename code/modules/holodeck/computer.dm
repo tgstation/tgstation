@@ -220,13 +220,13 @@
 
 		atoms.flags_1 |= HOLOGRAM_1
 
-		if (isholoeffect(atoms))//this is what makes holoeffects work
+		if (isholoeffect(atoms))//activates holo effects and transfers them from the spawned list into the effects list
 			var/obj/effect/holodeck_effect/holo_effect = atoms
 			effects += holo_effect
 			spawned -= holo_effect
 			var/atom/active_effect = holo_effect.activate(src)
 			if(istype(active_effect) || islist(active_effect))
-				spawned += active_effect // holocarp are not forever
+				spawned += active_effect // we want mobs or objects spawned via holoeffects to be tracked as objects
 			continue
 
 		if (isobj(atoms))
