@@ -4,6 +4,7 @@
 	desc = "While pretty finely crafted, surely you can find something better to use in the current year."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "bow"
+	inhand_icon_state = "bow"
 	load_sound = null
 	fire_sound = null
 	mag_type = /obj/item/ammo_box/magazine/internal/bow
@@ -16,10 +17,6 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
-/obj/item/gun/ballistic/bow/dropped(mob/user)
-	. = ..()
-	drop_arrow()
-
 /obj/item/gun/ballistic/bow/update_icon()
 	. = ..()
 	if(!chambered)
@@ -29,10 +26,13 @@
 
 /obj/item/gun/ballistic/bow/proc/drop_arrow()
 	drawn = FALSE
-	chambered = magazine.get_round()
+	if(!chambered)
+		chambered = magazine.get_round(keep = FALSE)
+		return
 	if(!chambered)
 		return
 	chambered.forceMove(drop_location())
+	update_icon()
 
 /obj/item/gun/ballistic/bow/chamber_round()
 	if(chambered || !magazine)
@@ -48,6 +48,8 @@
 	update_icon()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
+	if(!chambered)
+		return
 	if(!drawn)
 		to_chat(user, "<span clasas='warning'>Without drawing the bow, the arrow uselessly falls to the ground.</span>")
 		drop_arrow()

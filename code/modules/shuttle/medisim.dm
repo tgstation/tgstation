@@ -22,8 +22,6 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/human_knight = .
-	human_knight.remove_all_languages(LANGUAGE_CTF)
-	human_knight.grant_language(language = /datum/language/oldworld, understood = TRUE, spoken = TRUE, source = LANGUAGE_CTF)
 	randomize_human(human_knight)
 	human_knight.dna.add_mutation(MEDIEVAL, MUT_OTHER)
 	var/oldname = human_knight.name

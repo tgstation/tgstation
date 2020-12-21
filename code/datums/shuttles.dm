@@ -238,10 +238,10 @@
 	suffix = "medisim"
 	name = "Medieval Reality Simulation Dome"
 	description = "A state of the art simulation dome, loaded onto your shuttle! Watch and laugh at how petty humanity used to be before it reached the stars. Guaranteed to be at least 40% historically accurate."
-	admin_notes = "Ghosts can spawn in and fight as knights. They cannot speak about the round, instead speaking in chimpanzee."
+	admin_notes = "Ghosts can spawn in and fight as knights or archers. The CTF auto restarts, so no admin intervention necessary."
 	credit_cost = 20000
 
-/datum/map_template/shuttle/emergency/arena/prerequisites_met()
+/datum/map_template/shuttle/emergency/medisim/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM]
 
 /datum/map_template/shuttle/emergency/discoinferno
