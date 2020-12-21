@@ -220,7 +220,7 @@
 
 		atoms.flags_1 |= HOLOGRAM_1
 
-		if (istype(atoms, /obj/effect/holodeck_effect/))//this is what makes holoeffects work
+		if (isholoeffect(atoms))//this is what makes holoeffects work
 			var/obj/effect/holodeck_effect/holo_effect = atoms
 			effects += holo_effect
 			spawned -= holo_effect
