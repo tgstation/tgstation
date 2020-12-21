@@ -13,10 +13,10 @@ holodeck map templates:
 all the fancy flags and shit are added to holodeck objects in finish_spawn()
 
 Easiest way to add new holodeck programs:
-1) Define new map template datums in code/modules/holodeck/holodeck_map_templates, make sure they have the access flags
-   of the holodeck you want them to be able to load, for the onstation holodeck the flag is STATION_HOLODECK.
-2) Create the new map templates in _maps/templates (remember theyre 9x10, and make sure they have area/noop or else it will fuck with linked)
-   all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /turf/open/floor/engine, or they will block future programs!
+1)  Define new map template datums in code/modules/holodeck/holodeck_map_templates, make sure they have the access flags
+	of the holodeck you want them to be able to load, for the onstation holodeck the flag is STATION_HOLODECK.
+2)  Create the new map templates in _maps/templates (remember theyre 9x10, and make sure they have area/noop or else it will fuck with linked)
+	all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /turf/open/floor/engine, or they will block future programs!
 */
 
 #define HOLODECK_CD 20
