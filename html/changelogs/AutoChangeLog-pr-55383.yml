@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscadd: "Hulks can now throw monkeys/people with tails around by their tails! To do this, get your victim in at least a neck grab, enable throw mode, then click in the direction you want to throw. So long!"
-  - tweak: "Carbons will now take damage when thrown at high speeds into things like windows, girders, and other solid objects, in addition to just walls and other people."
