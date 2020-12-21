@@ -42,25 +42,29 @@
 
 /obj/item/ctf/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed)
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
 /obj/item/ctf/process()
-	if(is_ctf_target(loc)) //don't reset from someone's hands.
+	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
 		return PROCESS_KILL
 	if(world.time > reset_cooldown)
 		reset_flag()
 
-/obj/item/ctf/proc/reset_flag()
+/obj/item/ctf/proc/reset_flag(capture = FALSE)
+	SIGNAL_HANDLER
+
 	forceMove(get_turf(src.reset))
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
-			to_chat(M, "<span class='userdanger'>[src] has been returned to the base!</span>")
+			if(!capture)
+				to_chat(M, "<span class='userdanger'>[src] has been returned to the base!</span>")
 	STOP_PROCESSING(SSobj, src)
 	return TRUE //so if called by a signal, it doesn't delete
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
+//working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
 /obj/item/ctf/attack_hand(mob/living/user)
+	//pre normal check item stuff, this is for our special flag checks
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
 		return
@@ -70,31 +74,30 @@
 	if(loc == user)
 		if(!user.dropItemToGround(src))
 			return
-	anchored = FALSE
-	pickup(user)
-	if(!user.put_in_active_hand(src))
-		dropped(user)
-		return
-	user.set_anchored(TRUE)
-	user.status_flags &= ~CANPUSH
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
-			to_chat(M, "<span class='userdanger'>\The [src] has been taken!</span>")
+			to_chat(M, "<span class='userdanger'>\The [initial(src.name)] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
-	..()
+	anchored = FALSE //normal checks need this to be FALSE to pass
+	. = ..() //this is the actual normal item checks
+	if(.) //only apply these flag passives
+		anchored = TRUE
+		return
+	//passing means the user picked up the flag so we can now apply this
+	user.set_anchored(TRUE)
+	user.status_flags &= ~CANPUSH
 
 /obj/item/ctf/dropped(mob/user)
 	..()
-	CRASH("CTF flag dropped test, lets stack trace this bad boy")
 	user.set_anchored(FALSE)
 	user.status_flags |= CANPUSH
-	reset_cooldown = world.time + 200 //20 seconds
+	reset_cooldown = world.time + 20 SECONDS
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
-			to_chat(M, "<span class='userdanger'>\The [src] has been dropped!</span>")
+			to_chat(M, "<span class='userdanger'>\The [initial(src.name)] has been dropped!</span>")
 	anchored = TRUE
 
 
@@ -153,6 +156,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/game_id = "centcom"
 
+	var/victory_rejoin_text = "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>"
 	var/team = WHITE_TEAM
 	var/team_span = ""
 	//Capture the Flag scoring
@@ -265,8 +269,7 @@
 	var/client/new_team_member = user.client
 	if(user.mind && user.mind.current)
 		ctf_dust_old(user.mind.current)
-	if(spawn_team_member(new_team_member))
-		team_members |= user.ckey
+	spawn_team_member(new_team_member)
 
 /obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
 	if(isliving(body) && (team in body.faction))
@@ -277,14 +280,21 @@
 		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
+/obj/machinery/capture_the_flag/proc/ctf_qdelled_player(mob/living/body)
+	SIGNAL_HANDLER
+
+	recently_dead_ckeys += body.ckey
+	addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
+
 /obj/machinery/capture_the_flag/proc/clear_cooldown(ckey)
 	recently_dead_ckeys -= ckey
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
 	var/datum/outfit/chosen_class
 	if(ctf_gear.len == 1) //no choices to make
-		chosen_class = ctf_gear[1]
-	if(ctf_gear.len > 3) //a lot of choices, so much that we can't use a basic alert
+		for(var/key in ctf_gear)
+			chosen_class = ctf_gear[key]
+	else if(ctf_gear.len > 3) //a lot of choices, so much that we can't use a basic alert
 		var/result = input(new_team_member, "Select a class.", "CTF") as null|anything in sortList(ctf_gear)
 		if(!result || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?
@@ -302,7 +312,9 @@
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(chosen_class)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/ctf_qdelled_player) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
 	spawned_mobs[M] = chosen_class
+	team_members |= new_team_member.ckey
 	return M //used in medisim.dm
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -315,14 +327,14 @@
 	if(istype(I, /obj/item/ctf))
 		var/obj/item/ctf/flag = I
 		if(flag.team != src.team)
-			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
+			flag.reset_flag(capture = TRUE)
 			for(var/mob/M in GLOB.player_list)
 				var/area/mob_area = get_area(M)
 				if(istype(mob_area, game_area))
 					to_chat(M, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
-		if(points >= points_to_win)
-			victory()
+			if(points >= points_to_win)
+				victory()
 
 /obj/machinery/capture_the_flag/proc/victory()
 	for(var/mob/_competitor in GLOB.mob_living_list)
@@ -330,7 +342,7 @@
 		var/area/mob_area = get_area(competitor)
 		if(istype(mob_area, game_area))
 			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
-			to_chat(competitor, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
+			to_chat(competitor, victory_rejoin_text)
 			for(var/obj/item/ctf/W in competitor)
 				competitor.dropItemToGround(W)
 			competitor.dust()
@@ -483,8 +495,10 @@
 		. = TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
-			. = TRUE
+		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+			if(H in CTF.spawned_mobs)
+				. = TRUE
+				break
 
 // RED TEAM GUNS
 

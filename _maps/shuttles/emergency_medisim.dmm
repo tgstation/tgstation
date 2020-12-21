@@ -310,9 +310,6 @@
 "ls" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
-"lX" = (
-/turf/template_noop,
-/area/shuttle/escape)
 "mq" = (
 /obj/structure/railing{
 	dir = 1
@@ -1259,6 +1256,7 @@
 /obj/item/clothing/suit/armor/vest/cuirass,
 /obj/item/clothing/suit/armor/vest/cuirass,
 /obj/item/clothing/suit/armor/vest/cuirass,
+/obj/item/paper/crumpled/retired_designs,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "WN" = (
@@ -1280,7 +1278,7 @@
 "Xk" = (
 /obj/structure/closet/crate/critter,
 /mob/living/simple_animal/hostile/lizard/space{
-	name = "Horse Thief"
+	name = "Stows-Away"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -1431,9 +1429,9 @@ EN
 EN
 EN
 EN
-lX
-lX
-lX
+EN
+EN
+EN
 EN
 gj
 gj
@@ -1445,9 +1443,9 @@ Xv
 gj
 gj
 EN
-lX
-lX
-lX
+EN
+EN
+EN
 EN
 EN
 EN

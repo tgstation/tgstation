@@ -43,21 +43,15 @@
 
 /obj/item/gun/ballistic/bow/attack_self(mob/user)
 	if(chambered)
-		to_chat(user, "<span clasas='notice'>You [drawn ? "release the tension on" : "draw the string on "] [src].</span>")
+		to_chat(user, "<span class='notice'>You [drawn ? "release the tension on" : "draw the string on"] [src].</span>")
 		drawn = !drawn
 	update_icon()
-
-/obj/item/gun/ballistic/bow/attack_hand(mob/user)
-	if(chambered && !drawn)
-		drop_arrow()
-		update_icon()
-	else
-		..()
 
 /obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(!drawn)
 		to_chat(user, "<span clasas='warning'>Without drawing the bow, the arrow uselessly falls to the ground.</span>")
 		drop_arrow()
+		update_icon()
 		return
 	drawn = FALSE
 	. = ..() //fires, removing the arrow
