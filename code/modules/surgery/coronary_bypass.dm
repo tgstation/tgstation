@@ -1,7 +1,9 @@
 /datum/surgery/coronary_bypass
 	name = "Coronary Bypass"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
-				 /datum/surgery_step/incise_heart, /datum/surgery_step/coronary_bypass, /datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise_heart, /datum/surgery_step/coronary_bypass, /datum/surgery_step/close,
+	)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
@@ -52,7 +54,6 @@
 	name = "graft coronary bypass"
 	implements = list(TOOL_HEMOSTAT = 90, TOOL_WIRECUTTER = 35, /obj/item/stack/package_wrap = 15, /obj/item/stack/cable_coil = 5)
 	time = 90
-	experience_given = MEDICAL_SKILL_ORGAN_FIX
 
 /datum/surgery_step/coronary_bypass/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to graft a bypass onto [target]'s heart...</span>",

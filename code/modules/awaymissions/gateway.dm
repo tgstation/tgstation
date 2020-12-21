@@ -4,22 +4,22 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /**
-  * Corresponds to single entry in gateway control.
-  *
-  * Will NOT be added automatically to GLOB.gateway_destinations list.
-  */
+ * Corresponds to single entry in gateway control.
+ *
+ * Will NOT be added automatically to GLOB.gateway_destinations list.
+ */
 /datum/gateway_destination
 	var/name = "Unknown Destination"
 	var/wait = 0 /// How long after roundstart this destination becomes active
-	var/enabled = TRUE /// If disabled, the destination won't be availible
+	var/enabled = TRUE /// If disabled, the destination won't be available
 	var/hidden = FALSE /// Will not show on gateway controls at all.
 
 /* Can a gateway link to this destination right now. */
-/datum/gateway_destination/proc/is_availible()
+/datum/gateway_destination/proc/is_available()
 	return enabled && (world.time - SSticker.round_start_time >= wait)
 
 /* Returns user-friendly description why you can't connect to this destination, displayed in UI */
-/datum/gateway_destination/proc/get_availible_reason()
+/datum/gateway_destination/proc/get_available_reason()
 	. = "Unreachable"
 	if(world.time - SSticker.round_start_time < wait)
 		. = "Connection desynchronized. Recalibration in progress."
@@ -52,8 +52,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = list()
 	.["ref"] = REF(src)
 	.["name"] = name
-	.["availible"] = is_availible()
-	.["reason"] = get_availible_reason()
+	.["available"] = is_available()
+	.["reason"] = get_available_reason()
 	if(wait)
 		.["timeout"] = max(1 - (wait - (world.time - SSticker.round_start_time)) / wait, 0)
 
@@ -72,10 +72,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(target_gateway.target == deactivated.destination)
 		target_gateway.deactivate()
 
-/datum/gateway_destination/gateway/is_availible()
+/datum/gateway_destination/gateway/is_available()
 	return ..() && target_gateway.calibrated && !target_gateway.target && target_gateway.powered()
 
-/datum/gateway_destination/gateway/get_availible_reason()
+/datum/gateway_destination/gateway/get_available_reason()
 	. = ..()
 	if(!target_gateway.calibrated)
 		. = "Exit gateway malfunction. Manual recalibration required."
@@ -171,6 +171,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	var/datum/gateway_destination/target
 	/// bumper object, the thing that starts actual teleport
 	var/obj/effect/gateway_portal_bumper/portal
+	/// icon when off
+	var/icon_off = "off"
+	/// icon when on
+	var/icon_on = "on"
 
 /obj/machinery/gateway/Initialize()
 	generate_destination()
@@ -199,9 +203,9 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/update_icon_state()
 	if(target)
-		icon_state = "on"
+		icon_state = icon_on
 	else
-		icon_state = "off"
+		icon_state = icon_off
 
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
@@ -259,8 +263,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(!GLOB.the_gateway)
 			to_chat(user,"<span class='warning'>Home gateway is not responding!</span>")
 		if(GLOB.the_gateway.target)
-			to_chat(user,"<span class='warning'>Home gateway already in use!</span>")
-			return
+			GLOB.the_gateway.deactivate() //this will turn the home gateway off so that it's free for us to connect to
 		activate(GLOB.the_gateway.destination)
 	else
 		deactivate()
@@ -275,11 +278,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = ..()
 	try_to_linkup()
 
-/obj/machinery/computer/gateway_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
-	. = ..()
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/gateway_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Gateway", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Gateway", name)
 		ui.open()
 
 /obj/machinery/computer/gateway_control/ui_data(mob/user)
@@ -308,7 +310,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			try_to_connect(D)
 			return TRUE
 		if("deactivate")
-			if(G && G.target)
+			if(G?.target)
 				G.deactivate()
 			return TRUE
 
@@ -318,7 +320,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/machinery/computer/gateway_control/proc/try_to_connect(datum/gateway_destination/D)
 	if(!D || !G)
 		return
-	if(!D.is_availible() || G.target)
+	if(!D.is_available() || G.target)
 		return
 	G.activate(D)
 

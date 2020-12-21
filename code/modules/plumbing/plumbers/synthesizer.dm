@@ -5,13 +5,9 @@
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
-	rcd_cost = 25
-	rcd_delay = 15
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
-	///The maximum we can produce for every process
-	buffer = 5
 	///I track them here because I have no idea how I'd make tgui loop like that
 	var/static/list/possible_amounts = list(0,1,2,3,4,5)
 	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.
@@ -36,34 +32,30 @@
 		/datum/reagent/potassium,
 		/datum/reagent/uranium/radium,
 		/datum/reagent/silicon,
-		/datum/reagent/silver,
 		/datum/reagent/sodium,
 		/datum/reagent/stable_plasma,
 		/datum/reagent/consumable/sugar,
 		/datum/reagent/sulfur,
 		/datum/reagent/toxin/acid,
 		/datum/reagent/water,
-		/datum/reagent/fuel
+		/datum/reagent/fuel,
 	)
-
-	ui_x = 300
-	ui_y = 375
 
 /obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
-/obj/machinery/plumbing/synthesizer/process()
+/obj/machinery/plumbing/synthesizer/process(delta_time)
 	if(machine_stat & NOPOWER || !reagent_id || !amount)
 		return
-	if(reagents.total_volume >= amount) //otherwise we get leftovers, and we need this to be precise
+	if(reagents.total_volume >= amount*delta_time*0.5) //otherwise we get leftovers, and we need this to be precise
 		return
-	reagents.add_reagent(reagent_id, amount)
+	reagents.add_reagent(reagent_id, amount*delta_time*0.5)
 
-/obj/machinery/plumbing/synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ChemSynthesizer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemSynthesizer", name)
 		ui.open()
 
 /obj/machinery/plumbing/synthesizer/ui_data(mob/user)
@@ -87,7 +79,8 @@
 	return data
 
 /obj/machinery/plumbing/synthesizer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

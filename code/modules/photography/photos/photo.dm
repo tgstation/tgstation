@@ -51,6 +51,8 @@
 	user.examinate(src)
 
 /obj/item/photo/attackby(obj/item/P, mob/user, params)
+	if(burn_paper_product_attackby_check(P, user))
+		return
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
@@ -58,7 +60,8 @@
 		var/txt = stripped_input(user, "What would you like to write on the back?", "Photo Writing", "", 128)
 		if(txt && user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
-	..()
+	else
+		return ..()
 
 /obj/item/photo/examine(mob/user)
 	. = ..()

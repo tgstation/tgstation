@@ -30,6 +30,14 @@
 	icon_state = "sailor_dress"
 	inhand_icon_state = "sailor_dress"
 
+/obj/item/clothing/under/dress/wedding_dress
+	name = "wedding dress"
+	desc = "A luxurious gown for once-in-a-lifetime occasions."
+	icon_state = "wedding_dress"
+	inhand_icon_state = "wedding_dress"
+	body_parts_covered = CHEST|GROIN|LEGS
+	flags_cover = HIDESHOES
+
 /obj/item/clothing/under/dress/redeveninggown
 	name = "red evening gown"
 	desc = "Fancy dress for space bar singers."
@@ -46,21 +54,21 @@
 	desc = "A blue, casual skirt."
 	icon_state = "blueskirt"
 	inhand_icon_state = "b_suit"
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 
 /obj/item/clothing/under/dress/skirt/red
 	name = "red skirt"
 	desc = "A red, casual skirt."
 	icon_state = "redskirt"
 	inhand_icon_state = "r_suit"
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 
 /obj/item/clothing/under/dress/skirt/purple
 	name = "purple skirt"
 	desc = "A purple, casual skirt."
 	icon_state = "purpleskirt"
 	inhand_icon_state = "p_suit"
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 
 /obj/item/clothing/under/dress/skirt/plaid
 	name = "red plaid skirt"
@@ -69,7 +77,7 @@
 	inhand_icon_state = "plaid_red"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 
 /obj/item/clothing/under/dress/skirt/plaid/blue
 	name = "blue plaid skirt"

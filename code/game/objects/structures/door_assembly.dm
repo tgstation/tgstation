@@ -98,28 +98,28 @@
 
 			if(door_check)
 				user.visible_message("<span class='notice'>[user] secures the airlock assembly to the floor.</span>", \
-									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
-									 "<span class='hear'>You hear wrenching.</span>")
+					"<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
+					"<span class='hear'>You hear wrenching.</span>")
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(anchored)
 						return
 					to_chat(user, "<span class='notice'>You secure the airlock assembly.</span>")
 					name = "secured airlock assembly"
-					setAnchored(TRUE)
+					set_anchored(TRUE)
 			else
 				to_chat(user, "There is another door here!")
 
 		else
 			user.visible_message("<span class='notice'>[user] unsecures the airlock assembly from the floor.</span>", \
-								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
-								 "<span class='hear'>You hear wrenching.</span>")
+				"<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
+				"<span class='hear'>You hear wrenching.</span>")
 			if(W.use_tool(src, user, 40, volume=100))
 				if(!anchored)
 					return
 				to_chat(user, "<span class='notice'>You unsecure the airlock assembly.</span>")
 				name = "airlock assembly"
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == AIRLOCK_ASSEMBLY_NEEDS_WIRES && anchored )
 		if(!W.tool_start_check(user, amount=1))
@@ -208,7 +208,7 @@
 							if(G.get_amount() >= 2)
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 								user.visible_message("<span class='notice'>[user] adds [G.name] to the airlock assembly.</span>", \
-												 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+									"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 								if(do_after(user, 40, target = src))
 									if(G.get_amount() < 2 || mineral)
 										return
@@ -237,7 +237,7 @@
 
 	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message("<span class='notice'>[user] finishes the airlock.</span>", \
-							 "<span class='notice'>You start finishing the airlock...</span>")
+			"<span class='notice'>You start finishing the airlock...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))
 			if(loc && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
@@ -295,7 +295,7 @@
 	target.heat_proof_finished = source.heat_proof_finished
 	target.created_name = source.created_name
 	target.state = source.state
-	target.setAnchored(source.anchored)
+	target.set_anchored(source.anchored)
 	if(previous)
 		target.previous_assembly = source.type
 	if(electronics)

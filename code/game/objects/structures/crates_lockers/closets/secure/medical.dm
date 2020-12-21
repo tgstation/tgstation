@@ -88,7 +88,7 @@
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/reagent_containers/hypospray/cmo(src)
-	new /obj/item/autosurgeon/cmo(src)
+	new /obj/item/autosurgeon/organ/cmo(src)
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)

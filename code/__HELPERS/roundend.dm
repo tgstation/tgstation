@@ -12,7 +12,7 @@
 	var/num_escapees = 0 //Above and on centcom z
 	var/num_shuttle_escapees = 0 //Above and on escape shuttle
 	var/list/area/shuttle_areas
-	if(SSshuttle && SSshuttle.emergency)
+	if(SSshuttle?.emergency)
 		shuttle_areas = SSshuttle.emergency.shuttle_areas
 
 	for(var/mob/M in GLOB.mob_list)
@@ -316,6 +316,8 @@
 	parts += medal_report()
 	//Station Goals
 	parts += goal_report()
+	//Economy & Money
+	parts += market_report()
 
 	listclearnulls(parts)
 
@@ -366,7 +368,7 @@
 	if(!previous)
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
-		C.verbs -= /client/proc/show_previous_roundend_report
+		remove_verb(C, /client/proc/show_previous_roundend_report)
 		fdel(filename)
 		text2file(content, filename)
 	else
@@ -457,6 +459,34 @@
 			parts += G.get_result()
 		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
 
+///Generate a report for how much money is on station, as well as the richest crewmember on the station.
+/datum/controller/subsystem/ticker/proc/market_report()
+	var/list/parts = list()
+	parts += "<span class='header'>Station Economic Summary:</span>"
+	///This is the richest account on station at roundend.
+	var/datum/bank_account/mr_moneybags
+	///This is the station's total wealth at the end of the round.
+	var/station_vault = 0
+	///How many players joined the round.
+	var/total_players = GLOB.joined_player_list.len
+	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
+	for(var/i in SSeconomy.bank_accounts_by_id)
+		var/datum/bank_account/current_acc = SSeconomy.bank_accounts_by_id[i]
+		if(typecache_bank[current_acc.type])
+			continue
+		station_vault += current_acc.account_balance
+		if(!mr_moneybags || mr_moneybags.account_balance < current_acc.account_balance)
+			mr_moneybags = current_acc
+	parts += "<div class='panel stationborder'>There were [station_vault] credits collected by crew this shift.<br>"
+	if(total_players > 0)
+		parts += "An average of [station_vault/total_players] credits were collected.<br>"
+		log_econ("Roundend credit total: [station_vault] credits. Average Credits: [station_vault/total_players]")
+	if(mr_moneybags)
+		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
+	else
+		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
+	return parts
+
 /datum/controller/subsystem/ticker/proc/medal_report()
 	if(GLOB.commendations.len)
 		var/list/parts = list()
@@ -469,8 +499,7 @@
 ///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
 /datum/controller/subsystem/ticker/proc/hardcore_random_report()
 	. = list()
-	. += "<span class='header'>The following people made it out as a random hardcore character:</span>"
-	. += "<ul class='playerlist'>"
+	var/list/hardcores = list()
 	for(var/i in GLOB.player_list)
 		if(!ishuman(i))
 			continue
@@ -479,8 +508,14 @@
 			continue
 		if(!human_player.mind)
 			continue
+		hardcores += human_player
+	if(!length(hardcores))
+		return
+	. += "<div class='panel stationborder'><span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += "<ul class='playerlist'>"
+	for(var/mob/living/carbon/human/human_player in hardcores)
 		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
-	. += "</ul>"
+	. += "</ul></div>"
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()

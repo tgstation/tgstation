@@ -2,16 +2,15 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ByondUi, Input, Section } from '../components';
-import { refocusLayout, Window } from '../layouts';
+import { Button, ByondUi, Flex, Input, Section } from '../components';
+import { Window } from '../layouts';
 
 /**
  * Returns previous and next camera names relative to the currently
  * active camera.
  */
-const prevNextCamera = (cameras, activeCamera) => {
+export const prevNextCamera = (cameras, activeCamera) => {
   if (!activeCamera) {
     return [];
   }
@@ -29,7 +28,7 @@ const prevNextCamera = (cameras, activeCamera) => {
  *
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
-const selectCameras = (cameras, searchText = '') => {
+export const selectCameras = (cameras, searchText = '') => {
   const testSearch = createSearch(searchText, camera => camera.name);
   return flow([
     // Null camera filter
@@ -42,7 +41,7 @@ const selectCameras = (cameras, searchText = '') => {
 };
 
 export const CameraConsole = (props, context) => {
-  const { act, data, config } = useBackend(context);
+  const { act, data } = useBackend(context);
   const { mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
   const [
@@ -50,7 +49,10 @@ export const CameraConsole = (props, context) => {
     nextCameraName,
   ] = prevNextCamera(cameras, activeCamera);
   return (
-    <Window resizable>
+    <Window
+      width={870}
+      height={708}
+      resizable>
       <div className="CameraConsole__left">
         <Window.Content scrollable>
           <CameraConsoleContent />
@@ -81,7 +83,6 @@ export const CameraConsole = (props, context) => {
           className="CameraConsole__map"
           params={{
             id: mapRef,
-            parent: config.window,
             type: 'map',
           }} />
       </div>
@@ -98,38 +99,45 @@ export const CameraConsoleContent = (props, context) => {
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
   return (
-    <Fragment>
-      <Input
-        fluid
-        mb={1}
-        placeholder="Search for a camera"
-        onInput={(e, value) => setSearchText(value)} />
-      <Section>
-        {cameras.map(camera => (
+    <Flex
+      direction={"column"}
+      height="100%">
+      <Flex.Item>
+        <Input
+          autoFocus
+          fluid
+          mt={1}
+          placeholder="Search for a camera"
+          onInput={(e, value) => setSearchText(value)} />
+      </Flex.Item>
+      <Flex.Item
+        height="100%">
+        <Section
+          fill
+          scrollable>
+          {cameras.map(camera => (
           // We're not using the component here because performance
           // would be absolutely abysmal (50+ ms for each re-render).
-          <div
-            key={camera.name}
-            title={camera.name}
-            className={classes([
-              'Button',
-              'Button--fluid',
-              'Button--color--transparent',
-              'Button--ellipsis',
-              activeCamera
+            <div
+              key={camera.name}
+              title={camera.name}
+              className={classes([
+                'Button',
+                'Button--fluid',
+                'Button--color--transparent',
+                'Button--ellipsis',
+                activeCamera
                 && camera.name === activeCamera.name
                 && 'Button--selected',
-            ])}
-            onClick={() => {
-              refocusLayout();
-              act('switch_camera', {
+              ])}
+              onClick={() => act('switch_camera', {
                 name: camera.name,
-              });
-            }}>
-            {camera.name}
-          </div>
-        ))}
-      </Section>
-    </Fragment>
+              })}>
+              {camera.name}
+            </div>
+          ))}
+        </Section>
+      </Flex.Item>
+    </Flex>
   );
 };

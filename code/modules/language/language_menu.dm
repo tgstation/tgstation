@@ -8,10 +8,13 @@
 	language_holder = null
 	. = ..()
 
-/datum/language_menu/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.language_menu_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/language_menu/ui_state(mob/user)
+	return GLOB.language_menu_state
+
+/datum/language_menu/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "LanguageMenu", "Language Menu", 700, 600, master_ui, state)
+		ui = new(user, src, "LanguageMenu")
 		ui.open()
 
 /datum/language_menu/ui_data(mob/user)
@@ -60,7 +63,8 @@
 	return data
 
 /datum/language_menu/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/user = usr
 	var/atom/movable/AM = language_holder.get_atom()
@@ -92,6 +96,10 @@
 					if("Both")
 						spoken = TRUE
 						understood = TRUE
+				if(language_holder.blocked_languages && language_holder.blocked_languages[language_datum])
+					choice = alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", "Yes", "No")
+					if(choice == "Yes")
+						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, understood, spoken)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(AM)].")

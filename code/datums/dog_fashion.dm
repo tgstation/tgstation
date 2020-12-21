@@ -23,13 +23,13 @@
 	if(desc)
 		D.desc = desc
 	if(emote_see)
-		D.emote_see = emote_see
+		D.emote_see = string_list(emote_see)
 	if(emote_hear)
-		D.emote_hear = emote_hear
+		D.emote_hear = string_list(emote_hear)
 	if(speak)
-		D.speak = speak
+		D.speak = string_list(speak)
 	if(speak_emote)
-		D.speak_emote = speak_emote
+		D.speak_emote = string_list(speak_emote)
 
 /datum/dog_fashion/proc/get_overlay(dir)
 	if(icon_file && obj_icon_state)

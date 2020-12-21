@@ -28,6 +28,9 @@
 /datum/movespeed_modifier/reagent/freon
 	multiplicative_slowdown = 1.6
 
+/datum/movespeed_modifier/reagent/halon
+	multiplicative_slowdown = 1.8
+
 /datum/movespeed_modifier/reagent/lenturi
 	multiplicative_slowdown = 1.5
 

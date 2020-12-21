@@ -43,8 +43,7 @@
 	name ="retro laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
-//	projectile_type = "/obj/projectile/practice"
-	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
+	clumsy_check = FALSE //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate sub-machine guns.
 /obj/item/gun/ballistic/automatic/c20r/sc_c20r
@@ -68,7 +67,7 @@
 /obj/item/gun/energy/laser/practice/sc_laser
 	name = "Old laser"
 	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
-	clumsy_check = 0
+	clumsy_check = FALSE
 
 /*
  * Safe code hints
@@ -136,22 +135,3 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 	new /obj/item/clothing/suit/space/hardsuit/cult(src)
 	//new /obj/item/teleportation_scroll(src)
 	new /obj/item/stack/ore/diamond(src)
-
-/*
- * Modified Nar'Sie
- */
-/obj/singularity/narsie/mini
-	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
-	move_self = 0 //Contianed narsie does not move!
-	grav_pull = 0 //Contained narsie does not pull stuff in!
-//Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
-/obj/singularity/narsie/mini/admin_investigate_setup()
-	return
-
-/obj/singularity/narsie/mini/process()
-	eat()
-	if(prob(25))
-		mezzer()
-
-/obj/singularity/narsie/mini/ex_act()
-	return

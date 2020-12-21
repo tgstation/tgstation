@@ -52,6 +52,8 @@
 	* user: The mob who is wielding the attacking object.
 */
 /datum/component/label/proc/OnAttackby(datum/source, obj/item/attacker, mob/user)
+	SIGNAL_HANDLER
+
 	// If the attacking object is not a hand labeler or its mode is 1 (has a label ready to apply), return.
 	// The hand labeler should be off (mode is 0), in order to remove a label.
 	var/obj/item/hand_labeler/labeler = attacker
@@ -73,6 +75,8 @@
 	* examine_list: The current list of text getting passed from the parent's normal examine() proc.
 */
 /datum/component/label/proc/Examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
 	examine_list += "<span class='notice'>It has a label with some words written on it. Use a hand labeler to remove it.</span>"
 
 /// Applies a label to the name of the parent in the format of: "parent_name (label)"

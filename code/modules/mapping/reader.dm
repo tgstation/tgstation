@@ -38,9 +38,9 @@
 /// - `x_offset`, `y_offset`, `z_offset`: Positions representign where to load the map (Optional).
 /// - `cropMap`: When true, the map will be cropped to fit the existing world dimensions (Optional).
 /// - `measureOnly`: When true, no changes will be made to the world (Optional).
-/// - `no_changeturf`: When true, [turf/AfterChange] won't be called on loaded turfs
+/// - `no_changeturf`: When true, [/turf/proc/AfterChange] won't be called on loaded turfs
 /// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
-/// - `placeOnTop`: Whether to use [turf/PlaceOnTop] rather than [turf/ChangeTurf] (Optional).
+/// - `placeOnTop`: Whether to use [/turf/proc/PlaceOnTop] rather than [/turf/proc/ChangeTurf] (Optional).
 /proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
 	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
 	if(parsed.bounds && !measureOnly)

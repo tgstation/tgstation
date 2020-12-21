@@ -64,10 +64,10 @@ export const pureComponentHooks = {
 };
 
 /**
- * A helper to determine whether to render an item.
+ * A helper to determine whether the object is renderable by React.
  */
-export const isFalsy = value => {
-  return value === undefined
-    || value === null
-    || value === false;
+export const canRender = value => {
+  return value !== undefined
+    && value !== null
+    && typeof value !== 'boolean';
 };

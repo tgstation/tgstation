@@ -17,7 +17,9 @@ export const DnaVault = (props, context) => {
     animals_max,
   } = data;
   return (
-    <Window>
+    <Window
+      width={350}
+      height={400}>
       <Window.Content>
         <Section title="DNA Vault Database">
           <LabeledList>
@@ -35,7 +37,7 @@ export const DnaVault = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Animal DNA">
               <ProgressBar
-                value={animals / animals}>
+                value={animals / animals_max}>
                 {animals + ' / ' + animals_max + ' Samples'}
               </ProgressBar>
             </LabeledList.Item>

@@ -59,8 +59,8 @@
 			L.sec_hud_set_implants()
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/implanter/mindshield
 	name = "implanter (mindshield)"

@@ -13,7 +13,9 @@ export const Electropack = (props, context) => {
     maxFrequency,
   } = data;
   return (
-    <Window>
+    <Window
+      width={260}
+      height={137}>
       <Window.Content>
         <Section>
           <LabeledList>

@@ -17,13 +17,13 @@ GLOBAL_PROTECT(VVpixelmovement)
 //FALSE = no subtypes, strict exact type pathing (or the type doesn't have subtypes)
 //TRUE = Yes subtypes
 //NULL = User cancelled at the prompt or invalid type given
-/client/proc/vv_subtype_prompt(var/type)
+/client/proc/vv_subtype_prompt(type)
 	if (!ispath(type))
 		return
 	var/list/subtypes = subtypesof(type)
 	if (!subtypes || !subtypes.len)
 		return FALSE
-	if (subtypes && subtypes.len)
+	if (subtypes?.len)
 		switch(alert("Strict object type detection?", "Type detection", "Strictly this type","This type and subtypes", "Cancel"))
 			if("Strictly this type")
 				return FALSE

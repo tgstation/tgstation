@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(title)
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("icon")
+			if(NAMEOF(src, icon))
 				if(splash_turf)
 					splash_turf.icon = icon
 
@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(title)
 	for(var/thing in GLOB.clients)
 		if(!thing)
 			continue
-		var/obj/screen/splash/S = new(thing, FALSE)
+		var/atom/movable/screen/splash/S = new(thing, FALSE)
 		S.Fade(FALSE,FALSE)
 
 /datum/controller/subsystem/title/Recover()

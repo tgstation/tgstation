@@ -66,7 +66,7 @@
 		return
 
 	var/splatter_icon_state
-	if(set_dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(set_dir))
 		splatter_icon_state = "splatter[pick(1, 2, 6)]"
 	else
 		splatter_icon_state = "splatter[pick(3, 4, 5)]"

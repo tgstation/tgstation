@@ -3,6 +3,8 @@ import { useBackend } from '../backend';
 import { Box, Button } from '../components';
 import { Window } from '../layouts';
 
+const PX_PER_UNIT = 24;
+
 class PaintCanvas extends Component {
   constructor(props) {
     super(props);
@@ -58,16 +60,15 @@ class PaintCanvas extends Component {
     const {
       res = 1,
       value,
-      px_per_unit = 28,
+      dotsize = PX_PER_UNIT,
       ...rest
     } = this.props;
-    const x_size = value.length * px_per_unit;
-    const y_size = x_size !== 0 ? value[0].length * px_per_unit : 0;
+    const [width, height] = getImageSize(value);
     return (
       <canvas
         ref={this.canvasRef}
-        width={x_size || 300}
-        height={y_size || 300}
+        width={(width * dotsize) || 300}
+        height={(height * dotsize) || 300}
         {...rest}
         onClick={e => this.clickwrapper(e)}>
         Canvas failed to render.
@@ -76,14 +77,26 @@ class PaintCanvas extends Component {
   }
 }
 
+const getImageSize = value => {
+  const width = value.length;
+  const height = width !== 0 ? value[0].length : 0;
+  return [width, height];
+};
+
 export const Canvas = (props, context) => {
   const { act, data } = useBackend(context);
+  const dotsize = PX_PER_UNIT;
+  const [width, height] = getImageSize(data.grid);
   return (
-    <Window resizable>
-      <Window.Content scrollable>
+    <Window
+      width={Math.min(700, width * dotsize + 72)}
+      height={Math.min(700, height * dotsize + 72)}
+      resizable>
+      <Window.Content>
         <Box textAlign="center">
           <PaintCanvas
             value={data.grid}
+            dotsize={dotsize}
             onCanvasClick={(x, y) => act("paint", { x, y })} />
           <Box>
             {!data.finalized && (

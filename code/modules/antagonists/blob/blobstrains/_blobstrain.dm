@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
 	var/effectdesc = null //any long, blob-tile specific effects
 	var/analyzerdescdamage = "Unknown. Report this bug to a coder, or just adminhelp."
-	var/analyzerdesceffect = "N/A"
+	var/analyzerdesceffect
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	return
 
 /datum/blobstrain/proc/tesla_reaction(obj/structure/blob/B, power, coefficient = 1) //when the blob is hit by a tesla bolt, do this
-	return 1 //return 0 to ignore damage
+	return TRUE //return 0 to ignore damage
 
 /datum/blobstrain/proc/extinguish_reaction(obj/structure/blob/B, coefficient = 1) //when the blob is hit with water, do this
 	return

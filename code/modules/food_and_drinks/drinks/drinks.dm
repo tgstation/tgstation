@@ -45,12 +45,32 @@
 			"<span class='userdanger'>[user] fed you the contents of [src].</span>")
 		log_combat(user, M, "fed", reagents.log_list())
 
+	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
+	reagents.trans_to(M, gulp_size, transfered_by = user, methods = INGEST)
 	checkLiked(fraction, M)
-	reagents.expose(M, INGEST, fraction)
-	reagents.trans_to(M, gulp_size, transfered_by = user)
+
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	if(iscarbon(M))
+		var/mob/living/carbon/carbon_drinker = M
+		var/list/diseases = carbon_drinker.get_static_viruses()
+		if(LAZYLEN(diseases))
+			var/list/datum/disease/diseases_to_add = list()
+			for(var/d in diseases)
+				var/datum/disease/malady = d
+				if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+					diseases_to_add += malady
+			if(LAZYLEN(diseases_to_add))
+				AddComponent(/datum/component/infective, diseases_to_add)
 	return TRUE
+
+/*
+ * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
+ */
+/obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
+	if(isGlass && !custom_materials)
+		set_custom_materials(list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5))
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -207,7 +227,7 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
-	custom_price = 15
+	custom_price = PAYCHECK_PRISONER * 0.6
 	icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
 	spillable = TRUE
@@ -242,17 +262,17 @@
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
-	custom_price = 120
+	custom_price = PAYCHECK_ASSISTANT * 1.2
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
 	desc = "Just add 5ml of water, self heats! A taste that reminds you of your school years. Now new with salty flavour!"
 	icon_state = "ramen"
-	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/sodiumchloride = 3)
+	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/salt = 3)
 	foodtype = GRAIN
 	isGlass = FALSE
-	custom_price = 95
+	custom_price = PAYCHECK_ASSISTANT * 0.9
 
 /obj/item/reagent_containers/food/drinks/waterbottle
 	name = "bottle of water"
@@ -272,7 +292,7 @@
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
-	custom_price = 30
+	custom_price = PAYCHECK_PRISONER * 0.8
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
 	. = ..()
@@ -377,7 +397,8 @@
 	custom_materials = list(/datum/material/plastic=3000)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
-	amount_per_transfer_from_this = 20
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 	cap_icon_state = "bottle_cap"
 
 /obj/item/reagent_containers/food/drinks/waterbottle/large/empty
@@ -404,7 +425,7 @@
 	icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
@@ -418,7 +439,7 @@
 	inhand_icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
@@ -542,7 +563,7 @@
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
-	custom_price = 200
+	custom_price = PAYCHECK_HARD * 2
 	icon_state = "flask"
 	custom_materials = list(/datum/material/iron=250)
 	volume = 60
@@ -577,7 +598,7 @@
 	reagent_flags = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	custom_price = 45
+	custom_price = PAYCHECK_ASSISTANT * 0.9
 	obj_flags = CAN_BE_HIT
 
 /obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize()

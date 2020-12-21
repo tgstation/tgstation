@@ -1,37 +1,36 @@
-import { useBackend } from '../backend';
-import { flow } from 'common/fp';
 import { sortBy } from 'common/collections';
-import { map } from 'common/collections';
-import { Button, Section, Box, Tabs } from '../components';
+import { flow } from 'common/fp';
+import { useBackend } from '../backend';
+import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
 
 export const ForbiddenLore = (props, context) => {
   const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
   const {
     charges,
-    to_know = {},
   } = data;
-  const SortByPath = flow([
+  const to_know = flow([
     sortBy(to_know => to_know.state !== "Research",
       to_know => to_know.path === "Side"),
   ])(data.to_know || []);
-
   return (
-    <Window resizable>
+    <Window
+      width={500}
+      height={900}
+      resizable>
       <Window.Content scrollable>
         <Section title="Research Eldritch Knowledge">
           Charges left : {charges}
-          {SortByPath!== null ? (
-            SortByPath.map(knowledge => (
+          {to_know!== null ? (
+            to_know.map(knowledge => (
               <Section
                 key={knowledge.name}
                 title={knowledge.name}
                 level={2}>
-                <Box bold mb={1} mt={1}>
+                <Box bold my={1}>
                   {knowledge.path} path
                 </Box>
-                <Box mb={1} mt={1}>
+                <Box my={1}>
                   <Button
                     content={knowledge.state}
                     disabled={knowledge.disabled}
@@ -42,16 +41,16 @@ export const ForbiddenLore = (props, context) => {
                   {' '}
                   Cost : {knowledge.cost}
                 </Box >
-                <Box italic mb={1} mt={1}>
+                <Box italic my={1}>
                   {knowledge.flavour}
                 </Box>
-                <Box mb={1} mt={1}>
+                <Box my={1}>
                   {knowledge.desc}
                 </Box>
               </Section>
             ))
           ) : (
-            <Box >
+            <Box>
               No more knowledge can be found
             </Box>
           )}

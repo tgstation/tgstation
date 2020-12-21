@@ -12,7 +12,7 @@
 
 	// You can buckle someone to RTG, then open its panel. Fun stuff.
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_requires_restraints = TRUE
 
 	var/power_gen = 1000 // Enough to power a single APC. 4000 output with T4 capacitor.
@@ -96,7 +96,7 @@
 /obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()
 
-/obj/machinery/power/rtg/abductor/zap_act(tesla_flags)
-	..() //extend the zap
-	if(tesla_flags & ZAP_MACHINE_EXPLOSIVE)
+/obj/machinery/power/rtg/abductor/zap_act(power, zap_flags)
+	. = ..() //extend the zap
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		overload()

@@ -1,22 +1,22 @@
 /obj/structure/sacrificealtar
 	name = "sacrificial altar"
-	desc = "An altar designed to perform blood sacrifice for a deity."
+	desc = "An altar designed to perform blood sacrifice for a deity. Alt-click it to sacrifice a buckled creature."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "sacrificealtar"
 	anchored = TRUE
 	density = FALSE
 	can_buckle = 1
 
-/obj/structure/sacrificealtar/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
+/obj/structure/sacrificealtar/AltClick(mob/living/user)
+	..()
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(!has_buckled_mobs())
 		return
 	var/mob/living/L = locate() in buckled_mobs
 	if(!L)
 		return
-	to_chat(user, "<span class='notice'>You attempt to sacrifice [L] by invoking the sacrificial ritual.</span>")
+	to_chat(user, "<span class='notice'>Invoking the sacred ritual, you sacrifice [L].</span>")
 	L.gib()
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sacrificed [key_name_admin(L)] on the sacrificial altar at [AREACOORD(src)].")
 

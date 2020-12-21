@@ -65,7 +65,8 @@
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
-	reagents = imp.reagents
+	if(imp)
+		reagents = imp.reagents
 
 
 /obj/item/implantcase/tracking

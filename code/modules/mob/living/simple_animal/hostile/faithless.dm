@@ -15,7 +15,7 @@
 	speed = 0
 	maxHealth = 80
 	health = 80
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 
 	harm_intent_damage = 10

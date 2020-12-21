@@ -15,12 +15,16 @@
 
 	var/id
 	var/obscured = FALSE
-	var/sunfrac = 0 //[0-1] measure of obscuration -- multipllier against power generation
-	var/azimuth_current = 0 //[0-360) degrees, which direction are we facing?
+	///`[0-1]` measure of obscuration -- multipllier against power generation
+	var/sunfrac = 0
+	///`[0-360)` degrees, which direction are we facing?
+	var/azimuth_current = 0
 	var/azimuth_target = 0 //same but what way we're going to face next time we turn
 	var/obj/machinery/power/solar_control/control
-	var/needs_to_turn = TRUE //do we need to turn next tick?
-	var/needs_to_update_solar_exposure = TRUE //do we need to call update_solar_exposure() next tick?
+	///do we need to turn next tick?
+	var/needs_to_turn = TRUE
+	///do we need to call update_solar_exposure() next tick?
+	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
@@ -59,7 +63,7 @@
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
-		S.anchored = TRUE
+		S.set_anchored(TRUE)
 	else
 		S.forceMove(src)
 	if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
@@ -120,6 +124,8 @@
 	azimuth_target = azimuth
 
 /obj/machinery/power/solar/proc/queue_update_solar_exposure()
+	SIGNAL_HANDLER
+
 	needs_to_update_solar_exposure = TRUE //updating right away would be wasteful if we're also turning later
 
 /obj/machinery/power/solar/proc/update_turn()
@@ -145,7 +151,7 @@
 		x_hit += target_x
 		y_hit += target_y
 		hit = locate(round(x_hit, 1), round(y_hit, 1), z)
-		if(hit.opacity)
+		if(IS_OPAQUE_TURF(hit))
 			return
 		if(hit.x == 1 || hit.x == world.maxx || hit.y == 1 || hit.y == world.maxy) //edge of the map
 			break
@@ -185,7 +191,7 @@
 		control.gen += sgen
 
 //Bit of a hack but this whole type is a hack
-/obj/machinery/power/solar/fake/Initialize(turf/loc, obj/item/solar_assembly/S)
+/obj/machinery/power/solar/fake/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	UnregisterSignal(SSsun, COMSIG_SUN_MOVED)
 
@@ -216,8 +222,8 @@
 		randomise_offset(random_offset)
 
 /obj/item/solar_assembly/proc/randomise_offset(amount)
-	pixel_x = rand(-amount,amount)
-	pixel_y = rand(-amount,amount)
+	pixel_x = base_pixel_x + rand(-amount, amount)
+	pixel_y = base_pixel_y + rand(-amount, amount)
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
@@ -229,23 +235,21 @@
 		new glass_type(Tsec, 2)
 	glass_type = null
 
+/obj/item/solar_assembly/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.))
+		return
+	randomise_offset(anchored ? 0 : random_offset)
 
 /obj/item/solar_assembly/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
 			to_chat(user, "<span class='warning'>You can't secure [src] here.</span>")
 			return
-		anchored = !anchored
-		if(anchored)
-			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>", "<span class='notice'>You wrench the solar assembly into place.</span>")
-			W.play_tool_sound(src, 75)
-			pixel_x = 0
-			pixel_y = 0
-		else
-			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from its place.</span>", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
-			W.play_tool_sound(src, 75)
-			randomise_offset(random_offset)
-		return 1
+		set_anchored(!anchored)
+		user.visible_message("<span class='notice'>[user] [anchored ? null : "un"]wrenches the solar assembly into place.</span>", "<span class='notice'>You [anchored ? null : "un"]wrench the solar assembly into place.</span>")
+		W.play_tool_sound(src, 75)
+		return TRUE
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
 		if(!anchored)
@@ -263,22 +267,22 @@
 		else
 			to_chat(user, "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>")
 			return
-		return 1
+		return TRUE
 
 	if(!tracker)
 		if(istype(W, /obj/item/electronics/tracker))
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			tracker = 1
+			tracker = TRUE
 			qdel(W)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
-			return 1
+			return TRUE
 	else
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
-			tracker = 0
+			tracker = FALSE
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
-			return 1
+			return TRUE
 	return ..()
 
 //
@@ -348,11 +352,10 @@
 	else
 		. += mutable_appearance(icon, icon_screen)
 
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/power/solar_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SolarControl", name, 380, 230, master_ui, state)
+		ui = new(user, src, "SolarControl", name)
 		ui.open()
 
 /obj/machinery/power/solar_control/ui_data()
@@ -368,7 +371,8 @@
 	return data
 
 /obj/machinery/power/solar_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(action == "azimuth")
 		var/adjust = text2num(params["adjust"])
@@ -415,7 +419,7 @@
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
-				A.anchored = TRUE
+				A.set_anchored(TRUE)
 				qdel(src)
 			else
 				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
@@ -426,7 +430,7 @@
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"
-				A.anchored = TRUE
+				A.set_anchored(TRUE)
 				qdel(src)
 	else if(user.a_intent != INTENT_HARM && !(I.item_flags & NOBLUDGEON))
 		attack_hand(user)
@@ -457,6 +461,8 @@
 
 ///Ran every time the sun updates.
 /obj/machinery/power/solar_control/proc/timed_track()
+	SIGNAL_HANDLER
+
 	if(track == SOLAR_TRACK_TIMED)
 		azimuth_target += azimuth_rate
 		set_panels(azimuth_target)

@@ -14,7 +14,7 @@
 @use '../base.scss' with (
   $color-bg: #E8E4C9,
   $color-bg-grad-spread: 0%,
-  $border-radius: 0px,
+  $border-radius: 0,
 );
 
 // A fat warning to anyone who wants to use this: this only half works.
@@ -32,7 +32,7 @@
     'color-danger': #9a9d00,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.5),
+    'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
 
@@ -40,16 +40,14 @@
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-background': #585337,
+    'background-color': #585337,
   ));
 
   .Button {
     font-family: monospace;
     color: #161613;
-    border-width: 8px;
-    border-style: outset;
-    border-color: #E8E4C9;
-    outline: 3px solid #161613;
+    border: base.em(2px) outset #E8E4C9;
+    outline: base.em(1px) solid #161613;
   }
 
   .Layout__content {

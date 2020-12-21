@@ -16,6 +16,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
 	circuit = /obj/item/circuitboard/computer/card
+	light_color = LIGHT_COLOR_BLUE
 	var/mode = 0
 	var/printing = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
@@ -48,7 +49,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/region_access = null
 	var/list/head_subordinates = null
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/card/proc/get_jobs()
 	return get_all_jobs()
@@ -171,7 +171,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
 		return
 	if(inserted_modify_id)
 		if(id_eject(user, inserted_modify_id))
@@ -255,9 +255,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		var/scan_name = inserted_scan_id ? html_encode(inserted_scan_id.name) : "--------"
 		var/target_name = inserted_modify_id ? html_encode(inserted_modify_id.name) : "--------"
-		var/target_owner = (inserted_modify_id && inserted_modify_id.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
-		var/target_rank = (inserted_modify_id && inserted_modify_id.assignment) ? html_encode(inserted_modify_id.assignment) : "Unassigned"
-		var/target_age = (inserted_modify_id && inserted_modify_id.registered_age) ? html_encode(inserted_modify_id.registered_age) : "--------"
+		var/target_owner = (inserted_modify_id?.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
+		var/target_rank = (inserted_modify_id?.assignment) ? html_encode(inserted_modify_id.assignment) : "Unassigned"
+		var/target_age = (inserted_modify_id?.registered_age) ? html_encode(inserted_modify_id.registered_age) : "--------"
 
 		if(!authenticated)
 			header += {"<br><i>Please insert the cards into the slots</i><br>
@@ -355,14 +355,13 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat = list("<tt>", header.Join(), body, "<br></tt>")
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
 
-	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational())
+	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational)
 		usr.unset_machine()
 		usr << browse(null, "window=id_com")
 		return
@@ -370,27 +369,33 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
-			if(inserted_modify_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_modify_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_modify_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_modify_id))
 					inserted_modify_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_modify_id))
+				if(id_insert(L, held_item, inserted_modify_id))
 					inserted_modify_id = id_to_insert
 					updateUsrDialog()
 		if ("inserted_scan_id")
-			if(inserted_scan_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_scan_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_scan_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_scan_id))
 					inserted_scan_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_scan_id))
+				if(id_insert(L, held_item, inserted_scan_id))
 					inserted_scan_id = id_to_insert
 					updateUsrDialog()
 		if ("auth")
@@ -515,10 +520,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_open_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				if(opened_positions[edit_job_target] >= 0)
 					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
@@ -532,10 +537,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_close_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
 					GLOB.time_last_changed_position = world.time / 10
@@ -550,7 +555,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j
@@ -610,7 +615,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	target_dept = 2
 	icon_screen = "idhos"
 
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3

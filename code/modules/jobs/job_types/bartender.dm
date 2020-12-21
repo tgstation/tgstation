@@ -1,8 +1,6 @@
 /datum/job/bartender
 	title = "Bartender"
-	flag = BARTENDER
 	department_head = list("Head of Personnel")
-	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -16,6 +14,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
+	bounty_types = CIV_JOB_DRINK
 
 /datum/outfit/job/bartender
 	name = "Bartender"

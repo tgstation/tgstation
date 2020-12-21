@@ -1,3 +1,5 @@
+#define OPEN_DURATION 6
+#define CLOSE_DURATION 6
 
 // A place where tube pods stop, and people can get in or out.
 // Mappers: use "Generate Instances from Directions" for this
@@ -18,9 +20,6 @@
 	var/reverse_launch = FALSE
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
-
-	var/const/OPEN_DURATION = 6
-	var/const/CLOSE_DURATION = 6
 
 /obj/structure/transit_tube/station/New()
 	..()
@@ -116,6 +115,14 @@
 		if(STATION_TUBE_OPENING)
 			icon_state = "open_[base_icon]"
 			open_status = STATION_TUBE_OPEN
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				for(var/thing in pod)
+					if(ismob(thing))
+						var/mob/mob_content = thing
+						if(mob_content.client && mob_content.stat < UNCONSCIOUS)
+							continue // Let the mobs with clients decide what they want to do themselves.
+					var/atom/movable/movable_content = thing
+					movable_content.forceMove(loc) //Everything else is moved out of.
 		if(STATION_TUBE_CLOSING)
 			icon_state = "closed_[base_icon]"
 			open_status = STATION_TUBE_CLOSED
@@ -295,3 +302,6 @@
 /obj/structure/transit_tube/station/dispenser/reverse/flipped/init_tube_dirs()
 	..()
 	boarding_dir = dir
+
+#undef OPEN_DURATION
+#undef CLOSE_DURATION

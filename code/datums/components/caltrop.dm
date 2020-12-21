@@ -15,6 +15,8 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
 
 /datum/component/caltrop/proc/Crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(!prob(probability))
 		return
 
@@ -31,7 +33,7 @@
 			return							//gravity checking only our parent would prevent us from triggering they're using magboots / other gravity assisting items that would cause them to still touch us.
 		if(H.buckled) //if they're buckled to something, that something should be checked instead.
 			return
-		if(!(H.mobility_flags & MOBILITY_STAND)) //if were not standing we cant step on the caltrop
+		if(H.body_position == LYING_DOWN) //if were not standing we cant step on the caltrop
 			return
 
 		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -41,17 +43,16 @@
 		if(O.status == BODYPART_ROBOTIC)
 			return
 
-		var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
-
-		if(!(flags & CALTROP_BYPASS_SHOES) && (H.shoes || feetCover))
-			return
+		if (!(flags & CALTROP_BYPASS_SHOES))
+			if ((H.wear_suit?.body_parts_covered | H.w_uniform?.body_parts_covered | H.shoes?.body_parts_covered) & FEET)
+				return
 
 		var/damage = rand(min_damage, max_damage)
 		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 			damage *= 0.75
 
 
-		if(COOLDOWN_FINISHED(src, caltrop_cooldown))
+		if(!(flags & CALTROP_SILENT) && COOLDOWN_FINISHED(src, caltrop_cooldown))
 			COOLDOWN_START(src, caltrop_cooldown, 1 SECONDS) //cooldown to avoid message spam.
 			var/atom/A = parent
 			if(!H.incapacitated(ignore_restraints = TRUE))

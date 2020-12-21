@@ -101,7 +101,7 @@
 
 /// Update the display and, if necessary, re-enable processing.
 /obj/machinery/status_display/proc/update()
-	if (process() != PROCESS_KILL)
+	if (process(SSMACHINES_DT) != PROCESS_KILL)
 		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/status_display/power_change()
@@ -289,11 +289,11 @@
 	if(!.)
 		return
 	switch(var_name)
-		if("shuttle_id")
+		if(NAMEOF(src, shuttle_id))
 			update()
 
-/obj/machinery/status_display/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override)
-	if (port && (shuttle_id == initial(shuttle_id) || override))
+/obj/machinery/status_display/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(port)
 		shuttle_id = port.id
 	update()
 

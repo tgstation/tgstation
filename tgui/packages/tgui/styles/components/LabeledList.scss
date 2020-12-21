@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 
+@use '../base.scss';
+
 .LabeledList {
   display: table;
   // IE8: Does not support calc
   width: 100%;
   // Compensate for negative margin
-  width: calc(100% + 12px);
+  width: calc(100% + 1em);
   border-collapse: collapse;
   border-spacing: 0;
-  margin: -3px -6px;
+  margin: -0.25em -0.5em;
   margin-bottom: 0;
   padding: 0;
 }
@@ -27,7 +29,7 @@
 .LabeledList__cell {
   display: table-cell;
   margin: 0;
-  padding: 3px 6px;
+  padding: 0.25em 0.5em;
   border: 0;
   text-align: left;
   vertical-align: baseline;
@@ -36,13 +38,13 @@
 .LabeledList__label {
   width: 1%;
   white-space: nowrap;
-  min-width: 60px;
+  min-width: 5em;
 }
 
 .LabeledList__buttons {
   width: 0.1%;
   white-space: nowrap;
   text-align: right;
-  padding-top: 1px;
+  padding-top: base.em(1px);
   padding-bottom: 0;
 }

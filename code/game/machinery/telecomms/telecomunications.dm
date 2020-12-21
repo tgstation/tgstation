@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	critical_machine = TRUE
 	var/list/links = list() // list of machines this machine is linked to
 	var/traffic = 0 // value increases as traffic increases
-	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
+	var/netspeed = 2.5 // how much traffic to lose per second (50 gigabytes/second * netspeed)
 	var/list/autolinkers = list() // list of text/number values to link with
 	var/id = "NULL" // identification string
 	var/network = "NULL" // the network of the machinery
@@ -31,6 +31,8 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	var/long_range_link = FALSE  // Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = FALSE  // Is it a hidden machine?
 
+	///Looping sounds for any servers
+	var/datum/looping_sound/server/soundloop
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/subspace/signal, filter, copysig, amount = 20)
 	// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
@@ -82,6 +84,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
+	soundloop = new(list(src), on)
 	GLOB.telecomms_list += src
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
@@ -93,6 +96,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Destroy()
 	GLOB.telecomms_list -= src
+	QDEL_NULL(soundloop)
 	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
 		comm.links -= src
 	links = list()
@@ -127,28 +131,31 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(toggled)
 		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
 			on = FALSE
+			soundloop.stop()
 		else
 			on = TRUE
+			soundloop.start()
 	else
 		on = FALSE
+		soundloop.stop()
 
-/obj/machinery/telecomms/process()
+/obj/machinery/telecomms/process(delta_time)
 	update_power()
 
 	// Update the icon
 	update_icon()
 
 	if(traffic > 0)
-		traffic -= netspeed
+		traffic -= netspeed * delta_time
 
 /obj/machinery/telecomms/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(prob(100/severity) && !(machine_stat & EMPED))
-		machine_stat |= EMPED
+		set_machine_stat(machine_stat | EMPED)
 		var/duration = (300 * 10)/severity
 		addtimer(CALLBACK(src, .proc/de_emp), rand(duration - 20, duration + 20))
 
 /obj/machinery/telecomms/proc/de_emp()
-	machine_stat &= ~EMPED
+	set_machine_stat(machine_stat & ~EMPED)

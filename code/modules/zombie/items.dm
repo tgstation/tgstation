@@ -12,10 +12,10 @@
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
 	force = 21 // Just enough to break airlocks with melee attacks
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	wound_bonus = -30
 	bare_wound_bonus = 15
-	damtype = "brute"
+	damtype = BRUTE
 
 /obj/item/zombie_hand/Initialize()
 	. = ..()

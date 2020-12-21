@@ -218,7 +218,7 @@
 			new /obj/item/banhammer(src)
 			for(var/i in 1 to 3)
 				var/obj/effect/mine/sound/bwoink/mine = new (src)
-				mine.anchored = FALSE
+				mine.set_anchored(FALSE)
 				mine.move_resist = MOVE_RESIST_DEFAULT
 		if(97)
 			for(var/i in 1 to 4)

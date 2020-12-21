@@ -3,16 +3,18 @@
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_icon_state = "hypo"
+	worn_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "hypo"
+	worn_icon_state = "hypo"
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = list()
 	resistance_flags = ACID_PROOF
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
-	var/ignore_flags = 0
+	var/ignore_flags = NONE
 	var/infinite = FALSE
 
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user)
@@ -40,13 +42,14 @@
 		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
 		to_chat(user, "<span class='notice'>You inject [M] with [src].</span>")
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.expose(M, INJECT, fraction)
+
 
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
+				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
 			else
+				reagents.expose(M, INJECT, fraction)
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src].</span>")
 			log_combat(user, M, "injected", src, "([contained])")
@@ -100,6 +103,7 @@
 	desc = "A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Contains a powerful preservative that can delay decomposition when applied to a dead body."
 	icon_state = "medipen"
 	inhand_icon_state = "medipen"
+	worn_icon_state = "medipen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 15
@@ -108,8 +112,8 @@
 	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
-	custom_price = 150
-	custom_premium_price = 300
+	custom_price = PAYCHECK_MEDIUM
+	custom_premium_price = PAYCHECK_HARD
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -123,7 +127,7 @@
 		update_icon()
 
 /obj/item/reagent_containers/hypospray/medipen/attack_self(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK, FALSE, FLOOR_OKAY))
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon_state()
@@ -134,7 +138,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()
-	if(reagents && reagents.reagent_list.len)
+	if(reagents?.reagent_list.len)
 		. += "<span class='notice'>It is currently loaded.</span>"
 	else
 		. += "<span class='notice'>It is spent.</span>"
@@ -214,13 +218,39 @@
 		icon_state = "[initial(icon_state)]0"
 
 /obj/item/reagent_containers/hypospray/medipen/survival
-	name = "survival medipen"
-	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
+	name = "survival emergency medipen"
+	desc = "A medipen for surviving in the harsh environments, heals most common damage sources. WARNING: May cause organ damage."
 	icon_state = "stimpen"
 	inhand_icon_state = "stimpen"
+	volume = 30
+	amount_per_transfer_from_this = 30
+	list_reagents = list( /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/c2/aiuri = 8, /datum/reagent/medicine/c2/libital = 8 ,/datum/reagent/medicine/leporazine = 6)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/M, mob/user)
+	if(lavaland_equipment_pressure_check(get_turf(user)))
+		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
+		return ..()
+
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_SURVIVALPEN))
+		to_chat(user,"<span class='notice'>You are too busy to use \the [src]!</span>")
+		return
+
+	to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
+	if(!do_mob(user, M, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
+		return
+
+	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
+	return ..()
+
+
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury
+	name = "luxury medipen"
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard enviroments. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
+	icon_state = "luxpen"
+	inhand_icon_state = "atropen"
 	volume = 60
 	amount_per_transfer_from_this = 60
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5, /datum/reagent/medicine/oxandrolone = 8, /datum/reagent/medicine/sal_acid = 8, /datum/reagent/medicine/morphine = 2)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
@@ -256,7 +286,16 @@
 
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
-	desc = "An epinephrine medipen with trace amounts of coagulants and antibiotics to help stabilize bad cuts and burns."
+	desc = "An epinephrine medipen with extra coagulant and antibiotics to help stabilize bad cuts and burns."
+	icon_state = "firstaid"
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)
+
+/obj/item/reagent_containers/hypospray/medipen/blood_loss
+	name = "hypovolemic-response autoinjector"
+	desc = "A medipen designed to stabilize and rapidly reverse severe bloodloss."
+	icon_state = "hypovolemic"
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 5, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/iron = 3.5, /datum/reagent/medicine/salglu_solution = 4)

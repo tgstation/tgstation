@@ -89,6 +89,8 @@
 
 /// Triggered on equip of the item containing the component
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
+	SIGNAL_HANDLER
+
 	if(require_twohands && slot == ITEM_SLOT_HANDS) // force equip the item
 		wield(user)
 	if(!user.is_holding(parent) && wielded && !require_twohands)
@@ -96,6 +98,8 @@
 
 /// Triggered on drop of item containing the component
 /datum/component/two_handed/proc/on_drop(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(require_twohands)
 		unwield(user, show_message=TRUE)
 	if(wielded)
@@ -105,6 +109,8 @@
 
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(wielded)
 		unwield(user)
 	else if(user.is_holding(parent))
@@ -129,7 +135,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
-	if(user.get_num_arms() < 2)
+	if(user.usable_hands < 2)
 		if(require_twohands)
 			user.dropItemToGround(parent, force=TRUE)
 		to_chat(user, "<span class='warning'>You don't have enough intact hands.</span>")
@@ -203,23 +209,25 @@
 
 	// Update icons
 	parent_item.update_icon()
-	if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
-		user.update_inv_back()
-	else
-		user.update_inv_hands()
 
-	// if the item requires two handed drop the item on unwield
-	if(require_twohands)
-		user.dropItemToGround(parent, force=TRUE)
-
-	// Show message if requested
-	if(show_message)
-		if(iscyborg(user))
-			to_chat(user, "<span class='notice'>You free up your module.</span>")
-		else if(require_twohands)
-			to_chat(user, "<span class='notice'>You drop [parent].</span>")
+	if(istype(user)) // tk showed that we might not have a mob here
+		if(user.get_item_by_slot(ITEM_SLOT_BACK) == parent)
+			user.update_inv_back()
 		else
-			to_chat(user, "<span class='notice'>You are now carrying [parent] with one hand.</span>")
+			user.update_inv_hands()
+
+		// if the item requires two handed drop the item on unwield
+		if(require_twohands)
+			user.dropItemToGround(parent, force=TRUE)
+
+		// Show message if requested
+		if(show_message)
+			if(iscyborg(user))
+				to_chat(user, "<span class='notice'>You free up your module.</span>")
+			else if(require_twohands)
+				to_chat(user, "<span class='notice'>You drop [parent].</span>")
+			else
+				to_chat(user, "<span class='notice'>You are now carrying [parent] with one hand.</span>")
 
 	// Play sound if set
 	if(unwieldsound)
@@ -246,6 +254,8 @@
  * Updates the icon using icon_wielded if set
  */
 /datum/component/two_handed/proc/on_update_icon(datum/source)
+	SIGNAL_HANDLER
+
 	if(icon_wielded && wielded)
 		var/obj/item/parent_item = parent
 		if(parent_item)
@@ -256,12 +266,16 @@
  * on_moved Triggers on item moved
  */
 /datum/component/two_handed/proc/on_moved(datum/source, mob/user, dir)
+	SIGNAL_HANDLER
+
 	unwield(user)
 
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
  */
 /datum/component/two_handed/proc/on_swap_hands(mob/user, obj/item/held_item)
+	SIGNAL_HANDLER
+
 	if(!held_item)
 		return
 	if(held_item == parent)
@@ -271,6 +285,8 @@
  * on_sharpen Triggers on usage of a sharpening stone on the item
  */
 /datum/component/two_handed/proc/on_sharpen(obj/item/item, amount, max_amount)
+	SIGNAL_HANDLER
+
 	if(!item)
 		return COMPONENT_BLOCK_SHARPEN_BLOCKED
 	if(sharpened_increase)

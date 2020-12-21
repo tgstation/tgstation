@@ -21,7 +21,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	var/launch_warning = TRUE
 	var/list/turrets = list() //List of connected turrets
 
-	req_one_access = list(ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_HEADS, ACCESS_RESEARCH)
+	req_one_access = list(ACCESS_AUX_BASE, ACCESS_HEADS)
 	var/possible_destinations
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 
@@ -68,7 +68,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	var/datum/browser/popup = new(user, "computer", "base management", 550, 300) //width, height
 	popup.set_content("<center>[dat]</center>")
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 

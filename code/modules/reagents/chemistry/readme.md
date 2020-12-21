@@ -64,12 +64,12 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 		clear_reagents()
 			This proc removes ALL reagents from the holder.
 
-		reaction(var/atom/A, var/method=TOUCH, var/volume_modifier=0)
+		expose(var/atom/A, var/methods=TOUCH, var/volume_modifier=0)
 			This proc calls the appropriate reaction procs of the reagents.
 			I.e. if A is an object, it will call the reagents expose_obj
-			proc. The method var is used for reaction on mobs. It simply tells
+			proc. The methods var is used for reaction on mobs. It simply tells
 			us if the mob TOUCHed the reagent, if it INGESTed the reagent, if the reagent
-			was VAPORIZEd on them, if the reagent was INJECTed,	or transfered via a PATCH to them.
+			was VAPORIZEd on them, if the reagent was INJECTed, and/or transfered via a PATCH to them.
 			Since the volume can be checked in a reagents proc, you might want to
 			use the volume_modifier var to modifiy the passed value without actually
 			changing the volume of the reagents.
@@ -116,11 +116,12 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 # About Reagents:
 Reagents are all the things you can mix and fille in bottles etc. This can be anything from rejuvs over water to ... iron. Each reagent also has a few procs - i'll explain those below.
 ```
-		expose_mob(var/mob/living/L, var/method=TOUCH)
+		expose_mob(var/mob/living/L, var/methods=TOUCH)
 			This is called by the holder's reation proc.
 			This version is only called when the reagent
-			reacts with a mob. The method var can be either
-			TOUCH or INGEST. You'll want to put stuff like
+			reacts with a mob. The methods var can be any
+			combination of TOUCH, INGEST, VAPOR, PATCH,
+			and INJECT. You'll want to put stuff like
 			acid-facemelting in here.
 
 		expose_obj(var/obj/O)

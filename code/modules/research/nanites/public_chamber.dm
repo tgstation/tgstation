@@ -56,7 +56,7 @@
 	if(!occupant)
 		return
 	if(attacker)
-		occupant.investigate_log("was injected with nanites by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+		occupant.investigate_log("was injected with nanites with cloud ID [cloud_id] by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 		log_combat(attacker, occupant, "injected", null, "with nanites via [src]")
 	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
@@ -124,7 +124,7 @@
 
 	open_machine()
 
-/obj/machinery/public_nanite_chamber/container_resist(mob/living/user)
+/obj/machinery/public_nanite_chamber/container_resist_act(mob/living/user)
 	if(!locked)
 		open_machine()
 		return
@@ -172,7 +172,7 @@
 
 	return TRUE
 
-/obj/machinery/public_nanite_chamber/relaymove(mob/user as mob)
+/obj/machinery/public_nanite_chamber/relaymove(mob/living/user, direction)
 	if(user.stat || locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50

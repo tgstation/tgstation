@@ -146,3 +146,39 @@
 			C.cremate(usr)
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+
+//how long it spends on each floor when moving somewhere, so it'd take 4 seconds to reach you if it had to travel up 2 floors
+#define FLOOR_TRAVEL_TIME 2 SECONDS
+/obj/item/assembly/control/elevator
+	name = "elevator controller"
+	desc = "A small device used to call elevators to the current floor."
+
+/obj/item/assembly/control/elevator/activate()
+	if(cooldown)
+		return
+	cooldown = TRUE
+	var/obj/structure/industrial_lift/lift
+	for(var/l in GLOB.lifts)
+		var/obj/structure/industrial_lift/possible_lift = l
+		if(possible_lift.id != id || possible_lift.z == z || possible_lift.controls_locked)
+			continue
+		lift = possible_lift
+		break
+	if(!lift)
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+		return
+	lift.visible_message("<span class='notice'>[src] clinks and whirrs into automated motion, locking controls.</span")
+	lift.lift_master_datum.set_controls(LOCKED)
+	var/difference = abs(z - lift.z)
+	var/direction = lift.z > z ? UP : DOWN
+	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
+	for(var/i in 1 to difference)
+		sleep(FLOOR_TRAVEL_TIME)//hey this should be alright... right?
+		if(QDELETED(lift) || QDELETED(src))//elevator control or button gone = don't go up anymore
+			return
+		lift.lift_master_datum.MoveLift(direction, null)
+	lift.visible_message("<span class='notice'>[src] clicks, ready to be manually operated again.</span")
+	lift.lift_master_datum.set_controls(UNLOCKED)
+
+#undef FLOOR_TRAVEL_TIME

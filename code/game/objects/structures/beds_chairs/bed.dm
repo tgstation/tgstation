@@ -79,9 +79,9 @@
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-			return 0
+			return FALSE
 		if(has_buckled_mobs())
-			return 0
+			return FALSE
 		usr.visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>", "<span class='notice'>You collapse \the [src.name].</span>")
 		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
 		usr.put_in_hands(B)
@@ -90,18 +90,21 @@
 /obj/structure/bed/roller/post_buckle_mob(mob/living/M)
 	density = TRUE
 	icon_state = "up"
-	M.pixel_y = initial(M.pixel_y)
+	//Push them up from the normal lying position
+	M.pixel_y = M.base_pixel_y
 
 /obj/structure/bed/roller/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
+
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	density = FALSE
 	icon_state = "down"
-	M.pixel_x = M.get_standard_pixel_x_offset(!(M.mobility_flags & MOBILITY_STAND))
-	M.pixel_y = M.get_standard_pixel_y_offset(!(M.mobility_flags & MOBILITY_STAND))
+	//Set them back down to the normal lying position
+	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
+
 
 /obj/item/roller
 	name = "roller bed"
@@ -168,7 +171,7 @@
 	anchored = FALSE
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
-	var/mob/living/owner = null
+	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
 	desc = "Ian's bed! Looks comfy."
@@ -180,20 +183,33 @@
 	name = "Cayenne's bed"
 	anchored = TRUE
 
+/obj/structure/bed/dogbed/lia
+	desc = "Seems kind of... fishy."
+	name = "Lia's bed"
+	anchored = TRUE
+
 /obj/structure/bed/dogbed/renault
 	desc = "Renault's bed! Looks comfy. A foxy person needs a foxy pet."
 	name = "Renault's bed"
 	anchored = TRUE
+
+/obj/structure/bed/dogbed/mcgriff
+	desc = "McGriff's bed, because even crimefighters sometimes need a nap."
+	name = "McGriff's bed"
 
 /obj/structure/bed/dogbed/runtime
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."
 	name = "Runtime's bed"
 	anchored = TRUE
 
+///Used to set the owner of a dogbed, returns FALSE if called on an owned bed or an invalid one, TRUE if the possesion succeeds
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
-	owner = M
+	if(owned || type != /obj/structure/bed/dogbed) //Only marked beds work, this is hacky but I'm a hacky man
+		return FALSE //Failed
+	owned = TRUE
 	name = "[M]'s bed"
 	desc = "[M]'s bed! Looks comfy."
+	return TRUE //Let any callers know that this bed is ours now
 
 /obj/structure/bed/dogbed/buckle_mob(mob/living/M, force, check_loc)
 	. = ..()
@@ -203,3 +219,13 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+
+/obj/structure/bed/maint
+	name = "dirty mattress"
+	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
+	icon_state = "dirty_mattress"
+
+/obj/structure/bed/maint/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)

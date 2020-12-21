@@ -4,7 +4,7 @@
 /datum/emote/living/carbon/airguitar
 	key = "airguitar"
 	message = "is strumming the air and headbanging like a safari chimp."
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/blink
 	key = "blink"
@@ -20,7 +20,7 @@
 	key_third_person = "claps"
 	message = "claps."
 	muzzle_ignore = TRUE
-	restraint_check = TRUE
+	hands_use_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 
@@ -42,7 +42,7 @@
 	cooldown = 6 SECONDS
 
 /datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
-	if(user.get_num_arms() <= 1)
+	if(user.usable_hands < 2)
 		return FALSE
 	return ..()
 
@@ -64,27 +64,41 @@
 	key_third_person = "rolls"
 	message = "rolls."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/scratch
 	key = "scratch"
 	key_third_person = "scratches"
 	message = "scratches."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/screech
 	key = "screech"
 	key_third_person = "screeches"
 	message = "screeches."
-	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
+	mob_type_allowed_typecache = list(/mob/living/carbon/monkey)
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/screech/get_sound(mob/living/user)
+	return pick('sound/creatures/monkey/monkey_screech_1.ogg',
+				'sound/creatures/monkey/monkey_screech_2.ogg',
+				'sound/creatures/monkey/monkey_screech_3.ogg',
+				'sound/creatures/monkey/monkey_screech_4.ogg',
+				'sound/creatures/monkey/monkey_screech_5.ogg',
+				'sound/creatures/monkey/monkey_screech_6.ogg',
+				'sound/creatures/monkey/monkey_screech_7.ogg')
+/datum/emote/living/carbon/screech/roar
+	key = "roar"
+	key_third_person = "roars"
+	message = "roars."
 
 /datum/emote/living/carbon/sign
 	key = "sign"
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
@@ -96,7 +110,7 @@
 	key_third_person = "signals"
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/tail
 	key = "tail"
@@ -111,7 +125,7 @@
 /datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -125,7 +139,7 @@
 /datum/emote/living/carbon/slap
 	key = "slap"
 	key_third_person = "slaps"
-	restraint_check = TRUE
+	hands_use_check = TRUE
 
 /datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()

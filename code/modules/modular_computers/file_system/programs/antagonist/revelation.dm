@@ -8,18 +8,22 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRevelation"
-	ui_x = 400
-	ui_y = 250
-
+	program_icon = "magnet"
 	var/armed = 0
 
-/datum/computer_file/program/revelation/run_program(var/mob/living/user)
+/datum/computer_file/program/revelation/run_program(mob/living/user)
 	. = ..(user)
 	if(armed)
 		activate()
 
 /datum/computer_file/program/revelation/proc/activate()
 	if(computer)
+		if(istype(computer, /obj/item/modular_computer/tablet/integrated)) //If this is a borg's integrated tablet
+			var/obj/item/modular_computer/tablet/integrated/modularInterface = computer
+			to_chat(modularInterface.borgo,"<span class='userdanger'>SYSTEM PURGE DETECTED/</span>")
+			addtimer(CALLBACK(modularInterface.borgo, /mob/living/silicon/robot/.proc/death), 2 SECONDS, TIMER_UNIQUE)
+			return
+
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
 		computer.enabled = FALSE
 		computer.update_icon()
@@ -42,7 +46,8 @@
 
 
 /datum/computer_file/program/revelation/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("PRG_arm")

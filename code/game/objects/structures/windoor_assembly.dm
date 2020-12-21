@@ -52,8 +52,6 @@
 
 /obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return TRUE
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return
 	if(istype(mover, /obj/structure/window))
@@ -73,14 +71,13 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+/obj/structure/windoor_assembly/CheckExit(atom/movable/mover, turf/target)
+	if(mover.pass_flags & pass_flags_self)
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
-		return 1
-
+		return TRUE
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user, params)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
@@ -121,7 +118,7 @@
 							to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 							return
 					to_chat(user, "<span class='notice'>You secure the windoor assembly.</span>")
-					setAnchored(TRUE)
+					set_anchored(TRUE)
 					if(secure)
 						name = "secure anchored windoor assembly"
 					else
@@ -136,7 +133,7 @@
 					if(!anchored)
 						return
 					to_chat(user, "<span class='notice'>You unsecure the windoor assembly.</span>")
-					setAnchored(FALSE)
+					set_anchored(FALSE)
 					if(secure)
 						name = "secure windoor assembly"
 					else
@@ -338,7 +335,7 @@
 	set name = "Flip Windoor Assembly"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat || usr.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	if(isliving(usr))

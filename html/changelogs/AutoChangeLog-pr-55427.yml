@@ -1,0 +1,6 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "fixed delta station layer manifolds under floor in SM room"
+  - rscadd: "added some missing lights on delta station SM and atmos"
+  - rscadd: "added buttons and shutters to the delta station atmos testing room chambers to vent to space"

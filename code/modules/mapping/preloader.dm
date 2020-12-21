@@ -4,7 +4,6 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 
 /// Preloader datum
 /datum/map_preloader
-	parent_type = /datum
 	var/list/attributes
 	var/target_path
 

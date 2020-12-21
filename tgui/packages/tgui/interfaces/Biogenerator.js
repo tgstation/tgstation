@@ -2,7 +2,7 @@ import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Flex, Icon, Input, Section, Table, Tabs, NoticeBox, NumberInput } from '../components';
+import { Box, Button, Dimmer, Flex, Icon, Input, NoticeBox, NumberInput, Section, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -15,7 +15,10 @@ export const Biogenerator = (props, context) => {
     processing,
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={550}
+      height={420}
+      resizable>
       {!!processing && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
@@ -77,6 +80,7 @@ export const BiogeneratorContent = (props, context) => {
         <Fragment>
           Search
           <Input
+            autoFocus
             value={searchText}
             onInput={(e, value) => setSearchText(value)}
             mx={1} />
@@ -131,16 +135,16 @@ const ItemList = (props, context) => {
     hoveredItem,
     setHoveredItem,
   ] = useLocalState(context, 'hoveredItem', {});
-  const hoveredCost = hoveredItem && hoveredItem.cost || 0;
+  const hoveredCost = hoveredItem.cost || 0;
   // Append extra hover data to items
   const items = props.items.map(item => {
     const [
       amount,
       setAmount,
     ] = useLocalState(context, "amount" + item.name, 1);
-    const notSameItem = hoveredItem && hoveredItem.name !== item.name;
+    const notSameItem = hoveredItem.name !== item.name;
     const notEnoughHovered = props.biomass - hoveredCost
-    * hoveredItem.amount < item.cost * amount;
+      * hoveredItem.amount < item.cost * amount;
     const disabledDueToHovered = notSameItem && notEnoughHovered;
     const disabled = props.biomass < item.cost * amount || disabledDueToHovered;
     return {

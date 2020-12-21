@@ -68,7 +68,7 @@
 	addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.35 SECONDS, 20 SECONDS))
 	UnregisterFromParent()
 
-/datum/component/thermite/proc/burn_parent(var/datum/fakefire, mob/user)
+/datum/component/thermite/proc/burn_parent(datum/fakefire, mob/user)
 	var/turf/master = parent
 	if(!QDELETED(fakefire))
 		qdel(fakefire)
@@ -80,13 +80,20 @@
 	qdel(src)
 
 /datum/component/thermite/proc/clean_react(datum/source, strength)
+	SIGNAL_HANDLER
+
 	//Thermite is just some loose powder, you could probably clean it with your hands. << todo?
 	qdel(src)
+	return COMPONENT_CLEANED
 
 /datum/component/thermite/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
+	SIGNAL_HANDLER
+
 	if(exposed_temperature > 1922) // This is roughly the real life requirement to ignite thermite
 		thermite_melt()
 
 /datum/component/thermite/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
+	SIGNAL_HANDLER
+
 	if(thing.get_temperature())
 		thermite_melt(user)

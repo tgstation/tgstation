@@ -62,6 +62,13 @@
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
 		M.splat()
+	else if(israt(target))
+		var/mob/living/simple_animal/hostile/rat/ratt = target
+		visible_message("<span class='boldannounce'>Clink!</span>")
+		ratt.apply_damage(5) //Not lethal, but just enought to make a mark.
+		ratt.Stun(1 SECONDS)
+	else if(isregalrat(target))
+		visible_message("<span class='boldannounce'>Skreeeee!</span>") //He's simply too large to be affected by a tiny mouse trap.
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	armed = FALSE
 	update_icon()
@@ -78,7 +85,7 @@
 				which_hand = BODY_ZONE_PRECISE_R_HAND
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
-								 "<span class='warning'>You accidentally trigger [src]!</span>")
+				"<span class='warning'>You accidentally trigger [src]!</span>")
 			return
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
@@ -95,7 +102,7 @@
 				which_hand = BODY_ZONE_PRECISE_R_HAND
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
-								 "<span class='warning'>You accidentally trigger [src]!</span>")
+					"<span class='warning'>You accidentally trigger [src]!</span>")
 			return
 	return ..()
 
@@ -110,8 +117,8 @@
 					if(H.m_intent == MOVE_INTENT_RUN)
 						triggered(H)
 						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
-										  "<span class='warning'>You accidentally step on [src]</span>")
-				else if(ismouse(MM))
+							"<span class='warning'>You accidentally step on [src]</span>")
+				else if(ismouse(MM) || israt(MM) || isregalrat(MM))
 					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)

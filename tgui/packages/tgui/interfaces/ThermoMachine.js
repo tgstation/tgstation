@@ -6,7 +6,9 @@ import { Window } from '../layouts';
 export const ThermoMachine = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      width={300}
+      height={250}>
       <Window.Content>
         <Section title="Status">
           <LabeledList>
@@ -34,6 +36,13 @@ export const ThermoMachine = (props, context) => {
               onClick={() => act('power')} />
           )}>
           <LabeledList>
+            <LabeledList.Item label="Setting">
+              <Button
+                icon={data.cooling ? 'cooling' : 'heating'}
+                content={data.cooling ? 'Cooling' : 'Heating'}
+                selected={data.cooling}
+                onClick={() => act('cooling')} />
+            </LabeledList.Item>
             <LabeledList.Item label="Target Temperature">
               <NumberInput
                 animated

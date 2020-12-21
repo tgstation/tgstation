@@ -12,8 +12,6 @@
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/ore_redemption
-	ui_x = 440
-	ui_y = 550
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
@@ -30,22 +28,12 @@
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
-	materials = AddComponent(/datum/component/remote_materials, "orm", mapload)
+	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
 	materials = null
 	return ..()
-
-/obj/machinery/mineral/ore_redemption/RefreshParts()
-	var/point_upgrade_temp = 1
-	var/ore_multiplier_temp = 1
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		point_upgrade_temp = 0.65 + (0.35 * L.rating)
-	point_upgrade = point_upgrade_temp
-	ore_multiplier = round(ore_multiplier_temp, 0.01)
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
@@ -64,10 +52,10 @@
 	if(O.refined_type == null)
 		return
 
-	if(O && O.refined_type)
+	if(O?.refined_type)
 		points += O.points * point_upgrade * O.amount
 
-	var/material_amount = mat_container.get_item_material_amount(O)
+	var/material_amount = mat_container.get_item_material_amount(O, BREAKDOWN_FLAGS_ORM)
 
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
@@ -76,9 +64,10 @@
 		unload_mineral(O)
 
 	else
-		var/mats = O.custom_materials & mat_container.materials
+		var/list/stack_mats = O.get_material_composition(BREAKDOWN_FLAGS_ORM)
+		var/mats = stack_mats & mat_container.materials
 		var/amount = O.amount
-		mat_container.insert_item(O, ore_multiplier) //insert it
+		mat_container.insert_item(O, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
 		materials.silo_log(src, "smelted", amount, "someone", mats)
 		qdel(O)
 
@@ -208,10 +197,10 @@
 		register_input_turf() // register the new one
 		return TRUE
 
-/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "OreRedemptionMachine", "Ore Redemption Machine", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "OreRedemptionMachine")
 		ui.open()
 
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
@@ -253,13 +242,16 @@
 	return data
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			var/obj/item/card/id/I
+			if(isliving(usr))
+				var/mob/living/L = usr
+				I = L.get_idcard(TRUE)
 			if(points)
 				if(I)
 					I.mining_points += points
@@ -329,8 +321,10 @@
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			var/obj/item/card/id/I
+			if(isliving(usr))
+				var/mob/living/L = usr
+				I = L.get_idcard(TRUE)
 			if((check_access(I) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0

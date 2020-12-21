@@ -10,7 +10,6 @@
 	name = "extract implant"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 65, /obj/item/kitchen/fork = 35)
 	time = 64
-	experience_given = MEDICAL_SKILL_MEDIUM
 	var/obj/item/implant/I = null
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

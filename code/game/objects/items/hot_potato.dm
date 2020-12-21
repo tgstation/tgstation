@@ -103,7 +103,7 @@
 		return FALSE
 	if(!victim.client)
 		to_chat(user, "<span class='boldwarning'>[src] refuses to attach to a non-sapient creature!</span>")
-	if(victim.stat != CONSCIOUS || !victim.get_num_legs())
+	if(victim.stat != CONSCIOUS || !victim.usable_legs)
 		to_chat(user, "<span class='boldwarning'>[src] refuses to attach to someone incapable of using it!</span>")
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	. = FALSE

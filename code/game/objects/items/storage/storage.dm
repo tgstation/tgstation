@@ -19,14 +19,14 @@
 	return FALSE
 
 /obj/item/storage/contents_explosion(severity, target)
-	for(var/atom/A in contents)
+	for(var/thing in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += A
+				SSexplosions.high_mov_atom += thing
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += A
+				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += A
+				SSexplosions.low_mov_atom += thing
 
 /obj/item/storage/canStrip(mob/who)
 	. = ..()
@@ -48,3 +48,10 @@
 /obj/item/storage/proc/emptyStorage()
 	var/datum/component/storage/ST = GetComponent(/datum/component/storage)
 	ST.do_quick_empty()
+
+/obj/item/storage/Destroy()
+	for(var/obj/important_thing in contents)
+		if(!(important_thing.resistance_flags & INDESTRUCTIBLE))
+			continue
+		important_thing.forceMove(drop_location())
+	return ..()

@@ -10,11 +10,10 @@
 	anchored = FALSE
 	density = TRUE
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	machine_stat = 0
 	verb_say = "states"
 	var/cooldown = 0
 
-	var/active = 0
+	var/active = FALSE
 	var/icontype = "beacon"
 
 
@@ -23,21 +22,24 @@
 		if(user)
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return
-	for(var/obj/singularity/singulo in GLOB.singularities)
-		if(singulo.z == z)
+	for (var/_singulo in GLOB.singularities)
+		var/datum/component/singularity/singulo = _singulo
+		var/atom/singulo_atom = singulo.parent
+		if(singulo_atom.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
-	active = 1
+	active = TRUE
 	if(user)
 		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
 
 
 /obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user = null)
-	for(var/obj/singularity/singulo in GLOB.singularities)
+	for(var/_singulo in GLOB.singularities)
+		var/datum/component/singularity/singulo = _singulo
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
-	active = 0
+	active = FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 
@@ -62,7 +64,7 @@
 			return
 
 		if(anchored)
-			setAnchored(FALSE)
+			set_anchored(FALSE)
 			to_chat(user, "<span class='notice'>You unbolt \the [src] from the floor and detach it from the cable.</span>")
 			disconnect_from_network()
 			return
@@ -70,7 +72,7 @@
 			if(!connect_to_network())
 				to_chat(user, "<span class='warning'>\The [src] must be placed over an exposed, powered cable node!</span>")
 				return
-			setAnchored(TRUE)
+			set_anchored(TRUE)
 			to_chat(user, "<span class='notice'>You bolt \the [src] to the floor and attach it to the cable.</span>")
 			return
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -94,7 +96,9 @@
 		add_load(1500)
 		if(cooldown <= world.time)
 			cooldown = world.time + 80
-			for(var/obj/singularity/singulo in GLOB.singularities)
+			for(var/_singulo_component in GLOB.singularities)
+				var/datum/component/singularity/singulo_component = _singulo_component
+				var/atom/singulo = singulo_component.parent
 				if(singulo.z == z)
 					say("[singulo] is now [get_dist(src,singulo)] standard lengths away to the [dir2text(get_dir(src,singulo))]")
 	else
@@ -129,6 +133,10 @@
 /obj/item/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb
+
+/obj/item/sbeacondrop/emp
+	desc = "A label on it reads: <i>Warning: Activating this device will send a high-powered electromagnetic device to your location</i>."
+	droptype = /obj/machinery/syndicatebomb/emp
 
 /obj/item/sbeacondrop/powersink
 	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."

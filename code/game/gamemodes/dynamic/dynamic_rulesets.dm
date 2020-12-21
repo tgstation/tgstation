@@ -37,7 +37,7 @@
 	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
 	var/required_candidates = 0
-	/// 1 -> 9, probability for this rule to be picked against other rules
+	/// 0 -> 9, probability for this rule to be picked against other rules. If zero this will effectively disable the rule.
 	var/weight = 5
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
 	var/cost = 0
@@ -50,7 +50,7 @@
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
-	var/flags = 0
+	var/flags = NONE
 	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
 	var/pop_per_requirement = 0
 	/// Requirements are the threat level requirements per pop range.
@@ -198,21 +198,16 @@
 	for(var/mob/dead/new_player/P in candidates)
 		if (!P.client || !P.mind) // Are they connected?
 			candidates.Remove(P)
-			continue
-		if(!mode.check_age(P.client, minimum_required_age))
+		else if(!mode.check_age(P.client, minimum_required_age))
 			candidates.Remove(P)
-			continue
-		if(P.mind.special_role) // We really don't want to give antag to an antag.
+		else if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
-			continue
-		if(antag_flag_override)
+		else if(antag_flag_override)
 			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
 		else
 			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
-				continue
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE

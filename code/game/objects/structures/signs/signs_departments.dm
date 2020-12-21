@@ -107,6 +107,13 @@
 	icon_state = "holy"
 	is_editable = TRUE
 
+/obj/structure/sign/departments/lawyer
+	name = "\improper Legal Department sign"
+	sign_change_name = "Department - Legal"
+	desc = "A sign labelling an area where the Lawyers work, apply here for arrivals shuttle whiplash settlement."
+	icon_state = "lawyer"
+	is_editable = TRUE
+
 ///////SUPPLY
 
 /obj/structure/sign/departments/cargo
@@ -160,4 +167,11 @@
 	sign_change_name = "Location - Drop Pods"
 	desc = "A sign labelling an area where drop pod loading procedures take place."
 	icon_state = "drop"
+	is_editable = TRUE
+
+/obj/structure/sign/departments/court
+	name = "\improper Courtroom sign"
+	sign_change_name = "Location - Courtroom"
+	desc = "A sign labelling the courtroom, where the ever sacred Space Law is upheld."
+	icon_state = "court"
 	is_editable = TRUE

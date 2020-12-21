@@ -1,13 +1,15 @@
 /**
-  *A new subsystem for hydroponics, as a way to share specific traits into plants, as a way to phase out the DNA manipulator.
-  */
+ *A new subsystem for hydroponics, as a way to share specific traits into plants, as a way to phase out the DNA manipulator.
+ */
 /obj/item/graft
 	name = "plant graft"
 	desc = "A carefully cut graft off of a freshly grown plant. Can be grafted onto a plant in order to share unique plant traits onto a plant."
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "graft_plant"
-	attack_verb = list("planted", "vegitized", "cropped", "reaped", "farmed")
+	worn_icon_state = "graft"
+	attack_verb_continuous = list("plants", "vegitizes", "crops", "reaps", "farms")
+	attack_verb_simple = list("plant", "vegitize", "crop", "reap", "farm")
 	///The stored trait taken from the parent plant. Defaults to perenial growth.
 	var/datum/plant_gene/trait/stored_trait
 	///Determines the appearance of the graft. Rudimentary right now so it just picks randomly.
@@ -36,7 +38,7 @@
 	if(trait_path)
 		stored_trait = new trait_path
 	else
-		stored_trait = new /datum/plant_gene/trait/repeated_harvest 
+		stored_trait = new /datum/plant_gene/trait/repeated_harvest
 	icon_state = pick(
 		10 ; "graft_plant" , \
 		5 ; "graft_flower" , \
@@ -53,8 +55,8 @@
 	return ..()
 
 /**
-  *Adds text to the plant analyzer which describes the graft's parent plant and any stored trait it has, if any.
-  */
+ *Adds text to the plant analyzer which describes the graft's parent plant and any stored trait it has, if any.
+ */
 /obj/item/graft/proc/get_graft_text()
 	var/text = "- Plant Graft -\n"
 	if(parent_name)

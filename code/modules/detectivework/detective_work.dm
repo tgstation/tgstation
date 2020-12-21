@@ -46,10 +46,10 @@
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
 			if(add_blood_DNA(G.return_blood_DNA()) && length(G.return_blood_DNA()) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
-	else if(M.bloody_hands > 1)
+	else if(M.blood_in_hands > 1)
 		old = length(M.return_blood_DNA())
 		if(add_blood_DNA(M.return_blood_DNA()) && length(M.return_blood_DNA()) > old)
-			M.bloody_hands--
+			M.blood_in_hands--
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_fibers(M)
 
@@ -92,7 +92,7 @@
 		G.add_blood_DNA(blood_dna)
 	else if(length(blood_dna))
 		AddComponent(/datum/component/forensics, null, null, blood_dna)
-		bloody_hands = rand(2, 4)
+		blood_in_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE
 

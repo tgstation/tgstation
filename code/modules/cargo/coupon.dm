@@ -1,6 +1,6 @@
 #define COUPON_OMEN "omen"
 
-obj/item/coupon
+/obj/item/coupon
 	name = "coupon"
 	desc = "It doesn't matter if you didn't want it before, what matters now is that you've got a coupon for it!"
 	icon_state = "data_1"

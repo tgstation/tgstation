@@ -35,6 +35,8 @@
 
 
 /obj/item/folder/attackby(obj/item/W, mob/user, params)
+	if(burn_paper_product_attackby_check(W, user))
+		return
 	if(istype(W, /obj/item/paper) || istype(W, /obj/item/photo) || istype(W, /obj/item/documents))
 		if(!user.transferItemToLoc(W, src))
 			return
@@ -54,6 +56,14 @@
 			name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
 
 
+/obj/item/folder/Destroy()
+	for(var/obj/important_thing in contents)
+		if(!(important_thing.resistance_flags & INDESTRUCTIBLE))
+			continue
+		important_thing.forceMove(drop_location()) //don't destroy round critical content such as objective documents.
+	return ..()
+
+
 /obj/item/folder/attack_self(mob/user)
 	var/dat = "<title>[name]</title>"
 
@@ -66,7 +76,7 @@
 
 /obj/item/folder/Topic(href, href_list)
 	..()
-	if(usr.stat || usr.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	if(usr.contents.Find(src))

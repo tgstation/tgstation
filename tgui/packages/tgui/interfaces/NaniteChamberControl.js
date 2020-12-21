@@ -5,7 +5,10 @@ import { Window } from '../layouts';
 
 export const NaniteChamberControl = (props, context) => {
   return (
-    <Window resizable>
+    <Window
+      width={380}
+      height={570}
+      resizable>
       <Window.Content scrollable>
         <NaniteChamberControlContent />
       </Window.Content>

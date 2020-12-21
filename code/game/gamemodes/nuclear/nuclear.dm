@@ -64,7 +64,7 @@
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
-	var result = nuke_team.get_result()
+	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
 			SSticker.mode_result = "loss - syndicate nuked - disk secured"

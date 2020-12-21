@@ -4,7 +4,7 @@
 	icon_screen = "security"
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/warrant
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	var/screen = null
 	var/datum/data/record/current = null
 
@@ -88,7 +88,6 @@
 
 	var/datum/browser/popup = new(user, "warrant", "Security Warrant Console", 600, 400)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/warrant/Topic(href, href_list)
@@ -97,13 +96,15 @@
 	var/mob/M = usr
 	switch(href_list["choice"])
 		if("Login")
-			var/obj/item/card/id/scan = M.get_idcard(TRUE)
-			authenticated = scan.registered_name
-			if(authenticated)
-				for(var/datum/data/record/R in GLOB.data_core.security)
-					if(R.fields["name"] == authenticated)
-						current = R
-				playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+			if(isliving(M))
+				var/mob/living/L = M
+				var/obj/item/card/id/scan = L.get_idcard(TRUE)
+				authenticated = scan.registered_name
+				if(authenticated)
+					for(var/datum/data/record/R in GLOB.data_core.security)
+						if(R.fields["name"] == authenticated)
+							current = R
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if("Logout")
 			current = null
 			authenticated = null

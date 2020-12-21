@@ -1,7 +1,6 @@
 /obj/item/electronics/airlock
 	name = "airlock electronics"
 	req_access = list(ACCESS_MAINT_TUNNELS)
-	custom_price = 50
 	/// A list of all granted accesses
 	var/list/accesses = list()
 	/// If the airlock should require ALL or only ONE of the listed accesses
@@ -15,11 +14,13 @@
 	. = ..()
 	. += "<span class='notice'>Has a neat <i>selection menu</i> for modifying airlock access levels.</span>"
 
-/obj/item/electronics/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/electronics/airlock/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/electronics/airlock/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AirlockElectronics", name, 420, 485, master_ui, state)
+		ui = new(user, src, "AirlockElectronics", name)
 		ui.open()
 
 /obj/item/electronics/airlock/ui_static_data(mob/user)
@@ -51,8 +52,10 @@
 	return data
 
 /obj/item/electronics/airlock/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("clear_all")
 			accesses = list()

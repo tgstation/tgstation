@@ -795,7 +795,6 @@
 /area/icemoon/surface/outdoors)
 "cj" = (
 /obj/structure/sign/poster/official/pda_ad{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/icemoon,
@@ -966,7 +965,7 @@
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "cI" = (
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "cJ" = (

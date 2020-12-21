@@ -12,7 +12,6 @@
 #define LANGUAGE_APHASIA		"aphasia"
 #define LANGUAGE_CULTIST		"cultist"
 #define LANGUAGE_CURATOR 		"curator"
-#define LANGUAGE_DEVIL			"devil"
 #define LANGUAGE_GLAND			"gland"
 #define LANGUAGE_HAT 			"hat"
 #define LANGUAGE_HIGH			"high"

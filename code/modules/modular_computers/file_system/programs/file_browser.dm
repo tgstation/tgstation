@@ -8,12 +8,14 @@
 	available_on_ntnet = FALSE
 	undeletable = TRUE
 	tgui_id = "NtosFileManager"
+	program_icon = "folder"
 
 	var/open_file
 	var/error
 
 /datum/computer_file/program/filemanager/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
@@ -65,6 +67,13 @@
 			var/datum/computer_file/C = F.clone(FALSE)
 			HDD.store_file(C)
 			return TRUE
+		if("PRG_togglesilence")
+			if(!HDD)
+				return
+			var/datum/computer_file/program/binary = HDD.find_file_by_name(params["name"])
+			if(!binary || !istype(binary))
+				return
+			binary.alert_silenced = !binary.alert_silenced
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -78,11 +87,19 @@
 	else
 		var/list/files = list()
 		for(var/datum/computer_file/F in HDD.stored_files)
+			var/noisy = FALSE
+			var/silenced = FALSE
+			var/datum/computer_file/program/binary = F
+			if(istype(binary))
+				noisy = binary.alert_able
+				silenced = binary.alert_silenced
 			files += list(list(
 				"name" = F.filename,
 				"type" = F.filetype,
 				"size" = F.size,
-				"undeletable" = F.undeletable
+				"undeletable" = F.undeletable,
+				"alert_able" = noisy,
+				"alert_silenced" = silenced
 			))
 		data["files"] = files
 		if(RHDD)

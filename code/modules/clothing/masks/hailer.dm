@@ -82,6 +82,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorder_idle"
+	slot_flags = null
 	aggressiveness = AGGR_GOOD_COP // Borgs are nicecurity!
 	actions_types = list(/datum/action/item_action/halt)
 
@@ -182,7 +183,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	icon_state = "whistle"
 	inhand_icon_state = "whistle"
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
-	custom_price = 150
+	custom_price = PAYCHECK_HARD * 1.5
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)

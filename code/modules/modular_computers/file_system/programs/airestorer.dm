@@ -1,16 +1,15 @@
 /datum/computer_file/program/aidiag
 	filename = "aidiag"
-	filedesc = "AI Integrity Restorer"
+	filedesc = "NT FRK"
 	program_icon_state = "generic"
-	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
+	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	transfer_access = ACCESS_HEADS
 	available_on_ntnet = TRUE
 	tgui_id = "NtosAiRestorer"
-	ui_x = 370
-	ui_y = 400
+	program_icon = "laptop-code"
 	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
@@ -21,7 +20,7 @@
 	if(computer)
 		ai_slot = computer.all_components[MC_AI]
 
-	if(computer && ai_slot && ai_slot.check_functionality())
+	if(computer && ai_slot?.check_functionality())
 		if(cardcheck == 1)
 			return ai_slot
 		if(ai_slot.enabled && ai_slot.stored_card)
@@ -33,7 +32,8 @@
 	return
 
 /datum/computer_file/program/aidiag/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/mob/living/silicon/ai/A = get_ai()
@@ -49,8 +49,8 @@
 		if("PRG_eject")
 			if(computer.all_components[MC_AI])
 				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
-				if(ai_slot && ai_slot.stored_card)
-					ai_slot.try_eject(0,usr)
+				if(ai_slot?.stored_card)
+					ai_slot.try_eject(usr)
 					return TRUE
 
 /datum/computer_file/program/aidiag/process_tick()
@@ -73,14 +73,18 @@
 		ai_slot.locked = FALSE
 		restoring = FALSE
 		return
-	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-5, 0)
-	A.adjustFireLoss(-5, 0)
-	A.adjustToxLoss(-5, 0)
-	A.adjustBruteLoss(-5, 0)
+	ai_slot.locked = TRUE
+	A.adjustOxyLoss(-5, FALSE)
+	A.adjustFireLoss(-5, FALSE)
+	A.adjustBruteLoss(-5, FALSE)
+
+	// Please don't forget to update health, otherwise the below if statements will probably always fail.
 	A.updatehealth()
+
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		cardhold.update_icon()
+
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE
@@ -113,7 +117,7 @@
 				data["restoring"] = restoring
 				data["health"] = (AI.health + 100) / 2
 				data["isDead"] = AI.stat == DEAD
-				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
+				data["laws"] = AI.laws.get_law_list(include_zeroth = TRUE, render_html = FALSE)
 
 	return data
 

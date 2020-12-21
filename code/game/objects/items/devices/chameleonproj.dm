@@ -6,6 +6,7 @@
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 5
@@ -153,7 +154,7 @@
 	. = ..()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/relaymove(mob/user, direction)
+/obj/effect/dummy/chameleon/relaymove(mob/living/user, direction)
 	if(isspaceturf(loc) || !direction)
 		return //No magical space movement!
 
