@@ -5,10 +5,10 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/silicon/ai)))
 
 /**
-  * Creamed component
-  *
-  * For when you have pie on your face
-  */
+ * Creamed component
+ *
+ * For when you have pie on your face
+ */
 /datum/component/creamed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
@@ -17,6 +17,8 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 /datum/component/creamed/Initialize()
 	if(!is_type_in_typecache(parent, GLOB.creamable))
 		return COMPONENT_INCOMPATIBLE
+
+	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED)
 
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
@@ -58,6 +60,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 ///Callback to remove pieface
 /datum/component/creamed/proc/clean_up(datum/source, clean_types)
-	if(clean_types & CLEAN_TYPE_BLOOD)
+	SIGNAL_HANDLER
+
+	. = NONE
+	if(!(clean_types & CLEAN_TYPE_BLOOD))
 		qdel(src)
-		return TRUE
+		return COMPONENT_CLEANED

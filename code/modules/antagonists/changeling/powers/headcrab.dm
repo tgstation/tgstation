@@ -7,7 +7,7 @@
 	dna_cost = 1
 	req_human = 1
 
-/datum/action/changeling/headcrab/sting_action(mob/user)
+/datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
 	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
 		return
@@ -38,6 +38,6 @@
 		I.forceMove(crab)
 	crab.origin = M
 	if(crab.origin)
-		crab.origin.active = 1
+		crab.origin.active = TRUE
 		crab.origin.transfer_to(crab)
 		to_chat(crab, "<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")

@@ -18,8 +18,6 @@
 	var/list/head_announce = null
 
 	//Bitflags for the job
-	var/flag = NONE //Deprecated
-	var/department_flag = NONE //Deprecated
 	var/auto_deadmin_role_flags = NONE
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
@@ -66,6 +64,20 @@
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	var/bounty_types = CIV_JOB_BASIC
+
+/datum/job/New()
+	. = ..()
+	var/list/jobs_changes = GetMapChanges()
+	if(!jobs_changes)
+		return
+	if(isnum(jobs_changes["additional_access"]))
+		access += jobs_changes["additional_access"]
+	if(isnum(jobs_changes["additional_minimal_access"]))
+		minimal_access += jobs_changes["additional_minimal_access"]
+	if(isnum(jobs_changes["spawn_positions"]))
+		spawn_positions = jobs_changes["spawn_positions"]
+	if(isnum(jobs_changes["total_positions"]))
+		total_positions = jobs_changes["total_positions"]
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -175,7 +187,26 @@
 	return TRUE
 
 /datum/job/proc/map_check()
+	var/list/job_changes = GetMapChanges()
+	if(!job_changes)
+		return FALSE
 	return TRUE
+
+/**
+ * Gets the changes dictionary made to the job template by the map config. Returns null if job is removed.
+ */
+/datum/job/proc/GetMapChanges()
+	var/string_type = "[type]"
+	var/list/splits = splittext(string_type, "/")
+	var/endpart = splits[splits.len]
+
+	SSmapping.HACK_LoadMapConfig()
+
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!(endpart in job_changes))
+		return list()
+
+	return job_changes[endpart]
 
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
@@ -199,7 +230,7 @@
 
 	var/pda_slot = ITEM_SLOT_BELT
 
-	var/obj/item/skillchip/skillchip = null
+	var/skillchip_path = null
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backpack)
@@ -245,12 +276,10 @@
 		if(H.age)
 			C.registered_age = H.age
 		C.update_label()
-		for(var/A in SSeconomy.bank_accounts)
-			var/datum/bank_account/B = A
-			if(B.account_id == H.account_id)
-				C.registered_account = B
-				B.bank_cards += C
-				break
+		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
+		if(B && B.account_id == H.account_id)
+			C.registered_account = B
+			B.bank_cards += C
 		H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
@@ -263,17 +292,17 @@
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
 	// Insert the skillchip associated with this job into the target.
-	if(skillchip && istype(H))
-		var/obj/item/skillchip/skill_chip = new skillchip()
-		var/implant_msg = H.implant_skillchip(skill_chip)
+	if(skillchip_path && istype(H))
+		var/obj/item/skillchip/skillchip_instance = new skillchip_path()
+		var/implant_msg = H.implant_skillchip(skillchip_instance)
 		if(implant_msg)
-			stack_trace("Failed to implant [H] with [skill_chip], on job [src]. Failure message: [implant_msg]")
-			qdel(skill_chip)
+			stack_trace("Failed to implant [H] with [skillchip_instance], on job [src]. Failure message: [implant_msg]")
+			qdel(skillchip_instance)
 			return
 
-		var/activate_msg = skillchip.try_activate_skillchip(TRUE, TRUE)
+		var/activate_msg = skillchip_instance.try_activate_skillchip(TRUE, TRUE)
 		if(activate_msg)
-			CRASH("Failed to activate [H]'s [skill_chip], on job [src]. Failure message: [activate_msg]")
+			CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
@@ -281,8 +310,8 @@
 	types += backpack
 	types += satchel
 	types += duffelbag
-	if(skillchip)
-		types += skillchip
+	if(skillchip_path)
+		types += skillchip_path
 	return types
 
 //Warden and regular officers add this result to their get_access()

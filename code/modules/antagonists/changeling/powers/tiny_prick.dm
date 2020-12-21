@@ -34,7 +34,7 @@
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling && changeling.chosen_sting)
+		if(changeling?.chosen_sting)
 			changeling.chosen_sting.unset_sting(src)
 
 /datum/action/changeling/sting/can_sting(mob/user, mob/target)
@@ -87,12 +87,13 @@
 	..()
 
 /datum/action/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	if((HAS_TRAIT(target, TRAIT_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/action/changeling/sting/transformation/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
@@ -106,7 +107,7 @@
 		C.real_name = NewDNA.real_name
 		NewDNA.transfer_identity(C)
 		if(ismonkey(C))
-			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG)
+			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG | TR_KEEPAI)
 		C.updateappearance(mutcolor_update=1)
 
 
@@ -130,8 +131,8 @@
 		var/mob/living/L = target
 		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
 			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", object="false armblade sting")

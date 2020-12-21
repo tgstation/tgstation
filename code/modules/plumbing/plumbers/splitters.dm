@@ -3,6 +3,7 @@
 	name = "Chemical Splitter"
 	desc = "A chemical splitter for smart chemical factorization. Waits till a set of conditions is met and then stops all input and splits the buffer evenly or other in two ducts."
 	icon_state = "splitter"
+
 	buffer = 100
 	density = FALSE
 
@@ -33,7 +34,8 @@
 	return data
 
 /obj/machinery/plumbing/splitter/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

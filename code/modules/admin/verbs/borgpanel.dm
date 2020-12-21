@@ -1,5 +1,5 @@
 /datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
-	set category = "Admin - Game"
+	set category = "Admin.Game"
 	set name = "Show Borg Panel"
 	set desc = "Show borg panel"
 
@@ -79,7 +79,8 @@
 
 
 /datum/borgpanel/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch (action)
 		if ("set_charge")
@@ -138,7 +139,7 @@
 				message_admins("[key_name_admin(user)] disabled scrambled codes on [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] disabled scrambled codes on [key_name(borg)].")
 		if ("rename")
-			var/new_name = stripped_input(user,"What would you like to name this cyborg?","Input a name",borg.real_name,MAX_NAME_LEN)
+			var/new_name = sanitize_name(stripped_input(user,"What would you like to name this cyborg?","Input a name",borg.real_name,MAX_NAME_LEN), allow_numbers = TRUE)
 			if(!new_name)
 				return
 			message_admins("[key_name_admin(user)] renamed [ADMIN_LOOKUPFLW(borg)] to [new_name].")
@@ -148,11 +149,9 @@
 			var/upgradepath = text2path(params["upgrade"])
 			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
 			if (installedupgrade)
-				installedupgrade.deactivate(borg, user)
-				borg.upgrades -= installedupgrade
 				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
 				log_admin("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
-				qdel(installedupgrade)
+				qdel(installedupgrade) // see [mob/living/silicon/robot/on_upgrade_deleted()].
 			else
 				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
 				upgrade.action(borg, user)
@@ -199,7 +198,7 @@
 				borg.notify_ai(DISCONNECT)
 				if(borg.shell)
 					borg.undeploy()
-				borg.connected_ai = newai
+				borg.set_connected_ai(newai)
 				borg.notify_ai(TRUE)
 				message_admins("[key_name_admin(user)] slaved [ADMIN_LOOKUPFLW(borg)] to the AI [ADMIN_LOOKUPFLW(newai)].")
 				log_admin("[key_name(user)] slaved [key_name(borg)] to the AI [key_name(newai)].")
@@ -207,7 +206,7 @@
 				borg.notify_ai(DISCONNECT)
 				if(borg.shell)
 					borg.undeploy()
-				borg.connected_ai = null
+				borg.set_connected_ai(null)
 				message_admins("[key_name_admin(user)] freed [ADMIN_LOOKUPFLW(borg)] from being slaved to an AI.")
 				log_admin("[key_name(user)] freed [key_name(borg)] from being slaved to an AI.")
 			if (borg.lawupdate)

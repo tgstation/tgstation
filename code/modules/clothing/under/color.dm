@@ -7,6 +7,7 @@
 /obj/item/clothing/under/color/jumpskirt
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/color/random
@@ -17,7 +18,7 @@
 	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - typesof(/obj/item/clothing/under/color/jumpskirt) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/ancient - /obj/item/clothing/under/color/black/ghost)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.equip_to_slot_or_del(new C(H), ITEM_SLOT_ICLOTHING) //or else you end up with naked assistants running around everywhere...
+		H.equip_to_slot_or_del(new C(H), ITEM_SLOT_ICLOTHING, initial=TRUE) //or else you end up with naked assistants running around everywhere...
 	else
 		new C(loc)
 	return INITIALIZE_HINT_QDEL
@@ -30,7 +31,7 @@
 	var/obj/item/clothing/under/color/jumpskirt/C = pick(subtypesof(/obj/item/clothing/under/color/jumpskirt) - /obj/item/clothing/under/color/jumpskirt/random)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.equip_to_slot_or_del(new C(H), ITEM_SLOT_ICLOTHING)
+		H.equip_to_slot_or_del(new C(H), ITEM_SLOT_ICLOTHING, initial=TRUE)
 	else
 		new C(loc)
 	return INITIALIZE_HINT_QDEL

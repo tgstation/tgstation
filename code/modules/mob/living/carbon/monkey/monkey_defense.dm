@@ -1,4 +1,9 @@
 /mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
+	if(M == src)
+		//monkey's currently don't have check_self_for_injuries() and this is the next best thing
+		to_chat(src, "<span class='notice'>You examine yourself.</span>")
+		M.examinate(src)
+		return
 	if(health < 0 && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.do_cpr(src)
@@ -65,30 +70,16 @@
 				to_chat(M, "<span class='warning'>Your punch misses [name]!</span>")
 		if("disarm")
 			if(stat < UNCONSCIOUS)
-				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-				if (prob(25))
-					Paralyze(40)
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-					log_combat(M, src, "pushed")
-					visible_message("<span class='danger'>[M] pushes [src] down!</span>", \
-									"<span class='userdanger'>[M] pushes you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
-					to_chat(M, "<span class='danger'>You push [src] down!</span>")
-				else if(dropItemToGround(get_active_held_item()))
-					playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-					visible_message("<span class='danger'>[M] disarms [src]!</span>", \
-									"<span class='userdanger'>[M] disarms you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, M)
-					to_chat(M, "<span class='danger'>You disarm [src]!</span>")
+				M.disarm(src)
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
 		if (M.a_intent == INTENT_HARM)
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					if(AmountUnconscious() < 300)
-						Unconscious(rand(200, 300))
+				var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+				if(AmountUnconscious() < 300)
+					Unconscious(rand(200, 300))
 					visible_message("<span class='danger'>[M] wounds [name]!</span>", \
 									"<span class='userdanger'>[M] wounds you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
 					to_chat(M, "<span class='danger'>You wound [name]!</span>")
@@ -145,7 +136,7 @@
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(M.is_adult)
 			damage = rand(20, 40)
 		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
@@ -156,8 +147,19 @@
 			affecting = get_bodypart(BODY_ZONE_CHEST)
 		apply_damage(damage, BRUTE, affecting)
 
+/mob/living/carbon/monkey/attack_hulk(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	var/hulk_verb = pick("smash", "pummel")
+	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
+	visible_message("<span class='danger'>[user] [hulk_verb]ed [src]!</span>", \
+					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
+	to_chat(user, "<span class='danger'>You [hulk_verb] [src]!</span>")
+	apply_damage(15, BRUTE, wound_bonus=10)
+
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
-	. = 1
+	. = TRUE
 	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_HEAD)
 		if(wear_mask)
 			if(!(wear_mask.resistance_flags & UNACIDABLE))
@@ -173,7 +175,6 @@
 			return
 	take_bodypart_damage(acidpwr * min(0.6, acid_volume*0.1))
 
-
 /mob/living/carbon/monkey/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
@@ -188,7 +189,7 @@
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
-			damage_clothes(200, BRUTE, "bomb")
+			damage_clothes(200, BRUTE, BOMB)
 			if (ears && !HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
 				ears.adjustEarDamage(30, 120)
 			if(prob(70))
@@ -196,7 +197,7 @@
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30, 0)
-			damage_clothes(50, BRUTE, "bomb")
+			damage_clothes(50, BRUTE, BOMB)
 			if (ears && !HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
 				ears.adjustEarDamage(15,60)
 			if (prob(50))

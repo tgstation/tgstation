@@ -2,8 +2,8 @@
 #define SKILLCHIP_REMOVAL_TIME 30 SECONDS
 
 /obj/machinery/skill_station
-	name = "Skillsoft Station"
-	desc = "learn skills with only minimal chance for brain damage."
+	name = "\improper Skillsoft station"
+	desc = "Learn skills with only minimal chance for brain damage."
 
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
@@ -44,7 +44,7 @@
 	if(working)
 		. += "working"
 
-/obj/machinery/skill_station/relaymove(mob/user)
+/obj/machinery/skill_station/relaymove(mob/living/user, direction)
 	open_machine()
 
 /obj/machinery/skill_station/open_machine()
@@ -92,9 +92,15 @@
 		return
 	return ..()
 
-/obj/machinery/skill_station/dropContents(list/subset)
+/obj/machinery/skill_station/dump_contents()
+	. = ..()
+	inserted_skillchip = null
+
+/obj/machinery/skill_station/dump_inventory_contents(list/subset = null)
+	// Don't drop the skillchip, it's directly inserted into the machine.
+	// dump_contents() will drop everything including the skillchip as an alternative to this.
 	subset = contents - inserted_skillchip
-	return ..() //This is kinda annoying
+	return ..()
 
 /obj/machinery/skill_station/proc/toggle_open(mob/user)
 	state_open ? close_machine() : open_machine()
@@ -118,9 +124,9 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 	var/implant_msg = carbon_occupant.implant_skillchip(inserted_skillchip, FALSE)
 	if(implant_msg)
-		to_chat(occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation failed! [implant_msg]</span>")
 	else
-		to_chat(occupant,"<span class='notice'>Operation complete!</span>")
+		to_chat(carbon_occupant,"<span class='notice'>Operation complete!</span>")
 		inserted_skillchip = null
 
 	update_icon()

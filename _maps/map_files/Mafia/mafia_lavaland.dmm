@@ -392,11 +392,7 @@
 /turf/open/floor/plasteel/dark,
 /area/mafia)
 "Y" = (
-/turf/closed/indestructible{
-	icon = 'icons/turf/walls/reinforced_wall.dmi';
-	icon_state = "r_wall";
-	name = "reinforced wall"
-	},
+/turf/closed/indestructible/reinforced,
 /area/mafia)
 
 (1,1,1) = {"

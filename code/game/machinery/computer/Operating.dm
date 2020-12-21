@@ -90,7 +90,7 @@
 	else
 		if(sbed)
 			data["table"] = sbed
-			if(!ishuman(sbed.occupant) &&  !ismonkey(sbed.occupant))
+			if(!ishuman(sbed.occupant) && !ismonkey(sbed.occupant))
 				return data
 			data["patient"] = list()
 			patient = sbed.occupant
@@ -104,7 +104,7 @@
 		if(SOFT_CRIT)
 			data["patient"]["stat"] = "Conscious"
 			data["patient"]["statstate"] = "average"
-		if(UNCONSCIOUS)
+		if(UNCONSCIOUS, HARD_CRIT)
 			data["patient"]["stat"] = "Unconscious"
 			data["patient"]["statstate"] = "average"
 		if(DEAD)
@@ -144,7 +144,8 @@
 
 
 /obj/machinery/computer/operating/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("sync")

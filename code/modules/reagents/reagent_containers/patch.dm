@@ -24,8 +24,8 @@
 
 /obj/item/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
-		return 0
-	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
+		return FALSE
+	return TRUE // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
 /obj/item/reagent_containers/pill/patch/libital
 	name = "libital patch (brute)"

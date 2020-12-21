@@ -14,7 +14,8 @@
 	var/message_simple = "" //Message to display if the user is a simple_animal
 	var/message_param = "" //Message to display if a param was given
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
-	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
+	/// Checks if the mob can use its hands before performing the emote.
+	var/hands_use_check = FALSE
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
 	var/list/mob_type_allowed_typecache = /mob //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache //Types that are NOT allowed to use that emote
@@ -68,7 +69,7 @@
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(user)
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
+		if(M.stat == DEAD && M.client && user.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 			M.show_message("[FOLLOW_LINK(M, user)] [dchatmsg]")
 
 	if(emote_type == EMOTE_AUDIBLE)
@@ -134,23 +135,15 @@
 			switch(user.stat)
 				if(SOFT_CRIT)
 					to_chat(user, "<span class='warning'>You cannot [key] while in a critical condition!</span>")
-				if(UNCONSCIOUS)
+				if(UNCONSCIOUS, HARD_CRIT)
 					to_chat(user, "<span class='warning'>You cannot [key] while unconscious!</span>")
 				if(DEAD)
 					to_chat(user, "<span class='warning'>You cannot [key] while dead!</span>")
 			return FALSE
-		if(restraint_check)
-			if(isliving(user))
-				var/mob/living/L = user
-				if(L.IsParalyzed() || L.IsStun())
-					if(!intentional)
-						return FALSE
-					to_chat(user, "<span class='warning'>You cannot [key] while stunned!</span>")
-					return FALSE
-		if(restraint_check && user.restrained())
+		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 			if(!intentional)
 				return FALSE
-			to_chat(user, "<span class='warning'>You cannot [key] while restrained!</span>")
+			to_chat(user, "<span class='warning'>You cannot use your hands to [key] right now!</span>")
 			return FALSE
 
 	if(isliving(user))
@@ -180,13 +173,14 @@
 		CRASH("Someone passed nothing to manual_emote(), fix it")
 
 	log_message(text, LOG_EMOTE)
-	text = "<b>[src]</b> " + text
+
+	var/ghost_text = "<b>[src]</b> " + text //Sin I know
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(src)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(text)
+			M.show_message("[FOLLOW_LINK(M, src)] [ghost_text]")
 
-	visible_message(text)
+	visible_message(text, visible_message_flags = EMOTE_MESSAGE)

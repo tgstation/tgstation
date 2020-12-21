@@ -5,6 +5,10 @@
 
 @use '../base.scss';
 
+$cursor-color: base.$color-fg !default;
+$popup-background-color: #000000 !default;
+$popup-text-color: #ffffff !default;
+
 .Slider {
   cursor: e-resize;
 }
@@ -23,7 +27,7 @@
   right: base.em(-1px);
   bottom: 0;
   width: 0;
-  border-left: base.em(2px) solid #fff;
+  border-left: base.em(2px) solid $cursor-color;
 }
 
 .Slider__pointer {
@@ -34,7 +38,7 @@
   height: 0;
   border-left: base.em(5px) solid transparent;
   border-right: base.em(5px) solid transparent;
-  border-bottom: base.em(5px) solid #fff;
+  border-bottom: base.em(5px) solid $cursor-color;
 }
 
 .Slider__popupValue {
@@ -43,7 +47,8 @@
   top: -2rem;
   font-size: 1rem;
   padding: 0.25rem 0.5rem;
-  background-color: #000;
+  color: $popup-text-color;
+  background-color: $popup-background-color;
   transform: translateX(50%);
   white-space: nowrap;
 }

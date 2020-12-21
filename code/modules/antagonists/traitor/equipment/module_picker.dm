@@ -63,7 +63,8 @@
 	return data
 
 /datum/module_picker/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!isAI(usr))
 		return

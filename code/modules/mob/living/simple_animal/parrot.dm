@@ -46,7 +46,7 @@
 
 	speak_chance = 1 //1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/cracker/ = 1)
+	butcher_results = list(/obj/item/food/cracker = 1)
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
@@ -91,12 +91,18 @@
 	//Parrots will generally sit on their perch unless something catches their eye.
 	//These vars store their preffered perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
-	var/obj/desired_perches = list(/obj/structure/frame/computer, 		/obj/structure/displaycase, \
-									/obj/structure/filingcabinet,		/obj/machinery/teleport, \
-									/obj/machinery/dna_scannernew,		/obj/machinery/telecomms, \
-									/obj/machinery/nuclearbomb,			/obj/machinery/particle_accelerator, \
-									/obj/machinery/recharge_station,	/obj/machinery/smartfridge, \
-									/obj/machinery/computer,			/obj/machinery/suit_storage_unit)
+	var/obj/desired_perches = list(/obj/structure/frame/computer,
+		/obj/structure/displaycase,
+		/obj/structure/filingcabinet,
+		/obj/machinery/teleport,
+		/obj/machinery/dna_scannernew,
+		/obj/machinery/telecomms,
+		/obj/machinery/nuclearbomb,
+		/obj/machinery/recharge_station,
+		/obj/machinery/smartfridge,
+		/obj/machinery/computer,
+		/obj/machinery/suit_storage_unit,
+	)
 
 	//Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
 	var/obj/item/held_item = null
@@ -114,12 +120,12 @@
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
-	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
+	add_verb(src, list(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
 			  /mob/living/simple_animal/parrot/proc/perch_player, \
 			  /mob/living/simple_animal/parrot/proc/toggle_mode,
-			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
+			  /mob/living/simple_animal/parrot/proc/perch_mob_player))
 
 
 /mob/living/simple_animal/parrot/examine(mob/user)
@@ -136,16 +142,17 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	buckled = null
-	pixel_x = initial(pixel_x)
-	pixel_y = initial(pixel_y)
+	pixel_x = base_pixel_x
+	pixel_y = base_pixel_y
 
-	..(gibbed)
+	return ..()
 
-/mob/living/simple_animal/parrot/Stat()
-	..()
-	if(statpanel("Status"))
-		stat("Held Item", held_item)
-		stat("Mode",a_intent)
+
+/mob/living/simple_animal/parrot/get_status_tab_items()
+	. = ..()
+	. += ""
+	. += "Held Item: [held_item]"
+	. += "Mode: [a_intent]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -159,8 +166,8 @@
 
 /mob/living/simple_animal/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
-	if(. != 0)
-		return .
+	if(.)
+		return
 
 	if(message_mods[MODE_HEADSET])
 		if(ears)
@@ -175,19 +182,24 @@
 			ears.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return FALSE
 
 /*
  * Inventory
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
+	var/list/dat = list()
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Headset:</B> <A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'>Nothing"]</A>"
+	dat += "<table>"
+	dat += "<tr><td><B>Headset:</B></td><td><A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'><font color=grey>Empty</font>"]</A></td></tr>"
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	"}
 
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "window=mob[REF(src)]")
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()
 
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
@@ -211,6 +223,7 @@
 				for(var/possible_phrase in speak)
 					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
 						possible_phrase = copytext_char(possible_phrase, 3)
+		show_inv(usr)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
@@ -259,6 +272,8 @@
 
 					if(headset_to_add.translate_binary)
 						available_channels.Add(MODE_TOKEN_BINARY)
+		show_inv(usr)
+
 	else
 		return ..()
 
@@ -313,7 +328,7 @@
 
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/living/user, params)
-	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O, /obj/item/reagent_containers/food/snacks/cracker))
+	if(!stat && !client && !istype(O, /obj/item/stack/medical) && !istype(O, /obj/item/food/cracker))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -326,7 +341,7 @@
 				parrot_state |= PARROT_FLEE
 			icon_state = icon_living
 			drop_held_item(0)
-	else if(istype(O, /obj/item/reagent_containers/food/snacks/cracker)) //Poly wants a cracker.
+	else if(istype(O, /obj/item/food/cracker)) //Poly wants a cracker.
 		qdel(O)
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
@@ -605,12 +620,12 @@
 				parrot_state = PARROT_WANDER
 				parrot_stuck = 0
 				parrot_lastmove = null
-				return 1
+				return TRUE
 		else
 			parrot_lastmove = null
 	else
 		parrot_lastmove = src.loc
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -633,8 +648,6 @@
 				item = null
 				continue
 			return item
-
-	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
 	for(var/obj/O in view(src))
@@ -754,7 +767,7 @@
 
 
 //parrots will eat crackers instead of dropping them
-	if(istype(held_item, /obj/item/reagent_containers/food/snacks/cracker) && (drop_gently))
+	if(istype(held_item, /obj/item/food/cracker) && (drop_gently))
 		qdel(held_item)
 		held_item = null
 		if(health < maxHealth)
@@ -767,7 +780,7 @@
 		if(istype(held_item, /obj/item/grenade))
 			var/obj/item/grenade/G = held_item
 			G.forceMove(drop_location())
-			G.prime()
+			G.detonate()
 			to_chat(src, "<span class='danger'>You let go of [held_item]!</span>")
 			held_item = null
 			return 1

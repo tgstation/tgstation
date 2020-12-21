@@ -34,6 +34,7 @@
   max-height: base.em(200px);
   overflow-y: scroll;
   border-radius: 0 0 base.em(2px) base.em(2px);
+  color: #fff;
   background-color: #000;
   background-color: rgba(0, 0, 0, 0.75);
 }
@@ -45,6 +46,7 @@
   width: base.em(100px);
   max-height: base.em(200px);
   border-radius: 0 0 base.em(2px) base.em(2px);
+  color: #fff;
   background-color: #000;
   background-color: rgba(0, 0, 0, 0.75);
 }
@@ -55,8 +57,9 @@
   font-size: base.em(12px);
   line-height: base.em(17px);
   transition: background-color 100ms;
+
   &:hover {
-    background-color: #444;
+    background-color: rgba(255, 255, 255, 0.2);
     transition: background-color 0ms;
   }
 }

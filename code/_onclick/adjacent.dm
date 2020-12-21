@@ -11,7 +11,7 @@
 	to check that the mob is not inside of something
 */
 /atom/proc/Adjacent(atom/neighbor) // basic inheritance, unused
-	return 0
+	return
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
 /area/Adjacent(atom/neighbor)
@@ -57,9 +57,9 @@
 		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target, mover = mover))
 			continue // could not enter src
 
-		return 1 // we don't care about our own density
+		return TRUE // we don't care about our own density
 
-	return 0
+	return FALSE
 
 /*
 	Adjacency (to anything else):
@@ -78,11 +78,11 @@
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(atom/neighbor, recurse = 1)
 	if(neighbor == loc)
-		return 1
+		return TRUE
 	if(isitem(loc))
 		if(recurse > 0)
 			return loc.Adjacent(neighbor,recurse - 1)
-		return 0
+		return FALSE
 	return ..()
 
 /*
@@ -94,12 +94,12 @@
 	for(var/obj/O in src)
 		if((mover && O.CanPass(mover,get_step(src,target_dir))) || (!mover && !O.density))
 			continue
-		if(O == target_atom || O == mover || (O.pass_flags & LETPASSTHROW)) //check if there's a dense object present on the turf
+		if(O == target_atom || O == mover || (O.pass_flags_self & LETPASSTHROW)) //check if there's a dense object present on the turf
 			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)
 
 		if( O.flags_1&ON_BORDER_1) // windows are on border, check them first
 			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
-				return 0								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
+				return FALSE								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
 		else if( !border_only ) // dense, not on border, cannot pass over
-			return 0
-	return 1
+			return FALSE
+	return TRUE

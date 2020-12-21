@@ -46,3 +46,8 @@
 	mid_sounds = list('sound/machines/beep.ogg')
 	mid_length = 60
 	volume = 10
+
+/datum/looping_sound/siren
+	mid_sounds = list('sound/items/weeoo1.ogg')
+	mid_length = 15
+	volume = 20

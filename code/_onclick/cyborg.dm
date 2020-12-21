@@ -14,7 +14,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(stat || lockcharge || IsParalyzed() || IsStun())
+	if(stat || (lockcharge) || IsParalyzed() || IsStun())
 		return
 
 	var/list/modifiers = params2list(params)
@@ -42,12 +42,6 @@
 
 	face_atom(A) // change direction to face what you clicked on
 
-	/*
-	cyborg restrained() currently does nothing
-	if(restrained())
-		RestrainedClickOn(A)
-		return
-	*/
 	if(aicamera.in_camera_mode) //Cyborg picture taking
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
@@ -166,7 +160,10 @@
 	change attack_robot() above to the proper function
 */
 /mob/living/silicon/robot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	A.attack_robot(src)
+
 /mob/living/silicon/robot/RangedAttack(atom/A)
 	A.attack_robot(src)
 

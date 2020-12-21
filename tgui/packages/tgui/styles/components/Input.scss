@@ -6,6 +6,8 @@
 @use '../base.scss';
 @use '../functions.scss' as *;
 
+$text-color: base.$color-fg !default;
+$background-color: #0a0a0a !default;
 $border-color: #88bfff !default;
 $border-radius: base.$border-radius !default;
 
@@ -16,9 +18,8 @@ $border-radius: base.$border-radius !default;
   border: base.em(1px) solid $border-color;
   border: base.em(1px) solid rgba($border-color, 0.75);
   border-radius: $border-radius;
-  color: #fff;
-  background-color: #000;
-  background-color: rgba(0, 0, 0, 0.75);
+  color: $text-color;
+  background-color: $background-color;
   padding: 0 base.em(4px);
   margin-right: base.em(2px);
   line-height: base.em(17px);
@@ -52,7 +53,7 @@ $border-radius: base.$border-radius !default;
   padding: 0 0.5em;
   font-family: Verdana, sans-serif;
   background-color: transparent;
-  color: #fff;
+  color: $text-color;
   color: inherit;
 
   &:-ms-input-placeholder {
@@ -60,4 +61,8 @@ $border-radius: base.$border-radius !default;
     color: #777;
     color: rgba(255, 255, 255, 0.45);
   }
+}
+
+.Input--monospace .Input__input {
+  font-family: 'Consolas', monospace;
 }

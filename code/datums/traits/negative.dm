@@ -32,13 +32,13 @@
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 	hardcore_value = 8
 
-/datum/quirk/blooddeficiency/on_process()
+/datum/quirk/blooddeficiency/on_process(delta_time)
 	var/mob/living/carbon/human/H = quirk_holder
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 	else
 		if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
-			H.blood_volume -= 0.275
+			H.blood_volume -= 0.275 * delta_time
 
 /datum/quirk/blindness
 	name = "Blind"
@@ -93,10 +93,10 @@
 
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of mannitol pills [where] to keep you alive until you can secure a supply of medication. Don't rely on it too much!</span>")
 
-/datum/quirk/brainproblems/on_process()
+/datum/quirk/brainproblems/on_process(delta_time)
 	if(HAS_TRAIT(quirk_holder, TRAIT_TUMOR_SUPPRESSED))
 		return
-	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
+	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
 
 /datum/quirk/deafness
 	name = "Deaf"
@@ -119,8 +119,8 @@
 	mood_quirk = TRUE
 	hardcore_value = 1
 
-/datum/quirk/depression/on_process()
-	if(prob(0.05))
+/datum/quirk/depression/on_process(delta_time)
+	if(DT_PROB(0.05, delta_time))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
 
 /datum/quirk/family_heirloom
@@ -145,7 +145,7 @@
 			if("Clown")
 				heirloom_type = /obj/item/bikehorn/golden
 			if("Mime")
-				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
+				heirloom_type = /obj/item/food/baguette
 			if("Janitor")
 				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
 			if("Cook")
@@ -159,7 +159,7 @@
 			if("Chaplain")
 				heirloom_type = pick(/obj/item/toy/windup_toolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
 			if("Assistant")
-				heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+				heirloom_type = pick(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
 			//Security/Command
 			if("Captain")
 				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
@@ -257,7 +257,7 @@
 	name = "Frail"
 	desc = "You have skin of paper and bones of glass! You suffer wounds much more easily than most."
 	value = -2
-	mob_trait = TRAIT_EASYLIMBWOUND
+	mob_trait = TRAIT_EASILY_WOUNDED
 	gain_text = "<span class='danger'>You feel frail.</span>"
 	lose_text = "<span class='notice'>You feel sturdy again.</span>"
 	medical_record_text = "Patient is absurdly easy to injure. Please take all due dilligence to avoid possible malpractice suits."
@@ -462,11 +462,11 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
 
-/datum/quirk/insanity/on_process()
+/datum/quirk/insanity/on_process(delta_time)
 	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
 		quirk_holder.hallucination = 0
 		return
-	if(prob(2)) //we'll all be mad soon enough
+	if(DT_PROB(2, delta_time)) //we'll all be mad soon enough
 		madness()
 
 /datum/quirk/insanity/proc/madness()
@@ -495,25 +495,29 @@
 /datum/quirk/social_anxiety/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE))
 
-/datum/quirk/social_anxiety/on_process()
+/datum/quirk/social_anxiety/on_process(delta_time)
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+		return
 	var/nearby_people = 0
 	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
 			nearby_people++
 	var/mob/living/carbon/human/H = quirk_holder
-	if(prob(2 + nearby_people))
+	if(DT_PROB(2 + nearby_people, delta_time))
 		H.stuttering = max(3, H.stuttering)
-	else if(prob(min(3, nearby_people)) && !H.silent)
+	else if(DT_PROB(min(3, nearby_people), delta_time) && !H.silent)
 		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
 		H.silent = max(10, H.silent)
-	else if(prob(0.5) && dumb_thing)
+	else if(DT_PROB(0.5, delta_time) && dumb_thing)
 		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
-			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+			new/obj/item/food/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
 
 // small chance to make eye contact with inanimate objects/mindless mobs because of nerves
 /datum/quirk/social_anxiety/proc/looks_at_floor(datum/source, atom/A)
+	SIGNAL_HANDLER
+
 	var/mob/living/mind_check = A
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
 		return
@@ -521,6 +525,8 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, "<span class='smallnotice'>You make eye contact with [A].</span>"), 3)
 
 /datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
+	SIGNAL_HANDLER
+
 	if(prob(75))
 		return
 	var/msg
@@ -554,7 +560,6 @@
 	desc = "You can't get enough of hard drugs."
 	value = -2
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
-	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
 	hardcore_value = 4
 	var/drug_list = list(/datum/reagent/drug/crank, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
@@ -572,7 +577,7 @@
 	if (!reagent_type)
 		reagent_type = pick(drug_list)
 	reagent_instance = new reagent_type()
-	H.reagents.addiction_list.Add(reagent_instance)
+	LAZYADD(H.reagents.addiction_list, reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
@@ -602,19 +607,26 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
+/datum/quirk/junkie/remove()
+	if(quirk_holder && reagent_instance)
+		quirk_holder.reagents.remove_addiction(reagent_instance) //chat feedback here. No need of lose_text.
+
 /datum/quirk/junkie/proc/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] of [initial(reagent_type.name)] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
+	if(HAS_TRAIT(quirk_holder, TRAIT_NOMETABOLISM))
+		return
 	var/mob/living/carbon/human/H = quirk_holder
 	if(world.time > next_process)
 		next_process = world.time + process_interval
-		if(!H.reagents.addiction_list.Find(reagent_instance))
-			if(QDELETED(reagent_instance))
+		var/deleted = QDELETED(reagent_instance)
+		if(deleted || !LAZYFIND(H.reagents.addiction_list, reagent_instance))
+			if(deleted)
 				reagent_instance = new reagent_type()
 			else
 				reagent_instance.addiction_stage = 0
-			H.reagents.addiction_list += reagent_instance
+			LAZYADD(H.reagents.addiction_list, reagent_instance)
 			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
 
 /datum/quirk/junkie/smoker
@@ -622,7 +634,6 @@
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
 	value = -1
 	gain_text = "<span class='danger'>You could really go for a smoke right about now.</span>"
-	lose_text = "<span class='notice'>You feel like you should quit smoking.</span>"
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
@@ -700,7 +711,7 @@
 	dogtag.display = display
 	human_holder.equip_in_one_of_slots(dogtag, slots , qdel_on_fail = TRUE)
 
-/datum/quirk/allergic/on_process()
+/datum/quirk/allergic/on_process(delta_time)
 	. = ..()
 	if(!iscarbon(quirk_holder))
 		return
@@ -714,9 +725,9 @@
 			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
 			return //intentionally stops the entire proc so we avoid the organ damage after the loop
 		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
-		carbon_quirk_holder.adjustToxLoss(3)
-		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine,3)
-		if(prob(10))
+		carbon_quirk_holder.adjustToxLoss(3 * delta_time)
+		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * delta_time)
+		if(DT_PROB(10, delta_time))
 			carbon_quirk_holder.vomit()
 			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
 

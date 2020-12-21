@@ -3,8 +3,8 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	inhand_icon_state = "balaclava"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
 
@@ -17,10 +17,10 @@
 	icon_state = "syndicate_balaclava"
 	inhand_icon_state = "syndicate_balaclava"
 	clothing_flags = MASKINTERNALS
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
-	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 100, "acid" = 40)
+	armor = list(MELEE = 10, BULLET = 5, LASER = 5,ENERGY = 5, BOMB = 0, BIO = 0, RAD = 10, FIRE = 100, ACID = 40)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	var/voice_unknown = FALSE ///This makes it so that your name shows up as unknown when wearing the mask.
@@ -48,7 +48,7 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	inhand_icon_state = "luchag"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
 	modifies_speech = TRUE
 
@@ -93,6 +93,6 @@
 	desc = "Protects your face from snow."
 	icon_state = "rus_balaclava"
 	inhand_icon_state = "rus_balaclava"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL

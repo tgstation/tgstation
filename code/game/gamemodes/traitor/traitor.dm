@@ -2,9 +2,6 @@
 	var/traitor_name = "traitor"
 	var/list/datum/mind/traitors = list()
 
-	var/datum/mind/exchange_red
-	var/datum/mind/exchange_blue
-
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
@@ -73,8 +70,6 @@
 		var/datum/antagonist/traitor/new_antag = new antag_datum()
 		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
 		GLOB.pre_setup_antags -= traitor
-	if(!exchange_blue)
-		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	..()
 
 	//We're not actually ready until all traitors are assigned.

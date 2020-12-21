@@ -4,16 +4,16 @@
 	id = "his_grace"
 	duration = -1
 	tick_interval = 4
-	alert_type = /obj/screen/alert/status_effect/his_grace
+	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
 
-/obj/screen/alert/status_effect/his_grace
+/atom/movable/screen/alert/status_effect/his_grace
 	name = "His Grace"
 	desc = "His Grace hungers, and you must feed Him."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
-/obj/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
+/atom/movable/screen/alert/status_effect/his_grace/MouseEntered(location,control,params)
 	desc = initial(desc)
 	var/datum/status_effect/his_grace/HG = attached_effect
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
@@ -54,18 +54,19 @@
 /datum/status_effect/wish_granters_gift //Fully revives after ten seconds.
 	id = "wish_granters_gift"
 	duration = 50
-	alert_type = /obj/screen/alert/status_effect/wish_granters_gift
+	alert_type = /atom/movable/screen/alert/status_effect/wish_granters_gift
 
 /datum/status_effect/wish_granters_gift/on_apply()
 	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
 	return ..()
 
+
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = TRUE, admin_revive = TRUE)
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
-	owner.update_mobility()
 
-/obj/screen/alert/status_effect/wish_granters_gift
+
+/atom/movable/screen/alert/status_effect/wish_granters_gift
 	name = "Wish Granter's Immortality"
 	desc = "You are being resurrected!"
 	icon_state = "wish_granter"
@@ -103,9 +104,9 @@
 	id = "blooddrunk"
 	duration = 10
 	tick_interval = 0
-	alert_type = /obj/screen/alert/status_effect/blooddrunk
+	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
-/obj/screen/alert/status_effect/blooddrunk
+/atom/movable/screen/alert/status_effect/blooddrunk
 	name = "Blood-Drunk"
 	desc = "You are drunk on blood! Your pulse thunders in your ears! Nothing can harm you!" //not true, and the item description mentions its actual effect
 	icon_state = "blooddrunk"
@@ -124,7 +125,7 @@
 			H.physiology.stamina_mod *= 0.1
 		owner.log_message("gained blood-drunk stun immunity", LOG_ATTACK)
 		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
-		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
+		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
 
 /datum/status_effect/blooddrunk/on_remove()
 	if(ishuman(owner))
@@ -176,7 +177,7 @@
 /datum/status_effect/fleshmend
 	id = "fleshmend"
 	duration = 100
-	alert_type = /obj/screen/alert/status_effect/fleshmend
+	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
 
 /datum/status_effect/fleshmend/tick()
 	if(owner.on_fire)
@@ -192,7 +193,7 @@
 	var/mob/living/carbon/C = owner
 	QDEL_LIST(C.all_scars)
 
-/obj/screen/alert/status_effect/fleshmend
+/atom/movable/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
 	desc = "Our wounds are rapidly healing. <i>This effect is prevented if we are on fire.</i>"
 	icon_state = "fleshmend"
@@ -326,7 +327,7 @@
 		owner.set_confusion(max(0, owner.get_confusion() - 1))
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
-/obj/screen/alert/status_effect/regenerative_core
+/atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"
 	desc = "You can move faster than your broken body could normally handle!"
 	icon_state = "regenerative_core"
@@ -335,7 +336,7 @@
 	id = "Regenerative Core"
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /obj/screen/alert/status_effect/regenerative_core
+	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
@@ -343,6 +344,9 @@
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
 	owner.bodytemperature = owner.get_body_temp_normal()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/humi = owner
+		humi.coretemperature = humi.get_body_temp_normal()
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
@@ -363,3 +367,98 @@
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
+
+/datum/status_effect/crucible_soul
+	id = "Blessing of Crucible Soul"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 15 SECONDS
+	examine_text = "<span class='notice'>They don't seem to be all here.</span>"
+	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
+	var/turf/location
+
+/datum/status_effect/crucible_soul/on_apply()
+	. = ..()
+	to_chat(owner,"<span class='notice'>You phase through reality, nothing is out of bounds!</span>")
+	owner.alpha = 180
+	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB
+	location = get_turf(owner)
+
+/datum/status_effect/crucible_soul/on_remove()
+	to_chat(owner,"<span class='notice'>You regain your physicality, returning you to your original location...</span>")
+	owner.alpha = initial(owner.alpha)
+	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB)
+	owner.forceMove(location)
+	location = null
+	return ..()
+
+/datum/status_effect/duskndawn
+	id = "Blessing of Dusk and Dawn"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 60 SECONDS
+	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
+
+/datum/status_effect/duskndawn/on_apply()
+	. = ..()
+	ADD_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	owner.update_sight()
+
+/datum/status_effect/duskndawn/on_remove()
+	REMOVE_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	owner.update_sight()
+	return ..()
+
+/datum/status_effect/marshal
+	id = "Blessing of Wounded Soldier"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 60 SECONDS
+	tick_interval = 1 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/marshal
+
+/datum/status_effect/marshal/on_apply()
+	. = ..()
+	ADD_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+
+/datum/status_effect/marshal/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+
+/datum/status_effect/marshal/tick()
+	. = ..()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbie = owner
+
+	for(var/BP in carbie.bodyparts)
+		var/obj/item/bodypart/part = BP
+		for(var/W in part.wounds)
+			var/datum/wound/wound = W
+			var/heal_amt = 0
+
+			switch(wound.severity)
+				if(WOUND_SEVERITY_MODERATE)
+					heal_amt = 1
+				if(WOUND_SEVERITY_SEVERE)
+					heal_amt = 3
+				if(WOUND_SEVERITY_CRITICAL)
+					heal_amt = 6
+			if(wound.wound_type == WOUND_BURN)
+				carbie.adjustFireLoss(-heal_amt)
+			else
+				carbie.adjustBruteLoss(-heal_amt)
+				carbie.blood_volume += carbie.blood_volume >= BLOOD_VOLUME_NORMAL ? 0 : heal_amt*3
+
+
+/atom/movable/screen/alert/status_effect/crucible_soul
+	name = "Blessing of Crucible Soul"
+	desc = "You phased through the reality, you are halfway to your final destination..."
+	icon_state = "crucible"
+
+/atom/movable/screen/alert/status_effect/duskndawn
+	name = "Blessing of Dusk and Dawn"
+	desc = "Many things hide beyond the horizon, with Owl's help i managed to slip past sun's guard and moon's watch."
+	icon_state = "duskndawn"
+
+/atom/movable/screen/alert/status_effect/marshal
+	name = "Blessing of Wounded Soldier"
+	desc = "Some people seek power through redemption, one thing many people don't know is that battle is the ultimate redemption and wounds let you bask in eternal glory."
+	icon_state = "wounded_soldier"

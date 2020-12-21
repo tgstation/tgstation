@@ -3,7 +3,7 @@
 /obj/item/autosurgeon
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
-	 		It has a screwdriver slot for removing accidentally added items."
+		It has a screwdriver slot for removing accidentally added items."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "autoimplanter"
 	inhand_icon_state = "nothing"
@@ -17,7 +17,7 @@
 /obj/item/autosurgeon/organ
 	name = "implant autosurgeon"
 	desc = "A device that automatically inserts an implant or organ into the user without the hassle of extensive surgery. \
-	 		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items."
+		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items."
 
 	var/organ_type = /obj/item/organ
 	var/starting_organ
@@ -32,7 +32,7 @@
 	if(starting_organ)
 		insert_organ(new starting_organ(src))
 
-/obj/item/autosurgeon/organ/proc/insert_organ(var/obj/item/I)
+/obj/item/autosurgeon/organ/proc/insert_organ(obj/item/I)
 	storedorgan = I
 	I.forceMove(src)
 	name = "[initial(name)] ([storedorgan.name])"
@@ -114,7 +114,7 @@
 /obj/item/autosurgeon/skillchip
 	name = "skillchip autosurgeon"
 	desc = "A device that automatically inserts a skillchip into the user's brain without the hassle of extensive surgery. \
-	 		It has a slot to insert a skillchip and a screwdriver slot for removing accidentally added items."
+		It has a slot to insert a skillchip and a screwdriver slot for removing accidentally added items."
 	var/skillchip_type = /obj/item/skillchip
 	var/starting_skillchip
 	var/obj/item/skillchip/stored_skillchip
@@ -128,7 +128,7 @@
 	if(starting_skillchip)
 		insert_skillchip(new starting_skillchip(src))
 
-/obj/item/autosurgeon/skillchip/proc/insert_skillchip(var/obj/item/skillchip/skillchip)
+/obj/item/autosurgeon/skillchip/proc/insert_skillchip(obj/item/skillchip/skillchip)
 	if(!istype(skillchip))
 		return
 	stored_skillchip = skillchip

@@ -17,12 +17,13 @@
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
 
 /datum/game_mode/traitor/changeling/can_start()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return
 	possible_changelings = get_players_for_role(ROLE_CHANGELING)
 	if(possible_changelings.len < required_enemies)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /datum/game_mode/traitor/changeling/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))

@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "fixed mob temperature damage when dead"

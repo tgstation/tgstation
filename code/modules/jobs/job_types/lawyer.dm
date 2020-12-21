@@ -35,12 +35,13 @@
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
 	if(visualsOnly)
-		return
+		return ..()
 
-	var/datum/job/lawyer/J = SSjob.GetJobType(jobtype)
-	J.lawyers++
-	if(J.lawyers>1)
+	var/static/use_purple_suit = FALSE //If there is one lawyer, they get the default blue suit. If another lawyer joins the round, they start with a purple suit.
+	if(use_purple_suit)
 		uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
 		suit = /obj/item/clothing/suit/toggle/lawyer/purple
+	else
+		use_purple_suit = TRUE
+	..()

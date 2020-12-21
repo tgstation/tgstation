@@ -79,9 +79,6 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if((M.mind && !M.mind.hasSoul) || is_devil(M))
-		to_chat(user, "<span class='warning'>This... THING has no soul! It's filled with evil!</span>")
-		return
 	if(iscultist(M))
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
@@ -106,7 +103,7 @@
 		return
 	release_shades(user)
 
-/obj/item/soulstone/proc/release_shades(mob/user)
+/obj/item/soulstone/proc/release_shades(mob/user, silent = FALSE)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
@@ -117,11 +114,41 @@
 		else
 			icon_state = "soulstone"
 		name = initial(name)
-		if(iswizard(user) || usability)
-			to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
-		else if(iscultist(user))
-			to_chat(A, "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>")
+		if(!silent)
+			if(iswizard(user) || usability)
+				to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
+			else if(iscultist(user))
+				to_chat(A, "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>")
 		was_used()
+
+/obj/item/soulstone/pre_attack(atom/A, mob/living/user, params)
+	var/mob/living/simple_animal/shade/occupant = (locate() in src)
+	var/obj/item/storage/toolbox/mechanical/target_toolbox = A
+	if(!occupant || !istype(target_toolbox) || target_toolbox.has_soul)
+		return ..()
+
+	if(purified && iscultist(user))
+		hot_potato(user)
+		return
+	if(!iscultist(user) && !iswizard(user) && !usability)
+		user.Unconscious(10 SECONDS)
+		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] holds [src] above [user.p_their()] head and forces it into [target_toolbox] with a flash of light!", \
+		"<span class='notice'>You hold [src] above your head briefly, then force it into [target_toolbox], transferring the [occupant]'s soul!</span>", ignored_mobs = occupant)
+	to_chat(occupant, "<span class='userdanger'>[user] holds you up briefly, then forces you into [target_toolbox]!</span>")
+	to_chat(occupant, "<span class='deadsay'><b>Your eternal soul has been sacrificed to restore the soul of a toolbox. Them's the breaks!</b></span>")
+
+	occupant.client?.give_award(/datum/award/achievement/misc/toolbox_soul, occupant)
+	occupant.deathmessage = "shrieks out in unholy pain as [occupant.p_their()] soul is absorbed into [target_toolbox]!"
+	release_shades(user, TRUE)
+	occupant.death()
+
+	target_toolbox.name = "soulful toolbox"
+	target_toolbox.icon_state = "toolbox_blue_old"
+	target_toolbox.has_soul = TRUE
+	target_toolbox.has_latches = FALSE
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
@@ -177,7 +204,7 @@
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
 			var/datum/antagonist/cult/C = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team.is_sacrifice_target(T.mind))
+			if(C?.cult_team.is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
@@ -283,21 +310,21 @@
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
 	newstruct.key = target.key
-	var/obj/screen/alert/bloodsense/BS
-	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
+	var/atom/movable/screen/alert/bloodsense/BS
+	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker?.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow [stoner ? stoner.p_their() : "their"] orders and help [stoner ? stoner.p_them() : "them"] complete [stoner ? stoner.p_their() : "their"] goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow [stoner.p_their()] orders and help [stoner.p_them()] complete [stoner.p_their()] goals at all costs.</b>")
 	newstruct.clear_alert("bloodsense")
-	BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	BS = newstruct.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(BS)
 		BS.Cviewer = newstruct
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = 0 , mob/shade_controller)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = T
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
@@ -310,7 +337,8 @@
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key
 	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
-	S.copy_languages(user, LANGUAGE_MASTER)
+	if(user)
+		S.copy_languages(user, LANGUAGE_MASTER)
 	S.update_atom_languages()
 	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 	if(user)

@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
+	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
@@ -146,13 +146,7 @@
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
-		if(showpiece_type && !istype(W, showpiece_type))
-			to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
-			return TRUE
-		if(user.transferItemToLoc(W, src))
-			showpiece = W
-			to_chat(user, "<span class='notice'>You put [W] on display.</span>")
-			update_icon()
+		insert_showpiece(W, user)
 	else if(glass_fix && broken && istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() < 2)
@@ -166,6 +160,15 @@
 			update_icon()
 	else
 		return ..()
+
+/obj/structure/displaycase/proc/insert_showpiece(obj/item/wack, mob/user)
+	if(showpiece_type && !istype(wack, showpiece_type))
+		to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
+		return TRUE
+	if(user.transferItemToLoc(wack, src))
+		showpiece = wack
+		to_chat(user, "<span class='notice'>You put [wack] on display.</span>")
+		update_icon()
 
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
 	open = !open
@@ -190,7 +193,8 @@
 		if (!Adjacent(user))
 			return
 		if (user.a_intent == INTENT_HELP)
-			user.examinate(src)
+			if(!user.is_blind())
+				user.examinate(src)
 			return
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
@@ -383,7 +387,6 @@
 	density = FALSE
 	max_integrity = 100
 	req_access = null
-	showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
 	///The price of the item being sold. Altered by grab intent ID use.
@@ -425,9 +428,13 @@
 	return data
 
 /obj/structure/displaycase/forsale/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	var/obj/item/card/id/potential_acc = usr.get_idcard(hand_first = TRUE)
+	var/obj/item/card/id/potential_acc
+	if(isliving(usr))
+		var/mob/living/L = usr
+		potential_acc = L.get_idcard(hand_first = TRUE)
 	switch(action)
 		if("Buy")
 			if(!showpiece)
@@ -572,3 +579,9 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
+
+/obj/structure/displaycase/forsale/insert_showpiece(obj/item/wack, mob/user)
+	if(!IS_EDIBLE(wack))
+		to_chat(user, "<span class='notice'>\The [src] smartly rejects [wack], as it only accepts food and drinks.</span>")
+		return TRUE
+	. = ..()

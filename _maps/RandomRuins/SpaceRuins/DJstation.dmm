@@ -16,7 +16,7 @@
 "ae" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "af" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
@@ -71,6 +71,8 @@
 	pixel_y = -23
 	},
 /obj/structure/cable,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aq" = (
@@ -83,8 +85,8 @@
 /area/ruin/space/djstation)
 "as" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/orange,
-/obj/item/clothing/head/helmet/space/syndicate/orange,
+/obj/item/clothing/suit/space/eva,
+/obj/item/clothing/head/helmet/space/eva,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
@@ -286,7 +288,7 @@
 "aZ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "ba" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/djstation)
@@ -355,7 +357,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/template_noop)
 "Co" = (
 /obj/machinery/door/airlock/external{
 	name = "Ruskie DJ Station"

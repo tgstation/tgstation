@@ -4,9 +4,9 @@
 	var/heat_capacity = 1
 	var/temperature_archived
 
-	//list of open turfs adjacent to us
+	///list of open turfs adjacent to us
 	var/list/atmos_adjacent_turfs
-	//bitfield of dirs in which we are superconducitng
+	///bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = NONE
 
 	//used to determine whether we should archive
@@ -124,7 +124,7 @@
 		var/gas_meta = gas[GAS_META]
 		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
 		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			new_overlay_types += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
+			new_overlay_types += gas_overlay[min(TOTAL_VISIBLE_STATES, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
 
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
@@ -186,8 +186,6 @@
 	var/cached_atmos_cooldown = atmos_cooldown + 1
 
 	var/planet_atmos = planetary_atmos
-	if (planet_atmos)
-		adjacent_turfs_length++
 
 	var/datum/gas_mixture/our_air = air
 
@@ -245,12 +243,17 @@
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
 		G.archive()
+		// archive ourself again so we don't accidentally share more gas than we currently have
+		archive()
 		if(our_air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
 				EG.add_turf(src)
 				our_excited_group = excited_group
-			our_air.share(G, adjacent_turfs_length)
+			// shares 4/5 of our difference in moles with the atmosphere
+			our_air.share(G, 0.25)
+			// temperature share with the atmosphere with an inflated heat capacity to simulate faster sharing with a large atmosphere
+			our_air.temperature_share(G, OPEN_HEAT_TRANSFER_COEFFICIENT, G.temperature_archived, G.heat_capacity() * 5)
 			LAST_SHARE_CHECK
 
 	our_air.react(src)
@@ -285,7 +288,7 @@
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	var/max_force = sqrt(pressure_difference)*(MOVE_FORCE_DEFAULT / 5)
-	set waitfor = 0
+	set waitfor = FALSE
 	var/move_prob = 100
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
@@ -419,7 +422,7 @@
 /turf/proc/conductivity_directions()
 	if(archived_cycle < SSair.times_fired)
 		archive()
-	return NORTH|SOUTH|EAST|WEST
+	return ALL_CARDINALS
 
 /turf/open/conductivity_directions()
 	if(blocks_air)

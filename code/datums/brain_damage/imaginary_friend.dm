@@ -47,7 +47,7 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s imaginary friend?", ROLE_PAI, null, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		friend.key = C.key
@@ -94,7 +94,7 @@
 	trauma = _trauma
 	owner = trauma.owner
 
-	setup_friend()
+	INVOKE_ASYNC(src, .proc/setup_friend)
 
 	join = new
 	join.Grant(src)

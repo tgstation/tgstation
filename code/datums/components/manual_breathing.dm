@@ -33,19 +33,23 @@
 	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
-	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/pause)
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/pause)
 
 /datum/component/manual_breathing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
 	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
 	UnregisterSignal(parent, COMSIG_LIVING_REVIVE)
-	UnregisterSignal(parent, COMSIG_MOB_DEATH)
+	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 
 /datum/component/manual_breathing/proc/restart()
+	SIGNAL_HANDLER
+
 	START_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/proc/pause()
+	SIGNAL_HANDLER
+
 	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/process()
@@ -65,6 +69,8 @@
 			warn_grace = TRUE
 
 /datum/component/manual_breathing/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
+	SIGNAL_HANDLER
+
 	var/obj/item/organ/eyes/new_lungs = O
 
 	if(istype(new_lungs,/obj/item/organ/lungs))
@@ -72,6 +78,8 @@
 		START_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/proc/check_removed_organ(mob/who_cares, obj/item/organ/O)
+	SIGNAL_HANDLER
+
 	var/obj/item/organ/lungs/old_lungs = O
 
 	if(istype(old_lungs, /obj/item/organ/lungs))
@@ -79,6 +87,8 @@
 		STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/proc/check_emote(mob/living/carbon/user, datum/emote/emote)
+	SIGNAL_HANDLER
+
 	if(emote.type == next_breath_type)
 		if(next_breath_type == /datum/emote/inhale)
 			next_breath_type = /datum/emote/exhale

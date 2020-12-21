@@ -1,10 +1,13 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui subsystem
  *
  * Contains all tgui state and subsystem code.
  *
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
  */
 
 SUBSYSTEM_DEF(tgui)
@@ -24,15 +27,16 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml
 
 /datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text('tgui/packages/tgui/public/tgui.html')
+	basehtml = file2text('tgui/public/tgui.html')
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
 
-/datum/controller/subsystem/tgui/stat_entry()
-	..("P:[open_uis.len]")
+/datum/controller/subsystem/tgui/stat_entry(msg)
+	msg = "P:[length(open_uis)]"
+	return ..()
 
-/datum/controller/subsystem/tgui/fire(resumed = 0)
+/datum/controller/subsystem/tgui/fire(resumed = FALSE)
 	if(!resumed)
 		src.current_run = open_uis.Copy()
 	// Cache for sanic speed (lists are references anyways)
@@ -41,8 +45,8 @@ SUBSYSTEM_DEF(tgui)
 		var/datum/tgui/ui = current_run[current_run.len]
 		current_run.len--
 		// TODO: Move user/src_object check to process()
-		if(ui && ui.user && ui.src_object)
-			ui.process()
+		if(ui?.user && ui.src_object)
+			ui.process(wait * 0.1)
 		else
 			open_uis.Remove(ui)
 		if(MC_TICK_CHECK)
@@ -81,7 +85,8 @@ SUBSYSTEM_DEF(tgui)
 			window_found = TRUE
 			break
 	if(!window_found)
-		log_tgui(user, "Error: Pool exhausted")
+		log_tgui(user, "Error: Pool exhausted",
+			context = "SStgui/request_pooled_window")
 		return null
 	return window
 
@@ -93,7 +98,7 @@ SUBSYSTEM_DEF(tgui)
  * required user mob
  */
 /datum/controller/subsystem/tgui/proc/force_close_all_windows(mob/user)
-	log_tgui(user, "force_close_all_windows")
+	log_tgui(user, context = "SStgui/force_close_all_windows")
 	if(user.client)
 		user.client.tgui_windows = list()
 		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
@@ -109,7 +114,7 @@ SUBSYSTEM_DEF(tgui)
  * required window_id string
  */
 /datum/controller/subsystem/tgui/proc/force_close_window(mob/user, window_id)
-	log_tgui(user, "force_close_window")
+	log_tgui(user, context = "SStgui/force_close_window")
 	// Close all tgui datums based on window_id.
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)
@@ -189,8 +194,8 @@ SUBSYSTEM_DEF(tgui)
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
-			ui.process(force = 1)
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			ui.process(wait * 0.1, force = 1)
 			count++
 	return count
 
@@ -211,7 +216,7 @@ SUBSYSTEM_DEF(tgui)
 		return count
 	for(var/datum/tgui/ui in open_uis_by_src[key])
 		// Check if UI is valid.
-		if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.close()
 			count++
 	return count
@@ -228,7 +233,7 @@ SUBSYSTEM_DEF(tgui)
 	for(var/key in open_uis_by_src)
 		for(var/datum/tgui/ui in open_uis_by_src[key])
 			// Check if UI is valid.
-			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 				ui.close()
 				count++
 	return count
@@ -249,7 +254,7 @@ SUBSYSTEM_DEF(tgui)
 		return count
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(isnull(src_object) || ui.src_object == src_object)
-			ui.process(force = 1)
+			ui.process(wait * 0.1, force = 1)
 			count++
 	return count
 

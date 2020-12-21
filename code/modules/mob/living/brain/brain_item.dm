@@ -8,7 +8,8 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_VITAL
-	attack_verb = list("attacked", "slapped", "whacked")
+	attack_verb_continuous = list("attacks", "slaps", "whacks")
+	attack_verb_simple = list("attack", "slap", "whack")
 
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
 	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
@@ -123,7 +124,7 @@
 			return
 
 		user.visible_message("<span class='notice'>[user] starts to pour the contents of [O] onto [src].</span>", "<span class='notice'>You start to slowly pour the contents of [O] onto [src].</span>")
-		if(!do_after(user, 60, TRUE, src))
+		if(!do_after(user, 6 SECONDS, src))
 			to_chat(user, "<span class='warning'>You failed to pour [O] onto [src]!</span>")
 			return
 
@@ -134,7 +135,7 @@
 		return
 
 	// Cutting out skill chips.
-	if(length(skillchips) && O.sharpness == SHARP_EDGED)
+	if(length(skillchips) && O.get_sharpness() == SHARP_EDGED)
 		to_chat(user,"<span class='notice'>You begin to excise skillchips from [src].</span>")
 		if(do_after(user, 15 SECONDS, target = src))
 			for(var/chip in skillchips)

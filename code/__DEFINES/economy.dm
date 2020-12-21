@@ -1,6 +1,7 @@
 #define STARTING_PAYCHECKS 7
 
 //Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
+//Current design direction: Higher paying jobs are vastly outnumbered by lower paying jobs, so anything above medium hurts inflation, common jobs help inflation
 #define PAYCHECK_PRISONER 25
 #define PAYCHECK_ASSISTANT 50
 #define PAYCHECK_MINIMAL 55
@@ -9,12 +10,12 @@
 #define PAYCHECK_HARD 100
 #define PAYCHECK_COMMAND 200
 
-#define STATION_TARGET_INCREMENT 200
+#define STATION_TARGET_BUFFER 40
 
-#define MAX_GRANT_CIV 2500
-#define MAX_GRANT_ENG 3000
-#define MAX_GRANT_SCI 5000
-#define MAX_GRANT_SECMEDSRV 3000
+#define MAX_GRANT_DPT 500
+
+//What should vending machines charge when you buy something in-department.
+#define VENDING_DISCOUNT 0.2
 
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"
@@ -46,6 +47,10 @@
 #define CIV_JOB_MINE 10
 #define CIV_JOB_MED 11
 #define CIV_JOB_GROW 12
+#define CIV_JOB_RANDOM 13
+
+//By how much should the station's inflation value be multiplied by when dividing the civilian bounty's reward?
+#define BOUNTY_MULTIPLIER 10
 
 //These defines are to be used to with the payment component, determines which lines will be used during a transaction. If in doubt, go with clinical.
 #define PAYMENT_CLINICAL "clinical"

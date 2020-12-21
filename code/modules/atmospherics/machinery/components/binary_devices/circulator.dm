@@ -15,6 +15,7 @@
 
 	density = TRUE
 
+	circuit = /obj/item/circuitboard/machine/circulator
 
 	var/flipped = 0
 	var/mode = CIRCULATOR_HOT
@@ -23,10 +24,6 @@
 //default cold circ for mappers
 /obj/machinery/atmospherics/components/binary/circulator/cold
 	mode = CIRCULATOR_COLD
-
-/obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
-	.=..()
-	component_parts = list(new /obj/item/circuitboard/machine/circulator)
 
 /obj/machinery/atmospherics/components/binary/circulator/ComponentInitialize()
 	. = ..()
@@ -73,7 +70,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon()
-	if(!is_operational())
+	if(!is_operational)
 		icon_state = "circ-p-[flipped]"
 	else if(last_pressure_delta > 0)
 		if(last_pressure_delta > ONE_ATMOSPHERE)

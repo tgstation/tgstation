@@ -21,8 +21,8 @@
 
 /obj/item/paperplane/Initialize(mapload, obj/item/paper/newPaper)
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_x = base_pixel_x + rand(-9, 9)
+	pixel_y = base_pixel_y + rand(-8, 8)
 	if(newPaper)
 		internalPaper = newPaper
 		flags_1 = newPaper.flags_1
@@ -121,8 +121,8 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"
 
-/obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+/obj/item/paper/AltClick(mob/living/user, obj/item/I)
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src

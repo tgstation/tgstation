@@ -52,14 +52,15 @@
 	id = "EXPERIMENTAL"
 	organization = "Nanotrasen R&D"
 
-/datum/techweb/bepis/New()
+/datum/techweb/bepis/New(remove_tech = TRUE)
 	. = ..()
 	var/bepis_id = pick(SSresearch.techweb_nodes_experimental)	//To add a new tech to the BEPIS, add the ID to this pick list.
 	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
 	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
 	research_node(BN, TRUE, FALSE, FALSE)
 	update_node_status(BN)
-	SSresearch.techweb_nodes_experimental -= bepis_id
+	if(remove_tech)
+		SSresearch.techweb_nodes_experimental -= bepis_id
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -87,7 +88,6 @@
 		CHECK_TICK
 	for(var/v in consoles_accessing)
 		var/obj/machinery/computer/rdconsole/V = v
-		V.rescan_views()
 		V.updateUsrDialog()
 
 /datum/techweb/proc/add_point_list(list/pointlist)
@@ -309,7 +309,6 @@
 	if(autoupdate_consoles)
 		for(var/v in consoles_accessing)
 			var/obj/machinery/computer/rdconsole/V = v
-			V.rescan_views()
 			V.updateUsrDialog()
 
 //Laggy procs to do specific checks, just in case. Don't use them if you can just use the vars that already store all this!

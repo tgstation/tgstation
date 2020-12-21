@@ -1,7 +1,8 @@
-import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox, TimeDisplay, Flex, Icon, Table, Fragment, LabeledList } from '../components';
-import { Window } from '../layouts';
 import { toFixed } from 'common/math';
+import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 export const InsertedSkillchip = (props, context) => {
   const { act, data } = useBackend(context);
@@ -114,13 +115,14 @@ export const ImplantedSkillchips = (props, context) => {
   const { act, data } = useBackend(context);
 
   const {
-    current = [],
     slots_used,
     slots_max,
     complexity_used,
     complexity_max,
     working,
   } = data;
+
+  const current = data.current || [];
 
   return (
     <Section

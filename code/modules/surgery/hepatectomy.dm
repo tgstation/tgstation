@@ -26,7 +26,7 @@
 	time = 52
 
 /datum/surgery_step/hepatectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to cut out a damaged peice of [target]'s liver...</span>",
+	display_results(user, target, "<span class='notice'>You begin to cut out a damaged piece of [target]'s liver...</span>",
 		"<span class='notice'>[user] begins to make an incision in [target].</span>",
 		"<span class='notice'>[user] begins to make an incision in [target].</span>")
 

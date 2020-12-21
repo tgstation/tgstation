@@ -60,20 +60,19 @@
 	name = "Pyromancy Evaluation"
 	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutelage."
 
-
+/// The immobile, close pulling singularity seen in the academy away mission
 /obj/singularity/academy
-	dissipate = 0
-	move_self = 0
-	grav_pull = 1
+	move_self = FALSE
 
-/obj/singularity/academy/admin_investigate_setup()
-	return
+/obj/singularity/academy/Initialize()
+	. = ..()
 
-/obj/singularity/academy/process()
-	eat()
-	if(prob(1))
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/academy/process(delta_time)
+	if(DT_PROB(0.5, delta_time))
 		mezzer()
-
 
 /obj/item/clothing/glasses/meson/truesight
 	name = "The Lens of Truesight"
@@ -221,13 +220,12 @@
 		user.dropItemToGround(src)
 
 
-/obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
+/obj/item/dice/d20/fate/proc/effect(mob/living/carbon/human/user,roll)
 	var/turf/T = get_turf(src)
 	switch(roll)
 		if(1)
 			//Dust
 			T.visible_message("<span class='userdanger'>[user] turns to dust!</span>")
-			user.hellbound = TRUE
 			user.dust()
 		if(2)
 			//Death
@@ -276,7 +274,7 @@
 		if(11)
 			//Cookie
 			T.visible_message("<span class='userdanger'>A cookie appears out of thin air!</span>")
-			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location())
+			var/obj/item/food/cookie/C = new(drop_location())
 			do_smoke(0, drop_location())
 			C.name = "Cookie of Fate"
 		if(12)

@@ -6,7 +6,7 @@
 	icon_state = "shotguncase"
 	anchored = FALSE
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 	var/case_type = ""
 	var/gun_category = /obj/item/gun
 	var/open = TRUE
@@ -66,11 +66,11 @@
 		update_icon()
 
 /**
-  * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
-  *
-  * Arguments:
-  * * user The mob to which we are showing the radial menu
-  */
+ * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
+ *
+ * Arguments:
+ * * user The mob to which we are showing the radial menu
+ */
 /obj/structure/guncase/proc/show_menu(mob/user)
 	if(!LAZYLEN(contents))
 		return
@@ -98,11 +98,11 @@
 	update_icon()
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/structure/guncase/proc/check_menu(mob/living/carbon/human/user)
 	if(!open)
 		return FALSE
@@ -116,14 +116,14 @@
 	update_icon()
 
 /obj/structure/guncase/contents_explosion(severity, target)
-	for(var/atom/A in contents)
+	for(var/thing in contents)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += A
+				SSexplosions.high_mov_atom += thing
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += A
+				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += A
+				SSexplosions.low_mov_atom += thing
 
 /obj/structure/guncase/shotgun
 	name = "shotgun locker"

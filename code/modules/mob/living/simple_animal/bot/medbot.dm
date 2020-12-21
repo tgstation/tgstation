@@ -18,7 +18,7 @@
 	anchored = FALSE
 	health = 20
 	maxHealth = 20
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	status_flags = (CANPUSH | CANSTUN)
 
@@ -93,7 +93,7 @@
 	if(!on)
 		icon_state = "medibot0"
 		return
-	if(IsStun() || IsParalyzed())
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		icon_state = "medibota"
 		return
 	if(mode == BOT_HEALING)
@@ -116,9 +116,6 @@
 	if(damagetype_healer == "all")
 		return
 
-/mob/living/simple_animal/bot/medbot/update_mobility()
-	. = ..()
-	update_icon()
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -221,7 +218,7 @@
 			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
-		playsound(src, "sparks", 75, TRUE)
+		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)
 			oldpatient = user
 
@@ -245,7 +242,7 @@
 		return
 
 /mob/living/simple_animal/bot/medbot/proc/tip_over(mob/user)
-	mobility_flags &= ~MOBILITY_MOVE
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, BOT_TIPPED_OVER)
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
 	user.visible_message("<span class='danger'>[user] tips over [src]!</span>", "<span class='danger'>You tip [src] over!</span>")
 	mode = BOT_TIPPED
@@ -254,7 +251,7 @@
 	tipper_name = user.name
 
 /mob/living/simple_animal/bot/medbot/proc/set_right(mob/user)
-	mobility_flags |= MOBILITY_MOVE
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BOT_TIPPED_OVER)
 	var/list/messagevoice
 
 	if(user)
@@ -435,16 +432,16 @@
 
 	//They're injured enough for it!
 	var/list/treat_me_for = list()
-	if(C.getBruteLoss() >= heal_threshold)
+	if(C.getBruteLoss() > heal_threshold)
 		treat_me_for += BRUTE
 
-	if(C.getOxyLoss() >= (5 + heal_threshold))
+	if(C.getOxyLoss() > (5 + heal_threshold))
 		treat_me_for += OXY
 
-	if(C.getFireLoss() >= heal_threshold)
+	if(C.getFireLoss() > heal_threshold)
 		treat_me_for += BURN
 
-	if(C.getToxLoss() >= heal_threshold)
+	if(C.getToxLoss() > heal_threshold)
 		treat_me_for += TOX
 
 	if(damagetype_healer in treat_me_for)
@@ -453,7 +450,7 @@
 		return TRUE
 
 /mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
-	if(INTERACTING_WITH(H, src))
+	if(DOING_INTERACTION_WITH_TARGET(H, src))
 		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
@@ -478,6 +475,8 @@
 		..()
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(iscarbon(A) && !tending)
 		var/mob/living/carbon/C = A
 		patient = C
@@ -516,16 +515,16 @@
 		var/treatment_method
 		var/list/potential_methods = list()
 
-		if(C.getBruteLoss() >= heal_threshold)
+		if(C.getBruteLoss() > heal_threshold)
 			potential_methods += BRUTE
 
-		else if(C.getFireLoss() >= heal_threshold)
+		if(C.getFireLoss() > heal_threshold)
 			potential_methods += BURN
 
-		else if(C.getOxyLoss() >= (5 + heal_threshold))
+		if(C.getOxyLoss() > (5 + heal_threshold))
 			potential_methods += OXY
 
-		else if(C.getToxLoss() >= heal_threshold)
+		if(C.getToxLoss() > heal_threshold)
 			potential_methods += TOX
 
 		for(var/i in potential_methods)

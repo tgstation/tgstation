@@ -4,23 +4,33 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "fuckyou"
 	max_integrity = 300
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	density = TRUE
 	anchored = FALSE
+	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants				//mob = bitflags of their control level.
+	///Maximum amount of passengers plus drivers
 	var/max_occupants = 1
+	////Maximum amount of drivers
 	var/max_drivers = 1
 	var/movedelay = 2
 	var/lastmove = 0
+	///The typepath for the key we use to turn on this car if it has one
 	var/key_type
+	///The inserted key, needed on some vehicles to start the engine
 	var/obj/item/key/inserted_key
-	var/key_type_exact = TRUE		//can subtypes work
-	var/canmove = TRUE //If this is false the vehicle cant drive. (thanks for making this actually functional kevinz :^) )
-	var/emulate_door_bumps = TRUE	//when bumping a door try to make occupants bump them to open them.
-	var/default_driver_move = TRUE	//handle driver movement instead of letting something else do it like riding datums.
+	///Whether the key must be strict type and not a subtype to put it in the car
+	var/key_type_exact = TRUE
+	/// Whether the vehicle os currently able to move
+	var/canmove = TRUE
+	///Whether the occupants will bump into a door when the car bumps it
+	var/emulate_door_bumps = TRUE
+	///Whether we handle driving normally or through other things like riding components
+	var/default_driver_move = TRUE
 	var/list/autogrant_actions_passenger	//plain list of typepaths
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
+	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
 
@@ -107,12 +117,12 @@
 
 /obj/vehicle/proc/after_remove_occupant(mob/M)
 
-/obj/vehicle/relaymove(mob/user, direction)
+/obj/vehicle/relaymove(mob/living/user, direction)
 	if(is_driver(user))
 		return driver_move(user, direction)
 	return FALSE
 
-/obj/vehicle/proc/driver_move(mob/user, direction)
+/obj/vehicle/proc/driver_move(mob/living/user, direction)
 	if(key_type && !is_key(inserted_key))
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE
@@ -124,9 +134,9 @@
 	return TRUE
 
 /obj/vehicle/proc/vehicle_move(direction)
-	if(lastmove + movedelay > world.time)
+	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	lastmove = world.time
+	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
 		var/did_move = step(src, direction)
@@ -162,8 +172,9 @@
 	. = ..()
 	if(emulate_door_bumps)
 		if(istype(A, /obj/machinery/door))
+			var/obj/machinery/door/conditionalwall = A
 			for(var/m in occupants)
-				A.Bumped(m)
+				conditionalwall.bumpopen(m)
 
 /obj/vehicle/Move(newloc, dir)
 	. = ..()

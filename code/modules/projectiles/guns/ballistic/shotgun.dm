@@ -30,7 +30,7 @@
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
-	if(chambered && chambered.BB)
+	if(chambered?.BB)
 		process_fire(user, user, FALSE)
 		. = 1
 
@@ -105,7 +105,7 @@
 		to_chat(user, "<span class='notice'>You switch to tube A.</span>")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	rack()
 
@@ -227,7 +227,7 @@
 	. = ..()
 	if(. && slung) //sawing off the gun removes the sling
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		slung = 0
+		slung = FALSE
 		update_icon()
 		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -254,7 +254,8 @@
 	weapon_weight = WEAPON_MEDIUM
 	can_be_sawn_off = FALSE
 	force = 16 //it has a hook on it
-	attack_verb = list("slashed", "hooked", "stabbed")
+	attack_verb_continuous = list("slashes", "hooks", "stabs")
+	attack_verb_simple = list("slash", "hook", "stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
@@ -265,7 +266,7 @@
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(toggled)
 		to_chat(user,"<span class='notice'>You switch to the shotgun.</span>")

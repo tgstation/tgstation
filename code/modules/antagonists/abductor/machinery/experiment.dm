@@ -16,8 +16,7 @@
 	var/breakout_time = 450
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	var/mob/living/L = user
-	if(user.stat || (isliving(user) && (!(L.mobility_flags & MOBILITY_STAND) || !(L.mobility_flags & MOBILITY_UI))) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
 	if(isabductor(target))
 		return
@@ -34,14 +33,14 @@
 	if(state_open && !panel_open)
 		..(target)
 
-/obj/machinery/abductor/experiment/relaymove(mob/user)
+/obj/machinery/abductor/experiment/relaymove(mob/living/user, direction)
 	if(user.stat != CONSCIOUS)
 		return
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
-/obj/machinery/abductor/experiment/container_resist(mob/living/user)
+/obj/machinery/abductor/experiment/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
@@ -100,17 +99,17 @@
 			var/mob/living/mob_occupant = occupant
 			if(mob_occupant.stat == DEAD)
 				return
-			flash = experiment(occupant, params["experiment_type"], usr)
+			flash = experiment(mob_occupant, params["experiment_type"], usr)
 			return TRUE
 
 /**
-  * experiment: Performs selected experiment on occupant mob, resulting in a point reward on success
-  *
-  * Arguments:
-  * * occupant The mob inside the machine
-  * * type The type of experiment to be performed
-  * * user The mob starting the experiment
-  */
+ * experiment: Performs selected experiment on occupant mob, resulting in a point reward on success
+ *
+ * Arguments:
+ * * occupant The mob inside the machine
+ * * type The type of experiment to be performed
+ * * user The mob starting the experiment
+ */
 /obj/machinery/abductor/experiment/proc/experiment(mob/occupant, type, mob/user)
 	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
@@ -168,11 +167,11 @@
 		return "Specimen braindead - disposed."
 
 /**
-  * send_back: Sends a mob back to a selected teleport location if safe
-  *
-  * Arguments:
-  * * H The human mob to be sent back
-  */
+ * send_back: Sends a mob back to a selected teleport location if safe
+ *
+ * Arguments:
+ * * H The human mob to be sent back
+ */
 /obj/machinery/abductor/experiment/proc/send_back(mob/living/carbon/human/H)
 	H.Sleeping(160)
 	H.uncuff()

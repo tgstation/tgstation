@@ -28,6 +28,7 @@ Make sure to add new items to this list if you document new components.
   - [`Grid`](#grid)
   - [`Grid.Column`](#gridcolumn)
   - [`Icon`](#icon)
+  - [`Icon.Stack`](#iconstack)
   - [`Input`](#input)
   - [`Knob`](#knob)
   - [`LabeledControls`](#labeledcontrols)
@@ -39,6 +40,7 @@ Make sure to add new items to this list if you document new components.
   - [`NoticeBox`](#noticebox)
   - [`NumberInput`](#numberinput)
   - [`ProgressBar`](#progressbar)
+  - [`RoundGauge`](#roundgauge)
   - [`Section`](#section)
   - [`Slider`](#slider)
   - [`Table`](#table)
@@ -227,7 +229,7 @@ be truncated with an ellipsis. Be careful however, because this prop breaks
 the baseline alignment.
 - `title: string` - A native browser tooltip, which appears when hovering
 over the button.
-- `content/children: any` - Content to render inside the button.
+- `children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
 
 ### `Button.Checkbox`
@@ -246,7 +248,7 @@ A button with an extra confirmation step, using native button component.
 **Props:**
 
 - See inherited props: [Button](#button)
-- `confirmMessage: string` - Text to display after first click; defaults to "Confirm?"
+- `confirmContent: string` - Text to display after first click; defaults to "Confirm?"
 - `confirmColor: string` - Color to display after first click; defaults to "bad"
 
 ### `Button.Input`
@@ -258,7 +260,7 @@ commit, while escape cancels.
 **Props:**
 
 - See inherited props: [Box](#box)
-- `fluid`: fill availible horizontal space
+- `fluid`: fill available horizontal space
 - `onCommit: (e, value) => void`: function that is called after the user
 defocuses the input or presses enter
 - `currentValue: string`: default string to display when the input is shown
@@ -359,12 +361,16 @@ and displays selected entry.
 **Props:**
 
 - See inherited props: [Box](#box)
+- See inherited props: [Icon](#icon)
 - `options: string[]` - An array of strings which will be displayed in the
 dropdown when open
 - `selected: string` - Currently selected entry
 - `width: number` - Width of dropdown button and resulting menu
-- `over: boolean` - dropdown renders over instead of below
-- `color: string` - color of dropdown button
+- `over: boolean` - Dropdown renders over instead of below
+- `color: string` - Color of dropdown button
+- `nochevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
+- `noscroll: boolean` - Whether or not the dropdown menu should have a scroll bar
+- `displayText: string` - Text to always display in place of the selected text
 - `onClick: (e) => void` - Called when dropdown button is clicked
 - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
@@ -389,7 +395,9 @@ to the left, and certain elements to the right:
   </Flex.Item>
   <Flex.Item grow={1} />
   <Flex.Item>
-    <Button content="Perform an action" />
+    <Button>
+      Perform an action
+    </Button>
   </Flex.Item>
 </Flex>
 ```
@@ -527,6 +535,22 @@ Fractional numbers are supported.
 - `spin: boolean` - Whether an icon should be spinning. Good for load
 indicators.
 
+### `Icon.Stack`
+
+Renders children icons on top of each other in order to make your own icon.
+
+```jsx
+<Icon.Stack>
+  <Icon name="pen" />
+  <Icon name="slash" />
+</Icon.Stack>
+```
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `children: Icon` - Icons to stack.
+
 ### `Input`
 
 A basic text input, which allow users to enter text into a UI.
@@ -625,7 +649,9 @@ to perform some sort of action), there is a way to do that:
   <LabeledList.Item
     label="Item"
     buttons={(
-      <Button content="Click me!" />
+      <Button>
+        Click me!
+      </Button>
     )}>
     Content
   </LabeledList.Item>
@@ -643,7 +669,7 @@ to perform some sort of action), there is a way to do that:
 - `label: string` - Item label.
 - `color: string` - Sets the color of the text.
 - `buttons: any` - Buttons to render aside the content.
-- `content/children: any` - Content of this labeled item.
+- `children: any` - Content of this labeled item.
 
 ### `LabeledList.Divider`
 
@@ -748,7 +774,39 @@ percentage and how filled the bar is.
 - `ranges: { color: [from, to] }` - Applies a `color` to the progress bar
 based on whether the value lands in the range between `from` and `to`.
 - `color: string` - Color of the progress bar.
-- `content/children: any` - Content to render inside the progress bar.
+- `children: any` - Content to render inside the progress bar.
+
+### `RoundGauge`
+
+The RoundGauge component provides a visual representation of a single metric, as well as being capable of showing informational or cautionary boundaries related to that metric.
+
+```jsx
+<RoundGauge
+  size={1.75}
+  value={tankPressure}
+  minValue={0}
+  maxValue={pressureLimit}
+  alertAfter={pressureLimit * 0.70}
+  ranges={{
+    "good": [0, pressureLimit * 0.70],
+    "average": [pressureLimit * 0.70, pressureLimit * 0.85],
+    "bad": [pressureLimit * 0.85, pressureLimit],
+  }}
+  format={formatPressure} />
+```
+
+The alert on the gauge is optional, and will only be shown if the `alertAfter` prop is defined. When defined, the alert will begin to flash the respective color upon which the needle currently rests, as defined in the `ranges` prop.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `value: number` - The current value of the metric.
+- `minValue: number` (default: 0) - The lower bound of the guage.
+- `maxValue: number` (default: 1) - The upper bound of the guage.
+- `ranges: { color: [from, to] }` (default: `{ "good": [0, 1] }`) - Provide regions of the guage to color between two specified values of the metric.
+- `alertAfter: number` (optional) - When provided, will cause an alert symbol on the gauge to begin flashing in the color upon which the needle currently rest, as defined in `ranges`.
+- `format: function(value) => string` (optional) - When provided, will be used to format the value of the metric for display.
+- `size: number` (default: 1) - When provided scales the gauge.
 
 ### `Section`
 
@@ -773,7 +831,9 @@ If you want to have a button on the right side of an section title
 <Section
   title="Cargo"
   buttons={(
-    <Button content="Send shuttle" />
+    <Button>
+      Send shuttle
+    </Button>
   )}>
   Here you can order supply crates.
 </Section>
@@ -784,7 +844,10 @@ If you want to have a button on the right side of an section title
 - `level: number` - Section level in hierarchy. Default is 1, higher number
 means deeper level of nesting. Must be an integer number.
 - `buttons: any` - Buttons to render aside the section title.
-- `content/children: any` - Content of this section.
+- `fill: boolean` - If true, fills all available vertical space.
+- `fitted: boolean` - If true, removes all section padding.
+- `scrollable: boolean` - Shows or hides the scrollbar.
+- `children: any` - Content of this section.
 
 ### `Slider`
 
@@ -953,7 +1016,7 @@ Usage:
 **Props:**
 
 - `position: string` - Tooltip position.
-- `content/children: string` - Content of the tooltip. Must be a plain string.
+- `content: string` - Content of the tooltip. Must be a plain string.
 Fragments or other elements are **not** supported.
 
 ## `tgui/layouts`
@@ -978,11 +1041,13 @@ Example:
 
 **Props:**
 
+- See inherited props: [Box](#box)
 - `className: string` - Applies a CSS class to the element.
 - `theme: string` - A name of the theme.
   - For a list of themes, see `packages/tgui/styles/themes`.
 - `title: string` - Window title.
 - `resizable: boolean` - Controls resizability of the window.
+- `noClose: boolean` - Controls the ability to close the window.
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,
 they should be put as direct childs of a Window, otherwise you should be
@@ -995,6 +1060,8 @@ Can be scrollable.
 
 **Props:**
 
+- See inherited props: [Box](#box)
 - `className: string` - Applies a CSS class to the element.
+- `fitted: boolean` - If true, removes all padding.
 - `scrollable: boolean` - Shows or hides the scrollbar.
 - `children: any` - Main content of your window.

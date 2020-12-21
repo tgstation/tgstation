@@ -5,6 +5,7 @@
 	icon_state = "printer"
 	w_class = WEIGHT_CLASS_NORMAL
 	device_type = MC_PRINT
+	expansion_hw = TRUE
 	var/stored_paper = 20
 	var/max_paper = 30
 

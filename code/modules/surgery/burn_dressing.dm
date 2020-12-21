@@ -11,6 +11,8 @@
 	targetable_wound = /datum/wound/burn
 
 /datum/surgery/debride/can_start(mob/living/user, mob/living/carbon/target)
+	if(!istype(target))
+		return FALSE
 	if(..())
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
 		var/datum/wound/burn/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)
@@ -55,7 +57,7 @@
 		to_chat(user, "<span class='warning'>[target] has no infected flesh there!</span>")
 	return ..()
 
-/datum/surgery_step/debride/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
+/datum/surgery_step/debride/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
 	..()
 	display_results(user, target, "<span class='notice'>You carve away some of the healthy flesh from [target]'s [parse_zone(target_zone)].</span>",
 		"<span class='notice'>[user] carves away some of the healthy flesh from [target]'s [parse_zone(target_zone)] with [tool]!</span>",
@@ -100,7 +102,7 @@
 		to_chat(user, "<span class='warning'>[target] has no burns there!</span>")
 	return ..()
 
-/datum/surgery_step/dress/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
+/datum/surgery_step/dress/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
 	..()
 	if(istype(tool, /obj/item/stack))
 		var/obj/item/stack/used_stack = tool

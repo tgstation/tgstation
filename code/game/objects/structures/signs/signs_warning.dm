@@ -165,7 +165,7 @@
 	is_editable = TRUE
 
 /obj/structure/sign/warning/chemdiamond
-	name = "\improper REACTIVE CHEMICALS"
+	name = "\improper REACTIVE CHEMICALS sign"
 	sign_change_name = "Warning - Hazardous Chemicals sign"
 	desc = "A sign that warns of potentially reactive chemicals nearby, be they explosive, flamable, or acidic."
 	icon_state = "chemdiamond"

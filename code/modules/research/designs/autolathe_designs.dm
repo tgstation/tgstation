@@ -140,7 +140,7 @@
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/plunger
 	category = list("initial","Tools","Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/welding_helmet
 	name = "Welding Helmet"
@@ -376,6 +376,15 @@
 	category = list("initial", "Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/spoon
+	name = "Spoon"
+	id = "spoon"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 120)
+	build_path = /obj/item/kitchen/spoon
+	category = list("initial", "Tool Designs", "Dinnerware")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/plastic_spoon
 	name = "Plastic Spoon"
 	id = "plastic_spoon"
@@ -495,6 +504,15 @@
 	build_path = /obj/item/clothing/head/foilhat
 	category = list("hacked", "Misc")
 
+/datum/design/blood_filter
+	name = "Blood Filter"
+	id = "blood_filter"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1500, /datum/material/silver = 500)
+	build_path = /obj/item/blood_filter
+	category = list("initial", "Medical", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/scalpel
 	name = "Scalpel"
 	id = "scalpel"
@@ -517,7 +535,7 @@
 	name = "Bonesetter"
 	id = "bonesetter"
 	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500)
 	build_path = /obj/item/bonesetter
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -557,6 +575,15 @@
 	build_path = /obj/item/hemostat
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/stethoscope
+	name = "Stethoscope"
+	id = "stethoscope"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/clothing/neck/stethoscope
+	category = list("initial", "Medical", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/beaker
 	name = "Beaker"
@@ -1166,3 +1193,29 @@
 	build_path = /obj/item/stack/sticky_tape/surgical
 	category = list("initial", "Medical")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/petridish
+	name = "Petri Dish"
+	id = "petri_dish"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/glass = 500)
+	build_path = /obj/item/petri_dish
+	category = list("initial","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/swab
+	name = "Sterile Swab"
+	id = "swab"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/plastic = 200)
+	build_path = /obj/item/swab
+	category = list("initial","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/chisel
+	name = "Chisel"
+	id = "chisel"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 75)
+	build_path = /obj/item/chisel
+	category = list("initial","Tools")

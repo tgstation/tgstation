@@ -5,6 +5,8 @@
  *	For documentation on the changelog generator see https://tgstation13.org/phpBB/viewtopic.php?f=5&t=5157
  *	To hide prs from being announced in game, place a [s] in front of the title
  *	All runtime errors are echo'ed to the webhook's logs in github
+ *  Events to be sent via GitHub webhook: Pull Requests, Pushes
+ *  Any other Event will result in a 404 returned to the webhook.
  */
 
 /**CREDITS:
@@ -33,7 +35,7 @@ $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 $tracked_branch = "master";
 $trackPRBalance = true;
 $prBalanceJson = '';
-$startingPRBalance = 5;
+$startingPRBalance = 30;
 $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
@@ -641,36 +643,38 @@ function get_pr_code_friendliness($payload, $oldbalance = null){
 	$labels = get_pr_labels_array($payload);
 	//anything not in this list defaults to 0
 	$label_values = array(
-		'Fix' => 2,
-		'Refactor' => 2,
-		'CI/Tests' => 3,
-		'Code Improvement' => 1,
+		'Fix' => 3,
+		'Refactor' => 10,
+		'Code Improvement' => 2,
 		'Grammar and Formatting' => 1,
-		'Priority: High' => 4,
-		'Priority: CRITICAL' => 5,
+		'Priority: High' => 15,
+		'Priority: CRITICAL' => 20,
+		'Unit Tests' => 6,
 		'Logging' => 1,
-		'Feedback' => 1,
-		'Performance' => 3,
-		'Feature' => -1,
-		'Balance/Rebalance' => -1,
-		'PRB: Reset' => $startingPRBalance - $oldbalance,
+		'Feedback' => 2,
+		'Performance' => 12,
+		'Feature' => -10,
+		'Balance/Rebalance' => -8,
+		'Tweak' => -2,
+		'GBP: Reset' => $startingPRBalance - $oldbalance,
 	);
 
-	$affecting = 0;
-	$is_neutral = FALSE;
-	$found_something_positive = false;
+	$maxNegative = 0;
+	$maxPositive = 0;
 	foreach($labels as $l){
-		if($l == 'PRB: No Update') {	//no effect on balance
-			$affecting = 0;
-			break;
+		if($l == 'GBP: No Update') {	//no effect on balance
+			return 0;
 		}
 		else if(isset($label_values[$l])) {
 			$friendliness = $label_values[$l];
 			if($friendliness > 0)
-				$found_something_positive = true;
-			$affecting = $found_something_positive ? max($affecting, $friendliness) : $friendliness;
+				$maxPositive = max($friendliness, $maxPositive);
+			else
+				$maxNegative = min($friendliness, $maxNegative);
 		}
 	}
+	
+	$affecting = abs($maxNegative) >= $maxPositive ? $maxNegative : $maxPositive;
 	return $affecting;
 }
 
@@ -965,7 +969,7 @@ function checkchangelog($payload, $compile = true) {
 
 function game_server_send($addr, $port, $str) {
 	// All queries must begin with a question mark (ie "?players")
-	if($str{0} != '?') $str = ('?' . $str);
+	if($str[0] != '?') $str = ('?' . $str);
 	
 	/* --- Prepare a packet to send to the server (based on a reverse-engineered packet structure) --- */
 	$query = "\x00\x83" . pack('n', strlen($str) + 6) . "\x00\x00\x00\x00\x00" . $str . "\x00";
@@ -995,23 +999,23 @@ function game_server_send($addr, $port, $str) {
 	socket_close($server); // we don't need this anymore
 	
 	if($result != "") {
-		if($result{0} == "\x00" || $result{1} == "\x83") { // make sure it's the right packet format
+		if($result[0] == "\x00" || $result[1] == "\x83") { // make sure it's the right packet format
 			
 			// Actually begin reading the output:
-			$sizebytes = unpack('n', $result{2} . $result{3}); // array size of the type identifier and content
+			$sizebytes = unpack('n', $result[2] . $result[3]); // array size of the type identifier and content
 			$size = $sizebytes[1] - 1; // size of the string/floating-point (minus the size of the identifier byte)
 			
-			if($result{4} == "\x2a") { // 4-byte big-endian floating-point
-				$unpackint = unpack('f', $result{5} . $result{6} . $result{7} . $result{8}); // 4 possible bytes: add them up together, unpack them as a floating-point
+			if($result[4] == "\x2a") { // 4-byte big-endian floating-point
+				$unpackint = unpack('f', $result[5] . $result[6] . $result[7] . $result[8]); // 4 possible bytes: add them up together, unpack them as a floating-point
 				return $unpackint[1];
 			}
-			else if($result{4} == "\x06") { // ASCII string
+			else if($result[4] == "\x06") { // ASCII string
 				$unpackstr = ""; // result string
 				$index = 5; // string index
 				
 				while($size > 0) { // loop through the entire ASCII string
 					$size--;
-					$unpackstr .= $result{$index}; // add the string position to return string
+					$unpackstr .= $result[$index]; // add the string position to return string
 					$index++;
 				}
 				return $unpackstr;

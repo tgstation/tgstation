@@ -15,7 +15,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	var/scanning = 0
+	var/scanning = FALSE
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
@@ -32,7 +32,7 @@
 
 /obj/item/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
-		scanning = 1
+		scanning = TRUE
 		to_chat(user, "<span class='notice'>Printing report, please wait...</span>")
 		addtimer(CALLBACK(src, .proc/PrintReport), 100)
 	else
@@ -61,7 +61,7 @@
 
 	// Clear the logs
 	log = list()
-	scanning = 0
+	scanning = FALSE
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
@@ -69,13 +69,13 @@
 	return FALSE
 
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
-	set waitfor = 0
+	set waitfor = FALSE
 	if(!scanning)
 		// Can remotely scan objects and mobs.
 		if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
 			return
 
-		scanning = 1
+		scanning = TRUE
 
 		user.visible_message("<span class='notice'>\The [user] points the [src.name] at \the [A] and performs a forensic scan.</span>")
 		to_chat(user, "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
@@ -120,7 +120,7 @@
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
-		var/found_something = 0
+		var/found_something = FALSE
 		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
@@ -129,13 +129,13 @@
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
 				add_log("[finger]")
-			found_something = 1
+			found_something = TRUE
 
 		// Blood
 		if (length(blood))
 			sleep(30)
 			add_log("<span class='info'><B>Blood:</B></span>")
-			found_something = 1
+			found_something = TRUE
 			for(var/B in blood)
 				add_log("Type: <font color='red'>[blood[B]]</font> DNA (UE): <font color='red'>[B]</font>")
 
@@ -145,7 +145,7 @@
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
 				add_log("[fiber]")
-			found_something = 1
+			found_something = TRUE
 
 		//Reagents
 		if(length(reagents))
@@ -153,7 +153,7 @@
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
-			found_something = 1
+			found_something = TRUE
 
 		// Get a new user
 		var/mob/holder = null
@@ -169,7 +169,7 @@
 				to_chat(holder, "<span class='notice'>You finish scanning \the [target_name].</span>")
 
 		add_log("---------------------------------------------------------", 0)
-		scanning = 0
+		scanning = FALSE
 		return
 
 /obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)

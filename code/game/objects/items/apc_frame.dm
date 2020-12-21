@@ -55,7 +55,7 @@
 
 	qdel(src)
 
-/obj/item/wallframe/proc/after_attach(var/obj/O)
+/obj/item/wallframe/proc/after_attach(obj/O)
 	transfer_fingerprints_to(O)
 
 /obj/item/wallframe/attackby(obj/item/W, mob/user, params)
@@ -121,3 +121,4 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
+	custom_price = PAYCHECK_EASY * 0.5

@@ -109,7 +109,7 @@ export const ShuttleManipulatorTemplates = (props, context) => {
     selectedTemplateId,
     setSelectedTemplateId,
   ] = useLocalState(context, 'templateId', Object.keys(templateObject)[0]);
-  const actualTemplates = templateObject[selectedTemplateId]?.templates;
+  const actualTemplates = templateObject[selectedTemplateId]?.templates || [];
   return (
     <Section>
       <Flex>
@@ -228,14 +228,20 @@ export const ShuttleManipulatorModification = (props, context) => {
             level={2}
             title="Status">
             <Button
+              content="Load"
+              color="good"
+              onClick={() => act('load', {
+                shuttle_id: selected.shuttle_id,
+              })} />
+            <Button
               content="Preview"
               onClick={() => act('preview', {
                 shuttle_id: selected.shuttle_id,
               })} />
             <Button
-              content="Load"
+              content="Replace"
               color="bad"
-              onClick={() => act('load', {
+              onClick={() => act('replace', {
                 shuttle_id: selected.shuttle_id,
               })} />
           </Section>

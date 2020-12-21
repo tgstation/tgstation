@@ -31,7 +31,7 @@
 /obj/structure/frame/machine/examine(user)
 	. = ..()
 	if(state == 3 && req_components && req_component_names)
-		var/hasContent = 0
+		var/hasContent = FALSE
 		var/requires = "It requires"
 
 		for(var/i = 1 to req_components.len)
@@ -41,7 +41,7 @@
 				continue
 			var/use_and = i == req_components.len
 			requires += "[(hasContent ? (use_and ? ", and" : ",") : "")] [amt] [amt == 1 ? req_component_names[tname] : "[req_component_names[tname]]\s"]"
-			hasContent = 1
+			hasContent = TRUE
 
 		if(hasContent)
 			. +=  "[requires]."
@@ -120,7 +120,7 @@
 			if(istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/B = P
 				if(!B.build_path)
-					to_chat(user, "<span class'warning'>This circuitboard seems to be broken.</span>")
+					to_chat(user, "<span class='warning'>This circuitboard seems to be broken.</span>")
 					return
 				if(!anchored && B.needs_anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
@@ -176,29 +176,42 @@
 				return
 
 			if(P.tool_behaviour == TOOL_SCREWDRIVER)
-				var/component_check = 1
+				var/component_check = TRUE
 				for(var/R in req_components)
 					if(req_components[R] > 0)
-						component_check = 0
+						component_check = FALSE
 						break
 				if(component_check)
 					P.play_tool_sound(src)
-					var/obj/potential_machine = new circuit.build_path(loc)
-					if(ismachinery(potential_machine))
-						var/obj/machinery/new_machine = potential_machine
+					var/obj/machinery/new_machine = new circuit.build_path(loc)
+					if(istype(new_machine))
+						// Machines will init with a set of default components. Move to nullspace so we don't trigger handle_atom_del, then qdel.
+						// Finally, replace with this frame's parts.
 						if(new_machine.circuit)
+							// Move to nullspace and delete.
+							new_machine.circuit.moveToNullspace()
 							QDEL_NULL(new_machine.circuit)
-						new_machine.circuit = circuit
+						for(var/obj/old_part in new_machine.component_parts)
+							// Move to nullspace and delete.
+							old_part.moveToNullspace()
+							qdel(old_part)
+
+						// Set anchor state and move the frame's parts over to the new machine.
+						// Then refresh parts and call on_construction().
+
 						new_machine.set_anchored(anchored)
-						new_machine.on_construction()
-						for(var/obj/O in new_machine.component_parts)
-							qdel(O)
 						new_machine.component_parts = list()
-						for(var/obj/O in src)
-							O.moveToNullspace()
-							new_machine.component_parts += O
-						circuit.moveToNullspace()
+
+						circuit.forceMove(new_machine)
+						new_machine.component_parts += circuit
+						new_machine.circuit = circuit
+
+						for(var/obj/new_part in src)
+							new_part.forceMove(new_machine)
+							new_machine.component_parts += new_part
 						new_machine.RefreshParts()
+
+						new_machine.on_construction()
 					qdel(src)
 				return
 
@@ -232,12 +245,15 @@
 
 				for(var/obj/item/part in added_components)
 					if(istype(part,/obj/item/stack))
-						var/obj/item/stack/S = part
-						var/obj/item/stack/NS = locate(S.merge_type) in components //find a stack to merge with
-						if(NS)
-							S.merge(NS)
+						var/obj/item/stack/incoming_stack = part
+						for(var/obj/item/stack/merge_stack in components)
+							if(incoming_stack.can_merge(merge_stack))
+								incoming_stack.merge(merge_stack)
+								if(QDELETED(incoming_stack))
+									break
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
+						part.forceMove(src)
 					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
 				if(added_components.len)
 					replacer.play_rped_sound()
@@ -267,9 +283,9 @@
 						to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
 						components += P
 						req_components[I]--
-						return 1
+						return TRUE
 				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
-				return 0
+				return FALSE
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 

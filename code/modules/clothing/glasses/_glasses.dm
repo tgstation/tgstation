@@ -15,7 +15,7 @@
 	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
 	var/lighting_alpha
 	var/list/icon/current = list() //the current hud icons
-	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
+	var/vision_correction = FALSE //does wearing these glasses correct some of our vision defects?
 	var/glass_colour_type //colors your vision when worn
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
@@ -86,7 +86,8 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
@@ -99,7 +100,7 @@
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_EYES)
@@ -154,7 +155,8 @@
 	force = 10
 	throwforce = 20
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
@@ -164,7 +166,7 @@
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	inhand_icon_state = "glasses"
-	vision_correction = 1 //corrects nearsightedness
+	vision_correction = TRUE //corrects nearsightedness
 
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
@@ -226,7 +228,8 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
@@ -246,7 +249,8 @@
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/orange
@@ -477,7 +481,7 @@
 
 
 /mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if(client && client.prefs.uses_glasses_colour && glasses_equipped)
+	if(client?.prefs.uses_glasses_colour && glasses_equipped)
 		add_client_colour(G.glass_colour_type)
 	else
 		remove_client_colour(G.glass_colour_type)

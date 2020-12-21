@@ -1,5 +1,5 @@
 /datum/admins/proc/open_shuttlepanel()
-	set category = "Admin - Events"
+	set category = "Admin.Events"
 	set name = "Shuttle Manipulator"
 	set desc = "Opens the shuttle manipulator UI."
 

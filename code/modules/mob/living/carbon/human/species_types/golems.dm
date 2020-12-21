@@ -18,7 +18,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	sexes = 1
 	damage_overlay_type = ""
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
+	meat = /obj/item/food/meat/slab/human/mutant/golem
 	species_language_holder = /datum/language_holder/golem
 	// To prevent golem subtypes from overwhelming the odds when random species
 	// changes, only the Random Golem type can be chosen
@@ -39,7 +39,7 @@
 	// cultural contamination
 	if(prob(human_surname_chance))
 		golem_surname = pick(GLOB.last_names)
-	else if(special_names && special_names.len && prob(special_name_chance))
+	else if(special_names?.len && prob(special_name_chance))
 		golem_surname = pick(special_names)
 
 	var/golem_name = "[prefix] [golem_surname]"
@@ -66,7 +66,7 @@
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = "adamantine golem"
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+	meat = /obj/item/food/meat/slab/human/mutant/golem/adamantine
 	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/vocal_cords/adamantine)
 	fixed_mut_color = "4ed"
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems. Your unique mineral makeup makes you immune to most types of magic."
@@ -223,11 +223,11 @@
 
 /datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "ash"
+	LAZYOR(C.weather_immunities, "ash")
 
 /datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "ash"
+	LAZYREMOVE(C.weather_immunities, "ash")
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
@@ -242,13 +242,13 @@
 
 /datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "lava"
-	C.weather_immunities |= "ash"
+	LAZYOR(C.weather_immunities, "lava")
+	LAZYOR(C.weather_immunities, "ash")
 
 /datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "ash"
-	C.weather_immunities -= "lava"
+	LAZYREMOVE(C.weather_immunities, "ash")
+	LAZYREMOVE(C.weather_immunities, "lava")
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
@@ -358,7 +358,7 @@
 
 /datum/species/golem/sand/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
-		if(P.flag == "bullet" || P.flag == "bomb")
+		if(P.flag == BULLET || P.flag == BOMB)
 			playsound(H, 'sound/effects/shovel_dig.ogg', 70, TRUE)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
@@ -390,7 +390,7 @@
 
 /datum/species/golem/glass/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H)) //self-shots don't reflect
-		if(P.flag == "laser" || P.flag == "energy")
+		if(P.flag == LASER || P.flag == ENERGY)
 			H.visible_message("<span class='danger'>The [P.name] gets reflected by [H]'s glass skin!</span>", \
 			"<span class='userdanger'>The [P.name] gets reflected by [H]'s glass skin!</span>")
 			if(P.starting)
@@ -421,7 +421,7 @@
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(H))
-	playsound(get_turf(H), "sparks", 50, TRUE)
+	playsound(get_turf(H), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 
@@ -471,10 +471,12 @@
 	var/last_teleport = 0
 
 /datum/action/innate/unstable_teleport/IsAvailable()
-	if(..())
-		if(world.time > last_teleport + cooldown)
-			return 1
-		return 0
+	. = ..()
+	if(!.)
+		return
+	if(world.time > last_teleport + cooldown)
+		return TRUE
+	return FALSE
 
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
@@ -690,7 +692,7 @@
 	name = "pile of bandages"
 	desc = "It emits a strange aura, as if there was still life within it..."
 	max_integrity = 50
-	armor = list("melee" = 90, "bullet" = 90, "laser" = 25, "energy" = 80, "bomb" = 50, "bio" = 100, "fire" = -50, "acid" = -50)
+	armor = list(MELEE = 90, BULLET = 90, LASER = 25, ENERGY = 80, BOMB = 50, BIO = 100, FIRE = -50, ACID = -50)
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE
@@ -722,7 +724,7 @@
 /obj/structure/cloth_pile/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
-	if(cloth_golem.suiciding || cloth_golem.hellbound)
+	if(cloth_golem.suiciding)
 		QDEL_NULL(cloth_golem)
 		return
 
@@ -777,7 +779,7 @@
 /datum/species/golem/bronze/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(world.time > last_gong_time + gong_cooldown))
 		return ..()
-	if(P.flag == "bullet" || P.flag == "bomb")
+	if(P.flag == BULLET || P.flag == BOMB)
 		gong(H)
 		return ..()
 
@@ -875,7 +877,7 @@
 			to_chat(H, "<span class='notice'>You create a new cardboard golem shell.</span>")
 			create_brother(H.loc)
 
-/datum/species/golem/cardboard/proc/create_brother(var/location)
+/datum/species/golem/cardboard/proc/create_brother(location)
 	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
@@ -917,6 +919,7 @@
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,HAS_BONE)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
+	mutantstomach = /obj/item/organ/stomach/bone
 	sexes = FALSE
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH)
@@ -937,15 +940,6 @@
 
 /datum/species/golem/bone/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
-	if(chem.type == /datum/reagent/consumable/milk)
-		if(chem.volume > 10)
-			H.reagents.remove_reagent(chem.type, chem.volume - 10)
-			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		H.heal_bodypart_damage(1.5,0, 0)
-		for(var/i in H.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(2)
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
 		H.adjustStaminaLoss(7.5, 0)
 		H.adjustBruteLoss(0.5, 0)
@@ -1018,7 +1012,7 @@
 	prefix = "Snow"
 	special_names = list("Flake", "Blizzard", "Storm")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES) //no mutcolors, no eye sprites
-	inherent_traits = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 
 	var/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/ball
 	var/obj/effect/proc_holder/spell/aimed/cryo/cryo
@@ -1029,12 +1023,12 @@
 		H.dropItemToGround(W)
 	for(var/i=1, i <= rand(3,5), i++)
 		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
-	new /obj/item/reagent_containers/food/snacks/grown/carrot(get_turf(H))
+	new /obj/item/food/grown/carrot(get_turf(H))
 	qdel(H)
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.weather_immunities |= "snow"
+	LAZYOR(C.weather_immunities, "snow")
 	ball = new
 	ball.charge_counter = 0
 	C.AddSpell(ball)
@@ -1044,7 +1038,7 @@
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities -= "snow"
+	LAZYREMOVE(C.weather_immunities, "snow")
 	if(ball)
 		C.RemoveSpell(ball)
 	if(cryo)
@@ -1057,94 +1051,6 @@
 	charge_max = 15
 	action_icon = 'icons/obj/toy.dmi'
 	action_icon_state = "snowball"
-
-/datum/species/golem/capitalist
-	name = "Capitalist Golem"
-	id = "capitalist golem"
-	prefix = "Capitalist"
-	attack_verb = "monopoliz"
-	limbs_id = "ca_golem"
-	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr. Moneybags", "Adam Smith")
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
-	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
-	changesource_flags = MIRROR_BADMIN
-	random_eligible = FALSE
-
-	var/last_cash = 0
-	var/cash_cooldown = 100
-
-/datum/species/golem/capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), ITEM_SLOT_HEAD)
-	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), ITEM_SLOT_EYES)
-	C.revive(full_heal = TRUE, admin_revive = FALSE)
-
-	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
-	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
-	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/species/golem/capitalist/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	UnregisterSignal(C, COMSIG_MOB_SAY)
-	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
-		C.RemoveSpell(spell)
-
-/datum/species/golem/capitalist/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	..()
-	if(isgolem(target))
-		return
-	if(target.nutrition >= NUTRITION_LEVEL_FAT)
-		target.set_species(/datum/species/golem/capitalist)
-		return
-	target.adjust_nutrition(40)
-
-/datum/species/golem/capitalist/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/mymoney.ogg', 25, FALSE)
-	speech_args[SPEECH_MESSAGE] = "Hello, I like money!"
-
-/datum/species/golem/soviet
-	name = "Soviet Golem"
-	id = "soviet golem"
-	prefix = "Comrade"
-	attack_verb = "nationaliz"
-	limbs_id = "s_golem"
-	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
-	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
-	changesource_flags = MIRROR_BADMIN
-	random_eligible = FALSE
-
-/datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), ITEM_SLOT_HEAD)
-	C.revive(full_heal = TRUE, admin_revive = FALSE)
-
-	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
-	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
-	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/species/golem/soviet/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
-		C.RemoveSpell(spell)
-	UnregisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/species/golem/soviet/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	..()
-	if(isgolem(target))
-		return
-	if(target.nutrition <= NUTRITION_LEVEL_STARVING)
-		target.set_species(/datum/species/golem/soviet)
-		return
-	target.adjust_nutrition(-40)
-
-/datum/species/golem/soviet/proc/handle_speech(datum/source, list/speech_args)
-	playsound(source, 'sound/misc/Cyka Blyat.ogg', 25, FALSE)
-	speech_args[SPEECH_MESSAGE] = "Cyka Blyat"
 
 /datum/species/golem/mhydrogen
 	name = "Metallic Hydrogen Golem"

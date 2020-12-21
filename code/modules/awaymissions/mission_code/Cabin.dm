@@ -122,8 +122,8 @@
 
 /datum/map_generator_module/snow/checkPlaceAtom(turf/T)
 	if(istype(T, /turf/open/floor/plating/asteroid/snow))
-		return ..(T)
-	return 0
+		return ..()
+	return FALSE
 
 /datum/map_generator_module/bottomlayer/snow
 	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)

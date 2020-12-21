@@ -5,7 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 200
-	var/timer = 240 //eventually the person will be freed
+	var/timer = 480 //eventually the person will be freed
 	var/mob/living/petrified_mob
 
 /obj/structure/statue/petrified/New(loc, mob/living/L, statue_timer)
@@ -25,10 +25,10 @@
 		START_PROCESSING(SSobj, src)
 	..()
 
-/obj/structure/statue/petrified/process()
+/obj/structure/statue/petrified/process(delta_time)
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
-	timer--
+	timer -= delta_time
 	petrified_mob.Stun(40) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)
@@ -77,28 +77,28 @@
 
 /mob/living/carbon/human/petrify(statue_timer)
 	if(!isturf(loc))
-		return 0
+		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of [name]"
 	bleedsuppress = 1
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	return 1
+	return TRUE
 
 /mob/living/carbon/monkey/petrify(statue_timer)
 	if(!isturf(loc))
-		return 0
+		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of a monkey"
 	S.icon_state = "monkey"
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/pet/dog/corgi/petrify(statue_timer)
 	if(!isturf(loc))
-		return 0
+		return FALSE
 	var/obj/structure/statue/petrified/S = new (loc, src, statue_timer)
 	S.name = "statue of a corgi"
 	S.icon_state = "corgi"
 	S.desc = "If it takes forever, I will wait for you..."
-	return 1
+	return TRUE

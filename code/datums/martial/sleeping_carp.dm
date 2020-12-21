@@ -53,7 +53,7 @@
 /datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	if((D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == STANDING_UP)
 		D.apply_damage(10, A.dna.species.attack_type, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
 		D.Knockdown(40)
@@ -120,29 +120,34 @@
 	if(!.)
 		return
 	ADD_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	H.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
 	. = ..()
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 
 	H.faction -= "carp" //:(
 
+
+/// Verb added to humans who learn the art of the sleeping carp.
 /mob/living/carbon/human/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"
 
-	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>")
+	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
+	<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage every second (consecutive) punch!\n\
+	<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch your opponent away from you with incredible force!\n\
+	<span class='notice'>Keelhaul</span>: Harm Grab. Kick an opponent to the floor, knocking them down! If your opponent is already prone, this move will disarm them and deal additional stamina damage to them.\n\
+	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them!\
+	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons.\
+	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and appropriate medical supplies when possible for use during downtime.\
+	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
 
-	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage every second punch, with a chance for even more damage!")
-	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
-	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick opponents to the floor. Against prone targets, deal additional stamina damage and disarm them.")
-	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and can block all projectiles in Throw Mode. However, you are not invincible, and sustained damage will take it's toll. Avoid heat at all costs!</span>")
 
 /obj/item/staff/bostaff
 	name = "bo staff"
@@ -152,7 +157,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	throwforce = 20
 	throw_speed = 2
-	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
+	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
+	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
@@ -171,10 +177,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/staff/bostaff/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/staff/bostaff/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/staff/bostaff/update_icon_state()

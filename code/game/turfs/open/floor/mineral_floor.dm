@@ -24,8 +24,9 @@
 
 
 /turf/open/floor/mineral/update_icon()
-	if(!..())
-		return 0
+	. = ..()
+	if(!.)
+		return
 	if(!broken && !burnt)
 		if( !(icon_state in icons) )
 			icon_state = initial(icon_state)
@@ -57,6 +58,11 @@
 /turf/open/floor/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
+
+//Plasma floor that can't be removed, for disco inferno
+
+/turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
+	return
 
 
 //GOLD
@@ -91,26 +97,68 @@
 
 /turf/open/floor/mineral/titanium/yellow
 	icon_state = "titanium_yellow"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/yellow
 
 /turf/open/floor/mineral/titanium/yellow/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/blue
 	icon_state = "titanium_blue"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/blue
 
 /turf/open/floor/mineral/titanium/blue/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/white
 	icon_state = "titanium_white"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/white
 
 /turf/open/floor/mineral/titanium/white/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/purple
 	icon_state = "titanium_purple"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/purple
 
 /turf/open/floor/mineral/titanium/purple/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+// OLD TITANIUM (titanium floor tiles before PR #50454)
+/turf/open/floor/mineral/titanium/tiled
+	name = "titanium tile"
+	icon_state = "titanium_tiled"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled
+	broken_states = list("titanium_dam1_old","titanium_dam2_old","titanium_dam3_old","titanium_dam4_old","titanium_dam5_old")
+
+/turf/open/floor/mineral/titanium/tiled/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/yellow
+	icon_state = "titanium_tiled_yellow"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/yellow
+
+/turf/open/floor/mineral/titanium/tiled/yellow/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/blue
+	icon_state = "titanium_tiled_blue"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/blue
+
+/turf/open/floor/mineral/titanium/tiled/blue/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/white
+	icon_state = "titanium_tiled_white"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/white
+
+/turf/open/floor/mineral/titanium/tiled/white/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/tiled/purple
+	icon_state = "titanium_tiled_purple"
+	floor_tile = /obj/item/stack/tile/mineral/titanium/tiled/purple
+
+/turf/open/floor/mineral/titanium/tiled/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 //PLASTITANIUM (syndieshuttle)
@@ -142,7 +190,7 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
-	var/spam_flag = 0
+	var/sound_cooldown = 0
 
 /turf/open/floor/mineral/bananium/Entered(atom/movable/AM)
 	.=..()
@@ -166,14 +214,14 @@
 		honk()
 
 /turf/open/floor/mineral/bananium/proc/honk()
-	if(spam_flag < world.time)
+	if(sound_cooldown < world.time)
 		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
-		spam_flag = world.time + 20
+		sound_cooldown = world.time + 20
 
 /turf/open/floor/mineral/bananium/proc/squeak()
-	if(spam_flag < world.time)
+	if(sound_cooldown < world.time)
 		playsound(src, "clownstep", 50, TRUE)
-		spam_flag = world.time + 10
+		sound_cooldown = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -221,12 +269,12 @@
 /turf/open/floor/mineral/uranium/proc/radiate()
 	if(!active)
 		if(world.time > last_event+15)
-			active = 1
+			active = TRUE
 			radiation_pulse(src, 10)
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
-			active = 0
+			active = FALSE
 			return
 
 // ALIEN ALLOY

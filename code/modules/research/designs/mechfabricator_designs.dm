@@ -750,6 +750,15 @@
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_prt
+	name = "Cyborg Upgrade (Plating Repair Tool)"
+	id = "borg_upgrade_prt"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/prt
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750) //same price as a cautery
+	construction_time = 40
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
 	id = "borg_upgrade_expand"

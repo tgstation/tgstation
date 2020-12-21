@@ -61,6 +61,8 @@
 /mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A)
 	if(!on)
 		return
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(internal_ext)
 		internal_ext.afterattack(A, src)
 	else
@@ -125,7 +127,7 @@
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
-		playsound(src, "sparks", 75, TRUE)
+		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(user)
 			old_target_fire = user
 		extinguish_fires = FALSE

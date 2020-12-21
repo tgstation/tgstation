@@ -38,6 +38,9 @@
 #define APC_CHARGING 1
 #define APC_FULLY_CHARGED 2
 
+#define APC_DRAIN_TIME 75
+#define APC_POWER_GAIN 200
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
 
@@ -65,7 +68,7 @@
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	var/opened = APC_COVER_CLOSED
-	var/shorted = 0
+	var/shorted = FALSE
 	var/lighting = 3
 	var/equipment = 3
 	var/environ = 3
@@ -75,7 +78,7 @@
 	var/chargecount = 0
 	var/locked = TRUE
 	var/coverlocked = TRUE
-	var/aidisabled = 0
+	var/aidisabled = FALSE
 	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
@@ -83,8 +86,8 @@
 	var/lastused_environ = 0
 	var/lastused_total = 0
 	var/main_status = 0
-	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
-	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
+	powernet = FALSE		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
+	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	var/has_electronics = APC_ELECTRONICS_MISSING // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
@@ -94,7 +97,7 @@
 	var/longtermpower = 10
 	var/auto_name = FALSE
 	var/failure_timer = 0
-	var/force_update = 0
+	var/force_update = FALSE
 	var/emergency_lights = FALSE
 	var/nightshift_lights = FALSE
 	var/last_nightshift_switch = 0
@@ -153,7 +156,7 @@
 	if (!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if (!armor)
-		armor = list("melee" = 20, "bullet" = 20, "laser" = 10, "energy" = 100, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
+		armor = list(MELEE = 20, BULLET = 20, LASER = 10, ENERGY = 100, BOMB = 30, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)
 	..()
 	GLOB.apcs_list += src
 
@@ -187,7 +190,7 @@
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		name = "\improper [get_area_name(area, TRUE)] APC"
-		machine_stat |= MAINT
+		set_machine_stat(machine_stat | MAINT)
 		update_icon()
 		addtimer(CALLBACK(src, .proc/update), 5)
 
@@ -489,12 +492,12 @@
 			switch (has_electronics)
 				if (APC_ELECTRONICS_INSTALLED)
 					has_electronics = APC_ELECTRONICS_SECURED
-					machine_stat &= ~MAINT
+					set_machine_stat(machine_stat & ~MAINT)
 					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You screw the circuit electronics into place.</span>")
 				if (APC_ELECTRONICS_SECURED)
 					has_electronics = APC_ELECTRONICS_INSTALLED
-					machine_stat |= MAINT
+					set_machine_stat(machine_stat | MAINT)
 					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the electronics.</span>")
 				else
@@ -658,7 +661,7 @@
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You replace the damaged APC frame with a new one.</span>")
 			qdel(W)
-			machine_stat &= ~BROKEN
+			set_machine_stat(machine_stat & ~BROKEN)
 			obj_integrity = max_integrity
 			if (opened==APC_COVER_REMOVED)
 				opened = APC_COVER_OPENED
@@ -777,7 +780,7 @@
 			to_chat(user, "<span class='warning'>Nothing happens!</span>")
 		else
 			flick("apc-spark", src)
-			playsound(src, "sparks", 75, TRUE)
+			playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
@@ -794,43 +797,44 @@
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
+		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
 		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
-			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldn't drain it
-				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
+			if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
+				to_chat(H, "<span class='warning'>The APC's syphon safeties prevent you from draining power!</span>")
 				return
 			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach.crystal_charge > 145)
+			if(stomach.crystal_charge > charge_limit)
 				to_chat(H, "<span class='warning'>Your charge is full!</span>")
 				return
-			E.drain_time = world.time + 75
+			E.drain_time = world.time + APC_DRAIN_TIME
 			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
-			if(do_after(user, 75, target = src))
-				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 145))
+			if(do_after(user, APC_DRAIN_TIME, target = src))
+				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 					return
 				if(istype(stomach))
 					to_chat(H, "<span class='notice'>You receive some charge from the APC.</span>")
-					stomach.adjust_charge(10)
-					cell.charge -= 10
+					stomach.adjust_charge(APC_POWER_GAIN)
+					cell.charge -= APC_POWER_GAIN
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
 		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
-			if(cell.charge == cell.maxcharge)
+			if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
 				to_chat(H, "<span class='warning'>The APC is full!</span>")
 				return
 			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach.crystal_charge < 10)
+			if(stomach.crystal_charge < APC_POWER_GAIN)
 				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
 				return
-			E.drain_time = world.time + 75
+			E.drain_time = world.time + APC_DRAIN_TIME
 			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
-			if(do_after(user, 75, target = src))
-				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
+			if(do_after(user, APC_DRAIN_TIME, target = src))
+				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < APC_POWER_GAIN))
 					return
 				if(istype(stomach))
 					to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
-					stomach.adjust_charge(-10)
-					cell.charge += 10
+					stomach.adjust_charge(-APC_POWER_GAIN)
+					cell.charge += APC_POWER_GAIN
 				else
 					to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
 			return
@@ -963,7 +967,9 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
+	. = ..()
+
+	if(. || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
 		return
 	switch(action)
 		if("lock")
@@ -1027,10 +1033,10 @@
 					L.no_emergency = emergency_lights
 					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
 				CHECK_TICK
-	return 1
+	return TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)
-	if(!is_operational() || failure_timer)
+	if(!is_operational || failure_timer)
 		return
 	operating = !operating
 	add_hiddenprint(user)
@@ -1050,8 +1056,8 @@
 	malf.malfhack = src
 	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
 
-	var/obj/screen/alert/hackingapc/A
-	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
+	var/atom/movable/screen/alert/hackingapc/A
+	A = malf.throw_alert("hackingapc", /atom/movable/screen/alert/hackingapc)
 	A.target = src
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
@@ -1162,7 +1168,7 @@
 		return 0
 
 /obj/machinery/power/apc/add_load(amount)
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		terminal.add_load(amount)
 
 /obj/machinery/power/apc/avail(amount)
@@ -1176,13 +1182,13 @@
 		update_icon()
 	if(machine_stat & (BROKEN|MAINT))
 		return
-	if(!area.requires_power)
+	if(!area || !area.requires_power)
 		return
 	if(failure_timer)
 		update()
 		queue_icon_update()
 		failure_timer--
-		force_update = 1
+		force_update = TRUE
 		return
 
 	lastused_light = area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT]
@@ -1245,24 +1251,24 @@
 			equipment = autoset(equipment, 0)
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
-			area.poweralert(0, src)
+			area.poweralert(TRUE, src)
 		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
-			area.poweralert(0, src)
+			area.poweralert(TRUE, src)
 		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			area.poweralert(0, src)
+			area.poweralert(TRUE, src)
 		else									// otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			area.poweralert(1, src)
+			area.poweralert(FALSE, src)
 			if(cell.percent() > 75)
-				area.poweralert(1, src)
+				area.poweralert(FALSE, src)
 
 		// now trickle-charge the cell
 		if(chargemode && charging == APC_CHARGING && operating)
@@ -1304,7 +1310,7 @@
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
-		area.poweralert(0, src)
+		area.poweralert(TRUE, src)
 
 	// update icon & area power if anything changed
 
@@ -1400,22 +1406,22 @@
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
-		return 0
+		return FALSE
 	do_sparks(5, TRUE, src)
 	if(isalien(user))
-		return 0
+		return FALSE
 	if(electrocute_mob(user, src, src, 1, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/power/apc/proc/setsubsystem(val)
 	if(cell && cell.charge > 0)
 		return (val==1) ? 0 : val
 	else if(val == 3)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/power/apc/proc/energy_fail(duration)
@@ -1461,6 +1467,9 @@
 #undef APC_CHARGING
 #undef APC_FULLY_CHARGED
 
+#undef APC_DRAIN_TIME
+#undef APC_POWER_GAIN
+
 //update_overlay
 #undef APC_UPOVERLAY_CHARGEING0
 #undef APC_UPOVERLAY_CHARGEING1
@@ -1481,5 +1490,4 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
-	custom_price = 50
 	desc = "Heavy-duty switching circuits for power control."

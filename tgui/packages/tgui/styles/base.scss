@@ -7,6 +7,7 @@
 
 $color-fg: #ffffff !default;
 $color-bg: #252525 !default;
+$color-bg-section: rgba(0, 0, 0, 0.33) !default;
 $color-bg-grad-spread: 2% !default;
 $color-bg-start: color.adjust(
   $color-bg, $lightness: $color-bg-grad-spread) !default;

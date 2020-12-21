@@ -29,6 +29,7 @@ Difficulty: Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
+	base_pixel_x = -16
 	loot = list()
 	butcher_results = list()
 	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)
@@ -73,7 +74,7 @@ Difficulty: Hard
 /datum/action/innate/megafauna_attack/disorienting_scream
 	name = "Disorienting Scream"
 	icon_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall"
+	button_icon_state = "wall-0"
 	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
 	chosen_attack_num = 3
 
@@ -182,7 +183,7 @@ Difficulty: Hard
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
 		L.Dizzy(6)
-		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
+		to_chat(L, "<span class='danger'>[capitalize(src)] screams loudly!</span>")
 	SetRecoveryTime(30, 0)
 	SLEEP_CHECK_DEATH(12)
 	can_move = TRUE

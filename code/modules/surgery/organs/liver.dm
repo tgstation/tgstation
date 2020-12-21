@@ -14,6 +14,7 @@
 	decay_factor = STANDARD_ORGAN_DECAY
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5)
+	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
@@ -31,10 +32,13 @@
 		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(C, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 
 			var/provide_pain_message = HAS_NO_TOXIN
+			var/obj/belly = C.getorganslot(ORGAN_SLOT_STOMACH)
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
 				for(var/datum/reagent/toxin/T in C.reagents.reagent_list)
 					var/thisamount = C.reagents.get_reagent_amount(T.type)
+					if(belly)
+						thisamount += belly.reagents.get_reagent_amount(T.type)
 					if (thisamount && thisamount <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
 						C.reagents.remove_reagent(T.type, 1)
 					else
@@ -59,13 +63,7 @@
 #undef HAS_PAINFUL_TOXIN
 
 /obj/item/organ/liver/get_availability(datum/species/S)
-	return !(TRAIT_NOMETABOLISM in S.species_traits)
-
-/obj/item/organ/liver/fly
-	name = "insectoid liver"
-	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.
-	desc = "A mutant liver designed to handle the unique diet of a flyperson."
-	alcohol_tolerance = 0.007 //flies eat vomit, so a lower alcohol tolerance is perfect!
+	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
 
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"

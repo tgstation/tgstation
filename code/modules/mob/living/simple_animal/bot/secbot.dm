@@ -8,7 +8,7 @@
 	health = 25
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
@@ -203,6 +203,15 @@ Auto Patrol: []"},
 		if(special_retaliate_after_attack(H))
 			return
 
+		// Turns an oversight into a feature. Beepsky will now announce when pacifists taunt him over sec comms.
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			H.visible_message("<span class='notice'>[H] taunts [src], daring [p_them()] to give chase!</span>", \
+				"<span class='notice'>You taunt [src], daring [p_them()] to chase you!</span>", "<span class='hear'>You hear someone shout a daring taunt!</span>", DEFAULT_MESSAGE_RANGE, H)
+			speak("Taunted by pacifist scumbag <b>[H]</b> in [get_area(src)].", radio_channel)
+
+			// Interrupt the attack chain. We've already handled this scenario for pacifists.
+			return
+
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/user, params)
@@ -233,6 +242,8 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)
 	if(!on)
+		return
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
@@ -265,7 +276,7 @@ Auto Patrol: []"},
 	if( !on || !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!C.handcuffed)
-		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
+		C.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(C))
 		C.update_handcuffed()
 		playsound(src, "law", 50, FALSE)
 		back_to_idle()
@@ -435,7 +446,7 @@ Auto Patrol: []"},
 		else
 			continue
 
-/mob/living/simple_animal/bot/secbot/proc/check_for_weapons(var/obj/item/slot_item)
+/mob/living/simple_animal/bot/secbot/proc/check_for_weapons(obj/item/slot_item)
 	if(slot_item && (slot_item.item_flags & NEEDS_PERMIT))
 		return TRUE
 	return FALSE
@@ -479,7 +490,7 @@ Auto Patrol: []"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
+/mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user as mob)
 	..()
 	if(!isalien(target))
 		target = user

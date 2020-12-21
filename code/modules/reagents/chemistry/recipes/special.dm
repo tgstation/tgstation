@@ -1,4 +1,5 @@
 GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related food types
+GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
 /proc/build_reagents_to_food()
 	. = list()
@@ -18,6 +19,14 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 			.[r] += type
 		qdel(item)
 
+///Just grab every craftable medicine you can think off
+/proc/build_medicine_reagents()
+	. = list()
+
+	for(var/A in subtypesof(/datum/reagent/medicine))
+		var/datum/reagent/R = A
+		if(initial(R.can_synth))
+			. += R
 
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"
@@ -162,10 +171,29 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 			return food_reagent_ids
 	return ..()
 
+///Random recipe for meme chem metalgen. Always requires wittel and resets every 3 days
+/datum/chemical_reaction/randomized/metalgen
+	persistent = TRUE
+	persistence_period = 3 //Resets every three days. It's the ultimate meme and is best not worn out
+	randomize_req_temperature = TRUE
+	possible_catalysts = list(/datum/reagent/wittel)
+	min_catalysts = 1
+	max_catalysts = 1
+	results = list(/datum/reagent/metalgen=20)
+
+/datum/chemical_reaction/randomized/metalgen/GetPossibleReagents(kind)
+	switch(kind)
+		if(RNGCHEM_INPUT)
+			return GLOB.medicine_reagents
+	return ..()
 
 /obj/item/paper/secretrecipe
 	name = "old recipe"
-	var/recipe_id = /datum/chemical_reaction/randomized/secret_sauce
+
+	///List of possible recipes we could display
+	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
+	///The one we actually end up displaying
+	var/recipe_id = null
 
 /obj/item/paper/secretrecipe/examine(mob/user) //Extra secret
 	if(isobserver(user))
@@ -174,6 +202,9 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /obj/item/paper/secretrecipe/Initialize()
 	. = ..()
+
+	recipe_id = pick(possible_recipes)
+
 	if(SSpersistence.initialized)
 		UpdateInfo()
 	else

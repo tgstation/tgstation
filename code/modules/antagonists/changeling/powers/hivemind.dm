@@ -1,38 +1,3 @@
-//HIVEMIND COMMUNICATION (:g)
-/datum/action/changeling/hivemind_comms
-	name = "Hivemind Communication"
-	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
-	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
-	needs_button = FALSE
-	dna_cost = 0
-	chemical_cost = -1
-
-/datum/action/changeling/hivemind_comms/on_purchase(mob/user, is_respec)
-	..()
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	changeling.changeling_speak = 1
-	to_chat(user, "<i><font color=#800080>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with the other changelings.</font></i>")
-	var/datum/action/changeling/hivemind_upload/S1 = new
-	if(!changeling.has_sting(S1))
-		S1.Grant(user)
-		changeling.purchasedpowers+=S1
-	var/datum/action/changeling/hivemind_download/S2 = new
-	if(!changeling.has_sting(S2))
-		S2.Grant(user)
-		changeling.purchasedpowers+=S2
-
-/datum/action/changeling/hivemind_comms/Remove(mob/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(changeling.changeling_speak)
-		changeling.changeling_speak = FALSE
-	for(var/p in changeling.purchasedpowers)
-		var/datum/action/changeling/otherpower = p
-		if(istype(otherpower, /datum/action/changeling/hivemind_upload) || istype(otherpower, /datum/action/changeling/hivemind_download))
-			changeling.purchasedpowers -= otherpower
-			otherpower.Remove(changeling.owner.current)
-	..()
-
-
 // HIVE MIND UPLOAD/DOWNLOAD DNA
 GLOBAL_LIST_EMPTY(hivemind_bank)
 
@@ -43,7 +8,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	chemical_cost = 10
 	dna_cost = -1
 
-/datum/action/changeling/hivemind_upload/sting_action(var/mob/living/user)
+/datum/action/changeling/hivemind_upload/sting_action(mob/living/user)
 	if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return

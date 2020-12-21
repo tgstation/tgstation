@@ -15,29 +15,29 @@
 	gases.Cut()
 
 /datum/gas_mixture/immutable/archive()
-	return 1 //nothing changes, so we do nothing and the archive is successful
+	return TRUE //nothing changes, so we do nothing and the archive is successful
 
 /datum/gas_mixture/immutable/merge()
-	return 0 //we're immutable.
+	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
 	garbage_collect()
 
 /datum/gas_mixture/immutable/react()
-	return 0 //we're immutable.
+	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/copy()
 	return new type //we're immutable, so we can just return a new instance.
 
 /datum/gas_mixture/immutable/copy_from()
-	return 0 //we're immutable.
+	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/copy_from_turf()
-	return 0 //we're immutable.
+	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/parse_gas_string()
-	return 0 //we're immutable.
+	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	. = ..()

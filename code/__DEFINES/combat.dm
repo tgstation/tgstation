@@ -3,13 +3,44 @@
 //Damage and status effect defines
 
 //Damage defines //TODO: merge these down to reduce on defines
+/// Physical fracturing and warping of the material.
 #define BRUTE		"brute"
-#define BURN		"fire"
+/// Scorching and charring of the material.
+#define BURN		"burn"
+/// Poisoning. Mostly caused by reagents.
 #define TOX			"toxin"
+/// Suffocation.
 #define OXY			"oxygen"
+/// Cellular degredation. Rare and difficult to treat.
 #define CLONE		"clone"
+/// Exhaustion and nonlethal damage.
 #define STAMINA 	"stamina"
+/// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
 #define BRAIN		"brain"
+
+//Damage flag defines //
+/// Involves a melee attack or a thrown object.
+#define MELEE		"melee"
+/// Involves a solid projectile.
+#define BULLET		"bullet"
+/// Involves a laser.
+#define LASER		"laser"
+/// Involves an EMP or energy-based projectile.
+#define ENERGY		"energy"
+/// Involves a shockwave, usually from an explosion.
+#define BOMB		"bomb"
+/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+#define BIO			"bio"
+/// Involves ionizing radiation.
+#define RAD			"rad"
+/// Involves fire or temperature extremes.
+#define FIRE		"fire"
+/// Involves corrosive substances.
+#define ACID		"acid"
+/// Involves magic.
+#define MAGIC		"magic"
+/// Involved in checking the likelyhood of applying a wound to a mob.
+#define WOUND		"wound"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 	            	(1<<0)
@@ -50,6 +81,7 @@
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_MELEE 8
+#define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
@@ -111,11 +143,11 @@
 #define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 30
-#define SHOVE_KNOCKDOWN_HUMAN 30
-#define SHOVE_KNOCKDOWN_TABLE 30
-#define SHOVE_KNOCKDOWN_COLLATERAL 10
-#define SHOVE_CHAIN_PARALYZE 40
+#define SHOVE_KNOCKDOWN_SOLID 20
+#define SHOVE_KNOCKDOWN_HUMAN 20
+#define SHOVE_KNOCKDOWN_TABLE 20
+#define SHOVE_KNOCKDOWN_COLLATERAL 1
+#define SHOVE_CHAIN_PARALYZE 30
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
@@ -131,7 +163,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_PAIN_CHANCE 					15
 ///Chance for embedded object to fall out (causing pain but removing the object)
 #define EMBEDDED_ITEM_FALLOUT 					5
-///Chance for an object to embed into somebody when thrown (if it's sharp)
+///Chance for an object to embed into somebody when thrown
 #define EMBED_CHANCE							45
 ///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
 #define EMBEDDED_PAIN_MULTIPLIER				2
@@ -249,6 +281,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
-#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 
 #define NICE_SHOT_RICOCHET_BONUS	10			//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
+
+/// If a carbon is thrown at a speed faster than normal and impacts something solid, they take extra damage for every extra speed up to this number (see [/mob/living/carbon/proc/throw_impact])
+#define CARBON_MAX_IMPACT_SPEED_BONUS	5

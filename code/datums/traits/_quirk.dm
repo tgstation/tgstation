@@ -36,13 +36,15 @@
 
 
 /**
-  * On client connection set quirk preferences.
-  *
-  * Run post_add to set the client preferences for the quirk.
-  * Clear the attached signal for login.
-  * Used when the quirk has been gained and no client is attached to the mob.
-  */
+ * On client connection set quirk preferences.
+ *
+ * Run post_add to set the client preferences for the quirk.
+ * Clear the attached signal for login.
+ * Used when the quirk has been gained and no client is attached to the mob.
+ */
 /datum/quirk/proc/on_quirk_holder_first_login(mob/living/source)
+		SIGNAL_HANDLER
+
 		UnregisterSignal(source, COMSIG_MOB_LOGIN)
 		post_add()
 
@@ -73,22 +75,22 @@
 /datum/quirk/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
 /datum/quirk/proc/on_transfer() //code called when the trait is transferred to a new mob
 
-/datum/quirk/process()
+/datum/quirk/process(delta_time)
 	if(QDELETED(quirk_holder))
 		quirk_holder = null
 		qdel(src)
 		return
 	if(quirk_holder.stat == DEAD)
 		return
-	on_process()
+	on_process(delta_time)
 
 /**
-  * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
-  *
-  * Arguments:
-  * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
-  * * Category- Which types of quirks we want to print out. Defaults to everything
-  */
+ * get_quirk_string() is used to get a printable string of all the quirk traits someone has for certain criteria
+ *
+ * Arguments:
+ * * Medical- If we want the long, fancy descriptions that show up in medical records, or if not, just the name
+ * * Category- Which types of quirks we want to print out. Defaults to everything
+ */
 /mob/living/proc/get_quirk_string(medical, category = CAT_QUIRK_ALL) //helper string. gets a string of all the quirks the mob has
 	var/list/dat = list()
 	switch(category)

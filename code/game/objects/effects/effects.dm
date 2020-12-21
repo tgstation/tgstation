@@ -5,7 +5,7 @@
 	icon = 'icons/effects/effects.dmi'
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
-	obj_flags = 0
+	obj_flags = NONE
 	vis_flags = VIS_INHERIT_PLANE
 
 /obj/effect/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -15,10 +15,7 @@
 	return
 
 /obj/effect/acid_act()
-	return
-
-/obj/effect/mech_melee_attack(obj/mecha/M)
-	return 0
+	return FALSE
 
 /obj/effect/blob_act(obj/structure/blob/B)
 	return
@@ -30,28 +27,10 @@
 	return
 
 /obj/effect/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
-	else
-		switch(severity)
-			if(1)
-				qdel(src)
-			if(2)
-				if(prob(60))
-					qdel(src)
-			if(3)
-				if(prob(25))
-					qdel(src)
+	return
 
 /obj/effect/singularity_act()
 	qdel(src)
-	return 0
-
-/obj/effect/ConveyorMove()
-	return
-
-/obj/effect/abstract/ex_act(severity, target)
-	return
 
 /obj/effect/abstract/singularity_pull()
 	return

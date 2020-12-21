@@ -84,26 +84,6 @@
 /turf/Safe_COORD_Location()
 	return src
 
-
-#define ADMIN_PUNISHMENT_LIGHTNING "Lightning bolt"
-#define ADMIN_PUNISHMENT_BRAINDAMAGE "Brain damage"
-#define ADMIN_PUNISHMENT_GIB "Gib"
-#define ADMIN_PUNISHMENT_BSA "Bluespace Artillery Device"
-#define ADMIN_PUNISHMENT_FIREBALL "Fireball"
-#define ADMIN_PUNISHMENT_ROD "Immovable Rod"
-#define ADMIN_PUNISHMENT_SUPPLYPOD_QUICK "Supply Pod (Quick)"
-#define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
-#define ADMIN_PUNISHMENT_MAZING "Puzzle"
-#define ADMIN_PUNISHMENT_IMMERSE "Fully Immerse"
-#define ADMIN_PUNISHMENT_FAT "Fatten up"
-#define ADMIN_PUNISHMENT_FAKEBWOINK "Fake bwoink"
-#define ADMIN_PUNISHMENT_NUGGET "Nugget"
-#define ADMIN_PUNISHMENT_CRACK ":B:oneless"
-#define ADMIN_PUNISHMENT_BLEED ":B:loodless"
-#define ADMIN_PUNISHMENT_PERFORATE ":B:erforate"
-#define ADMIN_PUNISHMENT_SCARIFY "Scarify"
-#define ADMIN_PUNISHMENT_SHOES "Knot Shoes"
-
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
@@ -124,7 +104,7 @@
 #define MAX_KEYS_PER_KEYBIND 3
 ///Max amount of keypress messages per second over two seconds before client is autokicked
 #define MAX_KEYPRESS_AUTOKICK 50
-///Length of held key rolling buffer
+///Length of held key buffer
 #define HELD_KEY_BUFFER_LENGTH 15
 
 #define STICKYBAN_DB_CACHE_TIME 10 SECONDS
@@ -142,3 +122,18 @@
 // LOG BROWSE TYPES
 #define BROWSE_ROOT_ALL_LOGS 1
 #define BROWSE_ROOT_CURRENT_LOGS 2
+
+// allowed ghost roles this round, starts as everything allowed
+GLOBAL_VAR_INIT(ghost_role_flags, (~0))
+
+//Flags that control what ways ghosts can get back into the round
+//ie fugitives, space dragon, etc. also includes dynamic midrounds as it's the same deal
+#define GHOSTROLE_MIDROUND_EVENT	(1<<0)
+//ie ashwalkers, free golems, beach bums
+#define GHOSTROLE_SPAWNER			(1<<1)
+//ie mind monkeys, sentience potion
+#define GHOSTROLE_STATION_SENTIENCE	(1<<2)
+//ie pais, posibrains
+#define GHOSTROLE_SILICONS			(1<<3)
+//ie mafia, ctf
+#define GHOSTROLE_MINIGAME			(1<<4)

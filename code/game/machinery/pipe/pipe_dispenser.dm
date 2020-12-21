@@ -35,7 +35,7 @@
 	if(..())
 		return 1
 	var/mob/living/L = usr
-	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!anchored || (istype(L) && !(L.mobility_flags & MOBILITY_UI)) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)

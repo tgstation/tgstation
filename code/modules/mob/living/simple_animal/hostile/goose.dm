@@ -8,7 +8,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/food/meat/slab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -236,11 +236,11 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
 	stop_automated_movement = TRUE
 	AddComponent(/datum/component/deadchat_control, ANARCHY_MODE, list(
-	 "up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
-	 "down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
-	 "left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
-	 "right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST),
-	 "vomit" = CALLBACK(src, .proc/vomit_prestart, 25)), 12 SECONDS, 4 SECONDS)
+		"up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
+		"down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
+		"left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
+		"right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST),
+		"vomit" = CALLBACK(src, .proc/vomit_prestart, 25)), 12 SECONDS, 4 SECONDS)
 
 /datum/action/cooldown/vomit
 	name = "Vomit"

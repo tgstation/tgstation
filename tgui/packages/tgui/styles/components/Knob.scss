@@ -11,6 +11,8 @@ $bg-map: colors.$bg-map !default;
 $fg-map: colors.$fg-map !default;
 $ring-color: #6a96c9 !default;
 $knob-color: #333333 !default;
+$popup-background-color: #000000 !default;
+$popup-text-color: #ffffff !default;
 
 $inner-padding: 0.1em;
 
@@ -71,7 +73,8 @@ $inner-padding: 0.1em;
   font-size: 1rem;
   text-align: center;
   padding: 0.25rem 0.5rem;
-  background-color: #000;
+  color: $popup-text-color;
+  background-color: $popup-background-color;
   transform: translateX(50%);
   white-space: nowrap;
 }

@@ -3,10 +3,10 @@
 	desc = "chemical grinder."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER
+
 	reagent_flags = TRANSPARENT | DRAINABLE
-	rcd_cost = 30
-	rcd_delay = 30
 	buffer = 400
+
 	var/eat_dir = SOUTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt)

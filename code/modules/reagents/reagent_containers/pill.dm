@@ -4,6 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill"
 	inhand_icon_state = "pill"
+	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	possible_transfer_amounts = list()
@@ -50,7 +51,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, M, "<span class='notice'>[pick(strings(REDPILL_FILE, "redpill_questions"))]</span>"), 50)
 
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = apply_type)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = apply_type)
 	qdel(src)
 	return TRUE
 
@@ -73,15 +74,12 @@
 	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
 	qdel(src)
 
-/* 
+/*
  * On accidental consumption, consume the pill
  */
-/obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
-	to_chat(M, "<span class='warning'>You swallow something small. Was that in \the [source_item]?</span>")
-	if(reagents?.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = INGEST)
-
-	source_item?.contents -= src
+/obj/item/reagent_containers/pill/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = FALSE)
+	to_chat(victim, "<span class='warning'>You swallow something small. [source_item ? "Was that in [source_item]?" : ""]</span>")
+	reagents?.trans_to(victim, reagents.total_volume, transfered_by = user, methods = INGEST)
 	qdel(src)
 	return discover_after
 

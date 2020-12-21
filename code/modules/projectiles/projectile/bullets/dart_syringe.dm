@@ -3,6 +3,7 @@
 	icon_state = "cbbolt"
 	damage = 6
 	embedding = null
+	shrapnel_type = null
 	var/piercing = FALSE
 
 /obj/projectile/bullet/dart/Initialize()
@@ -15,7 +16,7 @@
 		if(blocked != 100) // not completely blocked
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
-				reagents.trans_to(M, reagents.total_volume, method = INJECT)
+				reagents.trans_to(M, reagents.total_volume, methods = INJECT)
 				return BULLET_ACT_HIT
 			else
 				blocked = 100

@@ -5,6 +5,7 @@
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
+
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
@@ -46,7 +47,8 @@
 	return data
 
 /obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

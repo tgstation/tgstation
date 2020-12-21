@@ -7,4 +7,6 @@
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_ICON, .proc/block_update_icon)
 
 /datum/element/update_icon_blocker/proc/block_update_icon()
+	SIGNAL_HANDLER
+
 	return COMSIG_ATOM_NO_UPDATE_ICON_STATE | COMSIG_ATOM_NO_UPDATE_OVERLAYS

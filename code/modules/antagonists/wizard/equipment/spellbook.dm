@@ -16,7 +16,7 @@
 	..()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
-/datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
+/datum/spellbook_entry/proc/IsAvailable() // For config prefs / gamemode restrictions - these are round applied
 	return TRUE
 
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book) // Specific circumstances
@@ -229,11 +229,23 @@
 	cost = 3
 	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 
+/datum/spellbook_entry/infinite_guns/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	for (var/obj/item/currentItem in user.get_all_gear())
+		if (currentItem.type == /obj/item/gun/ballistic/rifle/boltaction/enchanted)
+			qdel(currentItem)
+	return ..()
+
 /datum/spellbook_entry/arcane_barrage
 	name = "Arcane Barrage"
 	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
 	cost = 3
 	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
+
+/datum/spellbook_entry/arcane_barrage/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	for (var/obj/item/currentItem in user.get_all_gear())
+		if (currentItem.type == /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage)
+			qdel(currentItem)
+	return ..()
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
@@ -268,6 +280,11 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
 	category = "Defensive"
 	cost = 1
+
+/datum/spellbook_entry/bees
+	name = "Lesser Summon Bees"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
+	category = "Defensive"
 
 
 /datum/spellbook_entry/item
@@ -478,7 +495,7 @@
 	desc = "Spook the crew out by making them see dead people. Be warned, ghosts are capricious and occasionally vindicative, and some will use their incredibly minor abilities to frustrate you."
 	cost = 0
 
-/datum/spellbook_entry/summon/ghosts/IsAvailible()
+/datum/spellbook_entry/summon/ghosts/IsAvailable()
 	if(!SSticker.mode)
 		return FALSE
 	else
@@ -496,7 +513,7 @@
 	name = "Summon Guns"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. There is a good chance that they will shoot each other first."
 
-/datum/spellbook_entry/summon/guns/IsAvailible()
+/datum/spellbook_entry/summon/guns/IsAvailable()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
 	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
@@ -515,7 +532,7 @@
 	name = "Summon Magic"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
 
-/datum/spellbook_entry/summon/magic/IsAvailible()
+/datum/spellbook_entry/summon/magic/IsAvailable()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
 	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
@@ -537,7 +554,7 @@
 	limit = 1
 	var/times = 0
 
-/datum/spellbook_entry/summon/events/IsAvailible()
+/datum/spellbook_entry/summon/events/IsAvailable()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
 	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
@@ -605,7 +622,7 @@
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
-		if(E.IsAvailible())
+		if(E.IsAvailable())
 			entries |= E
 			categories |= E.category
 		else
@@ -674,16 +691,16 @@
 	dat += {"
 	<head>
 		<style type="text/css">
-      		body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
-      		ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
-      		ul#tabs li { display: inline; }
-      		ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
-      		ul#tabs li a:hover { background-color: #f1f0ee; }
-      		ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
-      		div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
-      		div.tabContent.hide { display: none; }
-    	</style>
-  	</head>
+			body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+			ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
+			ul#tabs li { display: inline; }
+			ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+			ul#tabs li a:hover { background-color: #f1f0ee; }
+			ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+			div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+			div.tabContent.hide { display: none; }
+		</style>
+	</head>
 	"}
 	dat += {"[content]</body></html>"}
 	return dat
@@ -734,13 +751,13 @@
 	return
 
 /obj/item/spellbook/Topic(href, href_list)
-	..()
-	var/mob/living/carbon/human/H = usr
+	. = ..()
 
-	if(H.stat || H.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if(!ishuman(H))
+	if(!ishuman(usr))
 		return TRUE
+	var/mob/living/carbon/human/H = usr
 
 	if(H.mind.special_role == "apprentice")
 		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
@@ -751,14 +768,14 @@
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]
-			if(E && E.CanBuy(H,src))
+			if(E?.CanBuy(H,src))
 				if(E.Buy(H,src))
 					if(E.limit)
 						E.limit--
 					uses -= E.cost
 		else if(href_list["refund"])
 			E = entries[text2num(href_list["refund"])]
-			if(E && E.refundable)
+			if(E?.refundable)
 				var/result = E.Refund(H,src)
 				if(result > 0)
 					if(!isnull(E.limit))

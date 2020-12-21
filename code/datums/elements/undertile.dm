@@ -29,6 +29,8 @@
 
 ///called when a tile has been covered or uncovered
 /datum/element/undertile/proc/hide(atom/movable/source, covered)
+	SIGNAL_HANDLER
+
 	source.invisibility = covered ? invisibility_level : 0
 
 	var/turf/T = get_turf(source)

@@ -66,7 +66,7 @@
 
 	bursting = TRUE
 
-	var/list/candidates = pollGhostCandidates("Do you want to play as an alien larva that will burst out of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/list/candidates = pollGhostCandidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return
@@ -85,17 +85,20 @@
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 	new_xeno.key = ghost.key
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
-	new_xeno.mobility_flags = NONE //so we don't move during the bursting animation
+	ADD_TRAIT(new_xeno, TRAIT_IMMOBILIZED, type) //so we don't move during the bursting animation
+	ADD_TRAIT(new_xeno, TRAIT_HANDS_BLOCKED, type)
 	new_xeno.notransform = 1
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
 	sleep(6)
 
 	if(QDELETED(src) || QDELETED(owner))
-		return
+		qdel(new_xeno)
+		CRASH("AttemptGrow failed due to the early qdeletion of source or owner.")
 
 	if(new_xeno)
-		new_xeno.mobility_flags = MOBILITY_FLAGS_DEFAULT
+		REMOVE_TRAIT(new_xeno, TRAIT_IMMOBILIZED, type)
+		REMOVE_TRAIT(new_xeno, TRAIT_HANDS_BLOCKED, type)
 		new_xeno.notransform = 0
 		new_xeno.invisibility = 0
 

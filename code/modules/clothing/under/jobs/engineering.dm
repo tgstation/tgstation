@@ -9,7 +9,7 @@
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	inhand_icon_state = "gy_suit"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 80, "acid" = 40)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 80, ACID = 40)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/skirt
@@ -19,6 +19,7 @@
 	inhand_icon_state = "gy_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
@@ -26,7 +27,7 @@
 	name = "atmospheric technician's jumpsuit"
 	icon_state = "atmos"
 	inhand_icon_state = "atmos_suit"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 60, ACID = 20)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt
@@ -36,6 +37,7 @@
 	inhand_icon_state = "atmos_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/engineering/engineer
@@ -43,7 +45,7 @@
 	name = "engineer's jumpsuit"
 	icon_state = "engine"
 	inhand_icon_state = "engi_suit"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 60, ACID = 20)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/engineering/engineer/hazard
@@ -60,5 +62,6 @@
 	inhand_icon_state = "engi_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 

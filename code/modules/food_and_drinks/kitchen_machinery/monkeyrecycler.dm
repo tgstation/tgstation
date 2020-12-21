@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
 	stored_matter += cube_production
-	addtimer(VARSET_CALLBACK(src, pixel_x, initial(pixel_x)))
+	addtimer(VARSET_CALLBACK(src, pixel_x, base_pixel_x))
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, "<span class='notice'>The machine now has [stored_matter] monkey\s worth of material stored.</span>"))
 
 /obj/machinery/monkey_recycler/interact(mob/user)
@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the ground monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 		for(var/i in 1 to FLOOR(stored_matter, 1))
-			new /obj/item/reagent_containers/food/snacks/monkeycube(src.loc)
+			new /obj/item/food/monkeycube(src.loc)
 			stored_matter--
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [stored_matter] monkeys worth of material left.</span>")
 	else

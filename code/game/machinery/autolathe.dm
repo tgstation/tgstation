@@ -17,7 +17,7 @@
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = FALSE
-	var/disabled = 0
+	var/disabled = FALSE
 	var/shocked = FALSE
 	var/hack_wire
 	var/disable_wire
@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, MATCONTAINER_EXAMINE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -61,7 +61,7 @@
 
 /obj/machinery/autolathe/ui_interact(mob/user)
 	. = ..()
-	if(!is_operational())
+	if(!is_operational)
 		return
 
 	if(shocked && !(machine_stat & NOPOWER))
