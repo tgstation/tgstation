@@ -34,7 +34,7 @@
 	chambered.forceMove(drop_location())
 	update_icon()
 
-/obj/item/gun/ballistic/bow/chamber_round()
+/obj/item/gun/ballistic/bow/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
 	if(chambered || !magazine)
 		return
 	if(magazine.ammo_count())
