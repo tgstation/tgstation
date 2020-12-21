@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "Kilo: fixed some wonky-looking pipes in the cargo mining shuttle"
