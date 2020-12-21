@@ -79,3 +79,45 @@
 	objectives = list("Turn the station over to Syndicate Control with as little damage and personnel loss as possible.")
 	tips = list("Listen to High Command's instructions carefully.")
 	job_whitelist = list("Captain")
+
+/datum/ambition_template/boxpushing
+	name = "Pushing Boxes"
+	narrative = "Null crates may be gone, but you know what isn't? Some good old fashioned, classic, disposal pipe terrorism. The Tiger Co-Operative has selected you to show Nanotrasen just how flawed this system is."
+	objectives = list("Concoct deadly grenades to deliver through disposals.")
+	tips = list("There's a circuit imprinter and engineering techfab on the mining outpost, useful for getting a chem dispenser set up quickly.", "Ideally, you won't just prime you grenades, wrap them, and send them through the pipes. Attach a remote signaller!")
+	job_whitelist = list("Cargo Technician")
+
+/datum/ambition_template/legitjustkiurz
+	name = "In The Name Of The Heroine Bud"
+	narrative = "Where you once were blind, now, you can see. You will show them all."
+	objectives = list("Spread the Heroine Bud's influence on the station.")
+	tips = list("Heroine Buds can be purchased from the uplink, but can alternatively be obtained through Xenobiology. You don't nessecarily have to use the station's xenobio lab, either! Set up your own on Lavaland, steal a slime extract and some monkey cubes!")
+	job_whitelist = list("Chaplain")
+
+/datum/ambition_template/chemdealers
+	name = "The Snowman"
+	narrative = "Interdyne Operative. It's time. Our benefactors want new, horrific recipes."
+	objectives = list("Homebrew deadly chemical concotions for grenades, syringes, what have you!")
+	tips = list("Experiment! And remember, multiple systems interact with chemistry, from Janitors to Chefs to the CMO!")
+	job_whitelist = list("Chemist")
+
+/datum/ambition_template/chiefofsabotage
+	name = "Saboteur"
+	narrative = "The Tiger Co-Operative has hired you on for the simplest task imaginable... in theory."
+	objectives = list("Ensure the station loses all possibilities for power generation by the end of the shift.")
+	tips = list("Water Vapor will DESTROY the Supermatter in ways you cannot even begin to imagine.", "The turbine can be destroyed with just your basic tools, as can solar panels and PACMANs.")
+	job_whitelist = list("Chief Engineer")
+
+/datum/ambition_template/chiefofmalpractice
+	name = "Head Of Malpractice"
+	narrative = "You have been surgically implanted with a microbomb by what you can only assume is MI13. If you fail them, so much as mention them, you will violently explode. They've given you a set of objectives before it will be removed."
+	objectives = list("Ensure all medicine is improperly administered. Mixed dosages are best for this.", "Surgically implant another crewmember with an object. This can be a grenade, a plushie, a fork, anything.")
+	tips = list("It helps to be familiar with Chemistry and Surgery. A. Lot.")
+	job_whitelist = list("Chief Medical Officer")
+
+/datum/ambition_template/honk
+	name = "Honkmother Bless Ye"
+	narrative = "WHOOPSIES, HONKMAN! HONK! YOU JUST GOT HONK'D BY A HONKIN HONKABALOOZA! A BIG HOONKIN GIGABALOOZA! A BINGA GONGA BIGA GALOOZA! JUST ANOTHER DAY IN THE LIFE, HONK!"
+	objectives = list("Unleash your wildest, most depraved, horrible clown pranks.")
+	tips = list("For the love of all that's holy, add what you plan to do to your objectives.")
+	job_whitelist = list("Clown")
