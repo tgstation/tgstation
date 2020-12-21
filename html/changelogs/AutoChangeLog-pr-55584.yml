@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - refactor: "Cyborg Boot Debug now uses tgui. Better check those endoskeletons with a multitool!"
