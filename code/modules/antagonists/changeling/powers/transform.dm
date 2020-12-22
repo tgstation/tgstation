@@ -165,7 +165,7 @@
 		disguise_image.overlays = snap.overlays
 		diguises += list("[current_profile.name]" = disguise_image)
 
-	var/chosen_name = show_radial_menu(user, user, diguises, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	var/chosen_name = show_radial_menu(user, user, diguises, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE, tooltips = TRUE)
 	if(!chosen_name)
 		return
 
