@@ -40,11 +40,8 @@ GLOBAL_LIST_EMPTY(bluestreams)
 	var/obj/effect/bluespace_stream/linked = pick(GLOB.bluestreams - src)
 	if(!linked)
 		return
-	var/slip_in_message = pick("slides sideways in an odd way, and disappears", "jumps into an unseen dimension",\
-		"sticks one leg straight out, wiggles [user.p_their()] foot, and is suddenly gone", "stops, then blinks out of reality", \
-		"is pulled into an invisible vortex, vanishing from sight")
-	var/slip_out_message = pick("silently fades in", "leaps out of thin air","appears", "walks out of an invisible doorway",\
-		"slides out of a fold in spacetime")
+	var/slip_in_message = pick("slides into [src] sideways", "touches [src] and suddenly gets sucked in", "walks into [src]", "unzips [src] and jumps into it")
+	var/slip_out_message = pick("leaps out of [src]", "falls to the ground from [src] along with some bluespace junk", "walks out of [src]", "slides out of [src]")
 	to_chat(user, "<span class='notice'>You try to align with the bluespace stream...</span>")
 	if(do_after(user, 20, target = src))
 		new /obj/effect/temp_visual/bluespace_fissure(get_turf(src))
@@ -113,8 +110,7 @@ GLOBAL_LIST_EMPTY(bluestreams)
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(10))
-		var/atom/T = C
-		T.emp_act(80)
+		C.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
