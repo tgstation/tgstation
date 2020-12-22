@@ -101,7 +101,7 @@
  * The "eating" is only conditional on the mob being injured in the first
  * place.
  */
-/mob/living/simple_animal/hostile/regalrat/proc/cheese_heal(var/obj/item/target, amount, message)
+/mob/living/simple_animal/hostile/regalrat/proc/cheese_heal(obj/item/target, amount, message)
 	if(health < maxHealth)
 		to_chat(src, message)
 		heal_bodypart_damage(amount)
