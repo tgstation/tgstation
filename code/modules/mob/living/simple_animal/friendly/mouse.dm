@@ -109,6 +109,8 @@
 		return
 
 /mob/living/simple_animal/mouse/UnarmedAttack(atom/A, proximity)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	. = ..()
 	if(istype(A, /obj/item/food/cheesewedge) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
 		if(health == maxHealth)

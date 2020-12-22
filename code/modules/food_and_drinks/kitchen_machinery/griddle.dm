@@ -27,6 +27,11 @@
 	grill_loop = new(list(src), FALSE)
 	variant = rand(1,3)
 
+/obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
+		return
+
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(griddled_objects.len >= max_items)
@@ -61,19 +66,22 @@
 	item_to_grill.flags_1 |= IS_ONTOP_1
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
+	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
+	update_grill_audio()
+
+/obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
+	I.flags_1 &= ~IS_ONTOP_1
+	griddled_objects -= I
+	vis_contents -= I
+	UnregisterSignal(I, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
-	I.flags_1 &= ~IS_ONTOP_1
-	griddled_objects -= I
-	vis_contents -= I
-	UnregisterSignal(I, COMSIG_GRILL_COMPLETED)
-	update_grill_audio()
+	ItemRemovedFromGrill(I)
 
 /obj/machinery/griddle/proc/GrillCompleted(obj/item/source, atom/grilled_result)
 	SIGNAL_HANDLER
-	griddled_objects -= source //Old object
 	AddToGrill(grilled_result)
 
 /obj/machinery/griddle/proc/update_grill_audio()
@@ -82,6 +90,9 @@
 	else
 		grill_loop.stop()
 
+///Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.
+/obj/machinery/griddle/get_dumping_location(obj/item/storage/source, mob/user)
+	return
 
 /obj/machinery/griddle/process(delta_time)
 	..()
