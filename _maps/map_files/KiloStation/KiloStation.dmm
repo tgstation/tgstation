@@ -88979,8 +88979,8 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 10
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
@@ -90323,18 +90323,13 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	pixel_x = 9;
-	pixel_y = 3
-	},
 /obj/item/radio/intercom{
 	desc = "A station intercom. It looks like it has been modified to not broadcast.";
 	name = "Prison Intercom (General)";
 	pixel_y = 24;
 	prison_radio = 1
 	},
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/machinery/griddle,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "qgG" = (
@@ -91065,9 +91060,12 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	pixel_x = 9;
+	pixel_y = 3
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "uKN" = (
@@ -91207,13 +91205,13 @@
 /obj/structure/sink{
 	pixel_y = 29
 	},
-/mob/living/simple_animal/mouse/brown/tom{
-	name = "Jerm"
-	},
 /obj/machinery/camera{
 	c_tag = "Prison Maintenance";
 	dir = 4;
 	network = list("ss13","prison")
+	},
+/mob/living/simple_animal/mouse/brown/tom{
+	name = "Jerm"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
