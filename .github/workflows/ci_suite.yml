@@ -8,6 +8,7 @@ on:
     - master
 jobs:
   run_linters:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Run Linters
     runs-on: ubuntu-latest
     steps:
@@ -40,6 +41,7 @@ jobs:
           outputFile: output-annotations.txt
 
   compile_all_maps:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Compile Maps
     runs-on: ubuntu-latest
     steps:
@@ -56,6 +58,7 @@ jobs:
           python3 tools/ci/template_dm_generator.py
           bash tools/ci/dm.sh -DCIBUILDING -DCITESTING -DALL_MAPS tgstation.dme
   run_all_tests:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Integration Tests
     runs-on: ubuntu-latest
     services:
@@ -93,6 +96,7 @@ jobs:
           bash tools/ci/dm.sh -DCIBUILDING tgstation.dme
           bash tools/ci/run_server.sh
   test_windows:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Windows Build
     runs-on: windows-latest
     steps:
