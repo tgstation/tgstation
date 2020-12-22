@@ -119,7 +119,6 @@
 
 /obj/item/cartridge/signal
 	name = "generic signaler cartridge"
-	icon_state = "cart-sig"
 	desc = "A data cartridge with an integrated radio signaler module."
 
 /obj/item/cartridge/signal/toxins
