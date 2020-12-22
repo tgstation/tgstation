@@ -1,0 +1,4 @@
+author: "That REALLY Good Soda Flavor"
+delete-after: True
+changes: 
+  - bugfix: "Reverb while you are affected by a chemical shouldn't cut out anymore."

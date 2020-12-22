@@ -50,6 +50,8 @@
 	eat_atom(attacked_target)
 
 /mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)

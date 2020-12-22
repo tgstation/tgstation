@@ -475,6 +475,8 @@
 		..()
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(iscarbon(A) && !tending)
 		var/mob/living/carbon/C = A
 		patient = C
