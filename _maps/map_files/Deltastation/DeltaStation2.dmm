@@ -16930,7 +16930,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse/white,
+/obj/structure/table,
+/obj/machinery/microwave,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
 "aNO" = (
@@ -108303,10 +108304,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "jWa" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_y = 7
-	},
+/obj/machinery/griddle,
 /turf/open/floor/plating,
 /area/security/prison)
 "jZv" = (
@@ -109848,6 +109846,10 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"neL" = (
+/mob/living/simple_animal/mouse/white,
+/turf/open/floor/plasteel/cafeteria,
+/area/security/prison)
 "nhw" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -170596,7 +170598,7 @@ gRM
 aKV
 jWa
 wtx
-aNK
+neL
 aPu
 aKZ
 aKZ
@@ -170851,10 +170853,10 @@ pmV
 lsG
 uoy
 aKV
-wDi
+aPv
 plN
 aNM
-aPv
+wDi
 aKZ
 aSI
 aUD
