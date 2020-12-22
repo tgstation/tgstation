@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixing a little visual issue with certain hoods, fake mustaches and similars making lizard snouts magically disappear when worn."
