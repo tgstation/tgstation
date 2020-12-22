@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	/// Chemical flags aka does it merge, is it invisible and etc.
 	var/chem_flags
 	///Acidic power
-	var/acidpwr = 0
+	var/acidpwr = null
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(material)
 		material = SSmaterials.GetMaterialRef(material)
 
-	if(acidpwr == 0)
+	if(isnull(acidpwr))
 		if(pH > 12)
 			acidpwr = (pH - 12) * 5 //14 pH will result in 10 power
 		if(pH < 2)
