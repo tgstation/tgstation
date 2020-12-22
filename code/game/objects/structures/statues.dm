@@ -426,8 +426,6 @@ Moving interrupts
 	var/completion = 0
 	/// Greyscaled target with cutout filter
 	var/mutable_appearance/target_appearance_with_filters
-	/// Cutout filter for main block sprite
-	var/partial_uncover_filter
 	/// HSV color filters parameters
 	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
 
@@ -490,20 +488,19 @@ Moving interrupts
 	if(!target_appearance_with_filters)
 		target_appearance_with_filters = new(current_target)
 		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER
+		//Doesn't use filter helpers because MAs aren't atoms
 		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	completion = value
 	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
 	switch(value)
 		if(0)
 			//delete uncovered and reset filters
-			filters -= partial_uncover_filter
+			remove_filter("partial_uncover")
 			target_appearance_with_filters = null
 		else
 			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
-			if(partial_uncover_filter)
-				filters -= partial_uncover_filter
-			partial_uncover_filter = filter(type="alpha",icon=white,y=-mask_offset)
-			filters += partial_uncover_filter
+			remove_filter("partial_uncover")
+			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
 	update_icon()
 

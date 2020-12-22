@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(17)
 			new /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola(loc)
 		if(18)
-			new /obj/item/assembly/signaler/anomaly/bluespace(loc)
+			new /obj/item/soulstone/anybody(loc)
 		if(19)
 			new /obj/item/disk/design_disk/modkit_disc/resonator_blast(loc)
 		if(20)

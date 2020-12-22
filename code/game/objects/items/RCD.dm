@@ -750,7 +750,7 @@ RLD
 	if(!range_check(A,user))
 		return
 	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
+		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
 	rcd_create(A,user)
 
 
@@ -827,7 +827,7 @@ RLD
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
@@ -841,7 +841,7 @@ RLD
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 					if(do_after(user, floordelay, target = A))
@@ -887,7 +887,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
