@@ -8208,13 +8208,11 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "aso" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/griddle,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "asp" = (
@@ -70368,6 +70366,10 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/structure/sink/kitchen{
+	dir = 4;
+	pixel_x = -11
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
