@@ -6,3 +6,4 @@
 #define SEC_LEVEL_AMBER		4
 #define SEC_LEVEL_RED		5
 #define SEC_LEVEL_DELTA		6
+#define SEC_LEVEL_GAMMA		7 //Oh shit bois

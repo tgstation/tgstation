@@ -306,8 +306,20 @@ SUBSYSTEM_DEF(shuttle)
 			if(emergency.timeLeft(1) < emergencyCallTime)
 				return
 		if(SEC_LEVEL_BLUE)
-			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+			//if(emergency.timeLeft(1) < emergencyCallTime * 0.5) ORIGINAL
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.6) //SKYRAT EDIT CHANGE - ALERTS
 				return
+		//SKYRAT EDIT ADDITION BEGIN - ALERTS
+		if(SEC_LEVEL_ORANGE)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.4)
+				return
+		if(SEC_LEVEL_VIOLET)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.4)
+				return
+		if(SEC_LEVEL_AMBER)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.4)
+				return
+		//SKYRAT EDIT ADDITION END
 		else
 			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 				return

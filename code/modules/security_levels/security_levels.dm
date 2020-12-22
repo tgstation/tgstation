@@ -6,6 +6,8 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 
 //config.alert_desc_blue_downto
 
+//SKYRAT EDIT REMOVAL BEGIN - ALERTS (moved to modular)
+/*
 /proc/set_security_level(level)
 	switch(level)
 		if("green")
@@ -116,3 +118,5 @@ GLOBAL_VAR_INIT(security_level, SEC_LEVEL_GREEN)
 			return SEC_LEVEL_RED
 		if("delta")
 			return SEC_LEVEL_DELTA
+*/
+//SKYRAT EDIT END

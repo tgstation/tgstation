@@ -1,7 +1,7 @@
 import { sortBy } from "common/collections";
 import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
+import { Blink, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from "../components";
 import { Window } from "../layouts";
 import { sanitizeText } from "../sanitize";
 
@@ -103,6 +103,40 @@ const MessageModal = (props, context) => {
         )}
       </Flex>
     </Modal>
+  );
+};
+
+const NoConnectionModal = () => {
+  return (
+    <Dimmer>
+      <Flex direction="column" textAlign="center" width="300px">
+        <Flex.Item>
+          <Icon
+            color="red"
+            name="wifi"
+            size={10}
+          />
+
+          <Blink>
+            <div
+              style={{
+                background: "#db2828",
+                bottom: "60%",
+                left: "25%",
+                height: "10px",
+                position: "relative",
+                transform: "rotate(45deg)",
+                width: "150px",
+              }}
+            />
+          </Blink>
+        </Flex.Item>
+
+        <Flex.Item fontSize="16px">
+          A connection to the station cannot be established.
+        </Flex.Item>
+      </Flex>
+    </Dimmer>
   );
 };
 
@@ -365,6 +399,26 @@ const PageMain = (props, context) => {
                 alertLevel="blue"
                 showAlertLevelConfirm={showAlertLevelConfirm}
                 setShowAlertLevelConfirm={setShowAlertLevelConfirm}
+              />
+
+              <AlertButton
+                // SKYRAT EDIT ADDTION BEGIN - ALERTS
+                alertLevel="violet"
+                showAlertLevelConfirm={showAlertLevelConfirm}
+                setShowAlertLevelConfirm={setShowAlertLevelConfirm}
+              />
+
+              <AlertButton
+                alertLevel="orange"
+                showAlertLevelConfirm={showAlertLevelConfirm}
+                setShowAlertLevelConfirm={setShowAlertLevelConfirm}
+              />
+
+              <AlertButton
+                alertLevel="amber"
+                showAlertLevelConfirm={showAlertLevelConfirm}
+                setShowAlertLevelConfirm={setShowAlertLevelConfirm}
+                // SKYRAT EDIT END
               />
             </Flex.Item>
           </Flex>
@@ -648,6 +702,7 @@ export const CommunicationsConsole = (props, context) => {
     authorizeName,
     canLogOut,
     emagged,
+    hasConnection,
     page,
   } = data;
 
@@ -658,6 +713,8 @@ export const CommunicationsConsole = (props, context) => {
       theme={emagged ? "syndicate" : undefined}
       resizable>
       <Window.Content scrollable>
+        {!hasConnection && <NoConnectionModal />}
+
         {(canLogOut || !authenticated)
           ? (
             <Section title="Authentication">

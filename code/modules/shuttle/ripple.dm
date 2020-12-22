@@ -11,28 +11,10 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	alpha = 0
 
-	/// The mobile docking_port these ripples were created for
-	var/obj/docking_port/mobile/incoming_shuttle
-
-	/// Unset by docking to prevent stray gibbings
-//	var/can_gib = TRUE //HAHA FUCK I SHOULDN'T HAVE SPEEDMERGED
-
-/obj/effect/abstract/ripple/Initialize(mapload, obj/docking_port/mobile/incoming_shuttle, time_left)
+/obj/effect/abstract/ripple/Initialize(mapload, time_left)
 	. = ..()
-	src.incoming_shuttle = incoming_shuttle
-
 	animate(src, alpha=255, time=time_left)
-	addtimer(CALLBACK(src, .proc/set_still_icon), 8, TIMER_CLIENT_TIME)
-	addtimer(CALLBACK(src, .proc/actualize), time_left, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, .proc/stop_animation), 8, TIMER_CLIENT_TIME)
 
-/// Switch to non-animating icon
-/obj/effect/abstract/ripple/proc/set_still_icon()
+/obj/effect/abstract/ripple/proc/stop_animation()
 	icon_state = "medi_holo_no_anim"
-
-/// Make the ripple dense, and act as a crush for the turf it resides on
-/obj/effect/abstract/ripple/proc/actualize()
-	density = TRUE
-/*	if(can_gib)
-		var/turf/T = get_turf(src)
-		T.shuttle_gib(incoming_shuttle)
-*/ //Hahaha fuck

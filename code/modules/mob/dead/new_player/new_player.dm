@@ -384,6 +384,9 @@
 
 /mob/dead/new_player/proc/LateChoices()
 	var/list/dat = list("<div class='notice'>Round Duration: [DisplayTimeText(world.time - SSticker.round_start_time)]</div>")
+	//SKYRAT EDIT ADDITION BEGIN - ALERTS
+	dat += "<div class='notice'>Alert Level: [capitalize(num2seclevel(GLOB.security_level))]</div>"
+	//SKYRAT EDIT END
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)

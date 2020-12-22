@@ -139,6 +139,14 @@ SUBSYSTEM_DEF(vote)
 			if("map")
 				SSmapping.changemap(global.config.maplist[.])
 				SSmapping.map_voted = TRUE
+			//SKYRAT EDIT ADDITION BEGIN - AUTOTRANSFER
+			if("transfer")
+				if(. == "Initiate Crew Transfer")
+					SSshuttle.autoEnd()
+					var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+					if(C)
+						C.post_status("shuttle")
+			//SKYRAT EDIT ADDITION END
 	if(restart)
 		var/active_admins = FALSE
 		for(var/client/C in GLOB.admins)
@@ -209,6 +217,10 @@ SUBSYSTEM_DEF(vote)
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)
+			//SKYRAT EDIT ADDITION BEGIN - AUTOTRANSFER
+			if("transfer")
+				choices.Add("Initiate Crew Transfer","Continue Playing")
+			//SKYRAT EDIT ADDITION END - AUTOTRANSFER
 			else
 				return FALSE
 		mode = vote_type
@@ -290,6 +302,13 @@ SUBSYSTEM_DEF(vote)
 			. += "\t(<a href='?src=[REF(src)];vote=toggle_map'>[avmap ? "Allowed" : "Disallowed"]</a>)"
 
 		. += "</li>"
+		//SKYRAT EDIT ADDITION - AUTOTRANSFER
+		if(trialmin)
+			. += "<a href='?src=[REF(src)];vote=transfer'>Transfer</a>"
+		else
+			. += "<font color='grey'>Transfer (Disallowed)</font>"
+		. += "</li>"
+		//SKYRAT EDIT ADDITION
 		//custom
 		if(trialmin)
 			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
@@ -336,6 +355,10 @@ SUBSYSTEM_DEF(vote)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)
+		//SKYRAT EDIT ADDITION BEGIN - autotransfer
+		if("transfer")
+			initiate_vote("transfer",usr.key)
+		//SKYRAT EDIT ADDITION END
 		else
 			submit_vote(round(text2num(href_list["vote"])))
 	usr.vote()

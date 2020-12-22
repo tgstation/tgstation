@@ -187,10 +187,10 @@
 
 /datum/config_entry/string/alert_red_downto
 	config_entry_value = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
-
+/* = SKYRAT EDIT REMOVAL BEGIN - MOVED TO MODULAR: ALERTS
 /datum/config_entry/string/alert_delta
 	config_entry_value = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
-
+*/ //SKYRAT EDIT REMOVAL END
 /datum/config_entry/flag/revival_pod_plants
 
 /datum/config_entry/number/revival_brain_life

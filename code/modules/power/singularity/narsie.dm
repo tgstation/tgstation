@@ -219,7 +219,7 @@
 		return
 	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","Central Command Higher Dimensional Affairs")
 	sleep(50)
-	set_security_level("delta")
+	set_security_level("gamma") //SKYRAT EDIT CHANGE - ALERTS - ORIGINAL "delta"
 	SSshuttle.registerHostileEnvironment(GLOB.cult_narsie)
 	SSshuttle.lockdown = TRUE
 	sleep(600)
