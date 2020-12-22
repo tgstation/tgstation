@@ -1343,9 +1343,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "ada" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
+/obj/machinery/griddle,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "adb" = (
@@ -2026,6 +2024,10 @@
 "aer" = (
 /obj/structure/window,
 /obj/effect/decal/cleanable/food/flour,
+/obj/structure/sink/kitchen{
+	dir = 4;
+	pixel_x = -11
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "aes" = (
