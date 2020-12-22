@@ -18275,7 +18275,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/base_construction{
+/obj/machinery/computer/camera_advanced/base_construction/aux{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{

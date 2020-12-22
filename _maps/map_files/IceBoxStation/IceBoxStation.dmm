@@ -9853,7 +9853,7 @@
 	c_tag = "Auxillary Base Construction";
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/base_construction{
+/obj/machinery/computer/camera_advanced/base_construction/aux{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
