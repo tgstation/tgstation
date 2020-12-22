@@ -139,18 +139,21 @@ SUBSYSTEM_DEF(garbage)
 
 	lastlevel = level
 
-	for (var/refID in queue)
-		if (!refID)
+	//We do this rather then for(var/refID in queue) because that sort of for loop copies the whole list.
+	//Normally this isn't expensive, but the gc queue can grow to 40k items, and that gets costly/causes overrun.
+	for (var/i in 1 to length(queue))
+		var/list/L = queue[i]
+		if (length(L) < 2)
 			count++
 			if (MC_TICK_CHECK)
 				return
 			continue
 
-		var/GCd_at_time = queue[refID]
+		var/GCd_at_time = L[1]
 		if(GCd_at_time > cut_off_time)
 			break // Everything else is newer, skip them
 		count++
-
+		var/refID = L[2]
 		var/datum/D
 		D = locate(refID)
 
@@ -221,10 +224,8 @@ SUBSYSTEM_DEF(garbage)
 
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
-	if (queue[refid])
-		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
-	queue[refid] = gctime
+	queue[++queue.len] = list(gctime, refid) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)

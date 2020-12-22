@@ -25,7 +25,7 @@
 
 /obj/projectile/curse_hand/fire(setAngle)
 	if(starting)
-		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
+		arm = starting.Beam(src, icon_state = "curse[handedness]", beam_type=/obj/effect/ebeam/curse_arm)
 	..()
 
 /obj/projectile/curse_hand/prehit_pierce(atom/target)
@@ -33,8 +33,7 @@
 
 /obj/projectile/curse_hand/Destroy()
 	if(arm)
-		arm.End()
-		arm = null
+		QDEL_NULL(arm)
 	if((movement_type & PHASING))
 		playsound(src, 'sound/effects/curse3.ogg', 25, TRUE, -1)
 	var/turf/T = get_step(src, dir)
@@ -43,9 +42,7 @@
 	for(var/obj/effect/temp_visual/dir_setting/curse/grasp_portal/G in starting)
 		qdel(G)
 	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal/fading(starting, dir)
-	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm, beam_sleep_time = 1)
-	for(var/b in D.elements)
-		var/obj/effect/ebeam/B = b
-		animate(B, alpha = 0, time = 32)
+	var/datum/beam/D = starting.Beam(T, icon_state = "curse[handedness]", time = 32, beam_type=/obj/effect/ebeam/curse_arm)
+	animate(D.visuals, alpha = 0, time = 32)
 	return ..()
 

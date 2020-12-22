@@ -5205,17 +5205,17 @@
 /area/science/xenobiology)
 "aiY" = (
 /obj/structure/chair,
-/mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too.";
-	health = 45;
-	maxHealth = 45;
-	name = "Officer Beepsky"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/mob/living/simple_animal/bot/secbot/beepsky{
+	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too.";
+	health = 45;
+	maxHealth = 45;
+	name = "Officer Beepsky"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -9689,6 +9689,12 @@
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/leafybush,
+/obj/machinery/camera{
+	c_tag = "Genetics Monkey Pen";
+	dir = 4;
+	name = "science camera";
+	network = list("ss13","rd")
+	},
 /turf/open/floor/grass,
 /area/science/genetics)
 "aqr" = (
@@ -18835,7 +18841,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Medbay Sleepers";
+	c_tag = "Medbay Stasis Beds";
 	name = "medical camera";
 	network = list("ss13","medical")
 	},
@@ -27368,7 +27374,8 @@
 /area/medical/medbay/central)
 "aSv" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12;70"
+	req_access_txt = null;
+	req_one_access_txt = "12;22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -32829,7 +32836,8 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bat" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;25"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
@@ -34510,14 +34518,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bde" = (
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Experimenter Chamber";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -36066,6 +36066,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "bfk" = (
@@ -36708,7 +36709,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Experimenter Lab";
+	c_tag = "Genetics";
 	dir = 8;
 	name = "science camera";
 	network = list("ss13","rd")
@@ -36900,7 +36901,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/toolbox/mechanical,
+/obj/structure/microscope{
+	pixel_x = -1;
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "bgy" = (
@@ -40109,7 +40113,8 @@
 /area/quartermaster/storage)
 "blq" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -45657,7 +45662,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null;
+	req_one_access_txt = "1;4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -46968,7 +46974,7 @@
 "bvV" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Service Production";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -51142,7 +51148,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null;
+	req_one_access_txt = "1;4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -52126,7 +52133,8 @@
 /area/maintenance/starboard/aft)
 "bEi" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;25"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53825,7 +53833,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/camera{
-	c_tag = "Recreation VR Sleepers";
+	c_tag = "Recreation Arcade";
 	name = "recreation camera"
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -55699,15 +55707,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"bJU" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Office";
-	req_access_txt = null;
-	req_one_access_txt = "1;4"
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/main)
 "bJV" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -64269,7 +64268,8 @@
 /area/hallway/primary/aft)
 "bXK" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = null;
+	req_one_access_txt = "12;35"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -70923,7 +70923,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "security maintenance";
-	req_access_txt = "1"
+	req_access_txt = "1;4"
 	},
 /obj/structure/sign/directions/evac{
 	pixel_y = -24
@@ -78450,8 +78450,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	dir = 8;
-	name = "scrubbers pipe"
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -78942,7 +78941,6 @@
 	environment_smash = 0;
 	health = 160;
 	maxHealth = 160;
-	melee_damage_lower = 15;
 	melee_damage_upper = 25;
 	name = "hungry show bear"
 	},
@@ -89638,6 +89636,8 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/table,
+/obj/machinery/microwave,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "lLc" = (
@@ -90200,6 +90200,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
+	},
+/obj/machinery/camera{
+	c_tag = "Prison Botany";
+	network = list("ss13","prison")
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -90790,6 +90794,11 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/machinery/camera{
+	c_tag = "Prison Cafeteria";
+	dir = 1;
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "tCi" = (
@@ -91152,6 +91161,11 @@
 /mob/living/simple_animal/mouse/brown/tom{
 	name = "Jerm"
 	},
+/obj/machinery/camera{
+	c_tag = "Prison Maintenance";
+	dir = 4;
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
 "vAM" = (
@@ -91179,12 +91193,24 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
+"vGA" = (
+/obj/machinery/camera{
+	c_tag = "Prison Recreation";
+	dir = 4;
+	network = list("ss13","prison")
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "vHi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
 "vIj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/camera{
+	c_tag = "Prison Labor";
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plating,
 /area/security/prison)
 "vJw" = (
@@ -91477,6 +91503,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xzI" = (
+/obj/machinery/camera{
+	c_tag = "Prison Cells";
+	dir = 4;
+	network = list("ss13","prison")
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "xFp" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -97671,7 +97705,7 @@ aeu
 aeU
 aeU
 anu
-tFc
+xzI
 clN
 chR
 chR
@@ -97681,7 +97715,7 @@ gUp
 mBd
 iBG
 chR
-tFc
+vGA
 tFc
 chR
 qgG
@@ -111057,7 +111091,7 @@ cxJ
 agS
 agS
 bJS
-bJU
+bCv
 agS
 cmP
 cub
