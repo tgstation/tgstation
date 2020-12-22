@@ -49,7 +49,25 @@
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
 		explosion(target, 0, 1, 2, 4, flame_range = 3)
 	else
+		explosion(target, 0, 0, 2, 4, flame_range = 3)
+	return BULLET_ACT_HIT
+
+/// PM9 weak rocket
+/obj/projectile/bullet/a84mm_weak
+	name ="low-yield HE missile"
+	desc = "Boom, but less so."
+	icon_state = "missile"
+	damage = 30
+	ricochets_max = 0 //it's a MISSILE
+	embedding = null
+	shrapnel_type = null
+
+/obj/projectile/bullet/a84mm_weak/on_hit(atom/target, blocked=0)
+	..()
+	if(!isliving(target)) //if the target isn't alive, so is a wall or something
 		explosion(target, 0, 1, 2, 4, flame_range = 3)
+	else
+		explosion(target, 0, 0, 2, 4, flame_range = 3)
 	return BULLET_ACT_HIT
 
 /// Mech BRM-6 missile

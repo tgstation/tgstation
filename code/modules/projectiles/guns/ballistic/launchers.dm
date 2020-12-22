@@ -44,7 +44,8 @@
 
 /obj/item/gun/ballistic/rocketlauncher
 	name = "\improper PML-9"
-	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel."
+	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel. \
+	A sticker near the shoulder rest reads, \"ENSURE AREA BEHIND IS CLEAR BEFORE FIRING\""
 	icon_state = "rocketlauncher"
 	inhand_icon_state = "rocketlauncher"
 	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
