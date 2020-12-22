@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - admin: "Added a special admin-only base construction console that works anywhere on the station!"
