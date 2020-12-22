@@ -893,7 +893,7 @@
  */
 /obj/item/light/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
-	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) ? TRUE : FALSE //has_reagent returns the reagent datum
+	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) ? TRUE : FALSE //has_reagent returns the reagent datum, we don't want to hold a reference to prevent hard dels
 	return NONE
 
 /**
