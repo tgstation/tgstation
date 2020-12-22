@@ -11,7 +11,7 @@ export BYOND_MINOR=${LIST[1]}
 unset LIST
 
 #rust_g git tag
-export RUST_G_VERSION=0.4.5
+export RUST_G_VERSION=0.4.7
 
 #node version
 export NODE_VERSION=12
