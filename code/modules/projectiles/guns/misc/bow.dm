@@ -80,6 +80,14 @@
 	caliber = "arrow"
 	heavy_metal = FALSE
 
+/obj/item/ammo_casing/caseless/arrow/despawning/dropped()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/floor_vanish), 5 SECONDS)
+
+/obj/item/ammo_casing/caseless/arrow/despawning/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
+
 /obj/projectile/bullet/reusable/arrow
 	name = "arrow"
 	desc = "Ow! Get it out of me!"
@@ -88,12 +96,15 @@
 	speed = 1
 	range = 25
 
+
+
 /obj/item/storage/bag/quiver
 	name = "quiver"
 	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
 	icon_state = "quiver"
 	inhand_icon_state = "quiver"
 	worn_icon_state = "harpoon_quiver"
+	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 
 /obj/item/storage/bag/quiver/ComponentInitialize()
 	. = ..()
@@ -108,4 +119,7 @@
 /obj/item/storage/bag/quiver/PopulateContents()
 	. = ..()
 	for(var/i in 1 to 10)
-		new /obj/item/ammo_casing/caseless/arrow(src)
+		new arrow_path(src)
+
+/obj/item/storage/bag/quiver/despawning
+	arrow_path = /obj/item/ammo_casing/caseless/arrow/despawning

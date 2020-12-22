@@ -41,14 +41,14 @@
 	icon_state = "syndbeacon"
 	team = REDFIELD_TEAM
 	team_span = "redteamradio"
-	ctf_gear = list("knight" = /datum/outfit/medisim_red_knight, "archer" = /datum/outfit/medisim_red_archer)
+	ctf_gear = list("knight" = /datum/outfit/medisim/red_knight, "archer" = /datum/outfit/medisim/red_archer)
 
 /obj/machinery/capture_the_flag/medisim/blue
 	name = "\improper Bluesworth Data Realizer"
 	icon_state = "bluebeacon"
 	team = BLUESWORTH_TEAM
 	team_span = "blueteamradio"
-	ctf_gear = list("knight" = /datum/outfit/medisim_blue_knight, "archer" = /datum/outfit/medisim_blue_archer)
+	ctf_gear = list("knight" = /datum/outfit/medisim/blue_knight, "archer" = /datum/outfit/medisim/blue_archer)
 
 /obj/item/ctf/red/medisim
 	name = "\improper Redfield Castle Fair Maiden"
@@ -66,7 +66,21 @@
 	game_area = /area/shuttle/escape
 	movement_type = FLOATING //there are chasms, and resetting when they fall in is really lame so lets minimize that
 
-/datum/outfit/medisim_red_knight
+//everything except arrows
+/datum/outfit/medisim/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/list/no_drops = list()
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_BELT)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_HEAD)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_HANDS)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	for(var/i in no_drops)
+		var/obj/item/I = i
+		I.item_flags |= DROPDEL//so this all stays clean :)
+
+/datum/outfit/medisim/red_knight
 	name = "Redfield Castle Knight"
 
 	uniform = /obj/item/clothing/under/color/red
@@ -76,7 +90,7 @@
 	head = /obj/item/clothing/head/helmet/knight/red
 	r_hand = /obj/item/claymore
 
-/datum/outfit/medisim_blue_knight
+/datum/outfit/medisim/blue_knight
 	name = "Bluesworth Hold Knight"
 
 	uniform = /obj/item/clothing/under/color/blue
@@ -86,7 +100,7 @@
 	head = /obj/item/clothing/head/helmet/knight/blue
 	r_hand = /obj/item/claymore
 
-/datum/outfit/medisim_red_archer
+/datum/outfit/medisim/red_archer
 	name = "Redfield Castle Archer"
 
 	uniform = /obj/item/clothing/under/color/red
@@ -97,7 +111,7 @@
 	head = /obj/item/clothing/head/helmet/knight/red
 	r_hand = /obj/item/gun/ballistic/bow
 
-/datum/outfit/medisim_blue_archer
+/datum/outfit/medisim/blue_archer
 	name = "Bluesworth Hold Archer"
 
 	uniform = /obj/item/clothing/under/color/blue
