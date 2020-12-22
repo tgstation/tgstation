@@ -163,7 +163,7 @@
 		var/datum/icon_snapshot/snap = current_profile.profile_snapshot
 		var/image/disguise_image = image(icon = snap.icon, icon_state = snap.icon_state)
 		disguise_image.overlays = snap.overlays
-		disguises += list("[current_profile.name]" = disguise_image)
+		disguises[current_profile.name] = disguise_image
 
 	var/chosen_name = show_radial_menu(user, user, disguises, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE, tooltips = TRUE)
 	if(!chosen_name)
