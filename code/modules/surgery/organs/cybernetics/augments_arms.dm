@@ -22,6 +22,10 @@
 	SetSlotFromZone()
 	items_list = contents.Copy()
 
+/obj/item/organ/cyberimp/arm/update_implants()
+	if(!check_compatibility())
+		Retract()
+
 /obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
 		if(BODY_ZONE_L_ARM)

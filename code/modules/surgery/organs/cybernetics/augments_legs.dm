@@ -42,7 +42,7 @@
 	else
 		zone = BODY_ZONE_R_LEG
 	SetSlotFromZone()
-	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_LEG ? "right" : "left"] LEG.</span>")
+	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_LEG ? "right" : "left"] leg.</span>")
 	update_icon()
 
 /obj/item/organ/cyberimp/leg/Insert(mob/living/carbon/M, special, drop_if_replaced)
@@ -63,10 +63,40 @@
 	encode_info = NT_LOWLEVEL
 	double_legged = TRUE
 
+/obj/item/organ/cyberimp/leg/table_glider/update_implants()
+	if(!check_compatibility())
+		REMOVE_TRAIT(M,TRAIT_FAST_CLIMBER,type)
+		return
+	ADD_TRAIT(M,TRAIT_FAST_CLIMBER,type)
+
 /obj/item/organ/cyberimp/leg/table_glider/on_full_insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
+	if(!check_compatibility())
+		return
 	ADD_TRAIT(M,TRAIT_FAST_CLIMBER,type)
 
 /obj/item/organ/cyberimp/leg/table_glider/Remove(mob/living/carbon/M, special)
 	REMOVE_TRAIT(M,TRAIT_FAST_CLIMBER,type)
+	return ..()
+
+/obj/item/organ/cyberimp/leg/shove_resist
+	name = "shove-resist implant"
+	desc = "Implant that allows you to resist shoves, instead shoves deal pure stamina damage."
+	encode_info = NT_HIGHLEVEL
+	double_legged = TRUE
+
+/obj/item/organ/cyberimp/leg/table_glider/update_implants()
+	if(!check_compatibility())
+		REMOVE_TRAIT(M,TRAIT_SHOVE_RESIST,type)
+		return
+	ADD_TRAIT(M,TRAIT_SHOVE_RESIST,type)
+
+/obj/item/organ/cyberimp/leg/shove_resist/on_full_insert(mob/living/carbon/M, special, drop_if_replaced)
+	. = ..()
+	if(!check_compatibility())
+		return
+	ADD_TRAIT(M,TRAIT_SHOVE_RESIST,type)
+
+/obj/item/organ/cyberimp/leg/shove_resist/Remove(mob/living/carbon/M, special)
+	REMOVE_TRAIT(M,TRAIT_SHOVE_RESIST,type)
 	return ..()

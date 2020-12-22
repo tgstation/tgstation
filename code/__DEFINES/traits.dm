@@ -210,7 +210,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERMANENTLY_ONFIRE	"permanently_onfire" //overrides the update_fire proc to always add fire (for lava)
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
-#define TRAIT_FAST_CLIMBER 		"fast_climber" //Used by
+#define TRAIT_FAST_CLIMBER 		"fast_climber" //Used by implants
+#define TRAIT_SHOVE_RESIST		"shove_resist" //Used by implants
 
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"

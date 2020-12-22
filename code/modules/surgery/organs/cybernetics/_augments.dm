@@ -19,6 +19,8 @@
 		add_overlay(overlay)
 	return ..()
 
+/obj/item/organ/cyberimp/proc/update_implants()
+	return
 
 /obj/item/organ/cyberimp/proc/check_compatibility()
 	. = FALSE
@@ -45,6 +47,15 @@
 	slot = ORGAN_SLOT_LINK
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/organ/cyberimp/cyberlink/Insert(mob/living/carbon/M, special, drop_if_replaced)
+	for(var/X in M.internal_organs)
+		var/obj/item/organ/O = X
+		if(!istype(O,/obj/item/organ/cyberimp))
+			continue
+		var/obj/item/organ/cyberimp/cyber = O
+		cyber.update_implants()
+	. = ..()
 
 /obj/item/organ/cyberimp/cyberlink/nt_low
 	encode_info = NT_LOWLEVEL
