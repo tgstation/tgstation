@@ -158,7 +158,7 @@
 	if(!istype(user))
 		return
 
-	var/list/diguises = list("Drop Flesh Disguise" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject"))
+	var/list/diguises = list("Drop Flesh Disguise" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_drop"))
 	for(var/datum/changelingprofile/current_profile in stored_profiles)
 		var/datum/icon_snapshot/snap = current_profile.profile_snapshot
 		var/image/disguise_image = image(icon = snap.icon, icon_state = snap.icon_state)
