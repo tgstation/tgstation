@@ -130,15 +130,15 @@
 			shell.newshot()
 
 /**
-  * create_blast_pellets() is for when we have a central point we want to shred the surroundings of with a ring of shrapnel, namely frag grenades and landmines.
-  *
-  * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, see [/datum/component/pellet_cloud/proc/handle_martyrs]
-  * Landmines just have a small check for [/obj/effect/mine/shrapnel/var/shred_triggerer], and spawn extra shrapnel for them if so
-  *
-  * Arguments:
-  * * O- Our parent, the thing making the shrapnel obviously (grenade or landmine)
-  * * punishable_triggerer- For grenade lances or people who step on the landmines (if we shred the triggerer), we spawn extra shrapnel for them in addition to the normal spread
-  */
+ * create_blast_pellets() is for when we have a central point we want to shred the surroundings of with a ring of shrapnel, namely frag grenades and landmines.
+ *
+ * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, see [/datum/component/pellet_cloud/proc/handle_martyrs]
+ * Landmines just have a small check for [/obj/effect/mine/shrapnel/var/shred_triggerer], and spawn extra shrapnel for them if so
+ *
+ * Arguments:
+ * * O- Our parent, the thing making the shrapnel obviously (grenade or landmine)
+ * * punishable_triggerer- For grenade lances or people who step on the landmines (if we shred the triggerer), we spawn extra shrapnel for them in addition to the normal spread
+ */
 /datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/triggerer)
 	SIGNAL_HANDLER
 

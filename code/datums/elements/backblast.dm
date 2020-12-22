@@ -1,9 +1,9 @@
 /**
-  * When attached to a gun and the gun is successfully fired, this element creates a "backblast" of fire and pain, like you'd find in a rocket launcher or recoilless rifle
-  *
-  * The backblast is simulated by a number of fire plumes, or invisible incendiary rounds that will torch anything they come across for a short distance, as well as knocking
-  * back nearby items.
-  */
+ * When attached to a gun and the gun is successfully fired, this element creates a "backblast" of fire and pain, like you'd find in a rocket launcher or recoilless rifle
+ *
+ * The backblast is simulated by a number of fire plumes, or invisible incendiary rounds that will torch anything they come across for a short distance, as well as knocking
+ * back nearby items.
+ */
 /datum/element/backblast
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
