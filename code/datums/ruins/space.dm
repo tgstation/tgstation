@@ -18,6 +18,11 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
+/datum/map_template/ruin/space/wreckedsyndieship
+	id = "wreckedsyndieship"
+	suffix = "wreckedsyndieship.dmm"
+	name = "Wrecked Infiltrator"
+	description = "For failing to file a space FAA flightplan, this group of brave nuclear operatives paid the ultimate price."
 
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"

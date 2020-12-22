@@ -50,3 +50,4 @@ _maps/RandomRuins/SpaceRuins/spacehotel.dmm
 #_maps/RandomRuins/SpaceRuins/forgottenship.dmm
 #_maps/RandomRuins/SpaceRuins/thederelict2.dmm
 #_maps/RandomRuins/SpaceRuins/prisonsat.dmm
+#_maps/RandomRuins/SpaceRuins/wreckedsyndieship.dmm
