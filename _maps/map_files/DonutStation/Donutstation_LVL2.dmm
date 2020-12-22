@@ -5883,6 +5883,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plasteel,
 /area/maintenance/external/port/bow)
 "mP" = (
@@ -5894,6 +5895,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plasteel,
 /area/maintenance/external/port/bow)
 "mR" = (
@@ -9916,6 +9918,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plasteel,
 /area/engine/atmos/upper)
 "vd" = (
@@ -13288,6 +13291,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server/upper)
 "Ba" = (
@@ -16464,6 +16468,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server/upper)
 "IX" = (
@@ -20774,6 +20779,10 @@
 	initial_gas_mix = "co2=50000;TEMP=293.15"
 	},
 /area/space/nearstation)
+"YD" = (
+/obj/machinery/atmospherics/pipe/multiz,
+/turf/open/floor/plating,
+/area/engine/gravity_generator)
 "ZS" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/dark,
@@ -59703,9 +59712,9 @@ lC
 lC
 lE
 oX
-pp
+YD
 oH
-pp
+YD
 oT
 lP
 lC

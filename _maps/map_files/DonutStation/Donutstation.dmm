@@ -19936,6 +19936,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "aUf" = (
@@ -22375,6 +22378,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "aZd" = (
@@ -24284,6 +24290,9 @@
 /area/crew_quarters/kitchen)
 "bdA" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/multiz{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -31415,6 +31424,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsp" = (
@@ -31547,6 +31559,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
