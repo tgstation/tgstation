@@ -1993,7 +1993,7 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "afG" = (
-/obj/machinery/computer/camera_advanced/base_construction{
+/obj/machinery/computer/camera_advanced/base_construction/aux{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,

@@ -85899,7 +85899,7 @@
 /area/security/main)
 "cJk" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/camera_advanced/base_construction{
+/obj/machinery/computer/camera_advanced/base_construction/aux{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
