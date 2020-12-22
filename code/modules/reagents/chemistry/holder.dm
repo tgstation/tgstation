@@ -66,6 +66,13 @@
 	var/list/datum/reagent/addiction_list
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
+	/// Re-chem variables
+	/// Overall pH
+	var/pH = 7
+	/// Overall purity
+	var/purity = 1
+	/// Currently occurring reactions
+	var/list/occurring_reactions = list()
 
 /datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
@@ -506,114 +513,203 @@
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
 
-	var/reaction_occurred = 0
-	do
-		var/list/possible_reactions = list()
-		reaction_occurred = 0
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/R = reagent
-			for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
-				if(!reaction)
-					continue
+	var/list/possible_reactions = list()
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			if(!reaction)
+				continue
 
-				var/datum/chemical_reaction/C = reaction
-				var/list/cached_required_reagents = C.required_reagents
-				var/total_required_reagents = cached_required_reagents.len
-				var/total_matching_reagents = 0
-				var/list/cached_required_catalysts = C.required_catalysts
-				var/total_required_catalysts = cached_required_catalysts.len
-				var/total_matching_catalysts= 0
-				var/matching_container = FALSE
-				var/matching_other = FALSE
-				var/required_temp = C.required_temp
-				var/is_cold_recipe = C.is_cold_recipe
-				var/meets_temp_requirement = FALSE
+			var/datum/chemical_reaction/C = reaction
+			var/list/cached_required_reagents = C.required_reagents
+			var/total_required_reagents = cached_required_reagents.len
+			var/total_matching_reagents = 0
+			var/list/cached_required_catalysts = C.required_catalysts
+			var/total_required_catalysts = cached_required_catalysts.len
+			var/total_matching_catalysts= 0
+			var/matching_container = FALSE
+			var/matching_other = FALSE
+			var/required_temp = C.required_temp
+			var/is_cold_recipe = C.is_cold_recipe
+			var/meets_temp_requirement = FALSE
+			var/matching_pH = FALSE
 
-				for(var/B in cached_required_reagents)
-					if(!has_reagent(B, cached_required_reagents[B]))
-						break
-					total_matching_reagents++
-				for(var/B in cached_required_catalysts)
-					if(!has_reagent(B, cached_required_catalysts[B]))
-						break
-					total_matching_catalysts++
-				if(cached_my_atom)
-					if(!C.required_container)
-						matching_container = TRUE
-					else
-						if(cached_my_atom.type == C.required_container)
-							matching_container = TRUE
-					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-						matching_container = FALSE
-					if(!C.required_other)
-						matching_other = TRUE
-
-					else if(istype(cached_my_atom, /obj/item/slime_extract))
-						var/obj/item/slime_extract/M = cached_my_atom
-
-						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-							matching_other = TRUE
+			for(var/B in cached_required_reagents)
+				if(!has_reagent(B, cached_required_reagents[B]))
+					break
+				total_matching_reagents++
+			for(var/B in cached_required_catalysts)
+				if(!has_reagent(B, cached_required_catalysts[B]))
+					break
+				total_matching_catalysts++
+			if((pH <= C.required_pH_max && pH >= C.required_pH_min) || (C.required_pH_min == 0 && C.required_pH_max == 0))
+				matching_pH = TRUE
+			if(cached_my_atom)
+				if(!C.required_container)
+					matching_container = TRUE
 				else
-					if(!C.required_container)
+					if(cached_my_atom.type == C.required_container)
 						matching_container = TRUE
-					if(!C.required_other)
+				if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+					matching_container = FALSE
+				if(!C.required_other)
+					matching_other = TRUE
+
+				else if(istype(cached_my_atom, /obj/item/slime_extract))
+					var/obj/item/slime_extract/M = cached_my_atom
+
+					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 						matching_other = TRUE
+			else
+				if(!C.required_container)
+					matching_container = TRUE
+				if(!C.required_other)
+					matching_other = TRUE
 
-				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
-					meets_temp_requirement = TRUE
+			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
+				meets_temp_requirement = TRUE
 
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
-					possible_reactions  += C
+			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && matching_pH)
+				possible_reactions  += C
 
-		if(possible_reactions.len)
-			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
-			//select the reaction with the most extreme temperature requirements
-			for(var/V in possible_reactions)
-				var/datum/chemical_reaction/competitor = V
+			if(C.explode)
+				if(C.fuckup_temp && chem_temp > C.fuckup_temp && !matching_pH)
+					C.major_fuckup(src, my_atom, get_mob_by_key(my_atom.fingerprintslast)) //Welp, you've missed the pH and overheated the mix. Prepare to die
+				else if(C.fuckup_temp && chem_temp > C.fuckup_temp)
+					C.minor_fuckup(src, my_atom, get_mob_by_key(my_atom.fingerprintslast)) //Just overheat, minor fuckup
+				else if(meets_temp_requirement && required_temp != 0 && chem_temp > 444 && !matching_pH) //If the choomist already started the reaction by heating the beaker but fucked up the pH, we call a minor(). chem_temp > 444 is required so shit won't hit the fan without chemist's mistake
+					C.minor_fuckup(src, my_atom, get_mob_by_key(my_atom.fingerprintslast)) //get_mob_by_key(my_atom.fingerprintslast) might backfire if a chemist already died and was revived in the other body/as a ghost role, but its bluespace magic baby
+	if(possible_reactions.len)
+		var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
+		for(var/datum/chemical_reaction/R in possible_reactions)
+			if(!R.instant_reaction)
+				START_PROCESSING(SSfastprocess, src)
+				if(!is_type_in_list(R,occurring_reactions))
+					occurring_reactions.Add(R)
+
+			else
+
+				var/datum/chemical_reaction/competitor = R
 				if(selected_reaction.is_cold_recipe) //if there are no recipe conflicts, everything in possible_reactions will have this same value for is_cold_reaction. warranty void if assumption not met.
 					if(competitor.required_temp <= selected_reaction.required_temp)
 						selected_reaction = competitor
 				else
 					if(competitor.required_temp >= selected_reaction.required_temp)
 						selected_reaction = competitor
-			var/list/cached_required_reagents = selected_reaction.required_reagents
-			var/list/cached_results = selected_reaction.results
-			var/list/multiplier = INFINITY
-			for(var/B in cached_required_reagents)
-				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
+				fastfinishReaction(selected_reaction)
 
-			for(var/B in cached_required_reagents)
-				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
-
-			for(var/P in selected_reaction.results)
-				multiplier = max(multiplier, 1) //this shouldn't happen ...
-				SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
-				add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
-
-			var/list/seen = viewers(4, get_turf(my_atom))
-			var/iconhtml = icon2html(cached_my_atom, seen)
-			if(cached_my_atom)
-				if(!ismob(cached_my_atom)) // No bubbling mobs
-					if(selected_reaction.mix_sound)
-						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
-
-					for(var/mob/M in seen)
-						to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
-
-				if(istype(cached_my_atom, /obj/item/slime_extract))
-					var/obj/item/slime_extract/ME2 = my_atom
-					ME2.Uses--
-					if(ME2.Uses <= 0) // give the notification that the slime core is dead
-						for(var/mob/M in seen)
-							to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
-							ME2.name = "used slime extract"
-							ME2.desc = "This extract has been used up."
-
-			selected_reaction.on_reaction(src, multiplier)
-			reaction_occurred = 1
-
-	while(reaction_occurred)
 	update_total()
+
+/datum/reagents/proc/mixemup() //Speeds up all occurring reactions in the beaker. Complicated reactions can't be speeded up tho.
+	for(var/datum/chemical_reaction/R in occurring_reactions)
+		if(R.can_mix)
+			fastfinishReaction(R)
+
+/datum/reagents/proc/fastfinishReaction(datum/chemical_reaction/R)
+	var/list/cached_required_reagents = R.required_reagents
+	var/list/cached_results = R.results
+	var/list/multiplier = INFINITY
+	for(var/B in cached_required_reagents)
+		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
+
+	for(var/B in cached_required_reagents)
+		remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+
+	for(var/P in R.results)
+		multiplier = max(multiplier, 1) //this shouldn't happen ...
+		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
+		add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
+
+	finishReaction(R, multiplier)
+
+
+/datum/reagents/proc/finishReaction(datum/chemical_reaction/R, amount = 1)
+	var/list/seen = viewers(4, get_turf(my_atom))
+	var/iconhtml = icon2html(my_atom, seen)
+	if(my_atom)
+		if(!ismob(my_atom)) // No bubbling mobs
+			if(R.mix_sound)
+				playsound(get_turf(my_atom), R.mix_sound, 80, TRUE)
+
+			for(var/mob/M in seen)
+				to_chat(M, "<span class='notice'>[iconhtml] [R.mix_message]</span>")
+
+		if(istype(my_atom, /obj/item/slime_extract))
+			var/obj/item/slime_extract/ME2 = my_atom
+			ME2.Uses--
+			if(ME2.Uses <= 0) // give the notification that the slime core is dead
+				for(var/mob/M in seen)
+					to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+				ME2.name = "used slime extract"
+				ME2.desc = "This extract has been used up."
+
+	R.on_reaction(src, amount)
+
+/datum/reagents/process()
+	for(var/datum/chemical_reaction/R in occurring_reactions)
+		var/list/cached_required_reagents = R.required_reagents
+		var/list/cached_results = R.results
+		var/resultAmount = 0
+		for(var/P in cached_results)
+			resultAmount += cached_results[P]
+
+		if(resultAmount == 0)
+			resultAmount = 1
+
+		if(R.required_catalysts)
+			for(var/P in R.required_catalysts)
+				if(!has_reagent(P))
+					occurring_reactions -= R
+					finishReaction(R)
+					continue
+
+		var/multiplier = INFINITY
+		for(var/B in cached_required_reagents)
+			multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
+
+		if(multiplier > 1)
+			multiplier = 1
+
+		if(multiplier <= 0)
+			occurring_reactions -= R
+			finishReaction(R)
+			continue
+
+		var/targetVol = 0
+		for(var/result in cached_results)
+			targetVol += cached_results[result] * multiplier
+
+		//We're doing some serious meth here. Hotter = faster, while pH must be as close to 7 as possible for optimal speed.
+		var/deltaT = chem_temp / 700
+		var/deltapH = 1 - abs(pH - 7) / 9
+		var/stepChemAmount = 0
+
+		var/removeChemAmount //remove factor
+		var/addChemAmount //add factor
+
+		for(var/P in cached_results)
+			stepChemAmount = (multiplier * cached_results[P])
+			if (stepChemAmount > 3) //Reactions are slow. No more than 3 units per tick.
+				stepChemAmount = 1
+			addChemAmount = deltaT * deltapH * stepChemAmount
+			if (addChemAmount >= targetVol)
+				addChemAmount = targetVol
+			if (addChemAmount < CHEMICAL_QUANTISATION_LEVEL)
+				addChemAmount = CHEMICAL_QUANTISATION_LEVEL
+			removeChemAmount = (addChemAmount / cached_results[P])
+			addChemAmount = round(addChemAmount, CHEMICAL_QUANTISATION_LEVEL)
+			removeChemAmount = round(removeChemAmount, CHEMICAL_QUANTISATION_LEVEL)
+
+		for(var/B in cached_required_reagents)
+			remove_reagent(B, (removeChemAmount * cached_required_reagents[B]))
+
+		for(var/P in cached_results)
+			add_reagent(P, cached_results[P] * addChemAmount / resultAmount, null, chem_temp)
+
+		chem_temp += R.heat_per_u * addChemAmount
+
+	if(!occurring_reactions.len)
+		STOP_PROCESSING(SSfastprocess, src)
 
 /// Remove every reagent except this one
 /datum/reagents/proc/isolate_reagent(reagent)
@@ -648,6 +744,7 @@
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
+	pH = 0
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -655,6 +752,17 @@
 			del_reagent(R.type)
 		else
 			total_volume += R.volume
+			pH += R.pH * R.volume
+
+	if(total_volume != 0)
+		pH = pH / total_volume
+	else
+		pH = 7 //Standard value that doesn't break shit
+
+	if(istype(my_atom, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RC = my_atom
+		RC.pH_check()
+		RC.temp_check()
 
 
 /// Removes all reagents

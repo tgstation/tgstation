@@ -12,6 +12,7 @@
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mob_react = FALSE
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/tofu/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -29,6 +30,7 @@
 
 /datum/chemical_reaction/chocolate_bar
 	required_reagents = list(/datum/reagent/consumable/soymilk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/chocolate_bar/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -39,6 +41,7 @@
 /datum/chemical_reaction/chocolate_bar2
 	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 4, /datum/reagent/consumable/sugar = 2)
 	mob_react = FALSE
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/chocolate_bar2/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -70,6 +73,7 @@
 /datum/chemical_reaction/cheesewheel
 	required_reagents = list(/datum/reagent/consumable/milk = 40)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/cheesewheel/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -79,6 +83,7 @@
 /datum/chemical_reaction/synthmeat
 	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/cryoxadone = 1)
 	mob_react = FALSE
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/synthmeat/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -97,6 +102,7 @@
 	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5)
 	required_container = /obj/item/food/tofu
 	mix_message = "The mixture becomes similar to carp meat."
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/imitationcarpmeat/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)
@@ -107,6 +113,7 @@
 /datum/chemical_reaction/dough
 	required_reagents = list(/datum/reagent/water = 10, /datum/reagent/consumable/flour = 15)
 	mix_message = "The ingredients form a dough."
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/dough/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -116,6 +123,7 @@
 /datum/chemical_reaction/cakebatter
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 15, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
 	mix_message = "The ingredients form a cake batter."
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/cakebatter/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -129,6 +137,7 @@
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
 	required_container = /obj/item/reagent_containers/glass/bowl
 	mix_message = "The rice absorbs the water."
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/ricebowl/on_reaction(datum/reagents/holder)
 	var/location = get_turf(holder.my_atom)

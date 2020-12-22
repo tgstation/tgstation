@@ -29,6 +29,7 @@
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 2.5
 	taste_description = "mushroom"
+	pH = 13
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
@@ -37,6 +38,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
+	pH = 2.3
 
 /datum/reagent/toxin/mutagen/expose_mob(mob/living/carbon/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -72,6 +74,7 @@
 	toxpwr = 3
 	material = /datum/material/plasma
 	penetrates_skin = NONE
+	pH = 4
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
@@ -127,6 +130,7 @@
 	color = "#7DC3A0"
 	toxpwr = 0
 	taste_description = "acid"
+	pH = 1.2
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
@@ -148,6 +152,7 @@
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 1.3
+	pH = 10
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
@@ -165,6 +170,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 	taste_description = "mint"
+	pH = 8
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
@@ -178,6 +184,7 @@
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
 	taste_description = "fish"
+	pH = 12
 
 /datum/reagent/toxin/carpotoxin/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -194,6 +201,7 @@
 	taste_description = "death"
 	penetrates_skin = NONE
 	var/fakedeath_active = FALSE
+	pH = 13
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
@@ -235,6 +243,7 @@
 	color = "#664700" // rgb: 102, 71, 0
 	toxpwr = 0.8
 	taste_description = "death"
+	pH = 14.5
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
@@ -255,6 +264,7 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
+	pH = 11
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
 	M.hallucination += 5
@@ -267,6 +277,7 @@
 	toxpwr = 1
 	taste_mult = 1
 	penetrates_skin = NONE
+	pH = 2.7
 
 	// Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -299,6 +310,7 @@
 	name = "Weed Killer"
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
+	pH = 3
 
 	//Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -313,6 +325,7 @@
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
+	pH = 3.2
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -347,6 +360,7 @@
 	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
 	toxpwr = 1
+	pH = 11
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C)
 	C.damageoverlaytemp = 60
@@ -359,7 +373,8 @@
 	description = "A natural toxin produced by blob spores that induces combustion in its victim."
 	color = "#9ACD32"
 	toxpwr = 0.5
-	taste_description = "burning"
+	taste_description ="burning"
+	pH = 13
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
@@ -374,6 +389,7 @@
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	pH = 11
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -398,6 +414,7 @@
 	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
+	pH = 2
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
 	switch(current_cycle)
@@ -414,6 +431,7 @@
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
 	toxpwr = 0.5
+	pH = 4.2
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -422,6 +440,7 @@
 	color = "#7F8400" // rgb: 127, 132, 0
 	toxpwr = 0.1
 	taste_description = "green tea"
+	pH = 4.9
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
@@ -430,6 +449,7 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "silence"
+	pH = 12.2
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
 	M.silent = max(M.silent, 3)
@@ -820,17 +840,18 @@
 
 //ACID
 
+//Acids no longer are unique and now every strongly basic/acidic shit works like acids. However, they still damage things more.
 
 /datum/reagent/toxin/acid
 	name = "Sulphuric acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
+	acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
 	self_consuming = TRUE
+	pH = 2.75
 
-// ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
@@ -838,39 +859,13 @@
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1.5))
 		mytray.adjustWeeds(-rand(1,2))
 
-/datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
-	. = ..()
-	if(!istype(exposed_carbon))
-		return
-	reac_volume = round(reac_volume,0.1)
-	if(methods & INGEST)
-		exposed_carbon.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
-		return
-	if(methods & INJECT)
-		exposed_carbon.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
-		return
-	exposed_carbon.acid_act(acidpwr, reac_volume)
-
-/datum/reagent/toxin/acid/expose_obj(obj/exposed_obj, reac_volume)
-	. = ..()
-	if(ismob(exposed_obj.loc)) //handled in human acid_act()
-		return
-	reac_volume = round(reac_volume,0.1)
-	exposed_obj.acid_act(acidpwr, reac_volume)
-
-/datum/reagent/toxin/acid/expose_turf(turf/exposed_turf, reac_volume)
-	. = ..()
-	if (!istype(exposed_turf))
-		return
-	reac_volume = round(reac_volume,0.1)
-	exposed_turf.acid_act(acidpwr, reac_volume)
-
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
 	color = "#5050FF"
 	toxpwr = 2
 	acidpwr = 42.0
+	pH = 1.3
 
 // SERIOUSLY
 /datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -891,6 +886,7 @@
 	color = "#5050FF"
 	toxpwr = 3
 	acidpwr = 5.0
+	pH = 3.3
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(volume/10, FALSE) //here you go nervar

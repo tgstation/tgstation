@@ -76,6 +76,24 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
+	/// Re-chem vars go here
+	/// How pure is it. Not used yet, still it will be useful to have something like this around for future ReChem PRs
+	var/purity = 1
+	var/cached_purity
+	/// pH of the reagent
+	var/pH = 7
+	/// Location where it was created
+	var/turf/created
+	/// An impure version of this chem
+	var/impure_chem
+	/// How impure the chem must be for it to inverse(stealthy corrupted version of it)
+	var/inverse_impurity = 0.5
+	/// Inversed version of the chemical
+	var/inverse_chem
+	/// Chemical flags aka does it merge, is it invisible and etc.
+	var/chem_flags
+	///Acidic power
+	var/acidpwr = 0
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -86,6 +104,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 	if(material)
 		material = SSmaterials.GetMaterialRef(material)
+
+	if(acidpwr == 0)
+		if(pH > 12)
+			acidpwr = (pH - 12) * 5 //14 pH will result in 10 power
+		if(pH < 2)
+			acidpwr = (2 - pH) * 5
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -109,15 +133,31 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if(amount >= 0.5)
 			exposed_mob.reagents.add_reagent(type, amount)
 
+	if(iscarbon(exposed_mob) && acidpwr > 0)
+		var/mob/living/carbon/exposed_carbon = exposed_mob
+		if(methods & INGEST)
+			exposed_carbon.adjustBruteLoss(min(6 * acidpwr, round(reac_volume,0.1) * acidpwr))
+			return
+		if(methods & INJECT)
+			exposed_carbon.adjustBruteLoss(1.5 * min(6 * acidpwr, round(reac_volume,0.1) * acidpwr))
+			return
+		exposed_carbon.acid_act(acidpwr, round(reac_volume,0.1))
+
 /// Applies this reagent to an [/obj]
 /datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(acidpwr > 0)
+		exposed_obj.acid_act(acidpwr, round(reac_volume,0.1))
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_OBJ, exposed_obj, reac_volume)
 
 /// Applies this reagent to a [/turf]
 /datum/reagent/proc/expose_turf(turf/exposed_turf, reac_volume)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(acidpwr > 0)
+		exposed_turf.acid_act(acidpwr, round(reac_volume,0.1))
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_TURF, exposed_turf, reac_volume)
 

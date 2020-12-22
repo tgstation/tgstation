@@ -293,6 +293,8 @@
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
 	custom_price = PAYCHECK_PRISONER * 0.8
+	container_flags = TEMP_WEAK
+	container_HP = 1
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
 	. = ..()

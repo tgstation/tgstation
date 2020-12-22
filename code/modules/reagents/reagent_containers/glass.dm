@@ -137,6 +137,7 @@
 	worn_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
+	container_flags = PH_WEAK
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -169,6 +170,7 @@
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
+	container_flags = TEMP_WEAK
 
 /obj/item/reagent_containers/glass/beaker/meta
 	name = "metamaterial beaker"
@@ -178,6 +180,7 @@
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
+	container_flags = NONE
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -188,6 +191,7 @@
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
+	container_HP = 10
 
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -200,6 +204,7 @@
 	material_flags = MATERIAL_NO_EFFECTS
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
+	container_HP = 5
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
@@ -256,6 +261,7 @@
 		ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
 		ITEM_SLOT_DEX_STORAGE
 	)
+	container_HP = 1
 
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"

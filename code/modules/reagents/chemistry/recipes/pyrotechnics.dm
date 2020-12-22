@@ -1,6 +1,7 @@
 /datum/chemical_reaction/reagent_explosion
 	var/strengthdiv = 10
 	var/modifier = 0
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
 	explode(holder, created_volume)
@@ -179,6 +180,7 @@
 
 /datum/chemical_reaction/emp_pulse
 	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -190,6 +192,7 @@
 
 /datum/chemical_reaction/beesplosion
 	required_reagents = list(/datum/reagent/consumable/honey = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/uranium/radium = 1)
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = holder.my_atom.drop_location()
@@ -257,6 +260,7 @@
 /datum/chemical_reaction/sorium_vortex
 	required_reagents = list(/datum/reagent/sorium = 1)
 	required_temp = 474
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -278,6 +282,7 @@
 /datum/chemical_reaction/ldm_vortex
 	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
 	required_temp = 474
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -308,6 +313,7 @@
 /datum/chemical_reaction/flash_powder_flash
 	required_reagents = list(/datum/reagent/flash_powder = 1)
 	required_temp = 374
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -346,6 +352,7 @@
 	required_reagents = list(/datum/reagent/smoke_powder = 1)
 	required_temp = 374
 	mob_react = FALSE
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -375,6 +382,7 @@
 /datum/chemical_reaction/sonic_powder_deafen
 	required_reagents = list(/datum/reagent/sonic_powder = 1)
 	required_temp = 374
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -411,6 +419,7 @@
 	results = list(/datum/reagent/cryostylane = 1)
 	required_reagents = list(/datum/reagent/cryostylane = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
@@ -419,6 +428,7 @@
 	results = list(/datum/reagent/pyrosium = 1)
 	required_reagents = list(/datum/reagent/pyrosium = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp += 10*created_volume

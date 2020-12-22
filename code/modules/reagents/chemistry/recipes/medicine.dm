@@ -158,6 +158,7 @@
 
 /datum/chemical_reaction/medsuture
 	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/medsuture/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -166,6 +167,7 @@
 
 /datum/chemical_reaction/medmesh
 	required_reagents = list(/datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/medmesh/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -174,6 +176,7 @@
 
 /datum/chemical_reaction/poultice
 	required_reagents = list(/datum/reagent/toxin/bungotoxin = 20, /datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20)
+	instant_reaction = TRUE
 
 /datum/chemical_reaction/poultice/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)

@@ -318,3 +318,5 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
+
+		beaker.reagents.mixemup()

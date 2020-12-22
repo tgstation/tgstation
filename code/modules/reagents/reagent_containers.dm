@@ -14,6 +14,9 @@
 	var/spillable = FALSE
 	var/list/fill_icon_thresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
+	var/container_HP = 2
+	var/cached_icon
+	var/container_flags
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -26,6 +29,35 @@
 		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
 
 	add_initial_reagents()
+
+//melts plastic beakers
+/obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
+	reagents.expose_temperature(1000)
+	if(container_flags & TEMP_WEAK)
+		visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] [src]'s melts from the temperature!</span>")
+		playsound(src, 'sound/ReChem/heatmelt.ogg', 80, 1)
+		qdel(src)
+	..()
+
+//melts plastic beakers
+/obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	reagents.expose_temperature(exposed_temperature)
+	temp_check()
+
+/obj/item/reagent_containers/proc/temp_check()
+	if(container_flags & TEMP_WEAK)
+		if(reagents.chem_temp >= 444)//assuming polypropylene
+			START_PROCESSING(SSobj, src)
+
+//melts glass beakers
+/obj/item/reagent_containers/proc/pH_check()
+	if(container_flags & PH_WEAK)
+		if((reagents.pH < 1.5) || (reagents.pH > 12.5))
+			START_PROCESSING(SSobj, src)
+	else if((reagents.pH < -3) || (reagents.pH > 17))
+		visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] \The [src] is damaged by the super pH and begins to deform!</span>")
+		reagents.pH = clamp(reagents.pH, -3, 17)
+		container_HP -= 1
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
@@ -128,13 +160,6 @@
 
 	reagents.clear_reagents()
 
-/obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
-	reagents.expose_temperature(1000)
-	..()
-
-/obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	reagents.expose_temperature(exposed_temperature)
-
 /obj/item/reagent_containers/on_reagent_change(changetype)
 	update_icon()
 
@@ -143,7 +168,7 @@
 	if(!fill_icon_thresholds)
 		return
 	if(reagents.total_volume)
-		var/fill_name = fill_icon_state? fill_icon_state : icon_state
+		var/fill_name = fill_icon_state? fill_icon_state : initial(icon_state)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
@@ -155,3 +180,75 @@
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling
+
+/obj/item/reagent_containers/process()
+	if(!cached_icon)
+		cached_icon = icon_state
+	var/damage
+	var/cause
+	if(container_flags & PH_WEAK)
+		if(reagents.pH < 2)
+			damage = (2 - reagents.pH)/20
+			cause = "from the extreme pH"
+			playsound(get_turf(src), 'sound/ReChem/bufferadd.ogg', 50, 1)
+
+		if(reagents.pH > 12)
+			damage = (reagents.pH - 12)/20
+			cause = "from the extreme pH"
+			playsound(get_turf(src), 'sound/ReChem/bufferadd.ogg', 50, 1)
+
+	if(container_flags & TEMP_WEAK)
+		if(reagents.chem_temp >= 444)
+			if(damage)
+				damage += (reagents.chem_temp/444)/5
+			else
+				damage = (reagents.chem_temp/444)/5
+			if(cause)
+				cause += " and "
+			cause += "from the high temperature"
+			playsound(get_turf(src), 'sound/ReChem/heatdam.ogg', 50, 1)
+
+	if(!damage || damage <= 0)
+		STOP_PROCESSING(SSobj, src)
+
+	container_HP -= damage
+
+	var/damage_percent = ((container_HP / initial(container_HP)*100))
+	var/volume_to_remove = 0
+	switch(damage_percent)
+		if(-INFINITY to 0)
+			visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] [src]'s melts [cause]!</span>")
+			playsound(src, 'sound/ReChem/acidmelt.ogg', 80, 1)
+			SSblackbox.record_feedback("tally", "Re_chem", 1, "Times beakers have melted")
+			volume_to_remove = volume
+		if(0 to 35)
+			icon_state = "[cached_icon]_m3"
+			desc = "[initial(desc)] It is severely deformed."
+			volume_to_remove = volume - initial(volume) * 0.25
+		if(35 to 70)
+			icon_state = "[cached_icon]_m2"
+			desc = "[initial(desc)] It is deformed."
+			volume_to_remove = volume - initial(volume) * 0.50
+		if(70 to 85)
+			desc = "[initial(desc)] It is mildly deformed."
+			icon_state = "[cached_icon]_m1"
+			volume_to_remove = volume - initial(volume) * 0.75
+
+	if(volume - volume_to_remove == 0)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
+			if(!C.get_item_by_slot(ITEM_SLOT_GLOVES))
+				SplashReagents(C)
+		else
+			SplashReagents(loc)
+		STOP_PROCESSING(SSobj, src)
+		qdel(src)
+		return
+
+	reagents.maximum_volume -= volume_to_remove
+	volume -= volume_to_remove
+
+	update_icon()
+	update_overlays()
+	if(prob(25))
+		visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] [src]'s is damaged by [cause] and begins to deform!</span>")

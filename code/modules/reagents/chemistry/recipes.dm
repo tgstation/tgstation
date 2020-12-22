@@ -29,10 +29,25 @@
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg'
+	///If TRUE, this reaction works instantly and doesn't use ReChem system. Should be toggled on with any spawning reactions.
+	var/instant_reaction = FALSE
+	///Determines can be this reaction completed by mixing stuff
+	var/can_mix = TRUE
+	///Talks for itself
+	var/required_pH_max = 0
+	var/required_pH_min = 0
+	///Can explode/do something if you fucked up?
+	var/explode = FALSE
+	///If overheated to this temperature, major fuckup will trigger.
+	var/fuckup_temp = 0
+	///How many heat this shit generates
+	var/heat_per_u = 0
 
 /datum/chemical_reaction/New()
 	. = ..()
 	SSticker.OnRoundstart(CALLBACK(src,.proc/update_info))
+	if(required_temp || required_pH_max || required_pH_min)
+		can_mix = FALSE
 
 /**
  * Updates information during the roundstart
@@ -100,6 +115,14 @@
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
+
+/datum/chemical_reaction/proc/minor_fuckup(var/datum/reagents/holder, var/obj/item/reagent_containers/beaker, var/mob/choomist) //Minor negative stuff
+	for(var/reagent_type in required_reagents)
+		holder.remove_reagent(reagent_type, holder.get_reagent_amount(reagent_type)) //Yep, all of the reagents are consumed in a violent reaction
+
+/datum/chemical_reaction/proc/major_fuckup(var/datum/reagents/holder, var/obj/item/reagent_containers/beaker, var/mob/choomist) //Major fuckup stuff
+	for(var/reagent_type in required_reagents)
+		holder.remove_reagent(reagent_type, holder.get_reagent_amount(reagent_type))
 
 /**
  * Magical move-wooney that happens sometimes.
