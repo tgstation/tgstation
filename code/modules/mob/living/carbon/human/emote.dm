@@ -179,8 +179,9 @@
 
 /datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional)
 	if(ismonkey(user))
-		return TRUE
+		return ..()
 	return FALSE
+
 /datum/emote/living/carbon/human/monkey/gnarl
 	key = "gnarl"
 	key_third_person = "gnarls"

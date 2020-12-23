@@ -10,7 +10,7 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
-	species_traits = list(HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY)
+	species_traits = list(HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY,NOTRANSSTING, NOAUGMENTS)
 	inherent_traits = list(TRAIT_MONKEYLIKE)
 	no_equip = list(ITEM_SLOT_EARS, ITEM_SLOT_EYES, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -24,11 +24,11 @@
 	species_language_holder = /datum/language_holder/monkey
 	bodypart_overides = list(
 	BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/monkey,\
-	BODY_ZONE_R_ARM = new /obj/item/bodypart/r_arm/monkey,\
-	BODY_ZONE_HEAD = new /obj/item/bodypart/head/monkey,\
-	BODY_ZONE_L_LEG = new /obj/item/bodypart/l_leg/monkey,\
-	BODY_ZONE_R_LEG = new /obj/item/bodypart/r_leg/monkey,\
-	BODY_ZONE_CHEST = new /obj/item/bodypart/chest/monkey)
+	BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/monkey,\
+	BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,\
+	BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/monkey,\
+	BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,\
+	BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey)
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
@@ -51,11 +51,19 @@
 			H.dna.features["tail_monkey"] = "Monkey"
 			handle_mutant_bodyparts(H)
 
+	C.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
+
+	//C.dna.mutations |= new RACEMUT(MUT_NORMAL)
+	//C.dna.mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
+
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.ventcrawler = initial(C.ventcrawler)
 	C.pass_flags = initial(C.pass_flags)
 	C.butcher_results = null
+	//C.dna.mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
+	C.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
+	C.domutcheck()
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target)
 	. = ..()
