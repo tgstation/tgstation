@@ -313,6 +313,8 @@
 	melee_damage_upper = 15
 	force_threshold = 10 //lots of fat to cushion blows.
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
+	attack_verb_continuous = "slams"
+	attack_verb_simple = "slam"
 	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
 	deathsound = 'sound/misc/sadtrombone.ogg'
 	food_type = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips)
@@ -417,7 +419,7 @@
 		user.icon_state = "glutton_tongue"
 		add_ranged_ability(user, "<span class='notice'>Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B></span>", TRUE)
 
-obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, atom/target)
+/obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 
 	if(.)
@@ -436,7 +438,7 @@ obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, a
 
 	var/obj/item/projected_morsel = pick_n_take(pouch_owner.prank_pouch)
 	projected_morsel.forceMove(pouch_owner.loc)
-	projected_morsel.throw_at(target, 8, 4, pouch_owner)
+	projected_morsel.throw_at(target, 8, 3, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
 	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
 
