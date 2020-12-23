@@ -13,6 +13,9 @@
 /obj/item/storage/part_replacer
 	icon = 'modular_frontier/modules/aesthetics/storage/storage.dmi'
 
+/obj/item/storage/part_replacer/bluespace
+	icon = 'icons/obj/storage.dmi'
+
 /obj/item/storage/part_replacer/cyborg
 	icon = 'modular_frontier/modules/aesthetics/storage/storage.dmi'
 
