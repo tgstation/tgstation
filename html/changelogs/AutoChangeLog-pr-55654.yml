@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "Cursed ice hiking boots dropped by demonic frost miners only
+become unremovable when worn."

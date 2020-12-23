@@ -74,7 +74,10 @@ icons_dir = os.path.join(root_dir, "icons")
 
 def Main():
   if len(sys.argv) != 2:
-    print("Usage: hitbox_expander.py filename.dmi")
+    if os.name == 'nt':
+      print("Usage: drag-and-drop a .dmi onto `Hitbox Expander.bat`\n  or")
+    with open(os.path.join(current_dir, "README.txt")) as f:
+      print(f.read())
     return 0
 
   try:

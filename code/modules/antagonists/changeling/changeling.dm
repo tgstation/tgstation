@@ -290,6 +290,13 @@
 		var/datum/scar/iter_scar = i
 		LAZYADD(prof.stored_scars, iter_scar.format())
 
+	var/datum/icon_snapshot/entry = new
+	entry.name = H.name
+	entry.icon = H.icon
+	entry.icon_state = H.icon_state
+	entry.overlays = H.get_overlays_copy(list(HANDS_LAYER, HANDCUFF_LAYER, LEGCUFF_LAYER))
+	prof.profile_snapshot = entry
+
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(slot in H.vars)
@@ -508,6 +515,8 @@
 	var/list/skillchips = list()
 	/// What scars the target had when we copied them, in string form (like persistent scars)
 	var/list/stored_scars
+	/// Icon snapshot of the profile
+	var/datum/icon_snapshot/profile_snapshot
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
@@ -533,6 +542,7 @@
 	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
 	newprofile.skillchips = skillchips.Copy()
 	newprofile.stored_scars = stored_scars.Copy()
+	newprofile.profile_snapshot = profile_snapshot
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
