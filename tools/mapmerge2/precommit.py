@@ -32,7 +32,7 @@ def main(repo):
                 merged_map = index_map
             else:
                 # Entry in HEAD, merge the index over it
-                print(f"Merging map: {path}", flush=True)
+                print(f"Converting map: {path}", flush=True)
                 assert not (status & pygit2.GIT_STATUS_INDEX_NEW)
                 head_map = dmm.DMM.from_bytes(head_blob.read_raw())
                 merged_map = merge_map(index_map, head_map)
@@ -50,7 +50,6 @@ def main(repo):
 
     if changed:
         repo.index.write()
-        print(f"Merged {changed} maps.")
     return 0
 
 if __name__ == '__main__':
