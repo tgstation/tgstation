@@ -43,6 +43,21 @@ class DMM:
             f.flush()
             return bio.getvalue()
 
+    def get_or_generate_key(self, tile):
+        try:
+            return self.dictionary.inv[tile]
+        except KeyError:
+            key = self.generate_new_key()
+            self.dictionary[key] = tile
+            return key
+
+    def get_tile(self, coord):
+        return self.dictionary[self.grid[coord]]
+
+    def set_tile(self, coord, tile):
+        tile = tuple(tile)
+        self.grid[coord] = self.get_or_generate_key(tile)
+
     def generate_new_key(self):
         free_keys = self._ensure_free_keys(1)
         # choose one of the free keys at random
@@ -124,6 +139,9 @@ class DMM:
         for y in range(1, self.size.y + 1):
             for x in range(1, self.size.x + 1):
                 yield (y, x)
+
+    def __repr__(self):
+        return f"DMM(size={self.size}, key_length={self.key_length}, dictionary_size={len(self.dictionary)})"
 
 # ----------
 # key handling
@@ -227,10 +245,8 @@ def is_bad_atom_ordering(key, atoms):
         print(f"Warning: key '{key}' is missing either a turf or area")
     return can_fix
 
-def fix_atom_ordering(atoms):
-    movables = []
-    turfs = []
-    areas = []
+def split_atom_groups(atoms):
+    movables, turfs, areas = [], [], []
     for each in atoms:
         if each.startswith('/turf'):
             turfs.append(each)
@@ -238,6 +254,10 @@ def fix_atom_ordering(atoms):
             areas.append(each)
         else:
             movables.append(each)
+    return movables, turfs, areas
+
+def fix_atom_ordering(atoms):
+    movables, turfs, areas = split_atom_groups(atoms)
     movables.extend(turfs)
     movables.extend(areas)
     return movables
@@ -287,7 +307,7 @@ def save_tgm(dmm, output):
         output.write("\n")
         for x in range(1, max_x + 1):
             output.write(f"({x},{1},{z}) = {{\"\n")
-            for y in range(1, max_y + 1):
+            for y in range(max_y, 0, -1):
                 output.write(f"{num_to_key(dmm.grid[x, y, z], dmm.key_length)}\n")
             output.write("\"}\n")
 
@@ -309,7 +329,7 @@ def save_dmm(dmm, output):
     for z in range(1, max_z + 1):
         output.write(f"(1,1,{z}) = {{\"\n")
 
-        for y in range(1, max_y + 1):
+        for y in range(max_y, 0, -1):
             for x in range(1, max_x + 1):
                 try:
                     output.write(num_to_key(dmm.grid[x, y, z], dmm.key_length))
@@ -542,7 +562,12 @@ def _parse(map_raw_text):
     if curr_y > maxy:
         maxy = curr_y
 
+    # Convert from raw .dmm coordinates to DM/BYOND coordinates by flipping Y
+    grid2 = dict()
+    for (x, y, z), tile in grid.items():
+        grid2[x, maxy + 1 - y, z] = tile
+
     data = DMM(key_length, Coordinate(maxx, maxy, maxz))
     data.dictionary = dictionary
-    data.grid = grid
+    data.grid = grid2
     return data
