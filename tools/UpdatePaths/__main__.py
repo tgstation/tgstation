@@ -1,9 +1,10 @@
 # A script and syntax for applying path updates to maps.
 import re
 import os
+import sys
 import argparse
-import frontend
-from dmm import *
+from mapmerge2 import frontend
+from mapmerge2.dmm import *
 
 desc = """
 Update dmm files given update file/string.
@@ -167,7 +168,11 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=desc, formatter_class=argparse.RawTextHelpFormatter)
+    prog = __spec__.name.replace('.__main__', '')
+    if os.name == 'nt' and len(sys.argv) <= 1:
+        print("usage: drag-and-drop a path script .txt onto `Update Paths.bat`\n  or")
+
+    parser = argparse.ArgumentParser(prog=prog, description=desc, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("update_source", help="update file path / line of update notation")
     parser.add_argument("--map", "-m", help="path to update, defaults to all maps in maps directory")
     parser.add_argument("--directory", "-d", help="path to maps directory, defaults to _maps/")

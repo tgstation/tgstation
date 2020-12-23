@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Regal rats no longer see themselves as an interloper on examine."
+  - bugfix: "Regal rats no longer think they are consuming themselves when
+eating cheese."
