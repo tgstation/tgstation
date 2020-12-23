@@ -4553,7 +4553,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/cryopod,
+/obj/effect/mob_spawn/human/oldjan,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "kr" = (
@@ -4768,7 +4768,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/cryopod,
+/obj/effect/mob_spawn/human/oldqm,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "kQ" = (
@@ -8669,6 +8669,18 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
+"FL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/human/oldass,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation)
 "FO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -9134,7 +9146,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
-/obj/machinery/cryopod,
+/obj/effect/mob_spawn/human/oldass,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation)
 "Js" = (
@@ -9449,6 +9461,19 @@
 /obj/item/stack/sheet/glass/fifty,
 /turf/template_noop,
 /area/template_noop)
+"LA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/human/oldcap,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/ancientstation)
 "LD" = (
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced,
 /turf/open/floor/plating,
@@ -13300,7 +13325,7 @@ Jo
 Aa
 kP
 bT
-kP
+LA
 pn
 mc
 ac
@@ -13396,7 +13421,7 @@ jT
 bN
 kr
 bN
-ln
+FL
 bN
 kp
 pk
