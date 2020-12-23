@@ -418,10 +418,6 @@
 	if(!has_dna())
 		return
 
-	for(var/mutation in dna.mutation_index)
-		if(ismob(dna.check_block(mutation)))
-			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
-
 	update_mutations_overlay()
 
 /datum/dna/proc/check_block(mutation)

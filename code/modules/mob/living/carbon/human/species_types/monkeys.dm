@@ -51,10 +51,10 @@
 			H.dna.features["tail_monkey"] = "Monkey"
 			handle_mutant_bodyparts(H)
 
-	C.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
+	//C.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
 
-	//C.dna.mutations |= new RACEMUT(MUT_NORMAL)
-	//C.dna.mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
+	C.dna.mutations |= new RACEMUT(MUT_NORMAL)
+	C.dna.mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
