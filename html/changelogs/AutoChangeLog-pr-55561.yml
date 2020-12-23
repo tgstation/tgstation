@@ -1,5 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - bugfix: "Fixed garbage collection of light fixture overlays, making the game run slightly faster"
-  - code_imp: "Light fixtures now use non-unique overlays with different variants for alpha changes"
