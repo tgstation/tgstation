@@ -1,0 +1,7 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - balance: "Botanists get access to the uplink traitor reagent gun."
+  - balance: "Uplink traitor reagent gun for CMO/Chemist/Botanist now has piercing darts."
+  - balance: "All syringe guns can no longer chamber bluespace syringes."
+  - balance: "Rapid fire syringe guns are now locked behind illegal tech."

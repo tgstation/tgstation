@@ -220,6 +220,7 @@
 	density = FALSE //allows shuttle airlocks to close, nothing but an approved passenger gets past CanPass
 	locked = TRUE
 	use_power = FALSE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
@@ -230,10 +231,23 @@
 
 	if(mover in approved_passengers)
 		set_scanline("scanning", 10)
+		if(isvehicle(mover))
+			var/obj/vehicle/vehicle = mover
+			for(var/mob/living/rat in vehicle.occupants)
+				if(!(rat in approved_passengers))
+					say("<span class='robot'>Stowaway detected. Please exit the vehicle first.</span>")
+					return FALSE
+		return TRUE
+	if(isitem(mover))
+		return TRUE
+	if(isstructure(mover))
+		var/obj/structure/struct = mover
+		for(var/mob/living/rat in struct.contents)
+			say("<span class='robot'>Stowaway detected. Please exit the structure first.</span>")
+			return FALSE
 		return TRUE
 
-	if(!isliving(mover)) //No stowaways
-		return FALSE
+	return FALSE
 
 /obj/machinery/scanner_gate/luxury_shuttle/auto_scan(atom/movable/AM)
 	return
@@ -246,7 +260,11 @@
 
 #define LUXURY_MESSAGE_COOLDOWN 100
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
-	if(!isliving(AM))
+	///If the atom entering the gate is a vehicle, we store it here to add to the approved list to enter/leave the scanner gate.
+	var/obj/vehicle/vehicle
+	///We store the driver of vehicles seperately so that we can add them to the approved list once payment is fully processed.
+	var/mob/living/driver_holdout
+	if(!isliving(AM) && !isvehicle(AM))
 		alarm_beep()
 		return ..()
 
@@ -258,9 +276,21 @@
 		else if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
 			to_chat(AM, "<span class='notice'>This ID card doesn't have an owner associated with it!</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
-	else
+	else if(isliving(AM))
 		var/mob/living/L = AM
 		account = L.get_bank_account()
+
+	else if(isvehicle(AM))
+		vehicle = AM
+		for(var/passenger in vehicle.occupants)
+			if(!isliving(passenger))
+				continue
+			var/mob/living/rider = passenger
+			if(vehicle.is_driver(rider))
+				driver_holdout = rider
+				var/obj/item/card/id/id = rider.get_idcard(TRUE)
+				account = id?.registered_account
+				break
 
 	if(account)
 		if(account.account_balance < threshold - payees[AM])
@@ -271,40 +301,40 @@
 			account.adjust_money(-money_owed)
 			payees[AM] += money_owed
 
+	//Here is all the possible paygate payment methods.
 	var/list/counted_money = list()
-
-	for(var/obj/item/coin/C in AM.GetAllContents())
+	for(var/obj/item/coin/C in AM.GetAllContents()) //Coins.
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += C.value
 		counted_money += C
-	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
+	for(var/obj/item/stack/spacecash/S in AM.GetAllContents()) //Paper Cash
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += S.value * S.amount
 		counted_money += S
-	for(var/obj/item/holochip/H in AM.GetAllContents())
+	for(var/obj/item/holochip/H in AM.GetAllContents()) //Holocredits
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += H.credits
 		counted_money += H
 
-	if(payees[AM] < threshold && istype(AM.pulling, /obj/item/coin))
+	if(payees[AM] < threshold && istype(AM.pulling, /obj/item/coin)) //Coins(Pulled).
 		var/obj/item/coin/C = AM.pulling
 		payees[AM] += C.value
 		counted_money += C
 
-	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/stack/spacecash))
+	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/stack/spacecash)) //Cash(Pulled).
 		var/obj/item/stack/spacecash/S = AM.pulling
 		payees[AM] += S.value * S.amount
 		counted_money += S
 
-	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/holochip))
+	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/holochip)) //Holocredits(pulled).
 		var/obj/item/holochip/H = AM.pulling
 		payees[AM] += H.credits
 		counted_money += H
 
-	if(payees[AM] < threshold)
+	if(payees[AM] < threshold) //Suggestions for those with no arms/simple animals.
 		var/armless
 		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
 			armless = TRUE
@@ -327,7 +357,7 @@
 		var/change = FALSE
 		if(payees[AM] > 0)
 			change = TRUE
-			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc)
+			var/obj/item/holochip/HC = new /obj/item/holochip(AM.loc) //Change is made in holocredits exclusively.
 			HC.credits = payees[AM]
 			HC.name = "[HC.credits] credit holochip"
 			if(istype(AM, /mob/living/carbon/human))
@@ -338,8 +368,12 @@
 				AM.pulling = HC
 			payees[AM] -= payees[AM]
 
-		say("<span class='robot'>Welcome to first class, [AM]![change ? " Here is your change." : ""]</span>")
-		approved_passengers += AM
+		say("<span class='robot'>Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]</span>")
+		approved_passengers |= AM
+		if(vehicle)
+			approved_passengers |= vehicle
+		if(driver_holdout)
+			approved_passengers |= driver_holdout
 
 		check_times -= AM
 		return

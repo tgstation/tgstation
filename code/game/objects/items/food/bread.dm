@@ -31,6 +31,10 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/bread/plain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+
 /obj/item/food/bread/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30)
 
@@ -40,6 +44,10 @@
 	icon_state = "breadslice"
 	foodtypes = GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+
+/obj/item/food/breadslice/plain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/moldy
 	name = "moldy bread slice"
@@ -161,6 +169,14 @@
 	icon_state = "creamcheesebreadslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 
+/obj/item/food/bread/empty
+	name = "bread"
+	icon_state = "tofubread"
+	desc = "It's bread, customized to your wildest dreams."
+
+/obj/item/food/bread/empty/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/empty, 5, 30)
+
 /obj/item/food/bread/mimana
 	name = "mimana bread"
 	desc = "Best eaten in silence."
@@ -179,10 +195,16 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtypes = GRAIN | FRUIT
 
-/obj/item/food/breadslice/custom
+// What you get from cutting a custom bread. Different from custom sliced bread.
+/obj/item/food/breadslice/empty
 	name = "bread slice"
 	icon_state = "tofubreadslice"
 	foodtypes = GRAIN
+	desc = "It's a slice of bread, customized to your wildest dreams."
+
+/obj/item/food/breadslice/empty/Initialize()
+	. = ..()
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/baguette
 	name = "baguette"

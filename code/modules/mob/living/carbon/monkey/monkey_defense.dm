@@ -77,11 +77,9 @@
 		if (M.a_intent == INTENT_HARM)
 			if ((prob(95) && health > 0))
 				playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					if(AmountUnconscious() < 300)
-						Unconscious(rand(200, 300))
+				var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+				if(AmountUnconscious() < 300)
+					Unconscious(rand(200, 300))
 					visible_message("<span class='danger'>[M] wounds [name]!</span>", \
 									"<span class='userdanger'>[M] wounds you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)
 					to_chat(M, "<span class='danger'>You wound [name]!</span>")
@@ -138,7 +136,7 @@
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(M.is_adult)
 			damage = rand(20, 40)
 		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
@@ -159,7 +157,6 @@
 					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
 	to_chat(user, "<span class='danger'>You [hulk_verb] [src]!</span>")
 	apply_damage(15, BRUTE, wound_bonus=10)
-	retaliate(user)
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = TRUE
