@@ -108651,10 +108651,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"kRi" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/space)
 "kXg" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plasteel,
@@ -108730,6 +108726,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"lcB" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
 "lcF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -136648,7 +136648,7 @@ bLF
 bLK
 bNN
 bPP
-kRi
+lcB
 bTO
 bWe
 bYq
