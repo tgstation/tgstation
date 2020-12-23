@@ -22,9 +22,8 @@ class DMM:
 
     @staticmethod
     def from_file(fname):
-        # stream the file rather than forcing all its contents to memory
         with open(fname, 'r', encoding=ENCODING) as f:
-            return _parse(iter(lambda: f.read(1), ''))
+            return _parse(f.read())
 
     @staticmethod
     def from_bytes(bytes):
