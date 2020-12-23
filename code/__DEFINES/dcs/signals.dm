@@ -180,6 +180,31 @@
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
 
+///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_NEW_REAGENT		"reagents_new_reagent"
+///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_ADD_REAGENT		"reagents_add_reagent"
+///from base of [/datum/reagents/proc/del_reagent]: (/datum/reagent)
+#define COMSIG_REAGENTS_DEL_REAGENT		"reagents_del_reagent"
+///from base of [/datum/reagents/proc/clear_reagents]: ()
+#define COMSIG_REAGENTS_REM_REAGENT		"reagents_rem_reagent"
+///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
+#define COMSIG_REAGENTS_CLEAR_REAGENTS	"reagents_clear_reagents"
+///from base of [/datum/reagents/proc/remove_reagent]: (/datum/reagent, amount)
+#define COMSIG_REAGENTS_TEMP_CHANGE		"reagents_temp_change"
+///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
+#define COMSIG_REAGENTS_REACTED			"reagents_reacted"
+///from base of [/atom/proc/expose_reagents]: (/atom, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_ATOM		"reagents_expose_atom"
+///from base of [/obj/proc/expose_reagents]: (/obj, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_OBJ		"reagents_expose_obj"
+///from base of [/mob/living/proc/expose_reagents]: (/mob/living, /list, methods, volume_modifier, show_message, touch_protection)
+#define COMSIG_REAGENTS_EXPOSE_MOB		"reagents_expose_mob"
+///from base of [/turf/proc/expose_reagents]: (/turf, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_TURF		"reagents_expose_turf"
+///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
+#define COMSIG_REAGENTS_CRAFTING_PING	"reagents_crafting_ping"
+
 ///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
 #define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
 ///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)

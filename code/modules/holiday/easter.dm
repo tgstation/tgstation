@@ -91,7 +91,7 @@
 	inhand_icon_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'."
 	slowdown = -1
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"

@@ -823,6 +823,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/cooking_oil = 2)
 	tastes = list("bacon" = 1)
 	foodtypes = MEAT | BREAKFAST
+	burns_on_grill = TRUE
 
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"

@@ -113,6 +113,17 @@
 	Friends = null
 	return ..()
 
+/mob/living/simple_animal/slime/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/// Handles removing signal hooks incase someone is crazy enough to reset the reagents datum.
+/mob/living/simple_animal/slime/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
+
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
 	update_name()
@@ -142,8 +153,13 @@
 		icon_state = icon_dead
 	..()
 
-/mob/living/simple_animal/slime/on_reagent_change()
-	. = ..()
+/**
+ * Snowflake handling of reagent movespeed modifiers
+ *
+ * Should be moved to the reagents at some point in the future. As it is I'm in a hurry.
+ */
+/mob/living/simple_animal/slime/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
@@ -152,6 +168,7 @@
 		amount = 5
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
+	return NONE
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
