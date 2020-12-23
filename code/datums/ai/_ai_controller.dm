@@ -77,6 +77,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 /// Generates a plan and see if our existing one is still valid.
 /datum/ai_controller/process(delta_time)
 	if(!able_to_run())
+		var/atom/movable/movable_pawn = pawn
+		walk(movable_pawn, 0) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 	if(!current_behaviors?.len)
 		SelectBehaviors(delta_time)
