@@ -562,6 +562,11 @@ def _parse(map_raw_text):
     if curr_y > maxy:
         maxy = curr_y
 
+    if not grid:
+        # Usually caused by unbalanced quotes.
+        max_key = num_to_key(max(dictionary.keys()), key_length, True)
+        raise ValueError(f"dmm failed to parse, check for a syntax error near or after key {max_key!r}")
+
     # Convert from raw .dmm coordinates to DM/BYOND coordinates by flipping Y
     grid2 = dict()
     for (x, y, z), tile in grid.items():
