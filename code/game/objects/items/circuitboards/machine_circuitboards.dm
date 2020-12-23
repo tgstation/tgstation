@@ -295,6 +295,7 @@
 /obj/item/circuitboard/machine/condenser
 	name = "Condenser (Machine Board)"
 	desc = "You can use a screwdriver to change the piping layer."
+	icon_state = "engineering"
 	build_path = /obj/machinery/atmospherics/components/unary/condenser
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,

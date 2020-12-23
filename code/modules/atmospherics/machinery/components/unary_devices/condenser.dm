@@ -24,6 +24,7 @@
 	name = "Gas Condenser"
 	desc = "Condenses gases in connected pipes."
 	icon = 'icons/obj/atmospherics/components/condenser.dmi'
+	icon_state = "condenser"
 	base_icon_state = "condenser"
 	layer = OBJ_LAYER
 	integrity_failure = 0.7	// Starts leaking at 70% integrity
