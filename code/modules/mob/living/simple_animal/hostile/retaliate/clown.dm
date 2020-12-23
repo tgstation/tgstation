@@ -311,17 +311,21 @@
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	force_threshold = 10 //lots of fat to cushion blows.
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
 	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
 	deathsound = 'sound/misc/sadtrombone.ogg'
+	food_type = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips)
+	tame_chance = 30
 	///This is the list of items we are ready to regurgitate,
 	var/list/prank_pouch = list()
-	///This ability lets you throw a single random item from your pouch.
-	var/datum/action/regurgitate/my_regurgitate
+	///This ability lets you fire a single random item from your pouch.
+	var/obj/effect/proc_holder/regurgitate/my_regurgitate
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Initialize()
 	. = ..()
 	my_regurgitate = new
-	my_regurgitate.Grant(src)
+	AddAbility(my_regurgitate)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -368,22 +372,72 @@
 		qdel(eaten_atom)
 	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+	flick("glutton_mouth", src)
 
-/datum/action/regurgitate
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/tamed()
+	. = ..()
+	can_buckle = TRUE
+	buckle_lying = 0
+	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
+	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 24), TEXT_SOUTH = list(0, 24), TEXT_EAST = list(-16, 24), TEXT_WEST = list(16, 24)))
+	riding.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	riding.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	riding.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+	riding.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
+
+	//these 0 offsets are needed for the riding component to work properly with base pixel offset mobs for some cursed reason.
+	riding.set_vehicle_dir_offsets(SOUTH, 0, 0)
+	riding.set_vehicle_dir_offsets(NORTH, 0, 0)
+	riding.set_vehicle_dir_offsets(EAST, 0, 0)
+	riding.set_vehicle_dir_offsets(WEST, 0, 0)
+
+	riding.drive_verb = "ride"
+
+///This ability will let you fire one random item from your pouch,
+/obj/effect/proc_holder/regurgitate
 	name = "Regurgitate"
 	desc = "Regurgitates a single item from the depths of your pouch."
-	background_icon_state = "bg_changeling"
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
-	button_icon_state = "regurgitate"
-	check_flags = AB_CHECK_CONSCIOUS
+	action_background_icon_state = "bg_changeling"
+	action_icon = 'icons/mob/actions/actions_animal.dmi'
+	action_icon_state = "regurgitate"
+	active = FALSE
 
-/datum/action/regurgitate/Trigger()
+/obj/effect/proc_holder/regurgitate/Click(location, control, params)
 	. = ..()
-	if(!istype(owner, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton))
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/user = usr
+	fire(user)
+
+/obj/effect/proc_holder/regurgitate/fire(mob/living/carbon/user)
+	if(active)
+		user.icon_state = initial(icon_state)
+		remove_ranged_ability("<span class='notice'>Your throat muscles relax.</span>")
+	else
+		user.icon_state = "glutton_tongue"
+		add_ranged_ability(user, "<span class='notice'>Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B></span>", TRUE)
+
+obj/effect/proc_holder/regurgitate/InterceptClickOn(mob/living/caller, params, atom/target)
+	. = ..()
+
+	if(.)
 		return
-	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = owner
+
+	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton) || ranged_ability_user.stat)
+		remove_ranged_ability()
+		return
+
+	var/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/pouch_owner = ranged_ability_user
 	if(!pouch_owner.prank_pouch.len)
+		//active = FALSE
+		pouch_owner.icon_state = "glutton"
+		remove_ranged_ability("<span class='notice'>Your prank pouch is empty,.</span>")
 		return
+
 	var/obj/item/projected_morsel = pick_n_take(pouch_owner.prank_pouch)
-	projected_morsel.forceMove(src)
-	projected_morsel.throw_at(get_step(7, owner.dir), 7, projected_morsel.throw_speed, owner)
+	projected_morsel.forceMove(pouch_owner.loc)
+	projected_morsel.throw_at(target, 8, 4, pouch_owner)
+	flick("glutton_mouth", pouch_owner)
+	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
+
+
