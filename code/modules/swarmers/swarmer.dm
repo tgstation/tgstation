@@ -457,7 +457,7 @@
 	. = ..()
 	if(!.)
 		return
-	if((!istype(target, /mob/living/simple_animal) && !ishuman(target)) || istype(target, /mob/living/simple_animal/hostile/swarmer))
+	if((!isanimal(target) && !ishuman(target)) || isswarmer(target))
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/possibleHulk = target
