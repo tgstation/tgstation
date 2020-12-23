@@ -1,0 +1,8 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - balance: "Swarmer beacon spawn time decreased from 30 seconds to a shorter timer based on the number of active swarmers"
+  - balance: "Swarmer drones now fire disabler beams at their target when not in melee range"
+  - balance: "Swarmer beacon integrity has been increased"
+  - balance: "Player swarmers now deal more stamina damage on melee attacks."
+  - bugfix: "Swarmer shock traps now actually work again"
