@@ -109094,6 +109094,10 @@
 	icon_state = "panelscorched"
 	},
 /area/security/prison)
+"lIF" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
 "lKR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
@@ -136644,7 +136648,7 @@ bLF
 bLK
 bNN
 bPP
-bRV
+lIF
 bTO
 bWe
 bYq
