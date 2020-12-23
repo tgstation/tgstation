@@ -2852,11 +2852,14 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "agl" = (
-/obj/machinery/door/airlock/security{
-	name = "Interrogation";
-	req_access_txt = "63"
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
 	},
-/turf/open/floor/plasteel/dark,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
 /area/security/prison)
 "agm" = (
 /obj/machinery/light{
@@ -10238,12 +10241,12 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "awO" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
-	dir = 6
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	name = "Permabrig Transfer";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -11514,9 +11517,12 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "azJ" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "permainner";
-	name = "Permabrig Transfer"
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "transferflash";
+	pixel_x = 25
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -11527,13 +11533,11 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "azL" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "permainner";
-	name = "Permabrig Transfer"
-	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
+/obj/machinery/turnstile{
+	req_access_txt = "2"
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "azM" = (
@@ -12174,10 +12178,8 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aBd" = (
-/obj/machinery/flasher{
-	id = "transferflash";
-	pixel_y = 28
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aBe" = (
@@ -13622,10 +13624,9 @@
 /area/security/prison)
 "aEt" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 5
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aEu" = (
@@ -14743,42 +14744,19 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "aGK" = (
-/obj/structure/table,
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = 10
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
 	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/obj/item/clothing/under/rank/prisoner{
-	pixel_x = 8;
-	pixel_y = 5
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aGL" = (
-/obj/structure/table,
-/obj/item/clothing/under/rank/prisoner/skirt{
-	pixel_x = -13;
-	pixel_y = 5
-	},
-/obj/item/clothing/under/rank/prisoner/skirt{
-	pixel_x = 9;
-	pixel_y = 5
-	},
-/obj/item/clothing/under/rank/prisoner{
-	pixel_x = -2;
-	pixel_y = 5
+/obj/machinery/door/firedoor,
+/obj/machinery/turnstile{
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -16040,15 +16018,14 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "aJD" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "permaouter";
-	name = "Permabrig Transfer";
-	req_access_txt = "2"
-	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/door/airlock/security/glass{
+	name = "Permabrig Transfer";
+	req_access_txt = "2"
+	},
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aJE" = (
@@ -16206,12 +16183,11 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aKb" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "permaouter";
-	name = "Permabrig Transfer";
+/obj/machinery/door/firedoor,
+/obj/machinery/turnstile{
+	dir = 1;
 	req_access_txt = "2"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aKc" = (
@@ -17365,23 +17341,30 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aNm" = (
-/obj/machinery/button/door{
-	id = "permaouter";
-	name = "Outer Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 6;
-	pixel_y = 25;
-	req_access_txt = "2";
-	specialfunctions = 4
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
-/obj/machinery/button/door{
-	id = "permainner";
-	name = "Inner Bolt Control";
-	normaldoorcontrol = 1;
+/obj/structure/table,
+/obj/item/clothing/shoes/sneakers/orange{
 	pixel_x = -6;
-	pixel_y = 25;
-	req_access_txt = "2";
-	specialfunctions = 4
+	pixel_y = -8
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/clothing/under/rank/prisoner{
+	pixel_x = 8;
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -56732,6 +56715,26 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"wXX" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = -13;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/rank/prisoner{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/rank/prisoner/skirt{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "wZy" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -82161,10 +82164,10 @@ aqV
 acd
 aaw
 aaq
-azJ
+acd
 aaw
 aEs
-aGK
+aaw
 aai
 aNk
 arS
@@ -82417,15 +82420,15 @@ apT
 apT
 acd
 aaw
-awO
+aaq
 azL
-aSj
+aaq
 aEt
+aaw
 aGL
-aai
-aNm
+aaw
 arS
-afI
+aNm
 acd
 agL
 agK
@@ -82674,16 +82677,16 @@ acd
 acd
 acd
 aaL
-arS
-acd
+agl
+awO
 aBd
-aEu
+aGK
 aSj
 aJD
 aSj
 aPO
-afI
-agl
+wXX
+acd
 agH
 ags
 ags
@@ -82932,7 +82935,7 @@ aqX
 asj
 aSj
 awR
-abd
+aKb
 aaw
 aEv
 aaw
@@ -83189,8 +83192,8 @@ ara
 aaw
 aaw
 azv
-abd
-alf
+acd
+azJ
 aEw
 alf
 aai

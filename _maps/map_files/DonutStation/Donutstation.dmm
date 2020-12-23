@@ -36042,16 +36042,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"bBZ" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Main Prison Wing";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel,
-/area/security/prison)
 "bCa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
@@ -36107,11 +36097,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
 "bCf" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Main Prison Wing";
+/obj/machinery/turnstile{
+	dir = 8;
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel,
@@ -37141,7 +37128,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "bDX" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
@@ -37152,7 +37138,14 @@
 /obj/machinery/atmospherics/pipe/simple/dark/hidden/layer1{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/security/glass{
+	name = "Main Prison Wing";
+	req_access_txt = "2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/security/prison)
 "bDY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -48256,6 +48249,13 @@
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"lFs" = (
+/obj/machinery/turnstile{
+	dir = 4;
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "lFx" = (
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/heads/hos";
@@ -49733,6 +49733,26 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"qMz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/dark/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Main Prison Wing";
+	req_access_txt = "2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/prison)
 "qOv" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -101970,7 +101990,7 @@ aij
 aij
 bCf
 bDX
-bCf
+lFs
 aij
 aij
 aij
@@ -102739,9 +102759,9 @@ bFn
 acU
 aij
 aij
-bBZ
-bDX
-bBZ
+bCf
+qMz
+lFs
 aij
 aij
 aij
