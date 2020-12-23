@@ -1,5 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - refactor: "Reagents are slightly more event based."
-  - bugfix: "Plasma now boils properly"
