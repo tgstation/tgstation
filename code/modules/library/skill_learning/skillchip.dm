@@ -420,8 +420,8 @@
 	name = "Savannah's Pancakeria skillchip"
 	auto_trait = TRAIT_PANCAKE_STACKER
 	skill_name = "Pancake Stacker"
-	skill_description = "\"Hi, I'm Savannah Ivanov, owner of the galaxy's finest pancakeria. I do all the classics, the space belgians, crepes and farinatas...\
-		even space dutch babies! There is no 'cake I do not know. But they always ask how I stack pancakes so high! Great question, which I have no time to answer.\
+	skill_description = "\"Hi, I'm Savannah Ivanov, owner of the galaxy's finest pancakeria. I do all the classics, the space belgians, crepes and farinatas... \
+		even space dutch babies! There is no 'cake I do not know. But they always ask how I stack pancakes so high! Great question, which I have no time to answer. \
 		So instead, I loaded it onto this skillchip and made it a premium product that people all across the cosmos will crave! Happy stacking, my friends!\""
 	skill_icon = "utensils"
 	activate_message = "<span class='notice'>You can now stack pancakes higher, higher than any creature should be allowed to!</span>"

@@ -732,6 +732,18 @@
 	. = ..()
 	update_icon()
 
+/obj/item/food/pancakes/MakeEdible()
+	AddComponent(/datum/component/edible,\
+			initial_reagents = food_reagents,\
+			food_flags = food_flags,\
+			foodtypes = foodtypes,\
+			volume = max_volume,\
+			eat_time = eat_time,\
+			tastes = tastes,\
+			eatverbs = eatverbs,\
+			bite_consumption = bite_consumption,\
+			on_consume = CALLBACK(src, .proc/On_Consume))
+
 /obj/item/food/pancakes/update_icon()
 	if(contents.len)
 		name = "stack of pancakes"
@@ -754,14 +766,17 @@
 			desc = "A grand tower of fluffy, delicious pancakes!"
 		if(PANCAKE_MAX_STACK)
 			desc = "A massive towering spire of fluffy, delicious pancakes. It looks like it could tumble over!"
-		if(11 to 99)
-			desc = "A completely mind bogglingly tremendous amount of fluffy and wonderful pancakes! It towers over the realm of the mortals, watching the petty squabbles of day to day from it's grandiose pile of battery goodness."
+		if(11 to 49)
+			desc = "A completely mindbogglingly tremendous amount of fluffy and wonderful pancakes! It towers over the realm of the mortals, watching the petty squabbles of day to day from its grandiose pile of battery goodness."
+		if(50 to 99)
+			desc = "You've lost count. The tower of babel was a story of hubris, And now this monument to humanity stands before you. Knowing that someone out there has set forth the task to build a skyscraper of pancakes this tall and intends to continue both sickens and amazes you."
 		if(PANCAKE_LORD_MAX_STACK)
-			desc = "One hundred pancakes. Your mind begins to melt at the sight of one hundred stacked pancakes. Only a master- no, a <b>GOD</b> could stack one hundred pancakes. The amount of milk, flour, and sugar in this fluffy monstrosity would make a bovine creature drop dead, and an entire field of wheat wither."
+			desc = "One hundred pancakes. Your mind begins to melt at the sight of one hundred stacked pancakes. Only a master--no, a <b>GOD</b>--could stack one hundred pancakes. The amount of milk, flour, and sugar in this fluffy monstrosity would make a barnhouse full of cows drop dead, and an entire field of wheat wither."
 	. = ..()
 	if (pancakeCount)
 		for(var/obj/item/food/pancakes/ING in contents)
 			ingredients_listed += "[ING.name], "
+		. += "In total, there are [pancakeCount+1] pancakes."
 		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
 
 /obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, params)
@@ -802,14 +817,19 @@
 	add_overlay(pancake_visual)
 	update_icon()
 
+/obj/item/food/pancakes/proc/On_Consume(eater, feeder)
+	if(istype(loc, /obj/item/food/pancakes)) //this is a pancake on the stack
+		var/obj/item/food/pancakes/stack = loc
+		addtimer(CALLBACK(stack, .update_icon),1) //remove the stack's last pancake we ate.
+
 /obj/item/food/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
 	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
 		return ..()
 	var/obj/item/O = contents[contents.len]
 	. = O.attack(M, user, def_zone, FALSE)
-	update_icon()
 
 #undef PANCAKE_MAX_STACK
+#undef PANCAKE_LORD_MAX_STACK
 
 /obj/item/food/cannoli
 	name = "cannoli"
