@@ -64,6 +64,15 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
+/obj/item/clothing/glasses/meson/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user) && slot == ITEM_SLOT_EYES)
+		ADD_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE, CLOTHING_TRAIT)
+
+/obj/item/clothing/glasses/meson/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE, CLOTHING_TRAIT)
+
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
