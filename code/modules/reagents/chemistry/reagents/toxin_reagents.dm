@@ -73,7 +73,12 @@
 
 /datum/reagent/toxin/plasma/on_new(data)
 	. = ..()
+	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
 	AddElement(/datum/element/boilable, BP_PLASMA, /datum/gas/plasma)
+
+/datum/reagent/toxin/plasma/Destroy()
+	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
+	return ..()
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))

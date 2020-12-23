@@ -15,11 +15,13 @@ contains the desired changes.
 
 ## Installation
 
-To install Python dependencies, run `requirements-install.bat`, or run
-`python -m pip install -r requirements.txt` directly. See the [Git hooks]
-documentation to install the Git pre-commit hook which runs the map merger
-automatically, or use `tools/mapmerge/Prepare Maps.bat` to save backups before
-running `mapmerge.bat`.
+To install the Git hooks, open the `tools/hooks/` folder and double-click
+`Install.bat` (Linux users run `tools/hooks/install`).
+
+To use Map Merge manually, such as when using a Git GUI which is incompatible
+with some of the hooks, double-click the `.bat` files at the appropriate time.
+
+A private copy of Python and any dependencies will be installed automatically.
 
 For up-to-date installation and detailed troubleshooting instructions, visit
 the [Map Merger] wiki article.

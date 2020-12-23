@@ -350,10 +350,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
-	if (istype(user, /mob/living/carbon))
-		var/mob/living/carbon/C = user
-		if (!istype(C.glasses, /obj/item/clothing/glasses/meson) && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
-			. += "<span class='danger'>You get headaches just from looking at it.</span>"
+	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
+		. += "<span class='danger'>You get headaches just from looking at it.</span>"
 
 /obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/T = get_turf(src)
@@ -707,11 +706,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
-	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
-		if(l.mind?.assigned_role == "Psychologist")
+	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power)))
+		// Someone (generally a Psychologist), when looking at the SM
+		// within hallucination range makes it easier to manage.
+		if(HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER))
 			toAdd = 0.05
 			psy_overlay = TRUE
-		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
+		// If they can see it without being immune (mesons, Psychologist)
+		if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)

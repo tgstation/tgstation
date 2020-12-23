@@ -76,7 +76,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	flags_inv = HIDEHAIR //bald
+	flags_inv = NONE
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	inhand_icon_state = "cage"
