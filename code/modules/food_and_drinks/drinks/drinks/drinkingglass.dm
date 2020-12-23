@@ -19,13 +19,19 @@
 	. = ..()
 	if(!length(reagents.reagent_list))
 		renamedByPlayer = FALSE //so new drinks can rename the glass
-		return
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/update_name(updates)
 	if(renamedByPlayer)
 		return
-
+	. = ..()
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	name = largest_reagent.glass_name || initial(name)
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/update_desc(updates)
+	if(renamedByPlayer)
+		return
+	. = ..()
+	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	desc = largest_reagent.glass_desc || initial(desc)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
@@ -66,15 +72,20 @@
 	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_ASSISTANT * 0.4
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(datum/reagents/holder, ...)
+/obj/item/reagent_containers/food/drinks/drinkingglass/update_name(updates)
+	if(renamedByPlayer)
+		return
+	. = ..()
+	name = "[length(reagents.reagent_list) ? "filled " : null]shot glass"
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/update_desc(updates)
+	if(renamedByPlayer)
+		return
 	. = ..()
 	if(!length(reagents.reagent_list))
-		name = "shot glass"
 		desc = "A shot glass - the universal symbol for bad decisions."
-		return
-
-	name = "filled shot glass"
-	desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
+	else
+		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_icon_state()
 	. = ..()

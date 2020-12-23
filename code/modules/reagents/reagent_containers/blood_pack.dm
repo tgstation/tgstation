@@ -22,14 +22,13 @@
 		blood_type = B.data["blood_type"]
 	else
 		blood_type = null
-	update_pack_name()
 	return ..()
 
-/obj/item/reagent_containers/blood/proc/update_pack_name()
+/obj/item/reagent_containers/blood/proc/update_name(updates)
+	. = ..()
 	if(labelled)
 		return
-
-	name = "blood_pack[blood_type ? " - [blood_type]" : ""]"
+	name = "blood_pack[blood_type ? " - [blood_type]" : null]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"

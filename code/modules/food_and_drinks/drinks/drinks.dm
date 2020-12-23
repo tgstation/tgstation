@@ -458,43 +458,73 @@
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
+/// Reagent container icon updates, especially this one, are complete jank. I will need to rework them after this is merged.
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		name = "small carton"
-		desc = "A small carton, intended for holding drinks."
-		foodtype = NONE
+		foodtype = NONE	/// Why are food types on the _container_? TODO: move these to the reagents
 		return
 
-	switch(reagents.get_master_reagent_id()) // - [] TODO: Unshitcode this. Right now I'm just passing through and this really needs it's own dedicated PR.
+	switch(reagents.get_master_reagent_id())
 		if(/datum/reagent/consumable/orangejuice)
-			name = "orange juice box" // I know this shouldn't be here, but I really don't have the time to fix this right now. Blame the last guy
-			desc = "A great source of vitamins. Stay healthy!" // Ditto
-			foodtype = FRUIT | BREAKFAST // Ditto
+			foodtype = FRUIT | BREAKFAST
 		if(/datum/reagent/consumable/milk)
-			name = "carton of milk"
-			desc = "An excellent source of calcium for growing space explorers."
 			foodtype = DAIRY | BREAKFAST
 		if(/datum/reagent/consumable/applejuice)
-			name = "apple juice box"
-			desc = "Sweet apple juice. Don't be late for school!"
 			foodtype = FRUIT
 		if(/datum/reagent/consumable/grapejuice)
-			name = "grape juice box"
-			desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
 			foodtype = FRUIT
 		if(/datum/reagent/consumable/pineapplejuice)
-			name = "pineapple juice box"
-			desc = "Why would you even want this?"
 			foodtype = FRUIT | PINEAPPLE
 		if(/datum/reagent/consumable/milk/chocolate_milk)
-			name = "carton of chocolate milk"
-			desc = "Milk for cool kids!"
 			foodtype = SUGAR
 		if(/datum/reagent/consumable/ethanol/eggnog)
-			name = "carton of eggnog"
-			desc = "For enjoying the most wonderful time of the year."
 			foodtype = MEAT
+
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_name(updates)
+	. = ..()
+	if(!length(reagents.reagent_list))
+		name = "small carton"
+		return
+
+	switch(reagents.get_master_reagent_id())
+		if(/datum/reagent/consumable/orangejuice)
+			name = "orange juice box"
+		if(/datum/reagent/consumable/milk)
+			name = "carton of milk"
+		if(/datum/reagent/consumable/applejuice)
+			name = "apple juice box"
+		if(/datum/reagent/consumable/grapejuice)
+			name = "grape juice box"
+		if(/datum/reagent/consumable/pineapplejuice)
+			name = "pineapple juice box"
+		if(/datum/reagent/consumable/milk/chocolate_milk)
+			name = "carton of chocolate milk"
+		if(/datum/reagent/consumable/ethanol/eggnog)
+			name = "carton of eggnog"
+
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_desc(updates)
+	. = ..()
+	if(!length(reagents.reagent_list))
+		desc = "A small carton, intended for holding drinks."
+		return
+
+	switch(reagents.get_master_reagent_id())
+		if(/datum/reagent/consumable/orangejuice)
+			desc = "A great source of vitamins. Stay healthy!"
+		if(/datum/reagent/consumable/milk)
+			desc = "An excellent source of calcium for growing space explorers."
+		if(/datum/reagent/consumable/applejuice)
+			desc = "Sweet apple juice. Don't be late for school!"
+		if(/datum/reagent/consumable/grapejuice)
+			desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
+		if(/datum/reagent/consumable/pineapplejuice)
+			desc = "Why would you even want this?"
+		if(/datum/reagent/consumable/milk/chocolate_milk)
+			desc = "Milk for cool kids!"
+		if(/datum/reagent/consumable/ethanol/eggnog)
+			desc = "For enjoying the most wonderful time of the year."
+
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/update_icon_state()
 	. = ..()

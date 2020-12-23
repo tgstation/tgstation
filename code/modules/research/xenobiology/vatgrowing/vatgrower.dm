@@ -79,7 +79,7 @@
 /obj/machinery/plumbing/growing_vat/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	update_appearance()
-	return ..()
+	return NONE
 
 ///Adds overlays to show the reagent contents
 /obj/machinery/plumbing/growing_vat/update_overlays()
