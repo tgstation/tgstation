@@ -3984,11 +3984,11 @@
 	dir = 4;
 	pixel_x = -31
 	},
-/obj/structure/table/wood,
 /obj/machinery/camera/autoname{
 	dir = 1;
 	pixel_x = 20
 	},
+/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/wood,
 /area/blueshieldoffice)
 "aks" = (

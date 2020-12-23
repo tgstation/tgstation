@@ -10772,7 +10772,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "aCg" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -17443,8 +17443,10 @@
 /obj/machinery/computer/crew{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/east,
+/obj/structure/cable,
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "aUA" = (
 /obj/machinery/computer/security{
 	dir = 4
@@ -18424,7 +18426,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "aWS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -18911,6 +18913,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aYd" = (
@@ -25006,6 +25009,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"bPp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
 "bQa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -25665,8 +25673,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cOI" = (
+/obj/structure/cable,
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "cPq" = (
 /turf/closed/wall/r_wall,
 /area/science/storage)
@@ -27980,7 +27989,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "gDj" = (
 /obj/structure/window{
 	dir = 4
@@ -28241,7 +28250,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "hfp" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -30021,7 +30030,6 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/item/clothing/suit/armor/reactive/teleport,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -32633,7 +32641,7 @@
 /obj/structure/table/wood,
 /obj/item/pinpointer/crew,
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "oil" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/computer/security/telescreen/toxins{
@@ -32860,7 +32868,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/table/wood,
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "otY" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -34245,7 +34253,7 @@
 /area/crew_quarters/heads/captain/private)
 "qva" = (
 /turf/closed/wall,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "qwi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -34526,8 +34534,9 @@
 /area/hallway/primary/aft)
 "qQU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "qSq" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -38369,7 +38378,7 @@
 /obj/effect/landmark/start/blueshield,
 /obj/structure/chair/office/light,
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "sYI" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -39918,8 +39927,9 @@
 /area/space)
 "vrd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable,
 /turf/open/floor/carpet/executive,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "vrQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/purple{
@@ -40150,8 +40160,9 @@
 	name = "Blueshield's Office";
 	req_access_txt = "14"
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/blueshieldoffice)
 "vLk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -82937,7 +82948,7 @@ vrd
 qQU
 qQU
 vKL
-bbE
+bPp
 aYb
 aYV
 aZR

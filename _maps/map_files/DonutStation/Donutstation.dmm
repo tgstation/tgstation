@@ -896,6 +896,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "acm" = (
@@ -919,6 +920,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "aco" = (
@@ -1733,8 +1735,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "aes" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -2834,19 +2837,18 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "agY" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/table/wood,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "agZ" = (
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
@@ -3105,8 +3107,12 @@
 /area/hallway/primary/central)
 "ahE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/landmark/start/blueshield,
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "ahF" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -3584,8 +3590,9 @@
 /area/quartermaster/storage)
 "aiT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "aiU" = (
 /obj/machinery/conveyor/inverted{
 	dir = 10;
@@ -5440,8 +5447,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "anf" = (
 /obj/structure/chair{
 	dir = 4
@@ -7388,15 +7396,15 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "arf" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/table/wood,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "arg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -7449,7 +7457,7 @@
 /area/crew_quarters/heads/captain)
 "arm" = (
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "arn" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 8
@@ -8967,21 +8975,12 @@
 /turf/closed/wall,
 /area/hallway/secondary/entry)
 "auH" = (
-/obj/structure/rack,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas{
-	pixel_x = -2;
-	pixel_y = -2
-	},
+/obj/structure/table/wood,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "auI" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -9426,13 +9425,17 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avJ" = (
-/obj/structure/tank_dispenser,
 /obj/machinery/camera{
 	c_tag = "Bridge - Emergency Storage";
 	dir = 8
 	},
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "avK" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -11785,14 +11788,15 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
 "aBc" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Bridge Emergency Storage";
-	req_access_txt = "19"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4,
+/obj/machinery/door/airlock/command{
+	name = "Blueshield's Office";
+	req_access_txt = "14"
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/bridge)
+/area/blueshieldoffice)
 "aBd" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -12555,20 +12559,16 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aCR" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 2;
-	pixel_y = 2
-	},
+/obj/structure/table/wood,
+/obj/item/pinpointer/crew,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "aCS" = (
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/captain)
@@ -39130,8 +39130,11 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "bHN" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/small,
@@ -39645,17 +39648,8 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "bJb" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
+/turf/closed/wall/r_wall,
+/area/blueshieldoffice)
 "bJc" = (
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -47667,23 +47661,18 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "jpL" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/item/radio/intercom{
 	pixel_y = 25
 	},
+/obj/structure/table/wood,
 /turf/open/floor/plasteel,
-/area/bridge)
+/area/blueshieldoffice)
 "jqp" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -51760,6 +51749,10 @@
 	},
 /turf/open/floor/grass,
 /area/hydroponics/garden)
+"xlT" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/blueshieldoffice)
 "xmN" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -97085,9 +97078,9 @@ asj
 fQk
 aCR
 auH
-aED
-aED
-aED
+bJb
+bJb
+bJb
 aED
 aiO
 wwX
@@ -97599,9 +97592,9 @@ aup
 fQk
 agY
 arm
-arm
+xlT
 aer
-aED
+bJb
 acn
 aiO
 aiO
@@ -97857,9 +97850,9 @@ fQk
 arf
 bHM
 avJ
-aED
-aED
 bJb
+bJb
+bKJ
 acx
 aiO
 aiO

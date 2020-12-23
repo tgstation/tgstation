@@ -5758,6 +5758,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
+/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/plasteel,
 /area/blueshieldoffice)
 "amu" = (

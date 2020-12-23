@@ -661,6 +661,9 @@
 	},
 /turf/open/floor/plasteel/dark/telecomms,
 /area/science/xenobiology)
+"du" = (
+/turf/closed/wall/r_wall/rust,
+/area/blueshieldoffice)
 "dv" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -945,6 +948,12 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
+"eX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/blueshield,
+/obj/structure/chair/office,
+/turf/open/floor/plasteel,
+/area/blueshieldoffice)
 "eY" = (
 /obj/structure/table,
 /obj/item/crowbar,
@@ -1858,6 +1867,11 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"jO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel,
+/area/blueshieldoffice)
 "jP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
@@ -3316,6 +3330,12 @@
 "rr" = (
 /turf/open/space/basic,
 /area/ruin/unpowered)
+"rt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/wood,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/blueshieldoffice)
 "ru" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/asteroid/corner,
@@ -5796,6 +5816,15 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"Dk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/blueshield,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/blueshieldoffice)
 "Dp" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -7874,6 +7903,14 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"NJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/command{
+	name = "Blueshield's Office";
+	req_access_txt = "14"
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/central)
 "NM" = (
 /obj/structure/transit_tube/horizontal{
 	dir = 1
@@ -8692,6 +8729,10 @@
 	},
 /turf/open/floor/plasteel/dark/airless,
 /area/ruin/unpowered)
+"RU" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/blueshieldoffice)
 "RW" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
@@ -41991,12 +42032,12 @@ OO
 OO
 OO
 Mz
-OO
-OO
-bJ
-bJ
-bJ
-bJ
+du
+du
+du
+du
+du
+du
 bJ
 bJ
 bJ
@@ -42248,12 +42289,12 @@ HI
 ak
 OO
 mh
-OO
-bJ
-bJ
-bJ
-bJ
-bJ
+du
+Dk
+RU
+RU
+RU
+du
 bJ
 bJ
 bJ
@@ -42505,12 +42546,12 @@ JV
 CG
 OO
 Xo
-OO
-bJ
-bJ
-bJ
-bJ
-bJ
+du
+RU
+RU
+RU
+jO
+du
 bJ
 bJ
 bJ
@@ -42762,12 +42803,12 @@ Cv
 OO
 OO
 Mz
-OO
-bJ
-bJ
-bJ
-bJ
-bJ
+NJ
+RU
+RU
+eX
+rt
+du
 bJ
 bJ
 bJ
@@ -43019,12 +43060,12 @@ JV
 JV
 Mz
 Mz
-OO
-bJ
-bJ
-bJ
-bJ
-bJ
+du
+RU
+RU
+jO
+jO
+du
 bJ
 bJ
 nv
@@ -43276,12 +43317,12 @@ FC
 Aj
 uK
 PQ
-PQ
-PQ
-bJ
-bJ
-bJ
-bJ
+du
+du
+du
+du
+du
+du
 bJ
 bJ
 nv

@@ -4136,7 +4136,7 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "vZ" = (
-/obj/structure/table/wood,
+/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/wood,
 /area/blueshieldoffice)
 "wb" = (

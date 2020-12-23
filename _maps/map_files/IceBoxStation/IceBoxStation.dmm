@@ -52948,6 +52948,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/plasteel,
 /area/blueshieldoffice)
 "nvT" = (

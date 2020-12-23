@@ -31540,6 +31540,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"sCr" = (
+/obj/structure/closet/secure_closet/blueshield,
+/turf/open/floor/wood,
+/area/blueshieldoffice)
 "sCv" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -77671,7 +77675,7 @@ qAC
 hwR
 uYr
 aXS
-xyk
+sCr
 vAm
 ctg
 uLa

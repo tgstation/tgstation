@@ -65832,6 +65832,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+/obj/structure/closet/secure_closet/blueshield,
 /turf/open/floor/wood,
 /area/hallway/primary/aft)
 "cah" = (
