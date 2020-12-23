@@ -65,18 +65,18 @@
 
 /obj/item/organ/cyberimp/leg/table_glider/update_implants()
 	if(!check_compatibility())
-		REMOVE_TRAIT(M,TRAIT_FAST_CLIMBER,type)
+		REMOVE_TRAIT(owner,TRAIT_FAST_CLIMBER,type)
 		return
-	ADD_TRAIT(M,TRAIT_FAST_CLIMBER,type)
+	ADD_TRAIT(owner,TRAIT_FAST_CLIMBER,type)
 
 /obj/item/organ/cyberimp/leg/table_glider/on_full_insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	if(!check_compatibility())
 		return
-	ADD_TRAIT(M,TRAIT_FAST_CLIMBER,type)
+	ADD_TRAIT(owner,TRAIT_FAST_CLIMBER,type)
 
 /obj/item/organ/cyberimp/leg/table_glider/Remove(mob/living/carbon/M, special)
-	REMOVE_TRAIT(M,TRAIT_FAST_CLIMBER,type)
+	REMOVE_TRAIT(owner,TRAIT_FAST_CLIMBER,type)
 	return ..()
 
 /obj/item/organ/cyberimp/leg/shove_resist
@@ -87,16 +87,16 @@
 
 /obj/item/organ/cyberimp/leg/table_glider/update_implants()
 	if(!check_compatibility())
-		REMOVE_TRAIT(M,TRAIT_SHOVE_RESIST,type)
+		REMOVE_TRAIT(owner,TRAIT_SHOVE_RESIST,type)
 		return
-	ADD_TRAIT(M,TRAIT_SHOVE_RESIST,type)
+	ADD_TRAIT(owner,TRAIT_SHOVE_RESIST,type)
 
 /obj/item/organ/cyberimp/leg/shove_resist/on_full_insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	if(!check_compatibility())
 		return
-	ADD_TRAIT(M,TRAIT_SHOVE_RESIST,type)
+	ADD_TRAIT(owner,TRAIT_SHOVE_RESIST,type)
 
 /obj/item/organ/cyberimp/leg/shove_resist/Remove(mob/living/carbon/M, special)
-	REMOVE_TRAIT(M,TRAIT_SHOVE_RESIST,type)
+	REMOVE_TRAIT(owner,TRAIT_SHOVE_RESIST,type)
 	return ..()
