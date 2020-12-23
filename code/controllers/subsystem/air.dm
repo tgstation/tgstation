@@ -70,16 +70,16 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
+
+	// Cached for ease of access. Who wants to sort through all of GLOB to find these?
+	gas_singletons = GLOB.gas_singletons
+	gas_metadata = GLOB.meta_gas_info
+
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
 	setup_turf_visuals()
-
-	if(GLOB.meta_gas_info)
-		gas_metadata = GLOB.meta_gas_info
-	if(GLOB.gas_singletons)
-		gas_singletons = GLOB.gas_singletons
 
 	return ..()
 

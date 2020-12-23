@@ -1,54 +1,22 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
 GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/nitryl))) //unable to react amongst themselves
 
-/proc/meta_gas_list()
+/// Constructs the global list of gas singletons
+/proc/init_gas_singletons()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
-		var/list/gas_info = new(13)
-		var/datum/gas/gas = gas_path
-
-		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
-		gas_info[META_GAS_NAME] = initial(gas.name)
-
-		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
-		if(initial(gas.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] = new /list(TOTAL_VISIBLE_STATES)
-			for(var/i in 1 to TOTAL_VISIBLE_STATES)
-				gas_info[META_GAS_OVERLAY][i] = new /obj/effect/overlay/gas(initial(gas.gas_overlay), log(4, (i+0.4*TOTAL_VISIBLE_STATES) / (0.35*TOTAL_VISIBLE_STATES)) * 255)
-
-		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
-		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
-		gas_info[META_GAS_ID] = initial(gas.id)
-
-		gas_info[META_GAS_COND_RATE] = initial(gas.cond_rate)
-		gas_info[META_GAS_COND_TEMP_MAX] = initial(gas.cond_temp_max)
-		gas_info[META_GAS_COND_TEMP_MIN] = initial(gas.cond_temp_min)
-		gas_info[META_GAS_COND_TYPE] = initial(gas.cond_type)
-		gas_info[META_GAS_COND_HEAT] = initial(gas.cond_heat)
-
-		if(GLOB.gas_singletons) // We do this twice to make sure it gets in regardless of which order these are instantiated
-			var/datum/gas/gas_singleton = GLOB.gas_singletons[gas_path]
-			gas_singleton.meta_gas_list = gas_info
-			gas_info[META_GAS_COND_EVENT] = gas_singleton.cond_event
-
-		.[gas_path] = gas_info
-
-	if(SSair)
-		SSair.gas_metadata = .
-
-/proc/init_gas_singletons()
-	. = list()
-	for(var/gas_path in subtypesof(/datum/gas))
 		var/datum/gas/gas_singleton = new gas_path
 		.[gas_path] = gas_singleton
 
-		if(GLOB.meta_gas_info) // We do this twice to make sure it gets in regardless of which order these are instantiated
-			gas_singleton.meta_gas_list = GLOB.meta_gas_info[gas_path]
-			GLOB.meta_gas_info[gas_path][META_GAS_COND_EVENT] = gas_singleton.cond_event
+/// Constructs the global cache of relevant gas data. Requries that [GLOB.gas_singletons] exists
+/proc/init_meta_gas_list()
+	. = subtypesof(/datum/gas)
+	var/list/cached_gases = GLOB.gas_singletons
+	for(var/gas_path in .)
+		var/datum/gas/gas_singleton = cached_gases[gas_path]
+		.[gas_path] = gas_singleton.meta_gas_list
 
-	if(SSair)
-		SSair.gas_singletons = .
-
+/// Helper that converts a gas's id to a gas's path
 /proc/gas_id2path(id)
 	var/list/meta_gas = GLOB.meta_gas_info
 	if(id in meta_gas)
@@ -104,8 +72,107 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 /datum/gas/New()
 	. = ..()
-	if(cond_event)
-		cond_event = CALLBACK(src, .proc/on_condense)
+	init_metadata_cache()
+
+/**
+ * Initializes the gas metadata list.
+ */
+/datum/gas/proc/init_metadata_cache()
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	PROTECTED_PROC(TRUE)
+
+	. = meta_gas_list = new /list(META_GAS_LEN)
+	.[META_GAS_SPECIFIC_HEAT] = specific_heat
+	.[META_GAS_NAME] = name
+
+	.[META_GAS_MOLES_VISIBLE] = moles_visible
+	if(moles_visible != null)
+		.[META_GAS_OVERLAY] = init_gas_overlays()
+
+	.[META_GAS_FUSION_POWER] = fusion_power
+	.[META_GAS_DANGER] = dangerous
+	.[META_GAS_ID] = id
+
+	.[META_GAS_COND_RATE] = cond_rate
+	.[META_GAS_COND_TEMP_MAX] = cond_temp_max
+	.[META_GAS_COND_TEMP_MIN] = cond_temp_min
+	.[META_GAS_COND_TYPE] = cond_type
+	.[META_GAS_COND_HEAT] = cond_heat
+
+	if(cond_event != null)
+		.[META_GAS_COND_EVENT] = init_cond_event()
+
+/// Initializes the overlays used to represent this gas in the air. Not inlined in case we want a gas to have special visual effects (ie: emissive gas overlays)
+/datum/gas/proc/init_gas_overlays()
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	PROTECTED_PROC(TRUE)
+
+	. = new /list(TOTAL_VISIBLE_STATES)
+	var/cached_overlay_state = gas_overlay
+	for(var/i in 1 to TOTAL_VISIBLE_STATES)
+		var/overlay_alpha = 255 * log(4, (i + (0.4*TOTAL_VISIBLE_STATES)) / (0.35*TOTAL_VISIBLE_STATES))
+		.[i] = new /obj/effect/overlay/gas(cached_overlay_state, overlay_alpha)
+
+/// Initializes the condensation event callback
+/datum/gas/proc/init_cond_event()
+	SHOULD_NOT_SLEEP(TRUE)
+	PROTECTED_PROC(TRUE)
+
+	cond_event = CALLBACK(src, .proc/on_condense)
+	return cond_event
+
+/// Updates the meta_gas_list in sync with the gas's vars
+/datum/gas/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+
+	switch(var_name)
+		if(NAMEOF(src, name))
+			meta_gas_list[META_GAS_NAME] = var_value
+		if(NAMEOF(src, id))
+			meta_gas_list[META_GAS_ID] = var_value
+
+		if(NAMEOF(src, moles_visible))
+			var/old_value = meta_gas_list[META_GAS_MOLES_VISIBLE]
+			meta_gas_list[META_GAS_MOLES_VISIBLE] = var_value
+			if(var_value && gas_overlay)
+				if(!old_value)
+					meta_gas_list[META_GAS_OVERLAY] = init_gas_overlays()
+			else
+				meta_gas_list[META_GAS_OVERLAY] = null
+		if(NAMEOF(src, gas_overlay))
+			var/old_value = meta_gas_list[META_GAS_OVERLAY]
+			if(var_value && moles_visible)
+				if(var_value != old_value)
+					meta_gas_list[META_GAS_OVERLAY] = init_gas_overlays()
+			else
+				meta_gas_list[META_GAS_OVERLAY] = null
+
+		if(NAMEOF(src, dangerous))
+			meta_gas_list[META_GAS_DANGER] = var_value
+
+		if(NAMEOF(src, specific_heat))
+			meta_gas_list[META_GAS_SPECIFIC_HEAT] = var_value
+		if(NAMEOF(src, fusion_power))
+			meta_gas_list[META_GAS_FUSION_POWER] = var_value
+
+		if(NAMEOF(src, cond_rate))
+			meta_gas_list[META_GAS_COND_RATE] = var_value
+		if(NAMEOF(src, cond_temp_max))
+			meta_gas_list[META_GAS_COND_TEMP_MAX] = var_value
+		if(NAMEOF(src, cond_temp_min))
+			meta_gas_list[META_GAS_COND_TEMP_MIN] = var_value
+		if(NAMEOF(src, cond_type))
+			meta_gas_list[META_GAS_COND_TYPE] = var_value
+		if(NAMEOF(src, cond_heat))
+			meta_gas_list[META_GAS_COND_HEAT] = var_value
+		if(NAMEOF(src, cond_event))
+			if(!(isnull(var_value) || istype(var_value, /datum/callback)))
+				var_value = initial(cond_event) ? init_cond_event() : null
+			meta_gas_list[META_GAS_COND_EVENT] = var_value
 
 /**
  * A proc used to generate the condensation event callback
@@ -126,6 +193,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
  * - delta_time: The amount of time the condensation is occuring over
  */
 /datum/gas/proc/on_condense(datum/gas_mixture/holder, cond_moles, cond_temp, atom/location, datum/reagents/target, list/cond_rates, rate_multiplier, delta_time)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 
