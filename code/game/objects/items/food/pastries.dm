@@ -726,15 +726,10 @@
 				cook_result = /obj/item/food/pancakes,\
 				required_cook_time = rand(30 SECONDS, 40 SECONDS),\
 				positive_result = TRUE,\
-				use_large_steam_sprite = TRUE,\
-				attackby_callback = CALLBACK(src, .proc/garnish))
+				use_large_steam_sprite = TRUE)
 
-/obj/item/food/pancakes/raw/examine(mob/user)
+/obj/item/food/pancakes/raw/attacked_by(obj/item/garnish, mob/living/user)
 	. = ..()
-	if(name == initial(name))
-		. += "<span class='notice'>You can modify the pancake by adding <b>blueberries</b> or <b>chocolate</b> before finishing the griddle."
-
-/obj/item/food/pancakes/raw/proc/garnish(datum/component/grillable/grill_comp, obj/item/garnish, mob/user)
 	var/newresult
 	if(istype(garnish, /obj/item/food/grown/berries))
 		newresult = /obj/item/food/pancakes/blueberry
@@ -749,7 +744,12 @@
 	if(newresult)
 		qdel(garnish)
 		to_chat(user, "<span class='notice'>You add [garnish] to [src].</span>")
-		grill_comp.cook_result = newresult
+		AddComponent(/datum/component/grillable, cook_result = newresult)
+
+/obj/item/food/pancakes/raw/examine(mob/user)
+	. = ..()
+	if(name == initial(name))
+		. += "<span class='notice'>You can modify the pancake by adding <b>blueberries</b> or <b>chocolate</b> before finishing the griddle."
 
 /obj/item/food/pancakes/blueberry
 	name = "blueberry pancake"

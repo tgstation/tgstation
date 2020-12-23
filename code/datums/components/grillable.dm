@@ -27,18 +27,22 @@
 	src.required_cook_time = required_cook_time
 	src.positive_result = positive_result
 	src.use_large_steam_sprite = use_large_steam_sprite
-	src.attackby_callback = attackby_callback
 
 	RegisterSignal(parent, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
-	if(attackby_callback)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/AttackBy)
 
-///Ran when the grill item is attacked
-/datum/component/grillable/proc/AttackBy(datum/source, obj/item/I, mob/user)
-	SIGNAL_HANDLER
-
-	attackby_callback.Invoke(src, I, user)
+// Inherit the new values passed to the component
+/datum/component/grillable/InheritComponent(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)
+	if(!original)
+		return
+	if(cook_result)
+		src.cook_result = cook_result
+	if(required_cook_time)
+		src.required_cook_time = required_cook_time
+	if(positive_result)
+		src.positive_result = positive_result
+	if(use_large_steam_sprite)
+		src.use_large_steam_sprite = use_large_steam_sprite
 
 ///Ran every time an item is grilled by something
 /datum/component/grillable/proc/OnGrill(datum/source, atom/used_grill, delta_time = 1)
