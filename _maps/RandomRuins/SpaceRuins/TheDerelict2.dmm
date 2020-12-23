@@ -454,6 +454,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/gravity_generator)
+"blI" = (
+/obj/structure/frame/machine,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/derelict2/arrival)
 "bme" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
@@ -495,10 +500,9 @@
 /turf/open/floor/circuit,
 /area/ruin/space/derelict2/gravity_generator)
 "bBc" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
-/turf/open/floor/engine,
-/area/ruin/space/derelict2/atmospherics)
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "bBD" = (
 /obj/machinery/mineral/stacking_machine{
 	input_dir = 1;
@@ -874,6 +878,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
+"daQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 9
+	},
+/area/ruin/space/derelict2/atmospherics)
 "dbG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -955,6 +967,11 @@
 /area/ruin/space/derelict2/atmospherics)
 "djs" = (
 /turf/template_noop,
+/area/ruin/space/derelict2/arrival)
+"dkr" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
 /area/ruin/space/derelict2/arrival)
 "dld" = (
 /obj/structure/sign/warning/coldtemp{
@@ -1141,6 +1158,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict2/bridge)
 "eka" = (
@@ -1429,11 +1447,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/gravity_generator)
 "fjs" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/engine,
-/area/ruin/space/derelict2/atmospherics)
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "fkq" = (
 /turf/open/floor/wood,
 /area/ruin/space/derelict2/medical/chapel)
@@ -1498,6 +1515,13 @@
 "fxH" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/derelict2/hallway/primary)
+"fzz" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/ruin/space/derelict2/atmospherics)
 "fzU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -1655,6 +1679,14 @@
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict2/atmospherics)
+"gdB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/arrival)
 "ger" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -2219,6 +2251,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict2/gravity_generator)
+"izN" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict2/atmospherics)
 "izT" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/closed/wall/r_wall,
@@ -2347,6 +2383,7 @@
 "jjv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/space/derelict2/atmospherics)
 "jkm" = (
@@ -11330,7 +11367,7 @@ lpM
 rVk
 fug
 hoV
-rVk
+bBc
 rVk
 rVk
 hIy
@@ -11482,7 +11519,7 @@ lpM
 rVk
 fug
 qwu
-oPv
+fjs
 oPv
 oPv
 nfm
@@ -14237,11 +14274,11 @@ rVk
 rVk
 psX
 psX
-eDb
+gdB
 psX
 lpe
 lpM
-xHi
+blI
 psX
 lpM
 psX
@@ -14518,7 +14555,7 @@ rVk
 rVk
 rVk
 rVk
-rVk
+bBc
 rVk
 fug
 rVk
@@ -14670,7 +14707,7 @@ rVk
 rVk
 rVk
 rVk
-rVk
+bBc
 rVk
 fug
 rVk
@@ -14832,8 +14869,8 @@ msy
 hIM
 lpM
 lpM
-mbH
-mbH
+dkr
+dkr
 mGY
 kDk
 rzU
@@ -25782,7 +25819,7 @@ cdZ
 ydA
 myT
 ydA
-crl
+izN
 kqd
 xyY
 xyY
@@ -25934,7 +25971,7 @@ gLf
 tVC
 myT
 ydA
-crl
+izN
 kqd
 crl
 xyY
@@ -26086,7 +26123,7 @@ rml
 ydA
 myT
 ydA
-crl
+izN
 kqd
 xyY
 xyY
@@ -26560,8 +26597,8 @@ sIh
 sIh
 sIh
 lCZ
-bBc
-fjs
+jzW
+jzW
 jzW
 lCZ
 tpj
@@ -26713,7 +26750,7 @@ lCZ
 lCZ
 lCZ
 lCZ
-gal
+lCZ
 lCZ
 lCZ
 rug
@@ -26865,7 +26902,7 @@ crl
 crl
 rug
 crl
-kqd
+crl
 crl
 crl
 crl
@@ -27017,7 +27054,7 @@ crl
 crl
 rug
 crl
-kqd
+crl
 crl
 crl
 crl
@@ -27169,7 +27206,7 @@ crl
 crl
 rug
 crl
-kqd
+crl
 crl
 crl
 crl
@@ -27321,7 +27358,7 @@ crl
 crl
 rug
 crl
-kqd
+crl
 crl
 crl
 crl
@@ -27473,7 +27510,7 @@ crl
 crl
 rug
 crl
-kqd
+crl
 crl
 crl
 crl
@@ -27625,7 +27662,7 @@ iVG
 iVG
 rug
 rug
-kDH
+rug
 dIN
 rug
 rug
@@ -27777,7 +27814,7 @@ aaM
 aaM
 aaM
 aaM
-oKZ
+aaM
 aaM
 aaM
 aaM
@@ -27929,10 +27966,10 @@ dQS
 dQS
 dQS
 dQS
-ioT
-wsn
-wsn
-wsn
+dQS
+dQS
+dQS
+sKP
 wsn
 wsn
 wsn
@@ -28084,7 +28121,7 @@ aaP
 aaP
 aaP
 aaP
-aaP
+daQ
 aaP
 aaP
 aaP
@@ -28236,7 +28273,7 @@ iVG
 iVG
 iVG
 mhV
-rug
+kDH
 rug
 iVG
 iVG
@@ -28388,7 +28425,7 @@ mhV
 mhV
 mhV
 mhV
-mhV
+fzz
 rug
 yll
 yll
@@ -29146,7 +29183,7 @@ sIh
 rug
 dQS
 dQS
-wsn
+dQS
 mhV
 mhV
 lCZ
