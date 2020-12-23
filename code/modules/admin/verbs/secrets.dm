@@ -215,11 +215,6 @@
 				log_admin("[key_name(holder)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
 				to_chat(holder, "<span class='admin'>There is no arrivals shuttle.</span>", confidential = TRUE)
-		if("moveminingshuttle")
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Mining Shuttle"))
-			if(!SSshuttle.toggleShuttle("mining","mining_home","mining_away"))
-				message_admins("[key_name_admin(holder)] moved mining shuttle")
-				log_admin("[key_name(holder)] moved the mining shuttle")
 		if("movelaborshuttle")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send Labor Shuttle"))
 			if(!SSshuttle.toggleShuttle("laborcamp","laborcamp_home","laborcamp_away"))
