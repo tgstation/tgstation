@@ -108726,10 +108726,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"lcB" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/space)
 "lcF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -109087,6 +109083,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"lGw" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/space/basic,
+/area/space)
 "lGy" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
@@ -136648,7 +136648,7 @@ bLF
 bLK
 bNN
 bPP
-lcB
+lGw
 bTO
 bWe
 bYq
