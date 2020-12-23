@@ -75,8 +75,9 @@ def three_way_merge(base, left, right):
         print(f" C: Both sides touch the tile at {coord}")
 
         if merged_movables is None:
-            merged_movables = left_movables + ['/obj'] + right_movables
-            print(f"    Left and right movable groups are split by a generic `/obj`")
+            obj_name = "---Merge conflict marker---"
+            merged_movables = left_movables + [f'/obj{{name = "{obj_name}"}}'] + right_movables
+            print(f"    Left and right movable groups are split by an `/obj` named \"{obj_name}\"")
         if merged_turfs is None:
             merged_turfs = left_turfs
             print(f"    Saving turf: {', '.join(left_turfs)}")
