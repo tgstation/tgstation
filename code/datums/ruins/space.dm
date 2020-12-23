@@ -18,6 +18,12 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
+/datum/map_template/ruin/space/dorms4
+	id = "dorms4"
+	suffix = "dorms4.dmm"
+	name = "Dorms 4"
+	description = "Where do the people who violate Nanotrasen's Promiscuity policy go?"
+
 /datum/map_template/ruin/space/wreckedsyndieship
 	id = "wreckedsyndieship"
 	suffix = "wreckedsyndieship.dmm"

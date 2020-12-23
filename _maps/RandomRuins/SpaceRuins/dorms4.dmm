@@ -1,0 +1,118 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"x" = (
+/obj/machinery/door/airlock{
+	name = "Dorms 4"
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"z" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"I" = (
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"P" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"T" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"X" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_y = 32
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"Y" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+T
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+T
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+P
+P
+P
+P
+T
+T
+"}
+(4,1,1) = {"
+a
+P
+X
+c
+P
+a
+a
+"}
+(5,1,1) = {"
+T
+P
+z
+I
+P
+a
+a
+"}
+(6,1,1) = {"
+a
+P
+Y
+I
+P
+a
+a
+"}
+(7,1,1) = {"
+a
+P
+P
+x
+P
+T
+a
+"}
+(8,1,1) = {"
+a
+a
+T
+a
+a
+T
+a
+"}
