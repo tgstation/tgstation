@@ -20,7 +20,7 @@
 	vapor_id = initial(vapor_type.id)
 	RegisterSignal(target, COMSIG_REAGENT_TEMP_CHANGE, .proc/try_boil)
 	. = ..()
-	try_boil(target, target.holder?.chem_temp)
+	try_boil(target, target.holder?.chem_temp, target.holder?.chem_temp)
 
 /datum/element/boilable/Detach(datum/source, force)
 	UnregisterSignal(source, COMSIG_REAGENT_TEMP_CHANGE)
