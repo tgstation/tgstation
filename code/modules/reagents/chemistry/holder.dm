@@ -133,13 +133,14 @@
 	//add the reagent to the existing if it exists
 	for(var/r in cached_reagents)
 		var/datum/reagent/iter_reagent = r
-		if (iter_reagent.type == reagent)
+		if(iter_reagent.type == reagent)
 			iter_reagent.volume += amount
 			update_total()
 
 			iter_reagent.on_merge(data, amount)
 			if(reagtemp != cached_temp)
-				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
+				var/added_heat_capacity = iter_reagent.specific_heat * amount
+				set_temperature(((old_heat_capacity * cached_temp) + (added_heat_capacity * reagtemp)) / (old_heat_capacity + added_heat_capacity))
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
 			if(!no_react)
@@ -153,14 +154,15 @@
 	new_reagent.volume = amount
 	if(data)
 		new_reagent.data = data
-		new_reagent.on_new(data)
 
+	new_reagent.on_new(data)
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
 
 	update_total()
 	if(reagtemp != cached_temp)
-		set_temperature(((old_heat_capacity * cached_temp) + (new_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
+		var/added_heat_capacity = new_reagent.specific_heat * amount
+		set_temperature(((old_heat_capacity * cached_temp) + (added_heat_capacity * reagtemp)) / (old_heat_capacity + added_heat_capacity))
 
 	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
 	if(!no_react)
@@ -985,12 +987,14 @@
 		var/obj/item/reagent_containers/RCs = my_atom
 		if(RCs.reagent_flags & NO_REACT) //stasis holders IE cryobeaker
 			return
-	var/temp_delta = (temperature - chem_temp) * coeff
+
+	var/tmp_temp = chem_temp
+	var/temp_delta = (temperature - tmp_temp) * coeff
 	if(temp_delta > 0)
-		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
+		tmp_temp = min(tmp_temp + max(temp_delta, 1), temperature)
 	else
-		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
-	set_temperature(round(chem_temp))
+		tmp_temp = max(tmp_temp + min(temp_delta, -1), temperature)
+	set_temperature(round(tmp_temp))
 	handle_reactions()
 
 /** Sets the temperature of this reagent container to a new value.
@@ -1007,6 +1011,9 @@
 	. = chem_temp
 	chem_temp = _temperature
 	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, _temperature, .)
+	for(var/r in reagent_list)
+		var/datum/reagent/iter_reagent = r
+		iter_reagent.on_temp_change(_temperature, .)
 
 
 /**

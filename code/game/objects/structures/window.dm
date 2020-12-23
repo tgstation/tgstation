@@ -99,10 +99,7 @@
 		deconstruct(FALSE)
 
 /obj/structure/window/setDir(direct)
-	if(!fulltile)
-		..()
-	else
-		..(FULLTILE_WINDOW_DIR)
+	return !fulltile ? ..() : ..(FULLTILE_WINDOW_DIR)
 
 /obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()

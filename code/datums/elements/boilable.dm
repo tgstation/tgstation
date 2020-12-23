@@ -10,14 +10,14 @@
 	/// The id of the resulting gas
 	var/vapor_id
 
-/datum/element/boilable/Attach(datum/reagent/target, _temp, datum/gas/_gas)
+/datum/element/boilable/Attach(datum/reagent/target, temp_threshold, datum/gas/vapor_type)
 	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
-	if(!GLOB.meta_gas_info[_gas])
+	if(!GLOB.meta_gas_info[vapor_type])
 		return ELEMENT_INCOMPATIBLE
 
-	boiling_temp = _temp
-	vapor_id = initial(_gas.id)
+	boiling_temp = temp_threshold
+	vapor_id = initial(vapor_type.id)
 	RegisterSignal(target, COMSIG_REAGENT_TEMP_CHANGE, .proc/try_boil)
 	. = ..()
 	try_boil(target, target.holder?.chem_temp)
@@ -27,9 +27,9 @@
 	return ..()
 
 /// Attempts to boil the source reagent
-/datum/element/boilable/proc/try_boil(datum/reagent/source, _temp)
+/datum/element/boilable/proc/try_boil(datum/reagent/source, new_temp, old_temp)
 	SIGNAL_HANDLER
-	if(_temp < boiling_temp)
+	if(new_temp < boiling_temp)
 		return NONE
 	var/datum/reagents/holder = source.holder
 	if(!holder)
@@ -42,6 +42,6 @@
 	if(!location)
 		return NONE
 
-	location.atmos_spawn_air("[vapor_id]=[source.volume * REAGENT_MOLE_DENSITY];TEMP=[_temp]")
+	location.atmos_spawn_air("[vapor_id]=[source.volume * REAGENT_MOLE_DENSITY];TEMP=[new_temp]")
 	holder.del_reagent(source.type)
 	return NONE

@@ -72,7 +72,7 @@
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(fire_range,T))
 		new /obj/effect/hotspot(turf)
-	holder.chem_temp = 500
+	holder.set_temperature(500)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion3
@@ -86,7 +86,7 @@
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(fire_range,T))
 		new /obj/effect/hotspot(turf)
-	holder.chem_temp = 750
+	holder.set_temperature(750)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/tatp
@@ -222,7 +222,7 @@
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
 		new /obj/effect/hotspot(turf)
-	holder.chem_temp = 1000 // hot as shit
+	holder.set_temperature(1000) // hot as shit
 
 /datum/chemical_reaction/reagent_explosion/methsplosion
 	required_temp = 380 //slightly above the meth mix time.
@@ -235,7 +235,7 @@
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(1,T))
 		new /obj/effect/hotspot(turf)
-	holder.chem_temp = 1000 // hot as shit
+	holder.set_temperature(1000) // hot as shit
 	..()
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
@@ -404,7 +404,7 @@
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, created_volume)
-	holder.chem_temp = 20 // cools the fuck down
+	holder.set_temperature(20) // cools the fuck down
 	return
 
 /datum/chemical_reaction/cryostylane_oxygen
@@ -413,7 +413,7 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
-	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
+	holder.set_temperature(max(holder.chem_temp - (10*created_volume), 0))
 
 /datum/chemical_reaction/pyrosium_oxygen
 	results = list(/datum/reagent/pyrosium = 1)
@@ -421,14 +421,14 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
-	holder.chem_temp += 10*created_volume
+	holder.set_temperature(holder.chem_temp + (10*created_volume))
 
 /datum/chemical_reaction/pyrosium
 	results = list(/datum/reagent/pyrosium = 3)
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/phosphorus = 1)
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)
-	holder.chem_temp = 20 // also cools the fuck down
+	holder.set_temperature(20) // also cools the fuck down
 	return
 
 /datum/chemical_reaction/teslium

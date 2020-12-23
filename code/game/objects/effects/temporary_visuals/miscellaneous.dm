@@ -67,7 +67,7 @@
 		else
 			pixel_x = rand(-1,1)
 			pixel_y = rand(-1,1)
-	..()
+	return ..()
 
 /obj/effect/temp_visual/dir_setting/firing_effect/energy
 	icon_state = "firing_effect_energy"

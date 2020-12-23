@@ -187,7 +187,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
 		humi.adjust_coretemperature(rand(-25,-5) * (TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
-	M.reagents?.chem_temp +=(-10*REM)
+	M.reagents?.set_temperature(M.reagents.chem_temp - (10 * REM))
 	M.adjust_fire_stacks(-1)
 	..()
 	. = TRUE

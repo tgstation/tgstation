@@ -166,8 +166,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 ///called on expose_temperature
-/datum/reagent/proc/on_temp_change(_temp)
-	SEND_SIGNAL(src, COMSIG_REAGENT_TEMP_CHANGE, _temp)
+/datum/reagent/proc/on_temp_change(new_temp, old_temp)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_REAGENT_TEMP_CHANGE, new_temp, old_temp)
 
 /// Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)

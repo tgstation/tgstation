@@ -26,6 +26,7 @@
 	icon = 'icons/obj/atmospherics/components/condenser.dmi'
 	base_icon_state = "condenser"
 	layer = OBJ_LAYER
+	integrity_failure = 0.7	// Starts leaking at 70% integrity
 
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/condenser
@@ -129,6 +130,8 @@
 		vented_gas.release_gas_to(env, air.return_pressure())
 		air.merge(vented_gas)
 		vent_moles = env.total_moles() - i_moles
+		if(vent_moles)
+			location.air_update_turf()
 
 	var/leak_vol = clamp(CONDENSER_LEAK_BASE + (CONDENSER_LEAK_RATE * reagents.total_volume) + (CONDENSER_LEAK_SCALE * vent_moles), 0, reagents.total_volume)
 	if(!leak_vol)
@@ -137,13 +140,13 @@
 	if(vent_moles)
 		switch(vent_moles / leak_vol)
 			if(LEAK_FOAM_THRESHOLD to LEAK_SPRAY_THRESHOLD)
-				if(DT_PROB(5, delta_time))
+				if(DT_PROB(20, delta_time))
 					visible_message(
 						"<span class='danger'>[src] sprays a wave of foam!</span>",
 						null,
 						"<span class='danger'>You hear a rapid bubbling!</span>"
 						)
-					playsound(src, 'sound/effects/bubbles.ogg', 30)
+					playsound(src, 'sound/effects/bubbles.ogg', 30, TRUE)
 
 				var/datum/reagents/tmp_holder = new(1000)
 				tmp_holder.my_atom = src
@@ -151,14 +154,15 @@
 				tmp_holder.create_foam(/datum/effect_system/foam_spread, rand(0, clamp(log(100, vent_moles+1), 0, 2)))
 				qdel(tmp_holder)
 				return
+
 			if(LEAK_SPRAY_THRESHOLD to INFINITY)
-				if(DT_PROB(5, delta_time))
+				if(DT_PROB(20, delta_time))
 					visible_message(
 						"<span class='danger'>[src] sprays liquid from a rupture!</span>",
 						null,
 						"<span class='danger'>You hear a violent hissing!</span>"
 						)
-					playsound(src, 'sound/effects/spray.ogg', 30)
+					playsound(src, 'sound/effects/spray.ogg', 30, TRUE)
 
 				var/datum/reagents/tmp_holder = new(1000)
 				reagents.trans_to(tmp_holder, leak_vol, methods=NONE)
@@ -179,12 +183,13 @@
 						break
 				return
 
-	if(DT_PROB(5, delta_time))
+	if(DT_PROB(20, delta_time))
 		visible_message(
 			"<span class='danger'>[src] dribbles some liquid onto the floor.</span>",
 			null,
 			"<span class='danger'>You hear a quiet sputtering.</span>"
 		)
+		playsound(src, 'sound/effects/bubbles.ogg', 10, TRUE)
 
 	var/leak_ratio = clamp(leak_vol / reagents.total_volume, 0, 1)
 	reagents.expose(location, leak_ratio)
@@ -204,19 +209,20 @@
 
 	var/high_temperature = max(env?.return_temperature(), air?.return_temperature())
 	if(high_temperature > TANK_MELT_TEMPERATURE)
-		take_damage(delta_time * sqrt((high_temperature - TANK_MELT_TEMPERATURE) / TANK_MELT_TEMPERATURE), BURN, FIRE)
-		if(DT_PROB(5, delta_time))
+		take_damage(delta_time * max_integrity * sqrt((high_temperature - TANK_MELT_TEMPERATURE) / TANK_MELT_TEMPERATURE), BURN, FIRE, FALSE)
+		if(DT_PROB(50, delta_time))
 			visible_message("<span class='danger'>[src] warps under the heat!</span>")
+			playsound(src, 'sound/items/welder.ogg', 20, TRUE)
 
 	if(QDELETED(src))
 		return
 
 	var/pressure_delta = air?.return_pressure() - env?.return_pressure()
 	if(abs(pressure_delta) > TANK_LEAK_PRESSURE)
-		take_damage(delta_time * sqrt((abs(pressure_delta - TANK_LEAK_PRESSURE) / TANK_FRAGMENT_SCALE)), BRUTE, BOMB, null)
-		if(DT_PROB(5, delta_time))
+		take_damage(delta_time * sqrt((abs(pressure_delta - TANK_LEAK_PRESSURE) / TANK_FRAGMENT_SCALE)), BRUTE, BOMB, FALSE)
+		if(DT_PROB(30, delta_time))
 			visible_message("<span class='danger'>[src] [pressure_delta > 0 ? "bulges" : "crumples"] under the pressure!")
-			playsound(location, 'sound/effects/creak1.ogg', 20, TRUE)
+			playsound(location, pick('sound/effects/creak1.ogg', 'sound/effects/creak2.ogg', 'sound/effects/creak3.ogg'), 20, TRUE)
 
 
 /obj/machinery/atmospherics/components/unary/condenser/obj_break()

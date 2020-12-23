@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
 	if(!C)
 		return
-	reagents.chem_temp = C.fry_temperature
+	reagents.set_temperature(C.fry_temperature)
 	if(frying)
 		reagents.trans_to(frying, oil_use * delta_time, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
 		cook_time += fry_speed * delta_time

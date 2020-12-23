@@ -179,7 +179,7 @@
 #define COMSIG_REAGENT_EXPOSE_MOB	"reagent_expose_mob"
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
-///from base of [/datum/reagent/proc/on_temp_change]: (new_temp)
+///from base of [/datum/reagent/proc/on_temp_change]: (new_temp, old_temp)
 #define COMSIG_REAGENT_TEMP_CHANGE	"reagent_temp_change"
 
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
@@ -188,11 +188,11 @@
 #define COMSIG_REAGENTS_ADD_REAGENT		"reagents_add_reagent"
 ///from base of [/datum/reagents/proc/del_reagent]: (/datum/reagent)
 #define COMSIG_REAGENTS_DEL_REAGENT		"reagents_del_reagent"
-///from base of [/datum/reagents/proc/clear_reagents]: ()
-#define COMSIG_REAGENTS_REM_REAGENT		"reagents_rem_reagent"
-///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
-#define COMSIG_REAGENTS_CLEAR_REAGENTS	"reagents_clear_reagents"
 ///from base of [/datum/reagents/proc/remove_reagent]: (/datum/reagent, amount)
+#define COMSIG_REAGENTS_REM_REAGENT		"reagents_rem_reagent"
+///from base of [/datum/reagents/proc/clear_reagents]: (new_temp, old_temp)
+#define COMSIG_REAGENTS_CLEAR_REAGENTS	"reagents_clear_reagents"
+///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
 #define COMSIG_REAGENTS_TEMP_CHANGE		"reagents_temp_change"
 ///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
 #define COMSIG_REAGENTS_REACTED			"reagents_reacted"

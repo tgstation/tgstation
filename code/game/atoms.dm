@@ -942,8 +942,12 @@
  */
 /atom/proc/setDir(newdir)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
+	if(newdir == dir)
+		return
+
+	. = dir
 	dir = newdir
+	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, ., newdir)
 
 /**
  * Called when the atom log's in or out

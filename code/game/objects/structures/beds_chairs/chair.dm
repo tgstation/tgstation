@@ -119,7 +119,7 @@
 	handle_layer()
 
 /obj/structure/chair/setDir(newdir)
-	..()
+	. = ..()
 	handle_rotation(newdir)
 
 // Chair types

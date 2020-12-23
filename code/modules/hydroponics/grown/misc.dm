@@ -228,7 +228,7 @@
 /obj/item/food/grown/cherry_bomb/proc/detonate(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
-	reagents.chem_temp = 1000 //Sets off the gunpowder
+	reagents.set_temperature(1000) //Sets off the gunpowder
 	reagents.handle_reactions()
 
 // aloe

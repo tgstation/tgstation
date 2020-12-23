@@ -72,7 +72,7 @@
 	cut_overlays()
 
 /obj/vehicle/ridden/wheelchair/setDir(newdir)
-	..()
+	. = ..()
 	handle_rotation(newdir)
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I)	//Attackby should stop it attacking the wheelchair after moving away during decon

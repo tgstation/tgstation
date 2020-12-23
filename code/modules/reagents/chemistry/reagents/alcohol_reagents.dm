@@ -1941,6 +1941,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
 	if(!data)
 		return
+
 	names = data["names"]
 	tastes = data["tastes"]
 	boozepwr = data["boozepwr"]

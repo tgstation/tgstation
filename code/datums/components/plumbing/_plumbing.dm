@@ -34,6 +34,7 @@
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
+	RegisterSignal(parent, list(COMSIG_ATOM_DIR_CHANGE), .proc/on_dir_change)
 	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
 	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
@@ -228,6 +229,18 @@
 		enable()
 	else
 		disable()
+
+/// Update our connections when the parent rotates.
+/datum/component/plumbing/proc/on_dir_change(atom/movable/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	if(old_dir == new_dir)
+		return NONE
+	if(!source.anchored)
+		return NONE
+
+	disable()
+	enable()
+	return NONE
 
 /** We update our connects only when we settle down by taking our current and original direction to find our new connects
 * If someone wants it to fucking spin while connected to something go actually knock yourself out
