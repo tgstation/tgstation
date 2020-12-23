@@ -99,7 +99,7 @@
 /datum/eldritch_knowledge/rune_carver
 	name = "Carving Knife"
 	gain_text = "Etched, carved... eternal. I can carve the monolith and evoke their powers!"
-	desc = "You can create a carving knife, which allows you to create up to 3 carvings on the floor that have various effects on nonbelievers who walk over them, to create the carving knife transmute a knife with a glass shard and a piece of paper."
+	desc = "You can create a carving knife, which allows you to create up to 3 carvings on the floor that have various effects on nonbelievers who walk over them. You can also use them as a good throw weapon, to create the carving knife transmute a knife with a glass shard and a piece of paper."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/void_phase,/datum/eldritch_knowledge/summon/raw_prophet)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/shard,/obj/item/paper)
