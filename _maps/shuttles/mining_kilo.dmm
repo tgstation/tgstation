@@ -241,8 +241,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
-	icon_state = "manifold-2"
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/yellow,
@@ -329,8 +328,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	icon_state = "pump_map-2"
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/mining/large)

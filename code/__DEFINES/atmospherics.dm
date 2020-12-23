@@ -422,6 +422,8 @@
 #define INCINERATOR_ATMOS_AIRLOCK_CONTROLLER	"atmos_incinerator_airlock_controller"
 #define INCINERATOR_ATMOS_AIRLOCK_INTERIOR 		"atmos_incinerator_airlock_interior"
 #define INCINERATOR_ATMOS_AIRLOCK_EXTERIOR 		"atmos_incinerator_airlock_exterior"
+#define TEST_ROOM_ATMOS_MAINVENT_1				"atmos_test_room_mainvent_1"
+#define TEST_ROOM_ATMOS_MAINVENT_2				"atmos_test_room_mainvent_2"
 
 //Syndicate lavaland base incinerator (lavaland_surface_syndicate_base1.dmm)
 #define INCINERATOR_SYNDICATELAVA_IGNITER 				"syndicatelava_igniter"

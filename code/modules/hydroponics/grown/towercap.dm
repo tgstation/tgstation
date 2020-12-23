@@ -271,9 +271,9 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength * 0.5 * delta_time)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && DT_PROB(10, delta_time))
-			var/obj/item/O = A
-			O.microwave_act()
+		else if(istype(A, /obj/item))
+			var/obj/item/grilled_item = A
+			SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILLED, src, delta_time) //Not a big fan, maybe make this use fire_act() in the future.
 
 /obj/structure/bonfire/process(delta_time)
 	if(!CheckOxygen())

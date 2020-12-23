@@ -22,6 +22,7 @@
 	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
 	fire_sound_volume = 90
 	bolt_wording = "slide"
+	suppressor_x_offset = 4
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
@@ -80,6 +81,7 @@
 	fire_delay = 1
 	spread = 10
 	actions_types = list(/datum/action/item_action/toggle_firemode)
+	suppressor_x_offset = 6
 
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
