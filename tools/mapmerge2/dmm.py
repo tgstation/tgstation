@@ -29,12 +29,12 @@ class DMM:
     def from_bytes(bytes):
         return _parse(bytes.decode(ENCODING))
 
-    def to_file(self, fname, tgm = True):
+    def to_file(self, fname, *, tgm = True):
         self._presave_checks()
         with open(fname, 'w', newline='\n', encoding=ENCODING) as f:
             (save_tgm if tgm else save_dmm)(self, f)
 
-    def to_bytes(self, tgm = True):
+    def to_bytes(self, *, tgm = True):
         self._presave_checks()
         bio = io.BytesIO()
         with io.TextIOWrapper(bio, newline='\n', encoding=ENCODING) as f:
