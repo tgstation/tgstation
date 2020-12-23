@@ -81,7 +81,7 @@
 	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
 	return ..()
 
-/datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
+/datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2 * REM * delta_time)
 	C.adjustPlasma(20 * REM * delta_time)
