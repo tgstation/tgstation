@@ -1,25 +1,25 @@
 import os
 import sys
-from dmi import *
+from .dmm import *
 
 
 def _self_test():
-    # test: can we load every DMI in the tree
+    # test: can we load every DMM in the tree
     count = 0
     for dirpath, dirnames, filenames in os.walk('.'):
         if '.git' in dirnames:
             dirnames.remove('.git')
         for filename in filenames:
-            if filename.endswith('.dmi'):
+            if filename.endswith('.dmm'):
                 fullpath = os.path.join(dirpath, filename)
                 try:
-                    Dmi.from_file(fullpath)
+                    DMM.from_file(fullpath)
                 except Exception:
                     print('Failed on:', fullpath)
                     raise
                 count += 1
 
-    print(f"{os.path.relpath(__file__)}: successfully parsed {count} .dmi files")
+    print(f"{os.path.relpath(__file__)}: successfully parsed {count} .dmm files")
 
 
 def _usage():
