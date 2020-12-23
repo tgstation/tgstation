@@ -51,19 +51,15 @@
 			H.dna.features["tail_monkey"] = "Monkey"
 			handle_mutant_bodyparts(H)
 
-	//C.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
+	C.dna.add_mutation(RACEMUT, MUT_NORMAL)
 
-	C.dna.mutations |= new RACEMUT(MUT_NORMAL)
-	C.dna.mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.ventcrawler = initial(C.ventcrawler)
 	C.pass_flags = initial(C.pass_flags)
 	C.butcher_results = null
-	//C.dna.mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
-	C.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
-	C.domutcheck()
+	C.dna.remove_mutation(RACEMUT)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target)
 	. = ..()

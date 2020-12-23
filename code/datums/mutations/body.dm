@@ -180,10 +180,12 @@
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
+	if(ismonkey(owner)) //already a monkey
+		return
 	. = owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
-	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
+	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && !ismonkey(owner))
 		. = owner.humanize()
 
 /datum/mutation/human/glow
