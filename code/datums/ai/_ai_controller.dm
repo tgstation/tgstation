@@ -108,7 +108,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/turf/target_turf = get_step_towards(movable_pawn, current_movement_target)
 
 	if(!is_type_in_typecache(target_turf, GLOB.dangerous_turfs))
-		movable_pawn.Move(target_turf, get_dir(target_turf, current_movement_target))
+		movable_pawn.Move(target_turf, get_dir(current_loc, target_turf))
 	if(current_loc == get_turf(movable_pawn))
 		if(++pathing_attempts >= MAX_PATHING_ATTEMPTS)
 			CancelActions()
