@@ -57,6 +57,10 @@
 	name = "energybar wrapper"
 	icon_state = "energybar"
 
+/obj/item/trash/bluespacebar
+	name = "bluespacebar wrapper"
+	icon_state = "bluespacebar"
+
 /obj/item/trash/waffles
 	name = "waffles tray"
 	icon_state = "waffles"

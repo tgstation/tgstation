@@ -163,3 +163,13 @@
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/bluespacebar
+    name = "Bluespace Bar"
+    icon_state = "bluespacebar"
+    desc = "Probably paraphysical, definitely delicious. Orginally designed to help with running through walls."
+    trash_type = /obj/item/trash/bluespacebar
+    food_reagents = list(/datum/reagent/bluespace = 30, /datum/reagent/drug/methamphetamine = 10, /datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 10)
+    tastes = list("sweetness" = 10)
+    foodtypes = SUGAR
+    w_class = WEIGHT_CLASS_SMALL
