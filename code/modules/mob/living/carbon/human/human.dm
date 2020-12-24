@@ -23,6 +23,7 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
@@ -1056,82 +1057,66 @@
 	return ishuman(target) && target.body_position == LYING_DOWN
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	var/carrydelay = 50 //if you have latex you are faster at grabbing
+	if(!can_be_firemanned(target) || incapacitated(FALSE, TRUE))
+		to_chat(src, "<span class='warning'>You can't fireman carry [target] while [target.p_they()] [target.p_are()] standing!</span>")
+		return
+
+	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space = "" //cobby told me to do this
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
-		carrydelay = 30
-		skills_space = "expertly"
+		carrydelay = 3 SECONDS
+		skills_space = " expertly"
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
-		carrydelay = 40
-		skills_space = "quickly"
-	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
-		visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
-		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
-		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
-		if(do_after(src, carrydelay, target))
-			//Second check to make sure they're still valid to be carried
-			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE) && !target.buckled)
-				if(target.loc != loc)
-					var/old_density = density
-					density = FALSE
-					step_towards(target, loc)
-					density = old_density
-					if(target.loc == loc)
-						buckle_mob(target, TRUE, TRUE, 90, 1, 0)
-						return
-				else
-					buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+		carrydelay = 4 SECONDS
+		skills_space = " quickly"
+
+	visible_message("<span class='notice'>[src] starts[skills_space] lifting [target] onto [p_their()] back..</span>",
+	//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
+	"<span class='notice'>[carrydelay < 3.5 SECONDS ? "Using your gloves' nanochips, you" : "You"][skills_space] start to lift [target] onto your back[carrydelay == 4 SECONDS ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+	//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
+	if(!do_after(src, carrydelay, target))
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
-	else
-		to_chat(src, "<span class='warning'>You can't fireman carry [target] while they're standing!</span>")
+		return
+
+	//Second check to make sure they're still valid to be carried
+	if(!can_be_firemanned(target) || incapacitated(FALSE, TRUE) || target.buckled)
+		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
+		return
+
+	if(target.loc != loc)
+		var/old_density = density
+		density = FALSE
+		step_towards(target, loc)
+		density = old_density
+
+	if(target.loc == loc)
+		buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
-	if(can_piggyback(target))
-		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
-		if(do_after(target, 15, target = src))
-			if(can_piggyback(target))
-				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
-					return
-				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
-		else
-			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
-	else
+	if(!can_piggyback(target))
 		to_chat(target, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
-
-/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
-	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
+
+	visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
+	if(!do_after(target, 1.5 SECONDS, target = src) || !can_piggyback(target))
+		visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
+		return
+
+	if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+		target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
+		return
+
+	buckle_mob(target, TRUE, TRUE, RIDER_NEEDS_ARMS)
+
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(!is_type_in_typecache(target, can_ride_typecache))
 		target.visible_message("<span class='warning'>[target] really can't seem to mount [src]...</span>")
 		return
-	buckle_lying = lying_buckle
-	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
-	if(target_hands_needed)
-		riding_datum.ride_check_rider_restrained = TRUE
-	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
+
+	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
-	var/equipped_hands_self
-	var/equipped_hands_target
-	if(hands_needed)
-		equipped_hands_self = riding_datum.equip_buckle_inhands(src, hands_needed, target)
-	if(target_hands_needed)
-		equipped_hands_target = riding_datum.equip_buckle_inhands(target, target_hands_needed)
 
-	if(hands_needed || target_hands_needed)
-		if(hands_needed && !equipped_hands_self)
-			src.visible_message("<span class='warning'>[src] can't get a grip on [target] because their hands are full!</span>",
-				"<span class='warning'>You can't get a grip on [target] because your hands are full!</span>")
-			return
-		else if(target_hands_needed && !equipped_hands_target)
-			target.visible_message("<span class='warning'>[target] can't get a grip on [src] because their hands are full!</span>",
-				"<span class='warning'>You can't get a grip on [src] because your hands are full!</span>")
-			return
-
-	stop_pulling()
-	riding_datum.handle_vehicle_layer()
-	. = ..(target, force, check_loc)
+	return ..()
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

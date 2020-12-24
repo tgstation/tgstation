@@ -168,9 +168,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/computer/security/qm{
-	dir = 2
-	},
+/obj/machinery/computer/security/qm,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aaw" = (
@@ -223,9 +221,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/cargo{
-	dir = 2
-	},
+/obj/machinery/computer/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aaE" = (
