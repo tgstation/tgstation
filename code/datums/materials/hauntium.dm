@@ -1,7 +1,8 @@
 /datum/material/hauntium
 	name = "hauntium"
 	desc = "very scary!"
-	color = list(460/255, 464/255, 460/255, 0.45, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	color = list(460/255, 464/255, 460/255, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	alpha = 100
 	categories = list(MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/hauntium
 	value_per_unit = 0.05

@@ -306,9 +306,7 @@
 
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
+	custom_materials = list(/datum/material/hauntium = 500)
 
-/obj/item/storage/toolbox/haunted/Initialize()
-	. = ..()
-	AddComponent(/datum/component/haunted)
 
 

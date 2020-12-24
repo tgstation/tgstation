@@ -766,9 +766,9 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	material_type = /datum/material/hauntium
 	material_modifier = 1 //None of that wussy stuff
 
-/obj/item/stack/sheet/meat/hauntium
+/obj/item/stack/sheet/hauntium/fifty
 	amount = 50
-/obj/item/stack/sheet/meat/hauntium
+/obj/item/stack/sheet/hauntium/twenty
 	amount = 20
-/obj/item/stack/sheet/meat/hauntium
+/obj/item/stack/sheet/hauntium/five
 	amount = 5
