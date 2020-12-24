@@ -407,7 +407,7 @@
 
 /obj/item/organ/eyes/fly
 	name = "fly eyes"
-	desc = "These eyes seem to always be staring at you no matter what angle you look at them from. "
+	desc = "These eyes seem to stare back no matter the direction you look at it from."
 
 /obj/item/organ/eyes/fly/Insert(mob/living/carbon/M, special = 0)
 	..()
