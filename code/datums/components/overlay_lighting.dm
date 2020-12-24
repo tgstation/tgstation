@@ -167,7 +167,8 @@
 	if(!current_holder)
 		return
 	var/atom/movable/light_source = GET_LIGHT_SOURCE
-	for(var/t in RANGE_TURFS(lumcount_range, get_turf(light_source)))
+	var/turf/my_turf = get_turf(light_source)
+	for(var/t in RANGE_TURFS(lumcount_range, my_turf))
 		var/turf/lit_turf = t
 		lit_turf.dynamic_lumcount += lum_power
 		LAZYADD(affected_turfs, lit_turf)
