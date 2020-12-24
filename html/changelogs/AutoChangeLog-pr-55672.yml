@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Mothpeople that consume a potion of flight and then their wings get burnt off will no longer fail to have wings after going through reconstructive surgery."
