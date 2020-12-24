@@ -176,25 +176,11 @@
 		reagents.remove_reagent(milk.type, milk.metabolization_rate)
 	return ..()
 
-/obj/item/organ/stomach/plasmaman
+/obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.12
-
-/obj/item/organ/stomach/plasmaman/on_life()
-	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
-	if(milk)
-		var/mob/living/carbon/body = owner
-		if(milk.volume > 10)
-			reagents.remove_reagent(milk.type, milk.volume - 10)
-			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(1.5,0, 0)
-		for(var/i in body.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(2)
-		reagents.remove_reagent(milk.type, milk.metabolization_rate)
-	return ..()
 
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"
