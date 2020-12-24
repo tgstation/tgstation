@@ -418,6 +418,9 @@
 	if(!has_dna())
 		return
 
+	for(var/mutation in dna.mutation_index)
+		dna.check_block(mutation)
+
 	update_mutations_overlay()
 
 /datum/dna/proc/check_block(mutation)
