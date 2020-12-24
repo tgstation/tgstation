@@ -126,9 +126,8 @@
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(affected_mob.mind && !is_monkey(affected_mob.mind))
 		add_monkey(affected_mob.mind)
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/M = affected_mob.monkeyize()
-		M.ventcrawler = VENTCRAWLER_ALWAYS
+		affected_mob.monkeyize()
+		affected_mob.ventcrawler = VENTCRAWLER_ALWAYS
 
 
 /datum/disease/transformation/jungle_fever/stage_act()

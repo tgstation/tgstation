@@ -4,6 +4,9 @@
 	if (notransform || transformation_timer)
 		return
 
+	if(ismonkey(src))
+		return
+
 	//Make mob invisible and spawn animation
 	notransform = TRUE
 	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
@@ -29,6 +32,9 @@
 
 /mob/living/carbon/proc/humanize()
 	if (notransform || transformation_timer)
+		return
+
+	if(!ismonkey(src))
 		return
 
 	//Make mob invisible and spawn animation

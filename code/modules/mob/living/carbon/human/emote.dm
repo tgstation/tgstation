@@ -68,7 +68,21 @@
 			return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg')
 	else if(ismoth(H))
 		return 'sound/voice/moth/scream_moth.ogg'
+	else if(ismonkey(user)) //If its a monkey, override it.
+		return pick('sound/creatures/monkey/monkey_screech_1.ogg',
+					'sound/creatures/monkey/monkey_screech_2.ogg',
+					'sound/creatures/monkey/monkey_screech_3.ogg',
+					'sound/creatures/monkey/monkey_screech_4.ogg',
+					'sound/creatures/monkey/monkey_screech_5.ogg',
+					'sound/creatures/monkey/monkey_screech_6.ogg',
+					'sound/creatures/monkey/monkey_screech_7.ogg')
 
+/datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
+	key = "screech"
+	key_third_person = "screeches"
+	message = "screeches."
+	emote_type = EMOTE_AUDIBLE
+	vary = FALSE
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
@@ -198,21 +212,6 @@
 	key_third_person = "scratches"
 	message = "scratches."
 	hands_use_check = TRUE
-
-/datum/emote/living/carbon/human/monkey/screech
-	key = "screech"
-	key_third_person = "screeches"
-	message = "screeches."
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/carbon/human/monkey/screech/get_sound(mob/living/user)
-	return pick('sound/creatures/monkey/monkey_screech_1.ogg',
-				'sound/creatures/monkey/monkey_screech_2.ogg',
-				'sound/creatures/monkey/monkey_screech_3.ogg',
-				'sound/creatures/monkey/monkey_screech_4.ogg',
-				'sound/creatures/monkey/monkey_screech_5.ogg',
-				'sound/creatures/monkey/monkey_screech_6.ogg',
-				'sound/creatures/monkey/monkey_screech_7.ogg')
 
 /datum/emote/living/carbon/human/monkey/screech/roar
 	key = "roar"

@@ -1158,6 +1158,7 @@
 
 /mob/living/carbon/human/species
 	var/race = null
+	var/use_random_name = TRUE
 
 /mob/living/carbon/human/species/Initialize()
 	. = ..()
@@ -1165,7 +1166,8 @@
 
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load)
 	. = ..()
-	fully_replace_character_name(real_name, dna.species.random_name())
+	if(use_random_name)
+		fully_replace_character_name(real_name, dna.species.random_name())
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
