@@ -383,15 +383,18 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/gloves/mod/Destroy()
+	overslot.forceMove(drop_location())
 	..()
 	if(mod)
 		mod.gauntlets = null
 		QDEL_NULL(mod)
+	if(isliving(loc))
+		show_overslot(loc)
 
-/obj/item/clothing/gloves/mod/dropped(mob/user)
-	. = ..()
-	if(overslot)
-		user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
+/obj/item/clothing/gloves/mod/proc/show_overslot(mob/user)
+	if(!overslot)
+		return
+	if(user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1))
 		overslot = null
 
 /obj/item/clothing/shoes/mod
@@ -406,13 +409,16 @@
 	var/obj/item/clothing/overslot
 
 /obj/item/clothing/shoes/mod/Destroy()
+	overslot.forceMove(drop_location())
 	..()
 	if(mod)
 		mod.boots = null
 		QDEL_NULL(mod)
+	if(isliving(loc))
+		show_overslot(loc)
 
-/obj/item/clothing/shoes/mod/dropped(mob/user)
-	. = ..()
-	if(overslot)
-		user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1)
+/obj/item/clothing/shoes/mod/proc/show_overslot(mob/user)
+	if(!overslot)
+		return
+	if(user.equip_to_slot_if_possible(overslot,overslot.slot_flags,0,0,1))
 		overslot = null
