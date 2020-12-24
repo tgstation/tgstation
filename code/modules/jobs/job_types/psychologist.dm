@@ -16,6 +16,8 @@
 
 	mind_traits = list(TRAIT_SUPERMATTER_SOOTHER, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
 
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
 
 /datum/outfit/job/psychologist

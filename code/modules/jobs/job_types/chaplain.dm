@@ -129,6 +129,8 @@
 		/obj/item/camera/spooky = 1
 		)
 
+	skillchip_path = /obj/item/skillchip/entrails_reader
+
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
 

@@ -14,6 +14,8 @@
 	paycheck = PAYCHECK_MINIMAL
 	paycheck_department = ACCOUNT_SRV
 
+	liver_traits = list(TRAIT_COMEDY_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_CLOWN
 
 
@@ -60,3 +62,8 @@
 		M.mutadone_proof = TRUE
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.add_hud_to(H)
+
+	// Are clown "bike" horns made from the livers of ex-clowns?
+	// Would that make the clown more or less likely to honk it
+	var/obj/item/organ/liver/liver = H.getorganslot(ORGAN_SLOT_LIVER)
+	liver.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)

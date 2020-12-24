@@ -127,8 +127,10 @@
 	glass_desc = "The raw essence of a banana. HONK."
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/M)
-	if((ishuman(M) && M.job == "Clown") || ismonkey(M))
-		M.heal_bodypart_damage(1,1, 0)
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+
+	if(ismonkey(M) || HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
+		M.heal_bodypart_damage(brute = 1, burn = 1)
 		. = 1
 	..()
 
@@ -685,7 +687,9 @@
 	M.adjustToxLoss(-0.5, 0)
 	M.adjustOxyLoss(-0.5, 0)
 	if(M.nutrition && (M.nutrition - 2 > 0))
-		if(!(M.mind && (M.mind.assigned_role in GLOB.medical_positions))) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
+		var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
+			// Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.adjust_nutrition(-2)
 	..()
 	. = 1

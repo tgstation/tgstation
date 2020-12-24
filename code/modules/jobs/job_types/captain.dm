@@ -22,6 +22,8 @@
 
 	mind_traits = list(TRAIT_DISK_VERIFIER)
 
+	liver_traits = list(TRAIT_ROYAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
 /datum/job/captain/get_access()
