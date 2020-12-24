@@ -4225,9 +4225,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/engine,
 /area/miningtech)
-"wL" = (
-/turf/open/genturf,
-/area/lavaland/surface/outdoors)
 "wQ" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine/n2,
@@ -17788,7 +17785,7 @@ zc
 aj
 aj
 aj
-wL
+zc
 aj
 aj
 aj

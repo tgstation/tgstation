@@ -8403,7 +8403,9 @@
 	dir = 8;
 	pixel_x = 28
 	},
-/obj/machinery/cryopod,
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -11607,7 +11609,7 @@
 /area/crew_quarters/dorms)
 "aDk" = (
 /obj/machinery/cryopod{
-	dir = 1
+	dir = 8
 	},
 /obj/machinery/computer/cryopod{
 	dir = 1;
@@ -56808,6 +56810,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
+"tkI" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "tlc" = (
 /obj/machinery/recharger,
 /obj/structure/table,
@@ -57619,6 +57627,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"uoh" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "uok" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -100828,12 +100845,12 @@ apX
 apX
 apX
 avl
-awv
-avk
+uoh
+tkI
 com
 avk
-avk
-avk
+tkI
+tkI
 aDk
 aEd
 aFb
