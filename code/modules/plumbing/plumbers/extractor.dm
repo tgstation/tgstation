@@ -1,24 +1,24 @@
 ///Food comes in, extract comes out. Inserting stuff into the person is handled by the feeder component
-/obj/machinery/plumbing/milker
+/obj/machinery/plumbing/extractor
 	name = "people extractor"
 	desc = "A mechanical rig with an input leading to the mouth and an outpu-... dear god."
 
-	icon_state = "milker"
+	icon_state = "extractor"
 	buffer = 200
 
 	layer = BELOW_MOB_LAYER
 	density = FALSE
 	can_buckle = TRUE
 
-/obj/machinery/plumbing/milker/Initialize(mapload, bolt)
+/obj/machinery/plumbing/extractor/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/feeder, bolt)
 
-/obj/machinery/plumbing/milker/update_overlays()
+/obj/machinery/plumbing/extractor/update_overlays()
 	. = ..()
-	. += image(icon = icon, icon_state = "milker_overlay", layer = ABOVE_MOB_LAYER)
+	. += image(icon = icon, icon_state = "extractor_overlay", layer = ABOVE_MOB_LAYER)
 
-/obj/machinery/plumbing/milker/process()
+/obj/machinery/plumbing/extractor/process()
 	if(buckled_mobs[1]) //always fun forgetting byond starts at 1
 		var/mob/living/L = buckled_mobs[1]
 		if(L.reagents)

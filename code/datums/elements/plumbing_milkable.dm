@@ -1,5 +1,5 @@
-///Element used for interfacing with the plumbing people milker machine
-/datum/element/plumbing_milkable
+///Element used for interfacing with the plumbing people extractor machine
+/datum/element/plumbing_extractable
 	var/list/required_reagents = list(/datum/reagent/water = 2)
 	var/list/returned_reagents = list(/datum/reagent/consumable/lemonade = 1)
 
