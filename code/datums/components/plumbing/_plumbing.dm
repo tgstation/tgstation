@@ -1,7 +1,7 @@
 /datum/component/plumbing
 	///Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
 	var/list/datum/ductnet/ducts = list()
-	///shortcut to our parents' reagent holder
+	///shortcut to our parents' reagent holder. Can be redirected
 	var/datum/reagents/reagents
 	///TRUE if we wanna add proper pipe overlays under our parent object. this is pretty good if i may so so myself
 	var/use_overlays = TRUE
@@ -105,9 +105,9 @@
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	if(reagent)
-		reagents.trans_id_to(target.parent, reagent, amount)
+		reagents.trans_id_to(target.reagents, reagent, amount)
 	else
-		reagents.trans_to(target.parent, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
+		reagents.trans_to(target.reagents, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/AM, list/overlays)
