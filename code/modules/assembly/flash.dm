@@ -205,6 +205,9 @@
 	if(victim.loc == attacker.loc)
 		return DEVIATION_PARTIAL
 
+	if(HAS_TRAIT(victim, TRAIT_LIGHT_SENSITIVE))
+		return DEVIATION_NONE
+
 	// If the victim was looking at the attacker, this is the direction they'd have to be facing.
 	var/victim_to_attacker = get_dir(victim, attacker)
 	// The victim's dir is necessarily a cardinal value.

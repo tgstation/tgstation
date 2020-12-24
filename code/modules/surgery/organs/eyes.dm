@@ -405,3 +405,14 @@
 	eye_icon_state = "snail_eyes"
 	icon_state = "snail_eyeballs"
 
+/obj/item/organ/eyes/fly
+	name = "fly eyes"
+	desc = "These eyes seem to always be staring at you no matter what angle you look at them from. "
+
+/obj/item/organ/eyes/fly/Insert(mob/living/carbon/M, special = 0)
+	..()
+	ADD_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "fly eyes")
+
+/obj/item/organ/eyes/fly/Remove(mob/living/carbon/M, special = 0)
+	REMOVE_TRAIT(M, TRAIT_LIGHT_SENSITIVE, "fly eyes")
+	..()
