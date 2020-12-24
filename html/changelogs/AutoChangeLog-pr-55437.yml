@@ -1,0 +1,5 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - tweak: "Heretics who finish the Void Path and become an Aristocrat of the Void can now survive in the Void (space)."
+  - bugfix: "Heretics who research Aristocrats Way on the Void Path will no longer suffocate in their own storm when they ascend (no longer breathes)."

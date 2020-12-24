@@ -1700,7 +1700,7 @@
 					/obj/item/seeds/bamboo,
 					/obj/item/seeds/eggplant/eggy,
 					/obj/item/seeds/rainbow_bunch,
-					/obj/item/seeds/rainbow_bunch,
+					/obj/item/seeds/shrub,
 					/obj/item/seeds/random,
 					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"

@@ -6,7 +6,7 @@
 
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, ByondUi, Collapsible, DraggableControl, Flex, Icon, Input, Knob, LabeledList, NoticeBox, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../components';
+import { Blink, BlockQuote, Box, Button, ByondUi, Collapsible, DraggableControl, Flex, Icon, Input, Knob, LabeledList, NoticeBox, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../components';
 import { formatSiUnit } from '../format';
 import { Pane, Window } from '../layouts';
 import { createLogger } from '../logging';
@@ -40,6 +40,10 @@ const PAGES = [
   {
     title: 'Button',
     component: () => KitchenSinkButton,
+  },
+  {
+    title: 'Blink',
+    component: () => KitchenSinkBlinker,
   },
   {
     title: 'Box',
@@ -171,6 +175,16 @@ const KitchenSinkButton = props => {
           </Box>
         ))}
       </Box>
+    </Section>
+  );
+};
+
+const KitchenSinkBlinker = props => {
+  return (
+    <Section>
+      <Blink>
+        Blink
+      </Blink>
     </Section>
   );
 };

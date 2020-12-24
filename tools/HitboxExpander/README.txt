@@ -1,10 +1,4 @@
-Setup: Install python3 and run install.bat for windows, install.sh for unix.
-Alternatively, you can manually install the Pillow package with
-```
-pip install Pillow
-```
-
-Usage: python hitbox_expander.py <path_to_file.dmi or png>
+Usage: tools/bootstrap/python -m HitboxExpander <path_to_file.dmi or png>
 
 This tool expands the hitbox of the given image by 1 pixel.
 Works by changing some of the fully-transparent pixels to alpha=1 black pixels.
