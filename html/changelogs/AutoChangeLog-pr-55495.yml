@@ -1,8 +1,0 @@
-author: "150 hours of testing"
-delete-after: True
-changes: 
-  - bugfix: "projectiles can hit all clicked things above the hit threshold layer (see: windows) when you directly click on it, even if they usually pass through"
-  - bugfix: "mechs are no longer immune to projectiles because **gee whiz, it turns out there's objects that are not items but are also not structures and machinery in the game!**"
-  - bugfix: "spiderwebs block projectiles again"
-  - bugfix: "beepsky and other non-dense mobs (vs laying down mobs) are no longer bullet sponges"
-  - bugfix: "blobs no longer have lasers pass through them, except for the core, which then soaks up the lasers. fair and balanced, right?"

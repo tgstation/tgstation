@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - admin: "Changing the emergency shuttle now gives the option for disabling shuttlechanging purchases/events"

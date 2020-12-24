@@ -1,0 +1,6 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - bugfix: "Chocolate milk is now made with a 3:2 mix of hot cocoa and cocoa in a temperature under 300K."
+  - tweak: "Hot cocoa recipe now makes 6 hot cocoa instead of making 5 instead of 6. This makes it possible to make chocolate milk by heating a 1:1 mix of cocoa and milk to over 320K and then cooling it to below 300K."
+  - tweak: "You can make hot cocoa with a 1:2 mix of chocolate milk and milk, useful if you accidentally make chocolate milk"

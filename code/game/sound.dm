@@ -166,13 +166,14 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 
 		S.falloff = max_distance || 1 //use max_distance, else just use 1 as we are a direct sound so falloff isnt relevant.
 
-		if(S.environment == SOUND_ENVIRONMENT_NONE)
-			if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
-				S.environment = sound_environment_override
-			else
-				var/area/A = get_area(src)
-				if(A.sound_environment != SOUND_ENVIRONMENT_NONE)
-					S.environment = A.sound_environment
+		// Sounds can't have their own environment. A sound's environment will be:
+		// 1. the mob's
+		// 2. the area's (defaults to SOUND_ENVRIONMENT_NONE)
+		if(sound_environment_override != SOUND_ENVIRONMENT_NONE)
+			S.environment = sound_environment_override
+		else
+			var/area/A = get_area(src)
+			S.environment = A.sound_environment
 
 		if(use_reverb && S.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
 			S.echo[3] = 0 //Room setting, 0 means normal reverb
