@@ -18,7 +18,7 @@
 	var/atom/A = parent
 
 	var/turf/open/T = get_turf(A)
-	if(!istype(T) || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
+	if(!istype(T) || T.planetary_atmos || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
 		return
 
 	var/datum/gas_mixture/stank = new
