@@ -54,10 +54,23 @@
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
+	var/datum/http_request/req = new()
+	req.prepare(RUSTG_HTTP_METHOD_GET, "https://api.15.ai/app/getCharacters", "", "")
+	req.begin_async()
+	UNTIL(req.is_complete())
+	var/datum/http_response/response = req.into_response()
+	if(!response.status_code)
+		to_chat(src, "Connection to 15.ai failed. Error: [req._raw_response]")
+		return
+	if(response.status_code != 200)
+		to_chat(src, "Connection to 15.ai failed. Error code: [response.status_code]")
+		return
+	var/list/usable_characters = json_decode(response["body"])
 	var/list/banned_characters = CONFIG_GET(keyed_list/vox_voice_blacklist)
-	var/list/usable_characters = GLOB.available_vox_voices.Copy()
-	for(var/B in banned_characters)
-		usable_characters -= GLOB.vox_config_translator[B]
+	for(var/character_name in usable_characters)
+		var/changed_name = lowertext(replacetext(character_name, " ", "_"))
+		if(banned_characters[changed_name])
+			usable_characters -= character_name
 	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in usable_characters
 	if(!character_to_use)
 		return
@@ -124,12 +137,12 @@
 			for(var/mob/M in GLOB.player_list)
 				var/turf/T = get_turf(M)
 				if(T.z == z_level && M.can_hear())
-					to_chat(M, "<audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>")
+					M <<browse({"<META http-equiv="X-UA-Compatible" content="IE=edge"><audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>"}, "window=vox_player&file=vox_player.htm")
 		else
-			to_chat(only_listener, "<audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>")
+			only_listener <<browse({"<META http-equiv="X-UA-Compatible" content="IE=edge"><audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>"}, "window=vox_player&file=vox_player.htm")
 		fdel("data/vox_[vox_voice_number].wav")
 		fdel("data/vox_[vox_voice_number].mp3")
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/delete_vox_statement, "[CONFIG_GET(string/asset_cdn_webroot)][WR.get_asset_suffex(ACI)]"), 30 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, .world/proc/delete_vox_statement, "[CONFIG_GET(string/asset_cdn_webroot)][WR.get_asset_suffex(ACI)]"), 30 SECONDS)
 		return 1
 	else
 		if(!res.status_code)
@@ -144,7 +157,7 @@
 		speaker.announcing_vox = world.time
 	return 0
 
-/proc/delete_vox_statement(string)
+/world/proc/delete_vox_statement(string)
 	fdel(string)
 
 #undef VOX_DELAY

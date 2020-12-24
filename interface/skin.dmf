@@ -117,6 +117,14 @@ window "mainwindow"
 		anchor2 = none
 		is-visible = false
 		saved-params = ""
+	elem "vox_player"
+		type = BROWSER
+		pos = 0,0
+		size = 200x200
+		anchor1 = none
+		anchor2 = none
+		is-visible = false
+		saved-params = ""
 	elem "tooltip"
 		type = BROWSER
 		pos = 0,0
