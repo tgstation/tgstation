@@ -4236,19 +4236,6 @@
 	dir = 1
 	},
 /area/awaymission/research/interior/dorm)
-"jp" = (
-/obj/structure/barricade/wooden{
-	desc = "A wooden table hastily flipped over for cover.";
-	icon = 'icons/obj/smooth_structures/wood_table.dmi';
-	icon_state = "wood_table";
-	max_integrity = 55;
-	name = "flipped table";
-	obj_integrity = 55
-	},
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/awaymission/research/interior/dorm)
 "jq" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -4413,17 +4400,6 @@
 	},
 /area/awaymission/research/interior/dorm)
 "jF" = (
-/turf/open/floor/plasteel,
-/area/awaymission/research/interior/dorm)
-"jG" = (
-/obj/structure/barricade/wooden{
-	desc = "A wooden table hastily flipped over for cover.";
-	icon = 'icons/obj/smooth_structures/wood_table.dmi';
-	icon_state = "wood_table";
-	max_integrity = 55;
-	name = "flipped table";
-	obj_integrity = 55
-	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
 "jH" = (
@@ -4605,17 +4581,6 @@
 /area/awaymission/research/interior/dorm)
 "ka" = (
 /turf/open/floor/plasteel/yellowsiding/corner,
-/area/awaymission/research/interior/dorm)
-"kb" = (
-/obj/structure/barricade/wooden{
-	desc = "A wooden table hastily flipped over for cover.";
-	icon = 'icons/obj/smooth_structures/wood_table.dmi';
-	icon_state = "wood_table";
-	max_integrity = 55;
-	name = "flipped table";
-	obj_integrity = 55
-	},
-/turf/open/floor/plasteel/yellowsiding,
 /area/awaymission/research/interior/dorm)
 "kc" = (
 /turf/open/floor/plasteel/yellowsiding,
@@ -5983,6 +5948,16 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
+"IO" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/yellowsiding,
+/area/awaymission/research/interior/dorm)
+"Jc" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/awaymission/research/interior/dorm)
 "Km" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
@@ -42994,9 +42969,9 @@ id
 id
 eH
 iX
-jp
-jG
-kb
+Jc
+kR
+IO
 iX
 iX
 iX

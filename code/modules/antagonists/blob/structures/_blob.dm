@@ -4,10 +4,11 @@
 	icon = 'icons/mob/blob.dmi'
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
-	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
+	density = TRUE
 	opacity = FALSE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	max_integrity = 30
@@ -68,19 +69,8 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(!(mover.pass_flags & PASSBLOB))
-		return FALSE
-
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
-
-/obj/structure/blob/CanAStarPass(ID, dir, caller)
-	. = 0
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
@@ -245,7 +235,7 @@
 	if(overmind)
 		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>",
 		"<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>",
-		"<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span>")
+		"<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect || "N/A"]</span>")
 	else
 		. += "<b>No Material Detected!</b>"
 

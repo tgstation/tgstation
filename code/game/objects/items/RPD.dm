@@ -243,7 +243,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
-	RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
+	if(slot == ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
+	else
+		UnregisterSignal(user,COMSIG_MOUSE_SCROLL_ON)
 
 /obj/item/pipe_dispenser/dropped(mob/user, silent)
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
@@ -386,7 +389,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_flipped = p_flipped
 
 	//Unwrench pipe before we build one over/paint it, but only if we're not already running a do_after on it already to prevent a potential runtime.
-	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(attack_target in user.do_afters))
+	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
 		attack_target = attack_target.wrench_act(user, src)
 		if(!isatom(attack_target))
 			CRASH("When attempting to call [A.type].wrench_act(), received the following non-atom return value: [attack_target]")

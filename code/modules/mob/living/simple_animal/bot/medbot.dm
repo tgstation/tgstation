@@ -18,7 +18,7 @@
 	anchored = FALSE
 	health = 20
 	maxHealth = 20
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	status_flags = (CANPUSH | CANSTUN)
 
@@ -450,7 +450,7 @@
 		return TRUE
 
 /mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
-	if(INTERACTING_WITH(H, src))
+	if(DOING_INTERACTION_WITH_TARGET(H, src))
 		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
@@ -475,6 +475,8 @@
 		..()
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(iscarbon(A) && !tending)
 		var/mob/living/carbon/C = A
 		patient = C

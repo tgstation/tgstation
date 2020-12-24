@@ -12,6 +12,17 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
+/obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/// Handles properly detaching signal hooks.
+/obj/machinery/plumbing/growing_vat/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
+
 ///When we process, we make use of our reagents to try and feed the samples we have.
 /obj/machinery/plumbing/growing_vat/process()
 	if(!is_operational)
@@ -64,10 +75,11 @@
 	. = ..()
 	QDEL_NULL(biological_sample)
 
-///Call update icon when reagents change to update the reagent content icons
-/obj/machinery/plumbing/growing_vat/on_reagent_change(changetype)
+/// Call update icon when reagents change to update the reagent content icons. Eats signal args.
+/obj/machinery/plumbing/growing_vat/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
 	update_icon()
-	return ..()
+	return NONE
 
 ///Adds overlays to show the reagent contents
 /obj/machinery/plumbing/growing_vat/update_overlays()

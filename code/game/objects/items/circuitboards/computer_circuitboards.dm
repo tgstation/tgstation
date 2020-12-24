@@ -173,9 +173,19 @@
 	build_path = /obj/machinery/computer/auxiliary_base
 
 /obj/item/circuitboard/computer/base_construction
-	name = "circuit board (Aux Mining Base Construction Console)"
+	name = "circuit board (Generic Base Construction Console)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction
+
+/obj/item/circuitboard/computer/base_construction/aux
+	name = "circuit board (Aux Mining Base Construction Console)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction/aux
+
+/obj/item/circuitboard/computer/base_construction/centcom
+	name = "circuit board (Centcom Base Construction Console)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction/centcom
 
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"
@@ -512,17 +522,20 @@
 	name = "Express Supply Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/express
 
-/obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
-	. = ..()
-	if (!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='alert'>Routing protocols are already set to: \"factory defaults\".</span>")
-	else
-		to_chat(user, "<span class='notice'>You reset the routing protocols to: \"factory defaults\".</span>")
-		obj_flags &= ~EMAGGED
-
 /obj/item/circuitboard/computer/cargo/express/emag_act(mob/living/user)
-		to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
+	if(!(obj_flags & EMAGGED))
+		contraband = TRUE
 		obj_flags |= EMAGGED
+		to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
+
+/obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
+	if (!(obj_flags & EMAGGED))
+		contraband = !contraband
+		to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
+	else
+		to_chat(user, "<span class='notice'>You reset the destination-routing protocols and receiver spectrum to factory defaults.</span>")
+		contraband = FALSE
+		obj_flags &= ~EMAGGED
 
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"

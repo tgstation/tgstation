@@ -634,7 +634,6 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-
 /obj/item/food/cookie/sugar
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
@@ -642,6 +641,13 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 6)
 	tastes = list("sweetness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
+
+/obj/item/food/cookie/sugar/Initialize()
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[FESTIVE_SEASON])
+		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
+		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
+		icon_state = "sugarcookie_[shape]"
 
 /obj/item/food/chococornet
 	name = "chocolate cornet"
@@ -779,11 +785,11 @@
 		return O.attackby(item, user, params)
 	..()
 
-/obj/item/food/pancakes/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/P)
-	var/mutable_appearance/pancake = mutable_appearance(icon, "[P.inhand_icon_state]_[rand(1,3)]")
-	pancake.pixel_x = rand(-1,1)
-	pancake.pixel_y = 3 * contents.len - 1
-	add_overlay(pancake)
+/obj/item/food/pancakes/proc/update_snack_overlays(obj/item/pancake)
+	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.inhand_icon_state]_[rand(1,3)]")
+	pancake_visual.pixel_x = rand(-1,1)
+	pancake_visual.pixel_y = 3 * contents.len - 1
+	add_overlay(pancake_visual)
 	update_icon()
 
 /obj/item/food/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)

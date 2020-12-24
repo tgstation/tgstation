@@ -33,8 +33,8 @@
 "bg" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = 8;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 8
 	},
 /obj/item/storage/toolbox/electrical,
 /obj/effect/turf_decal/stripes/line,
@@ -43,8 +43,8 @@
 "bS" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/lights/mixed{
-	pixel_y = 9;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 9
 	},
 /obj/item/storage/box/matches{
 	pixel_y = 5
@@ -413,8 +413,8 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy{
-	pixel_y = 5;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
@@ -494,8 +494,8 @@
 /area/shuttle/escape)
 "rg" = (
 /obj/item/clothing/glasses/welding{
-	pixel_y = 8;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 8
 	},
 /obj/item/weldingtool/largetank{
 	pixel_x = -3
@@ -882,8 +882,8 @@
 	},
 /obj/structure/table/glass,
 /obj/item/storage/box/monkeycubes{
-	pixel_y = 10;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/item/food/monkeycube{
 	pixel_x = 5
@@ -1156,8 +1156,8 @@
 	},
 /obj/structure/table/glass,
 /obj/item/clothing/suit/monkeysuit{
-	pixel_y = 4;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /obj/item/clothing/mask/gas/monkeymask{
 	pixel_x = 5;
