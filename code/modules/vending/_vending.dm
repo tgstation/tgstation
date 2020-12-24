@@ -1235,3 +1235,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 			LAZYREMOVE(stuck_items, stuckItem)
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[product.product_path]"))
 	vend_ready = TRUE
+
+/obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(isliving(hit_atom))
+		tilt(fatty=hit_atom)
+	return ..()
