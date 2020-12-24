@@ -265,7 +265,6 @@
 /obj/item/feather,
 /obj/structure/fluff/paper,
 /obj/structure/fluff/paper{
-	icon_state = "paper";
 	dir = 1
 	},
 /turf/open/floor/wood{
@@ -275,7 +274,6 @@
 "bd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper{
-	icon_state = "paper";
 	dir = 1
 	},
 /turf/open/floor/wood{
@@ -285,7 +283,6 @@
 /area/ruin/unpowered/buried_library)
 "be" = (
 /obj/structure/fluff/paper{
-	icon_state = "paper";
 	dir = 5
 	},
 /turf/open/floor/wood{
@@ -295,7 +292,6 @@
 "bf" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper{
-	icon_state = "paper";
 	dir = 4
 	},
 /turf/open/floor/wood{
@@ -413,7 +409,6 @@
 "bC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper{
-	icon_state = "paper";
 	dir = 1
 	},
 /mob/living/simple_animal/pet/fox,
@@ -479,7 +474,6 @@
 /area/ruin/unpowered/buried_library)
 "bL" = (
 /obj/structure/fluff/paper{
-	icon_state = "paper";
 	dir = 10
 	},
 /turf/open/floor/wood{
@@ -489,7 +483,6 @@
 /area/ruin/unpowered/buried_library)
 "bM" = (
 /obj/structure/fluff/paper{
-	icon_state = "paper";
 	dir = 1
 	},
 /turf/open/floor/wood{
