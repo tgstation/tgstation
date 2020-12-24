@@ -1001,6 +1001,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	tilt(L)
 
+///Crush the mob that the vending machine got thrown at
+/obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(isliving(hit_atom))
+		tilt(fatty=hit_atom)
+	return ..()
+
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
 	icon_state = "robotics"
@@ -1191,9 +1197,3 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/obj/item/I = target
 		I.custom_price = price
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
-
-///Crush the mob that the vending machine got thrown at
-/obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(isliving(hit_atom))
-		tilt(fatty=hit_atom)
-	return ..()
