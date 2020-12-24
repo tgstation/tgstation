@@ -12,6 +12,7 @@
 
 
 /datum/element/squashable/Attach(mob/living/target, squash_chance, squash_damage, squash_flags, squash_callback)
+	. = ..()
 	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
 	if(squash_chance)
