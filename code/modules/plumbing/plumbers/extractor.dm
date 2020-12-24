@@ -1,6 +1,6 @@
 ///Food comes in, extract comes out. Inserting stuff into the person is handled by the feeder component
 /obj/machinery/plumbing/milker
-	name = "people milker"
+	name = "people extractor"
 	desc = "A mechanical rig with an input leading to the mouth and an outpu-... dear god."
 
 	icon_state = "milker"

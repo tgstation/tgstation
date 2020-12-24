@@ -2702,6 +2702,7 @@
 #include "code\modules\plumbing\plumbers\acclimator.dm"
 #include "code\modules\plumbing\plumbers\bottler.dm"
 #include "code\modules\plumbing\plumbers\destroyer.dm"
+#include "code\modules\plumbing\plumbers\extractor.dm"
 #include "code\modules\plumbing\plumbers\fermenter.dm"
 #include "code\modules\plumbing\plumbers\filter.dm"
 #include "code\modules\plumbing\plumbers\grinder_chemical.dm"
