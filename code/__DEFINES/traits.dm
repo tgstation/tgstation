@@ -1,6 +1,3 @@
-#define SIGNAL_ADDTRAIT(trait_ref) "addtrait [trait_ref]"
-#define SIGNAL_REMOVETRAIT(trait_ref) "removetrait [trait_ref]"
-
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
 	do { \
@@ -9,14 +6,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
-			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
+			SEND_SIGNAL(target, COMSIG_TRAIT_ADD, trait, source); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
-				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
+				SEND_SIGNAL(target, COMSIG_TRAIT_ADD, trait, source); \
 			} \
 		} \
 	} while (0)
@@ -37,7 +34,7 @@
 			};\
 			if (!length(_L[trait])) { \
 				_L -= trait; \
-				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait)); \
+				SEND_SIGNAL(target, COMSIG_TRAIT_REMOVE, trait)); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -53,7 +50,7 @@
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
 					_L -= _T; \
-					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
+					SEND_SIGNAL(target, COMSIG_TRAIT_REMOVE, _T); \
 					}; \
 				};\
 			if (!length(_L)) { \

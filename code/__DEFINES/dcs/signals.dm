@@ -939,3 +939,9 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
+
+///from __DEFINES/traits.dm: ADD_TRAIT (trait, source)
+#define COMSIG_TRAIT_ADD "trait_add"
+
+///from __DEFINES/traits.dm: REMOVE_TRAIT (trait)
+#define COMSIG_TRAIT_REMOVE "trait_remove"
