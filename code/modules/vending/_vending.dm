@@ -169,9 +169,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/// used for narcing on underages
 	var/obj/item/radio/Radio
 
-/obj/item/circuitboard
-	///determines if the circuit board originated from a vendor off station or not.
-	var/onstation = TRUE
+	///List of stuck items inside the vending machine
+	var/list/stuck_items = list()
+
 
 /**
  * Initialize the vending machine
@@ -488,15 +488,25 @@ GLOBAL_LIST_EMPTY(vending_products)
 		. = ..()
 		if(tiltable && !tilted && I.force)
 			switch(rand(1, 100))
-				if(1 to 5)
+				if(1 to 3)
 					freebie(user, 3)
-				if(6 to 15)
+				if(4 to 10)
 					freebie(user, 2)
-				if(16 to 25)
+				if(11 to 20)
 					freebie(user, 1)
-				if(76 to 90)
+				if (21 to 80)
+					//Release any of the stuck items
+					if (stuck_items.len != 0)
+						var/obj/item/stuckItem = pick(stuck_items)
+						to_chat(usr, "<span class='notice'>The stuck [stuckItem.name] got loose!</span>")
+						if(usr.CanReach(src) && usr.put_in_hands(stuckItem))
+							to_chat(usr, "<span class='notice'>You take the [stuckItem.name] out of the slot.</span>")
+						else
+							to_chat(usr, "<span class='warning'>[capitalize(stuckItem.name)] falls onto the floor!<br></span>")
+						LAZYREMOVE(stuck_items, stuckItem)
+				if(81 to 94)
 					tilt(user)
-				if(91 to 100)
+				if(95 to 100)
 					tilt(user, crit=TRUE)
 
 /obj/machinery/vending/proc/freebie(mob/fatty, freebies)
@@ -620,6 +630,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(get_turf(fatty) != get_turf(src))
 		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
+
+	//Dispense all stuck items
+	for (var/obj/item/stuckItem in stuck_items)
+		stuckItem.loc = src.loc
+		to_chat(usr, "<span class='notice'>The stuck [stuckItem.name] got loose!</span>")
+		to_chat(usr, "<span class='warning'>[capitalize(stuckItem.name)] falls onto the floor!</span>")
 
 /obj/machinery/vending/proc/untilt(mob/user)
 	user.visible_message("<span class='notice'>[user] rights [src].</span>", \
@@ -866,22 +882,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					D.adjust_money(price_to_use)
 					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
-			if(last_shopper != usr || purchase_message_cooldown < world.time)
-				say("Thank you for shopping with [src]!")
-				purchase_message_cooldown = world.time + 5 SECONDS
-				last_shopper = usr
-			use_power(5)
-			if(icon_vend) //Show the vending animation if needed
-				flick(icon_vend,src)
-			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-			var/obj/item/vended_item = new R.product_path(get_turf(src))
-			R.amount--
-			if(usr.CanReach(src) && usr.put_in_hands(vended_item))
-				to_chat(usr, "<span class='notice'>You take [R.name] out of the slot.</span>")
-			else
-				to_chat(usr, "<span class='warning'>[capitalize(R.name)] falls onto the floor!</span>")
-			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
-			vend_ready = TRUE
+			vend_item(R)
 
 /obj/machinery/vending/process(delta_time)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -1194,3 +1195,43 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/obj/item/I = target
 		I.custom_price = price
 		to_chat(user, "<span class='notice'>You set the price of [I] to [price] cr.</span>")
+/**
+ * Vend the specified item
+ *
+ * Arguments:
+ * * product - The item that should be vended
+ */
+/obj/machinery/vending/proc/vend_item(var/datum/data/vending_product/product)
+	var/obj/item/vended_item = new product.product_path()
+	product.amount--
+	if (prob(3))
+		//Item got stuck in vending machine
+		LAZYADD(stuck_items, vended_item)
+		to_chat(usr, "<span class='warning'>It seems like [product.name] got stuck in the vending machine!<br>\
+		Maybe you can get it unstuck by buying another [product.name] or by bashing the vending machine.</span>")
+		vend_ready = TRUE
+		return
+	if(last_shopper != usr || purchase_message_cooldown < world.time)
+		say("Thank you for shopping with [src]!")
+		purchase_message_cooldown = world.time + 5 SECONDS
+		last_shopper = usr
+	use_power(5)
+	if(icon_vend) //Show the vending animation if needed
+		flick(icon_vend,src)
+	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
+		to_chat(usr, "<span class='notice'>You take [product.name] out of the slot.</span>")
+	else
+		to_chat(usr, "<span class='warning'>[capitalize(product.name)] falls onto the floor!</span>")
+	//If types of this product were stuck make them vend them too
+	for (var/obj/item/stuckItem in stuck_items)
+		if (istype(stuckItem, vended_item.type))
+			if(usr.CanReach(src) && usr.put_in_hands(stuckItem))
+				to_chat(usr, "<span class='notice'>Another [product.name] gets dispensed, it seems like it was stuck.<br>\
+				You take the second [product.name] out of the slot.</span>")
+			else
+				to_chat(usr, "<span class='warning'>Another [capitalize(product.name)] falls onto the floor!<br>\
+				It seems like it was stuck and got loose.</span>")
+			LAZYREMOVE(stuck_items, stuckItem)
+	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[product.product_path]"))
+	vend_ready = TRUE
