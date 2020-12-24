@@ -60,7 +60,7 @@
 	var/len = length(color)
 	var/char = ""
 	// Used for conversion between RGBA hex formats.
-	var/format_input_ratio = len ? desired_format / (length_char(color)-(start-1)) : -1
+	var/format_input_ratio = len ? round(desired_format / (length_char(color)-(start-1)), 0.01) : -1
 
 	. = ""
 	var/i = start
@@ -78,21 +78,21 @@
 			else
 				break
 		switch(format_input_ratio)
-			if(0 to 4/6) //skip next one. RRGGBB(AA) -> RGB(A)
+			if(0 to 0.67) //from 0 to 4:6. skip next one. RRGGBB(AA) -> RGB(A)
 				i += length(color[i])
-			if(6/4 to INFINITY) //Add current char again. RGB(A) -> RRGGBB(AA)
+			if(1.5 to INFINITY) //from 6:4 to inf. Add current char again. RGB(A) -> RRGGBB(AA)
 				. += char
 
 	if(length_char(.) == desired_format)
 		return crunch + .
 	switch(format_input_ratio) //Add or remove alpha channel depending on desired format.
-		if(3/8, 3/4, 6/4)
+		if(0.38, 0.75, 1.5) // 3:8, 3:4, 6:4
 			return copytext(., 1, desired_format+1)
-		if(4/6)
+		if(0.67) // 4:6
 			return . + "f"
-		if(4/3, 8/3)
+		if(1.33, 2.67) // 4:3, 8:3
 			return . + ((desired_format == 4) ? "f" : "ff")
-		else
+		else // not an hex color.
 			return default ? default : crunch + repeat_string(desired_format, "0")
 
 /// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
