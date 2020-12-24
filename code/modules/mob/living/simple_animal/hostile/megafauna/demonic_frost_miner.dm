@@ -315,9 +315,15 @@ Difficulty: Extremely Hard
 	var/change_turf = /turf/open/floor/plating/ice/icemoon
 	var/duration = 6 SECONDS
 
-/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize()
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	if(slot == ITEM_SLOT_FEET)
+		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
+	. = ..()
+	// Could have been blown off in an explosion from the previous owner
+	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on

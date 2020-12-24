@@ -43,6 +43,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/announcement_time
 	var/has_announced = FALSE
 
+	/// The list of strains the blob can reroll for.
+	var/list/strain_choices
+
 /mob/camera/blob/Initialize(mapload, starting_points = 60)
 	validate_location()
 	blob_points = starting_points
@@ -59,7 +62,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blob_core)
 		blob_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
-	announcement_time = world.time + 6000
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -122,7 +124,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!victory_in_progress && max_count < blobs_legit.len)
 		max_count = blobs_legit.len
 
-	if((world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
+	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
 		has_announced = TRUE
 
@@ -183,6 +185,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			BM.overmind = null
 			BM.update_icons()
 	GLOB.overminds -= src
+	QDEL_LIST_ASSOC_VAL(strain_choices)
 
 	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)

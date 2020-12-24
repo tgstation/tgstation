@@ -25,7 +25,7 @@
 			to_chat(ninja, "<span class='warning'>You may not use an energy net through solid obstacles!</span>")
 			return
 	if(!ninjacost(400,N_STEALTH_CANCEL))
-		ninja.Beam(net_target, "n_beam",time=15)
+		ninja.Beam(net_target, "n_beam", time = 15)
 		ninja.say("Get over here!", forced = "ninja net")
 		var/obj/structure/energy_net/net = new /obj/structure/energy_net(net_target.drop_location())
 		net.affecting = net_target

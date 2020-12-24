@@ -286,6 +286,12 @@
 	if(hud_used?.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
+///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
+/mob/proc/get_realname_string()
+	if(real_name && real_name != name)
+		return " \[[real_name]\]"
+	return ""
+
 ///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
 /mob/proc/is_blind()
 	SHOULD_BE_PURE(TRUE)
