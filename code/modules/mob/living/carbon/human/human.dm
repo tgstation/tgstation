@@ -26,7 +26,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 
 	//temp
-	reagents.AddElement(/datum/element/plumbing_milkable)
+	reagents.AddElement(/datum/element/plumbing_extractable)
 
 	GLOB.human_list += src
 
