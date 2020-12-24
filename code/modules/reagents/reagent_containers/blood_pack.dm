@@ -24,7 +24,7 @@
 		blood_type = null
 	return ..()
 
-/obj/item/reagent_containers/blood/proc/update_name(updates)
+/obj/item/reagent_containers/blood/update_name(updates)
 	. = ..()
 	if(labelled)
 		return
