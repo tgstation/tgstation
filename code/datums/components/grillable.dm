@@ -16,10 +16,7 @@
 	///Do we use the large steam sprite?
 	var/use_large_steam_sprite = FALSE
 
-	///Does this item have special grill interactions when items are used on it? if so, we need to invoke something on attack.
-	var/datum/callback/attackby_callback
-
-/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite, attackby_callback)
+/datum/component/grillable/Initialize(cook_result, required_cook_time, positive_result, use_large_steam_sprite)
 	. = ..()
 	if(!isitem(parent)) //Only items support grilling at the moment
 		return COMPONENT_INCOMPATIBLE

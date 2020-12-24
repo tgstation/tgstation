@@ -728,8 +728,7 @@
 				positive_result = TRUE,\
 				use_large_steam_sprite = TRUE)
 
-/obj/item/food/pancakes/raw/attacked_by(obj/item/garnish, mob/living/user)
-	. = ..()
+/obj/item/food/pancakes/raw/attackby(obj/item/garnish, mob/living/user, params)
 	var/newresult
 	if(istype(garnish, /obj/item/food/grown/berries))
 		newresult = /obj/item/food/pancakes/blueberry
@@ -741,6 +740,8 @@
 		name = "raw chocolate chip pancake"
 		icon_state = "rawccpancakes_1"
 		inhand_icon_state = "rawccpancakes"
+	else
+		return ..()
 	if(newresult)
 		qdel(garnish)
 		to_chat(user, "<span class='notice'>You add [garnish] to [src].</span>")
