@@ -170,7 +170,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/obj/item/radio/Radio
 
 
-
 /**
  * Initialize the vending machine
  *
