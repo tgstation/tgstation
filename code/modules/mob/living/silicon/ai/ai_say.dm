@@ -122,9 +122,9 @@
 			fdel("data/vox_[vox_voice_number].mp3")
 			return
 		var/datum/asset_transport/webroot/WR = SSassets.transport
-		var/shit_fuck_ass = "data/vox_[vox_voice_number].mp3"
-		var/datum/asset_cache_item/ACI = new("[md5filepath(shit_fuck_ass)].mp3", file("data/vox_[vox_voice_number].mp3"))
+		var/datum/asset_cache_item/ACI = new("vox_[vox_voice_number].mp3", file("data/vox_[vox_voice_number].mp3"))
 		ACI.namespace = "15aivox"
+		ACI.namespace_parent = TRUE
 		WR.save_asset_to_webroot(ACI)
 		var/url = WR.get_asset_url(null, ACI)
 
