@@ -1,7 +1,7 @@
 /datum/component/plumbing
 	///Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
 	var/list/datum/ductnet/ducts = list()
-	///shortcut to our parents' reagent holder. Can be redirected
+	///shortcut to our parents' reagent holder
 	var/datum/reagents/reagents
 	///TRUE if we wanna add proper pipe overlays under our parent object. this is pretty good if i may so so myself
 	var/use_overlays = TRUE
@@ -17,6 +17,8 @@
 	var/turn_connects = TRUE
 	///The layer on which we connect. Don't add multiple. If you want multiple layer connects for some reason you can just add multiple components with different layers
 	var/ducting_layer = DUCT_LAYER_DEFAULT
+	///In-case we don't want the main machine to get the reagents, but perhaps whoever is buckled to it
+	var/recipient_reagents_holder
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer)
@@ -31,6 +33,8 @@
 		return COMPONENT_INCOMPATIBLE
 	reagents = AM.reagents
 	turn_connects = _turn_connects
+
+	recipient_reagents_holder = AM.reagents
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
@@ -105,9 +109,9 @@
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	if(reagent)
-		reagents.trans_id_to(target.reagents, reagent, amount)
+		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
 	else
-		reagents.trans_to(target.reagents, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
+		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/AM, list/overlays)

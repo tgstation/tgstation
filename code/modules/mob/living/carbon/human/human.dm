@@ -24,7 +24,10 @@
 	AddComponent(/datum/component/bloodysoles/feet)
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
-	AddElement(/datum/element/plumbing_milkable)
+
+	//temp
+	reagents.AddElement(/datum/element/plumbing_milkable)
+
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()

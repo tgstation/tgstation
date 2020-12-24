@@ -989,7 +989,8 @@ RLD
 	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
 	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/sender = 20
+	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/plumbing/milker = 40
 )
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
