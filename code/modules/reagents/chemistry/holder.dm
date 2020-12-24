@@ -137,11 +137,11 @@
 			iter_reagent.volume += amount
 			update_total()
 
-			iter_reagent.on_merge(data, amount)
 			if(reagtemp != cached_temp)
 				var/added_heat_capacity = iter_reagent.specific_heat * amount
 				set_temperature(((old_heat_capacity * cached_temp) + (added_heat_capacity * reagtemp)) / (old_heat_capacity + added_heat_capacity))
 
+			iter_reagent.on_merge(data, amount)
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
 			if(!no_react)
 				handle_reactions()
@@ -155,15 +155,15 @@
 	if(data)
 		new_reagent.data = data
 
+	if(reagtemp != cached_temp)
+		var/added_heat_capacity = new_reagent.specific_heat * amount
+		set_temperature(((old_heat_capacity * cached_temp) + (added_heat_capacity * reagtemp)) / (old_heat_capacity + added_heat_capacity))
+
 	new_reagent.on_new(data)
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
 
 	update_total()
-	if(reagtemp != cached_temp)
-		var/added_heat_capacity = new_reagent.specific_heat * amount
-		set_temperature(((old_heat_capacity * cached_temp) + (added_heat_capacity * reagtemp)) / (old_heat_capacity + added_heat_capacity))
-
 	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
 	if(!no_react)
 		handle_reactions()
