@@ -108,6 +108,8 @@
 		bloodspell.phased = TRUE
 	if(bloodpool)
 		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
+	var/datum/atom_hud/easypickings = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	easypickings.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
 	if(!isliving(A))
