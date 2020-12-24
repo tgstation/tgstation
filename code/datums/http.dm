@@ -11,7 +11,7 @@
 
 	var/_raw_response
 
-/datum/http_request/proc/prepare(method, url, body = "", list/headers, options)
+/datum/http_request/proc/prepare(method, url, body = "", list/headers, options = "{}")
 	if (!length(headers))
 		headers = ""
 	else
