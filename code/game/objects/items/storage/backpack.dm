@@ -350,6 +350,64 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 30
 
+/obj/item/storage/backpack/duffelbag/cursed
+	name = "living duffel bag"
+	desc = "A cursed clown duffel bag that hungers for food of any kind. Putting some food for it to eat inside of it should distract it from eating you for a while. A warning label on one of the duffel bag's sides cautions against feeding your \"new pet\" anything poisonous..."
+	icon_state = "duffel-curse"
+	inhand_icon_state = "duffel-curse"
+	slowdown = 1.3
+	max_integrity = 100
+	///counts time passed since it ate food
+	var/hunger = 0
+
+/obj/item/storage/backpack/duffelbag/cursed/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj,src)
+	ADD_TRAIT(src, TRAIT_NODROP, "duffelbag")
+
+/obj/item/storage/backpack/duffelbag/cursed/process()
+	///don't process if it's somehow on the floor
+	if(!iscarbon(src.loc))
+		return
+	var/mob/living/carbon/user = src.loc
+	///check hp
+	if(obj_integrity < 0)
+		user.dropItemToGround(src, TRUE)
+		var/datum/component/storage/ST = GetComponent(/datum/component/storage)
+		ST.do_quick_empty()
+		var/turf/T = get_turf(user)
+		playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
+		new /obj/effect/decal/cleanable/vomit(T)
+		qdel(src)
+	hunger++
+	///check hunger
+	if((hunger > 50) && prob(20))
+		for(var/obj/item/I in contents)
+			if(IS_EDIBLE(I))
+				var/obj/item/food/F = I
+				F.forceMove(user.loc)
+				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+				///poisoned food damages it
+				if(F.reagents.has_reagent(/datum/reagent/toxin))
+					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
+					obj_integrity -= 20
+				else
+					to_chat(user, "<span class='notice'>The [name] eats your [F]!</span>")
+				qdel(F)
+				hunger = 0
+				return
+		///no food found: it bites you and loses some hp
+		var/affecting = user.get_bodypart(BODY_ZONE_CHEST)
+		user.apply_damage(40, BRUTE, affecting)
+		hunger = 5
+		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+		to_chat(user, "<span class='warning'>The [name] eats your back!</span>")
+		obj_integrity -= 15
+
+/obj/item/storage/backpack/duffelbag/cursed/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj,src)
+
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
 	desc = "A large duffel bag for holding extra captainly goods."

@@ -1,0 +1,10 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - balance: "Shotgun slugs can no longer be made in an autolathe / protolathe."
+  - balance: "Buckshot rounds can no longer be made in an autolathe  / protolathe."
+  - balance: "Frag12 rounds deal less direct damage, since they fucking explode."
+  - balance: "Pulse shot rounds deal less damage."
+  - balance: "Increased the cooldown on riot shotguns."
+  - balance: "Removed buckshot rounds from all maps."
+  - balance: "Combat shotguns start with beanbags."

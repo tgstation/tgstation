@@ -173,9 +173,19 @@
 	build_path = /obj/machinery/computer/auxiliary_base
 
 /obj/item/circuitboard/computer/base_construction
-	name = "circuit board (Aux Mining Base Construction Console)"
+	name = "circuit board (Generic Base Construction Console)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction
+
+/obj/item/circuitboard/computer/base_construction/aux
+	name = "circuit board (Aux Mining Base Construction Console)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction/aux
+
+/obj/item/circuitboard/computer/base_construction/centcom
+	name = "circuit board (Centcom Base Construction Console)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/camera_advanced/base_construction/centcom
 
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"

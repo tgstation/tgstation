@@ -82,12 +82,20 @@
  * M - The mob to be buckled to src
  * force - Set to TRUE to ignore src's can_buckle and M's can_buckle_to
  * check_loc - Set to FALSE to allow buckling from adjacent turfs, or TRUE if buckling is only allowed with src and M on the same turf.
+ * buckle_mob_flags- Used for riding cyborgs and humans if we need to reserve an arm or two on either the rider or the ridden mob.
  */
-/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(!buckled_mobs)
 		buckled_mobs = list()
 
 	if(!is_buckle_possible(M, force, check_loc))
+		return FALSE
+
+	// This signal will check if the mob is mounting this atom to ride it. There are 3 possibilities for how this goes
+	//	1. This movable doesn't have a ridable element and can't be ridden, so nothing gets returned, so continue on
+	//	2. There's a ridable element but we failed to mount it for whatever reason (maybe it has no seats left, for example), so we cancel the buckling
+	//	3. There's a ridable element and we were successfully able to mount, so keep it going and continue on with buckling
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PREBUCKLE, M, force, buckle_mob_flags) & COMPONENT_BLOCK_BUCKLE)
 		return FALSE
 
 	if(M.pulledby)
@@ -191,6 +199,10 @@
 
 	// Make sure this atom can still have more things buckled to it.
 	if(LAZYLEN(buckled_mobs) >= max_buckled_mobs)
+		return FALSE
+
+	// Stacking buckling leads to lots of jank and issues, better to just nix it entirely
+	if(target.has_buckled_mobs())
 		return FALSE
 
 	// If the buckle requires restraints, make sure the target is actually restrained.

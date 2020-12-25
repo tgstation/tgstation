@@ -216,9 +216,7 @@
 /area/shuttle/hunter)
 "N" = (
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
 "Q" = (
