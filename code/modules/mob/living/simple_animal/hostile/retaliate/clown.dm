@@ -306,7 +306,7 @@
 	icon_living = "glutton"
 	speak = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!")
 	emote_see = list("jiggles", "wobbles")
-	health = 130
+	health = 200
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
 	melee_damage_lower = 10
@@ -328,6 +328,7 @@
 	. = ..()
 	my_regurgitate = new
 	AddAbility(my_regurgitate)
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -394,6 +395,10 @@
 	riding.set_vehicle_dir_offsets(WEST, 0, 0)
 
 	riding.drive_verb = "ride"
+
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 ///This ability will let you fire one random item from your pouch,
 /obj/effect/proc_holder/regurgitate
