@@ -9,7 +9,6 @@
 	movedelay = 0.6
 	car_traits = CAN_KIDNAP
 	key_type = /obj/item/bikehorn
-	key_type_exact = FALSE
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
@@ -98,7 +97,7 @@
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	return ..()
 
-/obj/vehicle/sealed/car/clowncar/after_move(direction)
+/obj/vehicle/sealed/car/clowncar/Move(newloc, dir)
 	. = ..()
 	if(droppingoil)
 		new /obj/effect/decal/cleanable/oil/slippery(loc)

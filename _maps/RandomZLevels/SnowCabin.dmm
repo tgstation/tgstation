@@ -1717,10 +1717,7 @@
 /area/awaymission/cabin/lumbermill)
 "ff" = (
 /obj/structure/table/wood,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "fg" = (
@@ -2541,30 +2538,12 @@
 "gM" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "gN" = (
@@ -5050,10 +5029,7 @@
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/caves)
 "mZ" = (
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
 	},
