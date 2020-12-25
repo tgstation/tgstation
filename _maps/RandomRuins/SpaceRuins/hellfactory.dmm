@@ -699,7 +699,6 @@
 "cd" = (
 /obj/machinery/plumbing/synthesizer{
 	desc = "Produces a single chemical at a given volume. This one appears to have been hotwired to generate universal enzyme.";
-	dir = 2;
 	dispensable_reagents = list(/datum/reagent/consumable/enzyme);
 	reagent_id = /datum/reagent/consumable/enzyme
 	},
@@ -708,7 +707,6 @@
 "ce" = (
 /obj/machinery/plumbing/synthesizer{
 	desc = "Produces a single chemical at a given volume. This one appears to have been hotwired to generate honey.";
-	dir = 2;
 	dispensable_reagents = list(/datum/reagent/consumable/honey);
 	reagent_id = /datum/reagent/consumable/honey
 	},
@@ -717,7 +715,6 @@
 "cf" = (
 /obj/machinery/plumbing/synthesizer{
 	desc = "Produces a single chemical at a given volume. This one seems to have been hotwired to produce... blood?";
-	dir = 2;
 	dispensable_reagents = list(/datum/reagent/blood);
 	reagent_id = /datum/reagent/blood
 	},

@@ -178,7 +178,6 @@
 /area/mafia)
 "y" = (
 /obj/structure/chair/office{
-	dir = 2;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -195,7 +194,6 @@
 	dir = 1
 	},
 /obj/structure/chair/office{
-	dir = 2;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/plasteel/dark,
