@@ -2,7 +2,7 @@
 	/// Amount of miasma we're spawning per tick
 	var/amount = 1
 	/// Time remaining before we remove the component
-	var/time_remaining = 3 MINUTES
+	var/time_remaining = 5 MINUTES
 
 /datum/component/rot/Initialize(new_amount)
 	if(!isatom(parent))
@@ -39,6 +39,7 @@
 
 /datum/component/rot/corpse
 	amount = MIASMA_CORPSE_MOLES
+	time_remaining = 7 MINUTES //2 minutes more to compensate for the delay
 
 /datum/component/rot/corpse/Initialize()
 	if(!iscarbon(parent))
