@@ -5,9 +5,32 @@ import { Button, Flex, LabeledControls, NoticeBox, RoundGauge, Section } from '.
 import { FlexItem } from '../components/Flex';
 import { Window } from '../layouts';
 
-const formatPressure = value => {
-  return toFixed(value) + '%';
-};
+const TAB2NAME = [
+  {
+    title: 'Debugging',
+    blurb: 'Where useless shit goes to die',
+    gauge: 5,
+    component: () => DebuggingTab,
+  },
+  {
+    title: 'Helpful',
+    blurb: 'Where fuckwits put logging',
+    gauge: 25,
+    component: () => HelpfulTab,
+  },
+  {
+    title: 'Fun',
+    blurb: 'How I ran an """event"""',
+    gauge: 75,
+    component: () => FunTab,
+  },
+  {
+    title: 'Only Fun For You',
+    blurb: 'How I spent my last day adminning',
+    gauge: 95,
+    component: () => FunForYouTab,
+  },
+];
 
 const lineHeightNormal = 2.79;
 const lineHeightDebug = 6;
@@ -21,12 +44,12 @@ const DebuggingTab = (props, context) => {
       mx={-0.5}
       direction="column"
       height="100%"
+      textAlign="center"
       align="stretch"
       justify="center">
       <Flex.Item my={0.5}>
         <Button
           lineHeight={lineHeightDebug}
-          align="center"
           icon="question"
           fluid
           content="Change all maintenance doors to engie/brig access only"
@@ -35,7 +58,6 @@ const DebuggingTab = (props, context) => {
       <Flex.Item my={0.5}>
         <Button
           lineHeight={lineHeightDebug}
-          align="center"
           icon="question"
           fluid
           content="Change all maintenance doors to brig access only"
@@ -44,7 +66,6 @@ const DebuggingTab = (props, context) => {
       <Flex.Item mt={0.5} mb={-0.5}>
         <Button
           lineHeight={lineHeightDebug}
-          align="center"
           icon="question"
           fluid
           content="Remove cap on security officers"
@@ -67,7 +88,6 @@ const HelpfulTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="plus"
             lineHeight={lineHeightNormal}
             fluid
@@ -76,7 +96,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} ml={0.5}>
           <Button
-            align="center"
             icon="eye"
             lineHeight={lineHeightNormal}
             fluid
@@ -93,7 +112,6 @@ const HelpfulTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="bomb"
             lineHeight={lineHeightNormal}
             fluid
@@ -102,7 +120,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="signal"
             lineHeight={lineHeightNormal}
             fluid
@@ -111,7 +128,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="robot"
             lineHeight={lineHeightNormal}
             fluid
@@ -128,7 +144,6 @@ const HelpfulTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="address-book"
             lineHeight={lineHeightNormal}
             fluid
@@ -137,7 +152,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="dna"
             lineHeight={lineHeightNormal}
             fluid
@@ -146,7 +160,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="fingerprint"
             lineHeight={lineHeightNormal}
             fluid
@@ -163,7 +176,6 @@ const HelpfulTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="flag"
             lineHeight={lineHeightNormal}
             fluid
@@ -172,7 +184,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="sync-alt"
             lineHeight={lineHeightNormal}
             fluid
@@ -181,7 +192,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="moon"
             lineHeight={lineHeightNormal}
             fluid
@@ -198,7 +208,6 @@ const HelpfulTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="pencil-alt"
             lineHeight={lineHeightNormal}
             fluid
@@ -207,7 +216,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} ml={0.5}>
           <Button
-            align="center"
             icon="eraser"
             lineHeight={lineHeightNormal}
             fluid
@@ -223,7 +231,6 @@ const HelpfulTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="plane-departure"
             lineHeight={lineHeightNormal}
             fluid
@@ -232,7 +239,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="plane"
             lineHeight={lineHeightNormal}
             fluid
@@ -241,7 +247,6 @@ const HelpfulTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="plane-arrival"
             lineHeight={lineHeightNormal}
             fluid
@@ -256,7 +261,7 @@ const HelpfulTab = (props, context) => {
 const FunTab = (props, context) => {
   const { act } = useBackend(context);
   return (
-    <Flex direction="column" mb={-0.75} mx={-0.5}>
+    <Flex direction="column" mb={-0.75} mx={-0.5} textAlign="center">
       <Flex
         mb={1}
         grow={1}
@@ -266,7 +271,6 @@ const FunTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="grin-beam-sweat"
             lineHeight={lineHeightNormal}
             fluid
@@ -275,7 +279,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="magic"
             lineHeight={lineHeightNormal}
             fluid
@@ -284,7 +287,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="biohazard"
             lineHeight={lineHeightNormal}
             fluid
@@ -301,7 +303,6 @@ const FunTab = (props, context) => {
         justify="space-between">
         <Flex.Item>
           <Button
-            align="center"
             icon="bolt"
             lineHeight={lineHeightNormal}
             fluid
@@ -310,7 +311,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="moon"
             lineHeight={lineHeightNormal}
             fluid
@@ -319,7 +319,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item>
           <Button
-            align="center"
             icon="plug"
             lineHeight={lineHeightNormal}
             fluid
@@ -336,7 +335,6 @@ const FunTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="user-ninja"
             lineHeight={lineHeightNormal}
             fluid
@@ -345,7 +343,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="users"
             lineHeight={lineHeightNormal}
             fluid
@@ -354,7 +351,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="bullhorn"
             lineHeight={lineHeightNormal}
             fluid
@@ -371,7 +367,6 @@ const FunTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="grin-beam-sweat"
             lineHeight={lineHeightNormal}
             fluid
@@ -380,7 +375,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
-            align="center"
             icon="magic"
             lineHeight={lineHeightNormal}
             fluid
@@ -389,7 +383,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="meteor"
             lineHeight={lineHeightNormal}
             fluid
@@ -406,7 +399,6 @@ const FunTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="hammer"
             lineHeight={lineHeightNormal}
             fluid
@@ -415,7 +407,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} ml={0.5}>
           <Button
-            align="center"
             icon="dollar-sign"
             lineHeight={lineHeightNormal}
             fluid
@@ -431,7 +422,6 @@ const FunTab = (props, context) => {
         justify="space-between">
         <Flex.Item grow={1}>
           <Button
-            align="center"
             icon="bullseye"
             lineHeight={lineHeightNormal}
             fluid
@@ -440,7 +430,6 @@ const FunTab = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} ml={0.5}>
           <Button
-            align="center"
             icon="bomb"
             lineHeight={lineHeightNormal}
             fluid
@@ -467,7 +456,6 @@ const FunForYouTab = (props, context) => {
         <NoticeBox danger>
           <Button
             color="red"
-            align="center"
             icon="paw"
             fluid
             content="Turn all humans into monkeys"
@@ -478,7 +466,6 @@ const FunForYouTab = (props, context) => {
         <NoticeBox danger>
           <Button
             color="red"
-            align="center"
             icon="user-secret"
             fluid
             content="Everyone is the traitor"
@@ -489,7 +476,6 @@ const FunForYouTab = (props, context) => {
         <NoticeBox danger>
           <Button
             color="red"
-            align="center"
             icon="brain"
             fluid
             content="Make all players brain damaged"
@@ -500,7 +486,6 @@ const FunForYouTab = (props, context) => {
         <NoticeBox danger>
           <Button
             color="black"
-            align="center"
             icon="fire"
             fluid
             content="The floor is lava! (DANGEROUS: extremely lame)"
@@ -511,7 +496,6 @@ const FunForYouTab = (props, context) => {
         <NoticeBox danger>
           <Button
             color="black"
-            align="center"
             icon="tired"
             fluid
             content="Chinese Cartoons! (DANGEROUS: no going back, also fuck you)"
@@ -524,7 +508,6 @@ const FunForYouTab = (props, context) => {
             <NoticeBox danger>
               <Button
                 color="red"
-                align="center"
                 icon="cat"
                 fluid
                 content="Mass Purrbation"
@@ -535,7 +518,6 @@ const FunForYouTab = (props, context) => {
             <NoticeBox info>
               <Button
                 color="blue"
-                align="center"
                 icon="user"
                 fluid
                 content="Mass Remove Purrbation"
@@ -550,7 +532,6 @@ const FunForYouTab = (props, context) => {
             <NoticeBox danger>
               <Button
                 color="red"
-                align="center"
                 icon="flushed"
                 fluid
                 content="Fully Immerse Everyone"
@@ -561,7 +542,6 @@ const FunForYouTab = (props, context) => {
             <NoticeBox info>
               <Button
                 color="blue"
-                align="center"
                 icon="sync-alt"
                 fluid
                 content="Shatter the Immersion"
@@ -580,32 +560,6 @@ export const Secrets = (props, context) => {
     is_debugger,
     is_funmin,
   } = data;
-  const TAB2NAME = [
-    {
-      title: 'Debugging',
-      blurb: 'Where useless shit goes to die',
-      gauge: 5,
-      component: () => DebuggingTab,
-    },
-    {
-      title: 'Helpful',
-      blurb: 'Where fuckwits put logging',
-      gauge: 25,
-      component: () => HelpfulTab,
-    },
-    {
-      title: 'Fun',
-      blurb: 'How I ran an """event"""',
-      gauge: 75,
-      component: () => FunTab,
-    },
-    {
-      title: 'Only Fun For You',
-      blurb: 'How I spent my last day adminning',
-      gauge: 95,
-      component: () => FunForYouTab,
-    },
-  ];
   const [
     tabIndex,
     setTabIndex,
@@ -640,12 +594,13 @@ export const Secrets = (props, context) => {
                 justify="center">
                 <Flex.Item bold>
                   <NoticeBox color="black">
-                    {"The first rule of adminbuse is:\
-                    you don't talk about the adminbuse."}
+                    &quot;The first rule of adminbuse is:
+                    you don&apos;t talk about the adminbuse.&quot;
                   </NoticeBox>
                 </Flex.Item>
               </Flex>
               <Flex
+                textAlign="center"
                 mx={-0.5}
                 align="stretch"
                 justify="center">
@@ -693,7 +648,7 @@ export const Secrets = (props, context) => {
                           "average": [100 * 0.25, 100 * 0.75],
                           "bad": [100 * 0.75, 100],
                         }}
-                        format={formatPressure} />
+                        format={value => toFixed(value) + '%'} />
                     </LabeledControls.Item>
                   </LabeledControls>
                 </Flex.Item>
