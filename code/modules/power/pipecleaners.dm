@@ -264,7 +264,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
 
 /obj/item/stack/pipe_cleaner_coil/update_icon()
-	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
 	. = ..()
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
@@ -275,7 +274,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/obj/item/stack/pipe_cleaner_coil/new_pipe_cleaner = ..()
 	if(istype(new_pipe_cleaner))
 		new_pipe_cleaner.color = color
-		new_pipe_cleaner.update_icon()
+		new_pipe_cleaner.update_appearance()
 
 //add pipe_cleaners to the stack
 /obj/item/stack/pipe_cleaner_coil/proc/give(extra)
