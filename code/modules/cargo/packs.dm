@@ -60,7 +60,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contraband = TRUE
 	contains = list(/obj/vehicle/ridden/atv,
-					/obj/item/key,
+					/obj/item/key/atv,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
