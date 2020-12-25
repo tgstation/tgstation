@@ -3357,6 +3357,7 @@
 #include "modular_frontier\modules\bluespacelocker\code\game\objects\structures\crates_lockers\closets\bluespace_locker.dm"
 #include "modular_frontier\modules\coboldchem\medicines\coboldchem_medicines.dm"
 #include "modular_frontier\modules\coboldchem\reactions\coboldchems_reactions.dm"
+#include "modular_frontier\modules\contributoritems\modules\clothing\kiurz\kiurz.dm"
 #include "modular_frontier\modules\GhostCafe\code\game\objects\structures\ghost_role_spawners.dm"
 #include "modular_frontier\modules\implants\code\organs\augments_arms.dm"
 #include "modular_frontier\modules\miningbase\code\game\area\Space_Station_13_areas.dm"
