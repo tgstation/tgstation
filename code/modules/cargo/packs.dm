@@ -2093,7 +2093,8 @@
 					/obj/item/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope,
-					/obj/item/vending_refill/donksoft)
+					/obj/item/vending_refill/donksoft
+					/obj/item/clothing/gloves/baby)
 	crate_name = "crate"
 
 /datum/supply_pack/costumes_toys/foamforce
@@ -2479,6 +2480,15 @@
 					/obj/item/training_toolbox
 					)
 	crate_name = "training toolbox crate"
+
+	/datum/supply_pack/misc/baby_gloves
+	name = "Baby Glove Crate"
+	desc = "Hone your apparent lack of combat abiltities with two Baby Gloves! Guarenteed to make you just slight more robust against those catgirls!"
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/clothing/gloves/baby,
+					/obj/item/clothing/gloves/baby
+					)
+	crate_name = "baby glove crate"
 
 /datum/supply_pack/misc/blackmarket_telepad
 	name = "Black Market LTSRBT"
