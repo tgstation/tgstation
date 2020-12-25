@@ -102,6 +102,7 @@
 
 /// Stops the above.
 /datum/element/movetype_handler/proc/stop_floating(atom/movable/AM)
+	SIGNAL_HANDLER
 	var/final_pixel_y = AM.base_pixel_y
 	if(isliving(AM)) //Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
 		var/mob/living/L = AM
