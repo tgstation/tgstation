@@ -3,6 +3,7 @@
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
+	base_icon_state = "emitter"
 
 	anchored = FALSE
 	density = TRUE
@@ -13,7 +14,9 @@
 	idle_power_usage = 10
 	active_power_usage = 300
 
+	/// The icon state used by the emitter when it's on.
 	var/icon_state_on = "emitter_+a"
+	/// The icon state used by the emitter when it's on and low on power.
 	var/icon_state_underpowered = "emitter_+u"
 	var/active = FALSE
 	var/powered = FALSE
@@ -134,7 +137,10 @@
 
 /obj/machinery/power/emitter/update_icon_state()
 	. = ..()
-	icon_state = (active && powernet) ? (avail(active_power_usage) ? icon_state_on : icon_state_underpowered) : base_icon_state
+	if(!active || !powernet)
+		icon_state = base_icon_state
+		return
+	icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -370,6 +376,7 @@
 	name = "Prototype Emitter"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "protoemitter"
+	base_icon_state = "protoemitter"
 	icon_state_on = "protoemitter_+a"
 	icon_state_underpowered = "protoemitter_+u"
 	base_icon_state = "protoemitter"
