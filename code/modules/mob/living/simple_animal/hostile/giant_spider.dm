@@ -336,7 +336,7 @@
 				if(ishuman(living_target) && (living_target.stat != DEAD || !consumed_mobs[living_target.tag])) //if they're not dead, you can consume them anyway
 					consumed_mobs[living_target.tag] = TRUE
 					fed++
-					lay_eggs.UpdateButtonIcon(TRUE)
+					lay_eggs_enriched.UpdateButtonIcon(TRUE)
 					visible_message("<span class='danger'>[src] sticks a proboscis into [living_target] and sucks a viscous substance out.</span>","<span class='notice'>You suck the nutriment out of [living_target], feeding you enough to lay a cluster of eggs.</span>")
 					living_target.death() //you just ate them, they're dead.
 				else

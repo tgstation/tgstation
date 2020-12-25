@@ -61,7 +61,6 @@
 "n" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
@@ -69,7 +68,6 @@
 /area/mafia)
 "o" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
-	icon_state = "trimline_end_fill";
 	dir = 4
 	},
 /obj/structure/closet{
@@ -94,7 +92,6 @@
 /area/mafia)
 "r" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 9
 	},
 /obj/structure/closet{
@@ -107,7 +104,6 @@
 /area/mafia)
 "s" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 9
 	},
 /turf/open/floor/plasteel,
@@ -134,7 +130,6 @@
 /area/mafia)
 "w" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner,
@@ -142,7 +137,6 @@
 /area/mafia)
 "x" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
@@ -150,14 +144,12 @@
 /area/mafia)
 "y" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
-	icon_state = "trimline_end_fill";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "z" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 5
 	},
 /obj/structure/closet{
@@ -171,54 +163,45 @@
 "A" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "B" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
-	icon_state = "trimline_end_fill";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "C" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "D" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 10
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "E" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "F" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -226,14 +209,12 @@
 "G" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "H" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 10
 	},
 /obj/structure/closet{
@@ -246,7 +227,6 @@
 /area/mafia)
 "I" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 6
 	},
 /obj/structure/closet{
@@ -260,18 +240,15 @@
 "J" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 6
 	},
 /obj/effect/turf_decal/trimline/brown/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "K" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
-	icon_state = "trimline_end_fill";
 	dir = 8
 	},
 /obj/structure/closet{
@@ -285,14 +262,12 @@
 "L" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "M" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 10
 	},
 /turf/open/floor/plasteel,
@@ -300,18 +275,15 @@
 "N" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "O" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -323,7 +295,6 @@
 "Q" = (
 /obj/effect/landmark/mafia,
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 9
 	},
 /turf/open/floor/plasteel,
@@ -345,7 +316,6 @@
 /area/mafia)
 "S" = (
 /obj/effect/turf_decal/trimline/brown/filled/end{
-	icon_state = "trimline_end_fill";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -353,7 +323,6 @@
 "T" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -361,14 +330,12 @@
 "U" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
-	icon_state = "trimline_corner_fill";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/mafia)
 "V" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
-	icon_state = "trimline_fill";
 	dir = 6
 	},
 /turf/open/floor/plasteel,

@@ -237,6 +237,11 @@
 	/// Can't use initial(name) for this. This stores the name set by condimasters.
 	var/originalname = "condiment"
 
+/obj/item/reagent_containers/food/condiment/pack/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_add, TRUE)
+	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del, TRUE)
+
 /obj/item/reagent_containers/food/condiment/pack/update_icon()
 	return
 
@@ -264,19 +269,23 @@
 			return
 	. = ..()
 
-/obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)
-	if(reagents.reagent_list.len > 0)
-		var/main_reagent = reagents.get_master_reagent_id()
-		if(main_reagent in possible_states)
-			var/list/temp_list = possible_states[main_reagent]
-			icon_state = temp_list[1]
-			desc = temp_list[3]
-		else
-			icon_state = "condi_mixed"
-			desc = "A small condiment pack. The label says it contains [originalname]"
+/// Handles reagents getting added to the condiment pack.
+/obj/item/reagent_containers/food/condiment/pack/proc/on_reagent_add(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	var/main_reagent = reagents.get_master_reagent_id()
+	if(main_reagent in possible_states)
+		var/list/temp_list = possible_states[main_reagent]
+		icon_state = temp_list[1]
+		desc = temp_list[3]
 	else
-		icon_state = "condi_empty"
-		desc = "A small condiment pack. It is empty."
+		icon_state = "condi_mixed"
+		desc = "A small condiment pack. The label says it contains [originalname]"
+
+/// Handles reagents getting removed from the condiment pack.
+/obj/item/reagent_containers/food/condiment/pack/proc/on_reagent_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	icon_state = "condi_empty"
+	desc = "A small condiment pack. It is empty."
 
 //Ketchup
 /obj/item/reagent_containers/food/condiment/pack/ketchup

@@ -18275,7 +18275,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/base_construction{
+/obj/machinery/computer/camera_advanced/base_construction/aux{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -76155,7 +76155,7 @@
 "tgQ" = (
 /obj/structure/water_source/puddle,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 1
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/grass,
