@@ -20,8 +20,8 @@
 /datum/component/rot/process(delta_time)
 	var/atom/A = parent
 	
-	//SSprocessing goes off per 1 second, so just subtract delta time
-	time_remaining -= delta_time
+	//SSprocessing goes off per 1 second
+	time_remaining -= delta_time * 1 SECONDS
 	if(time_remaining <= 0)
 		qdel(src)
 		return
