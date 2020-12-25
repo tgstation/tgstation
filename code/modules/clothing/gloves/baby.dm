@@ -1,6 +1,6 @@
 /obj/item/clothing/gloves/baby
 	name = "baby gloves"
-	desc = "Dawww, aren't these the cutest? Intended for ages 0-4, prevents accidently self-harm to the user."
+	desc = "Dawww, aren't these the cutest? Intended for ages 0-4, prevents accidental self-harm to the user."
 	icon_state = "babygloves"
 	inhand_icon_state = "babygloves"
 	transfer_prints = FALSE

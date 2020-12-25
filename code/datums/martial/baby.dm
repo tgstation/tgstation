@@ -6,25 +6,22 @@
 	if(Attacker == Defender)
 		to_chat(Attacker, "<span class='warning'>You can't disarm yourself!</span>")
 		return TRUE
-	if(Attacker != Defender)
+	else
 		return FALSE
-	return
 
 /datum/martial_art/baby/grab_act(mob/living/carbon/human/Attacker, mob/living/carbon/human/Defender)
 	if(Attacker == Defender)
 		to_chat(Attacker, "<span class='warning'>You can't grab yourself!</span>")
 		return TRUE
-	if(Attacker != Defender)
+	else
 		return FALSE
-	return
 
 /datum/martial_art/baby/harm_act(mob/living/carbon/human/Attacker, mob/living/carbon/human/Defender)
 	if(Attacker == Defender)
 		to_chat(Attacker, "<span class='warning'>You can't harm yourself!</span>")
 		return TRUE
-	if(Attacker != Defender)
+	else
 		return FALSE
-	return TRUE
 
 /obj/item/clothing/gloves/baby
 	var/datum/martial_art/baby/style = new
