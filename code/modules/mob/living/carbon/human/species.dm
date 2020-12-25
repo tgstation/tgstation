@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/icon/ass_image
 
 	///For the plumbing reagent extractor.
-	var/list/reagent_exchange = list(/datum/element/plumbing_extractable/acid)
+	var/list/reagent_exchange = list(/datum/element/plumbing_extractable/acid, /datum/element/plumbing_extractable/essence_of_drug)
 
 
 ///////////

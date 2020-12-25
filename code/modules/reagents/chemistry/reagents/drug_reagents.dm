@@ -610,3 +610,71 @@
 
 	M.adjustToxLoss(5)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
+
+/datum/reagent/drug/essence_of_drug
+	name = "Essence Of Drug"
+	description = "It can't be... the prophecy is true!"
+	reagent_state = LIQUID
+	color = "#ffd900"
+	overdose_threshold = 20
+	trippy = TRUE
+
+/datum/reagent/drug/essence_of_drug/on_mob_life(mob/living/carbon/M)
+	var/high_message = pick("You feel enlightened.", "You are unstoppable.", "More.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
+	..()
+
+/datum/reagent/drug/essence_of_drug/on_mob_metabolize(mob/living/L)
+	. = ..()
+
+	RegisterSignal(L, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/add_overlays)
+	L.update_icon()
+
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+
+	ADD_TRAIT(L, TRAIT_PACIFISM, type) //There is no point in physical violence, because in the end it's all just a game
+	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type) //Your pathethic stuns mean nothing
+	ADD_TRAIT(L, TRAIT_SPACEWALK, type) //so we can move freely without gravity
+	ADD_TRAIT(L, TRAIT_NIGHT_VISION, type) //I see all
+
+	L.AddElement(/datum/element/forced_gravity, 0) //so we can float around freely
+
+/datum/reagent/drug/essence_of_drug/on_mob_end_metabolize(mob/living/M)
+	. = ..()
+
+	UnregisterSignal(M, list(COMSIG_ATOM_UPDATE_OVERLAYS))
+	M.update_icon()
+
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
+
+	REMOVE_TRAIT(M, TRAIT_PACIFISM, type) //There is no point in physical violence, because in the end it's all just a game
+	REMOVE_TRAIT(M, TRAIT_STUNIMMUNE, type) //Your pathethic stuns mean nothing
+	REMOVE_TRAIT(M, TRAIT_SPACEWALK, type) //so we can move freely without gravity
+	REMOVE_TRAIT(M, TRAIT_NIGHT_VISION, type) //I see all
+
+	M.RemoveElement(/datum/element/forced_gravity, 0)
+
+/datum/reagent/drug/essence_of_drug/proc/add_overlays(datum/source, list/overlays)
+	overlays += image('icons/effects/genetics.dmi', "servitude", BELOW_MOB_LAYER)
+
+/datum/reagent/drug/essence_of_drug/overdose_start(mob/living/M)
+	. = ..()
+
+	if(GLOB.main_supermatter_engine)
+		to_chat(M, "<span class='phobia'>All parties end the same...</span>")
+		REMOVE_TRAIT(M, TRAIT_STUNIMMUNE, type) //so we can properly immobilize them
+
+/datum/reagent/drug/essence_of_drug/overdose_process(mob/living/M)
+	. = ..()
+
+	if(GLOB.main_supermatter_engine)
+		M.SetImmobilized(20)
+		var/turf/T = get_step_towards(M, GLOB.main_supermatter_engine)
+
+		step_towards(M, GLOB.main_supermatter_engine) //we run both so we can bump into everyone and still go through walls
+		M.forceMove(T)
+
+	else
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10*REM) //I'd prefer dusting, but they deserve the chance to be saved

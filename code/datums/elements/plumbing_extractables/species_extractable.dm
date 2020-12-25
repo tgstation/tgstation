@@ -1,3 +1,4 @@
+///Creates liquid gibs depending on acid power
 /datum/element/plumbing_extractable/acid
 	returned_reagents = list(/datum/reagent/liquidgibs = 1)
 
@@ -6,7 +7,7 @@
 
 /datum/element/plumbing_extractable/acid/has_required(datum/reagents/victim)
 	for(var/datum/D in victim.reagent_list)
-		if(istype(D, /datum/reagent/toxin/acid/))
+		if(istype(D, /datum/reagent/toxin/acid ))
 			var/datum/reagent/toxin/acid/A = D
 			if(A.acidpwr > 0)
 				required_reagents.Cut()
@@ -14,3 +15,8 @@
 				required_reagents[A.type] = acidpwr_needed / A.acidpwr
 				return ..()
 
+
+/datum/element/plumbing_extractable/essence_of_drug
+	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/drug/krokodil = 10, /datum/reagent/drug/bath_salts = 10, \
+		/datum/reagent/medicine/omnizine/protozine = 10)
+	returned_reagents = list(/datum/reagent/drug/essence_of_drug = 5)
