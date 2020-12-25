@@ -873,6 +873,16 @@
 	dir = 8;
 	pixel_x = -26
 	},
+/obj/machinery/button/door{
+	id = "kitchen";
+	name = "Kitchen Shutters Control";
+	pixel_x = -24;
+	pixel_y = 24;
+	req_access_txt = "28"
+	},
+/obj/machinery/camera{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "ei" = (
@@ -1584,20 +1594,8 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "nz" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance{
-	name = "refrigerator"
-	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
-	},
-/obj/effect/turf_decal/delivery,
-/obj/machinery/camera,
-/obj/machinery/button/door{
-	id = "kitchen";
-	name = "Kitchen Shutters Control";
-	pixel_x = -7;
-	pixel_y = 24;
-	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
@@ -3379,6 +3377,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "IY" = (
@@ -3431,6 +3433,28 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"Jq" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/machinery/griddle,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "JA" = (
@@ -3913,6 +3937,26 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/shipstation)
+"Qr" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance{
+	name = "refrigerator"
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "QJ" = (
@@ -4458,10 +4502,6 @@
 "XZ" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26
 	},
 /obj/structure/sink{
 	dir = 4;
@@ -5178,7 +5218,7 @@ HT
 RN
 YL
 Xk
-ZH
+Jq
 nz
 yA
 XQ
@@ -5202,7 +5242,7 @@ xl
 Ld
 Us
 ZH
-ZH
+Qr
 eP
 bH
 ZH

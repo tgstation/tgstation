@@ -11443,9 +11443,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aEb" = (
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/toy/figure/chef,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -11458,6 +11455,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/griddle,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
 "aEd" = (
