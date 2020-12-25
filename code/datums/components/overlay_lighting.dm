@@ -168,6 +168,7 @@
 		return
 	var/atom/movable/light_source = GET_LIGHT_SOURCE
 	var/turf/my_turf = get_turf(light_source)
+	//using RANGE_TURFS with untyped turfs is faster than using view() with typechecked turfs
 	for(var/t in RANGE_TURFS(lumcount_range, my_turf))
 		var/turf/lit_turf = t
 		lit_turf.dynamic_lumcount += lum_power
