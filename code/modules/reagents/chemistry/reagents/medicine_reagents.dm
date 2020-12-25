@@ -1311,8 +1311,8 @@
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/healamount = max(0.5 - round(0.01 * (M.getBruteLoss() + M.getFireLoss()), 0.1), 0) //base of 0.5 healing per cycle and loses 0.1 healing for every 10 combined brute/burn damage you have
-	M.adjustBruteLoss(healamount * REM * delta_time, 0)
-	M.adjustFireLoss(healamount * REM * delta_time, 0)
+	M.adjustBruteLoss(-healamount * REM * delta_time, 0)
+	M.adjustFireLoss(-healamount * REM * delta_time, 0)
 	..()
 	. = TRUE
 
