@@ -1,5 +1,8 @@
 /datum/component/rot
+	/// Amount of miasma we're spawning per tick
 	var/amount = 1
+	/// Time remaining before we remove the component
+	var/time_remaining = 3 MINUTES
 
 /datum/component/rot/Initialize(new_amount)
 	if(!isatom(parent))
@@ -16,6 +19,12 @@
 
 /datum/component/rot/process(delta_time)
 	var/atom/A = parent
+	
+	//SSprocessing goes off per 1 second, so just subtract delta time
+	time_remaining -= delta_time
+	if(time_remaining <= 0)
+		qdel(src)
+		return
 
 	var/turf/open/T = get_turf(A)
 	if(!istype(T) || T.planetary_atmos || T.return_air().return_pressure() > (WARNING_HIGH_PRESSURE - 10))
