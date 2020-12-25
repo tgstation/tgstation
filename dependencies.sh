@@ -22,3 +22,6 @@ export SPACEMAN_DMM_VERSION=suite-1.6
 
 # Extools git tag
 export EXTOOLS_VERSION=v0.0.6
+
+# Python version for mapmerge and other tools
+export PYTHON_VERSION=3.6.8
