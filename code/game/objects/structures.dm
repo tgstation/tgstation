@@ -7,6 +7,7 @@
 	layer = BELOW_OBJ_LAYER
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.6
+	pass_flags_self = PASSSTRUCTURE
 
 	var/climb_time = 20
 	var/climb_stun = 20
@@ -114,12 +115,6 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
-
-/obj/structure/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-
-	if(mover.pass_flags & PASSSTRUCTURE)
-		return TRUE
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100

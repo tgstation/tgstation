@@ -377,15 +377,16 @@ Behavior that's still missing from this component that original food items had t
 
 	var/food_taste_reaction
 
-
 	if(check_liked) //Callback handling; use this as an override for special food like donuts
 		food_taste_reaction = check_liked.Invoke(fraction, H)
-	else if(foodtypes & H.dna.species.toxic_food)
-		food_taste_reaction = FOOD_TOXIC
-	else if(foodtypes & H.dna.species.disliked_food)
-		food_taste_reaction = FOOD_DISLIKED
-	else if(foodtypes & H.dna.species.liked_food)
-		food_taste_reaction = FOOD_LIKED
+
+	if(!food_taste_reaction)
+		if(foodtypes & H.dna.species.toxic_food)
+			food_taste_reaction = FOOD_TOXIC
+		else if(foodtypes & H.dna.species.disliked_food)
+			food_taste_reaction = FOOD_DISLIKED
+		else if(foodtypes & H.dna.species.liked_food)
+			food_taste_reaction = FOOD_LIKED
 
 	switch(food_taste_reaction)
 		if(FOOD_TOXIC)
