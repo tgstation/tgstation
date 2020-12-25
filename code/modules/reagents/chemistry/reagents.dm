@@ -165,9 +165,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-///called on expose_temperature
-/datum/reagent/proc/on_temp_change()
-	return
 /// Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return
