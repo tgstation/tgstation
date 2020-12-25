@@ -176,6 +176,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///For custom overrides for species ass images
 	var/icon/ass_image
 
+	///For the plumbing reagent extractor.
+	var/list/reagent_exchange = list(/datum/element/plumbing_extractable/acid)
+
+
 ///////////
 // PROCS //
 ///////////
@@ -393,6 +397,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(flying_species && isnull(fly))
 		fly = new
 		fly.Grant(C)
+
+	///Give and take the right plumbing reagent exchange recipys
+	for(var/A in old_species.reagent_exchange)
+		C.reagents.RemoveElement(A)
+	for(var/A in reagent_exchange)
+		C.reagents.AddElement(A)
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
 

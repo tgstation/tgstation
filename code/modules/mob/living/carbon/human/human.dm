@@ -25,9 +25,6 @@
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 
-	//temp
-	reagents.AddElement(/datum/element/plumbing_extractable)
-
 	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()

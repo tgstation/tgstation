@@ -1,22 +1,20 @@
-///Element used for interfacing with the plumbing people extractor machine
+///Element used for interfacing with the plumbing people extractor machine. Placed on the reagents datum
 /datum/element/plumbing_extractable
 	var/list/required_reagents = list(/datum/reagent/water = 2)
 	var/list/returned_reagents = list(/datum/reagent/consumable/lemonade = 1)
 
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_DETACH
 
-/datum/element/plumbing_extractable/Attach(datum/target, list/required_reagents, list/returned_reagents)
+/datum/element/plumbing_extractable/Attach(datum/target)
 	. = ..()
 	if(!istype(target, /datum/reagents))
 		return ELEMENT_INCOMPATIBLE
 
-	if(required_reagents)
-		required_reagents = src.required_reagents
-	if(returned_reagents)
-		returned_reagents = src.returned_reagents
-
 	RegisterSignal(target, list(COMSIG_MOB_EXTRACT_MILK), .proc/try_trade)
+
+/datum/element/plumbing_extractable/Detach(datum/target)
+	UnregisterSignal(target, COMSIG_MOB_EXTRACT_MILK)
+	return ..()
 
 ///Check if all required reagents are present
 /datum/element/plumbing_extractable/proc/has_required(datum/reagents/victim)
