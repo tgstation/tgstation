@@ -87,7 +87,7 @@
 	if(!candidates.len || !owner)
 		bursting = FALSE
 		stage = 4
-		advance_embryo_stage()	//We stop growing at stage 5, so if we go back a stage, we need to be able to advance again.
+		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)	//We stop growing at stage 5, so if we go back a stage, we need to be able to advance again.
 		return
 
 	var/mob/dead/observer/ghost = pick(candidates)
