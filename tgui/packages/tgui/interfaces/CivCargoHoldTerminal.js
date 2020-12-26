@@ -112,35 +112,35 @@ const BountyPickBox = (props, context) => {
     id_bounty_values,
   } = data;
   return (
-    <Section title="Bounty Picker">
+    <Section title="Please Select a Bounty:">
       <LabeledList>
-        <LabeledList.Item label="Bounty1">
+        <LabeledList.Item label="Bounty 1">
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[0]}
-            onClick={() => act('pick', { 'value': 0 })} />
-          id_bounty_values[0]
+            onClick={() => act('pick', { 'value': 1 })} />
         </LabeledList.Item>
-        <LabeledList.Item label="Bounty2">
+        <LabeledList.Item label="Reward">{id_bounty_values[0]}</LabeledList.Item>
+        <LabeledList.Item label="Bounty 2">
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[1]}
-            onClick={() => act('pick', { 'value': 1 })} />
-          id_bounty_values[1]
+            onClick={() => act('pick', { 'value': 2 })} />
         </LabeledList.Item>
-        <LabeledList.Item label="Bounty3">
+        <LabeledList.Item label="Reward">{id_bounty_values[1]}</LabeledList.Item>
+        <LabeledList.Item label="Bounty 3">
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[2]}
-            onClick={() => act('pick', { 'value': 2 })} />
-          id_bounty_values[2]
+            onClick={() => act('pick', { 'value': 3 })} />
         </LabeledList.Item>
+        <LabeledList.Item label="Reward">{id_bounty_values[2]}</LabeledList.Item>
       </LabeledList>
     </Section>
   );

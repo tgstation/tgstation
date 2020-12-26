@@ -114,14 +114,14 @@
 	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
 	if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
 		var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
-		to_chat(usr, "<span class='warning'>Beep boop go fuck yourself, try again in [curr_time] minutes!</span>")
+		to_chat(usr, "<span class='warning'>Internal ID network spools coiling, try again in [curr_time] minutes!</span>")
 		return FALSE
 	if(!pot_acc.account_job)
 		to_chat(usr, "<span class='warning'>The console smartly rejects your ID card, as it lacks a job assignment!</span>")
 		return FALSE
-	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types),
-										random_bounty(pot_acc.account_job.bounty_types),
-										random_bounty(pot_acc.account_job.bounty_types)) //It's a good scene from War Dogs (2016).
+	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
+										random_bounty(pot_acc.account_job.bounty_types), // and 1 guarenteed assistant bounty if the other 2 suck.
+										random_bounty(CIV_JOB_BASIC))
 	pot_acc.bounty_timer = world.time
 	pot_acc.bounties = crumbs
 
@@ -154,7 +154,7 @@
 			data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
 			data["id_bounty_value"] = inserted_scan_id.registered_account.civilian_bounty.reward
 		if(inserted_scan_id.registered_account.bounties)
-			data["picking"] =
+			data["picking"] = TRUE
 			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[1].name,
 											inserted_scan_id.registered_account.bounties[2].name,
 											inserted_scan_id.registered_account.bounties[3].name)
