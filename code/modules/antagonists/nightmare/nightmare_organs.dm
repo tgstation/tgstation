@@ -23,6 +23,7 @@
 		M.RemoveSpell(shadowwalk)
 	..()
 
+
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
