@@ -621,10 +621,6 @@
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
 
-/obj/structure/curtain/Initialize()
-	. = ..()
-	GLOB.curtains += src
-
 /obj/structure/curtain/proc/toggle()
 	open = !open
 	update_icon()
@@ -716,9 +712,13 @@
 	icon_state = "cur_fancy-open"
 
 /obj/structure/curtain/cloth/fancy/mechanical
-	var/id = 1
+	var/id = NULL
 	icon_type = "cur_fancy"
 	icon_state = "cur_fancy-open"
+
+/obj/structure/curtain/cloth/fancy/mechanical/Initialize()
+	. = ..()
+	GLOB.curtains += src
 
 /obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
