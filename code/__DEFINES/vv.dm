@@ -87,6 +87,9 @@
 #define VV_HK_EDIT_FILTERS "edit_filters"
 #define VV_HK_ADD_AI "add_ai"
 
+// /atom/movable
+#define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
+
 // /obj
 #define VV_HK_OSAY "osay"
 #define VV_HK_MASS_DEL_TYPE "mass_delete_type"
