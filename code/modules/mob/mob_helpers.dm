@@ -29,11 +29,11 @@
 	return zone
 
 /**
-  * Return the zone or randomly, another valid zone
-  *
-  * probability controls the chance it chooses the passed in zone, or another random zone
-  * defaults to 80
-  */
+ * Return the zone or randomly, another valid zone
+ *
+ * probability controls the chance it chooses the passed in zone, or another random zone
+ * defaults to 80
+ */
 /proc/ran_zone(zone = FALSE, probability = 80)
 	if(zone && prob(probability))
 		return check_zone(zone)
