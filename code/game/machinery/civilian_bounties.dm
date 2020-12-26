@@ -129,7 +129,7 @@
 	pot_acc.bounty_timer = world.time
 	pot_acc.bounties = crumbs
 
-/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(var/choice)
+/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null
 	return inserted_scan_id.registered_account.civilian_bounty
