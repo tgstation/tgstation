@@ -147,8 +147,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
-			say("Safeties restored. Restarting...")
-
+			say("Safeties reset. Restarting...")
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement)
@@ -159,7 +158,6 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 			if (istype(possible_blacklist, /turf/open/floor/engine))
 				continue
 			turf_blacklist += possible_blacklist
-
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
