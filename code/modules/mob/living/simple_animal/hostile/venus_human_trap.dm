@@ -38,8 +38,7 @@
 	anchors += locate(x+2,y-2,z)
 
 	for(var/turf/T in anchors)
-		var/datum/beam/B = Beam(T, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
-		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
+		Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 	finish_time = world.time + growth_time
 	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
 	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
@@ -153,7 +152,7 @@
 			if(O.density)
 				return
 
-	var/datum/beam/newVine = Beam(the_target, "vine", time=INFINITY, maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
+	var/datum/beam/newVine = Beam(the_target, icon_state = "vine", maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
 	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, .proc/remove_vine, newVine)
 	vines += newVine
 	if(isliving(the_target))
@@ -205,7 +204,7 @@
 			if(!AM.anchored)
 				step(AM,get_dir(AM,src))
 		if(get_dist(src,B.target) == 0)
-			B.End()
+			qdel(B)
 
 /**
  * Removes a vine from the list.
@@ -215,5 +214,5 @@
  * Arguments:
  * * datum/beam/vine - The vine to be removed from the list.
  */
-/mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine, force)
+/mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine)
 	vines -= vine

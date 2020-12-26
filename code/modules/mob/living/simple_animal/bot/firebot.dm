@@ -61,6 +61,8 @@
 /mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A)
 	if(!on)
 		return
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(internal_ext)
 		internal_ext.afterattack(A, src)
 	else

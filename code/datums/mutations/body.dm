@@ -498,7 +498,7 @@
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
 		return TRUE
-	owner.dna.species.regenerate_organs(owner, excluded_zones = list(BODY_ZONE_CHEST)) //only regenerate head
+	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
 	owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)

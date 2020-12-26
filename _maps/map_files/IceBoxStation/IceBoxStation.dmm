@@ -168,9 +168,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/computer/security/qm{
-	dir = 2
-	},
+/obj/machinery/computer/security/qm,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aaw" = (
@@ -223,9 +221,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/cargo{
-	dir = 2
-	},
+/obj/machinery/computer/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aaE" = (
@@ -786,7 +782,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "abN" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "abO" = (
@@ -9853,7 +9848,7 @@
 	c_tag = "Auxillary Base Construction";
 	dir = 8
 	},
-/obj/machinery/computer/camera_advanced/base_construction{
+/obj/machinery/computer/camera_advanced/base_construction/aux{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,

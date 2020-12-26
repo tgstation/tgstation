@@ -133,8 +133,6 @@
 
 	var/list/implants = null
 
-	var/datum/riding/riding_datum
-
 	var/last_words	///used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()

@@ -73,19 +73,31 @@
 	material = /datum/material/plasma
 	penetrates_skin = NONE
 
+/datum/reagent/toxin/plasma/on_new(data)
+	. = ..()
+	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
+
+/datum/reagent/toxin/plasma/Destroy()
+	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
+	return ..()
+
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
 	return ..()
 
-/datum/reagent/toxin/plasma/on_temp_change()
+/// Handles plasma boiling.
+/datum/reagent/toxin/plasma/proc/on_temp_change(datum/reagents/_holder, old_temp)
+	SIGNAL_HANDLER
 	if(holder.chem_temp < LIQUID_PLASMA_BP)
 		return
-	if(holder.my_atom)
-		var/atom/A = holder.my_atom
-		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
-		holder.del_reagent(type)
+	if(!holder.my_atom)
+		return
+
+	var/atom/A = holder.my_atom
+	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+	holder.del_reagent(type)
 
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
 	if(!istype(exposed_turf))
