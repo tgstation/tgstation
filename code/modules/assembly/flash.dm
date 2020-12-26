@@ -200,7 +200,7 @@
 	if(victim.flags_1 & IS_SPINNING_1)
 		return DEVIATION_NONE
 
-	if(HAS_TRAIT(victim, TRAIT_LIGHT_SENSITIVE)) //Basically if you have Flypeople eyes
+	if(HAS_TRAIT(victim, TRAIT_FLASH_SENSITIVE)) //Basically if you have Flypeople eyes
 		return DEVIATION_NONE
 
 	// Are they on the same tile? We'll return partial deviation. This may be someone flashing while lying down

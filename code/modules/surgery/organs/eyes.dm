@@ -411,8 +411,8 @@
 
 /obj/item/organ/eyes/fly/Insert(mob/living/carbon/M, special = 0)
 	..()
-	ADD_TRAIT(M, TRAIT_LIGHT_SENSITIVE, ORGAN_TRAIT)
+	ADD_TRAIT(M, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 
 /obj/item/organ/eyes/fly/Remove(mob/living/carbon/M, special = 0)
-	REMOVE_TRAIT(M, TRAIT_LIGHT_SENSITIVE, ORGAN_TRAIT)
+	REMOVE_TRAIT(M, TRAIT_FLASH_SENSITIVE, ORGAN_TRAIT)
 	..()
