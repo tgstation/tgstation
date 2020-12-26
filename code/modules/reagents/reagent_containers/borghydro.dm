@@ -54,7 +54,6 @@ Borg Hypospray
 		regenerate_reagents()
 		charge_timer = 0
 
-	//update_icon()
 	return 1
 
 // Use this to add more chemicals for the borghypo to produce.

@@ -1,5 +1,0 @@
-author: "Megarop"
-delete-after: True
-changes: 
-  - tweak: "The suppressor sprite is positioned differently on Makarovs and APS machine pistols."
-  - tweak: "Suppressors no longer become shorter when you put them on an APS machine pistol."

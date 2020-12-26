@@ -5,7 +5,7 @@ Use of these hooks and drivers is optional and they must be installed
 explicitly before they take effect.
 
 To install the current set of hooks, or update if new hooks are added, run
-`install.bat` (Windows) or `install.sh` (Unix-like) as appropriate.
+`Install.bat` (Windows) or `tools/hooks/install` (Unix-like) as appropriate.
 
 Hooks expect a Unix-like environment on the backend. Usually this is handled
 automatically by GUI tools like TortoiseGit and GitHub for Windows, but

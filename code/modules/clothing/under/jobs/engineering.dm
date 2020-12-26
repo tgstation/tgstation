@@ -47,6 +47,7 @@
 	inhand_icon_state = "engi_suit"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 60, ACID = 20)
 	resistance_flags = NONE
+	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"
