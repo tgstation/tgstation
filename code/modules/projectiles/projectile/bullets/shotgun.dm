@@ -1,6 +1,6 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
-	damage = 30
+	damage = 50
 	sharpness = SHARP_POINTY
 	wound_bonus = 0
 
@@ -63,8 +63,8 @@
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
-	damage = 15
-	paralyze = 10
+	damage = 25
+	paralyze = 50
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
