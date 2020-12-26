@@ -148,13 +148,3 @@
 	if(trailer && .)
 		var/dir_to_move = get_dir(trailer.loc, newloc)
 		step(trailer, dir_to_move)
-
-// handles vehicles without riding components such as mechs bumping into things and having their access checked
-/obj/vehicle/Bump(atom/A)
-	. = ..()
-	if(GetComponent(/datum/component/riding)) // if we're a ridable vehicle, this is already handled in the riding component
-		return
-	if(istype(A, /obj/machinery/door))
-		var/obj/machinery/door/conditionalwall = A
-		for(var/m in occupants)
-			conditionalwall.bumpopen(m)

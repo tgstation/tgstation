@@ -81,8 +81,7 @@
 		vehicle_move(direction)
 	return TRUE
 
-/// The car version of [/obj/vehicle/sealed/mecha/proc/vehicle_move], cars handle their driving manually since the riders/driver aren't buckled and thus can't use the riding component
-/obj/vehicle/sealed/car/proc/vehicle_move(direction)
+/obj/vehicle/sealed/car/vehicle_move(direction)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
 	COOLDOWN_START(src, cooldown_vehicle_move, vehicle_move_delay)
