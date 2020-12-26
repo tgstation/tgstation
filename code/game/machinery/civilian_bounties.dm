@@ -107,8 +107,8 @@
 	playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 	sending = FALSE
 
+///Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 /obj/machinery/computer/piratepad_control/civilian/proc/add_bounties()
-//Here is where cargo bounties are added to the player's bank accounts, then adjusted and scaled into a civilian bounty.
 	if(!inserted_scan_id || !inserted_scan_id.registered_account)
 		return
 	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
@@ -154,16 +154,16 @@
 			data["id_bounty_num"] = inserted_scan_id.registered_account.bounty_num()
 			data["id_bounty_value"] = inserted_scan_id.registered_account.civilian_bounty.reward
 		if(inserted_scan_id.registered_account.bounties)
-			data["picking"] = TRUE
-			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[0].name,
-										   inserted_scan_id.registered_account.bounties[1].name,
-									   	   inserted_scan_id.registered_account.bounties[2].name)
-			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[0].reward,
-									        inserted_scan_id.registered_account.bounties[1].reward,
-									        inserted_scan_id.registered_account.bounties[2].reward)
-		else 
+			data["picking"] =
+			data["id_bounty_names"] = list(inserted_scan_id.registered_account.bounties[1].name,
+											inserted_scan_id.registered_account.bounties[2].name,
+											inserted_scan_id.registered_account.bounties[3].name)
+			data["id_bounty_values"] = list(inserted_scan_id.registered_account.bounties[1].reward,
+											inserted_scan_id.registered_account.bounties[2].reward,
+											inserted_scan_id.registered_account.bounties[3].reward)
+		else
 			data["picking"] = FALSE
-			
+
 	return data
 
 /obj/machinery/computer/piratepad_control/civilian/ui_act(action, params)
