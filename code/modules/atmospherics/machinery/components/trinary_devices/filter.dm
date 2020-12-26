@@ -279,6 +279,14 @@
 	name = "zauker filter"
 	filter_type = "zauker"
 
+/obj/machinery/atmospherics/components/trinary/filter/atmos/helium
+	name = "helium filter"
+	filter_type = "helium"
+
+/obj/machinery/atmospherics/components/trinary/filter/atmos/antinoblium
+	name = "antinoblium filter"
+	filter_type = "antinoblium"
+
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
 	icon_state = "filter_on-0_f"
 	flipped = TRUE
@@ -339,6 +347,12 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/zauker
 	name = "zauker filter"
 	filter_type = "zauker"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/helium
+	name = "helium filter"
+	filter_type = "helium"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/antinoblium
+	name = "antinoblium filter"
+	filter_type = "antinoblium"
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 

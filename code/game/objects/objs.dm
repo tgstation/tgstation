@@ -78,7 +78,7 @@
 
 
 /obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	..()
+	. = ..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
 		qdel(src)
@@ -198,7 +198,11 @@
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
-/obj/proc/CanAStarPass()
+/obj/proc/CanAStarPass(ID, dir, caller)
+	if(ismovable(caller))
+		var/atom/movable/AM = caller
+		if(AM.pass_flags & pass_flags_self)
+			return TRUE
 	. = !density
 
 /obj/proc/check_uplink_validity()
@@ -292,11 +296,11 @@
 		reskin_obj(user)
 
 /**
-  * Reskins object based on a user's choice
-  *
-  * Arguments:
-  * * M The mob choosing a reskin option
-  */
+ * Reskins object based on a user's choice
+ *
+ * Arguments:
+ * * M The mob choosing a reskin option
+ */
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
@@ -317,11 +321,11 @@
 	to_chat(M, "[src] is now skinned as '[pick].'")
 
 /**
-  * Checks if we are allowed to interact with a radial menu for reskins
-  *
-  * Arguments:
-  * * user The mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu for reskins
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ */
 /obj/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
@@ -361,6 +365,7 @@
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_OBJ, src, reagents, methods, volume_modifier, show_message)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_obj(src, reagents[R])

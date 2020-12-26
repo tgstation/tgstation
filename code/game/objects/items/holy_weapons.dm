@@ -6,7 +6,7 @@
 	icon_state = "knight_templar"
 	inhand_icon_state = "knight_templar"
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
@@ -76,7 +76,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	flags_inv = HIDEHAIR //bald
+	flags_inv = NONE
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	inhand_icon_state = "cage"
@@ -219,11 +219,11 @@
 		reskin_holy_weapon(user)
 
 /**
-  * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
-  *
-  * Arguments:
-  * * M The mob choosing a nullrod reskin
-  */
+ * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
+ *
+ * Arguments:
+ * * M The mob choosing a nullrod reskin
+ */
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
 	if(GLOB.holy_weapon_type)
 		return
@@ -252,11 +252,11 @@
 		M.put_in_hands(holy_weapon)
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/item/nullrod/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE

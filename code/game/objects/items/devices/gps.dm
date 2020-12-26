@@ -64,7 +64,7 @@
 		// I assume it's faster to color,tag and OR the turf in, rather
 		// then checking if its there
 		T.color = RANDOM_COLOUR
-		T.maptext = "[T.x],[T.y],[T.z]"
+		T.maptext = MAPTEXT("[T.x],[T.y],[T.z]")
 		tagged |= T
 
 /obj/item/gps/visible_debug/proc/clear()

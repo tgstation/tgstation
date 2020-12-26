@@ -1,3 +1,4 @@
+/// Any humanoid (non-Xeno) mob, such as humans, plasmamen, lizards.
 /mob/living/carbon/human
 	name = "Unknown"
 	real_name = "Unknown"
@@ -58,6 +59,7 @@
 
 	var/list/datum/bioware = list()
 
+	/// What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
 	var/last_fire_update
@@ -69,4 +71,10 @@
 
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0
+
+	/// The core temperature of the human compaired to the skin temp of the body
+	var/coretemperature = BODYTEMP_NORMAL
+
+	///Exposure to damaging heat levels increases stacks, stacks clean over time when temperatures are lower. Stack is consumed to add a wound.
+	var/heat_exposure_stacks = 0
 

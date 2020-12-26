@@ -28,7 +28,7 @@
 	to_chat(user, "<span class='warning'>It's bolted to the floor, you'll need to unwrench it first.</span>")
 
 /obj/structure/statue/proc/can_user_rotate(mob/user)
-	return isliving(user) && user.canUseTopic(src, BE_CLOSE, no_dexterity = ismonkey(user))
+	return !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user))
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -257,9 +257,9 @@
 	icon_state = "snowman"
 
 /obj/structure/statue/snow/snowlegion
-    name = "snowlegion"
-    desc = "Looks like that weird kid with the tiger plushie has been round here again."
-    icon_state = "snowlegion"
+	name = "snowlegion"
+	desc = "Looks like that weird kid with the tiger plushie has been round here again."
+	icon_state = "snowlegion"
 
 ///////////////////////////////bronze///////////////////////////////////
 
@@ -322,10 +322,10 @@
 	return ..()
 
 /*
- Hit the block to start
- Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
- Hit block again to start sculpting.
- Moving interrupts
+Hit the block to start
+Point with the chisel at the target to choose what to sculpt or hit block to choose from preset statue types.
+Hit block again to start sculpting.
+Moving interrupts
 */
 /obj/item/chisel/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
@@ -426,8 +426,6 @@
 	var/completion = 0
 	/// Greyscaled target with cutout filter
 	var/mutable_appearance/target_appearance_with_filters
-	/// Cutout filter for main block sprite
-	var/partial_uncover_filter
 	/// HSV color filters parameters
 	var/static/list/greyscale_with_value_bump = list(0,0,0, 0,0,0, 0,0,1, 0,0,-0.05)
 
@@ -490,20 +488,19 @@
 	if(!target_appearance_with_filters)
 		target_appearance_with_filters = new(current_target)
 		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER
+		//Doesn't use filter helpers because MAs aren't atoms
 		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	completion = value
 	var/static/icon/white = icon('icons/effects/alphacolors.dmi', "white")
 	switch(value)
 		if(0)
 			//delete uncovered and reset filters
-			filters -= partial_uncover_filter
+			remove_filter("partial_uncover")
 			target_appearance_with_filters = null
 		else
 			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
-			if(partial_uncover_filter)
-				filters -= partial_uncover_filter
-			partial_uncover_filter = filter(type="alpha",icon=white,y=-mask_offset)
-			filters += partial_uncover_filter
+			remove_filter("partial_uncover")
+			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
 	update_icon()
 

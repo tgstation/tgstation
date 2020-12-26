@@ -6,8 +6,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/beacon,
-		/obj/singularity/narsie,
-		/obj/singularity/wizard,
+		/obj/narsie,
+		/obj/tear_in_reality,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/quantumpad,
@@ -195,7 +195,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		setupExports()
 
 	var/msg = ""
-	var/matched_bounty = FALSE
 
 	var/datum/export_report/ex = new
 
@@ -204,16 +203,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			if(bounty_ship_item_and_contents(AM, dry_run = FALSE))
-				matched_bounty = TRUE
 			if(!AM.anchored || istype(AM, /obj/vehicle/sealed/mecha))
 				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)
 		ex.exported_atoms += "." //ugh
-
-	if(matched_bounty)
-		msg += "Bounty items received. An update has been sent to all bounty consoles. "
 
 	for(var/datum/export/E in ex.total_amount)
 		var/export_text = E.total_printout(ex)

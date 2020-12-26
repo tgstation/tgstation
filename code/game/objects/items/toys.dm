@@ -198,14 +198,14 @@
 	return MANUAL_SUICIDE
 
 /**
-  * Internal function used in the toy singularity suicide
-  *
-  * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
-  * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
-  * Throwing the singularity away will cause the user to start choking themself to death.
-  * Arguments:
-  * * user - Whoever is doing the suiciding
-  */
+ * Internal function used in the toy singularity suicide
+ *
+ * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
+ * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
+ * Throwing the singularity away will cause the user to start choking themself to death.
+ * Arguments:
+ * * user - Whoever is doing the suiciding
+ */
 /obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
 	if(!user)
 		return
@@ -292,8 +292,8 @@
 	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
-						"<span class='danger'>You fire [src] at [target]!</span>", \
-						 "<span class='hear'>You hear a gunshot!</span>")
+		"<span class='danger'>You fire [src] at [target]!</span>", \
+		"<span class='hear'>You hear a gunshot!</span>")
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -862,11 +862,11 @@
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
@@ -875,8 +875,8 @@
 	return TRUE
 
 /**
-  * This proc updates the sprite for when you create a hand of cards
-  */
+ * This proc updates the sprite for when you create a hand of cards
+ */
 /obj/item/toy/cards/cardhand/proc/update_sprite()
 	cut_overlays()
 	var/overlay_cards = currenthand.len

@@ -106,6 +106,7 @@
 
 	can_buckle = TRUE
 	buckle_lying = 0
+	/// What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
 
 /mob/living/silicon/robot/get_cell()
@@ -118,6 +119,7 @@
 
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
 	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 
 	robot_modules_background = new()
@@ -525,12 +527,12 @@
 		clear_alert("hacked")
 
 /**
-  * Handles headlamp smashing
-  *
-  * When called (such as by the shadowperson lighteater's attack), this proc will break the borg's headlamp
-  * and then call toggle_headlamp to disable the light. It also plays a sound effect of glass breaking, and
-  * tells the borg what happened to its chat. Broken lights can be repaired by using a flashlight on the borg.
-  */
+ * Handles headlamp smashing
+ *
+ * When called (such as by the shadowperson lighteater's attack), this proc will break the borg's headlamp
+ * and then call toggle_headlamp to disable the light. It also plays a sound effect of glass breaking, and
+ * tells the borg what happened to its chat. Broken lights can be repaired by using a flashlight on the borg.
+ */
 /mob/living/silicon/robot/proc/smash_headlamp()
 	if(!lamp_functional)
 		return
@@ -540,18 +542,18 @@
 	to_chat(src, "<span class='danger'>Your headlamp is broken! You'll need a human to help replace it.</span>")
 
 /**
-  * Handles headlamp toggling, disabling, and color setting.
-  *
-  * The initial if statment is a bit long, but the gist of it is that should the lamp be on AND the update_color
-  * arg be true, we should simply change the color of the lamp but not disable it. Otherwise, should the turn_off
-  * arg be true, the lamp already be enabled, any of the normal reasons the lamp would turn off happen, or the
-  * update_color arg be passed with the lamp not on, we should set the lamp off. The update_color arg is only
-  * ever true when this proc is called from the borg tablet, when the color selection feature is used.
-  *
-  * Arguments:
-  * * arg1 - turn_off, if enabled will force the lamp into an off state (rather than toggling it if possible)
-  * * arg2 - update_color, if enabled, will adjust the behavior of the proc to change the color of the light if it is already on.
-  */
+ * Handles headlamp toggling, disabling, and color setting.
+ *
+ * The initial if statment is a bit long, but the gist of it is that should the lamp be on AND the update_color
+ * arg be true, we should simply change the color of the lamp but not disable it. Otherwise, should the turn_off
+ * arg be true, the lamp already be enabled, any of the normal reasons the lamp would turn off happen, or the
+ * update_color arg be passed with the lamp not on, we should set the lamp off. The update_color arg is only
+ * ever true when this proc is called from the borg tablet, when the color selection feature is used.
+ *
+ * Arguments:
+ * * arg1 - turn_off, if enabled will force the lamp into an off state (rather than toggling it if possible)
+ * * arg2 - update_color, if enabled, will adjust the behavior of the proc to change the color of the light if it is already on.
+ */
 /mob/living/silicon/robot/proc/toggle_headlamp(turn_off = FALSE, update_color = FALSE)
 	//if both lamp is enabled AND the update_color flag is on, keep the lamp on. Otherwise, if anything listed is true, disable the lamp.
 	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || stat || low_power_mode))
@@ -721,14 +723,11 @@
 		if(DISCONNECT) //Tampering with the wires
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
-/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(stat || lockcharge || low_power_mode)
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+	if(lockcharge || low_power_mode)
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
-	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	return TRUE
+	return ..()
 
 /mob/living/silicon/robot/updatehealth()
 	..()
@@ -855,10 +854,7 @@
 
 	// Remove upgrades.
 	for(var/obj/item/borg/upgrade/I in upgrades)
-		I.deactivate(src)
 		I.forceMove(get_turf(src))
-
-	upgrades.Cut()
 
 	ionpulse = FALSE
 	revert_shell()
@@ -907,14 +903,53 @@
 		hat = null
 		if(!QDELETED(src)) //Don't update icons if we are deleted.
 			update_icons()
-	. = ..()
+	return ..()
+
+///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
+/mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
+	if(new_upgrade in upgrades)
+		return FALSE
+	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
+		return FALSE
+	if(!new_upgrade.action(src, user))
+		to_chat(user, "<span class='danger'>Upgrade error.</span>")
+		new_upgrade.forceMove(loc) //gets lost otherwise
+		return FALSE
+	to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
+	to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[new_upgrade]</b>\"...Setup complete.\n----------------")
+	if(new_upgrade.one_use)
+		logevent("Firmware [new_upgrade] run successfully.")
+		qdel(new_upgrade)
+		return FALSE
+	upgrades += new_upgrade
+	new_upgrade.forceMove(src)
+	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, .proc/remove_from_upgrades)
+	RegisterSignal(new_upgrade, COMSIG_PARENT_QDELETING, .proc/on_upgrade_deleted)
+	logevent("Hardware [new_upgrade] installed successfully.")
+
+///Called when an upgrade is moved outside the robot. So don't call this directly, use forceMove etc.
+/mob/living/silicon/robot/proc/remove_from_upgrades(obj/item/borg/upgrade/old_upgrade)
+	SIGNAL_HANDLER
+	if(loc == src)
+		return
+	old_upgrade.deactivate(src)
+	upgrades -= old_upgrade
+	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+
+///Called when an applied upgrade is deleted.
+/mob/living/silicon/robot/proc/on_upgrade_deleted(obj/item/borg/upgrade/old_upgrade)
+	SIGNAL_HANDLER
+	if(!QDELETED(src))
+		old_upgrade.deactivate(src)
+	upgrades -= old_upgrade
+	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
 /**
-  * make_shell: Makes an AI shell out of a cyborg unit
-  *
-  * Arguments:
-  * * board - B.O.R.I.S. module board used for transforming the cyborg into AI shell
-  */
+ * make_shell: Makes an AI shell out of a cyborg unit
+ *
+ * Arguments:
+ * * board - B.O.R.I.S. module board used for transforming the cyborg into AI shell
+ */
 /mob/living/silicon/robot/proc/make_shell(obj/item/borg/upgrade/ai/board)
 	if(!board)
 		upgrades |= new /obj/item/borg/upgrade/ai(src)
@@ -928,8 +963,8 @@
 	diag_hud_set_aishell()
 
 /**
-  * revert_shell: Reverts AI shell back into a normal cyborg unit
-  */
+ * revert_shell: Reverts AI shell back into a normal cyborg unit
+ */
 /mob/living/silicon/robot/proc/revert_shell()
 	if(!shell)
 		return
@@ -946,11 +981,11 @@
 	diag_hud_set_aishell()
 
 /**
-  * deploy_init: Deploys AI unit into AI shell
-  *
-  * Arguments:
-  * * AI - AI unit that initiated the deployment into the AI shell
-  */
+ * deploy_init: Deploys AI unit into AI shell
+ *
+ * Arguments:
+ * * AI - AI unit that initiated the deployment into the AI shell
+ */
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
 	real_name = "[AI.real_name] [designation] Shell-[ident]"
 	name = real_name
@@ -1024,38 +1059,18 @@
 	if(can_buckle && isliving(user) && isliving(M) && !(M in buckled_mobs) && ((user != src) || (a_intent != INTENT_HARM)))
 		return user_buckle_mob(M, user, check_loc = FALSE)
 
-/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= RIDER_NEEDS_ARM)
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
-	var/datum/component/riding/riding_datum = LoadComponent(/datum/component/riding/cyborg)
-	if(buckled_mobs)
-		if(buckled_mobs.len >= max_buckled_mobs)
-			return
-		if(M in buckled_mobs)
-			return
-	if(stat)
-		return
-	if(incapacitated())
-		return
-	if(module)
-		if(!module.allow_riding)
-			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
-			return
-	if(iscarbon(M) && !M.incapacitated() && !riding_datum.equip_buckle_inhands(M, 1))
-		if(M.usable_hands == 0)
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
-		else
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
-		return
-	return ..()
 
-/mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
-	if(iscarbon(user))
-		var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
-		if(istype(riding_datum))
-			riding_datum.unequip_buckle_inhands(user)
-			riding_datum.restore_position(user)
+	if(stat || incapacitated())
+		return
+	if(module && !module.allow_riding)
+		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
+		return
+
+	buckle_mob_flags= RIDER_NEEDS_ARM // just in case
 	return ..()
 
 /mob/living/silicon/robot/resist()
@@ -1106,14 +1121,14 @@
 	toggle_headlamp(FALSE, TRUE)
 
 /**
-  * Records an IC event log entry in the cyborg's internal tablet.
-  *
-  * Creates an entry in the borglog list of the cyborg's internal tablet, listing the current
-  * in-game time followed by the message given. These logs can be seen by the cyborg in their
-  * BorgUI tablet app. By design, logging fails if the cyborg is dead.
-  *
-  * Arguments:
-  * arg1: a string containing the message to log.
+ * Records an IC event log entry in the cyborg's internal tablet.
+ *
+ * Creates an entry in the borglog list of the cyborg's internal tablet, listing the current
+ * in-game time followed by the message given. These logs can be seen by the cyborg in their
+ * BorgUI tablet app. By design, logging fails if the cyborg is dead.
+ *
+ * Arguments:
+ * arg1: a string containing the message to log.
  */
 /mob/living/silicon/robot/proc/logevent(string = "")
 	if(!string)

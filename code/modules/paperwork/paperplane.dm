@@ -121,8 +121,8 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"
 
-/obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+/obj/item/paper/AltClick(mob/living/user, obj/item/I)
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src

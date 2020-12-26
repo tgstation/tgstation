@@ -165,9 +165,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-///called on expose_temperature
-/datum/reagent/proc/on_temp_change()
-	return
 /// Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return
@@ -211,10 +208,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /**
-  * New, standardized method for chemicals to affect hydroponics trays.
-  * Defined on a per-chem level as opposed to by the tray.
-  * Can affect plant's health, stats, or cause the plant to react in certain ways.
-  */
+ * New, standardized method for chemicals to affect hydroponics trays.
+ * Defined on a per-chem level as opposed to by the tray.
+ * Can affect plant's health, stats, or cause the plant to react in certain ways.
+ */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	if(!mytray)
 		return

@@ -99,15 +99,15 @@
 	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
 	var/wound_bonus_hitstreak_max = 12
 
-/mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload, obj/effect/dummy/phased_mob/slaughter/bloodpool)//Bloodpool is the blood pool we spawn in
+/mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload, obj/effect/dummy/phased_mob/bloodpool)//Bloodpool is the blood pool we spawn in
 	..()
 	ADD_TRAIT(src, TRAIT_BLOODCRAWL_EAT, "innate")
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
-	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
+	if(istype(loc, /obj/effect/dummy/phased_mob))
 		bloodspell.phased = TRUE
 	if(bloodpool)
-		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/slaughter/.proc/deleteself)
+		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
 
 /mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
 	if(!isliving(A))
@@ -127,6 +127,8 @@
 	log_combat(src, victim, "slaughter slammed")
 
 /mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(iscarbon(A))
 		var/mob/living/carbon/target = A
 		if(target.stat != DEAD && target.mind && current_hitstreak < wound_bonus_hitstreak_max)
@@ -165,7 +167,7 @@
 	if(M != user)
 		return ..()
 	user.visible_message("<span class='warning'>[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!</span>", \
-						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
+		"<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
@@ -173,7 +175,7 @@
 			qdel(src)
 			return
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
-						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
+		"<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 

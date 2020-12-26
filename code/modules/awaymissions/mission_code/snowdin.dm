@@ -263,7 +263,7 @@
 /obj/item/paper/crumpled/ruins/snowdin/foreshadowing
 	name = "scribbled note"
 	info = {"Something's gone VERY wrong here. Jouslen has been mumbling about some weird shit in his cabin during the night and he seems always tired when we're working. I tried to confront him about it and he blew up on me,
-	 telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker..."}
+		telling me to mind my own business. I reported him to the officer, said he'd look into it. We only got another 2 months here before we're pulled for another assignment, so this shit can't go any quicker..."}
 
 /obj/item/paper/crumpled/ruins/snowdin/misc1
 	name = "Mission Prologue"
@@ -273,8 +273,8 @@
 /obj/item/paper/crumpled/ruins/snowdin/dontdeadopeninside
 	name = "scribbled note"
 	info = {"If you're reading this: GET OUT! The mining go on here has unearthed something that was once-trapped by the layers of ice on this hell-hole. The overseer and Jouslen have gone missing. The officer is
-	 keeping the rest of us on lockdown and I swear to god I keep hearing strange noises outside the walls at night. The gateway link has gone dead and without a supply of resources from Central, we're left
-	 for dead here. We haven't heard anything back from the mining squad either, so I can only assume whatever the fuck they unearthed got them first before coming for us. I don't want to die here..."}
+		keeping the rest of us on lockdown and I swear to god I keep hearing strange noises outside the walls at night. The gateway link has gone dead and without a supply of resources from Central, we're left
+		for dead here. We haven't heard anything back from the mining squad either, so I can only assume whatever the fuck they unearthed got them first before coming for us. I don't want to die here..."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/saw_usage
 	name = "SAW Usage"
@@ -289,19 +289,19 @@
 /obj/item/paper/fluff/awaymissions/snowdin/profile/overseer
 	name = "Personnel Record AOP#01"
 	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Caleb Reed<br><b>Age:</b>38<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Overseer<br><br><center><b>Information</b></center><br><center>Caleb Reed lead several expeditions
-	 among uncharted planets in search of plasma for Nanotrasen, scouring from hot savanas to freezing arctics. Track record is fairly clean with only incidient including the loss of two researchers during the
-	 expedition of <b>_______</b>, where mis-used of explosive ordinance for tunneling causes a cave-in."}
+		among uncharted planets in search of plasma for Nanotrasen, scouring from hot savanas to freezing arctics. Track record is fairly clean with only incidient including the loss of two researchers during the
+		expedition of <b>_______</b>, where mis-used of explosive ordinance for tunneling causes a cave-in."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/sec1
 	name = "Personnel Record AOP#02"
 	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>James Reed<br><b>Age:</b>43<br><b>Gender:</b>Male<br><b>On-Site Profession:</b>Outpost Security<br><br><center><b>Information</b></center><br><center>James Reed has been a part
-	 of Nanotrasen's security force for over 20 years, first joining in 22XX. A clean record and unwavering loyalty to the corperation through numerous deployments to various sites makes him a valuable asset to Natotrasen
-	  when it comes to keeping the peace while prioritizing Nanotrasen privacy matters. "}
+		of Nanotrasen's security force for over 20 years, first joining in 22XX. A clean record and unwavering loyalty to the corperation through numerous deployments to various sites makes him a valuable asset to Natotrasen
+		when it comes to keeping the peace while prioritizing Nanotrasen privacy matters. "}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/hydro1
 	name = "Personnel Record AOP#03"
 	info = {"<b><center>Personnel Log</b></center><br><br><b>Name:</b>Katherine Esterdeen<br><b>Age:</b>27<br><b>Gender:</b>Female<br><b>On-Site Profession:</b>Outpost Botanist<br><br><center><b>Information</b></center><br><center>Katherine Esterdeen is a recent
-	 graduate with a major in Botany and a PH.D in Ecology. Having a clean record and eager to work, Esterdeen seems to be the right fit for maintaining plants in the middle of nowhere."}
+		graduate with a major in Botany and a PH.D in Ecology. Having a clean record and eager to work, Esterdeen seems to be the right fit for maintaining plants in the middle of nowhere."}
 
 /obj/item/paper/fluff/awaymissions/snowdin/profile/engi1
 	name = "Personnel Record AOP#04"
@@ -329,12 +329,12 @@
 /obj/item/paper/fluff/awaymissions/snowdin/mining
 	name = "Assignment Notice"
 	info = {"This cold-ass planet is the new-age equivalent of striking gold. Huge deposits of plasma and literal streams of plasma run through the caverns under all this ice and we're here to mine it all.\
-	 Nanotrasen pays by the pound, so get minin' boys!"}
+		Nanotrasen pays by the pound, so get minin' boys!"}
 
 /obj/item/paper/crumpled/ruins/snowdin/lootstructures
 	name = "scribbled note"
 	info = {"There's some ruins scattered along the cavern, their walls seem to be made of some sort of super-condensed mixture of ice and snow. We've already barricaded up the ones we've found so far,
-	 since we keep hearing some strange noises from inside. Besides, what sort of fool would wrecklessly run into ancient ruins full of monsters for some old gear, anyway?"}
+		since we keep hearing some strange noises from inside. Besides, what sort of fool would wrecklessly run into ancient ruins full of monsters for some old gear, anyway?"}
 
 /obj/item/paper/crumpled/ruins/snowdin/shovel
 	name = "shoveling duties"
