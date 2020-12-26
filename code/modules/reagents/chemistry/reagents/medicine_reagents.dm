@@ -1412,3 +1412,83 @@
 	glass_desc = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
 	metabolization_rate = REAGENTS_METABOLISM
 	clot_coeff_per_wound = 0.6
+
+/datum/reagent/medicine/light_blessing
+	name = "Lights Blessing"
+	description = "An extract from a plant person, rumored to heal all those who bask themselves in light."
+	color = "#00ee00"
+	taste_description = "cabbage"
+	overdose_threshold = 80
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+
+	///Min light amount to heal
+	var/light_min = 0.2
+	///max light amount to heal, basically here for Darks blessing
+	var/light_max = INFINITY
+
+/datum/reagent/medicine/light_blessing/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	//I'll admit to copying most of this from podpeople.
+	var/turf/T = get_turf(M)
+	if(T)
+		var/light_amount = min(1,T.get_lumcount())
+		if(light_amount >= light_min && light_amount <= light_max) //if there's enough light, heal
+			M.heal_overall_damage(1, 1, 0, BODYPART_ORGANIC)
+			M.adjustToxLoss(-0.5)
+			M.adjustOxyLoss(-0.5)
+
+/datum/reagent/medicine/light_blessing/overdose_process(mob/living/M)
+	. = ..()
+
+	if(prob(5))
+		to_chat(M, "<span class='userdanger'>You cough up grass!</span>")
+		M.emote("cough")
+		new /obj/item/food/grown/grass (get_turf(M))
+		M.Paralyze(20)
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 5 * REM)
+
+/datum/reagent/medicine/light_blessing/overdose_start(mob/living/M)
+	. = ..()
+
+	var/obj/item/organ/lungs/L = M.getorganslot(ORGAN_SLOT_LUNGS)
+	if(L)
+		L.add_atom_colour(color, COLOUR_PRIORITY_AMOUNT) //grassy lungs
+
+/datum/reagent/medicine/light_blessing/dark
+	name = "Darkness' Blessing"
+	description = "A pitch black liquid, cold yet soothing."
+	color = "#000000"
+	taste_description = "cold"
+	overdose_threshold = 0 //No overdose, it can't be powergamed that hard since anyone with a flashlight can cuck you. also its basically impossible to get
+	metabolization_rate = REAGENTS_METABOLISM
+
+	light_min = 0
+	light_max = 0.15
+
+/datum/reagent/medicine/light_blessing/dark/on_mob_life(mob/living/carbon/M)
+	. = ..()
+
+	if(!ishuman(M))
+		return
+
+	var/mob/living/carbon/human/H = M
+
+	//About 5 minutes
+	if(current_cycle == 150)
+		var/obj/item/organ/eyes/night_vision/new_eyes = new()
+		new_eyes.eye_color = "ff0000" //red eyes
+		new_eyes.Insert(H, drop_if_replaced = FALSE)
+		to_chat(H, "<span class='notice'>Your eyes become accustomed to the dark...</span>")
+
+	//About 10 minutes
+	if(current_cycle == 300)
+		H.gain_trauma(/datum/brain_trauma/magic/lumiphobia)
+		to_chat(H, "<span class='boldnotice'>Your skin becomes accustomated to the dark...</span>")
+
+		//better than the shitcoding needed to give humans a shadowperson skin, which was really easy but the head was always invisible
+		H.skin_tone = "african2"
+		H.dna.features["mcolor"] = "303030"
+		H.regenerate_icons()
+
+
+

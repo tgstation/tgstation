@@ -20,3 +20,13 @@
 	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/drug/krokodil = 10, /datum/reagent/drug/bath_salts = 10, \
 		/datum/reagent/medicine/omnizine/protozine = 10)
 	returned_reagents = list(/datum/reagent/drug/essence_of_drug = 5)
+
+///Recipey is tweaked to be very slow but cheap. To get it faster, get more podpeople, which is the main bottleneck considering their rarity
+/datum/element/plumbing_extractable/lights_blessing
+	required_reagents = list(/datum/reagent/ammonia = 15)
+	returned_reagents = list(/datum/reagent/medicine/light_blessing = 1)
+
+///Needs a little bit of smart engineering to get stable liquid dark matter flowing, but otherwise the main bottle neck is getting shadowpeople
+/datum/element/plumbing_extractable/darkness_blessing
+	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
+	returned_reagents = list(/datum/reagent/medicine/light_blessing/dark = 1)
