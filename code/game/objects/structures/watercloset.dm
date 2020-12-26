@@ -711,8 +711,6 @@
 
 /obj/structure/curtain/cloth/fancy/mechanical
 	var/id = null
-	icon_type = "cur_fancy"
-	icon_state = "cur_fancy-open"
 
 /obj/structure/curtain/cloth/fancy/mechanical/Destroy()
 	GLOB.curtains -= src
