@@ -392,7 +392,7 @@ Contains:
 	inhand_icon_state = "hardsuit-berserker"
 	slowdown = 0
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/berserker
-	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/transforming/cleaving_saw)
@@ -421,7 +421,7 @@ Contains:
 	icon_state = "hardsuit0-berserker"
 	inhand_icon_state = "hardsuit0-berserker"
 	hardsuit_type = "berserker"
-	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF

@@ -640,7 +640,7 @@
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, "<span class='notice'>You send [held_sausage] towards [target].</span>")
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
-			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
+			beam = user.Beam(target,icon_state="rped_upgrade", time = 10 SECONDS)
 		else if (user.Adjacent(target))
 			to_chat(user, "<span class='notice'>You extend [src] towards [target].</span>")
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)

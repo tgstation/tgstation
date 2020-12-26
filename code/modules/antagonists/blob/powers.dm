@@ -1,3 +1,6 @@
+#define BLOB_REROLL_CHOICES 6
+#define BLOB_REROLL_RADIUS 60
+
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
@@ -58,6 +61,7 @@
 		core.update_icon()
 	update_health_hud()
 	placed = 1
+	announcement_time = world.time + 6000
 	return TRUE
 
 /mob/camera/blob/verb/transport_core()
@@ -348,25 +352,54 @@
 	set category = "Blob"
 	set name = "Reactive Strain Adaptation (40)"
 	set desc = "Replaces your strain with a random, different one."
-	if(!rerolling && (free_strain_rerolls || can_buy(40)))
-		rerolling = TRUE
-		reroll_strain()
-		rerolling = FALSE
-		if(free_strain_rerolls)
-			free_strain_rerolls--
-		last_reroll_time = world.time
 
-/mob/camera/blob/proc/reroll_strain()
-	var/list/choices = list()
-	while (length(choices) < 6)
-		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
-		choices[initial(bs.name)] = bs
+	if (!free_strain_rerolls && blob_points < BLOB_REROLL_COST)
+		to_chat(src, "<span class='warning'>You need at least [BLOB_REROLL_COST] resources to reroll your strain again!</span>")
+		return
 
-	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices, /proc/cmp_typepaths_asc)
-	if (choice && choices[choice] && !QDELETED(src))
-		var/datum/blobstrain/bs = choices[choice]
-		set_strain(bs)
+	open_reroll_menu()
 
+/// Open the menu to reroll strains
+/mob/camera/blob/proc/open_reroll_menu()
+	if (!strain_choices)
+		strain_choices = list()
+
+		var/list/new_strains = GLOB.valid_blobstrains.Copy()
+		for (var/_ in 1 to BLOB_REROLL_CHOICES)
+			var/datum/blobstrain/strain = pick_n_take(new_strains)
+
+			var/image/strain_icon = image('icons/mob/blob.dmi', "blob_core")
+			strain_icon.color = initial(strain.color)
+
+			var/info_text = "<span class='boldnotice'>[initial(strain.name)]</span>"
+			info_text += "<br><span class='notice'>[initial(strain.analyzerdescdamage)]</span>"
+			if (!isnull(initial(strain.analyzerdesceffect)))
+				info_text += "<br><span class='notice'>[initial(strain.analyzerdesceffect)]</span>"
+
+			var/datum/radial_menu_choice/choice = new
+			choice.image = strain_icon
+			choice.info = info_text
+
+			strain_choices[initial(strain.name)] = choice
+
+	var/strain_result = show_radial_menu(src, src, strain_choices, radius = BLOB_REROLL_RADIUS, tooltips = TRUE)
+	if (isnull(strain_result))
+		return
+
+	if (!free_strain_rerolls && !can_buy(BLOB_REROLL_COST))
+		return
+
+	for (var/_other_strain in GLOB.valid_blobstrains)
+		var/datum/blobstrain/other_strain = _other_strain
+		if (initial(other_strain.name) == strain_result)
+			set_strain(other_strain)
+
+			if (free_strain_rerolls)
+				free_strain_rerolls -= 1
+
+			last_reroll_time = world.time
+
+			return
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"
@@ -391,3 +424,6 @@
 	if(!placed && autoplace_max_time <= world.time)
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")
+
+#undef BLOB_REROLL_CHOICES
+#undef BLOB_REROLL_RADIUS

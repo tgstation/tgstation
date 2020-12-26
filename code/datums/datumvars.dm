@@ -47,6 +47,3 @@
 	. = list()
 	if(("name" in vars) && !isatom(src))
 		. += "<b>[vars["name"]]</b><br>"
-
-/datum/proc/on_reagent_change(changetype)
-	return
