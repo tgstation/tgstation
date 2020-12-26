@@ -5,8 +5,16 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
-	var/stage = 0
+	//Which growth stage are we currently on? Stages give hints to the organ holder that this is in them.
+	var/stage = -1	//Once we initialise, we call our first growth cycle which immediately puts us to stage 0.
+	// Are we bursting out of the poor sucker who's the xeno mom?
 	var/bursting = FALSE
+	// How long does it take to increase a stage? Contained in a var so it can be var-edited.
+	var/growth_time = 60 SECONDS
+
+/obj/item/organ/body_egg/alien_embryo/Initialize()
+	. = ..()
+	advance_embryo_stage()
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -46,11 +54,16 @@
 			to_chat(owner, "<span class='danger'>You feel something tearing its way out of your stomach...</span>")
 			owner.adjustToxLoss(10)
 
-/obj/item/organ/body_egg/alien_embryo/egg_process()
-	if(stage < 5 && prob(3))
+/obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
+	if(stage >= 5)
+		return
+	if(stage < 5)
 		stage++
 		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
+		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+	return
 
+/obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 5 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
 			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
@@ -74,6 +87,7 @@
 	if(!candidates.len || !owner)
 		bursting = FALSE
 		stage = 4
+		advance_embryo_stage()	//We stop growing at stage 5, so if we go back a stage, we need to be able to advance again.
 		return
 
 	var/mob/dead/observer/ghost = pick(candidates)
