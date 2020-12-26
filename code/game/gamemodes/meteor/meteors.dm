@@ -122,7 +122,6 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		deltimer(timerid)
 	GLOB.meteor_list -= src
 	SSaugury.unregister_doom(src)
-	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
 /obj/effect/meteor/Initialize(mapload, target)
@@ -134,7 +133,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	timerid = QDEL_IN(src, lifetime)
 	chase_target(target)
 
-/obj/effect/meteor/Bump(atom/A)
+/obj/effect/meteor/Bump(atom/A) //By overriding this we prevent the throwing loop from ending out of our terms
 	if(A)
 		ram_turf(get_turf(A))
 		playsound(src.loc, meteorsound, 40, TRUE)
@@ -195,9 +194,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		new thing_to_spawn(get_turf(src))
 
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay = 1)
-	set waitfor = FALSE
 	if(chasing)
-		walk_towards(src, chasing, delay)
+		throw_at(chasing, range = INFINITY, speed = delay, spin = FALSE, unstoppable = TRUE)
 
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
