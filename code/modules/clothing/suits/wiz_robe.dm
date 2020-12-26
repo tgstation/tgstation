@@ -177,7 +177,7 @@
 	src.robe_charge = FALSE
 	sleep(30)
 	src.robe_charge = TRUE
-	to_chat(usr, "<span class='notice'>\The robe hums, its internal magic supply restored.</span>")
+	to_chat(usr, "<span class='notice'>The robe hums, its internal magic supply restored.</span>")
 
 
 //Shielded Armour
