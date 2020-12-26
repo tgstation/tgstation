@@ -677,7 +677,6 @@
 	new /obj/item/stack/sheet/plastic (loc, 2)
 	new /obj/item/stack/rods (loc, 1)
 	qdel(src)
-	GLOB.curtains -= src
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -705,16 +704,19 @@
 	new /obj/item/stack/sheet/cloth (loc, 4)
 	new /obj/item/stack/rods (loc, 1)
 	qdel(src)
-	GLOB.curtains -= src
 
 /obj/structure/curtain/cloth/fancy
 	icon_type = "cur_fancy"
 	icon_state = "cur_fancy-open"
 
 /obj/structure/curtain/cloth/fancy/mechanical
-	var/id = NULL
+	var/id = null
 	icon_type = "cur_fancy"
 	icon_state = "cur_fancy-open"
+
+/obj/structure/curtain/cloth/fancy/mechanical/Destroy()
+	GLOB.curtains -= src
+	return ..()
 
 /obj/structure/curtain/cloth/fancy/mechanical/Initialize()
 	. = ..()
