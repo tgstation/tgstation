@@ -1,3 +1,4 @@
+///Component that feeds whatever it's supplied with to whoever is buckled to it. Can be safely added to whatever like the others, like chairs or something
 /datum/component/plumbing/feeder
 	demand_connects = SOUTH
 	supply_connects = NORTH

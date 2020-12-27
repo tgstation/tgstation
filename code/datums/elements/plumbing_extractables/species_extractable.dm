@@ -30,3 +30,25 @@
 /datum/element/plumbing_extractable/darkness_blessing
 	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
 	returned_reagents = list(/datum/reagent/medicine/light_blessing/dark = 1)
+
+/datum/element/plumbing_extractable/moth_milk
+	required_reagents = list(/datum/reagent/consumable/milk = 2)
+	returned_reagents = list(/datum/reagent/consumable/milk/moth = 1)
+
+/datum/element/plumbing_extractable/nutrient
+	required_reagents = list(/datum/reagent/yuck = 3)
+	returned_reagents = list(/datum/reagent/consumable/nutriment = 1)
+
+/datum/element/plumbing_extractable/lizard_wine
+	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 5)
+	returned_reagents = list(/datum/reagent/consumable/ethanol/lizardwine = 1)
+
+///Drain the milk right out of them
+/datum/element/plumbing_extractable/milk
+	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 1)
+	returned_reagents = list(/datum/reagent/consumable/milk = 5)
+
+///Convert stable plasma and bonehurting juice to ground plasma
+/datum/element/plumbing_extractable/plasma
+	required_reagents= list(/datum/reagent/toxin/bonehurtingjuice = 1, /datum/reagent/stable_plasma = 1)
+	returned_reagents = list(/datum/reagent/toxin/plasma = 2)

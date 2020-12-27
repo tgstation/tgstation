@@ -29,6 +29,7 @@
 	// Lizards are coldblooded and can stand a greater temperature range than humans
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
+	reagent_exchange = list(/datum/element/plumbing_extractable/lizard_wine)
 
 	ass_image = 'icons/ass/asslizard.png'
 

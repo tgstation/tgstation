@@ -19,6 +19,7 @@
 	wings_icon = "Megamoth"
 	has_innate_wings = TRUE
 	payday_modifier = 0.75
+	reagent_exchange = list(/datum/element/plumbing_extractable/moth_milk)
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 	. = ..()

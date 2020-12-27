@@ -215,6 +215,18 @@
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
 	..()
 
+/datum/reagent/consumable/milk/moth
+	name = "Moth Milk"
+	description = "An opaque white liquid produced by moths."
+	color = "#DFDFDF" // rgb: 223, 223, 223
+	taste_description = "moth milk"
+	glass_icon_state = "glass_white"
+	glass_name = "glass of moth milk"
+	glass_desc = "White and nutritious goodness!"
+
+	taste_mult = DRINK_FANTASTIC
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+
 /datum/reagent/consumable/soymilk
 	name = "Soy Milk"
 	description = "An opaque white liquid made from soybeans."
