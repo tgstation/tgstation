@@ -5438,7 +5438,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/lethalshots,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "dkP" = (

@@ -148,8 +148,12 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/effect/turf_decal/bot_red,
+/obj/structure/closet/secure_closet{
+	name = "contraband locker";
+	req_access_txt = "3"
+	},
+/obj/effect/spawner/lootdrop/armory_contraband/metastation,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/shipstation)
 "aO" = (
@@ -1457,11 +1461,6 @@
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
-	},
-/obj/effect/spawner/lootdrop/armory_contraband/metastation,
-/obj/structure/closet/secure_closet{
-	name = "contraband locker";
-	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/mineral/plastitanium,

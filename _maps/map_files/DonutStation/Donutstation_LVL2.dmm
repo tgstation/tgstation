@@ -16268,7 +16268,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "IA" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/power/apc{
 	areastring = "/area/ai_monitored/security/armory/upper";
 	dir = 1;

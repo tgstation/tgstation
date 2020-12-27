@@ -607,7 +607,6 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/theatre)
 "dg" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},

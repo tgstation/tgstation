@@ -2984,7 +2984,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "aik" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/camera/motion{
 	c_tag = "Armory Motion Sensor"
 	},
