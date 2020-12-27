@@ -193,6 +193,7 @@
 		if(9)
 			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
+	HandleRecurringMoodlets()
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
@@ -413,6 +414,21 @@
 	SIGNAL_HANDLER
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
+
+/datum/component/mood/proc/HandleRecurringMoodlets()
+	// All of these status effects only allow one instance, once added
+	// and will clear themselves up if the trait is no longer present.
+	var/mob/living/L = parent
+	if(HAS_TRAIT(parent, TRAIT_JOLLY))
+		L.apply_status_effect(/datum/status_effect/recurring_mood/jolly)
+
+	if(HAS_TRAIT(parent, TRAIT_DEPRESSION))
+		L.apply_status_effect(/datum/status_effect/recurring_mood/depression)
+
+	if(HAS_TRAIT(parent, TRAIT_NEUTRAL))
+		L.apply_status_effect(/datum/status_effect/recurring_mood/neutral)
+
+
 
 
 #undef MINOR_INSANITY_PEN

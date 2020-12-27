@@ -218,3 +218,7 @@
 	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
 	mood_change = 4
 	timeout = 1.5 MINUTES
+
+/datum/mood_event/gondola
+	description = "<span class='nicegreen'>You feel at peace and feel no need to make any sudden or rash action.</span>\n"
+	mood_change = 6
