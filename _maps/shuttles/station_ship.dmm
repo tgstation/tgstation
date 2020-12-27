@@ -203,6 +203,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "garbage"
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "bh" = (
@@ -4079,6 +4084,10 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "MP" = (
@@ -4092,6 +4101,7 @@
 	machinedir = 4;
 	pixel_y = -32
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "MW" = (
@@ -4843,6 +4853,14 @@
 	dir = 1;
 	layer = 2.9
 	},
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "garbage"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "XZ" = (

@@ -6596,10 +6596,6 @@
 /area/ruin/unpowered)
 "GM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor/inverted{
-	dir = 6;
-	id = "cargoload"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -8498,10 +8494,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "PM" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargoload"
-	},
 /obj/structure/plasticflaps,
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
@@ -9316,14 +9308,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"TT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargoload"
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "TU" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -33759,7 +33743,7 @@ nv
 nv
 nv
 tF
-zh
+HH
 Xr
 Gx
 Zs
@@ -34017,7 +34001,7 @@ nv
 nv
 cp
 GM
-TT
+Xr
 PM
 aR
 aR
