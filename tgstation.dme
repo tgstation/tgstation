@@ -3489,7 +3489,6 @@
 #include "modular_skyrat\modules\customization\_globalvars\names.dm"
 #include "modular_skyrat\modules\customization\datums\dna.dm"
 #include "modular_skyrat\modules\customization\datums\elements\polychromic.dm"
-#include "modular_skyrat\modules\customization\datums\keybinding\communication.dm"
 #include "modular_skyrat\modules\customization\datums\traits\negative.dm"
 #include "modular_skyrat\modules\customization\game\objects\items\balls.dm"
 #include "modular_skyrat\modules\customization\game\objects\items\devices\ttsdevice.dm"
