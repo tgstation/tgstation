@@ -68,9 +68,10 @@
 	return ..()
 
 /obj/item/hot_potato/process()
-	if(stimulant)
-		if(isliving(loc))
-			var/mob/living/L = loc
+	if(isliving(loc))
+		var/mob/living/L = loc
+		colorize(L)
+		if(stimulant)
 			L.SetStun(0)
 			L.SetKnockdown(0)
 			L.SetSleeping(0)
@@ -78,7 +79,7 @@
 			L.SetParalyzed(0)
 			L.SetUnconscious(0)
 			L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
-			colorize(L)
+
 
 /obj/item/hot_potato/examine(mob/user)
 	. = ..()
@@ -172,3 +173,4 @@
 	sticky = FALSE
 	reusable = TRUE
 	forceful_attachment = FALSE
+	stimulant = FALSE
