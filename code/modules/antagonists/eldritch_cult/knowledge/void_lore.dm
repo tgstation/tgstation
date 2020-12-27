@@ -47,7 +47,7 @@
 
 /datum/eldritch_knowledge/cold_snap
 	name = "Aristocrat's Way"
-	desc = "Makes you immune to cold temperatures, you can still take damage from lack of pressure."
+	desc = "Makes you immune to cold temperatures, and you no longer need to breathe, you can still take damage from lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. Translucent and white, a depiction of a nobleman stood before me."
 	cost = 1
 	route = PATH_VOID
@@ -56,10 +56,12 @@
 /datum/eldritch_knowledge/cold_snap/on_gain(mob/user)
 	. = ..()
 	ADD_TRAIT(user,TRAIT_RESISTCOLD,MAGIC_TRAIT)
+	ADD_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/cold_snap/on_lose(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user,TRAIT_RESISTCOLD,MAGIC_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
 
 /datum/eldritch_knowledge/void_cloak
 	name = "Void Cloak"
@@ -162,6 +164,7 @@
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
+	ADD_TRAIT(H, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 	H.client?.give_award(/datum/award/achievement/misc/void_ascension, H)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [H.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 
