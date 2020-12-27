@@ -40,6 +40,16 @@
 	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
+	else if(istype(W, /obj/item/bedsheet))
+		to_chat(user, "<span class='notice'>You make \the [src] with [W].</span>")
+		user.transferItemToLoc(W, drop_location())
+		W.pixel_x = 0
+		W.pixel_y = 0
+	else if(istype(W, /obj/item/disk/nuclear))
+		to_chat(user, "<span class='notice'>You lay [W] out on \the [src].</span>")
+		user.transferItemToLoc(W, drop_location())
+		W.pixel_x = 6
+		W.pixel_y = -6
 	else
 		return ..()
 

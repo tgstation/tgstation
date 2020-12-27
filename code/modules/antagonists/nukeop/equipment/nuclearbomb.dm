@@ -649,7 +649,23 @@ This is here to make the tiles around the station mininuke change when it's arme
 		STOP_PROCESSING(SSobj, src)
 		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
 	var/turf/newturf = get_turf(src)
+	var/area/currentarea = get_area(newturf)
+
 	if(newturf && lastlocation == newturf)
+		/// How comfy is our disk?
+		var/disk_comfort_level = 0
+
+		//Go through and check for items that make disk comfy
+		for(var/obj/comfort_item in loc)
+			if(istype(comfort_item, /obj/item/bedsheet) || istype(comfort_item, /obj/structure/bed))
+				disk_comfort_level++
+
+		//Nice rooms count, too
+		if(currentarea?.beauty >= BEAUTY_LEVEL_GOOD)
+			disk_comfort_level++
+
+		if(disk_comfort_level >= 2) //Sleep tight, disky.
+			return
 		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
