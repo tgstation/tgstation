@@ -286,6 +286,10 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
 	category = "Defensive"
 
+/datum/spellbook_entry/titin
+	name = "Cursed Incantation"
+	spell_type = /obj/effect/proc_holder/spell/self/titin
+	cost = 10
 
 /datum/spellbook_entry/item
 	name = "Buy Item"
