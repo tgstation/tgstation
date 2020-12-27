@@ -12,7 +12,8 @@
 
 /obj/machinery/plumbing/extractor/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/feeder, bolt)
+
+	AddComponent(/datum/component/plumbing/feeder, bolt, FALSE)
 
 /obj/machinery/plumbing/extractor/update_overlays()
 	. = ..()
@@ -24,3 +25,7 @@
 		if(L.reagents)
 			//Attempt to turn the reagents in our system into something else and put it in the machine for extraction
 			SEND_SIGNAL(L.reagents, COMSIG_MOB_EXTRACT_MILK, reagents, L.reagents)
+
+/obj/machinery/plumbing/extractor/setDir(newdir)
+	return ..(SOUTH) //Do not change direction, because we don't have a multidirectional sprite and we'll end up unaligned with the bucklee
+
