@@ -4721,7 +4721,11 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "garbage";
+	name = "disposal conveyor"
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/shipstation)
 "Wf" = (

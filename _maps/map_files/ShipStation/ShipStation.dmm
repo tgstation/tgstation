@@ -9311,6 +9311,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"TP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "TT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -41239,7 +41244,7 @@ ub
 aq
 JV
 JV
-JV
+TP
 OO
 Mz
 zw
