@@ -276,6 +276,13 @@
 						and shells to place those soulstones into.</b>"
 	can_repair_constructs = TRUE
 	can_repair_self = TRUE
+	///The health HUD applied to this mob.
+	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
+
+/mob/living/simple_animal/hostile/construct/artificer/Initialize()
+	. = ..()
+	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
+	datahud.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/construct/artificer/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
