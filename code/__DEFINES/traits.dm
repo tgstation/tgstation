@@ -151,8 +151,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
-#define TRAIT_DEPRESSION		"depression"
-#define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
 #define TRAIT_NOSLIPWATER		"noslip_water"
 #define TRAIT_NOSLIPALL			"noslip_all"
@@ -391,6 +389,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to PAIs by being folded
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
+/// Trait granted by [/datum/status_effect/gonbola_pacify]
+#define GONBOLA_TRAIT "gonbola"
 #define BRAIN_UNAIDED "brain-unaided"
 /// Trait applied by element
 #define ELEMENT_TRAIT "element_trait"

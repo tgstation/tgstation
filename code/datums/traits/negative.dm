@@ -111,17 +111,17 @@
 /datum/quirk/depression
 	name = "Depression"
 	desc = "You sometimes just hate life."
-	mob_trait = TRAIT_DEPRESSION
 	value = -1
-	gain_text = "<span class='danger'>You start feeling depressed.</span>"
-	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
+	gain_text = null // Handled by trauma.
+	lose_text = null
 	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
-	hardcore_value = 1
+	hardcore_value = 2
 
-/datum/quirk/depression/on_process(delta_time)
-	if(DT_PROB(0.05, delta_time))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+/datum/quirk/depression/add()
+	var/datum/brain_trauma/quirk/mood/depression/T = new()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"

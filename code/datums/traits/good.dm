@@ -112,7 +112,6 @@
 	name = "Friendly"
 	desc = "You give the best hugs, especially when you're in the right mood."
 	value = 1
-	mob_trait = TRAIT_FRIENDLY
 	gain_text = "<span class='notice'>You want to hug someone.</span>"
 	lose_text = "<span class='danger'>You no longer feel compelled to hug others.</span>"
 	mood_quirk = TRUE
@@ -122,13 +121,13 @@
 	name = "Jolly"
 	desc = "You sometimes just feel happy, for no reason at all."
 	value = 1
-	mob_trait = TRAIT_JOLLY
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 
-/datum/quirk/jolly/on_process(delta_time)
-	if(DT_PROB(0.05, delta_time))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
+/datum/quirk/jolly/add()
+	var/datum/brain_trauma/quirk/mood/jolly/T = new()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/light_step
 	name = "Light Step"
