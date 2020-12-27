@@ -159,10 +159,11 @@
 	post_unbuckle_mob(.)
 
 /atom/movable/proc/on_set_anchored(atom/movable/source, anchorvalue)
-	for(var/M in buckled_mobs)
-		if(!M)
+	SIGNAL_HANDLER
+	for(var/_buckled_mob in buckled_mobs)
+		if(!_buckled_mob)
 			continue
-		var/mob/living/buckled_mob = M
+		var/mob/living/buckled_mob = _buckled_mob
 		if(anchored)
 			ADD_TRAIT(buckled_mob, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
 		else

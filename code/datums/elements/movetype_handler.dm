@@ -17,21 +17,21 @@
 	if(attached_atoms[target]) //Already attached.
 		return
 
-	var/atom/movable/AM = target
-	RegisterSignal(AM, GLOB.movement_type_trait_add_signals, .proc/on_movement_type_trait_gain)
-	RegisterSignal(AM, GLOB.movement_type_trait_remove_signals, .proc/on_movement_type_trait_loss)
-	RegisterSignal(AM, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_gain)
-	RegisterSignal(AM, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_loss)
-	RegisterSignal(AM, COMSIG_PAUSE_FLOATING_ANIM, .proc/pause_floating_anim)
-	attached_atoms[AM] = TRUE
+	var/atom/movable/movable_target = target
+	RegisterSignal(movable_target, GLOB.movement_type_addtrait_signals, .proc/on_movement_type_trait_gain)
+	RegisterSignal(movable_target, GLOB.movement_type_removetrait_signals, .proc/on_movement_type_trait_loss)
+	RegisterSignal(movable_target, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_gain)
+	RegisterSignal(movable_target, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_loss)
+	RegisterSignal(movable_target, COMSIG_PAUSE_FLOATING_ANIM, .proc/pause_floating_anim)
+	attached_atoms[movable_target] = TRUE
 
-	if(AM.movement_type & (FLOATING|FLYING) && !HAS_TRAIT(AM, TRAIT_NO_FLOATING_ANIM))
-		float(AM)
+	if(movable_target.movement_type & (FLOATING|FLYING) && !HAS_TRAIT(movable_target, TRAIT_NO_FLOATING_ANIM))
+		float(movable_target)
 
 /datum/element/movetype_handler/Detach(datum/source)
 	UnregisterSignal(source, list(
-		GLOB.movement_type_trait_add_signals,
-		GLOB.movement_type_trait_remove_signals,
+		GLOB.movement_type_addtrait_signals,
+		GLOB.movement_type_removetrait_signals,
 		SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM),
 		SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM),
 		COMSIG_PAUSE_FLOATING_ANIM
@@ -84,27 +84,26 @@
 		paused_floating_anim_atoms[source] = world.time + timer
 
 /datum/element/movetype_handler/process()
-	for(var/a in paused_floating_anim_atoms)
-		var/atom/movable/AM = a
-		if(!AM)
-			paused_floating_anim_atoms -= AM
-		else if(paused_floating_anim_atoms[AM] < world.time)
-			if(AM.movement_type & (FLOATING|FLYING) && !HAS_TRAIT(AM, TRAIT_NO_FLOATING_ANIM))
-				float(AM)
-			paused_floating_anim_atoms -= AM
+	for(var/_paused in paused_floating_anim_atoms)
+		var/atom/movable/paused = _paused
+		if(!paused)
+			paused_floating_anim_atoms -= paused
+		else if(paused_floating_anim_atoms[paused] < world.time)
+			if(paused.movement_type & (FLOATING|FLYING) && !HAS_TRAIT(paused, TRAIT_NO_FLOATING_ANIM))
+				float(paused)
+			paused_floating_anim_atoms -= paused
 	if(!length(paused_floating_anim_atoms))
 		STOP_PROCESSING(SSdcs, src)
 
-///Floats the movable up and down.
-/datum/element/movetype_handler/proc/float(atom/movable/AM)
-	animate(AM, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+///Floats the movable up and down. Not a comsig proc.
+/datum/element/movetype_handler/proc/float(atom/movable/target)
+	animate(target, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
 
-/// Stops the above.
-/datum/element/movetype_handler/proc/stop_floating(atom/movable/AM)
-	SIGNAL_HANDLER
-	var/final_pixel_y = AM.base_pixel_y
-	if(isliving(AM)) //Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
-		var/mob/living/L = AM
-		final_pixel_y += L.body_position_pixel_y_offset
-	animate(AM, pixel_y = final_pixel_y, time = 1 SECONDS)
+/// Stops the above. Also not a comsig proc.
+/datum/element/movetype_handler/proc/stop_floating(atom/movable/target)
+	var/final_pixel_y = target.base_pixel_y
+	if(isliving(target)) //Living mobs also have a 'body_position_pixel_y_offset' variable that has to be taken into account here.
+		var/mob/living/living_target = target
+		final_pixel_y += living_target.body_position_pixel_y_offset
+	animate(target, pixel_y = final_pixel_y, time = 1 SECONDS)

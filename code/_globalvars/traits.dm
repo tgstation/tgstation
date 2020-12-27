@@ -196,10 +196,15 @@ GLOBAL_LIST_INIT(movement_type_trait_to_flag, list(
 	TRAIT_MOVE_PHASING = PHASING
 	))
 
-GLOBAL_LIST_INIT(movement_type_trait_add_signals, set_movement_type_trait_signals(SIGNAL_ADDTRAIT("")))
-GLOBAL_LIST_INIT(movement_type_trait_remove_signals, set_movement_type_trait_signals(SIGNAL_REMOVETRAIT("")))
+GLOBAL_LIST_INIT(movement_type_addtrait_signals, set_movement_type_addtrait_signals())
+GLOBAL_LIST_INIT(movement_type_removetrait_signals, set_movement_type_removetrait_signals())
 
-/proc/set_movement_type_trait_signals(signal_prefix)
+/proc/set_movement_type_addtrait_signals(signal_prefix)
 	. = list()
 	for(var/trait in GLOB.movement_type_trait_to_flag)
-		. += "[signal_prefix][trait]"
+		. += SIGNAL_ADDTRAIT(trait)
+
+/proc/set_movement_type_removetrait_signals(signal_prefix)
+	. = list()
+	for(var/trait in GLOB.movement_type_trait_to_flag)
+		. += SIGNAL_REMOVETRAIT(trait)
