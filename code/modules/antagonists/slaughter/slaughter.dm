@@ -127,6 +127,8 @@
 	log_combat(src, victim, "slaughter slammed")
 
 /mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(iscarbon(A))
 		var/mob/living/carbon/target = A
 		if(target.stat != DEAD && target.mind && current_hitstreak < wound_bonus_hitstreak_max)
