@@ -119,7 +119,7 @@
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
-	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns, to broken bones. "
+	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of slashes, punctures and burns. "
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
@@ -129,10 +129,8 @@
 	amount = 6
 	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = PAYCHECK_ASSISTANT * 2
-	absorption_rate = 0.25
-	absorption_capacity = 5
-	splint_factor = 0.35
 	merge_type = /obj/item/stack/medical/gauze
+	var/gauze_type = /datum/bodypart_aid/gauze
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
@@ -154,8 +152,8 @@
 		to_chat(user, "<span class='notice'>There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
 		return
 
-	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 0.8 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
-		to_chat(user, "<span class='warning'>The bandage currently on [user==M ? "your" : "[M]'s"] [limb.name] is still in good condition!</span>")
+	if(limb.current_gauze)
+		to_chat(user, "<span class='warning'>[user==M ? "Your" : "[M]'s"] [limb.name] is already bandaged!</span>")
 		return
 
 	user.visible_message("<span class='warning'>[user] begins wrapping the wounds on [M]'s [limb.name] with [src]...</span>", "<span class='warning'>You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]...</span>")
@@ -191,9 +189,8 @@
 	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
 	self_delay = 6 SECONDS
 	other_delay = 3 SECONDS
-	absorption_rate = 0.15
-	absorption_capacity = 4
 	merge_type = /obj/item/stack/medical/gauze/improvised
+	gauze_type = /datum/bodypart_aid/gauze/improvised
 
 	/*
 	The idea is for the following medical devices to work like a hybrid of the old brute packs and tend wounds,
@@ -422,3 +419,83 @@
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
 	. = ..()
 	healed_mob.adjustOxyLoss(amount_healed)
+
+/obj/item/stack/medical/splint
+	name = "medical splint"
+	desc = "Medical splints, designed to fastened a limb with ease, perfect for stabilizing broken bones and torn muscles. "
+	gender = PLURAL
+	singular_name = "medical splint"
+	icon_state = "splint"
+	self_delay = 5 SECONDS
+	other_delay = 2 SECONDS
+	max_amount = 12
+	amount = 6
+	grind_results = list(/datum/reagent/carbon = 2)
+	custom_price = PAYCHECK_ASSISTANT * 2
+	merge_type = /obj/item/stack/medical/splint
+	var/splint_type = /datum/bodypart_aid/splint
+
+/obj/item/stack/medical/splint/try_heal(mob/living/M, mob/user, silent)
+	var/obj/item/bodypart/limb = M.get_bodypart(check_zone(user.zone_selected))
+	if(!limb)
+		to_chat(user, "<span class='notice'>There's nothing there to bandage!</span>")
+		return
+	if(!LAZYLEN(limb.wounds))
+		to_chat(user, "<span class='notice'>There's no wounds that require bandaging on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
+		return
+
+	var/splintable_wound = FALSE
+	for(var/i in limb.wounds)
+		var/datum/wound/woundies = i
+		if(woundies.wound_flags & ACCEPTS_SPLINT)
+			splintable_wound = TRUE
+			break
+	if(!splintable_wound)
+		to_chat(user, "<span class='notice'>There's no wounds that require splinting on [user==M ? "your" : "[M]'s"] [limb.name]!</span>") // good problem to have imo
+		return
+
+	if(limb.current_splint)
+		to_chat(user, "<span class='warning'>[user==M ? "Your" : "[M]'s"] [limb.name] is already fastened in a splint!</span>")
+		return
+
+	user.visible_message("<span class='warning'>[user] begins fastening [M]'s [limb.name] with [src]...</span>", "<span class='warning'>You begin to fasten [user == M ? "your" : "[M]'s"] [limb.name] with [src]...</span>")
+	if(!do_after(user, (user == M ? self_delay : other_delay), target=M))
+		return
+
+	user.visible_message("<span class='green'>[user] applies [src] to [M]'s [limb.name].</span>", "<span class='green'>You splint [user == M ? "your" : "[M]'s"] [limb.name].</span>")
+	limb.apply_splint(src)
+
+/obj/item/stack/medical/splint/twelve
+	amount = 12
+
+/datum/crafting_recipe/tribalsplint
+	name = "Tribal Splint"
+	result = /obj/item/stack/medical/splint/tribal
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 2, /obj/item/stack/sheet/sinew = 1)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/improvsplint
+	name = "Improvised Splint"
+	result = /obj/item/stack/medical/splint/improvised
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2, /obj/item/stack/sheet/cloth = 2)
+	category = CAT_MISC
+
+/obj/item/stack/medical/splint/tribal
+	name = "tribal splint"
+	desc = "Bone fastened with sinew, used to keep injured limbs rigid, surprisingly effective."
+	singular_name = "tribal splint"
+	icon_state = "splint_tribal"
+	amount = 1
+	splint_type = /datum/bodypart_aid/splint/tribal
+	merge_type = /obj/item/stack/medical/splint/tribal
+
+/obj/item/stack/medical/splint/improvised
+	name = "improvised splint"
+	desc = "Crudely made out splints with wood and some cotton sling, you doubt this will be any good."
+	singular_name = "improvised splint"
+	icon_state = "splint_improv"
+	amount = 1
+	splint_type = /datum/bodypart_aid/splint/improvised
+	merge_type = /obj/item/stack/medical/splint/improvised

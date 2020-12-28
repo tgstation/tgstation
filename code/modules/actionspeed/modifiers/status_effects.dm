@@ -3,3 +3,6 @@
 
 /datum/actionspeed_modifier/blunt_wound
 	variable = TRUE
+
+/datum/actionspeed_modifier/muscle_wound
+	variable = TRUE

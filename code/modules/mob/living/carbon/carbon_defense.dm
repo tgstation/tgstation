@@ -655,6 +655,9 @@
 		return ..()
 
 	var/obj/item/bodypart/grasped_part = get_bodypart(zone_selected)
+	self_grasp_bleeding_limb(grasped_part, supress_message)
+
+/mob/living/carbon/proc/self_grasp_bleeding_limb(obj/item/bodypart/grasped_part, supress_message = FALSE)
 	if(!grasped_part?.get_bleed_rate())
 		return
 	var/starting_hand_index = active_hand_index

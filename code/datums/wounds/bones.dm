@@ -8,7 +8,7 @@
 	name = "Blunt (Bone) Wound"
 	sound_effect = 'sound/effects/wounds/crack1.ogg'
 	wound_type = WOUND_BLUNT
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE)
+	wound_flags = (BONE_WOUND | ACCEPTS_SPLINT)
 
 	/// Have we been taped?
 	var/taped
@@ -34,7 +34,7 @@
 */
 /datum/wound/blunt/wound_injury(datum/wound/old_wound = null)
 	// hook into gaining/losing gauze so crit bone wounds can re-enable/disable depending if they're slung or not
-	RegisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), .proc/update_inefficiencies)
+	RegisterSignal(limb, list(COMSIG_BODYPART_SPLINTED, COMSIG_BODYPART_SPLINT_DESTROYED), .proc/update_inefficiencies)
 
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group)
 		processes = TRUE
@@ -142,16 +142,16 @@
 
 
 /datum/wound/blunt/get_examine_description(mob/user)
-	if(!limb.current_gauze && !gelled && !taped)
+	if(!limb.current_splint && !gelled && !taped)
 		return ..()
 
 	var/list/msg = list()
-	if(!limb.current_gauze)
+	if(!limb.current_splint)
 		msg += "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
 	else
 		var/sling_condition = ""
 		// how much life we have left in these bandages
-		switch(limb.current_gauze.absorption_capacity)
+		switch(limb.current_splint.sling_condition)
 			if(0 to 1.25)
 				sling_condition = "just barely"
 			if(1.25 to 2.75)
@@ -161,7 +161,7 @@
 			if(4 to INFINITY)
 				sling_condition = "tightly"
 
-		msg += "[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened in a sling of [limb.current_gauze.name]"
+		msg += "[victim.p_their(TRUE)] [limb.name] is [sling_condition] fastened with a [limb.current_splint.name]"
 
 	if(taped)
 		msg += ", <span class='notice'>and appears to be reforming itself under some surgical tape!</span>"
@@ -177,19 +177,19 @@
 
 /datum/wound/blunt/proc/update_inefficiencies()
 	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		if(limb.current_gauze)
-			limp_slowdown = initial(limp_slowdown) * limb.current_gauze.splint_factor
+		if(limb.current_splint)
+			limp_slowdown = initial(limp_slowdown) * limb.current_splint.splint_factor
 		else
 			limp_slowdown = initial(limp_slowdown)
 		victim.apply_status_effect(STATUS_EFFECT_LIMP)
 	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-		if(limb.current_gauze)
-			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor)
+		if(limb.current_splint)
+			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_splint.splint_factor)
 		else
 			interaction_efficiency_penalty = interaction_efficiency_penalty
 
 	if(initial(disabling))
-		set_disabling(!limb.current_gauze)
+		set_disabling(!(limb.current_splint && limb.current_splint.helps_disabled))
 
 	limb.update_wounds()
 
@@ -323,7 +323,7 @@
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
 	internal_bleeding_chance = 40
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (BONE_WOUND | ACCEPTS_SPLINT | MANGLES_BONE)
 	regen_ticks_needed = 120 // ticks every 2 seconds, 240 seconds, so roughly 4 minutes default
 
 /// Compound Fracture (Critical Blunt)
@@ -347,7 +347,7 @@
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
 	internal_bleeding_chance = 60
-	wound_flags = (BONE_WOUND | ACCEPTS_GAUZE | MANGLES_BONE)
+	wound_flags = (BONE_WOUND | ACCEPTS_SPLINT | MANGLES_BONE)
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
 // doesn't make much sense for "a" bone to stick out of your head

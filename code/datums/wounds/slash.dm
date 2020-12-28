@@ -32,6 +32,16 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
+/datum/wound/slash/show_wound_topic(mob/user)
+	return (user == victim && blood_flow)
+
+/datum/wound/slash/Topic(href, href_list)
+	. = ..()
+	if(href_list["wound_topic"])
+		if(!usr == victim)
+			return
+		victim.self_grasp_bleeding_limb(limb)
+
 /datum/wound/slash/wound_injury(datum/wound/slash/old_wound = null)
 	blood_flow = initial_flow
 	if(old_wound)
@@ -78,8 +88,7 @@
 	// compare with being at 100 brute damage before, where you bled (brute/100 * 2), = 2 blood per tile
 	var/bleed_amt = min(blood_flow * 0.1, 1) // 3 * 3 * 0.1 = 0.9 blood total, less than before! the share here is .3 blood of course.
 
-	if(limb.current_gauze) // gauze stops all bleeding from dragging on this limb, but wears the gauze out quicker
-		limb.seep_gauze(bleed_amt * 0.33)
+	if(limb.current_gauze && limb.current_gauze.seep_gauze(bleed_amt * 0.33, GAUZE_STAIN_BLOOD)) // gauze stops all bleeding from dragging on this limb, but wears the gauze out quicker
 		return
 
 	return bleed_amt
@@ -102,8 +111,8 @@
 	if(limb.current_gauze)
 		if(clot_rate > 0)
 			blood_flow -= clot_rate
-		blood_flow -= limb.current_gauze.absorption_rate
-		limb.seep_gauze(limb.current_gauze.absorption_rate)
+		if(limb.current_gauze && limb.current_gauze.seep_gauze(limb.current_gauze.absorption_rate, GAUZE_STAIN_BLOOD))
+			blood_flow -= limb.current_gauze.absorption_rate
 	else
 		blood_flow -= clot_rate
 

@@ -737,14 +737,21 @@
 			var/msg
 			switch(W.severity)
 				if(WOUND_SEVERITY_TRIVIAL)
-					msg = "\t <span class='danger'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)].</span>"
+					msg = "\t <span class='danger'>Your [LB.name] is suffering [W.a_or_from] [W.get_topic_name(src)].</span>"
 				if(WOUND_SEVERITY_MODERATE)
-					msg = "\t <span class='warning'>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</span>"
+					msg = "\t <span class='warning'>Your [LB.name] is suffering [W.a_or_from] [W.get_topic_name(src)]!</span>"
 				if(WOUND_SEVERITY_SEVERE)
-					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!</b></span>"
+					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [W.get_topic_name(src)]!</b></span>"
 				if(WOUND_SEVERITY_CRITICAL)
-					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [lowertext(W.name)]!!</b></span>"
+					msg = "\t <span class='warning'><b>Your [LB.name] is suffering [W.a_or_from] [W.get_topic_name(src)]!!</b></span>"
 			combined_msg += msg
+
+		if(LB.current_gauze)
+			var/datum/bodypart_aid/current_gauze = LB.current_gauze
+			combined_msg += "\t <span class='notice'>Your [LB.name] is [current_gauze.desc_prefix] with <a href='?src=[REF(current_gauze)];remove=1'>[current_gauze.get_description()]</a>.</span>"
+		if(LB.current_splint)
+			var/datum/bodypart_aid/current_splint = LB.current_splint
+			combined_msg += "\t <span class='notice'>Your [LB.name] is [current_splint.desc_prefix] with <a href='?src=[REF(current_splint)];remove=1'>[current_splint.get_description()]</a>.</span>"
 
 		for(var/obj/item/I in LB.embedded_objects)
 			if(I.isEmbedHarmless())

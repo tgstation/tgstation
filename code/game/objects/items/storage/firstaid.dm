@@ -32,6 +32,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/splint = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1)
@@ -48,6 +49,7 @@
 	var/static/items_inside = list(
 		/obj/item/healthanalyzer/wound = 1,
 		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/splint = 1,
 		/obj/item/stack/medical/suture/emergency = 1,
 		/obj/item/stack/medical/ointment = 1,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 2,
@@ -124,6 +126,7 @@
 	var/static/items_inside = list(
 		/obj/item/healthanalyzer = 1,
 		/obj/item/stack/medical/gauze/twelve = 1,
+		/obj/item/stack/medical/splint/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
@@ -142,6 +145,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/splint = 1,
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment= 3)
 	generate_items_inside(items_inside,src)
@@ -246,6 +250,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/splint = 1,
 		/obj/item/storage/pill_bottle/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
@@ -265,6 +270,7 @@
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/splint = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -283,6 +289,7 @@
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/splint(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
 	new /obj/item/reagent_containers/pill/patch/libital(src)
