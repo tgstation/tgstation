@@ -71,14 +71,15 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED S_TURF(27)		///turf/open/floor/carpet/emissive/neon/simple/red
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE S_TURF(28)	///turf/open/floor/carpet/emissive/neon/simple/orange
 #define SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW S_TURF(29)	///turf/open/floor/carpet/emissive/neon/simple/yellow
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN S_TURF(30)	///turf/open/floor/carpet/emissive/neon/simple/green
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN S_TURF(31)		///turf/open/floor/carpet/emissive/neon/simple/cyan
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL S_TURF(32)		///turf/open/floor/carpet/emissive/neon/simple/teal
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE S_TURF(33)		///turf/open/floor/carpet/emissive/neon/simple/blue
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE S_TURF(34)	///turf/open/floor/carpet/emissive/neon/simple/purple
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET S_TURF(35)	///turf/open/floor/carpet/emissive/neon/simple/violet
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK S_TURF(36)		///turf/open/floor/carpet/emissive/neon/simple/pink
-#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK S_TURF(37)	///turf/open/floor/carpet/emissive/neon/simple/black
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME S_TURF(30)		///turf/open/floor/carpet/emissive/neon/simple/lime
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN S_TURF(31)	///turf/open/floor/carpet/emissive/neon/simple/green
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN S_TURF(32)		///turf/open/floor/carpet/emissive/neon/simple/cyan
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL S_TURF(33)		///turf/open/floor/carpet/emissive/neon/simple/teal
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE S_TURF(34)		///turf/open/floor/carpet/emissive/neon/simple/blue
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE S_TURF(35)	///turf/open/floor/carpet/emissive/neon/simple/purple
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET S_TURF(36)	///turf/open/floor/carpet/emissive/neon/simple/violet
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK S_TURF(37)		///turf/open/floor/carpet/emissive/neon/simple/pink
+#define SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK S_TURF(38)	///turf/open/floor/carpet/emissive/neon/simple/black
 
 #define SMOOTH_GROUP_CLOSED_TURFS S_TURF(40)			///turf/closed
 #define SMOOTH_GROUP_MATERIAL_WALLS S_TURF(41)			///turf/closed/wall/material

@@ -300,6 +300,11 @@
 	turf_type = /turf/open/floor/carpet/emissive/neon/simple/yellow
 	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/yellow
 
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime
+	name = "emissive lime neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/lime
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/lime
+
 /obj/item/stack/tile/carpet/emissive/neon/simple/green
 	name = "emissive green neon carpet"
 	turf_type = /turf/open/floor/carpet/emissive/neon/simple/green
@@ -461,6 +466,18 @@
 	amount = 30
 
 /obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty
 	amount = 60
 
 /obj/item/stack/tile/carpet/emissive/neon/simple/green/ten

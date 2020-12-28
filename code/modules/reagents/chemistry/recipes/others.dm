@@ -387,6 +387,57 @@
 	results = list(/datum/reagent/carpet/royal/blue = 2)
 	required_reagents = list(/datum/reagent/carpet/blue = 1, /datum/reagent/royal_bee_jelly = 1)
 
+/datum/chemical_reaction/carpet/simple_neon_white
+	results = list(/datum/reagent/carpet/neon/simple_white = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/sodium = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_red
+	results = list(/datum/reagent/carpet/neon/simple_red = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/toxin/mindbreaker = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_orange
+	results = list(/datum/reagent/carpet/neon/simple_orange = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/consumable/vitfro = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_yellow
+	results = list(/datum/reagent/carpet/neon/simple_yellow = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/stabilizing_agent = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_lime
+	results = list(/datum/reagent/carpet/neon/simple_lime = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/consumable/limejuice = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_green
+	results = list(/datum/reagent/carpet/neon/simple_green = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/toxin/mutagen = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_cyan
+	results = list(/datum/reagent/carpet/neon/simple_cyan = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/medicine/salbutamol = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_teal
+	results = list(/datum/reagent/carpet/neon/simple_teal = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/drug/nicotine = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_blue
+	results = list(/datum/reagent/carpet/neon/simple_blue = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/drug/happiness = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_purple
+	results = list(/datum/reagent/carpet/neon/simple_purple = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/plasma_oxide = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_violet
+	results = list(/datum/reagent/carpet/neon/simple_violet = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/medicine/c2/helbital = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_pink
+	results = list(/datum/reagent/carpet/neon/simple_pink = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/impedrezene = 1)
+
+/datum/chemical_reaction/carpet/simple_neon_black
+	results = list(/datum/reagent/carpet/neon/simple_black = 2)
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/consumable/tinlux = 1, /datum/reagent/medicine/c2/multiver = 1)
 
 /datum/chemical_reaction/oil
 	results = list(/datum/reagent/fuel/oil = 3)

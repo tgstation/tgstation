@@ -419,6 +419,15 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW)
 	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW)
 
+/turf/open/floor/carpet/emissive/neon/simple/lime
+	name = "Simple Lime Neon Carpet"
+	desc = "A carpet with a simple design woven into it using lime phosphorescent thread."
+	neon_color = COLOR_LIME
+	emissive_color = COLOR_LIME
+	floor_tile = /obj/item/stack/tile/carpet/emissive/neon/simple/lime
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME)
+	canSmoothWith = list(SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME)
+
 /turf/open/floor/carpet/emissive/neon/simple/green
 	name = "Simple Green Neon Carpet"
 	desc = "A carpet with a simple design woven into it using green phosphorescent thread."
