@@ -276,7 +276,6 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 
-
 /**
  * Middle click
  * Mainly used for swapping hands
