@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "The ashdrake won't become enraged if all lava arena targets have gone clientless or deleted now."
