@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Dead bodies with a brain but no ghost actively inside the body will once again appear dead when examined"
