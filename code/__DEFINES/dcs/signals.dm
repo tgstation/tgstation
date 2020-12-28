@@ -42,6 +42,9 @@
 #define COMSIG_PARENT_QDELETING "parent_qdeleting"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
+/// handler for vv_do_topic (usr, href_list)
+#define COMSIG_VV_TOPIC "vv_topic"
+	#define COMPONENT_VV_HANDLED (1<<0)
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
@@ -102,6 +105,8 @@
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
+	/// if returned, forces nothing to happen when the atom is attacked by a blob
+	#define COMPONENT_CANCEL_BLOB_ACT (1<<0)
 ///from base of atom/acid_act(): (acidpwr, acid_volume)
 #define COMSIG_ATOM_ACID_ACT "atom_acid_act"
 ///from base of atom/emag_act(): (/mob/user)
@@ -112,7 +117,7 @@
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
-///from base of atom/singularity_pull(): (S, current_size)
+///from base of atom/singularity_pull(): (/datum/component/singularity, current_size)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
@@ -142,6 +147,8 @@
 	#define COMPONENT_BLOCK_TOOL_ATTACK (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
+///when an atom is processed (mob/living/user, obj/item/I, list/atom/results)
+#define COMSIG_ATOM_PROCESSED "atom_processed"
 ///called when teleporting into a protected turf: (channel, turf/origin)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
@@ -153,6 +160,8 @@
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
+///from base of atom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+#define COMSIG_ATOM_HITBY "atom_hitby"
 
 //from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
 #define COMSIG_STORAGE_ENTERED "storage_entered"
@@ -174,6 +183,31 @@
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
 
+///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_NEW_REAGENT		"reagents_new_reagent"
+///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_ADD_REAGENT		"reagents_add_reagent"
+///from base of [/datum/reagents/proc/del_reagent]: (/datum/reagent)
+#define COMSIG_REAGENTS_DEL_REAGENT		"reagents_del_reagent"
+///from base of [/datum/reagents/proc/clear_reagents]: ()
+#define COMSIG_REAGENTS_REM_REAGENT		"reagents_rem_reagent"
+///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
+#define COMSIG_REAGENTS_CLEAR_REAGENTS	"reagents_clear_reagents"
+///from base of [/datum/reagents/proc/remove_reagent]: (/datum/reagent, amount)
+#define COMSIG_REAGENTS_TEMP_CHANGE		"reagents_temp_change"
+///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
+#define COMSIG_REAGENTS_REACTED			"reagents_reacted"
+///from base of [/atom/proc/expose_reagents]: (/atom, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_ATOM		"reagents_expose_atom"
+///from base of [/obj/proc/expose_reagents]: (/obj, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_OBJ		"reagents_expose_obj"
+///from base of [/mob/living/proc/expose_reagents]: (/mob/living, /list, methods, volume_modifier, show_message, touch_protection)
+#define COMSIG_REAGENTS_EXPOSE_MOB		"reagents_expose_mob"
+///from base of [/turf/proc/expose_reagents]: (/turf, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_TURF		"reagents_expose_turf"
+///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
+#define COMSIG_REAGENTS_CRAFTING_PING	"reagents_crafting_ping"
+
 ///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
 #define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
 ///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)
@@ -190,6 +224,12 @@
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
 ///called on /living when someone starts pulling it (atom/movable/puller, state, force)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
+
+/// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
+/// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf
+#define COMSIG_ATOM_SINGULARITY_TRY_MOVE "atom_singularity_try_move"
+	/// When returned from `COMSIG_ATOM_SINGULARITY_TRY_MOVE`, the singularity will move to that turf
+	#define SINGULARITY_TRY_MOVE_BLOCK (1 << 0)
 
 /////////////////
 
@@ -260,10 +300,16 @@
 	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND (1<<1)					//return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
 ///from base of mob/living/hitby(): (mob/living/target, hit_zone)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"
+///from /atom/movable/proc/buckle_mob(): (mob/living/M, force, check_loc, buckle_mob_flags)
+#define COMSIG_MOVABLE_PREBUCKLE "prebuckle" // this is the last chance to interrupt and block a buckle before it finishes
+	#define COMPONENT_BLOCK_BUCKLE	(1<<0)
 ///from base of atom/movable/buckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 ///from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"
+///from /obj/vehicle/proc/driver_move, caught by the riding component to check and execute the driver trying to drive the vehicle
+#define COMSIG_RIDDEN_DRIVER_MOVE "driver_move"
+	#define COMPONENT_DRIVER_BLOCK_MOVE (1<<0)
 ///from base of atom/movable/throw_at(): (list/args)
 #define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"
 	#define COMPONENT_CANCEL_THROW (1<<0)
@@ -277,7 +323,7 @@
 #define COMSIG_MOVABLE_HEAR "movable_hear"
 	#define HEARING_MESSAGE 1
 	#define HEARING_SPEAKER 2
-//	#define HEARING_LANGUAGE 3
+	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
 	/* #define HEARING_RADIO_FREQ 5
 	#define HEARING_SPANS 6
@@ -381,6 +427,11 @@
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
+///from base of mob/living/set_body_position()
+#define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
+///From post-can inject check of syringe after attack (mob/user)
+#define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
+
 
 ///Sent when bloodcrawl ends in mob/living/phasein(): (phasein_decal)
 #define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
@@ -453,6 +504,8 @@
 #define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"
 ///called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
+///Called when someone attempts to cuff a carbon
+#define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
@@ -506,6 +559,12 @@
 
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
+///from base of obj/item/on_grind(): ())
+#define COMSIG_ITEM_ON_GRIND "on_grind"
+///from base of obj/item/on_juice(): ()
+#define COMSIG_ITEM_ON_JUICE "on_juice"
+///from /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params) when an object is used as compost: (mob/user)
+#define COMSIG_ITEM_ON_COMPOSTED "on_composted"
 ///Called when an item is dried by a drying rack:
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
@@ -534,6 +593,12 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
+///Called when an object is grilled ontop of a griddle
+#define COMSIG_ITEM_GRILLED "item_griddled"
+	#define COMPONENT_HANDLED_GRILLING (1<<0)
+///Called when an object is turned into another item through grilling ontop of a griddle
+#define COMSIG_GRILL_COMPLETED "item_grill_completed"
+
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"
 ///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
@@ -686,7 +751,7 @@
 
 //Food
 
-///from base of obj/item/reagent_containers/food/snacks/attack() & Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
+///from Edible component: (mob/living/eater, mob/feeder, bitecount, bitesize)
 #define COMSIG_FOOD_EATEN "food_eaten"
 ///from base of datum/component/edible/oncrossed: (mob/crosser, bitecount)
 #define COMSIG_FOOD_CROSSED "food_crossed"
@@ -703,6 +768,16 @@
 #define COMSIG_DRINK_DRANK "drink_drank"
 ///from base of obj/item/reagent_containers/glass/attack(): (mob/M, mob/user)
 #define COMSIG_GLASS_DRANK "glass_drank"
+
+//Customizable
+
+///called when an atom with /datum/component/customizable_reagent_holder is customized (obj/item/I)
+#define COMSIG_ATOM_CUSTOMIZED "atom_customized"
+///called when an item is used as an ingredient: (atom/customized)
+#define COMSIG_ITEM_USED_AS_INGREDIENT "item_used_as_ingredient"
+///called when an edible ingredient is added: (datum/component/edible/ingredient)
+#define COMSIG_EDIBLE_INGREDIENT_ADDED "edible_ingredient_added"
+
 //Gibs
 
 ///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)

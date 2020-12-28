@@ -22,6 +22,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	light_power = 2
 	light_on = FALSE
 	var/can_reenter_corpse
+	var/pushed_do_not_resuscitate = FALSE
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -160,6 +161,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
+	if(data_huds_on)
+		remove_data_huds()
+
 	// Update our old body's medhud since we're abandoning it
 	if(mind?.current)
 		mind.current.med_hud_set_status()
@@ -377,6 +381,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	can_reenter_corpse = FALSE
+	pushed_do_not_resuscitate = TRUE
 	// Update med huds
 	var/mob/living/carbon/current = mind.current
 	current.med_hud_set_status()

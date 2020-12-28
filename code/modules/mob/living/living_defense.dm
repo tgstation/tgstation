@@ -47,9 +47,9 @@
 /mob/living/proc/on_hit(obj/projectile/P)
 	return BULLET_ACT_HIT
 
-/mob/living/bullet_act(obj/projectile/P, def_zone)
+/mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
-	var/on_hit_state = P.on_hit(src, armor)
+	var/on_hit_state = P.on_hit(src, armor, piercing_hit)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
 		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
@@ -437,6 +437,7 @@
 		taste(source)
 
 	var/touch_protection = (methods & VAPOR) ? get_permeability_protection() : 0
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_mob(src, methods, reagents[R], show_message, touch_protection)

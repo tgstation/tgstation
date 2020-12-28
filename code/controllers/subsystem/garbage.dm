@@ -1,3 +1,26 @@
+/*!
+## Debugging GC issues
+
+In order to debug `qdel()` failures, there are several tools available.
+To enable these tools, define `TESTING` in [_compile_options.dm](https://github.com/tgstation/-tg-station/blob/master/code/_compile_options.dm).
+
+First is a verb called "Find References", which lists **every** refererence to an object in the world. This allows you to track down any indirect or obfuscated references that you might have missed.
+
+Complementing this is another verb, "qdel() then Find References".
+This does exactly what you'd expect; it calls `qdel()` on the object and then it finds all references remaining.
+This is great, because it means that `Destroy()` will have been called before it starts to find references,
+so the only references you'll find will be the ones preventing the object from `qdel()`ing gracefully.
+
+If you have a datum or something you are not destroying directly (say via the singulo),
+the next tool is `QDEL_HINT_FINDREFERENCE`. You can return this in `Destroy()` (where you would normally `return ..()`),
+to print a list of references once it enters the GC queue.
+
+Finally is a verb, "Show qdel() Log", which shows the deletion log that the garbage subsystem keeps. This is helpful if you are having race conditions or need to review the order of deletions.
+
+Note that for any of these tools to work `TESTING` must be defined.
+By using these methods of finding references, you can make your life far, far easier when dealing with `qdel()` failures.
+*/
+
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = FIRE_PRIORITY_GARBAGE
@@ -116,18 +139,21 @@ SUBSYSTEM_DEF(garbage)
 
 	lastlevel = level
 
-	for (var/refID in queue)
-		if (!refID)
+	//We do this rather then for(var/refID in queue) because that sort of for loop copies the whole list.
+	//Normally this isn't expensive, but the gc queue can grow to 40k items, and that gets costly/causes overrun.
+	for (var/i in 1 to length(queue))
+		var/list/L = queue[i]
+		if (length(L) < 2)
 			count++
 			if (MC_TICK_CHECK)
 				return
 			continue
 
-		var/GCd_at_time = queue[refID]
+		var/GCd_at_time = L[1]
 		if(GCd_at_time > cut_off_time)
 			break // Everything else is newer, skip them
 		count++
-
+		var/refID = L[2]
 		var/datum/D
 		D = locate(refID)
 
@@ -198,10 +224,8 @@ SUBSYSTEM_DEF(garbage)
 
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
-	if (queue[refid])
-		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
-	queue[refid] = gctime
+	queue[++queue.len] = list(gctime, refid) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)

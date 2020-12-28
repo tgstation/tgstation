@@ -44,8 +44,8 @@
 /obj/machinery/vending/drugs
 	name = "\improper NanoDrug Plus"
 	desc = "Medical drugs dispenser."
-	icon_state = "med"
-	icon_deny = "med-deny"
+	icon_state = "drug"
+	icon_deny = "drug-deny"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access = list(ACCESS_MEDICAL)
 	products = list(/obj/item/reagent_containers/pill/patch/libital = 5,
@@ -71,6 +71,7 @@
 					/obj/item/plunger/reinforced = 2)
 	default_price = 50
 	extra_price = 100
+	payment_department = ACCOUNT_MED
 	refill_canister = /obj/item/vending_refill/drugs
 
 /obj/item/vending_refill/drugs

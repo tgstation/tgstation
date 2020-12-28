@@ -51,7 +51,7 @@
 	displayed_text = new_val
 
 	if(displayed_text)
-		maptext = "<span class='maptext'><font size = [text_size]>[displayed_text]</font></span>"
+		maptext = MAPTEXT("<font size = [text_size]>[displayed_text]</font>")
 	else
 		maptext = null
 

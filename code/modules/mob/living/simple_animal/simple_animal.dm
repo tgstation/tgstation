@@ -1,3 +1,4 @@
+/// Simple, mostly AI-controlled critters, such as pets, bots, and drones.
 /mob/living/simple_animal
 	name = "animal"
 	icon = 'icons/mob/animal.dmi'
@@ -67,9 +68,9 @@
 	///This damage is taken when atmos doesn't fit all the requirements above.
 	var/unsuitable_atmos_damage = 2
 
-	///LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly.
-	var/melee_damage_lower = 0
-	var/melee_damage_upper = 0
+	//Defaults to zero so Ian can still be cuddly. Moved up the tree to living! This allows us to bypass some hardcoded stuff.
+	melee_damage_lower = 0
+	melee_damage_upper = 0
 	///how much damage this simple animal does to objects, if any.
 	var/obj_damage = 0
 	///How much armour they ignore, as a flat reduction from the targets armour value.
@@ -190,6 +191,8 @@
 		atmos_requirements = string_assoc_list(atmos_requirements)
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/Life()
 	. = ..()
@@ -214,17 +217,17 @@
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
 	if(!is_type_in_list(O, food_type))
-		..()
+		return ..()
+
+	user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
+	qdel(O)
+	if(tame)
 		return
+	if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+		tame = TRUE
+		tamed(user)
 	else
-		user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
-		qdel(O)
-		if(tame)
-			return
-		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-			tamed(user)
-		else
-			tame_chance += bonus_tame_chance
+		tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed(whomst)
@@ -245,8 +248,6 @@
 		else
 			set_stat(CONSCIOUS)
 	med_hud_set_status()
-	if(footstep_type)
-		AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
@@ -651,26 +652,13 @@
 //ANIMAL RIDING
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
-	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
-	if(riding_datum)
-		if(user.incapacitated())
-			return
-		for(var/atom/movable/A in get_turf(src))
-			if(A != src && A != M && A.density)
-				return
-		M.forceMove(get_turf(src))
-		return ..()
-
-/mob/living/simple_animal/relaymove(mob/living/user, direction)
-	if (stat == DEAD)
+	if(user.incapacitated())
 		return
-	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
-	if(tame && riding_datum)
-		riding_datum.handle_ride(user, direction)
+	for(var/atom/movable/A in get_turf(src))
+		if(A != src && A != M && A.density)
+			return
 
-/mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
-	. = ..()
-	LoadComponent(/datum/component/riding)
+	return ..()
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
 	if(!can_have_ai && (togglestatus != AI_OFF))
@@ -709,3 +697,19 @@
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.
 /mob/living/simple_animal/proc/add_cell_sample()
 	return
+
+/mob/living/simple_animal/relaymove(mob/living/user, direction)
+	if(user.incapacitated())
+		return
+	return relaydrive(user, direction)
+
+/mob/living/simple_animal/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
+	stop_automated_movement = TRUE
+
+/mob/living/simple_animal/proc/stop_deadchat_plays()
+	stop_automated_movement = FALSE

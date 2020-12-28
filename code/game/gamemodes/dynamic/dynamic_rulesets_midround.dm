@@ -578,13 +578,13 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/finish_setup(mob/new_character, index)
-	new_team = new
-	if(new_team.team_number > ABDUCTOR_MAX_TEAMS)
-		return MAP_ERROR
-	if (index == 1) // Our first guy is the scientist.
+	if (index == 1) // Our first guy is the scientist.  We also initialize the team here as well since this should only happen once per pair of abductors.
+		new_team = new
+		if(new_team.team_number > ABDUCTOR_MAX_TEAMS)
+			return MAP_ERROR
 		var/datum/antagonist/abductor/scientist/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
-	else // Our second guy is the agent
+	else // Our second guy is the agent, team is already created, don't need to make another one.
 		var/datum/antagonist/abductor/agent/new_role = new
 		new_character.mind.add_antag_datum(new_role, new_team)
 

@@ -149,7 +149,7 @@
 	. = ..()
 	if(.)
 		return
-
+	// Snowflake handling for PASSGLASS.
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
@@ -165,7 +165,6 @@
 			open()
 		else
 			do_animate("deny")
-	return
 
 /obj/machinery/door/attack_hand(mob/user)
 	. = ..()

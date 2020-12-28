@@ -211,6 +211,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
 
+// You can stare into the abyss, but it does not stare back.
+// You're immune to the hallucination effect of the supermatter, either
+// through force of will, or equipment.
+#define TRAIT_SUPERMATTER_MADNESS_IMMUNE "supermatter_madness_immune"
+
+// You can stare into the abyss, and it turns pink.
+// Being close enough to the supermatter makes it heal at higher temperatures
+// and emit less heat. A trait applied to a mind.
+#define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
 #define TRAIT_WINE_TASTER "wine_taster"
@@ -227,6 +237,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER 	"keep-together"
+
+///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
+#define TRAIT_MAT_TRANSMUTED	"transmuted"
 
 // item traits
 #define TRAIT_NODROP			"nodrop"
@@ -264,6 +277,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
 #define TRAIT_DRIED "trait_dried"
+//Trait for customizable reagent holder
+#define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
@@ -380,3 +395,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define BRAIN_UNAIDED "brain-unaided"
 /// Trait applied by element
 #define ELEMENT_TRAIT "element_trait"
+/// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
+#define BERSERK_TRAIT "berserk_trait"

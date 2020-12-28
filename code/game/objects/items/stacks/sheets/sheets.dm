@@ -36,7 +36,7 @@
 		if(mat.shard_type)
 			var/obj/item/new_shard = new mat.shard_type(user.loc)
 			new_shard.add_fingerprint(user)
-			shards += "[new_shard.name]"
+			shards += "\a [new_shard.name]"
 	if(!shards.len)
 		return FALSE
 	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)
