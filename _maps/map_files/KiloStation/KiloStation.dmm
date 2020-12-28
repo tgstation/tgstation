@@ -6144,7 +6144,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/mixing)
 "akC" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8

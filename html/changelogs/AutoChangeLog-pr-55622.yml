@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - tweak: "Cyborg's pipe cleaner now uses a radial menu for choosing it's color variants."
-  - tweak: "RCL is now able to put cables down on floors seemlessly."
-  - bugfix: "RCL radial menu will now properly show it's currently set color for pipe cleaner."

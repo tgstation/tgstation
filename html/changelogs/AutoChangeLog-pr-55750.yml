@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Being incredibly confused no longer makes you immune to revolutionary conversion attempts."
+  - rscdel: "Revheads will no longer fail their over-the-shoulder conversions if they're on help intent."

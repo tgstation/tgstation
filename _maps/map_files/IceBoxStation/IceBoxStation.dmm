@@ -782,7 +782,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "abN" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "abO" = (

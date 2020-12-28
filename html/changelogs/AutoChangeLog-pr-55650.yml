@@ -1,4 +1,0 @@
-author: "Dex"
-delete-after: True
-changes: 
-  - bugfix: "Regular onions no longer turn into red onion slices when cut"
