@@ -58,7 +58,6 @@
 	if(!vendingMachines.len)	//if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
 			if(prob(70) && !QDELETED(upriser))
-				upriser.modify_max_integrity(100)
 				upriser.ai_controller = new /datum/ai_controller/vending_machine(upriser)
 				infectedMachines.Remove(upriser)
 			else
