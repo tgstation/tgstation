@@ -96,8 +96,7 @@
 	var/i = 1
 	for(var/plane in subtypesof(/atom/movable/screen/plane_master/emissive_blocker))
 		var/atom/movable/screen/plane_master/emissive_blocker/blocker_plane = plane
-		var/blocker_layer = initial(blocker_plane.layer)
-		if(blocker_layer <= layer)
+		if(initial(blocker_plane.layer) <= layer)
 			continue
 		add_filter("emissive_block-[i]", i++, alpha_mask_filter(render_source = initial(blocker_plane.blocker_target), flags = MASK_INVERSE))
 
@@ -120,7 +119,7 @@
 	plane = EMISSIVE_ITEM_PLANE
 	layer = EMISSIVE_ITEM_LAYER
 	render_target = EMISSIVE_ITEM_RENDER_TARGET
-	emissive_target = EMISSIVE_STRUCTURE_RENDER_TARGET
+	emissive_target = EMISSIVE_ITEM_RENDER_TARGET
 
 /atom/movable/screen/plane_master/emissive/mob
 	name = "emissive mob plane master"
