@@ -21,7 +21,7 @@
 /// probability that monkey will get into mischief, i.e. finding/stealing items
 #define MONKEY_SHENANIGAN_PROB 				20
 /// probability that monkey will disarm an armed attacker
-#define MONKEY_ATTACK_DISARM_PROB 			50
+#define MONKEY_ATTACK_DISARM_PROB 			20
 /// probability that monkey will get recruited when friend is attacked
 #define MONKEY_RECRUIT_PROB 				25
 
