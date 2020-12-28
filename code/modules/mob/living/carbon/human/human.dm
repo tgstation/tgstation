@@ -22,7 +22,6 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
-	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	GLOB.human_list += src
 
