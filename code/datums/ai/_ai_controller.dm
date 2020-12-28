@@ -22,6 +22,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/pathing_attempts
 	///Can the AI remain in control if there is a client?
 	var/continue_processing_when_client = FALSE
+	///distance to give up on target
+	var/max_target_distance = 14
 
 /datum/ai_controller/New(atom/new_pawn)
 	PossessPawn(new_pawn)
@@ -104,6 +106,9 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 	if(!is_type_in_typecache(get_step(pawn, get_dir(pawn, current_movement_target)), GLOB.dangerous_turfs))
 		step_towards(pawn, current_movement_target)
+	if(get_dist(pawn, current_movement_target) > max_target_distance)
+		CancelActions()
+		pathing_attempts = 0
 	if(current_loc == get_turf(pawn))
 		if(++pathing_attempts >= MAX_PATHING_ATTEMPTS)
 			CancelActions()
