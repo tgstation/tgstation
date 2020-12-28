@@ -32,15 +32,6 @@
 		internalPaper = new(src)
 	update_icon()
 
-/obj/item/paperplane/handle_atom_del(atom/A)
-	if(A == internalPaper)
-		var/obj/item/paper/P = internalPaper
-		internalPaper = null
-		P.moveToNullspace() //So we're not deleting it twice when deleting our contents.
-		if(!QDELETED(src))
-			qdel(src)
-	return ..()
-
 /obj/item/paperplane/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
 	if (AM == internalPaper)
@@ -69,14 +60,12 @@
 		for(var/S in stamped)
 			. += "paperplane_[S]"
 
-/obj/item/paperplane/attack_self(mob/user)
+/obj/item/paperplane/attack_self(mob/user) //[/obj/item/paperplane/Exited()] will delete src as the internal paper is moved out.
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
-	var/obj/item/paper/internal_paper_tmp = internalPaper
-	internal_paper_tmp.forceMove(loc)
-	internalPaper = null
-	qdel(src)
-	if(user.Adjacent(internal_paper_tmp))
-		user.put_in_hands(internal_paper_tmp)
+	if(user.Adjacent(internalPaper))
+		user.put_in_hands(internalPaper)
+	else
+		internalPaper.forceMove(loc)
 
 /obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(burn_paper_product_attackby_check(P, user))
