@@ -256,7 +256,7 @@
 	if(!emissive_icon_state)
 		emissive_icon_state = icon_state
 	var/turf/open/floor/carpet/emissive/turf_path = turf_type
-	AddElement(/datum/element/decal, icon, emissive_icon_state, dir, FALSE, initial(turf_path.emissive_color), EMISSIVE_LAYER, EMISSIVE_PLANE, null, initial(turf_path.emissive_alpha))
+	AddElement(/datum/element/decal, icon, emissive_icon_state, dir, FALSE, initial(turf_path.emissive_color), EMISSIVE_ITEM_LAYER, EMISSIVE_ITEM_PLANE, null, initial(turf_path.emissive_alpha))
 
 /obj/item/stack/tile/carpet/emissive/neon
 	name = "emissive carpet"

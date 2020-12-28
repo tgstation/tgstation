@@ -343,7 +343,7 @@
 		emissive_icon = icon
 	if(!base_emissive_state)
 		base_emissive_state = base_icon_state
-	AddElement(/datum/element/decal/smoothing, emissive_icon, base_emissive_state, dir, FALSE, emissive_color, EMISSIVE_LAYER, EMISSIVE_PLANE, null, emissive_alpha)
+	AddElement(/datum/element/decal/smoothing, emissive_icon, base_emissive_state, dir, FALSE, emissive_color, EMISSIVE_TURF_LAYER, EMISSIVE_TURF_PLANE, null, emissive_alpha)
 
 /turf/open/floor/carpet/emissive/neon
 	name = "Neon Carpet"

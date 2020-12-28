@@ -50,6 +50,8 @@
 
 	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
 	var/blocks_emissive = FALSE
+	/// The plane this uses for emissive effects and emissive blockers
+	var/emissive_blocker_plane = EMISSIVE_PLANE
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/emissive_blocker/em_block
 
@@ -69,7 +71,7 @@
 			update_emissive_block()
 		if(EMISSIVE_BLOCK_UNIQUE)
 			render_target = ref(src)
-			em_block = new(src, render_target)
+			em_block = new(src, render_target, emissive_blocker_plane)
 			vis_contents += em_block
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
@@ -125,7 +127,7 @@
 			if(vs.plane == EMISSIVE_BLOCKER_PLANE)
 				SSvis_overlays.remove_vis_overlay(src, list(vs))
 				break
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_BLOCKER_LAYER, EMISSIVE_BLOCKER_PLANE, dir)
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_LAYER, emissive_blocker_plane, dir)
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
 	if(!direction)
