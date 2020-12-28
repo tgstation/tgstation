@@ -53380,7 +53380,6 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bZY" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/light{
 	dir = 4
 	},

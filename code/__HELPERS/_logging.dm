@@ -25,9 +25,31 @@
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
 #define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
+
+GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
+// we don't really check if a word or name is used twice, be aware of that
+#define testing_profile_start(NAME, LIST) LIST[NAME] = world.timeofday
+#define testing_profile_current(NAME, LIST) round((world.timeofday - LIST[NAME])/10,0.1)
+#define testing_profile_output(NAME, LIST) testing("[LIST["_PROFILE_NAME"]] profile of [NAME] is [testing_profile_current(NAME,LIST)]s")
+#define testing_profile_output_all(LIST) { for(var/_NAME in LIST) { testing_profile_current(,_NAME,LIST); }; };
 #else
 #define testing(msg)
+#define testing_profile_start(NAME, LIST)
+#define testing_profile_current(NAME, LIST)
+#define testing_profile_output(NAME, LIST)
+#define testing_profile_output_all(LIST)
 #endif
+
+#define testing_profile_global_start(NAME) testing_profile_start(NAME,GLOB.testing_global_profiler)
+#define testing_profile_global_current(NAME) testing_profile_current(NAME, GLOB.testing_global_profiler)
+#define testing_profile_global_output(NAME) testing_profile_output(NAME, GLOB.testing_global_profiler)
+#define testing_profile_global_output_all testing_profile_output_all(GLOB.testing_global_profiler)
+
+#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc"  = world.timeofday )
+#define testing_profile_local_start(NAME) testing_profile_start(NAME, _timer_system)
+#define testing_profile_local_current(NAME) testing_profile_current(NAME, _timer_system)
+#define testing_profile_local_output(NAME) testing_profile_output(NAME, _timer_system)
+#define testing_profile_local_output_all testing_profile_output_all(_timer_system)
 
 #if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 /proc/log_test(text)
