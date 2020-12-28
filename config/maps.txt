@@ -32,7 +32,6 @@ endmap
 map icebox
 	minplayers 25
 	votable
-	default
 endmap
 
 map runtimestation
