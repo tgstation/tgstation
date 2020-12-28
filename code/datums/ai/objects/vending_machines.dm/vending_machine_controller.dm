@@ -6,6 +6,7 @@
 	BB_VENDING_BUSY_TILTING = FALSE,
 	BB_VENDING_LAST_HIT_SUCCESFUL = FALSE)
 	var/vision_range = 7
+	var/search_for_enemy_cooldown = 2 SECONDS
 
 /datum/ai_controller/vending_machine/TryPossessPawn(atom/new_pawn)
 	if(!istype(new_pawn, /obj/machinery/vending))
@@ -44,4 +45,5 @@
 			blackboard[BB_VENDING_CURRENT_TARGET] = living_target
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/vendor_crush)
 			return
+		blackboard[BB_VENDING_TILT_COOLDOWN] = world.time + search_for_enemy_cooldown
 	return

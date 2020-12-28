@@ -28,18 +28,18 @@
 /datum/ai_behavior/vendor_crush/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.blackboard[BB_VENDING_BUSY_TILTING] = FALSE
+	controller.blackboard[BB_VENDING_UNTILT_COOLDOWN] = world.time + untilt_cooldown
 
 /datum/ai_behavior/vendor_rise_up //what a gamer
 	///Time before machine can tilt again after untilting if last hit was a success
 	var/succes_tilt_cooldown = 5 SECONDS
-	///Time before machine can tilt again after untilting if last hit was a failure
-	var/fail_tilt_cooldown = 1 SECONDS
 
 /datum/ai_behavior/vendor_rise_up/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
 	vendor_pawn.visible_message("<span class='warning'>[vendor_pawn] untilts itself!</span>")
-	controller.blackboard[BB_VENDING_TILT_COOLDOWN] = world.time + (controller.blackboard[BB_VENDING_LAST_HIT_SUCCESFUL] ? succes_tilt_cooldown : fail_tilt_cooldown)
+	if(controller.blackboard[BB_VENDING_LAST_HIT_SUCCESFUL])
+		controller.blackboard[BB_VENDING_TILT_COOLDOWN] = world.time + succes_tilt_cooldown
 	vendor_pawn.untilt()
 	finish_action(controller, TRUE)
 
