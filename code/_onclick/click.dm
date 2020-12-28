@@ -86,7 +86,7 @@
 		CtrlShiftClickOn(A)
 		return
 	if(modifiers["middle"])
-		MiddleClickOn(A)
+		MiddleClickOn(A, params)
 		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)
@@ -278,11 +278,11 @@
 
 
 /**
- * Middle click
- * Mainly used for swapping hands
- */
-/mob/proc/MiddleClickOn(atom/A)
-	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A)
+  * Middle click
+  * Mainly used for swapping hands
+  */
+/mob/proc/MiddleClickOn(atom/A, params)
+	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A, params)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
 		return
 	swap_hand()
