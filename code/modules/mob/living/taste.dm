@@ -5,21 +5,6 @@
 	var/last_taste_text
 
 /*
-* Returns whether a given mob is capable of tasting flavour.
-*/
-/mob/living/proc/can_taste()
-	return !HAS_TRAIT(src, TRAIT_AGEUSIA)
-
-/*
-* Overrides the carbon tasting by also checking that the carbon
-* has a tongue. The absence of a tongue will prevent the carbon
-* mob from tasting.
-*/
-/mob/living/carbon/can_taste()
-	var/obj/item/organ/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
-	return ..() && istype(tongue)
-
-/*
 * Gets the "taste_sensitivity" of a given mob. This is used in calculating
 * what flavours the mob can pick up, with a lower number closer to 0
 * being better.
@@ -32,12 +17,12 @@
 	if(istype(tongue))
 		. = tongue.taste_sensitivity
 	else
-		// never normally reach this point without a tongue, but sensible fallback
+		// carbons without tongues normally have TRAIT_AGEUSIA but sensible fallback
 		. = DEFAULT_TASTE_SENSITIVITY
 
 // non destructively tastes a reagent container
 /mob/living/proc/taste(datum/reagents/from)
-	if(!can_taste())
+	if(HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return
 
 	var/taste_sensitivity = get_taste_sensitivity()
