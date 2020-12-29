@@ -165,7 +165,6 @@
 
 /obj/machinery/recharger/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	luminosity = 0
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return

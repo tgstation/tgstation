@@ -591,6 +591,7 @@
 #include "code\datums\elements\dryable.dm"
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\embed.dm"
+#include "code\datums\elements\emissive_blocker.dm"
 #include "code\datums\elements\empprotection.dm"
 #include "code\datums\elements\firestacker.dm"
 #include "code\datums\elements\forced_gravity.dm"

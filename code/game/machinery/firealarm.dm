@@ -67,8 +67,6 @@
 
 /obj/machinery/firealarm/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
 	if(machine_stat & NOPOWER)
 		return
 

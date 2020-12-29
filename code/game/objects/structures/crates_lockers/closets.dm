@@ -8,6 +8,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
@@ -69,7 +70,6 @@
 
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	luminosity = 0
 	if(!opened)
 		if(icon_door)
