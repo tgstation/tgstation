@@ -78,7 +78,7 @@
 			return
 
 	var/playtime = 0
-	var/datum/DBQuery/playtime_read = SSdbcore.NewQuery("SELECT minutes FROM [format_table_name("role_time")] WHERE ckey = '[target_ckey]' and job = 'Living'")
+	var/datum/db_query/playtime_read = SSdbcore.NewQuery("SELECT minutes FROM [format_table_name("role_time")] WHERE ckey = '[target_ckey]' and job = 'Living'")
 	if(!playtime_read.warn_execute())
 		qdel(playtime_read)
 		return
