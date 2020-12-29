@@ -63,6 +63,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		blob_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	START_PROCESSING(SSobj, src)
 
 /mob/camera/blob/proc/validate_location()
