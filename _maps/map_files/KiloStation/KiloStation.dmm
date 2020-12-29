@@ -3000,7 +3000,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/machinery/vending/wallmed/pubby{
+/obj/machinery/vending/wallmed{
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -4671,7 +4671,6 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red,
 /turf/open/floor/plasteel,
 /area/security/main)
 "aia" = (
@@ -4687,20 +4686,6 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red,
-/turf/open/floor/plasteel,
-/area/security/main)
-"aib" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red/corner,
 /turf/open/floor/plasteel,
 /area/security/main)
 "aic" = (
@@ -7890,11 +7875,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/space/nearstation)
-"ans" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating/airless,
-/area/solar/port/fore)
 "ant" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
@@ -10859,11 +10839,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
-"ase" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating/airless,
-/area/solar/starboard/fore)
 "asf" = (
 /obj/machinery/power/tracker,
 /obj/effect/turf_decal/box,
@@ -15544,13 +15519,12 @@
 	},
 /area/maintenance/starboard)
 "azH" = (
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/science/robotics/mechbay)
+/area/maintenance/starboard/fore)
 "azI" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/tile/purple{
@@ -18944,8 +18918,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary";
-	req_access_txt = null;
-	req_one_access_txt = "1;4"
+	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -39414,19 +39387,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bkp" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red,
-/turf/open/floor/plasteel,
-/area/security/main)
 "bkq" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -49314,31 +49274,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"bzN" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/security/main)
 "bzO" = (
 /obj/structure/girder,
 /obj/effect/decal/cleanable/dirt,
@@ -57578,9 +57513,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "bMR" = (
@@ -57835,7 +57767,7 @@
 /area/security/processing)
 "bNo" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_one_access_txt = "12;101"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -60142,9 +60074,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "bQM" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -60380,9 +60310,7 @@
 /turf/open/floor/plasteel/dark/corner,
 /area/hallway/primary/central)
 "bRe" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -63481,7 +63409,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "bWy" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_one_access_txt = "12;101"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -64676,7 +64604,7 @@
 /area/maintenance/port/aft)
 "bYt" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_one_access_txt = "12;101"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -73177,7 +73105,6 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red/corner,
 /turf/open/floor/plasteel,
 /area/security/main)
 "cnh" = (
@@ -74099,13 +74026,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/starboard/aft)
-"coS" = (
-/obj/machinery/power/solar{
-	id = "aftport";
-	name = "Aft-Port Solar Array"
-	},
-/turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/port/aft)
 "coT" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -74951,7 +74871,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/siding/red/corner,
 /turf/open/floor/plasteel,
 /area/security/main)
 "cqp" = (
@@ -75465,9 +75384,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "crg" = (
@@ -75503,9 +75419,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -75545,9 +75458,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "crl" = (
@@ -75583,9 +75493,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/red/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -76869,9 +76776,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
@@ -80192,9 +80096,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/red/corner{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -84267,11 +84168,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
-"cGG" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plating/airless,
-/area/solar/starboard/aft)
 "cGH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -84789,9 +84685,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/red{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "cHB" = (
@@ -85006,12 +84899,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "cHQ" = (
@@ -85161,9 +85048,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
-	},
-/obj/effect/turf_decal/siding/red{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -86425,9 +86309,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/red{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "cKo" = (
@@ -86441,9 +86322,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -90657,6 +90535,12 @@
 /obj/structure/sign/warning/fire,
 /turf/closed/wall,
 /area/maintenance/port)
+"scJ" = (
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "12;101"
+	},
+/turf/open/floor/plasteel/dark,
+/area/maintenance/port/aft)
 "slN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -91308,9 +91192,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/asteroid/airless,
 /area/space/nearstation)
-"vQL" = (
-/turf/open/floor/plating/airless,
-/area/solar/starboard/aft)
 "vSd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -103408,7 +103289,7 @@ bAU
 slN
 eZR
 cxi
-atk
+scJ
 cxl
 cuT
 bYq
@@ -103942,11 +103823,11 @@ oUy
 aau
 aeU
 cmU
-coS
-coS
-coS
-coS
-coS
+nMl
+nMl
+nMl
+nMl
+nMl
 ckj
 nMl
 nMl
@@ -104135,7 +104016,7 @@ ahG
 ahG
 ahG
 cjl
-ans
+cjl
 cjl
 ahG
 ahG
@@ -104199,11 +104080,11 @@ cQM
 aau
 aeU
 cmU
-coS
-coS
-coS
-coS
-coS
+nMl
+nMl
+nMl
+nMl
+nMl
 ckj
 nMl
 nMl
@@ -105204,7 +105085,7 @@ bMq
 cqc
 bAq
 aLf
-atk
+scJ
 cJB
 bJg
 bTP
@@ -109597,7 +109478,7 @@ aix
 ajc
 aiH
 amS
-bzN
+cri
 ajV
 avM
 cJj
@@ -110107,7 +109988,7 @@ afE
 bCv
 cvL
 cwx
-aib
+aic
 buJ
 aiJ
 bym
@@ -110364,7 +110245,7 @@ aeg
 agS
 aQS
 cwK
-bkp
+aic
 aiy
 aiK
 ajf
@@ -110621,7 +110502,7 @@ crt
 anw
 aLe
 cwK
-bkp
+aic
 aiz
 ajo
 cHY
@@ -123835,8 +123716,8 @@ aaa
 aaa
 aaa
 aaa
-acm
-acm
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -124093,7 +123974,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+aaa
 aaa
 aaa
 aaa
@@ -134804,7 +134685,7 @@ cDr
 cDr
 cDr
 ctQ
-cGG
+ctQ
 ctQ
 cDr
 cDr
@@ -135832,7 +135713,7 @@ cDr
 cFh
 cDr
 cDr
-vQL
+ctQ
 cDr
 cDr
 cDr
@@ -138061,7 +137942,7 @@ ajH
 ajH
 ajH
 cMU
-ase
+cMU
 cMU
 ajH
 ajH
