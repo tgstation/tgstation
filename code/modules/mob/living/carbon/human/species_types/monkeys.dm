@@ -49,8 +49,8 @@
 		H.dna.features["tail_monkey"] = "Monkey"
 		handle_mutant_bodyparts(H)
 
-	C.dna.add_mutation(RACEMUT, MUT_NORMAL)
-	C.dna.activate_mutation(RACEMUT)
+	H.dna.add_mutation(RACEMUT, MUT_NORMAL)
+	H.dna.activate_mutation(RACEMUT)
 
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
