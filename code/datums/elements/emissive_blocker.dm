@@ -6,6 +6,7 @@
  */
 /datum/element/emissive_blocker
 	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
+	id_arg_index = 2
 	/// The plane used
 	var/blocker_plane
 
