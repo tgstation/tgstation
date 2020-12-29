@@ -12,6 +12,8 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_SRV = ACCOUNT_SRV_NAME,
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
+	/// Accounts with deep pockets that are expected to be able to pay out whatever coders charge them with. Only used for bounties at the moment. Remove if unexpanded on.
+	var/list/banker_accounts = list(ACCOUNT_CENT = ACCOUNT_CENT_NAME)
 	var/list/generated_accounts = list()
 	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
 							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
@@ -41,6 +43,8 @@ SUBSYSTEM_DEF(economy)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
 	for(var/A in department_accounts)
 		new /datum/bank_account/department(A, budget_to_hand_out)
+	for(var/A in banker_accounts)
+		new /datum/bank_account/department(A, INFINITY)
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)

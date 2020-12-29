@@ -32,6 +32,8 @@
 #define ACCOUNT_SEC "SEC"
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
+#define ACCOUNT_CENT "CENT"
+#define ACCOUNT_CENT_NAME "Centcom Budget" //Adding this for Nanotrasen payouts (e.g. bounties) as I believe money should always come from existing financial assets (e.g. bank balances, cash)
 #define NO_FREEBIES "commies go home"
 
 //Defines that set what kind of civilian bounties should be applied mid-round.

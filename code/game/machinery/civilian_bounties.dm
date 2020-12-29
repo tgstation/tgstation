@@ -16,10 +16,19 @@
 	warmup_time = 3 SECONDS
 	var/obj/item/card/id/inserted_scan_id
 	circuit = /obj/item/circuitboard/computer/bountypad
+	///Percentage of sold bounties cargo receives.
+	var/cargo_cut = 70
+	///Radio used by the console to send messages on supply channel.
+	var/obj/item/radio/headset/radio
 
 /obj/machinery/computer/piratepad_control/civilian/Initialize()
 	. = ..()
 	pad = /obj/machinery/piratepad/civilian
+	radio = new /obj/item/radio/headset/headset_cargo(src)
+
+/obj/machinery/computer/piratepad_control/civilian/Destroy()
+	QDEL_NULL(radio)
+	..()
 
 /obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
@@ -95,16 +104,23 @@
 		stop_sending()
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
-		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
+		status_report += "Bounty completed!"
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
-		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
-		reward.bounty_value = curr_bounty.reward
-		reward.bounty_name = curr_bounty.name
-		reward.bounty_holder = inserted_scan_id.registered_name
-		reward.name = "\improper [reward.bounty_value] cr [reward.name]"
-		reward.desc += " The tag indicates it was [reward.bounty_holder]'s reward for completing the <i>[reward.bounty_name]</i> bounty and that it was created at [station_time_timestamp(format = "hh:mm")]."
-		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, 30)
+		//we get the accounts
+		var/datum/bank_account/your_acc = inserted_scan_id.registered_account
+		var/datum/bank_account/cargo_acc = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		var/datum/bank_account/cent_acc = SSeconomy.get_dep_account(ACCOUNT_CENT)
+		//we determine the shares
+		var/cargo_payout = curr_bounty.reward * cargo_cut * 0.01
+		var/your_payout = curr_bounty.reward * (100 - cargo_cut) * 0.01
+		//we give the payees their shares
+		cargo_acc.transfer_money(cent_acc, cargo_payout)
+		your_acc.transfer_money(cent_acc, your_payout)
+		//we tell the bounty holder about the deposit
+		say("<span class='robot'>Bounty received. [your_payout] credits added to account.</span>")
+		//we tell Supply listeners about the bounty's completion
+		radio.talk_into(src, "[inserted_scan_id.registered_name] completed the [curr_bounty.reward] cr <i>[curr_bounty.name]</i> bounty. Cargo's cut is [cargo_payout] cr.", RADIO_CHANNEL_SUPPLY)
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
