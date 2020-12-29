@@ -43,7 +43,8 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/scanning_module = 1,
-		/obj/item/stock_parts/micro_laser = 1)
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stack/sheet/mineral/silver = 2)
 
 /obj/item/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
