@@ -33,7 +33,7 @@
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store =  /obj/item/flashlight/pen
 
-	skillchip_path = /obj/item/skillchip/entrails_reader
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir

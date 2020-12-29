@@ -285,3 +285,13 @@
 /datum/mood_event/bald
 	description ="<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
+
+/datum/mood_event/bad_touch
+	description = "<span class='warning'>I don't like when people touch me.</span>\n"
+	mood_change = -3
+	timeout = 4 MINUTES
+
+/datum/mood_event/very_bad_touch
+	description = "<span class='warning'>I really don't like when people touch me.</span>\n"
+	mood_change = -5
+	timeout = 4 MINUTES

@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - rscadd: "New negative quirk: 'Bad Touch'. With it, you gain a negative moodlet from being hugged instead of a positive one, and you gain a negative moodlet from headpats and grabs."
+  - bugfix: "blind people can now feel headpats"
