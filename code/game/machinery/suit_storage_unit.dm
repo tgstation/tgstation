@@ -507,12 +507,10 @@
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return
 /obj/machinery/suit_storage_unit/crowbar_act(mob/living/user, obj/item/I)
-	if(default_pry_open(I))
-		return TRUE
 	if(default_deconstruction_crowbar(I))
 		open_machine()
 		dump_inventory_contents()
-		return TRUE
+		return
 
 	return ..()
 
