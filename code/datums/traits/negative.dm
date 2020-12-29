@@ -318,9 +318,8 @@
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
-	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
-	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
+	if(!H.equip_to_slot_if_possible(glasses, ITEM_SLOT_EYES))
+		H.put_in_hands(glasses)
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
