@@ -40,6 +40,7 @@
 	gender = PLURAL
 	name = "ash"
 	icon_state = "ash"
+	icon_plating = "ash"
 	base_icon_state = "ash"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	desc = "The ground is covered in volcanic ash."
@@ -132,17 +133,20 @@
 	name = "sand"
 	desc = "Surf's up."
 	icon_state = "sand"
+	icon_plating = "sand"
 	baseturfs = /turf/open/floor/plating/beach/sand
 
 /turf/open/floor/plating/beach/coastline_t
 	name = "coastline"
 	desc = "Tide's high tonight. Charge your batons."
 	icon_state = "sandwater_t"
+	icon_plating = "sandwater_t"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t
 
 /turf/open/floor/plating/beach/coastline_b //need to make this water subtype.
 	name = "coastline"
 	icon_state = "sandwater_b"
+	icon_plating = "sandwater_b"
 	baseturfs = /turf/open/floor/plating/beach/coastline_b
 	footstep = FOOTSTEP_LAVA
 	barefootstep = FOOTSTEP_LAVA
@@ -154,6 +158,7 @@
 	name = "water"
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
+	icon_plating = "water"
 	baseturfs = /turf/open/floor/plating/beach/water
 	footstep = FOOTSTEP_LAVA //placeholder, kinda.
 	barefootstep = FOOTSTEP_LAVA
@@ -169,6 +174,7 @@
 	name = "iron sand"
 	desc = "Like sand, but more <i>metal</i>."
 	icon_state = "ironsand1"
+	icon_plating = "ironsand1"
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
@@ -189,6 +195,7 @@
 	desc = "A sheet of solid ice. Looks slippery."
 	icon = 'icons/turf/floors/ice_turf.dmi'
 	icon_state = "ice_turf-0"
+	icon_plating = "ice_turf-0"
 	initial_gas_mix = FROZEN_ATMOS
 	temperature = 180
 	planetary_atmos = TRUE
@@ -236,6 +243,7 @@
 	desc = "A section of heated plating, helps keep the snow from stacking up too high."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
+	icon_plating = "snowplating"
 	initial_gas_mix = FROZEN_ATMOS
 	temperature = 180
 	attachment_holes = FALSE
@@ -303,6 +311,7 @@
 	name = "dirt"
 	desc = "Upon closer examination, it's still dirt."
 	icon_state = "sand"
+	icon_plating = "sand"
 	broken_states = list("sand_damaged")
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
