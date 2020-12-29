@@ -31,6 +31,10 @@
 	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
 	returned_reagents = list(/datum/reagent/medicine/light_blessing/dark = 1)
 
+/datum/element/plumbing_extractable/moth_milk
+	required_reagents = list(/datum/reagent/consumable/milk = 2)
+	returned_reagents = list(/datum/reagent/consumable/milk/moth = 1)
+
 /datum/element/plumbing_extractable/nutrient
 	required_reagents = list(/datum/reagent/yuck = 3)
 	returned_reagents = list(/datum/reagent/consumable/nutriment = 1)
