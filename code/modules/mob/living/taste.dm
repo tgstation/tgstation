@@ -5,10 +5,11 @@
 	var/last_taste_text
 
 /*
-* Gets the "taste_sensitivity" of a given mob. This is used in calculating
-* what flavours the mob can pick up, with a lower number closer to 0
-* being better.
-*/
+ * Gets taste sensitivity of given mob
+ *
+ * This is used in calculating what flavours the mob can pick up,
+ * with a lower number being able to pick up more distinct flavours.
+ */
 /mob/living/proc/get_taste_sensitivity()
 	return DEFAULT_TASTE_SENSITIVITY
 
@@ -25,9 +26,9 @@
 	if(HAS_TRAIT(src, TRAIT_AGEUSIA))
 		return
 
-	var/taste_sensitivity = get_taste_sensitivity()
 
 	if(last_taste_time + 50 < world.time)
+		var/taste_sensitivity = get_taste_sensitivity()
 		var/text_output = from.generate_taste_message(src, taste_sensitivity)
 		// We dont want to spam the same message over and over again at the
 		// person. Give it a bit of a buffer.
