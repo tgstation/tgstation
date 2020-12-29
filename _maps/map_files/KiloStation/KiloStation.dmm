@@ -12684,7 +12684,6 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
-	roundstart_template = /datum/map_template/shuttle/mining_common/kilo;
 	width = 35
 	},
 /turf/open/space/basic,
