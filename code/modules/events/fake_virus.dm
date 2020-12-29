@@ -5,10 +5,10 @@
 
 /datum/round_event/fake_virus/start()
 	var/list/fake_virus_victims = list()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
-		if(!H.client || H.stat == DEAD || H.InCritical())
+	for(var/mob/living/carbon/human/victim in shuffle(GLOB.player_list))
+		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !SSjob.GetJob(victim.mind.assigned_role) || (victim.mind.assigned_role in GLOB.nonhuman_positions))
 			continue
-		fake_virus_victims += H
+		fake_virus_victims += victim
 
 	//first we do hard status effect victims
 	var/defacto_min = min(3, LAZYLEN(fake_virus_victims))

@@ -3,9 +3,11 @@
 	antagpanel_category = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
+	antag_hud_type = ANTAG_HUD_BROTHER
+	antag_hud_name = "brother"
+	hijack_speed = 0.5
 	var/datum/team/brother_team/team
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
@@ -31,8 +33,16 @@
 	owner.special_role = null
 	return ..()
 
+/datum/antagonist/brother/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+
+/datum/antagonist/brother/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
+
 /datum/antagonist/brother/antag_panel_data()
-	return "Conspirators : [get_brother_names()]]"
+	return "Conspirators : [get_brother_names()]"
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
@@ -60,8 +70,7 @@
 	give_meeting_area()
 
 /datum/antagonist/brother/proc/finalize_brother()
-	SSticker.mode.update_brother_icons_added(owner)
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	//show list of possible brothers
@@ -71,7 +80,7 @@
 			continue
 		candidates[L.mind.name] = L.mind
 
-	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in candidates
+	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in sortNames(candidates)
 	if(!choice)
 		return
 	var/datum/mind/bro = candidates[choice]

@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "Kilo Station white ship shuttle dock no longer spawns a redundant mining shuttle"

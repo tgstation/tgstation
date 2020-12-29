@@ -39,7 +39,7 @@
 					to_chat(M, "<span class='warning'>Your punch misses [src]!</span>")
 
 			if ("disarm")
-				if (!(mobility_flags & MOBILITY_STAND))
+				if (body_position == STANDING_UP)
 					if (prob(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)

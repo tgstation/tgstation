@@ -4,7 +4,7 @@
 	if(istype(A))
 		appearance = A.appearance
 		dir = A.dir
-		if(ismovableatom(A))
+		if(ismovable(A))
 			var/atom/movable/AM = A
 			step_x = AM.step_x
 			step_y = AM.step_y
@@ -47,7 +47,7 @@
 				atoms += A
 			CHECK_TICK
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "transparent")
+	var/icon/res = icon('icons/blanks/96x96.dmi', "nothing")
 	res.Scale(psize_x, psize_y)
 
 	var/list/sorted = list()
@@ -56,7 +56,7 @@
 		var/atom/c = atoms[i]
 		for(j = sorted.len, j > 0, --j)
 			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
+			if((c2.plane <= c.plane) && (c2.layer <= c.layer))
 				break
 		sorted.Insert(j+1, c)
 		CHECK_TICK
@@ -64,18 +64,45 @@
 	var/xcomp = FLOOR(psize_x / 2, 1) - 15
 	var/ycomp = FLOOR(psize_y / 2, 1) - 15
 
-
-	for(var/atom/A in sorted)
-		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
-		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
-		if(ismovableatom(A))
-			var/atom/movable/AM = A
-			xo += AM.step_x
-			yo += AM.step_y
-		var/icon/img = getFlatIcon(A)
-		if(img)
+	if(!skip_normal) //these are not clones
+		for(var/atom/A in sorted)
+			var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
+			var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
+			if(ismovable(A))
+				var/atom/movable/AM = A
+				xo += AM.step_x
+				yo += AM.step_y
+			var/icon/img = getFlatIcon(A, no_anim = TRUE)
 			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
-		CHECK_TICK
+			CHECK_TICK
+	else
+		for(var/X in sorted) //these are clones
+			var/obj/effect/appearance_clone/clone = X
+			var/icon/img = getFlatIcon(clone, no_anim = TRUE)
+			if(img)
+				// Center of the image in X
+				var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp + clone.step_x
+				// Center of the image in Y
+				var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
+
+				if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
+					var/datum/decompose_matrix/decompose = clone.transform.decompose()
+					// Scale in X, Y
+					if(decompose.scale_x != 1 || decompose.scale_y != 1)
+						var/base_w = img.Width()
+						var/base_h = img.Height()
+						img.Scale(base_w * decompose.scale_x, base_h * decompose.scale_y)
+						xo -= base_w * (decompose.scale_x - 1) / 2
+						yo -= base_h * (decompose.scale_y - 1) / 2
+					// Rotation
+					if(decompose.rotation != 0)
+						img.Turn(decompose.rotation)
+					// Shift
+					xo += decompose.shift_x
+					yo += decompose.shift_y
+
+				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
+			CHECK_TICK
 
 	if(!silent)
 		if(istype(custom_sound))				//This is where the camera actually finishes its exposure.

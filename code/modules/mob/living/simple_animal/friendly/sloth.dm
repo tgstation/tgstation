@@ -10,10 +10,13 @@
 	emote_see = list("dozes off.", "looks around sleepily.")
 	speak_chance = 1
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
-	response_help = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm = "kicks"
+	butcher_results = list(/obj/item/food/meat/slab = 3)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	gold_core_spawnable = FRIENDLY_SPAWN
 	melee_damage_lower = 18
@@ -21,9 +24,11 @@
 	health = 50
 	maxHealth = 50
 	speed = 10
-	glide_size = 2
+	held_state = "sloth"
+	pet_bonus = TRUE
+	pet_bonus_emote = "slowly smiles!"
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 
 //Cargo Sloth

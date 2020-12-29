@@ -8,7 +8,7 @@
 	range = -1
 	include_user = TRUE
 	invocation = "CLANG!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "immrod"
 
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets,mob/user = usr)

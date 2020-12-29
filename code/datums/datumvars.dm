@@ -31,6 +31,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_EXPOSE, "Show VV To Player")
 	VV_DROPDOWN_OPTION(VV_HK_ADDCOMPONENT, "Add Component/Element")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRAITS, "Modify Traits")
+	VV_DROPDOWN_OPTION(VV_HK_VIEW_REFERENCES, "View References")
 
 //This proc is only called if everything topic-wise is verified. The only verifications that should happen here is things like permission checks!
 //href_list is a reference, modifying it in these procs WILL change the rest of the proc in topic.dm of admin/view_variables!
@@ -38,6 +39,8 @@
 /datum/proc/vv_do_topic(list/href_list)
 	if(!usr || !usr.client || !usr.client.holder || !check_rights(NONE))
 		return FALSE			//This is VV, not to be called by anything else.
+	if(SEND_SIGNAL(src, COMSIG_VV_TOPIC, usr, href_list) & COMPONENT_VV_HANDLED)
+		return FALSE
 	if(href_list[VV_HK_MODIFY_TRAITS])
 		usr.client.holder.modify_traits(src)
 	return TRUE
@@ -46,6 +49,3 @@
 	. = list()
 	if(("name" in vars) && !isatom(src))
 		. += "<b>[vars["name"]]</b><br>"
-
-/datum/proc/on_reagent_change(changetype)
-	return

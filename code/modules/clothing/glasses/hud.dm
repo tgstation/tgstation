@@ -5,11 +5,11 @@
 	var/hud_type = null
 	///Used for topic calls. Just because you have a HUD display doesn't mean you should be able to interact with stuff.
 	var/hud_trait = null
-	
+
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot != SLOT_GLASSES)
+	if(slot != ITEM_SLOT_EYES)
 		return
 	if(hud_type)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
@@ -53,7 +53,7 @@
 	name = "night vision health scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
-	item_state = "glasses"
+	inhand_icon_state = "glasses"
 	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -73,13 +73,14 @@
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
+	hud_trait = TRAIT_DIAGNOSTIC_HUD
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "night vision diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
 	icon_state = "diagnostichudnight"
-	item_state = "glasses"
+	inhand_icon_state = "glasses"
 	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -89,7 +90,7 @@
 	name = "diagnostic sunglasses"
 	desc = "Sunglasses with a diagnostic HUD."
 	icon_state = "sunhuddiag"
-	item_state = "glasses"
+	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 
@@ -152,19 +153,20 @@
 	name = "\improper HUD gar glasses"
 	desc = "GAR glasses with a HUD."
 	icon_state = "gars"
-	item_state = "garb"
+	inhand_icon_state = "garb"
 	force = 10
 	throwforce = 10
 	throw_speed = 4
-	attack_verb = list("sliced")
+	attack_verb_continuous = list("slices")
+	attack_verb_simple = list("slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
 	name = "giga HUD gar glasses"
 	desc = "GIGA GAR glasses with a HUD."
 	icon_state = "supergars"
-	item_state = "garb"
+	inhand_icon_state = "garb"
 	force = 12
 	throwforce = 12
 
@@ -223,3 +225,21 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	thermal_overload()
+
+/obj/item/clothing/glasses/hud/spacecop
+	name = "police aviators"
+	desc = "For thinking you look cool while brutalizing protestors and minorities."
+	icon_state = "bigsunglasses"
+	hud_type = ANTAG_HUD_GANGSTER
+	darkness_view = 1
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/gray
+
+
+/obj/item/clothing/glasses/hud/spacecop/hidden // for the undercover cop
+	name = "sunglasses"
+	desc = "These sunglasses are special, and let you view potential criminals."
+	icon_state = "sun"
+	inhand_icon_state = "sunglasses"
+

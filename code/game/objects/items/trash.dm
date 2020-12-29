@@ -6,6 +6,7 @@
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	item_flags = NOBLUDGEON
 
 /obj/item/trash/Initialize(mapload)
 	var/turf/T = get_turf(src)
@@ -34,6 +35,11 @@
 /obj/item/trash/chips
 	name = "chips"
 	icon_state = "chips"
+
+/obj/item/trash/boritos
+	name = "boritos bag"
+	icon_state = "boritos"
+	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
 
 /obj/item/trash/popcorn
 	name = "popcorn"
@@ -102,18 +108,3 @@
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
-
-/obj/item/trash/attack(mob/M, mob/living/user)
-	return
-
-/obj/item/trash/coal
-	name = "lump of coal"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "slag"
-	desc = "Someone's gotten on the naughty list."
-	grind_results = list(/datum/reagent/carbon = 20)
-
-/obj/item/trash/coal/burn()
-	visible_message("<span class='warning'>[src] fuses into a diamond! Someone wasn't so naughty after all...</span>")
-	new /obj/item/stack/ore/diamond(loc)
-	qdel(src)

@@ -12,7 +12,7 @@
 
 	// You can buckle someone to RTG, then open its panel. Fun stuff.
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	buckle_requires_restraints = TRUE
 
 	var/power_gen = 1000 // Enough to power a single APC. 4000 output with T4 capacitor.
@@ -78,7 +78,7 @@
 	tesla_zap(src, 5, power_gen * 0.05)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, get_turf(src), 2, 3, 4, 8), 100) // Not a normal explosion.
 
-/obj/machinery/power/rtg/abductor/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/Proj)
 	. = ..()
 	if(!going_kaboom && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
 		log_bomber(Proj.firer, "triggered a", src, "explosion via projectile")
@@ -96,6 +96,7 @@
 /obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()
 
-/obj/machinery/power/rtg/abductor/tesla_act()
-	..() //extend the zap
-	overload()
+/obj/machinery/power/rtg/abductor/zap_act(power, zap_flags)
+	. = ..() //extend the zap
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
+		overload()

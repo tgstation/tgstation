@@ -14,7 +14,8 @@
 	var/max_spawned = 8
 	var/segment_chance = 35
 
-/obj/item/grenade/clusterbuster/prime()
+/obj/item/grenade/clusterbuster/detonate(mob/living/lanced_by)
+	. = ..()
 	update_mob()
 	var/numspawned = rand(min_spawned,max_spawned)
 	var/again = 0
@@ -35,7 +36,7 @@
 //Clusterbang segment
 //////////////////////
 /obj/item/grenade/clusterbuster/segment
-	desc = "A smaller segment of a clusterbang. Better run."
+	desc = "A smaller segment of a clusterbang. Better run!"
 	name = "clusterbang segment"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
@@ -57,9 +58,9 @@
 	var/steps = rand(1,4)
 	for(var/i in 1 to steps)
 		step_away(src,loc)
-	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
+	addtimer(CALLBACK(src, .proc/detonate), rand(15,60))
 
-/obj/item/grenade/clusterbuster/segment/prime()
+/obj/item/grenade/clusterbuster/segment/detonate(mob/living/lanced_by)
 	new payload_spawner(drop_location(), payload, rand(min_spawned,max_spawned))
 	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
@@ -77,7 +78,7 @@
 		var/obj/item/grenade/P = new type(loc)
 		if(istype(P))
 			P.active = TRUE
-			addtimer(CALLBACK(P, /obj/item/grenade/proc/prime), rand(15,60))
+			addtimer(CALLBACK(P, /obj/item/grenade/proc/detonate), rand(15,60))
 		var/steps = rand(1,4)
 		for(var/i in 1 to steps)
 			step_away(src,loc)

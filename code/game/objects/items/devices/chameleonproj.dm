@@ -1,11 +1,12 @@
 /obj/item/chameleon
-	name = "chameleon-projector"
+	name = "chameleon projector"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throwforce = 5
@@ -49,6 +50,10 @@
 		return
 	if(istype(target, /obj/structure/falsewall))
 		return
+	if(target.alpha != 255)
+		return
+	if(target.invisibility != 0)
+		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
@@ -86,7 +91,7 @@
 /obj/item/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
 		for(var/mob/M in active_dummy)
-			to_chat(M, "<span class='danger'>Your chameleon-projector deactivates.</span>")
+			to_chat(M, "<span class='danger'>Your chameleon projector deactivates.</span>")
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
@@ -116,11 +121,7 @@
 	appearance = saved_appearance
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
-		var/datum/component/riding/VRD = V.GetComponent(/datum/component/riding)
-		if(VRD)
-			VRD.force_dismount(M)
-		else
-			V.unbuckle_mob(M, force = TRUE)
+		V.unbuckle_mob(M, force = TRUE)
 	M.forceMove(src)
 	master = C
 	master.active_dummy = src
@@ -149,7 +150,7 @@
 	. = ..()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/relaymove(mob/user, direction)
+/obj/effect/dummy/chameleon/relaymove(mob/living/user, direction)
 	if(isspaceturf(loc) || !direction)
 		return //No magical space movement!
 

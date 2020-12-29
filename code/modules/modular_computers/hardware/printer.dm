@@ -5,19 +5,20 @@
 	icon_state = "printer"
 	w_class = WEIGHT_CLASS_NORMAL
 	device_type = MC_PRINT
+	expansion_hw = TRUE
 	var/stored_paper = 20
 	var/max_paper = 30
 
 /obj/item/computer_hardware/printer/diagnostics(mob/living/user)
 	..()
-	to_chat(user, "Paper level: [stored_paper]/[max_paper].")
+	to_chat(user, "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>")
 
 /obj/item/computer_hardware/printer/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Paper level: [stored_paper]/[max_paper].</span>"
 
 
-/obj/item/computer_hardware/printer/proc/print_text(var/text_to_print, var/paper_title = "")
+/obj/item/computer_hardware/printer/proc/print_text(text_to_print, paper_title = "")
 	if(!stored_paper)
 		return FALSE
 	if(!check_functionality())
@@ -33,7 +34,6 @@
 	if(paper_title)
 		P.name = paper_title
 	P.update_icon()
-	P.reload_fields()
 	stored_paper--
 	P = null
 	return TRUE

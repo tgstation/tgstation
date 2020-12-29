@@ -14,7 +14,7 @@
 /obj/structure/mopbucket/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mop))
 		if(reagents.total_volume < 1)
-			to_chat(user, "[src] is out of water!</span>")
+			to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		else
 			reagents.trans_to(I, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
@@ -24,7 +24,7 @@
 		. = ..()
 		update_icon()
 
-/obj/structure/mopbucket/update_icon()
-	cut_overlays()
+/obj/structure/mopbucket/update_overlays()
+	. = ..()
 	if(reagents.total_volume > 0)
-		add_overlay("mopbucket_water")
+		. += "mopbucket_water"

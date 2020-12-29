@@ -14,8 +14,8 @@
 	var/x = target.x
 	var/y = target.y
 	var/z = target.z
-	var/turf/southwest = locate(CLAMP(x - (direction & WEST ? range : 0), 1, world.maxx), CLAMP(y - (direction & SOUTH ? range : 0), 1, world.maxy), CLAMP(z, 1, world.maxz))
-	var/turf/northeast = locate(CLAMP(x + (direction & EAST ? range : 0), 1, world.maxx), CLAMP(y + (direction & NORTH ? range : 0), 1, world.maxy), CLAMP(z, 1, world.maxz))
+	var/turf/southwest = locate(clamp(x - (direction & WEST ? range : 0), 1, world.maxx), clamp(y - (direction & SOUTH ? range : 0), 1, world.maxy), clamp(z, 1, world.maxz))
+	var/turf/northeast = locate(clamp(x + (direction & EAST ? range : 0), 1, world.maxx), clamp(y + (direction & NORTH ? range : 0), 1, world.maxy), clamp(z, 1, world.maxz))
 	//holder.vis_contents += block(southwest, northeast) // This doesnt work because of beta bug memes
 	for(var/i in block(southwest, northeast))
 		holder.vis_contents += i

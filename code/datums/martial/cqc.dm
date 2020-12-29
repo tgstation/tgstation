@@ -9,6 +9,7 @@
 	id = MARTIALART_CQC
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
+	smashes_tables = TRUE
 	var/old_grab_state = null
 	var/restraining = FALSE
 
@@ -43,7 +44,7 @@
 /datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!can_use(A))
 		return FALSE
-	if(D.mobility_flags & MOBILITY_STAND)
+	if(D.body_position == STANDING_UP)
 		D.visible_message("<span class='danger'>[A] slams [D] into the ground!</span>", \
 						"<span class='userdanger'>You're slammed into the ground by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You slam [D] into the ground!</span>")
@@ -127,7 +128,7 @@
 		D.grabbedby(A, 1)
 		if(old_grab_state == GRAB_PASSIVE)
 			D.drop_all_held_items()
-			A.grab_state = GRAB_AGGRESSIVE //Instant agressive grab if on grab intent
+			A.setGrabState(GRAB_AGGRESSIVE) //Instant agressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 							"<span class='userdanger'>You're grabbed violently by [A]!</span>", "<span class='hear'>You hear sounds of aggressive fondling!</span>", COMBAT_MESSAGE_RANGE, A)
@@ -146,7 +147,7 @@
 	A.do_attack_animation(D)
 	var/picked_hit_type = pick("CQC", "Big Boss")
 	var/bonus_damage = 13
-	if(!(D.mobility_flags & MOBILITY_STAND))
+	if(D.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
 	D.apply_damage(bonus_damage, BRUTE)
@@ -159,7 +160,7 @@
 	to_chat(A, "<span class='danger'>You [picked_hit_type] [D]!</span>")
 	log_combat(A, D, "[picked_hit_type]s (CQC)")
 	if(A.resting && !D.stat && !D.IsParalyzed())
-		D.visible_message("<span class='danger'>[A] leg sweeps [D]!", \
+		D.visible_message("<span class='danger'>[A] leg sweeps [D]!</span>", \
 						"<span class='userdanger'>Your legs are sweeped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 		to_chat(A, "<span class='danger'>You leg sweep [D]!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
@@ -199,8 +200,8 @@
 		to_chat(A, "<span class='danger'>You put [D] into a chokehold!</span>")
 		D.SetSleeping(400)
 		restraining = FALSE
-		if(A.grab_state < GRAB_NECK)
-			A.grab_state = GRAB_NECK
+		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
+			A.setGrabState(GRAB_NECK)
 	else
 		restraining = FALSE
 		return FALSE
@@ -223,9 +224,10 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
+	var/list/valid_areas = list(/area/crew_quarters/kitchen)
 
 ///Prevents use if the cook is not in the kitchen.
 /datum/martial_art/cqc/under_siege/can_use(mob/living/carbon/human/H) //this is used to make chef CQC only work in kitchen
-	if(!istype(get_area(H), /area/crew_quarters/kitchen))
+	if(!is_type_in_list(get_area(H), valid_areas))
 		return FALSE
 	return ..()

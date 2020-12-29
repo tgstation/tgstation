@@ -3,7 +3,7 @@
 	name = "FORCEWALL"
 	icon_state = "m_shield"
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)
@@ -24,12 +24,18 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	timeleft = 200
 
+/// A form of the cult forcefield that lasts permanently.
+/// Used on the Shuttle 667.
+/obj/effect/forcefield/cult/permanent
+	timeleft = 0
+
 ///////////Mimewalls///////////
 
 /obj/effect/forcefield/mime
 	icon_state = "nothing"
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
+	alpha = 0
 
 /obj/effect/forcefield/mime/advanced
 	name = "invisible blockade"

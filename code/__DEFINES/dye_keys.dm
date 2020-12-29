@@ -4,6 +4,7 @@
 #define DYE_REGISTRY_SNEAKERS "sneakers"
 #define DYE_REGISTRY_FANNYPACK "fannypack"
 #define DYE_REGISTRY_BEDSHEET "bedsheet"
+#define DYE_LAWYER_SPECIAL "lawyer_special"
 
 #define DYE_RED "red"
 #define DYE_ORANGE "orange"
@@ -16,6 +17,7 @@
 #define DYE_RAINBOW "rainbow"
 #define DYE_MIME "mime"
 #define DYE_COSMIC "cosmic"
+#define DYE_SYNDICATE "syndicate"
 #define DYE_QM "qm"
 #define DYE_LAW "law"
 #define DYE_CAPTAIN "captain"
@@ -26,3 +28,5 @@
 #define DYE_CMO "cmo"
 #define DYE_REDCOAT "redcoat"
 #define DYE_CLOWN "clown"
+#define DYE_CHAP "chap"
+#define DYE_CENTCOM "centcom"

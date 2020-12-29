@@ -3,7 +3,6 @@
 	desc = "Attack the weak point for massive damage."
 	health = 1000
 	maxHealth = 1000
-	spacewalk = TRUE
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
@@ -12,7 +11,7 @@
 	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
@@ -25,28 +24,43 @@
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
 	pull_force = MOVE_FORCE_OVERPOWERING
-	mob_size = MOB_SIZE_LARGE
+	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
-	var/medal_type
-	var/score_type = BOSS_SCORE
+	/// Achievement given to surrounding players when the megafauna is killed
+	var/achievement_type
+	/// Crusher achievement given to players when megafauna is killed
+	var/crusher_achievement_type
+	/// Score given to players when megafauna is killed
+	var/score_achievement_type
+	/// If the megafauna was actually killed (not just dying, then transforming into another type)
 	var/elimination = 0
+	/// Modifies attacks when at lower health
 	var/anger_modifier = 0
+	/// Name for the GPS signal of the megafauna
 	var/gps_name = null
+	/// Next time the megafauna can use a melee attack
 	var/recovery_time = 0
-	var/true_spawn = TRUE // if this is a megafauna that should grant achievements, or have a gps signal
+	/// If this is a megafauna that is real (has achievements, gps signal)
+	var/true_spawn = TRUE
+	/// Range the megafauna can move from their nest (if they have one
 	var/nest_range = 10
-	var/chosen_attack = 1 // chosen attack num
+	/// The chosen attack by the megafauna
+	var/chosen_attack = 1
+	/// Attack actions, sets chosen_attack to the number in the action
 	var/list/attack_action_types = list()
+	/// If there is a small sprite icon for players controlling the megafauna to use
 	var/small_sprite_type
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
 	if(gps_name && true_spawn)
 		AddComponent(/datum/component/gps, gps_name)
-	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
 		attack_action.Grant(src)
@@ -64,27 +78,24 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
-	return TRUE
-
-/mob/living/simple_animal/hostile/megafauna/death(gibbed, var/list/force_grant)
+/mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
-	else
-		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-		var/crusher_kill = FALSE
-		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
-			spawn_crusher_loot()
-			crusher_kill = TRUE
-		if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
-			var/tab = "megafauna_kills"
-			if(crusher_kill)
-				tab = "megafauna_kills_crusher"
-			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-				grant_achievement(medal_type, score_type, crusher_kill, force_grant)
-				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
-		..()
+	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	var/crusher_kill = FALSE
+	if(crusher_dmg && crusher_loot && crusher_dmg.total_damage >= maxHealth * 0.6)
+		spawn_crusher_loot()
+		crusher_kill = TRUE
+	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
+		var/tab = "megafauna_kills"
+		if(crusher_kill)
+			tab = "megafauna_kills_crusher"
+		if(!elimination)	//used so the achievment only occurs for the last legion to die.
+			grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
+			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
+	return ..()
 
+/// Spawns crusher loot instead of normal loot
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
 	loot = crusher_loot
 
@@ -109,9 +120,13 @@
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
+
+			if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still gibs yall
+				devour(L)
 		else
 			devour(L)
 
+/// Devours a target and restores health to the megafauna
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return FALSE
@@ -134,12 +149,16 @@
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
-/mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
+/// Sets the next time the megafauna can use a melee or ranged attack, in deciseconds
+/mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time, ranged_buffer_time)
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = world.time + buffer_time
+	if(ranged_buffer_time)
+		ranged_cooldown = world.time + ranged_buffer_time
 
-/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, var/list/grant_achievement = list())
-	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
+/// Grants medals and achievements to surrounding players
+/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, list/grant_achievement = list())
+	if(!achievement_type || (flags_1 & ADMIN_SPAWNED_1) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
 	if(!grant_achievement.len)
 		for(var/mob/living/L in view(7,src))
@@ -147,13 +166,12 @@
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
-		var/client/C = L.client
-		SSmedals.UnlockMedal("Boss [BOSS_KILL_MEDAL]", C)
-		SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL]", C)
-		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
-			SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]", C)
-		SSmedals.SetScore(BOSS_SCORE, C, 1)
-		SSmedals.SetScore(score_type, C, 1)
+		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
+		L.client.give_award(achievement_type, L)
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/kinetic_crusher))
+			L.client.give_award(crusher_achievement_type, L)
+		L.client.give_award(/datum/award/score/boss_score, L) //Score progression for bosses killed in general
+		L.client.give_award(score_achievement_type, L) //Score progression for specific boss killed
 	return TRUE
 
 /datum/action/innate/megafauna_attack

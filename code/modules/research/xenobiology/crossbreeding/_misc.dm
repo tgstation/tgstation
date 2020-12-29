@@ -4,8 +4,6 @@ Slimecrossing Items
 	Collected here for clarity.
 */
 
-#define DEJAVU_REWIND_INTERVAL (10 SECONDS)
-
 //Rewind camera - I'm already Burning Sepia
 /obj/item/camera/rewind
 	name = "sepia-tinted camera"
@@ -40,7 +38,7 @@ Slimecrossing Items
 		if(!already || already != saved_part.old_part)
 			saved_part.old_part.replace_limb(src, TRUE)
 		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
-		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
+		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam, wound_bonus=CANT_WOUND)
 		dont_chop[zone] = TRUE
 	for(var/_part in bodyparts)
 		var/obj/item/bodypart/part = _part
@@ -56,81 +54,6 @@ Slimecrossing Items
 
 		ret[part.body_zone] = saved_part
 	return ret
-
-
-
-/datum/component/dejavu
-	var/integrity	//for objects
-	var/brute_loss //for simple animals
-	var/list/datum/saved_bodypart/saved_bodyparts //maps bodypart slots to health
-	var/clone_loss = 0
-	var/tox_loss = 0
-	var/oxy_loss = 0
-	var/brain_loss = 0
-	var/x
-	var/y
-	var/z
-	var/rewinds_remaining
-
-/datum/component/dejavu/Initialize(rewinds = 1)
-	rewinds_remaining = rewinds
-	var/turf/T = get_turf(parent)
-	if(T)
-		x = T.x
-		y = T.y
-		z = T.z
-	if(isliving(parent))
-		var/mob/living/L = parent
-		clone_loss = L.getCloneLoss()
-		tox_loss = L.getToxLoss()
-		oxy_loss = L.getOxyLoss()
-		brain_loss = L.getOrganLoss(ORGAN_SLOT_BRAIN)
-	if(iscarbon(parent))
-		var/mob/living/carbon/C = parent
-		saved_bodyparts = C.save_bodyparts()
-	else if(isanimal(parent))
-		var/mob/living/simple_animal/M = parent
-		brute_loss = M.bruteloss
-	else if(isobj(parent))
-		var/obj/O = parent
-		integrity = O.obj_integrity
-	addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
-
-/datum/component/dejavu/proc/rewind()
-	to_chat(parent, "<span class=notice>You remember a time not so long ago...</span>")
-
-	if(isliving(parent))
-		var/mob/living/L = parent
-		L.setCloneLoss(clone_loss)
-		L.setToxLoss(tox_loss)
-		L.setOxyLoss(oxy_loss)
-		L.setOrganLoss(ORGAN_SLOT_BRAIN, brain_loss)
-
-	if(iscarbon(parent))
-		if(saved_bodyparts)
-			var/mob/living/carbon/C = parent
-			C.apply_saved_bodyparts(saved_bodyparts)
-	else if(isanimal(parent))
-		var/mob/living/simple_animal/M = parent
-		M.bruteloss = brute_loss
-		M.updatehealth()
-	else if(isobj(parent))
-		var/obj/O = parent
-		O.obj_integrity = integrity
-
-	//comes after healing so new limbs comically drop to the floor
-	if(!isnull(x) && istype(parent, /atom/movable))
-		var/atom/movable/AM = parent
-		var/turf/T = locate(x,y,z)
-		AM.forceMove(T)
-
-	rewinds_remaining --
-	if(rewinds_remaining)
-		addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
-	else
-		to_chat(parent, "<span class=notice>But the memory falls out of your reach.</span>")
-
-
 
 /obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
@@ -166,14 +89,16 @@ Slimecrossing Items
 		desc = "This camera has seen better days."
 	. = ..()
 
-
 //Hypercharged slime cell - Charged Yellow
-/obj/item/stock_parts/cell/high/slime/hypercharged
+/obj/item/stock_parts/cell/high/slime_hypercharged
 	name = "hypercharged slime core"
-	desc = "A charged yellow slime extract, infused with even more plasma. It almost hurts to touch."
-	rating = 7 //Roughly 1.5 times the original.
-	maxcharge = 20000 //2 times the normal one.
-	chargerate = 2250 //1.5 times the normal rate.
+	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "yellow slime extract"
+	rating = 7
+	custom_materials = null
+	maxcharge = 50000
+	chargerate = 2500
 
 //Barrier cube - Chilling Grey
 /obj/item/barriercube
@@ -217,29 +142,6 @@ Slimecrossing Items
 	desc = "Despite others' urgings, you probably shouldn't taste this."
 	icon_state = "rainbowbarrier"
 
-//Ration pack - Chilling Silver
-/obj/item/reagent_containers/food/snacks/rationpack
-	name = "ration pack"
-	desc = "A square bar that sadly <i>looks</i> like chocolate, packaged in a nondescript grey wrapper. Has saved soldiers' lives before - usually by stopping bullets."
-	icon_state = "rationpack"
-	bitesize = 3
-	junkiness = 15
-	filling_color = "#964B00"
-	tastes = list("cardboard" = 3, "sadness" = 3)
-	foodtype = null //Don't ask what went into them. You're better off not knowing.
-	list_reagents = list(/datum/reagent/consumable/nutriment/stabilized = 10, /datum/reagent/consumable/nutriment = 2) //Won't make you fat. Will make you question your sanity.
-
-/obj/item/reagent_containers/food/snacks/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
-	if(last_check_time + 50 < world.time)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.mind && !HAS_TRAIT(H, TRAIT_AGEUSIA))
-				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
-				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
-				last_check_time = world.time
-				return
-	..()
-
 //Ice stasis block - Chilling Dark Blue
 /obj/structure/ice_stasis
 	name = "ice block"
@@ -248,7 +150,7 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	armor = list("melee" = 30, "bullet" = 50, "laser" = -50, "energy" = -50, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = -80, "acid" = 30)
+	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 100, RAD = 100, FIRE = -80, ACID = 30)
 
 /obj/structure/ice_stasis/Initialize()
 	. = ..()
@@ -302,7 +204,7 @@ Slimecrossing Items
 	else
 		to_chat(user, "<span class='warning'>The device is empty...</span>")
 
-/obj/item/capturedevice/proc/store(var/mob/living/M)
+/obj/item/capturedevice/proc/store(mob/living/M)
 	M.forceMove(src)
 
 /obj/item/capturedevice/proc/release()

@@ -5,7 +5,7 @@
 	icon_state = "shield-old"
 	density = TRUE
 	move_resist = INFINITY
-	opacity = 0
+	opacity = FALSE
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
@@ -29,7 +29,7 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(50, BRUTE, "energy", 0)
+			take_damage(50, BRUTE, ENERGY, 0)
 
 /obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -43,16 +43,22 @@
 	if(.) //damage was dealt
 		new /obj/effect/temp_visual/impact_effect/ion(loc)
 
-/obj/structure/emergency_shield/sanguine
-	name = "sanguine barrier"
-	desc = "A potent shield summoned by cultists to defend their rites."
-	icon_state = "shield-red"
-	max_integrity = 60
 
-/obj/structure/emergency_shield/sanguine/emp_act(severity)
+/obj/structure/emergency_shield/cult
+	name = "cult barrier"
+	desc = "A shield summoned by cultists to keep heretics away."
+	max_integrity = 100
+	icon_state = "shield-red"
+
+/obj/structure/emergency_shield/cult/emp_act(severity)
 	return
 
-/obj/structure/emergency_shield/invoker
+/obj/structure/emergency_shield/cult/narsie
+	name = "sanguine barrier"
+	desc = "A potent shield summoned by cultists to defend their rites."
+	max_integrity = 60
+
+/obj/structure/emergency_shield/cult/weak
 	name = "Invoker's Shield"
 	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals."
 	color = "#FF0000"
@@ -60,9 +66,40 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
 
-/obj/structure/emergency_shield/invoker/emp_act(severity)
-	return
+/obj/structure/emergency_shield/cult/barrier
+	density = FALSE //toggled on right away by the parent rune
+	CanAtmosPass = ATMOS_PASS_DENSITY
+	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
+	var/obj/effect/rune/parent_rune
 
+/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user)
+	parent_rune.attack_hand(user)
+
+/obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user)
+	if(iscultist(user))
+		parent_rune.attack_animal(user)
+	else
+		..()
+
+/obj/structure/emergency_shield/cult/barrier/Destroy()
+	if(parent_rune)
+		parent_rune.visible_message("<span class='danger'>The [parent_rune] fades away as [src] is destroyed!</span>")
+		QDEL_NULL(parent_rune)
+	return ..()
+
+/**
+*Turns the shield on and off.
+*
+*The shield has 2 states: on and off. When on, it will block movement,projectiles, items, etc. and be clearly visible, and block atmospheric gases.
+*When off, the rune no longer blocks anything and turns invisible.
+*The barrier itself is not intended to interact with the conceal runes cult spell for balance purposes.
+*/
+/obj/structure/emergency_shield/cult/barrier/proc/Toggle()
+	density = !density
+	air_update_turf(1)
+	invisibility = initial(invisibility)
+	if(!density)
+		invisibility = INVISIBILITY_OBSERVER
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -70,7 +107,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
 	density = TRUE
-	opacity = 0
+	opacity = FALSE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	req_access = list(ACCESS_ENGINE)
@@ -98,7 +135,7 @@
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
-			if(!(stat & BROKEN) || prob(33))
+			if(!(machine_stat & BROKEN) || prob(33))
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
@@ -107,9 +144,9 @@
 	update_icon()
 	QDEL_LIST(deployed_shields)
 
-/obj/machinery/shieldgen/process()
-	if((stat & BROKEN) && active)
-		if(deployed_shields.len && prob(5))
+/obj/machinery/shieldgen/process(delta_time)
+	if((machine_stat & BROKEN) && active)
+		if(deployed_shields.len && DT_PROB(2.5, delta_time))
 			qdel(pick(deployed_shields))
 
 
@@ -151,7 +188,7 @@
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 		else
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil) && (stat & BROKEN) && panel_open)
+	else if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
@@ -162,7 +199,7 @@
 				return
 			coil.use(1)
 			obj_integrity = max_integrity
-			stat &= ~BROKEN
+			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
@@ -173,14 +210,14 @@
 		if(!anchored && !isinspace())
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
-			setAnchored(TRUE)
+			set_anchored(TRUE)
 		else if(anchored)
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 				shields_down()
-			setAnchored(FALSE)
+			set_anchored(FALSE)
 
 	else if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
@@ -200,14 +237,14 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
-/obj/machinery/shieldgen/update_icon()
+/obj/machinery/shieldgen/update_icon_state()
 	if(active)
-		icon_state = (stat & BROKEN) ? "shieldonbr":"shieldon"
+		icon_state = (machine_stat & BROKEN) ? "shieldonbr":"shieldon"
 	else
-		icon_state = (stat & BROKEN) ? "shieldoffbr":"shieldoff"
+		icon_state = (machine_stat & BROKEN) ? "shieldoffbr":"shieldoff"
 
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2
@@ -215,7 +252,7 @@
 	name = "shield wall generator"
 	desc = "A shield generator."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "Shield_Gen"
+	icon_state = "shield_wall_gen"
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
@@ -225,8 +262,6 @@
 	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
-	var/power = 0
-	var/maximum_stored_power = 500
 	var/locked = TRUE
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
@@ -234,13 +269,16 @@
 /obj/machinery/power/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
-	icon_state = "Shield_Gen"
 	req_access = list(ACCESS_XENOBIOLOGY)
+
+/obj/machinery/power/shieldwallgen/anchored
+	anchored = TRUE
 
 /obj/machinery/power/shieldwallgen/Initialize()
 	. = ..()
 	if(anchored)
 		connect_to_network()
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
@@ -273,6 +311,7 @@
 				"<span class='hear'>You hear heavy droning fade out.</span>")
 			icon_state = "shield_wall_gen"
 			active = FALSE
+			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
@@ -326,6 +365,12 @@
 		if(F && (F.gen_primary == src || F.gen_secondary == src)) //it's ours, kill it.
 			qdel(F)
 
+/obj/machinery/power/shieldwallgen/proc/block_singularity_if_active()
+	SIGNAL_HANDLER
+
+	if (active)
+		return SINGULARITY_TRY_MOVE_BLOCK
+
 /obj/machinery/power/shieldwallgen/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
@@ -376,11 +421,13 @@
 			"<span class='notice'>You turn off \the [src].</span>", \
 			"<span class='hear'>You hear heavy droning fade out.</span>")
 		active = FALSE
+		log_game("[src] was deactivated by [key_name(user)] at [AREACOORD(src)]")
 	else
 		user.visible_message("<span class='notice'>[user] turned \the [src] on.</span>", \
 			"<span class='notice'>You turn on \the [src].</span>", \
 			"<span class='hear'>You hear heavy droning.</span>")
 		active = ACTIVE_SETUPFIELDS
+		log_game("[src] was activated by [key_name(user)] at [AREACOORD(src)]")
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user)
@@ -389,7 +436,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 //////////////Containment Field START
@@ -415,6 +462,7 @@
 	for(var/mob/living/L in get_turf(src))
 		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]!</span>")
 		L.gib()
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null
@@ -449,11 +497,15 @@
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.add_load(drain_amount * 0.5)
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/shieldwall/proc/block_singularity()
+	SIGNAL_HANDLER
+
+	return SINGULARITY_TRY_MOVE_BLOCK
+
+/obj/machinery/shieldwall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/projectile))
 			return prob(10)
-		else
-			return !density

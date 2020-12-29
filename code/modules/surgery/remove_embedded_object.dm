@@ -22,18 +22,14 @@
 		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 
-/datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/remove_object/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(L)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/objects = 0
 			for(var/obj/item/I in L.embedded_objects)
 				objects++
-				I.forceMove(get_turf(H))
-				L.embedded_objects -= I
-			if(!H.has_embedded_objects())
-				H.clear_alert("embeddedobject")
-				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+				H.remove_embedded_object(I)
 
 			if(objects > 0)
 				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",
@@ -45,4 +41,4 @@
 	else
 		to_chat(user, "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>")
 
-	return 1
+	return ..()

@@ -1,10 +1,14 @@
 //wrapper macros for easier grepping
 #define DIRECT_OUTPUT(A, B) A << B
+#define DIRECT_INPUT(A, B) A >> B
 #define SEND_IMAGE(target, image) DIRECT_OUTPUT(target, image)
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
-#define WRITE_LOG(log, text) rustg_log_write(log, text)
+#define READ_FILE(file, text) DIRECT_INPUT(file, text)
+//This is an external call, "true" and "false" are how rust parses out booleans
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
@@ -21,11 +25,33 @@
 //print a testing-mode debug message to world.log and world
 #ifdef TESTING
 #define testing(msg) log_world("## TESTING: [msg]"); to_chat(world, "## TESTING: [msg]")
+
+GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
+// we don't really check if a word or name is used twice, be aware of that
+#define testing_profile_start(NAME, LIST) LIST[NAME] = world.timeofday
+#define testing_profile_current(NAME, LIST) round((world.timeofday - LIST[NAME])/10,0.1)
+#define testing_profile_output(NAME, LIST) testing("[LIST["_PROFILE_NAME"]] profile of [NAME] is [testing_profile_current(NAME,LIST)]s")
+#define testing_profile_output_all(LIST) { for(var/_NAME in LIST) { testing_profile_current(,_NAME,LIST); }; };
 #else
 #define testing(msg)
+#define testing_profile_start(NAME, LIST)
+#define testing_profile_current(NAME, LIST)
+#define testing_profile_output(NAME, LIST)
+#define testing_profile_output_all(LIST)
 #endif
 
-#ifdef UNIT_TESTS
+#define testing_profile_global_start(NAME) testing_profile_start(NAME,GLOB.testing_global_profiler)
+#define testing_profile_global_current(NAME) testing_profile_current(NAME, GLOB.testing_global_profiler)
+#define testing_profile_global_output(NAME) testing_profile_output(NAME, GLOB.testing_global_profiler)
+#define testing_profile_global_output_all testing_profile_output_all(GLOB.testing_global_profiler)
+
+#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc"  = world.timeofday )
+#define testing_profile_local_start(NAME) testing_profile_start(NAME, _timer_system)
+#define testing_profile_local_current(NAME) testing_profile_current(NAME, _timer_system)
+#define testing_profile_local_output(NAME) testing_profile_output(NAME, _timer_system)
+#define testing_profile_local_output_all testing_profile_output_all(_timer_system)
+
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 /proc/log_test(text)
 	WRITE_LOG(GLOB.test_log, text)
 	SEND_TEXT(world.log, text)
@@ -88,6 +114,14 @@
 	if (CONFIG_GET(flag/log_attack))
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
 
+/proc/log_wounded(text)
+	if (CONFIG_GET(flag/log_attack))
+		WRITE_LOG(GLOB.world_attack_log, "WOUND: [text]")
+
+/proc/log_econ(text)
+	if (CONFIG_GET(flag/log_econ))
+		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
+
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
 		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
@@ -148,6 +182,9 @@
 	if (CONFIG_GET(flag/log_vote))
 		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
 
+/proc/log_shuttle(text)
+	if (CONFIG_GET(flag/log_shuttle))
+		WRITE_LOG(GLOB.world_shuttle_log, "SHUTTLE: [text]")
 
 /proc/log_topic(text)
 	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
@@ -186,6 +223,42 @@
 
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
+
+/proc/log_perf(list/perf_info)
+	. = "[perf_info.Join(",")]\n"
+	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
+
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context,
+		datum/tgui_window/window,
+		datum/src_object)
+	var/entry = ""
+	// Insert user info
+	if(!user)
+		entry += "<nobody>"
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window?.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "\nUsing: [src_object.type] [REF(src_object)]"
+	// Insert message
+	if(message)
+		entry += "\n[message]"
+	WRITE_LOG(GLOB.tgui_log, entry)
 
 /* For logging round startup. */
 /proc/start_log(log)
@@ -252,7 +325,7 @@
 		include_link = FALSE
 
 	if(key)
-		if(C && C.holder && C.holder.fakekey && !include_name)
+		if(C?.holder && C.holder.fakekey && !include_name)
 			if(include_link)
 				. += "<a href='?priv_msg=[C.findStealthKey()]'>"
 			. += "Administrator"

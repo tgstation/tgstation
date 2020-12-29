@@ -11,7 +11,7 @@
 	clothes_req = FALSE
 	centcom_cancast = FALSE
 	invocation = "NECREM IMORTIUM!"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 10
@@ -26,10 +26,7 @@
 		if(iscarbon(M))
 			hand_items = list(M.get_active_held_item(),M.get_inactive_held_item())
 		if(!hand_items.len)
-			to_chat(M, "<span class='caution'>You must hold an item you wish to make your phylactery...</span>")
-			return
-		if(!M.mind.hasSoul)
-			to_chat(user, "<span class='caution'>You do not possess a soul.</span>")
+			to_chat(M, "<span class='warning'>You must hold an item you wish to make your phylactery!</span>")
 			return
 
 		var/obj/item/marked_item
@@ -49,27 +46,27 @@
 
 		playsound(user, 'sound/effects/pope_entry.ogg', 100)
 
-		if(!do_after(M, 50, needhand=FALSE, target=marked_item))
+		if(!do_after(M, 5 SECONDS, target = marked_item, timed_action_flags = IGNORE_HELD_ITEM))
 			to_chat(M, "<span class='warning'>Your soul snaps back to your body as you stop ensouling [marked_item]!</span>")
 			return
 
 		marked_item.name = "ensouled [marked_item.name]"
 		marked_item.desc += "\nA terrible aura surrounds this item, its very existence is offensive to life itself..."
 		marked_item.add_atom_colour("#003300", ADMIN_COLOUR_PRIORITY)
+		marked_item.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 		new /obj/item/phylactery(marked_item, M.mind)
 
 		to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
-		M.mind.hasSoul = FALSE
 		M.set_species(/datum/species/skeleton)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.dropItemToGround(H.w_uniform)
 			H.dropItemToGround(H.wear_suit)
 			H.dropItemToGround(H.head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), SLOT_WEAR_SUIT)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), SLOT_HEAD)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), SLOT_W_UNIFORM)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), ITEM_SLOT_OCLOTHING)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), ITEM_SLOT_HEAD)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), ITEM_SLOT_ICLOTHING)
 
 		// you only get one phylactery.
 		M.mind.RemoveSpell(src)
@@ -80,9 +77,10 @@
 	desc = "Stores souls. Revives liches. Also repels mosquitos."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
-	color = "#003300"
-	light_color = "#003300"
-	var/lon_range = 3
+	color = COLOR_VERY_DARK_LIME_GREEN
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_color = COLOR_VERY_DARK_LIME_GREEN
 	var/resurrections = 0
 	var/datum/mind/mind
 	var/respawn_time = 1800
@@ -95,16 +93,14 @@
 	name = "phylactery of [mind.name]"
 
 	active_phylacteries++
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	START_PROCESSING(SSobj, src)
-	set_light(lon_range)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
 		SSticker.mode.round_ends_with_antag_death = FALSE
 
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
-	GLOB.poi_list -= src
 	if(!active_phylacteries)
 		SSticker.mode.round_ends_with_antag_death = initial(SSticker.mode.round_ends_with_antag_death)
 	. = ..()
@@ -125,23 +121,23 @@
 	if(!item_turf)
 		return "[src] is not at a turf? NULLSPACE!?"
 
-	var/mob/old_body = mind.current
+	var/mob/living/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
 
-	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), SLOT_SHOES)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), SLOT_W_UNIFORM)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), SLOT_WEAR_SUIT)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), SLOT_HEAD)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), ITEM_SLOT_FEET)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), ITEM_SLOT_ICLOTHING)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), ITEM_SLOT_OCLOTHING)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), ITEM_SLOT_HEAD)
 
 	lich.real_name = mind.name
 	mind.transfer_to(lich)
 	mind.grab_ghost(force=TRUE)
-	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton)
+	lich.hardset_dna(null,null,null,lich.real_name,null, new /datum/species/skeleton)
 	to_chat(lich, "<span class='warning'>Your bones clatter and shudder as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
 	lich.Paralyze(200 + 200*resurrections)
 	resurrections++
-	if(old_body && old_body.loc)
+	if(old_body?.loc)
 		if(iscarbon(old_body))
 			var/mob/living/carbon/C = old_body
 			for(var/obj/item/W in C)
@@ -153,7 +149,7 @@
 		var/wheres_wizdo = dir2text(get_dir(body_turf, item_turf))
 		if(wheres_wizdo)
 			old_body.visible_message("<span class='warning'>Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!</span>")
-			body_turf.Beam(item_turf,icon_state="lichbeam",time=10+10*resurrections,maxdistance=INFINITY)
+			body_turf.Beam(item_turf,icon_state="lichbeam", time = 10 + 10 * resurrections)
 		old_body.dust()
 
 

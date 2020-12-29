@@ -44,18 +44,20 @@
 			. += "It has a slot installed for an intelliCard."
 
 	var/obj/item/computer_hardware/card_slot/card_slot = get_modular_computer_part(MC_CARD)
+	var/obj/item/computer_hardware/card_slot/card_slot2 = get_modular_computer_part(MC_CARD2)
+	var/multiple_slots = istype(card_slot) && istype(card_slot2)
 	if(card_slot)
-		if(card_slot.stored_card || card_slot.stored_card2)
-			var/obj/item/card/id/first_ID = card_slot.stored_card
-			var/obj/item/card/id/second_ID = card_slot.stored_card2
+		if(card_slot?.stored_card || card_slot2?.stored_card)
+			var/obj/item/card/id/first_ID = card_slot?.stored_card
+			var/obj/item/card/id/second_ID = card_slot2?.stored_card
 			var/multiple_cards = istype(first_ID) && istype(second_ID)
 			if(user_is_adjacent)
-				. += "It has two slots for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
+				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
 			else
-				. += "It has two slots for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
+				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
 			. += "<span class='info'>Alt-click [src] to eject the identification card[multiple_cards ? "s":""].</span>"
 		else
-			. += "It has two slots installed for identification cards."
+			. += "It has [multiple_slots ? "two slots" : "a slot"] installed for identification cards."
 
 	var/obj/item/computer_hardware/printer/printer_slot = get_modular_computer_part(MC_PRINT)
 	if(printer_slot)

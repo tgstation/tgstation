@@ -12,15 +12,14 @@
 	. = ..()
 	update_icon()
 
-/obj/structure/closet/crate/bin/update_icon()
-	..()
-	cut_overlays()
+/obj/structure/closet/crate/bin/update_overlays()
+	. = ..()
 	if(contents.len == 0)
-		add_overlay("largebing")
+		. += "largebing"
 	else if(contents.len >= storage_capacity)
-		add_overlay("largebinr")
+		. += "largebinr"
 	else
-		add_overlay("largebino")
+		. += "largebino"
 
 /obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage/bag/trash))
@@ -37,6 +36,8 @@
 /obj/structure/closet/crate/bin/proc/do_animate()
 	playsound(loc, open_sound, 15, TRUE, -3)
 	flick("animate_largebins", src)
-	spawn(13)
-		playsound(loc, close_sound, 15, TRUE, -3)
-		update_icon()
+	addtimer(CALLBACK(src, .proc/do_close), 13)
+
+/obj/structure/closet/crate/bin/proc/do_close()
+	playsound(loc, close_sound, 15, TRUE, -3)
+	update_icon()

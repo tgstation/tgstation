@@ -33,16 +33,13 @@
 	if(cell && cell.charge <= 0)
 		. += "<span class='warning'>Its battery indicator is blinking red!</span>"
 
-	if(is_servant_of_ratvar(src) && get_dist(user, src) <= 1 && !stat) //To counter pseudo-stealth by using headlamps
-		. += "<span class='warning'>Its eyes are glowing a blazing yellow!</span>"
-
 	switch(stat)
 		if(CONSCIOUS)
 			if(shell)
 				. += "It appears to be an [deployed ? "active" : "empty"] AI shell."
 			else if(!client)
 				. += "It appears to be in stand-by mode." //afk
-		if(UNCONSCIOUS)
+		if(SOFT_CRIT, UNCONSCIOUS, HARD_CRIT)
 			. += "<span class='warning'>It doesn't seem to be responding.</span>"
 		if(DEAD)
 			. += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>"

@@ -6,16 +6,16 @@
 	desc = "The massive external power source for the laser gatling gun."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "holstered"
-	item_state = "backpack"
+	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	var/obj/item/gun/ballistic/minigun/gun
-	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
+	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
-	var/heat_diffusion = 1
+	var/heat_diffusion = 0.5
 
 /obj/item/minigunpack/Initialize()
 	. = ..()
@@ -26,17 +26,17 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/minigunpack/process()
-	overheat = max(0, overheat - heat_diffusion)
+/obj/item/minigunpack/process(delta_time)
+	overheat = max(0, overheat - heat_diffusion * delta_time)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
+/obj/item/minigunpack/attack_hand(mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
-				armed = 1
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
+				armed = TRUE
 				if(!user.put_in_hands(gun))
-					armed = 0
+					armed = FALSE
 					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
 					return
 				update_icon()
@@ -69,22 +69,22 @@
 
 		if(!M.incapacitated())
 
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
+			if(istype(over_object, /atom/movable/screen/inventory/hand))
+				var/atom/movable/screen/inventory/hand/H = over_object
 				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 
-/obj/item/minigunpack/update_icon()
+/obj/item/minigunpack/update_icon_state()
 	if(armed)
 		icon_state = "notholstered"
 	else
 		icon_state = "holstered"
 
-/obj/item/minigunpack/proc/attach_gun(var/mob/user)
+/obj/item/minigunpack/proc/attach_gun(mob/user)
 	if(!gun)
 		gun = new(src)
 	gun.forceMove(src)
-	armed = 0
+	armed = FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You attach the [gun.name] to the [name].</span>")
 	else
@@ -98,12 +98,12 @@
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
-	item_state = "minigun"
+	inhand_icon_state = "minigun"
 	flags_1 = CONDUCT_1
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list()
+	custom_materials = null
 	burst_size = 3
 	automatic = 0
 	fire_delay = 1

@@ -20,89 +20,52 @@
 #define STORAGE_VIEW_DEPTH	2
 
 //ITEM INVENTORY SLOT BITMASKS
+/// Suit slot (armors, costumes, space suits, etc.)
 #define ITEM_SLOT_OCLOTHING		(1<<0)
+/// Jumpsuit slot
 #define ITEM_SLOT_ICLOTHING		(1<<1)
+/// Glove slot
 #define ITEM_SLOT_GLOVES		(1<<2)
+/// Glasses slot
 #define ITEM_SLOT_EYES			(1<<3)
+/// Ear slot (radios, earmuffs)
 #define ITEM_SLOT_EARS			(1<<4)
+/// Mask slot
 #define ITEM_SLOT_MASK			(1<<5)
+/// Head slot (helmets, hats, etc.)
 #define ITEM_SLOT_HEAD			(1<<6)
+/// Shoe slot
 #define ITEM_SLOT_FEET			(1<<7)
+/// ID slot
 #define ITEM_SLOT_ID			(1<<8)
+/// Belt slot
 #define ITEM_SLOT_BELT			(1<<9)
+/// Back slot
 #define ITEM_SLOT_BACK			(1<<10)
-/// this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
-#define ITEM_SLOT_POCKET		(1<<11)
-/// this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
-#define ITEM_SLOT_DENYPOCKET	(1<<12)
-#define ITEM_SLOT_NECK			(1<<13)
-#define ITEM_SLOT_HANDS			(1<<14)
-#define ITEM_SLOT_BACKPACK		(1<<15)
-#define ITEM_SLOT_SUITSTORE		(1<<16)
+/// Dextrous simplemob "hands" (used for Drones and Dextrous Guardians)
+#define ITEM_SLOT_DEX_STORAGE	(1<<11)
+/// Neck slot (ties, bedsheets, scarves)
+#define ITEM_SLOT_NECK			(1<<12)
+/// A character's hand slots
+#define ITEM_SLOT_HANDS			(1<<13)
+/// Inside of a character's backpack
+#define ITEM_SLOT_BACKPACK		(1<<14)
+/// Suit Storage slot
+#define ITEM_SLOT_SUITSTORE		(1<<15)
+/// Left Pocket slot
+#define ITEM_SLOT_LPOCKET		(1<<16)
+/// Right Pocket slot
+#define ITEM_SLOT_RPOCKET		(1<<17)
+/// Handcuff slot
+#define ITEM_SLOT_HANDCUFFED	(1<<18)
+/// Legcuff slot (bolas, beartraps)
+#define ITEM_SLOT_LEGCUFFED		(1<<19)
 
-//SLOTS
-#define SLOT_BACK			1
-#define SLOT_WEAR_MASK		2
-#define SLOT_HANDCUFFED		3
-/// wherever you provide a slot for hands you provide SLOT_HANDS.
-/// SLOT_HANDS as a slot will pick ANY available hand
-#define SLOT_HANDS			4
-#define SLOT_BELT			5
-#define SLOT_WEAR_ID		6
-#define SLOT_EARS			7
-#define SLOT_GLASSES		8
-#define SLOT_GLOVES			9
-#define SLOT_NECK			10
-#define SLOT_HEAD			11
-#define SLOT_SHOES			12
-#define SLOT_WEAR_SUIT		13
-#define SLOT_W_UNIFORM		14
-#define SLOT_L_STORE		15
-#define SLOT_R_STORE		16
-#define SLOT_S_STORE		17
-#define SLOT_IN_BACKPACK	18
-#define SLOT_LEGCUFFED		19
-#define SLOT_GENERC_DEXTROUS_STORAGE	20
+/// Total amount of slots
+#define SLOTS_AMT				20 // Keep this up to date!
 
-#define SLOTS_AMT			20 // Keep this up to date!
-
-//I hate that this has to exist
-/proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
-	. = 0
-	switch(slotdefine)
-		if(SLOT_BACK)
-			. = ITEM_SLOT_BACK
-		if(SLOT_WEAR_MASK)
-			. = ITEM_SLOT_MASK
-		if(SLOT_NECK)
-			. = ITEM_SLOT_NECK
-		if(SLOT_BELT)
-			. = ITEM_SLOT_BELT
-		if(SLOT_WEAR_ID)
-			. = ITEM_SLOT_ID
-		if(SLOT_EARS)
-			. = ITEM_SLOT_EARS
-		if(SLOT_GLASSES)
-			. = ITEM_SLOT_EYES
-		if(SLOT_GLOVES)
-			. = ITEM_SLOT_GLOVES
-		if(SLOT_HEAD)
-			. = ITEM_SLOT_HEAD
-		if(SLOT_SHOES)
-			. = ITEM_SLOT_FEET
-		if(SLOT_WEAR_SUIT)
-			. = ITEM_SLOT_OCLOTHING
-		if(SLOT_W_UNIFORM)
-			. = ITEM_SLOT_ICLOTHING
-		if(SLOT_L_STORE, SLOT_R_STORE)
-			. = ITEM_SLOT_POCKET
-		if(SLOT_HANDS)
-			. = ITEM_SLOT_HANDS
-		if(SLOT_S_STORE)
-			. = ITEM_SLOT_SUITSTORE
-		if(SLOT_IN_BACKPACK)
-			. = ITEM_SLOT_BACKPACK
-
+//SLOT GROUP HELPERS
+#define ITEM_SLOT_POCKETS		(ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update check_obscured_slots() if you add more.
@@ -110,13 +73,17 @@
 #define HIDESUITSTORAGE	(1<<1)
 #define HIDEJUMPSUIT	(1<<2)	//these first four are only used in exterior suits
 #define HIDESHOES		(1<<3)
-#define HIDEMASK		(1<<4)	//these last six are only used in masks and headgear.
+#define HIDEMASK		(1<<4)	//these next seven are only used in masks and headgear.
 #define HIDEEARS		(1<<5)	// (ears means headsets and such)
 #define HIDEEYES		(1<<6)	// Whether eyes and glasses are hidden
 #define HIDEFACE		(1<<7)	// Whether we appear as unknown.
 #define HIDEHAIR		(1<<8)
 #define HIDEFACIALHAIR	(1<<9)
 #define HIDENECK		(1<<10)
+/// for wigs, only obscures the headgear
+#define HIDEHEADGEAR	(1<<11)
+///for lizard snouts, because some HIDEFACE clothes don't actually conceal that portion of the head.
+#define HIDESNOUT		(1<<12)
 
 //bitflags for clothing coverage - also used for limbs
 #define HEAD		(1<<0)
@@ -161,7 +128,7 @@
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES	(1<<0)
-#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other retardation in these flags
+#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other stupidness in these flags
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		(1<<4)
@@ -178,6 +145,7 @@ GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
 	/obj/item/flashlight,
 	/obj/item/gun,
 	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals)))
@@ -189,6 +157,7 @@ GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals)))
@@ -218,7 +187,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/gun/energy,
 	/obj/item/kitchen/knife/combat,
 	/obj/item/melee/baton,
-	/obj/item/melee/classic_baton/telescopic,
+	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals/emergency_oxygen,
@@ -233,7 +202,7 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/gun/energy,
 	/obj/item/lighter,
 	/obj/item/melee/baton,
-	/obj/item/melee/classic_baton/telescopic,
+	/obj/item/melee/classic_baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals/emergency_oxygen,

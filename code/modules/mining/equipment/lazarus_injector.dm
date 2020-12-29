@@ -4,7 +4,7 @@
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "lazarus_hypo"
-	item_state = "hypo"
+	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throwforce = 0
@@ -27,7 +27,7 @@
 				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
-				M.revive(full_heal = 1, admin_revive = 1)
+				M.revive(full_heal = TRUE, admin_revive = TRUE)
 				if(ishostile(target))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)

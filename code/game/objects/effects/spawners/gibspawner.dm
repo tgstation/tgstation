@@ -1,5 +1,6 @@
 
 /obj/effect/gibspawner
+	icon_state = "gibspawner"// For the map editor
 	var/sparks = 0 //whether sparks spread
 	var/virusProb = 20 //the chance for viruses to spread on the gibs
 	var/gib_mob_type  //generate a fake mob to transfer DNA from if we weren't passed a mob.
@@ -52,7 +53,7 @@
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
-						gib.streak(directions)
+						gib.streak(directions, mapload)
 
 	return INITIALIZE_HINT_QDEL
 

@@ -18,14 +18,14 @@
 			continue
 		possible_types += E
 
-	forced_type = input(usr, "Select the scare.","False event") as null|anything in possible_types
+	forced_type = input(usr, "Select the scare.","False event") as null|anything in sortNames(possible_types)
 
 /datum/round_event_control/falsealarm/canSpawnEvent(players_amt, gamemode)
 	return ..() && length(gather_false_events())
 
 /datum/round_event/falsealarm
-	announceWhen	= 0
-	endWhen			= 1
+	announceWhen = 0
+	endWhen = 1
 	fakeable = FALSE
 
 /datum/round_event/falsealarm/announce(fake)

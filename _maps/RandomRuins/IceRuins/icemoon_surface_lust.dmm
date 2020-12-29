@@ -1,0 +1,171 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface/outdoors/unexplored)
+"b" = (
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/turf/closed/indestructible/syndicate,
+/area/icemoon/surface/outdoors)
+"c" = (
+/turf/open/floor/mineral/diamond,
+/area/icemoon/surface/outdoors)
+"d" = (
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
+/turf/open/floor/mineral/diamond,
+/area/icemoon/surface/outdoors)
+"e" = (
+/obj/item/greentext{
+	light_color = "#64C864";
+	light_range = 1
+	},
+/turf/open/floor/mineral/diamond,
+/area/icemoon/surface/outdoors)
+"f" = (
+/obj/structure/falsewall/plastitanium,
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/turf/open/floor/mineral/diamond,
+/area/icemoon/surface/outdoors)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+b
+c
+c
+c
+b
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+c
+c
+d
+c
+c
+b
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+c
+d
+e
+d
+c
+f
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+b
+c
+c
+d
+c
+c
+b
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+b
+c
+c
+c
+b
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

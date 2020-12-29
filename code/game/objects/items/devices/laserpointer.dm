@@ -3,18 +3,19 @@
 	desc = "Don't shine it in your eyes!"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pointer"
-	item_state = "pen"
+	inhand_icon_state = "pen"
+	worn_icon_state = "pen"
 	var/pointer_icon_state
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(/datum/material/iron=500, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
 	var/energy = 10
 	var/max_energy = 10
 	var/effectchance = 30
-	var/recharging = 0
+	var/recharging = FALSE
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
@@ -46,7 +47,7 @@
 			diode = W
 			to_chat(user, "<span class='notice'>You install a [diode.name] in [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
+			to_chat(user, "<span class='warning'>[src] already has a diode installed!</span>")
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(diode)
@@ -74,7 +75,7 @@
 	if (!diode)
 		to_chat(user, "<span class='notice'>You point [src] at [target], but nothing happens!</span>")
 		return
-	if (!user.IsAdvancedToolUser())
+	if (!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
@@ -94,7 +95,6 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-			log_combat(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -105,8 +105,10 @@
 			//chance to actually hit the eyes depends on internal component
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in [C.p_their()] eyes.</span>"
+				log_combat(user, C, "blinded with a laser pointer",src)
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at [C.p_their()] eyes!</span>"
+				log_combat(user, C, "attempted to blind with a laser pointer",src)
 
 	//robots
 	else if(iscyborg(target))
@@ -133,9 +135,9 @@
 
 	//catpeople
 	for(var/mob/living/carbon/human/H in view(1,targloc))
-		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
+		if(!isfelinid(H) || H.incapacitated() || H.is_blind())
 			continue
-		if(user.mobility_flags & MOBILITY_STAND)
+		if(user.body_position == STANDING_UP)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
 			if(prob(effectchance * diode.rating))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
@@ -149,9 +151,11 @@
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
 		if(prob(effectchance * diode.rating))
+			if(C.resting)
+				C.set_resting(FALSE, instant = TRUE)
 			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
-			C.set_resting(TRUE, FALSE)
+			C.Immobilize(1 SECONDS)
 		else
 			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
@@ -176,7 +180,7 @@
 	energy -= 1
 	if(energy <= max_energy)
 		if(!recharging)
-			recharging = 1
+			recharging = TRUE
 			START_PROCESSING(SSobj, src)
 		if(energy <= 0)
 			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
@@ -185,11 +189,14 @@
 	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
 
-/obj/item/laser_pointer/process()
-	if(prob(20 + diode.rating*20 - recharge_locked*2)) //t1 is 20, 2 40
+/obj/item/laser_pointer/process(delta_time)
+	if(!diode)
+		recharging = FALSE
+		return PROCESS_KILL
+	if(DT_PROB(10 + diode.rating*10 - recharge_locked*1, delta_time)) //t1 is 20, 2 40
 		energy += 1
 		if(energy >= max_energy)
 			energy = max_energy
-			recharging = 0
+			recharging = FALSE
 			recharge_locked = FALSE
-			..()
+			return ..()

@@ -3,30 +3,51 @@
 	name = "reaction chamber"
 	desc = "Keeps chemicals seperated until given conditions are met."
 	icon_state = "reaction_chamber"
-
-	buffer = 100
+	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
+
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
-	* example: list(/datum/reagent/water = 20, /datum/reagent/oil = 50)
+	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
 	var/list/required_reagents = list()
 	///our reagent goal has been reached, so now we lock our inputs and start emptying
 	var/emptying = FALSE
 
-
-/obj/machinery/plumbing/reaction_chamber/Initialize()
+/obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/reaction_chamber)
+	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
 
-/obj/machinery/plumbing/reaction_chamber/on_reagent_change()
-	if(reagents.total_volume == 0 && emptying) //we were emptying, but now we aren't
+/obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/// Handles properly detaching signal hooks.
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_PARENT_QDELETING))
+	return NONE
+
+
+/// Handles stopping the emptying process when the chamber empties.
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	if(holder.total_volume == 0 && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
-		reagents.flags |= NO_REACT
+		holder.flags |= NO_REACT
+	return NONE
 
-/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/reaction_chamber/power_change()
+	. = ..()
+	if(use_power != NO_POWER_USE)
+		icon_state = initial(icon_state) + "_on"
+	else
+		icon_state = initial(icon_state)
+
+/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "reaction_chamber", name, 500, 300, master_ui, state)
+		ui = new(user, src, "ChemReactionChamber", name)
 		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
@@ -35,12 +56,14 @@
 	for(var/A in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
 		var/datum/reagent/R = A
 		text_reagents[initial(R.name)] = required_reagents[R]
+
 	data["reagents"] = text_reagents
 	data["emptying"] = emptying
 	return data
 
 /obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)
@@ -49,8 +72,8 @@
 			if(reagent)
 				required_reagents.Remove(reagent)
 		if("add")
-			var/input_reagent = get_chem_id(input("Enter the name of the reagent", "Input") as text|null)
+			var/input_reagent = get_chem_id(params["chem"])
 			if(input_reagent && !required_reagents.Find(input_reagent))
-				var/input_amount = CLAMP(round(input("Enter amount", "Input") as num|null), 1, 100)
+				var/input_amount = text2num(params["amount"])
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount

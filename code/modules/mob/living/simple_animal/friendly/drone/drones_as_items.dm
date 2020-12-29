@@ -5,7 +5,12 @@
 ///////////////////
 //Drone shells
 
-//DRONE SHELL
+/** Drone Shell: Ghost role item for drones
+ *
+ * A simple mob spawner item that transforms into a maintenance drone
+ * Resepcts drone minimum age
+ */
+
 /obj/effect/mob_spawn/drone
 	name = "drone shell"
 	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
@@ -15,18 +20,15 @@
 	density = FALSE
 	death = FALSE
 	roundstart = FALSE
-	mob_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
+	///Type of drone that will be spawned
+	mob_type = /mob/living/simple_animal/drone
 
 /obj/effect/mob_spawn/drone/Initialize()
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
-	GLOB.poi_list |= src
-
-/obj/effect/mob_spawn/drone/Destroy()
-	GLOB.poi_list -= src
-	. = ..()
+	AddElement(/datum/element/point_of_interest)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/drone/attack_ghost(mob/user)

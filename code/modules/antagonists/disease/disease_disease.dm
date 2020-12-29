@@ -19,7 +19,7 @@
 		overmind.remove_infection(src)
 	..()
 
-/datum/disease/advance/sentient_disease/infect(var/mob/living/infectee, make_copy = TRUE)
+/datum/disease/advance/sentient_disease/infect(mob/living/infectee, make_copy = TRUE)
 	if(make_copy && overmind && (overmind.disease_template != src))
 		overmind.disease_template.infect(infectee, TRUE) //get an updated version of the virus
 	else

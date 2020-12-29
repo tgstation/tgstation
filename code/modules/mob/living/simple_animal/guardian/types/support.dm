@@ -1,7 +1,8 @@
 //Healer
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = INTENT_HARM
-	friendly = "heals"
+	friendly_verb_continuous = "heals"
+	friendly_verb_simple = "heal"
 	speed = 0
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
@@ -10,7 +11,8 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the CMO, a potent force of life... and death.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught a support carp. It's a kleptocarp!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Support modules active. Holoparasite swarm online.</span>"
-	toggle_button_type = /obj/screen/guardian/ToggleMode
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Bluespace, the master of support.</span>"
+	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
 	var/obj/structure/receiving_pad/beacon
 	var/beacon_cooldown = 0
 	var/toggle = FALSE
@@ -20,11 +22,10 @@
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
 
-/mob/living/simple_animal/hostile/guardian/healer/Stat()
-	..()
-	if(statpanel("Status"))
-		if(beacon_cooldown >= world.time)
-			stat(null, "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]")
+/mob/living/simple_animal/hostile/guardian/healer/get_status_tab_items()
+	. = ..()
+	if(beacon_cooldown >= world.time)
+		. += "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]"
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
@@ -35,8 +36,8 @@
 		C.adjustOxyLoss(-5)
 		C.adjustToxLoss(-5)
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(C))
-		if(namedatum)
-			H.color = namedatum.colour
+		if(guardiancolor)
+			H.color = guardiancolor
 		if(C == summoner)
 			update_health_hud()
 			med_hud_set_health()
@@ -91,7 +92,7 @@
 	name = "bluespace receiving pad"
 	icon = 'icons/turf/floors.dmi'
 	desc = "A receiving zone for bluespace teleportations."
-	icon_state = "light_on-w"
+	icon_state = "light_on-8"
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	density = FALSE
 	anchored = TRUE
@@ -99,8 +100,8 @@
 
 /obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
 	. = ..()
-	if(G.namedatum)
-		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
+	if(G.guardiancolor)
+		add_atom_colour(G.guardiancolor, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/receiving_pad/proc/disappear()
 	visible_message("<span class='notice'>[src] vanishes!</span>")

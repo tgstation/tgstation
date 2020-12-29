@@ -6,15 +6,15 @@
 	charge_max = 200
 	clothes_req = TRUE
 	invocation = "FORTI GY AMA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
 	max_targets = 0
-	proj_type = /obj/item/projectile/magic/spell/magic_missile
+	proj_type = /obj/projectile/magic/spell/magic_missile
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
 
-/obj/item/projectile/magic/spell/magic_missile
+/obj/projectile/magic/spell/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 20
@@ -29,7 +29,7 @@
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
 
-/obj/item/projectile/magic/spell/magic_missile/on_hit(target)
+/obj/projectile/magic/spell/magic_missile/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -45,7 +45,7 @@
 	charge_max = 400
 	clothes_req = TRUE
 	invocation = "BIRUZ BENNAR"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	include_user = TRUE
 
@@ -99,7 +99,7 @@
 	charge_max = 400
 	clothes_req = TRUE
 	invocation = "NEC CANTIO"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //50 deciseconds reduction per rank
@@ -136,7 +136,6 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = FALSE
 	clothes_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
@@ -147,7 +146,7 @@
 	charge_max = 600
 	clothes_req = TRUE
 	invocation = "SCYAR NILA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -165,19 +164,21 @@
 	clothes_req = FALSE
 	say_destination = FALSE // Santa moves in mysterious ways
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+/obj/effect/proc_holder/spell/aoe_turf/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
 	clothes_req = TRUE
 	invocation = "TOKI YO TOMARE"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 0
 	cooldown_min = 100
-	summon_amt = 1
 	action_icon_state = "time"
+	var/timestop_range = 2
+	var/timestop_duration = 100
 
-	summon_type = list(/obj/effect/timestop/wizard)
+/obj/effect/proc_holder/spell/aoe_turf/timestop/cast(list/targets, mob/user = usr)
+	new /obj/effect/timestop/magic(get_turf(user), timestop_range, timestop_duration, list(user))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -187,29 +188,25 @@
 	charge_max = 1200
 	clothes_req = TRUE
 	invocation = "NOUK FHUNMM SACP RISSKA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 1
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
 	cast_sound = 'sound/magic/summon_karp.ogg'
 
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
 	desc = "This spell conjures a construct which may be controlled by Shades."
-
 	school = "conjuration"
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-
 	summon_type = list(/obj/structure/constructshell)
-
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "artificer"
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
-
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
@@ -219,28 +216,12 @@
 	charge_max = 1200
 	clothes_req = FALSE
 	invocation = "IA IA"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	summon_amt = 10
 	range = 3
 
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
-
-/obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Blind"
-	desc = "This spell temporarily blinds a single target."
-
-	school = "transmutation"
-	charge_max = 300
-	clothes_req = FALSE
-	invocation = "STI KALY"
-	invocation_type = "whisper"
-	message = "<span class='notice'>Your eyes cry out in pain!</span>"
-	cooldown_min = 50 //12 deciseconds reduction per rank
-
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
-
-	action_icon_state = "blind"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
@@ -248,24 +229,26 @@
 	charge_max = 5000
 	summon_amt = 2
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
+	name = "Lesser summon bees"
+	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
+	charge_max = 600
+	clothes_req = TRUE
+	invocation = "NOT THE BEES"
+	summon_amt = 9
+	action_icon_state = "bee"
+	cooldown_min = 20 SECONDS
 
+	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin
+	cast_sound = 'sound/voice/moth/scream_moth.ogg'
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/blind
-	amt_eye_blind = 10
-	amt_eye_blurry = 20
-	sound = 'sound/magic/blind.ogg'
-
-/obj/effect/proc_holder/spell/targeted/genetic/blind
-	mutations = list(BLINDMUT)
-	duration = 300
-	sound = 'sound/magic/blind.ogg'
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
 	charge_max = 400
 	clothes_req = TRUE
 	invocation = "GITTAH WEIGH"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
@@ -277,7 +260,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, stun_amt = 40)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -310,7 +293,7 @@
 				var/mob/living/M = AM
 				M.Paralyze(stun_amt)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
+			AM.safe_throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
@@ -341,7 +324,7 @@
 	charge_max = 60
 	clothes_req = FALSE
 	invocation = "FI'RAN DADISKO"
-	invocation_type = "shout"
+	invocation_type = INVOCATION_SHOUT
 	max_targets = 0
 	range = 6
 	include_user = TRUE
@@ -384,10 +367,10 @@
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
 			if(!M.anti_magic_check())
-				M.electrocute_act(80, src, illusion = 1)
+				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 		qdel(src)
 
-/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)
+/obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY, quickstart = TRUE)
 	. = ..()
 	if(ishuman(thrower))
 		var/mob/living/carbon/human/H = thrower

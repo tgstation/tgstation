@@ -1,11 +1,11 @@
 /**
-  * The mob, usually meant to be a creature of some type
-  *
-  * Has a client attached that is a living person (most of the time), although I have to admit
-  * sometimes it's hard to tell they're sentient
-  *
-  * Has a lot of the creature game world logic, such as health etc
-  */
+ * The mob, usually meant to be a creature of some type
+ *
+ * Has a client attached that is a living person (most of the time), although I have to admit
+ * sometimes it's hard to tell they're sentient
+ *
+ * Has a lot of the creature game world logic, such as health etc
+ */
 /mob
 	datum_flags = DF_USE_TAG
 	density = TRUE
@@ -16,6 +16,11 @@
 	pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSMOB
+
+	///when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	vis_flags = VIS_INHERIT_PLANE
 
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
@@ -23,12 +28,22 @@
 
 	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
+	/// List of action speed modifiers applying to this mob
+	var/list/actionspeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/actionspeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	/// The calculated mob action speed slowdown based on the modifiers list
+	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
-	var/list/datum/action/actions = list()
+	var/list/datum/action/actions
 	/// A special action? No idea why this lives here
 	var/list/datum/action/chameleon_item_actions
+	///Cursor icon used when holding shift over things
+	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
@@ -41,7 +56,7 @@
 	*/
 
 	/// The zone this mob is currently targeting
-	var/zone_selected = null
+	var/zone_selected = BODY_ZONE_CHEST
 
 	var/computer_id = null
 	var/list/logging = list()
@@ -66,9 +81,6 @@
 	var/eye_blurry = 0		//Carbon
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
-
-	/// can this mob move freely in space (should be a trait)
-	var/spacewalk = FALSE
 
 	/**
 	  * back up of the real name during admin possession
@@ -105,10 +117,8 @@
 	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null
 
-	/// movable atoms buckled to this mob
-	var/atom/movable/buckled = null//Living
 	/// movable atom we are buckled to
-	var/atom/movable/buckling
+	var/atom/movable/buckled = null//Living
 
 	//Hands
 	///What hand is the active hand
@@ -121,8 +131,8 @@
 	  *
 	  * NB: contains nulls!
 	  *
-	  * held_items[active_hand_index] is the actively held item, but please use
-	  * get_active_held_item() instead, because OOP
+	  * `held_items[active_hand_index]` is the actively held item, but please use
+	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
 
@@ -136,7 +146,7 @@
 	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
-	var/in_throw_mode = 0
+	var/in_throw_mode = FALSE
 
 	/// What job does this mob have
 	var/job = null//Living
@@ -156,7 +166,7 @@
 	  * Spells that do not transfer from one mob to another and can not be lost in mindswap.
 	  * obviously do not live in the mind
 	  */
-	var/list/mob_spell_list = list()
+	var/list/mob_spell_list
 
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
@@ -187,6 +197,9 @@
 	///List of progress bars this mob is currently seeing for actions
 	var/list/progressbars = null	//for stacking do_after bars
 
+	///For storing what do_after's someone has, key = string, value = amount of interactions of that type happening.
+	var/list/do_afters
+
 	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
@@ -194,3 +207,24 @@
 	var/registered_z = null
 
 	var/memory_throttle_time = 0
+
+	/// Contains [/atom/movable/screen/alert] only.
+	///
+	/// On [/mob] so clientless mobs will throw alerts properly.
+	var/list/alerts = list()
+	var/list/screens = list()
+	var/list/client_colours = list()
+	var/hud_type = /datum/hud
+
+	var/datum/h_sandbox/sandbox = null
+
+	var/datum/focus //What receives our keyboard inputs. src by default
+
+	/// Used for tracking last uses of emotes for cooldown purposes
+	var/list/emotes_used
+
+	///Whether the mob is updating glide size when movespeed updates or not
+	var/updating_glide_size = TRUE
+
+	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
+	var/sound_environment_override = SOUND_ENVIRONMENT_NONE

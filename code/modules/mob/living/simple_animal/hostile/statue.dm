@@ -11,19 +11,21 @@
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_HUMANOID
 
-	response_help = "touches"
-	response_disarm = "pushes"
+	response_help_continuous = "touches"
+	response_help_simple = "touch"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
 
 	speed = -1
 	maxHealth = 50000
 	health = 50000
 	healable = 0
-
 	harm_intent_damage = 10
 	obj_damage = 100
 	melee_damage_lower = 68
 	melee_damage_upper = 83
-	attacktext = "claws"
+	attack_verb_continuous = "claws"
+	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -55,9 +57,10 @@
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/Initialize(mapload, var/mob/living/creator)
+/mob/living/simple_animal/hostile/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
+	LAZYINITLIST(mob_spell_list)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
@@ -76,7 +79,7 @@
 	if(can_be_seen(NewLoc))
 		if(client)
 			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
-		return 0
+		return
 	return ..()
 
 /mob/living/simple_animal/hostile/statue/Life()
@@ -106,6 +109,9 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
+/mob/living/simple_animal/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
+	return FALSE
+
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
 	if(!cannot_be_seen)
 		return null
@@ -126,18 +132,19 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
-				if(!M.eye_blind)
+				if(!M.is_blind())
 					return M
-		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			if(M.occupant && M.occupant.client)
-				if(!M.occupant.eye_blind)
-					return M.occupant
+		for(var/obj/vehicle/sealed/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			for(var/O in M.occupants)
+				var/mob/mechamob = O
+				if(mechamob.client && !mechamob.is_blind())
+					return mechamob
 	return null
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/statue/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	return 0
+/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	return
 
 // Turn to dust when gibbed
 
@@ -151,7 +158,7 @@
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
-			return 0
+			return FALSE
 	return ..()
 
 // Don't attack your creator if there is one
@@ -190,7 +197,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L.loc)
-		if(T && T in targets)
+		if(T && (T in targets))
 			L.blind_eyes(4)
 	return
 
@@ -225,8 +232,3 @@
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
-
-/mob/living/simple_animal/hostile/statue/restrained(ignore_grab)
-	. = ..()
-	if(can_be_seen(loc))
-		return 1

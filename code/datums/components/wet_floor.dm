@@ -12,14 +12,13 @@
 	var/permanent = FALSE
 	var/last_process = 0
 
-/datum/component/wet_floor/InheritComponent(datum/newcomp, orig, argslist)
+/datum/component/wet_floor/InheritComponent(datum/newcomp, orig, strength, duration_minimum, duration_add, duration_maximum, _permanent)
 	if(!newcomp)	//We are getting passed the arguments of a would-be new component, but not a new component
-		add_wet(arglist(argslist))
+		add_wet(arglist(args.Copy(3)))
 	else			//We are being passed in a full blown component
 		var/datum/component/wet_floor/WF = newcomp			//Lets make an assumption
 		if(WF.gc())						//See if it's even valid, still. Also does LAZYLEN and stuff for us.
 			CRASH("Wet floor component tried to inherit another, but the other was able to garbage collect while being inherited! What a waste of time!")
-			return
 		for(var/i in WF.time_left_list)
 			add_wet(text2num(i), WF.time_left_list[i])
 
@@ -70,7 +69,7 @@
 
 /datum/component/wet_floor/proc/AfterSlip(mob/living/L)
 	if(highest_strength == TURF_WET_LUBE)
-		L.confused = max(L.confused, 8)
+		L.set_confusion(max(L.get_confusion(), 8))
 
 /datum/component/wet_floor/proc/update_flags()
 	var/intensity
@@ -98,6 +97,8 @@
 	parent.LoadComponent(/datum/component/slippery, intensity, lube_flags, CALLBACK(src, .proc/AfterSlip))
 
 /datum/component/wet_floor/proc/dry(datum/source, strength = TURF_WET_WATER, immediate = FALSE, duration_decrease = INFINITY)
+	SIGNAL_HANDLER
+
 	for(var/i in time_left_list)
 		if(text2num(i) <= strength)
 			time_left_list[i] = max(0, time_left_list[i] - duration_decrease)
@@ -138,6 +139,8 @@
 		highest_strength = max(highest_strength, text2num(i))
 
 /datum/component/wet_floor/proc/is_wet()
+	SIGNAL_HANDLER
+
 	. = 0
 	for(var/i in time_left_list)
 		. |= text2num(i)
@@ -178,7 +181,7 @@
 /datum/component/wet_floor/proc/_do_add_wet(type, duration_minimum, duration_add, duration_maximum)
 	var/time = 0
 	if(LAZYACCESS(time_left_list, "[type]"))
-		time = CLAMP(LAZYACCESS(time_left_list, "[type]") + duration_add, duration_minimum, duration_maximum)
+		time = clamp(LAZYACCESS(time_left_list, "[type]") + duration_add, duration_minimum, duration_maximum)
 	else
 		time = min(duration_minimum, duration_maximum)
 	LAZYSET(time_left_list, "[type]", time)

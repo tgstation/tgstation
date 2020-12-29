@@ -35,10 +35,10 @@
 				chatter_speak_word(A.loc, phomeme, length)
 
 /proc/chatter_speak_word(loc, phomeme, length)
-	var/path = "sound/chatter/[phomeme]_[length].ogg"
+	var/path = "sound/runtime/chatter/[phomeme]_[length].ogg"
 
 	playsound(loc, path,
-		vol = 40, vary = 0, extrarange = 3, falloff = FALSE)
+		vol = 40, vary = 0, extrarange = 3)
 
 	sleep((length + 1) * chatter_get_sleep_multiplier(phomeme))
 

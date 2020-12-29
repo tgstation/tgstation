@@ -8,6 +8,7 @@
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
+	show_to_ghosts = TRUE
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 
@@ -46,10 +47,21 @@
 
 	. = ..()
 
+/datum/antagonist/monkey/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	ADD_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
+/datum/antagonist/monkey/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	REMOVE_TRAIT(M, TRAIT_ADVANCEDTOOLUSER, JUNGLE_FEVER_TRAIT)
+
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
 	if(!new_team)
 		for(var/datum/antagonist/monkey/H in GLOB.antagonists)
 			if(!H.owner)
+				stack_trace("Antagonist datum without owner in GLOB.antagonists: [H]")
 				continue
 			if(H.monkey_team)
 				monkey_team = H.monkey_team

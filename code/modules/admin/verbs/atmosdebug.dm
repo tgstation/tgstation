@@ -2,30 +2,30 @@
 	set category = "Mapping"
 	set name = "Check Plumbing"
 	if(!src.holder)
-		to_chat(src, "Only administrators may use this command.")
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Plumbing") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	//all plumbing - yes, some things might get stated twice, doesn't matter.
 	for(var/obj/machinery/atmospherics/components/pipe in GLOB.machines)
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
-			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
+			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
 
 	//Manifolds
 	for(var/obj/machinery/atmospherics/pipe/manifold/pipe in GLOB.machines)
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
-			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
+			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
 
 	//Pipes
 	for(var/obj/machinery/atmospherics/pipe/simple/pipe in GLOB.machines)
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
-			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]")
+			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
 
 /client/proc/powerdebug()
 	set category = "Mapping"
 	set name = "Check Power"
 	if(!src.holder)
-		to_chat(src, "Only administrators may use this command.")
+		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Power") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	var/list/results = list()
@@ -53,4 +53,4 @@
 			var/obj/structure/cable/C = locate(/obj/structure/cable) in T.contents
 			if(!C)
 				results += "Unwired terminal at [ADMIN_VERBOSEJMP(term)]"
-	to_chat(usr, "[results.Join("\n")]")
+	to_chat(usr, "[results.Join("\n")]", confidential = TRUE)

@@ -198,6 +198,8 @@ Temporary Items
 !/.vscode/extensions.json
 tools/MapAtmosFixer/MapAtmosFixer/obj/*
 tools/MapAtmosFixer/MapAtmosFixer/bin/*
+tools/CreditsTool/bin/*
+tools/CreditsTool/obj/*
 
 #GitHub Atom
 .atom-build.json
@@ -212,6 +214,7 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
 #dmdoc default folder
 /dmdoc
+
 # Ignore custom music and title screens (amend as appropriate)
 /config/jukebox_music/sounds/*
 !/config/jukebox_music/sounds/exclude
@@ -219,3 +222,12 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/title_music/sounds/exclude
 /config/title_screens/images/*
 !/config/title_screens/images/exclude
+
+#Linux docker
+tools/LinuxOneShot/SetupProgram/obj/*
+tools/LinuxOneShot/SetupProgram/bin/*
+tools/LinuxOneShot/SetupProgram/.vs
+tools/LinuxOneShot/Database
+tools/LinuxOneShot/TGS_Config
+tools/LinuxOneShot/TGS_Instances
+tools/LinuxOneShot/TGS_Logs

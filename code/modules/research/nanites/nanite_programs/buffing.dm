@@ -18,16 +18,15 @@
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 2
 
-/datum/nanite_program/triggered/adrenaline
+/datum/nanite_program/adrenaline
 	name = "Adrenaline Burst"
 	desc = "The nanites cause a burst of adrenaline when triggered, allowing the user to push their body past its normal limits."
+	can_trigger = TRUE
 	trigger_cost = 25
 	trigger_cooldown = 1200
 	rogue_types = list(/datum/nanite_program/toxic, /datum/nanite_program/nerve_decay)
 
-/datum/nanite_program/triggered/adrenaline/trigger()
-	if(!..())
-		return
+/datum/nanite_program/adrenaline/on_trigger()
 	to_chat(host_mob, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	host_mob.set_resting(FALSE)
 	host_mob.reagents.add_reagent(/datum/reagent/medicine/badstims, 3)
@@ -44,15 +43,15 @@
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee += 50
-		H.physiology.armor.bullet += 35
+		H.physiology.armor.melee += 25
+		H.physiology.armor.bullet += 20
 
 /datum/nanite_program/hardening/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.melee -= 50
-		H.physiology.armor.bullet -= 35
+		H.physiology.armor.melee -= 25
+		H.physiology.armor.bullet -= 20
 
 /datum/nanite_program/refractive
 	name = "Dermal Refractive Surface"
@@ -64,15 +63,15 @@
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser += 50
-		H.physiology.armor.energy += 35
+		H.physiology.armor.laser += 25
+		H.physiology.armor.energy += 20
 
 /datum/nanite_program/refractive/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.armor.laser -= 50
-		H.physiology.armor.energy -= 35
+		H.physiology.armor.laser -= 25
+		H.physiology.armor.energy -= 20
 
 /datum/nanite_program/coagulating
 	name = "Rapid Coagulation"

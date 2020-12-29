@@ -134,7 +134,7 @@
 			maptext_x = 10
 		if(100)
 			maptext_x = 8
-	maptext = "[current_number]" //Finally, apply the maptext
+	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
@@ -163,21 +163,21 @@
 /obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user)
 	. = ..()
 	if(!ready)
-		to_chat(user,"You press the button, but nothing happens...")
+		to_chat(user,"<span class='warning'>You press the button, but nothing happens...</span>")
 		return
 	if(ticket_number >= max_number)
-		to_chat(user,"Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!")
+		to_chat(user,"<span class='warning'>Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!</span>")
 		return
 	if((user in ticket_holders) && !(obj_flags & EMAGGED))
-		to_chat(user, "You already have a ticket!")
+		to_chat(user, "<span class='warning'>You already have a ticket!</span>")
 		return
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number ++
 	to_chat(user, "<span class='notice'>You take a ticket from [src], looks like you're ticket number #[ticket_number]...</span>")
 	var/obj/item/ticket_machine_ticket/theirticket = new /obj/item/ticket_machine_ticket(get_turf(src))
 	theirticket.name = "Ticket #[ticket_number]"
-	theirticket.maptext = "<font color='#000000'>[ticket_number]</font>"
-	theirticket.saved_maptext = "<font color='#000000'>[ticket_number]</font>"
+	theirticket.maptext = MAPTEXT(ticket_number)
+	theirticket.saved_maptext = MAPTEXT(ticket_number)
 	theirticket.ticket_number = ticket_number
 	theirticket.source = src
 	theirticket.owner = user
@@ -213,17 +213,10 @@
 	maptext = saved_maptext //For some reason, storage code removes all maptext off objs, this stops its number from being wiped off when taken out of storage.
 
 /obj/item/ticket_machine_ticket/attackby(obj/item/P, mob/living/carbon/human/user, params) //Stolen from papercode
-	..()
-	if(P.get_temperature())
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
-								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
-			user.dropItemToGround(P)
-			user.adjust_fire_stacks(1)
-			user.IgniteMob()
-			return
-		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
-		fire_act()
+	if(burn_paper_product_attackby_check(P, user))
+		return
+
+	return ..()
 
 /obj/item/paper/extinguish()
 	..()

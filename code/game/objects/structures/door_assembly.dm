@@ -98,28 +98,28 @@
 
 			if(door_check)
 				user.visible_message("<span class='notice'>[user] secures the airlock assembly to the floor.</span>", \
-									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
-									 "<span class='hear'>You hear wrenching.</span>")
+					"<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
+					"<span class='hear'>You hear wrenching.</span>")
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(anchored)
 						return
 					to_chat(user, "<span class='notice'>You secure the airlock assembly.</span>")
 					name = "secured airlock assembly"
-					setAnchored(TRUE)
+					set_anchored(TRUE)
 			else
 				to_chat(user, "There is another door here!")
 
 		else
 			user.visible_message("<span class='notice'>[user] unsecures the airlock assembly from the floor.</span>", \
-								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
-								 "<span class='hear'>You hear wrenching.</span>")
+				"<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
+				"<span class='hear'>You hear wrenching.</span>")
 			if(W.use_tool(src, user, 40, volume=100))
 				if(!anchored)
 					return
 				to_chat(user, "<span class='notice'>You unsecure the airlock assembly.</span>")
 				name = "airlock assembly"
-				setAnchored(FALSE)
+				set_anchored(FALSE)
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == AIRLOCK_ASSEMBLY_NEEDS_WIRES && anchored )
 		if(!W.tool_start_check(user, amount=1))
@@ -208,7 +208,7 @@
 							if(G.get_amount() >= 2)
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 								user.visible_message("<span class='notice'>[user] adds [G.name] to the airlock assembly.</span>", \
-												 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+									"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 								if(do_after(user, 40, target = src))
 									if(G.get_amount() < 2 || mineral)
 										return
@@ -216,6 +216,17 @@
 									G.use(2)
 									var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
 									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
+
+									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
+										var/obj/item/stack/sheet/dropped_glass
+										if(heat_proof_finished)
+											dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())
+											heat_proof_finished = FALSE
+										else
+											dropped_glass = new /obj/item/stack/sheet/glass(drop_location())
+										glass = FALSE
+										to_chat(user, "<span class='notice'>As you finish, a [dropped_glass.singular_name] falls out of [MA]'s frame.</span>")
+
 									transfer_assembly_vars(src, MA, TRUE)
 							else
 								to_chat(user, "<span class='warning'>You need at least two sheets add a mineral cover!</span>")
@@ -226,7 +237,7 @@
 
 	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message("<span class='notice'>[user] finishes the airlock.</span>", \
-							 "<span class='notice'>You start finishing the airlock...</span>")
+			"<span class='notice'>You start finishing the airlock...</span>")
 
 		if(W.use_tool(src, user, 40, volume=100))
 			if(loc && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
@@ -259,13 +270,13 @@
 	update_name()
 	update_icon()
 
-/obj/structure/door_assembly/update_icon()
-	cut_overlays()
+/obj/structure/door_assembly/update_overlays()
+	. = ..()
 	if(!glass)
-		add_overlay(get_airlock_overlay("fill_construction", icon))
-	else if(glass)
-		add_overlay(get_airlock_overlay("glass_construction", overlays_file))
-	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))
+		. += get_airlock_overlay("fill_construction", icon)
+	else
+		. += get_airlock_overlay("glass_construction", overlays_file)
+	. += get_airlock_overlay("panel_c[state+1]", overlays_file)
 
 /obj/structure/door_assembly/proc/update_name()
 	name = ""
@@ -284,7 +295,7 @@
 	target.heat_proof_finished = source.heat_proof_finished
 	target.created_name = source.created_name
 	target.state = source.state
-	target.setAnchored(source.anchored)
+	target.set_anchored(source.anchored)
 	if(previous)
 		target.previous_assembly = source.type
 	if(electronics)
@@ -312,3 +323,17 @@
 			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 			new mineral_path(T, 2)
 	qdel(src)
+
+
+/obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+	return FALSE
+
+/obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
+			qdel(src)
+			return TRUE
+	return FALSE

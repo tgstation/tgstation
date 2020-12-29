@@ -20,9 +20,13 @@
 	owner.alpha = max(0, owner.alpha - 25)
 
 /datum/mutation/human/chameleon/proc/on_move()
+	SIGNAL_HANDLER
+
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/proc/on_attack_hand(atom/target, proximity)
+	SIGNAL_HANDLER
+
 	if(!proximity) //stops tk from breaking chameleon
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY

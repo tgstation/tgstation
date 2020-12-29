@@ -3,8 +3,8 @@
 /// Creates a global initializer with a given InitValue expression, do not use
 #define GLOBAL_MANAGED(X, InitValue)\
 /datum/controller/global_vars/proc/InitGlobal##X(){\
-    ##X = ##InitValue;\
-    gvars_datum_init_order += #X;\
+	##X = ##InitValue;\
+	gvars_datum_init_order += #X;\
 }
 /// Creates an empty global initializer, do not use
 #define GLOBAL_UNMANAGED(X) /datum/controller/global_vars/proc/InitGlobal##X() { return; }
@@ -13,8 +13,8 @@
 #ifndef TESTING
 #define GLOBAL_PROTECT(X)\
 /datum/controller/global_vars/InitGlobal##X(){\
-    ..();\
-    gvars_datum_protected_varlist[#X] = TRUE;\
+	..();\
+	gvars_datum_protected_varlist[#X] = TRUE;\
 }
 #else
 #define GLOBAL_PROTECT(X)
@@ -56,5 +56,5 @@
 /// Create a null global list
 #define GLOBAL_LIST(X) GLOBAL_RAW(/list/##X); GLOBAL_UNMANAGED(X)
 
-/// Create an typed null global
+/// Create a typed null global
 #define GLOBAL_DATUM(X, Typepath) GLOBAL_RAW(Typepath/##X); GLOBAL_UNMANAGED(X)

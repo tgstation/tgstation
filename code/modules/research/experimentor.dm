@@ -72,8 +72,8 @@
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
+	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list
+	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list
 	SetTypeReactions()
 
 	critical_items_typecache = typecacheof(list(
@@ -124,8 +124,6 @@
 
 /obj/machinery/rnd/experimentor/ui_interact(mob/user)
 	var/list/dat = list("<center>")
-	if(!linked_console)
-		dat += "<b><a href='byond://?src=[REF(src)];function=search'>Scan for R&D Console</A></b>"
 	if(loaded_item)
 		dat += "<b>Loaded Item:</b> [loaded_item]"
 
@@ -175,10 +173,6 @@
 	if(href_list["close"])
 		usr << browse(null, "window=experimentor")
 		return
-	if(scantype == "search")
-		var/obj/machinery/computer/rdconsole/D = locate(/obj/machinery/computer/rdconsole) in oview(3,src)
-		if(D)
-			linked_console = D
 	else if(scantype == "eject")
 		ejectItem()
 	else if(scantype == "refresh")
@@ -201,8 +195,7 @@
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
 				var/picked = pickweight(nodes)		//This should work.
-				if(linked_console)
-					linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
+				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
@@ -298,7 +291,7 @@
 			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", INVESTIGATE_EXPERIMENTOR)
 			if(istype(loaded_item, /obj/item/grenade/chem_grenade))
 				var/obj/item/grenade/chem_grenade/CG = loaded_item
-				CG.prime()
+				CG.detonate()
 			ejectItem()
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_GAS)
@@ -361,7 +354,7 @@
 			if(MT)
 				visible_message("<span class='danger'>[src] dangerously overheats, launching a flaming fuel orb!</span>")
 				investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [M]!", INVESTIGATE_EXPERIMENTOR)
-				var/obj/item/projectile/magic/aoe/fireball/FB = new /obj/item/projectile/magic/aoe/fireball(start)
+				var/obj/projectile/magic/aoe/fireball/FB = new /obj/projectile/magic/aoe/fireball(start)
 				FB.preparePixelProjectile(MT, start)
 				FB.fire()
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
@@ -438,10 +431,6 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_OBLITERATE)
 		visible_message("<span class='warning'>[exp_on] activates the crushing mechanism, [exp_on] is destroyed!</span>")
-		if(linked_console.linked_lathe)
-			var/datum/component/material_container/linked_materials = linked_console.linked_lathe.GetComponent(/datum/component/material_container)
-			for(var/material in exp_on.materials)
-				linked_materials.insert_amount_mat( min((linked_materials.max_amount - linked_materials.total_amount), (exp_on.materials[material])), material)
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
@@ -466,7 +455,7 @@
 		ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == FAIL)
-		var/a = pick("rumbles","shakes","vibrates","shudders")
+		var/a = pick("rumbles","shakes","vibrates","shudders","honks")
 		var/b = pick("crushes","spins","viscerates","smashes","insults")
 		visible_message("<span class='warning'>[exp_on] [a], and [b], the experiment was a failure.</span>")
 
@@ -474,6 +463,10 @@
 		visible_message("<span class='notice'>[src] scans the [exp_on], revealing its true nature!</span>")
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/relic/R = loaded_item
+		if (!R.revealed)
+			var/points = rand(3500,3750) // discovery reward
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+			visible_message("<span class='notice'> This discovery netted [points] points for research.</span>")
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
@@ -513,18 +506,31 @@
 				new /mob/living/simple_animal/pet/cat(loc)
 				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		if(globalMalf > 76)
+		if(globalMalf > 76 && globalMalf < 98)
 			visible_message("<span class='warning'>[src] begins to smoke and hiss, shaking violently!</span>")
 			use_power(500000)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
+		if(globalMalf == 99)
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
+			addtimer(CALLBACK(src, .proc/boom), 50)
+		if(globalMalf == 100)
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
+			addtimer(CALLBACK(src, .proc/honk), 50)
 
 	addtimer(CALLBACK(src, .proc/reset_exp), resetTime)
+
+/obj/machinery/rnd/experimentor/proc/boom()
+	explosion(src, 1, 5, 10, 5, 1)
+
+/obj/machinery/rnd/experimentor/proc/honk()
+	playsound(src, 'sound/items/bikehorn.ogg', 500)
+	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
 	update_icon()
 	recentlyExperimented = FALSE
 
-/obj/machinery/rnd/experimentor/update_icon()
+/obj/machinery/rnd/experimentor/update_icon_state()
 	icon_state = "h_lathe"
 
 /obj/machinery/rnd/experimentor/proc/warn_admins(user, ReactionName)
@@ -553,7 +559,7 @@
 
 /obj/item/relic
 	name = "strange object"
-	desc = "What mysteries could this hold?"
+	desc = "What mysteries could this hold? Maybe Research & Development could find out."
 	icon = 'icons/obj/assemblies.dmi'
 	var/realName = "defined object"
 	var/revealed = FALSE
@@ -573,7 +579,7 @@
 	revealed = TRUE
 	name = realName
 	cooldownMax = rand(60,300)
-	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
+	realProc = pick(.proc/teleport,.proc/explode,.proc/rapidDupe,.proc/petSpray,.proc/flash,.proc/clean,.proc/corgicannon)
 
 /obj/item/relic/attack_self(mob/user)
 	if(revealed)
@@ -583,9 +589,10 @@
 		else if(loc == user)
 			cooldown = TRUE
 			call(src,realProc)(user)
-			addtimer(CALLBACK(src, .proc/cd), cooldownMax)
+			if(!QDELETED(src))
+				addtimer(CALLBACK(src, .proc/cd), cooldownMax)
 	else
-		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this yet.</span>")
+		to_chat(user, "<span class='notice'>You aren't quite sure what this is. Maybe R&D knows what to do with it?</span>")
 
 /obj/item/relic/proc/cd()
 	cooldown = FALSE
@@ -598,21 +605,21 @@
 	smoke.start()
 
 /obj/item/relic/proc/corgicannon(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE)
+	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .proc/throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/clean(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE)
+	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
-	CL.prime()
+	CL.detonate()
 	warn_admins(user, "Smoke", 0)
 
 /obj/item/relic/proc/flash(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE)
+	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/flashbang/CB = new/obj/item/grenade/flashbang(user.loc)
-	CB.prime()
+	CB.detonate()
 	warn_admins(user, "Flash")
 
 /obj/item/relic/proc/petSpray(mob/user)

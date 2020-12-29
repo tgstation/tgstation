@@ -137,7 +137,7 @@ Chilling extracts:
 	user.visible_message("<span class='notice'>[src] crumbles into icy powder, leaving behind several emergency food supplies!</span>")
 	var/amount = rand(5, 10)
 	for(var/i in 1 to amount)
-		new /obj/item/reagent_containers/food/snacks/rationpack(get_turf(user))
+		new /obj/item/food/rationpack(get_turf(user))
 	..()
 
 /obj/item/slimecross/chilling/bluespace
@@ -148,6 +148,9 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/bluespace/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !isliving(target) || active)
+		return
+	if(HAS_TRAIT(target, TRAIT_NO_TELEPORT))
+		to_chat(user, "<span class='warning'>[target] resists being linked with [src]!</span>")
 		return
 	if(target in allies)
 		allies -= target
@@ -235,7 +238,7 @@ Chilling extracts:
 		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm.</span>")
 	else
 		user.visible_message("<span class='notice'>[src] lets out a peaceful ring as it shatters, but nothing happens...</span>")
-	..()
+	return ..()
 
 /obj/item/slimecross/chilling/green
 	colour = "green"

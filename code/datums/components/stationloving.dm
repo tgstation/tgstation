@@ -5,7 +5,7 @@
 	var/allow_death = FALSE
 
 /datum/component/stationloving/Initialize(inform_admins = FALSE, allow_death = FALSE)
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_MOVABLE_Z_CHANGED), .proc/check_in_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_SECLUDED_LOCATION), .proc/relocate)
@@ -16,15 +16,17 @@
 	src.allow_death = allow_death
 	check_in_bounds() // Just in case something is being created outside of station/centcom
 
-/datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, list/arguments)
+/datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
 	if (original)
-		if (istype(newc))
+		if (newc)
 			inform_admins = newc.inform_admins
 			allow_death = newc.allow_death
-		else if (LAZYLEN(arguments))
-			inform_admins = arguments[1]
+		else
+			inform_admins = inform_admins
 
 /datum/component/stationloving/proc/relocate()
+	SIGNAL_HANDLER
+
 	var/targetturf = find_safe_turf()
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
@@ -33,12 +35,15 @@
 			CRASH("Unable to find a blobstart landmark")
 
 	var/atom/movable/AM = parent
+	playsound(AM, 'sound/machines/synth_no.ogg', 5, TRUE) //hey dumbass, you failed at your MOST IMPORTANT JOB, maybe you should check your chat log to see what could have caused that strange buzzing noise
 	AM.forceMove(targetturf)
 	to_chat(get(parent, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
 	return targetturf
 
 /datum/component/stationloving/proc/check_in_bounds()
+	SIGNAL_HANDLER
+
 	if(in_bounds())
 		return
 	else
@@ -49,9 +54,13 @@
 			message_admins("[parent] has been moved out of bounds in [ADMIN_VERBOSEJMP(currentturf)]. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
 
 /datum/component/stationloving/proc/check_soul_imbue()
+	SIGNAL_HANDLER
+
 	return disallow_soul_imbue
 
 /datum/component/stationloving/proc/check_mark_retrieval()
+	SIGNAL_HANDLER
+
 	return COMPONENT_BLOCK_MARK_RETRIEVAL
 
 /datum/component/stationloving/proc/in_bounds()
@@ -74,6 +83,9 @@
 	return FALSE
 
 /datum/component/stationloving/proc/check_deletion(datum/source, force) // TRUE = interrupt deletion, FALSE = proceed with deletion
+
+	SIGNAL_HANDLER
+
 
 	var/turf/T = get_turf(parent)
 

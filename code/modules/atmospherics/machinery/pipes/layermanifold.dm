@@ -11,6 +11,7 @@
 	volume = 260
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "manifoldlayer"
+	paintable = FALSE
 
 	var/list/front_nodes
 	var/list/back_nodes
@@ -32,12 +33,12 @@
 	nodes = list()
 	for(var/obj/machinery/atmospherics/A in needs_nullifying)
 		A.disconnect(src)
-		A.build_network()
+		SSair.add_to_rebuild_queue(A)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
 	return front_nodes + back_nodes + nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
+/obj/machinery/atmospherics/pipe/layer_manifold/update_icon()
 	cut_overlays()
 	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
 
@@ -45,8 +46,6 @@
 		add_attached_images(node)
 	for(var/node in back_nodes)
 		add_attached_images(node)
-
-	update_alpha()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_images(obj/machinery/atmospherics/A)
 	if(!A)
@@ -60,19 +59,20 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_image(p_dir, p_layer, p_color = null)
 	var/image/I
 
+	// Uses pipe-3 because we don't want the vertical shifting
 	if(p_color)
-		I = getpipeimage(icon, "pipe", p_dir, p_color, piping_layer = p_layer)
+		I = getpipeimage(icon, "pipe-3", p_dir, p_color, piping_layer = p_layer)
 	else
-		I = getpipeimage(icon, "pipe", p_dir, piping_layer = p_layer)
+		I = getpipeimage(icon, "pipe-3", p_dir, piping_layer = p_layer)
 
 	I.layer = layer - 0.01
 	add_overlay(I)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
 	switch(dir)
-		if(NORTH || SOUTH)
+		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
-		if(EAST || WEST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/layer_manifold/isConnectable(obj/machinery/atmospherics/target, given_layer)
@@ -99,8 +99,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
 	normalize_cardinal_directions()
 	findAllConnections()
-	var/turf/T = loc			// hide if turf is not intact
-	hide(T.intact)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
 	piping_layer = PIPING_LAYER_DEFAULT
@@ -124,16 +122,15 @@
 			back_nodes[i] = null
 	update_icon()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
-	if(initialize_directions & dir)
+/obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, direction)
+	if(initialize_directions & direction)
 		return ..()
-	if((NORTH|EAST) & dir)
-		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
-	if((SOUTH|WEST) & dir)
-		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+	if((NORTH|EAST) & direction)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+	if((SOUTH|WEST) & direction)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
 
 /obj/machinery/atmospherics/pipe/layer_manifold/visible
-	level = PIPE_VISIBLE_LEVEL
+	hide = FALSE
 	layer = GAS_PIPE_VISIBLE_LAYER
-	

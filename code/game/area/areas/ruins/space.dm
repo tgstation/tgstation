@@ -2,28 +2,13 @@
 
 /area/ruin/space
 	has_gravity = FALSE
-	blob_allowed = FALSE //Nope, no winning in space as a blob. Gotta eat the station.
+	area_flags = UNIQUE_AREA
 
 /area/ruin/space/has_grav
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
-
-
-/area/ruin/fakespace
-	icon_state = "space"
-	requires_power = TRUE
-	always_unpowered = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	has_gravity = FALSE
-	power_light = FALSE
-	power_equip = FALSE
-	power_environ = FALSE
-	valid_territory = FALSE
-	outdoors = TRUE
-	ambientsounds = SPACE
-	blob_allowed = FALSE
 
 /////////////
 
@@ -243,19 +228,17 @@
 /area/ruin/space/has_grav/ancientstation/atmo
 	name = "Beta Station Atmospherics"
 	icon_state = "red"
+	ambientsounds = ENGINEERING
 	has_gravity = TRUE
 
-/area/ruin/space/has_grav/ancientstation/betanorth
-	name = "Beta Station North Corridor"
-	icon_state = "blue"
-
-/area/ruin/space/has_grav/ancientstation/solar
-	name = "Station Solar Array"
-	icon_state = "panelsAP"
+/area/ruin/space/has_grav/ancientstation/betacorridor
+	name = "Beta Station Main Corridor"
+	icon_state = "bluenew"
 
 /area/ruin/space/has_grav/ancientstation/engi
 	name = "Charlie Station Engineering"
 	icon_state = "engine"
+	ambientsounds = ENGINEERING
 
 /area/ruin/space/has_grav/ancientstation/comm
 	name = "Charlie Station Command"
@@ -287,11 +270,24 @@
 
 /area/ruin/space/has_grav/ancientstation/deltaai
 	name = "Delta Station AI Core"
-	icon_state = "teleporter"
+	icon_state = "ai"
+	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/ruin/space/has_grav/ancientstation/mining
 	name = "Beta Station Mining Equipment"
-	icon_state = "green"
+	icon_state = "mining"
+
+/area/ruin/space/has_grav/ancientstation/medbay
+	name = "Beta Station Medbay"
+	icon_state = "medbay"
+
+/area/ruin/space/has_grav/ancientstation/betastorage
+	name = "Beta Station Storage"
+	icon_state = "storage"
+
+/area/solar/ancientstation
+	name = "Charlie Station Solar Array"
+	icon_state = "panelsP"
 
 //DERELICT
 
@@ -372,13 +368,11 @@
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
-	blob_allowed = FALSE //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/ruin/space/djstation/solars
 	name = "DJ Station Solars"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
-
 
 //ABANDONED TELEPORTER
 
@@ -410,3 +404,13 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "Ancient Shuttle"
 	icon_state = "yellow"
+
+//HELL'S FACTORY OPERATING FACILITY
+/area/ruin/space/has_grav/hellfactory
+	name = "Hell Factory"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/hellfactoryoffice
+	name = "Hell Factory Office"
+	icon_state = "red"
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT

@@ -50,18 +50,6 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/shotgun_slug/sec
-	id = "sec_slug"
-	build_type = PROTOLATHE
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
-/datum/design/buckshot_shell/sec
-	id = "sec_bshot"
-	build_type = PROTOLATHE
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-
 /datum/design/shotgun_dart/sec
 	id = "sec_dart"
 	build_type = PROTOLATHE
@@ -91,6 +79,16 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 600, /datum/material/diamond = 600, /datum/material/uranium = 200)
 	build_path = /obj/item/firing_pin/implant/mindshield
+	category = list("Firing Pins")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/pin_explorer
+	name = "Outback Firing Pin"
+	desc = "This firing pin only shoots while ya ain't on station, fair dinkum!"
+	id = "pin_explorer"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/silver = 1000, /datum/material/gold = 1000, /datum/material/iron = 500)
+	build_path = /obj/item/firing_pin/explorer
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -170,8 +168,7 @@
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
 	id = "flora_gun"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 500)
-	reagents_list = list(/datum/reagent/uranium/radium = 20)
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 500, /datum/material/uranium = 2000)
 	build_path = /obj/item/gun/energy/floragun
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
@@ -238,7 +235,7 @@
 
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	id = "wormholeprojector"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 2000, /datum/material/iron = 5000, /datum/material/diamond = 2000, /datum/material/bluespace = 3000)
@@ -305,8 +302,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/gravitygun
-	name = "One-point Bluespace-gravitational Manipulator"
-	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity."
+	name = "One-point Gravitational Manipulator"
+	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity. Requires a gravitational anomaly core to function."
 	id = "gravitygun"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/silver = 8000, /datum/material/uranium = 8000, /datum/material/glass = 12000, /datum/material/iron = 12000, /datum/material/diamond = 3000, /datum/material/bluespace = 3000)
@@ -324,12 +321,21 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/cryostasis_shotgun_dart
-	name = "Cryostasis Shotgun Dart"
-	desc = "A shotgun dart designed with similar internals to that of a cryostasis beaker, allowing reagents to not react when inside."
-	id = "shotgundartcryostasis"
+/datum/design/cleric_mace
+	name = "Cleric Mace"
+	desc = "A mace fit for a cleric. Useful for bypassing plate armor, but too bulky for much else."
+	id = "cleric_mace"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 12000)
+	build_path = /obj/item/melee/cleric_mace
+	category = list("Imported")
+
+/datum/design/stun_boomerang
+	name = "OZtek Boomerang"
+	desc = "Uses reverse flow gravitodynamics to flip its personal gravity back to the thrower mid-flight. Also functions similar to a stun baton."
+	id = "stun_boomerang"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 3500)
-	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
-	category = list("Ammo")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+	build_path = /obj/item/melee/baton/boomerang
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

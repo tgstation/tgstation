@@ -1,5 +1,5 @@
 /datum/component/storage/concrete/wallet/on_alt_click(datum/source, mob/user)
-	if(!isliving(user) || !user.CanReach(parent))
+	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
 		return
 	if(locked)
 		to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")

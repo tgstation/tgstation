@@ -51,7 +51,7 @@
 	displayed_text = new_val
 
 	if(displayed_text)
-		maptext = "<font size = [text_size]>[displayed_text]</font>"
+		maptext = MAPTEXT("<font size = [text_size]>[displayed_text]</font>")
 	else
 		maptext = null
 
@@ -59,9 +59,6 @@
 	attached_to = null
 	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
-
-/obj/effect/countdown/ex_act(severity, target) //immune to explosions
-	return
 
 /obj/effect/countdown/singularity_pull()
 	return
@@ -89,32 +86,6 @@
 		return
 	else if(N.timing)
 		return round(N.get_time_left(), 1)
-
-/obj/effect/countdown/clonepod
-	name = "cloning pod countdown"
-	color = "#18d100"
-	text_size = 1
-
-/obj/effect/countdown/clonepod/get_value()
-	var/obj/machinery/clonepod/C = attached_to
-	if(!istype(C))
-		return
-	else if(C.occupant)
-		var/completion = round(C.get_completion())
-		return completion
-
-/obj/effect/countdown/clockworkgate
-	name = "gateway countdown"
-	text_size = 1
-	color = "#BE8700"
-	layer = POINT_LAYER
-
-/obj/effect/countdown/clockworkgate/get_value()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = attached_to
-	if(!istype(G))
-		return
-	else if(G.obj_integrity && !G.purpose_fulfilled)
-		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_time(FALSE)]</div>"
 
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
@@ -170,3 +141,28 @@
 	else
 		var/time_left = max(0, (H.finish_time - world.time) / 10)
 		return round(time_left)
+
+/obj/effect/countdown/arena
+	invisibility = 0
+	name = "arena countdown"
+
+/obj/effect/countdown/arena/get_value()
+	var/obj/machinery/arena_spawn/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/obj/machinery/computer/arena/C = A.get_controller()
+		var/time_left = max(0, (C.start_time - world.time) / 10)
+		return round(time_left)
+
+/obj/effect/countdown/flower_bud
+	name = "flower bud countdown"
+
+/obj/effect/countdown/flower_bud/get_value()
+	var/obj/structure/alien/resin/flower_bud/bud = attached_to
+	if(!istype(bud))
+		return
+	if(!bud.finish_time)
+		return -1
+	var/time_left = max(0, (bud.finish_time - world.time) / 10)
+	return time_left

@@ -24,8 +24,6 @@
 	else
 		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 		user.fakedeath("changeling") //play dead
-		user.update_stat()
-		user.update_mobility()
 		addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
 
@@ -33,7 +31,7 @@
 	if(!user || !istype(user))
 		return
 	user.cure_fakedeath("changeling")
-	user.revive(full_heal = TRUE)
+	user.revive(full_heal = TRUE, admin_revive = FALSE)
 	var/list/missing = user.get_missing_limbs()
 	missing -= BODY_ZONE_HEAD // headless changelings are funny
 	if(missing.len)
@@ -49,9 +47,9 @@
 	user.regenerate_organs()
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
-	if(user && user.mind)
+	if(user?.mind)
 		var/datum/antagonist/changeling/C = user.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(C && C.purchasedpowers)
+		if(C?.purchasedpowers)
 			to_chat(user, "<span class='notice'>We are ready to revive.</span>")
 			name = "Revive"
 			desc = "We arise once more."

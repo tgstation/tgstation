@@ -219,11 +219,11 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aI" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aJ" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
@@ -234,7 +234,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aK" = (
 /obj/structure/stone_tile/block/cracked{
@@ -275,7 +275,7 @@
 	dir = 8
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aR" = (
@@ -304,17 +304,17 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aU" = (
 /obj/structure/lavaland/ash_walker,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aV" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aW" = (
 /obj/structure/stone_tile/block{
@@ -383,13 +383,13 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "be" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bf" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -402,7 +402,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bg" = (
 /obj/structure/stone_tile/block{
@@ -606,7 +606,6 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/machinery/the_singularitygen,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bA" = (
@@ -696,7 +695,7 @@
 /area/lavaland/surface/outdoors)
 "bP" = (
 /obj/structure/stone_tile/block,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -868,7 +867,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ck" = (
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/structure/stone_tile{
 	dir = 4
 	},
@@ -882,7 +881,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -986,7 +985,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "cA" = (
@@ -1029,7 +1028,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/item/storage/belt,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
@@ -1072,7 +1071,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/item/scythe,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
@@ -1085,7 +1084,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "cN" = (
@@ -1100,7 +1099,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/item/clothing/head/helmet/roman/legionnaire,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
@@ -1250,7 +1249,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "do" = (
-/obj/structure/sink/puddle{
+/obj/structure/water_source/puddle{
 	pixel_x = -3;
 	pixel_y = 1
 	},

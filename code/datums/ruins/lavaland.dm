@@ -67,7 +67,8 @@
 	description = "Lumbering humanoids, made out of precious metals, move inside this ship. They frequently leave to mine more minerals, which they somehow turn into more of them. \
 	Seem very intent on research and individual liberty, and also geology-based naming?"
 	cost = 20
-	suffix = "lavaland_surface_golem_ship.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/gaia
@@ -166,7 +167,8 @@
 	name = "Fountain Hall"
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
-	suffix = "lavaland_surface_fountain_hall.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "fountain_hall.dmm"
 	cost = 5
 
 /datum/map_template/ruin/lavaland/survivalcapsule
@@ -223,9 +225,34 @@
 	suffix = "lavaland_surface_wizard.dmm"
 	cost = 5
 
+/datum/map_template/ruin/lavaland/strong_stone
+	name = "Strong Stone"
+	id = "strong_stone"
+	description = "A stone that seems particularly powerful."
+	suffix = "lavaland_strong_rock.dmm"
+	allow_duplicates = FALSE
+	cost = 2
+
 /datum/map_template/ruin/lavaland/puzzle
 	name = "Ancient Puzzle"
 	id = "puzzle"
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
+
+/datum/map_template/ruin/lavaland/elite_tumor
+	name = "Pulsating Tumor"
+	id = "tumor"
+	description = "A strange tumor which houses a powerful beast..."
+	suffix = "lavaland_surface_elite_tumor.dmm"
+	cost = 5
+	always_place = TRUE
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/lavaland/elephant_graveyard
+	name = "Elephant Graveyard"
+	id = "Graveyard"
+	description = "An abandoned graveyard, calling to those unable to continue."
+	suffix = "lavaland_surface_elephant_graveyard.dmm"
+	allow_duplicates = FALSE
+	cost = 10

@@ -34,9 +34,8 @@
 	QDEL_NULL(countdown)
 	. = ..()
 
-/obj/machinery/transformer/update_icon()
-	..()
-	if(stat & (BROKEN|NOPOWER) || cooldown == 1)
+/obj/machinery/transformer/update_icon_state()
+	if(machine_stat & (BROKEN|NOPOWER) || cooldown == 1)
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
@@ -50,18 +49,19 @@
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
-		if((transform_standing || !(H.mobility_flags & MOBILITY_STAND)) && move_dir == EAST)// || move_dir == WEST)
+		if((transform_standing || H.body_position == LYING_DOWN) && move_dir == EAST)// || move_dir == WEST)
 			AM.forceMove(drop_location())
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target)
+
+/obj/machinery/transformer/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.
 	if(!ishuman(mover))
-		var/dir = get_dir(src, mover)
-		if(dir == EAST)
-			return ..()
-	return 0
+		if(get_dir(src, mover) == EAST)
+			return
+	return FALSE
 
 /obj/machinery/transformer/process()
 	if(cooldown && (cooldown_timer <= world.time))
@@ -69,7 +69,7 @@
 		update_icon()
 
 /obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
-	if(stat & (BROKEN|NOPOWER))
+	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(cooldown == 1)
 		return
@@ -94,10 +94,10 @@
 	var/mob/living/silicon/robot/R = H.Robotize()
 	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R, robot_cell_charge)
 
- 	// So he can't jump out the gate right away.
+	// So he can't jump out the gate right away.
 	R.SetLockdown()
 	if(masterAI)
-		R.connected_ai = masterAI
+		R.set_connected_ai(masterAI)
 		R.lawsync()
 		R.lawupdate = 1
 	addtimer(CALLBACK(src, .proc/unlock_new_robot, R), 50)

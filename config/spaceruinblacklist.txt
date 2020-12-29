@@ -13,7 +13,9 @@
 #_maps/RandomRuins/SpaceRuins/bigderelict1.dmm
 #_maps/RandomRuins/SpaceRuins/bus.dmm
 #_maps/RandomRuins/SpaceRuins/caravanambush.dmm
+#_maps/RandomRuins/SpaceRuins/clericden.dmm
 #_maps/RandomRuins/SpaceRuins/cloning_facility.dmm
+#_maps/RandomRuins/SpaceRuins/clownplanet.dmm
 #_maps/RandomRuins/SpaceRuins/crashedclownship.dmm
 #_maps/RandomRuins/SpaceRuins/crashedship.dmm
 #_maps/RandomRuins/SpaceRuins/deepstorage.dmm
@@ -45,4 +47,5 @@
 #_maps/RandomRuins/SpaceRuins/way_home.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipdock.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
+#_maps/RandomRuins/SpaceRuins/forgottenship.dmm
 

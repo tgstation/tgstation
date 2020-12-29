@@ -1,8 +1,6 @@
 // TODO:
 //	- Potentially roll HUDs and Records into one
 //	- Shock collar/lock system for prisoner pAIs?
-//  - Put cable in user's hand instead of on the ground
-//  - Camera jack
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
@@ -20,9 +18,6 @@
 															"security records" = 10,
 															"camera zoom" = 10,
 															"host scan" = 10,
-															//"camera jack" = 10,
-															//"heartbeat sensor" = 10,
-															//"projection array" = 15,
 															"medical HUD" = 20,
 															"security HUD" = 20,
 															"loudness booster" = 20,
@@ -72,8 +67,6 @@
 				left_part = medicalAnalysis()
 			if("doorjack")
 				left_part = softwareDoor()
-			if("camerajack")
-				left_part = softwareCamera()
 			if("signaller")
 				left_part = softwareSignal()
 			if("loudness")
@@ -89,9 +82,8 @@
 	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 			<html>
 			<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style type=\"text/css\">
-					body { background-image:url('html/paigrid.png'); }
-
 					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5}
 					#content {position: relative; left: 10px; height: 400px; width: 100%; z-index: 0}
 
@@ -156,31 +148,15 @@
 				radio.attack_self(src)
 
 			if("image") // Set pAI card display face
-				var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
-				var/pID = 1
-
+				var/newImage = input("Select your new display image.", "Display Image", "Happy") in sortList(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses"))
 				switch(newImage)
-					if("Happy")
-						pID = 1
-					if("Cat")
-						pID = 2
+					if(null)
+						card.emotion_icon = "null"
 					if("Extremely Happy")
-						pID = 3
-					if("Face")
-						pID = 4
-					if("Laugh")
-						pID = 5
-					if("Off")
-						pID = 6
-					if("Sad")
-						pID = 7
-					if("Angry")
-						pID = 8
-					if("What")
-						pID = 9
-					if("Null")
-						pID = 10
-				card.setEmotion(pID)
+						card.emotion_icon = "extremely-happy"
+					else
+						card.emotion_icon = "[lowertext(newImage)]"
+				card.update_icon()
 
 			if("news")
 				newscaster.ui_interact(src)
@@ -211,7 +187,7 @@
 					if(iscarbon(card.loc))
 						CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 					else
-						to_chat(src, "You are not being carried by anyone!")
+						to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
 						return 0 // FALSE ? If you return here you won't call paiinterface() below
 
 			if("pdamessage")
@@ -275,29 +251,37 @@
 			if("encryptionkeys")
 				if(href_list["toggle"])
 					encryptmod = TRUE
+					radio.subspace_transmission = TRUE
 
 			if("translator")
-				if(href_list["toggle"])
-					grant_all_languages(TRUE)
-						// this is PERMAMENT.
+				if(href_list["toggle"])	//This is permanent.
+					grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 
 			if("doorjack")
 				if(href_list["jack"])
-					if(cable && cable.machine)
-						hackdoor = cable.machine
+					if(hacking_cable?.machine)
+						hackdoor = hacking_cable.machine
 						hackloop()
 				if(href_list["cancel"])
 					hackdoor = null
 				if(href_list["cable"])
-					var/turf/T = get_turf(loc)
-					cable = new /obj/item/pai_cable(T)
-					T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='hear'>You hear the soft click of something light and hard falling to the ground.</span>")
+					qdel(hacking_cable) //clear any old cables
+					hacking_cable = new
+					var/transfered_to_mob
+					if(isliving(card.loc))
+						var/mob/living/L = card.loc
+						if(L.put_in_hands(hacking_cable))
+							transfered_to_mob = TRUE
+							L.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of.</span>", "<span class='hear'>You hear the soft click of something light and manage to catch hold of [hacking_cable].</span>")
+					if(!transfered_to_mob)
+						hacking_cable.forceMove(drop_location())
+						hacking_cable.visible_message("<span class='warning'>A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor.</span>", "<span class='hear'>You hear the soft click of something light and hard falling to the ground.</span>")
+
+
 
 			if("loudness")
 				if(subscreen == 1) // Open Instrument
 					internal_instrument.interact(src)
-				if(subscreen == 2) // Change Instrument type
-					internal_instrument.selectInstrument()
 
 		paiInterface()
 
@@ -327,8 +311,6 @@
 			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
 			dat += "<a href='byond://?src=[REF(src)];software=securityrecord;sub=0'>Security Records</a> <br>"
-		if(s == "camera")
-			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
 		if(s == "loudness booster")
@@ -342,8 +324,6 @@
 			dat += "<a href='byond://?src=[REF(src)];software=camzoom;sub=0'>Adjust Camera Zoom</a> <br>"
 		if(s == "atmosphere sensor")
 			dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
-		if(s == "heartbeat sensor")
-			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Heartbeat Sensor</a> <br>"
 		if(s == "security HUD")
 			dat += "<a href='byond://?src=[REF(src)];software=securityhud;sub=0'>Facial Recognition Suite</a>[(secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "medical HUD")
@@ -353,10 +333,6 @@
 		if(s == "universal translator")
 			var/datum/language_holder/H = get_language_holder()
 			dat += "<a href='byond://?src=[REF(src)];software=translator;sub=0'>Universal Translator</a>[H.omnitongue ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
-		if(s == "projection array")
-			dat += "<a href='byond://?src=[REF(src)];software=projectionarray;sub=0'>Projection Array</a> <br>"
-		if(s == "camera jack")
-			dat += "<a href='byond://?src=[REF(src)];software=camerajack;sub=0'>Camera Jack</a> <br>"
 		if(s == "door jack")
 			dat += "<a href='byond://?src=[REF(src)];software=doorjack;sub=0'>Door Jack</a> <br>"
 	dat += "<br>"
@@ -399,13 +375,13 @@
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
-			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
-			 rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
-			 only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
-			 <b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
-			 simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
-			 prime directive to the best of your ability.</b></p><br><br>-
-			"}
+		comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
+		rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
+		only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
+		<b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
+		simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
+		prime directive to the best of your ability.</b></p><br><br>-
+		"}
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
@@ -425,7 +401,7 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.")
+		to_chat(P, "<span class='warning'>[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.</span>")
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -475,7 +451,7 @@
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
 			if(medicalActive2 in GLOB.data_core.medical)
-				. += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=[REF(src)];field=blood_type'>[medicalActive2.fields["blood_type"]]</A><BR>\nDNA: <A href='?src=[REF(src)];field=b_dna'>[medicalActive2.fields["b_dna"]]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=[REF(src)];field=mi_dis'>[medicalActive2.fields["mi_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=mi_dis_d'>[medicalActive2.fields["mi_dis_d"]]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=[REF(src)];field=ma_dis'>[medicalActive2.fields["ma_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=ma_dis_d'>[medicalActive2.fields["ma_dis_d"]]</A><BR>\n<BR>\nAllergies: <A href='?src=[REF(src)];field=alg'>[medicalActive2.fields["alg"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=alg_d'>[medicalActive2.fields["alg_d"]]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=[REF(src)];field=cdi'>[medicalActive2.fields["cdi"]]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=[REF(src)];field=cdi_d'>[medicalActive2.fields["cdi_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[medicalActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+				. += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=[REF(src)];field=blood_type'>[medicalActive2.fields["blood_type"]]</A><BR>\nDNA (UE): <A href='?src=[REF(src)];field=b_dna'>[medicalActive2.fields["b_dna"]]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=[REF(src)];field=mi_dis'>[medicalActive2.fields["mi_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=mi_dis_d'>[medicalActive2.fields["mi_dis_d"]]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=[REF(src)];field=ma_dis'>[medicalActive2.fields["ma_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=ma_dis_d'>[medicalActive2.fields["ma_dis_d"]]</A><BR>\n<BR>\nAllergies: <A href='?src=[REF(src)];field=alg'>[medicalActive2.fields["alg"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=alg_d'>[medicalActive2.fields["alg_d"]]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=[REF(src)];field=cdi'>[medicalActive2.fields["cdi"]]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=[REF(src)];field=cdi_d'>[medicalActive2.fields["cdi_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[medicalActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
 			. += "<BR>\n<A href='?src=[REF(src)];software=medicalrecord;sub=0'>Back</A><BR>"
@@ -497,7 +473,7 @@
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
 			if(securityActive2 in GLOB.data_core.security)
-				. += "<BR>\nSecurity Data<BR>\nCriminal Status: [securityActive2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: <A href='?src=[REF(src)];field=mi_crim'>[securityActive2.fields["mi_crim"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=mi_crim_d'>[securityActive2.fields["mi_crim_d"]]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=[REF(src)];field=ma_crim'>[securityActive2.fields["ma_crim"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=ma_crim_d'>[securityActive2.fields["ma_crim_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[securityActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+				. += "<BR>\nSecurity Data<BR>\nCriminal Status: [securityActive2.fields["criminal"]]<BR>\n<BR>\nCrimes: <A href='?src=[REF(src)];field=mcrim'>[securityActive2.fields["crim"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=crim_d'>[securityActive2.fields["crim_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[securityActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
@@ -574,41 +550,20 @@
 	dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
 	return dat
-
-// Camera Jack - Clearly not finished
-/mob/living/silicon/pai/proc/softwareCamera()
-	var/dat = "<h3>Camera Jack</h3>"
-	dat += "Cable status : "
-
-	if(!cable)
-		dat += "<font color=#FF5555>Retracted</font> <br>"
-		return dat
-	if(!cable.machine)
-		dat += "<font color=#FFFF55>Extended</font> <br>"
-		return dat
-
-	var/obj/machinery/machine = cable.machine
-	dat += "<font color=#55FF55>Connected</font> <br>"
-
-	if(!istype(machine, /obj/machinery/camera))
-		to_chat(src, "DERP")
-	return dat
-
 // Door Jack
 /mob/living/silicon/pai/proc/softwareDoor()
 	var/dat = "<h3>Airlock Jack</h3>"
 	dat += "Cable status : "
-	if(!cable)
+	if(!hacking_cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
 		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
 		return dat
-	if(!cable.machine)
+	if(!hacking_cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
 		return dat
 
-	var/obj/machinery/machine = cable.machine
 	dat += "<font color=#55FF55>Connected</font> <br>"
-	if(!istype(machine, /obj/machinery/door))
+	if(!istype(hacking_cable.machine, /obj/machinery/door))
 		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
 		return dat
 
@@ -639,7 +594,7 @@
 	[(aiPDA.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!aiPDA.toff)
-		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
+		for (var/obj/item/pda/P in get_viewable_pdas())
 			if (P == aiPDA)
 				continue
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"

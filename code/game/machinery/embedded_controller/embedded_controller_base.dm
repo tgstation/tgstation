@@ -29,24 +29,22 @@
 	. = ..()
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(return_text())
 	popup.open()
-
-/obj/machinery/embedded_controller/update_icon()
 
 /obj/machinery/embedded_controller/proc/return_text()
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
-	return 0
+	return
 
 /obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
 	if(istype(signal) && program)
 		program.receive_signal(signal)
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
-	if(..())
-		return 0
+	. = ..()
+	if(.)
+		return
 
 	if(program)
 		program.receive_user_command(href_list["command"])
@@ -55,9 +53,9 @@
 	usr.set_machine(src)
 	addtimer(CALLBACK(src, .proc/updateDialog), 5)
 
-/obj/machinery/embedded_controller/process()
+/obj/machinery/embedded_controller/process(delta_time)
 	if(program)
-		program.process()
+		program.process(delta_time)
 
 	update_icon()
 	src.updateDialog()

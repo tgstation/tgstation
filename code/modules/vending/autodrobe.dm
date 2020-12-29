@@ -77,15 +77,15 @@
 					/obj/item/clothing/mask/gas/sexymime = 1,
 					/obj/item/clothing/under/rank/civilian/mime/sexy = 1,
 					/obj/item/clothing/under/rank/civilian/mime/skirt = 1,
-					/obj/item/clothing/mask/rat/bat = 1,
-					/obj/item/clothing/mask/rat/bee = 1,
-					/obj/item/clothing/mask/rat/bear = 1,
-					/obj/item/clothing/mask/rat/raven = 1,
-					/obj/item/clothing/mask/rat/jackal = 1,
-					/obj/item/clothing/mask/rat/fox = 1,
-					/obj/item/clothing/mask/frog = 1,
-					/obj/item/clothing/mask/rat/tribal = 1,
-					/obj/item/clothing/mask/rat = 1,
+					/obj/item/clothing/mask/animal/rat/bat = 1,
+					/obj/item/clothing/mask/animal/rat/bee = 1,
+					/obj/item/clothing/mask/animal/rat/bear = 1,
+					/obj/item/clothing/mask/animal/rat/raven = 1,
+					/obj/item/clothing/mask/animal/rat/jackal = 1,
+					/obj/item/clothing/mask/animal/rat/fox = 1,
+					/obj/item/clothing/mask/animal/frog = 1,
+					/obj/item/clothing/mask/animal/rat/tribal = 1,
+					/obj/item/clothing/mask/animal/rat = 1,
 					/obj/item/clothing/suit/apron/overalls = 1,
 					/obj/item/clothing/head/rabbitears =1,
 					/obj/item/clothing/head/sombrero = 1,
@@ -114,12 +114,18 @@
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/suit/white_on_white = 1,
 					/obj/item/clothing/under/costume/sailor = 1,
-					/obj/item/clothing/ears/headphones = 2,
 					/obj/item/clothing/head/delinquent = 1,
-					/obj/item/clothing/head/wig/random = 3)
+					/obj/item/clothing/head/wig/random = 3,
+					/obj/item/clothing/head/shrine_wig = 1,
+					/obj/item/clothing/suit/shrine_maiden = 1,
+					/obj/item/clothing/suit/changshan_red = 1,
+					/obj/item/clothing/suit/changshan_blue = 1,
+					/obj/item/clothing/suit/cheongsam_red = 1,
+					/obj/item/clothing/suit/cheongsam_blue = 1,
+					/obj/item/gohei = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,
-					  /obj/item/gun/magic/wand = 2,
+					  /obj/item/gun/magic/wand/nothing = 2,
 					  /obj/item/clothing/glasses/sunglasses/garb = 2,
 					  /obj/item/clothing/glasses/blindfold = 1,
 					  /obj/item/clothing/mask/muzzle = 2)
@@ -133,15 +139,21 @@
 				   /obj/item/shield/riot/roman/fake = 1,
 				   /obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 				   /obj/item/clothing/head/clownmitre = 1,
-				   /obj/item/skub = 1)
+				   /obj/item/skub = 1,
+				   /obj/item/clothing/suit/hooded/mysticrobe = 1,
+				   /obj/item/clothing/under/dress/wedding_dress = 1,
+				   /obj/item/clothing/under/suit/tuxedo = 1,
+				   /obj/item/clothing/head/weddingveil = 1,
+				   /obj/item/storage/belt/cummerbund = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = PAYCHECK_ASSISTANT * 0.8 //Default of 40.
+	extra_price = PAYCHECK_HARD
+	payment_department = ACCOUNT_SRV
+	light_mask="theater-light-mask"
 
 /obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)
 
-	default_price = 50
-	extra_price = 75
-	payment_department = ACCOUNT_SRV
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null

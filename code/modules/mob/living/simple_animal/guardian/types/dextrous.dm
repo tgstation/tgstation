@@ -7,6 +7,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Drone, a dextrous master of construction and repair.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Dextrous combat modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Gold, a malleable constructor.</span>"
 	dextrous = TRUE
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself
@@ -40,21 +41,21 @@
 		..() //lose items, then return
 
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
-/mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force)
+/mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	if(..())
 		update_inv_hands()
 		if(I == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/guardian/dextrous/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	switch(slot)
-		if(SLOT_GENERC_DEXTROUS_STORAGE)
+		if(ITEM_SLOT_DEX_STORAGE)
 			if(internal_storage)
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 	..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/I, slot)
@@ -62,20 +63,20 @@
 		return
 
 	switch(slot)
-		if(SLOT_GENERC_DEXTROUS_STORAGE)
+		if(ITEM_SLOT_DEX_STORAGE)
 			internal_storage = I
 			update_inv_internal_storage()
 		else
 			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
 /mob/living/simple_animal/hostile/guardian/dextrous/getBackSlot()
-	return SLOT_GENERC_DEXTROUS_STORAGE
+	return ITEM_SLOT_DEX_STORAGE
 
 /mob/living/simple_animal/hostile/guardian/dextrous/getBeltSlot()
-	return SLOT_GENERC_DEXTROUS_STORAGE
+	return ITEM_SLOT_DEX_STORAGE
 
 /mob/living/simple_animal/hostile/guardian/dextrous/proc/update_inv_internal_storage()
-	if(internal_storage && client && hud_used && hud_used.hud_shown)
+	if(internal_storage && client && hud_used?.hud_shown)
 		internal_storage.screen_loc = ui_id
 		client.screen += internal_storage
 

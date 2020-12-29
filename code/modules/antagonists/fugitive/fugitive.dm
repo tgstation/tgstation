@@ -5,17 +5,19 @@
 	silent = TRUE //greet called by the event
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
+	antag_hud_type = ANTAG_HUD_FUGITIVE
+	antag_hud_name = "fugitive"
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"
 
 /datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_fugitive_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/fugitive/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_fugitive_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/fugitive/on_gain()
 	forge_objectives()
@@ -33,7 +35,7 @@
 	switch(backstory)
 		if("prisoner")
 			to_chat(owner, "<B>I can't believe we managed to break out of a Nanotrasen superjail! Sadly though, our work is not done. The emergency teleport at the station logs everyone who uses it, and where they went.</B>")
-			to_chat(owner, "<B>It won't be long until Centcom tracks where we've gone off to. I need to work with my fellow escapees to prepare for the troops Nanotrasen is sending, I'm not going back.</B>")
+			to_chat(owner, "<B>It won't be long until CentCom tracks where we've gone off to. I need to work with my fellow escapees to prepare for the troops Nanotrasen is sending, I'm not going back.</B>")
 		if("cultist")
 			to_chat(owner, "<B>Blessed be our journey so far, but I fear the worst has come to our doorstep, and only those with the strongest faith will survive.</B>")
 			to_chat(owner, "<B>Our religion has been repeatedly culled by Nanotrasen because it is categorized as an \"Enemy of the Corporation\", whatever that means.</B>")
@@ -89,13 +91,3 @@
 			result += "<b>[printplayer(antag.owner)]</b>"
 
 	return result.Join("<br>")
-
-/datum/antagonist/fugitive/proc/update_fugitive_icons_added(var/mob/living/carbon/human/fugitive)
-	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
-	fughud.join_hud(fugitive)
-	set_antag_hud(fugitive, "fugitive")
-
-/datum/antagonist/fugitive/proc/update_fugitive_icons_removed(var/mob/living/carbon/human/fugitive)
-	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
-	fughud.leave_hud(fugitive)
-	set_antag_hud(fugitive, null)

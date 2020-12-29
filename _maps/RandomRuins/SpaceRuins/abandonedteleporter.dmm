@@ -8,7 +8,7 @@
 "c" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "d" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plating/airless,
@@ -99,6 +99,7 @@
 /area/ruin/space/abandoned_tele)
 "x" = (
 /obj/structure/closet,
+/obj/item/gps/spaceruin,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "y" = (

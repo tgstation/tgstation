@@ -6,9 +6,10 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
 	max_integrity = 250
-	integrity_failure = 100
-	light_color = LIGHT_COLOR_WHITE
+	integrity_failure = 0.4
+	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
+	damage_deflection = 10
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
@@ -24,6 +25,9 @@
 	anchored = FALSE
 	base_state = "pflash"
 	density = TRUE
+	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_range = FLASH_LIGHT_RANGE
+	light_on = FALSE
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
@@ -34,8 +38,9 @@
 	else
 		bulb = new(src)
 
-/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	id = "[idnum][id]"
+
+/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.id]_[id]"
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)
@@ -46,7 +51,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/flasher/update_icon()
+/obj/machinery/flasher/update_icon_state()
 	if (powered())
 		if(bulb.burnt_out)
 			icon_state = "[base_state]1-p"
@@ -62,7 +67,7 @@
 		if (bulb)
 			user.visible_message("<span class='notice'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message("<span class='notice'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
+				user.visible_message("<span class='notice'>[user] disconnects [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
@@ -93,11 +98,6 @@
 	if (anchored)
 		return flash()
 
-/obj/machinery/flasher/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 10) //any melee attack below 10 dmg does nothing
-		return 0
-	. = ..()
-
 /obj/machinery/flasher/proc/flash()
 	if (!powered() || !bulb)
 		return
@@ -111,7 +111,9 @@
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick("[base_state]_flash", src)
-	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
+	set_light_on(TRUE)
+	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
+
 	last_flash = world.time
 	use_power(1000)
 
@@ -121,6 +123,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
+			L.log_message("was AOE flashed by an automated portable flasher",LOG_ATTACK)
 			L.Paralyze(strength)
 			flashed = TRUE
 
@@ -130,9 +133,13 @@
 	return 1
 
 
+/obj/machinery/flasher/proc/flash_end()
+	set_light_on(FALSE)
+
+
 /obj/machinery/flasher/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		if(bulb && prob(75/severity))
 			flash()
 			bulb.burn_out()
@@ -178,13 +185,13 @@
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
-			setAnchored(TRUE)
+			set_anchored(TRUE)
 			power_change()
 			proximity_monitor.SetRange(range)
 		else
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
-			setAnchored(FALSE)
+			set_anchored(FALSE)
 			power_change()
 			proximity_monitor.SetRange(0)
 
@@ -203,7 +210,7 @@
 	. = ..()
 	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
-/obj/item/wallframe/flasher/after_attach(var/obj/O)
+/obj/item/wallframe/flasher/after_attach(obj/O)
 	..()
 	var/obj/machinery/flasher/F = O
 	F.id = id

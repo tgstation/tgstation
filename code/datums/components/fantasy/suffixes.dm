@@ -100,6 +100,8 @@
 		// Some types to remove them and their subtypes
 		possible_mobtypes -= typecacheof(list(
 			/mob/living/carbon/human/species,
+			/mob/living/simple_animal/hostile/syndicate/mecha_pilot,
+			/mob/living/simple_animal/hostile/asteroid/elite,
 			/mob/living/simple_animal/hostile/megafauna,
 			))
 
@@ -124,26 +126,26 @@
 /datum/fantasy_affix/shrapnel/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	// higher means more likely
-	var/list/weighted_projectile_types = list(/obj/item/projectile/meteor = 1,
-											  /obj/item/projectile/energy/nuclear_particle = 1,
-											  /obj/item/projectile/beam/pulse = 1,
-											  /obj/item/projectile/bullet/honker = 15,
-											  /obj/item/projectile/temp = 15,
-											  /obj/item/projectile/ion = 15,
-											  /obj/item/projectile/magic/door = 15,
-											  /obj/item/projectile/magic/locker = 15,
-											  /obj/item/projectile/magic/fetch = 15,
-											  /obj/item/projectile/beam/emitter = 15,
-											  /obj/item/projectile/magic/flying = 15,
-											  /obj/item/projectile/energy/net = 15,
-											  /obj/item/projectile/bullet/incendiary/c9mm = 15,
-											  /obj/item/projectile/temp/hot = 15,
-											  /obj/item/projectile/beam/disabler = 15)
+	var/list/weighted_projectile_types = list(/obj/projectile/meteor = 1,
+											  /obj/projectile/energy/nuclear_particle = 1,
+											  /obj/projectile/beam/pulse = 1,
+											  /obj/projectile/bullet/honker = 15,
+											  /obj/projectile/temp = 15,
+											  /obj/projectile/ion = 15,
+											  /obj/projectile/magic/door = 15,
+											  /obj/projectile/magic/locker = 15,
+											  /obj/projectile/magic/fetch = 15,
+											  /obj/projectile/beam/emitter = 15,
+											  /obj/projectile/magic/flying = 15,
+											  /obj/projectile/energy/net = 15,
+											  /obj/projectile/bullet/incendiary/c9mm = 15,
+											  /obj/projectile/temp/hot = 15,
+											  /obj/projectile/beam/disabler = 15)
 
-	var/obj/item/projectile/picked_projectiletype = pickweight(weighted_projectile_types)
+	var/obj/projectile/picked_projectiletype = pickweight(weighted_projectile_types)
 
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/shrapnel, picked_projectiletype)
+	comp.appliedComponents += master.AddComponent(/datum/component/mirv, picked_projectiletype)
 	return "[newName] of [initial(picked_projectiletype.name)] shrapnel"
 
 /datum/fantasy_affix/strength
@@ -165,5 +167,5 @@
 /datum/fantasy_affix/fool/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
 	return "[newName] of the fool"

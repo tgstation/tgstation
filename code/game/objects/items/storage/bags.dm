@@ -18,6 +18,7 @@
 //  Generic non-item
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/bag/ComponentInitialize()
 	. = ..()
@@ -35,11 +36,10 @@
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
-	item_state = "trashbag"
+	inhand_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-
-	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = null
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
@@ -55,14 +55,16 @@
 	playsound(loc, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return (TOXLOSS)
 
-/obj/item/storage/bag/trash/update_icon()
-	if(contents.len == 0)
-		icon_state = "[initial(icon_state)]"
-	else if(contents.len < 12)
-		icon_state = "[initial(icon_state)]1"
-	else if(contents.len < 21)
-		icon_state = "[initial(icon_state)]2"
-	else icon_state = "[initial(icon_state)]3"
+/obj/item/storage/bag/trash/update_icon_state()
+	switch(contents.len)
+		if(20 to INFINITY)
+			icon_state = "[initial(icon_state)]3"
+		if(11 to 20)
+			icon_state = "[initial(icon_state)]2"
+		if(1 to 11)
+			icon_state = "[initial(icon_state)]1"
+		else
+			icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/bag/trash/cyborg
 	insertable = FALSE
@@ -76,10 +78,19 @@
 		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
 		return
 
+/obj/item/storage/bag/trash/filled
+
+/obj/item/storage/bag/trash/filled/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(1, 7))
+		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+	update_icon_state()
+
 /obj/item/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
+	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/storage/bag/trash/bluespace/ComponentInitialize()
@@ -100,7 +111,8 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
+	worn_icon_state = "satchel"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
@@ -108,6 +120,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
+	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
@@ -185,7 +198,7 @@
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
-	w_class = WEIGHT_CLASS_TINY
+	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/plants/ComponentInitialize()
@@ -194,7 +207,13 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 100
 	STR.max_items = 100
-	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb, /obj/item/disk/plantgene))
+	STR.set_holdable(list(
+		/obj/item/food/grown,
+		/obj/item/seeds,
+		/obj/item/grown,
+		/obj/item/reagent_containers/honeycomb,
+		/obj/item/graft,
+		))
 ////////
 
 /obj/item/storage/bag/plants/portaseeder
@@ -222,16 +241,23 @@
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
+	worn_icon_state = "satchel"
 
 	var/capacity = 300; //the number of sheets it can carry.
-	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 
 /obj/item/storage/bag/sheetsnatcher/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
-	STR.set_holdable(list(/obj/item/stack/sheet), list(/obj/item/stack/sheet/mineral/sandstone, /obj/item/stack/sheet/mineral/wood))
+	STR.set_holdable(list(
+			/obj/item/stack/sheet,
+			/obj/item/stack/tile/bronze
+			),
+		list(
+			/obj/item/stack/sheet/mineral/sandstone,
+			/obj/item/stack/sheet/mineral/wood
+			))
 	STR.max_combined_stack_amount = 300
 
 // -----------------------------
@@ -257,7 +283,7 @@
 	desc = "A bag for books."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookbag"
-	w_class = WEIGHT_CLASS_BULKY //Bigger than a book because physics
+	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/books/ComponentInitialize()
@@ -267,28 +293,44 @@
 	STR.max_combined_w_class = 21
 	STR.max_items = 7
 	STR.display_numerical_stacking = FALSE
-	STR.set_holdable(list(/obj/item/book, /obj/item/storage/book, /obj/item/spellbook))
+	STR.set_holdable(list(
+		/obj/item/book,
+		/obj/item/storage/book,
+		/obj/item/spellbook
+		))
 
 /*
  * Trays - Agouri
  */
 /obj/item/storage/bag/tray
-	name = "tray"
+	name = "serving tray"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
+	worn_icon_state = "tray"
 	desc = "A metal tray to lay food on."
 	force = 5
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list(/datum/material/iron=3000)
+	slot_flags = ITEM_SLOT_BELT
+	custom_materials = list(/datum/material/iron=3000)
+	custom_price = PAYCHECK_ASSISTANT * 0.6
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/glass,
+		/obj/item/food,
+		/obj/item/kitchen/knife,
+		/obj/item/kitchen/rollingpin,
+		/obj/item/kitchen/fork,
+		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
 	STR.insert_preposition = "on"
+	STR.max_items = 7
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -315,10 +357,13 @@
 			step(I, pick(NORTH,SOUTH,EAST,WEST))
 			sleep(rand(2,4))
 
-/obj/item/storage/bag/tray/update_icon()
-	cut_overlays()
+/obj/item/storage/bag/tray/update_overlays()
+	. = ..()
 	for(var/obj/item/I in contents)
-		add_overlay(new /mutable_appearance(I))
+		var/mutable_appearance/I_copy = new(I)
+		I_copy.plane = FLOAT_PLANE
+		I_copy.layer = FLOAT_LAYER
+		. += I_copy
 
 /obj/item/storage/bag/tray/Entered()
 	. = ..()
@@ -328,6 +373,12 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/bag/tray/cafeteria
+	name = "cafeteria tray"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "foodtray"
+	desc = "A cheap metal tray to pile today's meal onto."
+
 /*
  *	Chemistry bag
  */
@@ -336,8 +387,8 @@
 	name = "chemistry bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag"
+	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
-	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/chemistry/ComponentInitialize()
@@ -346,7 +397,16 @@
 	STR.max_combined_w_class = 200
 	STR.max_items = 50
 	STR.insert_preposition = "in"
-	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/medigel, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/chem_pack))
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/food/drinks/waterbottle,
+		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/chem_pack
+		))
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
@@ -356,8 +416,8 @@
 	name = "bio bag"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
+	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
-	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/bio/ComponentInitialize()
@@ -366,7 +426,19 @@
 	STR.max_combined_w_class = 200
 	STR.max_items = 25
 	STR.insert_preposition = "in"
-	STR.set_holdable(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.set_holdable(list(
+		/obj/item/slime_extract,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/food/deadmouse,
+		/obj/item/food/monkeycube,
+		/obj/item/organ,
+		/obj/item/bodypart
+		))
 
 /*
  *  Construction bag (for engineering, holds stock parts and electronics)
@@ -376,8 +448,8 @@
 	name = "construction bag"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "construction_bag"
+	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
-	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/construction/ComponentInitialize()
@@ -387,4 +459,34 @@
 	STR.max_items = 50
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.insert_preposition = "in"
-	STR.set_holdable(list(/obj/item/stack/ore/bluespace_crystal, /obj/item/assembly, /obj/item/stock_parts, /obj/item/reagent_containers/glass/beaker, /obj/item/stack/cable_coil, /obj/item/circuitboard, /obj/item/electronics))
+	STR.set_holdable(list(
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/assembly,
+		/obj/item/stock_parts,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/stack/cable_coil,
+		/obj/item/circuitboard,
+		/obj/item/electronics,
+		/obj/item/wallframe/camera
+		))
+
+/obj/item/storage/bag/harpoon_quiver
+	name = "harpoon quiver"
+	desc = "A quiver for holding harpoons."
+	icon_state = "quiver"
+	inhand_icon_state = "quiver"
+	worn_icon_state = "harpoon_quiver"
+
+/obj/item/storage/bag/harpoon_quiver/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_TINY
+	STR.max_items = 40
+	STR.max_combined_w_class = 100
+	STR.set_holdable(list(
+		/obj/item/ammo_casing/caseless/harpoon
+		))
+
+/obj/item/storage/bag/harpoon_quiver/PopulateContents()
+	for(var/i in 1 to 40)
+		new /obj/item/ammo_casing/caseless/harpoon(src)
