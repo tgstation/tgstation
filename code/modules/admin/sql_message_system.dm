@@ -76,18 +76,9 @@
 		note_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
 		if(!note_severity)
 			return
-
-	var/playtime = 0
-	var/datum/db_query/playtime_read = SSdbcore.NewQuery("SELECT minutes FROM [format_table_name("role_time")] WHERE ckey = '[target_ckey]' and job = 'Living'")
-	if(!playtime_read.warn_execute())
-		qdel(playtime_read)
-		return
-	while(playtime_read.NextRow())
-		playtime = playtime_read.item[1]
-
 	var/datum/db_query/query_create_message = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity)
-		VALUES (:type, :target_ckey, :admin_ckey, :text, :timestamp, :server, INET_ATON(:internet_address), :port, :round_id, :secret, :expiry, :note_severity)
+		INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity, playtime)
+		VALUES (:type, :target_ckey, :admin_ckey, :text, :timestamp, :server, INET_ATON(:internet_address), :port, :round_id, :secret, :expiry, :note_severity, :playtime)
 	"}, list(
 		"type" = type,
 		"target_ckey" = target_ckey,
@@ -101,7 +92,7 @@
 		"secret" = secret,
 		"expiry" = expiry || null,
 		"note_severity" = note_severity,
-		"playtime" = playtime,
+		"playtime" = "(SELECT minutes FROM [format_table_name("role_time")] WHERE ckey = '[target_ckey]' AND job = 'Living')",
 	))
 	var/pm = "[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]: [text]"
 	var/header = "[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]"
@@ -443,7 +434,7 @@
 			output += "<b>"
 			if(type == "watchlist entry")
 				output += "[t_key] | "
-			output += "[timestamp] | [server] | [admin_key] | [get_exp_format(text2num(playtime))]"
+			output += "[timestamp] | [server] | [admin_key] | [get_exp_format(text2num(playtime))] Living Playtime"
 			if(expire_timestamp)
 				output += " | Expires [expire_timestamp]"
 			output += "</b>"
