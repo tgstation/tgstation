@@ -157,13 +157,13 @@
 
 /obj/effect/mapping_helpers/airlock/cutaiwire
 	name = "airlock cut ai wire helper"
-	icon_state = "airlock_abandoned"
+	icon_state = "airlock_cutaiwire"
 
 /obj/effect/mapping_helpers/airlock/cutaiwire/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.aiWireCut)
+	if(airlock.cutAiWire)
 		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
 	else
-		airlock.aiWireCut = TRUE
+		airlock.cutAiWire = TRUE
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)

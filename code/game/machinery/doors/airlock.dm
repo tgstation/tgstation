@@ -79,7 +79,7 @@
 	var/obj/item/seal
 	var/detonated = FALSE
 	var/abandoned = FALSE
-	var/aiWireCut = FALSE
+	var/cutAiWire = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/airlockclose.ogg'
 	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
@@ -155,7 +155,7 @@
 				welded = TRUE
 			if(24 to 30)
 				panel_open = TRUE
-	if(aiWireCut)
+	if(cutAiWire)
 		wires.cut(WIRE_AI)
 	update_icon()
 
