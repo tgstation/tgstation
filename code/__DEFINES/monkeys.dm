@@ -1,7 +1,7 @@
 //Monkey defines, placed here so they can be read by other things!
 
 /// below this health value the monkey starts to flee from enemies
-#define MONKEY_FLEE_HEALTH 					50
+#define MONKEY_FLEE_HEALTH 					40
 /// how close an enemy must be to trigger aggression
 #define MONKEY_ENEMY_VISION 				9
 /// how close an enemy must be before it triggers flee
