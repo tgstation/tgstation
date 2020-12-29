@@ -439,7 +439,7 @@
 			var/server = query_get_type_messages.item[7]
 			var/editor_key = query_get_type_messages.item[8]
 			var/expire_timestamp = query_get_type_messages.item[9]
-			var/playtime = query_get_messages.item[10]
+			var/playtime = query_get_type_messages.item[10]
 			output += "<b>"
 			if(type == "watchlist entry")
 				output += "[t_key] | "
