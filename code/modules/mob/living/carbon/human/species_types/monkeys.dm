@@ -13,7 +13,7 @@
 	species_traits = list(HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY,NOTRANSSTING, NOAUGMENTS)
 	inherent_traits = list(TRAIT_MONKEYLIKE)
 	no_equip = list(ITEM_SLOT_EARS, ITEM_SLOT_EYES, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT
 	limbs_id = "monkey"
 	damage_overlay_type = "monkey"
@@ -40,16 +40,14 @@
 
 	return randname
 
-/datum/species/monkey/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	C.ventcrawler = VENTCRAWLER_NUDE
-	C.pass_flags |= PASSTABLE
-	C.butcher_results = knife_butcher_results
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
-			H.dna.features["tail_monkey"] = "Monkey"
-			handle_mutant_bodyparts(H)
+	H.ventcrawler = VENTCRAWLER_NUDE
+	H.pass_flags |= PASSTABLE
+	H.butcher_results = knife_butcher_results
+	if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
+		H.dna.features["tail_monkey"] = "Monkey"
+		handle_mutant_bodyparts(H)
 
 	C.dna.add_mutation(RACEMUT, MUT_NORMAL)
 	C.dna.activate_mutation(RACEMUT)
