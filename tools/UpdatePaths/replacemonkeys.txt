@@ -2,4 +2,4 @@
 
 /mob/living/carbon/monkey : /mob/living/carbon/human/species/monkey
 /mob/living/carbon/monkey/angry : /mob/living/carbon/human/species/monkey/angry
-/mob/living/carbon/monkey/punpun : /mob/living/carbon/human/species/monkey/punpunbut
+/mob/living/carbon/monkey/punpun : /mob/living/carbon/human/species/monkey/punpun
