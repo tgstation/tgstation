@@ -1614,6 +1614,11 @@
 	icon_state = "cat"
 	color_src = HAIR
 
+/datum/sprite_accessory/tails/monkey/default
+	name = "Monkey"
+	icon_state = "monkey"
+	color_src = FALSE
+
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
