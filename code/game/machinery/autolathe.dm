@@ -225,7 +225,7 @@
 	materials.use_materials(materials_used)
 
 	if(is_stack)
-		var/obj/item/stack/N = new being_built.build_path(A, multiplier)
+		var/obj/item/stack/N = new being_built.build_path(A, multiplier, FALSE)
 		N.update_icon()
 		N.autolathe_crafted(src)
 	else

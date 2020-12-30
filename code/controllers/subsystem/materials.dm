@@ -145,6 +145,8 @@ SUBSYSTEM_DEF(materials)
 
 /// Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
 /datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
+	if(isnull(materials_declaration))
+		return // Shouldn't happen. Will happen.
 	if(!material_combos)
 		InitializeMaterials()
 	var/list/combo_params = list()
