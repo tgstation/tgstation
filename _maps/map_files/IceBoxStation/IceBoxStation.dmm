@@ -49688,6 +49688,9 @@
 /obj/item/assembly/mousetrap,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"fEx" = (
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "fGg" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -55260,6 +55263,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"tZy" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/port/fore)
 "ubj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55542,6 +55555,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"uJk" = (
+/obj/effect/spawner/structure/window,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "uJY" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -72595,7 +72616,7 @@ aqH
 asc
 aAQ
 azF
-azF
+aAQ
 azF
 aLD
 atR
@@ -74646,7 +74667,7 @@ amC
 ayx
 alU
 aAL
-aBQ
+aDo
 aDb
 aDo
 aFY
@@ -75160,7 +75181,7 @@ axj
 alU
 alU
 asK
-aBQ
+aDo
 aDk
 aDo
 asZ
@@ -75416,7 +75437,7 @@ atU
 amC
 atJ
 alU
-asK
+tZy
 aBQ
 aDn
 aDo
@@ -75672,8 +75693,8 @@ alU
 aqO
 amC
 atJ
-alU
-asK
+fEx
+tZy
 aBQ
 aDm
 aDo
@@ -75929,7 +75950,7 @@ alU
 alU
 amC
 alU
-alU
+fEx
 asK
 aBQ
 aDp
@@ -77226,7 +77247,7 @@ aJd
 aLL
 bDe
 aOl
-aPF
+uJk
 aQY
 aSk
 bml
