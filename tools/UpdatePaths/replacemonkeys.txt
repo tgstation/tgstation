@@ -1,0 +1,1 @@
+/mob/living/carbon/monkey : /mob/living/carbon/human/species/monkey
