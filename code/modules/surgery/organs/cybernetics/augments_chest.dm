@@ -10,6 +10,7 @@
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
 	implant_color = "#00AA00"
+	encode_info = AUGMENT_NT_LOWLEVEL
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
 	var/synthesizing = 0
 	var/poison_amount = 5
@@ -45,6 +46,7 @@
 	icon_state = "chest_implant"
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
+	encode_info = AUGMENT_NT_HIGHLEVEL
 	poison_amount = 10
 
 /obj/item/organ/cyberimp/chest/reviver
@@ -53,6 +55,7 @@
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"
 	slot = ORGAN_SLOT_HEART_AID
+	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/revive_cost = 0
 	var/reviving = FALSE
 	COOLDOWN_DECLARE(reviver_cooldown)
@@ -150,12 +153,16 @@
 /obj/item/organ/cyberimp/chest/thrusters/ui_action_click()
 	toggle()
 
-/obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
-	if(!check_compatibility())
-		to_chat(owner, "<span class='warning'>The Neuralink beeps: ERR01 INCOMPATIBLE IMPLANT</span>")
+/obj/item/organ/cyberimp/chest/thrusters/update_implants()
+	. = ..()
+	if(check_compatibility())
 		return
 
-	if(!on)
+	if(on)
+		toggle(TRUE)
+
+/obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
+	if(!on && check_compatibility())
 		if((organ_flags & ORGAN_FAILING))
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
@@ -238,3 +245,41 @@
 
 	toggle(silent = TRUE)
 	return FALSE
+
+/obj/item/organ/cyberimp/chest/filtration
+	name = "S.I.L.V.E.R filtration pump"
+	desc = "This implant purges your body of any toxins and drugs extremely quickly"
+	icon_state = "chest_implant"
+	implant_color = "#00e7b5"
+	encode_info = AUGMENT_NT_HIGHLEVEL
+	var/removal_speed = 1
+	var/list/reagent_quirks = list()
+	var/num_reagent_quirks = 0
+
+/obj/item/organ/cyberimp/chest/filtration/emp_act(severity)
+	. = ..()
+	for(var/i in 0 to rand(0,5))
+		reagent_quirks += get_random_reagent_id()
+
+/obj/item/organ/cyberimp/chest/filtration/Initialize()
+	. = ..()
+	for(var/i in 0 to num_reagent_quirks)
+		reagent_quirks += get_random_reagent_id()
+
+/obj/item/organ/cyberimp/chest/filtration/on_life()
+	. = ..()
+	if(!check_compatibility())
+		return
+
+	for(var/R in owner.reagents.reagent_list)
+		if(istype(R,/datum/reagent/toxin) || istype(R,/datum/reagent/drug) || is_type_in_list(R,reagent_quirks))
+			owner.reagents.remove_reagent(R,removal_speed)
+
+/obj/item/organ/cyberimp/chest/filtration/offbrand
+	name = "offbrand filtration pump"
+	desc = "You're not sure if it is a great idea, This implant purges your body of any toxins and drugs extremely quickly"
+	icon_state = "chest_implant"
+	implant_color = "#0d3d33"
+	encode_info = AUGMENT_NT_HIGHLEVEL
+	removal_speed = 2
+	num_reagent_quirks = 5

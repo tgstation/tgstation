@@ -3,7 +3,7 @@
 	desc = "Implants for your eyes."
 	icon_state = "eye_implant"
 	implant_overlay = "eye_implant_overlay"
-	encode_info = NT_LOWLEVEL
+	encode_info = AUGMENT_NT_LOWLEVEL
 	slot = ORGAN_SLOT_EYES
 	zone = BODY_ZONE_PRECISE_EYES
 	w_class = WEIGHT_CLASS_TINY
@@ -66,4 +66,4 @@
 	name = "Contraband Security HUD Implant"
 	desc = "A Cybersun Industries brand Security HUD Implant. These illicit cybernetic eye implants will display a security HUD over everything you see."
 	syndicate_implant = TRUE
-	encode_info = SYNDICATE_LEVEL
+	encode_info = AUGMENT_SYNDICATE_LEVEL

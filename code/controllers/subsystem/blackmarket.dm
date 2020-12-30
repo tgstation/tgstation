@@ -34,6 +34,8 @@ SUBSYSTEM_DEF(blackmarket)
 		qdel(I)
 	. = ..()
 
+
+
 /datum/controller/subsystem/blackmarket/fire(resumed)
 	while(length(queued_purchases))
 		var/datum/blackmarket_purchase/purchase = queued_purchases[1]
@@ -113,3 +115,19 @@ SUBSYSTEM_DEF(blackmarket)
 		return FALSE
 	queued_purchases += P
 	return TRUE
+
+/// Used to repopulate the market when the auction rotation happens.
+/datum/controller/subsystem/blackmarket/proc/repopulate_market(market)
+	markets[market].available_items.Cut()
+	markets[market].categories.Cut()
+
+	for(var/item in subtypesof(/datum/blackmarket_item))
+		var/datum/blackmarket_item/I = new item()
+
+		if(!I.item)
+			continue
+
+		if(market in I.markets)
+			markets[market].add_item(item)
+
+		qdel(I)

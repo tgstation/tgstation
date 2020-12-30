@@ -5,7 +5,6 @@
 	/// Available shipping methods and prices, just leave the shipping method out that you don't want to have.
 	var/list/shipping
 
-
 	// Automatic vars, do not touch these.
 	/// Items available from this market, populated by SSblackmarket on initialization.
 	var/list/available_items = list()
@@ -51,3 +50,22 @@
 	shipping = list(SHIPPING_METHOD_LTSRBT	=50,
 					SHIPPING_METHOD_LAUNCH	=10,
 					SHIPPING_METHOD_TELEPORT=75)
+
+/datum/blackmarket_market/auction
+
+/datum/blackmarket_market/auction/New()
+	. = ..()
+	addtimer(CALLBACK(src,.proc/rotate_item_pool),rand(1 MINUTES, 5 MINUTES))
+
+/datum/blackmarket_market/auction/proc/rotate_item_pool()
+	SSblackmarket.repopulate_market(type)
+	addtimer(CALLBACK(src,.proc/rotate_item_pool),rand(1 MINUTES, 5 MINUTES))
+
+/datum/blackmarket_market/auction/cybernetics
+	name = "Monorail Cybernetics Auction"
+	shipping = list(SHIPPING_METHOD_LTSRBT	=100,
+					SHIPPING_METHOD_LAUNCH	=20,
+					SHIPPING_METHOD_TELEPORT=150)
+
+
+

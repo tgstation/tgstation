@@ -5,26 +5,12 @@
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	encode_info = NT_LOWLEVEL
-	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
-	var/obj/hand
-	/// Used to store a list of all items inside, for multi-item implants.
-	var/list/items_list = list()// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
-	/// You can use this var for item path, it would be converted into an item on New().
-	var/obj/item/active_item
+	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/cyberimp/arm/Initialize()
 	. = ..()
-	if(ispath(active_item))
-		active_item = new active_item(src)
-
 	update_icon()
 	SetSlotFromZone()
-	items_list = contents.Copy()
-
-/obj/item/organ/cyberimp/arm/update_implants()
-	if(!check_compatibility())
-		Retract()
 
 /obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
@@ -58,7 +44,25 @@
 	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>")
 	update_icon()
 
-/obj/item/organ/cyberimp/arm/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/cyberimp/arm/item_set
+	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
+	var/obj/hand
+	/// Used to store a list of all items inside, for multi-item implants.
+	var/list/items_list = list()// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
+	/// You can use this var for item path, it would be converted into an item on New().
+	var/obj/item/active_item
+
+/obj/item/organ/cyberimp/arm/item_set/Initialize()
+	. = ..()
+	if(ispath(active_item))
+		active_item = new active_item(src)
+	items_list = contents.Copy()
+
+/obj/item/organ/cyberimp/arm/item_set/update_implants()
+	if(!check_compatibility())
+		Retract()
+
+/obj/item/organ/cyberimp/arm/item_set/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = owner.hand_bodyparts[side]
@@ -66,14 +70,14 @@
 		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/ui_action_click) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
 		RegisterSignal(M, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
-/obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/arm/item_set/Remove(mob/living/carbon/M, special = 0)
 	Retract()
 	if(hand)
 		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
 		UnregisterSignal(M, COMSIG_KB_MOB_DROPITEM_DOWN)
 	..()
 
-/obj/item/organ/cyberimp/arm/emp_act(severity)
+/obj/item/organ/cyberimp/arm/item_set/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
@@ -89,14 +93,14 @@
  * quick way to store implant items. In this case, we check to make sure the user has the correct arm
  * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
 **/
-/obj/item/organ/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
+/obj/item/organ/cyberimp/arm/item_set/proc/dropkey(mob/living/carbon/host)
 	if(!host)
 		return //How did we even get here
 	if(hand != host.hand_bodyparts[host.active_hand_index])
 		return //wrong hand
 	Retract()
 
-/obj/item/organ/cyberimp/arm/proc/Retract()
+/obj/item/organ/cyberimp/arm/item_set/proc/Retract()
 	if(!active_item || (active_item in src))
 		return
 
@@ -108,7 +112,7 @@
 	active_item = null
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/organ/cyberimp/arm/proc/Extend(obj/item/item)
+/obj/item/organ/cyberimp/arm/item_set/proc/Extend(obj/item/item)
 	if(!check_compatibility())
 		return
 
@@ -147,7 +151,7 @@
 		"<span class='hear'>You hear a short mechanical noise.</span>")
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/organ/cyberimp/arm/ui_action_click()
+/obj/item/organ/cyberimp/arm/item_set/ui_action_click()
 	if(!check_compatibility())
 		to_chat(owner, "<span class='warning'>The Neuralink beeps: ERR01 INCOMPATIBLE IMPLANT</span>")
 		return
@@ -172,7 +176,7 @@
 		Retract()
 
 
-/obj/item/organ/cyberimp/arm/gun/emp_act(severity)
+/obj/item/organ/cyberimp/arm/item_set/gun/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
@@ -187,103 +191,293 @@
 		organ_flags |= ORGAN_FAILING
 
 
-/obj/item/organ/cyberimp/arm/gun/laser
+/obj/item/organ/cyberimp/arm/item_set/gun/laser
 	name = "arm-mounted laser implant"
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
-	encode_info = TG_LEVEL
+	encode_info = AUGMENT_TG_LEVEL
 	contents = newlist(/obj/item/gun/energy/laser/mounted)
 
-/obj/item/organ/cyberimp/arm/gun/laser/l
+/obj/item/organ/cyberimp/arm/item_set/gun/laser/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/cyberimp/arm/gun/laser/Initialize()
+/obj/item/organ/cyberimp/arm/item_set/gun/laser/Initialize()
 	. = ..()
-	var/obj/item/organ/cyberimp/arm/gun/laser/laserphasergun = locate(/obj/item/gun/energy/laser/mounted) in contents
+	var/obj/item/organ/cyberimp/arm/item_set/gun/laser/laserphasergun = locate(/obj/item/gun/energy/laser/mounted) in contents
 	laserphasergun.icon = icon //No invisible laser guns kthx
 	laserphasergun.icon_state = icon_state
 
-/obj/item/organ/cyberimp/arm/gun/taser
+/obj/item/organ/cyberimp/arm/item_set/gun/taser
 	name = "arm-mounted taser implant"
 	desc = "A variant of the arm cannon implant that fires electrodes and disabler shots. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_taser"
-	encode_info = TG_LEVEL
+	encode_info = AUGMENT_TG_LEVEL
 	contents = newlist(/obj/item/gun/energy/e_gun/advtaser/mounted)
 
-/obj/item/organ/cyberimp/arm/gun/taser/l
+/obj/item/organ/cyberimp/arm/item_set/gun/taser/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/cyberimp/arm/toolset
+/obj/item/organ/cyberimp/arm/item_set/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
-	encode_info = NT_HIGHLEVEL
+	encode_info = AUGMENT_NT_HIGHLEVEL
 	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
 		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
 
-/obj/item/organ/cyberimp/arm/toolset/l
+/obj/item/organ/cyberimp/arm/item_set/toolset/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user)
+/obj/item/organ/cyberimp/arm/item_set/toolset/emag_act(mob/user)
 	if(!(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list))
 		to_chat(user, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 		items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0
 
-/obj/item/organ/cyberimp/arm/esword
+/obj/item/organ/cyberimp/arm/item_set/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
-	encode_info = SYNDICATE_LEVEL
+	encode_info = AUGMENT_SYNDICATE_LEVEL
 	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight)
 
-/obj/item/organ/cyberimp/arm/medibeam
+/obj/item/organ/cyberimp/arm/item_set/medibeam
 	name = "integrated medical beamgun"
 	desc = "A cybernetic implant that allows the user to project a healing beam from their hand."
-	encode_info = TG_LEVEL
+	encode_info = AUGMENT_TG_LEVEL
 	contents = newlist(/obj/item/gun/medbeam)
 
 
-/obj/item/organ/cyberimp/arm/flash
+/obj/item/organ/cyberimp/arm/item_set/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
-	encode_info = NT_HIGHLEVEL
+	encode_info = AUGMENT_NT_HIGHLEVEL
 	contents = newlist(/obj/item/assembly/flash/armimplant)
 
-/obj/item/organ/cyberimp/arm/flash/Initialize()
+/obj/item/organ/cyberimp/arm/item_set/flash/Initialize()
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
 
-/obj/item/organ/cyberimp/arm/flash/Extend()
+/obj/item/organ/cyberimp/arm/item_set/flash/Extend()
 	. = ..()
 	active_item.set_light_range(7)
 	active_item.set_light_on(TRUE)
 
-/obj/item/organ/cyberimp/arm/flash/Retract()
+/obj/item/organ/cyberimp/arm/item_set/flash/Retract()
 	active_item.set_light_on(FALSE)
 	return ..()
 
-/obj/item/organ/cyberimp/arm/baton
+/obj/item/organ/cyberimp/arm/item_set/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
-	encode_info = TG_LEVEL
+	encode_info = AUGMENT_TG_LEVEL
 	contents = newlist(/obj/item/borg/stun)
 
-/obj/item/organ/cyberimp/arm/combat
+/obj/item/organ/cyberimp/arm/item_set/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	encode_info = TG_LEVEL
+	encode_info = AUGMENT_TG_LEVEL
 	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
 
-/obj/item/organ/cyberimp/arm/combat/Initialize()
+/obj/item/organ/cyberimp/arm/item_set/combat/Initialize()
 	. = ..()
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
 
-/obj/item/organ/cyberimp/arm/surgery
+/obj/item/organ/cyberimp/arm/item_set/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	contents = newlist(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
-	encode_info = NT_HIGHLEVEL
+	encode_info = AUGMENT_NT_HIGHLEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/cook
+	name = "kitchenware toolset implant"
+	desc = "A set of kitchen tools hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/kitchen/rollingpin,/obj/item/kitchen/knife,/obj/item/reagent_containers/glass/beaker)
+	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/janitor
+	name = "janitorial toolset implant"
+	desc = "A set of janitorial tools hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/mop/advanced,/obj/item/reagent_containers/glass/bucket,/obj/item/soap,/obj/item/reagent_containers/spray/cleaner)
+	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/detective
+	name = "detective's toolset implant"
+	desc = "A set of detective tools hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/evidencebag,/obj/item/evidencebag,/obj/item/evidencebag,/obj/item/detective_scanner,/obj/item/lighter)
+	encode_info = AUGMENT_NT_HIGHLEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/detective/Destroy()
+	on_destruction()
+	return ..()
+
+/obj/item/organ/cyberimp/arm/item_set/detective/proc/on_destruction()
+	//We need to drop whatever is in the evidence bags
+	for(var/obj/item/evidencebag/baggie in contents)
+		var/obj/item/located = locate() in baggie
+		if(located)
+			located.forceMove(drop_location())
+
+/obj/item/organ/cyberimp/arm/item_set/chemical
+	name = "chemical toolset implant"
+	desc = "A set of chemical tools hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/reagent_containers/glass/beaker,/obj/item/reagent_containers/glass/beaker,/obj/item/reagent_containers/glass/beaker,/obj/item/reagent_containers/dropper)
+	encode_info = AUGMENT_NT_HIGHLEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/atmospherics
+	name = "atmospherics toolset implant"
+	desc = "A set of atmospheric tools hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/extinguisher,/obj/item/analyzer,/obj/item/crowbar,/obj/item/holosign_creator/atmos,)
+	encode_info = AUGMENT_NT_HIGHLEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/tablet
+	name = "inbuilt tablet implant"
+	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
+	contents = newlist(/obj/item/modular_computer/tablet/preset/cheap)
+	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/cyberimp/arm/ammo_counter
+	name = "S.M.A.R.T ammo logistics system"
+	desc = "Special inhand implant that allows transmits the current ammo and energy data straight to the user's visual cortex."
+	icon_state = "hand_implant"
+	implant_overlay = "hand_implant_overlay"
+	implant_color = "#750137"
+	encode_info = AUGMENT_NT_HIGHLEVEL
+
+	var/atom/movable/screen/cybernetics/ammo_counter/counter_ref
+	var/obj/item/gun/our_gun
+
+/obj/item/organ/cyberimp/arm/ammo_counter/Insert(mob/living/carbon/M, special, drop_if_replaced)
+	. = ..()
+	RegisterSignal(M,COMSIG_CARBON_ITEM_PICKED_UP,.proc/add_to_hand)
+	RegisterSignal(M,COMSIG_CARBON_ITEM_DROPPED,.proc/remove_from_hand)
+
+/obj/item/organ/cyberimp/arm/ammo_counter/Remove(mob/living/carbon/M, special)
+	. = ..()
+	UnregisterSignal(M,COMSIG_CARBON_ITEM_PICKED_UP)
+	UnregisterSignal(M,COMSIG_CARBON_ITEM_DROPPED)
+	our_gun = null
+	update_hud_elements()
+
+/obj/item/organ/cyberimp/arm/ammo_counter/update_implants()
+	update_hud_elements()
+
+/obj/item/organ/cyberimp/arm/ammo_counter/proc/update_hud_elements()
+	SIGNAL_HANDLER
+	if(!owner || !owner?.stat || !owner?.hud_used)
+		return
+
+	if(!check_compatibility())
+		return
+
+	var/datum/hud/H = owner.hud_used
+
+	if(!our_gun)
+		if(!H.cybernetics_ammo[zone])
+			return
+		H.cybernetics_ammo[zone] = null
+
+		counter_ref.hud = null
+		H.infodisplay -= counter_ref
+		H.mymob.client.screen -= counter_ref
+		QDEL_NULL(counter_ref)
+		return
+
+	if(!H.cybernetics_ammo[zone])
+		counter_ref = new()
+		counter_ref.screen_loc =  zone == BODY_ZONE_L_ARM ? ui_hand_position(1,1,9) : ui_hand_position(2,1,9)
+		H.cybernetics_ammo[zone] = counter_ref
+		counter_ref.hud = H
+		H.infodisplay += counter_ref
+		H.mymob.client.screen += counter_ref
+
+	var/display
+	if(istype(our_gun,/obj/item/gun/ballistic))
+		var/obj/item/gun/ballistic/balgun = our_gun
+		display = balgun.magazine.ammo_count()
+	else
+		var/obj/item/gun/energy/egun = our_gun
+		var/obj/item/ammo_casing/energy/shot = egun.ammo_type[egun.select]
+		display = FLOOR(egun.cell.charge / shot.e_cost,1)
+	counter_ref.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='white'>[display]</font></div>")
+
+/obj/item/organ/cyberimp/arm/ammo_counter/proc/add_to_hand(datum/source,obj/item/maybegun)
+	SIGNAL_HANDLER
+
+	var/obj/item/bodypart/bp = owner.get_active_hand()
+
+	if(bp.body_zone != zone)
+		return
+
+	if(istype(maybegun,/obj/item/gun/ballistic))
+		our_gun = maybegun
+		RegisterSignal(owner,COMSIG_MOB_FIRED_GUN,.proc/update_hud_elements)
+
+	if(istype(maybegun,/obj/item/gun/energy))
+		var/obj/item/gun/energy/egun = maybegun
+		our_gun = egun
+		RegisterSignal(egun.cell,COMSIG_CELL_CHANGE_POWER,.proc/update_hud_elements)
+
+	update_hud_elements()
+
+/obj/item/organ/cyberimp/arm/ammo_counter/proc/remove_from_hand(datum/source,obj/item/maybegun)
+	SIGNAL_HANDLER
+
+	if(our_gun != maybegun)
+		return
+
+	if(istype(maybegun,/obj/item/gun/ballistic))
+		UnregisterSignal(owner,COMSIG_MOB_FIRED_GUN)
+
+	if(istype(maybegun,/obj/item/gun/energy))
+		var/obj/item/gun/energy/egun = maybegun
+		UnregisterSignal(egun.cell,COMSIG_CELL_CHANGE_POWER)
+
+
+	our_gun = null
+	update_hud_elements()
+
+/obj/item/organ/cyberimp/arm/cooler
+	name = "sub-dermal cooling implant"
+	desc = "Special inhand implant that allows transmits the current ammo and energy data straight to the user's visual cortex."
+	icon_state = "hand_implant"
+	implant_overlay = "hand_implant_overlay"
+	implant_color = "#00e1ff"
+	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/cyberimp/arm/cooler/on_life()
+	. = ..()
+	if(!check_compatibility())
+		return
+	var/amt = BODYTEMP_NORMAL - owner.get_body_temp_normal()
+	if(amt == 0)
+		return
+	owner.add_body_temperature_change("dermal_cooler_[zone]",clamp(amt,-1,0))
+
+/obj/item/organ/cyberimp/arm/cooler/Remove(mob/living/carbon/M, special)
+	. = ..()
+	owner.remove_body_temperature_change("dermal_cooler_[zone]")
+
+/obj/item/organ/cyberimp/arm/heater
+	name = "sub-dermal heater implant"
+	desc = "Special inhand implant that allows transmits the current ammo and energy data straight to the user's visual cortex."
+	icon_state = "hand_implant"
+	implant_overlay = "hand_implant_overlay"
+	implant_color = "#ff9100"
+	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/cyberimp/arm/heater/on_life()
+	. = ..()
+	if(!check_compatibility())
+		return
+	var/amt = BODYTEMP_NORMAL - owner.get_body_temp_normal()
+	if(amt == 0)
+		return
+	owner.add_body_temperature_change("dermal_heater_[zone]",clamp(amt,0,1))
+
+/obj/item/organ/cyberimp/arm/heater/Remove(mob/living/carbon/M, special)
+	. = ..()
+	owner.remove_body_temperature_change("dermal_heater_[zone]")

@@ -470,6 +470,10 @@
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
+///Sent to carbon when they pickup something (/obj/item)
+#define COMSIG_CARBON_ITEM_PICKED_UP "carbon_item_picked_up"
+///Sent to carbon when they drop something (/obj/item)
+#define COMSIG_CARBON_ITEM_DROPPED "carbon_item_dropped"
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
@@ -623,6 +627,11 @@
 	#define COMPONENT_STOP_RINGTONE_CHANGE (1<<0)
 #define COMSIG_PDA_CHECK_DETONATE "pda_check_detonate"
 	#define COMPONENT_PDA_NO_DETONATE (1<<0)
+
+// /obj/item/stock_parts/cell signals
+
+///Called by either cell/proc/give or cell/proc/use
+#define COMSIG_CELL_CHANGE_POWER "cell_change_power"
 
 // /obj/item/radio signals
 
