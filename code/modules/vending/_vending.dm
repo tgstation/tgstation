@@ -169,9 +169,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/// used for narcing on underages
 	var/obj/item/radio/Radio
 
-/obj/item/circuitboard
-	///determines if the circuit board originated from a vendor off station or not.
-	var/onstation = TRUE
 
 /**
  * Initialize the vending machine
@@ -1003,6 +1000,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	tilt(L)
+
+///Crush the mob that the vending machine got thrown at
+/obj/machinery/vending/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(isliving(hit_atom))
+		tilt(fatty=hit_atom)
+	return ..()
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"

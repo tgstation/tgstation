@@ -39,10 +39,10 @@
 	var/explosion_block = 0
 
 	/**
-	  * used to store the different colors on an atom
-	  *
-	  * its inherent color, the colored paint applied on it, special color effect etc...
-	  */
+	 * used to store the different colors on an atom
+	 *
+	 * its inherent color, the colored paint applied on it, special color effect etc...
+	 */
 	var/list/atom_colours
 
 
@@ -678,6 +678,16 @@
 		buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
+
+/**
+ * A special case of relaymove() in which the person relaying the move may be "driving" this atom
+ *
+ * This is a special case for vehicles and ridden animals where the relayed movement may be handled
+ * by the riding component attached to this atom. Returns TRUE as long as there's nothing blocking
+ * the movement, or FALSE if the signal gets a reply that specifically blocks the movement
+ */
+/atom/proc/relaydrive(mob/living/user, direction)
+	return !(SEND_SIGNAL(src, COMSIG_RIDDEN_DRIVER_MOVE, user, direction) & COMPONENT_DRIVER_BLOCK_MOVE)
 
 /// Handle what happens when your contents are exploded by a bomb
 /atom/proc/contents_explosion(severity, target)

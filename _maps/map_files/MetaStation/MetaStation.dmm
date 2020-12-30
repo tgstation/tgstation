@@ -6534,7 +6534,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "aoy" = (
-/obj/structure/closet/secure_closet/lethalshots,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -28786,7 +28785,9 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bqd" = (
-/obj/machinery/door/airlock/grunge,
+/obj/machinery/door/airlock/grunge{
+	name = "Vacant Office"
+	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -76155,7 +76156,7 @@
 "tgQ" = (
 /obj/structure/water_source/puddle,
 /obj/structure/flora/junglebush/large{
-	pixel_y = 1
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/grass,

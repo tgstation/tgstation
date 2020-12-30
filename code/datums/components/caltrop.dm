@@ -29,7 +29,7 @@
 			return
 
 		//move these next two down a level if you add more mobs to this.
-		if(H.is_flying() || H.is_floating()) //check if they are able to pass over us
+		if(H.movement_type & (FLOATING|FLYING)) //check if they are able to pass over us
 			return							//gravity checking only our parent would prevent us from triggering they're using magboots / other gravity assisting items that would cause them to still touch us.
 		if(H.buckled) //if they're buckled to something, that something should be checked instead.
 			return

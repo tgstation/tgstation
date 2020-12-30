@@ -63,7 +63,7 @@
 	friendly_verb_continuous = "grooms"
 	friendly_verb_simple = "groom"
 	mob_size = MOB_SIZE_SMALL
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	var/parrot_damage_upper = 10
