@@ -1,6 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - admin: "Admins may now call the deadchat_plays proc on any movable atom in the game, allowing deadchat to move it around with zero effort. They should now call the generic deadchat_plays instead of deadchat_plays_goose to turn Birdboat into a deadchat controlled vomit goose."
-  - admin: "The VV dropdown now contains an option to enable or disable deadchat control. This comes with an alert confirmation box to allow you to back out and chat messages to tell you the result."
-  - refactor: "There's now a lot more feedback when deadchat is controlling something, including telling you when command inputs are successful, telling you the remaining cooldown until you can input new commands when it fails and additional examine text detailling the control mode, commands and overall cooldown."
