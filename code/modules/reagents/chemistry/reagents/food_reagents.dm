@@ -314,7 +314,7 @@
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(!ishuman(exposed_mob) && !ismonkey(exposed_mob))
+	if(!ishuman(exposed_mob))
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
