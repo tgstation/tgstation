@@ -68,7 +68,21 @@
 			return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg')
 	else if(ismoth(H))
 		return 'sound/voice/moth/scream_moth.ogg'
+	else if(ismonkey(user)) //If its a monkey, override it.
+		return pick('sound/creatures/monkey/monkey_screech_1.ogg',
+					'sound/creatures/monkey/monkey_screech_2.ogg',
+					'sound/creatures/monkey/monkey_screech_3.ogg',
+					'sound/creatures/monkey/monkey_screech_4.ogg',
+					'sound/creatures/monkey/monkey_screech_5.ogg',
+					'sound/creatures/monkey/monkey_screech_6.ogg',
+					'sound/creatures/monkey/monkey_screech_7.ogg')
 
+/datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
+	key = "screech"
+	key_third_person = "screeches"
+	message = "screeches."
+	emote_type = EMOTE_AUDIBLE
+	vary = FALSE
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
@@ -172,3 +186,44 @@
 		T.Entered(src)
 
 //Ayy lmao
+
+
+///Snowflake emotes only for le epic chimp
+/datum/emote/living/carbon/human/monkey
+
+/datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(ismonkey(user))
+		return ..()
+	return FALSE
+
+/datum/emote/living/carbon/human/monkey/gnarl
+	key = "gnarl"
+	key_third_person = "gnarls"
+	message = "gnarls and shows its teeth..."
+
+/datum/emote/living/carbon/human/monkey/roll
+	key = "roll"
+	key_third_person = "rolls"
+	message = "rolls."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/monkey/scratch
+	key = "scratch"
+	key_third_person = "scratches"
+	message = "scratches."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/monkey/screech/roar
+	key = "roar"
+	key_third_person = "roars"
+	message = "roars."
+
+/datum/emote/living/carbon/human/monkey/tail
+	key = "tail"
+	message = "waves their tail."
+
+/datum/emote/living/carbon/human/monkeysign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	hands_use_check = TRUE

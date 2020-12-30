@@ -6,7 +6,7 @@
 	cures = list(/datum/reagent/medicine/spaceacillin)
 	cure_chance = 10
 	agent = "H13N1 flu virion"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will feel quite unwell."
 	severity = DISEASE_SEVERITY_MINOR
