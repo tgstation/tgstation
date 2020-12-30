@@ -261,8 +261,9 @@
 			grabbedby(M)
 			return TRUE
 		if (INTENT_DISARM)
-			M.disarm(src)
-			return TRUE
+			if (M != src)
+				M.disarm(src)
+				return TRUE
 	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
