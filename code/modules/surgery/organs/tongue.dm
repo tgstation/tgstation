@@ -8,11 +8,10 @@
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
 	var/say_mod = null
-	/*
-	* Whether the owner of this tongue can taste anything. Being
-	* set to FALSE will mean no taste feedback will be provided.
-	*/
+
+	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
+
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
