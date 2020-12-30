@@ -1,0 +1,4 @@
+author: "Qustinnus, Fikou for sprites"
+delete-after: True
+changes: 
+  - refactor: "Monkeys are now a humanoid species rather than a subtype of carbon."
