@@ -719,28 +719,6 @@
 	return ..()
 
 /**
- * Generate a name devices
- *
- * Creates a randomly generated tag or name for devices5
- * The length of the generated name can be set by passing in an int
- * args:
- * * len (int)(Optional) Default=5 The length of the name
- * Returns (string) The generated name
- */
-/obj/machinery/proc/assign_random_name(len=5)
-	var/list/new_name = list()
-	// machine id's should be fun random chars hinting at a larger world
-	for(var/i = 1 to len)
-		switch(rand(1,3))
-			if(1)
-				new_name += ascii2text(rand(65, 90)) // A - Z
-			if(2)
-				new_name += ascii2text(rand(97,122)) // a - z
-			if(3)
-				new_name += ascii2text(rand(48, 57)) // 0 - 9
-	return new_name.Join()
-
-/**
  * Alerts the AI that a hack is in progress.
  *
  * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
@@ -750,3 +728,4 @@
 	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		to_chat(AI, alertstr)
+
