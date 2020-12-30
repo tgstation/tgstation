@@ -39,8 +39,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/turf_sound_override
 	///what texture icon state to overlay
 	var/texture_layer_icon_state
-	///a cached filter for the texture icon
-	var/cached_texture_filter
+	///a cached icon for the texture filter
+	var/cached_texture_filter_icon
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
 
@@ -56,8 +56,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		id = type
 
 	if(texture_layer_icon_state)
-		var/texture_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
-		cached_texture_filter = filter(type="layer", icon=texture_icon, blend_mode = BLEND_INSET_OVERLAY)
+		cached_texture_filter_icon = icon('icons/materials/composite.dmi', texture_layer_icon_state)
 
 	return TRUE
 
@@ -70,7 +69,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.alpha = alpha
 		if(texture_layer_icon_state)
 			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
-			source.filters += cached_texture_filter
+			source.add_filter("material_texture_[name]",1,layering_filter(icon=cached_texture_filter_icon,blend_mode=BLEND_INSET_OVERLAY))
 
 	if(alpha < 255)
 		source.opacity = FALSE
@@ -139,7 +138,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(color)
 			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
 		if(texture_layer_icon_state)
-			source.filters -= cached_texture_filter
+			source.remove_filter("material_texture_[name]")
 			REMOVE_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 		source.alpha = initial(source.alpha)
 

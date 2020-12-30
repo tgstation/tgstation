@@ -294,7 +294,7 @@
 		attacked += 10
 
 
-/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/human/M)
 	if(..()) //successful monkey bite.
 		attacked += 10
 

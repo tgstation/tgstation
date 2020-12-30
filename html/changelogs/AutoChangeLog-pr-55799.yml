@@ -1,0 +1,5 @@
+author: "iwishforducks"
+delete-after: True
+changes: 
+  - rscadd: "Cut AI Wires maphelper for airlocks."
+  - tweak: "AI wires on the Space Pirate shuttle are cut by default."
