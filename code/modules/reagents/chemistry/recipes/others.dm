@@ -446,7 +446,7 @@
 			M.gib()
 		else
 			M.vomit(blood = TRUE, stun = TRUE) //not having a redo of itching powder (hopefully)
-	new /mob/living/carbon/monkey(location, TRUE)
+	new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis

@@ -68,7 +68,7 @@
 	to_chat(user, "<span class='danger'>You punch [src]!</span>")
 	adjustBruteLoss(15)
 
-/mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/attack_paw(mob/living/carbon/human/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)

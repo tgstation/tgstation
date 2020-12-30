@@ -594,7 +594,7 @@
 	get_patient()
 	if(!patient)
 		return FALSE
-	if(ishuman(patient) ||  ismonkey(patient))
+	if(ishuman(patient))
 		return TRUE
 	return FALSE
 
