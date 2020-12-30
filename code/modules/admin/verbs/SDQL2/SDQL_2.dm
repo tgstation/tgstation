@@ -99,7 +99,7 @@
 
 	Don't crash the server, OK?
 
-	"UPDATE /mob/living/carbon/monkey SET #null = forceMove(usr.loc)"
+	"UPDATE /mob/living/carbon/human/species/monkey SET #null = forceMove(usr.loc)"
 
 	Writing "#null" in front of the "=" will call the proc and discard the return value.
 
