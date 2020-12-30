@@ -173,18 +173,30 @@
 /datum/mutation/human/race
 	name = "Monkified"
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
+	text_gain_indication = "You feel unusually monkey-like."
+	text_lose_indication = "You feel like your old self."
 	quality = NEGATIVE
 	time_coeff = 2
 	locked = TRUE //Species specific, keep out of actual gene pool
+	var/datum/species/original_species = /datum/species/human
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	. = owner.monkeyize()
+	if(!ismonkey(owner))
+		original_species = owner.dna.species.type
+		owner.Immobilize(2 SECONDS)
+		owner.do_alert_animation()
+		owner.emote("scream")
+		owner.set_species(/datum/species/monkey)
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
 	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
-		. = owner.humanize()
+		owner.set_species(original_species)
+		owner.Immobilize(2 SECONDS)
+		owner.do_alert_animation()
+		owner.emote("scream")
+		original_species = /datum/species/human
 
 /datum/mutation/human/glow
 	name = "Glowy"
