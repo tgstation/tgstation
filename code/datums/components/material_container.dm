@@ -20,8 +20,10 @@
 	var/list/materials //Map of key = material ref | Value = amount
 	/// Unused?
 	var/disable_attackby
+	/// The list of materials that this material container can accept
+	var/list/allowed_materials
 	/// The typecache of things that this material container can accept
-	var/list/allowed_typecache
+	var/list/allowed_item_typecache
 	/// The last main material that was inserted into this container
 	var/last_inserted_id
 	/// Whether or not this material container allows specific amounts from sheets to be inserted
@@ -36,32 +38,34 @@
 	var/mat_container_flags
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _mat_container_flags=NONE, list/allowed_types, datum/callback/_insertion_check, datum/callback/_precondition, datum/callback/_after_insert)
+/datum/component/material_container/Initialize(list/init_mats, max_amt = 0, _mat_container_flags=NONE, list/allowed_mats=init_mats, list/allowed_items, datum/callback/_insertion_check, datum/callback/_precondition, datum/callback/_after_insert)
 	materials = list()
 	max_amount = max(0, max_amt)
 	mat_container_flags = _mat_container_flags
 
-	if(allowed_types)
-		if(ispath(allowed_types) && allowed_types == /obj/item/stack)
-			allowed_typecache = GLOB.typecache_stack
+	allowed_materials = allowed_mats || list()
+	if(allowed_items)
+		if(ispath(allowed_items) && allowed_items == /obj/item/stack)
+			allowed_item_typecache = GLOB.typecache_stack
 		else
-			allowed_typecache = typecacheof(allowed_types)
+			allowed_item_typecache = typecacheof(allowed_items)
 
-	insertion_check = _insertion_check || CALLBACK(src, .proc/default_insertion_check)
+	insertion_check = _insertion_check
 	precondition = _precondition
 	after_insert = _after_insert
 
-	for(var/mat in mat_list) //Make the assoc list ref | amount
-		materials[GetMaterialRef(mat)] = 0
+	for(var/mat in init_mats) //Make the assoc list ref | amount
+		materials[GetMaterialRef(mat)] = init_mats[mat]
 
 /datum/component/material_container/Destroy(force, silent)
 	materials = null
+	allowed_materials = null
+	if(insertion_check)
+		QDEL_NULL(insertion_check)
 	if(precondition)
 		QDEL_NULL(precondition)
 	if(after_insert)
 		QDEL_NULL(after_insert)
-	if(insertion_check)
-		QDEL_NULL(insertion_check)
 	return ..()
 
 
@@ -102,7 +106,7 @@
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
 
-	var/list/tc = allowed_typecache
+	var/list/tc = allowed_item_typecache
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.a_intent != INTENT_HELP)
 		return
 	if(I.item_flags & ABSTRACT)
@@ -176,7 +180,7 @@
 	var/max_mat_value = 0
 	var/list/item_materials = source.get_material_composition(breakdown_flags)
 	for(var/MAT in item_materials)
-		if(!insertion_check.Invoke(MAT))
+		if(!can_hold_material(MAT))
 			continue
 		materials[MAT] += item_materials[MAT] * multiplier
 		total_amount += item_materials[MAT] * multiplier
@@ -192,8 +196,16 @@
  * Arguments:
  * - [mat][/atom/material]: The material we are checking for insertability.
  */
-/datum/component/material_container/proc/default_insertion_check(datum/material/mat)
-	return !isnull(materials[mat])
+/datum/component/material_container/proc/can_hold_material(datum/material/mat)
+	if(mat in allowed_materials)
+		return TRUE
+	if(istype(mat) && ((mat.id in allowed_materials) || (mat.type in allowed_materials)))
+		allowed_materials += mat	// This could get messy with passing lists by ref... but if you're doing that the list expansion is probably being taken care of elsewhere anyway...
+		return TRUE
+	if(insertion_check?.Invoke(mat))
+		allowed_materials += mat
+		return TRUE
+	return FALSE
 
 /// For inserting an amount of material
 /datum/component/material_container/proc/insert_amount_mat(amt, datum/material/mat)
@@ -388,7 +400,7 @@
 	var/material_amount = 0
 	var/list/item_materials = I.get_material_composition(breakdown_flags)
 	for(var/MAT in item_materials)
-		if(!insertion_check.Invoke(MAT))
+		if(!can_hold_material(MAT))
 			continue
 		material_amount += item_materials[MAT]
 	return material_amount

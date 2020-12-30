@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, SSmaterials.materialids_by_category[MAT_CATEGORY_RIGID], 0, MATCONTAINER_EXAMINE, _insertion_check = CALLBACK(src, .proc/IsRigidMaterial), _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_RIGID], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -133,10 +133,6 @@
 
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
-
-/// Checks whether a material is rigid
-/obj/machinery/autolathe/proc/IsRigidMaterial(datum/material/rigid_ref)
-	return rigid_ref?.categories[MAT_CATEGORY_RIGID]
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())
