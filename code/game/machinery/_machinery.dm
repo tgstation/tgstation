@@ -613,6 +613,13 @@
 						break
 				for(var/obj/item/B in W.contents)
 					if(istype(B, P) && istype(A, P))
+						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
+						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
+							var/obj/item/stock_parts/cell/checked_cell = B
+							// If it's rigged or corrupted, max the charge. Then explode it.
+							if(checked_cell.rigged || checked_cell.corrupted)
+								checked_cell.charge = checked_cell.maxcharge
+								checked_cell.explode()
 						if(B.get_part_rating() > A.get_part_rating())
 							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
 								var/obj/item/stack/SA = A

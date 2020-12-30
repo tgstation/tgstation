@@ -7,11 +7,10 @@
 	var/engine_sound_length = 2 SECONDS
 	///Time it takes to break out of the car.
 	var/escape_time = 6 SECONDS
+	/// How long it takes to move, cars don't use the riding component similar to mechs so we handle it ourselves
+	var/vehicle_move_delay = 1
+	/// How long it takes to rev (vrrm vrrm!)
 	COOLDOWN_DECLARE(enginesound_cooldown)
-
-/obj/vehicle/sealed/car/Initialize()
-	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/car)
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
@@ -76,3 +75,27 @@
 	explosion(loc, 0, 1, 2, 3, 0)
 	log_message("[src] exploded due to destruction", LOG_ATTACK)
 	return ..()
+
+/obj/vehicle/sealed/car/relaymove(mob/living/user, direction)
+	if(canmove && (!key_type || istype(inserted_key, key_type)))
+		vehicle_move(direction)
+	return TRUE
+
+/obj/vehicle/sealed/car/vehicle_move(direction)
+	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
+		return FALSE
+	COOLDOWN_START(src, cooldown_vehicle_move, vehicle_move_delay)
+
+	if(COOLDOWN_FINISHED(src, enginesound_cooldown))
+		COOLDOWN_START(src, enginesound_cooldown, engine_sound_length)
+		playsound(get_turf(src), engine_sound, 100, TRUE)
+
+	if(trailer)
+		var/dir_to_move = get_dir(trailer.loc, loc)
+		var/did_move = step(src, direction)
+		if(did_move)
+			step(trailer, dir_to_move)
+		return did_move
+	else
+		after_move(direction)
+		return step(src, direction)
