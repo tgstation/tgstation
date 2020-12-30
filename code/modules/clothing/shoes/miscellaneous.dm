@@ -376,7 +376,6 @@
 	custom_premium_price = PAYCHECK_EASY * 1.6
 	custom_price = PAYCHECK_EASY * 1.6
 
-
 /obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"
 	desc = "They'll sure kindle something in you, and it's not childhood nostalgia..."
