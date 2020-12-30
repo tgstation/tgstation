@@ -16,21 +16,27 @@
 		. += "It seems to have been tinkered with."
 	if(HAS_TRAIT(user,TRAIT_DIAGNOSTIC_HUD))
 		var/display = ""
-		for(var/security in encode_info[SECURITY_PROTOCOL])
-			display += "[uppertext(security)], "
-		. += "It's security protocols are [display] anything else is incompatible"
-		display = ""
-		for(var/encode in encode_info[ENCODE_PROTOCOL])
-			display += "[uppertext(encode)], "
-		. += "It's encoding protocols are [display] anything else is incompatible"
-		display = ""
-		for(var/operating in encode_info[OPERATING_PROTOCOL])
-			display += "[uppertext(operating)], "
-		. += "It's operating protocols are [display] anything else is incompatible"
+
+		if(encode_info[SECURITY_PROTOCOL].len)
+			for(var/security in encode_info[SECURITY_PROTOCOL])
+				display += "[uppertext(security)], "
+			. += "It's security protocols are [display] for the implant to function it requires at least one of them to be shared with the cyberlink."
+
+		if(encode_info[ENCODE_PROTOCOL].len)
+			display = ""
+			for(var/encode in encode_info[ENCODE_PROTOCOL])
+				display += "[uppertext(encode)], "
+			. += "It's encoding protocols are [display] for the implant to function it requires at least one of them to be shared with the cyberlink."
+
+		if(encode_info[OPERATING_PROTOCOL].len)
+			display = ""
+			for(var/operating in encode_info[OPERATING_PROTOCOL])
+				display += "[uppertext(operating)], "
+			. += "It's operating protocols are [display]for the implant to function it requires at least one of them to be shared with the cyberlink."
 
 /obj/item/organ/cyberimp/emp_act(severity)
 	. = ..()
-	to_chat(owner,"<span class = 'notice'> cyberlink beeps: ERR02 [name] ELECTROMAGNETIC MALFUNCTION DETECTED</span>")
+	to_chat(owner,"<span class = 'danger'> cyberlink beeps: ERR02 ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)] </span>")
 
 /obj/item/organ/cyberimp/New(mob/M = null)
 	if(iscarbon(M))

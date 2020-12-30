@@ -114,7 +114,7 @@
 
 /obj/item/organ/cyberimp/leg/accelerator/on_full_insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
-	tackler = M.AddComponent(/datum/component/tackler, stamina_cost=30, base_knockdown = 1.5, range = 5, speed = 1.2, skill_mod = 1.5, min_distance = 2)
+	tackler = M.AddComponent(/datum/component/tackler, stamina_cost=30, base_knockdown = 1.5, range = 5, speed = 2, skill_mod = 1.5, min_distance = 3)
 
 /obj/item/organ/cyberimp/leg/accelerator/Remove(mob/living/carbon/M, special)
 	if(tackler)

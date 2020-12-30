@@ -135,6 +135,7 @@
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
+	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 

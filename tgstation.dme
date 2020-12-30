@@ -2082,6 +2082,7 @@
 #include "code\modules\hydroponics\grown\tobacco.dm"
 #include "code\modules\hydroponics\grown\tomato.dm"
 #include "code\modules\hydroponics\grown\towercap.dm"
+#include "code\modules\implant_hacking\_hacking.dm"
 #include "code\modules\instruments\items.dm"
 #include "code\modules\instruments\stationary.dm"
 #include "code\modules\instruments\instrument_data\_instrument_data.dm"
