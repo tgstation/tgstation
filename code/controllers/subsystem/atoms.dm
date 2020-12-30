@@ -34,17 +34,17 @@ SUBSYSTEM_DEF(atoms)
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
-	var/atom/A
+
 	if(atoms)
 		count = atoms.len
 		for(var/I in 1 to count)
-			A = atoms[I]
+			var/atom/A = atoms[I]
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, mapload_arg)
 				CHECK_TICK
 	else
 		count = 0
-		for(A in world)
+		for(var/atom/A in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, mapload_arg)
 				++count

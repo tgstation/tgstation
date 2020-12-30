@@ -56,7 +56,7 @@
 	if(!target_interface)
 		return
 
-	usr.set_machine(user)
+	user.set_machine(user)
 	// Generate a control packet.
 	var/datum/netdata/data = new(list("data" = mode,"data_secondary" = "toggle"))
 	data.receiver_id = target_interface.hardware_id
