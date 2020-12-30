@@ -1,5 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Space Dragon's overlay not being set properly on death"
-  - bugfix: "Fixed Space Dragon's color selection not limiting darker colors as it should"

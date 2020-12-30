@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed zero damage items with set attack verbs not showing chat messages anyway."
