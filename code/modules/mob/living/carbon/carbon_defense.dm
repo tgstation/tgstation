@@ -252,6 +252,27 @@
 			"You hear a slap.")
 			target.dna?.species?.stop_wagging_tail(target)
 			return
+	//SKYRAT EDIT ADDITION BEGIN - EMOTES
+	if(zone_selected == BODY_ZONE_PRECISE_GROIN && target.dir == src.dir)
+		if(HAS_TRAIT(target, TRAIT_IRONASS))
+			var/obj/item/bodypart/affecting = src.get_bodypart("[(src.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+			if(affecting?.receive_damage(2))
+				src.update_damage_overlays()
+			visible_message("<span class='danger'>[src] tried slapping [target]'s ass, however it was much harder than expected!</span>",
+			"<span class='danger'>You tried slapping [target]'s ass, but it felt like metal, ouch!</span>",\
+			"You hear a sore sounding slap.")
+			playsound(target.loc, 'sound/effects/snap.ogg', 50, TRUE, -1)
+			to_chat(target, "<span class='danger'>[src] tried slapping your ass, but it was deflected!")
+			return
+		else
+			do_ass_slap_animation(target)
+			playsound(target.loc, 'sound/weapons/slap.ogg', 50, TRUE, -1)
+			visible_message("<span class='danger'>[src] slaps [target] right on the ass!</span>",\
+				"<span class='notice'>You slap [src] on the ass, how satisfying.</span>",\
+				"You hear a slap.")
+			to_chat(target, "<span class='danger'>[src] slaps your ass!")
+			return
+	//SKYRAT EDIT END
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))
@@ -425,6 +446,7 @@
 		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+	var/nosound = FALSE //SKYRAT EDIT ADDITION - EMOTES
 	if(on_fire)
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
@@ -440,10 +462,21 @@
 						null, "<span class='hear'>You hear the rustling of clothes.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You shake [src] trying to pick [p_them()] up!</span>")
 		to_chat(src, "<span class='notice'>[M] shakes you to get you up!</span>")
+	//SKYRAT EDIT ADDITION BEGIN - EMOTES
+	else if(M.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		nosound = TRUE
+		M.visible_message("<span class='notice'>[M] boops [src]'s nose.", \
+					"<span class='notice'>You boop [src] on the nose.</span>")
+		playsound(src, 'modular_skyrat/modules/emotes/sound/emotes/Nose_boop.ogg', 50, 0)
+	//SKYRAT EDIT ADDITION END
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
 		M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+		//SKYRAT EDIT ADDITION BEGIN - EMOTES
+		if(HAS_TRAIT(src, TRAIT_EXCITABLE))
+			src.emote("wag")
+		//SKYRAT EDIT ADDITION END
 
 	else
 		SEND_SIGNAL(M, COMSIG_CARBON_HUG, M, src)
@@ -488,7 +521,8 @@
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
 		get_up(TRUE)
 
-	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	if(!nosound) //SKYRAT EDIT ADDITION - EMOTES
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 	// Shake animation
 	if (incapacitated())

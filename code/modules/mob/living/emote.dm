@@ -200,6 +200,7 @@
 	message_param = "blows a kiss to %t."
 	emote_type = EMOTE_AUDIBLE
 
+/* SKYRAT EDIT REMOVAL - EMOTES - MOVED TO EMOTES.DM MODULAR
 /datum/emote/living/laugh
 	key = "laugh"
 	key_third_person = "laughs"
@@ -215,6 +216,7 @@
 		return !C.silent
 
 /datum/emote/living/laugh/get_sound(mob/living/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
@@ -222,6 +224,7 @@
 				return 'sound/voice/human/womanlaugh.ogg'
 			else
 				return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
+*/ //SKYRAT EDIT END
 
 /datum/emote/living/look
 	key = "look"

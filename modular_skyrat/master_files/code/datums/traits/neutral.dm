@@ -1,5 +1,5 @@
 //SKYRAT NEUTRAL TRAITS
-/*/datum/quirk/excitable
+/datum/quirk/excitable
 	name = "Excitable!"
 	desc = "Head patting makes your tail wag! You're very excitable! WAG WAG."
 	gain_text = "<span class='notice'>You crave for some headpats!</span>"
@@ -16,7 +16,6 @@
 	medical_record_text = "Patient's ass seems incredibly solid."
 	value = 0
 	mob_trait = TRAIT_IRONASS
-*/
 
 /datum/quirk/dnc
 	name = "Do Not Clone"
