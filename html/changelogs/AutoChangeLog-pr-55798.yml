@@ -1,0 +1,4 @@
+author: "spessbro"
+delete-after: True
+changes: 
+  - bugfix: "fixed vibebot connectivity issues"

@@ -613,6 +613,13 @@
 						break
 				for(var/obj/item/B in W.contents)
 					if(istype(B, P) && istype(A, P))
+						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
+						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
+							var/obj/item/stock_parts/cell/checked_cell = B
+							// If it's rigged or corrupted, max the charge. Then explode it.
+							if(checked_cell.rigged || checked_cell.corrupted)
+								checked_cell.charge = checked_cell.maxcharge
+								checked_cell.explode()
 						if(B.get_part_rating() > A.get_part_rating())
 							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
 								var/obj/item/stack/SA = A
@@ -712,28 +719,6 @@
 	return ..()
 
 /**
- * Generate a name devices
- *
- * Creates a randomly generated tag or name for devices5
- * The length of the generated name can be set by passing in an int
- * args:
- * * len (int)(Optional) Default=5 The length of the name
- * Returns (string) The generated name
- */
-/obj/machinery/proc/assign_random_name(len=5)
-	var/list/new_name = list()
-	// machine id's should be fun random chars hinting at a larger world
-	for(var/i = 1 to len)
-		switch(rand(1,3))
-			if(1)
-				new_name += ascii2text(rand(65, 90)) // A - Z
-			if(2)
-				new_name += ascii2text(rand(97,122)) // a - z
-			if(3)
-				new_name += ascii2text(rand(48, 57)) // 0 - 9
-	return new_name.Join()
-
-/**
  * Alerts the AI that a hack is in progress.
  *
  * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
@@ -743,3 +728,4 @@
 	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		to_chat(AI, alertstr)
+

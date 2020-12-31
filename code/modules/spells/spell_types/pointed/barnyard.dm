@@ -16,7 +16,7 @@
 	active_msg = "You prepare to curse a target..."
 	deactive_msg = "You dispel the curse..."
 	/// List of mobs which are allowed to be a target of the spell
-	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
+	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human))
 
 /obj/effect/proc_holder/spell/pointed/barnyardcurse/cast(list/targets, mob/user)
 	if(!targets.len)

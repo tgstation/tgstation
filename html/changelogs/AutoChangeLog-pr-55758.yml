@@ -1,0 +1,4 @@
+author: "InvalidArgument3"
+delete-after: True
+changes: 
+  - balance: "shotgun slug damage increased"
