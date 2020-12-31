@@ -55,7 +55,13 @@
 	after_insert = _after_insert
 
 	for(var/mat in init_mats) //Make the assoc list ref | amount
-		materials[GET_MATERIAL_REF(mat)] = init_mats[mat]
+		var/mat_ref = GET_MATERIAL_REF(mat)
+		if(isnull(mat_ref))
+			continue
+		var/mat_amt = init_mats[mat]
+		if(isnull(mat_amt) || (mat_amt <= 0))
+			continue
+		materials[mat_ref] = mat_amt
 
 /datum/component/material_container/Destroy(force, silent)
 	materials = null
