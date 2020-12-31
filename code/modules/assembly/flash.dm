@@ -157,25 +157,19 @@
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 				M.add_confusion(min(power, diff))
-				// Special check for if we're a revhead. Special cases to attempt conversion.
-				if(converter)
-					// Did we try to flash them from behind?
-					if(deviation == DEVIATION_FULL)
-						// If we did and we're on help intent, fail with a feedback message and return.
-						if(converter.owner.current.a_intent == INTENT_HELP)
-							to_chat(user, "<span class='notice'>You try to use the tacticool tier, lean over the shoulder technique to blind [M] from behind but your poor combat stance causes you to stumble!</span>")
-							visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
-							return
-						// Otherwise, tacticool leaning technique engaged for sideways-stun power.
-						to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
-						deviation = DEVIATION_PARTIAL
-					// Convert them. Terribly.
-					terrible_conversion_proc(M, user)
-					visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
+			// Special check for if we're a revhead. Special cases to attempt conversion.
+			if(converter)
+				// Did we try to flash them from behind?
+				if(deviation == DEVIATION_FULL)
+					// Headrevs can use a tacticool leaning technique so that they don't have to worry about facing for their conversions.
+					to_chat(user, "<span class='notice'>You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!</span>")
+					deviation = DEVIATION_PARTIAL
+				// Convert them. Terribly.
+				terrible_conversion_proc(M, user)
+				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>","<span class='userdanger'>[user] blinds you with the flash!</span>")
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			M.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
 			M.Paralyze(rand(25,50)*(1-(deviation*0.5)))
-
 		else if(user)
 			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>","<span class='danger'>[user] fails to blind you with the flash!</span>")
 		else
