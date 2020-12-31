@@ -482,11 +482,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
-	GLOB.poi_list |= src
-
-/obj/effect/rune/narsie/Destroy()
-	GLOB.poi_list -= src
-	. = ..()
+	AddElement(/datum/element/point_of_interest)
 
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
@@ -849,7 +845,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		while(!QDELETED(affecting))
 			if(!(affecting in T))
 				user.visible_message("<span class='warning'>A spectral tendril wraps around [affecting] and pulls [affecting.p_them()] back to the rune!</span>")
-				Beam(affecting, icon_state="drainbeam", time=2)
+				Beam(affecting, icon_state="drainbeam", time = 2)
 				affecting.forceMove(get_turf(src)) //NO ESCAPE :^)
 			if(affecting.key)
 				affecting.visible_message("<span class='warning'>[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming.</span>", \

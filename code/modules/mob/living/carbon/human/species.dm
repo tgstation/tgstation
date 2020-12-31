@@ -66,6 +66,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/mutant_bodyparts = list()
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
+	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
+	var/list/bodypart_overides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm,\
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm,\
+		BODY_ZONE_HEAD = /obj/item/bodypart/head,\
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,\
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,\
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest)
 	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speedmod = 0
 	///Percentage modifier for overall defense of the race, or less defense, if it's negative.
@@ -128,7 +136,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///Species-only traits. Can be found in [code/__DEFINES/DNA.dm]
 	var/list/species_traits = list()
 	///Generic traits tied to having the species.
-	var/list/inherent_traits = list()
+	var/list/inherent_traits = list(TRAIT_ADVANCEDTOOLUSER)
 	/// List of biotypes the mob belongs to. Used by diseases.
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	///List of factions the mob gain upon gaining this species.
@@ -142,6 +150,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
 	var/breathid = "o2"
+
+	///What anim to use for dusting
+	var/dust_anim = "dust-h"
+	///What anim to use for gibbing
+	var/gib_anim = "gibbed-h"
 
 
 	//Do NOT remove by setting to null. use OR make a RESPECTIVE TRAIT (removing stomach? add the NOSTOMACH trait to your species)
@@ -167,14 +180,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/appendix/mutantappendix = /obj/item/organ/appendix
 	///Forces an item into this species' hands. Only an honorary mutantthing because this is not an organ and not loaded in the same way, you've been warned to do your research.
 	var/obj/item/mutanthands
-	///Allows the species to not give a single F about gravity. Used by wings.
-	var/override_float = FALSE
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
 	///For custom overrides for species ass images
 	var/icon/ass_image
+
+	///List of results you get from knife-butchering. null means you cant butcher it. Associated by resulting type - value of amount
+	var/list/knife_butcher_results
 
 ///////////
 // PROCS //
@@ -347,6 +361,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
+
+	fix_non_native_limbs(C)
 
 	C.mob_biotypes = inherent_biotypes
 
@@ -743,6 +759,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_human"
 
+	if("tail_monkey" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail_monkey"
+
 
 	if(mutant_bodyparts["waggingtail_human"])
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -761,7 +781,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			bodyparts_to_add -= "waggingspines"
 
 	if(mutant_bodyparts["snout"]) //Take a closer look at that snout!
-		if((H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)) || !HD || HD.status == BODYPART_ROBOTIC)
+		if((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "snout"
 
 	if(mutant_bodyparts["frills"])
@@ -859,13 +879,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.moth_antennae_list[H.dna.features["moth_antennae"]]
 				if("caps")
 					S = GLOB.caps_list[H.dna.features["caps"]]
+				if("tail_monkey")
+					S = GLOB.tails_list_monkey[H.dna.features["tail_monkey"]]
 			if(!S || S.icon_state == "none")
 				continue
 
 			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "tail_monkey")
 				bodypart = "tail"
 			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
 				bodypart = "waggingtail"
@@ -1315,6 +1337,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.do_attack_animation(target, ATTACK_EFFECT_CLAW)
 			if(ATTACK_EFFECT_SMASH)
 				user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
+			if(ATTACK_EFFECT_BITE)
+				if(user.is_mouth_covered(FALSE, TRUE))
+					to_chat(user, "<span class='warning'>You can't bite with your mouth covered!</span>")
+					return FALSE
+				user.do_attack_animation(target, ATTACK_EFFECT_BITE)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
@@ -1619,13 +1646,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//when in a cryo unit we suspend all natural body regulation
 	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
-	//when dead the air still effects your skin temp
-	if(humi.stat == DEAD || IS_IN_STASIS(humi))
-		body_temperature_skin(humi)
-	else //when alive do all the things
+
+	//Only stabilise core temp when alive and not in statis
+	if(humi.stat < DEAD && !IS_IN_STASIS(humi))
 		body_temperature_core(humi)
-		body_temperature_skin(humi)
-		body_temperature_alerts(humi)
+
+	//These do run in statis
+	body_temperature_skin(humi)
+	body_temperature_alerts(humi)
+
+	//Do not cause more damage in statis
+	if(!IS_IN_STASIS(humi))
 		body_temperature_damage(humi)
 
 /**
@@ -2059,18 +2090,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 //UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /datum/species/proc/ToggleFlight(mob/living/carbon/human/H)
-	if(!(H.movement_type & FLYING))
+	if(!HAS_TRAIT_FROM(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
 		stunmod *= 2
 		speedmod -= 0.35
-		H.setMovetype(H.movement_type | FLYING)
-		override_float = TRUE
+		ADD_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
+		ADD_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_on(H, SPECIES_TRAIT)
 		H.OpenWings()
 	else
 		stunmod *= 0.5
 		speedmod += 0.35
-		H.setMovetype(H.movement_type & ~FLYING)
-		override_float = FALSE
+		REMOVE_TRAIT(H, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
+		REMOVE_TRAIT(H, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_off(H, SPECIES_TRAIT)
 		H.CloseWings()
 
@@ -2100,3 +2131,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		. |= BIO_JUST_FLESH
 	if(HAS_BONE in species_traits)
 		. |= BIO_JUST_BONE
+
+///Species override for unarmed attacks because the attack_hand proc was made by a mouth-breathing troglodyte on a tricycle. Also to whoever thought it would be a good idea to make it so the original spec_unarmedattack was not actually linked to unarmed attack needs to be checked by a doctor because they clearly have a vast empty space in their head.
+/datum/species/proc/spec_unarmedattack(mob/living/carbon/human/user, atom/target)
+	return FALSE
+
+
+///Removes any non-native limbs from the mob
+/datum/species/proc/fix_non_native_limbs(mob/living/carbon/human/H)
+	for(var/X in H.bodyparts)
+		var/obj/item/bodypart/current_part = X
+		var/obj/item/bodypart/species_part = bodypart_overides[current_part.body_zone]
+
+		if(current_part.type == species_part)
+			continue
+
+		current_part.change_bodypart(species_part)

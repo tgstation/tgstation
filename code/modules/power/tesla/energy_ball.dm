@@ -169,7 +169,6 @@
 /obj/energy_ball/orbit(obj/energy_ball/target)
 	if (istype(target))
 		target.orbiting_balls += src
-		GLOB.poi_list -= src
 	. = ..()
 
 /obj/energy_ball/stop_orbit()
@@ -311,7 +310,7 @@
 	if(!closest_atom)
 		return
 	//common stuff
-	source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
+	source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time = 5)
 	var/zapdir = get_dir(source, closest_atom)
 	if(zapdir)
 		. = zapdir

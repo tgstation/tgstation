@@ -48,8 +48,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNPAINTABLE_1 (1 << 20)
 /// Is the thing currently spinning?
 #define IS_SPINNING_1 (1 << 21)
-/// Does the supermatter skip over this atom?
-#define SUPERMATTER_IGNORES_1 (1 << 22)
+#define IS_ONTOP_1 (1 << 22)
+#define SUPERMATTER_IGNORES_1 (1 << 23)
+
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
@@ -74,7 +75,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// If blobs can spawn there and if it counts towards their score.
 #define BLOBS_ALLOWED				(1<<1)
 /// If mining tunnel generation is allowed in this area
-#define TUNNELS_ALLOWED				(1<<2)
+#define CAVES_ALLOWED				(1<<2)
 /// If flora are allowed to spawn in this area randomly through tunnel generation
 #define FLORA_ALLOWED				(1<<3)
 /// If mobs can be spawned by natural random generation

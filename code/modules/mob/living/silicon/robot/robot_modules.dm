@@ -23,7 +23,6 @@
 
 	var/moduleselect_icon = "nomod"
 
-	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
 	var/clean_on_move = FALSE
 	var/breakable_modules = TRUE //Whether the borg loses tool slots with damage.
@@ -35,9 +34,13 @@
 
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
-	var/ride_allow_incapacitated = TRUE
 	var/allow_riding = TRUE
 	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
+
+	/**
+	* List of traits that will be applied to the mob if this module is used.
+	*/
+	var/list/module_traits = null
 
 /obj/item/robot_module/Initialize()
 	. = ..()
@@ -215,15 +218,18 @@
 	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.module)
 
 /**
- * check_menu: Checks if we are allowed to interact with a radial menu
+ * Checks if we are allowed to interact with a radial menu
  *
  * Arguments:
- * * user The mob interacting with a menu
+ * * user The cyborg mob interacting with the menu
+ * * old_module The old cyborg's module
  */
-/obj/item/robot_module/proc/check_menu(mob/user)
+/obj/item/robot_module/proc/check_menu(mob/living/silicon/robot/user, obj/item/robot_module/old_module)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated())
+		return FALSE
+	if(user.module != old_module)
 		return FALSE
 	return TRUE
 
@@ -255,7 +261,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/engineering
@@ -304,7 +310,7 @@
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/security/do_transform_animation()
@@ -337,7 +343,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
 
 /obj/item/robot_module/peacekeeper/do_transform_animation()
@@ -454,22 +460,20 @@
 		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
-	var/mob/living/silicon/robot/R = loc
-	var/list/service_icons = sortList(list(
-		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f"),
-		"Butler" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_m"),
+	var/mob/living/silicon/robot/cyborg = loc
+	var/list/service_icons = list(
 		"Bro" = image(icon = 'icons/mob/robots.dmi', icon_state = "brobot"),
+		"Butler" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_m"),
 		"Kent" = image(icon = 'icons/mob/robots.dmi', icon_state = "kent"),
-		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat")
-		))
-	var/service_robot_icon = show_radial_menu(R, R , service_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat"),
+		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f")
+		)
+	var/service_robot_icon = show_radial_menu(cyborg, cyborg, service_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_module), radius = 38, require_near = TRUE)
 	switch(service_robot_icon)
-		if("Waitress")
-			cyborg_base_icon = "service_f"
-		if("Butler")
-			cyborg_base_icon = "service_m"
 		if("Bro")
 			cyborg_base_icon = "brobot"
+		if("Butler")
+			cyborg_base_icon = "service_m"
 		if("Kent")
 			cyborg_base_icon = "kent"
 			special_light_key = "medical"
@@ -478,6 +482,8 @@
 			cyborg_base_icon = "tophat"
 			special_light_key = null
 			hat_offset = INFINITY //He is already wearing a hat
+		if("Waitress")
+			cyborg_base_icon = "service_f"
 		else
 			return FALSE
 	return ..()
@@ -505,21 +511,21 @@
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
-	var/mob/living/silicon/robot/R = loc
-	var/list/miner_icons = sortList(list(
-		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner"),
+	var/mob/living/silicon/robot/cyborg = loc
+	var/list/miner_icons = list(
 		"Asteroid Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "minerOLD"),
-		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin")
-		))
-	var/miner_robot_icon = show_radial_menu(R, R , miner_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
+		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin"),
+		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner")
+		)
+	var/miner_robot_icon = show_radial_menu(cyborg, cyborg, miner_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_module), radius = 38, require_near = TRUE)
 	switch(miner_robot_icon)
-		if("Lavaland Miner")
-			cyborg_base_icon = "miner"
 		if("Asteroid Miner")
 			cyborg_base_icon = "minerOLD"
 			special_light_key = "miner"
 		if("Spider Miner")
 			cyborg_base_icon = "spidermin"
+		if("Lavaland Miner")
+			cyborg_base_icon = "miner"
 		else
 			return FALSE
 	return ..()
@@ -547,7 +553,7 @@
 
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/syndicate/rebuild_modules()
@@ -585,7 +591,7 @@
 
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/saboteur
@@ -616,7 +622,7 @@
 
 	cyborg_base_icon = "synd_engi"
 	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	magpulsing = TRUE
 	hat_offset = -4
 	canDispose = TRUE

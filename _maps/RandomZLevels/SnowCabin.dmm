@@ -437,9 +437,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bl" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bm" = (
@@ -593,9 +591,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bN" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bO" = (
@@ -1102,7 +1098,6 @@
 	anchored = 1;
 	density = 1;
 	desc = "Generates power from lava!";
-	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
 	icon_state = "turbine";
 	name = "geothermal generator"
@@ -1119,8 +1114,7 @@
 	melee_damage_lower = 10;
 	melee_damage_upper = 20;
 	name = "fat space polar bear";
-	speed = 3;
-	wander = 1
+	speed = 3
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
@@ -1283,8 +1277,7 @@
 	melee_damage_lower = 10;
 	melee_damage_upper = 20;
 	name = "fat space polar bear";
-	speed = 3;
-	wander = 1
+	speed = 3
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
@@ -1724,10 +1717,7 @@
 /area/awaymission/cabin/lumbermill)
 "ff" = (
 /obj/structure/table/wood,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "fg" = (
@@ -1958,7 +1948,6 @@
 /obj/structure/ladder/unbreakable{
 	desc = "Who left the grate open?";
 	height = 1;
-	icon = 'icons/obj/structures.dmi';
 	icon_state = "ladder01";
 	id = "dealwentoffwithoutahitchBRO";
 	name = "Grate";
@@ -2383,7 +2372,6 @@
 "gv" = (
 /obj/structure/ladder/unbreakable{
 	desc = "Finally.";
-	height = 0;
 	icon_state = "ladder10";
 	id = "whyisitcalledladder10andnotladder1";
 	name = "Freedom"
@@ -2414,7 +2402,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder/unbreakable{
 	desc = "Yeah, I'll just go back to jail instead of this. It's not like there is an escape out of here, right?";
-	height = 0;
 	icon_state = "ladder10";
 	id = "dealwentoffwithoutahitchBRO";
 	name = "Sewer Ladder"
@@ -2537,7 +2524,6 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/item/food/egg/rainbow{
-	anchored = 0;
 	desc = "Was an egg really worth this much effort?";
 	name = "easter egg"
 	},
@@ -2552,30 +2538,12 @@
 "gM" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "gN" = (
@@ -3145,7 +3113,7 @@
 /area/awaymission/cabin)
 "io" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -24;
+	pixel_x = -24
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -5061,10 +5029,7 @@
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/caves)
 "mZ" = (
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
 	},
@@ -5262,9 +5227,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "nN" = (
-/obj/machinery/light/small{
-	dir = 2
-	},
+/obj/machinery/light/small,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nO" = (

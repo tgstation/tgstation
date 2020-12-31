@@ -4,23 +4,6 @@
 				BLOOD SYSTEM
 ****************************************************/
 
-/mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature <= TCRYO || (HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
-		return
-
-	var/temp_bleed = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		temp_bleed += BP.get_bleed_rate()
-		BP.generic_bleedstacks = max(0, BP.generic_bleedstacks - 1)
-	bleed(temp_bleed)
-
-	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL)
-		blood_volume += 0.1 // regenerate blood VERY slowly
-		if(blood_volume < BLOOD_VOLUME_OKAY)
-			adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
-
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
@@ -205,10 +188,6 @@
 
 /mob/living/simple_animal/get_blood_id()
 	if(blood_volume)
-		return /datum/reagent/blood
-
-/mob/living/carbon/monkey/get_blood_id()
-	if(!(HAS_TRAIT(src, TRAIT_HUSK)))
 		return /datum/reagent/blood
 
 /mob/living/carbon/human/get_blood_id()

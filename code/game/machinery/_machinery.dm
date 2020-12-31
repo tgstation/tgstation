@@ -563,6 +563,10 @@
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
+		var/turf/ground = get_turf(src)
+		if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_object = src))
+			to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
+			return CANT_UNFASTEN
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
@@ -572,6 +576,9 @@
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
+			if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_object = src))//i know what you tryin to sneak in
+				to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
+				return CANT_UNFASTEN
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			set_anchored(!anchored)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -606,6 +613,13 @@
 						break
 				for(var/obj/item/B in W.contents)
 					if(istype(B, P) && istype(A, P))
+						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
+						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
+							var/obj/item/stock_parts/cell/checked_cell = B
+							// If it's rigged or corrupted, max the charge. Then explode it.
+							if(checked_cell.rigged || checked_cell.corrupted)
+								checked_cell.charge = checked_cell.maxcharge
+								checked_cell.explode()
 						if(B.get_part_rating() > A.get_part_rating())
 							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
 								var/obj/item/stack/SA = A

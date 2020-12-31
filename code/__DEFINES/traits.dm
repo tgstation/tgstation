@@ -9,14 +9,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
-			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
+			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
-				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
+				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 			} \
 		} \
 	} while (0)
@@ -37,7 +37,7 @@
 			};\
 			if (!length(_L[trait])) { \
 				_L -= trait; \
-				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait)); \
+				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -53,6 +53,29 @@
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
 					_L -= _T; \
+					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T), _T); \
+					}; \
+				};\
+			if (!length(_L)) { \
+				target.status_traits = null\
+			};\
+		}\
+	} while (0)
+
+#define REMOVE_TRAITS_IN(target, sources) \
+	do { \
+		var/list/_L = target.status_traits; \
+		var/list/_S = sources; \
+		if (sources && !islist(sources)) { \
+			_S = list(sources); \
+		} else { \
+			_S = sources\
+		}; \
+		if (_L) { \
+			for (var/_T in _L) { \
+				_L[_T] -= _S;\
+				if (!length(_L[_T])) { \
+					_L -= _T; \
 					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
 					}; \
 				};\
@@ -61,6 +84,7 @@
 			};\
 		}\
 	} while (0)
+
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
 #define HAS_TRAIT_FROM_ONLY(target, trait, source) (\
@@ -180,7 +204,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define	TRAIT_MAGIC_CHOKE		"magic_choke"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
-#define TRAIT_ALWAYS_CLEAN      "always-clean"
 #define TRAIT_BOOZE_SLIDER      "booze-slider"
 #define TRAIT_QUICK_CARRY		"quick-carry"
 #define TRAIT_QUICKER_CARRY		"quicker-carry"
@@ -211,6 +234,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
 
+// You can stare into the abyss, but it does not stare back.
+// You're immune to the hallucination effect of the supermatter, either
+// through force of will, or equipment.
+#define TRAIT_SUPERMATTER_MADNESS_IMMUNE "supermatter_madness_immune"
+
+// You can stare into the abyss, and it turns pink.
+// Being close enough to the supermatter makes it heal at higher temperatures
+// and emit less heat. A trait applied to a mind.
+#define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
 #define TRAIT_WINE_TASTER "wine_taster"
@@ -218,6 +251,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
+
+///Movement type traits for movables. See elements/movetype_handler.dm
+#define TRAIT_MOVE_GROUND		"move_ground"
+#define TRAIT_MOVE_FLYING		"move_flying"
+#define TRAIT_MOVE_VENTCRAWLING	"move_ventcrawling"
+#define TRAIT_MOVE_FLOATING		"move_floating"
+#define TRAIT_MOVE_PHASING		"move_phasing"
+/// Disables the floating animation. See above.
+#define TRAIT_NO_FLOATING_ANIM		"no-floating-animation"
 
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
@@ -263,6 +305,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GRABWEAKNESS		"grab_weakness"
 #define TRAIT_SNOB				"snob"
 #define TRAIT_BALD				"bald"
+#define TRAIT_BADTOUCH			"bad_touch"
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
@@ -360,6 +403,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
+#define LIFECANDLE_TRAIT "lifecandle"
+#define VENTCRAWLING_TRAIT "ventcrawling"
+#define SPECIES_FLIGHT_TRAIT "species-flight"
+#define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
+#define NO_GRAVITY_TRAIT "no-gravity"
+#define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define SKILLCHIP_TRAIT "skillchip"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
@@ -386,3 +435,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ELEMENT_TRAIT "element_trait"
 /// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
 #define BERSERK_TRAIT "berserk_trait"
+
+/// Trait granted by [/mob/living/silicon/robot]
+/// Traits applied to a silicon mob by their module.
+#define MODULE_TRAIT "module_trait"

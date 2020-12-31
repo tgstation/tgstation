@@ -186,6 +186,7 @@
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -374,7 +375,6 @@
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	custom_premium_price = PAYCHECK_EASY * 1.6
 	custom_price = PAYCHECK_EASY * 1.6
-
 
 /obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"
