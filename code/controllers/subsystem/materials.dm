@@ -159,6 +159,6 @@ SUBSYSTEM_DEF(materials)
 	if(!combo)
 		combo = list()
 		for(var/mat in materials_declaration)
-			combo[GetMaterialRef(mat)] = materials_declaration[mat] * multiplier
+			combo[GET_MATERIAL_REF(mat)] = materials_declaration[mat] * multiplier
 		material_combos[combo_index] = combo
 	return combo

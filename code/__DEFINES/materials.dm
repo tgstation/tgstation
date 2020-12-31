@@ -49,7 +49,7 @@
 #define MATERIAL_AFFECT_STATISTICS (1<<3)
 
 /// Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.
-#define GetMaterialRef(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
+#define GET_MATERIAL_REF(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
 
 #define MATERIAL_SOURCE(mat) "[mat.name]_material"
 

@@ -55,7 +55,7 @@
 	after_insert = _after_insert
 
 	for(var/mat in init_mats) //Make the assoc list ref | amount
-		materials[GetMaterialRef(mat)] = init_mats[mat]
+		materials[GET_MATERIAL_REF(mat)] = init_mats[mat]
 
 /datum/component/material_container/Destroy(force, silent)
 	materials = null
@@ -215,7 +215,7 @@
 	var/total_amount_saved = total_amount
 	if(mat)
 		if(!istype(mat))
-			mat = GetMaterialRef(mat)
+			mat = GET_MATERIAL_REF(mat)
 		materials[mat] += amt
 	else
 		var/num_materials = length(materials)
@@ -231,7 +231,7 @@
 /// Uses an amount of a specific material, effectively removing it.
 /datum/component/material_container/proc/use_amount_mat(amt, datum/material/mat)
 	if(!istype(mat))
-		mat = GetMaterialRef(mat)
+		mat = GET_MATERIAL_REF(mat)
 
 	if(!mat)
 		return 0
@@ -246,7 +246,7 @@
 /// Proc for transfering materials to another container.
 /datum/component/material_container/proc/transer_amt_to(datum/component/material_container/T, amt, datum/material/mat)
 	if(!istype(mat))
-		mat = GetMaterialRef(mat)
+		mat = GET_MATERIAL_REF(mat)
 	if((amt==0)||(!T)||(!mat))
 		return FALSE
 	if(amt<0)
@@ -279,7 +279,7 @@
 	for(var/x in mats) //Loop through all required materials
 		var/datum/material/req_mat = x
 		if(!istype(req_mat))
-			req_mat = GetMaterialRef(req_mat) //Get the ref if necesary
+			req_mat = GET_MATERIAL_REF(req_mat) //Get the ref if necesary
 		if(!materials[req_mat]) //Do we have the resource?
 			return FALSE //Can't afford it
 		var/amount_required = mats[x] * multiplier
@@ -341,7 +341,7 @@
 		var/datum/material/req_mat = x
 		if(!istype(req_mat))
 			if(ispath(req_mat)) //Is this an actual material, or is it a category?
-				req_mat = GetMaterialRef(req_mat) //Get the ref
+				req_mat = GET_MATERIAL_REF(req_mat) //Get the ref
 
 			else // Its a category. (For example MAT_CATEGORY_RIGID)
 				if(!has_enough_of_category(req_mat, mats[x], multiplier)) //Do we have enough of this category?
@@ -408,5 +408,5 @@
 /// Returns the amount of a specific material in this container.
 /datum/component/material_container/proc/get_material_amount(datum/material/mat)
 	if(!istype(mat))
-		mat = GetMaterialRef(mat)
+		mat = GET_MATERIAL_REF(mat)
 	return materials[mat]

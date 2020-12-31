@@ -320,8 +320,8 @@
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
 		if(LAZYLEN(O.custom_materials))
-			if(O.custom_materials[GetMaterialRef(/datum/material/iron)])
-				metal += O.custom_materials[GetMaterialRef(/datum/material/iron)]
+			if(O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
+				metal += O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)]
 
 	if(metal)
 		spark()
