@@ -312,6 +312,9 @@
 	begin_month = SEPTEMBER
 	drone_hat = /obj/item/clothing/head/pirate
 
+/datum/holiday/pirate/getStationPrefix()
+	return pick("Yarr","Scurvy","Yo-ho-ho")
+
 /datum/holiday/carfreeday
 	name = CARFREEDAY
 	begin_day = 22
