@@ -39,7 +39,7 @@
 	if(!istype(source))
 		return FALSE
 
-	name = "[source.name ? "[source.name]'s" : "mystery"] [initial(name)]"
+	name = "[source?.name ? "[source.name]'s" : "mystery"] [initial(name)]"
 	return ..()
 
 /datum/material/meat/species
@@ -49,5 +49,5 @@
 	if(!istype(source))
 		return FALSE
 
-	name = "[source.name || "mystery"] [initial(name)]"
+	name = "[source?.name || "mystery"] [initial(name)]"
 	return ..()
