@@ -327,7 +327,7 @@
 	return "Car-free day! Damn, and to think I was saving up for one."
 
 /datum/holiday/carfreeday/getStationPrefix()
-	return pick("Vroom","Jam","Crash")
+	return pick("Vroom","GT","Crash","Sport Utility","High Octane","High Speed Low Drag","3 Door Sprinter Trueno GT-Apex")
 
 /datum/holiday/programmers
 	name = "Programmers' Day"
