@@ -695,7 +695,7 @@
 	alpha = 255
 	opaque_closed = TRUE
 
-/obj/structure/curtain/cloth/
+/obj/structure/curtain/cloth
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
