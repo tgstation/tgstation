@@ -128,7 +128,11 @@
 	mutation_index.Cut()
 	default_mutation_genes.Cut()
 	shuffle_inplace(mutations_temp)
-	mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
+	if(ismonkey(holder))
+		mutations |= new RACEMUT(MUT_NORMAL)
+		mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
+	else
+		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
 	default_mutation_genes[RACEMUT] = mutation_index[RACEMUT]
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
@@ -419,7 +423,8 @@
 		return
 
 	for(var/mutation in dna.mutation_index)
-		dna.check_block(mutation)
+		if(ismob(dna.check_block(mutation)))
+			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
 	update_mutations_overlay()
 

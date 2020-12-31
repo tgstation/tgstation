@@ -127,7 +127,7 @@
 			body += "<br>"
 
 			//Human
-			if(ishuman(M) && !ismonkey(M))
+			if(ishuman(M))
 				body += "<B>Human</B> | "
 			else
 				body += "<A href='?_src_=holder;[HrefToken()];humanone=[REF(M)]'>Humanize</A> | "

@@ -54,39 +54,6 @@
 				H.blur_eyes(5)
 				eyes.applyOrganDamage(5)
 
-/obj/item/clothing/glasses/AltClick(mob/user)
-	if(glass_colour_type && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.client)
-			if(H.client.prefs)
-				if(src == H.glasses)
-					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
-					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, "<span class='notice'>You will now see glasses colors.</span>")
-					else
-						to_chat(H, "<span class='notice'>You will no longer see glasses colors.</span>")
-					H.update_glasses_color(src, 1)
-	else
-		return ..()
-
-/obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
-	var/old_colour_type = glass_colour_type
-	if(!new_color_type || ispath(new_color_type)) //the new glass colour type must be null or a path.
-		glass_colour_type = new_color_type
-		if(H && H.glasses == src)
-			if(old_colour_type)
-				H.remove_client_colour(old_colour_type)
-			if(glass_colour_type)
-				H.update_glasses_color(src, 1)
-
-
-/mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if(client?.prefs.uses_glasses_colour && glasses_equipped)
-		add_client_colour(G.glass_colour_type)
-	else
-		remove_client_colour(G.glass_colour_type)
-
-
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
@@ -476,62 +443,57 @@
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	custom_materials = null
 	clothing_flags = SCAN_REAGENTS
-	var/double = FALSE
 
-/obj/item/clothing/glasses/godeye/equipped(mob/user, slot)
+/obj/item/clothing/glasses/godeye/Initialize()
 	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
-		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
-
-		pain(user)
-
-/obj/item/clothing/glasses/godeye/dropped(mob/user)
-	. = ..()
-	// Behead someone, their "glasses" drop on the floor
-	// and thus, the god eye should no longer be sticky
-	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/clothing/glasses/godeye) && W != src && W.loc == user)
-		if(!double)
-			var/obj/item/clothing/glasses/godeye/double/T = /obj/item/clothing/glasses/godeye/double
-
-			icon_state = initial(T.icon_state)
-			inhand_icon_state = initial(T.inhand_icon_state)
-
+	if(istype(W, src) && W != src && W.loc == user)
+		if(W.icon_state == "godeye")
+			W.icon_state = "doublegodeye"
+			W.inhand_icon_state = "doublegodeye"
+			W.desc = "A pair of strange eyes, said to have been torn from an omniscient creature that used to roam the wastes. There's no real reason to have two, but that isn't stopping you."
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.update_inv_glasses()
-
-				// Apply pain now, so message is still for solo eye bore
-				if(C.glasses == src)
-					pain(C)
-
-			name = initial(T.name)
-			desc = initial(T.desc)
-			double = TRUE
+				C.update_inv_wear_mask()
 		else
-			to_chat(user, "<span class='notice'>[W] winks at you and vanishes into the abyss, you feel really unlucky.</span>")
-		qdel(W)
+			to_chat(user, "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>")
+		qdel(src)
 	..()
 
-/obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
-	// If pain/pain immunity ever implemented, check for it here.
+/obj/item/clothing/glasses/AltClick(mob/user)
+	if(glass_colour_type && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.client)
+			if(H.client.prefs)
+				if(src == H.glasses)
+					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
+					if(H.client.prefs.uses_glasses_colour)
+						to_chat(H, "<span class='notice'>You will now see glasses colors.</span>")
+					else
+						to_chat(H, "<span class='notice'>You will no longer see glasses colors.</span>")
+					H.update_glasses_color(src, 1)
+	else
+		return ..()
 
-	to_chat(victim, "<span class='userdanger'>You experience blinding pain, as [src] [double ? "burrow" : "burrows"] into your skull.</span>")
-	victim.emote("scream")
-	victim.flash_act()
+/obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
+	var/old_colour_type = glass_colour_type
+	if(!new_color_type || ispath(new_color_type)) //the new glass colour type must be null or a path.
+		glass_colour_type = new_color_type
+		if(H && H.glasses == src)
+			if(old_colour_type)
+				H.remove_client_colour(old_colour_type)
+			if(glass_colour_type)
+				H.update_glasses_color(src, 1)
 
-/obj/item/clothing/glasses/godeye/double
-	name = "eyes of god"
-	desc = "A pair of strange eyes, said to have been torn from an omniscient creature that used to roam the wastes. There's no real reason to have two, but that isn't stopping you."
-	icon_state = "doublegodeye"
-	inhand_icon_state = "doublegodeye"
 
-	double = TRUE
-
+/mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
+	if(client?.prefs.uses_glasses_colour && glasses_equipped)
+		add_client_colour(G.glass_colour_type)
+	else
+		remove_client_colour(G.glass_colour_type)
 
 /obj/item/clothing/glasses/debug
 	name = "debug glasses"

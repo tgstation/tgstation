@@ -40,7 +40,6 @@
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
-#include "designs.dm"
 #include "emoting.dm"
 #include "heretic_knowledge.dm"
 #include "holidays.dm"

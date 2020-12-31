@@ -36,4 +36,4 @@
 
 	pda_slot = ITEM_SLOT_LPOCKET
 
-	skillchips = list(/obj/item/skillchip/job/roboticist)
+	skillchip_path = /obj/item/skillchip/job/roboticist

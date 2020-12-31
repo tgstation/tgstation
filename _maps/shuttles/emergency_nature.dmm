@@ -287,7 +287,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "it" = (
-/mob/living/carbon/human/species/monkey,
+/mob/living/carbon/monkey,
 /obj/structure/flora/grass/jungle/b{
 	icon_state = "bushb3"
 	},
@@ -428,7 +428,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "mq" = (
-/mob/living/carbon/human/species/monkey,
+/mob/living/carbon/monkey,
 /obj/machinery/light/floor,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
@@ -926,7 +926,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "Ia" = (
-/mob/living/carbon/human/species/monkey,
+/mob/living/carbon/monkey,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -1243,11 +1243,11 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/mob/living/carbon/human/species/monkey,
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Vv" = (
-/mob/living/carbon/human/species/monkey,
+/mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "VI" = (

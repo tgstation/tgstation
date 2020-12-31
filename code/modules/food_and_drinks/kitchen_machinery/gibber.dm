@@ -172,7 +172,9 @@
 		var/mob/living/carbon/C = occupant
 		typeofmeat = C.type_of_meat
 		gibtype = C.gib_type
-		if(isalien(C))
+		if(ismonkey(C))
+			typeofskin = /obj/item/stack/sheet/animalhide/monkey
+		else if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 	var/occupant_volume
 	if(occupant?.reagents)

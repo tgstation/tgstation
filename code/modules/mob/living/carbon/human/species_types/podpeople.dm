@@ -4,6 +4,7 @@
 	id = "pod"
 	default_color = "59CE00"
 	species_traits = list(MUTCOLORS,EYECOLOR, HAS_FLESH, HAS_BONE)
+	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
 	inherent_factions = list("plants", "vines")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'

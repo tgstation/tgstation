@@ -52,14 +52,6 @@
 /obj/effect/landmark/shuttle_arena_safe,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
-"T" = (
-/obj/machinery/computer/emergency_shuttle{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "cult"
-	},
-/area/shuttle/escape/arena)
 
 (1,1,1) = {"
 g
@@ -202,7 +194,7 @@ j
 j
 j
 j
-T
+p
 g
 "}
 (7,1,1) = {"
