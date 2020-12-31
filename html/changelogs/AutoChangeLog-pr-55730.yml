@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "The cursed hot spring no longer polymorphs incorporeal critters such as unrevealed revenants."
