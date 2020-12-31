@@ -730,7 +730,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasite bold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasite bold'>Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.</span>"
-	mori_message = "<span class='holoparasite bold'>The pungant smell of a false god on your necklace held all the fish at bay. At carp bay.</span>"
+	mori_message = "<span class='holoparasite bold'>The pungent smell of a false god on your necklace held all the fish at bay. At carp bay.</span>"
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/carp/choose
