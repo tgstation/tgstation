@@ -315,6 +315,9 @@
 /datum/holiday/pirate/getStationPrefix()
 	return pick("Yarr","Scurvy","Yo-ho-ho")
 
+/datum/holiday/pirate/greet()
+	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
+
 /datum/holiday/carfreeday
 	name = CARFREEDAY
 	begin_day = 22
