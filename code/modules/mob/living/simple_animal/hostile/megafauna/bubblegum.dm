@@ -182,12 +182,13 @@ Difficulty: Hard
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay)
 	revving_charge = FALSE
-	var/movespeed = 0.7
-	walk_towards(src, T, movespeed)
-	SLEEP_CHECK_DEATH(get_dist(src, T) * movespeed)
-	walk(src, 0) // cancel the movement
-	try_bloodattack()
+	SSmovement_loop.home_onto(src, T, timeout = get_dist(src, T) * 0.1, override = TRUE)
+	RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/reset_charge)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/reset_charge()
+	UnregisterSignal(src, COMSIG_MOVELOOP_END)
 	charging = FALSE
+	try_bloodattack()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
 	var/list/targets = ListTargets()

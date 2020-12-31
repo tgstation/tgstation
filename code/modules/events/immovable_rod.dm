@@ -55,7 +55,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/mob/living/wizard
 	var/z_original = 0
-	var/destination
 	var/notify = TRUE
 	///We can designate a specific target to aim for, in which case we'll try to snipe them rather than just flying in a random direction
 	var/atom/special_target
@@ -66,23 +65,22 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	///How many people we've hit with clients
 	var/num_sentient_people_hit = 0
 
-/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
-	..()
+/obj/effect/immovablerod/Initialize(mapload, atom/end, aimed_at)
+	. = ..()
 	SSaugury.register_doom(src, 2000)
 	z_original = z
-	destination = end
 	special_target = aimed_at
 	AddElement(/datum/element/point_of_interest)
 
-	var/special_target_valid = FALSE
+	var/atom/target
 	if(special_target)
 		var/turf/T = get_turf(special_target)
 		if(T.z == z_original)
-			special_target_valid = TRUE
-	if(special_target_valid)
-		walk_towards(src, special_target, 1)
-	else if(end && end.z==z_original)
-		walk_towards(src, destination, 1)
+			target = special_target
+	if(!target && end && end.z==z_original)
+		target = end
+	if(target)
+		SSmovement_loop.start_looping(src, target, home = (!!special_target)) //Only home if you're aiming for something special
 
 /obj/effect/immovablerod/examine(mob/user)
 	. = ..()
@@ -105,18 +103,17 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			ghost.ManualFollow(src)
 
 /obj/effect/immovablerod/Moved()
+	. = ..()
 	if((z != z_original))
 		qdel(src)
+		return
 	if(special_target && loc == get_turf(special_target))
 		complete_trajectory()
-	return ..()
 
 /obj/effect/immovablerod/proc/complete_trajectory()
 	//We hit what we wanted to hit, time to go
 	special_target = null
-	destination = get_edge_target_turf(src, dir)
-	walk(src,0)
-	walk_towards(src, destination, 1)
+	SSmovement_loop.start_looping(src, get_edge_target_turf(src, dir), override = TRUE)
 
 /obj/effect/immovablerod/singularity_act()
 	return
@@ -124,35 +121,44 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/singularity_pull()
 	return
 
+/obj/effect/immovablerod/Process_Spacemove()
+	return TRUE
+
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
 
-	if(clong && prob(25))
-		x = clong.x
-		y = clong.y
 
 	if(special_target && clong == special_target)
 		complete_trajectory()
+	if(isturf(clong))
+		SSexplosions.medturf += clong
 
-	if(isturf(clong) || isobj(clong))
-		if(clong.density)
-			if(isturf(clong))
-				SSexplosions.medturf += clong
-			if(isobj(clong))
-				SSexplosions.med_mov_atom += clong
+	for(var/atom/thing in get_turf(clong))
+		if(thing == src)
+			continue
+		if(special_target && thing == special_target)
+			complete_trajectory()
+		if(istype(thing, type))
+			var/obj/effect/immovablerod/other = thing
+			visible_message("<span class='danger'>[src] collides with [other]!</span>")
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(2, get_turf(src))
+			smoke.start()
+			qdel(src)
+			qdel(thing)
 
-	else if(isliving(clong))
-		penetrate(clong)
-	else if(istype(clong, type))
-		var/obj/effect/immovablerod/other = clong
-		visible_message("<span class='danger'>[src] collides with [other]!</span>")
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(2, get_turf(src))
-		smoke.start()
-		qdel(src)
-		qdel(other)
+		else if(isobj(thing))
+			if(thing.density)
+				SSexplosions.med_mov_atom += thing
+		else if(isliving(thing))
+			penetrate(thing)
+
+/obj/effect/immovablerod/proc/chase_target(atom/chasing, timeout, delay, home)
+	if(!isatom(chasing))
+		return
+	SSmovement_loop.start_looping(src, FALSE, chasing, timeout, home, delay)
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")

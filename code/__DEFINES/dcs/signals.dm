@@ -887,6 +887,14 @@
 ///from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
 
+// Movement loop signals
+
+///from /datum/move_loop/handle_delete():
+#define COMSIG_MOVELOOP_END "loop_end"
+///from /datum/move_loop/process():
+#define COMSIG_MOVELOOP_PROCESS_CHECK "process_check"
+	#define MOVELOOP_STOP_PROCESSING (1<<0)
+
 // /datum/action signals
 
 ///from base of datum/action/proc/Trigger(): (datum/action)
