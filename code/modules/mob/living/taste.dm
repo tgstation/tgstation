@@ -4,7 +4,7 @@
 	var/last_taste_time
 	var/last_taste_text
 
-/*
+/**
  * Gets taste sensitivity of given mob
  *
  * This is used in calculating what flavours the mob can pick up,
