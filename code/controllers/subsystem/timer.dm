@@ -159,25 +159,25 @@ SUBSYSTEM_DEF(timer)
 				bucket_resolution = null // force bucket recreation
 				CRASH("Invalid timer: [get_timer_debug_string(timer)] world.time: [world.time], \
 					head_offset: [head_offset], practical_offset: [practical_offset]")
-			
+
 			timer.bucketEject() //pop the timer off of the bucket list.
-			
+
 			// Invoke callback if possible
 			if (!timer.spent)
 				timer.spent = world.time
 				callBack.InvokeAsync()
 				last_invoke_tick = world.time
-			
+
 			if (timer.flags & TIMER_LOOP) // Prepare looping timers to re-enter the queue
 				timer.spent = 0
 				timer.timeToRun = world.time + timer.wait
 				timer.bucketJoin()
 			else
 				qdel(timer)
-			
+
 			if (MC_TICK_CHECK)
 				break
-		
+
 		if (!bucket_list[practical_offset])
 			// Empty the bucket, check if anything in the secondary queue should be shifted to this bucket
 			bucket_list[practical_offset++] = null
@@ -472,7 +472,7 @@ SUBSYSTEM_DEF(timer)
 	name = "Timer: [id] (\ref[src]), TTR: [timeToRun], wait:[wait] Flags: [jointext(bitfield2list(flags, bitfield_flags), ", ")], \
 		callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), \
 		callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""]), source: [source]"
-		
+
 	// Check if this timed event should be diverted to the client time bucket, or the secondary queue
 	var/list/L
 	if (flags & TIMER_CLIENT_TIME)
@@ -584,7 +584,7 @@ SUBSYSTEM_DEF(timer)
 		return TRUE
 	//id is string
 	var/datum/timedevent/timer = SStimer.timer_id_dict[id]
-	if (timer && !timer.spent)
+	if (timer && (!timer.spent || timer.flags & TIMER_DELETE_ME))
 		qdel(timer)
 		return TRUE
 	return FALSE
