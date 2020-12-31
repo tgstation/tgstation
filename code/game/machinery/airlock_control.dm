@@ -4,7 +4,6 @@
 /obj/machinery/door/airlock
 	/// The current state of the airlock, used to construct the airlock overlays
 	var/airlock_state
-	var/id_tag
 	var/frequency
 	var/datum/radio_frequency/radio_connection
 
@@ -95,7 +94,6 @@
 
 	power_channel = AREA_USAGE_ENVIRON
 
-	var/id_tag
 	var/master_tag
 	var/frequency = FREQ_AIRLOCK_CONTROL
 

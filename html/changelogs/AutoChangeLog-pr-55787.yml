@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "You can once again put oars into lava boats in order to use them to cross lava."
