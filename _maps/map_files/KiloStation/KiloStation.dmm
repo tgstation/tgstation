@@ -70128,7 +70128,6 @@
 /area/ai_monitored/turret_protected/aisat/atmos)
 "chP" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/corner{

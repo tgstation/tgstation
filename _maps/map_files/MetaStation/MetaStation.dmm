@@ -22748,9 +22748,6 @@
 	c_tag = "Engineering - Entrance";
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bbz" = (
