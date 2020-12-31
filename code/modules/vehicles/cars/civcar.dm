@@ -104,8 +104,8 @@
 
 /obj/item/car_beacon/proc/launch_payload()
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-toLaunch.setStyle(STYLE_SEETHROUGH)
-toLaunch.delays[POD_OPENING] = 0
+	toLaunch.setStyle(STYLE_SEETHROUGH)
+	toLaunch.delays[POD_OPENING] = 0
 	new /obj/vehicle/sealed/car/civ(toLaunch)
 
 	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
