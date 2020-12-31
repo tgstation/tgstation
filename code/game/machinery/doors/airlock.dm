@@ -617,14 +617,6 @@
 			I.pixel_x = -32
 			. += I
 
-/proc/get_airlock_overlay(icon_state, icon_file)
-	var/obj/machinery/door/airlock/A
-	pass(A)	//suppress unused warning
-	var/list/airlock_overlays = A.airlock_overlays
-	var/iconkey = "[icon_state][icon_file]"
-	if((!(. = airlock_overlays[iconkey])))
-		. = airlock_overlays[iconkey] = mutable_appearance(icon_file, icon_state)
-
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
 		if("opening")
