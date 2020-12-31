@@ -113971,7 +113971,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "vVy" = (
 /obj/effect/spawner/structure/window/reinforced,
