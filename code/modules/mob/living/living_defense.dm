@@ -224,7 +224,7 @@
 	return TRUE
 
 
-/mob/living/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/attack_paw(mob/living/carbon/human/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return FALSE
@@ -401,7 +401,6 @@
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()
-	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 
 /**
  * Does a slap animation on an atom

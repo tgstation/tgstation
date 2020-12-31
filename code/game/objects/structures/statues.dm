@@ -487,7 +487,8 @@ Moving interrupts
 		return
 	if(!target_appearance_with_filters)
 		target_appearance_with_filters = new(current_target)
-		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER
+		// KEEP_APART in case carving block gets KEEP_TOGETHER from somewhere like material texture filters.
+		target_appearance_with_filters.appearance_flags |= KEEP_TOGETHER | KEEP_APART
 		//Doesn't use filter helpers because MAs aren't atoms
 		target_appearance_with_filters.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	completion = value
@@ -549,6 +550,7 @@ Moving interrupts
 	content_ma.pixel_x = 0
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
+	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	update_icon()
 

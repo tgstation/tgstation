@@ -201,28 +201,10 @@
 	set_vehicle_dir_offsets(EAST, -18, 0)
 	set_vehicle_dir_offsets(WEST, -18, 0)
 
-
-/datum/component/riding/vehicle/car
-	vehicle_move_delay = 1
-	COOLDOWN_DECLARE(enginesound_cooldown)
-
-/datum/component/riding/vehicle/car/handle_ride(mob/user, direction)
-	. = ..()
-	if(!.)
-		return
-	var/obj/vehicle/sealed/car/car_parent = parent
-	if(!COOLDOWN_FINISHED(src, enginesound_cooldown))
-		return
-	COOLDOWN_START(src, enginesound_cooldown, car_parent.engine_sound_length)
-	playsound(car_parent, car_parent.engine_sound, 100, TRUE)
-
-/datum/component/riding/vehicle/car/clowncar
-	keytype = /obj/item/bikehorn
-
-/datum/component/riding/vehicle/car/speedwagon
+/datum/component/riding/vehicle/speedwagon
 	vehicle_move_delay = 0
 
-/datum/component/riding/vehicle/car/speedwagon/handle_specials()
+/datum/component/riding/vehicle/speedwagon/handle_specials()
 	. = ..()
 	set_riding_offsets(1, list(TEXT_NORTH = list(-10, -4), TEXT_SOUTH = list(16, 3), TEXT_EAST = list(-4, 30), TEXT_WEST = list(4, -3)))
 	set_riding_offsets(2, list(TEXT_NORTH = list(19, -5, 4), TEXT_SOUTH = list(-13, 3, 4), TEXT_EAST = list(-4, -3, 4.1), TEXT_WEST = list(4, 28, 3.9)))

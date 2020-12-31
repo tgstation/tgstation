@@ -23,7 +23,7 @@
 	agent = "advance microbes"
 	max_stages = 5
 	spread_text = "Unknown"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human)
 
 	// NEW VARS
 	var/list/properties = list()

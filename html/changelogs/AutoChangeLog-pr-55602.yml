@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - balance: "Uranium golems now no longer irradiate things around them passively."
-  - balance: "Uranium golems now irradiate targets they punch, while also doing burn damage with punches. They only hit as hard a human, however."
-  - balance: "Uranium golems are significantly resistant to brute, but less resistant to all other damage types compared to typical golems."
-  - balance: "Uranium golems release their radiation pulse when hit by attacks. Or objects."
-  - rscadd: "Uranium golems can now wear engineering jumpsuits, work boots and wintercoats."
