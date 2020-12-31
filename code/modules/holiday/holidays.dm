@@ -320,7 +320,7 @@
 /datum/holiday/carfreeday/greet()
 	return "Car-free day! Damn, and to think I was saving up for one."
 
-/datum/holiday/pirate/getStationPrefix()
+/datum/holiday/carfreeday/getStationPrefix()
 	return pick("Vroom","Jam","Crash")
 
 /datum/holiday/programmers
