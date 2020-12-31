@@ -14,7 +14,8 @@
 
 /obj/vehicle/sealed/car/generate_actions()
 	. = ..()
-	initialize_controller_action_type(/datum/action/vehicle/sealed/remove_key, VEHICLE_CONTROL_DRIVE)
+	if(key_type)
+		initialize_controller_action_type(/datum/action/vehicle/sealed/remove_key, VEHICLE_CONTROL_DRIVE)
 	if(car_traits & CAN_KIDNAP)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
@@ -99,3 +100,4 @@
 	else
 		after_move(direction)
 		return step(src, direction)
+

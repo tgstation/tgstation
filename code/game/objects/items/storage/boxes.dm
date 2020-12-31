@@ -129,6 +129,9 @@
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
+	if(SSevents.holidays && SSevents.holidays[CARFREEDAY])
+		new /obj/item/car_beacon(src)
+
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
@@ -830,6 +833,9 @@
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(SSevents.holidays && SSevents.holidays[CARFREEDAY])
+		new /obj/item/car_beacon(src)
 
 /obj/item/storage/box/rubbershot
 	name = "box of rubber shots"

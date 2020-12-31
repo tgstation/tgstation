@@ -3231,6 +3231,7 @@
 #include "code\modules\vehicles\vehicle_key.dm"
 #include "code\modules\vehicles\wheelchair.dm"
 #include "code\modules\vehicles\cars\car.dm"
+#include "code\modules\vehicles\cars\civcar.dm"
 #include "code\modules\vehicles\cars\clowncar.dm"
 #include "code\modules\vehicles\mecha\_mecha.dm"
 #include "code\modules\vehicles\mecha\mech_bay.dm"

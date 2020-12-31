@@ -19,6 +19,7 @@
 #define APRIL_FOOLS				"April Fool's Day"
 #define EASTER					"Easter"
 #define HALLOWEEN				"Halloween"
+#define CARFREEDAY				"Car-Free Day"
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
 #define GARBAGEDAY				"Garbage Day"
