@@ -296,14 +296,8 @@
 					selectedtrait.on_grow(src)
 	return
 
-/obj/machinery/hydroponics/update_icon()
-	//Refreshes the icon and sets the luminosity
+/obj/machinery/hydroponics/update_appearance(updates)
 	. = ..()
-
-	if(myseed)
-		update_icon_plant()
-		update_icon_lights()
-
 	if(self_sustaining)
 		set_light(3)
 	else if(myseed?.get_gene(/datum/plant_gene/trait/glow))
@@ -312,14 +306,16 @@
 	else
 		set_light(0)
 
-	return
-
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
+	if(myseed)
+		. += update_plant_overlay()
+		. += update_status_light_overlays()
+
 	if(self_sustaining && self_sustaining_overlay_icon_state)
 		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
 
-/obj/machinery/hydroponics/proc/update_icon_plant()
+/obj/machinery/hydroponics/proc/update_plant_overlay()
 	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
 	if(dead)
 		plant_overlay.icon_state = myseed.icon_dead
@@ -331,19 +327,20 @@
 	else
 		var/t_growthstate = clamp(round((age / myseed.maturation) * myseed.growthstages), 1, myseed.growthstages)
 		plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
-	add_overlay(plant_overlay)
+	return plant_overlay
 
-/obj/machinery/hydroponics/proc/update_icon_lights()
+/obj/machinery/hydroponics/proc/update_status_light_overlays()
+	. = list()
 	if(waterlevel <= 10)
-		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowwater3"))
+		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowwater3")
 	if(reagents.total_volume <= 2)
-		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3"))
+		overlays += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3")
 	if(plant_health <= (myseed.endurance / 2))
-		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowhealth3"))
+		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowhealth3")
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_alert3"))
+		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_alert3")
 	if(harvest)
-		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3"))
+		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3")
 
 
 /obj/machinery/hydroponics/examine(user)
@@ -914,7 +911,7 @@
 	if(self_sustaining)
 		add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/hydroponics/soil/update_icon_lights()
+/obj/machinery/hydroponics/soil/update_status_light_overlays()
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
