@@ -90,7 +90,7 @@
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(turned_on && prob(throw_stun_chance) && iscarbon(hit_atom))
+	if(turned_on && prob(throw_stun_chance) && isliving(hit_atom) && !iscyborg(hit_atom))
 		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
