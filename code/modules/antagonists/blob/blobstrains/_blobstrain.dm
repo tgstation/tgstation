@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	overmind.color = complementary_color
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
-		B.update_icon()
+		B.update_appearance()
 	for(var/BLO in overmind.blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO
 		BM.update_icons() //If it's getting a new strain, tell it what it does!

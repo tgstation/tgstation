@@ -62,7 +62,7 @@
 	idle_threads = list()
 	if(looping_sound)
 		soundloop = new(list(src), enabled)
-	update_icon()
+	update_appearance()
 
 /obj/item/modular_computer/Destroy()
 	kill_program(forced = TRUE)
@@ -168,10 +168,8 @@
 	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon_state()
-	if(!enabled)
-		icon_state = icon_state_unpowered
-	else
-		icon_state = icon_state_powered
+	. = ..()
+	icon_state = enabled ? icon_state_powered : icon_state_unpowered
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
@@ -217,7 +215,7 @@
 		if(looping_sound)
 			soundloop.start()
 		enabled = 1
-		update_icon()
+		update_appearance()
 		ui_interact(user)
 		return TRUE
 	else // Unpowered
@@ -353,7 +351,7 @@
 	var/mob/user = usr
 	if(user && istype(user))
 		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-	update_icon()
+	update_appearance()
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
@@ -379,7 +377,7 @@
 	if(loud)
 		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
 	enabled = 0
-	update_icon()
+	update_appearance()
 
 /**
  * Toggles the computer's flashlight, if it has one.

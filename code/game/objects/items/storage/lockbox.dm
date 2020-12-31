@@ -60,12 +60,12 @@
 /obj/item/storage/lockbox/Entered()
 	. = ..()
 	open = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/lockbox/Exited()
 	. = ..()
 	open = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
@@ -114,7 +114,7 @@
 	if(user.canUseTopic(src, BE_CLOSE))
 		if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 			open = (open ? FALSE : TRUE)
-			update_icon()
+			update_appearance()
 		..()
 
 /obj/item/storage/lockbox/medal/PopulateContents()
@@ -138,6 +138,7 @@
 			icon_state += "open"
 		if(broken)
 			icon_state += "+b"
+	return ..()
 
 /obj/item/storage/lockbox/medal/update_overlays()
 	. = ..()

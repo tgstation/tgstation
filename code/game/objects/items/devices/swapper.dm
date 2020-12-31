@@ -16,7 +16,7 @@
 /obj/item/swapper/Destroy()
 	if(linked_swapper)
 		linked_swapper.linked_swapper = null //*inception music*
-		linked_swapper.update_icon()
+		linked_swapper.update_appearance()
 		linked_swapper = null
 	return ..()
 
@@ -25,6 +25,7 @@
 		icon_state = "swapper-linked"
 	else
 		icon_state = "swapper"
+	return ..()
 
 /obj/item/swapper/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/swapper))
@@ -38,8 +39,8 @@
 		to_chat(user, "<span class='notice'>You establish a quantum link between the two devices.</span>")
 		linked_swapper = other_swapper
 		other_swapper.linked_swapper = src
-		update_icon()
-		linked_swapper.update_icon()
+		update_appearance()
+		linked_swapper.update_appearance()
 	else
 		return ..()
 
@@ -74,9 +75,9 @@
 	to_chat(user, "<span class='notice'>You break the current quantum link.</span>")
 	if(!QDELETED(linked_swapper))
 		linked_swapper.linked_swapper = null
-		linked_swapper.update_icon()
+		linked_swapper.update_appearance()
 		linked_swapper = null
-	update_icon()
+	update_appearance()
 
 //Gets the topmost teleportable container
 /obj/item/swapper/proc/get_teleportable_container()

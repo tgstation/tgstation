@@ -7,6 +7,7 @@
 	var/iscopy = FALSE
 
 /obj/item/paper/carbon/update_icon_state()
+	. = ..()
 	if(iscopy)
 		icon_state = "cpaper"
 	else if(copied)

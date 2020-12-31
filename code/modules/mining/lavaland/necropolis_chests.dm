@@ -591,6 +591,7 @@
 		icon_state = "potionflask"
 	else
 		icon_state = "potionflask_empty"
+	return ..()
 
 /datum/reagent/flightpotion
 	name = "Flight Potion"
@@ -1107,13 +1108,13 @@
 		var/obj/item/hierophant_club/club = src.target
 		if(istype(club))
 			club.blink_charged = FALSE
-			club.update_icon()
+			club.update_appearance()
 
 /datum/action/innate/dash/hierophant/charge()
 	var/obj/item/hierophant_club/club = target
 	if(istype(club))
 		club.blink_charged = TRUE
-		club.update_icon()
+		club.update_appearance()
 
 	current_charges = clamp(current_charges + 1, 0, max_charges)
 	holder.update_action_buttons_icon()
@@ -1192,6 +1193,7 @@
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
+	return ..()
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if(!user.is_holding(src)) //you need to hold the staff to teleport

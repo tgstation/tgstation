@@ -28,7 +28,7 @@
 	. = ..()
 	if(starting_tape_type)
 		mytape = new starting_tape_type(src)
-	update_icon()
+	update_appearance()
 
 
 /obj/item/taperecorder/examine(mob/user)
@@ -65,7 +65,7 @@
 			return
 		mytape = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		update_icon()
+		update_appearance()
 
 
 /obj/item/taperecorder/proc/eject(mob/user)
@@ -74,7 +74,7 @@
 		stop()
 		user.put_in_hands(mytape)
 		mytape = null
-		update_icon()
+		update_appearance()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.ruin() //Fires destroy the tape
@@ -114,6 +114,7 @@
 		icon_state = "taperecorder_playing"
 	else
 		icon_state = "taperecorder_idle"
+	return ..()
 
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list())
@@ -138,7 +139,7 @@
 	if(mytape.used_capacity < mytape.max_capacity)
 		to_chat(usr, "<span class='notice'>Recording started.</span>")
 		recording = 1
-		update_icon()
+		update_appearance()
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
@@ -148,7 +149,7 @@
 			used++
 			sleep(10)
 		recording = FALSE
-		update_icon()
+		update_appearance()
 	else
 		to_chat(usr, "<span class='notice'>The tape is full.</span>")
 
@@ -170,7 +171,7 @@
 		playing = FALSE
 		var/turf/T = get_turf(src)
 		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
-	update_icon()
+	update_appearance()
 
 
 /obj/item/taperecorder/verb/play()
@@ -187,7 +188,7 @@
 		return
 
 	playing = 1
-	update_icon()
+	update_appearance()
 	to_chat(usr, "<span class='notice'>Playing started.</span>")
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
@@ -212,7 +213,7 @@
 		i++
 
 	playing = FALSE
-	update_icon()
+	update_appearance()
 
 
 /obj/item/taperecorder/attack_self(mob/user)

@@ -42,18 +42,21 @@
 	attack(user,user)
 	return FIRELOSS
 
-/obj/item/assembly/flash/update_icon(flash = FALSE)
-	cut_overlays()
-	attached_overlays = list()
-	if(burnt_out)
-		add_overlay("flashburnt")
-		attached_overlays += "flashburnt"
+/obj/item/assembly/flash/update_icon(updates=ALL, flash = FALSE)
+	. = ..()
 	if(flash)
 		add_overlay(flashing_overlay)
 		attached_overlays += flashing_overlay
 		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 	if(holder)
-		holder.update_icon()
+		holder.update_icon(updates)
+
+/obj/item/assembly/flash/update_overlays()
+	attached_overlays = list()
+	. = ..()
+	if(burnt_out)
+		. += "flashburnt"
+		attached_overlays += "flashburnt"
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -64,7 +67,7 @@
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!burnt_out)
 		burnt_out = TRUE
-		update_icon()
+		update_appearance()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
@@ -113,7 +116,7 @@
 	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
 	flash_recharge()
-	update_icon(TRUE)
+	update_icon(ALL, TRUE)
 	if(user && !clown_check(user))
 		return FALSE
 	return TRUE
@@ -233,7 +236,7 @@
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
 		log_combat(user, R, "flashed", src)
-		update_icon(1)
+		update_icon(ALL, TRUE)
 		R.Paralyze(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 		R.add_confusion(min(5, diff))
@@ -338,7 +341,7 @@
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	update_icon(1)
+	update_icon(ALL, TRUE)
 	return TRUE
 
 

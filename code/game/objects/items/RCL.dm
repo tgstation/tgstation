@@ -64,7 +64,7 @@
 			loaded.amount += transfer_amount
 		else
 			return
-		update_icon()
+		update_appearance()
 		to_chat(user, "<span class='notice'>You add the pipe cleaners to [src]. It now contains [loaded.amount].</span>")
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!loaded)
@@ -96,7 +96,7 @@
 			loaded.forceMove(get_turf(user))
 
 		loaded = null
-		update_icon()
+		update_appearance()
 	else
 		..()
 
@@ -130,9 +130,10 @@
 		else
 			icon_state = "rcl-0"
 			inhand_icon_state = "rcl-0"
+	return ..()
 
 /obj/item/rcl/proc/is_empty(mob/user, loud = 1)
-	update_icon()
+	update_appearance()
 	if(!loaded || !loaded.amount)
 		if(loud)
 			to_chat(user, "<span class='notice'>The last of the pipe cleaners unreel from [src].</span>")
@@ -214,7 +215,7 @@
 		loaded.update_icon()
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
-	update_icon()
+	update_appearance()
 
 
 //searches the current tile for a stub pipe_cleaner of the same colour
@@ -304,11 +305,11 @@
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
-	update_icon()
+	update_appearance()
 
 /obj/item/rcl/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/rcl/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/rcl_col))
@@ -346,3 +347,4 @@
 		else
 			icon_state = "rclg-1"
 			inhand_icon_state = "rclg-1"
+	return ..()

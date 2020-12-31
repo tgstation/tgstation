@@ -29,6 +29,7 @@
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
 	icon_state = "psiphon:[on]"
+	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_overlays()
 	. = ..()
@@ -74,7 +75,7 @@
 		if(prob(100 / severity))
 			direction = PUMP_OUT
 		target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
-		update_icon()
+		update_appearance()
 
 /obj/machinery/portable_atmospherics/pump/replace_tank(mob/living/user, close_valve)
 	. = ..()
@@ -82,7 +83,7 @@
 		if(close_valve)
 			if(on)
 				on = FALSE
-				update_icon()
+				update_appearance()
 		else if(on && holding && direction == PUMP_OUT)
 			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
@@ -156,4 +157,4 @@
 			if(holding)
 				replace_tank(usr, FALSE)
 				. = TRUE
-	update_icon()
+	update_appearance()

@@ -237,4 +237,4 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			dat += " above [recipe.required_temp] degrees"
 	dat += "."
 	info = dat.Join("")
-	update_icon()
+	update_appearance()

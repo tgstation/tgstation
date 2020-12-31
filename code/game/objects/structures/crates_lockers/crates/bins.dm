@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/bin/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/crate/bin/update_overlays()
 	. = ..()
@@ -27,7 +27,7 @@
 		to_chat(user, "<span class='notice'>You fill the bag.</span>")
 		for(var/obj/item/O in src)
 			SEND_SIGNAL(T, COMSIG_TRY_STORAGE_INSERT, O, user, TRUE)
-		T.update_icon()
+		T.update_appearance()
 		do_animate()
 		return TRUE
 	else
@@ -40,4 +40,4 @@
 
 /obj/structure/closet/crate/bin/proc/do_close()
 	playsound(loc, close_sound, 15, TRUE, -3)
-	update_icon()
+	update_appearance()

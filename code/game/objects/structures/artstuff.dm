@@ -118,7 +118,7 @@
 			var/y = text2num(params["y"])
 			grid[x][y] = color
 			used = TRUE
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("finalize")
 			. = TRUE
@@ -154,7 +154,7 @@
 		CRASH("Error generating painting png : [result]")
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/item/canvas/proc/get_data_string()
 	var/list/data = list()
@@ -241,6 +241,7 @@
 	desc = "Art or \"Art\"? You decide. Use wirecutters to remove the painting."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
+	base_icon_state = "frame"
 	custom_materials = list(/datum/material/wood = 2000)
 	buildable_sign = FALSE
 	var/obj/item/canvas/C
@@ -279,7 +280,7 @@
 		C.forceMove(drop_location())
 		C = null
 		to_chat(user, "<span class='notice'>You remove the painting from the frame.</span>")
-		update_icon()
+		update_appearance()
 		return TRUE
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user,obj/item/canvas/new_canvas)
@@ -288,7 +289,7 @@
 		if(!C.finalized)
 			C.finalize(user)
 		to_chat(user,"<span class='notice'>You frame [C].</span>")
-	update_icon()
+	update_appearance()
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
 	if(C.painting_name == initial(C.painting_name))
@@ -296,10 +297,7 @@
 
 /obj/structure/sign/painting/update_icon_state()
 	. = ..()
-	if(C?.generated_icon)
-		icon_state = "frame-overlay"
-	else
-		icon_state = "frame-empty"
+	icon_state = "[base_icon_state]-[C?.generated_icon ? "overlay" : "empty"]"
 
 
 /obj/structure/sign/painting/update_overlays()
@@ -344,7 +342,7 @@
 	new_canvas.painting_name = title
 	new_canvas.author_ckey = author
 	C = new_canvas
-	update_icon()
+	update_appearance()
 
 /obj/structure/sign/painting/proc/save_persistent()
 	if(!persistence_id || !C)

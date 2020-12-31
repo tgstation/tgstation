@@ -4,6 +4,7 @@
 	circuit = /obj/item/circuitboard/machine/nanite_chamber
 	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
+	base_icon_state = "nanite_chamber"
 	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
@@ -38,7 +39,7 @@
 	busy = status
 	busy_message = message
 	busy_icon_state = working_icon
-	update_icon()
+	update_appearance()
 
 /obj/machinery/nanite_chamber/proc/set_safety(threshold)
 	if(!occupant)
@@ -107,13 +108,11 @@
 /obj/machinery/nanite_chamber/update_icon_state()
 	//running and someone in there
 	if(occupant)
-		if(busy)
-			icon_state = busy_icon_state
-		else
-			icon_state = initial(icon_state) + "_occupied"
-	else
-		//running
-		icon_state = initial(icon_state) + (state_open ? "_open" : "")
+		icon_state = busy ? busy_icon_state : "[base_icon_state]_occupied"
+		return
+	//running
+	icon_state = "[base_icon_state][state_open ? "_open" : null]"
+	return ..()
 
 /obj/machinery/nanite_chamber/update_overlays()
 	. = ..()
@@ -188,7 +187,7 @@
 
 /obj/machinery/nanite_chamber/attackby(obj/item/I, mob/user, params)
 	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
-		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
+		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
 	if(default_pry_open(I))

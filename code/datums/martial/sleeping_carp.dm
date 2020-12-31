@@ -161,6 +161,7 @@
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bostaff0"
+	base_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
@@ -188,7 +189,8 @@
 	wielded = FALSE
 
 /obj/item/staff/bostaff/update_icon_state()
-	icon_state = "bostaff0"
+	. = ..()
+	icon_state = "[base_icon_state]0"
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)

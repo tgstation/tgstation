@@ -93,7 +93,7 @@
 	if(beegent)
 		bee_to_eat.beegent = beegent
 		bee_to_eat.reagents.add_reagent(beegent.type, 5)
-	bee_to_eat.update_icon()
+	bee_to_eat.update_appearance()
 	beegent = null
 	..()
 
@@ -356,10 +356,9 @@
 	. = ..()
 	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
 
-/obj/item/trash/bee/update_icon()
+/obj/item/trash/bee/update_overlays()
 	. = ..()
-	cut_overlays()
 	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
 	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
-	add_overlay(body_overlay)
+	. += body_overlay
 

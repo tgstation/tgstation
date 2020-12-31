@@ -28,7 +28,7 @@
 			var/obj/item/organ/appendix/A = affected_mob.getorgan(/obj/item/organ/appendix)
 			if(A)
 				A.inflamed = 1
-				A.update_icon()
+				A.update_appearance()
 			if(prob(3))
 				to_chat(affected_mob, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 5)

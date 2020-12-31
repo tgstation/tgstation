@@ -4,6 +4,7 @@
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
+	base_icon_state = "hygienebot"
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -39,7 +40,7 @@
 
 /mob/living/simple_animal/bot/hygienebot/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	var/datum/job/janitor/J = new/datum/job/janitor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
@@ -65,10 +66,7 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	if(on)
-		icon_state = "hygienebot-on"
-	else
-		icon_state = "hygienebot"
+	icon_state = "[base_icon_state][on ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
@@ -203,11 +201,11 @@
 
 /mob/living/simple_animal/bot/hygienebot/proc/start_washing()
 	washing = TRUE
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/hygienebot/proc/stop_washing()
 	washing = FALSE
-	update_icon()
+	update_appearance()
 
 
 

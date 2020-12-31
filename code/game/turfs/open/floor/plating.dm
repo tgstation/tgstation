@@ -40,11 +40,10 @@
 	else
 		icon_plating = initial(icon_state)
 
-/turf/open/floor/plating/update_icon()
-	if(!..())
-		return
+/turf/open/floor/plating/update_icon_state()
+	. = ..()
 	if(!broken && !burnt)
-		icon_state = icon_plating //Because asteroids are 'platings' too.
+		icon_state = icon_plating
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())

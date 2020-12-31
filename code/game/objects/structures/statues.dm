@@ -503,7 +503,7 @@ Moving interrupts
 			remove_filter("partial_uncover")
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
-	update_icon()
+	update_appearance()
 
 
 /// Returns a list of preset statues carvable from this block depending on the custom materials
@@ -552,7 +552,7 @@ Moving interrupts
 	content_ma.alpha = 255
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
-	update_icon()
+	update_appearance()
 
 /obj/structure/statue/custom/update_overlays()
 	. = ..()

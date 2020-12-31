@@ -28,6 +28,7 @@
 
 /obj/item/powersink/update_icon_state()
 	icon_state = "powersink[mode == OPERATING]"
+	return ..()
 
 /obj/item/powersink/set_anchored(anchorvalue)
 	. = ..()
@@ -57,7 +58,7 @@
 			set_anchored(TRUE)
 
 	mode = value
-	update_icon()
+	update_appearance()
 	set_light(0)
 
 /obj/item/powersink/attackby(obj/item/I, mob/user, params)

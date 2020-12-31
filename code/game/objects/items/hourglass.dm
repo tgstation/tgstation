@@ -34,6 +34,7 @@
 		icon_state = "hourglass_active"
 	else
 		icon_state = "hourglass_idle"
+	return ..()
 
 /obj/item/hourglass/proc/start()
 	finish_time = world.time + time
@@ -54,7 +55,7 @@
 	countdown.stop()
 	finish_time = null
 	animate(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/hourglass/proc/finish()
 	visible_message("<span class='notice'>[src] stops.</span>")

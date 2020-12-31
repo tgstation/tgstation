@@ -55,4 +55,4 @@
 			icon_state = "docs_[C.crayon_color]"
 			forgedseal = C.crayon_color
 			to_chat(user, "<span class='notice'>You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?</span>")
-			update_icon()
+			update_appearance()

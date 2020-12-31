@@ -368,6 +368,7 @@
 
 /obj/item/sharpener/cult/update_icon_state()
 	icon_state = "cult_sharpener[used ? "_used" : ""]"
+	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -674,6 +675,7 @@
 
 /obj/item/cult_spear/update_icon_state()
 	icon_state = "bloodspear0"
+	return ..()
 
 /obj/item/cult_spear/Destroy()
 	if(spear_act)

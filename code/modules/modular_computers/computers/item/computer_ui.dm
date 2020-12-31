@@ -111,7 +111,7 @@
 			active_program.program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
 
 			active_program = null
-			update_icon()
+			update_appearance()
 			if(user && istype(user))
 				ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 
@@ -150,7 +150,7 @@
 				active_program = P
 				P.alert_pending = FALSE
 				idle_threads.Remove(P)
-				update_icon()
+				update_appearance()
 				return
 
 			var/obj/item/computer_hardware/processor_unit/PU = all_components[MC_CPU]
@@ -165,7 +165,7 @@
 			if(P.run_program(user))
 				active_program = P
 				P.alert_pending = FALSE
-				update_icon()
+				update_appearance()
 			return 1
 
 		if("PC_toggle_light")

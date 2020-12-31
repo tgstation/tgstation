@@ -8,15 +8,13 @@
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
 	icon_state = "empty_blastcannon"
 	inhand_icon_state = "blastcannon_empty"
+	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
 	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
-	/// The icon state used when this is loaded with a bomb.
-	var/icon_state_loaded = "loaded_blastcannon"
-
 	/// The TTV this contains that will be used to create the projectile
 	var/obj/item/transfer_valve/bomb
 	/// Additional volume added to the gasmixture used to calculate the bombs power.
@@ -57,12 +55,12 @@
 		bomb = null
 		name = initial(name)
 		desc = initial(desc)
-	update_icon()
+	update_appearance()
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
 	. = ..()
-	icon_state = bomb ? icon_state_loaded : initial(icon_state)
+	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
 	if(!istype(bomb_to_attach))
@@ -79,7 +77,7 @@
 	bomb = bomb_to_attach
 	name = "blast cannon"
 	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /// Handles the bomb power calculations
@@ -112,7 +110,7 @@
 	var/power =  bomb ? calculate_bomb() : debug_power
 	power = min(power, max_power)
 	QDEL_NULL(bomb)
-	update_icon()
+	update_appearance()
 
 	var/heavy = power * 0.25
 	var/medium = power * 0.5

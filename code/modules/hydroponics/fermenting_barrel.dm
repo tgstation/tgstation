@@ -66,13 +66,14 @@
 		reagents.flags |= DRAINABLE
 		reagents.flags &= ~(REFILLABLE)
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
-	update_icon()
+	update_appearance()
 
 /obj/structure/fermenting_barrel/update_icon_state()
 	if(open)
 		icon_state = "barrel_open"
 	else
 		icon_state = "barrel"
+	return ..()
 
 /datum/crafting_recipe/fermenting_barrel
 	name = "Wooden Barrel"

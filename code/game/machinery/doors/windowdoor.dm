@@ -51,10 +51,8 @@
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
-	if(density)
-		icon_state = base_state
-	else
-		icon_state = "[base_state]open"
+	. = ..()
+	icon_state = "[base_state][density ? null : "open"]"
 
 /obj/machinery/door/window/proc/open_and_close()
 	if(!open())
@@ -254,7 +252,7 @@
 						WA.state= "02"
 						WA.setDir(dir)
 						WA.ini_dir = dir
-						WA.update_icon()
+						WA.update_appearance()
 						WA.created_name = name
 
 						if(obj_flags & EMAGGED)

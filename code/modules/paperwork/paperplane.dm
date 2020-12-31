@@ -30,7 +30,7 @@
 		newPaper.forceMove(src)
 	else
 		internalPaper = new(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/paperplane/handle_atom_del(atom/A)
 	if(A == internalPaper)
@@ -86,7 +86,7 @@
 
 	else if(istype(P, /obj/item/stamp)) 	//we don't randomize stamps on a paperplane
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
-		update_icon()
+		update_appearance()
 		add_fingerprint(user)
 		return
 

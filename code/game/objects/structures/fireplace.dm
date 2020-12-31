@@ -112,7 +112,7 @@
 	playsound(src, 'sound/effects/comfyfire.ogg',50,FALSE, FALSE, TRUE)
 	var/turf/T = get_turf(src)
 	T.hotspot_expose(700, 2.5 * delta_time)
-	update_icon()
+	update_appearance()
 	adjust_light()
 
 /obj/structure/fireplace/extinguish()
@@ -142,11 +142,11 @@
 	desc = "A large stone brick fireplace, warm and cozy."
 	flame_expiry_timer = world.time + fuel_added
 	fuel_added = 0
-	update_icon()
+	update_appearance()
 	adjust_light()
 
 /obj/structure/fireplace/proc/put_out()
 	lit = FALSE
-	update_icon()
+	update_appearance()
 	adjust_light()
 	desc = initial(desc)

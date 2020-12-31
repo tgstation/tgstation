@@ -39,6 +39,7 @@
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
+	return ..()
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(cooldown == 1)
@@ -66,7 +67,7 @@
 /obj/machinery/transformer/process()
 	if(cooldown && (cooldown_timer <= world.time))
 		cooldown = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -81,7 +82,7 @@
 	// Activate the cooldown
 	cooldown = 1
 	cooldown_timer = world.time + cooldown_duration
-	update_icon()
+	update_appearance()
 
 	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
 	H.emote("scream") // It is painful

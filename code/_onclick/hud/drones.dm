@@ -26,7 +26,7 @@
 		if(inv.slot_id)
 			inv.hud = src
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_icon()
+			inv.update_appearance()
 
 
 /datum/hud/dextrous/drone/persistent_inventory_update()

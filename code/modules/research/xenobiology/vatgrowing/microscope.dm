@@ -78,4 +78,4 @@
 			current_dish.forceMove(get_turf(src))
 			current_dish = null
 			. = TRUE
-	update_icon()
+	update_appearance()

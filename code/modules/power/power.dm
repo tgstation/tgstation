@@ -184,7 +184,7 @@
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
 		set_machine_stat(machine_stat | NOPOWER)
-	update_icon()
+	update_appearance()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
@@ -269,7 +269,7 @@
 
 /proc/update_cable_icons_on_turf(turf/T)
 	for(var/obj/structure/cable/C in T.contents)
-		C.update_icon()
+		C.update_appearance()
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling
@@ -422,7 +422,7 @@
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.machinery_layer & machinery_layer)
-			C.update_icon()
+			C.update_appearance()
 			return C
 	return null
 

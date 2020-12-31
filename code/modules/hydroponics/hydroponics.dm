@@ -52,6 +52,8 @@
 	var/mob/lastuser
 	///If the tray generates nutrients and water on its own
 	var/self_sustaining = FALSE
+	///The icon state for the overlay used to represent that this tray is self-sustaining.
+	var/self_sustaining_overlay_icon_state = "gaia_blessing"
 
 /obj/machinery/hydroponics/Initialize()
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -133,7 +135,7 @@
 		visible_message("<span class='warning'>[name]'s auto-grow functionality shuts off!</span>")
 		idle_power_usage = 0
 		self_sustaining = FALSE
-		update_icon()
+		update_appearance()
 
 	else if(self_sustaining)
 		adjustWater(rand(1,2) * delta_time * 0.5)
@@ -285,7 +287,7 @@
 				weedinvasion()
 			needs_update = 1
 		if (needs_update)
-			update_icon()
+			update_appearance()
 
 		if(myseed && prob(5 * (11-myseed.production)))
 			for(var/g in myseed.genes)
@@ -296,27 +298,26 @@
 
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
-	cut_overlays()
-
-	if(self_sustaining)
-		if(istype(src, /obj/machinery/hydroponics/soil))
-			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
-		else
-			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
-		set_light(3)
+	. = ..()
 
 	if(myseed)
 		update_icon_plant()
 		update_icon_lights()
 
-	if(!self_sustaining)
-		if(myseed?.get_gene(/datum/plant_gene/trait/glow))
-			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-			set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
-		else
-			set_light(0)
+	if(self_sustaining)
+		set_light(3)
+	else if(myseed?.get_gene(/datum/plant_gene/trait/glow))
+		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	else
+		set_light(0)
 
 	return
+
+/obj/machinery/hydroponics/update_overlays()
+	. = ..()
+	if(self_sustaining && self_sustaining_overlay_icon_state)
+		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
 
 /obj/machinery/hydroponics/proc/update_icon_plant()
 	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
@@ -405,7 +406,7 @@
 	harvest = FALSE
 	weedlevel = 0 // Reset
 	pestlevel = 0 // Reset
-	update_icon()
+	update_appearance()
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 	TRAY_NAME_UPDATE
 
@@ -439,7 +440,7 @@
 	weedlevel = 0 // Reset
 
 	sleep(5) // Wait a while
-	update_icon()
+	update_appearance()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
 	TRAY_NAME_UPDATE
 
@@ -459,7 +460,7 @@
 		weedlevel = 0 // Reset
 
 		sleep(5) // Wait a while
-		update_icon()
+		update_appearance()
 		visible_message("<span class='warning'>The mutated weeds in [src] spawn some [myseed.plantname]!</span>")
 		TRAY_NAME_UPDATE
 	else
@@ -475,7 +476,7 @@
 	pestlevel = 0 // Pests die
 	lastproduce = 0
 	if(!dead)
-		update_icon()
+		update_appearance()
 		dead = TRUE
 
 /**
@@ -571,11 +572,11 @@
 			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
-				H.update_icon()
+				H.update_appearance()
 				return 1
-			H.update_icon()
+			H.update_appearance()
 		if(reagent_source) // If the source wasn't composted and destroyed
-			reagent_source.update_icon()
+			reagent_source.update_appearance()
 		return 1
 
 	else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
@@ -591,7 +592,7 @@
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
-			update_icon()
+			update_appearance()
 			return
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
@@ -627,7 +628,7 @@
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
-			update_icon()
+			update_appearance()
 			return
 		else
 			to_chat(user, "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
@@ -682,7 +683,7 @@
 		myseed.reagents_from_genes()
 		adjustHealth(-15)
 		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], leaving the plant looking weaker.</span>")
-		update_icon()
+		update_appearance()
 		return
 
 	else if(istype(O, /obj/item/graft))
@@ -725,7 +726,7 @@
 				name = initial(name)
 				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
-			update_icon()
+			update_appearance()
 			return
 	else if(istype(O, /obj/item/storage/part_replacer))
 		RefreshParts()
@@ -755,7 +756,7 @@
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.endurance = (myseed.endurance/2)
 			flowergun.cell.use(flowergun.cell.charge)
-			flowergun.update_icon()
+			flowergun.update_appearance()
 			to_chat(user, "<span class='notice'>[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!</span>")
 			return
 	else
@@ -781,7 +782,7 @@
 		to_chat(user, "<span class='notice'>You remove the dead plant from [src].</span>")
 		qdel(myseed)
 		myseed = null
-		update_icon()
+		update_appearance()
 		TRAY_NAME_UPDATE
 	else
 		if(user)
@@ -799,12 +800,12 @@
 	self_sustaining = !self_sustaining
 	idle_power_usage = self_sustaining ? 5000 : 0
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
-	update_icon()
+	update_appearance()
 
 /obj/machinery/hydroponics/AltClick(mob/user)
 	. = ..()
 	if(!anchored)
-		update_icon()
+		update_appearance()
 		return FALSE
 	var/warning = alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", "Yes", "No")
 	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -837,7 +838,7 @@
 		if(self_sustaining) //No reason to pay for an empty tray.
 			idle_power_usage = 0
 			self_sustaining = FALSE
-	update_icon()
+	update_appearance()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.
 /**
@@ -906,6 +907,12 @@
 	use_power = NO_POWER_USE
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
+	self_sustaining_overlay_icon_state = null
+
+/obj/machinery/hydroponics/soil/update_icon(updates=ALL)
+	. = ..()
+	if(self_sustaining)
+		add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/hydroponics/soil/update_icon_lights()
 	return // Has no lights

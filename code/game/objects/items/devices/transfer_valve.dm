@@ -2,6 +2,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
+	base_icon_state = "valve"
 	inhand_icon_state = "ttv"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
@@ -35,7 +36,7 @@
 			tank_two = item
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
-		update_icon()
+		update_appearance()
 //TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/assembly/A = item
@@ -92,16 +93,15 @@
 /obj/item/transfer_valve/proc/toggle_off()
 	toggle = TRUE
 
-/obj/item/transfer_valve/update_icon()
-	cut_overlays()
+/obj/item/transfer_valve/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][(!tank_one && !tank_two && !attached_device) ? "_1" : ""]"
 
-	if(!tank_one && !tank_two && !attached_device)
-		icon_state = "valve_1"
-		return
-	icon_state = "valve"
-
+/obj/item/transfer_valve/update_overlays()
+	. = ..()
 	if(tank_one)
-		add_overlay("[tank_one.icon_state]")
+		. += "[tank_one.icon_state]"
+
 	if(tank_two)
 		var/mutable_appearance/J = mutable_appearance(icon, icon_state = "[tank_two.icon_state]")
 		var/matrix/T = matrix()
@@ -110,12 +110,14 @@
 		underlays = list(J)
 	else
 		underlays = null
+
 	if(attached_device)
-		add_overlay("device")
+		. += "device"
 		if(istype(attached_device, /obj/item/assembly/infra))
 			var/obj/item/assembly/infra/sensor = attached_device
 			if(sensor.on && sensor.visible)
-				add_overlay("proxy_beam")
+				. += "proxy_beam"
+
 
 /obj/item/transfer_valve/proc/merge_gases(datum/gas_mixture/target, change_volume = TRUE)
 	var/target_self = FALSE
@@ -187,7 +189,7 @@
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
 		valve_open = FALSE
-		update_icon()
+		update_appearance()
 /*
 	This doesn't do anything but the timer etc. expects it to be here
 	eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
@@ -245,7 +247,7 @@
 				attached_device = null
 				. = TRUE
 
-	update_icon()
+	update_appearance()
 
 /**
  * Returns if this is ready to be detonated. Checks if both tanks are in place.

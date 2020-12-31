@@ -29,7 +29,7 @@
 			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
 		if (SP_UNREADY)
 			ready = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/item/supplypod_beacon/update_overlays()
 	. = ..()

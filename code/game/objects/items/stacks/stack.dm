@@ -72,7 +72,7 @@
 					var/list/temp = SSmaterials.rigid_stack_recipes.Copy()
 					recipes += temp
 	update_weight()
-	update_icon()
+	update_appearance()
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -121,6 +121,7 @@
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
+	return ..()
 
 /obj/item/stack/examine(mob/user)
 	. = ..()
@@ -355,7 +356,7 @@
 		return TRUE
 	if(length(mats_per_unit))
 		update_custom_materials()
-	update_icon()
+	update_appearance()
 	update_weight()
 	return TRUE
 
@@ -393,7 +394,7 @@
 		amount += _amount
 	if(length(mats_per_unit))
 		update_custom_materials()
-	update_icon()
+	update_appearance()
 	update_weight()
 
 /** Checks whether this stack can merge itself into another stack.

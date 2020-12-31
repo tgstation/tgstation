@@ -183,7 +183,7 @@ no power level overlay is currently in the overlays list.
 	var/new_level = round(6 * power / field_generator_max_power)
 	if(new_level != power_level)
 		power_level = new_level
-		update_icon()
+		update_appearance()
 
 /obj/machinery/field/generator/proc/turn_off()
 	active = FG_OFFLINE
@@ -196,7 +196,7 @@ no power level overlay is currently in the overlays list.
 	if(active || warming_up <= 0)
 		return
 	warming_up--
-	update_icon()
+	update_appearance()
 	if(warming_up > 0)
 		addtimer(CALLBACK(src, .proc/cool_down), 50)
 
@@ -208,7 +208,7 @@ no power level overlay is currently in the overlays list.
 	if(!active)
 		return
 	warming_up++
-	update_icon()
+	update_appearance()
 	if(warming_up >= 3)
 		start_fields()
 	else
@@ -322,7 +322,7 @@ no power level overlay is currently in the overlays list.
 	connected_gens |= G
 	G.connected_gens |= src
 	shield_floor(TRUE)
-	update_icon()
+	update_appearance()
 
 
 /obj/machinery/field/generator/proc/cleanup()
@@ -339,7 +339,7 @@ no power level overlay is currently in the overlays list.
 			FG.cleanup()
 		connected_gens -= FG
 	clean_up = 0
-	update_icon()
+	update_appearance()
 
 	move_resist = initial(move_resist)
 

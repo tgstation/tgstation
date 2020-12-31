@@ -18,7 +18,7 @@
 
 /obj/machinery/recharge_station/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 	if(is_operational)
 		begin_processing()
 
@@ -106,6 +106,7 @@
 			icon_state = (occupant ? "borgcharger1" : "borgcharger2")
 	else
 		icon_state = (state_open ? "borgcharger-u0" : "borgcharger-u1")
+	return ..()
 
 /obj/machinery/recharge_station/proc/process_occupant(delta_time)
 	if(!occupant)

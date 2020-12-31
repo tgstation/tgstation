@@ -11,6 +11,7 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox"
+	base_icon_state = "pizzabox"
 	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
@@ -34,16 +35,16 @@
 
 /obj/item/pizzabox/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
 	return ..()
 
-/obj/item/pizzabox/update_icon()
-	// Description
+/obj/item/pizzabox/update_desc()
 	desc = initial(desc)
+	. = ..()
 	if(open)
 		if(pizza)
 			desc = "[desc] It appears to have \a [pizza] inside. Use your other hand to take it out."
@@ -60,34 +61,41 @@
 		if(box.boxtag != "")
 			desc = "[desc] The [boxes.len ? "top box" : "box"]'s tag reads: [box.boxtag]"
 
-	// Icon/Overlays
-	cut_overlays()
+/obj/item/pizzabox/update_icon_state()
+	. = ..()
+	if(!open)
+		icon_state = "[base_icon_state]"
+		return
+
+	icon_state = pizza ? "[base_icon_state]_messy" : "[base_icon_state]_open"
+	bomb?.icon_state = "pizzabomb_[bomb_active ? "active" : "inactive"]"
+
+/obj/item/pizzabox/update_overlays()
+	. = ..()
 	if(open)
-		icon_state = "pizzabox_open"
 		if(pizza)
-			icon_state = "pizzabox_messy"
 			var/mutable_appearance/pizza_overlay = mutable_appearance(pizza.icon, pizza.icon_state)
 			pizza_overlay.pixel_y = -3
-			add_overlay(pizza_overlay)
+			. += pizza_overlay
 		if(bomb)
-			bomb.icon_state = "pizzabomb_[bomb_active ? "active" : "inactive"]"
 			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
 			bomb_overlay.pixel_y = 5
-			add_overlay(bomb_overlay)
-	else
-		icon_state = "pizzabox"
-		var/current_offset = 3
-		for(var/V in boxes)
-			var/obj/item/pizzabox/P = V
-			var/mutable_appearance/box_overlay = mutable_appearance(P.icon, P.icon_state)
-			box_overlay.pixel_y = current_offset
-			add_overlay(box_overlay)
-			current_offset += 3
-		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
-		if(box.boxtag != "")
-			var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
-			tag_overlay.pixel_y = boxes.len * 3
-			add_overlay(tag_overlay)
+			. += bomb_overlay
+		return
+
+	var/box_offset = 0
+	for(var/stacked_box in boxes)
+		box_offset += 3
+		var/obj/item/pizzabox/box = stacked_box
+		var/mutable_appearance/box_overlay = mutable_appearance(box.icon, box.icon_state)
+		box_overlay.pixel_y = box_offset
+		. += box_overlay
+
+	var/obj/item/pizzabox/box = LAZYLEN(boxes.len) ? boxes[boxes.len] : src
+	if(box.boxtag != "")
+		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
+		tag_overlay.pixel_y = box_offset
+		. += tag_overlay
 
 /obj/item/pizzabox/worn_overlays(isinhands, icon_file)
 	. = list()
@@ -113,7 +121,7 @@
 		user.put_in_active_hand(cardboard)
 		qdel(src)
 		return
-	update_icon()
+	update_appearance()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user)
@@ -124,13 +132,13 @@
 			user.put_in_hands(pizza)
 			to_chat(user, "<span class='notice'>You take [pizza] out of [src].</span>")
 			pizza = null
-			update_icon()
+			update_appearance()
 		else if(bomb)
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
 				to_chat(user, "<span class='notice'>You carefully remove the [bomb] from [src].</span>")
 				bomb = null
-				update_icon()
+				update_appearance()
 				return
 			else
 				bomb_timer = input(user, "Set the [bomb] timer from [bomb_timer_min] to [bomb_timer_max].", bomb, bomb_timer) as num|null
@@ -145,14 +153,14 @@
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
 
 				to_chat(user, "<span class='warning'>You trap [src] with [bomb].</span>")
-				update_icon()
+				update_appearance()
 	else if(boxes.len)
 		var/obj/item/pizzabox/topbox = boxes[boxes.len]
 		boxes -= topbox
 		user.put_in_hands(topbox)
 		to_chat(user, "<span class='notice'>You remove the topmost [name] from the stack.</span>")
-		topbox.update_icon()
-		update_icon()
+		topbox.update_appearance()
+		update_appearance()
 		user.regenerate_icons()
 
 /obj/item/pizzabox/attackby(obj/item/I, mob/user, params)
@@ -167,8 +175,8 @@
 			boxes += add
 			newbox.boxes.Cut()
 			to_chat(user, "<span class='notice'>You put [newbox] on top of [src]!</span>")
-			newbox.update_icon()
-			update_icon()
+			newbox.update_appearance()
+			update_appearance()
 			user.regenerate_icons()
 			if(boxes.len >= 5)
 				if(prob(10 * boxes.len))
@@ -188,7 +196,7 @@
 				return
 			pizza = I
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-			update_icon()
+			update_appearance()
 			return
 	else if(istype(I, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
@@ -197,7 +205,7 @@
 			wires = new /datum/wires/explosive/pizza(src)
 			bomb = I
 			to_chat(user, "<span class='notice'>You put [I] in [src]. Sneeki breeki...</span>")
-			update_icon()
+			update_appearance()
 			return
 		else if(bomb)
 			to_chat(user, "<span class='warning'>[src] already has a bomb in it!</span>")
@@ -211,7 +219,7 @@
 			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			to_chat(user, "<span class='notice'>You write with [I] on [src].</span>")
-			update_icon()
+			update_appearance()
 			return
 	else if(is_wire_tool(I))
 		if(wires && bomb)
@@ -257,9 +265,9 @@
 			fall_dir = pick(GLOB.alldirs)
 			step(P.pizza, fall_dir)
 			P.pizza = null
-			P.update_icon()
+			P.update_appearance()
 		boxes -= P
-	update_icon()
+	update_appearance()
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L.regenerate_icons()
@@ -268,7 +276,7 @@
 	STOP_PROCESSING(SSobj, src)
 	qdel(wires)
 	wires = null
-	update_icon()
+	update_appearance()
 
 /obj/item/pizzabox/bomb/Initialize()
 	. = ..()

@@ -19,6 +19,7 @@
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "slots1"
+	base_icon_state = "slots"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -68,16 +69,14 @@
 
 /obj/machinery/computer/slot_machine/update_icon_state()
 	if(machine_stat & NOPOWER)
-		icon_state = "slots0"
-
+		icon_state = "[base_icon_state]0"
 	else if(machine_stat & BROKEN)
-		icon_state = "slotsb"
-
+		icon_state = "[base_icon_state]b"
 	else if(working)
-		icon_state = "slots2"
-
+		icon_state = "[base_icon_state]2"
 	else
-		icon_state = "slots1"
+		icon_state = "[base_icon_state]1"
+	return ..()
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))
@@ -206,7 +205,7 @@
 	working = TRUE
 
 	toggle_reel_spin(1)
-	update_icon()
+	update_appearance()
 	updateDialog()
 
 	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
@@ -223,7 +222,7 @@
 	working = FALSE
 	deltimer(spin_loop)
 	give_prizes(the_name, user)
-	update_icon()
+	update_appearance()
 	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)

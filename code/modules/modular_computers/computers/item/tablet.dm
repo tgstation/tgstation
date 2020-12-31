@@ -21,8 +21,9 @@
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants)
 		if(!finish_color)
-			finish_color = pick("red","blue","brown","green","black")
+			finish_color = pick("red", "blue", "brown", "green", "black")
 		icon_state = icon_state_powered = icon_state_unpowered = "tablet-[finish_color]"
+	return ..()
 
 /obj/item/modular_computer/tablet/syndicate_contract_uplink
 	name = "contractor tablet"

@@ -354,3 +354,4 @@
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
+	return ..()

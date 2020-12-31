@@ -87,6 +87,7 @@
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/ui_assets(mob/user)
 	return list(

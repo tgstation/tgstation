@@ -28,6 +28,7 @@
 
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "broom0"
+	return ..()
 
 /**
  * Handles registering the sweep proc when the broom is wielded
@@ -90,7 +91,7 @@
 			break
 	if(i > 1)
 		if (target_bin)
-			target_bin.update_icon()
+			target_bin.update_appearance()
 			to_chat(user, "<span class='notice'>You sweep the pile of garbage into [target_bin].</span>")
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
@@ -104,7 +105,7 @@
 /obj/item/pushbroom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
 	J.put_in_cart(src, user)
 	J.mybroom=src
-	J.update_icon()
+	J.update_appearance()
 
 /obj/item/pushbroom/cyborg
 	name = "robotic push broom"

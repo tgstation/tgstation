@@ -170,8 +170,8 @@
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
-	if(!("status" in signal.data)) //do not update_icon
-		update_icon()
+	if(!("status" in signal.data)) //do not update_appearance
+		update_appearance()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"

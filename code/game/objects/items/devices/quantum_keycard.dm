@@ -30,3 +30,4 @@
 		icon_state = "quantum_keycard_on"
 	else
 		icon_state = initial(icon_state)
+	return ..()

@@ -70,7 +70,7 @@
 	anchored = TRUE //Prevent movement
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/Move()
@@ -86,7 +86,7 @@
 	connected_port = null
 	pixel_x = 0
 	pixel_y = 0
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
@@ -111,7 +111,7 @@
 		holding = null
 	if(new_tank)
 		holding = new_tank
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
@@ -123,7 +123,7 @@
 			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
 			investigate_log("had its internal [holding] swapped with [T] by [key_name(user)].", INVESTIGATE_ATMOS)
 			replace_tank(user, FALSE, T)
-			update_icon()
+			update_appearance()
 	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(!(machine_stat & BROKEN))
 			if(connected_port)
@@ -134,7 +134,7 @@
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
 					"<span class='hear'>You hear a ratchet.</span>")
-				update_icon()
+				update_appearance()
 				return
 			else
 				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
@@ -149,7 +149,7 @@
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='hear'>You hear a ratchet.</span>")
-				update_icon()
+				update_appearance()
 				investigate_log("was connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 	else
 		return ..()

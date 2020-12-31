@@ -134,7 +134,7 @@
 					charge -= text2num(params["cost"])
 					return TRUE
 
-	update_icon() // Not applicable to all objects.
+	update_appearance() // Not applicable to all objects.
 
 /obj/item/forbidden_book/ui_close(mob/user)
 	flick("book_closing",src)

@@ -38,6 +38,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon_state()
 	icon_state = "pscrubber:[on]"
+	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_overlays()
 	. = ..()
@@ -97,7 +98,7 @@
 	if(is_operational)
 		if(prob(50 / severity))
 			on = !on
-		update_icon()
+		update_appearance()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -131,7 +132,7 @@
 		if(close_valve)
 			if(on)
 				on = FALSE
-				update_icon()
+				update_appearance()
 		else if(on && holding)
 			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
@@ -150,7 +151,7 @@
 		if("toggle_filter")
 			scrubbing ^= gas_id2path(params["val"])
 			. = TRUE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "huge air scrubber"
@@ -174,11 +175,12 @@
 
 /obj/machinery/portable_atmospherics/scrubber/huge/update_icon_state()
 	icon_state = "scrubber:[on]"
+	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos(delta_time)
 	if((!anchored && !movable) || !is_operational)
 		on = FALSE
-		update_icon()
+		update_appearance()
 	use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 	if(!on)
 		return

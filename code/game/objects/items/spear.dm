@@ -32,6 +32,7 @@
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
+	return ..()
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -44,7 +45,7 @@
 			throwforce = 21
 			icon_prefix = "spearplasma"
 			AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_wielded="[icon_prefix]1")
-		update_icon()
+		update_appearance()
 		parts_list -= tip
 		qdel(tip)
 	return ..()
@@ -78,6 +79,7 @@
 
 /obj/item/spear/explosive/update_icon_state()
 	icon_state = "spearbomb0"
+	return ..()
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -178,3 +180,4 @@
 
 /obj/item/spear/bonespear/update_icon_state()
 	icon_state = "bone_spear0"
+	return ..()

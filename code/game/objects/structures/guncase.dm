@@ -20,7 +20,7 @@
 				I.forceMove(src)
 			if(contents.len >= capacity)
 				break
-	update_icon()
+	update_appearance()
 
 /obj/structure/guncase/update_overlays()
 	. = ..()
@@ -42,14 +42,14 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
-			update_icon()
+			update_appearance()
 		else
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		return
 
 	else if(user.a_intent != INTENT_HARM)
 		open = !open
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -63,7 +63,7 @@
 		show_menu(user)
 	else
 		open = !open
-		update_icon()
+		update_appearance()
 
 /**
  * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
@@ -95,7 +95,7 @@
 		return
 	if(!user.put_in_hands(weapon))
 		weapon.forceMove(get_turf(src))
-	update_icon()
+	update_appearance()
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -113,7 +113,7 @@
 	return TRUE
 
 /obj/structure/guncase/handle_atom_del(atom/A)
-	update_icon()
+	update_appearance()
 
 /obj/structure/guncase/contents_explosion(severity, target)
 	for(var/thing in contents)

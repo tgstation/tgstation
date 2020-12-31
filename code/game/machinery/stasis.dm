@@ -4,6 +4,7 @@
 	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will keep someone in stasis."
 	icon = 'icons/obj/machines/stasis.dmi'
 	icon_state = "stasis"
+	base_icon_state = "stasis"
 	density = FALSE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -56,7 +57,7 @@
 					"<span class='notice'>You [stasis_enabled ? "power on" : "shut down"] \the [src].</span>", \
 					"<span class='hear'>You hear a nearby machine [stasis_enabled ? "power on" : "shut down"].</span>")
 		play_power_sound()
-		update_icon()
+		update_appearance()
 
 /obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
 	if(AM == occupant)
@@ -70,12 +71,13 @@
 
 /obj/machinery/stasis/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = "stasis_broken"
+		icon_state = "[base_icon_state]_broken"
 		return
 	if(panel_open || machine_stat & MAINT)
-		icon_state = "stasis_maintenance"
+		icon_state = "[base_icon_state]_maintenance"
 		return
-	icon_state = "stasis"
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/stasis/update_overlays()
 	. = ..()
@@ -126,13 +128,13 @@
 	set_occupant(L)
 	if(stasis_running() && check_nap_violations())
 		chill_out(L)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
 		set_occupant(null)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/process()
 	if( !( occupant && isliving(occupant) && check_nap_violations() ) )
@@ -148,7 +150,7 @@
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	. |= default_deconstruction_screwdriver(user, "stasis_maintenance", "stasis", I)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()

@@ -59,8 +59,8 @@
 	name = "worn out [name]" //whetstone becomes used whetstone
 	desc = "[desc] At least, it used to."
 	used = TRUE
-	update_icon()
-	
+	update_appearance()
+
 /**
 * # Super whetstone
 *

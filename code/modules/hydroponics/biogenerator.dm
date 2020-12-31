@@ -41,7 +41,7 @@
 	..()
 	if(A == beaker)
 		beaker = null
-		update_icon()
+		update_appearance()
 
 /obj/machinery/biogenerator/RefreshParts()
 	var/E = 0
@@ -70,6 +70,7 @@
 		icon_state = "biogen-stand"
 	else
 		icon_state = "biogen-work"
+	return ..()
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -84,7 +85,7 @@
 			var/obj/item/reagent_containers/glass/B = beaker
 			B.forceMove(drop_location())
 			beaker = null
-		update_icon()
+		update_appearance()
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -100,7 +101,7 @@
 					return
 				beaker = O
 				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
-				update_icon()
+				update_appearance()
 		else
 			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
 		return
@@ -180,12 +181,12 @@
 		qdel(I)
 	if(S)
 		processing = TRUE
-		update_icon()
+		update_appearance()
 		playsound(loc, 'sound/machines/blender.ogg', 50, TRUE)
 		use_power(S * 30)
 		sleep(S + 15 / productivity)
 		processing = FALSE
-		update_icon()
+		update_appearance()
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
 	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
@@ -195,7 +196,7 @@
 	else
 		if(remove_points)
 			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
-		update_icon()
+		update_appearance()
 		return TRUE
 
 /obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
@@ -236,7 +237,7 @@
 				beaker.reagents.add_reagent(R, D.make_reagents[R])
 			. = 1
 			--i
-	update_icon()
+	update_appearance()
 	return .
 
 /obj/machinery/biogenerator/proc/detach(mob/living/user)
@@ -246,7 +247,7 @@
 		else
 			beaker.drop_location(get_turf(src))
 		beaker = null
-		update_icon()
+		update_appearance()
 
 /obj/machinery/biogenerator/ui_status(mob/user)
 	if(machine_stat & BROKEN || panel_open)

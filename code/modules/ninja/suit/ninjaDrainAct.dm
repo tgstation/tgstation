@@ -48,7 +48,7 @@
 			playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
-			update_icon()
+			update_appearance()
 
 	return drain_total
 
@@ -103,7 +103,7 @@
 				ninja_suit.cell.give(charge)
 			charge = 0
 			corrupt()
-			update_icon()
+			update_appearance()
 
 	return drain_total
 

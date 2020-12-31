@@ -41,7 +41,7 @@
 /mob/living/simple_animal/bot/firebot/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	update_icon()
+	update_appearance()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
@@ -78,11 +78,11 @@
 
 /mob/living/simple_animal/bot/firebot/turn_on()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/turn_off()
 	..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	..()
@@ -90,14 +90,14 @@
 	old_target_fire = null
 	ignore_list = list()
 	anchored = FALSE
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/soft_reset()
 	path = list()
 	target_fire = null
 	mode = BOT_IDLE
 	last_found = world.time
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/set_custom_texts()
 	text_hack = "You corrupt [name]'s safety protocols."
@@ -154,7 +154,7 @@
 			stationary_mode = !stationary_mode
 
 	update_controls()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
@@ -286,7 +286,8 @@
 		flick("firebot1_use", user)
 	internal_ext.afterattack(target, user, null)
 
-/mob/living/simple_animal/bot/firebot/update_icon()
+/mob/living/simple_animal/bot/firebot/update_icon_state()
+	. = ..()
 	if(!on)
 		icon_state = "firebot0"
 		return

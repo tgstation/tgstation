@@ -1,16 +1,14 @@
 /obj/item/ammo_box/magazine/sniper_rounds
 	name = "sniper rounds (.50)"
 	icon_state = ".50mag"
+	base_icon_state = ".50mag"
 	ammo_type = /obj/item/ammo_casing/p50
 	max_ammo = 6
 	caliber = ".50"
 
-/obj/item/ammo_box/magazine/sniper_rounds/update_icon()
-	..()
-	if(ammo_count())
-		icon_state = "[initial(icon_state)]-ammo"
-	else
-		icon_state = "[initial(icon_state)]"
+/obj/item/ammo_box/magazine/sniper_rounds/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][ammo_count() ? "-ammo" : ""]"
 
 /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	name = "sniper rounds (Zzzzz)"
