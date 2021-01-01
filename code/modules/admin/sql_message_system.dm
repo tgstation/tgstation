@@ -77,8 +77,8 @@
 		if(!note_severity)
 			return
 	var/datum/db_query/query_create_message = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity)
-		VALUES (:type, :target_ckey, :admin_ckey, :text, :timestamp, :server, INET_ATON(:internet_address), :port, :round_id, :secret, :expiry, :note_severity)
+		INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity, playtime)
+		VALUES (:type, :target_ckey, :admin_ckey, :text, :timestamp, :server, INET_ATON(:internet_address), :port, :round_id, :secret, :expiry, :note_severity, :playtime)
 	"}, list(
 		"type" = type,
 		"target_ckey" = target_ckey,
@@ -92,6 +92,7 @@
 		"secret" = secret,
 		"expiry" = expiry || null,
 		"note_severity" = note_severity,
+		"playtime" = "(SELECT minutes FROM [format_table_name("role_time")] WHERE ckey = '[target_ckey]' AND job = 'Living')",
 	))
 	var/pm = "[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]: [text]"
 	var/header = "[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_key]" : ""]"
@@ -407,7 +408,8 @@
 				timestamp,
 				server,
 				IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor),
-				expire_timestamp
+				expire_timestamp,
+				playtime
 			FROM [format_table_name("messages")]
 			WHERE type = :type AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
 		"}, list("type" = type))
@@ -428,10 +430,11 @@
 			var/server = query_get_type_messages.item[7]
 			var/editor_key = query_get_type_messages.item[8]
 			var/expire_timestamp = query_get_type_messages.item[9]
+			var/playtime = query_get_type_messages.item[10]
 			output += "<b>"
 			if(type == "watchlist entry")
 				output += "[t_key] | "
-			output += "[timestamp] | [server] | [admin_key]"
+			output += "[timestamp] | [server] | [admin_key] | [get_exp_format(text2num(playtime))] Living Playtime"
 			if(expire_timestamp)
 				output += " | Expires [expire_timestamp]"
 			output += "</b>"

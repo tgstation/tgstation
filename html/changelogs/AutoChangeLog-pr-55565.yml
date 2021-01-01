@@ -1,0 +1,4 @@
+author: "Azarak"
+delete-after: True
+changes: 
+  - bugfix: "fixed the recycler eating all sorts of effects, including directional lighting"
