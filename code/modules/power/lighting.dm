@@ -920,7 +920,7 @@
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
-	if(istype(L) && !(L.is_flying() || L.is_floating() || L.buckled))
+	if(!(L.movement_type & (FLYING|FLOATING)) || L.buckled)
 		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()
