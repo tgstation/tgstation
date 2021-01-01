@@ -127,10 +127,15 @@
 	glass_desc = "The raw essence of a banana. HONK."
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/M)
+<<<<<<< HEAD
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 
 	if(ismonkey(M) || HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		M.heal_bodypart_damage(brute = 1, burn = 1)
+=======
+	if((ishuman(M) && HAS_TRAIT(M, TRAIT_CLOWNLIKE)) || ismonkey(M))
+		M.heal_bodypart_damage(1,1, 0)
+>>>>>>> master
 		. = 1
 	..()
 

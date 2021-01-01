@@ -1,6 +1,6 @@
 /datum/surgery/hepatectomy
 	name = "Hepatectomy"
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_real_bodypart = TRUE
 	steps = list(/datum/surgery_step/incise,

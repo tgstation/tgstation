@@ -1119,7 +1119,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "cU" = (
@@ -1279,7 +1279,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "dj" = (
@@ -3699,7 +3699,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/genetics)
 "hX" = (

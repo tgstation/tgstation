@@ -30478,7 +30478,7 @@
 /area/science/xenobiology)
 "aXb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "aXc" = (
@@ -31066,7 +31066,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "aXV" = (
@@ -34807,7 +34807,7 @@
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/grassybush,
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "bdB" = (
@@ -35037,7 +35037,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "bdT" = (
@@ -38263,7 +38263,7 @@
 /obj/item/food/grown/banana,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "biE" = (
@@ -40223,7 +40223,7 @@
 	name = "medical camera";
 	network = list("ss13","medical")
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "blC" = (
@@ -41656,7 +41656,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/mob/living/carbon/monkey{
+/mob/living/carbon/human/species/monkey{
 	name = "mankey"
 	},
 /turf/open/floor/grass,
@@ -42413,7 +42413,7 @@
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/disposalpipe/segment,
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "bpb" = (
@@ -45441,7 +45441,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "btw" = (
@@ -80856,7 +80856,7 @@
 	pixel_y = 24;
 	req_access_txt = "25"
 	},
-/mob/living/carbon/monkey/punpun,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "cAl" = (

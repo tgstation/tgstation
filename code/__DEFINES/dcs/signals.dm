@@ -806,8 +806,21 @@
 
 //NTnet
 
-///called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
+///called on an object by its NTNET connection component on receive. (data(datum/netdata))
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"
+///called on an object by its NTNET connection component on a port update (hardware_id, port))
+#define COMSIG_COMPONENT_NTNET_PORT_UPDATE "ntnet_port_update"
+/// called when packet was accepted by the target (datum/netdata, error_code)
+#define COMSIG_COMPONENT_NTNET_ACK "ntnet_ack"
+/// called when packet was not acknoledged by the target (datum/netdata, error_code)
+#define COMSIG_COMPONENT_NTNET_NAK "ntnet_nack"
+
+// Some internal NTnet signals used on ports
+///called on an object by its NTNET connection component on a port distruction (port, list/data))
+#define COMSIG_COMPONENT_NTNET_PORT_DESTROYED "ntnet_port_destroyed"
+///called on an object by its NTNET connection component on a port distruction (port, list/data))
+#define COMSIG_COMPONENT_NTNET_PORT_UPDATED "ntnet_port_updated"
+
 
 //Nanites
 
@@ -960,6 +973,8 @@
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, params)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
+///From base of atom/ctrl_click(): (atom/A)
+#define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
