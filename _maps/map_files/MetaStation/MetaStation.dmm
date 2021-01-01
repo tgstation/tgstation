@@ -3208,10 +3208,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"ahM" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/security/range)
 "ahO" = (
 /turf/closed/wall,
 /area/security/range)
@@ -110167,7 +110163,7 @@ auX
 afm
 agi
 aha
-ahM
+ahO
 aiG
 ajH
 www
@@ -110424,7 +110420,7 @@ auX
 afm
 agi
 aha
-ahM
+ahO
 aiG
 ajH
 akQ
