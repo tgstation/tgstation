@@ -610,6 +610,12 @@
 	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
 	host = loc
+	RegisterSignal(host, COMSIG_LIVING_DEATH, .proc/on_death)
+
+/obj/item/borg/projectile_dampen/proc/on_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+
+	deactivate_field()
 
 /obj/item/borg/projectile_dampen/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -670,10 +676,6 @@
 	host = loc
 
 /obj/item/borg/projectile_dampen/cyborg_unequip(mob/user)
-	deactivate_field()
-	. = ..()
-
-/obj/item/borg/projectile_dampen/on_mob_death()
 	deactivate_field()
 	. = ..()
 
