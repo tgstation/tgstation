@@ -161,6 +161,8 @@
 /obj/item/organ/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.05 //very bad
+	var/milk_brute_healing = 1.5
+	var/milk_burn_healing = 1.5
 
 /obj/item/organ/stomach/bone/on_life()
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
@@ -169,7 +171,8 @@
 		if(milk.volume > 10)
 			reagents.remove_reagent(milk.type, milk.volume - 10)
 			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(1.5,0, 0)
+
+		body.heal_bodypart_damage(brute = milk_brute_healing, burn = milk_burn_healing)
 		for(var/i in body.all_wounds)
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(2)
@@ -181,6 +184,7 @@
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.12
+	milk_burn_healing = 0
 
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"
