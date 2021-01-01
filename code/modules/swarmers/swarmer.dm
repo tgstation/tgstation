@@ -35,8 +35,8 @@
 	maxbodytemp = 500
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 30
+	melee_damage_upper = 30
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
@@ -69,7 +69,7 @@
 	///Maximum amount of resources a swarmer can store
 	var/max_resources = 100
 	///List used for player swarmers to keep track of their drones
-	var/list/mob/living/simple_animal/hostile/swarmer/melee/dronelist
+	var/list/mob/living/simple_animal/hostile/swarmer/drone/dronelist
 	///Bitflags to store boolean conditions, such as whether the light is on or off.
 	var/swarmer_flags = NONE
 
@@ -352,7 +352,7 @@
  * Returns the type of the swarmer to be created
  */
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_type_to_create()
-	return /mob/living/simple_animal/hostile/swarmer/melee
+	return /mob/living/simple_animal/hostile/swarmer/drone
 
 /**
  * Called when a swarmer attempts to repair itself
@@ -380,7 +380,7 @@
 		if(!mind)
 			return
 		for(var/d in dronelist)
-			var/mob/living/simple_animal/hostile/swarmer/melee/drone = d
+			var/mob/living/simple_animal/hostile/swarmer/drone/drone = d
 			drone.swarmer_flags = ~SWARMER_LIGHT_ON
 			drone.set_light_on(FALSE)
 		return
@@ -389,7 +389,7 @@
 	if(!mind)
 		return
 	for(var/d in dronelist)
-		var/mob/living/simple_animal/hostile/swarmer/melee/drone = d
+		var/mob/living/simple_animal/hostile/swarmer/drone/drone = d
 		drone.swarmer_flags |= SWARMER_LIGHT_ON
 		drone.set_light_on(TRUE)
 
@@ -446,21 +446,18 @@
 /**
  * # Swarmer Drone
  *
- * Melee subtype of swarmers, always AI-controlled under normal circumstances.  Cannot fire projectiles, but does double stamina damage on melee
+ * AI subtype of swarmers, always AI-controlled under normal circumstances.  Automatically attacks nearby threats.
  */
-/mob/living/simple_animal/hostile/swarmer/melee
+/mob/living/simple_animal/hostile/swarmer/drone
 	icon_state = "swarmer_melee"
 	icon_living = "swarmer_melee"
-	ranged = FALSE
 	AIStatus = AI_ON
-	melee_damage_lower = 30
-	melee_damage_upper = 30
 
 /obj/projectile/beam/disabler/swarmer/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(!.)
 		return
-	if((!istype(target, /mob/living/simple_animal) && !ishuman(target)) || !istype(firer, /mob/living/simple_animal/hostile/swarmer))
+	if((!isanimal(target) && !ishuman(target)) || isswarmer(target))
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/possibleHulk = target

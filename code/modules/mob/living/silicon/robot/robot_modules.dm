@@ -23,7 +23,6 @@
 
 	var/moduleselect_icon = "nomod"
 
-	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
 	var/clean_on_move = FALSE
 	var/breakable_modules = TRUE //Whether the borg loses tool slots with damage.
@@ -35,9 +34,13 @@
 
 	var/list/ride_offset_x = list("north" = 0, "south" = 0, "east" = -6, "west" = 6)
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
-	var/ride_allow_incapacitated = TRUE
 	var/allow_riding = TRUE
 	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
+
+	/**
+	* List of traits that will be applied to the mob if this module is used.
+	*/
+	var/list/module_traits = null
 
 /obj/item/robot_module/Initialize()
 	. = ..()
@@ -258,7 +261,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/engineering
@@ -307,7 +310,7 @@
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/security/do_transform_animation()
@@ -340,7 +343,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
 
 /obj/item/robot_module/peacekeeper/do_transform_animation()
@@ -550,7 +553,7 @@
 
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/syndicate/rebuild_modules()
@@ -588,7 +591,7 @@
 
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 /obj/item/robot_module/saboteur
@@ -619,7 +622,7 @@
 
 	cyborg_base_icon = "synd_engi"
 	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
+	module_traits = list(TRAIT_PUSHIMMUNE)
 	magpulsing = TRUE
 	hat_offset = -4
 	canDispose = TRUE
