@@ -65,7 +65,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	///How many people we've hit with clients
 	var/num_sentient_people_hit = 0
 
-/obj/effect/immovablerod/Initialize(mapload, atom/end, aimed_at)
+/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
 	. = ..()
 	SSaugury.register_doom(src, 2000)
 	z_original = z

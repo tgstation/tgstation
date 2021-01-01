@@ -186,6 +186,7 @@ Difficulty: Hard
 	RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/reset_charge)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/reset_charge()
+	SIGNAL_HANDLER
 	UnregisterSignal(src, COMSIG_MOVELOOP_END)
 	charging = FALSE
 	try_bloodattack()

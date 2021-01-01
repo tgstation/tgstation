@@ -355,6 +355,22 @@ This is good:
 	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
 ```
 
+### The BYOND walk procs
+
+BYOND has a few procs that move one atom towards/away from another, `walk()`, `walk_to()`, `walk_towards`, `walk_away()` and `walk_rand()`.
+
+The way they pull this off, while fine for the language itself, makes a mess of our master-controller, and can cause the whole game to slow down.
+
+The following is a list of procs, and their safe replacements.
+
+* `walk()` - None
+* `walk_to()` - None
+* `walk_towards()` - `SSmovement_loop.home_onto()`
+* `walk_away()` - None
+* `walk_rand()` - None
+
+As you can see, the project of replacing all of these is still ongoing. If you do end up needing to use one of these, keep the delay var high, and don't do it that often/with too many objects.
+
 ### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind

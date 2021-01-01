@@ -2,12 +2,27 @@ SUBSYSTEM_DEF(movement_loop)
 	name = "Movement Loop"
 	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
 	wait = 1 //Fire each tick
+	///The list of datums we're processing
 	var/list/processing = list()
+	///Used to make pausing possible
 	var/list/currentrun = list()
+	///An assoc list of source to movement datum, used for lookups and removal
 	var/list/lookup = list()
 
-///Used to add something to the subsystem
-/datum/controller/subsystem/movement_loop/proc/start_looping(source, chasing, delay, home, timeout, override)
+/**
+ * Used to add something to the subsystem
+ *
+ * Arguments:
+ * source - The atom we want to move
+ * chasing - The atom we want to move towards
+ * delay - How many seconds to wait between fires, defaults to the lowest value, 0.1
+ * home - Should we move towards the object at all times? Or launch towards them, but allow walls and such to take us off track
+ * timeout - Time in seconds until the moveloop self expires, defaults to infinity
+ * override - Should we replace the current loop if it exists.
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/movement_loop/proc/start_looping(source, chasing, delay, home, timeout, override = FALSE)
 	var/datum/move_loop/old = lookup[source]
 	if(old)
 		if(!override)
@@ -20,13 +35,19 @@ SUBSYSTEM_DEF(movement_loop)
 	lookup[source] = loop //Cache the datum so lookups are cheap
 	return TRUE
 
-///Helper proc to help
+///Helper proc for homing
 /datum/controller/subsystem/movement_loop/proc/home_onto(source, chasing, delay, timeout, override)
 	start_looping(source, chasing, delay, TRUE, timeout, override)
 
+///Stops an object from being processed, assuming it is being processed
 /datum/controller/subsystem/movement_loop/proc/stop_looping(atom/source)
-	remove_from_loop(source, lookup[source])
+	var/datum/loop = lookup[source]
+	if(loop)
+		remove_from_loop(source, lookup[source])
+		return TRUE
+	return FALSE
 
+///Removes a loop from processing based on the source and the loop itself
 /datum/controller/subsystem/movement_loop/proc/remove_from_loop(atom/source, datum/move_loop/loop)
 	processing -= loop
 	currentrun -= loop
@@ -46,7 +67,7 @@ SUBSYSTEM_DEF(movement_loop)
 			return
 
 /datum/controller/subsystem/movement_loop/stat_entry(msg)
-	msg = " [length(processing)]"
+	msg = "P:[length(processing)]"
 	return ..()
 
 ///Used as a alternative to walk_towards
@@ -93,12 +114,14 @@ SUBSYSTEM_DEF(movement_loop)
 	return ..()
 
 /datum/move_loop/proc/kill()
+	SHOULD_CALL_PARENT(TRUE)
 	if(home)
 		if(ismovable(dest))
 			UnregisterSignal(dest, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 		UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 /datum/move_loop/proc/handle_delete()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(source, COMSIG_MOVELOOP_END)
 	SSmovement_loop.remove_from_loop(source, src)
 
@@ -114,7 +137,7 @@ SUBSYSTEM_DEF(movement_loop)
 
 	lasttick = timer
 
-	//Move our tickers forward a step, we're guarenteed at least one step forward becasue of how the code is written
+	//Move our tickers forward a step, we're guaranteed at least one step forward because of how the code is written
 	x_ticker += x_rate
 	y_ticker += y_rate
 	var/atom/movable/thing = source
@@ -131,19 +154,32 @@ SUBSYSTEM_DEF(movement_loop)
 	thing.Move(moving_towards, get_dir(thing, moving_towards))
 
 /datum/move_loop/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
+	SIGNAL_HANDLER
 	var/atom/thing = source
-	if(thing.loc != moving_towards) //If we didn't go where we should have, update slope to account for the deveation
+	if(thing.loc != moving_towards) //If we didn't go where we should have, update slope to account for the deviation
 		update_slope()
 
 /datum/move_loop/proc/handle_no_target()
+	SIGNAL_HANDLER
 	handle_delete()
 
+/**
+ * Recalculates the slope between the source and our target, sets our rates to it
+ *
+ * The math below is reminiscent of something like y = mx + b
+ * Except we don't need to care about axis, since we do all our movement in steps of 1
+ * Because of that all that matters is we only move one tile at a time
+ * So we take the smaller delta, divide it by the larger one, and get smaller step per large step
+ * Then we set the large step to 1, and we're done. This way we're guaranteed to never move more then a tile at once
+ * And we can have nice lines
+**/
 /datum/move_loop/proc/update_slope()
+	SIGNAL_HANDLER
 	var/atom/thing = source
 	var/x = thing.x
 	var/y = thing.y
 
-	//You'll notice this is rise over run, except we flip the forumla upside down depending on the larger number
+	//You'll notice this is rise over run, except we flip the formula upside down depending on the larger number
 	//This is so we never move more then once tile at once
 	var/delta_y = dest.y - y
 	var/delta_x = dest.x - x
