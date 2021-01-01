@@ -59406,7 +59406,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/button/door{
 	id = "xenobio7";
 	layer = 3.3;
@@ -59417,6 +59416,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cYE" = (
@@ -60575,8 +60576,11 @@
 /area/science/xenobiology)
 "dde" = (
 /obj/structure/sign/warning/securearea,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/science/xenobiology)
+"ddf" = (
+/turf/closed/wall,
+/area/maintenance/department/science/xenobiology)
 "ddh" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -69655,7 +69659,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "kkP" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -69663,9 +69666,13 @@
 	id = "xenobio1";
 	layer = 3.3;
 	name = "Xenobio Pen 1 Blast Doors";
-	pixel_y = 4;
+	pixel_y = 1;
 	req_access_txt = "55"
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "kle" = (
@@ -71441,7 +71448,6 @@
 /turf/closed/wall,
 /area/medical/psychology)
 "mjV" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/button/door{
 	id = "xenobio3";
 	layer = 3.3;
@@ -71455,6 +71461,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "mla" = (
@@ -75371,7 +75379,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/button/door{
 	id = "xenobio5";
 	layer = 3.3;
@@ -75382,6 +75389,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "qGP" = (
@@ -76963,14 +76972,17 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "smO" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/button/door{
 	id = "xenobio4";
 	layer = 3.3;
 	name = "Xenobio Pen 4 Blast Doors";
-	pixel_y = 4;
+	pixel_y = 1;
 	req_access_txt = "55"
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "smW" = (
@@ -80908,16 +80920,19 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "wSG" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/button/door{
 	id = "xenobio6";
 	layer = 3.3;
 	name = "Xenobio Pen 6 Blast Doors";
-	pixel_y = 4;
+	pixel_y = 1;
 	req_access_txt = "55"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -81081,7 +81096,6 @@
 /area/medical/surgery/room_b)
 "xeL" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -81089,9 +81103,13 @@
 	id = "xenobio2";
 	layer = 3.3;
 	name = "Xenobio Pen 2 Blast Doors";
-	pixel_y = 4;
+	pixel_y = 1;
 	req_access_txt = "55"
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "xeT" = (
@@ -124049,13 +124067,13 @@ cUM
 daL
 dbw
 dco
-dbU
-dbU
+daJ
+daJ
 ddB
-dbU
+daJ
 dde
 lBX
-daJ
+dbU
 ipk
 rZS
 rZS
@@ -124069,10 +124087,10 @@ vuB
 rZS
 rZS
 dbU
-dbU
+daJ
 oKV
-dbU
-dbU
+daJ
+daJ
 dbU
 dbU
 dbU
@@ -124312,7 +124330,7 @@ ddC
 mjj
 rCU
 xFl
-daJ
+dbU
 czR
 bvg
 pjT
@@ -124336,7 +124354,7 @@ rZS
 qrU
 dbU
 hIV
-srj
+ddf
 srj
 srj
 srj
@@ -124582,7 +124600,7 @@ smO
 wla
 seX
 wSG
-dbU
+daJ
 okR
 poU
 iqG
@@ -124593,7 +124611,7 @@ rZS
 rZS
 dbU
 hIV
-srj
+ddf
 ycD
 lZi
 srj
@@ -124850,7 +124868,7 @@ rZS
 rZS
 dbU
 hIV
-srj
+ddf
 qRI
 tDH
 wcK
@@ -125364,7 +125382,7 @@ rZS
 jQy
 dbU
 qRI
-srj
+ddf
 qRI
 qRI
 wcK
@@ -125597,10 +125615,10 @@ dlV
 ssm
 nas
 tmE
-dcE
+sLK
 eaz
 feD
-dbU
+daJ
 mjV
 eyS
 fTd
@@ -125610,7 +125628,7 @@ xTY
 cYu
 mnD
 xTY
-dbU
+daJ
 rzL
 dSe
 uHw
@@ -125621,7 +125639,7 @@ rZS
 rZS
 dbU
 qRI
-srj
+ddf
 iYM
 jNW
 srj
@@ -125854,7 +125872,7 @@ dmq
 tsk
 rth
 jje
-dbU
+daJ
 iBQ
 lOw
 dbU
@@ -126111,7 +126129,7 @@ dmr
 tCe
 tsk
 jir
-dbU
+daJ
 iBQ
 lOw
 dbU
@@ -126125,10 +126143,10 @@ jsJ
 rZS
 ipk
 dbU
-dbU
+daJ
 eTa
-dbU
-dbU
+daJ
+daJ
 dbU
 dbU
 dbU
@@ -126368,7 +126386,7 @@ dwv
 tsk
 jJf
 xXK
-dbU
+daJ
 iBQ
 gGJ
 dbU
@@ -126625,7 +126643,7 @@ dzc
 tMJ
 hNO
 vcJ
-dbU
+daJ
 gIs
 rXl
 dbU
