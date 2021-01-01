@@ -255,6 +255,7 @@ CREATE TABLE `SS13_messages` (
   `secret` tinyint(1) unsigned NOT NULL,
   `expire_timestamp` datetime DEFAULT NULL,
   `severity` enum('high','medium','minor','none') DEFAULT NULL,
+  `playtime` int(11) unsigned NULL DEFAULT NULL,
   `lasteditor` varchar(32) DEFAULT NULL,
   `edits` text,
   `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',

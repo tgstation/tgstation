@@ -6,6 +6,7 @@
 	var/loaded = 0 // Times loaded this round
 	var/datum/parsed_map/cached_map
 	var/keep_cached_map = FALSE
+	var/station_id = null // used to override the root id when generating
 
 	var/should_place_on_top = TRUE
 
@@ -55,7 +56,11 @@
 		)
 	for(var/L in turfs)
 		var/turf/B = L
-		areas |= B.loc
+		var/area/G = B.loc
+		areas |= G
+		if(!SSatoms.initialized)
+			continue
+
 		for(var/A in B)
 			atoms += A
 			if(istype(A, /obj/structure/cable))
@@ -64,7 +69,14 @@
 			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
 
+	// Not sure if there is some importance here to make sure the area is in z
+	// first or not.  Its defined In Initialize yet its run first in templates
+	// BEFORE so... hummm
 	SSmapping.reg_in_areas_in_z(areas)
+	SSnetworks.assign_areas_root_ids(areas, template)
+	if(!SSatoms.initialized)
+		return
+
 	SSatoms.InitializeAtoms(areas + turfs + atoms, returns_created_atoms ? created_atoms : null)
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
