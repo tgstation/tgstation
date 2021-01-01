@@ -191,7 +191,7 @@
 	to_chat(usr, "<span class='notice'>Playing started.</span>")
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
-	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
+	for(var/i = 1, used <= max, sleep(10 * playsleepseconds))
 		if(!mytape)
 			break
 		if(playing == FALSE)
