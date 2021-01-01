@@ -21,9 +21,6 @@
 	activate("action_button")
 
 /obj/item/implant/proc/can_be_implanted_in(mob/living/target)
-	// Originally mob types could specify their own "implant permission" code, but it wasn't used
-	// anywhere, and neither was this proc. Folding the two together means you can have an
-	//implant that always works without too much jumping through hoops.
 	if(issilicon(target))
 		return FALSE
 
@@ -31,9 +28,9 @@
 		return TRUE
 
 	if(isanimal(target))
-		var/mob/living/simple_animal/A = target
+		var/mob/living/simple_animal/animal = target
 		// Robots and most non-organics aren't healable.
-		return A.healable
+		return animal.healable
 
 	return TRUE
 
