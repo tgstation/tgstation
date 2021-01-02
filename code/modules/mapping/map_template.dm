@@ -33,7 +33,7 @@
 	return bounds
 
 /datum/map_template/proc/initTemplateBounds(list/bounds)
-	if (!bounds)
+	if (!bounds) //something went wrong
 		message_admins("[name] template failed to initialize!")
 		return
 
@@ -73,7 +73,7 @@
 	// first or not.  Its defined In Initialize yet its run first in templates
 	// BEFORE so... hummm
 	SSmapping.reg_in_areas_in_z(areas)
-	SSnetworks.assign_areas_root_ids(areas, template)
+	SSnetworks.assign_areas_root_ids(areas, src)
 	if(!SSatoms.initialized)
 		return
 
