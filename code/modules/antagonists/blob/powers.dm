@@ -364,8 +364,7 @@
 	if (!strain_choices)
 		strain_choices = list()
 
-		var/list/new_strains = GLOB.valid_blobstrains.Copy()
-		LAZYREMOVE(new_strains, blobstrain.type)
+		var/list/new_strains = GLOB.valid_blobstrains.Copy() - blobstrain.type
 		for (var/_ in 1 to BLOB_REROLL_CHOICES)
 			var/datum/blobstrain/strain = pick_n_take(new_strains)
 
