@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Observers can now read paper documents without having to be
-adjacent."
