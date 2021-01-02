@@ -11,6 +11,15 @@
 	if(!mapload)  //I don't want no gas leaks on my space ruin you hear?
 		RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 
+	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+	t_He = p_they(TRUE)
+	t_His = p_their(TRUE)
+	t_his = p_their()
+	t_him = p_them()
+	t_has = p_have()
+	t_is = p_are()
+	t_es = p_es()
+
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()

@@ -108,3 +108,12 @@
 
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
+
+	//Used for pronouns
+	var/t_He
+	var/t_His
+	var/t_his
+	var/t_him
+	var/t_has
+	var/t_is
+	var/t_es

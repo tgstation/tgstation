@@ -1,14 +1,4 @@
 /mob/living/carbon/human/examine(mob/user)
-//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
-	var/t_He = p_they(TRUE)
-	var/t_His = p_their(TRUE)
-	var/t_his = p_their()
-	var/t_him = p_them()
-	var/t_has = p_have()
-	var/t_is = p_are()
-	var/t_es = p_es()
-	var/obscure_name
-
 	if(isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA))
@@ -124,16 +114,7 @@
 			if(suiciding)
 				. += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>"
 
-			var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
-			if(getorgan(/obj/item/organ/brain))
-				if(!ghost && !client) //There's no ghost with a mind matching the body's (and there's no client still in the body, if they haven't left the body once yet), the ghost has likely disconnected
-					. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
-				else if (!ghost.can_reenter_corpse || ghost.pushed_do_not_resuscitate) //There is a ghost with a matching mind but they pushed DNR or otherwise can't reenter
-					. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has lost the will to live...</span>"
-				else
-					. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
-			else
-				. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
+			. += generate_death_examine_text()
 
 	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
