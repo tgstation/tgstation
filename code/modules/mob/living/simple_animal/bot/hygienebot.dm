@@ -45,7 +45,6 @@
 	prev_access = access_card.access
 
 /mob/living/simple_animal/bot/hygienebot/explode()
-	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart in a foamy explosion!</span>")
 	do_sparks(3, TRUE, src)
 	on = FALSE
@@ -91,7 +90,7 @@
 	..()
 	target = null
 	oldtarget_name = null
-	walk_to(src,0)
+	SSmovement_loop.stop_looping(src)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/hygienebot/handle_automated_action()
@@ -108,7 +107,7 @@
 
 	switch(mode)
 		if(BOT_IDLE)		// idle
-			walk_to(src,0)
+			SSmovement_loop.stop_looping(src)
 			look_for_lowhygiene()	// see if any disgusting fucks are in range
 			if(!mode && auto_patrol)	// still idle, and set to patrol
 				mode = BOT_START_PATROL	// switch to patrol mode
@@ -172,7 +171,7 @@
 
 /mob/living/simple_animal/bot/hygienebot/proc/back_to_idle()
 	mode = BOT_IDLE
-	walk_to(src,0)
+	SSmovement_loop.stop_looping(src)
 	target = null
 	frustration = 0
 	last_found = world.time

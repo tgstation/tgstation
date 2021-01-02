@@ -105,7 +105,7 @@
 	target = null
 	oldtarget_name = null
 	anchored = FALSE
-	walk_to(src,0)
+	SSmovement_loop.stop_looping(src)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
@@ -314,7 +314,7 @@ Auto Patrol: []"},
 
 		if(BOT_IDLE)		// idle
 
-			walk_to(src,0)
+			SSmovement_loop.stop_looping(src)
 			look_for_perp()	// see if any criminals are in range
 			if(!mode && auto_patrol)	// still idle, and set to patrol
 				mode = BOT_START_PATROL	// switch to patrol mode
@@ -323,7 +323,7 @@ Auto Patrol: []"},
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				walk_to(src,0)
+				SSmovement_loop.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -451,8 +451,6 @@ Auto Patrol: []"},
 	return FALSE
 
 /mob/living/simple_animal/bot/secbot/explode()
-
-	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
 	if(ranged)

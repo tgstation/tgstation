@@ -111,7 +111,7 @@
 	ranged = 0
 	minimum_distance = 1
 
-	walk(M,0)//end any lingering movement loops, to prevent the haunted mecha bug
+	SSmovement_loop.stop_looping(src)//end any lingering movement loops, to prevent the haunted mecha bug
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/vehicle/sealed/mecha/M)

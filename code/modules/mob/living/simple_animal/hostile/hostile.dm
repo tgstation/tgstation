@@ -79,7 +79,7 @@
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
 	if(!.) //dead
-		walk(src, 0) //stops walking
+		SSmovement_loop.stop_looping(src)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -294,7 +294,7 @@
 			enter_charge(target)
 			return TRUE
 		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
+			SSmovement_loop.stop_looping(src)
 			return 1
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
@@ -367,7 +367,7 @@
 	target = null
 	approaching_target = FALSE
 	in_melee = FALSE
-	walk(src, 0)
+	SSmovement_loop.stop_looping(src)
 	LoseAggro()
 
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
