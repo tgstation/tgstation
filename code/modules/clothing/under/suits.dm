@@ -41,13 +41,13 @@
 	icon_state = "blacksuit"
 	inhand_icon_state = "blacksuit"
 	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/suit/black/skirt
 	name = "black suitskirt"
 	desc = "A professional black suitskirt. Nanotrasen Investigation Bureau approved!"
 	icon_state = "blacksuit_skirt"
 	inhand_icon_state = "bar_suit"
-	alt_covers_chest = TRUE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
