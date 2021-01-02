@@ -359,7 +359,7 @@ This is good:
 
 BYOND has a few procs that move one atom towards/away from another, `walk()`, `walk_to()`, `walk_towards`, `walk_away()` and `walk_rand()`.
 
-The way they pull this off, while fine for the language itself, makes a mess of our master-controller, and can cause the whole game to slow down.
+The way they pull this off, while fine for the language itself, makes a mess of our master-controller, and can cause the whole game to slow down. Do not use them.
 
 The following is a list of procs, and their safe replacements.
 
@@ -369,8 +369,6 @@ The following is a list of procs, and their safe replacements.
 * `walk_towards()` - `SSmovement_loop.home_onto()` and `SSmovement_loop.move_towards_legacy()`, check the documentation to see which you like better
 * `walk_away()` - `SSmovement_loop.move_away()`
 * `walk_rand()` - `SSmovement_loop.move_rand()` is random walk, `SSmovement_loop.move_to_rand()` is walk to a random place
-
-As you can see, the project of replacing all of these is still ongoing. If you do end up needing to use one of these, keep the delay var high, and don't do it that often/with too many objects.
 
 ### Develop Secure Code
 
