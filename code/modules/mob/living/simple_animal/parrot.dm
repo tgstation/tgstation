@@ -520,7 +520,7 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		walk_to(src, parrot_interest, 1, parrot_speed)
+		SSmovement_loop.move_to(src, parrot_interest, 1, parrot_speed * 0.1)
 		if(isStuck())
 			return
 
@@ -541,7 +541,7 @@
 			icon_state = icon_sit
 			return
 
-		walk_to(src, parrot_perch, 1, parrot_speed)
+		SSmovement_loop.move_to(src, parrot_perch, 1, parrot_speed * 0.1)
 		if(isStuck())
 			return
 
@@ -594,7 +594,7 @@
 			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else
-			walk_to(src, parrot_interest, 1, parrot_speed)
+			SSmovement_loop.move_to(src, parrot_interest, 1, parrot_speed * 0.1)
 			if(isStuck())
 				return
 
@@ -991,7 +991,7 @@
 		if(!ishuman(parrot_interest))
 			parrot_interest = null
 		else if(parrot_state == (PARROT_SWOOP | PARROT_ATTACK) && Adjacent(parrot_interest))
-			walk_to(src, parrot_interest, 0, parrot_speed)
+			SSmovement_loop.move_to(src, parrot_interest, 0, parrot_speed * 0.1)
 			Possess(parrot_interest)
 	..()
 

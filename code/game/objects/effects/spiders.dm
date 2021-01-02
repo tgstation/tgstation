@@ -260,7 +260,7 @@
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v
-				walk_to(src, entry_vent, 1)
+				SSmovement_loop.move_to(src, entry_vent, 1)
 				break
 	if(isturf(loc))
 		amount_grown += rand(0,2)

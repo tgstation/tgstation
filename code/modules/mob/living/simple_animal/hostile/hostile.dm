@@ -331,7 +331,8 @@
 		approaching_target = TRUE
 	else
 		approaching_target = FALSE
-	walk_to(src, target, minimum_distance, delay)
+	//Mobs deal with delay in ticks, the movement loop subsystem deals with them in deciseconds, so we convert
+	SSmovement_loop.move_to(src, target, minimum_distance, delay * 0.1)
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
