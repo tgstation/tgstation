@@ -26532,7 +26532,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/mob/living/carbon/monkey/punpun,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bff" = (
@@ -83762,7 +83762,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "djC" = (
@@ -83786,7 +83786,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "djD" = (
@@ -84685,7 +84685,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "dlp" = (
@@ -85072,7 +85072,7 @@
 	layer = 2.9
 	},
 /obj/effect/turf_decal/stripes/end,
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "dmC" = (
@@ -100811,7 +100811,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dVE" = (
@@ -100858,7 +100858,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dVH" = (
@@ -101182,7 +101182,7 @@
 /obj/structure/bed/roller,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/mob/living/carbon/monkey,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "dWy" = (

@@ -22,7 +22,6 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
-	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	GLOB.human_list += src
 
@@ -1153,10 +1152,16 @@
 
 /mob/living/carbon/human/species
 	var/race = null
+	var/use_random_name = TRUE
 
 /mob/living/carbon/human/species/Initialize()
 	. = ..()
 	INVOKE_ASYNC(src, .proc/set_species, race)
+
+/mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load)
+	. = ..()
+	if(use_random_name)
+		fully_replace_character_name(real_name, dna.species.random_name())
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
