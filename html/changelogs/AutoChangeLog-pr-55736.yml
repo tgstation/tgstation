@@ -1,0 +1,4 @@
+author: "KathrinBailey"
+delete-after: True
+changes: 
+  - code_imp: "Mechs receive damage from Xenomorphs in a non-hardcoded fashion, and will take the amount of damage. Merry Christmas!"

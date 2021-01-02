@@ -66,7 +66,7 @@ def merge_map(new_map, old_map, delete_unused=False):
 
     # step two: delete unused keys
     if unused_keys:
-        print(f"Notice: Trimming {len(unused_keys)} unused dictionary keys.")
+        #print(f"Notice: Trimming {len(unused_keys)} unused dictionary keys.")
         for key in unused_keys:
             del merged.dictionary[key]
 
