@@ -1,0 +1,5 @@
+author: "NotRanged"
+delete-after: True
+changes: 
+  - bugfix: "Your current blob strain no longer shows up as reroll option"
+  - bugfix: "The blob strain selection actually gets refreshed now after rerolling"

@@ -1,5 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Griddles no longer spam runtimes"
-  - bugfix: "Griddles no longer eat crowbars"

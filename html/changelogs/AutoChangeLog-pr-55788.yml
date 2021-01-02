@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Icebox cavegen generates the correct mobs and ore on the bottom z-level again"
