@@ -565,3 +565,20 @@
 /obj/item/storage/box/syndie_kit/signaler/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/assembly/signaler(src)
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle
+	name = "deathrattle implant box"
+	desc = "Contains eight linked deathrattle implants."
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle/PopulateContents()
+	new /obj/item/implanter(src)
+
+	var/implants = list()
+	for(var/j in 1 to 8)
+		var/obj/item/implantcase/deathrattle/case = new /obj/item/implantcase/deathrattle(src)
+		implants += case.imp
+
+	var/datum/deathrattle_group/group = new
+	for(var/i in implants)
+		group.register(i)
+	desc += " The implants are registered to the \"[group.name]\" group."
