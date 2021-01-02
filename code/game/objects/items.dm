@@ -781,8 +781,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
-/obj/item/proc/on_mob_death(mob/living/L, gibbed)
-
 /obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
 	return TRUE
 
