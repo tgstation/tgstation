@@ -222,7 +222,8 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
-	overdose_threshold = 20
+	overdose_threshold = 10
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM //1 unit a tick
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
@@ -260,7 +261,7 @@
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
-	if(data["misc"] >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(data["misc"] >= 10)		// 10 units, 18 seconds @ metabolism 1 unit & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
@@ -272,14 +273,14 @@
 				M.Unconscious(120)
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data["misc"] >= 60)	// 30 units, 135 seconds
+	if(data["misc"] >= 30)	// 30 units, 54 seconds
 		if(iscultist(M))
 			SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 		M.jitteriness = 0
 		M.stuttering = 0
 		holder.remove_reagent(type, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
-	holder.remove_reagent(type, 0.4)	//fixed consumption to prevent balancing going out of whack
+	holder.remove_reagent(type, metabolization_rate)	//this line sucked and it is now fixed by Bug
 
 /datum/reagent/water/holywater/overdose_process(mob/living/M) //if overdosed, removes benificial aspect of antimagic and makes you shaky, confused, and religious.
 	if(ishuman(M))
