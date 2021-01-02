@@ -121,7 +121,7 @@
 			break
 
 	if(target)
-		SSmovement_loop.move_away(living_pawn, target, MONKEY_ENEMY_VISION, 0.5, override = TRUE)
+		SSmovement_loop.move_away(living_pawn, target, MONKEY_ENEMY_VISION, 0.5)
 	else
 		finish_action(controller, TRUE)
 

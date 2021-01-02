@@ -14,14 +14,14 @@ SUBSYSTEM_DEF(movement_loop)
  *
  * Arguments:
  * looptype - What sort of loop do we want to make
- * override - Should we replace the current loop if it exists. Defaults to FALSE
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
  * moving - The atom we want to move
  * delay - How many seconds to wait between fires, defaults to the lowest value, 0.1
  * timeout - Time in seconds until the moveloop self expires, defaults to INFINITY
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/movement_loop/proc/start_looping(looptype, override = FALSE, atom/moving, delay = 0.1, timeout = INFINITY)
+/datum/controller/subsystem/movement_loop/proc/start_looping(looptype, override = TRUE, atom/moving, delay = 0.1, timeout = INFINITY)
 	PRIVATE_PROC(TRUE)
 	var/datum/move_loop/old = lookup[moving]
 	if(old)
@@ -216,7 +216,7 @@ SUBSYSTEM_DEF(movement_loop)
 		x_ticker = round(x_ticker + x_rate, x_rate)
 	if(y_rate)
 		y_ticker = round(y_ticker + y_rate, y_rate)
-		
+
 	var/x = moving.x
 	var/y = moving.y
 	var/z = moving.z

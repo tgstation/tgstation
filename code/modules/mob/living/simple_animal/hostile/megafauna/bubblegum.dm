@@ -182,7 +182,7 @@ Difficulty: Hard
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay)
 	revving_charge = FALSE
-	SSmovement_loop.home_onto(src, T, timeout = get_dist(src, T) * 0.1, override = TRUE)
+	SSmovement_loop.home_onto(src, T, timeout = get_dist(src, T) * 0.1)
 	RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/reset_charge)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/reset_charge()

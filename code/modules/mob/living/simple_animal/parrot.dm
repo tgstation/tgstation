@@ -553,7 +553,7 @@
 		if(!parrot_interest || !isliving(parrot_interest)) //Sanity
 			parrot_state = PARROT_WANDER
 
-		SSmovement_loop.move_away(src, parrot_interest, 1, parrot_speed * 0.1, override = TRUE)
+		SSmovement_loop.move_away(src, parrot_interest, 1, parrot_speed * 0.1)
 		if(isStuck())
 			return
 

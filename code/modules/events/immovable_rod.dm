@@ -113,7 +113,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/proc/complete_trajectory()
 	//We hit what we wanted to hit, time to go
 	special_target = null
-	SSmovement_loop.move_towards(src, get_edge_target_turf(src, dir), override = TRUE)
+	SSmovement_loop.move_towards(src, get_edge_target_turf(src, dir))
 
 /obj/effect/immovablerod/singularity_act()
 	return
