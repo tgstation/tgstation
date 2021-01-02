@@ -70,6 +70,68 @@ SUBSYSTEM_DEF(movement_loop)
 	return ..()
 
 /**
+ * Replacement for walk()
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * direction - The direction we want to move in
+ * delay - How many seconds to wait between fires. Fefaults to the lowest value, 0.1
+ * timeout - Time in seconds until the moveloop self expires. Fefaults to infinity
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/movement_loop/proc/move(moving, direction, delay, timeout, override)
+	return start_looping(/datum/move_loop/move, override, moving, delay, timeout, direction)
+
+/**
+ * Used for force-move loops, similar to move_towards_legacy() but not quite the same
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * chasing - The atom we want to move towards
+ * delay - How many seconds to wait between fires. Fefaults to the lowest value, 0.1
+ * timeout - Time in seconds until the moveloop self expires. Fefaults to infinity
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/movement_loop/proc/force_move(moving, chasing, delay, timeout, override)
+	return start_looping(/datum/move_loop/has_target/force_move, override, moving, delay, timeout, chasing)
+
+/**
+ * Wrapper around walk_to()
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * chasing - The atom we want to move towards
+ * min_dist - the closest we're allower to get to the target
+ * delay - How many seconds to wait between fires. Fefaults to the lowest value, 0.1
+ * timeout - Time in seconds until the moveloop self expires. Fefaults to infinity
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/movement_loop/proc/move_to(moving, chasing, min_dist, delay, timeout, override)
+	return start_looping(/datum/move_loop/has_target/dist_bound/move_to, override, moving, delay, timeout, chasing, min_dist)
+
+/**
+ * Wrapper around walk_away()
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * chasing - The atom we want to move towards
+ * max_dist - the furthest away from the target we're allowed to get
+ * delay - How many seconds to wait between fires. Fefaults to the lowest value, 0.1
+ * timeout - Time in seconds until the moveloop self expires. Fefaults to infinity
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/movement_loop/proc/move_away(moving, chasing, max_dist, delay, timeout, override)
+	return start_looping(/datum/move_loop/has_target/dist_bound/move_away, override, moving, delay, timeout, chasing, max_dist)
+
+/**
  * Helper proc for the move_towards datum
  *
  * Arguments:
@@ -78,16 +140,31 @@ SUBSYSTEM_DEF(movement_loop)
  * delay - How many seconds to wait between fires. Defaults to the lowest value, 0.1
  * home - Should we move towards the object at all times? Or launch towards them, but allow walls and such to take us off track. Defaults to FALSE
  * timeout - Time in seconds until the moveloop self expires. Defaults to INFINITY
- * override - Should we replace the current loop if it exists. Defaults to FALSE
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/movement_loop/proc/move_towards(moving, chasing, delay, home, timeout, override)
-	return start_looping(/datum/move_loop/move_towards, override, moving, delay, timeout, chasing, home)
+	return start_looping(/datum/move_loop/has_target/move_towards, override, moving, delay, timeout, chasing, home)
 
 ///Helper proc for homing
 /datum/controller/subsystem/movement_loop/proc/home_onto(moving, chasing, delay, timeout, override)
 	return move_towards(moving, chasing, delay, TRUE, timeout, override)
+
+/**
+ * Wrapper for walk_towards, not reccomended, as it's movement ends up being a bit stilted
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * chasing - The atom we want to move towards
+ * delay - How many seconds to wait between fires. Fefaults to the lowest value, 0.1
+ * timeout - Time in seconds until the moveloop self expires. Fefaults to infinity
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/movement_loop/proc/move_towards_legacy(moving, chasing, delay, timeout, override)
+	return start_looping(/datum/move_loop/has_target/move_towards_budget, override, moving, delay, timeout, chasing)
 
 /**
  * Helper proc for the move_rand datum
@@ -97,7 +174,7 @@ SUBSYSTEM_DEF(movement_loop)
  * directions - A list of acceptable directions to try and move in. Fefaults to GLOB.alldirs
  * delay - How many seconds to wait between fires. Fefaults to the lowest value, 0.1
  * timeout - Time in seconds until the moveloop self expires. Fefaults to infinity
- * override - Should we replace the current loop if it exists. Defaults to FALSE
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
@@ -106,14 +183,19 @@ SUBSYSTEM_DEF(movement_loop)
 		directions = GLOB.alldirs
 	return start_looping(/datum/move_loop/move_rand, override, moving, delay, timeout, directions)
 
-/datum/controller/subsystem/movement_loop/proc/move_to(moving, target, min_dist, delay, timeout, override)
-	return start_looping(/datum/move_loop/dist_bound/move_to, override, moving, delay, timeout, target, min_dist)
-
-/datum/controller/subsystem/movement_loop/proc/move_away(moving, target, max_dist, delay, timeout, override)
-	return start_looping(/datum/move_loop/dist_bound/move_away, override, moving, delay, timeout, target, max_dist)
-
-/datum/controller/subsystem/movement_loop/proc/force_move(moving, target, delay, timeout, override)
-	return start_looping(/datum/move_loop/force_move, override, moving, delay, timeout, target)
+/**
+ * Wrapper around walk_rand(), doesn't actually result in a random walk, it's more like moving to random places in viewish
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * delay - How many seconds to wait between fires. Fefaults to the lowest value, 0.1
+ * timeout - Time in seconds until the moveloop self expires. Fefaults to infinity
+ * override - Should we replace the current loop if it exists. Defaults to TRUE
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/movement_loop/proc/move_to_rand(moving, delay, timeout, override)
+	return start_looping(/datum/move_loop/move_to_rand, override, moving, delay, timeout)
 
 ///Template class of the walk() replacements, handles the timing portion of the loops
 /datum/move_loop
@@ -168,10 +250,98 @@ SUBSYSTEM_DEF(movement_loop)
 /datum/move_loop/proc/move()
 	return
 
+///Replacement for walk()
+/datum/move_loop/move
+	var/direction
+
+/datum/move_loop/move/setup(atom/moving, delay, timeout, dir)
+	if(!..())
+		return FALSE
+	direction = dir
+	return TRUE
+
+/datum/move_loop/move/move()
+	moving.Move(get_step(moving, direction), direction)
+
+
+/datum/move_loop/has_target
+	///The thing we're moving in relation to, either at or away from
+	var/atom/target
+
+/datum/move_loop/has_target/setup(atom/moving, delay, timeout, atom/chasing)
+	if(!..())
+		return FALSE
+	if(!isatom(chasing))
+		handle_delete()
+		return FALSE
+
+	target = chasing
+
+	if(!isturf(target))
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because of reasons
+
+	return TRUE
+
+/datum/move_loop/has_target/kill()
+	if(!isturf(target))
+		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	return ..()
+
+/datum/move_loop/has_target/proc/handle_no_target()
+	SIGNAL_HANDLER
+	handle_delete()
+
+///Used for force-move loops
+/datum/move_loop/has_target/force_move
+
+/datum/move_loop/has_target/force_move/move()
+	moving.forceMove(get_step(moving, get_dir(moving, target)))
+
+///Base class of move_to and move_away, deals with the distance and target aspect of things
+/datum/move_loop/has_target/dist_bound
+	var/distance = 0
+
+/datum/move_loop/has_target/dist_bound/setup(atom/moving, delay, timeout, atom/chasing, dist = 0)
+	if(!..())
+		return FALSE
+	distance = dist
+
+	return TRUE
+
+
+/datum/move_loop/has_target/dist_bound/proc/check_dist()
+	return (get_dist(moving, target) >= distance) //If you get too close, stop moving closer
+
+/datum/move_loop/has_target/dist_bound/move()
+	if(!check_dist()) //If we're too close don't do the move
+		lasttick = round(lasttick - delay, 0.1) //Make sure to move as soon as possible
+		return FALSE
+	return TRUE
+
+///Wrapper around walk_to()
+/datum/move_loop/has_target/dist_bound/move_to
+
+/datum/move_loop/has_target/dist_bound/move_to/check_dist()
+	return (get_dist(moving, target) >= distance) //If you get too close, stop moving
+
+/datum/move_loop/has_target/dist_bound/move_to/move()
+	if(!..())
+		return
+	step_to(moving, target)
+
+///Wrapper around walk_away()
+/datum/move_loop/has_target/dist_bound/move_away
+
+/datum/move_loop/has_target/dist_bound/move_away/check_dist()
+	return (get_dist(moving, target) <= distance) //If you get too far out, stop moving away
+
+/datum/move_loop/has_target/dist_bound/move_away/move()
+	if(!..())
+		return
+	step_away(moving, target)
+
 ///Used as a alternative to walk_towards
-/datum/move_loop/move_towards
-	///The thing we're moving towards, usually a turf
-	var/atom/dest
+/datum/move_loop/has_target/move_towards
 	///The turf we want to move into, used for course correction
 	var/turf/moving_towards
 	///Should we try and stay on the path, or is deviation alright
@@ -183,34 +353,28 @@ SUBSYSTEM_DEF(movement_loop)
 	var/x_rate = 1
 	var/y_rate = 1
 
-/datum/move_loop/move_towards/setup(atom/moving, delay, timeout, atom/chasing, home = FALSE)
+/datum/move_loop/has_target/move_towards/setup(atom/moving, delay, timeout, atom/chasing, home = FALSE)
 	if(!..())
 		return FALSE
-	if(!isatom(chasing))
-		handle_delete()
-		return FALSE
-	dest = chasing
 	src.home = home
 	update_slope()
 
-	if(!isturf(dest))
-		RegisterSignal(dest, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because of reasons
 	if(home)
-		if(ismovable(dest))
-			RegisterSignal(dest, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
+		if(ismovable(target))
+			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
 		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 
 	return TRUE
 
-/datum/move_loop/move_towards/kill()
+/datum/move_loop/has_target/move_towards/kill()
 	if(home)
-		if(ismovable(dest))
-			UnregisterSignal(dest, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		if(ismovable(target))
+			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 		if(moving)
 			UnregisterSignal(moving, COMSIG_MOVABLE_MOVED)
 	return ..()
 
-/datum/move_loop/move_towards/move()
+/datum/move_loop/has_target/move_towards/move()
 	//Move our tickers forward a step, we're guaranteed at least one step forward because of how the code is written
 	if(x_rate) //Did you know that rounding by 0 throws a divide by 0 error?
 		x_ticker = round(x_ticker + x_rate, x_rate)
@@ -229,14 +393,10 @@ SUBSYSTEM_DEF(movement_loop)
 		y_ticker -= (y_ticker > 0) ? 1 : -1
 	moving.Move(moving_towards, get_dir(moving, moving_towards))
 
-/datum/move_loop/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
+/datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
 	if(moving.loc != moving_towards) //If we didn't go where we should have, update slope to account for the deviation
 		update_slope()
-
-/datum/move_loop/move_towards/proc/handle_no_target()
-	SIGNAL_HANDLER
-	handle_delete()
 
 /**
  * Recalculates the slope between our object and the target, sets our rates to it
@@ -248,15 +408,13 @@ SUBSYSTEM_DEF(movement_loop)
  * Then we set the large step to 1, and we're done. This way we're guaranteed to never move more then a tile at once
  * And we can have nice lines
 **/
-/datum/move_loop/move_towards/proc/update_slope()
+/datum/move_loop/has_target/move_towards/proc/update_slope()
 	SIGNAL_HANDLER
-	var/x = moving.x
-	var/y = moving.y
 
 	//You'll notice this is rise over run, except we flip the formula upside down depending on the larger number
 	//This is so we never move more then once tile at once
-	var/delta_y = dest.y - y
-	var/delta_x = dest.x - x
+	var/delta_y = target.y - moving.y
+	var/delta_x = target.x - moving.x
 	if(abs(delta_x) >= abs(delta_y))
 		if(delta_x == 0) //Just go up/down
 			x_rate = 0
@@ -271,6 +429,13 @@ SUBSYSTEM_DEF(movement_loop)
 			return
 		y_rate = (delta_y > 0) ? 1 : -1
 		x_rate = delta_x / abs(delta_y) //Keep the larger step size at 1
+
+///The actual implementation of walk_towards()
+/datum/move_loop/has_target/move_towards_budget
+
+/datum/move_loop/has_target/move_towards_budget/move()
+	var/dir = get_dir(moving, target)
+	moving.Move(get_step(moving, dir), dir)
 
 /**
  * This isn't actually the same as walk_rand
@@ -296,75 +461,8 @@ SUBSYSTEM_DEF(movement_loop)
 			break
 		potential_dirs -= testdir
 
-/datum/move_loop/dist_bound
-	var/atom/target
-	var/distance = 0
+///Wrapper around step_rand
+/datum/move_loop/move_to_rand
 
-/datum/move_loop/dist_bound/setup(atom/moving, delay, timeout, atom/thing, dist)
-	if(!..())
-		return FALSE
-	if(!isatom(thing))
-		handle_delete()
-		return
-	target = thing
-	distance = dist
-	if(ismovable(target))
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because of reasons
-
-	return TRUE
-
-/datum/move_loop/dist_bound/kill()
-	. = ..()
-	if(ismovable(target))
-		UnregisterSignal(target, list(COMSIG_PARENT_QDELETING))
-
-/datum/move_loop/dist_bound/proc/check_dist()
-	return (get_dist(moving, target) >= distance) //If you get too close, stop moving closer
-
-/datum/move_loop/dist_bound/proc/handle_no_target()
-	SIGNAL_HANDLER
-	handle_delete()
-
-/datum/move_loop/dist_bound/move()
-	if(!check_dist()) //If we're too close don't do the move
-		lasttick = round(lasttick - delay, 0.1) //Make sure to move as soon as possible
-		return FALSE
-	return TRUE
-
-/datum/move_loop/dist_bound/move_to/check_dist()
-	return (get_dist(moving, target) >= distance) //If you get too close, stop moving
-
-/datum/move_loop/dist_bound/move_to/move()
-	if(!..())
-		return
-	step_to(moving, target)
-
-/datum/move_loop/dist_bound/move_away/check_dist()
-	return (get_dist(moving, target) <= distance) //If you get too far out, stop moving away
-
-/datum/move_loop/dist_bound/move_away/move()
-	if(!..())
-		return
-	step_away(moving, target)
-
-/datum/move_loop/force_move
-	var/atom/target
-
-/datum/move_loop/force_move/setup(atom/moving, delay, timeout, atom/thing)
-	if(!..())
-		return FALSE
-	if(!isatom(thing))
-		handle_delete()
-		return
-	target = thing
-	if(ismovable(target))
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because of reasons
-
-	return TRUE
-
-/datum/move_loop/force_move/proc/handle_no_target()
-	SIGNAL_HANDLER
-	handle_delete()
-
-/datum/move_loop/force_move/move()
-	moving.forceMove(get_step(moving, get_dir(moving, target)))
+/datum/move_loop/move_to_rand/move()
+	step_rand(moving)
