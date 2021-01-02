@@ -68206,6 +68206,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
+/obj/effect/landmark/start/head_of_security,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hos)
 "jpq" = (
