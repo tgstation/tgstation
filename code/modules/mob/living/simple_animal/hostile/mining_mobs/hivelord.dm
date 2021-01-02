@@ -73,7 +73,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	is_flying_animal = TRUE
+	movement_type = FLYING
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
