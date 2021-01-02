@@ -222,6 +222,7 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
+	overdose_threshold = 20
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
@@ -279,6 +280,18 @@
 		holder.remove_reagent(type, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
 	holder.remove_reagent(type, 0.4)	//fixed consumption to prevent balancing going out of whack
+
+/datum/reagent/water/holywater/overdose_process(mob/living/M) //if overdosed, removes benificial aspect of antimagic and makes you shaky, confused, and religious.
+	if(ishuman(M))
+		REMOVE_TRAIT(M, TRAIT_ANTIMAGIC, type)
+		M.jitteriness = min(M.jitteriness+8,20)
+		M.Dizzy(15)
+		M.set_confusion(min(M.get_confusion() + 2, 5))
+		if(!iscultist(M)) //cultists wont speak religious as they already have their own shouts for being dosed with holy water. they hate god, anyway.
+			if(prob(10))
+				M.say(pick("Hallelujiah!!", "God hates spacemen!", "It's Adam and Eve, not Adam and Steve!", "Im Pope", "Waga baga bobo", "I'm saving myself until marriage." ), forced = /datum/reagent/water/holywater)
+	..()
+	return
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
