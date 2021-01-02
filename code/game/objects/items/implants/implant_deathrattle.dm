@@ -47,7 +47,7 @@
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...
 	return TRUE
 
-/obj/item/implant/deathrattle/proc/on_death(datum/source, gibbed)
+/obj/item/implant/deathrattle/proc/on_predeath(datum/source, gibbed)
 	SIGNAL_HANDLER
 
 	if(group)
@@ -56,7 +56,7 @@
 /obj/item/implant/deathrattle/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
 	if(.)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+		RegisterSignal(target, COMSIG_LIVING_PREDEATH, .proc/on_predeath)
 
 		if(!group)
 			var/msg = "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>Warning: No other linked implants detected.</span>\""
