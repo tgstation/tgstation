@@ -1,5 +1,0 @@
-author: "MissFox0810"
-delete-after: True
-changes: 
-  - admin: "Added playtime tracking to notes"
-  - server: "Added playtime to messages SQL table"
