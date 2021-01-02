@@ -592,7 +592,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 			if(do_mob(user, C, time_to_cuff) && C.canBeHandcuffed())
 				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/restraints/handcuffs/energy/used(C)
+					C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/used(C))
 					C.update_handcuffed()
 					to_chat(user, "<span class='notice'>You restrain [C].</span>")
 					log_combat(user, C, "handcuffed")

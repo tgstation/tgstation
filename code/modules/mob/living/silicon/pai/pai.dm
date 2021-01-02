@@ -200,8 +200,6 @@
 	else
 		. += text("Systems nonfunctional")
 
-/mob/living/silicon/pai/restrained(ignore_grab)
-	. = FALSE
 
 // See software.dm for Topic()
 
