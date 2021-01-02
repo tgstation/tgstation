@@ -293,7 +293,7 @@
 /datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
 	slap_item = null
 
-//Rotates the client screen hues over time, alters sounds, gives a moodlet and grants the beachbum language.
+///Moves around the client screen color over time, alters sounds, gives a moodlet, fullscreen overlay, beachbum language...
 /datum/status_effect/tripping
 	id = "tripping"
 	duration = 10 SECONDS
@@ -301,6 +301,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/high
 	var/datum/client_colour/hue_rotation/tripping/colour //See client_colour.dm
+	var/datum/client_colour/tripping_secondary/colour_two //Additional filter so greyshaded atoms don't stand out too much.
 	var/clockwise = TRUE //will the color matrix hue rotate clockwise or counterclockwise? Randomised on creation.
 
 /datum/status_effect/tripping/on_creation(mob/living/new_owner, set_duration)
@@ -311,7 +312,9 @@
 	new_owner.sound_environment_override = SOUND_ENVIRONMENT_DRUGGED
 	new_owner.grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
 	colour = new_owner.add_client_colour(/datum/client_colour/hue_rotation/tripping)
+	colour_two = new_owner.add_client_colour(/datum/client_colour/hue_rotation/tripping)
 	RegisterSignal(colour, COMSIG_PARENT_PREQDELETED, .proc/prevent_qdel)
+	RegisterSignal(colour_two, COMSIG_PARENT_PREQDELETED, .proc/prevent_qdel)
 	clockwise = pick(TRUE, FALSE)
 
 //Better safe than sorry. Also generally better than checking the instance every tick.
@@ -323,24 +326,27 @@
 	owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_HIGH)
 	UnregisterSignal(colour, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(colour_two, COMSIG_PARENT_PREQDELETED)
+	colour_two.colour = "" //we don't need mob/proc/update_client_colour() running twice.
 	QDEL_NULL(colour)
+	QDEL_NULL(colour_two)
 	. = ..()
 
-//oscillates the client screen hues based on the duration left.
+//Moves around the client color based on the strength/duration left of the status effect.
 /datum/status_effect/tripping/tick()
-	var/clock_max_dist = max((duration - world.time)/4, 37.5) //the maximum closest angle difference from 0° allowed.
-	var/counterclock_max_dist = 360 - clock_max_dist
-	var/rotation = min(clock_max_dist/7.5, 24) // about 30 seconds to oscillate from an extremity to another. (or complete a spin at 144"+ duration)
+	var/clock_max_dist = max((duration - world.time)/16, 9.38) //the maximum closest angle difference from 0° allowed. The upper limit.
+	var/counterclock_max_dist = 360 - clock_max_dist // The lower limit.
+	var/rotation = min(clock_max_dist/5, 18) // about 20 seconds to go from a limit to the other. (or complete a spin at 144"+ duration)
+	//changes direction once it reaches or exceeds the allowed limits.
+	var/sat = num2text(255 - min(rotation, 18)*5, 2, 16) //The higher the rotation, the higher the saturation of the second filter.
+	colour_two.colour = pick("#ff[sat][sat]", "#[sat]ff[sat]", "#[sat][sat]ff") // e.g. #ffcccc for lean, #ff7b7b for stage 4 hippie delight. colour.rotate_hue() will take care of calling client_colour/proc/update_colour().
+	if(rotation < 18 && ISINRANGE(colour.hue_angle, clock_max_dist, counterclock_max_dist))
+		var/adjustment = clockwise ? colour.hue_angle - clock_max_dist : counterclock_max_dist - colour.hue_angle
+		rotation += adjustment
+		clockwise = !clockwise
 	if(!clockwise)
 		rotation = -rotation
-	//changes direction if it's not doing 360° and exceeding the maximum closest angle diff allowed.
-	if(rotation < 24 && ISINRANGE(colour.hue_angle, clock_max_dist, counterclock_max_dist))
-		var/min_rotation = clockwise ? colour.hue_angle - clock_max_dist : counterclock_max_dist - colour.hue_angle
-		rotation = clockwise ? min(-rotation, min_rotation) : max(-rotation, min_rotation)
-		clockwise = !clockwise
-	else if(rotation == 24 && prob(1)) //will be spinning the other way next tick.
-		clockwise = !clockwise
-	colour.rotate_hue(rotation)
+	colour.rotate_hue(rotation, 1.9 SECONDS)
 
 /atom/movable/screen/alert/status_effect/high
 	name = "High"

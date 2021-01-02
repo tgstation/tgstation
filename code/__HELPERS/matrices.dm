@@ -133,7 +133,7 @@ list(0.393,0.349,0.272,0, 0.769,0.686,0.534,0, 0.189,0.168,0.131,0, 0,0,0,1, 0,0
 	return list(value,0,0,0, 0,value,0,0, 0,0,value,0, 0,0,0,1, add,add,add,0)
 
 //Moves all colors angle degrees around the color wheel while maintaining intensity of the color and not affecting greys
-//0 is identity, 120 moves reds to greens, 240 moves reds to blues
+//0/180 is identity, 60/240 moves reds to greens, 120/300 moves reds to blues
 /proc/color_matrix_rotate_hue(angle)
 	var/sin = sin(angle)
 	var/cos = cos(angle)

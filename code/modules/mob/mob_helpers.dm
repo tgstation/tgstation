@@ -226,7 +226,7 @@
 
 	for(var/i in 0 to duration-1)
 		if (i == 0)
-			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1, flags = ANIMATION_PARALLEL)
 		else
 			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
@@ -492,7 +492,7 @@
 			colored_message = "(ASAY) [colored_message]"
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
-	
+
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)]" = colored_message)
 
 	logging[smessage_type] += timestamped_message

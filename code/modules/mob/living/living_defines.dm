@@ -117,7 +117,6 @@
 	var/see_override = 0 ///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
 
 	var/list/status_effects ///a list of all status effects the mob has
-	var/druggy = 0
 
 	//Speech
 	var/stuttering = 0

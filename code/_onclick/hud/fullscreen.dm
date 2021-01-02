@@ -124,6 +124,12 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "noise"
 
+/atom/movable/screen/fullscreen/high
+	icon = 'icons/hud/screen_gen.dmi'
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	icon_state = "flash"
+	blend_mode = BLEND_MULTIPLY
+
 /atom/movable/screen/fullscreen/color_vision
 	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"

@@ -16,7 +16,7 @@
  * Define subtypes of this datum
  */
 /datum/client_colour
-	///Any client.color-valid value
+	///Any client.color-valid value. If not null, will update client.color when added and removed.
 	var/colour = ""
 	///The mob that owns this client_colour.
 	var/mob/owner
@@ -48,7 +48,7 @@
 	return ..()
 
 ///Sets a new colour, then updates the owner's screen colour.
-/datum/client_colour/proc/update_colour(new_colour, anim_time, easing = 0)
+/datum/client_colour/proc/update_colour(new_colour, anim_time, easing = NONE)
 	colour = new_colour
 	if(anim_time)
 		owner.animate_client_colour(anim_time, easing)
@@ -64,14 +64,14 @@
 		return
 
 	var/datum/client_colour/new_colour = new colour_type(src)
+	. = new_colour
 	BINARY_INSERT(new_colour, client_colours, /datum/client_colour, new_colour, priority, COMPARE_KEY)
-	if(!new_colour.colour) //No color, don't update yet.
+	if(!new_colour.colour) //No color to apply, no update.
 		return
 	if(new_colour.fade_in)
 		animate_client_colour(new_colour.fade_in)
 	else
 		update_client_colour()
-	return new_colour
 
 /**
  * Removes an instance of colour_type from the mob's client_colours list
@@ -88,15 +88,14 @@
 			break
 
 /**
- * Gets the resulting colour/tone from client_colours.
- * In the case of multiple colours, they'll be converted to RGBA matrices for compatibility,
- * summed together, and then each element divided by the number of matrices. (except we do this with lists because byond)
+ * Gets the colour to apply to the client from a client_colours list.
+ * In the case of multiple client_colour instances, their colours will be blended together with color_matrix_multiply().
  * target is the target variable.
  */
 #define MIX_CLIENT_COLOUR(target)\
 	var/_our_colour;\
-	var/_number_colours = 0;\
 	var/_pool_closed = INFINITY;\
+	var/_not_blending_yet = TRUE;\
 	for(var/_c in client_colours){\
 		var/datum/client_colour/_colour = _c;\
 		if(_pool_closed < _colour.priority){\
@@ -105,7 +104,6 @@
 		if(!_colour.colour){\
 			continue\
 		};\
-		_number_colours++;\
 		if(_colour.override){\
 			_pool_closed = _colour.priority\
 		};\
@@ -113,20 +111,12 @@
 			_our_colour = _colour.colour;\
 			continue\
 		};\
-		if(_number_colours == 2){\
-			_our_colour = color_to_full_rgba_matrix(_our_colour)\
+		if(_not_blending_yet){\
+			_our_colour = color_to_full_rgba_matrix(_our_colour);\
+			_not_blending_yet = FALSE\
 		};\
 		var/list/_colour_matrix = color_to_full_rgba_matrix(_colour.colour);\
-		var/list/_L = _our_colour;\
-		for(var/_i in 1 to 20){\
-			_L[_i] += _colour_matrix[_i]\
-		};\
-	};\
-	if(_number_colours > 1){\
-		var/list/_L = _our_colour;\
-		for(var/_i in 1 to 20){\
-			_L[_i] /= _number_colours\
-		};\
+		_our_colour = color_matrix_multiply(_our_colour, _colour_matrix)\
 	};\
 	target = _our_colour\
 
@@ -223,19 +213,22 @@
 
 //Exactly what it says on the tin.
 /datum/client_colour/hue_rotation
-	colour = null //calculated on rotate_hue()
 	var/hue_angle = 0 //Keeps track of the current angle.
 
-/datum/client_colour/hue_rotation/proc/rotate_hue(rotation, duration = 2 SECONDS)
+/datum/client_colour/hue_rotation/proc/rotate_hue(rotation, duration = 2 SECONDS, easing = NONE)
 	hue_angle = SIMPLIFY_DEGREES(hue_angle + rotation)
-	update_colour(color_matrix_rotate_hue(hue_angle), duration)
+	update_colour(color_matrix_rotate_hue(hue_angle), duration, easing)
 
 /datum/client_colour/hue_rotation/tripping
 	priority = PRIORITY_HIGH //It shouldn't mess up with monochromia that much.
 
 /datum/client_colour/hue_rotation/tripping/rotate_hue(rotation, duration = 2 SECONDS)
 	. = ..()
-	fade_out = ((hue_angle > 180) ? 360 - hue_angle : hue_angle)/9 //1 decimal every 9° of closer angle diff, for a max of 2" at 180°
+	fade_out = round(abs(sin(hue_angle))*4 SECONDS) //Maximum fade out duration of 4 seconds at 90° / 270°
+
+/datum/client_colour/tripping_secondary //Used in combination with the above.
+	priority = PRIORITY_HIGH
+
 
 #undef PRIORITY_ABSOLUTE
 #undef PRIORITY_HIGH
