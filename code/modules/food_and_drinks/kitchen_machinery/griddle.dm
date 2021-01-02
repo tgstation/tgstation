@@ -26,11 +26,28 @@
 	. = ..()
 	grill_loop = new(list(src), FALSE)
 	variant = rand(1,3)
+	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
+
+/obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)
+	SIGNAL_HANDLER
+
+	if(griddled_objects.len >= max_items || !istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) || reac_volume < 5)
+		return NONE //make sure you have space... it's actually batter... and a proper amount of it.
+
+	for(var/pancakes in 1 to FLOOR(reac_volume, 5) step 5) //this adds as many pancakes as you possibly could make, with 5u needed per pancake
+		var/obj/item/food/pancakes/raw/new_pancake = new(src)
+		new_pancake.pixel_x = rand(16,-16)
+		new_pancake.pixel_y = rand(16,-16)
+		AddToGrill(new_pancake)
+		if(griddled_objects.len >= max_items)
+			break
+	visible_message("<span class='notice'>[exposing_reagent] begins to cook on [src].</span>")
+	return NONE
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
-		return
+	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
+
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
 	. = ..()

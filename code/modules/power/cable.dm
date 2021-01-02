@@ -601,9 +601,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	base_icon_state = "coil2"
 
 /obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. = ..()
 	if(!amount)
 		amount = rand(1,2)
+	. = ..()
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
 	update_appearance()

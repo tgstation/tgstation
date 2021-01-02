@@ -603,16 +603,18 @@
 	if(component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
-			var/P
+			var/required_type
 			if(W.works_from_distance)
 				to_chat(user, display_parts(user))
+			if(!CB)
+				return FALSE
 			for(var/obj/item/A in component_parts)
-				for(var/D in CB.req_components)
-					if(ispath(A.type, D))
-						P = D
+				for(var/design_type in CB.req_components)
+					if(ispath(A.type, design_type))
+						required_type = design_type
 						break
 				for(var/obj/item/B in W.contents)
-					if(istype(B, P) && istype(A, P))
+					if(istype(B, required_type) && istype(A, required_type))
 						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
 						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
 							var/obj/item/stock_parts/cell/checked_cell = B

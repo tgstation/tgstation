@@ -1,4 +1,4 @@
 author: "spessbro"
 delete-after: True
 changes: 
-  - tweak: "cats are skinnier"
+  - bugfix: "Fixed core removal surgery"

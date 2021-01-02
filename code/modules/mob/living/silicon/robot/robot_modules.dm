@@ -95,7 +95,6 @@
 
 		if(istype(sheet_module.source))
 			sheet_module.cost = max(sheet_module.cost, 1) // Must not cost 0 to prevent div/0 errors.
-			sheet_module.set_mats_per_unit(null)
 			sheet_module.is_cyborg = TRUE
 
 	if(I.loc != src)
