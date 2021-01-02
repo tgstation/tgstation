@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "SiliConnect users can now emag their device to send anonymous messages to borgs. Remember to remove your ID before hitting send!"
