@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - tweak: "Scrolls of teleportation no longer use outdated interface and will take you straight into a list of a possible destinations upon use."
-  - tweak: "Scrolls of teleportation now show number of remaining uses upon examination and also give proper feedback messages upon teleportation."
-  - tweak: "Scrolls of teleportation now crumble to dust when out of uses."

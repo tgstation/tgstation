@@ -925,7 +925,7 @@
 	else
 		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * delta_time
 
-	var/datum/gas_mixture/internal_output
+	var/datum/gas_mixture/internal_output = new
 	//gas consumption and production
 	if(check_fuel())
 		var/fuel_consumption = clamp((fuel_injection_rate * 0.001) * 5 * power_level, 0.05, 30) * delta_time
