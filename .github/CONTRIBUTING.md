@@ -364,10 +364,10 @@ The way they pull this off, while fine for the language itself, makes a mess of 
 The following is a list of procs, and their safe replacements.
 
 * `walk()` - None
-* `walk_to()` - None
+* `walk_to()` - `SSmovement_loop.move_to()`
 * `walk_towards()` - `SSmovement_loop.home_onto()`
-* `walk_away()` - None
-* `walk_rand()` - None
+* `walk_away()` - `SSmovement_loop.move_away()`
+* `walk_rand()` - kinda? `SSmovement_loop.move_rand()` this one is odd, check the docs on it
 
 As you can see, the project of replacing all of these is still ongoing. If you do end up needing to use one of these, keep the delay var high, and don't do it that often/with too many objects.
 

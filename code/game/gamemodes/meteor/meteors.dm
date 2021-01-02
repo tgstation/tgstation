@@ -156,11 +156,13 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
-	SSmovement_loop.start_looping(src, chasing, delay, home, lifetime)
+	SSmovement_loop.move_towards(src, chasing, delay, home, lifetime)
 	RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/handle_stopping)
 
 /obj/effect/meteor/proc/handle_stopping()
-	qdel(src)
+	SIGNAL_HANDLER
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf

@@ -80,7 +80,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(!target && end && end.z==z_original)
 		target = end
 	if(target)
-		SSmovement_loop.start_looping(src, target, home = (!!special_target)) //Only home if you're aiming for something special
+		SSmovement_loop.move_towards(src, target, home = (!!special_target)) //Only home if you're aiming for something special
 
 /obj/effect/immovablerod/examine(mob/user)
 	. = ..()
@@ -113,7 +113,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/proc/complete_trajectory()
 	//We hit what we wanted to hit, time to go
 	special_target = null
-	SSmovement_loop.start_looping(src, get_edge_target_turf(src, dir), override = TRUE)
+	SSmovement_loop.move_towards(src, get_edge_target_turf(src, dir), override = TRUE)
 
 /obj/effect/immovablerod/singularity_act()
 	return
@@ -155,10 +155,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		else if(isliving(thing))
 			penetrate(thing)
 
-/obj/effect/immovablerod/proc/chase_target(atom/chasing, timeout, delay, home)
+/obj/effect/immovablerod/proc/chase_target(atom/chasing, delay, home, timeout)
 	if(!isatom(chasing))
 		return
-	SSmovement_loop.start_looping(src, FALSE, chasing, timeout, home, delay)
+	SSmovement_loop.move_towards(src, chasing, delay, home, timeout)
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
