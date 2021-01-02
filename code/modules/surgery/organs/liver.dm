@@ -21,6 +21,21 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
 
+/obj/item/organ/liver/Initialize()
+	. = ..()
+	// If the liver handles foods like a clown, it honks like a bike horn
+	// Don't think about it too much.
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_comedy)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_comedy_remove)
+
+/obj/item/organ/liver/proc/on_comedy()
+	// Are clown "bike" horns made from the livers of ex-clowns?
+	// Would that make the clown more or less likely to honk it
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
+
+/obj/item/organ/liver/proc/on_comedy_remove()
+	qdel(GetComponent(/datum/component/squeak))
+
 /obj/item/organ/liver/examine(mob/user)
 	. = ..()
 

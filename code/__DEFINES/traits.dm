@@ -129,7 +129,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HUSK				"husk"
 #define TRAIT_BADDNA			"baddna"
 #define TRAIT_CLUMSY			"clumsy"
-#define TRAIT_CLOWNLIKE			"clownlike" //for those creatures that are related to clowns, but not necessarily clumsy
 #define TRAIT_CHUNKYFINGERS		"chunkyfingers" //means that you can't use weapons with normal trigger guards.
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_ADVANCEDTOOLUSER	"advancedtooluser" //Whether a mob is dexterous enough to use machines and certain items or not.
@@ -470,3 +469,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait granted by [/mob/living/silicon/robot]
 /// Traits applied to a silicon mob by their module.
 #define MODULE_TRAIT "module_trait"
+
+/// Trait from [/datum/antagonist/nukeop/clownop]
+#define CLOWNOP_TRAIT "clownop"
