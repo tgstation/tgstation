@@ -294,7 +294,7 @@
 		attacked += 10
 
 
-/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/human/M)
 	if(..()) //successful monkey bite.
 		attacked += 10
 
@@ -499,9 +499,6 @@
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
-
-/mob/living/simple_animal/slime/can_be_implanted()
-	return TRUE
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))

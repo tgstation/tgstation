@@ -251,7 +251,7 @@
 		usr.put_in_hands(C)
 		qdel(src)
 
-/obj/structure/chair/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
+/obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return ..()
 
 /obj/structure/chair/stool/bar

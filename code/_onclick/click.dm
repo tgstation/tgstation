@@ -312,6 +312,7 @@
 
 /atom/proc/CtrlClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
+	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
