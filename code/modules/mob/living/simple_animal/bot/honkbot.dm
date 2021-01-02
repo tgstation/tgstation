@@ -230,7 +230,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 		if(BOT_IDLE)		// idle
 
-			SSmovement.stop_looping(src)
+			SSmovement_loop.stop_looping(src)
 			look_for_perp()
 			if(!mode && auto_patrol)
 				mode = BOT_START_PATROL
