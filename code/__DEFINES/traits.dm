@@ -129,6 +129,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HUSK				"husk"
 #define TRAIT_BADDNA			"baddna"
 #define TRAIT_CLUMSY			"clumsy"
+#define TRAIT_CLOWNLIKE			"clownlike" //for those creatures that are related to clowns, but not necessarily clumsy
 #define TRAIT_CHUNKYFINGERS		"chunkyfingers" //means that you can't use weapons with normal trigger guards.
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_ADVANCEDTOOLUSER	"advancedtooluser" //Whether a mob is dexterous enough to use machines and certain items or not.
@@ -378,9 +379,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SANTA "santa"
 #define SCRYING_ORB "scrying-orb"
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
-#define NUKEOP_TRAIT "nuke-op"
 #define JUNGLE_FEVER_TRAIT "jungle_fever"
-#define DEATHSQUAD_TRAIT "deathsquad"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define CLOWN_NUKE_TRAIT "clown-nuke"
 #define STICKY_MOUSTACHE_TRAIT "sticky-moustache"
@@ -435,6 +434,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ELEMENT_TRAIT "element_trait"
 /// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
 #define BERSERK_TRAIT "berserk_trait"
+
+/**
+* Trait granted by [/mob/living/carbon/Initialize] and
+* granted/removed by [/obj/item/organ/tongue]
+* Used for ensuring that carbons without tongues cannot taste anything
+* so it is added in Initialize, and then removed when a tongue is inserted
+* and readded when a tongue is removed.
+*/
+#define NO_TONGUE_TRAIT "no_tongue_trait"
 
 /// Trait granted by [/mob/living/silicon/robot]
 /// Traits applied to a silicon mob by their module.
