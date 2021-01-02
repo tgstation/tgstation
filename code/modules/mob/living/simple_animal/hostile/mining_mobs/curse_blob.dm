@@ -23,7 +23,6 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
-	var/doing_move_loop = FALSE
 	var/mob/living/set_target
 	var/timerid
 
@@ -34,27 +33,33 @@
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Destroy()
 	new /obj/effect/temp_visual/dir_setting/curse/blob(loc, dir)
-	doing_move_loop = FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/Goto(move_target, delay, minimum_distance)
+/mob/living/simple_animal/hostile/asteroid/curseblob/Goto(move_target, delay, minimum_distance) //Observe
+	if(check_for_target())
+		return
 	move_loop(target, delay)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
-	set waitfor = FALSE
-	if(doing_move_loop)
-		return
-	doing_move_loop = TRUE
-	if(check_for_target())
-		return
-	while(!QDELETED(src) && doing_move_loop && isturf(loc) && !check_for_target())
-		var/step_turf = get_step(src, get_dir(src, set_target))
-		if(step_turf != get_turf(set_target))
-			forceMove(step_turf)
-		sleep(delay)
-	doing_move_loop = FALSE
+	//Goto passes delay in ticks, we need it in deciseconds
+	//We don't need to check to see if the loop exists, as the subsystem handles that
+	if(SSmovement_loop.force_move(src, set_target, delay * 0.1))
+		RegisterSignal(src, COMSIG_MOVELOOP_PROCESS_CHECK, .proc/check_target)
+		RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/handle_loop_end)
+
+/mob/living/simple_animal/hostile/asteroid/curseblob/proc/check_target()
+	SIGNAL_HANDLER
+	if(set_target.stat != CONSCIOUS || z != set_target.z)
+		return MOVELOOP_STOP_PROCESSING
+
+/mob/living/simple_animal/hostile/asteroid/curseblob/proc/handle_loop_end()
+	SIGNAL_HANDLER
+	if(!QDELETED(src))
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/check_for_target()
+	if(QDELETED(src))
+		return TRUE
 	if(QDELETED(set_target) || set_target.stat != CONSCIOUS || z != set_target.z)
 		qdel(src)
 		return TRUE
