@@ -523,16 +523,29 @@ RLD
 		return FALSE
 	var/delay = rcd_results["delay"] * delay_mod
 	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
-	if(checkResource(rcd_results["cost"], user))
-		if(do_after(user, delay, target = A))
-			if(checkResource(rcd_results["cost"], user))
-				if(A.rcd_act(user, src, rcd_results["mode"]))
-					rcd_effect.end_animation()
-					useResource(rcd_results["cost"], user)
-					activate()
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					return TRUE
-	qdel(rcd_effect)
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
+		var/turf/target_turf = get_turf(A)
+		if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(rcd_effect)
+			return FALSE
+	if(!do_after(user, delay, target = A))
+		qdel(rcd_effect)
+		return FALSE
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(!A.rcd_act(user, src, rcd_results["mode"]))
+		qdel(rcd_effect)
+		return FALSE
+	rcd_effect.end_animation()
+	useResource(rcd_results["cost"], user)
+	activate()
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	return TRUE
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
