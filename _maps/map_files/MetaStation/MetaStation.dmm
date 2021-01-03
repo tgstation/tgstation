@@ -58046,6 +58046,7 @@
 "cRw" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/bed/roller,
+/obj/item/toy/plush/snakeplushie,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -73901,6 +73902,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
 	},
+/obj/item/toy/plush/pkplush,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "piK" = (
@@ -80056,12 +80058,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "vVt" = (
