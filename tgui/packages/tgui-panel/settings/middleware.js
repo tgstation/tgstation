@@ -16,6 +16,13 @@ const setGlobalFontSize = fontSize => {
     .setProperty('font-size', fontSize + 'px');
 };
 
+const setGlobalFontFamily = fontFamily => {
+  document.documentElement.style
+    .setProperty('font-family', fontFamily);
+  document.body.style
+    .setProperty('font-family', fontFamily);
+};
+
 export const settingsMiddleware = store => {
   let initialized = false;
   return next => action => {
@@ -37,6 +44,8 @@ export const settingsMiddleware = store => {
       const settings = selectSettings(store.getState());
       // Update global UI font size
       setGlobalFontSize(settings.fontSize);
+      // Update global UI font family
+      setGlobalFontFamily(settings.fontFamily);
       // Save settings to the web storage
       storage.set('panel-settings', settings);
       return;

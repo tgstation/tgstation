@@ -11,7 +11,7 @@ import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings } from './actions';
-import { SETTINGS_TABS } from './constants';
+import { SETTINGS_TABS, FONTS } from './constants';
 import { selectActiveTab, selectSettings } from './selectors';
 
 export const SettingsPanel = (props, context) => {
@@ -50,6 +50,7 @@ export const SettingsPanel = (props, context) => {
 export const SettingsGeneral = (props, context) => {
   const {
     theme,
+    fontFamily,
     fontSize,
     lineHeight,
     highlightText,
@@ -65,6 +66,15 @@ export const SettingsGeneral = (props, context) => {
             options={THEMES}
             onSelected={value => dispatch(updateSettings({
               theme: value,
+            }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Font style">
+          <Dropdown
+            selected={fontFamily}
+            options={FONTS}
+            width="350px"
+            onSelected={value => dispatch(updateSettings({
+              fontFamily: value,
             }))} />
         </LabeledList.Item>
         <LabeledList.Item label="Font size">
