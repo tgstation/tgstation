@@ -134,6 +134,9 @@
 		return
 	if(!isitem(exposed_obj) || istype(exposed_obj, /obj/item/food/deepfryholder))
 		return
+	if(is_type_in_typecache(exposed_obj, GLOB.oilfry_blacklisted_items) || (exposed_obj.resistance_flags & INDESTRUCTIBLE))
+		exposed_obj.loc.visible_message("<span class='notice'>The hot oil has no effect on [exposed_obj]!</span>")
+		return
 	exposed_obj.loc.visible_message("<span class='warning'>[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow.</span>")
 	var/obj/item/food/deepfryholder/fry_target = new(exposed_obj.drop_location(), exposed_obj)
 	fry_target.fry(volume)
@@ -311,7 +314,7 @@
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(!ishuman(exposed_mob) && !ismonkey(exposed_mob))
+	if(!ishuman(exposed_mob))
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
@@ -858,3 +861,16 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	taste_mult = 2
 	taste_description = "fizzy sweetness"
+
+/datum/reagent/consumable/gravy
+	name = "Gravy"
+	description = "A mixture of flour, water, and the juices of cooked meat."
+	taste_description = "gravy"
+	color = "#623301"
+	taste_mult = 1.2
+
+/datum/reagent/consumable/pancakebatter
+	name = "pancake batter"
+	description = "A very milky batter. 5 units of this on the griddle makes a mean pancake."
+	taste_description = "milky batter"
+	color = "#fccc98"

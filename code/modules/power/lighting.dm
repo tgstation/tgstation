@@ -227,7 +227,7 @@
 	var/static_power_used = 0
 	var/brightness = 8			// luminosity when on, also used in power calculation
 	var/bulb_power = 1			// basically the alpha of the emitted light source
-	var/bulb_colour = "#FFFFFF"	// befault colour of the light.
+	var/bulb_colour = "#f3fffa"	// befault colour of the light.
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = FALSE
 	var/light_type = /obj/item/light/tube		// the type of light item
@@ -253,35 +253,9 @@
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
 
-	var/obj/effect/overlay/vis/glowybit		// the light overlay
-
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
-
-/obj/machinery/light/dim
-	nightshift_allowed = FALSE
-	bulb_colour = "#FFDDCC"
-	bulb_power = 0.8
-
-// the smaller bulb light fixture
-
-/obj/machinery/light/small
-	icon_state = "bulb"
-	base_state = "bulb"
-	fitting = "bulb"
-	brightness = 4
-	desc = "A small lighting fixture."
-	light_type = /obj/item/light/bulb
-
-/obj/machinery/light/small/broken
-	status = LIGHT_BROKEN
-	icon_state = "bulb-broken"
-
-/obj/machinery/light/Move()
-	if(status != LIGHT_BROKEN)
-		break_light_tube(1)
-	return ..()
 
 /obj/machinery/light/built
 	icon_state = "tube-empty"
@@ -292,6 +266,57 @@
 	status = LIGHT_EMPTY
 	update(0)
 
+
+/obj/machinery/light/no_nightlight
+	nightshift_enabled = FALSE
+
+/obj/machinery/light/warm
+	bulb_colour = "#fae5c1"
+
+/obj/machinery/light/warm/no_nightlight
+	nightshift_allowed = FALSE
+
+/obj/machinery/light/cold
+	bulb_colour = "#deefff"
+	nightshift_light_color = "#deefff"
+
+/obj/machinery/light/cold/no_nightlight
+	nightshift_allowed = FALSE
+
+/obj/machinery/light/red
+	bulb_colour = "#FF3232"
+	nightshift_allowed = FALSE
+	no_emergency = TRUE
+	brightness = 2
+	bulb_power = 0.7
+
+/obj/machinery/light/blacklight
+	bulb_colour = "#A700FF"
+	nightshift_allowed = FALSE
+	brightness = 2
+	bulb_power = 0.8
+
+/obj/machinery/light/dim
+	nightshift_allowed = FALSE
+	bulb_colour = "#FFDDCC"
+	bulb_power = 0.6
+
+// the smaller bulb light fixture
+
+/obj/machinery/light/small
+	icon_state = "bulb"
+	base_state = "bulb"
+	fitting = "bulb"
+	brightness = 4
+	nightshift_brightness = 4
+	bulb_colour = "#FFD6AA"
+	desc = "A small lighting fixture."
+	light_type = /obj/item/light/bulb
+
+/obj/machinery/light/small/broken
+	status = LIGHT_BROKEN
+	icon_state = "bulb-broken"
+
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
 	start_with_cell = FALSE
@@ -301,13 +326,27 @@
 	status = LIGHT_EMPTY
 	update(0)
 
+/obj/machinery/light/small/red
+	bulb_colour = "#FF3232"
+	no_emergency = TRUE
+	nightshift_allowed = FALSE
+	brightness = 1
+	bulb_power = 0.8
 
+/obj/machinery/light/small/blacklight
+	bulb_colour = "#A700FF"
+	nightshift_allowed = FALSE
+	brightness = 1
+	bulb_power = 0.9
+
+/obj/machinery/light/Move()
+	if(status != LIGHT_BROKEN)
+		break_light_tube(1)
+	return ..()
 
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
-
-	glowybit = SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir, alpha = 0, unique = TRUE)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/A = get_area(src)
@@ -338,8 +377,6 @@
 		on = FALSE
 //		A.update_lights()
 	QDEL_NULL(cell)
-	vis_contents.Cut()
-	QDEL_NULL(glowybit)
 	return ..()
 
 /obj/machinery/light/update_icon_state()
@@ -359,10 +396,15 @@
 
 /obj/machinery/light/update_overlays()
 	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(on && status == LIGHT_OK)
-		glowybit.alpha = clamp(light_power*250, 30, 200)
-	else
-		glowybit.alpha = 0
+		var/area/A = get_area(src)
+		if(emergency_mode || (A?.fire))
+			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+		else if (nightshift_enabled)
+			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+		else
+			SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -878,17 +920,38 @@
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
-	if(istype(L) && !(L.is_flying() || L.is_floating() || L.buckled))
+	if(!(L.movement_type & (FLYING|FLOATING)) || L.buckled)
 		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()
 
-// attack bulb/tube with object
-// if a syringe, can inject plasma to make it explode
-/obj/item/light/on_reagent_change(changetype)
-	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) //has_reagent returns the reagent datum
-	return ..()
-	
+/obj/item/light/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/**
+ * Handles rigging the cell if it contains enough plasma.
+ */
+/obj/item/light/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	rigged = (reagents.has_reagent(/datum/reagent/toxin/plasma, LIGHT_REAGENT_CAPACITY)) ? TRUE : FALSE //has_reagent returns the reagent datum, we don't want to hold a reference to prevent hard dels
+	return NONE
+
+/**
+ * Handles the reagent holder datum being deleted for some reason. Probably someone making pizza lights.
+ */
+/obj/item/light/proc/on_reagents_del(datum/reagents/holder)
+	SIGNAL_HANDLER
+	UnregisterSignal(holder, list(
+		COMSIG_PARENT_QDELETING,
+		COMSIG_REAGENTS_NEW_REAGENT,
+		COMSIG_REAGENTS_ADD_REAGENT,
+		COMSIG_REAGENTS_REM_REAGENT,
+		COMSIG_REAGENTS_DEL_REAGENT,
+	))
+	return NONE
+
 #undef LIGHT_REAGENT_CAPACITY
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)

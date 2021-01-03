@@ -988,13 +988,11 @@
 		return src
 
 /**
- * Buckle a living mob to this mob
+ * Buckle a living mob to this mob. Also turns you to face the other mob
  *
  * You can buckle on mobs if you're next to them since most are dense
- *
- * Turns you to face the other mob too
  */
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(M.buckled)
 		return FALSE
 	var/turf/T = get_turf(src)
@@ -1288,14 +1286,6 @@
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
 	nutrition = max(0, change)
-
-
-/mob/setMovetype(newval) //Set the movement type of the mob and update it's movespeed
-	. = ..()
-	if(isnull(.))
-		return
-	update_movespeed(FALSE)
-
 
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()

@@ -915,7 +915,7 @@
 
 /datum/status_effect/amok/on_apply(mob/living/afflicted)
 	. = ..()
-	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+	to_chat(owner, "<span class='boldwarning'>You feel filled with a rage that is not your own!</span>")
 
 /datum/status_effect/amok/tick()
 	. = ..()

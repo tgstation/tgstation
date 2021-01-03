@@ -7,6 +7,7 @@
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
+	clean_type = CLEAN_TYPE_BLOOD
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	C.add_blood_DNA(return_blood_DNA())
@@ -60,6 +61,8 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
+	if(mapload) //Don't rot at roundstart for the love of god
+		return
 	if(already_rotting)
 		start_rotting(rename=FALSE)
 	else

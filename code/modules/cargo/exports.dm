@@ -27,7 +27,7 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/exported_atoms_ref = list()	//if they're not deleted they go in here for use.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
-/proc/export_item_and_contents(atom/movable/AM, allowed_categories = EXPORT_CARGO, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
+/proc/export_item_and_contents(atom/movable/AM, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
 	if(!GLOB.exports_list.len)
 		setupExports()
 
@@ -50,8 +50,8 @@ Then the player gets the profit from selling his own wasted time.
 		for(var/datum/export/E in GLOB.exports_list)
 			if(!E)
 				continue
-			if(E.applies_to(thing, allowed_categories, apply_elastic))
-				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, profit_ratio)
+			if(E.applies_to(thing, apply_elastic))
+				sold = E.sell_object(thing, report, dry_run, apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
 				if(!QDELETED(thing))
 					report.exported_atoms_ref += thing
@@ -75,8 +75,7 @@ Then the player gets the profit from selling his own wasted time.
 	//cost includes elasticity, this does not.
 	var/init_cost
 
-	//All these need to be present in export call parameter for this to apply.
-	var/export_category = EXPORT_CARGO
+
 
 /datum/export/New()
 	..()
@@ -96,7 +95,7 @@ Then the player gets the profit from selling his own wasted time.
 		cost = init_cost
 
 // Checks the cost. 0 cost items are skipped in export.
-/datum/export/proc/get_cost(obj/O, allowed_categories = NONE, apply_elastic = TRUE)
+/datum/export/proc/get_cost(obj/O, apply_elastic = TRUE)
 	var/amount = get_amount(O)
 	if(apply_elastic)
 		if(k_elasticity!=0)
@@ -112,14 +111,12 @@ Then the player gets the profit from selling his own wasted time.
 	return 1
 
 // Checks if the item is fit for export datum.
-/datum/export/proc/applies_to(obj/O, allowed_categories = NONE, apply_elastic = TRUE)
-	if((allowed_categories & export_category) != export_category)
-		return FALSE
+/datum/export/proc/applies_to(obj/O, apply_elastic = TRUE)
 	if(!is_type_in_typecache(O, export_types))
 		return FALSE
 	if(include_subtypes && is_type_in_typecache(O, exclude_types))
 		return FALSE
-	if(!get_cost(O, allowed_categories , apply_elastic))
+	if(!get_cost(O, apply_elastic))
 		return FALSE
 	if(O.flags_1 & HOLOGRAM_1)
 		return FALSE
@@ -133,9 +130,9 @@ Then the player gets the profit from selling his own wasted time.
  * get_cost, get_amount and applies_to do not neccesary mean a successful sale.
  *
  */
-/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
+/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	///This is the value of the object, as derived from export datums.
-	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
+	var/the_cost = get_cost(O, apply_elastic)
 	///Quantity of the object in question.
 	var/amount = get_amount(O)
 	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
@@ -144,7 +141,7 @@ Then the player gets the profit from selling his own wasted time.
 	if(amount <=0 || the_cost <=0)
 		return FALSE
 	if(dry_run == FALSE)
-		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, allowed_categories , apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
+		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
 			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_DRY)
 			the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	else
