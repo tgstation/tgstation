@@ -77,7 +77,7 @@
 	return ..()
 
 /obj/vehicle/sealed/car/relaymove(mob/living/user, direction)
-	if(canmove && (!key_type || istype(inserted_key, key_type)))
+	if(is_driver(user) && canmove && (!key_type || istype(inserted_key, key_type)))
 		vehicle_move(direction)
 	return TRUE
 
