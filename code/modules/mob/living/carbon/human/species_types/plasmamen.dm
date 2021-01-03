@@ -12,7 +12,7 @@
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/liver/plasmaman
-	mutantstomach = /obj/item/organ/stomach/plasmaman
+	mutantstomach = /obj/item/organ/stomach/bone/plasmaman
 	burnmod = 1.5
 	heatmod = 1.5
 	brutemod = 1.5

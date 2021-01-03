@@ -1,0 +1,4 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Doorjacks should be able to hack green airlocks now /emags should not be able to hack green airlocks now"
