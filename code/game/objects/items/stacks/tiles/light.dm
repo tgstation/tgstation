@@ -22,6 +22,5 @@
 
 /obj/item/stack/tile/light/place_tile(turf/open/T)
 	. = ..()
-	if(.)
-		var/turf/open/floor/light/F = .
-		F.state = state
+	var/turf/open/floor/light/F = .
+	F?.state = state

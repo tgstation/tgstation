@@ -417,7 +417,7 @@
 		return FALSE
 	return TRUE
 
-///Merges src into S, as much as possible. If present, the limit arg is used instead of S.max_amount for transfer.
+///Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.
 /obj/item/stack/proc/merge(obj/item/stack/S, limit)
 	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
@@ -426,8 +426,6 @@
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
 	else
 		transfer = min(transfer, (limit ? limit : S.max_amount) - S.amount)
-	if(limit)
-		transfer = min(limit, transfer)
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)

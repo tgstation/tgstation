@@ -5,7 +5,6 @@
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "floorbot0"
 	density = FALSE
-	anchored = FALSE
 	health = 25
 	maxHealth = 25
 
@@ -76,8 +75,7 @@
 	target = null
 	oldloc = null
 	ignore_list = list()
-	anchored = FALSE
-	update_icon()
+	toggle_magnet(FALSE)
 
 /mob/living/simple_animal/bot/floorbot/set_custom_texts()
 	text_hack = "You corrupt [name]'s construction protocols."
@@ -103,7 +101,7 @@
 		dat += "Place floor tiles: <A href='?src=[REF(src)];operation=place'>[placetiles ? "Yes" : "No"]</A><BR>"
 		dat += "Replace existing floor tiles with custom tiles: <A href='?src=[REF(src)];operation=replace'>[replacetiles ? "Yes" : "No"]</A><BR>"
 		dat += "Repair damaged tiles and platings: <A href='?src=[REF(src)];operation=fix'>[fixfloors ? "Yes" : "No"]</A><BR>"
-		dat += "Traction Magnets: <A href='?src=[REF(src)];operation=anchor'>[HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT) ? "Engaged" : "Disengaged"]</A><BR>"
+		dat += "Traction Magnets: <A href='?src=[REF(src)];operation=magnet'>[HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT) ? "Engaged" : "Disengaged"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 		var/bmode
 		if(targetdirection)
@@ -147,7 +145,7 @@
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
 ///mobs should use move_resist instead of anchored.
-/mob/living/simple_animal/bot/floorbot/proc/toggle_anchor(engage = TRUE, change_icon = TRUE)
+/mob/living/simple_animal/bot/floorbot/proc/toggle_magnet(engage = TRUE, change_icon = TRUE)
 	if(engage)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		move_resist = INFINITY
@@ -172,8 +170,8 @@
 			fixfloors = !fixfloors
 		if("autotile")
 			autotile = !autotile
-		if("anchor")
-			toggle_anchor(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT), FALSE)
+		if("magnet")
+			toggle_magnet(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT), FALSE)
 		if("eject")
 			if(tilestack)
 				tilestack.forceMove(drop_location())
@@ -254,7 +252,7 @@
 				repair(target)
 			else if(emagged == 2 && isfloorturf(target))
 				var/turf/open/floor/F = target
-				toggle_anchor()
+				toggle_magnet()
 				mode = BOT_REPAIRING
 				if(isplatingturf(F))
 					F.ReplaceWithLattice()
@@ -286,7 +284,7 @@
 	oldloc = loc
 
 /mob/living/simple_animal/bot/floorbot/proc/go_idle()
-	toggle_anchor(FALSE)
+	toggle_magnet(FALSE)
 	mode = BOT_IDLE
 	target = null
 
@@ -345,7 +343,7 @@
 	else if(!isfloorturf(target_turf))
 		return
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
-		toggle_anchor()
+		toggle_magnet()
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
@@ -365,14 +363,14 @@
 		var/was_replacing = replacetiles
 
 		if(F.broken || F.burnt || isplatingturf(F))
-			toggle_anchor()
+			toggle_magnet()
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins [(F.broken || F.burnt) ? "repairing the floor" : "placing a floor tile"].</span>")
 			if(do_after(src, 50, target = F) && mode == BOT_REPAIRING)
 				success = TRUE
 
 		else if(replacetiles && tilestack && F.type != tilestack.turf_type)
-			toggle_anchor()
+			toggle_magnet()
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING && tilestack)
