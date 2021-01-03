@@ -633,3 +633,9 @@
 	icon_state = "lean"
 	list_reagents = list(/datum/reagent/consumable/lean = 50)
 	random_sprite = FALSE
+
+/obj/item/reagent_containers/food/drinks/colocup/lean/Initialize()
+	. = ..()
+	if(prob(15))
+		name = "senzu lean"
+		desc = "Sip on this! Esketit!"
