@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - refactor: "Auxiliary Base Management Console now uses tgui."
