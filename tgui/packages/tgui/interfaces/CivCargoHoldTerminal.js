@@ -113,35 +113,33 @@ const BountyPickBox = (props, context) => {
   } = data;
   return (
     <Section title="Please Select a Bounty:">
-      <LabeledList>
-        <LabeledList.Item label="Bounty 1">
+      <Flex space-evenly>
+        <Flex.Item>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[0]}
             onClick={() => act('pick', { 'value': 1 })} />
-        </LabeledList.Item>
-        <LabeledList.Item label="Reward">{id_bounty_values[0]}</LabeledList.Item>
-        <LabeledList.Item label="Bounty 2">
+        </Flex.Item>
+        <Flex.Item>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[1]}
             onClick={() => act('pick', { 'value': 2 })} />
-        </LabeledList.Item>
-        <LabeledList.Item label="Reward">{id_bounty_values[1]}</LabeledList.Item>
-        <LabeledList.Item label="Bounty 3">
+        </Flex.Item>
+        <Flex.Item>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[2]}
             onClick={() => act('pick', { 'value': 3 })} />
-        </LabeledList.Item>
-        <LabeledList.Item label="Reward">{id_bounty_values[2]}</LabeledList.Item>
-      </LabeledList>
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };
+
