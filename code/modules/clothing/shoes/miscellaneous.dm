@@ -431,7 +431,7 @@
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
 	if(prob(2))
-		var/mob/living/simple_animal/hostile/retaliate/poison/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/poison/snake(src)
+		var/mob/living/simple_animal/hostile/poison/snake/bootsnake = new/mob/living/simple_animal/hostile/poison/snake(src)
 		occupants += bootsnake
 
 
@@ -444,7 +444,9 @@
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
-				user.reagents.add_reagent(/datum/reagent/toxin, 7)
+				var/mob/living/simple_animal/hostile/retaliate/poison/poisonous = occupant
+				poisonous.attack_hand(src)//this will make sure snakes get pissed off at you, too
+				user.reagents.add_reagent(poisonous.poison_type, poisonous.poison_per_bite)
 		occupants.Cut()
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
@@ -454,7 +456,7 @@
 	if(occupants.len >= max_occupants)
 		to_chat(user, "<span class='warning'>[src] are full!</span>")
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
+	if(istype(target, /mob/living/simple_animal/hostile/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
 		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")

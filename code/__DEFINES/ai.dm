@@ -33,3 +33,16 @@
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
+
+//Snake AI controller blackboard keys
+
+#define BB_SNAKE_ENEMIES "BB_snake_enemies"
+#define BB_SNAKE_FRIENDS "BB_snake_friends"
+#define BB_SNAKE_BOOT "BB_snake_pickpocketing"
+#define BB_SNAKE_CURRENT_RETREAT_TARGET "BB_snake_current_retreat_target"
+#define BB_SNAKE_CURRENT_ATTACK_TARGET "BB_snake_current_attack_target"
+
+//Snakey defines to go along with above :)
+
+#define ONE_SNAKE_BITE 1
+#define SNAKE_SHENANIGAN_PROB 20
