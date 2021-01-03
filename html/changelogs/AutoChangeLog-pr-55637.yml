@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Bolas will now make sounds and facehuggers now have a special sprite when thrown, as was intended."

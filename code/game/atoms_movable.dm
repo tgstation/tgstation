@@ -35,8 +35,14 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	///In case you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc. Should only be changed through setMovetype()
+
+	/**
+	  * In case you have multiple types, you automatically use the most useful one.
+	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+	  * I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.
+	  */
 	var/movement_type = GROUND
+
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -594,15 +600,6 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
-
-///Proc to modify the movement_type and hook behavior associated with it changing.
-/atom/movable/proc/setMovetype(newval)
-	if(movement_type == newval)
-		return
-	. = movement_type
-	movement_type = newval
-
-
 /**
  * Called whenever an object moves and by mobs when they attempt to move themselves through space
  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
@@ -848,8 +845,8 @@
 
 	var/matrix/initial_transform = matrix(transform)
 	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING)
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -902,19 +899,6 @@
 		return FALSE
 	acted_explosions += ex_id
 	return TRUE
-
-//TODO: Better floating
-/atom/movable/proc/float(on)
-	if(throwing)
-		return
-	if(on && !(movement_type & FLOATING))
-		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		animate(pixel_y = -2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)
-		setMovetype(movement_type | FLOATING)
-	else if (!on && (movement_type & FLOATING))
-		animate(src, pixel_y = base_pixel_y, time = 10)
-		setMovetype(movement_type & ~FLOATING)
-
 
 /* 	Language procs
 *	Unless you are doing something very specific, these are the ones you want to use.

@@ -446,7 +446,7 @@
 			M.gib()
 		else
 			M.vomit(blood = TRUE, stun = TRUE) //not having a redo of itching powder (hopefully)
-	new /mob/living/carbon/monkey(location, TRUE)
+	new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
@@ -582,10 +582,6 @@
 	required_reagents = list(/datum/reagent/water/hollowwater = 1)
 	required_catalysts = list(/datum/reagent/water/holywater = 1)
 
-/datum/chemical_reaction/gravy
-	results = list(/datum/reagent/consumable/gravy = 3)
-	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
-
 /datum/chemical_reaction/exotic_stabilizer
 	results = list(/datum/reagent/exotic_stabilizer = 2)
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)
@@ -599,3 +595,4 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/silver(location)
+
