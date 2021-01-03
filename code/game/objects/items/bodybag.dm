@@ -8,7 +8,10 @@
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
 /obj/item/bodybag/attack_self(mob/user)
-	deploy_bodybag(user, src.loc)
+	if(user.is_holding(src))
+		deploy_bodybag(user, user.loc)
+	else
+		deploy_bodybag(user, src.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
 	. = ..()

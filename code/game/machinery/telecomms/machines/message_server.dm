@@ -24,7 +24,9 @@
 /obj/machinery/blackbox_recorder/attack_hand(mob/living/user)
 	. = ..()
 	if(stored)
-		stored.forceMove(get_turf(src))
+		stored.forceMove(drop_location())
+		if(Adjacent(user))
+			user.put_in_hands(stored)
 		stored = null
 		to_chat(user, "<span class='notice'>You remove the blackbox from [src]. The tapes stop spinning.</span>")
 		update_icon()
