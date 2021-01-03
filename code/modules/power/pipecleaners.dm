@@ -454,9 +454,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "pipecleaner2"
 
 /obj/item/stack/pipe_cleaner_coil/cut/Initialize(mapload)
-	. = ..()
 	if(!amount)
 		amount = rand(1,2)
+	. = ..()
 	pixel_x = base_pixel_x + rand(-2, 2)
 	pixel_y = base_pixel_y + rand(-2, 2)
 	update_icon()

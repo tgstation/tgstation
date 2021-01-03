@@ -1,4 +1,0 @@
-author: "Dex"
-delete-after: True
-changes: 
-  - bugfix: "Added missing vents and scrubbers to toxins storage and server areas on MetaStation"
