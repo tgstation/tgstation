@@ -60,8 +60,7 @@
 	var/len = length(color)
 	var/char = ""
 	// Used for conversion between RGBA hex formats.
-	var/denominator = length_char(color)-(start-1)
-	var/format_input_ratio = denominator ? desired_format / denominator : -1
+	var/format_input_ratio = "[desired_format]:[length_char(color)-(start-1)]"
 
 	. = ""
 	var/i = start
@@ -79,14 +78,14 @@
 			else
 				break
 		switch(format_input_ratio)
-			if(0 to 0.67) //skip next one. RRGGBB(AA) -> RGB(A)
+			if("3:8", "4:8", "3:6", "4:6") //skip next one. RRGGBB(AA) -> RGB(A)
 				i += length(color[i])
-			if(1.5 to INFINITY) //add current char again. RGB(A) -> RRGGBB(AA)
+			if("6:4", "6:3", "8:4", "8:3") //add current char again. RGB(A) -> RRGGBB(AA)
 				. += char
 
 	if(length_char(.) == desired_format)
 		return crunch + .
-	switch("[desired_format]:[denominator]") //add or remove alpha channel depending on desired format.
+	switch(format_input_ratio) //add or remove alpha channel depending on desired format.
 		if("3:8", "3:4", "6:4")
 			return copytext(., 1, desired_format+1)
 		if("4:6", "4:3", "8:3")
