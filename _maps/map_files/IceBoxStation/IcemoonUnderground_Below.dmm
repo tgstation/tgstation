@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "b" = (
 /turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers/deep)
 "c" = (
 /turf/open/floor/plasteel/dark,
 /area/mine/eva)
