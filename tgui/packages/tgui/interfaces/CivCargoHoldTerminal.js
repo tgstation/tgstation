@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, Flex, LabeledList, NoticeBox, Section } from '../components';
+import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const CivCargoHoldTerminal = (props, context) => {
@@ -113,42 +113,52 @@ const BountyPickBox = (props, context) => {
   } = data;
   return (
     <Section
-      title="Please Select a Bounty:">
-      <Flex wrap>
-        <Flex.Item grow>
+      title="Please Select a Bounty:"
+      textAlign="center">
+      <Flex width="330px" wrap>
+        <Flex.Item
+          shrink={0}
+          grow={1}
+          m={1}>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[0]}
             onClick={() => act('pick', { 'value': 1 })}>
-            <Section>
+            <Box fontSize="14px">
               Payout: {id_bounty_values[0]}
-            </Section>
+            </Box>
           </Button>
         </Flex.Item>
-        <Flex.Item grow>
+        <Flex.Item
+          shrink={0}
+          grow={1}
+          m={1}>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[1]}
             onClick={() => act('pick', { 'value': 2 })}>
-            <Section>
+            <Box fontSize="14px">
               Payout: {id_bounty_values[1]}
-            </Section>
+            </Box>
           </Button>
         </Flex.Item>
-        <Flex.Item grow>
+        <Flex.Item
+          shrink={0}
+          grow={1}
+          m={1}>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[2]}
             onClick={() => act('pick', { 'value': 3 })}>
-            <Section>
+            <Box fontSize="14px">
               Payout: {id_bounty_values[2]}
-            </Section>
+            </Box>
           </Button>
         </Flex.Item>
       </Flex>
