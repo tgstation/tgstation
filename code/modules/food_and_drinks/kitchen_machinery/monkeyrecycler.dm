@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	if(ismonkey(target))
 		stuff_monkey_in(target, user)
 
-/obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/monkey/target, mob/living/user)
+/obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/human/target, mob/living/user)
 	if(!istype(target))
 		return
 	if(target.stat == CONSCIOUS)
