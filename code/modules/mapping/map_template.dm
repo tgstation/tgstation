@@ -6,6 +6,7 @@
 	var/loaded = 0 // Times loaded this round
 	var/datum/parsed_map/cached_map
 	var/keep_cached_map = FALSE
+	var/station_id = null // used to override the root id when generating
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -25,7 +26,9 @@
 			cached_map = parsed
 	return bounds
 
-/datum/parsed_map/proc/initTemplateBounds()
+/datum/parsed_map/proc/initTemplateBounds(datum/map_template/template)
+
+
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -45,7 +48,11 @@
 		)
 	for(var/L in turfs)
 		var/turf/B = L
-		areas |= B.loc
+		var/area/G = B.loc
+		areas |= G
+		if(!SSatoms.initialized)
+			continue
+
 		for(var/A in B)
 			atoms += A
 			if(istype(A, /obj/structure/cable))
@@ -54,7 +61,17 @@
 			if(istype(A, /obj/machinery/atmospherics))
 				atmos_machines += A
 
+	// Not sure if there is some importance here to make sure the area is in z
+	// first or not.  Its defined In Initialize yet its run first in templates
+	// BEFORE so... hummm
 	SSmapping.reg_in_areas_in_z(areas)
+	// We have to do this hack here because its the ONLY place we can get the
+	// meta data from the template so we can properly set up the area
+	SSnetworks.assign_areas_root_ids(areas, template)
+	// If the world is starting up stop here and the world will do the rest
+	if(!SSatoms.initialized)
+		return
+
 	SSatoms.InitializeAtoms(areas + turfs + atoms)
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
@@ -92,7 +109,7 @@
 	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	parsed.initTemplateBounds()
+	parsed.initTemplateBounds(src)
 	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 
@@ -129,7 +146,7 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	parsed.initTemplateBounds()
+	parsed.initTemplateBounds(src)
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds

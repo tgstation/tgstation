@@ -26,7 +26,7 @@
 	maxbodytemp = INFINITY
 	healable = 0
 	faction = list("cult")
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
