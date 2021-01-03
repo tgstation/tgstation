@@ -42,6 +42,9 @@
 #define COMSIG_PARENT_QDELETING "parent_qdeleting"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
+/// handler for vv_do_topic (usr, href_list)
+#define COMSIG_VV_TOPIC "vv_topic"
+	#define COMPONENT_VV_HANDLED (1<<0)
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
@@ -180,6 +183,31 @@
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
 
+///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_NEW_REAGENT		"reagents_new_reagent"
+///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_ADD_REAGENT		"reagents_add_reagent"
+///from base of [/datum/reagents/proc/del_reagent]: (/datum/reagent)
+#define COMSIG_REAGENTS_DEL_REAGENT		"reagents_del_reagent"
+///from base of [/datum/reagents/proc/clear_reagents]: ()
+#define COMSIG_REAGENTS_REM_REAGENT		"reagents_rem_reagent"
+///from base of [/datum/reagents/proc/set_temperature]: (new_temp, old_temp)
+#define COMSIG_REAGENTS_CLEAR_REAGENTS	"reagents_clear_reagents"
+///from base of [/datum/reagents/proc/remove_reagent]: (/datum/reagent, amount)
+#define COMSIG_REAGENTS_TEMP_CHANGE		"reagents_temp_change"
+///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
+#define COMSIG_REAGENTS_REACTED			"reagents_reacted"
+///from base of [/atom/proc/expose_reagents]: (/atom, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_ATOM		"reagents_expose_atom"
+///from base of [/obj/proc/expose_reagents]: (/obj, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_OBJ		"reagents_expose_obj"
+///from base of [/mob/living/proc/expose_reagents]: (/mob/living, /list, methods, volume_modifier, show_message, touch_protection)
+#define COMSIG_REAGENTS_EXPOSE_MOB		"reagents_expose_mob"
+///from base of [/turf/proc/expose_reagents]: (/turf, /list, methods, volume_modifier, show_message)
+#define COMSIG_REAGENTS_EXPOSE_TURF		"reagents_expose_turf"
+///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
+#define COMSIG_REAGENTS_CRAFTING_PING	"reagents_crafting_ping"
+
 ///Called right before the atom changes the value of light_range to a different one, from base atom/set_light_range(): (new_range)
 #define COMSIG_ATOM_SET_LIGHT_RANGE "atom_set_light_range"
 ///Called right before the atom changes the value of light_power to a different one, from base atom/set_light_power(): (new_power)
@@ -192,10 +220,12 @@
 #define COMSIG_ATOM_SET_LIGHT_FLAGS "atom_set_light_flags"
 ///called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"
-///called on a movable (NOT living) when someone starts pulling it (atom/movable/puller, state, force)
+///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
-///called on /living when someone starts pulling it (atom/movable/puller, state, force)
+///called on /living when someone starts pulling (atom/movable/pulled, state, force)
 #define COMSIG_LIVING_START_PULL "living_start_pull"
+///called on /living when someone is pulled (mob/living/puller)
+#define COMSIG_LIVING_GET_PULLED "living_start_pulled"
 
 /// from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
 /// if a callback returns `SINGULARITY_TRY_MOVE_BLOCK`, then the singularity will not move to that turf
@@ -272,10 +302,16 @@
 	#define COMPONENT_MOVABLE_IMPACT_NEVERMIND (1<<1)					//return true if you destroyed whatever it was you're impacting and there won't be anything for hitby() to run on
 ///from base of mob/living/hitby(): (mob/living/target, hit_zone)
 #define COMSIG_MOVABLE_IMPACT_ZONE "item_impact_zone"
+///from /atom/movable/proc/buckle_mob(): (mob/living/M, force, check_loc, buckle_mob_flags)
+#define COMSIG_MOVABLE_PREBUCKLE "prebuckle" // this is the last chance to interrupt and block a buckle before it finishes
+	#define COMPONENT_BLOCK_BUCKLE	(1<<0)
 ///from base of atom/movable/buckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 ///from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"
+///from /obj/vehicle/proc/driver_move, caught by the riding component to check and execute the driver trying to drive the vehicle
+#define COMSIG_RIDDEN_DRIVER_MOVE "driver_move"
+	#define COMPONENT_DRIVER_BLOCK_MOVE (1<<0)
 ///from base of atom/movable/throw_at(): (list/args)
 #define COMSIG_MOVABLE_PRE_THROW "movable_pre_throw"
 	#define COMPONENT_CANCEL_THROW (1<<0)
@@ -393,6 +429,8 @@
 #define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
+///from base of mob/living/set_body_position()
+#define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
 ///From post-can inject check of syringe after attack (mob/user)
 #define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
 
@@ -434,8 +472,12 @@
 ///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
 
-///When a carbon mob hugs someone, this is called on the carbon mob.
+///When a carbon mob hugs someone, this is called on the carbon that is hugging. (mob/living/hugger, mob/living/hugged)
 #define COMSIG_CARBON_HUG "carbon_hug"
+///When a carbon mob is hugged, this is called on the carbon that is hugged. (mob/living/hugger)
+#define COMSIG_CARBON_HUGGED "carbon_hugged"
+///When a carbon mob is headpatted, this is called on the carbon that is headpatted. (mob/living/headpatter)
+#define COMSIG_CARBON_HEADPAT "carbon_headpatted"
 
 ///When a carbon slips. Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
@@ -764,8 +806,21 @@
 
 //NTnet
 
-///called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
+///called on an object by its NTNET connection component on receive. (data(datum/netdata))
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"
+///called on an object by its NTNET connection component on a port update (hardware_id, port))
+#define COMSIG_COMPONENT_NTNET_PORT_UPDATE "ntnet_port_update"
+/// called when packet was accepted by the target (datum/netdata, error_code)
+#define COMSIG_COMPONENT_NTNET_ACK "ntnet_ack"
+/// called when packet was not acknoledged by the target (datum/netdata, error_code)
+#define COMSIG_COMPONENT_NTNET_NAK "ntnet_nack"
+
+// Some internal NTnet signals used on ports
+///called on an object by its NTNET connection component on a port distruction (port, list/data))
+#define COMSIG_COMPONENT_NTNET_PORT_DESTROYED "ntnet_port_destroyed"
+///called on an object by its NTNET connection component on a port distruction (port, list/data))
+#define COMSIG_COMPONENT_NTNET_PORT_UPDATED "ntnet_port_updated"
+
 
 //Nanites
 
@@ -851,6 +906,14 @@
 ///from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
 
+// /datum/element/movetype_handler signals
+/// Called when the floating anim has to be temporarily stopped and restarted later: (timer)
+#define COMSIG_PAUSE_FLOATING_ANIM "pause_floating_anim"
+/// From base of datum/element/movetype_handler/on_movement_type_trait_gain: (flag)
+#define COMSIG_MOVETYPE_FLAG_ENABLED "movetype_flag_enabled"
+/// From base of datum/element/movetype_handler/on_movement_type_trait_loss: (flag)
+#define COMSIG_MOVETYPE_FLAG_DISABLED "movetype_flag_disabled"
+
 // /datum/action signals
 
 ///from base of datum/action/proc/Trigger(): (datum/action)
@@ -910,6 +973,8 @@
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, params)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
+///From base of atom/ctrl_click(): (atom/A)
+#define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)

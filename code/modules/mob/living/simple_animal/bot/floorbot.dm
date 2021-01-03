@@ -392,6 +392,8 @@
 	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
 
 /mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(isturf(A))
 		repair(A)
 	else

@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Infectious zombies (from romerol) can actually be wounded and dismembered (and thus decapitated) properly"

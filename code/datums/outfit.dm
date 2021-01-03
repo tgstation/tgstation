@@ -95,6 +95,13 @@
 	  */
 	var/list/implants = null
 
+	/**
+	  * Any skillchips the mob should have in their brain.
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/skillchips = null
+
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
 
@@ -233,6 +240,21 @@
 				var/obj/item/implant/I = new implant_type(H)
 				I.implant(H, null, TRUE)
 
+		// Insert the skillchips associated with this outfit into the target.
+		if(skillchips)
+			for(var/skillchip_path in skillchips)
+				var/obj/item/skillchip/skillchip_instance = new skillchip_path()
+				var/implant_msg = H.implant_skillchip(skillchip_instance)
+				if(implant_msg)
+					stack_trace("Failed to implant [H] with [skillchip_instance], on job [src]. Failure message: [implant_msg]")
+					qdel(skillchip_instance)
+					return
+
+				var/activate_msg = skillchip_instance.try_activate_skillchip(TRUE, TRUE)
+				if(activate_msg)
+					CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
+
+
 	H.update_body()
 	return TRUE
 
@@ -288,6 +310,7 @@
 /datum/outfit/proc/get_chameleon_disguise_info()
 	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
 	types += chameleon_extras
+	types += skillchips
 	listclearnulls(types)
 	return types
 
