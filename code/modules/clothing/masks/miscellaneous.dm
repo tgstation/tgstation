@@ -184,3 +184,36 @@
 			message = replacetextEx(message,regex(capitalize(key),"g"), "[capitalize(value)]")
 			message = replacetextEx(message,regex(key,"g"), "[value]")
 	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/obj/item/clothing/mask/Madvilliansmask
+	name = "Mad Villian's mask"
+	desc = "A metal mask formerly owned by the Mad Villian."
+	icon_state = "madvilliansmask"
+	inhand_icon_state = "madvilliansmask"
+	w_class = WEIGHT_CLASS_SMALL
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50, WOUND = 10)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	modifies_speech = TRUE
+
+/obj/item/clothing/mask/Madvilliansmask/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+
+/obj/item/clothing/mask/Madvilliansmask/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/DOOMspeak_words = strings("DOOMspeak.json", "DOOMspeak")
+
+		for(var/key in DOOMspeak_words)
+			var/value = DOOMspeak_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+
+		if(prob(2))
+			message += pick(" More cheese than doritos, cheetos, fritos."," Just remember ALL CAPS when you spell the man name")
+	speech_args[SPEECH_MESSAGE] = trim(message)
