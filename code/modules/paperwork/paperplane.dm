@@ -60,8 +60,9 @@
 		for(var/S in stamped)
 			. += "paperplane_[S]"
 
-/obj/item/paperplane/attack_self(mob/user) //[/obj/item/paperplane/Exited()] will delete src as the internal paper is moved out.
+/obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
+	// We don't have to qdel the paperplane here; it shall be done once the internal paper object is moved out of src anyway.
 	if(user.Adjacent(internalPaper))
 		user.put_in_hands(internalPaper)
 	else
