@@ -69,7 +69,7 @@ export const CivCargoHoldTerminal = (props, context) => {
               <Button
                 fluid
                 icon={'download'}
-                content={"Eject"}
+                content={"Eject ID"}
                 disabled={!id_inserted}
                 onClick={() => act('eject')} />
             </Fragment>
@@ -112,31 +112,44 @@ const BountyPickBox = (props, context) => {
     id_bounty_values,
   } = data;
   return (
-    <Section title="Please Select a Bounty:">
-      <Flex space-evenly>
-        <Flex.Item>
+    <Section
+      title="Please Select a Bounty:">
+      <Flex wrap>
+        <Flex.Item grow>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[0]}
-            onClick={() => act('pick', { 'value': 1 })} />
+            onClick={() => act('pick', { 'value': 1 })}>
+            <Section>
+              Payout: {id_bounty_values[0]}
+            </Section>
+          </Button>
         </Flex.Item>
-        <Flex.Item>
+        <Flex.Item grow>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[1]}
-            onClick={() => act('pick', { 'value': 2 })} />
+            onClick={() => act('pick', { 'value': 2 })}>
+            <Section>
+              Payout: {id_bounty_values[1]}
+            </Section>
+          </Button>
         </Flex.Item>
-        <Flex.Item>
+        <Flex.Item grow>
           <Button
             fluid
             icon="check"
             color="green"
             content={id_bounty_names[2]}
-            onClick={() => act('pick', { 'value': 3 })} />
+            onClick={() => act('pick', { 'value': 3 })}>
+            <Section>
+              Payout: {id_bounty_values[2]}
+            </Section>
+          </Button>
         </Flex.Item>
       </Flex>
     </Section>
