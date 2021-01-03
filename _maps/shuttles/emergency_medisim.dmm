@@ -165,7 +165,7 @@
 /area/shuttle/escape/simulation)
 "hw" = (
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "hV" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -197,7 +197,7 @@
 "iQ" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "jf" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 8
@@ -323,7 +323,7 @@
 "np" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "nA" = (
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
@@ -504,7 +504,7 @@
 	pixel_x = 11
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "uW" = (
 /obj/structure/rack,
 /obj/item/documents/syndicate/blue,
@@ -551,13 +551,10 @@
 	name = "emergency shower"
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "xP" = (
 /obj/structure/grille/indestructable,
 /turf/open/floor/plating,
-/area/shuttle/escape/simulation)
-"yn" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape/simulation)
 "yw" = (
 /obj/effect/turf_decal/sand/plating,
@@ -604,10 +601,6 @@
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"Bp" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/escape/simulation)
 "BO" = (
 /obj/structure/closet/crate{
 	name = "emergency supplies crate"
@@ -626,7 +619,7 @@
 /obj/item/wrench,
 /obj/item/radio,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "Ck" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
@@ -646,7 +639,7 @@
 	starting_amount = 25000
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "Cy" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -718,16 +711,13 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"EX" = (
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape/simulation)
 "EZ" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Fd" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "Fs" = (
 /obj/item/candle/infinite{
 	anchored = 1;
@@ -741,7 +731,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "FT" = (
 /obj/item/clothing/suit/hazardvest{
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
@@ -830,7 +820,7 @@
 	name = "Reality Simulation Computer"
 	},
 /turf/open/floor/circuit/green/anim,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "GQ" = (
 /obj/structure/punji_sticks/spikes,
 /turf/open/floor/plating/grass,
@@ -922,7 +912,7 @@
 /obj/item/food/popcorn,
 /obj/item/binoculars,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "LA" = (
 /obj/item/banner/red{
 	anchored = 1
@@ -971,7 +961,7 @@
 	name = "Emergency Shuttle Cargo Bay Airlock"
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "Ob" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/red{
@@ -1091,7 +1081,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "Sf" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
@@ -1106,7 +1096,7 @@
 	pixel_y = -5
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "Si" = (
 /obj/structure/rack,
 /obj/item/crowbar,
@@ -1115,7 +1105,7 @@
 /obj/item/wirecutters,
 /obj/item/stack/cable_coil,
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "Su" = (
 /turf/open/floor/plasteel/chapel,
 /area/shuttle/escape/simulation)
@@ -1171,7 +1161,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "TE" = (
 /turf/open/chasm,
 /area/shuttle/escape/simulation)
@@ -1181,7 +1171,7 @@
 /obj/item/binoculars,
 /obj/item/binoculars,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/simulation)
+/area/shuttle/escape)
 "TZ" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -1685,7 +1675,7 @@ cc
 aB
 "}
 (10,1,1) = {"
-Xv
+sS
 Xv
 Xv
 Xv
@@ -1711,7 +1701,7 @@ EN
 Xv
 Xv
 Xv
-Xv
+sS
 "}
 (11,1,1) = {"
 EN
@@ -1840,13 +1830,13 @@ aG
 pF
 uM
 xy
-Bp
-EX
-EX
+ZB
+Zx
+Zx
 hw
-EX
-EX
-Bp
+Zx
+Zx
+ZB
 TI
 TI
 pF
@@ -1854,8 +1844,8 @@ aG
 aG
 aG
 pF
-yn
-yn
+Xv
+Xv
 EN
 "}
 (16,1,1) = {"
@@ -1868,15 +1858,15 @@ rG
 oK
 pF
 pF
-yn
-yn
-Bp
-Bp
+Xv
+Xv
+ZB
+ZB
 NX
-Bp
-Bp
-yn
-yn
+ZB
+ZB
+Xv
+Xv
 pF
 pF
 Yp
@@ -1884,7 +1874,7 @@ Zk
 Yp
 pF
 pF
-yn
+Xv
 EN
 "}
 (17,1,1) = {"
@@ -1898,13 +1888,13 @@ pD
 NS
 aG
 aG
-yn
+Xv
 Fd
 hw
 hw
 hw
 Fd
-yn
+Xv
 aG
 aG
 NS

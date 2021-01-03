@@ -146,6 +146,7 @@
 
 /area/shuttle/escape/simulation
 	name = "Medieval Reality Simulation Dome"
+	icon_state = "shuttlectf"
 	area_flags = NOTELEPORT
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
