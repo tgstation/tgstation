@@ -88445,7 +88445,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/plasma,
 /area/maintenance/space_hut/plasmaman)
 "dEI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -90109,7 +90109,7 @@
 "pqf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/plasma,
 /area/maintenance/space_hut/plasmaman)
 "prO" = (
 /obj/machinery/door/firedoor,
@@ -90151,7 +90151,7 @@
 "pFC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/holosign/barrier/atmos,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/airless,
 /area/maintenance/space_hut/plasmaman)
 "pGW" = (
 /obj/structure/flora/grass/jungle,
@@ -90350,7 +90350,7 @@
 /obj/item/toy/plush/plasmamanplushie{
 	name = "Lithium II"
 	},
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/plasma,
 /area/maintenance/space_hut/plasmaman)
 "qCd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -91179,7 +91179,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/plasma,
 /area/maintenance/space_hut/plasmaman)
 "vAM" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -91327,7 +91327,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/item/flashlight/lamp,
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/plasma,
 /area/maintenance/space_hut/plasmaman)
 "wqI" = (
 /obj/structure/rack,
@@ -91623,7 +91623,7 @@
 /obj/item/toy/plush/plasmamanplushie{
 	name = "Dianion XV"
 	},
-/turf/open/floor/plating/rust,
+/turf/open/floor/plating/rust/plasma,
 /area/maintenance/space_hut/plasmaman)
 "xWh" = (
 /obj/machinery/newscaster,
@@ -140907,7 +140907,7 @@ acm
 lGO
 acK
 acK
-aaa
+acK
 aeo
 aaa
 aaa
@@ -141423,7 +141423,7 @@ pFC
 dyq
 xUP
 pFC
-aaa
+viq
 aaa
 aaa
 aaa
@@ -141680,7 +141680,7 @@ pFC
 pqf
 vzj
 pFC
-aaa
+viq
 aaa
 aaa
 aaa
@@ -141937,7 +141937,7 @@ pFC
 qBh
 wiR
 pFC
-aaa
+viq
 aaa
 aaa
 aaa
@@ -142448,8 +142448,8 @@ aaa
 acm
 aaa
 aaa
-aaa
-acm
+acK
+acK
 aeo
 aaa
 aaa
