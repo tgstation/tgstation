@@ -79,7 +79,6 @@
 
 	//halucination vars
 	var/image/halimage
-	var/image/halbody
 	var/obj/halitem
 	var/hal_screwyhud = SCREWYHUD_NONE
 	var/next_hallucination = 0
