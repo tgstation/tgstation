@@ -291,9 +291,9 @@
 	S.colour = mobcolour
 
 /obj/effect/mob_spawn/facehugger/create(ckey) //Creates a squashed facehugger
-	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
+	var/mob/living/simple_animal/hostile/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
 	O.name = src.name
-	O.Die() //call the facehugger's death proc
+	O.death() //call the facehugger's death proc
 	qdel(src)
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.

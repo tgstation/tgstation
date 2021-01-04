@@ -14,3 +14,9 @@
 		temperature = max(loc_temp, temperature-change)
 	temp_change = (temperature - current)
 	return temp_change
+
+/mob/living/carbon/alien/humanoid/royal/queen/Life()
+	. = ..()
+	if(!has_gps && SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		AddComponent(/datum/component/gps, "Regal Signal")
+		has_gps = TRUE

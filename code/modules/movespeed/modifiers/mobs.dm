@@ -88,6 +88,10 @@
 /datum/movespeed_modifier/simplemob_varspeed
 	variable = TRUE
 	flags = IGNORE_NOSLOW
+	
+/datum/movespeed_modifier/alien_varspeed
+	variable = TRUE
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/tarantula_web
 	multiplicative_slowdown = 5
@@ -114,3 +118,6 @@
 
 /datum/movespeed_modifier/metabolicboost
 	multiplicative_slowdown = -1.5
+
+/datum/movespeed_modifier/xeno_queen_loss
+	multiplicative_slowdown = 2

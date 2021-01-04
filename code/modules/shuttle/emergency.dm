@@ -193,8 +193,25 @@
 	return shuttle.hijack_status
 
 /obj/machinery/computer/emergency_shuttle/AltClick(user)
+	if(isalien(user))
+		xeno_queen_action(user)
+		return
 	if(isliving(user))
 		attempt_hijack_stage(user)
+
+/**
+ * Used for the alien queen's shuttle interaction.
+ *
+ * Used to remove an alien queen's hostile environment, allowing the shuttle to leave while it is still alive.
+ * Also plays a menacing roar to all playing players, letting them know the alien queen is still alive and probably on board.
+ * Arguments:
+ * * user - The alien queen interacting with the console.
+ */
+obj/machinery/computer/emergency_shuttle/proc/xeno_queen_action(mob/living/carbon/alien/user)
+	if(user?.mind?.has_antag_datum(/datum/antagonist/xeno/queen) && user in SSshuttle.hostileEnvironments)
+		sound_to_playing_players('sound/voice/alien_queen_roar.ogg')
+		sleep(50)
+		SSshuttle.clearHostileEnvironment(user)
 
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))

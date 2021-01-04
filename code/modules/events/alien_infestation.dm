@@ -1,44 +1,28 @@
 /datum/round_event_control/alien_infestation
 	name = "Alien Infestation"
 	typepath = /datum/round_event/ghost_role/alien_infestation
-	weight = 5
-
-	min_players = 10
-
-/datum/round_event_control/alien_infestation/canSpawnEvent()
-	. = ..()
-	if(!.)
-		return .
-
-	for(var/mob/living/carbon/alien/A in GLOB.player_list)
-		if(A.stat != DEAD)
-			return FALSE
+	weight = 10
+	max_occurrences = 1
+	min_players = 20
 
 /datum/round_event/ghost_role/alien_infestation
 	announceWhen	= 400
-
 	minimum_required = 1
 	role_name = "alien larva"
-
-	// 50% chance of being incremented by one
-	var/spawncount = 1
 	fakeable = TRUE
-
+	/// How many alien larva to spawn
+	var/spawncount = 2
 
 /datum/round_event/ghost_role/alien_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
-	if(prob(50))
-		spawncount++
 
 /datum/round_event/ghost_role/alien_infestation/announce(fake)
 	var/living_aliens = FALSE
 	for(var/mob/living/carbon/alien/A in GLOB.player_list)
 		if(A.stat != DEAD)
 			living_aliens = TRUE
-
 	if(living_aliens || fake)
 		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
-
 
 /datum/round_event/ghost_role/alien_infestation/spawn_role()
 	var/list/vents = list()

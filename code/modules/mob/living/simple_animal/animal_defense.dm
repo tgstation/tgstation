@@ -89,7 +89,7 @@
 			to_chat(M, "<span class='danger'>You [response_disarm_simple] [name]!</span>")
 			log_combat(M, src, "disarmed")
 		else
-			var/damage = rand(15, 30)
+			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			visible_message("<span class='danger'>[M] slashes at [src]!</span>", \
 							"<span class='userdanger'>You're slashed at by [M]!</span>", null, COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='danger'>You slash at [src]!</span>")

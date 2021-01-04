@@ -46,6 +46,8 @@
 	speed = 2.5
 	/// The queen's small sprite action.
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
+	/// Whether or not the queen currently emits a GPS signal.
+	var/has_gps = FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
 	//there should only be one queen
@@ -59,14 +61,13 @@
 			break
 
 	real_name = src.name
-	RegisterSignal(SSshuttle, COMSIG_SHUTTLE_STRANDED, .proc/add_gps)
 
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	AddAbility(new/obj/effect/proc_holder/alien/call_shuttle())
 	smallsprite.Grant(src)
 	SSshuttle.registerHostileEnvironment(src)
-	return ..()
+	. = ..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
@@ -75,16 +76,6 @@
 	internal_organs += new /obj/item/organ/alien/neurotoxin
 	internal_organs += new /obj/item/organ/alien/eggsac
 	..()
-
-/**
- * Adds a GPS signal to the queen and has Centcom tell the crew about it.
- *
- * Registers a GPS component to the queen with Regal Signal being the signal name.
- * Then, it alerts the crew via Centcom announcement that the signal is available and that the threat must be killed before they can leave.
- */
-/mob/living/carbon/alien/humanoid/royal/queen/proc/add_gps()
-	AddComponent(/datum/component/gps, "Regal Signal")
-	priority_announce("Attention crew, we were able to register a GPS signal to the threat preventing your departure.  You are expected to elimate the threat before leaving.", "[command_name()] High-Priority Update", 'sound/misc/notice1.ogg', "Priority")
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg

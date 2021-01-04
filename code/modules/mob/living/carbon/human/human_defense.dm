@@ -291,20 +291,30 @@
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
-	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand on first go.  If no item exists, try to shove them back.  If you share the tile with the target, slam them directly into the ground to stun them and slightly damage them.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] disarms [src]!</span>", \
 							"<span class='userdanger'>[M] disarms you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, M)
 			to_chat(M, "<span class='danger'>You disarm [src]!</span>")
-		else
+		else if(get_dist(src, M) != 0)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-			Paralyze(100)
-			log_combat(M, src, "tackled")
+			var/shovetarget = get_edge_target_turf(M, get_dir(M, get_step_away(src, M)))
+			Knockdown(0.3 SECONDS)
+			throw_at(shovetarget, 4, 2, M, force = MOVE_FORCE_OVERPOWERING)
+			log_combat(M, src, "shoved")
 			visible_message("<span class='danger'>[M] tackles [src] down!</span>", \
-							"<span class='userdanger'>[M] tackles you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
-			to_chat(M, "<span class='danger'>You tackle [src] down!</span>")
+							"<span class='userdanger'>[M] shoves you with great force!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
+			to_chat(M, "<span class='danger'>You shove [src] with great force!</span>")
+		else
+			Paralyze(3 SECONDS)
+			adjustBruteLoss(5)
+			playsound(loc, 'sound/weapons/punch3.ogg', 25, TRUE, -1)
+			visible_message("<span class='danger'>[M] slams [src] into the floor!</span>", \
+							"<span class='userdanger'>[M] slams you into the ground!</span>", "<span class='hear'>You hear something slam loudly onto the floor!</span>", null, M)
+			to_chat(M, "<span class='danger'>You slam [src] into the floor beneath you!</span>")
+			log_combat(M, src, "slammed into the ground")
 
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)

@@ -19,4 +19,11 @@
 		if(istype(node)) // just in case someone would ever add a diffirent node to hivenode slot
 			node.queen_death()
 
-	return ..()
+	. = ..()
+
+	SSshuttle.clearHostileEnvironment(src)
+	if(!mind)
+		return
+	var/datum/antagonist/xeno/xeno_datum = mind.has_antag_datum(/datum/antagonist/xeno)
+	if(xeno_datum)
+		xeno_datum.xeno_team.queen_deaths++
