@@ -162,6 +162,7 @@
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.025 //very bad
 	var/milk_brute_healing = 1.5
+  /// How much burn damage milk heals every second
 	var/milk_burn_healing = 1.5
 
 /obj/item/organ/stomach/bone/on_life(delta_time, times_fired)
@@ -171,7 +172,8 @@
 		if(milk.volume > 10)
 			reagents.remove_reagent(milk.type, milk.volume - 10)
 			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(brute = milk_brute_healing, burn = milk_burn_healing)
+		body.heal_bodypart_damage(milk_brute_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time, milk_burn_healing * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+    
 		for(var/i in body.all_wounds)
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(1, delta_time, times_fired)
