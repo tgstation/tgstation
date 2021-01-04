@@ -156,7 +156,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/acid/proc/corrode(atom/target,mob/living/carbon/user = usr)
 	if(target in oview(1,user))
-		if(target.acid_act(200, 1000))
+		if(target.acid_act(400, 1000))
 			user.visible_message("<span class='alertalien'>[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 			return TRUE
 		else
@@ -188,7 +188,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
-	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
+	desc = "Spits neurotoxin at someone, dealing large amounts of stamina damage."
 	action_icon_state = "alien_neurotoxin_0"
 	active = FALSE
 
@@ -261,7 +261,6 @@ Doesn't work on other aliens/AI.*/
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
 		"resin nest" = /obj/structure/bed/nest)
-
 	action_icon_state = "alien_resin"
 
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
@@ -288,28 +287,50 @@ Doesn't work on other aliens/AI.*/
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
 	active = 0
-
 	action_icon_state = "alien_sneak"
 
 /obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
 	if(!active)
-		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
-		user.sneaking = 1
-		active = 1
+		user.alpha = 25
+		user.sneaking = TRUE
+		active = TRUE
 		to_chat(user, "<span class='noticealien'>You blend into the shadows...</span>")
 	else
 		user.alpha = initial(user.alpha)
-		user.sneaking = 0
-		active = 0
+		user.sneaking = FALSE
+		active = FALSE
 		to_chat(user, "<span class='noticealien'>You reveal yourself!</span>")
 
+#define QUEEN_CALL_TIME 15 MINUTES
+
+/obj/effect/proc_holder/alien/call_shuttle
+	name = "Summon Shuttle"
+	desc = "Sends a fake message which will beckon an emergency shuttle to the station."
+	action_icon_state = "alien_sneak"
+	var/time_created
+
+/obj/effect/proc_holder/alien/call_shuttle/Initialize()
+	. = ..()
+	time_created = world.time
+
+/obj/effect/proc_holder/alien/call_shuttle/fire(mob/living/carbon/alien/humanoid/user)
+	if(world.time < time_created + QUEEN_CALL_TIME)
+		to_chat(user, "<span class='noticealien'>You can't call the shuttle just yet!</span>")
+		return
+	if(SSshuttle.canEvac() != TRUE)
+		to_chat(user, "<span class='noticealien'>Something is preventing you from calling the shuttle right now.</span>")
+		return
+	sound_to_playing_players('sound/voice/alien_queen_roar.ogg')
+	sleep(50)
+	SSshuttle.emergency.request(null, set_coefficient = 1.0)
+
+#undef QUEEN_CALL_TIME
 
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
 		return 0
 	return vessel.storedPlasma
-
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
