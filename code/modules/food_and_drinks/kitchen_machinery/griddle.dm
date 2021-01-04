@@ -46,8 +46,8 @@
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
-		return
+	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
+
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
 	. = ..()

@@ -57,6 +57,7 @@
 
 ///Ran when an object starts grilling on something
 /datum/component/grillable/proc/StartGrilling(atom/grill_source)
+	currently_grilling = TRUE
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/OnMoved)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/AddGrilledItemOverlay)
 

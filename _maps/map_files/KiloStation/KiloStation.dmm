@@ -21062,14 +21062,8 @@
 /area/hallway/primary/fore)
 "aIY" = (
 /obj/structure/lattice/catwalk,
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
 	},
 /turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
@@ -60947,14 +60941,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
 	},
 /turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
@@ -62279,19 +62267,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/asteroid/airless,
 /area/hallway/secondary/entry)
-"bUG" = (
-/obj/structure/lattice/catwalk,
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "bUH" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -62315,14 +62290,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
 	},
 /obj/machinery/button/door{
 	id = "Arrival Shuttle Bay";
@@ -90324,6 +90293,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"qJs" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qKa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -90473,9 +90449,6 @@
 /obj/item/food/grown/potato,
 /obj/item/food/grown/onion,
 /obj/item/food/grown/onion,
-/obj/item/food/meat/rawcutlet/plain,
-/obj/item/food/meat/rawcutlet/plain,
-/obj/item/food/meat/rawcutlet/plain,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -91089,13 +91062,13 @@
 /obj/structure/sink{
 	pixel_y = 29
 	},
-/mob/living/simple_animal/mouse/brown/tom{
-	name = "Jerm"
-	},
 /obj/machinery/camera{
 	c_tag = "Prison Maintenance";
 	dir = 4;
 	network = list("ss13","prison")
+	},
+/mob/living/simple_animal/mouse/brown/tom{
+	name = "Jerm"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
@@ -94469,7 +94442,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -98924,7 +98897,7 @@ ivj
 anu
 anu
 ivj
-bUG
+qJs
 aav
 kLr
 xFp
@@ -100204,7 +100177,7 @@ aaa
 acm
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -101376,7 +101349,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -101746,7 +101719,7 @@ ctb
 cEZ
 vfF
 ajd
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -102499,11 +102472,11 @@ aeu
 wDI
 aeu
 aeu
-bUG
+qJs
 acK
 acm
 acK
-bUG
+qJs
 aeu
 amR
 amA
@@ -108204,7 +108177,7 @@ anZ
 cmt
 agw
 aoc
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -109232,7 +109205,7 @@ anZ
 cmt
 aob
 aoe
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -109332,7 +109305,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -113186,7 +113159,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -114629,13 +114602,13 @@ akK
 anh
 bwu
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -115657,13 +115630,13 @@ cJU
 cKi
 akK
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 acm
 cow
 aaa
@@ -116685,13 +116658,13 @@ akK
 bwu
 akK
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 cow
 acm
@@ -131751,7 +131724,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aDT
 agw
 akA
@@ -132779,7 +132752,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aeZ
 aob
 akA
@@ -132834,7 +132807,7 @@ bju
 bhW
 acK
 acK
-bUG
+qJs
 blE
 bkN
 bIQ
@@ -132842,7 +132815,7 @@ bll
 bOg
 blH
 bmn
-bUG
+qJs
 acK
 bEg
 bEg
@@ -134110,13 +134083,13 @@ cbg
 cbk
 bfW
 bkd
-bUG
+qJs
 bin
 bhW
 aVN
 bhW
 bkc
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -134298,11 +134271,11 @@ cOp
 acm
 acm
 acm
-bUG
+qJs
 asJ
 cKG
 asJ
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -134769,7 +134742,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -134901,27 +134874,27 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
-bUG
+qJs
 bPe
 bSM
 bTl
 bXe
 bPe
-bUG
+qJs
 aaa
-bUG
+qJs
 bPe
 bXe
 bTl
 bXe
 bPe
-bUG
+qJs
 acm
 acm
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -134929,7 +134902,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aeU
 aaa
 acm
@@ -136359,7 +136332,7 @@ cKw
 cKR
 asJ
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -136922,11 +136895,11 @@ ajH
 cmU
 aeU
 aof
-bUG
+qJs
 acK
 acm
 acK
-bUG
+qJs
 aeu
 aeu
 aeu
@@ -136937,13 +136910,13 @@ aaa
 acm
 aaa
 aaa
-bUG
+qJs
 acm
 acK
 acK
 acK
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -137130,7 +137103,7 @@ cKz
 asJ
 abq
 act
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -138415,7 +138388,7 @@ abq
 act
 act
 act
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -140429,7 +140402,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -143525,7 +143498,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aeu
 aeu
 aeu
@@ -148426,7 +148399,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aeu
@@ -150244,7 +150217,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -152326,14 +152299,14 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -152863,12 +152836,12 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa

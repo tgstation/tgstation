@@ -8196,9 +8196,6 @@
 /obj/item/food/grown/potato,
 /obj/item/food/grown/onion,
 /obj/item/food/grown/onion,
-/obj/item/food/meat/rawcutlet/plain,
-/obj/item/food/meat/rawcutlet/plain,
-/obj/item/food/meat/rawcutlet/plain,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -57863,7 +57860,7 @@
 	},
 /obj/item/seeds/cannabis/ultimate,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/starboard/aft)
 "cPg" = (
 /obj/machinery/hydroponics/soil{
 	pixel_y = 8
