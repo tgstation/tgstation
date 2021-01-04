@@ -35,7 +35,6 @@ em						{font-style: normal;	font-weight: bold;}
 .name					{					font-weight: bold;}
 
 .say					{}
-.pda					{}
 .deadsay				{color: #5c00e6;}
 .binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
 .binarysay a			{color: #00ff00;}
