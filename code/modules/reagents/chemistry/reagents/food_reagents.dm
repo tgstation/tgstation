@@ -742,25 +742,21 @@
 
 /datum/reagent/consumable/liquidelectricity
 	name = "Liquid Electricity"
-	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
+	description = "An energy dense reagent beloved by Ethereals. Great for them, horrid for anyone else."
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#97ee63"
 	taste_description = "pure electricity"
 
-/datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
-	. = ..()
-	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
-		return
-
-	var/mob/living/carbon/exposed_carbon = exposed_mob
-	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
-	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM * 20)
-
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
-	if(prob(25) && !isethereal(M)) //lmao at the newbs who eat energy bars
-		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
-		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(isethereal(M))
+		var/obj/item/organ/stomach/ethereal/stomach = M.getorganslot(ORGAN_SLOT_STOMACH)
+		if(istype(stomach))
+			stomach.adjust_charge(REM * 20)
+	else
+		if(prob(25)) //lmao at the newbs who eat energy bars
+			M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
+			playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
 	return ..()
 
 /datum/reagent/consumable/astrotame

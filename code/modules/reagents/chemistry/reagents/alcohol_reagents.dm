@@ -41,6 +41,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			booze_power *= 0.7
 		if(HAS_TRAIT(C, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
+		if(isethereal(C)) //alcohol has no effect on Ethereals
+			booze_power *= 0
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 		if(boozepwr > 0)
 			var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
@@ -2323,3 +2325,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Godmother"
 	glass_desc = "A lovely fresh smelling cocktail, a true Sicilian delight."
 
+/datum/reagent/consumable/ethanol/isopropyl
+	name = "Isopropyl Alcohol"
+	description = "A highly toxic type of alcohol used in various antiseptics. Also acts as blood for Ethereals."
+	boozepwr = 80
+	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+
+/datum/reagent/consumable/ethanol/isopropyl/on_mob_life(mob/living/carbon/M)
+	if(!isethereal(M))
+		M.adjustToxLoss(1, 0)
+	return ..()
