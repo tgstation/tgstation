@@ -649,7 +649,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 		STOP_PROCESSING(SSobj, src)
 		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
 	var/turf/newturf = get_turf(src)
-	var/area/currentarea = get_area(newturf)
 
 	if(newturf && lastlocation == newturf)
 		/// How comfy is our disk?
@@ -659,10 +658,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 		for(var/obj/comfort_item in loc)
 			if(istype(comfort_item, /obj/item/bedsheet) || istype(comfort_item, /obj/structure/bed))
 				disk_comfort_level++
-
-		//Nice rooms count, too
-		if(currentarea?.beauty >= BEAUTY_LEVEL_GOOD)
-			disk_comfort_level++
 
 		if(disk_comfort_level >= 2) //Sleep tight, disky.
 			return

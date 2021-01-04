@@ -41,15 +41,15 @@
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 	else if(istype(W, /obj/item/bedsheet))
-		to_chat(user, "<span class='notice'>You make \the [src] with [W].</span>")
-		user.transferItemToLoc(W, drop_location())
-		W.pixel_x = 0
-		W.pixel_y = 0
+		if(user.transferItemToLoc(W, drop_location()))
+			to_chat(user, "<span class='notice'>You make \the [src] with [W].</span>")
+			W.pixel_x = 0
+			W.pixel_y = 0
 	else if(istype(W, /obj/item/disk/nuclear))
-		to_chat(user, "<span class='notice'>You lay [W] out on \the [src].</span>")
-		user.transferItemToLoc(W, drop_location())
-		W.pixel_x = 6
-		W.pixel_y = -6
+		if(user.transferItemToLoc(W, drop_location()))
+			to_chat(user, "<span class='notice'>You lay [W] out on \the [src].</span>")
+			W.pixel_x = 6 //make sure they reach the pillow
+			W.pixel_y = -6
 	else
 		return ..()
 
