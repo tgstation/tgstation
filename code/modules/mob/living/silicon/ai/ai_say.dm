@@ -118,10 +118,10 @@
 	var/datum/http_response/res = req.into_response()
 	if(res.status_code == 200)
 		var/full_name_file = "data/vox_[vox_voice_number].wav"
-		// Slap an extra second on at the end for reverb padding.
-		shell("./data/ffmpeg.exe -nostats -loglevel 0 -f lavfi -t 1 -i anullsrc=channel_layout=stereo:sample_rate=44100 -i ./[full_name_file] -filter_complex \"\[1:a\]\[0:a\]concat=n=2:v=0:a=1\" -vn -y ./[full_name_file]")
+		// Slap an extra 5 seconds on at the end for reverb padding.
+		shell("./data/ffmpeg.exe -nostats -loglevel 0 -i ./[full_name_file] -af \"apad=pad_dur=6\" -vn -y ./[full_name_file]")
 		// Apply a reverb effect for space authenticity.
-		shell("./data/ffmpeg.exe -nostats -loglevel 0 -i ./[full_name_file] -i ./sound/effects/reverb_effect_vox.wav -filter_complex \"\[0\] \[1\] afir=dry=10:wet=10 \[reverb\]; \[0\] \[reverb\] amix=inputs=2:weights=10 1\" -vn -y ./data/vox_[vox_voice_number].mp3")
+		shell("./data/ffmpeg.exe -nostats -loglevel 0 -i ./[full_name_file] -i ./sound/effects/reverb_effect_vox.wav -filter_complex \"\[0\] \[1\] afir=dry=10:wet=10 \[reverb\]; \[0\] \[reverb\] amix=inputs=2:weights=7 1\" -vn -y ./data/vox_[vox_voice_number].mp3")
 		if (!istype(SSassets.transport, /datum/asset_transport/webroot))
 			log_game("CDN not set up, VOX aborted.")
 			message_admins("CDN not set up, VOX aborted.")
