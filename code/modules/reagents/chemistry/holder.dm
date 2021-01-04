@@ -1,4 +1,5 @@
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001 //stops floating point errors causing issues with checking reagent amounts
+#define CHEMICAL_VOLUME_MINIMUM 0.001 //The smallest amount of volume allowed - prevents tiny numbers
 
 
 /proc/build_chemical_reagent_list()
@@ -58,6 +59,8 @@
 	var/atom/my_atom = null
 	/// Current temp of the holder volume
 	var/chem_temp = 150
+	///pH of the whole system
+	var/pH = REAGENT_NORMAL_PH
 	/// unused
 	var/last_tick = 1
 	/// see [/datum/reagents/proc/metabolize] for usage
@@ -66,6 +69,10 @@
 	var/list/datum/reagent/addiction_list
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
+	///list of reactions currently on going
+	var/list/datum/equilibrium/reaction_list = new/list()
+	///Hard check to see if the reagents is presently reacting
+	var/isReacting = FALSE
 
 /datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
@@ -86,6 +93,10 @@
 		var/datum/reagent/R = reagent
 		qdel(R)
 	reagent_list = null
+	if(isReacting) //If false, reaction list should be cleaned up 
+		for(var/reaction in reaction_list)
+			var/datum/equilibrium/E = reaction
+			qdel(E)
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
@@ -100,18 +111,27 @@
  * * list/data - Any reagent data for this reagent, used for transferring data with reagents
  * * reagtemp - Temperature of this reagent, will be equalized
  * * no_react - prevents reactions being triggered by this addition
+ * * added_purity - override to force a purity when added
+ * * added_pH - override to force a pH when added
+ * * ignore_pH - bypass the pH update when adding a reagent, in an addition to an empty beaker this will default to 7
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, added_pH, no_react = 0, ignore_pH = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small amount problems.
 		return FALSE
 
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent]
 	if(!glob_reagent)
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
+
+	if(!added_purity)
+		added_purity = initial(D.purity) //Usually 1
+
+	if(!pH)
+		other_pH = D.pH
 
 	update_total()
 	var/cached_total = total_volume
@@ -130,11 +150,16 @@
 			var/datum/reagent/iter_reagent = r
 			old_heat_capacity += iter_reagent.specific_heat * iter_reagent.volume
 
+	//cacluate reagent based pH shift.
+	if(!ignore_pH)
+		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)
+
 	//add the reagent to the existing if it exists
 	for(var/r in cached_reagents)
 		var/datum/reagent/iter_reagent = r
 		if (iter_reagent.type == reagent)
-			iter_reagent.volume += amount
+			iter_reagent.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
+			iter_reagent.purity = ((iter_reagent.purity * iter_reagent.volume) + (added_purity * amount)) /((iter_reagent.volume + amount)) //This should add the purity to the product
 			update_total()
 
 			iter_reagent.on_merge(data, amount)
@@ -151,9 +176,12 @@
 	cached_reagents += new_reagent
 	new_reagent.holder = src
 	new_reagent.volume = amount
+	new_reagent.purity = added_purity
 	if(data)
 		new_reagent.data = data
 		new_reagent.on_new(data)
+	if(new_reagent.chemical_flags & REAGENT_FORCEONNEW)//Allows on new without data overhead.
+		new_reagent.on_new()
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
@@ -175,7 +203,8 @@
 
 
 /// Remove a specific reagent
-/datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
+// ignore_pH again removes reagents ignoring the pH
+/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
@@ -194,6 +223,8 @@
 			//and zero, to prevent removing more than the holder has stored
 			amount = clamp(amount, 0, R.volume)
 			R.volume -= amount
+			if(!ignore_pH)
+				pH = clamp(((pH * (total_volume-(amount))+(R.pH * (volume)) )/holder.total_volume), 0, 14) //CHECK HERE incase tg is different (linear because otherwise vol/power cost is too high)
 			update_total()
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 			if(!safety)//So it does not handle reactions when it need not to
@@ -386,14 +417,14 @@
 			var/transfer_amount = T.volume * part
 			if(preserve_data)
 				trans_data = copy_data(T)
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(T, target, methods, part, show_message)
 				else
 					R.expose_single(T, target_atom, methods, part, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
-			remove_reagent(T.type, transfer_amount)
+			remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
 			transfer_log[T.type] = transfer_amount
 	else
 		var/to_transfer = amount
@@ -408,7 +439,7 @@
 			var/transfer_amount = amount
 			if(amount > T.volume)
 				transfer_amount = T.volume
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE, ignore_pH = TRUE) //we only handle reaction after every reagent has been transfered.
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -416,7 +447,7 @@
 				else
 					R.expose_single(T, target_atom, methods, transfer_amount, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
-			remove_reagent(T.type, transfer_amount)
+			remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
 			transfer_log[T.type] = transfer_amount
 
 	if(transfered_by && target_atom)
@@ -483,7 +514,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.type, copy_amount * multiplier, trans_data)
+		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity)
 
 	src.update_total()
 	R.update_total()
@@ -500,7 +531,7 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/T = reagent
 		if(change > 0)
-			add_reagent(T.type, T.volume * change)
+			add_reagent(T.type, T.volume * change, added_purity = T.purity)
 		else
 			remove_reagent(T.type, abs(T.volume * change)) //absolute value to prevent a double negative situation (removing -50% would be adding 50%)
 
@@ -745,6 +776,14 @@
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 					possible_reactions  += C
 
+		//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
+		for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
+
+
+		/*
+		BELOW IS OLD TG CODE
+		*/
+
 		if(possible_reactions.len)
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
 			//select the reaction with the most extreme temperature requirements
@@ -805,10 +844,14 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume < 0.05)
+		if(R.volume <= 0)//For clarity
+			del_reagent(R.type)
+		if((R.volume < 0.05) && !isReacting)
 			del_reagent(R.type)
 		else
 			total_volume += R.volume
+	if(!reagent_list || !total_volume) //Ensure that this is true
+		pH = REAGENT_NORMAL_PH
 
 /**
  * Applies the relevant expose_ proc for every reagent in this holder

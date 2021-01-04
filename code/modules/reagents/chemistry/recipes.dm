@@ -21,7 +21,7 @@
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
-	///Required temperature for the reaction to begin
+	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions
 	var/required_temp = 0
 	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
 	var/is_cold_recipe = FALSE
@@ -29,6 +29,21 @@
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg'
+
+	//FermiChem!
+	//var/OptimalTempMin 		= 200 			// Lower area of bell curve for determining heat based rate reactions (TO REMOVE)
+	var/optimalTempMax			= 800			// Upper end for above
+	var/overheatTemp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
+	var/optimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/optimalpHMax 			= 10        	// Higest value for above
+	var/reactpHLim 				= 3         	// How far out pH wil react, giving impurity place (Exponential phase)
+	var/curveSharpT 			= 2         	// How sharp the temperature exponential curve is (to the power of value)
+	var/curveSharppH 			= 2         	// How sharp the pH exponential curve is (to the power of value)
+	var/thermicConstant 		= 1         	// Temperature change per 1u produced
+	var/hIonRelease 			= 0.1       	// pH change per 1u reaction
+	var/rateUpLim 				= 10			// Optimal/max rate possible if all conditions are perfect
+	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	var/purityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 
 /datum/chemical_reaction/New()
 	. = ..()
@@ -101,6 +116,39 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
+//Called for every reaction step
+/datum/chemical_reaction/proc/ReactionStep(datum/reagents/holder, added_volume, added_purity)
+	return
+
+//Called when reaction STOP_PROCESSING
+/datum/chemical_reaction/proc/ReactionFinish(datum/reagents/holder, var/atom/my_atom, reactVol)
+	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
+		for(var/id in results)
+			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
+			if(!R || R.purity == 1)
+				continue
+
+			var/cached_volume = R.volume
+			if(reactionFlags == REACTION_CLEAR_INVERSE && R.inverse_chem)
+				if(R.inverse_chem_val > R.purity)
+					my_atom.reagents.remove_reagent(R.type, cached_volume, FALSE)
+					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
+
+			else if (reactionFlags == REACTION_CLEAR_IMPURE && R.impure_chem)
+				var/impureVol = cached_volume * (1 - R.purity)
+				my_atom.reagents.remove_reagent(R.type, (impureVol), FALSE)
+				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
+				R.cached_purity = R.purity
+				R.purity = 1
+
+//When a reaction's temperature gets above 
+/datum/chemical_reaction/proc/Overheated(datum/reagents/holder, datum/equilibrium/reaction)
+	reaction.toDelete = TRUE
+
+//When purity of a reaction gets below PurityMin 
+/datum/chemical_reaction/proc/OverlyImpure(datum/reagents/holder, datum/equilibrium/reaction)
+	TempExplosion(holder)
+
 /**
  * Magical move-wooney that happens sometimes.
  *
@@ -132,3 +180,5 @@
 			else
 				if(step_towards(X, T) && moving_power > 1)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
+
+

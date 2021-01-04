@@ -43,3 +43,27 @@
 #define CONDIMASTER_STYLE_FALLBACK "_"
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
+
+//reagent bitflags, used for altering how they works
+#define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body
+#define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing
+#define REAGENT_ONLYINVERSE			(1<<2)	//Only invert chem, no splitting
+#define REAGENT_ONMOBMERGE			(1<<3)	//Call on_mob_life proc when reagents are merging.
+#define REAGENT_INVISIBLE			(1<<4)	//Doesn't appear on handheld health analyzers.
+#define REAGENT_FORCEONNEW			(1<<5)  //Forces a on_new() call without a data overhead
+#define REAGENT_SNEAKYNAME          (1<<6)  //When inverted, the inverted chem uses the name of the original chem
+#define REAGENT_SPLITRETAINVOL      (1<<7)  //Retains initial volume of chem when splitting
+
+//Chemical reaction flags, for determining reaction specialties
+#define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
+#define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough
+#define REACTION_CLEAR_RETAIN		(1<<2)	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
+//Used to create instant reactions
+#define REACTION_INSTANT INFINITE
+
+//Explosion flags for using different explosive handlers
+#define FERMI_TYPE_MIXED (1<<0)
+#define FERMI_TYPE_INVERTSMOKE (1<<1)
+#define FERMI_TYPE_SMOKE (1<<2)
+#define FERMI_REDUCE_YIELD (1<<3)
+#define FERMI_REDUCE_PURITY (1<<4)
