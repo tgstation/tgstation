@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/binary/temperature_pump
 	icon_state = "tpump_map-3"
 	name = "temperature pump"
-	desc = "A pump that moves heat from one pipeline to another. The input will get cooler, and the output will get hotter"
+	desc = "A pump that moves heat from one pipeline to another. The input will get cooler, and the output will get hotter."
 
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
@@ -93,4 +93,3 @@
 				heat_transfer_rate = clamp(rate, 0, max_heat_transfer_rate)
 				investigate_log("was set to [heat_transfer_rate]% by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
-
