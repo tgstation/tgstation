@@ -50,9 +50,6 @@ const Minigame = (props, context) => {
       <Box key={i}>
         {toArray(arr).map((element, j) => (
           <Box
-            style={{
-              margin: '0px',
-            }}
             key={i + '_' + j}
             as="img"
             className="pathway"
