@@ -30405,9 +30405,7 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "bte" = (
-/obj/structure/marker_beacon{
-	icon_state = "markerburgundy-on"
-	},
+/obj/structure/marker_beacon/burgundy,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "btf" = (
@@ -31724,9 +31722,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "bwm" = (
-/obj/structure/marker_beacon{
-	icon_state = "markerburgundy-on"
-	},
+/obj/structure/marker_beacon/burgundy,
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
@@ -31735,9 +31731,7 @@
 /turf/open/floor/plasteel,
 /area/storage/mining)
 "bwo" = (
-/obj/structure/marker_beacon{
-	icon_state = "markerburgundy-on"
-	},
+/obj/structure/marker_beacon/burgundy,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "bwp" = (
@@ -53643,9 +53637,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_smes)
 "pAz" = (
-/obj/structure/marker_beacon{
-	icon_state = "markerburgundy-on"
-	},
+/obj/structure/marker_beacon/burgundy,
 /obj/structure/fluff/fokoff_sign,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
