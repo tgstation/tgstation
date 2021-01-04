@@ -106817,6 +106817,10 @@
 /obj/effect/turf_decal/arrows/white,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"gCX" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "gDF" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -173255,7 +173259,7 @@ qYo
 aaa
 aaa
 aaa
-aaa
+gCX
 ajr
 aaa
 dFy
@@ -173512,7 +173516,7 @@ qYo
 aaa
 aaa
 aaa
-aaa
+gCX
 ajr
 aaa
 aaa
@@ -173768,8 +173772,8 @@ qhQ
 qYo
 aaa
 aaa
-aaa
-aaa
+gCX
+gCX
 ajr
 ajr
 aad
@@ -174018,14 +174022,14 @@ aaa
 aaa
 aaa
 qYo
-qYo
+tKr
 fsE
 jqI
 fsE
-qYo
+tKr
 aaa
-aaa
-aaa
+gCX
+mbS
 aaa
 aaa
 aaa
@@ -174274,14 +174278,14 @@ aaa
 aaa
 aaa
 aaa
-qYo
+tKr
 tKr
 tgu
 mQX
 hos
 tKr
-qYo
-aaa
+tKr
+gCX
 aaa
 aaa
 aaa
@@ -175302,13 +175306,13 @@ aaa
 aaa
 aaa
 aaa
-qYo
+tKr
 tKr
 acR
 jdJ
 acR
 tKr
-qYo
+tKr
 aaa
 aaa
 aaa
@@ -175560,11 +175564,11 @@ aaa
 aaa
 aaa
 aaa
-qYo
+tKr
 fsE
 fsE
 fsE
-qYo
+tKr
 aaa
 aaa
 aaa
