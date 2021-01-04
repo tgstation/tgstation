@@ -78,6 +78,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Maintenance
 
 /area/maintenance
+	name = "Generic Maintenance"
 	ambientsounds = MAINTENANCE
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	airlock_wires = /datum/wires/airlock/maint
@@ -251,6 +252,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/hallway/primary
+	name = "Primary Hallway"
+
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -370,6 +374,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Crew
 
 /area/crew_quarters
+	name = "Crew Quarters"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/crew_quarters/dorms
