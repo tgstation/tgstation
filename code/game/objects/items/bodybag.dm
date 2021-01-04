@@ -9,9 +9,9 @@
 
 /obj/item/bodybag/attack_self(mob/user)
 	if(user.is_holding(src))
-		deploy_bodybag(user, user.loc)
+		deploy_bodybag(user, get_turf(user))
 	else
-		deploy_bodybag(user, src.loc)
+		deploy_bodybag(user, get_turf(src))
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
 	. = ..()
