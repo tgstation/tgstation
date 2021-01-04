@@ -449,7 +449,7 @@ class ChatRenderer {
     cssText += 'body, html { background-color: #141414 }\n';
     // Compile chat log as HTML text
     let messagesHtml = '';
-    for (let message of this.messages) {
+    for (let message of this.visibleMessages) {
       if (message.node) {
         messagesHtml += message.node.outerHTML + '\n';
       }
