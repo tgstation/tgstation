@@ -403,6 +403,12 @@
 
 /datum/config_entry/flag/dynamic_config_enabled
 
-/datum/config_entry/keyed_list/vox_voice_whitelist
+/datum/config_entry/flag/vox_allowlist_is_denylist
+
+/datum/config_entry/keyed_list/vox_voice_allowlist
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/vox_voice_denylist
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG

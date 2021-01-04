@@ -66,15 +66,27 @@
 		to_chat(src, "Connection to 15.ai failed. Error code: [response.status_code]")
 		return
 	var/list/usable_characters = json_decode(response["body"])
-	var/list/allowed_characters = CONFIG_GET(keyed_list/vox_voice_whitelist)
+	var/allowlist_is_denylist = CONFIG_GET(flag/vox_allowlist_is_denylist)
+	var/list/allowed_characters = CONFIG_GET(keyed_list/vox_voice_allowlist)
+	var/list/banned_characters = CONFIG_GET(keyed_list/vox_voice_denylist)
 	var/list/passed_characters = list()
-	if(allowed_characters.len)
-		for(var/character_name in usable_characters)
-			var/changed_name = lowertext(replacetext(character_name, " ", "_"))
-			if(allowed_characters[changed_name])
-				passed_characters += character_name
+	if(!allowlist_is_denylist)
+		if(allowed_characters.len)
+			for(var/character_name in usable_characters)
+				var/changed_name = lowertext(replacetext(character_name, " ", "_"))
+				if(allowed_characters[changed_name])
+					passed_characters += character_name
+		else
+			passed_characters = usable_characters
 	else
-		passed_characters = usable_characters
+		if(banned_characters.len)
+			passed_characters = usable_characters
+			for(var/character_name in usable_characters)
+				var/changed_name = lowertext(replacetext(character_name, " ", "_"))
+				if(banned_characters[changed_name])
+					passed_characters -= character_name
+		else
+			passed_characters = usable_characters
 	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in passed_characters
 	if(!character_to_use)
 		return

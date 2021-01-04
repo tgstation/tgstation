@@ -565,5 +565,11 @@ RATCAP 64
 ## Maximum fine for a citation
 MAXFINE 2000
 
-## Vox voice whitelist. If no voices are whitelisted, all voices are available.
-#VOX_VOICE_WHITELIST sans
+##Whether to use the Denylist or the Allowlist for VOX. Uncomment for Denylist, comment for Allowlist.
+#VOX_ALLOWLIST_IS_DENYLIST
+
+## Vox voice allowlist. If no voices are allowlisted, all voices are available.
+#VOX_VOICE_ALLOWLIST sans
+
+## Vox voice denylist. If no voices are denylisted, all voices are available.
+#VOX_VOICE_DENYLIST sans
