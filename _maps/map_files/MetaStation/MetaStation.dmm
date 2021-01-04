@@ -20725,6 +20725,7 @@
 	output_dir = 4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "aXn" = (
