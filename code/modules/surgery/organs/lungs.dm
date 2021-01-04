@@ -276,9 +276,9 @@
 		if(safe_toxins_max && SA_pp > safe_toxins_max*3)
 			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_toxins_max)
 			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
-			H.throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
+			H.throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
 		else
-			H.clear_alert("too_much_tox")
+			H.clear_alert("too_much_n2o")
 
 
 	// BZ

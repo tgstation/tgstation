@@ -131,7 +131,7 @@ Des: Removes all infected images from the alien.
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)
-	return ((I && istype(I, /obj/item/clothing/mask/facehugger)) || (ISADVANCEDTOOLUSER(src) && ..()))
+	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 /mob/living/carbon/alien/on_lying_down(new_lying_angle)
 	. = ..()

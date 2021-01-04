@@ -358,16 +358,15 @@
 	else
 		. += "<span class='info'>It's empty.</span>"
 
-	. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
-	"<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
+	. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>"
+	. += "<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
 	if(self_sustaining)
 		. += "<span class='info'>The tray's autogrow is active, protecting it from species mutations, weeds, and pests.</span>"
 
 	if(weedlevel >= 5)
-		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
+		. += "<span class='warning'>It's filled with weeds!</span>"
 	if(pestlevel >= 5)
-		to_chat(user, "<span class='warning'>It's filled with tiny worms!</span>")
-	to_chat(user, "" )
+		. += "<span class='warning'>It's filled with tiny worms!</span>"
 
 /**
  * What happens when a tray's weeds grow too large.
@@ -785,7 +784,7 @@
 		TRAY_NAME_UPDATE
 	else
 		if(user)
-			examine(user)
+			user.examinate(src)
 
 /obj/machinery/hydroponics/CtrlClick(mob/user)
 	. = ..()
