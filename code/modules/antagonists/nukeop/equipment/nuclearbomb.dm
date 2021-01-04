@@ -635,6 +635,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
+	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
+
 	if(!fake)
 		GLOB.poi_list |= src
 		last_disk_move = world.time
@@ -651,6 +653,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	var/turf/newturf = get_turf(src)
 
 	if(newturf && lastlocation == newturf)
+		/// Probability of ticking up lone op weight
+		var/lone_op_prob = 0.0001
 		/// How comfy is our disk?
 		var/disk_comfort_level = 0
 
@@ -660,8 +664,11 @@ This is here to make the tiles around the station mininuke change when it's arme
 				disk_comfort_level++
 
 		if(disk_comfort_level >= 2) //Sleep tight, disky.
-			return
-		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
+			if(SSticker.totalPlayers > 20)
+				lone_op_prob *= 2
+			else
+				lone_op_prob *= 0.5
+		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*lone_op_prob))
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
 				loneop.weight += 1
