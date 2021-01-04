@@ -82,7 +82,7 @@
 	cleanup()
 
 /obj/item/cyberlink_connector/proc/hack_failure(failed as num)
-	var/chance = rand(0,25*failed)
+	var/chance = rand(0,40*failed)
 	switch(chance)
 		if(0 to 25)
 			to_chat(current_user,"<span class='warning'> Cyberlink beeps: HACKING [uppertext(cybernetic.name)] MINOR FAILURE. COMPATIBILITY NOT ACHIEVED. NO DAMAGE DETECTED.</span>")
@@ -99,7 +99,7 @@
 		if(76 to 99)
 			to_chat(current_user,"<span class='danger'> Cyberlink beeps: HACKING [uppertext(cybernetic.name)] MAJOR FAILURE. COMPATIBILITY NOT ACHIEVED. MAJOR ELECTROMAGNETIC PULSE DETECTED.</span>")
 			empulse(current_user, 1, 2)
-		if(100)
+		if(100 to INFINITY)
 			to_chat(current_user,"<span class='danger'> Cyberlink beeps: HACKING [uppertext(cybernetic.name)] CRITICAL FAILURE. COMPATIBILITY NOT ACHIEVED. IMPLANT OVERHEATING IN 5 SECONDS.</span>")
 			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
 	current_user.mind.adjust_experience(/datum/skill/implant_hacking,(4 - failed)*2)
@@ -107,6 +107,7 @@
 
 /obj/item/cyberlink_connector/proc/explode()
 	dyn_explosion(get_turf(cybernetic),2,1)
+	qdel(src)
 
 /obj/item/cyberlink_connector/process(delta_time)
 
