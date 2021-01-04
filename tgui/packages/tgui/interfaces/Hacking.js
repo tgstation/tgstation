@@ -1,36 +1,70 @@
 import { toArray } from 'common/collections';
 import { useBackend } from '../backend';
-import { Section } from '../components';
+import { AnimatedNumber, Section, Box } from '../components';
+import { formatMoney } from '../format';
 import { resolveAsset } from '../assets';
 import { Window } from '../layouts';
-import { Box } from '../components';
 
 export const Hacking = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    array = [[]],
+    timeleft,
+    games = [[[]]],
   } = data;
   return (
     <Window
       width={1000}
       height={1000}
+      theme="hackerman"
       resizable>
       <Window.Content>
         <Section title="CYBERNETICS HACKING INTERFACE ">
-          {toArray(array).map((arr, i) => (
-            <Box key={i}>
-              {toArray(arr).map((element, j) => (
-                <Box
-                  key={i + '_' + j}
-                  as="img"
-                  className="Safe__dial"
-                  src={resolveAsset(element + '.png')}
-                />
-              ))}
-            </Box>
+          [ TIME LEFT :
+          <AnimatedNumber
+            value={timeleft} /> ]
+          {toArray(games).map((array, i) => (
+            <Section
+              key={i}
+              title={'HACKING IN PROGRESS [ ' + i + ' ]'}
+              level={2}>
+              <Minigame
+                key={i}
+                array={array}
+                minigame_id={i} />
+            </Section>
           ))}
         </Section>
       </Window.Content>
     </Window>
+  );
+};
+
+const Minigame = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    array = [[]],
+    minigame_id = 0,
+  } = props;
+  return (
+    toArray(array).map((arr, i) => (
+      <Box key={i}>
+        {toArray(arr).map((element, j) => (
+          <Box
+            style={{
+              margin: '0px',
+            }}
+            key={i + '_' + j}
+            as="img"
+            className="pathway"
+            src={resolveAsset(element + '.png')}
+            onClick={() => act('click', {
+              xcord: i,
+              ycord: j,
+              id: minigame_id,
+            })}
+          />
+        ))}
+      </Box>
+    ))
   );
 };

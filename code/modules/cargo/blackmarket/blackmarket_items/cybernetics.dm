@@ -4,7 +4,7 @@
 
 /datum/blackmarket_item/cyberlinks
 	category = "Cybernetics"
-	markets = list(/datum/blackmarket_market/auction/cybernetics)
+	markets = list(/datum/blackmarket_market/cybernetics)
 
 /datum/blackmarket_item/cyberlinks/nt_low
 	name = "Nanotrasen's Basic Cyberlink Package"
@@ -46,13 +46,14 @@
 
 /datum/blackmarket_item/cybernetics
 	category = "Cybernetics"
-	markets = list(/datum/blackmarket_market/auction/cybernetics)
+	markets = list(/datum/blackmarket_market/cybernetics)
 	stock = 1 //Can never have more than 1 of the same implant on the auction at the same time.
+	var/randomizable = TRUE
 
 /datum/blackmarket_item/cybernetics/spawn_item(loc)
 	. = ..()
 	var/obj/item/organ/cyberimp/implant = .
-	if(prob(25))
+	if(prob(30) && randomizable)
 		implant.random_encode()
 
 // LEGS
@@ -115,16 +116,16 @@
 	desc = "An old design of a medibeam used by terragov doctors in dire situations, very rare."
 	item = /obj/item/organ/cyberimp/arm/item_set/medibeam
 	availability_prob = 10
-	price_min = 600
-	price_max = 1000
+	price_min = 1200
+	price_max = 2200
 
 /datum/blackmarket_item/cybernetics/laser
 	name = "in-buily laser cybernetic"
 	desc = "Laser implant of Terran design, used by their high-ranking officers"
 	item = /obj/item/organ/cyberimp/arm/item_set/gun/laser
 	availability_prob = 5
-	price_min = 1000
-	price_max = 1200
+	price_min = 1200
+	price_max = 2200
 
 /datum/blackmarket_item/cybernetics/toolset
 	name = "integrated toolset implant"
@@ -139,7 +140,7 @@
 	desc = "Can be quite handy, especially since it is quite literally, built into your hand."
 	item = /obj/item/organ/cyberimp/arm/item_set/flash
 	availability_prob = 20
-	price_min = 500
+	price_min = 600
 	price_max = 800
 
 /datum/blackmarket_item/cybernetics/surgery
@@ -155,7 +156,7 @@
 	desc = "Useful for extra-fast cooking"
 	item = /obj/item/organ/cyberimp/arm/item_set/cook
 	availability_prob = 25
-	price_min = 400
+	price_min = 300
 	price_max = 500
 
 /datum/blackmarket_item/cybernetics/janitor
@@ -163,7 +164,7 @@
 	desc = "Useful for extra-fast cleaning"
 	item = /obj/item/organ/cyberimp/arm/item_set/janitor
 	availability_prob = 25
-	price_min = 400
+	price_min = 300
 	price_max = 500
 
 /datum/blackmarket_item/cybernetics/detective
@@ -179,7 +180,7 @@
 	desc = "Useful for extra-fast research"
 	item = /obj/item/organ/cyberimp/arm/item_set/chemical
 	availability_prob = 25
-	price_min = 400
+	price_min = 300
 	price_max = 500
 
 /datum/blackmarket_item/cybernetics/atmos
@@ -187,7 +188,7 @@
 	desc = "Useful for extra-fast firefighting"
 	item = /obj/item/organ/cyberimp/arm/item_set/atmospherics
 	availability_prob = 25
-	price_min = 400
+	price_min = 300
 	price_max = 500
 
 /datum/blackmarket_item/cybernetics/tablet
@@ -199,6 +200,16 @@
 	stock_max = 4
 	price_min = 200
 	price_max = 500
+
+/datum/blackmarket_item/cybernetics/hack
+	name = "universal connection implant"
+	desc = "Allows for direct connection between your brain, the cyberlink and the implant's firmware, allowing you to change protocols to make them compatible with your cyberlink."
+	item = /obj/item/organ/cyberimp/arm/item_set/connector
+	availability_prob = 60
+	stock_min = 1
+	stock_max = 4
+	price_min = 500
+	price_max = 1000
 
 /datum/blackmarket_item/cybernetics/ammo_counter
 	name = "S.M.A.R.T ammo logistics system"
@@ -213,7 +224,7 @@
 	desc = "Helps you stabilize your temperature, extra useful for those filthy lizards, i wonder if they made this thing?"
 	item = /obj/item/organ/cyberimp/arm/heater
 	availability_prob = 25
-	price_min = 200
+	price_min = 100
 	price_max = 500
 
 /datum/blackmarket_item/cybernetics/cooler
@@ -221,7 +232,7 @@
 	desc = "Helps you stabilize your temperature, extra useful for those filthy lizards, i wonder if they made this thing?"
 	item = /obj/item/organ/cyberimp/arm/cooler
 	availability_prob = 25
-	price_min = 200
+	price_min = 100
 	price_max = 500
 
 /datum/blackmarket_item/cybernetics/filter
@@ -239,3 +250,19 @@
 	availability_prob = 20
 	price_min = 200
 	price_max = 400
+
+/datum/blackmarket_item/cybernetics/sensors
+	name = "Interdyne Sensor Field Visualizer"
+	desc = "Makes you see sensor signals from nearby dead crew that had the sensors turned to Tracking Beacon. Very useful, just a note, this uses Terran firmware for some reason."
+	item = /obj/item/organ/cyberimp/eyes/hud/sensor
+	availability_prob = 10
+	price_min = 600
+	price_max = 1000
+
+/datum/blackmarket_item/cybernetics/mantis
+	name = "C.H.R.O.M.A.T.A cybernetic mantis blades"
+	desc = "Powerful blades, first developed on earth, they fit right under your Humerus, and can be sprung into actions in just miliseconds."
+	item = /obj/item/organ/cyberimp/arm/item_set/mantis
+	availability_prob = 10
+	price_min = 1200
+	price_max = 1800

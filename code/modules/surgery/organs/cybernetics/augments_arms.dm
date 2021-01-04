@@ -4,7 +4,6 @@
 	zone = BODY_ZONE_R_ARM
 	icon_state = "implant-toolkit"
 	w_class = WEIGHT_CLASS_SMALL
-	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	encode_info = AUGMENT_NT_LOWLEVEL
 
 /obj/item/organ/cyberimp/arm/Initialize()
@@ -45,6 +44,8 @@
 	update_icon()
 
 /obj/item/organ/cyberimp/arm/item_set
+	actions_types = list(/datum/action/item_action/organ_action/toggle)
+
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
 	/// Used to store a list of all items inside, for multi-item implants.
@@ -330,7 +331,7 @@
 /obj/item/organ/cyberimp/arm/item_set/atmospherics
 	name = "atmospherics toolset implant"
 	desc = "A set of atmospheric tools hidden behind a concealed panel on the user's arm."
-	contents = newlist(/obj/item/extinguisher,/obj/item/analyzer,/obj/item/crowbar,/obj/item/holosign_creator/atmos,)
+	contents = newlist(/obj/item/extinguisher,/obj/item/analyzer,/obj/item/crowbar,/obj/item/holosign_creator/atmos)
 	encode_info = AUGMENT_NT_HIGHLEVEL
 
 /obj/item/organ/cyberimp/arm/item_set/tablet
@@ -338,6 +339,21 @@
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm."
 	contents = newlist(/obj/item/modular_computer/tablet/preset/cheap)
 	encode_info = AUGMENT_NT_LOWLEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/connector
+	name = "universal connection implant"
+	desc = "Special inhand implant that allows you to connect your brain directly into the protocl sphere of implants, which allows for you to hack them and make the compatible."
+	icon_state = "hand_implant"
+	implant_overlay = "hand_implant_overlay"
+	implant_color = "#39992d"
+	encode_info = AUGMENT_NO_REQ
+	contents = newlist(/obj/item/cyberlink_connector)
+
+/obj/item/organ/cyberimp/arm/item_set/mantis
+	name = "C.H.R.O.M.A.T.A mantis blade implants"
+	desc = "high tech mantis blade implants, easily portable weapon, that has a high wound potential."
+	contents = newlist(/obj/item/mantis_blade)
+	encode_info = AUGMENT_TG_LEVEL
 
 /obj/item/organ/cyberimp/arm/ammo_counter
 	name = "S.M.A.R.T ammo logistics system"
@@ -481,3 +497,4 @@
 /obj/item/organ/cyberimp/arm/heater/Remove(mob/living/carbon/M, special)
 	. = ..()
 	owner.remove_body_temperature_change("dermal_heater_[zone]")
+

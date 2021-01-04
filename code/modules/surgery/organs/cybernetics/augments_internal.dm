@@ -157,7 +157,8 @@
 		/obj/item/autosurgeon/organ/syndicate/thermal_eyes,
 		/obj/item/autosurgeon/organ/syndicate/xray_eyes,
 		/obj/item/autosurgeon/organ/syndicate/anti_stun,
-		/obj/item/autosurgeon/organ/syndicate/reviver)
+		/obj/item/autosurgeon/organ/syndicate/reviver,
+		/obj/item/autosurgeon/organ/cyberlink_syndicate)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

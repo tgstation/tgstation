@@ -46,6 +46,8 @@
 #define ANTAG_HUD		"23"
 // for fans to identify pins
 #define FAN_HUD		"24"
+// for fans to identify pins
+#define SENSOR_HUD		"25"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -63,23 +65,24 @@
 #define DATA_HUD_SENTIENT_DISEASE		8
 #define DATA_HUD_AI_DETECT				9
 #define DATA_HUD_FAN					10
+#define DATA_HUD_SENSORS		11
 
 //antag HUD defines
-#define ANTAG_HUD_CULT			11
-#define ANTAG_HUD_REV			12
-#define ANTAG_HUD_OPS			13
-#define ANTAG_HUD_WIZ			14
-#define ANTAG_HUD_SHADOW    	15
-#define ANTAG_HUD_TRAITOR 		16
-#define ANTAG_HUD_NINJA 		17
-#define ANTAG_HUD_CHANGELING 	18
-#define ANTAG_HUD_ABDUCTOR 		19
-#define ANTAG_HUD_BROTHER		20
-#define ANTAG_HUD_OBSESSED		21
-#define ANTAG_HUD_FUGITIVE		22
-#define ANTAG_HUD_GANGSTER		23
-#define ANTAG_HUD_SPACECOP		24
-#define ANTAG_HUD_HERETIC		25
+#define ANTAG_HUD_CULT			12
+#define ANTAG_HUD_REV			13
+#define ANTAG_HUD_OPS			14
+#define ANTAG_HUD_WIZ			15
+#define ANTAG_HUD_SHADOW    	16
+#define ANTAG_HUD_TRAITOR 		17
+#define ANTAG_HUD_NINJA 		18
+#define ANTAG_HUD_CHANGELING 	19
+#define ANTAG_HUD_ABDUCTOR 		20
+#define ANTAG_HUD_BROTHER		21
+#define ANTAG_HUD_OBSESSED		22
+#define ANTAG_HUD_FUGITIVE		23
+#define ANTAG_HUD_GANGSTER		24
+#define ANTAG_HUD_SPACECOP		25
+#define ANTAG_HUD_HERETIC		26
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

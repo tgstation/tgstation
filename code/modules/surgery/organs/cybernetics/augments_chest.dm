@@ -250,7 +250,6 @@
 /obj/item/organ/cyberimp/chest/filtration
 	name = "S.I.L.V.E.R filtration pump"
 	desc = "This implant purges your body of any toxins and drugs extremely quickly"
-	icon_state = "chest_implant"
 	implant_color = "#00e7b5"
 	encode_info = AUGMENT_NT_HIGHLEVEL
 	var/removal_speed = 1
@@ -279,7 +278,6 @@
 /obj/item/organ/cyberimp/chest/filtration/offbrand
 	name = "offbrand filtration pump"
 	desc = "You're not sure if it is a great idea, This implant purges your body of any toxins and drugs extremely quickly"
-	icon_state = "chest_implant"
 	implant_color = "#0d3d33"
 	encode_info = AUGMENT_NT_HIGHLEVEL
 	removal_speed = 2
