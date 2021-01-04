@@ -131,7 +131,7 @@
 	if(res.status_code == 200)
 		var/full_name_file = "data/vox_[vox_voice_number].wav"
 		// Process the audio to match SS13 AI effects.
-		if (world.system_type != UNIX)
+		if(world.system_type == MS_WINDOWS)
 			shell(".\\data\\ffmpeg.exe \
 				    -nostats -loglevel 0 \
 				    -i .\\[full_name_file] \
@@ -148,7 +148,7 @@
 				        \[mix_2\] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 \[out\]; \
 	        			\[out\] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled\" \
 	    			-vn -y .\\data\\vox_[vox_voice_number].mp3")
-	    else // linux nonsense, just looks for ffmpeg
+		if(world.system_type == UNIX) // linux nonsense, just looks for ffmpeg
 			shell("ffmpeg -nostats -loglevel 0 \
 				    -nostats -loglevel 0 \
 				    -i ./[full_name_file] \
