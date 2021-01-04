@@ -131,11 +131,11 @@
 	if(res.status_code == 200)
 		var/full_name_file = "data/vox_[vox_voice_number].wav"
 		// Process the audio to match SS13 AI effects.
-		shell("./data/ffmpeg.exe \
+		shell(".\\data\\ffmpeg.exe \
 			    -nostats -loglevel 0 \
-			    -i ./[full_name_file] \
-			    -i ./sound/effects/SynthImpulse.wav \
-			    -i ./sound/effects/RoomImpulse.wav \
+			    -i .\\[full_name_file] \
+			    -i .\\sound\\effects\\SynthImpulse.wav \
+			    -i .\\sound\\effects/RoomImpulse.wav \
 			    -filter_complex \" \
 			        \[0\] apad=pad_dur=2 \[in_1\]; \
 			        \[in_1\] asplit=2 \[in_1_1\] \[in_1_2\]; \
@@ -146,7 +146,7 @@
 			        \[mix_1_2\] \[reverb_2\] amix=inputs=2:weights=10 1 \[mix_2\]; \
 			        \[mix_2\] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 \[out\]; \
         			\[out\] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled\" \
-    			-vn -y ./data/vox_[vox_voice_number].mp3")
+    			-vn -y .\\data\\vox_[vox_voice_number].mp3")
 
 		if (!istype(SSassets.transport, /datum/asset_transport/webroot))
 			log_game("CDN not set up, VOX aborted.")
