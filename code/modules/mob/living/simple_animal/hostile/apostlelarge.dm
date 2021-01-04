@@ -4,14 +4,17 @@
 	icon = 'icons/mob/largeapostles.dmi'
 	vision_range = 20
 	pixel_x = -16
+	weather_immunities = list("lava","ash")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	robust_searching = 1
+	mob_size = MOB_SIZE_HUGE
+	del_on_death = TRUE
+	layer = LARGE_MOB_LAYER
+	deathmessage = "fades away into nothing..."
 	faction = list("neutral","silicon","turret","sabbatziege")
 
-/mob/living/simple_animal/hostile/largeapostle/death()
-	gib()
 
 /mob/living/simple_animal/hostile/largeapostle/khamael
 	name = "Khamael"

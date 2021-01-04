@@ -10,6 +10,7 @@
 	pixel_y = -32
 	pixel_x= -96
 	speed = 5
+	gender = MALE
 	move_to_delay = 5
 	dextrous = TRUE
 	light_color = COLOR_WHITE
@@ -70,9 +71,14 @@
 		return
 
 /mob/living/simple_animal/hostile/megafauna/sabbat/ClickOn(mob/living/carbon/target)
-	target.revive(full_heal = TRUE, admin_revive = TRUE)
-	target.grab_ghost(force = TRUE)
-	to_chat(target, "<span class='notice'>Rejoice! The lord has looked upon you!</span>")
+	if(chosen_attack == 2)
+		summon_apostle1()
+		summon_apostle2()
+		summon_apostle3()
+	else
+		target.revive(full_heal = TRUE, admin_revive = TRUE)
+		target.grab_ghost(force = TRUE)
+		to_chat(target, "<span class='notice'>Rejoice! The lord has looked upon you!</span>")
 
 /mob/living/simple_animal/hostile/megafauna/sabbat/proc/blessing(mob/living/carbon/target)
 	target.revive(full_heal = TRUE, admin_revive = TRUE)

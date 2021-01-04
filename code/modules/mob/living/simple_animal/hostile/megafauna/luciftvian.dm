@@ -9,8 +9,9 @@
 	var/icon_defeat = "luciftabouttodie"
 	icon_dead = "luciftdead"
 	AIStatus = AI_OFF
-	maxHealth = 20000
-	health = 20000
+	maxHealth = 30000
+	health = 30000
+	gender = MALE
 	armour_penetration = 10
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -35,7 +36,7 @@
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	deathmessage = "slumps, finally motionless."
+	deathmessage = "slumps, finally peaceful."
 	deathsound = 'sound/effects/gravhit.ogg'
 	move_force = MOVE_FORCE_OVERPOWERING
 	move_resist = MOVE_FORCE_OVERPOWERING
@@ -49,8 +50,7 @@
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
 							   /datum/action/innate/megafauna_attack/teleport,
-							   /datum/action/innate/megafauna_attack/lucift_summon,
-							   /datum/action/innate/megafauna_attack/disorienting_scream)
+							   /datum/action/innate/megafauna_attack/lucift_summon)
 	faction = list("boss", "lucift")
 	var/BATTLESTART = FALSE
 	var/ENRAGED = FALSE
@@ -88,33 +88,26 @@
 	chosen_message = "<span class='colossus'>You are now summoning your minions when you click.</span>"
 	chosen_attack_num = 3
 
-/datum/action/innate/megafauna_attack/lucift_scream
-	name = "Disorienting Scream"
-	icon_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall"
-	chosen_message = "<span class='colossus'>You are now screeching, disorienting targets around you.</span>"
-	chosen_attack_num = 4
-
 /mob/living/simple_animal/hostile/megafauna/lucift/Initialize()
 	. = ..()
 	starting = get_turf(src)
 
 /mob/living/simple_animal/hostile/megafauna/lucift/Life()
-	if(health < 19600)
+	if(health < 29600)
 		if(BATTLESTART == FALSE)
 			icon_state = icon_battle
 			armour_penetration = 30
 			melee_damage_lower = 30
 			melee_damage_upper = 40
 			BATTLESTART = TRUE
-		else if(health < 12000)
+		else if(health < 15000)
 			if(ENRAGED == FALSE)
 				icon_state = icon_enraged
 				ENRAGED = TRUE
 				armour_penetration = 30
 				melee_damage_lower = 50
 				melee_damage_upper = 70
-			else if(health < 1000)
+			else if(health < 6000)
 				if(ABOUTTODIE == FALSE)
 					icon_state = icon_defeat
 					ABOUTTODIE = TRUE
@@ -149,29 +142,6 @@
 				summon_synth2()
 				summon_synth2()
 				summon_synth3()
-			if(4)
-				lucift_scream()
-		return
-
-	if(world.time > last_scream + 60)
-		chosen_attack = rand(1, 3)
-	else
-		chosen_attack = rand(1, 2)
-	switch(chosen_attack)
-		if(1)
-			heavy_stomp()
-		if(2)
-			teleport()
-		if(3)
-			summon_synth1()
-			summon_synth1()
-			summon_synth1()
-			summon_synth2()
-			summon_synth2()
-			summon_synth2()
-			summon_synth3()
-		if(4)
-			lucift_scream()
 
 //mob/living/simple_animal/hostile/megafauna/lucift/Life()
 //	. = ..()
@@ -197,18 +167,18 @@
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/lucift/Bump(atom/A)
-	SSexplosions.medturf += A
-	DestroySurroundings()
-	if(isliving(A))
-		var/mob/living/L = A
-		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
-		src.forceMove(get_turf(L))
-		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		shake_camera(L, 4, 3)
-		L.apply_damage(30, BRUTE, wound_bonus=CANT_WOUND)
-		shake_camera(src, 2, 3)
-	..()
+//mob/living/simple_animal/hostile/megafauna/lucift/Bump(atom/A)
+//	SSexplosions.medturf += A
+//	DestroySurroundings()
+//	if(isliving(A))
+//		var/mob/living/L = A
+//		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
+//		src.forceMove(get_turf(L))
+//		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
+//		shake_camera(L, 4, 3)
+//		L.apply_damage(30, BRUTE, wound_bonus=CANT_WOUND)
+//		shake_camera(src, 2, 3)
+//	..()
 
 /// Slams the ground around the wendigo throwing back enemies caught nearby
 /mob/living/simple_animal/hostile/megafauna/lucift/proc/ground_slam(range, delay)
@@ -229,7 +199,6 @@
 				L.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
 				shake_camera(L, 2, 1)
 			all_turfs -= T
-		sleep(delay)
 
 /// Larger but slower ground stomp
 /mob/living/simple_animal/hostile/megafauna/lucift/proc/heavy_stomp()

@@ -1217,3 +1217,39 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	reach = 3
 	var/min_reach = 3
+
+/obj/item/noblesiege
+	name = "Noble Siege"
+	desc = "Once wielded by a knight who's name is long forgotten. Now its your turn to forge a new story with this old sword."
+	icon_state = "noblesiege"
+	inhand_icon_state = "noblesiege"
+	worn_icon_state = "noblesiege"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 75
+	throwforce = 75
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	block_chance = 50
+	sharpness = SHARP_EDGED
+	max_integrity = 200
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 50, ACID = 50)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	reach = 3
+	var/min_reach = 3
+
+/obj/item/kingexpertise
+	name = "King's Expertise"
+	desc = "Normally you wouldn't resort to this. But the only way to save individuals sometimes is through brute strength."
+	icon_state = "kingexpertise"
+	inhand_icon_state = "kingexpertise"
+	worn_icon_state = "kingexpertise"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	block_chance = 100
+	force = 100
+	damtype = BURN
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	reach = 5
+	var/min_reach = 5

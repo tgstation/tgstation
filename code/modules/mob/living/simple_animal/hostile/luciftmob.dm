@@ -14,6 +14,7 @@
 /mob/living/simple_animal/hostile/lucift/death()
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
 	qdel(src)
+	return ..()
 
 /mob/living/simple_animal/hostile/lucift/petasia
 	name = "Petasia"
@@ -28,6 +29,8 @@
 	melee_damage_upper = 30
 	attack_verb_continuous = "stabs"
 	attack_verb_simple = "stab"
+	mob_size = MOB_SIZE_HUGE
+	layer = LARGE_MOB_LAYER
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
