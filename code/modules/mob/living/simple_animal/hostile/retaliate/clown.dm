@@ -394,9 +394,6 @@
 	riding.set_vehicle_dir_offsets(EAST, 0, 0)
 	riding.set_vehicle_dir_offsets(WEST, 0, 0)
 
-	riding.drive_verb = "ride"
-
-
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
