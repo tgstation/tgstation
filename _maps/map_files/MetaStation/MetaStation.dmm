@@ -7150,6 +7150,9 @@
 /obj/structure/table,
 /obj/item/folder/red,
 /obj/item/storage/secure/briefcase,
+/obj/item/inspector{
+	pixel_x = -5
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "apV" = (
@@ -7171,6 +7174,9 @@
 /obj/structure/table,
 /obj/item/folder/red,
 /obj/item/assembly/flash/handheld,
+/obj/item/inspector{
+	pixel_x = 5
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "apX" = (

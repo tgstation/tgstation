@@ -30549,7 +30549,10 @@
 /area/security/main)
 "bmo" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box{
+	pixel_x = -8;
+	pixel_y = -4
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -30559,6 +30562,11 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/item/inspector,
+/obj/item/inspector{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/main)

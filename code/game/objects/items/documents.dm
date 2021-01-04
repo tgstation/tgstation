@@ -73,7 +73,7 @@
 	. = ..()
 	print_report()
 
-/obj/item/inspector/attack_hand(mob/user)
+/obj/item/inspector/attack_self(mob/user)
 	. = ..()
 	print_report()
 

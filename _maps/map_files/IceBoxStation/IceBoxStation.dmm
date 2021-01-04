@@ -2994,6 +2994,7 @@
 /obj/structure/table,
 /obj/item/folder/red,
 /obj/item/pen,
+/obj/item/inspector,
 /turf/open/floor/plasteel,
 /area/security/main)
 "agF" = (
@@ -3239,6 +3240,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/item/inspector,
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahi" = (

@@ -5015,6 +5015,7 @@
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/item/inspector,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "aiH" = (
@@ -5046,6 +5047,7 @@
 /obj/item/clothing/accessory/armband/deputy,
 /obj/effect/turf_decal/tile/red,
 /obj/item/food/donut,
+/obj/item/inspector,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "aiL" = (
