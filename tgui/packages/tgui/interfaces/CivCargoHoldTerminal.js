@@ -30,7 +30,34 @@ export const CivCargoHoldTerminal = (props, context) => {
               color={!id_inserted ? 'default': 'blue'}>
               {id_inserted ? in_text : out_text}
             </NoticeBox>
-            <Section title="Cargo Pad">
+            <Section
+              title="Cargo Pad"
+              buttons={(
+                <Fragment>
+                  <Button
+                    icon={"sync"}
+                    tooltip={"Check Contents"}
+                    disabled={!pad || !id_inserted}
+                    onClick={() => act('recalc')} />
+                  <Button
+                    icon={sending ? 'times' : 'arrow-up'}
+                    tooltip={sending ? "Stop Sending" : "Send Goods"}
+                    selected={sending}
+                    disabled={!pad || !id_inserted}
+                    onClick={() => act(sending ? 'stop' : 'send')} />
+                  <Button
+                    icon={id_bounty_info ? 'recycle' : 'pen'}
+                    color={id_bounty_info ? 'green' : 'default'}
+                    tooltip={id_bounty_info ? "Replace Bounty" : "New Bounty"}
+                    disabled={!id_inserted}
+                    onClick={() => act('bounty')} />
+                  <Button
+                    icon={'download'}
+                    content={"Eject ID"}
+                    disabled={!id_inserted}
+                    onClick={() => act('eject')} />
+                </Fragment>
+              )}>
               <LabeledList>
                 <LabeledList.Item
                   label="Status"
@@ -43,36 +70,6 @@ export const CivCargoHoldTerminal = (props, context) => {
               </LabeledList>
             </Section>
             {picking ? <BountyPickBox /> : <BountyTextBox />}
-          </Flex.Item>
-          <Flex.Item m={1}>
-            <Fragment>
-              <Button
-                fluid
-                icon={"sync"}
-                content={"Check Contents"}
-                disabled={!pad || !id_inserted}
-                onClick={() => act('recalc')} />
-              <Button
-                fluid
-                icon={sending ? 'times' : 'arrow-up'}
-                content={sending ? "Stop Sending" : "Send Goods"}
-                selected={sending}
-                disabled={!pad || !id_inserted}
-                onClick={() => act(sending ? 'stop' : 'send')} />
-              <Button
-                fluid
-                icon={id_bounty_info ? 'recycle' : 'pen'}
-                color={id_bounty_info ? 'green' : 'default'}
-                content={id_bounty_info ? "Replace Bounty" : "New Bounty"}
-                disabled={!id_inserted}
-                onClick={() => act('bounty')} />
-              <Button
-                fluid
-                icon={'download'}
-                content={"Eject ID"}
-                disabled={!id_inserted}
-                onClick={() => act('eject')} />
-            </Fragment>
           </Flex.Item>
         </Flex>
       </Window.Content>
@@ -115,11 +112,10 @@ const BountyPickBox = (props, context) => {
     <Section
       title="Please Select a Bounty:"
       textAlign="center">
-      <Flex width="330px" wrap>
+      <Flex width="100%" wrap>
         <Flex.Item
           shrink={0}
-          grow={1}
-          m={1}>
+          grow={0.5}>
           <Button
             fluid
             icon="check"
@@ -133,8 +129,8 @@ const BountyPickBox = (props, context) => {
         </Flex.Item>
         <Flex.Item
           shrink={0}
-          grow={1}
-          m={1}>
+          grow={0.5}
+          px={1}>
           <Button
             fluid
             icon="check"
@@ -148,8 +144,7 @@ const BountyPickBox = (props, context) => {
         </Flex.Item>
         <Flex.Item
           shrink={0}
-          grow={1}
-          m={1}>
+          grow={0.5}>
           <Button
             fluid
             icon="check"
