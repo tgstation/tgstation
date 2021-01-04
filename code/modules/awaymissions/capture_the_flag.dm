@@ -137,7 +137,7 @@
 	desc = "This is where a blue banner used to play capture the flag \
 		would go."
 
-/proc/toggle_id_ctf(mob/user, activated_id, automated = FALSE)
+/proc/toggle_id_ctf(user, activated_id, automated = FALSE)
 	var/ctf_enabled = FALSE
 	var/area/A
 	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)

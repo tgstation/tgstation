@@ -152,7 +152,7 @@
 			dat += "</table>"
 			holder << browse(dat, "window=fingerprints;size=440x410")
 		if("ctfbutton")
-			toggle_id_ctf(user, "centcom")
+			toggle_id_ctf(holder, "centcom")
 		if("tdomereset")
 			var/delete_mobs = alert("Clear all mobs?","Confirm","Yes","No","Cancel")
 			if(delete_mobs == "Cancel")
