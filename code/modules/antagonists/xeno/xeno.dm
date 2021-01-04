@@ -52,13 +52,13 @@
 
 /datum/objective/escape/xeno_queen
 	name = "shuttle takeover"
-	explanation_text = "Escape on the shuttle and arrive at Centcomm alive.  You can hijack the shuttle console (alt-click) to allow it to leave."
+	explanation_text = "Escape on the shuttle and arrive at Centcom alive.  You can hijack the shuttle console (alt-click) to allow it to leave."
 
 /datum/antagonist/xeno/queen/roundend_report()
 	var/list/parts = list()
 	var/datum/objective/escape/xeno_queen/objective = locate() in objectives
 	if(objective.check_completion())
-		parts += "<span class='redtext big'>The [name] has succeeded! Centcomm has been compromised!</span>"
+		parts += "<span class='redtext big'>The [name] has succeeded! Centcom has been compromised!</span>"
 	else
 		parts += "<span class='redtext big'>The [name] has failed! The crew has managed to keep the alien threat at bay!</span>"
 	parts += printplayer(owner)
