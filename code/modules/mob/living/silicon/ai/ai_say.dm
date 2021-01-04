@@ -66,12 +66,16 @@
 		to_chat(src, "Connection to 15.ai failed. Error code: [response.status_code]")
 		return
 	var/list/usable_characters = json_decode(response["body"])
-	var/list/banned_characters = CONFIG_GET(keyed_list/vox_voice_blacklist)
-	for(var/character_name in usable_characters)
-		var/changed_name = lowertext(replacetext(character_name, " ", "_"))
-		if(banned_characters[changed_name])
-			usable_characters -= character_name
-	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in usable_characters
+	var/list/allowed_characters = CONFIG_GET(keyed_list/vox_voice_whitelist)
+	var/list/passed_characters = list()
+	if(allowed_characters.len)
+		for(var/character_name in usable_characters)
+			var/changed_name = lowertext(replacetext(character_name, " ", "_"))
+			if(allowed_characters[changed_name])
+				passed_characters += character_name
+	else
+		passed_characters = usable_characters
+	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in passed_characters
 	if(!character_to_use)
 		return
 	var/max_characters = 300 // magic number but its the cap 15 allows
@@ -114,7 +118,10 @@
 	var/datum/http_response/res = req.into_response()
 	if(res.status_code == 200)
 		var/full_name_file = "data/vox_[vox_voice_number].wav"
-		shell("./data/ffmpeg.exe -nostats -loglevel 0 -i ./[full_name_file] -vn -y ./data/vox_[vox_voice_number].mp3")
+		// Slap an extra second on at the end for reverb padding.
+		shell("./data/ffmpeg.exe -nostats -loglevel 0 -f lavfi -t 1 -i anullsrc=channel_layout=stereo:sample_rate=44100 -i ./[full_name_file] -filter_complex \"\[1:a\]\[0:a\]concat=n=2:v=0:a=1\" -vn -y ./[full_name_file]")
+		// Apply a reverb effect for space authenticity.
+		shell("./data/ffmpeg.exe -nostats -loglevel 0 -i ./[full_name_file] -i ./sound/effects/reverb_effect_vox.wav -filter_complex \"\[0\] \[1\] afir=dry=10:wet=10 \[reverb\]; \[0\] \[reverb\] amix=inputs=2:weights=10 1\" -vn -y ./data/vox_[vox_voice_number].mp3")
 		if (!istype(SSassets.transport, /datum/asset_transport/webroot))
 			log_game("CDN not set up, VOX aborted.")
 			message_admins("CDN not set up, VOX aborted.")
