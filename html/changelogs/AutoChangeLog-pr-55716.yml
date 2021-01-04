@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - refactor: "Skeleton and plasmaman stomachs now share the same code."
+  - bugfix: "Skeletons now heal brute and burn damage from drinking milk, plasmamen
+only heal brute damage."
