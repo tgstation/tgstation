@@ -370,5 +370,4 @@
 #undef BURST
 #undef GROWING
 #undef GROWN
-#undef MIN_GROWTH_TIME
-#undef MAX_GROWTH_TIME
+#undef GROWTH_TIME
