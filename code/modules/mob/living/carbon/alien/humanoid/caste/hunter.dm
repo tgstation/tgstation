@@ -55,11 +55,6 @@
 	Paralyze(40, ignore_canstun = TRUE)
 	toggle_leap(FALSE)
 
-/mob/living/carbon/alien/humanoid/float(on)
-	if(leaping)
-		return
-	..()
-
 /**
  * Used to toggle the hunter's leap ability.
  *
