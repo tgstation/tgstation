@@ -1,4 +1,14 @@
 /mob/living/carbon/human/examine(mob/user)
+	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+	var/t_He = p_they(TRUE)
+	var/t_His = p_their(TRUE)
+	var/t_his = p_their()
+	var/t_him = p_them()
+	var/t_has = p_have()
+	var/t_is = p_are()
+	var/t_es = p_es()
+	var/obscure_name
+
 	if(isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA))
