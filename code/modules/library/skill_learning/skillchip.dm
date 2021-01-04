@@ -415,3 +415,12 @@
 	skill_icon = "lightbulb"
 	activate_message = "<span class='notice'>Your feel like your pain receptors are less sensitive to hot objects.</span>"
 	deactivate_message = "<span class='notice'>You feel like hot objects could stop you again...</span>"
+
+/obj/item/skillchip/disk_verifier
+	name = "K33P-TH4T-D15K skillchip"
+	auto_trait = TRAIT_DISK_VERIFIER
+	skill_name = "Nuclear Disk Verification"
+	skill_description = "Nuclear authentication disks have an extremely long serial number for verification. This skillchip stores that number, which allows the user to automatically spot forgeries."
+	skill_icon = "save"
+	activate_message = "<span class='notice'>You feel your mind automatically verifying long serial numbers on disk shaped objects.</span>"
+	deactivate_message = "<span class='notice'>The innate recognition of absurdly long disk-related serial numbers fades from your mind.</span>"

@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - code_imp: "items being able to be held by xenos is now a flag that can be applied to any item by admin"

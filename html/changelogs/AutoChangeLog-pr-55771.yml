@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a case where a syndicate assault pod was unlaunchable."
