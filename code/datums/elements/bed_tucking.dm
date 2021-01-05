@@ -23,7 +23,8 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_ITEM_ATTACK_OBJ)
 
-/** Tuck our object into bed.
+/**
+ * Tuck our object into bed.
  *
  * tucked - the object being tucked
  * target_bed - the bed we're tucking them into
@@ -47,7 +48,8 @@
 
 	return COMPONENT_NO_AFTERATTACK
 
-/** If we rotate our object, then we need to un-rotate it when it's picked up
+/**
+ * If we rotate our object, then we need to un-rotate it when it's picked up
  *
  * tucked - the object that is tucked
  */
