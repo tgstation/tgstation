@@ -2990,13 +2990,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"agE" = (
-/obj/structure/table,
-/obj/item/folder/red,
-/obj/item/pen,
-/obj/item/inspector,
-/turf/open/floor/plasteel,
-/area/security/main)
 "agF" = (
 /obj/structure/toilet/greyscale{
 	dir = 4
@@ -3229,18 +3222,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
-/area/security/main)
-"ahh" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/inspector,
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahi" = (
@@ -43910,6 +43891,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"cmI" = (
+/turf/closed/wall/mineral/wood,
+/area/maintenance/space_hut/cabin)
 "cmL" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -49381,6 +49365,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"eqR" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
+"ete" = (
+/obj/structure/chair/wood,
+/turf/open/floor/carpet,
+/area/maintenance/space_hut/cabin)
 "eyF" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -49468,6 +49460,10 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
+"eNy" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "eRH" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
@@ -50070,6 +50066,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"gHF" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	desc = "Still hot!";
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "gIB" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -50275,6 +50280,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
+"hoT" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/maintenance/space_hut/cabin)
 "hxq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -50413,6 +50424,12 @@
 /obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
+"hMO" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/maintenance/space_hut/cabin)
 "hQK" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -50745,6 +50762,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"iVW" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "iYg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -51835,6 +51856,19 @@
 /obj/item/target,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"lgJ" = (
+/obj/structure/window/reinforced/fulltile/ice{
+	name = "frozen window"
+	},
+/turf/open/floor/plating,
+/area/maintenance/space_hut/cabin)
+"lha" = (
+/obj/structure/table,
+/obj/item/folder/red,
+/obj/item/pen,
+/obj/item/inspector,
+/turf/open/floor/plasteel,
+/area/security/main)
 "lhu" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -51857,6 +51891,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"lkn" = (
+/obj/structure/fireplace,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "lqJ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
@@ -52241,6 +52279,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"mfr" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/maintenance/space_hut/cabin)
+"mgG" = (
+/obj/item/chair/wood,
+/turf/open/floor/carpet,
+/area/maintenance/space_hut/cabin)
 "mhs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -52332,6 +52382,11 @@
 "mtK" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
+"mtY" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/maintenance/space_hut/cabin)
 "muj" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/light{
@@ -53457,6 +53512,12 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
+"phh" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/maintenance/space_hut/cabin)
 "phz" = (
 /obj/effect/turf_decal/trimline/blue/end{
 	dir = 1
@@ -54165,6 +54226,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plastic,
 /area/hallway/secondary/service)
+"qPd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/inspector,
+/turf/open/floor/plasteel,
+/area/security/main)
 "qQC" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -25
@@ -54657,6 +54730,11 @@
 /obj/structure/tank_holder,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"stK" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "stP" = (
 /obj/machinery/atmospherics/pipe/multiz/layer2{
 	color = "#ff0000";
@@ -54781,6 +54859,11 @@
 /obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"sIk" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "sJf" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light,
@@ -55786,6 +55869,9 @@
 "vwd" = (
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hor)
+"vwG" = (
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "vwX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
@@ -56647,6 +56733,9 @@
 /obj/item/crowbar/red,
 /turf/open/floor/glass/reinforced,
 /area/science/xenobiology)
+"xzC" = (
+/turf/open/floor/carpet,
+/area/maintenance/space_hut/cabin)
 "xzN" = (
 /obj/machinery/door/airlock/external{
 	name = "Common Mining Shuttle Bay"
@@ -90278,8 +90367,8 @@ adh
 adm
 afk
 afZ
-agE
-ahh
+lha
+qPd
 ahM
 aiv
 abp
@@ -96547,8 +96636,8 @@ ccM
 jaC
 bAw
 bzs
-bzs
-bzs
+boP
+boP
 boP
 boP
 boP
@@ -96803,12 +96892,12 @@ bzs
 bzs
 cdL
 bAw
-bAw
-bXZ
-bzs
 bzs
 boP
 boP
+boP
+boP
+iVW
 boP
 boP
 boP
@@ -97060,10 +97149,10 @@ vKc
 bzs
 cdL
 bAw
-bAw
-bAw
-bAw
 bPn
+boP
+boP
+boP
 boP
 boP
 boP
@@ -97317,9 +97406,6 @@ bAw
 bAw
 cdL
 cfp
-bAw
-bAw
-bAw
 bPn
 boP
 boP
@@ -97328,11 +97414,14 @@ boP
 boP
 boP
 boP
+cmI
+cmI
+cmI
+cmI
+cmI
 boP
 boP
-boP
-boP
-boP
+iVW
 boP
 boP
 boP
@@ -97574,9 +97663,6 @@ bAw
 bzs
 cdL
 bAw
-bAw
-bAw
-bAw
 bPn
 boP
 boP
@@ -97585,8 +97671,11 @@ boP
 boP
 boP
 boP
-boP
-boP
+cmI
+mfr
+mtY
+sIk
+lgJ
 boP
 boP
 boP
@@ -97830,9 +97919,6 @@ bAw
 bAw
 bzs
 cdL
-bAw
-bAw
-bAw
 ceF
 bzs
 boP
@@ -97842,8 +97928,11 @@ boP
 boP
 boP
 boP
-boP
-boP
+cmI
+lkn
+mgG
+vwG
+lgJ
 boP
 boP
 boP
@@ -98089,18 +98178,18 @@ bzs
 cdL
 jsP
 bzs
-cfn
 bzs
+bPn
 bzs
 cng
 boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
+bte
+eNy
+cmI
+phh
+xzC
+hMO
+cmI
 boP
 boP
 boP
@@ -98345,19 +98434,19 @@ bXZ
 bzs
 cdL
 ciF
-bzs
+cfn
 bAw
 bAw
 cfn
 cng
 boP
 boP
-boP
-boP
-boP
-boP
-boP
-boP
+eNy
+stK
+vwG
+ete
+gHF
+lgJ
 boP
 boP
 boP
@@ -98605,16 +98694,16 @@ bRa
 bRa
 bzs
 bPn
-bPn
+bzs
 cng
 boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
+bte
+eNy
+cmI
+eqR
+hoT
+gHF
+lgJ
 boP
 boP
 boP
@@ -98867,11 +98956,11 @@ boP
 boP
 boP
 boP
-boP
-boP
-boP
-boP
-sNY
+cmI
+cmI
+lgJ
+cmI
+cmI
 boP
 boP
 boP
@@ -99377,7 +99466,7 @@ czY
 bPn
 boP
 boP
-boP
+iVW
 boP
 boP
 boP
@@ -99641,7 +99730,7 @@ boP
 boP
 boP
 boP
-boP
+iVW
 boP
 boP
 boP

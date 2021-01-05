@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the plasma alert not showing up"
-  - imageadd: "Added a new alert for n2o in the air"
