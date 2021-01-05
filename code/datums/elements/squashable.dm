@@ -54,7 +54,6 @@
 			else
 				target.visible_message("<span class='notice'>[target] avoids getting crushed.</span>")
 	else if(isstructure(AM))
-
 		if(should_squash)
 			AM.visible_message("<span class='notice'>[target] is crushed under [AM].</span>")
 			Squish(target)
