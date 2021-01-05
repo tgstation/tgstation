@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "The xeno attack hallucination will properly throw the xenomorph at you now"

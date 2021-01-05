@@ -1320,6 +1320,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/solars/starboard/fore)
+"acR" = (
+/obj/structure/table/glass,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/space_hut/observatory)
 "acV" = (
 /obj/machinery/status_display/evac{
 	pixel_x = -32
@@ -7167,6 +7172,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
+"asj" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ask" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -19348,6 +19358,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
+"aSk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "aSl" = (
 /obj/machinery/power/apc{
 	areastring = "/area/quartermaster/storage";
@@ -35876,10 +35894,6 @@
 /area/security/execution/transfer)
 "bwc" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},
@@ -89249,6 +89263,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"dwv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/safety_eye_protection{
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "dww" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -96927,10 +96952,9 @@
 /turf/open/floor/plating,
 /area/security/detectives_office/private_investigators_office)
 "dNn" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/space,
-/area/solar/starboard/aft)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "dNo" = (
 /obj/structure/chair{
 	dir = 4
@@ -106108,6 +106132,24 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"eTV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office/light,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/safety_internals{
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
+"eVg" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space/nearstation)
 "eVx" = (
 /obj/machinery/light{
 	dir = 8
@@ -106278,6 +106320,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"fsE" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/maintenance/space_hut/observatory)
 "fuE" = (
 /obj/machinery/door/airlock/security{
 	name = "Isolation Cell";
@@ -106393,6 +106439,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"fEm" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/science{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "fIc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/flasher{
@@ -106496,6 +106556,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"fRu" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "fRT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -106742,6 +106813,10 @@
 /obj/effect/turf_decal/arrows/white,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"gCX" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "gDF" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -107052,6 +107127,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"hij" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "hjf" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -107098,6 +107180,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"hos" = (
+/obj/structure/table/glass,
+/obj/item/paper_bin,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/space_hut/observatory)
 "hpy" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -107381,6 +107469,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"hUm" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/machinery/vending/coffee,
+/turf/open/space/basic,
+/area/space/nearstation)
 "hVS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -107910,6 +108006,11 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"jdJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/turf/open/floor/plating,
+/area/maintenance/space_hut/observatory)
 "jdO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -108015,6 +108116,13 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"jqI" = (
+/obj/machinery/door/airlock/external{
+	name = "Observatory";
+	req_access_txt = "13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/space_hut/observatory)
 "jqM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -108089,6 +108197,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
+"jwg" = (
+/obj/effect/landmark/xeno_spawn,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "jwH" = (
 /mob/living/simple_animal/mouse/brown/tom,
 /turf/open/floor/plasteel,
@@ -108687,6 +108799,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"kUH" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/closet/crate,
+/turf/open/space/basic,
+/area/space/nearstation)
 "kXg" = (
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plasteel,
@@ -109087,6 +109207,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"lAw" = (
+/obj/item/chair/plastic,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "lEl" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -109674,6 +109802,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
+"mQX" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/space_hut/observatory)
 "mRz" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
@@ -109806,6 +109938,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"ncv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/bless_this_spess{
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "ncP" = (
 /obj/item/radio/intercom{
 	pixel_y = -32
@@ -110090,6 +110233,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"nHf" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/turf/open/space/basic,
+/area/space/nearstation)
 "nJb" = (
 /obj/structure/sign/departments/chemistry{
 	pixel_x = -32
@@ -110337,6 +110485,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
+"oub" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall,
+/area/maintenance/starboard/aft)
 "ovb" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -110962,6 +111114,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"pCQ" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/space/basic,
+/area/space/nearstation)
 "pDb" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible/layer4,
 /obj/machinery/atmospherics/pipe/manifold/general/visible/layer2{
@@ -111114,6 +111274,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"pYz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "qcx" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -111194,6 +111361,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"qhQ" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "qiJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -111970,6 +112141,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"rKA" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "rKN" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -112040,6 +112215,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/surgery/room_b)
+"rNd" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Observatory";
+	req_access_txt = "13"
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/aft)
 "rOf" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light_switch{
@@ -112643,6 +112828,12 @@
 	heat_capacity = 1e+006
 	},
 /area/maintenance/starboard/aft)
+"tgu" = (
+/obj/structure/table/glass,
+/obj/item/food/pizzaslice/vegetable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/space_hut/observatory)
 "tju" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria,
@@ -112937,6 +113128,9 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
+"tKr" = (
+/turf/closed/wall,
+/area/maintenance/space_hut/observatory)
 "tLN" = (
 /obj/machinery/atmospherics/pipe/manifold4w/green/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -113695,6 +113889,13 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"vpk" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "vqo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -113973,7 +114174,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "vVy" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -114017,6 +114218,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"wao" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "wav" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -114214,6 +114425,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"wvA" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Observatory";
+	req_access_txt = "13"
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/aft)
 "wvD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -114313,6 +114534,16 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
 /area/library/abandoned)
+"wIU" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/item/toy/plush/lizardplushie/space{
+	name = "Meets-the-Ore"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "wJo" = (
 /obj/machinery/status_display/evac{
 	pixel_x = -32
@@ -114669,6 +114900,13 @@
 /obj/machinery/computer/shuttle/mining/common,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"xBA" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "xDZ" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
@@ -114687,6 +114925,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"xEm" = (
+/obj/item/chair/plastic,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "xER" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -114821,6 +115065,13 @@
 /obj/structure/punching_bag,
 /turf/open/floor/plating,
 /area/security/prison)
+"xPy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/glass,
+/area/maintenance/space_hut/observatory)
 "xRb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -114891,6 +115142,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"ybr" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/closet/crate,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ybK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -114935,6 +115194,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"yhJ" = (
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "yiv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -167846,8 +168108,8 @@ dkQ
 cHU
 dkQ
 cHU
-cHU
-dfX
+oub
+rNd
 cHU
 cHU
 dkQ
@@ -168104,7 +168366,7 @@ cHU
 dnW
 dpK
 cHU
-aad
+cIW
 cHU
 dvQ
 iVw
@@ -168361,7 +168623,7 @@ cHU
 dnX
 dpL
 dfX
-aaa
+wvA
 dfX
 dvR
 dxz
@@ -168618,7 +168880,7 @@ cHU
 dnY
 dpM
 dfX
-aad
+abj
 dfX
 dvS
 dxA
@@ -168875,7 +169137,7 @@ cHU
 cHU
 dfX
 dfX
-aaa
+vVc
 dfX
 dfX
 cHU
@@ -169126,16 +169388,16 @@ ddw
 cuM
 aad
 aad
+eqU
+eqU
+eqU
+aad
+eqU
+aad
+abj
 aad
 aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aad
+eqU
 aad
 dyV
 dBL
@@ -169383,16 +169645,16 @@ ddx
 cuM
 aad
 aaa
-ajr
-ajr
-ajr
-ajr
-ajr
 aaa
-ajr
 aaa
-ajr
-ajr
+aaa
+aaa
+aaa
+aaa
+vVc
+aaa
+aaa
+aaa
 aad
 dyV
 dBM
@@ -169639,19 +169901,19 @@ dbI
 cDL
 cuM
 aad
+qYo
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+ajr
+vVc
 aaa
 aaa
 aaa
 aad
-aaa
+qYo
 dLB
 aad
 aad
@@ -169897,17 +170159,17 @@ dbJ
 cuM
 aad
 ajr
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qYo
 aaa
 aaa
 aaa
 aaa
 ajr
+vVc
+aaa
+aaa
+aaa
+aaa
 aad
 dLB
 aad
@@ -170155,15 +170417,15 @@ cuM
 aad
 ajr
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qYo
+qYo
+qYo
+qYo
+qYo
+vVc
+qYo
+qYo
+qYo
 aad
 aaa
 dLB
@@ -170410,18 +170672,18 @@ dbJ
 ddy
 cuM
 aad
+qYo
+qYo
 aaa
 aaa
 aaa
 aaa
 aaa
+vVc
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-ajr
 aad
 dLB
 aad
@@ -170667,18 +170929,18 @@ dbK
 ddz
 cuM
 aad
-ajr
+mIc
+aaa
+qYo
 aaa
 aaa
 aaa
 aaa
+vVc
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-ajr
 aaa
 dBO
 aad
@@ -170924,18 +171186,18 @@ dbL
 ddA
 cuM
 aad
-ajr
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+mIc
 aaa
 aaa
 ajr
+aaa
+hUm
+vpk
+asj
+wIU
+aaa
+aaa
+aaa
 aad
 dBO
 aad
@@ -171181,19 +171443,19 @@ cuM
 cuM
 cuL
 aad
+qYo
+qYo
+qYo
+qYo
+qYo
+kUH
+yhJ
+yhJ
+nHf
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aad
-aaa
+eqU
+qYo
 dBO
 aad
 aaa
@@ -171438,19 +171700,19 @@ aad
 aad
 aad
 aad
+mIc
+ajr
 ajr
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-ajr
-aad
+kUH
+jwg
+yhJ
+eVg
+asj
+vVc
+vVc
+abj
 dBO
 dBO
 dBO
@@ -171460,7 +171722,7 @@ dBO
 dBO
 dBO
 dBO
-dNn
+dBO
 dBO
 dOK
 dBO
@@ -171693,17 +171955,17 @@ cuM
 aad
 aaa
 aaa
-ajr
-ajr
-ajr
+mIc
+mIc
+mIc
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+pCQ
+xBA
+asj
+ybr
 aaa
 aaa
 ajr
@@ -171950,19 +172212,19 @@ cuM
 aad
 ajr
 aaa
+qYo
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
+qYo
+aaa
+vVc
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qYo
 ajr
 ajr
 aad
@@ -172207,19 +172469,19 @@ cuM
 aad
 ajr
 aaa
+qYo
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
+qYo
 aaa
+vVc
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qYo
+ajr
 aaa
 aaa
 aaa
@@ -172464,18 +172726,18 @@ cuM
 aad
 ajr
 aaa
+qYo
+aaa
+qYo
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qYo
+ajr
+vVc
+ajr
+qYo
 aaa
 aaa
 aaa
@@ -172720,19 +172982,19 @@ aad
 cuL
 aad
 ajr
+qYo
+ajr
+ajr
+ajr
+qYo
+qYo
 aaa
+qYo
+ajr
 aaa
+vVc
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ajr
 aaa
 aaa
 aaa
@@ -172982,18 +173244,18 @@ aaa
 aaa
 aaa
 aaa
+ajr
+ajr
+qYo
+aaa
+qYo
+vVc
+aaa
+qYo
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gCX
 ajr
 aaa
 dFy
@@ -173240,17 +173502,17 @@ aaa
 aaa
 aab
 aaa
+qYo
+mIc
+aaa
+aaa
+vVc
+aaa
+qYo
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gCX
 ajr
 aaa
 aaa
@@ -173490,7 +173752,7 @@ cVi
 aad
 cuM
 aad
-mbS
+ajr
 aaa
 aaa
 aaa
@@ -173498,16 +173760,16 @@ aaa
 aaa
 aaa
 aaa
+qYo
+aaa
+qhQ
+vVc
+qhQ
+qYo
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gCX
+gCX
 ajr
 ajr
 aad
@@ -173746,24 +174008,24 @@ bry
 cVk
 aaa
 cuM
-nOg
+aad
+ajr
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+qYo
+tKr
+fsE
+jqI
+fsE
+tKr
+aaa
+gCX
 mbS
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -174003,7 +174265,7 @@ aad
 aaa
 aaa
 cuM
-nOg
+aad
 aaa
 aaa
 aaa
@@ -174012,14 +174274,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+tKr
+tKr
+tgu
+mQX
+hos
+tKr
+tKr
+gCX
 aaa
 aaa
 aaa
@@ -174260,7 +174522,7 @@ cuM
 cuM
 cuM
 cuM
-nOg
+aad
 aaa
 aaa
 aaa
@@ -174268,15 +174530,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dNn
+fsE
+lAw
+ncv
+hij
+dwv
+wao
+fsE
+dNn
 aaa
 aaa
 aaa
@@ -174517,7 +174779,7 @@ aad
 aad
 aad
 aad
-nOg
+aad
 aaa
 aaa
 aaa
@@ -174526,13 +174788,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fsE
+pYz
+rKA
+rKA
+rKA
+xEm
+fsE
 aaa
 aaa
 aaa
@@ -174782,15 +175044,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dNn
+fsE
+fRu
+fEm
+xPy
+eTV
+aSk
+fsE
+dNn
 aaa
 aaa
 aaa
@@ -175040,13 +175302,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+tKr
+tKr
+acR
+jdJ
+acR
+tKr
+tKr
 aaa
 aaa
 aaa
@@ -175298,11 +175560,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+tKr
+fsE
+fsE
+fsE
+tKr
 aaa
 aaa
 aaa
@@ -175556,9 +175818,9 @@ aaa
 aaa
 aaa
 aaa
+dNn
 aaa
-aaa
-aaa
+dNn
 aaa
 aaa
 aaa
