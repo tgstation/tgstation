@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(fire_burning)
 	name = "Fire Burning"
 	priority = FIRE_PRIOTITY_BURNING
-	flags = SS_NO_INIT|SS_BACKGROUND
+	flags = SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
