@@ -342,7 +342,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	update_portal_filters()
 
 /obj/effect/gateway_portal_effect/proc/update_portal_filters()
-	filters = null
+	clear_filters()
 	vis_contents = null
 
 	if(!our_destination)
