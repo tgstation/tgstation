@@ -39,7 +39,7 @@
 	make_squashable()
 
 /mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
-	AddElement(/datum/element/squashable, squash_chance = 50, squash_damaged = 1)
+	AddElement(/datum/element/squashable, squash_chance = 50, squash_damage = 1)
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
