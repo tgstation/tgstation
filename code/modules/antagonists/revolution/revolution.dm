@@ -1,3 +1,5 @@
+#define DECONVERTER_STATION_WIN "gamemode_station_win"
+#define DECONVERTER_REVS_WIN "gamemode_revs_win"
 //How often to check for promotion possibility
 #define HEAD_UPDATE_PERIOD 300
 
@@ -10,6 +12,9 @@
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "rev"
 	var/datum/team/revolution/rev_team
+
+	/// What message should the player receive when they are being demoted, and the revolution has won?
+	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution!"
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
@@ -201,6 +206,10 @@
 	to_chat(old_owner, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
 
 /datum/antagonist/rev/farewell()
+	if (rev_team.check_rev_victory())
+		to_chat(owner, "<span class='deconversion_message bold'>[victory_message]</span>")
+		return
+
 	if(ishuman(owner.current))
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class ='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
@@ -209,6 +218,10 @@
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
 /datum/antagonist/rev/head/farewell()
+	if (rev_team.check_rev_victory())
+		to_chat(owner, "<span class='deconversion_message bold'>[victory_message]</span>")
+		return
+
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
@@ -225,13 +238,13 @@
 	if(borged)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
-	if(iscarbon(owner.current))
+	if(iscarbon(owner.current) && deconverter != DECONVERTER_REVS_WIN)
 		var/mob/living/carbon/C = owner.current
 		C.Unconscious(100)
 	owner.remove_antag_datum(type)
 
 /datum/antagonist/rev/head/remove_revolutionary(borged,deconverter)
-	if(borged || deconverter == "gamemode")
+	if(borged || deconverter == DECONVERTER_STATION_WIN || deconverter == DECONVERTER_REVS_WIN)
 		. = ..()
 
 /datum/antagonist/rev/head/equip_rev()
@@ -334,25 +347,55 @@
 /// Updates the state of the world depending on if revs won or loss.
 /// Returns who won, at which case this method should no longer be called.
 /datum/team/revolution/proc/process_victory()
-	if(check_rev_victory())
-		return REVOLUTION_VICTORY
+	if (check_rev_victory())
+		. = REVOLUTION_VICTORY
 	else if (check_heads_victory())
-		SSshuttle.clearHostileEnvironment(src)
-		save_members()
-		for(var/datum/mind/rev_mind in members) // Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
-			if(rev_mind.has_antag_datum(/datum/antagonist/rev/head))
-				var/datum/antagonist/rev/head/rev_head = rev_mind.has_antag_datum(/datum/antagonist/rev/head)
-				rev_head.remove_revolutionary(FALSE, "gamemode")
-				if(rev_mind.current)
-					var/mob/living/carbon/C = rev_mind.current
-					if(istype(C) && C.stat == DEAD)
-						C.makeUncloneable()
-			if(rev_mind.has_antag_datum(/datum/antagonist/rev))
-				var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
-				rev_antag.remove_revolutionary(FALSE, "gamemode")
+		. = STATION_VICTORY
+	else
+		return
+
+	SSshuttle.clearHostileEnvironment(src)
+	save_members()
+
+	// Remove everyone as a revolutionary
+	for (var/_rev_mind in members)
+		var/datum/mind/rev_mind = _rev_mind
+		if (rev_mind.has_antag_datum(/datum/antagonist/rev))
+			var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
+			rev_antag.remove_revolutionary(FALSE, . == STATION_VICTORY ? DECONVERTER_STATION_WIN : DECONVERTER_REVS_WIN)
+
+	if (. == STATION_VICTORY)
+		// If the revolution was quelled, make rev heads unable to be revived through pods
+		for (var/_rev_head_mind in ex_revs)
+			var/datum/mind/rev_head_mind = _rev_head_mind
+			var/mob/living/carbon/rev_head_body = rev_head_mind.current
+			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
+				rev_head_body.makeUncloneable()
+
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-			We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
-		return STATION_VICTORY
+		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
+	else
+		for (var/_player in GLOB.player_list)
+			var/mob/player = _player
+			var/datum/mind/mind = player.mind
+
+			if (isnull(mind))
+				continue
+
+			if (!(mind.assigned_role in GLOB.command_positions))
+				continue
+
+			var/mob/living/carbon/head_body = mind.current
+			if (istype(head_body) && head_body.stat == DEAD)
+				head_body.makeUncloneable()
+
+		for (var/job_name in GLOB.command_positions + GLOB.security_positions)
+			var/datum/job/job = SSjob.GetJob(job_name)
+			job.total_positions = 0
+
+		priority_announce("A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials. \
+		For the safety of our staff, we have blacklisted your station for new employment of security and command. \
+		[pick(world.file2list("strings/anti_union_propaganda.txt"))]", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)
@@ -399,13 +442,13 @@
 	if(headrevs.len)
 		var/list/headrev_part = list()
 		headrev_part += "<span class='header'>The head revolutionaries were:</span>"
-		headrev_part += printplayerlist(headrevs,TRUE)
+		headrev_part += printplayerlist(headrevs, !check_rev_victory())
 		result += headrev_part.Join("<br>")
 
 	if(revs.len)
 		var/list/rev_part = list()
 		rev_part += "<span class='header'>The revolutionaries were:</span>"
-		rev_part += printplayerlist(revs,TRUE)
+		rev_part += printplayerlist(revs, !check_rev_victory())
 		result += rev_part.Join("<br>")
 
 	var/list/heads = SSjob.get_all_heads()
@@ -458,3 +501,6 @@
 
 /datum/team/revolution/is_gamemode_hero()
 	return SSticker.mode.name == "revolution"
+
+#undef DECONVERTER_STATION_WIN
+#undef DECONVERTER_REVS_WIN

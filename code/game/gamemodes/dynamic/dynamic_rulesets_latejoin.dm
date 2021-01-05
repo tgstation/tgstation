@@ -112,7 +112,7 @@
 		new_head = M.mind.add_antag_datum(new_head, revolution)
 		revolution.update_objectives()
 		revolution.update_heads()
-		SSshuttle.registerHostileEnvironment(src)
+		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	else
 		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
