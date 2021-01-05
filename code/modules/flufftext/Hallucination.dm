@@ -57,6 +57,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_deleting)
 
 /datum/hallucination/proc/target_deleting()
+	SIGNAL_HANDLER
+
 	qdel(src)
 
 /datum/hallucination/proc/wake_and_restore()
