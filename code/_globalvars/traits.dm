@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_HUSK" = TRAIT_HUSK,
 		"TRAIT_BADDNA" = TRAIT_BADDNA,
 		"TRAIT_CLUMSY" = TRAIT_CLUMSY,
+		"TRAIT_CLOWNLIKE" = TRAIT_CLOWNLIKE,
 		"TRAIT_CHUNKYFINGERS" = TRAIT_CHUNKYFINGERS,
 		"TRAIT_DUMB" = TRAIT_DUMB,
 		"TRAIT_ADVANCEDTOOLUSER" = TRAIT_ADVANCEDTOOLUSER,
@@ -97,7 +98,6 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_MAGIC_CHOKE" = TRAIT_MAGIC_CHOKE,
 		"TRAIT_SOOTHED_THROAT" = TRAIT_SOOTHED_THROAT,
 		"TRAIT_LAW_ENFORCEMENT_METABOLISM" = TRAIT_LAW_ENFORCEMENT_METABOLISM,
-		"TRAIT_ALWAYS_CLEAN" = TRAIT_ALWAYS_CLEAN,
 		"TRAIT_BOOZE_SLIDER" = TRAIT_BOOZE_SLIDER,
 		"TRAIT_QUICK_CARRY" = TRAIT_QUICK_CARRY,
 		"TRAIT_QUICKER_CARRY" = TRAIT_QUICKER_CARRY,
@@ -154,7 +154,8 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_FRIENDLY" = TRAIT_FRIENDLY,
 		"TRAIT_GRABWEAKNESS" = TRAIT_GRABWEAKNESS,
 		"TRAIT_SNOB" = TRAIT_SNOB,
-		"TRAIT_BALD" = TRAIT_BALD
+		"TRAIT_BALD" = TRAIT_BALD,
+		"TRAIT_BADTOUCH" = TRAIT_BADTOUCH
 
 	),
 	/obj/item/bodypart = list(
@@ -168,6 +169,13 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		),
 	/atom = list(
 		"TRAIT_KEEP_TOGETHER" = TRAIT_KEEP_TOGETHER
+		),
+	/atom/movable = list(
+		"TRAIT_MOVE_GROUND" = TRAIT_MOVE_GROUND,
+		"TRAIT_MOVE_FLYING" = TRAIT_MOVE_FLYING,
+		"TRAIT_MOVE_VENTCRAWLING" = TRAIT_MOVE_VENTCRAWLING,
+		"TRAIT_MOVE_FLOATING" = TRAIT_MOVE_FLOATING,
+		"TRAIT_MOVE_PHASING" = TRAIT_MOVE_PHASING
 		)
 	))
 
@@ -180,3 +188,24 @@ GLOBAL_LIST(trait_name_map)
 		for(var/tname in GLOB.traits_by_type[key])
 			var/val = GLOB.traits_by_type[key][tname]
 			.[val] = tname
+
+GLOBAL_LIST_INIT(movement_type_trait_to_flag, list(
+	TRAIT_MOVE_GROUND = GROUND,
+	TRAIT_MOVE_FLYING = FLYING,
+	TRAIT_MOVE_VENTCRAWLING = VENTCRAWLING,
+	TRAIT_MOVE_FLOATING = FLOATING,
+	TRAIT_MOVE_PHASING = PHASING
+	))
+
+GLOBAL_LIST_INIT(movement_type_addtrait_signals, set_movement_type_addtrait_signals())
+GLOBAL_LIST_INIT(movement_type_removetrait_signals, set_movement_type_removetrait_signals())
+
+/proc/set_movement_type_addtrait_signals(signal_prefix)
+	. = list()
+	for(var/trait in GLOB.movement_type_trait_to_flag)
+		. += SIGNAL_ADDTRAIT(trait)
+
+/proc/set_movement_type_removetrait_signals(signal_prefix)
+	. = list()
+	for(var/trait in GLOB.movement_type_trait_to_flag)
+		. += SIGNAL_REMOVETRAIT(trait)

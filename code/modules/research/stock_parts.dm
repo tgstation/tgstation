@@ -20,7 +20,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		return ..()
 	if(user.Adjacent(T)) // no TK upgrading.
 		if(works_from_distance)
-			user.Beam(T, icon_state = "rped_upgrade", time = 5)
+			Beam(T, icon_state = "rped_upgrade", time = 5)
 		T.exchange_parts(user, src)
 		return TRUE
 	return ..()
@@ -29,7 +29,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(adjacent || !istype(T) || !T.component_parts)
 		return ..()
 	if(works_from_distance)
-		user.Beam(T, icon_state = "rped_upgrade", time = 5)
+		Beam(T, icon_state = "rped_upgrade", time = 5)
 		T.exchange_parts(user, src)
 		return
 	return ..()
@@ -50,6 +50,22 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/pshoom.ogg'
 	alt_sound = 'sound/items/pshoom_2.ogg'
 	component_type = /datum/component/storage/concrete/bluespace/rped
+
+/obj/item/storage/part_replacer/bluespace/Initialize()
+	. = ..()
+
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
+
+/obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/I)
+	if(!istype(I, /obj/item/stock_parts/cell))
+		return
+
+	var/obj/item/stock_parts/cell/inserted_cell = I
+
+	if(inserted_cell.rigged || inserted_cell.corrupted)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /obj/item/storage/part_replacer/bluespace/tier1
 

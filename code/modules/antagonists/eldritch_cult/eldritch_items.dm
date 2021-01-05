@@ -167,7 +167,7 @@
 	name = "ominous hood"
 	icon_state = "eldritch"
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flash_protect = FLASH_PROTECTION_WELDER
 
@@ -236,7 +236,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	///Who is wearing this
 	var/mob/living/carbon/human/local_user
 
@@ -319,6 +319,10 @@
 	. = ..()
 	linked_action = new(src)
 
+/obj/item/melee/rune_knife/Destroy()
+	. = ..()
+	QDEL_NULL(linked_action)
+
 /obj/item/melee/rune_knife/pickup(mob/user)
 	. = ..()
 	linked_action.Grant(user, src)
@@ -339,10 +343,10 @@
 		to_chat(user,"<span class='notice'>You can't draw runes that close to each other!</span>")
 		return
 
-	for(var/X in current_runes)
-		var/obj/structure/trap/eldritch/eldritch = X
-		if(QDELETED(eldritch) || !eldritch)
-			current_runes -= eldritch
+	for(var/_rune_ref in current_runes)
+		var/datum/weakref/rune_ref = _rune_ref
+		if(!rune_ref.resolve())
+			current_runes -= rune_ref
 
 	if(current_runes.len >= max_rune_amt)
 		to_chat(user,"<span class='notice'>The blade cannot support more runes!</span>")
@@ -369,7 +373,7 @@
 	drawing = FALSE
 	var/obj/structure/trap/eldritch/eldritch = new type(target)
 	eldritch.set_owner(user)
-	current_runes += eldritch
+	current_runes += WEAKREF(eldritch)
 
 /datum/action/innate/rune_shatter
 	name = "Rune break"
@@ -386,10 +390,10 @@
 	return ..()
 
 /datum/action/innate/rune_shatter/Activate()
-	for(var/X in sword.current_runes)
-		var/obj/structure/trap/eldritch/eldritch = X
-		if(!QDELETED(eldritch) && eldritch)
-			qdel(eldritch)
+	for(var/_rune_ref in sword.current_runes)
+		var/datum/weakref/rune_ref = _rune_ref
+		qdel(rune_ref.resolve())
+	sword.current_runes.Cut()
 
 /obj/item/eldritch_potion
 	name = "Brew of Day and Night"
