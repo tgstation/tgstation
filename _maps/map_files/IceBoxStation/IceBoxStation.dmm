@@ -49236,6 +49236,10 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"dOB" = (
+/obj/structure/chair/wood,
+/turf/open/floor/carpet,
+/area/maintenance/space_hut/cabin)
 "dPH" = (
 /obj/machinery/light,
 /obj/structure/cable,
@@ -49361,6 +49365,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"emN" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/maintenance/space_hut/cabin)
 "epk" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
@@ -50175,10 +50185,21 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"gXk" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "gYE" = (
 /obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
+"gZj" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/maintenance/space_hut/cabin)
 "gZK" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -50358,6 +50379,11 @@
 	},
 /turf/open/openspace,
 /area/science/xenobiology)
+"hEs" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "hFg" = (
 /obj/machinery/door/airlock/external{
 	name = "Port Docking Bay 1";
@@ -50407,6 +50433,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
+"hJM" = (
+/obj/item/chair/wood,
+/turf/open/floor/carpet,
+/area/maintenance/space_hut/cabin)
 "hKu" = (
 /obj/machinery/modular_computer/console/preset/civilian,
 /turf/open/floor/plasteel/white,
@@ -51432,6 +51462,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
+"krt" = (
+/turf/open/floor/carpet,
+/area/maintenance/space_hut/cabin)
 "krJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -53241,6 +53274,10 @@
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
+"oCP" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "oDF" = (
 /obj/machinery/light,
 /turf/open/floor/plating,
@@ -53546,6 +53583,14 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
+"prX" = (
+/obj/structure/chair/comfy/brown{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/maintenance/space_hut/cabin)
 "psm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -54132,6 +54177,11 @@
 "qzO" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/hallway/secondary/service)
+"qAP" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/maintenance/space_hut/cabin)
 "qDH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -54310,6 +54360,9 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
+"ryI" = (
+/turf/closed/wall/mineral/wood,
+/area/maintenance/space_hut/cabin)
 "rzl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -54381,6 +54434,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"rGb" = (
+/obj/structure/fireplace,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "rKc" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -54542,6 +54599,10 @@
 /obj/machinery/camera,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"rWU" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "rZR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -55290,6 +55351,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
+"ueK" = (
+/obj/structure/window/reinforced/fulltile/ice{
+	name = "frozen window"
+	},
+/turf/open/floor/plating,
+/area/maintenance/space_hut/cabin)
 "ufp" = (
 /obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
@@ -55452,6 +55519,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/science/server)
+"uzt" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	desc = "Still hot!";
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "uzB" = (
 /obj/structure/displaycase/labcage,
 /obj/effect/turf_decal/stripes/end{
@@ -55816,6 +55892,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"vAX" = (
+/obj/item/chair/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/maintenance/space_hut/cabin)
 "vCt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -56808,6 +56890,9 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
+"xUW" = (
+/turf/open/floor/wood,
+/area/maintenance/space_hut/cabin)
 "xVA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -56903,6 +56988,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
+"yao" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "yay" = (
 /obj/machinery/computer/med_data,
 /turf/open/floor/plasteel/grimy,
@@ -96545,8 +96634,8 @@ ccM
 jaC
 bAw
 bzs
-bzs
-bzs
+boP
+boP
 boP
 boP
 boP
@@ -96801,12 +96890,12 @@ bzs
 bzs
 cdL
 bAw
-bAw
-bXZ
-bzs
 bzs
 boP
 boP
+boP
+boP
+oCP
 boP
 boP
 boP
@@ -97058,10 +97147,10 @@ vKc
 bzs
 cdL
 bAw
-bAw
-bAw
-bAw
 bPn
+boP
+boP
+boP
 boP
 boP
 boP
@@ -97315,9 +97404,6 @@ bAw
 bAw
 cdL
 cfp
-bAw
-bAw
-bAw
 bPn
 boP
 boP
@@ -97326,11 +97412,14 @@ boP
 boP
 boP
 boP
+ryI
+ryI
+ryI
+ryI
+ryI
 boP
 boP
-boP
-boP
-boP
+oCP
 boP
 boP
 boP
@@ -97572,9 +97661,6 @@ bAw
 bzs
 cdL
 bAw
-bAw
-bAw
-bAw
 bPn
 boP
 boP
@@ -97583,8 +97669,11 @@ boP
 boP
 boP
 boP
-boP
-boP
+ryI
+prX
+qAP
+hEs
+ueK
 boP
 boP
 boP
@@ -97828,9 +97917,6 @@ bAw
 bAw
 bzs
 cdL
-bAw
-bAw
-bAw
 ceF
 bzs
 boP
@@ -97840,8 +97926,11 @@ boP
 boP
 boP
 boP
-boP
-boP
+ryI
+rGb
+hJM
+xUW
+ueK
 boP
 boP
 boP
@@ -98087,18 +98176,18 @@ bzs
 cdL
 jsP
 bzs
-cfn
 bzs
+bPn
 bzs
 cng
 boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
+bte
+yao
+ryI
+vAX
+krt
+emN
+ryI
 boP
 boP
 boP
@@ -98343,19 +98432,19 @@ bXZ
 bzs
 cdL
 ciF
-bzs
+cfn
 bAw
 bAw
 cfn
 cng
 boP
 boP
-boP
-boP
-boP
-boP
-boP
-boP
+yao
+gXk
+xUW
+dOB
+uzt
+ueK
 boP
 boP
 boP
@@ -98603,16 +98692,16 @@ bRa
 bRa
 bzs
 bPn
-bPn
+bzs
 cng
 boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
+bte
+yao
+ryI
+rWU
+gZj
+uzt
+ueK
 boP
 boP
 boP
@@ -98865,11 +98954,11 @@ boP
 boP
 boP
 boP
-boP
-boP
-boP
-boP
-sNY
+ryI
+ryI
+ueK
+ryI
+ryI
 boP
 boP
 boP
@@ -99375,7 +99464,7 @@ czY
 bPn
 boP
 boP
-boP
+oCP
 boP
 boP
 boP
@@ -99639,7 +99728,7 @@ boP
 boP
 boP
 boP
-boP
+oCP
 boP
 boP
 boP
