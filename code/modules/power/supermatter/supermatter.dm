@@ -709,14 +709,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power)))
 		// Someone (generally a Psychologist), when looking at the SM
 		// within hallucination range makes it easier to manage.
-		if(HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER))
-			toAdd = 0.05
-			psy_overlay = TRUE
-		// If they can see it without being immune (mesons, Psychologist)
-		if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
-			var/D = sqrt(1 / max(1, get_dist(l, src)))
-			l.hallucination += power * hallucination_power * D
-			l.hallucination = clamp(l.hallucination, 0, 200)
+		if(l.mind)
+			if(HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER))
+				toAdd = 0.05
+				psy_overlay = TRUE
+			// If they can see it without being immune (mesons, Psychologist)
+			if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+				var/D = sqrt(1 / max(1, get_dist(l, src)))
+				l.hallucination += power * hallucination_power * D
+				l.hallucination = clamp(l.hallucination, 0, 200)
 	psyCoeff = clamp(psyCoeff + toAdd, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
