@@ -653,8 +653,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	var/turf/newturf = get_turf(src)
 
 	if(newturf && lastlocation == newturf)
-		/// Probability of ticking up lone op weight
-		var/lone_op_prob = 0.0001
 		/// How comfy is our disk?
 		var/disk_comfort_level = 0
 
@@ -663,19 +661,13 @@ This is here to make the tiles around the station mininuke change when it's arme
 			if(istype(comfort_item, /obj/item/bedsheet) || istype(comfort_item, /obj/structure/bed))
 				disk_comfort_level++
 
-		//Sleep tight, disky.
-		if(disk_comfort_level >= 2)
-			if(SSticker.totalPlayers > 20)
-				lone_op_prob *= 2
-			else
-				lone_op_prob *= 0.5
-		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*lone_op_prob))
+		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
 				loneop.weight += 1
 				if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
 					if(disk_comfort_level >= 2)
-						message_admins("[src] is currently tucked in. The probability of Lone Operative ticking up has [(SSticker.totalPlayers > 20)? "doubled." : "halved."]")
+						visible_message("<span class='notice'> [src] sleeps soundly. Sleep tight, disky.</span>")
 					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
 				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
 

@@ -11,7 +11,7 @@
 
 /datum/element/bed_tuckable/Attach(obj/target, x = 0, y = 0, rotation = 0)
 	. = ..()
-	if(!isobj(target))
+	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	x_offset = x
