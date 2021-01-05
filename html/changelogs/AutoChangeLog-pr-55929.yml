@@ -1,0 +1,4 @@
+author: "Sarvannas"
+delete-after: True
+changes: 
+  - bugfix: "Fixed digitigrade legs not showing on a blacksuit skirt"
