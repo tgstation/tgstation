@@ -77,9 +77,9 @@
 	no_drops += H.get_item_by_slot(ITEM_SLOT_HANDS)
 	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
 	listclearnulls(no_drops) //any slots we didn't have
-	for(var/i in no_drops)
-		var/obj/item/I = i
-		I.item_flags |= DROPDEL//so this all stays clean :)
+	for(var/oi in no_drops)
+		var/obj/item/outfit_item = oi
+		outfit_item.item_flags |= DROPDEL//so this all stays clean :)
 
 /datum/outfit/medisim/red_knight
 	name = "Redfield Castle Knight"

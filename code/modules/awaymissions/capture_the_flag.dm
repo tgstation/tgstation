@@ -28,6 +28,7 @@
 	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
+	/// Which area we announce updates on the flag to. Should just generally be the area of the arena.
 	var/game_area = /area/ctf
 
 /obj/item/ctf/Destroy()
@@ -97,7 +98,7 @@
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, game_area))
-			to_chat(M, "<span class='userdanger'>\The [initial(src.name)] has been dropped!</span>")
+			to_chat(M, "<span class='userdanger'>\The [initial(name)] has been dropped!</span>")
 	anchored = TRUE
 
 
@@ -148,7 +149,7 @@
 	for(var/obj/machinery/power/emitter/E in A)
 		E.active = ctf_enabled
 	if(user)
-		message_admins("[key_name_admin(user)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
+		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
 	else if(automated)
 		message_admins("CTF has finished a round and automatically restarted.")
 		notify_ghosts("CTF has automatically restarted after a round finished in [A]!",'sound/effects/ghost2.ogg')
@@ -337,10 +338,10 @@
 		if(flag.team != src.team)
 			points++
 			flag.reset_flag(capture = TRUE)
-			for(var/mob/M in GLOB.player_list)
-				var/area/mob_area = get_area(M)
+			for(var/mob/ctf_players in GLOB.player_list)
+				var/area/mob_area = get_area(ctf_players)
 				if(istype(mob_area, game_area))
-					to_chat(M, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
+					to_chat(ctf_players, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
 			if(points >= points_to_win)
 				victory()
 

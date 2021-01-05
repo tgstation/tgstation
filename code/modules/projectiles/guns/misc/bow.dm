@@ -106,13 +106,13 @@
 	worn_icon_state = "harpoon_quiver"
 	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 
-/obj/item/storage/bag/quiver/ComponentInitialize()
+/obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_TINY
-	STR.max_items = 40
-	STR.max_combined_w_class = 100
-	STR.set_holdable(list(
+	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	storage.max_w_class = WEIGHT_CLASS_TINY
+	storage.max_items = 40
+	storage.max_combined_w_class = 100
+	storage.set_holdable(list(
 		/obj/item/ammo_casing/caseless/arrow
 		))
 
