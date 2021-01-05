@@ -217,34 +217,8 @@
 
 	return
 
-/proc/get_hearers_in_view_old(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
-	var/turf/T = get_turf(source)
-	. = list()
-	if(!T)
-		return
-	var/list/processing_list = list()
-	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
-		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
-	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
-		var/lum = T.luminosity
-		T.luminosity = 6 // This is the maximum luminosity
-		for(var/mob/M in view(R, T))
-			processing_list += M
-		for(var/obj/O in view(R, T))
-			processing_list += O
-		T.luminosity = lum
-
-	var/i = 0
-	while(i < length(processing_list)) // recursive_hear_check inlined here
-		var/atom/A = processing_list[++i]
-		if(A.flags_1 & HEAR_1)
-			. += A
-			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, .)
-		processing_list += A.contents
-
+///Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 /proc/get_hearers_in_view(range, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 
 	if (range == 0) // if the range is zero, we know exactly where to look for, we can skip view
@@ -265,20 +239,6 @@
 		if(A.flags_1 & HEAR_1)
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, .)
 		. += A.contents
-
-/client/verb/brbrb()
-	set category = "sss"
-	set name = "sssss"
-	for(var/i=1 to 5000)
-		get_hearers_in_view(5, get_turf(mob))
-		get_hearers_in_view_old(5, get_turf(mob))
-
-/client/verb/ddd()
-	set category = "ddd"
-	set name = "dddddd"
-	for(var/i=1 to 5000)
-		get_hearers_in_view(0, get_turf(mob))
-		get_hearers_in_view_old(0, get_turf(mob))
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
