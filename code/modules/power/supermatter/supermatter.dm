@@ -710,7 +710,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		// Someone (generally a Psychologist), when looking at the SM
 		// within hallucination range makes it easier to manage.
 		if (isnull(l.mind))
-    		continue
+			continue
 		if(HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER))
 			toAdd = 0.05
 			psy_overlay = TRUE
