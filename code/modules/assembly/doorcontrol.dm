@@ -25,6 +25,27 @@
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
+/obj/item/assembly/control/curtain
+	name = "curtain controller"
+	desc = "A small electronic device able to control a mechanical curtain remotely."
+
+/obj/item/assembly/control/curtain/examine(mob/user)
+	. = ..()
+	if(id)
+		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+
+/obj/item/assembly/control/curtain/activate()
+	var/openclose
+	if(cooldown)
+		return
+	cooldown = TRUE
+	for(var/obj/structure/curtain/cloth/fancy/mechanical/M in GLOB.curtains)
+		if(M.id == src.id)
+			if(openclose == null || !sync_doors)
+				openclose = M.density
+			INVOKE_ASYNC(M, openclose ? /obj/structure/curtain/cloth/fancy/mechanical.proc/open : /obj/structure/curtain/cloth/fancy/mechanical.proc/close)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5)
+
 
 /obj/item/assembly/control/airlock
 	name = "airlock controller"

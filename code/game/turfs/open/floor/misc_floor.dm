@@ -183,5 +183,8 @@
 	desc = "Corrupted steel."
 	icon_state = "plating_rust"
 
+/turf/open/floor/plating/rust/plasma
+	initial_gas_mix = "plasma=104;TEMP=293.15"
+
 /turf/open/floor/plating/rust/rust_heretic_act()
 	return

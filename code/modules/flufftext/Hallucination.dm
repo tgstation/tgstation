@@ -293,11 +293,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				stage = XENO_ATTACK_STAGE_FINISH
 			if (XENO_ATTACK_STAGE_LEAP_AT_PUMP to XENO_ATTACK_STAGE_CLIMB)
 				xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi', -32, -32)
-				xeno.throw_at(pump_location, 7, 1, xeno, FALSE, TRUE)
+				xeno.throw_at(pump_location, 7, 1, spin = FALSE, diagonals_first = TRUE)
 				stage = XENO_ATTACK_STAGE_CLIMB
 			if (XENO_ATTACK_STAGE_LEAP_AT_TARGET to XENO_ATTACK_STAGE_LEAP_AT_PUMP)
 				xeno.update_icon("alienh_leap",'icons/mob/alienleap.dmi', -32, -32)
-				xeno.throw_at(target, 7, 1, xeno, FALSE, TRUE)
+				xeno.throw_at(target, 7, 1, spin = FALSE, diagonals_first = TRUE)
 				stage = XENO_ATTACK_STAGE_LEAP_AT_PUMP
 
 /datum/hallucination/xeno_attack/Destroy()
