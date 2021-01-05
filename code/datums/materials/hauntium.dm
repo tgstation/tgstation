@@ -14,9 +14,9 @@
 /datum/material/hauntium/on_applied_obj(obj/o, amount, material_flags)
 	. = ..()
 	if(isitem(o))
-		o.AddComponent(/datum/component/haunted)
+		o.AddElement(/datum/element/haunted)
 
 /datum/material/hauntium/on_removed_obj(obj/o, amount, material_flags)
 	. = ..()
 	if(isitem(o))
-		qdel(o.GetComponent(/datum/component/haunted))
+		o.RemoveElement(/datum/element/haunted)

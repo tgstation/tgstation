@@ -1,17 +1,18 @@
+///This behavior is for obj/items, it is used to free themselves out of the hands of whoever is holding them
 /datum/ai_behavior/item_escape_grasp
 
 /datum/ai_behavior/item_escape_grasp/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/item/item_pawn = controller.pawn
-	var/mob/M = item_pawn.loc
-	if(!istype(M))
+	var/mob/item_holder = item_pawn.loc
+	if(!istype(item_holder))
 		finish_action(controller, FALSE) //We're no longer beind held. abort abort!!
-	item_pawn.visible_message("<span class='warning'>[item_pawn] slips out of the hands of [M]!</span>")
-	M.dropItemToGround(item_pawn, TRUE)
+	item_pawn.visible_message("<span class='warning'>[item_pawn] slips out of the hands of [item_holder]!</span>")
+	item_holder.dropItemToGround(item_pawn, TRUE)
 	finish_action(controller, TRUE)
 
 
-
+///This behavior is for obj/items, it is used to move closer to a target and throw themselves towards them.
 /datum/ai_behavior/item_move_close_and_attack
 	required_distance = 3
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
