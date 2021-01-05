@@ -726,7 +726,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/airlocks_to_hit
 	var/list/locks
 	var/next_action = 0
-	var/unlocking = FALSE
+	var/locking = TRUE
 
 /datum/hallucination/bolts/New(mob/living/carbon/C, forced, door_number)
 	set waitfor = FALSE
@@ -744,7 +744,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		count++
 		LAZYADD(airlocks_to_hit, A)
 
-	addtimer(VARSET_CALLBACK(src, unlocking, TRUE), 10 SECONDS)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/hallucination/bolts/process(delta_time)
@@ -752,20 +751,25 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if (next_action > 0)
 		return
 
-	if (unlocking)
-		var/obj/effect/hallucination/fake_door_lock/next_unlock = popleft(locks)
-		if (next_unlock)
-			next_unlock.unlock()
-		else
-			qdel(src)
-			return
-	else
+	if (locking)
 		var/atom/next_airlock = pop(airlocks_to_hit)
 		if (next_airlock)
 			var/obj/effect/hallucination/fake_door_lock/lock = new(get_turf(next_airlock))
 			lock.target = target
 			lock.airlock = next_airlock
 			LAZYADD(locks, lock)
+
+		if (!airlocks_to_hit.len)
+			locking = FALSE
+			next_action = 10 SECONDS
+			return
+	else
+		var/obj/effect/hallucination/fake_door_lock/next_unlock = popleft(locks)
+		if (next_unlock)
+			next_unlock.unlock()
+		else
+			qdel(src)
+			return
 
 	next_action = rand(4, 12)
 
