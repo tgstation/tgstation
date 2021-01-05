@@ -60,18 +60,18 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[GLOB.cached_cards.len]}")
 	return cached_cards["ALL"][id]
 
-/obj/item/tcgcard/get_name_chaser(mob/user, text)
+/obj/item/tcgcard/get_name_chaser(mob/user, list/name_chaser = list())
 	if(flipped)
 		return ..()
 	var/datum/card/data_holder = extract_datum()
 
-	text += "Faction: [data_holder.faction]"
-	text += "Cost: [data_holder.summoncost]"
-	text += "Type: [data_holder.cardtype] - [data_holder.cardsubtype]"
-	text += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
+	name_chaser += "Faction: [data_holder.faction]"
+	name_chaser += "Cost: [data_holder.summoncost]"
+	name_chaser += "Type: [data_holder.cardtype] - [data_holder.cardsubtype]"
+	name_chaser += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
 	if(data_holder.rules) //This can sometimes be empty
-		text += "Ruleset: [data_holder.rules]"
-	return text
+		name_chaser += "Ruleset: [data_holder.rules]"
+	return name_chaser
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
