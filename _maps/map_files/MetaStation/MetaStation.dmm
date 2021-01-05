@@ -78916,6 +78916,7 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
+<<<<<<< HEAD
 <<<<<<< master
 "wQf" = (
 /obj/structure/table,
@@ -78931,6 +78932,8 @@
 /turf/open/floor/plating,
 /area/maintenance/space_hut)
 =======
+=======
+>>>>>>> MetaSecOffices
 "wPy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -78938,7 +78941,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/range)
+<<<<<<< HEAD
 >>>>>>> Changes MetaSec Offices Layout, adds walls to maintenance by upload.
+=======
+>>>>>>> MetaSecOffices
 "wQr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
