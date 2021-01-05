@@ -21062,14 +21062,8 @@
 /area/hallway/primary/fore)
 "aIY" = (
 /obj/structure/lattice/catwalk,
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
 	},
 /turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
@@ -60947,14 +60941,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
 	},
 /turf/open/floor/plating/airless,
 /area/hallway/secondary/entry)
@@ -62279,19 +62267,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/asteroid/airless,
 /area/hallway/secondary/entry)
-"bUG" = (
-/obj/structure/lattice/catwalk,
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "bUH" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -62315,14 +62290,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/stack/marker_beacon{
-	anchored = 1;
-	icon_state = "markerburgundy-on";
-	light_color = "#FA644B";
-	light_power = 3;
-	light_range = 2;
-	name = "landing marker";
-	picked_color = "Burgundy"
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
 	},
 /obj/machinery/button/door{
 	id = "Arrival Shuttle Bay";
@@ -88435,6 +88404,18 @@
 "dvN" = (
 /turf/open/floor/plating/asteroid/lowpressure,
 /area/space/nearstation)
+"dyq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "dEI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
@@ -88525,6 +88506,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"eiW" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "eja" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -88825,6 +88814,9 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"gpw" = (
+/turf/closed/wall/rust,
+/area/maintenance/space_hut/plasmaman)
 "gwd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -89304,6 +89296,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/carpet/green,
 /area/maintenance/port)
+"jTL" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "kfw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -89557,6 +89558,13 @@
 /obj/machinery/microwave,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"lGO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "lLc" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -90067,6 +90075,11 @@
 	},
 /turf/open/floor/carpet/green,
 /area/maintenance/port)
+"pqf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "prO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -90104,6 +90117,11 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/security/prison)
+"pFC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/holosign/barrier/atmos,
+/turf/open/floor/plating/airless,
+/area/maintenance/space_hut/plasmaman)
 "pGW" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/grassybush,
@@ -90286,6 +90304,23 @@
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/security/prison)
+"qBh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/obj/item/toy/plush/plasmamanplushie{
+	name = "Lithium II"
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "qCd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -90304,6 +90339,13 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison)
+"qDp" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qFC" = (
 /obj/structure/rack,
 /obj/item/restraints/handcuffs,
@@ -90324,6 +90366,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"qJs" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qKa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -91054,6 +91103,11 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port/aft)
+"viq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/turf/open/space/basic,
+/area/space/nearstation)
 "vmE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -91096,6 +91150,13 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
+"vzj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "vAM" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/plasteel/white,
@@ -91229,6 +91290,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
+"wiR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/structure/table,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/item/flashlight/lamp,
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "wqI" = (
 /obj/structure/rack,
 /obj/item/stack/medical/gauze,
@@ -91508,6 +91584,23 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port/aft)
+"xUP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
+	},
+/obj/item/toy/plush/plasmamanplushie{
+	name = "Dianion XV"
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "xWh" = (
 /obj/machinery/newscaster,
 /turf/closed/wall/r_wall,
@@ -94466,7 +94559,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -98921,7 +99014,7 @@ ivj
 anu
 anu
 ivj
-bUG
+qJs
 aav
 kLr
 xFp
@@ -100201,7 +100294,7 @@ aaa
 acm
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -101373,7 +101466,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -101743,7 +101836,7 @@ ctb
 cEZ
 vfF
 ajd
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -102496,11 +102589,11 @@ aeu
 wDI
 aeu
 aeu
-bUG
+qJs
 acK
 acm
 acK
-bUG
+qJs
 aeu
 amR
 amA
@@ -108201,7 +108294,7 @@ anZ
 cmt
 agw
 aoc
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -109229,7 +109322,7 @@ anZ
 cmt
 aob
 aoe
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -109329,7 +109422,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -113183,7 +113276,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -114626,13 +114719,13 @@ akK
 anh
 bwu
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -115654,13 +115747,13 @@ cJU
 cKi
 akK
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 acm
 cow
 aaa
@@ -116682,13 +116775,13 @@ akK
 bwu
 akK
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 cow
 acm
@@ -131748,7 +131841,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aDT
 agw
 akA
@@ -132776,7 +132869,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aeZ
 aob
 akA
@@ -132831,7 +132924,7 @@ bju
 bhW
 acK
 acK
-bUG
+qJs
 blE
 bkN
 bIQ
@@ -132839,7 +132932,7 @@ bll
 bOg
 blH
 bmn
-bUG
+qJs
 acK
 bEg
 bEg
@@ -134107,13 +134200,13 @@ cbg
 cbk
 bfW
 bkd
-bUG
+qJs
 bin
 bhW
 aVN
 bhW
 bkc
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -134295,11 +134388,11 @@ cOp
 acm
 acm
 acm
-bUG
+qJs
 asJ
 cKG
 asJ
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -134766,7 +134859,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -134898,27 +134991,27 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
-bUG
+qJs
 bPe
 bSM
 bTl
 bXe
 bPe
-bUG
+qJs
 aaa
-bUG
+qJs
 bPe
 bXe
 bTl
 bXe
 bPe
-bUG
+qJs
 acm
 acm
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -134926,7 +135019,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aeU
 aaa
 acm
@@ -135647,7 +135740,7 @@ aaa
 acm
 aaa
 acm
-acK
+qDp
 acm
 aaa
 aaa
@@ -135904,7 +135997,7 @@ aaa
 acm
 aaa
 acm
-aaa
+qDp
 aaa
 aaa
 aaa
@@ -136161,7 +136254,7 @@ aaa
 acm
 aaa
 acm
-aaa
+eiW
 aaa
 aaa
 aaa
@@ -136356,7 +136449,7 @@ cKw
 cKR
 asJ
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -136418,7 +136511,7 @@ aaa
 acK
 acm
 acK
-aaa
+viq
 aaa
 aaa
 aaa
@@ -136675,7 +136768,7 @@ acm
 acm
 aaa
 acm
-aaa
+viq
 aaa
 aaa
 aaa
@@ -136919,11 +137012,11 @@ ajH
 cmU
 aeU
 aof
-bUG
+qJs
 acK
 acm
 acK
-bUG
+qJs
 aeu
 aeu
 aeu
@@ -136932,15 +137025,15 @@ aaa
 acm
 aaa
 acm
+acK
 aaa
-aaa
-bUG
+qJs
 acm
 acK
 acK
 acK
 acm
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -137127,7 +137220,7 @@ cKz
 asJ
 abq
 act
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -137189,7 +137282,7 @@ aaa
 aeo
 aaa
 acm
-acm
+acK
 acm
 aaQ
 aeo
@@ -137446,7 +137539,7 @@ aeu
 aeo
 aaa
 acm
-aaa
+acK
 aaa
 aaa
 acm
@@ -137703,7 +137796,7 @@ aeu
 aaQ
 aaa
 acm
-acm
+qDp
 aaQ
 aeo
 aeo
@@ -137960,7 +138053,7 @@ aeu
 acm
 aaa
 acm
-aaa
+eiW
 aaa
 acm
 aaa
@@ -138217,7 +138310,7 @@ acm
 acm
 aaa
 acm
-aaQ
+jTL
 aeo
 aeo
 aaa
@@ -138412,7 +138505,7 @@ abq
 act
 act
 act
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -138474,7 +138567,7 @@ aaa
 acK
 acm
 acK
-aaa
+acK
 acm
 aaa
 aaa
@@ -138731,7 +138824,7 @@ aaa
 acm
 aaa
 aaQ
-acm
+acK
 aeo
 aaa
 aaa
@@ -138988,7 +139081,7 @@ aaa
 acm
 aaa
 aeo
-aaa
+viq
 aaa
 aaa
 aaa
@@ -139245,7 +139338,7 @@ aaa
 acm
 aaa
 aeo
-acm
+acK
 aeo
 aaQ
 aaa
@@ -139502,7 +139595,7 @@ aaa
 aaQ
 aaa
 aeo
-aaa
+acK
 aaa
 aaa
 aaa
@@ -139759,7 +139852,7 @@ aaa
 aeo
 aaa
 acm
-aaa
+viq
 aaa
 aaa
 aaa
@@ -140016,7 +140109,7 @@ aaa
 aeo
 aaa
 aaQ
-aaa
+eiW
 aaa
 aaa
 aaa
@@ -140273,7 +140366,7 @@ aaa
 acm
 aaa
 acm
-aaa
+acK
 aaa
 aaa
 aaa
@@ -140426,7 +140519,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 bVu
 aeu
 aeu
@@ -140530,7 +140623,7 @@ acm
 acK
 acm
 acK
-acm
+acK
 aaQ
 aeo
 acm
@@ -140787,11 +140880,11 @@ aaa
 acm
 aaa
 acm
-aaa
-aaa
-aaa
-aaa
-aaa
+lGO
+acK
+acK
+acK
+aeo
 aaa
 aaa
 aaa
@@ -141044,12 +141137,12 @@ aaa
 acm
 aaa
 aeo
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acm
+gpw
+pFC
+pFC
+gpw
+aeo
 aaa
 aaa
 aaa
@@ -141302,11 +141395,11 @@ aeo
 aaa
 aeo
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pFC
+dyq
+xUP
+pFC
+viq
 aaa
 aaa
 aaa
@@ -141559,11 +141652,11 @@ acm
 aaa
 aaQ
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pFC
+pqf
+vzj
+pFC
+viq
 aaa
 aaa
 aaa
@@ -141816,11 +141909,11 @@ aeo
 aaa
 aeo
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+pFC
+qBh
+wiR
+pFC
+viq
 aaa
 aaa
 aaa
@@ -142072,12 +142165,12 @@ aaa
 aeo
 aaa
 acm
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+acm
+gpw
+pFC
+pFC
+gpw
+aeo
 aaa
 aaa
 aaa
@@ -142331,9 +142424,9 @@ aaa
 acm
 aaa
 aaa
-aaa
-aaa
-aaa
+acK
+acK
+aeo
 aaa
 aaa
 aaa
@@ -143522,7 +143615,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aeu
 aeu
 aeu
@@ -148423,7 +148516,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aeu
@@ -150241,7 +150334,7 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -152323,14 +152416,14 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
@@ -152860,12 +152953,12 @@ aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
 aaa
-bUG
+qJs
 aaa
 aaa
 aaa
