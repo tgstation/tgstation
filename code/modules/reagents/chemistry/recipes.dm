@@ -59,6 +59,8 @@
 /datum/chemical_reaction/proc/update_info()
 	return
 
+///REACTION PROCS
+
 /**
  * Shit that happens on reaction
  * Only procs at the START of a reaction
@@ -75,6 +77,40 @@
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return
 	//I recommend you set the result amount to the total volume of all components.
+
+//Called for every reaction step
+/datum/chemical_reaction/proc/reaction_step(datum/reagents/holder, added_volume, added_purity)
+	return
+
+//Called when reaction STOP_PROCESSING
+/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, var/atom/my_atom, reactVol)
+	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
+		for(var/id in results)
+			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
+			if(!R || R.purity == 1)
+				continue
+
+			var/cached_volume = R.volume
+			if(reactionFlags == REACTION_CLEAR_INVERSE && R.inverse_chem)
+				if(R.inverse_chem_val > R.purity)
+					my_atom.reagents.remove_reagent(R.type, cached_volume, FALSE)
+					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
+
+			else if (reactionFlags == REACTION_CLEAR_IMPURE && R.impure_chem)
+				var/impureVol = cached_volume * (1 - R.purity)
+				my_atom.reagents.remove_reagent(R.type, (impureVol), FALSE)
+				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
+				R.creation_purity = R.purity
+				R.purity = 1
+
+//When a reaction's temperature gets above it's limit
+/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/reaction)
+	return
+
+//When purity of a reaction gets below PurityMin 
+/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/reaction)
+	overheated(holder) //Defaults to overheated mechanics
+	return
 
 /**
  * Magical mob spawning when chemicals react
@@ -119,39 +155,6 @@
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
-
-//Called for every reaction step
-/datum/chemical_reaction/proc/reaction_step(datum/reagents/holder, added_volume, added_purity)
-	return
-
-//Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, var/atom/my_atom, reactVol)
-	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
-		for(var/id in results)
-			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
-			if(!R || R.purity == 1)
-				continue
-
-			var/cached_volume = R.volume
-			if(reactionFlags == REACTION_CLEAR_INVERSE && R.inverse_chem)
-				if(R.inverse_chem_val > R.purity)
-					my_atom.reagents.remove_reagent(R.type, cached_volume, FALSE)
-					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
-
-			else if (reactionFlags == REACTION_CLEAR_IMPURE && R.impure_chem)
-				var/impureVol = cached_volume * (1 - R.purity)
-				my_atom.reagents.remove_reagent(R.type, (impureVol), FALSE)
-				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
-				R.creation_purity = R.purity
-				R.purity = 1
-
-//When a reaction's temperature gets above 
-/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/reaction)
-	reaction.toDelete = TRUE
-
-//When purity of a reaction gets below PurityMin 
-/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/reaction)
-	overheated(holder) //Defaults to overheated mechanics
 
 /**
  * Magical move-wooney that happens sometimes.

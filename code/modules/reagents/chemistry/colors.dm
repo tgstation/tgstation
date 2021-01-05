@@ -7,7 +7,9 @@
 	var/vol_temp
 
 	for(var/datum/reagent/R in reagent_list)
-		vol_temp = R.volume
+		if(!R.volume) //if 0
+			continue
+		vol_temp = R.volume		
 		vol_counter += vol_temp
 
 		if(!mixcolor)

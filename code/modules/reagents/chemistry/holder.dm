@@ -127,7 +127,7 @@
 	if(!added_purity)
 		added_purity = initial(D.purity) //Usually 1
 
-	if(!pH)
+	if(!added_pH)
 		added_pH = D.pH
 
 	update_total()
@@ -165,7 +165,7 @@
 				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
-			if(!no_react && calculate_reactions) //I dislike how this is done, but I'm not sure how else to implement it. To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents removal/addition
+			if(!no_react && calculate_reactions) //I dislike how this is done, but I'm not sure how else to implement it. To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return TRUE
 
@@ -221,12 +221,12 @@
 			R.volume -= amount
 			if(!ignore_pH)
 				pH = clamp(((pH * (total_volume-(amount))+(R.pH * (R.volume)) )/total_volume), 0, 14) //CHECK HERE incase tg is different (linear because otherwise vol/power cost is too high)
-			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 			if(!safety)//So it does not handle reactions when it need not to
 				update_total()
-				//handle_reactions() is in update_total() - only occurs if a reagent is removed
+				//handle_reactions() - might not be needed
+			//Moving this so color.dm stops runtiming
+			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 				
-
 			return TRUE
 
 	return FALSE
@@ -712,6 +712,8 @@
 	update_total()
 
 /// Handle any reactions possible in this holder
+/// Also UPDATES the reaction list
+/// High potential for infinite loops if you're editing this.
 /datum/reagents/proc/handle_reactions()
 	if(flags & NO_REACT)
 		return 0 //Yup, no reactions here. No siree.
@@ -719,97 +721,95 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	//Master reaction list reset
-	reaction_list = list()
 
 	. = 0
-	var/reaction_occurred
-	do
-		var/list/possible_reactions = list()
-		reaction_occurred = FALSE
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/R = reagent
-			for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
-				if(!reaction)
-					continue
+	var/list/possible_reactions = list()
+	for(var/reagent in cached_reagents)
+		var/datum/reagent/R = reagent
+		for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			if(!reaction)
+				continue
 
-				var/datum/chemical_reaction/C = reaction
-				var/list/cached_required_reagents = C.required_reagents
-				var/total_required_reagents = cached_required_reagents.len
-				var/total_matching_reagents = 0
-				var/list/cached_required_catalysts = C.required_catalysts
-				var/total_required_catalysts = cached_required_catalysts.len
-				var/total_matching_catalysts= 0
-				var/matching_container = FALSE
-				var/matching_other = FALSE
-				var/required_temp = C.required_temp
-				var/is_cold_recipe = C.is_cold_recipe
-				var/meets_temp_requirement = FALSE
+			var/datum/chemical_reaction/C = reaction
+			var/list/cached_required_reagents = C.required_reagents
+			var/total_required_reagents = cached_required_reagents.len
+			var/total_matching_reagents = 0
+			var/list/cached_required_catalysts = C.required_catalysts
+			var/total_required_catalysts = cached_required_catalysts.len
+			var/total_matching_catalysts= 0
+			var/matching_container = FALSE
+			var/matching_other = FALSE
+			var/required_temp = C.required_temp
+			var/is_cold_recipe = C.is_cold_recipe
+			var/meets_temp_requirement = FALSE
 
-				for(var/B in cached_required_reagents)
-					if(!has_reagent(B, cached_required_reagents[B]))
-						break
-					total_matching_reagents++
-				for(var/B in cached_required_catalysts)
-					if(!has_reagent(B, cached_required_catalysts[B]))
-						break
-					total_matching_catalysts++
-				if(cached_my_atom)
-					if(!C.required_container)
-						matching_container = TRUE
-					else
-						if(cached_my_atom.type == C.required_container)
-							matching_container = TRUE
-					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
-						matching_container = FALSE
-					if(!C.required_other)
-						matching_other = TRUE
-
-					else if(istype(cached_my_atom, /obj/item/slime_extract))
-						var/obj/item/slime_extract/M = cached_my_atom
-
-						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-							matching_other = TRUE
+			for(var/B in cached_required_reagents)
+				if(!has_reagent(B, cached_required_reagents[B]))
+					break
+				total_matching_reagents++
+			for(var/B in cached_required_catalysts)
+				if(!has_reagent(B, cached_required_catalysts[B]))
+					break
+				total_matching_catalysts++
+			if(cached_my_atom)
+				if(!C.required_container)
+					matching_container = TRUE
 				else
-					if(!C.required_container)
+					if(cached_my_atom.type == C.required_container)
 						matching_container = TRUE
-					if(!C.required_other)
+				if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+					matching_container = FALSE
+				if(!C.required_other)
+					matching_other = TRUE
+
+				else if(istype(cached_my_atom, /obj/item/slime_extract))
+					var/obj/item/slime_extract/M = cached_my_atom
+
+					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
 						matching_other = TRUE
-
-				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
-					meets_temp_requirement = TRUE
-
-				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
-					possible_reactions  += C
-
-		//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
-		for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
-			//POTENTIAL EDIT: Presently ALL possible instant reactions occur at once - if this is undesired, then edit it so only 1 can occur at a time.
-			if(selected_reaction.reactionFlags & REACTION_INSTANT) //If we have instant reactions, we process them here
-				instant_react(selected_reaction)
-				.++
-				reaction_occurred = TRUE
 			else
-				reaction_list += new /datum/equilibrium(selected_reaction) //Otherwise we add them to the processing list. 
-				.++
-				reaction_occurred = TRUE
-				isReacting = TRUE //We've entered the reaction phase
-		//Now we set up and begin processing the list of equlibrium reactions
-		//on_reaction() is handled in new()
-		for(var/datum/equilibrium/E in reaction_list) //Check to see if anything we've set up fails to meet requirements on new()
-			if(E.toDelete)
-				qdel(E)
-				reaction_list -= E
+				if(!C.required_container)
+					matching_container = TRUE
+				if(!C.required_other)
+					matching_other = TRUE
 
-		if(!reaction_list.len)
-			isReacting = FALSE //A just in case
-			return
-		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
-			
-	while(reaction_occurred)
-	update_total()
+			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
+				meets_temp_requirement = TRUE
+
+			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
+				possible_reactions  += C
+
+	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
+	for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
+		//POTENTIAL EDIT: Presently ALL possible instant reactions occur at once - if this is undesired, then edit it so only 1 can occur at a time.
+		if(selected_reaction.reactionFlags & REACTION_INSTANT) //If we have instant reactions, we process them here
+			instant_react(selected_reaction)
+			.++
+			update_total()
+		else
+			var/exists = FALSE
+			for(var/datum/equilibrium/E in reaction_list)
+				if(E.reaction.type == selected_reaction.type) //Don't add duplicates
+					debug_world("Reaction [selected_reaction.type] is already processing")
+					exists = TRUE
+
+			//Add it if it doesn't exist in the list
+			if(!exists)
+				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list. 
+				reaction_list += E
+				if(E.toDelete)//failed startup checks
+					debug_world("Deleting for [E.reaction.type]")
+					qdel(E)
+					reaction_list -= E
+				debug_world("Setting up reaction for [selected_reaction.type]")
+
+		if(reaction_list.len)		
+			isReacting = TRUE //We've entered the reaction phase
+			START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
+		
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
+		update_total()
 
 /datum/reagents/process()
 	if(!isReacting)
@@ -829,11 +829,14 @@
 			mix_message += "[E.reaction.mix_message] "
 			if(E.reaction.mix_sound)
 				playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
+			SSblackbox.record_feedback("tally", "chemical_ends", 1, "[E.reaction.type] completions")
 			qdel(E)
 			reaction_list -= E
-			update_total()
+			//Reaction occured
+			update_total(FALSE)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 			continue
-		//ottherwise continue reacting
+		//otherwise continue reacting
 		E.react_timestep()
 
 	if(mix_message)
@@ -847,7 +850,7 @@
 	isReacting = FALSE
 	//Cap off values
 	for(var/datum/reagent/R in reagent_list)
-		R.volume = round(R.volume, CHEMICAL_VOLUME_MINIMUM)//To prevent runaways.
+		R.volume = round(R.volume, 0.01)//To prevent runaways.
 	//pH check, handled at the end to reduce calls.
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
@@ -915,21 +918,17 @@
 		return FALSE
 
 /// Updates [/datum/reagents/var/total_volume]
-/datum/reagents/proc/update_total()
+/datum/reagents/proc/update_total(update_reactions = TRUE)
 	var/list/cached_reagents = reagent_list
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if((R.volume < 0.05) && !isReacting)
 			del_reagent(R.type)
-			handle_reactions()
 		else if(R.volume <= CHEMICAL_VOLUME_MINIMUM)//For clarity
 			del_reagent(R.type)
-			handle_reactions()
 		else
 			total_volume += R.volume
-			if(!isReacting)
-				handle_reactions()
 
 	if(!reagent_list || !total_volume) //Ensure that this is true
 		pH = CHEMICAL_NORMAL_PH

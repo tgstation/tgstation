@@ -793,7 +793,7 @@
 	metabolization_rate = 1.25 * REAGENTS_METABOLISM
 	taste_description = "magnets"
 	harmful = TRUE
-	pH = 0
+	pH = 0.5
 
 
 // FEED ME SEYMOUR
