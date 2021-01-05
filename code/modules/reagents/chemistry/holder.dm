@@ -1,7 +1,3 @@
-#define CHEMICAL_QUANTISATION_LEVEL 0.0001 //stops floating point errors causing issues with checking reagent amounts
-#define CHEMICAL_VOLUME_MINIMUM 0.001 //The smallest amount of volume allowed - prevents tiny numbers
-
-
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 
@@ -115,7 +111,7 @@
  * * added_pH - override to force a pH when added
  * * ignore_pH - bypass the pH update when adding a reagent, in an addition to an empty beaker this will default to 7
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, added_pH, no_react = 0, ignore_pH = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, added_pH, no_react = 0, ignore_pH = FALSE, calculate_reactions = TRUE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -167,7 +163,7 @@
 				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
-			if(!no_react)
+			if(!no_react && calculate_reactions) //I dislike how this is done, but I'm not sure how else to implement it. To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents removal/addition
 				handle_reactions()
 			return TRUE
 
@@ -204,7 +200,7 @@
 
 /// Remove a specific reagent
 // ignore_pH again removes reagents ignoring the pH
-/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE, calculate_reactions = TRUE)//Added a safety check for the trans_id_to
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
@@ -225,10 +221,11 @@
 			R.volume -= amount
 			if(!ignore_pH)
 				pH = clamp(((pH * (total_volume-(amount))+(R.pH * (volume)) )/holder.total_volume), 0, 14) //CHECK HERE incase tg is different (linear because otherwise vol/power cost is too high)
-			update_total()
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 			if(!safety)//So it does not handle reactions when it need not to
-				handle_reactions()
+				update_total()
+				//handle_reactions() is in update_total()
+				
 
 			return TRUE
 
@@ -320,6 +317,15 @@
 			update_total()
 			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
 	return TRUE
+
+//Converts the cached_purity to purity
+/datum/reagents/proc/uncache_purity(id)
+	var/datum/reagent/R = has_reagent(id)
+	if(!R)
+		return
+	if(R.cached_purity == 1)
+		return
+	R.purity = R.cached_purity
 
 /// Remove every reagent except this one
 /datum/reagents/proc/isolate_reagent(reagent)
@@ -715,6 +721,8 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
+	//Master reaction list reset
+	reaction_list = list()
 
 	. = 0
 	var/reaction_occurred
@@ -778,65 +786,128 @@
 
 		//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 		for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
+			//POTENTIAL EDIT: Presently ALL possible instant reactions occur at once - if this is undesired, then edit it so only 1 can occur at a time.
+			if(selected_reaction.reactionFlags & REACTION_INSTANT) //If we have instant reactions, we process them here
+				instant_react(selected_reaction)
+				.++
+				reaction_occurred = TRUE
+			else
+				reaction_list += new /datum/equilibrium(selected_reaction) //Otherwise we add them to the processing list. 
+				.++
+				reaction_occurred = TRUE
+				isReacting = TRUE //We've entered the reaction phase
+		//Now we set up and begin processing the list of equlibrium reactions
+		//on_reaction() is handled in new()
+		for(var/datum/equilibrium/E in reaction_list) //Check to see if anything we've set up fails to meet requirements on new()
+			if(E.toDelete)
+				qdel(E)
+				reaction_list -= E
 
-
-		/*
-		BELOW IS OLD TG CODE
-		*/
-
-		if(possible_reactions.len)
-			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
-			//select the reaction with the most extreme temperature requirements
-			for(var/V in possible_reactions)
-				var/datum/chemical_reaction/competitor = V
-				if(selected_reaction.is_cold_recipe) //if there are no recipe conflicts, everything in possible_reactions will have this same value for is_cold_reaction. warranty void if assumption not met.
-					if(competitor.required_temp <= selected_reaction.required_temp)
-						selected_reaction = competitor
-				else
-					if(competitor.required_temp >= selected_reaction.required_temp)
-						selected_reaction = competitor
-			var/list/cached_required_reagents = selected_reaction.required_reagents
-			var/list/cached_results = selected_reaction.results
-			var/list/multiplier = INFINITY
-			for(var/B in cached_required_reagents)
-				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
-
-			for(var/B in cached_required_reagents)
-				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
-
-			for(var/P in selected_reaction.results)
-				multiplier = max(multiplier, 1) //this shouldn't happen ...
-				SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
-				add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
-
-			var/list/seen = viewers(4, get_turf(my_atom))
-			var/iconhtml = icon2html(cached_my_atom, seen)
-			if(cached_my_atom)
-				if(!ismob(cached_my_atom)) // No bubbling mobs
-					if(selected_reaction.mix_sound)
-						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
-
-					for(var/mob/M in seen)
-						to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
-
-				if(istype(cached_my_atom, /obj/item/slime_extract))
-					var/obj/item/slime_extract/ME2 = my_atom
-					ME2.Uses--
-					if(ME2.Uses <= 0) // give the notification that the slime core is dead
-						for(var/mob/M in seen)
-							to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
-							ME2.name = "used slime extract"
-							ME2.desc = "This extract has been used up."
-
-			selected_reaction.on_reaction(src, multiplier)
-			reaction_occurred = TRUE
-			.++
-
+		if(!reaction_list.len)
+			isReacting = FALSE //A just in case
+			return
+		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
+			
 	while(reaction_occurred)
 	update_total()
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 
+/datum/reagents/process()
+	if(!isReacting)
+		end_reaction()
+	
+	//Process over our reaction list
+	//See equilibrium.dm for mechanics
+	for(var/datum/equilibrium/E in reaction_list) 
+		if(E.toDelete)
+			qdel(E)
+			reaction_list -= E
+			update_total()
+			continue
+		E.react_timestep()
+
+	if(!reaction_list.len)
+		end_reaction()
+
+/datum/reagents/proc/end_reaction()
+	STOP_PROCESSING(SSprocessing, src)
+	isReacting = FALSE
+	//Cap off values
+	for(var/datum/reagent/R in reagent_list)
+		R.volume = round(R.volume, CHEMICAL_VOLUME_MINIMUM)//To prevent runaways.
+	//pH check, handled at the end to reduce calls.
+	if(istype(my_atom, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RC = my_atom
+		RC.pH_check()
+	update_total()
+	for(var/datum/equilibrium/E in reaction_list)
+		if(GLOB.Debug2)
+			message_admins("(fermichem) Reaction [E.reaction] finished reactedVol:[reactedVol], targetVol:[targetVol]")
+		
+		reaction.ReactionFinish(src, my_atom, reactedVol)
+		E.reactedVol = 0
+		E.targetVol = 0
+		//handle_reactions() - Possible bug
+	//Reaction sounds and words
+	my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [C.mix_message]</span>")
+
+
+//Old reaction mechanics, edited to work on one only
+//This is changed from the old 
+/datum/reagents/proc/instant_react(datum/chemical_reaction/selected_reaction)
+	var/list/cached_required_reagents = selected_reaction.required_reagents
+	var/list/cached_results = selected_reaction.results
+	var/list/multiplier = INFINITY
+	for(var/B in cached_required_reagents)
+		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
+
+	for(var/B in cached_required_reagents)
+		remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+
+	for(var/P in selected_reaction.results)
+		multiplier = max(multiplier, 1) //this shouldn't happen ...
+		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
+		add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
+
+	var/list/seen = viewers(4, get_turf(my_atom))
+	var/iconhtml = icon2html(cached_my_atom, seen)
+	if(cached_my_atom)
+		if(!ismob(cached_my_atom)) // No bubbling mobs
+			if(selected_reaction.mix_sound)
+				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
+
+			for(var/mob/M in seen)
+				to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+
+		if(istype(cached_my_atom, /obj/item/slime_extract))
+			var/obj/item/slime_extract/ME2 = my_atom
+			ME2.Uses--
+			if(ME2.Uses <= 0) // give the notification that the slime core is dead
+				for(var/mob/M in seen)
+					to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+					ME2.name = "used slime extract"
+					ME2.desc = "This extract has been used up."
+
+	selected_reaction.on_reaction(src, multiplier)
+
+//Possibly remove - see if multiple instant reactions is okay
+//Presently unused
+/datum/reagents/proc/get_priority_instant_reaction(list/possible_reactions)
+	if(possible_reactions.len)
+		var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
+		//select the reaction with the most extreme temperature requirements
+		for(var/V in possible_reactions)
+			var/datum/chemical_reaction/competitor = V
+			if(selected_reaction.is_cold_recipe) //if there are no recipe conflicts, everything in possible_reactions will have this same value for is_cold_reaction. warranty void if assumption not met.
+				if(competitor.required_temp <= selected_reaction.required_temp)
+					selected_reaction = competitor
+			else
+				if(competitor.required_temp >= selected_reaction.required_temp)
+					selected_reaction = competitor
+		return selected_reaction
+	else
+		return FALSE
 
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()
@@ -844,12 +915,17 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if(R.volume <= 0)//For clarity
-			del_reagent(R.type)
 		if((R.volume < 0.05) && !isReacting)
 			del_reagent(R.type)
+			handle_reactions()
+		else if(R.volume <= 0)//For clarity
+			del_reagent(R.type)
+			handle_reactions()
 		else
 			total_volume += R.volume
+			if(!isReacting)
+				handle_reactions()
+
 	if(!reagent_list || !total_volume) //Ensure that this is true
 		pH = REAGENT_NORMAL_PH
 

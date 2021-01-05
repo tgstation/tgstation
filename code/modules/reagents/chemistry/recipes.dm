@@ -21,7 +21,7 @@
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
-	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions
+	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
 	var/required_temp = 0
 	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
 	var/is_cold_recipe = FALSE
@@ -42,8 +42,8 @@
 	var/thermicConstant 		= 1         	// Temperature change per 1u produced
 	var/hIonRelease 			= 0.1       	// pH change per 1u reaction
 	var/rateUpLim 				= 10			// Optimal/max rate possible if all conditions are perfect
-	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 	var/purityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 
 /datum/chemical_reaction/New()
 	. = ..()
@@ -61,6 +61,10 @@
 
 /**
  * Shit that happens on reaction
+ * Only procs at the START of a reaction
+ * use reaction_step() for each step of a reaction
+ * or reaction_end() when the reaction stops
+ * If reactionFlags & REACTION_INSTANT then this is the only proc that is called.
  *
  * Proc where the additional magic happens.
  * You dont want to handle mob spawning in this since there is a dedicated proc for that.client
@@ -117,11 +121,11 @@
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
 //Called for every reaction step
-/datum/chemical_reaction/proc/ReactionStep(datum/reagents/holder, added_volume, added_purity)
+/datum/chemical_reaction/proc/reaction_step(datum/reagents/holder, added_volume, added_purity)
 	return
 
 //Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/proc/ReactionFinish(datum/reagents/holder, var/atom/my_atom, reactVol)
+/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, var/atom/my_atom, reactVol)
 	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
 			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
@@ -132,22 +136,22 @@
 			if(reactionFlags == REACTION_CLEAR_INVERSE && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
 					my_atom.reagents.remove_reagent(R.type, cached_volume, FALSE)
-					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, other_purity = 1)
+					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
 
 			else if (reactionFlags == REACTION_CLEAR_IMPURE && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
 				my_atom.reagents.remove_reagent(R.type, (impureVol), FALSE)
-				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, other_purity = 1)
+				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
 				R.cached_purity = R.purity
 				R.purity = 1
 
 //When a reaction's temperature gets above 
-/datum/chemical_reaction/proc/Overheated(datum/reagents/holder, datum/equilibrium/reaction)
+/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/reaction)
 	reaction.toDelete = TRUE
 
 //When purity of a reaction gets below PurityMin 
-/datum/chemical_reaction/proc/OverlyImpure(datum/reagents/holder, datum/equilibrium/reaction)
-	TempExplosion(holder)
+/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/reaction)
+	overheated(holder) //Defaults to overheated mechanics
 
 /**
  * Magical move-wooney that happens sometimes.
