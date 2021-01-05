@@ -79,7 +79,7 @@
 
 ///Prints out a report for bounty purposes, and plays a short audio blip.
 /obj/item/inspector/proc/print_report()
-	/// Create our report
+	// Create our report
 	var/obj/item/report/slip = new(get_turf(src))
 	slip.scanned_area = get_area(src)
 	playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
