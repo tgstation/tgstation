@@ -30,7 +30,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_environ = FALSE
 	area_flags = UNIQUE_AREA | NO_ALERTS
 	outdoors = TRUE
-	ambientsounds = SPACE
+	ambientsounds = space_ambience
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
 
@@ -59,13 +59,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA
-	ambientsounds = MINING
+	ambientsounds = mining_ambience
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_ASTEROID
 
 /area/asteroid/nearstation
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	ambientsounds = RUINS
+	ambientsounds = ruins_ambience
 	always_unpowered = FALSE
 	requires_power = TRUE
 	area_flags = UNIQUE_AREA | BLOBS_ALLOWED
@@ -78,7 +78,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Maintenance
 
 /area/maintenance
-	ambientsounds = MAINTENANCE
+	ambientsounds = maint_ambience
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
@@ -516,7 +516,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/chapel
 	icon_state = "chapel"
-	ambientsounds = HOLY
+	ambientsounds = holy_ambience
 	flags_1 = NONE
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
@@ -551,7 +551,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Engineering
 
 /area/engine
-	ambientsounds = ENGINEERING
+	ambientsounds = engi_ambience
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
@@ -625,7 +625,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 	area_flags = UNIQUE_AREA
 	flags_1 = NONE
-	ambientsounds = ENGINEERING
+	ambientsounds = engi_ambience
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
 
@@ -710,13 +710,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/teleporter
 	name = "Teleporter Room"
 	icon_state = "teleporter"
-	ambientsounds = ENGINEERING
+	ambientsounds = engi_ambience
 	airlock_wires = /datum/wires/airlock/command
 
 /area/gateway
 	name = "Gateway"
 	icon_state = "gateway"
-	ambientsounds = ENGINEERING
+	ambientsounds = engi_ambience
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
@@ -725,7 +725,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical
 	name = "Medical"
 	icon_state = "medbay1"
-	ambientsounds = MEDICAL
+	ambientsounds = med_ambience
 	airlock_wires = /datum/wires/airlock/medbay
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
@@ -802,7 +802,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/morgue
 	name = "Morgue"
 	icon_state = "morgue"
-	ambientsounds = SPOOKY
+	ambientsounds = spooky_ambience
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/medical/chemistry
@@ -849,7 +849,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security
 	name = "Security"
 	icon_state = "security"
-	ambientsounds = HIGHSEC
+	ambientsounds = danger_ambience
 	airlock_wires = /datum/wires/airlock/security
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
@@ -1201,7 +1201,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/construction
 	name = "Construction Area"
 	icon_state = "construction"
-	ambientsounds = ENGINEERING
+	ambientsounds = engi_ambience
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/construction/mining/aux_base
@@ -1217,7 +1217,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/vacant_room
 	name = "Vacant Room"
 	icon_state = "vacant_room"
-	ambientsounds = MAINTENANCE
+	ambientsounds = maint_ambience
 
 /area/vacant_room/office
 	name = "Vacant Office"
@@ -1235,7 +1235,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/security/armory
 	name = "Armory"
 	icon_state = "armory"
-	ambientsounds = HIGHSEC
+	ambientsounds = danger_ambience
 	airlock_wires = /datum/wires/airlock/security
 
 /area/ai_monitored/security/armory/upper
@@ -1244,7 +1244,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
-	ambientsounds = HIGHSEC
+	ambientsounds = danger_ambience
 
 /area/ai_monitored/storage/eva/upper
 	name = "Upper EVA Storage"
@@ -1252,7 +1252,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/storage/satellite
 	name = "AI Satellite Maint"
 	icon_state = "ai_storage"
-	ambientsounds = HIGHSEC
+	ambientsounds = danger_ambience
 	airlock_wires = /datum/wires/airlock/ai
 
 	//Turret_protected

@@ -15,7 +15,7 @@
 	power_light = FALSE
 	outdoors = TRUE
 	flags_1 = NONE
-	ambientsounds = MINING
+	ambientsounds = GLOB.mining_ambience
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
@@ -29,7 +29,7 @@
 	power_light = FALSE
 	outdoors = TRUE
 	flags_1 = NONE
-	ambientsounds = MINING
+	ambientsounds = GLOB.mining_ambience
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED | NO_ALERTS
 
 /area/mine/lobby
@@ -80,7 +80,7 @@
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
 	icon_state = "security"
-	ambientsounds = HIGHSEC
+	ambientsounds = GLOB.danger_ambience
 
 
 
