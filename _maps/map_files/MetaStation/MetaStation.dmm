@@ -69908,9 +69908,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"kyt" = (
-/turf/closed/wall,
-/area/space)
 "kyG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -77230,13 +77227,8 @@
 /turf/open/floor/carpet,
 /area/library)
 "sCV" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/cultivator,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "sEG" = (
@@ -79182,17 +79174,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"uXu" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/glowshroom,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/item/seeds/cannabis/ultimate,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "uYd" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
@@ -114593,7 +114574,7 @@ dvY
 dvY
 dvY
 dvY
-kyt
+aaa
 aaa
 aaa
 anS
@@ -114848,9 +114829,9 @@ dxQ
 dvY
 cNi
 cgs
-ciL
-uXu
-kyt
+sCV
+dvY
+aaa
 aaa
 aaa
 aaa
@@ -115106,8 +115087,8 @@ pLQ
 ciL
 ciL
 ciL
-sCV
-kyt
+dvY
+aaa
 aaa
 aaa
 aaa
