@@ -24,7 +24,7 @@
 	var/requires_sharpness = TRUE
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
-	if(uses==0)
+	if(uses == 0)
 		to_chat(user, "<span class='warning'>The sharpening block is too worn to use again!</span>")
 		return
 	if(I.force >= max || I.throwforce >= max) //So the whetstone never reduces force or throw_force
