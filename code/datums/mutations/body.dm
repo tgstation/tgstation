@@ -183,20 +183,12 @@
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	if(!ismonkey(owner))
-		original_species = owner.dna.species.type
-		owner.Immobilize(2 SECONDS)
-		owner.do_alert_animation()
-		owner.emote("scream")
-		owner.set_species(/datum/species/monkey)
+	original_species = owner.dna.species.type
+	. = owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
 	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
-		owner.set_species(original_species)
-		owner.Immobilize(2 SECONDS)
-		owner.do_alert_animation()
-		owner.emote("scream")
-		original_species = /datum/species/human
+		. = owner.humanize(original_species)
 
 /datum/mutation/human/glow
 	name = "Glowy"
