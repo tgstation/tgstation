@@ -22746,9 +22746,6 @@
 	c_tag = "Engineering - Entrance";
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bbz" = (
@@ -32916,9 +32913,7 @@
 /area/bridge)
 "bBG" = (
 /obj/structure/cable,
-/turf/open/floor/goonplaque{
-	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of sentient postcards in a realm of darkness. The station model number is MSv42A-160516"
-	},
+/turf/open/floor/goonplaque,
 /area/hallway/primary/port)
 "bBH" = (
 /obj/effect/spawner/structure/window/reinforced,

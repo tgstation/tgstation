@@ -35894,10 +35894,6 @@
 /area/security/execution/transfer)
 "bwc" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},
@@ -114178,7 +114174,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "vVy" = (
 /obj/effect/spawner/structure/window/reinforced,
