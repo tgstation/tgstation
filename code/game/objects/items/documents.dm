@@ -58,7 +58,7 @@
 			update_icon()
 
 /obj/item/inspector
-	name = "in-spector"
+	name = "in-spect scanner"
 	desc = "Cental commmand issued inspection device. Does company grade station inspection protocols when activated, and prints encripted sheets of paper regarding the mainenance of the station. Hard to Replace."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "inspector"
@@ -77,9 +77,7 @@
 	. = ..()
 	print_report()
 
-/**
-  * Prints out a report for bounty purposes, and plays a short audio blip.
-  */
+///Prints out a report for bounty purposes, and plays a short audio blip.
 /obj/item/inspector/proc/print_report()
 	/// Create our report
 	var/obj/item/report/slip = new(get_turf(src))

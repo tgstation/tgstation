@@ -39,16 +39,14 @@
 	required_count = 5
 	wanted_types = list(/obj/item/restraints/handcuffs)
 
-/**
-  * Bounties that require you to perform documentation and inspection of your department to send to centcom.
-  * This is more or less meant to give officers a way to perform routine inspections as a way to fulfill bounties, since most item-fetching is rather useless for them to perform.
-  */
+
+///Bounties that require you to perform documentation and inspection of your department to send to centcom.
 /datum/bounty/item/security/paperwork
 	name = "Routine Security Inspection"
 	description = "Perform a routine security inspection using an in-spect scanner on the following general area on station:"
 	required_count = 1
 	wanted_types = list(/obj/item/report)
-	reward = CARGO_CRATE_VALUE * 2.5
+	reward = CARGO_CRATE_VALUE * 5
 	var/area/demanded_area
 
 /datum/bounty/item/security/paperwork/New()
