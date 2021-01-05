@@ -57,7 +57,8 @@
 	I.throwforce = clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]" //This adds a prefix and a space to the item's name regardless of what the prefix is
 	desc = "[desc] At least, it used to."
-	uses--
+	if(uses!=0)
+		uses--
 	if(uses==0)
 		name = "worn out [name]" //whetstone becomes used whetstone
 	update_icon()
