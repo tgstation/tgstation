@@ -146,8 +146,36 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 
 /// Called when this reagent is first added to a mob
-/datum/reagent/proc/on_mob_add(mob/living/L)
-	return
+/datum/reagent/proc/on_mob_add(mob/living/L, amount)
+	if(!iscarbon(L))
+		return
+	var/mob/living/carbon/M = L
+	var/turf/T = get_turf(M)
+	debug_world("MOB ADD: on_mob_add(): [key_name(M)] at [AREACOORD(T)] - [volume] of [type] with [purity] purity")
+	if (purity == 1)
+		return
+	if(creation_purity == 1)
+		creation_purity = purity
+	else if(purity < 0)
+		CRASH("Purity below 0 for chem: [type]!")
+	if(chemical_flags & REAGENT_DONOTSPLIT)
+		return
+
+	if ((inverse_chem_val > purity) && (inverse_chem))//Turns all of a added reagent into the inverse chem
+		M.reagents.remove_reagent(type, amount, FALSE)
+		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-creation_purity)
+		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
+		if(R.chemical_flags & REAGENT_SNEAKYNAME)
+			R.name = name//Negative effects are hidden
+			if(R.chemical_flags & REAGENT_INVISIBLE)
+				R.chemical_flags |= (REAGENT_INVISIBLE)
+		debug_world("MOB ADD: on_mob_add() (impure): merged [volume] of [inverse_chem]")
+	else if (impure_chem)
+		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
+		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
+			M.reagents.remove_reagent(type, (impureVol), FALSE)
+		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-creation_purity)
+		debug_world("MOB ADD: on_mob_add() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
@@ -161,6 +189,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
+/// Called when a reagent is inside of a mob when they are dead
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/C)
+	if(!chemical_flags & REAGENT_DEAD_PROCESS)
+		return
+	current_cycle++
+	if(length(reagent_removal_skip_list))
+		return
+	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency)
+	return
+
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
 	return
@@ -170,8 +208,35 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Called when two reagents of the same are mixing.
-/datum/reagent/proc/on_merge(data)
-	return
+// Called when two reagents of the same are mixing.
+/datum/reagent/proc/on_merge(data, mob/living/carbon/M, amount)
+	if(!iscarbon(M))
+		return
+	var/turf/T = get_turf(M)
+	debug_world("MOB ADD: on_merge(): [key_name(M)] at [AREACOORD(T)] - [volume] of [type] with [purity] purity")
+	if (purity == 1)
+		return
+	creation_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
+	if (purity < 0)
+		CRASH("Purity below 0 for chem: [type]!")
+	if(chemical_flags & REAGENT_DONOTSPLIT)
+		return
+
+	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
+		M.reagents.remove_reagent(type, amount, FALSE)
+		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-creation_purity)
+		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
+		if(R.chemical_flags & REAGENT_SNEAKYNAME)
+			R.name = name//Negative effects are hidden
+			if(R.chemical_flags & REAGENT_INVISIBLE)
+				R.chemical_flags |= (REAGENT_INVISIBLE)
+		debug_world("MOB ADD: on_merge() (impure): merged [volume] of [inverse_chem]")
+	else if (impure_chem) //SPLIT
+		var/impureVol = amount * (1 - purity)
+		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
+			M.reagents.remove_reagent(type, impureVol, FALSE)
+		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-creation_purity)
+		debug_world("MOB ADD: on_merge() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
 /// Called by [/datum/reagents/proc/conditional_update]
 /datum/reagent/proc/on_update(atom/A)

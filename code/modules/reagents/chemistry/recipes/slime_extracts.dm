@@ -1,6 +1,7 @@
 
 /datum/chemical_reaction/slime
 	var/deletes_extract = TRUE
+	reactionFlags = REACTION_INSTANT 
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
 	use_slime_core(holder)

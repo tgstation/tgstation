@@ -32,17 +32,17 @@
 
 	//FermiChem!
 	//var/OptimalTempMin 		= 200 			// Lower area of bell curve for determining heat based rate reactions (TO REMOVE)
-	var/optimalTempMax			= 800			// Upper end for above
+	var/OptimalTempMax			= 800			// Upper end for above
 	var/overheatTemp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
-	var/optimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/optimalpHMax 			= 10        	// Higest value for above
-	var/reactpHLim 				= 3         	// How far out pH wil react, giving impurity place (Exponential phase)
-	var/curveSharpT 			= 2         	// How sharp the temperature exponential curve is (to the power of value)
-	var/curveSharppH 			= 2         	// How sharp the pH exponential curve is (to the power of value)
-	var/thermicConstant 		= 1         	// Temperature change per 1u produced
-	var/hIonRelease 			= 0.1       	// pH change per 1u reaction
-	var/rateUpLim 				= 10			// Optimal/max rate possible if all conditions are perfect
-	var/purityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	var/OptimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/OptimalpHMax 			= 10        	// Higest value for above
+	var/ReactpHLim 				= 3         	// How far out pH wil react, giving impurity place (Exponential phase)
+	var/CurveSharpT 			= 2         	// How sharp the temperature exponential curve is (to the power of value)
+	var/CurveSharppH 			= 2         	// How sharp the pH exponential curve is (to the power of value)
+	var/ThermicConstant 		= 1         	// Temperature change per 1u produced
+	var/HIonRelease 			= 0.1       	// pH change per 1u reaction
+	var/RateUpLim 				= 10			// Optimal/max rate possible if all conditions are perfect
+	var/PurityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 
 /datum/chemical_reaction/New()
@@ -142,7 +142,7 @@
 				var/impureVol = cached_volume * (1 - R.purity)
 				my_atom.reagents.remove_reagent(R.type, (impureVol), FALSE)
 				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
-				R.cached_purity = R.purity
+				R.creation_purity = R.purity
 				R.purity = 1
 
 //When a reaction's temperature gets above 

@@ -56,7 +56,7 @@
 	/// Current temp of the holder volume
 	var/chem_temp = 150
 	///pH of the whole system
-	var/pH = REAGENT_NORMAL_PH
+	var/pH = CHEMICAL_NORMAL_PH
 	/// unused
 	var/last_tick = 1
 	/// see [/datum/reagents/proc/metabolize] for usage
@@ -123,11 +123,12 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
+	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
 	if(!added_purity)
 		added_purity = initial(D.purity) //Usually 1
 
 	if(!pH)
-		other_pH = D.pH
+		added_pH = D.pH
 
 	update_total()
 	var/cached_total = total_volume
@@ -138,6 +139,7 @@
 
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
+	var/cached_pH = pH
 
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
 	var/old_heat_capacity = 0
@@ -148,7 +150,7 @@
 
 	//cacluate reagent based pH shift.
 	if(!ignore_pH)
-		pH = ((cached_pH * cached_total)+(other_pH * amount))/(cached_total + amount)
+		pH = ((cached_pH * cached_total)+(added_pH * amount))/(cached_total + amount)
 
 	//add the reagent to the existing if it exists
 	for(var/r in cached_reagents)
@@ -158,7 +160,7 @@
 			iter_reagent.purity = ((iter_reagent.purity * iter_reagent.volume) + (added_purity * amount)) /((iter_reagent.volume + amount)) //This should add the purity to the product
 			update_total()
 
-			iter_reagent.on_merge(data, amount)
+			iter_reagent.on_merge(data, my_atom, amount)
 			if(reagtemp != cached_temp)
 				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
@@ -176,11 +178,9 @@
 	if(data)
 		new_reagent.data = data
 		new_reagent.on_new(data)
-	if(new_reagent.chemical_flags & REAGENT_FORCEONNEW)//Allows on new without data overhead.
-		new_reagent.on_new()
 
 	if(isliving(my_atom))
-		new_reagent.on_mob_add(my_atom) //Must occur before it could posibly run on_mob_delete
+		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete
 
 	update_total()
 	if(reagtemp != cached_temp)
@@ -200,7 +200,7 @@
 
 /// Remove a specific reagent
 // ignore_pH again removes reagents ignoring the pH
-/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE, calculate_reactions = TRUE)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
@@ -220,11 +220,11 @@
 			amount = clamp(amount, 0, R.volume)
 			R.volume -= amount
 			if(!ignore_pH)
-				pH = clamp(((pH * (total_volume-(amount))+(R.pH * (volume)) )/holder.total_volume), 0, 14) //CHECK HERE incase tg is different (linear because otherwise vol/power cost is too high)
+				pH = clamp(((pH * (total_volume-(amount))+(R.pH * (R.volume)) )/total_volume), 0, 14) //CHECK HERE incase tg is different (linear because otherwise vol/power cost is too high)
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 			if(!safety)//So it does not handle reactions when it need not to
 				update_total()
-				//handle_reactions() is in update_total()
+				//handle_reactions() is in update_total() - only occurs if a reagent is removed
 				
 
 			return TRUE
@@ -318,14 +318,12 @@
 			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
 	return TRUE
 
-//Converts the cached_purity to purity
-/datum/reagents/proc/uncache_purity(id)
+//Converts the creation_purity to purity
+/datum/reagents/proc/uncache_creation_purity(id)
 	var/datum/reagent/R = has_reagent(id)
 	if(!R)
 		return
-	if(R.cached_purity == 1)
-		return
-	R.purity = R.cached_purity
+	R.purity = R.creation_purity
 
 /// Remove every reagent except this one
 /datum/reagents/proc/isolate_reagent(reagent)
@@ -819,13 +817,27 @@
 	
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
+	var/mix_message
+	//Checover the reaction list
 	for(var/datum/equilibrium/E in reaction_list) 
+		//if it's been flagged to delete
 		if(E.toDelete)
+			if(GLOB.Debug2)
+				message_admins("(fermichem) Reaction [E.reaction] finished reactedVol:[E.reactedVol], targetVol:[E.targetVol]")
+			//end reaction proc
+			E.reaction.reaction_finish(src, my_atom, E.reactedVol)
+			mix_message += "[E.reaction.mix_message] "
+			if(E.reaction.mix_sound)
+				playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
 			qdel(E)
 			reaction_list -= E
 			update_total()
 			continue
+		//ottherwise continue reacting
 		E.react_timestep()
+
+	if(mix_message)
+		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message]</span>")
 
 	if(!reaction_list.len)
 		end_reaction()
@@ -840,17 +852,9 @@
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.pH_check()
-	update_total()
-	for(var/datum/equilibrium/E in reaction_list)
-		if(GLOB.Debug2)
-			message_admins("(fermichem) Reaction [E.reaction] finished reactedVol:[reactedVol], targetVol:[targetVol]")
-		
-		reaction.ReactionFinish(src, my_atom, reactedVol)
-		E.reactedVol = 0
-		E.targetVol = 0
-		//handle_reactions() - Possible bug
-	//Reaction sounds and words
-	my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [C.mix_message]</span>")
+	update_total()		
+	handle_reactions()
+
 
 
 //Old reaction mechanics, edited to work on one only
@@ -858,6 +862,7 @@
 /datum/reagents/proc/instant_react(datum/chemical_reaction/selected_reaction)
 	var/list/cached_required_reagents = selected_reaction.required_reagents
 	var/list/cached_results = selected_reaction.results
+	var/datum/cached_my_atom = my_atom
 	var/list/multiplier = INFINITY
 	for(var/B in cached_required_reagents)
 		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
@@ -918,7 +923,7 @@
 		if((R.volume < 0.05) && !isReacting)
 			del_reagent(R.type)
 			handle_reactions()
-		else if(R.volume <= 0)//For clarity
+		else if(R.volume <= CHEMICAL_VOLUME_MINIMUM)//For clarity
 			del_reagent(R.type)
 			handle_reactions()
 		else
@@ -927,7 +932,7 @@
 				handle_reactions()
 
 	if(!reagent_list || !total_volume) //Ensure that this is true
-		pH = REAGENT_NORMAL_PH
+		pH = CHEMICAL_NORMAL_PH
 
 /**
  * Applies the relevant expose_ proc for every reagent in this holder

@@ -27,6 +27,7 @@
 		. = ..()
 
 	if(stat == DEAD)
+		handle_death()
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
 		var/bprv = handle_bodyparts()
@@ -366,6 +367,10 @@
 		var/datum/wound/W = thing
 		if(W.processes) // meh
 			W.handle_process()
+
+/mob/living/carbon/proc/handle_death()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		R.on_mob_dead(src)
 
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()

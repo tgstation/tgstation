@@ -44,19 +44,21 @@
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
 
+//container_flags
+#define PH_WEAK 		(1 << 0)
+#define TEMP_WEAK 		(1 << 1)
+
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001 //stops floating point errors causing issues with checking reagent amounts
 #define CHEMICAL_VOLUME_MINIMUM 0.001 //The smallest amount of volume allowed - prevents tiny numbers
+#define CHEMICAL_NORMAL_PH 7.000
 
 //reagent bitflags, used for altering how they works
 #define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing
-#define REAGENT_ONLYINVERSE			(1<<2)	//Only invert chem, no splitting
-#define REAGENT_ONMOBMERGE			(1<<3)	//Call on_mob_life proc when reagents are merging.
-#define REAGENT_INVISIBLE			(1<<4)	//Doesn't appear on handheld health analyzers.
-#define REAGENT_FORCEONNEW			(1<<5)  //Forces a on_new() call without a data overhead
-#define REAGENT_SNEAKYNAME          (1<<6)  //When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SPLITRETAINVOL      (1<<7)  //Retains initial volume of chem when splitting
+#define REAGENT_INVISIBLE			(1<<2)	//Doesn't appear on handheld health analyzers.
+#define REAGENT_SNEAKYNAME          (1<<3)  //When inverted, the inverted chem uses the name of the original chem
+#define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting
 
 //Chemical reaction flags, for determining reaction specialties
 #define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
@@ -65,8 +67,8 @@
 #define REACTION_INSTANT            (1<<3)  //Used to create instant reactions
 
 //Explosion flags for using different explosive handlers
-#define FERMI_TYPE_MIXED (1<<0)
-#define FERMI_TYPE_INVERTSMOKE (1<<1)
-#define FERMI_TYPE_SMOKE (1<<2)
-#define FERMI_REDUCE_YIELD (1<<3)
-#define FERMI_REDUCE_PURITY (1<<4)
+#define FERMI_TYPE_MIXED            (1<<0)
+#define FERMI_TYPE_INVERTSMOKE      (1<<1)
+#define FERMI_TYPE_SMOKE            (1<<2)
+#define FERMI_REDUCE_YIELD          (1<<3)
+#define FERMI_REDUCE_PURITY         (1<<4)
