@@ -338,10 +338,10 @@
 		if(flag.team != src.team)
 			points++
 			flag.reset_flag(capture = TRUE)
-			for(var/mob/ctf_players in GLOB.player_list)
-				var/area/mob_area = get_area(ctf_players)
+			for(var/mob/ctf_player in GLOB.player_list)
+				var/area/mob_area = get_area(ctf_player)
 				if(istype(mob_area, game_area))
-					to_chat(ctf_players, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
+					to_chat(ctf_player, "<span class='userdanger [team_span]'>[user.real_name] has captured \the [flag], scoring a point for [team] team! They now have [points]/[points_to_win] points!</span>")
 			if(points >= points_to_win)
 				victory()
 
