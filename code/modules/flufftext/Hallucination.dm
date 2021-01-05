@@ -336,7 +336,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/image/fakerune
 	var/turf/landing
 	var/charged
-	var/time_spent = 0
+	var/next_action = 0
 
 /datum/hallucination/oh_yeah/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
@@ -368,9 +368,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/hallucination/oh_yeah/process(delta_time)
-	time_spent += delta_time
+	next_action -= delta_time
 
-	if (time_spent < 0.2)
+	if (next_action > 0)
 		return
 
 	if (get_turf(bubblegum) != landing && target?.stat != DEAD)
@@ -388,6 +388,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			step_away(target, bubblegum)
 			shake_camera(target, 4, 3)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
+		next_action = 0.2
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 		QDEL_IN(src, 3 SECONDS)
@@ -414,7 +415,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 	source = random_far_turf()
 
-	battle_type = battle_type || pick("laser", "disabler", "esword", "gun", "stunprod", "harmbaton", "bomb")
+	battle_type = new_battle_type
+	if (isnull(battle_type))
+		battle_type = pick("laser", "disabler", "esword", "gun", "stunprod", "harmbaton", "bomb")
 	feedback_details += "Type: [battle_type]"
 	var/process = TRUE
 
@@ -447,73 +450,76 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/battle/process(delta_time)
 	next_action -= (delta_time * 10)
 
-	if (next_action <= 0)
-		switch (battle_type)
-			if ("disabler", "laser", "gun")
-				var/fire_sound
-				var/hit_person_sound
-				var/hit_wall_sound
-				var/number_of_hits
-				var/chance_to_fall
+	if (next_action > 0)
+		return
 
-				switch (battle_type)
-					if ("disabler")
-						fire_sound = 'sound/weapons/taser2.ogg'
-						hit_person_sound = 'sound/weapons/tap.ogg'
-						hit_wall_sound = 'sound/weapons/effects/searwall.ogg'
-						number_of_hits = 3
-						chance_to_fall = 70
-					if ("laser")
-						fire_sound = 'sound/weapons/laser.ogg'
-						hit_person_sound = 'sound/weapons/sear.ogg'
-						hit_wall_sound = 'sound/weapons/effects/searwall.ogg'
-						number_of_hits = 4
-						chance_to_fall = 70
-					if ("gun")
-						fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
-						hit_person_sound = 'sound/weapons/pierce.ogg'
-						hit_wall_sound = "ricochet"
-						number_of_hits = 2
-						chance_to_fall = 80
+	switch (battle_type)
+		if ("disabler", "laser", "gun")
+			var/fire_sound
+			var/hit_person_sound
+			var/hit_wall_sound
+			var/number_of_hits
+			var/chance_to_fall
 
-				target.playsound_local(source, fire_sound, 25, 1)
+			switch (battle_type)
+				if ("disabler")
+					fire_sound = 'sound/weapons/taser2.ogg'
+					hit_person_sound = 'sound/weapons/tap.ogg'
+					hit_wall_sound = 'sound/weapons/effects/searwall.ogg'
+					number_of_hits = 3
+					chance_to_fall = 70
+				if ("laser")
+					fire_sound = 'sound/weapons/laser.ogg'
+					hit_person_sound = 'sound/weapons/sear.ogg'
+					hit_wall_sound = 'sound/weapons/effects/searwall.ogg'
+					number_of_hits = 4
+					chance_to_fall = 70
+				if ("gun")
+					fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+					hit_person_sound = 'sound/weapons/pierce.ogg'
+					hit_wall_sound = "ricochet"
+					number_of_hits = 2
+					chance_to_fall = 80
 
-				if(prob(50))
-					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, hit_person_sound, 25, 1), rand(5,10))
-					hits += 1
-				else
-					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, hit_wall_sound, 25, 1), rand(5,10))
+			target.playsound_local(source, fire_sound, 25, 1)
 
-				next_action = rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6)
-
-				if(hits >= number_of_hits && prob(chance_to_fall))
-					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, get_sfx("bodyfall"), 25, 1), next_action)
-					qdel(src)
-					return
-			if ("esword")
-				target.playsound_local(source, 'sound/weapons/blade1.ogg', 50, 1)
-
-				if (hits == 4)
-					target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
-
-				next_action = rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6)
+			if(prob(50))
+				addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, hit_person_sound, 25, 1), rand(5,10))
 				hits += 1
+			else
+				addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, hit_wall_sound, 25, 1), rand(5,10))
 
-				if (iterations_left == 0)
-					target.playsound_local(source, 'sound/weapons/saberoff.ogg', 15, 1)
-			if ("harmbaton")
-				target.playsound_local(source, "swing_hit", 50, 1)
-				next_action = rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4)
-			if ("bomb")
-				target.playsound_local(source, 'sound/items/timer.ogg', 25, 0)
-				next_action = 15
+			next_action = rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6)
 
-		iterations_left -= 1
-		if (iterations_left == 0)
-			qdel(src)
+			if(hits >= number_of_hits && prob(chance_to_fall))
+				addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, get_sfx("bodyfall"), 25, 1), next_action)
+				qdel(src)
+				return
+		if ("esword")
+			target.playsound_local(source, 'sound/weapons/blade1.ogg', 50, 1)
+
+			if (hits == 4)
+				target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
+
+			next_action = rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6)
+			hits += 1
+
+			if (iterations_left == 1)
+				target.playsound_local(source, 'sound/weapons/saberoff.ogg', 15, 1)
+		if ("harmbaton")
+			target.playsound_local(source, "swing_hit", 50, 1)
+			next_action = rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4)
+		if ("bomb")
+			target.playsound_local(source, 'sound/items/timer.ogg', 25, 0)
+			next_action = 15
+
+	iterations_left -= 1
+	if (iterations_left == 0)
+		qdel(src)
 
 /datum/hallucination/battle/Destroy()
 	. = ..()
+	source = null
 	STOP_PROCESSING(SSfastprocess, src)
 
 /datum/hallucination/items_other
@@ -953,16 +959,16 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mech_dir
 	var/steps_left
 	var/next_action = 0
+	var/turf/source
 
 /datum/hallucination/mech_sounds/New()
 	. = ..()
 	mech_dir = pick(GLOB.cardinals)
 	steps_left = rand(4, 9)
+	source = random_far_turf()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/hallucination/mech_sounds/process(delta_time)
-	var/turf/source = random_far_turf()
-
 	next_action -= delta_time
 	if (next_action > 0)
 		return
@@ -1146,60 +1152,63 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	//Strange items
-	if(!target.halitem)
-		target.halitem = new
-		var/obj/item/l_hand = target.get_item_for_held_index(1)
-		var/obj/item/r_hand = target.get_item_for_held_index(2)
-		var/l = ui_hand_position(target.get_held_index_of_item(l_hand))
-		var/r = ui_hand_position(target.get_held_index_of_item(r_hand))
-		var/list/slots_free = list(l,r)
-		if(l_hand)
-			slots_free -= l
-		if(r_hand)
-			slots_free -= r
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(!H.belt)
-				slots_free += ui_belt
-			if(!H.l_store)
-				slots_free += ui_storage1
-			if(!H.r_store)
-				slots_free += ui_storage2
-		if(slots_free.len)
-			target.halitem.screen_loc = pick(slots_free)
-			target.halitem.layer = ABOVE_HUD_LAYER
-			target.halitem.plane = ABOVE_HUD_PLANE
-			switch(rand(1,6))
-				if(1) //revolver
-					target.halitem.icon = 'icons/obj/guns/projectile.dmi'
-					target.halitem.icon_state = "revolver"
-					target.halitem.name = "Revolver"
-				if(2) //c4
-					target.halitem.icon = 'icons/obj/grenade.dmi'
-					target.halitem.icon_state = "plastic-explosive0"
-					target.halitem.name = "C4"
-					if(prob(25))
-						target.halitem.icon_state = "plasticx40"
-				if(3) //sword
-					target.halitem.icon = 'icons/obj/transforming_energy.dmi'
-					target.halitem.icon_state = "sword0"
-					target.halitem.name = "Energy Sword"
-				if(4) //stun baton
-					target.halitem.icon = 'icons/obj/items_and_weapons.dmi'
-					target.halitem.icon_state = "stunbaton"
-					target.halitem.name = "Stun Baton"
-				if(5) //emag
-					target.halitem.icon = 'icons/obj/card.dmi'
-					target.halitem.icon_state = "emag"
-					target.halitem.name = "Cryptographic Sequencer"
-				if(6) //flashbang
-					target.halitem.icon = 'icons/obj/grenade.dmi'
-					target.halitem.icon_state = "flashbang1"
-					target.halitem.name = "Flashbang"
-			feedback_details += "Type: [target.halitem.name]"
-			if(target.client)
-				target.client.screen += target.halitem
-			QDEL_IN(target.halitem, rand(150, 350))
+
+	var/obj/halitem = new
+
+	halitem = new
+	var/obj/item/l_hand = target.get_item_for_held_index(1)
+	var/obj/item/r_hand = target.get_item_for_held_index(2)
+	var/l = ui_hand_position(target.get_held_index_of_item(l_hand))
+	var/r = ui_hand_position(target.get_held_index_of_item(r_hand))
+	var/list/slots_free = list(l,r)
+	if(l_hand)
+		slots_free -= l
+	if(r_hand)
+		slots_free -= r
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(!H.belt)
+			slots_free += ui_belt
+		if(!H.l_store)
+			slots_free += ui_storage1
+		if(!H.r_store)
+			slots_free += ui_storage2
+	if(slots_free.len)
+		halitem.screen_loc = pick(slots_free)
+		halitem.layer = ABOVE_HUD_LAYER
+		halitem.plane = ABOVE_HUD_PLANE
+		switch(rand(1,6))
+			if(1) //revolver
+				halitem.icon = 'icons/obj/guns/projectile.dmi'
+				halitem.icon_state = "revolver"
+				halitem.name = "Revolver"
+			if(2) //c4
+				halitem.icon = 'icons/obj/grenade.dmi'
+				halitem.icon_state = "plastic-explosive0"
+				halitem.name = "C4"
+				if(prob(25))
+					halitem.icon_state = "plasticx40"
+			if(3) //sword
+				halitem.icon = 'icons/obj/transforming_energy.dmi'
+				halitem.icon_state = "sword0"
+				halitem.name = "Energy Sword"
+			if(4) //stun baton
+				halitem.icon = 'icons/obj/items_and_weapons.dmi'
+				halitem.icon_state = "stunbaton"
+				halitem.name = "Stun Baton"
+			if(5) //emag
+				halitem.icon = 'icons/obj/card.dmi'
+				halitem.icon_state = "emag"
+				halitem.name = "Cryptographic Sequencer"
+			if(6) //flashbang
+				halitem.icon = 'icons/obj/grenade.dmi'
+				halitem.icon_state = "flashbang1"
+				halitem.name = "Flashbang"
+		feedback_details += "Type: [halitem.name]"
+		if(target.client)
+			target.client.screen += halitem
+		QDEL_IN(halitem, rand(150, 350))
+
 	qdel(src)
 
 /datum/hallucination/dangerflash
@@ -1208,21 +1217,22 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	//Flashes of danger
-	if(!target.halimage)
-		var/list/possible_points = list()
-		for(var/turf/open/floor/F in view(target,world.view))
-			possible_points += F
-		if(possible_points.len)
-			var/turf/open/floor/danger_point = pick(possible_points)
-			if(!danger_type)
-				danger_type = pick("lava","chasm","anomaly")
-			switch(danger_type)
-				if("lava")
-					new /obj/effect/hallucination/danger/lava(danger_point, target)
-				if("chasm")
-					new /obj/effect/hallucination/danger/chasm(danger_point, target)
-				if("anomaly")
-					new /obj/effect/hallucination/danger/anomaly(danger_point, target)
+
+	var/list/possible_points = list()
+	for(var/turf/open/floor/F in view(target,world.view))
+		possible_points += F
+	if(possible_points.len)
+		var/turf/open/floor/danger_point = pick(possible_points)
+		if(!danger_type)
+			danger_type = pick("lava","chasm","anomaly")
+		switch(danger_type)
+			if("lava")
+				new /obj/effect/hallucination/danger/lava(danger_point, target)
+			if("chasm")
+				new /obj/effect/hallucination/danger/chasm(danger_point, target)
+			if("anomaly")
+				new /obj/effect/hallucination/danger/anomaly(danger_point, target)
+
 	qdel(src)
 
 /obj/effect/hallucination/danger

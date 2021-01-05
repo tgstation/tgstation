@@ -78,8 +78,6 @@
 	var/static/list/limb_icon_cache = list()
 
 	//halucination vars
-	var/image/halimage
-	var/obj/halitem
 	var/hal_screwyhud = SCREWYHUD_NONE
 	var/next_hallucination = 0
 	var/damageoverlaytemp = 0
