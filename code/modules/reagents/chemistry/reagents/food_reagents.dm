@@ -117,6 +117,10 @@
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 * REAGENTS_METABOLISM //45% as calorie dense as corn oil.
 
+/datum/reagent/consumable/nutriment/organ_tissue
+	name = "Organ Tissue"
+	description = "Natural tissues that make up the bulk of organs, providing many vitamins, minerals."
+
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
 	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
