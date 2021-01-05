@@ -370,6 +370,9 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	emergency_shutdown()
 	return ..()
 
+	if(istype(program, /area/holodeck/rec_center/thunderdome1218) && !SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM])
+		say("Special note from \"1218 AD\" developer: I see you too are interested in the REAL dark ages of humanity! I've made this program also unlock some interesting shuttle designs on any communication console around. Have fun!")
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM] = TRUE
 
 /obj/machinery/computer/holodeck/offstation //second holodeck if you want to add one to a ruin :flushed:
 	name = "holodeck control console"
