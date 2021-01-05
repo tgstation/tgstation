@@ -46,4 +46,3 @@
 			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/vendor_crush)
 			return
 		blackboard[BB_VENDING_TILT_COOLDOWN] = world.time + search_for_enemy_cooldown
-	return

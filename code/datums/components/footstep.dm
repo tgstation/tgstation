@@ -132,4 +132,3 @@
 	if(!istype(T))
 		return
 	playsound(T, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
-	return
