@@ -70556,17 +70556,6 @@
 /obj/structure/curtain,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
-"lkh" = (
-/obj/machinery/hydroponics/soil{
-	pixel_y = 8
-	},
-/obj/item/seeds/glowshroom,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/item/seeds/cannabis/ultimate,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "lkk" = (
 /obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
@@ -114842,7 +114831,7 @@ dvY
 cNi
 cgs
 sCV
-lkh
+dvY
 aaa
 aaa
 aaa
