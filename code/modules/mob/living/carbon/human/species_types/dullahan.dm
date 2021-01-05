@@ -138,7 +138,7 @@
 		return COMPONENT_ALLOW_EXAMINATE
 
 //Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
-/obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)
+/obj/item/dullahan_relay/proc/include_owner(datum/source, list/hearers)
 	if(!QDELETED(owner))
 		hearers += owner
 
