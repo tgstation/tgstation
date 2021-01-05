@@ -254,7 +254,8 @@
  * This is where plant chemical products are handled.
  *
  * Individually, the formula for individual amounts of chemicals is Potency * the chemical production %, rounded to the fullest 1.
- * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling trait.
+ * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling/autojuicing traits.
+ * This is where chemical reactions can occur, and the heating / cooling traits effect the reagent container.
  */
 /obj/item/seeds/proc/prepare_result(obj/item/T)
 	if(!T.reagents)
@@ -279,8 +280,27 @@
 				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
 					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
 					continue
+				//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
+				else if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results.len)
+					for(var/datum/reagent/juice in grown_edible.juice_results)
+						T.reagents.add_reagent(juice, amount/2)
+					continue
+
 			T.reagents.add_reagent(rid, amount, data)
 
+		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
+		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+
+		// Heats up the plant's contents by 100 kelvin per 1 unit of nutriment.
+		if(get_gene(/datum/plant_gene/trait/chem_heating))
+			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment)
+			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 100))
+			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 50)
+		// Cools down the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
+		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
+			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment)
+			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -25))
+			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
 
 /// Setters procs ///
 

@@ -521,6 +521,24 @@
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
 
+/datum/plant_gene/trait/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/juicing))
+		return FALSE
+	. = ..()
+
+/**
+ * Similar to auto-distilling, but instead of brewing the plant's contents it juices it.
+ *
+ * Incompatible with auto-distilling composition.
+ */
+/datum/plant_gene/trait/juicing
+	name = "Auto-Juicing Composition"
+
+/datum/plant_gene/trait/juicing/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/brewing))
+		return FALSE
+	. = ..()
+
 /**
  * A plant trait that causes the plant to gain aesthetic googly eyes.
  *
@@ -550,6 +568,31 @@
 
 /datum/plant_gene/trait/sticky/can_add(obj/item/seeds/S)
 	if(S.get_gene(/datum/plant_gene/trait/squash))
+		return FALSE
+	. = ..()
+
+/**
+ * This trait automatically heats up the plant's chemical contents when harvested.
+ * This requires nutriment to fuel. 1u nutriment = 100 K.
+ */
+/datum/plant_gene/trait/chem_heating
+	name = "Endothermic Activity"
+
+
+/datum/plant_gene/trait/chem_heating/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/chem_cooling))
+		return FALSE
+	. = ..()
+
+/**
+ * This trait is the opposite - it cools down the plant's chemical contents.
+ * This requires nutriment to fuel. 1u nutriment = -25 K.
+ */
+/datum/plant_gene/trait/chem_cooling
+	name = "Exothermic Activity"
+
+/datum/plant_gene/trait/chem_cooling/can_add(obj/item/seeds/S)
+	if(S.get_gene(/datum/plant_gene/trait/chem_heating))
 		return FALSE
 	. = ..()
 
