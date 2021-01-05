@@ -69908,6 +69908,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"kyt" = (
+/turf/closed/wall,
+/area/space)
 "kyG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -77227,9 +77230,13 @@
 /turf/open/floor/carpet,
 /area/library)
 "sCV" = (
-/obj/structure/rack,
-/obj/item/crowbar,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/hydroponics/soil{
+	pixel_y = 8
+	},
+/obj/item/cultivator,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "sEG" = (
@@ -114586,7 +114593,7 @@ dvY
 dvY
 dvY
 dvY
-aaa
+kyt
 aaa
 aaa
 anS
@@ -114841,9 +114848,9 @@ dxQ
 dvY
 cNi
 cgs
-sCV
+ciL
 uXu
-aaa
+kyt
 aaa
 aaa
 aaa
@@ -115099,8 +115106,8 @@ pLQ
 ciL
 ciL
 ciL
-dvY
-aaa
+sCV
+kyt
 aaa
 aaa
 aaa
