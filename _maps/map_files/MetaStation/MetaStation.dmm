@@ -79175,6 +79175,17 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"uXu" = (
+/obj/machinery/hydroponics/soil{
+	pixel_y = 8
+	},
+/obj/item/seeds/glowshroom,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/seeds/cannabis/ultimate,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "uYd" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
@@ -114831,7 +114842,7 @@ dvY
 cNi
 cgs
 sCV
-dvY
+uXu
 aaa
 aaa
 aaa
