@@ -315,6 +315,54 @@
 	ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
 	ex_revs = get_antag_minds(/datum/antagonist/rev, TRUE)
 
+/// Checks if revs have won
+/datum/team/revolution/proc/check_rev_victory()
+	for(var/datum/objective/mutiny/objective in objectives)
+		if(!(objective.check_completion()))
+			return FALSE
+	return TRUE
+
+/// Checks if heads have won
+/datum/team/revolution/proc/check_heads_victory()
+	for(var/datum/mind/rev_mind in head_revolutionaries())
+		var/turf/rev_turf = get_turf(rev_mind.current)
+		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(rev_turf.z))
+			if(ishuman(rev_mind.current))
+				return FALSE
+	return TRUE
+
+/// Updates the state of the world depending on if revs won or loss.
+/// Returns who won, at which case this method should no longer be called.
+/datum/team/revolution/proc/process_victory()
+	if(check_rev_victory())
+		return REVOLUTION_VICTORY
+	else if (check_heads_victory())
+		SSshuttle.clearHostileEnvironment(src)
+		save_members()
+		for(var/datum/mind/rev_mind in members) // Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
+			if(rev_mind.has_antag_datum(/datum/antagonist/rev/head))
+				var/datum/antagonist/rev/head/rev_head = rev_mind.has_antag_datum(/datum/antagonist/rev/head)
+				rev_head.remove_revolutionary(FALSE, "gamemode")
+				if(rev_mind.current)
+					var/mob/living/carbon/C = rev_mind.current
+					if(istype(C) && C.stat == DEAD)
+						C.makeUncloneable()
+			if(rev_mind.has_antag_datum(/datum/antagonist/rev))
+				var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
+				rev_antag.remove_revolutionary(FALSE, "gamemode")
+		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
+			We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
+		return STATION_VICTORY
+
+/// Mutates the ticker to report that the revs have won
+/datum/team/revolution/proc/round_result(finished)
+	if (finished == REVOLUTION_VICTORY)
+		SSticker.mode_result = "win - heads killed"
+		SSticker.news_report = REVS_WIN
+	else if (finished == STATION_VICTORY)
+		SSticker.mode_result = "loss - rev heads killed"
+		SSticker.news_report = REVS_LOSE
+
 /datum/team/revolution/roundend_report()
 	if(!members.len && !ex_headrevs.len)
 		return
