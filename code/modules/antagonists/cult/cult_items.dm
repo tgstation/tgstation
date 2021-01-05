@@ -367,7 +367,7 @@
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon_state()
-	icon_state = "cult_sharpener[(uses==0) ? "_used" : ""]"
+	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
