@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - rscadd: "You can now make beds with blankets."
+  - rscadd: "You can now tuck plushes into bed."
+  - rscadd: "You can also tuck the nuclear authentication disk into bed. Sleep tight, disky."
