@@ -1,3 +1,4 @@
+///This element allows something to be when crossed, for example for cockroaches.
 /datum/element/squashable
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
@@ -30,7 +31,7 @@
 	UnregisterSignal(target, COMSIG_MOVABLE_CROSSED)
 
 ///Handles the squashing of the mob
-/datum/element/squashable/proc/OnCrossed(mob/living/target, atom/movable/AM)
+/datum/element/squashable/proc/OnCrossed(mob/living/target, atom/movable/crossing_movable)
 	SIGNAL_HANDLER
 
 
@@ -40,10 +41,10 @@
 	var/should_squash = prob(squash_chance)
 
 	if(should_squash && on_squash_callback)
-		if(on_squash_callback.Invoke(AM))
+		if(on_squash_callback.Invoke(crossing_movable))
 			return //Everything worked, we're done!
-	if(isliving(AM))
-		var/mob/living/crossing_mob = AM
+	if(isliving(crossing_movable))
+		var/mob/living/crossing_mob = crossing_movable
 		if(crossing_mob.mob_size > MOB_SIZE_SMALL && !(crossing_mob.movement_type & FLYING))
 			if(HAS_TRAIT(crossing_mob, TRAIT_PACIFISM))
 				crossing_mob.visible_message("<span class='notice'>[crossing_mob] carefully steps over [target].</span>", "<span class='notice'>You carefully step over [target] to avoid hurting it.</span>")
@@ -53,9 +54,9 @@
 				Squish(target)
 			else
 				target.visible_message("<span class='notice'>[target] avoids getting crushed.</span>")
-	else if(isstructure(AM))
+	else if(isstructure(crossing_movable))
 		if(should_squash)
-			AM.visible_message("<span class='notice'>[target] is crushed under [AM].</span>")
+			crossing_movable.visible_message("<span class='notice'>[target] is crushed under [crossing_movable].</span>")
 			Squish(target)
 		else
 			target.visible_message("<span class='notice'>[target] avoids getting crushed.</span>")

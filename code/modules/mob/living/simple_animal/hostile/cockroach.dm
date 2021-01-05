@@ -39,7 +39,7 @@
 	make_squashable()
 
 /mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
-	AddElement(/datum/element/squashable, 50, 1)
+	AddElement(/datum/element/squashable, squash_chance = 50, squash_damaged = 1)
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
@@ -95,11 +95,10 @@
 	AddComponent(/datum/component/caltrop, 10, 15, 100, (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach/make_squashable()
-	AddElement(/datum/element/squashable, 100, 1, null, /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
+	AddElement(/datum/element/squashable, squash_chance = 100, squahs_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
 
 ///Proc used to override the squashing behavior of the normal cockroach.
-/mob/living/simple_animal/hostile/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, atom/movable/AM)
-	var/mob/living/living_target = AM
+/mob/living/simple_animal/hostile/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
 	if(!istype(living_target))
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
 	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
