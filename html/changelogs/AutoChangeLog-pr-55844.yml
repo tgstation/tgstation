@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Monkey mutation remembers your species across transformations once again."
