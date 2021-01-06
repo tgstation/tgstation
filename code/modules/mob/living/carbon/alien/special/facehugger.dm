@@ -208,7 +208,7 @@
  * * target - the wearer of the facehugger and the one to be impregnated
  */
 /obj/item/clothing/mask/facehugger_item/proc/Impregnate(mob/living/carbon/target)
-	if(!target || target.stat == DEAD || !src || src?.facehugger_mob?.sterile)
+	if(QDELETED(target) || target.stat == DEAD || facehugger_mob?.sterile)
 		return
 
 	var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
