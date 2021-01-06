@@ -813,7 +813,6 @@
 			if(!AI)
 				to_chat(user, "<span class='warning'>No AI selected.</span>")
 				return
-			for(var/mob/living/silicon/ai in occupants)
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = TRUE
 			AI.radio_enabled = FALSE
