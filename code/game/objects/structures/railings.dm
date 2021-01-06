@@ -5,7 +5,7 @@
 	icon_state = "railing"
 	density = TRUE
 	anchored = TRUE
-	climbable = TRUE
+	var/climbable = TRUE
 	///Initial direction of the railing.
 	var/ini_dir
 
@@ -21,6 +21,8 @@
 /obj/structure/railing/Initialize()
 	. = ..()
 	ini_dir = dir
+	if(climbable)
+		AddElement(/datum/element/climbable)
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()

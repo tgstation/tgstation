@@ -166,7 +166,6 @@
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
-	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
 	return TRUE
@@ -217,7 +216,6 @@
 		return FALSE
 	take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
-	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
 	update_icon()
