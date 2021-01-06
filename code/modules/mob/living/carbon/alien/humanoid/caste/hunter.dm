@@ -25,8 +25,8 @@
 	face_atom(A)
 	if(leap_on_click)
 		leap_at(A)
-	else
-		..()
+		return
+	return ..()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!leaping)
