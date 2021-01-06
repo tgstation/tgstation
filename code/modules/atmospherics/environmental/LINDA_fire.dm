@@ -240,13 +240,6 @@
 		var/mob/living/L = AM
 		L.fire_act(temperature, volume)
 
-// for special backblast hotspots
-/obj/effect/hotspot/backblast/Crossed(atom/movable/AM, oldLoc)
-	..()
-	if(isliving(AM))
-		var/mob/living/L = AM
-		L.adjust_fire_stacks(3) // +3 firestacks on top of the normal +3
-
 /obj/effect/hotspot/singularity_pull()
 	return
 
