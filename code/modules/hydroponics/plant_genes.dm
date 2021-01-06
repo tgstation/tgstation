@@ -183,6 +183,11 @@
 	reagent_id = /datum/reagent/consumable/liquidelectricity
 	rate = 0.1
 
+/datum/plant_gene/reagent/carbon
+	name = "Carbon"
+	reagent_id = /datum/reagent/carbon
+	rate = 0.1
+
 // Various traits affecting the product.
 /datum/plant_gene/trait
 	var/rate = 0.05
@@ -573,7 +578,7 @@
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.
- * This requires nutriment to fuel. 1u nutriment = 100 K.
+ * This requires nutriment to fuel. 1u nutriment = 25 K.
  */
 /datum/plant_gene/trait/chem_heating
 	name = "Endothermic Activity"
@@ -586,7 +591,7 @@
 
 /**
  * This trait is the opposite - it cools down the plant's chemical contents.
- * This requires nutriment to fuel. 1u nutriment = -25 K.
+ * This requires nutriment to fuel. 1u nutriment = -5 K.
  */
 /datum/plant_gene/trait/chem_cooling
 	name = "Exothermic Activity"

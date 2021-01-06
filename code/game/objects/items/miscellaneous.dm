@@ -408,3 +408,8 @@
 	name = "poppy bouquet"
 	desc = "A bouquet of poppies. You feel loved just looking at it."
 	icon_state = "poppybouquet"
+
+/obj/item/bouquet/rose
+	name = "rose bouquet"
+	desc = "A bouquet of roses. A bundle of love."
+	icon_state = "rosebouquet"

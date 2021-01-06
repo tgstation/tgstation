@@ -1818,7 +1818,7 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains fourteen different seeds."
+	desc = "Big things have small beginnings. Contains fifteen different seeds."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/seeds/chili,
 					/obj/item/seeds/cotton,
@@ -1831,6 +1831,7 @@
 					/obj/item/seeds/wheat/rice,
 					/obj/item/seeds/carrot,
 					/obj/item/seeds/sunflower,
+					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
 					/obj/item/seeds/sugarcane)
