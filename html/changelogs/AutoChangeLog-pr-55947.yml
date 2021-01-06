@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - tweak: "sorted some of the unsorted chat types"
