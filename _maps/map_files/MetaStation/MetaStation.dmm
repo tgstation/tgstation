@@ -5334,9 +5334,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 1
 	},
-/obj/structure/chair/sofa/corp/right{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "amE" = (
@@ -5355,9 +5352,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
-	},
-/obj/structure/chair/sofa/corp/left{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -7928,8 +7922,20 @@
 /area/security/main)
 "asI" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/computer/security{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/item/paper/crumpled{
+	info = "<i>Hey, assholes. We don't need a couch in the meeting room, I threw it out the airlock. I don't care if it's real leather, go patrol like you're paid to do instead of cycling through cameras all shift!";
+	name = "old, crumpled note"
+	},
+/turf/open/floor/plasteel,
 /area/security/main)
 "asJ" = (
 /obj/machinery/computer/secure_data{
@@ -64594,11 +64600,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"exP" = (
-/obj/structure/cable,
-/obj/machinery/computer/security,
-/turf/open/floor/plating,
-/area/security/main)
 "eyo" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/cable,
@@ -69844,6 +69845,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"lhi" = (
+/obj/structure/chair/sofa/corp/right{
+	desc = "Looks like someone threw it out. Covered in donut crumbs.";
+	name = "couch"
+	},
+/turf/open/space/basic,
+/area/space)
 "lhQ" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -71323,7 +71331,7 @@
 /area/engine/break_room)
 "nnB" = (
 /obj/structure/cable,
-/obj/machinery/computer/secure_data,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/main)
 "noe" = (
@@ -73690,6 +73698,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"qlL" = (
+/obj/structure/chair/sofa/corp/left{
+	desc = "Looks like someone threw it out. Covered in donut crumbs.";
+	name = "couch"
+	},
+/turf/open/space/basic,
+/area/space)
 "qmy" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -76965,6 +76980,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
+"uoU" = (
+/obj/structure/cable,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 "uqX" = (
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
@@ -110831,7 +110859,7 @@ aoF
 bni
 ars
 asI
-exP
+nnB
 amD
 awq
 aHE
@@ -111087,7 +111115,7 @@ bnh
 aoG
 bni
 ars
-asI
+uoU
 nnB
 amI
 awr
@@ -116208,7 +116236,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lhi
 aag
 aaa
 aaa
@@ -116465,7 +116493,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+qlL
 aag
 aaa
 aaa
@@ -116722,8 +116750,8 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aai
+anT
+anT
 aaf
 aaf
 aaf
@@ -116979,7 +117007,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aqB
 aaa
 aaa
 aaa
