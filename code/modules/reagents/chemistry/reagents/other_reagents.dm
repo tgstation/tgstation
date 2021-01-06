@@ -2254,6 +2254,7 @@
 	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
 
 /datum/reagent/yuck/on_mob_add(mob/living/L)
+	..()
 	if(HAS_TRAIT(L, TRAIT_NOHUNGER)) //they can't puke
 		holder.del_reagent(type)
 
@@ -2372,6 +2373,7 @@
 
 /datum/reagent/gravitum/on_mob_add(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
+	..()
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
 	L.RemoveElement(/datum/element/forced_gravity, 0)

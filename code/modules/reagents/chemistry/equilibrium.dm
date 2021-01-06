@@ -207,13 +207,6 @@ Instant reactions AREN'T handled here. See holder.dm
 	//keep track of the current reacted amount
 	reactedVol = reactedVol + addChemAmmount
 
-	//conditions are updated at the start - so if you go over at the last tick, you should be safe.
-	/*
-	if(round(reactedVol, CHEMICAL_VOLUME_MINIMUM) >= round(targetVol, CHEMICAL_VOLUME_MINIMUM))
-		debug_world("fermiEnd due to volumes: React:[round(reactedVol, CHEMICAL_VOLUME_MINIMUM)] vs Target:[round(targetVol, CHEMICAL_VOLUME_MINIMUM)]")
-		toDelete = TRUE	   
-		*/
-
 	//Give a chance of sounds
 	if (prob(20))
 		holder.my_atom.visible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]</span>")
@@ -222,7 +215,7 @@ Instant reactions AREN'T handled here. See holder.dm
 
 	//Make sure things are limited
 	holder.pH = clamp(holder.pH, 0, 14)
-	holder.update_total(FALSE)//do NOT recalculate reactions
+	holder.update_total()//do NOT recalculate reactions
 	return
 
 //Currently calculates it irrespective of required reagents at the start

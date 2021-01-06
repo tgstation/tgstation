@@ -918,7 +918,7 @@
 		return FALSE
 
 /// Updates [/datum/reagents/var/total_volume]
-/datum/reagents/proc/update_total(update_reactions = TRUE)
+/datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
 	total_volume = 0
 	for(var/reagent in cached_reagents)

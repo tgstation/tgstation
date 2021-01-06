@@ -1970,6 +1970,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/data, amount)
+	..()
 	var/diff = (amount/volume)
 	if(diff < 1)
 		color = BlendRGB(color, data["color"], diff/2) //The percentage difference over two, so that they take average if equal.
