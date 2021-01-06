@@ -114,7 +114,8 @@
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if(!client)
 		return
-	for(var/mob/living/livingbeing in GLOB.mob_living_list)
+	for(var/lb in GLOB.mob_living_list)
+		var/mob/living/livingbeing = lb
 		if(!HAS_TRAIT(livingbeing, TRAIT_XENO_HOST))
 			return
 		var/obj/item/organ/body_egg/alien_embryo/embryo = livingbeing.getorgan(/obj/item/organ/body_egg/alien_embryo)
