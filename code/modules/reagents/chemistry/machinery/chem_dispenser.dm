@@ -29,6 +29,7 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
+	var/pHaccuracy = 1
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -196,18 +197,20 @@
 	var/beakerCurrentVolume = 0
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "volume" = round(R.volume, 0.01), "pH" = R.pH, "purity" = R.purity))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
 	if (beaker)
-		data["beakerCurrentVolume"] = beakerCurrentVolume
+		data["beakerCurrentVolume"] = round(beakerCurrentVolume, 0.01)
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
+		data["beakerCurrentpH"] = round(beaker.reagents.pH, pHaccuracy)
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
 		data["beakerTransferAmounts"] = null
+		data["beakerCurrentpH"] = null
 
 	var/chemicals[0]
 	var/is_hallucinating = FALSE
@@ -219,7 +222,7 @@
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name))))
+			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "pH" = temp.pH, "pHCol" = ConvertpHToCol(temp.pH))))
 	data["chemicals"] = chemicals
 	data["recipes"] = saved_recipes
 
@@ -390,6 +393,7 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
+		pHaccuracy = 10**(-(M.rating-1))
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -402,6 +406,32 @@
 		beaker = new_beaker
 	update_icon()
 	return TRUE
+
+//Converts the pH into a tgui readable color
+/obj/machinery/chem_dispenser/proc/ConvertpHToCol(pH)
+	switch(pH)
+		if(-INFINITY to 1)
+			return "red"
+		if(1 to 2)
+			return "orange"
+		if(2 to 3)
+			return "average"
+		if(3 to 4)
+			return "yellow" 
+		if(4 to 5)
+			return "olive"
+		if(5 to 6)
+			return "good"
+		if(6 to 8)
+			return "green"
+		if(8 to 9.5)
+			return "teal"
+		if(9.5 to 11)
+			return "blue"
+		if(11 to 12.5)
+			return "violet"
+		if(12.5 to INFINITY)
+			return "purple"
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null

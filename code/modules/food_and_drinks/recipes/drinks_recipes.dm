@@ -393,6 +393,8 @@
 	mix_message = "The color changes as the mixture blends smoothly."
 	required_temp = 300
 	is_cold_recipe = TRUE
+	OptimalTempMax	= 50
+	overheatTemp = 5
 
 /datum/chemical_reaction/hot_coco
 	results = list(/datum/reagent/consumable/hot_coco = 6)

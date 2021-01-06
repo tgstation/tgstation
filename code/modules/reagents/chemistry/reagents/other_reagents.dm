@@ -2458,10 +2458,11 @@
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	pH = 0
-	var/strength = 1.5
+	data = list("pH" = 0)
+	var/strength = 1
 
 //Consumes self on addition and shifts pH
-/datum/reagent/acidic_buffer/on_transfer(atom/A, methods=INGEST, trans_volume)
+/datum/reagent/acidic_buffer/on_new(list/data)
 	. = ..()
 	if(!holder)
 		return 
@@ -2486,9 +2487,10 @@
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	pH = 14
-	var/strength = 1.5
+	data = list("pH" = 14)
+	var/strength = 1
 
-/datum/reagent/basic_buffer/on_transfer(atom/A, methods=INGEST, trans_volume)
+/datum/reagent/basic_buffer/on_new(list/data)
 	. = ..()
 	if(!holder)
 		return 
@@ -2497,7 +2499,7 @@
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return 
 	if(LAZYLEN(holder.reagent_list) == 1)
-		return 
+		return
 	if(holder.pH > pH)
 		holder.my_atom.visible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</b></span>")
 		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, 1)

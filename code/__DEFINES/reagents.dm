@@ -65,10 +65,3 @@
 #define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough
 #define REACTION_CLEAR_RETAIN		(1<<2)	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
 #define REACTION_INSTANT            (1<<3)  //Used to create instant reactions
-
-//Explosion flags for using different explosive handlers
-#define FERMI_TYPE_MIXED            (1<<0)
-#define FERMI_TYPE_INVERTSMOKE      (1<<1)
-#define FERMI_TYPE_SMOKE            (1<<2)
-#define FERMI_REDUCE_YIELD          (1<<3)
-#define FERMI_REDUCE_PURITY         (1<<4)

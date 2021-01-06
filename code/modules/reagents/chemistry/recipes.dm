@@ -22,7 +22,7 @@
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
 	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
-	var/required_temp = 0
+	var/required_temp = 100
 	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
 	var/is_cold_recipe = FALSE
 	///The message shown to nearby people upon mixing, if applicable
@@ -32,16 +32,16 @@
 
 	//FermiChem!
 	//var/OptimalTempMin 		= 200 			// Lower area of bell curve for determining heat based rate reactions (TO REMOVE)
-	var/OptimalTempMax			= 800			// Upper end for above
+	var/OptimalTempMax			= 500			// Upper end for above
 	var/overheatTemp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
-	var/OptimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/OptimalpHMax 			= 10        	// Higest value for above
+	var/OptimalpHMin 			= 6         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/OptimalpHMax 			= 9	        	// Higest value for above
 	var/ReactpHLim 				= 3         	// How far out pH wil react, giving impurity place (Exponential phase)
 	var/CurveSharpT 			= 2         	// How sharp the temperature exponential curve is (to the power of value)
 	var/CurveSharppH 			= 2         	// How sharp the pH exponential curve is (to the power of value)
 	var/ThermicConstant 		= 1         	// Temperature change per 1u produced
-	var/HIonRelease 			= 0.1       	// pH change per 1u reaction
-	var/RateUpLim 				= 10			// Optimal/max rate possible if all conditions are perfect
+	var/HIonRelease 			= 0.01       	// pH change per 1u reaction
+	var/RateUpLim 				= 20			// Optimal/max rate possible if all conditions are perfect
 	var/PurityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 
@@ -78,38 +78,89 @@
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
-//Called for every reaction step
+/**
+ * Stuff that occurs in the middle of a reaction
+ * Only procs DURING a reaction
+ * If reactionFlags & REACTION_INSTANT then this isn't called
+ *
+ * Arguments:
+ * * holder - the datum that holds this reagent, be it a beaker or anything else
+ * * created_volume - volume created per step
+ * * added_purity - how pure the created volume is per step
+ */
 /datum/chemical_reaction/proc/reaction_step(datum/reagents/holder, added_volume, added_purity)
 	return
 
-//Called when reaction STOP_PROCESSING
-/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, var/atom/my_atom, reactVol)
+/**
+ * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).
+ * Only procs at the end of reaction
+ * If reactionFlags & REACTION_INSTANT then this isn't called
+ * if reactionFlags REACTION_CLEAR_IMPURE then the impurity chem is handled here, producing the result in the beaker instead of in a mob
+ * Likewise for REACTION_CLEAR_INVERSE the inverse chem is produced at the end of the reaction in the beaker
+ * You should be calling ..() if you're writing a child function of this proc otherwise purity methods won't work correctly
+ *
+ * Proc where the additional magic happens.
+ * You dont want to handle mob spawning in this since there is a dedicated proc for that.client
+ * Arguments:
+ * * holder - the datum that holds this reagent, be it a beaker or anything else
+ * * created_volume - volume created per step
+ * * added_purity - how pure the created volume is per step
+ */
+/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, react_vol, react_purity)
 	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
-			var/datum/reagent/R = my_atom.reagents.has_reagent(id)
+			var/datum/reagent/R = holder.has_reagent(id)
 			if(!R || R.purity == 1)
 				continue
 
 			var/cached_volume = R.volume
 			if(reactionFlags == REACTION_CLEAR_INVERSE && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
-					my_atom.reagents.remove_reagent(R.type, cached_volume, FALSE)
-					my_atom.reagents.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
+					holder.remove_reagent(R.type, cached_volume, FALSE)
+					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
 
 			else if (reactionFlags == REACTION_CLEAR_IMPURE && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
-				my_atom.reagents.remove_reagent(R.type, (impureVol), FALSE)
-				my_atom.reagents.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
+				holder.remove_reagent(R.type, (impureVol), FALSE)
+				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
 				R.creation_purity = R.purity
 				R.purity = 1
 
-//When a reaction's temperature gets above it's limit
-/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/reaction)
+
+
+/**
+ * Occurs when a reation is overheated (i.e. past it's overheatTemp)
+ * Will be called every tick in the reaction that it is overheated
+ * If you want this to be a once only proc (i.e. the reaction is stopped after) set reaction.toDelete = TRUE
+ * The above is useful if you're writing an explosion
+ * By default the parent proc will reduce the final yield slightly. If you don't want that don't add ..()
+ *
+ * Arguments:
+ * * holder - the datum that holds this reagent, be it a beaker or anything else
+ * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
+ */
+/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+	for(var/datum/reagent/id in results)
+		var/datum/reagent/R = holder.get_reagent(id)
+		if(!R)
+			return
+		R.volume *= 0.01 //Slowly remove yield
 	return
 
-//When purity of a reaction gets below PurityMin 
-/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/reaction)
-	overheated(holder) //Defaults to overheated mechanics
+/**
+ * Occurs when a reation is too impure (i.e. it's below PurityMin)
+ * Will be called every tick in the reaction that it is too impure
+ * If you want this to be a once only proc (i.e. the reaction is stopped after) set reaction.toDelete = TRUE
+ * The above is useful if you're writing an explosion
+ * By default the parent proc will reduce the purity of all reagents in the beaker slightly. If you don't want that don't add ..()
+ *
+ * Arguments:
+ * * holder - the datum that holds this reagent, be it a beaker or anything else
+ * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
+ */
+/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+	for(var/datum/reagent/R in holder.reagent_list)
+		R.purity -= 0.01 //slowly reduce purity of other reagents
 	return
 
 /**

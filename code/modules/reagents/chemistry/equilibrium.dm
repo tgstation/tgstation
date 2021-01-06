@@ -23,6 +23,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(!calculate_yield()) //maybe remove
 		toDelete = TRUE
 		return
+	/* doesn't play nice atm
 	if(reaction.RateUpLim > targetVol) //A catch all check incase I miss some reactions
 		holder.instant_react(reaction)
 		toDelete = TRUE
@@ -30,6 +31,7 @@ Instant reactions AREN'T handled here. See holder.dm
 		SEND_SIGNAL(holder, COMSIG_REAGENTS_REACTED, 1)
 		holder.update_total(FALSE)
 		return
+	*/
 	Cr.on_reaction(holder, targetVol) 
 	SSblackbox.record_feedback("tally", "chemical_starts", 1, "[reaction.type] attempts")
 
@@ -38,9 +40,16 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(holder.chem_temp > reaction.overheatTemp)//This is here so grenades can be made
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[reaction.type] overheats"))
 		reaction.overheated(holder, src)//Though the proc will likely have to be created to be an explosion.
-	if(holder.chem_temp < reaction.required_temp) //This check is done before in holder, BUT this is here to ensure if it dips under it'll stop
-		debug_world("[reaction.type] Failed initial temp checks")
-		return FALSE //Not hot enough
+
+	if(!reaction.is_cold_recipe)
+		if(holder.chem_temp < reaction.required_temp) //This check is done before in holder, BUT this is here to ensure if it dips under it'll stop
+			debug_world("[reaction.type] Failed initial temp checks")
+			return FALSE //Not hot enough
+	else
+		if(holder.chem_temp > reaction.required_temp)
+			debug_world("[reaction.type] Failed initial cold temp checks")
+			return FALSE //Not cold enough
+			
 	if(! ((holder.pH >= (reaction.OptimalpHMin - reaction.ReactpHLim)) && (holder.pH <= (reaction.OptimalpHMax + reaction.ReactpHLim)) ))//To prevent pointless reactions
 		debug_world("[reaction.type] Failed initial pH checks")
 		return FALSE
@@ -54,14 +63,13 @@ Instant reactions AREN'T handled here. See holder.dm
 		return FALSE
 	//Are we overheated?
 	if(holder.chem_temp > reaction.overheatTemp)
+		debug_world("[reaction.type] Overheated")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[reaction.type] overheats"))
 		reaction.overheated(holder, src)
 
 	//set up catalyst checks
-	var/catalystCheck = TRUE
+	var/total_matching_catalysts = 0
 	var/total_matching_reagents = 0
-	if(reaction.required_catalysts.len)
-		catalystCheck = FALSE
 
 	//If the product/reactants are too impure
 	for(var/datum/reagent/R in holder.reagent_list)
@@ -69,31 +77,38 @@ Instant reactions AREN'T handled here. See holder.dm
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[reaction.type] overly impure reactions"))
 			reaction.overly_impure(holder, src)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
-		if(!catalystCheck)
-			for(var/datum/reagent/P in reaction.required_catalysts)
-				if(P.type == R.type)
-					catalystCheck = TRUE
+		for(var/P in reaction.required_catalysts)
+			if(P == R.type)
+				total_matching_catalysts++
 
-		for(var/datum/reagent/B in reaction.required_reagents)
-			if(B.type == R.type)
+		for(var/B in reaction.required_reagents)
+			if(B == R.type) // required_reagents = list(/datum/reagent/consumable/sugar = 1) /datum/reagent/consumable/sugar
 				total_matching_reagents++
 	
-	if(!total_matching_reagents == reaction.required_reagents.len)
+	if(!(total_matching_reagents == reaction.required_reagents.len))
 		debug_world("[reaction.type] Failed reagent checks")
 		return FALSE
 
-	if(!catalystCheck)
+	if(!(total_matching_catalysts == reaction.required_catalysts.len))
 		debug_world("[reaction.type] Failed catalyst checks")
 		return FALSE
 
+	/* moved to main handler
 	//If we're too cold
-	if(holder.chem_temp < reaction.required_temp) 
-		debug_world("[reaction.type] Failed temp checks")
-		return FALSE 
-	//Ensure we're within pH bounds
-	if(! ((holder.pH >= (reaction.OptimalpHMin - reaction.ReactpHLim)) && (holder.pH <= (reaction.OptimalpHMax + reaction.ReactpHLim)) )) //This could potentially be removed to reduce overhead
-		debug_world("[reaction.type] Failed pH checks")
-		return FALSE
+	if(!reaction.is_cold_recipe)
+		if(holder.chem_temp < reaction.required_temp) //This check is done before in holder, BUT this is here to ensure if it dips under it'll stop
+			debug_world("[reaction.type] Failed initial temp checks")
+			return FALSE //Not hot enough
+	else //or too hot
+		if(holder.chem_temp > reaction.required_temp)
+			debug_world("[reaction.type] Failed initial cold temp checks")
+			return FALSE //Not cold enough
+	*/
+
+	//Ensure we're within pH bounds - Disables reactions outside of the pH range
+	//if(! ((holder.pH >= (reaction.OptimalpHMin - reaction.ReactpHLim)) && (holder.pH <= (reaction.OptimalpHMax + reaction.ReactpHLim)) )) //This could potentially be removed to reduce overhead
+		//debug_world("[reaction.type] Failed pH checks")
+		//return FALSE
 	
 	//All good!
 	return TRUE
@@ -159,12 +174,26 @@ Instant reactions AREN'T handled here. See holder.dm
 		WARNING("[holder.my_atom] | [reaction.type] attempted to determine FermiChem pH for '[reaction.type]' which broke for some reason! ([usr])")
 
 	//Calculate DeltaT (Deviation of T from optimal)
-	if (cached_temp < reaction.OptimalTempMax && cached_temp >= reaction.required_temp)
-		deltaT = (((cached_temp - reaction.required_temp)**reaction.CurveSharpT)/((reaction.OptimalTempMax - reaction.required_temp)**reaction.CurveSharpT))
-	else if (cached_temp >= reaction.OptimalTempMax)
-		deltaT = 1
+	if(!reaction.is_cold_recipe)
+		if (cached_temp < reaction.OptimalTempMax && cached_temp >= reaction.required_temp)
+			deltaT = (((cached_temp - reaction.required_temp)**reaction.CurveSharpT)/((reaction.OptimalTempMax - reaction.required_temp)**reaction.CurveSharpT))
+		else if (cached_temp >= reaction.OptimalTempMax)
+			deltaT = 1
+		else
+			debug_world("[reaction.type] Failed temp checks")
+			deltaT = 0
+			toDelete = TRUE
+			return
 	else
-		deltaT = 0
+		if (cached_temp > reaction.OptimalTempMax && cached_temp <= reaction.required_temp)
+			deltaT = (((cached_temp - reaction.required_temp)**reaction.CurveSharpT)/((reaction.OptimalTempMax - reaction.required_temp)**reaction.CurveSharpT))
+		else if (cached_temp <= reaction.OptimalTempMax)
+			deltaT = 1
+		else
+			debug_world("[reaction.type] Failed cold temp checks")
+			deltaT = 0
+			toDelete = TRUE
+			return
 
 	purity = (deltapH)//set purity equal to pH offset
 
@@ -188,7 +217,7 @@ Instant reactions AREN'T handled here. See holder.dm
 		removeChemAmmount = round(removeChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
 		debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*reaction.results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [reaction.results[P]], adding [addChemAmmount]")
 		//create the products
-		holder.add_reagent(P, (addChemAmmount), null, cached_temp, purity, calculate_reactions = FALSE) //Calculate reactions only recalculates if a NEW reagent is added
+		holder.add_reagent(P, (addChemAmmount), null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
 		SSblackbox.record_feedback("tally", "fermi_chem", addChemAmmount, P)
 		TotalStep += addChemAmmount//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make targetVol in the calculate yield equal to all of the products, and make the vol check add totalStep)
 	
@@ -228,7 +257,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			cachedPurity += R.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case
-		CRASH("No reactants found mid reaction for [C.type], how it got here is beyond me. Beaker: [holder.my_atom]")
+		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cachedPurity/i
 
 

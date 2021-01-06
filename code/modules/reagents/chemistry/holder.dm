@@ -111,7 +111,7 @@
  * * added_pH - override to force a pH when added
  * * ignore_pH - bypass the pH update when adding a reagent, in an addition to an empty beaker this will default to 7
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, added_pH, no_react = 0, ignore_pH = FALSE, calculate_reactions = TRUE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, added_pH, no_react = 0, ignore_pH = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -165,7 +165,7 @@
 				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
-			if(!no_react && !isReacting) //I dislike how this is done, but I'm not sure how else to implement it. To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
+			if(!no_react && !isReacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return TRUE
 
@@ -218,12 +218,12 @@
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
 			amount = clamp(amount, 0, R.volume)
+			if(!ignore_pH && total_volume)
+				pH = clamp((((pH - R.pH) / total_volume) * amount) + pH, 0, 14) 
 			R.volume -= amount
-			if(!ignore_pH)
-				pH = clamp(((pH * (total_volume-(amount))+(R.pH * (R.volume)) )/total_volume), 0, 14) //CHECK HERE incase tg is different (linear because otherwise vol/power cost is too high)
+			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
-				update_total()
-				//handle_reactions() - might not be needed
+				handle_reactions() 
 			//Moving this so color.dm stops runtiming
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 				
@@ -742,13 +742,16 @@
 			var/required_temp = C.required_temp
 			var/is_cold_recipe = C.is_cold_recipe
 			var/meets_temp_requirement = FALSE
+			var/granularity = 1
+			if(!C.reactionFlags & REACTION_INSTANT)
+				granularity = 0.01
 
 			for(var/B in cached_required_reagents)
-				if(!has_reagent(B, cached_required_reagents[B]))
+				if(!has_reagent(B, (cached_required_reagents[B]*granularity)))
 					break
 				total_matching_reagents++
 			for(var/B in cached_required_catalysts)
-				if(!has_reagent(B, cached_required_catalysts[B]))
+				if(!has_reagent(B, (cached_required_catalysts[B]*granularity)))
 					break
 				total_matching_catalysts++
 			if(cached_my_atom)
@@ -803,9 +806,9 @@
 					reaction_list -= E
 				debug_world("Setting up reaction for [selected_reaction.type]")
 
-		if(reaction_list.len)		
-			isReacting = TRUE //We've entered the reaction phase
-			START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
+	if(reaction_list.len)		
+		isReacting = TRUE //We've entered the reaction phase
+		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
 		
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
@@ -813,7 +816,7 @@
 
 /datum/reagents/process(delta_time)
 	if(!isReacting)
-		end_reaction()
+		finish_reacting()
 	
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
@@ -822,19 +825,7 @@
 	for(var/datum/equilibrium/E in reaction_list) 
 		//if it's been flagged to delete
 		if(E.toDelete)
-			if(GLOB.Debug2)
-				message_admins("(fermichem) Reaction [E.reaction] finished reactedVol:[E.reactedVol], targetVol:[E.targetVol]")
-			//end reaction proc
-			E.reaction.reaction_finish(src, my_atom, E.reactedVol)
-			mix_message += "[E.reaction.mix_message] "
-			if(E.reaction.mix_sound)
-				playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
-			SSblackbox.record_feedback("tally", "chemical_ends", 1, "[E.reaction.type] completions")
-			qdel(E)
-			reaction_list -= E
-			//Reaction occured
-			update_total(FALSE)
-			SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
+			mix_message += end_reaction(E)
 			continue
 		//otherwise continue reacting
 		E.react_timestep(delta_time)
@@ -843,9 +834,27 @@
 		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message]</span>")
 
 	if(!reaction_list.len)
-		end_reaction()
+		finish_reacting()
 
-/datum/reagents/proc/end_reaction()
+//This ends a single instance of an ongoing reaction
+/datum/reagents/proc/end_reaction(datum/equilibrium/E)
+	if(GLOB.Debug2)
+		message_admins("(fermichem) Reaction [E.reaction] finished reactedVol:[E.reactedVol], targetVol:[E.targetVol]")
+	//end reaction proc
+	E.reaction.reaction_finish(src, my_atom, E.reactedVol)
+	var/mix_message = "[E.reaction.mix_message] "
+	if(E.reaction.mix_sound)
+		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
+	SSblackbox.record_feedback("tally", "chemical_ends", 1, "[E.reaction.type] completions")
+	qdel(E)
+	reaction_list -= E
+	//Reaction occured
+	update_total(FALSE)
+	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
+	return mix_message
+
+//This stops the holder from processing at the end of a series of reactions (i.e. when all the equilibriums are completed)
+/datum/reagents/proc/finish_reacting()
 	STOP_PROCESSING(SSprocessing, src)
 	isReacting = FALSE
 	//Cap off values
@@ -857,8 +866,6 @@
 		RC.pH_check()
 	update_total()		
 	handle_reactions()
-
-
 
 //Old reaction mechanics, edited to work on one only
 //This is changed from the old 
@@ -899,7 +906,7 @@
 
 	selected_reaction.on_reaction(src, multiplier)
 
-//Possibly remove - see if multiple instant reactions is okay
+//Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 //Presently unused
 /datum/reagents/proc/get_priority_instant_reaction(list/possible_reactions)
 	if(possible_reactions.len)
@@ -907,7 +914,7 @@
 		//select the reaction with the most extreme temperature requirements
 		for(var/V in possible_reactions)
 			var/datum/chemical_reaction/competitor = V
-			if(selected_reaction.is_cold_recipe) //if there are no recipe conflicts, everything in possible_reactions will have this same value for is_cold_reaction. warranty void if assumption not met.
+			if(selected_reaction.is_cold_recipe) 
 				if(competitor.required_temp <= selected_reaction.required_temp)
 					selected_reaction = competitor
 			else

@@ -30,6 +30,8 @@
 	required_reagents = list(/datum/reagent/cryostylane = 3, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
 	required_temp = 47
 	is_cold_recipe = TRUE
+	OptimalTempMax	= 10
+	overheatTemp = 5
 
 /*****OXY*****/
 

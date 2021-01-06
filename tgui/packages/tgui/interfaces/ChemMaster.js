@@ -378,6 +378,9 @@ const AnalysisResults = (props, context) => {
         <LabeledList.Item label="State">
           {analyzeVars.state}
         </LabeledList.Item>
+        <LabeledList.Item label="pH">
+          {analyzeVars.pH}
+        </LabeledList.Item>
         <LabeledList.Item label="Color">
           <ColorBox color={analyzeVars.color} mr={1} />
           {analyzeVars.color}
