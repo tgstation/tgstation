@@ -239,6 +239,7 @@
 							A = new /mob/living/silicon/ai(loc, brain.laws, B)
 						else
 							A = new /mob/living/silicon/ai(loc, laws, B)
+							laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
