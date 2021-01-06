@@ -25,6 +25,7 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
+	uncuff()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
