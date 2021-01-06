@@ -14,7 +14,7 @@
 	var/datum/team/revolution/rev_team
 
 	/// What message should the player receive when they are being demoted, and the revolution has won?
-	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution!"
+	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution! Execute any head of staff and security should you find them alive."
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
 	. = ..()
