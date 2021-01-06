@@ -284,11 +284,22 @@
 	create_reagents(max_volume, NO_REACT)
 	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/c2/multiver="Multiver")
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Destroy()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/// Handles detaching signal hooks incase someone is crazy enough to make this edible.
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
+
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -477,9 +488,11 @@
 		send_byjax(chassis.occupants,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change(changetype)
-	. = ..()
+/// Updates the equipment info list when the reagents change. Eats signal args.
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
 	update_equip_info()
+	return NONE
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process(delta_time)

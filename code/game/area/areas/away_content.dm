@@ -31,3 +31,4 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	var/pacifist = TRUE // if when you enter this zone, you become a pacifist or not
 	var/death = FALSE // if when you enter this zone, you die
+	network_root_id = "VR"
