@@ -185,19 +185,19 @@
 			message = replacetextEx(message,regex(key,"g"), "[value]")
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
-/obj/item/clothing/mask/Madvilliansmask
-	name = "the MadVillian's mask"
-	desc = "A metal mask formerly owned by the Madvillian."
+/obj/item/clothing/mask/Madvillainsmask
+	name = "the Madvillain's mask"
+	desc = "A metal mask formerly owned by the Madvillain."
 	icon_state = "madvilliansmask"
 	inhand_icon_state = "madvilliansmask"
 	w_class = WEIGHT_CLASS_SMALL
 	modifies_speech = TRUE
 
-/obj/item/clothing/mask/Madvilliansmask/dropped(mob/M)
+/obj/item/clothing/mask/Madvillainsmask/dropped(mob/M)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
-/obj/item/clothing/mask/Madvilliansmask/handle_speech(datum/source, list/speech_args)
+/obj/item/clothing/mask/Madvillainsmask/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = " [message]"
