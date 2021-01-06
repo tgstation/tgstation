@@ -39,13 +39,20 @@
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 
+	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
+	/// Next pr after the network fix will have me refactor door interactions, so help me god.
+	var/id_tag = null
+	/// Network id. If set it can be found by either its hardware id or by the id tag if thats set.  It can also be
+	/// broadcasted to as long as the other guys network is on the same branch or above.
+	var/network_id = null
+
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))
 		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
 			return FALSE
 	return ..()
 
-/obj/Initialize()
+/obj/Initialize(mapload)
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
 	else if (!armor)
@@ -69,6 +76,20 @@
 	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
+
+	if(network_id)
+		var/area/A = get_area(src)
+		if(A)
+			if(!A.network_root_id)
+				log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
+				SSnetworks.lookup_area_root_id(A)
+			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
+		else
+			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
+			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
+		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
+
 
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))

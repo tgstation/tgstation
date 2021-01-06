@@ -3847,6 +3847,7 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/mining_scanner,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "yD" = (
@@ -4228,6 +4229,7 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/mining_scanner,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/suit/hooded/wintercoat,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Dt" = (

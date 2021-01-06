@@ -107,6 +107,8 @@
 		return
 	if(safety_mode)
 		return
+	if(iseffect(AM0))
+		return
 	if(!isturf(AM0.loc))
 		return //I don't know how you called Crossed() but stop it.
 
