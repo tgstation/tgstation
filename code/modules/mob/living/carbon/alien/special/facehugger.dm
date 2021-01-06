@@ -177,7 +177,7 @@
 
 /obj/item/clothing/mask/facehugger_item/dropped(mob/user)
 	. = ..()
-	if(!(src in user.contents) && src != null)
+	if(loc != user)
 		facehugger_mob.forceMove(get_turf(src))
 		Destroy()
 
