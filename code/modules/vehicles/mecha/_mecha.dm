@@ -802,8 +802,16 @@
 			if(!construction_state) //Mech must be in maint mode to allow carding.
 				to_chat(user, "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
 				return
-			if(!locate(AI) in occupants) //Mech does not have an AI for a pilot
+			var/list/ai_pilots = list()
+			for(var/mob/occupant in occupants)
+				if(isAI(occupant))
+					ai_pilots += occupant
+			if(!ai_pilots.len) //Mech does not have an AI for a pilot
 				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
+				return
+			AI = input(user,"Which AI do you wish to card?", "AI Selection") in sortList(ai_pilots)
+			if(!AI)
+				to_chat(user, "<span class='warning'>No AI selected.</span>")
 				return
 			for(var/mob/living/silicon/ai in occupants)
 			AI.ai_restore_power()//So the AI initially has power.
