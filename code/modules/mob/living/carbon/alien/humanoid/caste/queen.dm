@@ -67,7 +67,7 @@
 	AddAbility(new/obj/effect/proc_holder/alien/call_shuttle())
 	smallsprite.Grant(src)
 	SSshuttle.registerHostileEnvironment(src)
-	. = ..()
+	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
