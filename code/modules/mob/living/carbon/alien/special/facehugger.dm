@@ -243,7 +243,6 @@
 	mob_lamarr.name = name
 	mob_lamarr.desc = desc
 	mob_lamarr.sterile = TRUE
-	mob_lamarr.forceMove(src)
 	facehugger_mob = mob_lamarr
 
 /**
