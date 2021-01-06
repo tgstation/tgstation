@@ -132,7 +132,8 @@
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
 	if(!client)
 		return
-	for(var/image/image in client.images)
+	for(var/i in client.images)
+		var/image/image = i
 		var/searchfor = "infected"
 		if(findtext(image.icon_state, searchfor, 1, length(searchfor) + 1))
 			qdel(image)
