@@ -140,11 +140,11 @@
  * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
-	for(var/datum/reagent/id in results)
+	for(var/id in results)
 		var/datum/reagent/R = holder.get_reagent(id)
 		if(!R)
 			return
-		R.volume *= 0.01 //Slowly remove yield
+		R.volume *= 0.025 //Slowly lower yield
 	return
 
 /**
