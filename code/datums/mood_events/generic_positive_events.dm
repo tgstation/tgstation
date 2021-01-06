@@ -220,5 +220,5 @@
 	timeout = 1.5 MINUTES
 
 /datum/mood_event/gondola
-	description = "<span class='nicegreen'>You feel at peace and feel no need to make any sudden or rash action.</span>\n"
+	description = "<span class='nicegreen'>I feel at peace and feel no need to make any sudden or rash action.</span>\n"
 	mood_change = 6
