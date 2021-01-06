@@ -129,7 +129,7 @@
 					  /obj/item/clothing/glasses/sunglasses/garb = 2,
 					  /obj/item/clothing/glasses/blindfold = 1,
 					  /obj/item/clothing/mask/muzzle = 2,
-					  /obj/item/clothing/mask/Madvillainsmask = 1)
+					  /obj/item/clothing/mask/madvillainsmask = 1)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 				   /obj/item/clothing/head/pirate/captain = 2,
 				   /obj/item/clothing/under/rank/civilian/clown/rainbow = 1,
