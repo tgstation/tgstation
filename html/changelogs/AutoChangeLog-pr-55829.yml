@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue with player logs becoming confused when someone triggers multiple events within one second (like being attacked by two people at the same time) that would cause holes in the logs"

@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Skeletons, abductors, etherals and anyone without a tongue
-can no longer taste anything, or get food/drink moodlets."
-  - tweak: "People with the ageusia quirk will also not get any taste
-messages, or get food/drink moodlets."
