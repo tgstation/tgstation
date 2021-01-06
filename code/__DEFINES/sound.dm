@@ -34,7 +34,20 @@
 #define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
 
-
+#define AMBIENCE_GENERIC 0
+#define AMBIENCE_HOLY 1
+#define AMBIENCE_DANGER 2
+#define AMBIENCE_RUINS 3
+#define AMBIENCE_ENGI 4
+#define AMBIENCE_MINING 5
+#define AMBIENCE_MEDICAL 6
+#define AMBIENCE_SPOOKY 7
+#define AMBIENCE_SPACE 8
+#define AMBIENCE_MAINT 9
+#define AMBIENCE_AWAY 10
+#define AMBIENCE_REEBE 11 //unused
+#define AMBIENCE_CREEPY 12 //not to be confused with spooky
+ 
 //default byond sound environments
 #define SOUND_ENVIRONMENT_NONE -1
 #define SOUND_ENVIRONMENT_GENERIC 0
