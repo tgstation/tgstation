@@ -83,7 +83,7 @@
  * * target - the atom which is being checked for coupling
  */
 /mob/living/simple_animal/hostile/facehugger/proc/TryCoupling(atom/target)
-	if(!istype(target, /mob/living) || stat == DEAD || world.time < couple_timeout)
+	if(!isliving(target) || stat == DEAD || world.time < couple_timeout)
 		return FALSE
 	if(isanimal(target) || isalien(target) || iscyborg(target))
 		var/mob/living/living_target = target
