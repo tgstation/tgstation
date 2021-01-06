@@ -125,7 +125,7 @@
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
 	if(!added_purity)
-		added_purity = initial(D.purity) //Usually 1
+		added_purity = D.purity //Usually 1
 
 	if(!added_pH)
 		added_pH = D.pH
@@ -165,7 +165,7 @@
 				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
-			if(!no_react && calculate_reactions) //I dislike how this is done, but I'm not sure how else to implement it. To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
+			if(!no_react && !isReacting) //I dislike how this is done, but I'm not sure how else to implement it. To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return TRUE
 
@@ -485,7 +485,7 @@
 		if(current_reagent.type == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.type, amount, trans_data, src.chem_temp)
+			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, pH, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			break
 
@@ -811,7 +811,7 @@
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 		update_total()
 
-/datum/reagents/process()
+/datum/reagents/process(delta_time)
 	if(!isReacting)
 		end_reaction()
 	
@@ -837,7 +837,7 @@
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 			continue
 		//otherwise continue reacting
-		E.react_timestep()
+		E.react_timestep(delta_time)
 
 	if(mix_message)
 		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message]</span>")
@@ -876,7 +876,7 @@
 	for(var/P in selected_reaction.results)
 		multiplier = max(multiplier, 1) //this shouldn't happen ...
 		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
-		add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
+		add_reagent(P, cached_results[P]*multiplier, null, chem_temp, 1)
 
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)

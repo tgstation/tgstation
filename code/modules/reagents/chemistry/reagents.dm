@@ -85,9 +85,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
 	var/chemical_flags 
 	//impure chem values (see fermi_readme.dm for more details):
-	var/impure_chem						// What chemical path is made when metabolised as a function of purity
-	var/inverse_chem_val = 0			// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
-	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val
+	var/impure_chem		 = /datum/reagent/impure			// What chemical path is made when metabolised as a function of purity
+	var/inverse_chem_val = 0								// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
+	var/inverse_chem	 = /datum/reagent/impure/toxic		// What chem is metabolised when purity is below inverse_chem_val
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)

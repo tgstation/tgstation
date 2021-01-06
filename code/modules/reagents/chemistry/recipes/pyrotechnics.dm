@@ -1,6 +1,7 @@
 /datum/chemical_reaction/reagent_explosion
 	var/strengthdiv = 10
 	var/modifier = 0
+	reactionFlags = REACTION_INSTANT
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
 	explode(holder, created_volume)
