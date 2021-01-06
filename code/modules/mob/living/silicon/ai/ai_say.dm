@@ -50,10 +50,22 @@
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 #define VOX_DELAY 300
+#define DECTALK "ALTERNATIVE: DECTalk" // https://github.com/connornishijima/80speak/tree/master/dectalk, put MSVCRTd.dll and say.exe in data/dectalk, put dectalk.dll and dtalk_us.dic in the tgstation folder
+#define MSAPI "ALTERNATIVE: Microsoft Speech API" // https://github.com/p-groarke/wsay/releases/tag/v1.4, put wsay.exe in data/wsay
+#define SAMTTS "ALTERNATIVE: Software Automatic Mouth" // https://github.com/s-macke/SAM, put the exe and its shit in the data/sam folder
 /mob/living/silicon/ai/proc/announcement()
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
+	var/list/passed_characters = list()
+	if(world.system_type == MS_WINDOWS)
+		if(fexists("./data/dectalk/say.exe")) // DECTalk
+			passed_characters += DECTALK
+		if(fexists("./data/wsay/wsay.exe")) // Microsoft Speech API
+			passed_characters += MSAPI
+		if(fexists("./data/sam/sam.exe")) // Software Automatic Mouth
+			passed_characters += SAMTTS
+
 	var/datum/http_request/req = new()
 	req.prepare(RUSTG_HTTP_METHOD_GET, "https://api.15.ai/app/getCharacters")
 	req.begin_async()
@@ -61,15 +73,21 @@
 	var/datum/http_response/response = req.into_response()
 	if(!response.status_code)
 		to_chat(src, "Connection to 15.ai failed. Error: [req._raw_response]")
-		return
+		if(passed_characters.len)
+			to_chat(src, "Alternative VOX methods available, defaulting to those.")
+		else
+			return
 	if(response.status_code != 200)
 		to_chat(src, "Connection to 15.ai failed. Error code: [response.status_code]")
-		return
+		if(passed_characters.len)
+			to_chat(src, "Alternative VOX methods available, defaulting to those.")
+		else
+			return
 	var/list/usable_characters = json_decode(response["body"])
 	var/allowlist_is_denylist = CONFIG_GET(flag/vox_allowlist_is_denylist)
 	var/list/allowed_characters = CONFIG_GET(keyed_list/vox_voice_allowlist)
 	var/list/banned_characters = CONFIG_GET(keyed_list/vox_voice_denylist)
-	var/list/passed_characters = list()
+
 	if(!allowlist_is_denylist)
 		if(allowed_characters.len)
 			for(var/character_name in usable_characters)
@@ -77,7 +95,7 @@
 				if(allowed_characters[changed_name])
 					passed_characters += character_name
 		else
-			passed_characters = usable_characters
+			passed_characters += usable_characters
 	else
 		if(banned_characters.len)
 			passed_characters = usable_characters
@@ -86,7 +104,7 @@
 				if(banned_characters[changed_name])
 					passed_characters -= character_name
 		else
-			passed_characters = usable_characters
+			passed_characters += usable_characters
 	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in passed_characters
 	if(!character_to_use)
 		return
@@ -108,11 +126,11 @@
 		return
 	var/regex/check_for_bad_chars = regex("\[^a-zA-Z!?.,' :\]+")
 	if(check_for_bad_chars.Find(message))
-		to_chat(src, "<span class='notice'>These characters are not available on the 15.ai system: [english_list(check_for_bad_chars.group)].</span>")
+		to_chat(src, "<span class='notice'>These characters are not available on the 15.ai system: [english_list(check_for_bad_chars.match)].</span>")
 		return
 	last_announcement = message
 
-	announcing_vox = world.time + VOX_DELAY
+	//announcing_vox = world.time + VOX_DELAY
 
 	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
 	message_admins("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
@@ -122,91 +140,103 @@
 /proc/play_vox_word(message, character, mob/living/silicon/ai/speaker, z_level, mob/only_listener)
 	var/api_url = "https://api.15.ai/app/getAudioFile"
 	var/static/vox_voice_number = 0
-	var/datum/http_request/req = new()
 	vox_voice_number++
-	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"Contextual\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_[vox_voice_number].wav")))
-	req.begin_async()
-	UNTIL(req.is_complete())
-	var/datum/http_response/res = req.into_response()
-	if(res.status_code == 200)
-		var/full_name_file = "data/vox_[vox_voice_number].wav"
-		// Process the audio to match SS13 AI effects.
-		if(world.system_type == MS_WINDOWS)
-			shell(".\\data\\ffmpeg.exe \
-				    -nostats -loglevel 0 \
-				    -i .\\[full_name_file] \
-				    -i .\\sound\\effects\\SynthImpulse.wav \
-				    -i .\\sound\\effects\\RoomImpulse.wav \
-				    -filter_complex \" \
-				        \[0\] apad=pad_dur=2 \[in_1\]; \
-				        \[in_1\] asplit=2 \[in_1_1\] \[in_1_2\]; \
-				        \[in_1_1\] \[1\] afir=dry=10:wet=10 \[reverb_1\]; \
-				        \[in_1_2\] \[reverb_1\] amix=inputs=2:weights=8 1 \[mix_1\]; \
-				        \[mix_1\] asplit=2 \[mix_1_1\] \[mix_1_2\]; \
-				        \[mix_1_1\] \[2\] afir=dry=10:wet=10 \[reverb_2\]; \
-				        \[mix_1_2\] \[reverb_2\] amix=inputs=2:weights=10 1 \[mix_2\]; \
-				        \[mix_2\] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 \[out\]; \
-	        			\[out\] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled\" \
-	    			-vn -y .\\data\\vox_[vox_voice_number].mp3")
-		if(world.system_type == UNIX) // linux nonsense, just looks for ffmpeg
-			shell("ffmpeg -nostats -loglevel 0 \
-				    -nostats -loglevel 0 \
-				    -i ./[full_name_file] \
-				    -i ./sound/effects/SynthImpulse.wav \
-				    -i ./sound/effects/RoomImpulse.wav \
-				    -filter_complex \" \
-				        \[0\] apad=pad_dur=2 \[in_1\]; \
-				        \[in_1\] asplit=2 \[in_1_1\] \[in_1_2\]; \
-				        \[in_1_1\] \[1\] afir=dry=10:wet=10 \[reverb_1\]; \
-				        \[in_1_2\] \[reverb_1\] amix=inputs=2:weights=8 1 \[mix_1\]; \
-				        \[mix_1\] asplit=2 \[mix_1_1\] \[mix_1_2\]; \
-				        \[mix_1_1\] \[2\] afir=dry=10:wet=10 \[reverb_2\]; \
-				        \[mix_1_2\] \[reverb_2\] amix=inputs=2:weights=10 1 \[mix_2\]; \
-				        \[mix_2\] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 \[out\]; \
-	        			\[out\] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled\" \
-	    			-vn -y ./data/vox_[vox_voice_number].mp3")
+	var/full_name_file = "data\\vox_output.wav"
+	var/datum/http_request/req = new()
+	switch(character)
+		if(DECTALK)
+			world.shelleo(".\\data\\dectalk\\say.exe -w dectalk_output.wav \"[message]\"")
+			fcopy(".\\dectalk_output.wav", ".\\data\\vox_output.wav")
+		if(MSAPI)
+			fdel("data\\msapi_text.txt")
+			text2file(message, "data\\msapi_text.txt")
+			world.shelleo(".\\data\\wsay\\wsay.exe -i .\\data\\msapi_text.txt -o .\\data\\vox_output.wav")
+		if(SAMTTS)
+			world.shelleo(".\\data\\sam\\sam.exe -wav .\\data\\vox_output.wav \"[message]\"")
+		else // 15.AI
+			req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"Contextual\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_output.wav")))
+			req.begin_async()
+			UNTIL(req.is_complete())
+			var/datum/http_response/res = req.into_response()
+			if(res.status_code != 200)
+				if(!res.status_code)
+					log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
+					message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
+				else
+					log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+					message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+				to_chat(speaker, "The speech synthesizer failed to return audio. Your speech cooldown has been reset. Please try again.")
+				fdel("data/vox_output.wav")
+				fdel("data/vox_output.mp3")
+				speaker.announcing_vox = world.time
+				return 0
+	// Process the audio to match SS13 AI effects.
+	if(world.system_type == MS_WINDOWS)
+		world.shelleo(".\\data\\ffmpeg.exe \
+			    -nostats -loglevel 0 \
+			    -i .\\[full_name_file] \
+			    -i .\\sound\\effects\\SynthImpulse.wav \
+			    -i .\\sound\\effects\\RoomImpulse.wav \
+			    -filter_complex \" \
+			        \[0\] aresample=44100 \[re_1\]; \
+			        \[re_1\] apad=pad_dur=2 \[in_1\]; \
+			        \[in_1\] asplit=2 \[in_1_1\] \[in_1_2\]; \
+			        \[in_1_1\] \[1\] afir=dry=10:wet=10 \[reverb_1\]; \
+			        \[in_1_2\] \[reverb_1\] amix=inputs=2:weights=8 1 \[mix_1\]; \
+			        \[mix_1\] asplit=2 \[mix_1_1\] \[mix_1_2\]; \
+			        \[mix_1_1\] \[2\] afir=dry=10:wet=10 \[reverb_2\]; \
+			        \[mix_1_2\] \[reverb_2\] amix=inputs=2:weights=10 1 \[mix_2\]; \
+			        \[mix_2\] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 \[out\]; \
+        			\[out\] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled\" \
+    			-vn -y .\\data\\vox_output.mp3")
+	if(world.system_type == UNIX) // linux nonsense, just looks for ffmpeg
+		world.shelleo("ffmpeg -nostats -loglevel 0 \
+			    -nostats -loglevel 0 \
+			    -i ./[full_name_file] \
+			    -i ./sound/effects/SynthImpulse.wav \
+			    -i ./sound/effects/RoomImpulse.wav \
+			    -filter_complex \" \
+			        \[0\] aresample=44100 \[re_1\]; \
+			        \[re_1\] apad=pad_dur=2 \[in_1\]; \
+			        \[in_1\] asplit=2 \[in_1_1\] \[in_1_2\]; \
+			        \[in_1_1\] \[1\] afir=dry=10:wet=10 \[reverb_1\]; \
+			        \[in_1_2\] \[reverb_1\] amix=inputs=2:weights=8 1 \[mix_1\]; \
+			        \[mix_1\] asplit=2 \[mix_1_1\] \[mix_1_2\]; \
+			        \[mix_1_1\] \[2\] afir=dry=10:wet=10 \[reverb_2\]; \
+			        \[mix_1_2\] \[reverb_2\] amix=inputs=2:weights=10 1 \[mix_2\]; \
+			        \[mix_2\] equalizer=f=7710:t=q:w=0.6:g=-6,equalizer=f=33:t=q:w=0.44:g=-10 \[out\]; \
+        			\[out\] alimiter=level_in=1:level_out=1:limit=0.5:attack=5:release=20:level=disabled\" \
+    			-vn -y ./data/vox_output.mp3")
 
-		if (!istype(SSassets.transport, /datum/asset_transport/webroot))
-			log_game("CDN not set up, VOX aborted.")
-			message_admins("CDN not set up, VOX aborted.")
-			fdel("data/vox_[vox_voice_number].wav")
-			fdel("data/vox_[vox_voice_number].mp3")
-			return
-		var/datum/asset_transport/webroot/WR = SSassets.transport
-		var/shit_fuck_ass = "data/vox_[vox_voice_number].mp3"
-		var/datum/asset_cache_item/ACI = new("[md5filepath(shit_fuck_ass)].mp3", file("data/vox_[vox_voice_number].mp3"))
-		ACI.namespace = "15aivox"
-		WR.save_asset_to_webroot(ACI)
-		var/url = WR.get_asset_url(null, ACI)
+	if (!istype(SSassets.transport, /datum/asset_transport/webroot))
+		log_game("CDN not set up, VOX aborted.")
+		message_admins("CDN not set up, VOX aborted.")
+		//fdel("data/vox_output.wav")
+		//fdel("data/vox_output.mp3")
+		return
+	var/datum/asset_transport/webroot/WR = SSassets.transport
+	var/shit_fuck_ass = "data/vox_output.mp3"
+	var/datum/asset_cache_item/ACI = new("[md5filepath(shit_fuck_ass)].mp3", file("data/vox_output.mp3"))
+	ACI.namespace = "15aivox"
+	WR.save_asset_to_webroot(ACI)
+	var/url = WR.get_asset_url(null, ACI)
 
-		log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
-		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
-		speaker.say(";[message]")
-		// If there is no single listener, broadcast to everyone in the same z level
-		if(!only_listener)
-			// Play voice for all mobs in the z level
-			for(var/mob/M in GLOB.player_list)
-				var/turf/T = get_turf(M)
-				if(T.z == z_level && M.can_hear())
-					M <<browse({"<META http-equiv="X-UA-Compatible" content="IE=edge"><audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>"}, "window=vox_player&file=vox_player.htm")
-		else
-			only_listener <<browse({"<META http-equiv="X-UA-Compatible" content="IE=edge"><audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>"}, "window=vox_player&file=vox_player.htm")
-		fdel("data/vox_[vox_voice_number].wav")
-		fdel("data/vox_[vox_voice_number].mp3")
-		addtimer(CALLBACK(GLOBAL_PROC, .world/proc/delete_vox_statement, "[CONFIG_GET(string/asset_cdn_webroot)][WR.get_asset_suffex(ACI)]"), 30 SECONDS)
-		return 1
+	log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
+	message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
+	speaker.say(";[message]")
+	// If there is no single listener, broadcast to everyone in the same z level
+	if(!only_listener)
+		// Play voice for all mobs in the z level
+		for(var/mob/M in GLOB.player_list)
+			var/turf/T = get_turf(M)
+			if(T.z == z_level && M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				M <<browse({"<META http-equiv="X-UA-Compatible" content="IE=edge"><audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>"}, "window=vox_player&file=vox_player.htm")
 	else
-		if(!res.status_code)
-			log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
-			message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
-		else
-			log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
-			message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
-		to_chat(speaker, "The speech synthesizer failed to return audio. Your speech cooldown has been reset. Please try again.")
-		fdel("data/vox_[vox_voice_number].wav")
-		fdel("data/vox_[vox_voice_number].mp3")
-		speaker.announcing_vox = world.time
-	return 0
+		only_listener <<browse({"<META http-equiv="X-UA-Compatible" content="IE=edge"><audio autoplay><source src=\"[url]\" type=\"audio/mpeg\"></audio>"}, "window=vox_player&file=vox_player.htm")
+	fdel("data/vox_[vox_voice_number].wav")
+	fdel("data/vox_[vox_voice_number].mp3")
+	addtimer(CALLBACK(GLOBAL_PROC, .world/proc/delete_vox_statement, "[CONFIG_GET(string/asset_cdn_webroot)][WR.get_asset_suffex(ACI)]"), 30 SECONDS)
+	return 1
 
 /world/proc/delete_vox_statement(string)
 	fdel(string)
