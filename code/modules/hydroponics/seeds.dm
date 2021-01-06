@@ -634,7 +634,7 @@
  * - [snip][/obj/item/graft]: The graft being used applied to this plant.
  */
 /obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
-	var/datum/plant_gene/trait/new_trait = snip.stored_trait
+	var/datum/plant_gene/new_trait = snip.stored_trait
 	if(new_trait?.can_add(src))
 		genes += new_trait.Copy()
 
@@ -645,5 +645,8 @@
 	src.weed_rate	= round(clamp(max(src.weed_rate,	(src.weed_rate	+(2/3)*(snip.weed_rate	-src.weed_rate)		)),0,100))
 	src.weed_chance	= round(clamp(max(src.weed_chance,	(src.weed_chance+(2/3)*(snip.weed_chance-src.weed_chance)	)),0,100))
 	src.yield		= round(clamp(max(src.yield,		(src.yield		+(2/3)*(snip.yield		-src.yield)			)),0,10	))
+
+	// Add in any reagents, too.
+	reagents_from_genes()
 
 	return TRUE
