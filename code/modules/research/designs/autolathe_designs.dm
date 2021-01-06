@@ -1167,6 +1167,7 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = 500)
 	build_path = /obj/item/stack/sticky_tape
+	maxstack = 5
 	category = list("initial", "Misc")
 
 /datum/design/sticky_tape/surgical
