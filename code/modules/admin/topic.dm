@@ -2126,7 +2126,7 @@
 	else if(href_list["ctf_toggle"])
 		if(!check_rights(R_ADMIN))
 			return
-		toggle_all_ctf(usr)
+		toggle_id_ctf(usr, "centcom")
 
 	else if(href_list["rebootworld"])
 		if(!check_rights(R_ADMIN))

@@ -32,15 +32,6 @@
 		internalPaper = new(src)
 	update_icon()
 
-/obj/item/paperplane/handle_atom_del(atom/A)
-	if(A == internalPaper)
-		var/obj/item/paper/P = internalPaper
-		internalPaper = null
-		P.moveToNullspace() //So we're not deleting it twice when deleting our contents.
-		if(!QDELETED(src))
-			qdel(src)
-	return ..()
-
 /obj/item/paperplane/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
 	if (AM == internalPaper)
@@ -71,11 +62,11 @@
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
-	var/obj/item/paper/internal_paper_tmp = internalPaper
-	internal_paper_tmp.forceMove(loc)
-	internalPaper = null
-	qdel(src)
-	user.put_in_hands(internal_paper_tmp)
+	// We don't have to qdel the paperplane here; it shall be done once the internal paper object is moved out of src anyway.
+	if(user.Adjacent(internalPaper))
+		user.put_in_hands(internalPaper)
+	else
+		internalPaper.forceMove(loc)
 
 /obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(burn_paper_product_attackby_check(P, user))
@@ -137,5 +128,6 @@
 	if(origami_action?.active)
 		plane_type = /obj/item/paperplane/syndicate
 
-	I = new plane_type(user, src)
-	user.put_in_hands(I)
+	I = new plane_type(loc, src)
+	if(user.Adjacent(I))
+		user.put_in_hands(I)
