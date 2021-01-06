@@ -13256,19 +13256,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
-"aDL" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/turf/open/floor/plasteel/freezer,
-/area/crew_quarters/toilet)
 "aDM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -29093,18 +29080,6 @@
 /obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
-"bpW" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "robotics2";
-	name = "robotics lab shutters"
-	},
-/obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "robotics2";
-	name = "robotics lab shutters"
-	},
-/turf/open/floor/plating,
-/area/science/robotics/lab)
 "bpX" = (
 /turf/open/floor/plasteel/white/side,
 /area/science/research)
@@ -43590,14 +43565,14 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/structure/chair/sofa/left{
-	dir = 1
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/break_room)
 "ckO" = (
@@ -57104,13 +57079,13 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/structure/chair/sofa/right{
-	dir = 1
-	},
 /obj/structure/sign/departments/restroom{
 	pixel_y = -32
 	},
 /obj/machinery/light/small,
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/break_room)
 "yiW" = (
@@ -89108,7 +89083,7 @@ awr
 aAd
 aAh
 aCm
-aDL
+aGk
 aFf
 aGk
 aHU
@@ -102757,7 +102732,7 @@ bfV
 bfV
 bfV
 box
-bpW
+buj
 brs
 box
 box
