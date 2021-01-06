@@ -15,7 +15,7 @@ import { chatRenderer } from './renderer';
 import { selectChat, selectCurrentChatPage } from './selectors';
 
 // List of blacklisted tags
-let defTag = [
+const FORBID_TAGS = [
   'a',
   'iframe',
   'link',
@@ -47,7 +47,7 @@ const loadChatFromStorage = async store => {
     for (let message of messages) {
       if (message.html) {
         message.html = DOMPurify.sanitize(message.html, {
-          FORBID_TAGS: defTag,
+          FORBID_TAGS,
         });
       }
     }
