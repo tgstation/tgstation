@@ -349,6 +349,10 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(L.density || L.mob_size > max_mob_size)
 				return FALSE
+			var/mobs_stored = 0
+			for(var/mob/living/M in contents)
+				if(++mobs_stored >= mob_storage_capacity)
+					return FALSE
 		L.stop_pulling()
 
 	else if(istype(AM, /obj/structure/closet))
