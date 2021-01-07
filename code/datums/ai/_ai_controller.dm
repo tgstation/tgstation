@@ -111,7 +111,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 	if(!is_type_in_typecache(target_turf, GLOB.dangerous_turfs))
 		movable_pawn.Move(target_turf, get_dir(current_loc, target_turf))
-  if(get_dist(movable_pawn, current_movement_target) > max_target_distance)
+	if(get_dist(movable_pawn, current_movement_target) > max_target_distance)
 		CancelActions()
 		pathing_attempts = 0
 	if(current_loc == get_turf(movable_pawn))
