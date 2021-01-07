@@ -68,17 +68,19 @@
 	return ..()
 
 /obj/item/hot_potato/process()
-	if(isliving(loc))
-		var/mob/living/L = loc
-		colorize(L)
-		if(stimulant)
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetSleeping(0)
-			L.SetImmobilized(0)
-			L.SetParalyzed(0)
-			L.SetUnconscious(0)
-			L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
+	if(!isliving(loc))
+		return
+	var/mob/living/L = loc
+	colorize(L)
+	if(!stimulant)
+		return
+	L.SetStun(0)
+	L.SetKnockdown(0)
+	L.SetSleeping(0)
+	L.SetImmobilized(0)
+	L.SetParalyzed(0)
+	L.SetUnconscious(0)
+	L.reagents.add_reagent(/datum/reagent/medicine/muscle_stimulant, clamp(5 - L.reagents.get_reagent_amount(/datum/reagent/medicine/muscle_stimulant), 0, 5))	//If you don't have legs or get bola'd, tough luck!
 
 
 /obj/item/hot_potato/examine(mob/user)
