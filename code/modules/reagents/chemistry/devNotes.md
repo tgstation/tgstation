@@ -18,10 +18,7 @@ if you're reading this in the PR. I forgot to remove this or I'm in the middle o
 - remove debug messages
 - make sure plumbing remains functional after conditions to deal with smoke and the optimisations put in
 
-- write the readme
 - make the PR!
-- make fancy webms to show off effects!
-- convert webms because github is dumb and wants gifs
 
 - atomise universal indicator for ghetto chem
 - atomise do like an otter, add acid to water (though will plumbing make this too much?)

@@ -88,11 +88,6 @@ Instant reactions AREN'T handled here. See holder.dm
 		debug_world("[reaction.type] Failed catalyst checks")
 		return FALSE
 
-	//Ensure we're within pH bounds - Disables reactions outside of the pH range
-	//if(! ((holder.pH >= (reaction.OptimalpHMin - reaction.ReactpHLim)) && (holder.pH <= (reaction.OptimalpHMax + reaction.ReactpHLim)) )) //This could potentially be removed to reduce overhead
-		//debug_world("[reaction.type] Failed pH checks")
-		//return FALSE
-	
 	//All good!
 	return TRUE
 

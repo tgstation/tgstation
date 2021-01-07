@@ -21,17 +21,17 @@
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
-	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
-	var/required_temp = 100
-	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
-	var/is_cold_recipe = FALSE
+	
 	///The message shown to nearby people upon mixing, if applicable
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg'
 
-	//FermiChem!
-	//var/OptimalTempMin 		= 200 			// Lower area of bell curve for determining heat based rate reactions (TO REMOVE)
+	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
+	var/is_cold_recipe = FALSE
+	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
+	var/required_temp = 100
+	//FermiChem! - See fermi_readme.md
 	var/OptimalTempMax			= 500			// Upper end for above
 	var/overheatTemp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
 	var/OptimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)

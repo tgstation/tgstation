@@ -49,7 +49,6 @@
 	// digest food, sent all reagents that can metabolize to the body
 	for(var/chunk in reagents.reagent_list)
 		var/datum/reagent/bit = chunk
-		
 		// If the reagent does not metabolize then it will sit in the stomach
 		// This has an effect on items like plastic causing them to take up space in the stomach
 		if(!(bit.metabolization_rate > 0))
@@ -71,7 +70,6 @@
 
 		if(!(amount > 0))
 			continue
-		
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed and react
 		// the stomach manages how fast they are feed in a drip style
