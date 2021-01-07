@@ -24,8 +24,6 @@
 	heat_protection = 0.5 // minor heat insulation
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = TRUE
-	/// How fast the alien is.  0 is default human speed, with negative numbers being faster and positive ones being slower.
-	var/speed = 0
 	/// Determines whether or not the alien is leaping.  Currently only used by the hunter.
 	var/leaping = FALSE
 	/// Used to detmine how to name the alien.
@@ -40,8 +38,6 @@
 	create_internal_organs()
 
 	. = ..()
-	if(speed != 0)
-		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/alien_varspeed, multiplicative_slowdown = speed)
 
 /mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien

@@ -34,6 +34,9 @@
 	// Upper bound of damage done by unarmed melee attacks. Please ensure you check the xyz_defenses.dm for the mobs in question to see if it uses this or hardcoded values.
 	var/melee_damage_upper = 0
 
+	///Adjusts the mob's speed.  0 is default human speed.
+	var/speed = 0
+
 	/// Generic bitflags for boolean conditions at the [/mob/living] level. Keep this for inherent traits of living types, instead of runtime-changeable ones.
 	var/living_flags = NONE
 

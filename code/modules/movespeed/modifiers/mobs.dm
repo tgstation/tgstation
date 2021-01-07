@@ -85,11 +85,7 @@
 	movetypes = GROUND
 	flags = IGNORE_NOSLOW
 
-/datum/movespeed_modifier/simplemob_varspeed
-	variable = TRUE
-	flags = IGNORE_NOSLOW
-	
-/datum/movespeed_modifier/alien_varspeed
+/datum/movespeed_modifier/living_varspeed
 	variable = TRUE
 	flags = IGNORE_NOSLOW
 

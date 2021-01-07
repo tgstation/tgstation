@@ -91,9 +91,6 @@
 	///Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls.
 	var/environment_smash = ENVIRONMENT_SMASH_NONE
 
-	///LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster.
-	var/speed = 1
-
 	///Hot simple_animal baby making vars.
 	var/list/childtype = null
 	var/next_scan_time = 0
@@ -177,7 +174,6 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
-	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
 		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
@@ -442,15 +438,6 @@
 	if(stat)
 		return FALSE
 	return ..()
-
-/mob/living/simple_animal/proc/set_varspeed(var_value)
-	speed = var_value
-	update_simplemob_varspeed()
-
-/mob/living/simple_animal/proc/update_simplemob_varspeed()
-	if(speed == 0)
-		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
-	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
 /mob/living/simple_animal/get_status_tab_items()
 	. = ..()
