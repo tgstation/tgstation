@@ -265,7 +265,6 @@
 	chemholder = new /obj()
 	var/datum/reagents/R = new/datum/reagents(500, INSTANT_REACT)//This is so it can't create infinites
 	chemholder.reagents = R
-	chemholder.reagents.flags = INSTANT_REACT
 	
 	R.my_atom = chemholder
 
@@ -280,8 +279,6 @@
 	else
 		location = get_turf(loca)
 	amount = radius
-	chemholder.reagents.flags = INSTANT_REACT
-	debug_world("[INSTANT_REACT] How are you not working aaaa")
 	carry.copy_to(chemholder, carry.total_volume)
 
 	if(!silent)
