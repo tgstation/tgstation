@@ -106,10 +106,23 @@
 	starting_organ = /obj/item/organ/eyes/robotic/xray
 
 /obj/item/autosurgeon/organ/syndicate/anti_stun
-	starting_organ = /obj/item/organ/cyberimp/brain/anti_stun
+	starting_organ = /obj/item/organ/cyberimp/brain/anti_stun/syndicate
 
 /obj/item/autosurgeon/organ/syndicate/reviver
-	starting_organ = /obj/item/organ/cyberimp/chest/reviver
+	starting_organ = /obj/item/organ/cyberimp/chest/reviver/syndicate
+
+/obj/item/autosurgeon/organ/syndicate/ammo_counter
+	starting_organ = /obj/item/organ/cyberimp/arm/ammo_counter/syndicate
+
+/obj/item/autosurgeon/organ/syndicate/esword
+	starting_organ = /obj/item/organ/cyberimp/arm/item_set/esword
+
+/obj/item/autosurgeon/organ/syndicate/syndie_mantis
+	starting_organ = /obj/item/organ/cyberimp/arm/item_set/syndie_mantis
+
+/obj/item/autosurgeon/organ/syndicate/syndie_mantis/l
+	starting_organ = /obj/item/organ/cyberimp/arm/item_set/syndie_mantis/l
+
 
 /obj/item/autosurgeon/skillchip
 	name = "skillchip autosurgeon"

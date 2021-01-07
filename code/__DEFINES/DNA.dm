@@ -233,6 +233,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define ENCODE_PROTOCOL "enc_protocol"
 #define OPERATING_PROTOCOL	"op_protocol"
 
+#define NO_PROTOCOL 0
+
 /// Security protocols
 
 ///Those names mean nothing don't try to decipher these. They are defines because some cybernetics will be incompatible with eachother. treat those defines like software names.
@@ -258,7 +260,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define OPERATING_TGMF "tgmf"
 #define OPERATING_CSOF "csof"
 
-#define AUGMENT_NO_REQ list(SECURITY_PROTOCOL = 0, ENCODE_PROTOCOL = 0, OPERATING_PROTOCOL = 0)
+#define AUGMENT_NO_REQ list(SECURITY_PROTOCOL = NO_PROTOCOL, ENCODE_PROTOCOL = NO_PROTOCOL, OPERATING_PROTOCOL = NO_PROTOCOL)
 #define AUGMENT_NT_LOWLEVEL list(SECURITY_PROTOCOL = list(SECURITY_NT1), ENCODE_PROTOCOL = list(ENCODE_ENC1), OPERATING_PROTOCOL = list(OPERATING_NTOS))
 #define AUGMENT_NT_HIGHLEVEL list(SECURITY_PROTOCOL = list(SECURITY_NT2 , SECURITY_NT1), ENCODE_PROTOCOL = list(ENCODE_ENC2), OPERATING_PROTOCOL = list(OPERATING_NTOS))
 #define AUGMENT_TG_LEVEL list(SECURITY_PROTOCOL = list(SECURITY_NTX , SECURITY_NT2 , SECURITY_NT1), ENCODE_PROTOCOL = list(ENCODE_TENN), OPERATING_PROTOCOL = list(OPERATING_TGMF))

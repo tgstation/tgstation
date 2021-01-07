@@ -63,7 +63,7 @@
 
 /obj/item/organ/cyberimp/leg/table_glider
 	name = "table-glider implant"
-	desc = "Implant that allows you quickly glide tables, if you have this installed in both of your legs."
+	desc = "Implant that allows you quickly glide tables. You need to implant this in both of your legs to make it work."
 	encode_info = AUGMENT_NT_LOWLEVEL
 	double_legged = TRUE
 
@@ -85,7 +85,7 @@
 
 /obj/item/organ/cyberimp/leg/shove_resist
 	name = "BU-TAM resistor implant"
-	desc = "Implant that allows you to resist shoves, instead shoves deal pure stamina damage."
+	desc = "Implant that allows you to resist shoves, instead shoves deal pure stamina damage. You need to implant this in both of your legs to make it work."
 	encode_info = AUGMENT_NT_HIGHLEVEL
 	double_legged = TRUE
 
@@ -106,8 +106,8 @@
 	return ..()
 
 /obj/item/organ/cyberimp/leg/accelerator
-	name = "P.R.Y.Z.H.O.K accelerator system"
-	desc = "Russian implant that allows you to tackle people."
+	name = "P.R.Y.Z.H.O.K. accelerator system"
+	desc = "Russian implant that allows you to tackle people. You need to implant this in both of your legs to make it work."
 	encode_info = AUGMENT_TG_LEVEL
 	double_legged = TRUE
 	var/datum/component/tackler
@@ -127,16 +127,27 @@
 	icon_state = "chemplant"
 	implant_overlay = "chemplant_overlay"
 	var/list/reagent_list = list()
-	var/health_threshold = 20
-	var/max_ticks_cooldown = 100
+	var/health_threshold = 40
+	var/max_ticks_cooldown = 60 SECONDS
 	var/current_ticks_cooldown = 0
+	var/mutable_appearance/overlay
+
+/obj/item/organ/cyberimp/leg/chemplant/Initialize()
+	. = ..()
 
 /obj/item/organ/cyberimp/leg/chemplant/on_life()
 	if(!check_compatibility())
 		return
+		//Cost of refilling is a little bit of nutrition, some blood and getting jittery
+	if(owner.nutrition > NUTRITION_LEVEL_STARVING && owner.blood_volume > BLOOD_VOLUME_SURVIVE && current_ticks_cooldown > 0)
 
-	if(current_ticks_cooldown > 0)
-		current_ticks_cooldown--
+		owner.nutrition -= 5
+		owner.blood_volume--
+		owner.Jitter(1)
+		owner.Dizzy(1)
+
+		current_ticks_cooldown -= SSmobs.wait
+
 		return
 
 	if(owner.health < health_threshold)
@@ -146,13 +157,42 @@
 /obj/item/organ/cyberimp/leg/chemplant/emp_act(severity)
 	. = ..()
 	health_threshold += rand(-10,10)
-
+	current_ticks_cooldown = max_ticks_cooldown
 	on_effect()
 
 /obj/item/organ/cyberimp/leg/chemplant/proc/on_effect()
+	var/obj/effect/temp_visual/chempunk/punk = new /obj/effect/temp_visual/chempunk(get_turf(owner))
+	punk.color = implant_color
 	owner.reagents.add_reagent_list(reagent_list)
+
+	overlay = mutable_appearance('icons/effects/effects.dmi', "biogas",ABOVE_MOB_LAYER)
+	overlay.color = implant_color
+
+	RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_overlay)
+
+	addtimer(CALLBACK(src,.proc/remove_overlay),max_ticks_cooldown/2)
+
 	to_chat(owner,"<span class = 'notice'> You feel a sharp pain as the cocktail of chemicals is injected into your bloodstream!</span>")
 	return
+
+/obj/item/organ/cyberimp/leg/chemplant/proc/update_owner_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+
+	if(overlay)
+		overlays += overlay
+
+/obj/item/organ/cyberimp/leg/chemplant/proc/remove_overlay()
+	QDEL_NULL(overlay)
+
+	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+
+/obj/effect/temp_visual/chempunk
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "chempunk"
+	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_y = -32
+	layer = BELOW_MOB_LAYER
+	duration = 5
 
 /obj/item/organ/cyberimp/leg/chemplant/drugs
 	name = "deep-vein emergency morale rejuvenator"
@@ -169,9 +209,9 @@
 	reagent_list = list(/datum/reagent/medicine/atropine = 5, /datum/reagent/medicine/omnizine = 3 , /datum/reagent/medicine/leporazine = 3, /datum/reagent/medicine/c2/aiuri = 2, /datum/reagent/medicine/c2/libital = 2)
 
 /obj/item/organ/cyberimp/leg/chemplant/rage
-	name = "R.A.G.E chemical system"
+	name = "R.A.G.E. chemical system"
 	desc = "Extremely dangerous system that fills the user with a mix of potent drugs in dire situation."
 	implant_color = "#ce3914"
 	encode_info = AUGMENT_TG_LEVEL
-	reagent_list = list(/datum/reagent/determination = 5, /datum/reagent/drug/methamphetamine = 5 , /datum/reagent/drug/bath_salts = 5)
+	reagent_list = list(/datum/reagent/determination = 2, /datum/reagent/medicine/c2/penthrite = 3 , /datum/reagent/drug/bath_salts = 5 , /datum/reagent/medicine/ephedrine = 5)
 

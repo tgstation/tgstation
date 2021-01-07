@@ -950,7 +950,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return FALSE
 
 /obj/item/mantis_blade
-	name = "C.H.R.O.M.A.T.A mantis blade"
+	name = "C.H.R.O.M.A.T.A. mantis blade"
 	desc = "Powerful inbuilt blade, hidden just beneath the skin. Singular brain signals directly link to this bad boy, allowing it to spring into action in just seconds."
 	icon_state = "mantis"
 	inhand_icon_state = "mantis"
@@ -990,3 +990,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.do_attack_animation(M,null,some_item)
 	some_item.attack(M,user)
 
+/obj/item/mantis_blade/syndicate
+	name = "A.R.A.S.A.K.A. mantis blade"
+	icon_state = "syndie_mantis"
+	inhand_icon_state = "syndie_mantis"
+	force = 15
+	block_chance = 20
+
+/obj/item/mantis_blade/syndicate/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(proximity_flag || get_dist(user,target) > 3 || !isliving(target))
+		return
+
+	for(var/i in 1 to get_dist(user,target))
+		step_towards(user,target)
+	attack(target,user)

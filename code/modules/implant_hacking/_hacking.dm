@@ -43,7 +43,7 @@
 	cybernetic = target
 
 	for(var/info in cybernetic.encode_info)
-		if(cybernetic.encode_info[info] == 0)
+		if(cybernetic.encode_info[info] == NO_PROTOCOL)
 			continue
 		var/list/encrypted_information = cybernetic.encode_info[info]
 
@@ -73,13 +73,14 @@
 
 /obj/item/cyberlink_connector/proc/hack_success(success as num)
 	for(var/info in cybernetic.encode_info)
-		if(cybernetic.encode_info[info] == 0)
+		if(cybernetic.encode_info[info] == NO_PROTOCOL)
 			continue
 		//Not a += because we want to avoid having duplicate entries in either encode_info
 		cybernetic.encode_info[info] |= parent_cyberlink.encode_info[info]
 	current_user.mind.adjust_experience(/datum/skill/implant_hacking,success * 25)
 	to_chat(current_user,"<span class='notice'> Cyberlink beeps: HACKING [uppertext(cybernetic.name)] SUCCESS. COMPATIBILITY ACHIEVED.</span>")
 	cleanup()
+
 
 /obj/item/cyberlink_connector/proc/hack_failure(failed as num)
 	var/chance = rand(0,40*failed)
@@ -101,11 +102,14 @@
 			empulse(current_user, 1, 2)
 		if(100 to INFINITY)
 			to_chat(current_user,"<span class='danger'> Cyberlink beeps: HACKING [uppertext(cybernetic.name)] CRITICAL FAILURE. COMPATIBILITY NOT ACHIEVED. IMPLANT OVERHEATING IN 5 SECONDS.</span>")
+			cybernetic.visible_message("<span class='danger'>[cybernetic.name] begins to flare and twitch as the electronics fry and sizzle!</span>")
 			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
 	current_user.mind.adjust_experience(/datum/skill/implant_hacking,(4 - failed)*2)
 	cleanup()
 
 /obj/item/cyberlink_connector/proc/explode()
+	SIGNAL_HANDLER
+
 	dyn_explosion(get_turf(cybernetic),2,1)
 	qdel(src)
 

@@ -247,7 +247,6 @@
 	encode_info = AUGMENT_TG_LEVEL
 	contents = newlist(/obj/item/gun/medbeam)
 
-
 /obj/item/organ/cyberimp/arm/item_set/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
@@ -350,13 +349,22 @@
 	contents = newlist(/obj/item/cyberlink_connector)
 
 /obj/item/organ/cyberimp/arm/item_set/mantis
-	name = "C.H.R.O.M.A.T.A mantis blade implants"
-	desc = "high tech mantis blade implants, easily portable weapon, that has a high wound potential."
+	name = "C.H.R.O.M.A.T.A. mantis blade implants"
+	desc = "High tech mantis blade implants, easily portable weapon, that has a high wound potential."
 	contents = newlist(/obj/item/mantis_blade)
 	encode_info = AUGMENT_TG_LEVEL
 
+/obj/item/organ/cyberimp/arm/item_set/syndie_mantis
+	name = "A.R.A.S.A.K.A. mantis blade implants"
+	desc = "Modernized mantis blade designed coined by Tiger operatives, much sharper blade with energy actuators makes it a much deadlier weapon."
+	contents = newlist(/obj/item/mantis_blade/syndicate)
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+
+/obj/item/organ/cyberimp/arm/item_set/syndie_mantis/l
+	zone = BODY_ZONE_L_ARM
+
 /obj/item/organ/cyberimp/arm/ammo_counter
-	name = "S.M.A.R.T ammo logistics system"
+	name = "S.M.A.R.T. ammo logistics system"
 	desc = "Special inhand implant that allows transmits the current ammo and energy data straight to the user's visual cortex."
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
@@ -456,9 +464,12 @@
 	our_gun = null
 	update_hud_elements()
 
+/obj/item/organ/cyberimp/arm/ammo_counter/syndicate
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+
 /obj/item/organ/cyberimp/arm/cooler
 	name = "sub-dermal cooling implant"
-	desc = "Special inhand implant that allows transmits the current ammo and energy data straight to the user's visual cortex."
+	desc = "Special inhand implant that cools you down if overheated."
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#00e1ff"
@@ -479,7 +490,7 @@
 
 /obj/item/organ/cyberimp/arm/heater
 	name = "sub-dermal heater implant"
-	desc = "Special inhand implant that allows transmits the current ammo and energy data straight to the user's visual cortex."
+	desc = "Special inhand implant that heats you up if overcooled."
 	icon_state = "hand_implant"
 	implant_overlay = "hand_implant_overlay"
 	implant_color = "#ff9100"

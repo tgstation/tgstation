@@ -77,7 +77,7 @@
 	price_max = 600
 
 /datum/blackmarket_item/cybernetics/accelerator
-	name = "P.R.Y.Z.H.O.K accelerator cybernetic"
+	name = "P.R.Y.Z.H.O.K. accelerator cybernetic"
 	desc = "Advanced russian implant that allows you to tackle people without special gloves or training, very rare to aquire these as TerraGov has cracked down on the sales."
 	item = /obj/item/organ/cyberimp/leg/accelerator
 	availability_prob = 10
@@ -87,7 +87,7 @@
 
 /datum/blackmarket_item/cybernetics/chemplant_drug
 	name = "deep-vein emergency morale rejuvenator"
-	desc = "Interdyne Pharmaceutic's cybernetic that was recenetly 'legally' aquired by us, now we are willing to sell a one of these bad boys to anyone i need of some rejuvenation!"
+	desc = "Interdyne Pharmaceutic's cybernetic that was recenetly 'legally' aquired by us, now we are willing to sell a one of these bad boys to anyone in need of some rejuvenation!"
 	item = /obj/item/organ/cyberimp/leg/chemplant/drugs
 	availability_prob = 10
 	price_min = 500
@@ -102,7 +102,7 @@
 	price_max = 800
 
 /datum/blackmarket_item/cybernetics/chemplant_rage
-	name = "R.A.G.E chemical system"
+	name = "R.A.G.E. chemical system"
 	desc = "An implant created by Terragov scientists, later modified by their prison warden's to serve as both a torture tool and a last-stand implant by their military."
 	item = /obj/item/organ/cyberimp/leg/chemplant/rage
 	availability_prob = 10
@@ -120,8 +120,8 @@
 	price_max = 2200
 
 /datum/blackmarket_item/cybernetics/laser
-	name = "in-buily laser cybernetic"
-	desc = "Laser implant of Terran design, used by their high-ranking officers"
+	name = "in-built laser cybernetic"
+	desc = "Laser implant of Terran design, used by their high-ranking officers."
 	item = /obj/item/organ/cyberimp/arm/item_set/gun/laser
 	availability_prob = 5
 	price_min = 1200
@@ -129,7 +129,7 @@
 
 /datum/blackmarket_item/cybernetics/toolset
 	name = "integrated toolset implant"
-	desc = "Doesn't NT produce those en masse? Oh well, if you are willing to buy, we are willing to sell"
+	desc = "Doesn't NT produce those en masse? Oh well, if you are willing to buy, we are willing to sell."
 	item = /obj/item/organ/cyberimp/arm/item_set/toolset
 	availability_prob = 25
 	price_min = 300
@@ -145,7 +145,7 @@
 
 /datum/blackmarket_item/cybernetics/surgery
 	name = "surgery toolset cybernetic"
-	desc = "Doesn't NT produce those en masse? Oh well, if you are willing to buy, we are willing to sell"
+	desc = "Doesn't NT produce those en masse? Oh well, if you are willing to buy, we are willing to sell."
 	item = /obj/item/organ/cyberimp/arm/item_set/surgery
 	availability_prob = 25
 	price_min = 300
@@ -153,7 +153,7 @@
 
 /datum/blackmarket_item/cybernetics/cook
 	name = "cooking toolset cybernetic"
-	desc = "Useful for extra-fast cooking"
+	desc = "Useful for extra-fast cooking."
 	item = /obj/item/organ/cyberimp/arm/item_set/cook
 	availability_prob = 25
 	price_min = 300
@@ -161,7 +161,7 @@
 
 /datum/blackmarket_item/cybernetics/janitor
 	name = "janitorial toolset cybernetic"
-	desc = "Useful for extra-fast cleaning"
+	desc = "Useful for extra-fast cleaning."
 	item = /obj/item/organ/cyberimp/arm/item_set/janitor
 	availability_prob = 25
 	price_min = 300
@@ -177,7 +177,7 @@
 
 /datum/blackmarket_item/cybernetics/chemical
 	name = "chemical toolset cybernetic"
-	desc = "Useful for extra-fast research"
+	desc = "Useful for extra-fast research."
 	item = /obj/item/organ/cyberimp/arm/item_set/chemical
 	availability_prob = 25
 	price_min = 300
@@ -185,7 +185,7 @@
 
 /datum/blackmarket_item/cybernetics/atmos
 	name = "atmos toolset cybernetic"
-	desc = "Useful for extra-fast firefighting"
+	desc = "Useful for extra-fast firefighting."
 	item = /obj/item/organ/cyberimp/arm/item_set/atmospherics
 	availability_prob = 25
 	price_min = 300
@@ -212,7 +212,7 @@
 	price_max = 1000
 
 /datum/blackmarket_item/cybernetics/ammo_counter
-	name = "S.M.A.R.T ammo logistics system"
+	name = "S.M.A.R.T. ammo logistics system"
 	desc = "Created by Nanotrasen's scientist's and used by their high-command. Very useful if you don't want to examine your gun every few seconds."
 	item = /obj/item/organ/cyberimp/arm/ammo_counter
 	availability_prob = 10
@@ -221,7 +221,7 @@
 
 /datum/blackmarket_item/cybernetics/heater
 	name = "sub-dermal heating implant"
-	desc = "Helps you stabilize your temperature, extra useful for those filthy lizards, i wonder if they made this thing?"
+	desc = "Helps you stabilize your temperature, extra useful for those filthy lizards, I wonder if they made this thing?"
 	item = /obj/item/organ/cyberimp/arm/heater
 	availability_prob = 25
 	price_min = 100
@@ -229,15 +229,15 @@
 
 /datum/blackmarket_item/cybernetics/cooler
 	name = "sub-dermal cooling implant"
-	desc = "Helps you stabilize your temperature, extra useful for those filthy lizards, i wonder if they made this thing?"
+	desc = "Helps you stabilize your temperature, extra useful for those filthy lizards, I wonder if they made this thing?"
 	item = /obj/item/organ/cyberimp/arm/cooler
 	availability_prob = 25
 	price_min = 100
 	price_max = 500
 
 /datum/blackmarket_item/cybernetics/filter
-	name = "S.I.L.V.E.R filtration pump"
-	desc = "Another major success of Interdyne, this time this blood pump will filter out all harmful substances from your system"
+	name = "S.I.L.V.E.R. filtration pump"
+	desc = "Another major success of Interdyne, this time this blood pump will filter out all harmful substances from your system."
 	item = /obj/item/organ/cyberimp/chest/filtration
 	availability_prob = 10
 	price_min = 800
@@ -245,7 +245,7 @@
 
 /datum/blackmarket_item/cybernetics/filter_offbrand
 	name = "offbrand filtration pump"
-	desc = "An offbrand version of Interdyne's filtration pump, god i hope this one works."
+	desc = "An offbrand version of Interdyne's filtration pump, god I hope this one works."
 	item = /obj/item/organ/cyberimp/chest/filtration/offbrand
 	availability_prob = 20
 	price_min = 200
@@ -260,7 +260,7 @@
 	price_max = 1000
 
 /datum/blackmarket_item/cybernetics/mantis
-	name = "C.H.R.O.M.A.T.A cybernetic mantis blades"
+	name = "C.H.R.O.M.A.T.A. cybernetic mantis blades"
 	desc = "Powerful blades, first developed on earth, they fit right under your Humerus, and can be sprung into actions in just miliseconds."
 	item = /obj/item/organ/cyberimp/arm/item_set/mantis
 	availability_prob = 10

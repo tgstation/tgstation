@@ -170,6 +170,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/bundles_tc/mantis_kit
+	name = "A.R.A.S.A.K.A. Mantis Blades Kit"
+	desc = "Comes with 2 A.R.A.S.A.K.A. Mantis blades and a syndicate cyberlink. All packaged with autosurgeons."
+	item = /obj/item/storage/briefcase/syndie_mantis
+	cost = 20
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a tactical medkit, \
@@ -206,6 +213,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	player_minimum = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/bundles_tc/cybernetics
+	name = "Interdyne Cybernetic Package GOLD"
+	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains a lethal New Russian backpack spray, Elite hardsuit, \
+			Stechkin APS machine pistol, two incendiary magazines, a minibomb and a stimulant syringe. \
+			Order NOW and comrade Boris will throw in an extra tracksuit."
+	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
+	cost = 30
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"

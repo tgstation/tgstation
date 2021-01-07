@@ -124,6 +124,8 @@
 	if(H.stat == CONSCIOUS)
 		to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
 
+/obj/item/organ/cyberimp/chest/reviver/syndicate
+	encode_info = AUGMENT_SYNDICATE_LEVEL
 
 /obj/item/organ/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
@@ -248,7 +250,7 @@
 	return FALSE
 
 /obj/item/organ/cyberimp/chest/filtration
-	name = "S.I.L.V.E.R filtration pump"
+	name = "S.I.L.V.E.R. filtration pump"
 	desc = "This implant purges your body of any toxins and drugs extremely quickly"
 	implant_color = "#00e7b5"
 	encode_info = AUGMENT_NT_HIGHLEVEL

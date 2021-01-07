@@ -36,7 +36,12 @@
 
 /obj/item/organ/cyberimp/emp_act(severity)
 	. = ..()
-	to_chat(owner,"<span class = 'danger'> cyberlink beeps: ERR02 ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)] </span>")
+	if(severity == EMP_HEAVY && prob(5))
+		to_chat(owner,"<span class = 'danger'> cyberlink beeps: ERR03 HEAVY ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)].DAMAGE DETECTED, INTERNAL MEMORY DAMAGED. </span>")
+		random_encode()
+	else
+		to_chat(owner,"<span class = 'danger'> cyberlink beeps: ERR02 ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)] </span>")
+
 
 /obj/item/organ/cyberimp/New(mob/M = null)
 	if(iscarbon(M))
@@ -47,21 +52,39 @@
 		add_overlay(overlay)
 	return ..()
 
+/**
+ * Updates implants
+ *
+ * Used when an implant is already installed and a new cyberlink is inserted, in this situation this proc fires, to update the compatibility of an implant.
+ */
 /obj/item/organ/cyberimp/proc/update_implants()
 	return
 
+/**
+ * Randomly scrambles encode_info of an implant
+ *
+ * Every implant contains it's own encode_info, this info stores the data on what security, encoding and operating protocols it uses.
+ * Implant is compatible if for every protocol catergory it shares at least 1 protocol in common with the link.
+ * If it fails to meet that criteria, than it is incompatible and this proc returns FALSE. If it is compatibile returns TRUE
+ */
 /obj/item/organ/cyberimp/proc/random_encode()
 	hacked = TRUE
 	encode_info = list(	SECURITY_PROTOCOL = list(pick(SECURITY_NT1,SECURITY_NT2,SECURITY_NTX,SECURITY_TMSP,SECURITY_TOSP)), \
 						ENCODE_PROTOCOL = list(pick(ENCODE_ENC1,ENCODE_ENC2,ENCODE_TENN,ENCODE_CSEP)), \
 						OPERATING_PROTOCOL = list(pick(OPERATING_NTOS,OPERATING_TGMF,OPERATING_CSOF)))
-
+/**
+ * Checks compatibility of implant against the cyberlink
+ *
+ * Every implant contains it's own encode_info, this info stores the data on what security, encoding and operating protocols it uses.
+ * Implant is compatible if for every protocol catergory it shares at least 1 protocol in common with the link.
+ * If it fails to meet that criteria, than it is incompatible and this proc returns FALSE. If it is compatibile returns TRUE
+ */
 /obj/item/organ/cyberimp/proc/check_compatibility()
 	var/obj/item/organ/cyberimp/cyberlink/link = owner.getorganslot(ORGAN_SLOT_LINK)
 
 	for(var/info in encode_info)
-
-		if(encode_info[info] == 0)
+		// We check if encode_info for this protocol categoru is NO_PROTOCOL meaning it is compatible with anything.
+		if(encode_info[info] == NO_PROTOCOL)
 			. = TRUE
 			continue
 
@@ -69,10 +92,16 @@
 
 		. = FALSE
 
+		//We check for link here because implants that contain NO_PROTOCOL for every category should work even without an implant.
+		if(!link)
+			return
+
+		//We check if our protocol category shares at least 1 protocol with the cyberlink
 		for(var/protocol in encrypted_information)
 			if(protocol in link.encode_info[info])
 				. = TRUE
 
+		//If it doesn't return FALSE
 		if(!.)
 			return
 

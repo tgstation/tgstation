@@ -128,6 +128,9 @@
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
 
+/obj/item/organ/cyberimp/brain/anti_stun/syndicate
+	encode_info = AUGMENT_SYNDICATE_LEVEL
+
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -158,10 +161,14 @@
 		/obj/item/autosurgeon/organ/syndicate/xray_eyes,
 		/obj/item/autosurgeon/organ/syndicate/anti_stun,
 		/obj/item/autosurgeon/organ/syndicate/reviver,
-		/obj/item/autosurgeon/organ/cyberlink_syndicate)
+		/obj/item/autosurgeon/organ/syndicate/ammo_counter,
+		/obj/item/autosurgeon/organ/syndicate/esword,
+		/obj/item/autosurgeon/organ/syndicate/syndie_mantis
+		)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()
+	new /obj/item/autosurgeon/organ/cyberlink_syndicate(src)
 	var/implant
 	while(contents.len <= amount)
 		implant = pick(boxed)

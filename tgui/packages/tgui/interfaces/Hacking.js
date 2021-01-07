@@ -13,20 +13,19 @@ export const Hacking = (props, context) => {
   } = data;
   return (
     <Window
-      width={1000}
-      height={1000}
-      theme="hackerman"
-      resizable>
+      width={500}
+      height={768}
+      theme="hackerman">
       <Window.Content>
         <Section title="CYBERNETICS HACKING INTERFACE ">
-          [ TIME LEFT :
-          <AnimatedNumber
-            value={timeleft} /> ]
           {toArray(games).map((array, i) => (
             <Section
               key={i}
               title={'HACKING IN PROGRESS [ ' + i + ' ]'}
               level={2}>
+              [ TIME LEFT :
+              <AnimatedNumber
+                value={timeleft} /> ]
               <Minigame
                 key={i}
                 array={array}
@@ -50,6 +49,10 @@ const Minigame = (props, context) => {
       <Box key={i}>
         {toArray(arr).map((element, j) => (
           <Box
+            style={{
+              'width': '50px',
+              'height': '50px',
+            }}
             key={i + '_' + j}
             as="img"
             className="pathway"

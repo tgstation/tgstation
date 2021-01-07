@@ -246,7 +246,11 @@
 		board[xcord][ycord].visited = TRUE
 
 	return FALSE
-
+/**
+ * Simple holder of information and some procs relating to this information
+ *
+ * Holds relevant information about a single cell of the board.
+ */
 /datum/hacking_minigame_piece
 	var/rotation = 0
 	var/pass_in = NONE
@@ -262,14 +266,17 @@
 	. = ..()
 	game = _game
 
+///Returns value of pass_in + pass_out adjusted for rotation
 /datum/hacking_minigame_piece/proc/get_dir_val()
 	if(pass_in != NONE && pass_out != NONE)
 		return angle2dir(dir2angle(pass_in)+rotation*90) + angle2dir(dir2angle(pass_out)+rotation*90)
 	return 0
 
+///Returns a list of possible directions this cell can connect to
 /datum/hacking_minigame_piece/proc/get_dir_val_list()
 	return finish == TRUE || start == TRUE ? GLOB.cardinals.Copy() : list(pass_in != NONE ? angle2dir(dir2angle(pass_in)+rotation*90) : 0 , pass_out != NONE ? angle2dir(dir2angle(pass_out)+rotation*90) : 0 )
 
+///Rotates the cell num amount of times
 /datum/hacking_minigame_piece/proc/rotate(num = 1)
 	num = clamp(num,-3,3)
 	rotation += num
