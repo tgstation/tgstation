@@ -447,7 +447,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if(access_allowed == 1)
 							inserted_modify_id.access += access_type
 							if(access_type in ACCESS_ALERT_ADMINS)
-								LOG_ID_ACCESS_CHANGE(usr, access_type, inserted_modify_id)
+								message_admins("[ADMIN_LOOKUPFLW(usr)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
+							log_game("[key_name(usr)] added [get_access_desc(access_type)] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
 						playsound(src, "terminal_type", 50, FALSE)
 		if ("assign")
 			if (authenticated == 2)
@@ -480,8 +481,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					// Check if we should alert admins that an ID card has been given a new access level.
 					for(var/logged_access in ACCESS_ALERT_ADMINS)
 						if(logged_access in inserted_modify_id.access)
-							LOG_ID_JOB_CHANGE(usr, jobdatum, inserted_modify_id)
+							message_admins("[ADMIN_LOOKUPFLW(usr)] assigned the job [jobdatum.title] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
 							break
+					log_game("[key_name(usr)] assigned the job [jobdatum.title] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
