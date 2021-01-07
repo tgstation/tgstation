@@ -109,7 +109,11 @@
 	if(!character_to_use)
 		return
 	var/max_characters = 300 // magic number but its the cap 15 allows
-	var/message = input(src, "Use the power of 15.ai to say anything! ([max_characters] character maximum)", "15.ai VOX System", src.last_announcement) as text|null
+	var/input_prompt = "Use the power of 15.ai to say anything! ([max_characters] character maximum)"
+	if(character_to_use == DECTALK)
+		max_characters = 1000 // DECTalk has a lot of text based configuration. Would you deny the AI the right to sing?
+		input_prompt = "Use DECTalk to say anything! ([max_characters] character maximum)"
+	var/message = input(src, input_prompt, "15.ai VOX System", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
 		return
@@ -124,13 +128,9 @@
 	if(length(message) > max_characters)
 		to_chat(src, "<span class='notice'>You have too many characters! You used [length(message)] characters, you need to lower this to [max_characters] or lower.</span>")
 		return
-	var/regex/check_for_bad_chars = regex("\[^a-zA-Z!?.,' :\]+")
-	if(check_for_bad_chars.Find(message))
-		to_chat(src, "<span class='notice'>These characters are not available on the 15.ai system: [english_list(check_for_bad_chars.match)].</span>")
-		return
 	last_announcement = message
 
-	//announcing_vox = world.time + VOX_DELAY
+	announcing_vox = world.time + VOX_DELAY
 
 	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
 	message_admins("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
