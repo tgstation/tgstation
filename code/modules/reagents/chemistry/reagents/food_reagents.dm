@@ -119,7 +119,8 @@
 
 /datum/reagent/consumable/nutriment/organ_tissue
 	name = "Organ Tissue"
-	description = "Natural tissues that make up the bulk of organs, providing many vitamins, minerals."
+	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
+	taste_description = "rich earthy pungent"
 
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
