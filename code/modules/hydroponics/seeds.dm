@@ -263,7 +263,7 @@
 	var/reagent_max = 0
 	for(var/rid in reagents_add)
 		reagent_max += reagents_add[rid]
-	if(IS_EDIBLE(T))
+	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
 		var/obj/item/food/grown/grown_edible = T
 		for(var/rid in reagents_add)
 			var/reagent_overflow_mod = reagents_add[rid]
@@ -274,32 +274,36 @@
 			var/list/data
 			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 				data = list("blood_type" = "O-")
-			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
+			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 				data = grown_edible.tastes // apple tastes of apple.
 				//Handles the distillary trait, swaps nutriment and vitamins for that species brewable if it exists.
 				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
+					grown_edible.visible_message("<span class='notice'>[T] bubbles slightly.</span>")
 					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
-					continue
-				//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-				else if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
-					for(var/datum/reagent/juice in grown_edible.juice_results)
-						T.reagents.add_reagent(juice, amount/2)
 					continue
 
 			T.reagents.add_reagent(rid, amount, data)
 
+		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
+		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
+			grown_edible.visible_message("<span class='notice'>[T] whirrs slightly.</span>")
+			grown_edible.on_juice()
+			grown_edible.reagents.add_reagent_list(grown_edible.juice_results)
+
 		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
 		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 
-		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment.
+		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
 		if(get_gene(/datum/plant_gene/trait/chem_heating))
-			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment)
-			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 100))
-			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 50)
+			T.visible_message("<span class='notice'>[T] releases freezing air.</span>")
+			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
+			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
+			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
 		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
 		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
-			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment)
-			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -25))
+			T.visible_message("<span class='notice'>[T] releases a blast of hot air.</span>")
+			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
+			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
 			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
 
 /// Setters procs ///
@@ -482,7 +486,6 @@
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/plant_analyzer))
 		var/obj/item/plant_analyzer/P_analyzer = O
-		to_chat(user, "<span class='info'>*---------*\nThis is \a <span class='name'>[src]</span>.")
 		to_chat(user, P_analyzer.scan_plant(src))
 		return
 

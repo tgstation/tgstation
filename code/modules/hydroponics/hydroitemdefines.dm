@@ -41,7 +41,7 @@
  * Returns the formatted message as text.
  */
 /obj/item/plant_analyzer/proc/scan_tray(obj/machinery/hydroponics/scanned_tray)
-	var/returned_message = "<span class='info'>"
+	var/returned_message = "<span class='info'>*---------*\n"
 	if(scanned_tray.myseed)
 		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
 		returned_message += "- Plant Age: <span class='notice'>[scanned_tray.age]</span></span>\n"
@@ -67,7 +67,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/scan_plant(obj/item/scanned_object)
-	var/returned_message = "<span class='info'>"
+	var/returned_message = "<span class='info'>*---------*\nThis is \a <span class='name'>[scanned_object]</span>.\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		var/obj/item/grown/scanned_plant = scanned_object
@@ -184,7 +184,7 @@
  * Returns the formatted output as text.
  */
 /obj/item/plant_analyzer/proc/get_graft_text(obj/item/graft/scanned_graft)
-	var/text = "<span class='info'>- Plant Graft -\n"
+	var/text = "<span class='info'>*---------*</span>\n<span class='info'>- Plant Graft -\n"
 	if(scanned_graft.parent_name)
 		text += "- Parent Plant: <span class='notice'>[scanned_graft.parent_name]</span> -\n"
 	if(scanned_graft.stored_trait)

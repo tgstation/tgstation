@@ -599,7 +599,6 @@
 
 	else if(istype(O, /obj/item/plant_analyzer))
 		var/obj/item/plant_analyzer/P_analyzer = O
-		to_chat(user, "<span class='info'>*---------*</span>")
 		to_chat(user, P_analyzer.scan_tray(src))
 		return
 

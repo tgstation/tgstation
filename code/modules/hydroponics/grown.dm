@@ -82,7 +82,6 @@
 	..()
 	if (istype(O, /obj/item/plant_analyzer))
 		var/obj/item/plant_analyzer/P_analyzer = O
-		to_chat(user, "<span class='info'>*---------*\nThis is \a <span class='name'>[src]</span>.")
 		to_chat(user, P_analyzer.scan_plant(src))
 	else
 		if(seed)
