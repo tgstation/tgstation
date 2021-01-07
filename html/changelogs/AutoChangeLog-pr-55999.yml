@@ -1,0 +1,4 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - bugfix: "Library console printers no longer become unavaible after failing to print something."
