@@ -1,0 +1,173 @@
+/**
+ * # Alien Royal
+ *
+ * A subtype of alien which is used for the larger alien castes (queen and praetorian)
+ *
+ * A subtype of alien used for the larger types of alien, which currently only includes praetorians and queens.
+ * This subtype essentially just has them inherit proper sprite alignment, no ventcrawling, and large amounts of
+ * pressure resistance and more butcher results than a normal alien.
+ */
+/mob/living/carbon/alien/humanoid/royal
+	//Common stuffs for Praetorian and Queen
+	icon = 'icons/mob/alienqueen.dmi'
+	status_flags = 0
+	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
+	pixel_x = -16
+	base_pixel_x = -16
+	bubble_icon = "alienroyal"
+	mob_size = MOB_SIZE_LARGE
+	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
+	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	/// The alternate appearance for items being held by an alien royal.
+	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
+
+/mob/living/carbon/alien/humanoid/royal/can_inject()
+	return FALSE
+
+/**
+ * # Alien Queen
+ *
+ * The most important alien caste, the queen is the only reproductive member of the set.
+ *
+ * A subtype of alien which acts as the sole reproductive member of the alien castes.  The queen
+ * boasts the most health and damage of all the xeno types, but is also the slowest.  She can
+ * lay eggs which will create facehuggers, promote other xenos to praetorians, and also call_shuttle
+ * the emergency shuttle after 15 minutes of being alive.
+ */
+/mob/living/carbon/alien/humanoid/royal/queen
+	name = "alien queen"
+	caste = "q"
+	maxHealth = 500
+	health = 500
+	icon_state = "alienq"
+	melee_damage_lower = 50
+	melee_damage_upper = 50
+	speed = 2.5
+	/// The queen's small sprite action.
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
+
+/mob/living/carbon/alien/humanoid/royal/queen/Initialize()
+	//there should only be one queen
+	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in GLOB.carbon_list)
+		if(Q == src)
+			continue
+		if(Q.stat == DEAD)
+			continue
+		if(Q.client)
+			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			break
+
+	real_name = src.name
+	RegisterSignal(SSshuttle, COMSIG_SHUTTLE_STRANDED, .proc/add_gps)
+
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
+	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
+	AddAbility(new/obj/effect/proc_holder/alien/call_shuttle())
+	smallsprite.Grant(src)
+	SSshuttle.registerHostileEnvironment(src)
+	return ..()
+
+/mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
+	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
+	internal_organs += new /obj/item/organ/alien/resinspinner
+	internal_organs += new /obj/item/organ/alien/acid
+	internal_organs += new /obj/item/organ/alien/neurotoxin
+	internal_organs += new /obj/item/organ/alien/eggsac
+	..()
+
+/**
+ * Adds a GPS signal to the queen and has Centcom tell the crew about it.
+ *
+ * Registers a GPS component to the queen with Regal Signal being the signal name.
+ * Then, it alerts the crew via Centcom announcement that the signal is available and that the threat must be killed before they can leave.
+ */
+/mob/living/carbon/alien/humanoid/royal/queen/proc/add_gps()
+	AddComponent(/datum/component/gps, "Regal Signal")
+	priority_announce("Attention crew, we were able to register a GPS signal to the threat preventing your departure.  You are expected to elimate the threat before leaving.", "[command_name()] High-Priority Update", 'sound/misc/notice1.ogg', "Priority")
+
+//Queen verbs
+/obj/effect/proc_holder/alien/lay_egg
+	name = "Lay Egg"
+	desc = "Lay an egg to produce huggers to impregnate prey with."
+	plasma_cost = 75
+	check_turf = TRUE
+	action_icon_state = "alien_egg"
+
+/obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
+	if(!check_vent_block(user))
+		return FALSE
+
+	if(locate(/obj/structure/alien/egg) in get_turf(user))
+		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
+		return FALSE
+
+	user.visible_message("<span class='alertalien'>[user] lays an egg!</span>")
+	new /obj/structure/alien/egg(user.loc)
+	return TRUE
+
+//Button to let queen choose her praetorian.
+/obj/effect/proc_holder/alien/royal/queen/promote
+	name = "Create Royal Parasite"
+	desc = "Produce a royal parasite to grant one of your children the honor of being your Praetorian."
+	plasma_cost = 500 //Plasma cost used on promotion, not spawning the parasite.
+
+	action_icon_state = "alien_queen_promote"
+
+/obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/alien/user)
+	var/obj/item/queenpromote/prom
+	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
+		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
+		return
+	else
+		for(prom in user)
+			to_chat(user, "<span class='noticealien'>You discard [prom].</span>")
+			qdel(prom)
+			return
+
+		prom = new (user.loc)
+		if(!user.put_in_active_hand(prom, 1))
+			to_chat(user, "<span class='warning'>You must empty your hands before preparing the parasite.</span>")
+			return
+		else //Just in case telling the player only once is not enough!
+			to_chat(user, "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>")
+	return
+
+/obj/item/queenpromote
+	name = "\improper royal parasite"
+	desc = "Inject this into one of your grown children to promote her to a Praetorian!"
+	icon_state = "alien_medal"
+	item_flags = ABSTRACT | DROPDEL
+	icon = 'icons/mob/alien.dmi'
+
+/obj/item/queenpromote/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
+	if(!isalienadult(M) || isalienroyal(M))
+		to_chat(user, "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>")
+		return
+	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
+		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
+		return
+
+	var/mob/living/carbon/alien/humanoid/A = M
+	if(A.stat == CONSCIOUS && A.mind && A.key)
+		if(!user.usePlasma(500))
+			to_chat(user, "<span class='noticealien'>You must have 500 plasma stored to use this!</span>")
+			return
+
+		to_chat(A, "<span class='noticealien'>The queen has granted you a promotion to Praetorian!</span>")
+		user.visible_message("<span class='alertalien'>[A] begins to expand, twist and contort!</span>")
+		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_prae = new (A.loc)
+		A.mind.transfer_to(new_prae)
+		qdel(A)
+		qdel(src)
+		return
+	else
+		to_chat(user, "<span class='warning'>This child must be alert and responsive to become a Praetorian!</span>")
+
+/obj/item/queenpromote/attack_self(mob/user)
+	to_chat(user, "<span class='noticealien'>You discard [src].</span>")
+	qdel(src)

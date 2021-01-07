@@ -1,5 +1,3 @@
-
-
 /mob/living/carbon/alien/humanoid/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
 	var/difference = abs(current-loc_temp)	//get difference
