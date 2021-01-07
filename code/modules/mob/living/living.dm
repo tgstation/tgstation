@@ -9,7 +9,8 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-	update_living_varspeed()
+	if(speed)
+		update_living_varspeed()
 
 /mob/living/ComponentInitialize()
 	. = ..()
