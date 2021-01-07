@@ -395,6 +395,7 @@
 	is_cold_recipe = TRUE
 	OptimalTempMax	= 50
 	overheatTemp = 5
+	ThermicConstant = -1
 
 /datum/chemical_reaction/hot_coco
 	results = list(/datum/reagent/consumable/hot_coco = 6)

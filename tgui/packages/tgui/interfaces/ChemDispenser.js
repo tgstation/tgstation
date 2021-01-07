@@ -48,7 +48,6 @@ export const ChemDispenser = (props, context) => {
                 icon="cog"
                 tooltip="Color code the reagents by pH"
                 tooltipPosition="bottom-left"
-                disabled={!data.isBeakerLoaded}
                 selected={hasCol}
                 onClick={() => setHasCol(!hasCol)} />
             </Fragment>
@@ -198,7 +197,7 @@ export const ChemDispenser = (props, context) => {
                   units of {chemical.name}
                 </Box>
               ))}
-              {(!!data.isBeakerLoaded && (
+              {(beakerContents.length > 0 && (
                 <Box
                   key={"pH"}>
                   pH:

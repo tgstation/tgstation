@@ -34,15 +34,15 @@
 	//var/OptimalTempMin 		= 200 			// Lower area of bell curve for determining heat based rate reactions (TO REMOVE)
 	var/OptimalTempMax			= 500			// Upper end for above
 	var/overheatTemp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
-	var/OptimalpHMin 			= 6         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/OptimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	var/OptimalpHMax 			= 9	        	// Higest value for above
-	var/ReactpHLim 				= 3         	// How far out pH wil react, giving impurity place (Exponential phase)
+	var/ReactpHLim 				= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
 	var/CurveSharpT 			= 2         	// How sharp the temperature exponential curve is (to the power of value)
-	var/CurveSharppH 			= 2         	// How sharp the pH exponential curve is (to the power of value)
+	var/CurveSharppH 			= 1         	// How sharp the pH exponential curve is (to the power of value)
 	var/ThermicConstant 		= 1         	// Temperature change per 1u produced
 	var/HIonRelease 			= 0.01       	// pH change per 1u reaction
 	var/RateUpLim 				= 20			// Optimal/max rate possible if all conditions are perfect
-	var/PurityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	var/PurityMin 				= 0.1 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 
 /datum/chemical_reaction/New()
@@ -106,6 +106,17 @@
  * * react_volume - volume created across the whole reaction
  */
 /datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, react_vol)
+	//failed_chem handler
+	for(var/id in results)
+		var/datum/reagent/R = holder.has_reagent(id)
+		if(!R)
+			continue
+		if(R.purity < PurityMin)
+			var/cached_volume = R.volume
+			holder.remove_reagent(R.type, cached_volume, FALSE)
+			holder.add_reagent(R.failed_chem, cached_volume, FALSE, added_purity = 1)
+
+	//REACTION_CLEAR handler
 	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
 			var/datum/reagent/R = holder.has_reagent(id)
@@ -143,7 +154,7 @@
 		var/datum/reagent/R = holder.get_reagent(id)
 		if(!R)
 			return
-		R.volume *= 0.98 //Slowly lower yield per tick
+		R.volume =  round((R.volume*0.98), 0.01) //Slowly lower yield per tick
 	return
 
 /**
@@ -159,7 +170,7 @@
  */
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
 	for(var/datum/reagent/R in holder.reagent_list)
-		R.purity -= 0.01 //slowly reduce purity of other reagents
+		R.purity = clamp((R.purity-0.01), 0, 1) //slowly reduce purity of other reagents
 	return
 
 /**

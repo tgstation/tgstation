@@ -86,8 +86,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/chemical_flags 
 	//impure chem values (see fermi_readme.dm for more details):
 	var/impure_chem		 = /datum/reagent/impure			// What chemical path is made when metabolised as a function of purity
-	var/inverse_chem_val = 0								// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
+	var/inverse_chem_val = 0.2								// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem	 = /datum/reagent/impure/toxic		// What chem is metabolised when purity is below inverse_chem_val
+	var/failed_chem		 = /datum/reagent/consumable/failed_reaction //what chem is made at the end of a reaction IF the purity is below the recipies PurityMin
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -147,35 +148,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)
-	if(!iscarbon(L))
-		return
-	var/mob/living/carbon/M = L
-	var/turf/T = get_turf(M)
-	debug_world("MOB ADD: on_mob_add(): [key_name(M)] at [AREACOORD(T)] - [volume] of [type] with [purity] purity")
-	if (purity == 1)
-		return
-	if(creation_purity == 1)
-		creation_purity = purity
-	else if(purity < 0)
-		CRASH("Purity below 0 for chem: [type]!")
-	if(chemical_flags & REAGENT_DONOTSPLIT)
-		return
-
-	if ((inverse_chem_val > purity) && (inverse_chem))//Turns all of a added reagent into the inverse chem
-		M.reagents.remove_reagent(type, amount, FALSE)
-		M.reagents.add_reagent(inverse_chem, amount, FALSE, added_purity = 1-creation_purity)
-		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
-		if(R.chemical_flags & REAGENT_SNEAKYNAME)
-			R.name = name//Negative effects are hidden
-			if(R.chemical_flags & REAGENT_INVISIBLE)
-				R.chemical_flags |= (REAGENT_INVISIBLE)
-		debug_world("MOB ADD: on_mob_add() (impure): merged [volume] of [inverse_chem]")
-	else if (impure_chem)
-		var/impureVol = amount * (1 - purity) //turns impure ratio into impure chem
-		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
-			M.reagents.remove_reagent(type, (impureVol), FALSE)
-		M.reagents.add_reagent(impure_chem, impureVol, FALSE, added_purity = 1-creation_purity)
-		debug_world("MOB ADD: on_mob_add() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
+	return
 
 /// Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/living/L)
@@ -208,35 +181,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return
 
 /// Called when two reagents of the same are mixing.
-// Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, mob/living/carbon/M, amount)
-	if(!iscarbon(M))
-		return
-	var/turf/T = get_turf(M)
-	debug_world("MOB ADD: on_merge(): [key_name(M)] at [AREACOORD(T)] - [volume] of [type] with [purity] purity")
-	if (purity == 1)
-		return
-	creation_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
-	if (purity < 0)
-		CRASH("Purity below 0 for chem: [type]!")
-	if(chemical_flags & REAGENT_DONOTSPLIT)
-		return
-
-	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
-		M.reagents.remove_reagent(type, amount, FALSE)
-		M.reagents.add_reagent(inverse_chem, amount, FALSE, added_purity = 1-creation_purity)
-		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
-		if(R.chemical_flags & REAGENT_SNEAKYNAME)
-			R.name = name//Negative effects are hidden
-			if(R.chemical_flags & REAGENT_INVISIBLE)
-				R.chemical_flags |= (REAGENT_INVISIBLE)
-		debug_world("MOB ADD: on_merge() (impure): merged [volume] of [inverse_chem]")
-	else if (impure_chem) //SPLIT
-		var/impureVol = amount * (1 - purity)
-		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
-			M.reagents.remove_reagent(type, impureVol, FALSE)
-		M.reagents.add_reagent(impure_chem, impureVol, FALSE, added_purity = 1-creation_purity)
-		debug_world("MOB ADD: on_merge() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
 /// Called by [/datum/reagents/proc/conditional_update]
 /datum/reagent/proc/on_update(atom/A)

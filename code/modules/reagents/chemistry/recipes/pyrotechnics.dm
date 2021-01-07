@@ -218,6 +218,7 @@
 	results = list(/datum/reagent/clf3 = 4)
 	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 3)
 	required_temp = 424
+	overheatTemp = 1050
 
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -501,3 +502,5 @@
 	is_cold_recipe = 1
 	OptimalTempMax	= 50
 	overheatTemp = 5
+	ThermicConstant = -1
+	HIonRelease = -0.02

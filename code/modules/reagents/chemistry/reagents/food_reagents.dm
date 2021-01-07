@@ -13,6 +13,10 @@
 	taste_mult = 4
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
+	impure_chem = /datum/reagent/water
+	inverse_chem_val = 0.1
+	inverse_chem = /datum/reagent/water
+	failed_chem = /datum/reagent/consumable/nutriment
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++

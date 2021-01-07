@@ -271,7 +271,7 @@
 			var/datum/reagent/R = reagent
 			remove_reagent(R.type, R.volume * part)
 
-		update_total()
+		finish_reacting() //A just in case - update total is in here
 		handle_reactions()
 		return amount
 
@@ -314,6 +314,7 @@
 			//Clear from relevant lists
 			LAZYREMOVE(addiction_list, R)
 			reagent_list -= R
+			previous_reagent_list -= R.type
 			qdel(R)
 			update_total()
 			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
@@ -825,6 +826,7 @@
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 
+//Reaction loop handler
 /datum/reagents/process(delta_time)
 	if(!isReacting)
 		finish_reacting()
@@ -891,7 +893,7 @@
 	return FALSE
 
 //Old reaction mechanics, edited to work on one only
-//This is changed from the old 
+//This is changed from the old - purity of the reagents will affect yield
 /datum/reagents/proc/instant_react(datum/chemical_reaction/selected_reaction)
 	var/list/cached_required_reagents = selected_reaction.required_reagents
 	var/list/cached_results = selected_reaction.results
@@ -900,13 +902,18 @@
 	for(var/B in cached_required_reagents)
 		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
 
+	var/sum_purity = 0
 	for(var/B in cached_required_reagents)
+		var/datum/reagent/R = has_reagent(B)
 		remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+		sum_purity += R.purity
+	sum_purity /= cached_required_reagents.len
 
 	for(var/P in selected_reaction.results)
 		multiplier = max(multiplier, 1) //this shouldn't happen ...
-		SSblackbox.record_feedback("tally", "chemical_reaction", cached_results[P]*multiplier, P)
-		add_reagent(P, cached_results[P]*multiplier, null, chem_temp, 1)
+		var/yield = (cached_results[P]*multiplier)*sum_purity
+		SSblackbox.record_feedback("tally", "chemical_reaction", yield, P)
+		add_reagent(P, yield, null, chem_temp, sum_purity)
 
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)

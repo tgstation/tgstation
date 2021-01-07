@@ -20,7 +20,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
 		toDelete = TRUE
 		return
-	if(!calculate_yield()) //maybe remove
+	if(!calculate_yield())
 		toDelete = TRUE
 		return
 	debug_world("Trying to call on_reaction for [Cr.type]")
@@ -87,18 +87,6 @@ Instant reactions AREN'T handled here. See holder.dm
 		debug_world("[reaction.type] Failed catalyst checks")
 		return FALSE
 
-	/* moved to main handler
-	//If we're too cold
-	if(!reaction.is_cold_recipe)
-		if(holder.chem_temp < reaction.required_temp) //This check is done before in holder, BUT this is here to ensure if it dips under it'll stop
-			debug_world("[reaction.type] Failed initial temp checks")
-			return FALSE //Not hot enough
-	else //or too hot
-		if(holder.chem_temp > reaction.required_temp)
-			debug_world("[reaction.type] Failed initial cold temp checks")
-			return FALSE //Not cold enough
-	*/
-
 	//Ensure we're within pH bounds - Disables reactions outside of the pH range
 	//if(! ((holder.pH >= (reaction.OptimalpHMin - reaction.ReactpHLim)) && (holder.pH <= (reaction.OptimalpHMax + reaction.ReactpHLim)) )) //This could potentially be removed to reduce overhead
 		//debug_world("[reaction.type] Failed pH checks")
@@ -120,7 +108,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	for(var/P in reaction.results)
 		targetVol = (reaction.results[P]*multiplier)
 	debug_world("(Fermichem) reaction [reaction.type] has a target volume of: [targetVol] with a multipler of [multiplier]")
-	if(targetVol == 0)
+	if(targetVol == 0 || multiplier == INFINITY)
 		debug_world("[reaction.type] Failed volume calculation checks [multiplier] | [targetVol]")
 		return FALSE
 	return TRUE
@@ -146,8 +134,11 @@ Instant reactions AREN'T handled here. See holder.dm
 	//Begin checks
 	//For now, purity is handled elsewhere (on add)
 	//Calculate DeltapH (Deviation of pH from optimal)
+	//Within mid range
+	if (cached_pH >= reaction.OptimalpHMin  && cached_pH <= reaction.OptimalpHMax)
+		deltapH = 1
 	//Lower range
-	if (cached_pH < reaction.OptimalpHMin)
+	else if (cached_pH < reaction.OptimalpHMin)
 		if (cached_pH < (reaction.OptimalpHMin - reaction.ReactpHLim))
 			deltapH = 0
 			//If outside pH range, 0
@@ -160,9 +151,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			//If outside pH range, 0
 		else
 			deltapH = (((- cached_pH + (reaction.OptimalpHMax + reaction.ReactpHLim))**reaction.CurveSharppH)/(reaction.ReactpHLim**reaction.CurveSharppH))//Reverse - to + to prevent math operation failures.
-	//Within mid range
-	else if (cached_pH >= reaction.OptimalpHMin  && cached_pH <= reaction.OptimalpHMax)
-		deltapH = 1
+	
 	//This should never proc, but it's a catch incase someone puts in incorrect values
 	else
 		WARNING("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_pH] for set recipie pH vars. It's likely the recipe vars are wrong.")
@@ -189,7 +178,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			toDelete = TRUE
 			return
 
-	purity = (deltapH)//set purity equal to pH offset
+	purity = deltapH//set purity equal to pH offset
 
 	//Then adjust purity of result with reagent purity.
 	purity *= reactant_purity(reaction)
@@ -209,7 +198,7 @@ Instant reactions AREN'T handled here. See holder.dm
 		//keep limited.
 		addChemAmmount = round(addChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
 		removeChemAmmount = round(removeChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
-		debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*reaction.results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [reaction.results[P]], adding [addChemAmmount]")
+		debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*reaction.results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [reaction.results[P]], adding [addChemAmmount] with a purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
 		//create the products
 		holder.add_reagent(P, (addChemAmmount), null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
 		TotalStep += addChemAmmount//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make targetVol in the calculate yield equal to all of the products, and make the vol check add totalStep)
@@ -237,7 +226,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	holder.update_total()//do NOT recalculate reactions
 	return
 
-//Currently calculates it irrespective of required reagents at the start
+//Currently calculates it irrespective of required reagents at the start, but this should be changed if this is powergamed
 /datum/equilibrium/proc/reactant_purity(var/datum/chemical_reaction/C)
 	var/list/cached_reagents = holder.reagent_list
 	var/i = 0
@@ -247,7 +236,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			cachedPurity += R.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case
-		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
+		WARNING("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cachedPurity/i
 
 
