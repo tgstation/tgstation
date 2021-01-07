@@ -15,22 +15,21 @@
 		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
-/obj/item/reagent_containers/blood/on_reagent_change(changetype)
-	if(reagents)
-		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-		if(B && B.data && B.data["blood_type"])
-			blood_type = B.data["blood_type"]
-		else
-			blood_type = null
+/// Handles updating the container when the reagents change.
+/obj/item/reagent_containers/blood/on_reagent_change(datum/reagents/holder, ...)
+	var/datum/reagent/blood/B = holder.has_reagent(/datum/reagent/blood)
+	if(B && B.data && B.data["blood_type"])
+		blood_type = B.data["blood_type"]
+	else
+		blood_type = null
 	update_pack_name()
-	update_icon()
+	return ..()
 
 /obj/item/reagent_containers/blood/proc/update_pack_name()
-	if(!labelled)
-		if(blood_type)
-			name = "blood pack - [blood_type]"
-		else
-			name = "blood pack"
+	if(labelled)
+		return
+
+	name = "blood_pack[blood_type ? " - [blood_type]" : ""]"
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"

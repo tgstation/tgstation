@@ -26,6 +26,28 @@
 	. = ..()
 	grill_loop = new(list(src), FALSE)
 	variant = rand(1,3)
+	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
+
+/obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)
+	SIGNAL_HANDLER
+
+	if(griddled_objects.len >= max_items || !istype(exposing_reagent, /datum/reagent/consumable/pancakebatter) || reac_volume < 5)
+		return NONE //make sure you have space... it's actually batter... and a proper amount of it.
+
+	for(var/pancakes in 1 to FLOOR(reac_volume, 5) step 5) //this adds as many pancakes as you possibly could make, with 5u needed per pancake
+		var/obj/item/food/pancakes/raw/new_pancake = new(src)
+		new_pancake.pixel_x = rand(16,-16)
+		new_pancake.pixel_y = rand(16,-16)
+		AddToGrill(new_pancake)
+		if(griddled_objects.len >= max_items)
+			break
+	visible_message("<span class='notice'>[exposing_reagent] begins to cook on [src].</span>")
+	return NONE
+
+/obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
+
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -61,19 +83,22 @@
 	item_to_grill.flags_1 |= IS_ONTOP_1
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
+	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
+	update_grill_audio()
+
+/obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
+	I.flags_1 &= ~IS_ONTOP_1
+	griddled_objects -= I
+	vis_contents -= I
+	UnregisterSignal(I, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
-	I.flags_1 &= ~IS_ONTOP_1
-	griddled_objects -= I
-	vis_contents -= I
-	UnregisterSignal(I, COMSIG_GRILL_COMPLETED)
-	update_grill_audio()
+	ItemRemovedFromGrill(I)
 
 /obj/machinery/griddle/proc/GrillCompleted(obj/item/source, atom/grilled_result)
 	SIGNAL_HANDLER
-	griddled_objects -= source //Old object
 	AddToGrill(grilled_result)
 
 /obj/machinery/griddle/proc/update_grill_audio()
@@ -82,6 +107,9 @@
 	else
 		grill_loop.stop()
 
+///Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.
+/obj/machinery/griddle/get_dumping_location(obj/item/storage/source, mob/user)
+	return
 
 /obj/machinery/griddle/process(delta_time)
 	..()

@@ -2,14 +2,11 @@
 	name = "scooter"
 	desc = "A fun way to get around."
 	icon_state = "scooter"
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	are_legs_exposed = TRUE
 
 /obj/vehicle/ridden/scooter/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(-2), TEXT_EAST = list(0), TEXT_WEST = list( 2)))
-
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -44,7 +41,6 @@
 	desc = "An old, battered skateboard. It's still rideable, but probably unsafe."
 	icon_state = "skateboard"
 	density = FALSE
-	rider_check_flags = REQUIRES_LEGS | UNBUCKLE_DISABLED_RIDER
 	var/datum/effect_system/spark_spread/sparks
 	///Whether the board is currently grinding
 	var/grinding = FALSE
@@ -57,15 +53,11 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1.5
-	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
 	sparks = new
 	sparks.set_up(1, 0, src)
 	sparks.attach(src)
+
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
 	if(sparks)
@@ -92,54 +84,55 @@
 
 /obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
-	if(A.density && has_buckled_mobs())
-		var/mob/living/H = buckled_mobs[1]
-		H.adjustStaminaLoss(instability*6)
-		playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
-			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
-			unbuckle_mob(H)
-			H.throw_at(throw_target, 3, 2)
-			var/head_slot = H.get_item_by_slot(ITEM_SLOT_HEAD)
-			if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-				H.updatehealth()
-			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
-			H.Paralyze(80)
-		else
-			var/backdir = turn(dir, 180)
-			vehicle_move(backdir)
-			H.spin(4, 1)
-		next_crash = world.time + 10
+	if(!A.density || !has_buckled_mobs())
+		return
+
+	var/mob/living/rider = buckled_mobs[1]
+	rider.adjustStaminaLoss(instability*6)
+	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
+	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
+		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
+		unbuckle_mob(rider)
+		rider.throw_at(throw_target, 3, 2)
+		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+			rider.updatehealth()
+		visible_message("<span class='danger'>[src] crashes into [A], sending [rider] flying!</span>")
+		rider.Paralyze(80)
+	else
+		var/backdir = turn(dir, 180)
+		step(src, backdir)
+		rider.spin(4, 1)
+	next_crash = world.time + 10
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
-	vehicle_move(dir)
-	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
-		var/mob/living/L = buckled_mobs[1]
-		L.adjustStaminaLoss(instability*0.5)
-		if (L.getStaminaLoss() >= 100)
-			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
-			unbuckle_mob(L)
-			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
-			L.throw_at(throw_target, 2, 2)
-			visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
-			L.Paralyze(40)
-			grinding = FALSE
-			icon_state = "[initial(icon_state)]"
-			return
-		else
-			playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
-			if(prob (25))
-				var/turf/location = get_turf(loc)
-				if(location)
-					location.hotspot_expose(1000,1000)
-				sparks.start() //the most radical way to start plasma fires
-			addtimer(CALLBACK(src, .proc/grind), 1)
-			return
-	else
+	step(src, dir)
+	if(!has_buckled_mobs() || !(locate(/obj/structure/table) in loc.contents))
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
+		return
+
+	var/mob/living/L = buckled_mobs[1]
+	L.adjustStaminaLoss(instability*0.5)
+	if (L.getStaminaLoss() >= 100)
+		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		unbuckle_mob(L)
+		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
+		L.throw_at(throw_target, 2, 2)
+		visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
+		L.Paralyze(40)
+		grinding = FALSE
+		icon_state = "[initial(icon_state)]"
+	else
+		playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
+		if(prob (25))
+			var/turf/location = get_turf(loc)
+			if(location)
+				location.hotspot_expose(1000,1000)
+			sparks.start() //the most radical way to start plasma fires
+		addtimer(CALLBACK(src, .proc/grind), 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()
@@ -260,9 +253,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/Initialize()
 	. = ..()
-	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
-	riding.vehicle_move_delay = 0
-	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0), TEXT_SOUTH = list(0), TEXT_EAST = list(0), TEXT_WEST = list(0)))
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/wheelys)
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
@@ -290,8 +281,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates/Initialize()
 	. = ..()
-	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
-	riding.vehicle_move_delay = 1.5
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/wheelys/rollerskates)
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
@@ -301,6 +291,4 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes/Initialize()
 	. = ..()
-	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
-	riding.vehicle_move_delay = 1
-	riding.allowed_turf_typecache = typecacheof(/turf/open/floor/plating/asteroid/snow/icemoon)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes)

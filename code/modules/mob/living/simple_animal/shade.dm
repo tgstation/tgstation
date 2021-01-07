@@ -30,7 +30,7 @@
 	stop_automated_movement = 1
 	faction = list("cult")
 	status_flags = CANPUSH
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
@@ -57,7 +57,7 @@
 			return
 		if(health < maxHealth)
 			adjustHealth(-25)
-			Beam(M,icon_state="sendbeam",time=4)
+			Beam(M,icon_state="sendbeam", time = 4)
 			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
 					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 		else

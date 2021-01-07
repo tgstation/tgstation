@@ -455,7 +455,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed/pubby{
+/obj/machinery/vending/wallmed{
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/white,

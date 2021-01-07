@@ -634,7 +634,6 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 
-
 /obj/item/food/cookie/sugar
 	name = "sugar cookie"
 	desc = "Just like your little sister used to make."
@@ -642,6 +641,13 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 6)
 	tastes = list("sweetness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
+
+/obj/item/food/cookie/sugar/Initialize()
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[FESTIVE_SEASON])
+		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
+		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
+		icon_state = "sugarcookie_[shape]"
 
 /obj/item/food/chococornet
 	name = "chocolate cornet"
@@ -704,6 +710,47 @@
 	tastes = list("pancakes" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+
+/obj/item/food/pancakes/raw
+	name = "goopy pancake"
+	desc = "A barely cooked mess that some may mistake for a pancake. It longs for the griddle."
+	icon_state = "rawpancakes_1"
+	inhand_icon_state = "rawpancakes"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("milky batter" = 1)
+	burns_on_grill = FALSE
+
+/obj/item/food/pancakes/raw/MakeGrillable()
+	AddComponent(/datum/component/grillable,\
+				cook_result = /obj/item/food/pancakes,\
+				required_cook_time = rand(30 SECONDS, 40 SECONDS),\
+				positive_result = TRUE,\
+				use_large_steam_sprite = TRUE)
+
+/obj/item/food/pancakes/raw/attackby(obj/item/garnish, mob/living/user, params)
+	var/newresult
+	if(istype(garnish, /obj/item/food/grown/berries))
+		newresult = /obj/item/food/pancakes/blueberry
+		name = "raw blueberry pancake"
+		icon_state = "rawbbpancakes_1"
+		inhand_icon_state = "rawbbpancakes"
+	else if(istype(garnish, /obj/item/food/chocolatebar))
+		newresult = /obj/item/food/pancakes/chocolatechip
+		name = "raw chocolate chip pancake"
+		icon_state = "rawccpancakes_1"
+		inhand_icon_state = "rawccpancakes"
+	else
+		return ..()
+	if(newresult)
+		qdel(garnish)
+		to_chat(user, "<span class='notice'>You add [garnish] to [src].</span>")
+		AddComponent(/datum/component/grillable, cook_result = newresult)
+
+/obj/item/food/pancakes/raw/examine(mob/user)
+	. = ..()
+	if(name == initial(name))
+		. += "<span class='notice'>You can modify the pancake by adding <b>blueberries</b> or <b>chocolate</b> before finishing the griddle."
 
 /obj/item/food/pancakes/blueberry
 	name = "blueberry pancake"
