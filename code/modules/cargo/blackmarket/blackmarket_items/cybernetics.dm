@@ -205,10 +205,10 @@
 	name = "universal connection implant"
 	desc = "Allows for direct connection between your brain, the cyberlink and the implant's firmware, allowing you to change protocols to make them compatible with your cyberlink."
 	item = /obj/item/organ/cyberimp/arm/item_set/connector
-	availability_prob = 60
+	availability_prob = 95
 	stock_min = 1
 	stock_max = 4
-	price_min = 500
+	price_min = 250
 	price_max = 1000
 
 /datum/blackmarket_item/cybernetics/ammo_counter
