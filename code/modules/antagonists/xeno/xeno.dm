@@ -1,7 +1,10 @@
 //XENO TEAM
 /datum/team/xeno
 	name = "Aliens"
+	/// How many alien queens have already died
 	var/queen_deaths = 0
+	/// How many alien queens can die before no more can be created
+	var/max_queen_deaths = 2
 
 //Simply lists them.
 /datum/team/xeno/roundend_report()
