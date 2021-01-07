@@ -13,10 +13,3 @@
 	var/mob/living/living_pawn = controller.pawn
 	INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick(screeches))
 	finish_action(controller, TRUE)
-
-
-
-
-
-
-

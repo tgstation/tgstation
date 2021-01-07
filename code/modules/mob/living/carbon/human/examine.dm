@@ -124,16 +124,7 @@
 			if(suiciding)
 				. += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>"
 
-			var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
-			if(getorgan(/obj/item/organ/brain))
-				if(!ghost && !client) //There's no ghost with a mind matching the body's (and there's no client still in the body, if they haven't left the body once yet), the ghost has likely disconnected
-					. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
-				else if (!ghost.can_reenter_corpse || ghost.pushed_do_not_resuscitate) //There is a ghost with a matching mind but they pushed DNR or otherwise can't reenter
-					. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has lost the will to live...</span>"
-				else
-					. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
-			else
-				. += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>"
+			. += generate_death_examine_text()
 
 	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"

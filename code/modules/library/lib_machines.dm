@@ -465,7 +465,6 @@
 		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			printer_cooldown = world.time + PRINTER_COOLDOWN
 			var/datum/db_query/query_library_print = SSdbcore.NewQuery(
 				"SELECT * FROM [format_table_name("library")] WHERE id=:id AND isnull(deleted)",
 				list("id" = id)
@@ -474,6 +473,7 @@
 				qdel(query_library_print)
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 			while(query_library_print.NextRow())
 				var/author = query_library_print.item[2]
 				var/title = query_library_print.item[3]

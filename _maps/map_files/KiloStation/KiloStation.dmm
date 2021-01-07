@@ -55618,14 +55618,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"bJW" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/computer/arcade,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/fitness/recreation)
 "bJX" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/space_heater,
@@ -70077,19 +70069,6 @@
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat/atmos)
-"chP" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
 "chQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -74551,17 +74530,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"cpO" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/computer/arcade,
-/obj/machinery/newscaster{
-	pixel_x = -30
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/fitness/recreation)
 "cpP" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
@@ -88386,6 +88354,18 @@
 "dvN" = (
 /turf/open/floor/plating/asteroid/lowpressure,
 /area/space/nearstation)
+"dyq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "dEI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
@@ -88476,6 +88456,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"eiW" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "eja" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -88739,13 +88727,6 @@
 /obj/effect/spawner/randomarcade,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison)
-"gdt" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "geJ" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -88783,6 +88764,9 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"gpw" = (
+/turf/closed/wall/rust,
+/area/maintenance/space_hut/plasmaman)
 "gwd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -88794,23 +88778,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port)
-"gAK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = 32;
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 4
-	},
-/obj/item/toy/plush/plasmamanplushie{
-	name = "Lithium II"
-	},
-/turf/open/floor/plating/rust/plasma,
-/area/maintenance/space_hut/plasmaman)
 "gBM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -88819,15 +88786,6 @@
 	icon_state = "panelscorched"
 	},
 /area/security/prison)
-"gEF" = (
-/obj/structure/grille/broken,
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "gEN" = (
 /obj/structure/table/reinforced,
 /obj/structure/reagent_dispensers/servingdish,
@@ -88907,9 +88865,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/closed/wall/r_wall/rust,
 /area/science/mixing/chamber)
-"hkG" = (
-/turf/closed/wall/rust,
-/area/maintenance/space_hut/plasmaman)
 "hmh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -89218,11 +89173,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/security/prison)
-"iTF" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/turf/open/space/basic,
-/area/space/nearstation)
 "iUy" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
@@ -89296,6 +89246,28 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/carpet/green,
 /area/maintenance/port)
+"jTL" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
+"jUV" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_x = -30
+	},
+/obj/effect/spawner/randomarcade{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/recreation)
 "kfw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -89549,6 +89521,13 @@
 /obj/machinery/microwave,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"lGO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "lLc" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -89789,31 +89768,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"nDl" = (
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/effect/turf_decal/tile/red,
-/obj/item/food/donut,
-/obj/item/inspector,
-/turf/open/floor/plasteel/dark,
-/area/security/main)
 "nFQ" = (
 /obj/item/canvas/nineteen_nineteen,
 /obj/structure/easel,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison)
-"nHy" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "nLY" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/drip{
@@ -89854,23 +89813,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/prison)
-"odV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = -32;
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 8
-	},
-/obj/item/toy/plush/plasmamanplushie{
-	name = "Dianion XV"
-	},
-/turf/open/floor/plating/rust/plasma,
-/area/maintenance/space_hut/plasmaman)
 "oev" = (
 /obj/structure/cable,
 /obj/machinery/power/tracker,
@@ -90069,6 +90011,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
+"pjk" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat/atmos)
 "pjq" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -90096,6 +90050,11 @@
 	},
 /turf/open/floor/carpet/green,
 /area/maintenance/port)
+"pqf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "prO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -90133,6 +90092,11 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/security/prison)
+"pFC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/holosign/barrier/atmos,
+/turf/open/floor/plating/airless,
+/area/maintenance/space_hut/plasmaman)
 "pGW" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/grassybush,
@@ -90315,6 +90279,23 @@
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/security/prison)
+"qBh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/obj/item/toy/plush/plasmamanplushie{
+	name = "Lithium II"
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "qCd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -90333,6 +90314,13 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/grimy,
 /area/security/prison)
+"qDp" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "qFC" = (
 /obj/structure/rack,
 /obj/item/restraints/handcuffs,
@@ -90360,13 +90348,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"qJA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 1
-	},
-/turf/open/floor/plating/rust/plasma,
-/area/maintenance/space_hut/plasmaman)
 "qKa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -90437,18 +90418,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/aft)
-"rcZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = -32;
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner,
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 1
-	},
-/turf/open/floor/plating/rust/plasma,
-/area/maintenance/space_hut/plasmaman)
 "rdm" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -90535,11 +90504,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
-"rww" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/turf/open/floor/plating/rust/plasma,
-/area/maintenance/space_hut/plasmaman)
 "rAp" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -90730,11 +90694,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"tbi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/holosign/barrier/atmos,
-/turf/open/floor/plating/airless,
-/area/maintenance/space_hut/plasmaman)
 "thU" = (
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/open/floor/plating/asteroid/lowpressure,
@@ -91014,21 +90973,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
-"uKf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/tank/internals/plasmaman/belt/full,
-/obj/structure/table,
-/obj/structure/sign/poster/contraband/rebels_unite{
-	pixel_x = 32;
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/purple/filled/corner,
-/obj/item/flashlight/lamp,
-/turf/open/floor/plating/rust/plasma,
-/area/maintenance/space_hut/plasmaman)
 "uKN" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "permaouter";
@@ -91059,13 +91003,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"uUW" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/inspector,
-/turf/open/floor/plasteel/dark,
-/area/security/main)
 "uWN" = (
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall/rust,
@@ -91141,6 +91078,11 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port/aft)
+"viq" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/turf/open/space/basic,
+/area/space/nearstation)
 "vmE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -91183,6 +91125,13 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/prison/safe)
+"vzj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "vAM" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/open/floor/plasteel/white,
@@ -91290,14 +91239,6 @@
 /obj/item/plant_analyzer,
 /turf/open/floor/grass,
 /area/security/prison)
-"vYu" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "weO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -91324,6 +91265,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
+"wiR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/structure/table,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/item/flashlight/lamp,
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "wqI" = (
 /obj/structure/rack,
 /obj/item/stack/medical/gauze,
@@ -91349,6 +91305,19 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port)
+"wrN" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/effect/turf_decal/tile/red,
+/obj/item/food/donut,
+/obj/item/inspector,
+/turf/open/floor/plasteel/dark,
+/area/security/main)
 "wsg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
@@ -91523,6 +91492,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xyF" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/spawner/randomarcade{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/recreation)
 "xzI" = (
 /obj/machinery/camera{
 	c_tag = "Prison Cells";
@@ -91603,6 +91582,23 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port/aft)
+"xUP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
+	},
+/obj/item/toy/plush/plasmamanplushie{
+	name = "Dianion XV"
+	},
+/turf/open/floor/plating/rust/plasma,
+/area/maintenance/space_hut/plasmaman)
 "xWh" = (
 /obj/machinery/newscaster,
 /turf/closed/wall/r_wall,
@@ -91661,6 +91657,13 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
 /area/security/prison)
+"ygA" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/inspector,
+/turf/open/floor/plasteel/dark,
+/area/security/main)
 "yio" = (
 /turf/closed/wall,
 /area/medical/psychology)
@@ -104914,10 +104917,10 @@ beX
 cnL
 awD
 bGR
-bJW
-bJW
-cpO
-bJW
+xyF
+xyF
+jUV
+xyF
 cuD
 aSL
 cJB
@@ -109310,7 +109313,7 @@ aog
 aSV
 aia
 cBu
-uUW
+ygA
 cyK
 cri
 cHe
@@ -110338,7 +110341,7 @@ aQS
 cwK
 aic
 aiy
-nDl
+wrN
 ajf
 cKn
 agS
@@ -119248,7 +119251,7 @@ auf
 bmD
 ccl
 adt
-chP
+pjk
 chO
 agf
 ceF
@@ -135742,7 +135745,7 @@ aaa
 acm
 aaa
 acm
-gdt
+qDp
 acm
 aaa
 aaa
@@ -135999,7 +136002,7 @@ aaa
 acm
 aaa
 acm
-gdt
+qDp
 aaa
 aaa
 aaa
@@ -136256,7 +136259,7 @@ aaa
 acm
 aaa
 acm
-vYu
+eiW
 aaa
 aaa
 aaa
@@ -136513,7 +136516,7 @@ aaa
 acK
 acm
 acK
-iTF
+viq
 aaa
 aaa
 aaa
@@ -136770,7 +136773,7 @@ acm
 acm
 aaa
 acm
-iTF
+viq
 aaa
 aaa
 aaa
@@ -137798,7 +137801,7 @@ aeu
 aaQ
 aaa
 acm
-gdt
+qDp
 aaQ
 aeo
 aeo
@@ -138055,7 +138058,7 @@ aeu
 acm
 aaa
 acm
-vYu
+eiW
 aaa
 acm
 aaa
@@ -138312,7 +138315,7 @@ acm
 acm
 aaa
 acm
-gEF
+jTL
 aeo
 aeo
 aaa
@@ -139083,7 +139086,7 @@ aaa
 acm
 aaa
 aeo
-iTF
+viq
 aaa
 aaa
 aaa
@@ -139854,7 +139857,7 @@ aaa
 aeo
 aaa
 acm
-iTF
+viq
 aaa
 aaa
 aaa
@@ -140111,7 +140114,7 @@ aaa
 aeo
 aaa
 aaQ
-vYu
+eiW
 aaa
 aaa
 aaa
@@ -140882,7 +140885,7 @@ aaa
 acm
 aaa
 acm
-nHy
+lGO
 acK
 acK
 acK
@@ -141140,10 +141143,10 @@ acm
 aaa
 aeo
 acm
-hkG
-tbi
-tbi
-hkG
+gpw
+pFC
+pFC
+gpw
 aeo
 aaa
 aaa
@@ -141397,11 +141400,11 @@ aeo
 aaa
 aeo
 aaa
-tbi
-rcZ
-odV
-tbi
-iTF
+pFC
+dyq
+xUP
+pFC
+viq
 aaa
 aaa
 aaa
@@ -141654,11 +141657,11 @@ acm
 aaa
 aaQ
 aaa
-tbi
-rww
-qJA
-tbi
-iTF
+pFC
+pqf
+vzj
+pFC
+viq
 aaa
 aaa
 aaa
@@ -141911,11 +141914,11 @@ aeo
 aaa
 aeo
 aaa
-tbi
-gAK
-uKf
-tbi
-iTF
+pFC
+qBh
+wiR
+pFC
+viq
 aaa
 aaa
 aaa
@@ -142168,10 +142171,10 @@ aeo
 aaa
 acm
 acm
-hkG
-tbi
-tbi
-hkG
+gpw
+pFC
+pFC
+gpw
 aeo
 aaa
 aaa
