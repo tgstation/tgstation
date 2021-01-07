@@ -7,7 +7,7 @@
 	icon = 'ICON FILENAME' 			(defaults to 'icons/turf/areas.dmi')
 	icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
 	requires_power = FALSE 				(defaults to true)
-	ambience_index = AMBIENCE_GENERIC   (picks the ambience from an assoc list in ambience.dm)   
+	ambience_index = AMBIENCE_GENERIC   (picks the ambience from an assoc list in ambience.dm)
 	ambientsounds = list()				(defaults to ambience_index's assoc on Initialize(). override it as "ambientsounds = list('sound/ambience/signal.ogg')" or by changing ambience_index)
 
 NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
@@ -79,12 +79,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Maintenance
 
 /area/maintenance
-<<<<<<< HEAD:code/game/area/space_station_13_areas.dm
 	name = "Generic Maintenance"
-	ambientsounds = MAINTENANCE
-=======
 	ambience_index = AMBIENCE_MAINT
->>>>>>> upstream/master:code/game/area/Space_Station_13_areas.dm
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
