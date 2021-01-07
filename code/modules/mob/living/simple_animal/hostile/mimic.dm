@@ -30,6 +30,10 @@
 	faction = list("mimic")
 	move_to_delay = 9
 	del_on_death = 1
+	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.
+	var/storage_capacity = 50
+	///A separate cap for mobs. Same purpose as above.
+	var/mob_storage_capacity = 10
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
