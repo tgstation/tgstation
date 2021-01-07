@@ -1,4 +1,0 @@
-author: "spessbro"
-delete-after: True
-changes: 
-  - bugfix: "Fixed SM not delamming if a brainless human was near it."
