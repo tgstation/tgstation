@@ -143,7 +143,7 @@
 		var/datum/reagent/R = holder.get_reagent(id)
 		if(!R)
 			return
-		R.volume *= 0.025 //Slowly lower yield
+		R.volume *= 0.98 //Slowly lower yield per tick
 	return
 
 /**
