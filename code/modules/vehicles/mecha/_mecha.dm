@@ -694,7 +694,13 @@
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		if(phase_state)
 			flick(phase_state, src)
-		forceMove(get_step(src,dir))//This is jank I hate it thanks, this should be done thrugh move not this dumb shit
+		var/turf/destination = get_step(src,dir)
+		var/area/destination_area = destination.loc
+		if(destination_area.area_flags & NOTELEPORT)
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>A dull, universal force is preventing you from phasing here!</span>")
+			spark_system.start()
+		else
+			forceMove(destination)//This is jank I hate it thanks, this should be done thrugh move not this dumb shit
 		use_power(phasing_energy_drain)
 		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 		return
