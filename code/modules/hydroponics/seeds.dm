@@ -281,7 +281,7 @@
 					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
 					continue
 				//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-				else if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results.len)
+				else if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
 					for(var/datum/reagent/juice in grown_edible.juice_results)
 						T.reagents.add_reagent(juice, amount/2)
 					continue
@@ -291,12 +291,12 @@
 		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
 		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 
-		// Heats up the plant's contents by 100 kelvin per 1 unit of nutriment.
+		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment.
 		if(get_gene(/datum/plant_gene/trait/chem_heating))
 			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment)
 			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 100))
 			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 50)
-		// Cools down the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
+		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
 		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
 			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment)
 			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -25))
@@ -466,60 +466,24 @@
 	if(C)
 		C.value = weed_chance
 
+/**
+ * Override for seeds with unique text for their analyzer.
+ * Returns FALSE if no unique text, or a string of text if there is.
+ */
+/obj/item/seeds/proc/get_unique_analyzer_text()
+	return FALSE
 
-/obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
-	var/text = ""
-	if(!get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && !get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
-		text += "- Plant type: Normal plant\n"
-	if(get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-		text += "- Plant type: Weed. Can grow in nutrient-poor soil.\n"
-	if(get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-		text += "- Plant type: Mushroom. Can grow in dry soil.\n"
-	if(get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
-		text += "- Plant type: <span class='warning'>UNKNOWN</span> \n"
-	if(potency != -1)
-		text += "- Potency: [potency]\n"
-	if(yield != -1)
-		text += "- Yield: [yield]\n"
-	text += "- Maturation speed: [maturation]\n"
-	if(yield != -1)
-		text += "- Production speed: [production]\n"
-	text += "- Endurance: [endurance]\n"
-	text += "- Lifespan: [lifespan]\n"
-	text += "- Instability: [instability]\n"
-	text += "- Weed Growth Rate: [weed_rate]\n"
-	text += "- Weed Vulnerability: [weed_chance]\n"
-	if(rarity)
-		text += "- Species Discovery Value: [rarity]\n"
-	var/all_traits = ""
-	for(var/datum/plant_gene/trait/traits in genes)
-		if(istype(traits, /datum/plant_gene/trait/plant_type))
-			continue
-		all_traits += " [traits.get_name()]"
-	text += "- Plant Traits:[all_traits]\n"
-	text += "*---------*"
-	return text
-
-/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
+/**
+ * Override for seeds with special chem reactions.
+ */
+/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/plant_analyzer))
-		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
-		var/text
 		var/obj/item/plant_analyzer/P_analyzer = O
-		if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
-			text = get_analyzer_text()
-			if(text)
-				to_chat(user, "<span class='notice'>[text]</span>")
-		if(reagents_add && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
-			to_chat(user, "<span class='notice'>- Plant Reagents -</span>")
-			to_chat(user, "<span class='notice'>*---------*</span>")
-			for(var/datum/plant_gene/reagent/G in genes)
-				to_chat(user, "<span class='notice'>- [G.get_name()] -</span>")
-			to_chat(user, "<span class='notice'>*---------*</span>")
-
-
+		to_chat(user, "<span class='info'>*---------*\nThis is \a <span class='name'>[src]</span>.")
+		to_chat(user, P_analyzer.scan_plant(src))
 		return
 
 	if(istype(O, /obj/item/pen))

@@ -49,13 +49,13 @@
 		plant(user)
 		to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 
-/obj/item/seeds/kudzu/get_analyzer_text()
-	var/text = ..()
-	var/text_string = ""
+/obj/item/seeds/kudzu/get_unique_analyzer_text()
+	var/kudzu_mutations = ""
+	var/output_message = ""
 	for(var/datum/spacevine_mutation/SM in mutations)
-		text_string += "[(text_string == "") ? "" : ", "][SM.name]"
-	text += "\n- Plant Mutations: [(text_string == "") ? "None" : text_string]"
-	return text
+		kudzu_mutations += "[(kudzu_mutations == "") ? "" : ", "][SM.name]"
+	output_message += "\n- Plant Mutations: [(kudzu_mutations == "") ? "None." : "[kudzu_mutations]."]"
+	return output_message? output_message : FALSE
 
 /obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/S)
 	var/list/temp_mut_list = list()
