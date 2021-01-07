@@ -183,7 +183,8 @@
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	original_species = owner.dna.species.type
+	if(!ismonkey(owner))
+		original_species = owner.dna.species.type
 	. = owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
