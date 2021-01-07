@@ -2501,4 +2501,4 @@
 	holder.my_atom.visible_message("<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
-	
+
