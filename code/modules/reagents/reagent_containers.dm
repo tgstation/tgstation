@@ -264,3 +264,4 @@
 	update_overlays()
 	if(prob(25))
 		visible_message("<span class='notice'>[icon2html(src, viewers(DEFAULT_MESSAGE_RANGE, src))] [src]'s is damaged by [cause] and begins to deform!</span>")
+		

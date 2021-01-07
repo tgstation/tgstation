@@ -221,7 +221,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	return
 
 //Currently calculates it irrespective of required reagents at the start, but this should be changed if this is powergamed
-/datum/equilibrium/proc/reactant_purity(var/datum/chemical_reaction/C)
+/datum/equilibrium/proc/reactant_purity(datum/chemical_reaction/C)
 	var/list/cached_reagents = holder.reagent_list
 	var/i = 0
 	var/cachedPurity

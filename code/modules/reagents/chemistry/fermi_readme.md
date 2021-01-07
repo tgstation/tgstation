@@ -48,7 +48,7 @@ When one of the checks fails in the equilibrium object, it is flagged for deleti
 ## Recipe and processing mechanics
 
 Lets go over the reaction vars below
-` 	var/required_temp			= 100
+``` 	var/required_temp			= 100
     var/OptimalTempMax			= 500			// Upper end for above
 	var/overheatTemp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
 	var/OptimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
@@ -60,7 +60,7 @@ Lets go over the reaction vars below
 	var/HIonRelease 			= 0.01       	// pH change per 1u reaction
 	var/RateUpLim 				= 20			// Optimal/max rate possible if all conditions are perfect
 	var/PurityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT`
+	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT```
 
 The amount added is based off the recipies’ required_temp, OptimalTempMax, overheatTemp and CurveSharpT. See below:
 ![image](https://user-images.githubusercontent.com/33956696/103941344-9d06ae80-5126-11eb-951d-aa5302641eb9.png)
@@ -73,22 +73,22 @@ Finally the ThermicConstant is how much the temperature changes per u created. T
 PurityMin will set when overly_impure is called – if the purity of the product is below this value it will call overly_impure. In addition, on the end of a reaction, by default reaction_finish() will convert any products below the PurityMin into the product’s failed_chem.
 
 Reaction_flags can be used to set these defines:
-` #define REACTION_CLEAR_IMPURE   //Convert into impure/pure on reaction completion
+``` #define REACTION_CLEAR_IMPURE   //Convert into impure/pure on reaction completion
 #define REACTION_CLEAR_INVERSE     //Convert into inverse on reaction completion when purity is low enough
 #define REACTION_CLEAR_RETAIN	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
-#define REACTION_INSTANT          //Used to create instant reactions`
+#define REACTION_INSTANT          //Used to create instant reactions```
 
 For REACTION_CLEAR – this causes the purity mechanics to resolve in the beaker at the end of the reaction, instead of when added to a mob.
 
 Is_cold_recipie requires you to set your overheatTemp and OptimalTempMax descend instead.
 Eg:
-`var/required_temp			= 300
+```var/required_temp			= 300
 var/OptimalTempMax			= 200
-#var/overheatTemp 			= 50 `
+#var/overheatTemp 			= 50 ```
 
 ## Reagents
 The new vars that are introduced are below:
-`
+```
 	/// pH of the reagent
 	var/pH = 7
 	///Purity of the reagent
@@ -100,15 +100,15 @@ The new vars that are introduced are below:
 	var/inverse_chem_val = 0.2								// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem	 = /datum/reagent/impure/toxic		// What chem is metabolised when purity is below inverse_chem_val
 	var/failed_chem		 = /datum/reagent/consumable/failed_reaction //what chem is made at the end of a reaction IF the purity is below the recipies PurityMin
-var/chemical_flags `
+var/chemical_flags ```
 
 When writing any reagent code ALWAYS use creation_purity. Purity is kept for internal mechanics only and won’t reflect the purity on creation.
 
 See above for purity mechanics, but this is where you set the reagents that are created. If you’re making an impure reagent I recommend looking at impure_reagents.dm to see how they’re set up.
 
 The flags you can set for var/chemical_flags are:
-` #define REAGENT_DEAD_PROCESS		(1<<0)	//allows on_mob_dead() if present in a dead body
+``` #define REAGENT_DEAD_PROCESS		(1<<0)	//allows on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing - ignores all purity effects
 #define REAGENT_INVISIBLE			(1<<2)	//Doesn't appear on handheld health analyzers.
 #define REAGENT_SNEAKYNAME          (1<<3)  //When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting for purity effects `
+#define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting for purity effects ```

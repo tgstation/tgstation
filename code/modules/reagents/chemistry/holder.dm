@@ -979,7 +979,7 @@
 		return FALSE
 
 //Processes the reagents in the holder and converts them
-/datum/reagents/proc/process_mob_reagent_purity(var/reagent, added_volume, added_purity)
+/datum/reagents/proc/process_mob_reagent_purity(reagent, added_volume, added_purity)
 	var/datum/reagent/R = has_reagent(reagent)
 	if(!R)
 		WARNING("Tried to process reagent purity for [reagent], but 0 volume was found right after it was added!")
