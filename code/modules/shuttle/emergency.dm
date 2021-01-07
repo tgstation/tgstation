@@ -193,27 +193,25 @@
 	return shuttle.hijack_status
 
 /obj/machinery/computer/emergency_shuttle/AltClick(user)
-	if(isalien(user))
-		xeno_queen_action(user)
-		return
 	if(isliving(user))
-		attempt_hijack_stage(user)
+		check_antag_interactions(user)
 
 /**
- * Used for the alien queen's shuttle interaction.
+ * Used for antagonists' console interactions.
  *
- * Used to remove an alien queen's hostile environment, allowing the shuttle to leave while it is still alive.
- * Also plays a menacing roar to all playing players, letting them know the alien queen is still alive and probably on board.
+ * Controls both the alien queen's console interaction and the hijack objective.
+ * If the alien queen interacts, then she will remove her own hostile environment and allow the shuttle to leave.
+ * If a different antagonist with a hijack speed set interacts with the console, it will progress shuttle hijacking.
+ * If the user isn't any of the above, then it will simply display some flavor text.
  * Arguments:
- * * user - The alien queen interacting with the console.
+ * * user - The living mob interacting with the console
  */
-/obj/machinery/computer/emergency_shuttle/proc/xeno_queen_action(mob/living/carbon/alien/user)
-	if(user?.mind?.has_antag_datum(/datum/antagonist/xeno/queen) && (user in SSshuttle.hostileEnvironments))
+/obj/machinery/computer/emergency_shuttle/proc/check_antag_interactions(mob/living/user)
+	if(isalien(user) && user.mind?.has_antag_datum(/datum/antagonist/xeno/queen) && (user in SSshuttle.hostileEnvironments))
 		sound_to_playing_players('sound/voice/alien_queen_roar.ogg')
 		sleep(50)
 		SSshuttle.clearHostileEnvironment(user)
-
-/obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
+		return
 	if(!user.CanReach(src))
 		return
 	if(!user?.mind?.get_hijack_speed())
