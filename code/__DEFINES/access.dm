@@ -148,14 +148,14 @@
 /// Helper define to log access changes.
 #define LOG_ID_ACCESS_CHANGE(user, access, card)\
 	log_game("[key_name(user)] added [get_access_desc(access)] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
-	message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access)] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
+	message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access)] to an ID card [ADMIN_VV(card)] [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]")
 
 /// Helper define to log job changes.
 #define LOG_ID_JOB_CHANGE(user, job, card)\
 	log_game("[key_name(user)] assigned the job [job.title] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
-	message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
+	message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(card)] [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]")
 
 /// Helper define to log access changes when an ID card has multiple access levels granted at once. Accesses should be a string of access levels that were added and should be logged.
 #define LOG_ID_REGION_GRANT(user, region, card)\
 	log_game("[key_name(user)] added [region] region access to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
-	message_admins("[ADMIN_LOOKUPFLW(user)] just added [region] region access to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
+	message_admins("[ADMIN_LOOKUPFLW(user)] just added [region] region access to an ID card [ADMIN_VV(card)] [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]")
