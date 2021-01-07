@@ -1,0 +1,4 @@
+author: "Azarak"
+delete-after: True
+changes: 
+  - code_imp: "Spawning equipment for nearsighted or tongue-tied people is now safe code-wise, and shouldnt do any bugs, nor will they delete your previous equipment. Also blindness doesn't call a redundant expensive proc"
