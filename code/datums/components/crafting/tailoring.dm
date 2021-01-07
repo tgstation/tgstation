@@ -143,3 +143,17 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1, /obj/item/stack/sheet/leather = 1)
 	time = 60
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonsuit
+	name = "Prisoner Uniform (Suit)"
+	result = /obj/item/clothing/under/rank/prisoner
+	reqs = list(/obj/item/stack/sheet/cloth = 3)
+	time = 20
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonskirt
+	name = "Prisoner Uniform (Skirt)"
+	result = /obj/item/clothing/under/rank/prisoner/skirt
+	reqs = list(/obj/item/stack/sheet/cloth = 3)
+	time = 20
+	category = CAT_CLOTHING
