@@ -75,7 +75,7 @@
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"
 
-obj/item/storage/box/holy/clock/PopulateContents()
+/obj/item/storage/box/holy/clock/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain/clock(src)
 	new /obj/item/clothing/suit/armor/riot/chaplain/clock(src)
 
