@@ -8,7 +8,7 @@ if you're reading this in the PR. I forgot to remove this or I'm in the middle o
     - disabled REACT_INSTANT Do I want it back? Is foam continulously reacting a bad thing?
     - I tested explosive foam - seems fine, the explosion clears reagents so it doesn't cause chaos
 - Convert previous_reagents_list into a list of types, not a list of objects - PASSED
-- Check over purity conversion - seems to work, slight numbers are off
+- Check over purity conversion - PASSED!
 - Ensure revisions to equilibrium haven't broken it - PASSED
 - Multiple product reactions should work now - but I can't find any in code to test. If there are none, atomise out a new chem that produces 2+ to test
 

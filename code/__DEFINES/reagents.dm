@@ -55,11 +55,11 @@
 #define CHEMICAL_NORMAL_PH 7.000
 
 //reagent bitflags, used for altering how they works
-#define REAGENT_DEAD_PROCESS		(1<<0)	//calls on_mob_dead() if present in a dead body
-#define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing
+#define REAGENT_DEAD_PROCESS		(1<<0)	//allows on_mob_dead() if present in a dead body
+#define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing - ignores all purity effects
 #define REAGENT_INVISIBLE			(1<<2)	//Doesn't appear on handheld health analyzers.
 #define REAGENT_SNEAKYNAME          (1<<3)  //When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting
+#define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting for purity effects
 
 //Chemical reaction flags, for determining reaction specialties
 #define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
