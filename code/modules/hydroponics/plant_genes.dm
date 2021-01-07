@@ -545,6 +545,29 @@
 	. = ..()
 
 /**
+ * Plays a laughter sound when someone slips on it.
+ * Like the sitcom component but for plants.
+ */
+/datum/plant_gene/trait/plant_laughter
+	name = "Hallucinatory Feedback"
+	/// Sounds that play when this trait triggers
+	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
+	/// Whether or not we can trigger.
+	var/can_trigger = TRUE
+
+/datum/plant_gene/trait/plant_laughter/on_new(obj/item/food/grown/G, newloc)
+	..()
+	if(istype(G) && ispath(G.trash_type, /obj/item/grown))
+		can_trigger = FALSE
+
+/datum/plant_gene/trait/plant_laughter/on_slip(obj/item/food/grown/G, atom/target)
+	if(!can_trigger)
+		return
+
+	G.audible_message("<span_class='notice'>[G] lets out a subtle laughter.</span>")
+	playsound(G, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/**
  * A plant trait that causes the plant to gain aesthetic googly eyes.
  *
  * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
@@ -582,7 +605,6 @@
  */
 /datum/plant_gene/trait/chem_heating
 	name = "Endothermic Activity"
-
 
 /datum/plant_gene/trait/chem_heating/can_add(obj/item/seeds/S)
 	if(S.get_gene(/datum/plant_gene/trait/chem_cooling))
