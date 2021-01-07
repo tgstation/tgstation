@@ -90,3 +90,9 @@
 		return TRUE
 	target.attack_paw(user)
 	return TRUE
+
+
+/datum/species/monkey/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
+		return TRUE
+	return ..()

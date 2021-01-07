@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 	if(!isliving(thing))
 		return
 	var/mob/living/L = thing
-	if(!L.client)
+	if(!L.client || L.incorporeal_move)
 		return
 	if(GLOB.cursed_minds[L.mind])
 		return
