@@ -141,3 +141,21 @@
 #define ACCESS_MECH_SECURITY 302
 #define ACCESS_MECH_SCIENCE 303
 #define ACCESS_MECH_ENGINE 304
+
+/// A list of access levels that, when added to an ID card, will warn admins. This is currently a list of access levels that can change other access levels.
+#define ACCESS_ALERT_ADMINS list(ACCESS_CHANGE_IDS, ACCESS_HOP, ACCESS_HOS, ACCESS_RD, ACCESS_CMO, ACCESS_CE)
+
+/// Helper define to log access changes.
+#define LOG_ID_ACCESS_CHANGE(user, access, card)\
+	log_game("[key_name(user)] added [get_access_desc(access)] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
+	message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access)] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
+
+/// Helper define to log job changes.
+#define LOG_ID_JOB_CHANGE(user, job, card)\
+	log_game("[key_name(user)] assigned the job [job.title] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
+	message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
+
+/// Helper define to log access changes when an ID card has multiple access levels granted at once. Accesses should be a string of access levels that were added and should be logged.
+#define LOG_ID_ACCESS_GRANT(user, accesses, card)\
+	log_game("[key_name(user)] added [accesses] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
+	message_admins("[ADMIN_LOOKUPFLW(user)] just added [accesses] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
