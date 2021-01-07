@@ -49,8 +49,9 @@
 	if(!blocked)
 		living_target.visible_message("<span class='danger'>[src] pounces on [living_target]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
 		living_target.Paralyze(100)
-		sleep(2)//Runtime prevention (infinite bump() calls on hulks)
-		step_towards(src,living_target)
+		var/turf/hit_target_turf = get_turf(living_target)
+		if(living_target.CanPass(src, hit_target_turf))
+			Move(hit_target_turf, get_dir(src, hit_target_turf))
 		return
 	Paralyze(40, ignore_canstun = TRUE)
 	toggle_leap(FALSE)
