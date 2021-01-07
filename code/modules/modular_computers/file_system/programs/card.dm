@@ -218,6 +218,7 @@
 							message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 							break
 					log_game("[key_name(user)] assigned the job [job.title] to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+					user.log_message("assigned the job [job.title] to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]", LOG_GAME)
 				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
 				target_id_card.access |= new_access
 				target_id_card.assignment = target
@@ -236,6 +237,7 @@
 					if(access_type in ACCESS_ALERT_ADMINS)
 						message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 					log_game("[key_name(user)] added [get_access_desc(access_type)] to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+					user.log_message("added [get_access_desc(access_type)] to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]", LOG_GAME)
 				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
@@ -244,6 +246,7 @@
 			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
 
 			log_game("[key_name(user)] added All Access permissions to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+			user.log_message("added All Access permissions to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]", LOG_GAME)
 			message_admins("[ADMIN_LOOKUPFLW(user)] just added All Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -263,6 +266,7 @@
 			target_id_card.access |= get_region_accesses(region)
 
 			log_game("[key_name(user)] added [get_region_accesses_name(region)] region access to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+			user.log_message("added [get_region_accesses_name(region)] region access to an ID card [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]", LOG_GAME)
 			message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_region_accesses_name(region)] region access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
