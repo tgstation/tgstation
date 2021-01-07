@@ -95,7 +95,7 @@
 	AddComponent(/datum/component/caltrop, 10, 15, 100, (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
 
 /mob/living/simple_animal/hostile/cockroach/hauberoach/make_squashable()
-	AddElement(/datum/element/squashable, squash_chance = 100, squahs_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
+	AddElement(/datum/element/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
 
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/simple_animal/hostile/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
