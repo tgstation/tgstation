@@ -32,6 +32,7 @@
 	verb_exclaim = "shrieks"
 	verb_yell = "screeches"
 	initial_language_holder = /datum/language_holder/alien
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	footstep_type = FOOTSTEP_MOB_CLAW
 	gold_core_spawnable = NO_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -45,10 +46,11 @@
 	var/sterile = FALSE
 	/// How long it takes for a facehugger to impregnate a target once attached
 	var/pregnation_time = 10 SECONDS
-	/// The time at which the facehugger will try to couple with a target again
-	var/couple_timeout
 	/// How long it takes between coupling attempts
 	var/couple_retry_time = 15 SECONDS
+	/// The mob's internal mask version, stored within the mob when the facehugger isn't being used as an item.
+	var/obj/item/clothing/mask/facehugger_item/mask_facehugger
+	COOLDOWN_DECLARE(coupling_cooldown)
 
 /mob/living/simple_animal/hostile/facehugger/AttackingTarget()
 	TryCoupling(target)
@@ -83,10 +85,15 @@
  * * target - the atom which is being checked for coupling
  */
 /mob/living/simple_animal/hostile/facehugger/proc/TryCoupling(atom/target)
-	if(!isliving(target) || stat == DEAD || world.time < couple_timeout)
+	if(!isliving(target) || stat == DEAD || !COOLDOWN_FINISHED(src, coupling_cooldown))
 		return FALSE
+	var/mob/living/living_target = target
+
+	//Check for immunity
+	if(HAS_TRAIT(living_target, TRAIT_XENO_IMMUNE))
+		return FALSE
+		
 	if(isanimal(target) || isalien(target) || iscyborg(target))
-		var/mob/living/living_target = target
 		if(faction_check_mob(living_target))
 			return FALSE
 		visible_message("<span class='danger'>[src] smashes against [target], but can't seem to latch on!</span>", "<span class='userdanger'>[src] smashes against you, but can't seem to latch on!</span>")
@@ -96,10 +103,6 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/carbon_target = target
-
-	//Check for immunity
-	if(HAS_TRAIT(carbon_target, TRAIT_XENO_IMMUNE))
-		return FALSE
 		
 	//Check for headlessness
 	if(!carbon_target.get_bodypart(BODY_ZONE_HEAD))
@@ -113,7 +116,7 @@
 		var/mob/living/carbon/human/human_target = carbon_target
 		if(human_target.is_mouth_covered(head_only = TRUE))
 			human_target.visible_message("<span class='danger'>[src] smashes against [target]'s [human_target.head]!</span>", "<span class='userdanger'>[src] smashes against your [human_target.head]!</span>")
-			couple_timeout = world.time + couple_retry_time
+			COOLDOWN_START(src, coupling_cooldown, couple_retry_time)
 			return FALSE
 
 	//Check for mask
@@ -125,7 +128,7 @@
 			carbon_target.visible_message("<span class='danger'>[src] tears [mask] off of [target]'s face!</span>", "<span class='userdanger'>[src] tears [mask] off of your face!</span>")
 		else
 			carbon_target.visible_message("<span class='danger'>[src] tries to tear [mask] off of [target]'s face, but fails!</span>", "<span class='userdanger'>[src] trys to tear [mask] off of your face, but fails!</span>")
-			couple_timeout = world.time + couple_retry_time
+			COOLDOWN_START(src, coupling_cooldown, couple_retry_time)
 			return FALSE
 
 	target.visible_message("<span class='danger'>[src] leaps at [target]'s face!</span>", "<span class='userdanger'>[src] leaps at your face!</span>")
@@ -141,13 +144,15 @@
  * The item version will take the name, description, and appearance of the facehugger.
  */
 /mob/living/simple_animal/hostile/facehugger/proc/BecomeItem()
-	var/obj/item/clothing/mask/facehugger_item/hugger_item = new(loc)
-	forceMove(hugger_item)
-	hugger_item.facehugger_mob = src
-	hugger_item.name = name
-	hugger_item.desc = desc
-	hugger_item.icon_state = icon_state
-	return hugger_item
+	if(!mask_facehugger)
+		mask_facehugger = new(src)
+		mask_facehugger.facehugger_mob = src
+	mask_facehugger.forceMove(loc)
+	forceMove(mask_facehugger)
+	mask_facehugger.name = name
+	mask_facehugger.desc = desc
+	mask_facehugger.icon_state = icon_state
+	return mask_facehugger
 
 /**
  * # Facehugger Item
@@ -179,7 +184,7 @@
 	. = ..()
 	if(loc != user)
 		facehugger_mob.forceMove(get_turf(src))
-		Destroy()
+		forceMove(facehugger_mob)
 
 /obj/item/clothing/mask/facehugger_item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, quickstart = TRUE)
 	facehugger_mob.throw_at(target, range, speed, thrower, spin, diagonals_first, callback, quickstart)
@@ -188,7 +193,7 @@
  * Proc which begins the impregnation process 
  *
  * Checks whether or not the facehugger is sterile.  If it isn't, it will knockout the wearer and initialize the impregnation process.
- * Regardless of the above condition, it always sets the facehugger's coupling timeout to whatever the retry time of the facehugger mob specifies.
+ * Regardless of the above condition, the facehugger will go on cooldown, preventing it from trying to couple for a time.
  * Argument:
  * * target - the wearer of the facehugger
  */
@@ -197,7 +202,7 @@
 		target.take_bodypart_damage(facehugger_mob.melee_damage_upper,0)
 		target.Unconscious(facehugger_mob.pregnation_time)
 		addtimer(CALLBACK(src, .proc/Impregnate, target), facehugger_mob.pregnation_time)
-	facehugger_mob.couple_timeout = world.time + facehugger_mob.couple_retry_time
+	COOLDOWN_START(facehugger_mob, coupling_cooldown, facehugger_mob.couple_retry_time)
 
 /**
  * Proc which will implant the embryo into the wearer if it can.
@@ -244,6 +249,7 @@
 	mob_lamarr.desc = desc
 	mob_lamarr.sterile = TRUE
 	facehugger_mob = mob_lamarr
+	mob_lamarr.mask_facehugger = src
 
 /**
  * # Toy Facehugger
