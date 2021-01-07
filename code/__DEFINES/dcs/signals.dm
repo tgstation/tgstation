@@ -984,3 +984,6 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
+
+///from the shuttle subsystem, occurs when the shuttle is stranded
+#define COMSIG_SHUTTLE_STRANDED "shuttle_stranded"
