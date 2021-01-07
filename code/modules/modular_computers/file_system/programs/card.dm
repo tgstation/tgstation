@@ -241,16 +241,7 @@
 				return
 			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
 
-			// A bit of cheeky logging. This isn't perfect and will trigger whenever anyone hits grant all regardless of the
-			// old ID's former accesses. The rest is up to the admins to investigate.
-			var/list/access_logging = list()
-			for(var/logged_access in ACCESS_ALERT_ADMINS)
-				if(logged_access in target_id_card.access)
-					access_logging += get_access_desc(logged_access)
-
-			if(length(access_logging))
-				var/logged_accesses = access_logging.Join(", ")
-				LOG_ID_ACCESS_GRANT(user, logged_accesses, target_id_card)
+			LOG_ID_REGION_GRANT(user, "all", target_id_card)
 
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
@@ -268,16 +259,7 @@
 				return
 			target_id_card.access |= get_region_accesses(region)
 
-			// A bit of cheeky logging. This isn't perfect and will trigger whenever anyone hits grant region regardless of the
-			// old ID's former accesses. The rest is up to the admins to investigate.
-			var/list/access_logging = list()
-			for(var/logged_access in ACCESS_ALERT_ADMINS)
-				if(logged_access in target_id_card.access)
-					access_logging += get_access_desc(logged_access)
-
-			if(length(access_logging))
-				var/logged_accesses = access_logging.Join(", ")
-				LOG_ID_ACCESS_GRANT(user, logged_accesses, target_id_card)
+			LOG_ID_REGION_GRANT(user, get_region_accesses_name(region), target_id_card)
 
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
