@@ -1090,7 +1090,6 @@
 		if(filtering && moderator_internal.gases[filter_type])
 			var/datum/gas_mixture/removed = moderator_internal.remove_specific(filter_type, 20)
 			if(removed)
-				removed.temperature = moderator_internal.temperature
 				linked_output.airs[1].merge(removed)
 
 		var/datum/gas_mixture/internal_remove
