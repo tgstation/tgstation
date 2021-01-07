@@ -10,6 +10,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	var/datum/chemical_reaction/reaction //The chemical reaction that is presently being processed
 	var/datum/reagents/holder //The location the processing is taking place
 	var/multiplier = INFINITY
+	var/productRatio = 0
 	var/targetVol = INFINITY//The target volume the reaction is headed towards.
 	var/reactedVol = 0 //How much of the reaction has been made so far. Mostly used for subprocs
 	var/toDelete = FALSE //If we're done with this reaction so that holder can clear it
@@ -103,10 +104,13 @@ Instant reactions AREN'T handled here. See holder.dm
 		WARNING("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
 		return FALSE
 	multiplier = INFINITY
+	productRatio = 0
+	targetVol = 0
 	for(var/B in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
 	for(var/P in reaction.results)
-		targetVol = (reaction.results[P]*multiplier)
+		targetVol += (reaction.results[P]*multiplier)
+		productRatio += reaction.results[P]
 	debug_world("(Fermichem) reaction [reaction.type] has a target volume of: [targetVol] with a multipler of [multiplier]")
 	if(targetVol == 0 || multiplier == INFINITY)
 		debug_world("[reaction.type] Failed volume calculation checks [multiplier] | [targetVol]")
@@ -116,11 +120,6 @@ Instant reactions AREN'T handled here. See holder.dm
 //Main reaction processor
 //Increments reaction by a timestep
 /datum/equilibrium/proc/react_timestep(delta_time)
-	var/deltaT = 0
-	var/deltapH = 0 //How far off the pH we are
-	var/cached_pH = holder.pH
-	var/cached_temp = holder.chem_temp
-	var/stepChemAmmount = 0
 	if(!check_conditions())
 		toDelete = TRUE
 		return
@@ -128,11 +127,14 @@ Instant reactions AREN'T handled here. See holder.dm
 		toDelete = TRUE
 		return
 
-	//get purity from combined beaker reactant purities HERE.
-	var/purity = 1
+
+	var/deltaT = 0 //how far off optimal temp we care
+	var/deltapH = 0 //How far off the pH we are
+	var/cached_pH = holder.pH
+	var/cached_temp = holder.chem_temp
+	var/purity = 1 //purity of the current step
 
 	//Begin checks
-	//For now, purity is handled elsewhere (on add)
 	//Calculate DeltapH (Deviation of pH from optimal)
 	//Within mid range
 	if (cached_pH >= reaction.OptimalpHMin  && cached_pH <= reaction.OptimalpHMax)
@@ -180,40 +182,37 @@ Instant reactions AREN'T handled here. See holder.dm
 
 	purity = deltapH//set purity equal to pH offset
 
-	//Then adjust purity of result with reagent purity.
+	//Then adjust purity of result with beaker reagent purity.
 	purity *= reactant_purity(reaction)
 
+	//Now we calculate how much to add - this is normalised to the rate up limiter
+	var/deltaChemFactor = (reaction.RateUpLim*deltaT)*delta_time//add/remove factor
+	var/totalStepAdded = 0
+	//keep limited
+	if(deltaChemFactor > targetVol)
+		deltaChemFactor = targetVol
+	else if (deltaChemFactor < CHEMICAL_VOLUME_MINIMUM)
+		deltaChemFactor = CHEMICAL_VOLUME_MINIMUM
+	deltaChemFactor = round(deltaChemFactor, CHEMICAL_QUANTISATION_LEVEL)
 
-	var/removeChemAmmount //remove factor
-	var/addChemAmmount //add factor
-	var/TotalStep = 0 //total added
 	//Calculate how much product to make and how much reactant to remove factors..
-	for(var/P in reaction.results)
-		addChemAmmount = (reaction.RateUpLim*deltaT)*delta_time
-		if(addChemAmmount > targetVol)
-			addChemAmmount = targetVol
-		else if (addChemAmmount < CHEMICAL_VOLUME_MINIMUM)
-			addChemAmmount = CHEMICAL_VOLUME_MINIMUM
-		removeChemAmmount = (addChemAmmount/reaction.results[P])
-		//keep limited.
-		addChemAmmount = round(addChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
-		removeChemAmmount = round(removeChemAmmount, CHEMICAL_QUANTISATION_LEVEL)
-		debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*reaction.results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [reaction.results[P]], adding [addChemAmmount] with a purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
-		//create the products
-		holder.add_reagent(P, (addChemAmmount), null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
-		TotalStep += addChemAmmount//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make targetVol in the calculate yield equal to all of the products, and make the vol check add totalStep)
-	
-	//remove reactants
 	for(var/B in reaction.required_reagents)
-		holder.remove_reagent(B, (removeChemAmmount * reaction.required_reagents[B]), safety = 1, ignore_pH = TRUE)
+		holder.remove_reagent(B, ((deltaChemFactor/productRatio) * reaction.required_reagents[B]), safety = 1, ignore_pH = TRUE)
+
+	for(var/P in reaction.results)
+		//create the products
+		var/stepAdd = (deltaChemFactor/productRatio) * reaction.results[P]
+		holder.add_reagent(P, stepAdd, null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
+		reactedVol += stepAdd//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make targetVol in the calculate yield equal to all of the products, and make the vol check add totalStep)
+		totalStepAdded += stepAdd
+	debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], deltaChemFactor [deltaChemFactor] Pfactor [productRatio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
+
 		
 	//Apply pH changes and thermal output of reaction to beaker
-	holder.chem_temp = round(cached_temp + (reaction.ThermicConstant * addChemAmmount))
-	holder.pH += (reaction.HIonRelease * addChemAmmount)
-	//keep track of the current reacted amount
-	reactedVol = reactedVol + addChemAmmount
-
-	reaction.reaction_step(src, addChemAmmount, purity)//proc that calls when step is done
+	holder.chem_temp = round(cached_temp + (reaction.ThermicConstant * totalStepAdded))
+	holder.pH += (reaction.HIonRelease * totalStepAdded)
+	//Call any special reaction steps
+	reaction.reaction_step(src, totalStepAdded, purity)//proc that calls when step is done
 
 	//Give a chance of sounds
 	if (prob(20))

@@ -113,7 +113,7 @@
  * * added_pH - override to force a pH when added
  * * ignore_pH - bypass the pH update when adding a reagent, in an addition to an empty beaker this will default to 7
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity, added_pH, no_react = 0, ignore_pH = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = INFINITY, added_pH, no_react = 0, ignore_pH = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -126,8 +126,8 @@
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
-	if(!added_purity)
-		added_purity = D.purity //Usually 1
+	if(added_purity == INFINITY) //Because purity additions can be 0
+		added_purity = D.creation_purity //Usually 1
 
 	if(!added_pH)
 		added_pH = D.pH
@@ -159,7 +159,8 @@
 		var/datum/reagent/iter_reagent = r
 		if (iter_reagent.type == reagent)
 			iter_reagent.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
-			iter_reagent.purity = ((iter_reagent.purity * iter_reagent.volume) + (added_purity * amount)) /((iter_reagent.volume + amount)) //This should add the purity to the product
+			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /((iter_reagent.volume + amount)) //This should add the purity to the product
+			iter_reagent.creation_purity = iter_reagent.purity
 			update_total()
 
 			iter_reagent.on_merge(data, my_atom, amount)
@@ -177,6 +178,7 @@
 	new_reagent.holder = src
 	new_reagent.volume = amount
 	new_reagent.purity = added_purity
+	new_reagent.creation_purity = added_purity
 	if(data)
 		new_reagent.data = data
 		new_reagent.on_new(data)
@@ -411,6 +413,12 @@
 			R = target.reagents
 			target_atom = target
 
+	//Set up new reagents to inherit the old ongoing reactions
+	if(!no_react)
+		R.reaction_list = reaction_list.Copy()
+		R.previous_reagent_list = previous_reagent_list.Copy()
+		R.isReacting = isReacting
+
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/trans_data = null
 	var/transfer_log = list()
@@ -432,6 +440,8 @@
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
 			transfer_log[T.type] = transfer_amount
+			if(is_type_in_list(target_atom, list(/mob/living/carbon, /obj/item/organ/stomach)))
+				R.process_mob_reagent_purity(T.type, transfer_amount * multiplier, T.purity)
 	else
 		var/to_transfer = amount
 		for(var/reagent in cached_reagents)
@@ -455,10 +465,13 @@
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
 			transfer_log[T.type] = transfer_amount
-
+			if(is_type_in_list(target_atom, list(/mob/living/carbon, /obj/item/organ/stomach)))
+				R.process_mob_reagent_purity(T.type, transfer_amount * multiplier, T.purity)
+	
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
 		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
+
 
 	update_total()
 	R.update_total()
@@ -512,6 +525,12 @@
 
 	if(amount < 0)
 		return
+
+	//pass over previous ongoing reactions before handle_reactions is called
+	R.reaction_list = reaction_list.Copy()
+	R.previous_reagent_list = previous_reagent_list.Copy()
+	R.isReacting = isReacting
+
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
@@ -788,7 +807,7 @@
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 				possible_reactions  += C
 
-	previous_reagent_list = reagent_list.Copy()
+	update_previous_reaction_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
 		debug_world("determining [selected_reaction.type]")
@@ -884,13 +903,18 @@
 //Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 /datum/reagents/proc/has_changed_state()
 	var/total_matching_reagents = 0
-	for(var/datum/R in previous_reagent_list)
-		if(has_reagent(R.type))
+	for(var/R in previous_reagent_list)
+		if(has_reagent(R))
 			total_matching_reagents++
 	debug_world("[reagent_list.len] vs [previous_reagent_list.len] counted at [total_matching_reagents]")
 	if(total_matching_reagents != reagent_list.len)
 		return TRUE
 	return FALSE
+
+/datum/reagents/proc/update_previous_reaction_list()
+	previous_reagent_list = list()
+	for(var/datum/reagent/R in reagent_list)
+		previous_reagent_list += R.type
 
 //Old reaction mechanics, edited to work on one only
 //This is changed from the old - purity of the reagents will affect yield
@@ -953,6 +977,39 @@
 		return selected_reaction
 	else
 		return FALSE
+
+//Processes the reagents in the holder and converts them
+/datum/reagents/proc/process_mob_reagent_purity(var/reagent, added_volume, added_purity)
+	var/datum/reagent/R = has_reagent(reagent)
+	if(!R)
+		WARNING("Tried to process reagent purity for [reagent], but 0 volume was found right after it was added!")
+		return
+	if (R.purity == 1)
+		return
+	if(R.chemical_flags & REAGENT_DONOTSPLIT)
+		R.purity = 1
+		return
+	debug_world("Reagent processing: [my_atom.type] [R.type]: [R.volume]u added [added_volume] with [R.purity] purity")
+	if(R.purity < 0)
+		WARNING("Purity below 0 for chem: [type]!")
+		R.purity = 0
+
+	if ((R.inverse_chem_val > R.purity) && (R.inverse_chem))//Turns all of a added reagent into the inverse chem
+		remove_reagent(R.type, added_volume, FALSE)
+		add_reagent(R.inverse_chem, added_volume, FALSE, added_purity = 1-R.creation_purity)
+		var/datum/reagent/Ri = has_reagent(R.inverse_chem)
+		if(Ri.chemical_flags & REAGENT_SNEAKYNAME)
+			Ri.name = R.name//Negative effects are hidden
+			if(Ri.chemical_flags & REAGENT_INVISIBLE)
+				Ri.chemical_flags |= (REAGENT_INVISIBLE)
+		debug_world("REAGENT INVERSION: (impure): added [added_volume] of [R.inverse_chem]")
+	else if (R.impure_chem)
+		var/impureVol = added_volume * (1 - R.purity) //turns impure ratio into impure chem
+		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
+			remove_reagent(R.type, impureVol, FALSE)
+		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
+		debug_world("REAGENT CONVERSION: (mixed purity): set [R.type] to [added_volume] and added [impureVol] of [R.impure_chem]")
+	R.purity = 1 //prevent this process from repeating (this is why creation_purity exists)
 
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()

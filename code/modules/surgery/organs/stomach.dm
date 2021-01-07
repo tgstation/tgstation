@@ -46,13 +46,10 @@
 
 	var/mob/living/carbon/body = owner
 
-	//Process through reagents and convert their purities
-	process_reagent_purity()
-
 	// digest food, sent all reagents that can metabolize to the body
 	for(var/chunk in reagents.reagent_list)
 		var/datum/reagent/bit = chunk
-
+		
 		// If the reagent does not metabolize then it will sit in the stomach
 		// This has an effect on items like plastic causing them to take up space in the stomach
 		if(!(bit.metabolization_rate > 0))
@@ -152,37 +149,6 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			H.throw_alert("disgust", /atom/movable/screen/alert/disgusted)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
-
-//Converts chems with impurity into impure chems + base reagent or all of inverse chem
-/obj/item/organ/stomach/proc/process_reagent_purity()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		debug_world("Stomach processing: [type] [R.type] - [R.volume] of [R.type] with [R.purity] purity")
-		if (R.purity == 1)
-			continue
-		if(R.chemical_flags & REAGENT_DONOTSPLIT)
-			R.purity = 1
-			continue
-		if(R.purity < 0)
-			WARNING("Purity below 0 for chem: [type]!")
-			R.purity = 0
-		R.creation_purity = R.purity
-
-		if ((R.inverse_chem_val > R.purity) && (R.inverse_chem))//Turns all of a added reagent into the inverse chem
-			reagents.remove_reagent(R, R.volume, FALSE)
-			reagents.add_reagent(R.inverse_chem, R.volume, FALSE, added_purity = 1-R.creation_purity)
-			var/datum/reagent/Ri = reagents.has_reagent(R.inverse_chem)
-			if(Ri.chemical_flags & REAGENT_SNEAKYNAME)
-				Ri.name = name//Negative effects are hidden
-				if(Ri.chemical_flags & REAGENT_INVISIBLE)
-					Ri.chemical_flags |= (REAGENT_INVISIBLE)
-			debug_world("MOB ADD: on_mob_add() (impure): merged [R.volume] of [R.inverse_chem]")
-		else if (R.impure_chem)
-			var/impureVol = R.volume * (1 - R.purity) //turns impure ratio into impure chem
-			if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
-				reagents.remove_reagent(R, impureVol, FALSE)
-			reagents.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
-			debug_world("MOB ADD: on_mob_add() (mixed purity): merged [R.volume - impureVol] of [R.type] and [R.volume] of [R.impure_chem]")
-		R.purity = 1 //prevent this process from repeating (this is why creation_purity exists)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	if(istype(owner, /mob/living/carbon/human))

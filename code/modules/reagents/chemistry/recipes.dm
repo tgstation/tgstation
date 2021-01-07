@@ -42,7 +42,7 @@
 	var/ThermicConstant 		= 1         	// Temperature change per 1u produced
 	var/HIonRelease 			= 0.01       	// pH change per 1u reaction
 	var/RateUpLim 				= 20			// Optimal/max rate possible if all conditions are perfect
-	var/PurityMin 				= 0.1 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	var/PurityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 
 /datum/chemical_reaction/New()
@@ -115,6 +115,7 @@
 			var/cached_volume = R.volume
 			holder.remove_reagent(R.type, cached_volume, FALSE)
 			holder.add_reagent(R.failed_chem, cached_volume, FALSE, added_purity = 1)
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[type] failed reactions")
 
 	//REACTION_CLEAR handler
 	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
