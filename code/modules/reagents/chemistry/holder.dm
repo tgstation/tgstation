@@ -67,6 +67,8 @@
 	var/flags
 	///list of reactions currently on going
 	var/list/datum/equilibrium/reaction_list = new/list()
+	///cached list of reagents
+	var/list/datum/reagent/previous_reagent_list = new/list()
 	///Hard check to see if the reagents is presently reacting
 	var/isReacting = FALSE
 
@@ -200,7 +202,7 @@
 
 /// Remove a specific reagent
 // ignore_pH again removes reagents ignoring the pH
-/datum/reagents/proc/remove_reagent(reagent, amount, safety, ignore_pH = FALSE)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE, ignore_pH = FALSE)//Added a safety check for the trans_id_to
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
@@ -224,7 +226,6 @@
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions() 
-			//Moving this so color.dm stops runtiming
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 				
 			return TRUE
@@ -718,6 +719,10 @@
 	if(flags & NO_REACT)
 		return 0 //Yup, no reactions here. No siree.
 
+	if(isReacting)//Prevent wasteful calculations
+		if(!(has_changed_state()))
+			return 0
+
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
@@ -782,14 +787,18 @@
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 				possible_reactions  += C
 
+	previous_reagent_list = reagent_list.Copy()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
-		//POTENTIAL EDIT: Presently ALL possible instant reactions occur at once - if this is undesired, then edit it so only 1 can occur at a time.
-		if(selected_reaction.reactionFlags & REACTION_INSTANT) //If we have instant reactions, we process them here
+		debug_world("determining [selected_reaction.type]")
+		if((selected_reaction.reactionFlags & REACTION_INSTANT) || (flags & INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
 			update_total()
+			debug_world("[selected_reaction.type] is instant")
+			continue
 		else
+			debug_world("[selected_reaction.type] is processive")
 			var/exists = FALSE
 			for(var/datum/equilibrium/E in reaction_list)
 				if(E.reaction.type == selected_reaction.type) //Don't add duplicates
@@ -798,31 +807,33 @@
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
+				isReacting = TRUE//Prevent any on_reaction() procs from infinite looping
 				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list. 
-				reaction_list += E
 				if(E.toDelete)//failed startup checks
-					debug_world("Deleting for [E.reaction.type]")
+					debug_world("[E.reaction.type] failed startup")
 					qdel(E)
-					reaction_list -= E
-				debug_world("Setting up reaction for [selected_reaction.type]")
-
+				else
+					reaction_list += E
+					debug_world("Setting up reaction for [selected_reaction.type]")
+	
 	if(reaction_list.len)		
-		isReacting = TRUE //We've entered the reaction phase
+		isReacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
 		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
+	else
+		isReacting = FALSE
 		
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
-		update_total()
 
 /datum/reagents/process(delta_time)
 	if(!isReacting)
 		finish_reacting()
-	
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
 	var/mix_message
 	//Checover the reaction list
 	for(var/datum/equilibrium/E in reaction_list) 
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//if it's been flagged to delete
 		if(E.toDelete)
 			mix_message += end_reaction(E)
@@ -835,23 +846,23 @@
 
 	if(!reaction_list.len)
 		finish_reacting()
+	else
+		update_total()
 
 //This ends a single instance of an ongoing reaction
 /datum/reagents/proc/end_reaction(datum/equilibrium/E)
 	if(GLOB.Debug2)
 		message_admins("(fermichem) Reaction [E.reaction] finished reactedVol:[E.reactedVol], targetVol:[E.targetVol]")
 	//end reaction proc
-	E.reaction.reaction_finish(src, my_atom, E.reactedVol)
-	var/mix_message = "[E.reaction.mix_message] "
+	E.reaction.reaction_finish(src, E.reactedVol)
 	if(E.reaction.mix_sound)
 		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
-	SSblackbox.record_feedback("tally", "chemical_ends", 1, "[E.reaction.type] completions")
 	qdel(E)
 	reaction_list -= E
 	//Reaction occured
-	update_total(FALSE)
+	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
-	return mix_message
+	return E.reaction.mix_message
 
 //This stops the holder from processing at the end of a series of reactions (i.e. when all the equilibriums are completed)
 /datum/reagents/proc/finish_reacting()
@@ -864,8 +875,20 @@
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.pH_check()
-	update_total()		
-	handle_reactions()
+	previous_reagent_list = list() //reset it to 0 - because any change will be different now.
+	update_total()
+	handle_reactions() //Should be okay without. Each step checks.
+
+//Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
+/datum/reagents/proc/has_changed_state()
+	var/total_matching_reagents = 0
+	for(var/datum/R in previous_reagent_list)
+		if(has_reagent(R.type))
+			total_matching_reagents++
+	debug_world("[reagent_list.len] vs [previous_reagent_list.len] counted at [total_matching_reagents]")
+	if(total_matching_reagents != reagent_list.len)
+		return TRUE
+	return FALSE
 
 //Old reaction mechanics, edited to work on one only
 //This is changed from the old 

@@ -330,7 +330,7 @@
 				"Maximum [vol_each_max] units per item.",
 				"How many units to fill?",
 				vol_each_max))
-		vol_each = clamp(vol_each, 0, vol_each_max)
+		vol_each = round(clamp(vol_each, 0, vol_each_max), 0.01)
 		if(vol_each <= 0)
 			return FALSE
 		// Get item name
@@ -583,8 +583,9 @@
 		return FALSE
 	var/canMove = TRUE
 	for(var/datum/equilibrium/E in holder.reaction_list)
-		for(var/datum/reagent/R in E.reaction.results)
-			if(R.type == reagent.type)
+		for(var/result in E.reaction.results)
+			var/datum/reagent/R = result
+			if(R == reagent.type)
 				canMove = FALSE
 	if(!canMove)
 		say("Cannot move ongoing chemical reaction products!")

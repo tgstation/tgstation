@@ -43,15 +43,14 @@ export const ChemDispenser = (props, context) => {
                   Recording
                 </Box>
               )}
-              {!!data.isBeakerLoaded && (
-                <Button      
-                  key="colorButton"
-                  icon="cog"
-                  tooltip="Color code the reagents by pH"
-                  tooltipPosition="bottom-left"
-                  selected={hasCol}
-                  onClick={() => setHasCol(!hasCol)} />
-              )}
+              <Button      
+                key="colorButton"
+                icon="cog"
+                tooltip="Color code the reagents by pH"
+                tooltipPosition="bottom-left"
+                disabled={!data.isBeakerLoaded}
+                selected={hasCol}
+                onClick={() => setHasCol(!hasCol)} />
             </Fragment>
           )}>
           <LabeledList>

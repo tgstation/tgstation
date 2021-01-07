@@ -93,7 +93,7 @@
 
 /**
  * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).
- * Only procs at the end of reaction
+ * Only procs at the END of reaction
  * If reactionFlags & REACTION_INSTANT then this isn't called
  * if reactionFlags REACTION_CLEAR_IMPURE then the impurity chem is handled here, producing the result in the beaker instead of in a mob
  * Likewise for REACTION_CLEAR_INVERSE the inverse chem is produced at the end of the reaction in the beaker
@@ -103,10 +103,9 @@
  * You dont want to handle mob spawning in this since there is a dedicated proc for that.client
  * Arguments:
  * * holder - the datum that holds this reagent, be it a beaker or anything else
- * * created_volume - volume created per step
- * * added_purity - how pure the created volume is per step
+ * * react_volume - volume created across the whole reaction
  */
-/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, react_vol, react_purity)
+/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, react_vol)
 	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
 		for(var/id in results)
 			var/datum/reagent/R = holder.has_reagent(id)

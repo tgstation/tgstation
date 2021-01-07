@@ -23,22 +23,14 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(!calculate_yield()) //maybe remove
 		toDelete = TRUE
 		return
-	/* doesn't play nice atm
-	if(reaction.RateUpLim > targetVol) //A catch all check incase I miss some reactions
-		holder.instant_react(reaction)
-		toDelete = TRUE
-		//This is done at the end
-		SEND_SIGNAL(holder, COMSIG_REAGENTS_REACTED, 1)
-		holder.update_total(FALSE)
-		return
-	*/
-	Cr.on_reaction(holder, targetVol) 
-	SSblackbox.record_feedback("tally", "chemical_starts", 1, "[reaction.type] attempts")
+	debug_world("Trying to call on_reaction for [Cr.type]")
+	reaction.on_reaction(holder, multiplier) 
+	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 
 //Check to make sure our input vars are sensible - truncated version of check_conditions (as the setup in holder.dm checks for that already)
 /datum/equilibrium/proc/check_inital_conditions()
 	if(holder.chem_temp > reaction.overheatTemp)//This is here so grenades can be made
-		SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[reaction.type] overheats"))
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheats")
 		reaction.overheated(holder, src)//Though the proc will likely have to be created to be an explosion.
 
 	if(!reaction.is_cold_recipe)
@@ -64,7 +56,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	//Are we overheated?
 	if(holder.chem_temp > reaction.overheatTemp)
 		debug_world("[reaction.type] Overheated")
-		SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[reaction.type] overheats"))
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
 		reaction.overheated(holder, src)
 
 	//set up catalyst checks
@@ -74,15 +66,17 @@ Instant reactions AREN'T handled here. See holder.dm
 	//If the product/reactants are too impure
 	for(var/datum/reagent/R in holder.reagent_list)
 		if (R.purity < reaction.PurityMin)//If purity is below the min, call the proc
-			SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[reaction.type] overly impure reactions"))
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
 			reaction.overly_impure(holder, src)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
 		for(var/P in reaction.required_catalysts)
-			if(P == R.type)
+			var/datum/reagent/R0 = P
+			if(R0 == R.type)
 				total_matching_catalysts++
 
 		for(var/B in reaction.required_reagents)
-			if(B == R.type) // required_reagents = list(/datum/reagent/consumable/sugar = 1) /datum/reagent/consumable/sugar
+			var/datum/reagent/R0 = B
+			if(R0 == R.type) // required_reagents = list(/datum/reagent/consumable/sugar = 1) /datum/reagent/consumable/sugar
 				total_matching_reagents++
 	
 	if(!(total_matching_reagents == reaction.required_reagents.len))
@@ -118,14 +112,14 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(toDelete)
 		return FALSE
 	if(!reaction)
-		debug_world("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
+		WARNING("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
+		return FALSE
 	multiplier = INFINITY
 	for(var/B in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
 	for(var/P in reaction.results)
 		targetVol = (reaction.results[P]*multiplier)
-	if(GLOB.Debug2)
-		debug_world("(Fermichem) reaction [reaction.type] has a target volume of: [targetVol] with a multipler of [multiplier]")
+	debug_world("(Fermichem) reaction [reaction.type] has a target volume of: [targetVol] with a multipler of [multiplier]")
 	if(targetVol == 0)
 		debug_world("[reaction.type] Failed volume calculation checks [multiplier] | [targetVol]")
 		return FALSE
@@ -169,9 +163,9 @@ Instant reactions AREN'T handled here. See holder.dm
 	//Within mid range
 	else if (cached_pH >= reaction.OptimalpHMin  && cached_pH <= reaction.OptimalpHMax)
 		deltapH = 1
-	//This should never proc:
+	//This should never proc, but it's a catch incase someone puts in incorrect values
 	else
-		WARNING("[holder.my_atom] | [reaction.type] attempted to determine FermiChem pH for '[reaction.type]' which broke for some reason! ([usr])")
+		WARNING("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_pH] for set recipie pH vars. It's likely the recipe vars are wrong.")
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
@@ -218,23 +212,19 @@ Instant reactions AREN'T handled here. See holder.dm
 		debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], Step [stepChemAmmount], uncapped Step [deltaT*(multiplier*reaction.results[P])], addChemAmmount [addChemAmmount], removeFactor [removeChemAmmount] Pfactor [reaction.results[P]], adding [addChemAmmount]")
 		//create the products
 		holder.add_reagent(P, (addChemAmmount), null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
-		SSblackbox.record_feedback("tally", "fermi_chem", addChemAmmount, P)
 		TotalStep += addChemAmmount//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make targetVol in the calculate yield equal to all of the products, and make the vol check add totalStep)
 	
-
 	//remove reactants
 	for(var/B in reaction.required_reagents)
 		holder.remove_reagent(B, (removeChemAmmount * reaction.required_reagents[B]), safety = 1, ignore_pH = TRUE)
-
-	SSblackbox.record_feedback("tally", "chemical_steps", addChemAmmount, reaction.type)//log
 		
-	reaction.reaction_step(src, addChemAmmount, purity)//proc that calls when step is done
-
 	//Apply pH changes and thermal output of reaction to beaker
 	holder.chem_temp = round(cached_temp + (reaction.ThermicConstant * addChemAmmount))
 	holder.pH += (reaction.HIonRelease * addChemAmmount)
 	//keep track of the current reacted amount
 	reactedVol = reactedVol + addChemAmmount
+
+	reaction.reaction_step(src, addChemAmmount, purity)//proc that calls when step is done
 
 	//Give a chance of sounds
 	if (prob(20))
