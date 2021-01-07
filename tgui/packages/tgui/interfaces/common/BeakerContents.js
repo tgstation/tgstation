@@ -17,7 +17,6 @@ export const BeakerContents = props => {
         <Box key={chemical.name} color="label">
           <AnimatedNumber
             initial={0}
-            duration={2000}
             value={chemical.volume} /> 
           {" units of "+chemical.name}
         </Box>

@@ -75,7 +75,7 @@ export const ChemHeater = (props, context) => {
             beakerLoaded={isBeakerLoaded}
             beakerContents={beakerContents} />
           {(beakerContents.length > 0 && (
-            <Box key="pH" color="label">pH: {data.currentpH}</Box>
+            <Box color="label">pH: {data.currentpH}</Box>
           ))}
         </Section>
       </Window.Content>
