@@ -234,4 +234,4 @@
 		//There is no way this mob can in any normal way get a player, so they lost the will to live
 		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has lost the will to live...</span>"
 	//This mob has a ghost linked that could still reenter the body, so the soul only departed
-	return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...</span>"
+	return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed, but the link is not yet fully broken...</span>"
