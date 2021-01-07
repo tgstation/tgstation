@@ -21,7 +21,7 @@
 	. = _canary
 	_canary = null
 
-// returns true if the stack is still going. Calling before the canary has been primed also returns true
+/// Returns true if the stack is still going. Calling before the canary has been primed also returns true
 /datum/stack_end_detector/proc/check()
 	return istype(_WF.resolve(), /datum/stack_canary)
 
