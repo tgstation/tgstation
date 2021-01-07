@@ -2502,4 +2502,3 @@
 	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	
-	
