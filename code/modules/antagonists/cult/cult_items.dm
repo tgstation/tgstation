@@ -832,7 +832,6 @@
 		return
 	var/C = user.client
 	if(ishuman(user) && C)
-		angle = mouse_angle_from_client(C)
 		var/list/angle_vector = calculate_projectile_angle_and_pixel_offsets(user, params)
 		angle = angle_vector[1]
 	else
