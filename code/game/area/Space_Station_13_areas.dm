@@ -246,6 +246,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Incinerator"
 	icon_state = "incinerator"
 
+/area/maintenance/space_hut
+	name = "Space Hut"
+	icon_state = "spacehut"
+
+/area/maintenance/space_hut/cabin
+	name = "Abandoned Cabin"
+
+/area/maintenance/space_hut/plasmaman
+	name = "Abandoned Plasmaman Friendly Startup"
+
+/area/maintenance/space_hut/observatory
+	name = "Space Observatory"
 
 //Hallway
 /area/hallway
