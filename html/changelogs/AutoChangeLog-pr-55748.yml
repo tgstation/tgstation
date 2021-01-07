@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "The clown car can once again be driven"
-  - bugfix: "Mechs can once again open doors by bumping into them (assuming the rider has access, obviously)"

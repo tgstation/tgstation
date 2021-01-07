@@ -48,6 +48,7 @@
 	icon_state = "blacksuit_skirt"
 	inhand_icon_state = "bar_suit"
 	alt_covers_chest = TRUE
+	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 

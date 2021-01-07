@@ -246,6 +246,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Incinerator"
 	icon_state = "incinerator"
 
+/area/maintenance/space_hut
+	name = "Space Hut"
+	icon_state = "spacehut"
+
+/area/maintenance/space_hut/cabin
+	name = "Abandoned Cabin"
+
+/area/maintenance/space_hut/plasmaman
+	name = "Abandoned Plasmaman Friendly Startup"
+
+/area/maintenance/space_hut/observatory
+	name = "Space Observatory"
 
 //Hallway
 /area/hallway
@@ -1321,6 +1333,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
+	network_root_id = STATION_NETWORK_ROOT	// They should of unpluged the router before they left
 
 /area/tcommsat/computer
 	name = "Telecomms Control Room"

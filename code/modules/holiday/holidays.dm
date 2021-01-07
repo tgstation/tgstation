@@ -417,7 +417,7 @@
 	begin_month = DECEMBER
 
 /datum/holiday/monkey
-	name = "Monkey Day"
+	name = MONKEYDAY
 	begin_day = 14
 	begin_month = DECEMBER
 	drone_hat = /obj/item/clothing/mask/gas/monkeymask

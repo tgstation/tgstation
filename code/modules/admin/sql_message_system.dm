@@ -77,8 +77,8 @@
 		if(!note_severity)
 			return
 	var/datum/db_query/query_create_message = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity)
-		VALUES (:type, :target_ckey, :admin_ckey, :text, :timestamp, :server, INET_ATON(:internet_address), :port, :round_id, :secret, :expiry, :note_severity)
+		INSERT INTO [format_table_name("messages")] (type, targetckey, adminckey, text, timestamp, server, server_ip, server_port, round_id, secret, expire_timestamp, severity, playtime)
+		VALUES (:type, :target_ckey, :admin_ckey, :text, :timestamp, :server, INET_ATON(:internet_address), :port, :round_id, :secret, :expiry, :note_severity, (SELECT `minutes` FROM [format_table_name("role_time")] WHERE `ckey` = :target_ckey AND `job` = 'Living'))
 	"}, list(
 		"type" = type,
 		"target_ckey" = target_ckey,
@@ -407,7 +407,8 @@
 				timestamp,
 				server,
 				IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor),
-				expire_timestamp
+				expire_timestamp,
+				playtime
 			FROM [format_table_name("messages")]
 			WHERE type = :type AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
 		"}, list("type" = type))
@@ -428,10 +429,13 @@
 			var/server = query_get_type_messages.item[7]
 			var/editor_key = query_get_type_messages.item[8]
 			var/expire_timestamp = query_get_type_messages.item[9]
+			var/playtime = query_get_type_messages.item[10]
 			output += "<b>"
 			if(type == "watchlist entry")
 				output += "[t_key] | "
 			output += "[timestamp] | [server] | [admin_key]"
+			if(type == "watchlist entry")
+				output += " | [get_exp_format(text2num(playtime))] Living Playtime"
 			if(expire_timestamp)
 				output += " | Expires [expire_timestamp]"
 			output += "</b>"
@@ -456,7 +460,7 @@
 				IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor),
 				DATEDIFF(NOW(), timestamp),
 				IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey),
-				expire_timestamp, severity
+				expire_timestamp, severity, playtime
 			FROM [format_table_name("messages")]
 			WHERE type <> 'memo' AND targetckey = :targetckey AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
 			ORDER BY timestamp DESC
@@ -487,6 +491,7 @@
 			target_key = query_get_messages.item[10]
 			var/expire_timestamp = query_get_messages.item[11]
 			var/severity = query_get_messages.item[12]
+			var/playtime = query_get_messages.item[13]
 			var/alphatext = ""
 			var/nsd = CONFIG_GET(number/note_stale_days)
 			var/nfd = CONFIG_GET(number/note_fresh_days)
@@ -503,7 +508,7 @@
 			var/list/data = list("<div style='margin:0px;[alphatext]'><p class='severity'>")
 			if(severity)
 				data += "<img src='[SSassets.transport.get_asset_url("[severity]_button.png")]' height='24' width='24'></img> "
-			data += "<b>[timestamp] | [server] | [admin_key][secret ? " | <i>- Secret</i>" : ""]"
+			data += "<b>[timestamp] | [server] | [admin_key][secret ? " | <i>- Secret</i>" : ""] | [get_exp_format(text2num(playtime))] Living Playtime"
 			if(expire_timestamp)
 				data += " | Expires [expire_timestamp]"
 			data += "</b></p><center>"

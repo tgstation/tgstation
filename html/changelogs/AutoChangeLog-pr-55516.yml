@@ -1,8 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - rscdel: "PubbyStation subtypes of booze-o-mat and wallmed"
-  - bugfix: "ERT shuttle access on Kilostation. Interns and other livestock may board again."
-  - bugfix: "Misplaced solar wires on Kilo have been corrected"
-  - bugfix: "Some more minor decals/grille placement on Kilo"
-  - bugfix: "Spiders will no longer spawn in space on Kilo"

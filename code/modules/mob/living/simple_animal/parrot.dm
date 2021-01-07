@@ -305,7 +305,7 @@
 		handle_automated_speech(1) //assured speak/emote
 	return
 
-/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/human/M)
 	return attack_hand(M)
 
 /mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M)

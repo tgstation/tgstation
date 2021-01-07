@@ -603,16 +603,18 @@
 	if(component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
-			var/P
+			var/required_type
 			if(W.works_from_distance)
 				to_chat(user, display_parts(user))
+			if(!CB)
+				return FALSE
 			for(var/obj/item/A in component_parts)
-				for(var/D in CB.req_components)
-					if(ispath(A.type, D))
-						P = D
+				for(var/design_type in CB.req_components)
+					if(ispath(A.type, design_type))
+						required_type = design_type
 						break
 				for(var/obj/item/B in W.contents)
-					if(istype(B, P) && istype(A, P))
+					if(istype(B, required_type) && istype(A, required_type))
 						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
 						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
 							var/obj/item/stock_parts/cell/checked_cell = B
@@ -719,28 +721,6 @@
 	return ..()
 
 /**
- * Generate a name devices
- *
- * Creates a randomly generated tag or name for devices5
- * The length of the generated name can be set by passing in an int
- * args:
- * * len (int)(Optional) Default=5 The length of the name
- * Returns (string) The generated name
- */
-/obj/machinery/proc/assign_random_name(len=5)
-	var/list/new_name = list()
-	// machine id's should be fun random chars hinting at a larger world
-	for(var/i = 1 to len)
-		switch(rand(1,3))
-			if(1)
-				new_name += ascii2text(rand(65, 90)) // A - Z
-			if(2)
-				new_name += ascii2text(rand(97,122)) // a - z
-			if(3)
-				new_name += ascii2text(rand(48, 57)) // 0 - 9
-	return new_name.Join()
-
-/**
  * Alerts the AI that a hack is in progress.
  *
  * Sends all AIs a message that a hack is occurring.  Specifically used for space ninja tampering as this proc was originally in the ninja files.
@@ -750,3 +730,4 @@
 	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		to_chat(AI, alertstr)
+

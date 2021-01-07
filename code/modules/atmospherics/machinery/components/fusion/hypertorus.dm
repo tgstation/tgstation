@@ -925,7 +925,7 @@
 	else
 		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * delta_time
 
-	var/datum/gas_mixture/internal_output
+	var/datum/gas_mixture/internal_output = new
 	//gas consumption and production
 	if(check_fuel())
 		var/fuel_consumption = clamp((fuel_injection_rate * 0.001) * 5 * power_level, 0.05, 30) * delta_time
@@ -1089,8 +1089,8 @@
 				filtering = FALSE
 		if(filtering && moderator_internal.gases[filter_type])
 			var/datum/gas_mixture/removed = moderator_internal.remove_specific(filter_type, 20)
-			removed.temperature = moderator_internal.temperature
-			linked_output.airs[1].merge(removed)
+			if(removed)
+				linked_output.airs[1].merge(removed)
 
 		var/datum/gas_mixture/internal_remove
 		if(internal_fusion.gases[/datum/gas/helium][MOLES] > 0)
