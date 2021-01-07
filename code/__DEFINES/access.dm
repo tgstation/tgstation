@@ -156,6 +156,6 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
 
 /// Helper define to log access changes when an ID card has multiple access levels granted at once. Accesses should be a string of access levels that were added and should be logged.
-#define LOG_ID_ACCESS_GRANT(user, accesses, card)\
-	log_game("[key_name(user)] added [accesses] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
-	message_admins("[ADMIN_LOOKUPFLW(user)] just added [accesses] to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
+#define LOG_ID_REGION_GRANT(user, region, card)\
+	log_game("[key_name(user)] added [region] region access to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."]");\
+	message_admins("[ADMIN_LOOKUPFLW(user)] just added [region] region access to an ID card [(card.registered_name) ? "belonging to [card.registered_name]." : "with no registered name."] [ADMIN_VV(card)]")
