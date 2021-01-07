@@ -36,15 +36,13 @@
 
 	action_icon_state = "alien_evolve_praetorian"
 
-#define MAX_QUEEN_DEATHS 2
-
 /obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/humanoid/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
 		to_chat(user, "<span class='warning'>Without the hivemind, you would be unfit to rule as queen!</span>")
 		return FALSE
 	var/datum/antagonist/xeno/xeno_datum = user.mind.has_antag_datum(/datum/antagonist/xeno)
-	if(xeno_datum?.xeno_team?.queen_deaths >= MAX_QUEEN_DEATHS)
+	if(xeno_datum?.xeno_team?.queen_deaths >= xeno_datum?.xeno_team?.max_queen_deaths)
 		to_chat(user, "<span class='warning'>Too many queens have died today already!  The hivemind can't take any more pain!</span>")
 		return FALSE	
 	if(node.recent_queen_death)
@@ -57,5 +55,3 @@
 	else
 		to_chat(user, "<span class='warning'>We already have an alive queen!</span>")
 		return FALSE
-
-#undef MAX_QUEEN_DEATHS
