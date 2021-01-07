@@ -201,7 +201,7 @@
 	to_chat(old_owner, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
 
 /datum/antagonist/rev/farewell()
-	if(ishuman(owner.current) || ismonkey(owner.current))
+	if(ishuman(owner.current))
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class ='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
 	else if(issilicon(owner.current))
@@ -209,7 +209,7 @@
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
 /datum/antagonist/rev/head/farewell()
-	if((ishuman(owner.current) || ismonkey(owner.current)))
+	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
@@ -236,7 +236,7 @@
 
 /datum/antagonist/rev/head/equip_rev()
 	var/mob/living/carbon/C = owner.current
-	if(!ishuman(C) && !ismonkey(C))
+	if(!ishuman(C))
 		return
 
 	if(give_flash)

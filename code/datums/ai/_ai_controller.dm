@@ -79,6 +79,8 @@ have ways of interacting with a specific atom and control it. They posses a blac
 /// Generates a plan and see if our existing one is still valid.
 /datum/ai_controller/process(delta_time)
 	if(!able_to_run())
+		var/atom/movable/movable_pawn = pawn
+		walk(movable_pawn, 0) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 	if(!current_behaviors?.len)
 		SelectBehaviors(delta_time)
@@ -103,13 +105,16 @@ have ways of interacting with a specific atom and control it. They posses a blac
 ///Move somewhere using dumb movement (byond base)
 /datum/ai_controller/proc/MoveTo(delta_time)
 	var/current_loc = get_turf(pawn)
+	var/atom/movable/movable_pawn = pawn
 
-	if(!is_type_in_typecache(get_step(pawn, get_dir(pawn, current_movement_target)), GLOB.dangerous_turfs))
-		step_towards(pawn, current_movement_target)
-	if(get_dist(pawn, current_movement_target) > max_target_distance)
+	var/turf/target_turf = get_step_towards(movable_pawn, current_movement_target)
+
+	if(!is_type_in_typecache(target_turf, GLOB.dangerous_turfs))
+		movable_pawn.Move(target_turf, get_dir(current_loc, target_turf))
+  if(get_dist(movable_pawn, current_movement_target) > max_target_distance)
 		CancelActions()
 		pathing_attempts = 0
-	if(current_loc == get_turf(pawn))
+	if(current_loc == get_turf(movable_pawn))
 		if(++pathing_attempts >= MAX_PATHING_ATTEMPTS)
 			CancelActions()
 			pathing_attempts = 0

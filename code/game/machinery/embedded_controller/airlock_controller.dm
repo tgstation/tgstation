@@ -204,7 +204,6 @@
 	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
-	var/id_tag
 	var/exterior_door_tag
 	var/interior_door_tag
 	var/airpump_tag
