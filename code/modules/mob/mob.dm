@@ -195,7 +195,7 @@
 
 	var/raw_msg = message
 	if(visible_message_flags & EMOTE_MESSAGE)
-		message = "<b>[src]</b> [message]"
+		message = "<span class='emote'><b>[src]</b> [message]</span>"
 
 	for(var/mob/M in hearers)
 		if(!M.client)
@@ -240,7 +240,7 @@
 		hearers -= src
 	var/raw_msg = message
 	if(audible_message_flags & EMOTE_MESSAGE)
-		message = "<b>[src]</b> [message]"
+		message = "<span class='emote'><b>[src]</b> [message]</span>"
 	for(var/mob/M in hearers)
 		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags) && M.can_hear())
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
@@ -988,13 +988,11 @@
 		return src
 
 /**
- * Buckle a living mob to this mob
+ * Buckle a living mob to this mob. Also turns you to face the other mob
  *
  * You can buckle on mobs if you're next to them since most are dense
- *
- * Turns you to face the other mob too
  */
-/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+/mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(M.buckled)
 		return FALSE
 	var/turf/T = get_turf(src)
@@ -1288,14 +1286,6 @@
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(change) //Seriously fuck you oldcoders.
 	nutrition = max(0, change)
-
-
-/mob/setMovetype(newval) //Set the movement type of the mob and update it's movespeed
-	. = ..()
-	if(isnull(.))
-		return
-	update_movespeed(FALSE)
-
 
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()

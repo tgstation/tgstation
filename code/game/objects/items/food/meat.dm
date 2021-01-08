@@ -324,7 +324,7 @@
 	foodtypes = MEAT | SUGAR
 	w_class = WEIGHT_CLASS_TINY
 	var/faction
-	var/spawned_mob = /mob/living/carbon/monkey
+	var/spawned_mob = /mob/living/carbon/human/species/monkey
 
 /obj/item/food/monkeycube/proc/Expand()
 	var/mob/spammer = get_mob_by_key(fingerprintslast)

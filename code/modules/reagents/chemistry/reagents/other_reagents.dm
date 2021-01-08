@@ -2012,7 +2012,7 @@
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
-	if((ismonkey(M) || ishuman(M)) && current_cycle >= 10)
+	if((ishuman(M)) && current_cycle >= 10)
 		M.gorillize()
 
 /datum/reagent/growthserum
@@ -2323,13 +2323,6 @@
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0
-
-/datum/reagent/consumable/gravy
-	name = "Gravy"
-	description = "A mixture of flour, water, and the juices of cooked meat."
-	taste_description = "gravy"
-	color = "#623301"
-	taste_mult = 1.2
 
 /datum/reagent/determination
 	name = "Determination"

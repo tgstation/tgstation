@@ -111,6 +111,6 @@
 
 /datum/export/material/metal_hydrogen
 	cost = CARGO_CRATE_VALUE * 1.05
-	unit_name = "of metallic hydrogen"
+	message = "cm3 of metallic hydrogen"
 	material_id = /datum/material/metalhydrogen
 	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen

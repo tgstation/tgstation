@@ -94,7 +94,7 @@
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"
 	name = "Readapt Strain"
-	desc = "Allows you to choose a new strain from 4 random choices for 40 resources."
+	desc = "Allows you to choose a new strain from 6 random choices for 40 resources."
 
 /atom/movable/screen/blob/readapt_strain/MouseEntered(location,control,params)
 	if(hud?.mymob && isovermind(hud.mymob))
