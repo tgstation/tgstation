@@ -73,10 +73,16 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/id_type_name = "identification card"
 	var/mining_points = 0 //For redeeming at mining equipment vendors
+	///The stuff that makes you open doors and shit
 	var/list/access = list()
-	var/registered_name = null // The name registered_name on the card
+	///Access that cannot be removed by the ID console
+	var/list/StickyAccess = list()
+	/// The name registered on the card (for example: Dr Bryan See)
+	var/registered_name = null
+	///The job name registered on the card (for example: Assistant)
 	var/assignment = null
-	var/access_txt // mapping aid
+	/// mapping aid
+	var/access_txt
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
 	var/uses_overlays = TRUE
@@ -354,8 +360,11 @@ update_label()
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
-	var/forged = FALSE //have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
+	StickyAccess = list(ACCESS_SYNDICATE) //Maint access isn't sticky to prevent the HoP executing people for having immutable access to maint.
+	///Can anyone forge the ID or just syndicate?
+	var/anyone = FALSE
+	///have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
+	var/forged = FALSE
 
 /obj/item/card/id/syndicate/Initialize()
 	. = ..()
