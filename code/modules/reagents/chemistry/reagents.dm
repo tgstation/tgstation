@@ -182,6 +182,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /// Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, mob/living/carbon/M, amount)
+	return
 
 /// Called by [/datum/reagents/proc/conditional_update]
 /datum/reagent/proc/on_update(atom/A)

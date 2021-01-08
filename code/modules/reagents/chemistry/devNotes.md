@@ -11,6 +11,8 @@ if you're reading this in the PR. I forgot to remove this or I'm in the middle o
 - I think botany is okay too, but check a few reactions there
     - I grew a plant and nothing bad happened
 
+- Look at chem goggles and add pH and extra for them
+
 - remove debug messages
 - make sure plumbing remains functional after conditions to deal with smoke and the optimisations put in
 
