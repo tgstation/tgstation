@@ -277,7 +277,7 @@
 	if(cached_gases[/datum/gas/hydrogen])
 		gas_change = TRUE
 		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen] -= pulse_strength / 1000
+		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
 		ASSERT_GAS(/datum/gas/tritium, air)
 		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
 		strength -= pulse_strength
