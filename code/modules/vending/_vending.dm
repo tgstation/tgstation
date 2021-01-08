@@ -619,7 +619,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	transform = M
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
+		throw_at(get_turf(fatty), 1, 1, spin=FALSE, quickstart=FALSE)
 
 /obj/machinery/vending/proc/untilt(mob/user)
 	if(user)
