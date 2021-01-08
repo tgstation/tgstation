@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return 1
 
 	///Copies all gas info from the turf into the gas list along with temperature
-	///Returns: 1 if we are mutable, 0 otherwise
+	///Returns: TRUE if we are mutable, FALSE otherwise
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
 
@@ -284,7 +284,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
 		temperature = model.temperature
 
-	return 1
+	return TRUE
 
 	///Copies variables from a particularly formatted string.
 	///Returns: 1 if we are mutable, 0 otherwise
@@ -295,6 +295,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		temperature = text2num(gas["TEMP"])
+		temperature_archived = temperature
 		gas -= "TEMP"
 	else // if we do not have a temp in the new gas mix lets assume room temp.
 		temperature = T20C
@@ -421,7 +422,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	var/our_moles
 	TOTAL_MOLES(cached_gases, our_moles)
-	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE)
+	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
 		var/temp = temperature
 		var/sample_temp = sample.temperature
 
@@ -439,12 +440,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!length(cached_gases))
 		return
 	var/list/reactions = list()
-	for(var/datum/gas_reaction/G in SSair.gas_reactions)
-		if(cached_gases[G.major_gas])
+	for(var/G in SSair.gas_reactions)
+		var/datum/gas_reaction/reaction = G
+		if(cached_gases[reaction.major_gas])
 			reactions += G
+
 	if(!length(reactions))
 		return
+
 	reaction_results = new
+	//It might be worth looking into updating these after each reaction, but it changes things a lot, so be careful
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
@@ -468,9 +473,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 
 			. |= reaction.react(src, holder)
+
 			if (. & STOP_REACTIONS)
 				break
-	if(.)
+
+	if(.) //If we changed the mix to any degree, or if we stopped reacting
 		garbage_collect()
 
 ///Takes the amount of the gas you want to PP as an argument
@@ -505,7 +512,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 	//Calculate necessary moles to transfer using PV=nRT
 	if((total_moles() > 0) && (temperature>0))
 		var/pressure_delta = target_pressure - output_starting_pressure
-		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = remove(transfer_moles)
@@ -528,7 +535,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
 		//Can not have a pressure delta that would cause output_pressure > input_pressure
 
-		var/transfer_moles = pressure_delta*output_air.volume/(temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = remove(transfer_moles)

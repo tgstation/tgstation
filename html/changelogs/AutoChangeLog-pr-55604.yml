@@ -1,0 +1,18 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Speeds up gas movement"
+  - rscadd: "Documents the intent and finer details of the atmos system (Thanks dunc/aran/skog)"
+  - bugfix: "Fixes excited groups constantly rebuilding, this broke 4 years ago"
+  - bugfix: "Fixes superconduction just straight up not working. This means heat can leak through windows, glass doors, and a few other things. Keep an eye on your temperature"
+  - bugfix: "Most heat based behavior no longer relies on being inside a fire"
+  - rscadd: "APCs take damage in heat to prevent infinite plasma fire diffs, watch out when operating that supermatter"
+  - refactor: "Cleans up immutable gas mixtures to make them work properly when the mix has gas in it"
+  - refactor: "Planetary turfs no longer create a new copy of themselves each time they process. We instead use a global
+mmutable mix"
+  - refactor: "Cleans up a typed for loop in reactions"
+  - bugfix: "Canisters will properly take damage from outside heat now"
+  - bugfix: "Cleans up some roundstart ATs on some ruins"
+  - bugfix: "Keeps openspace from trying to melt"
+  - bugfix: "Destroying a wall wakes up the tile beneath it to atmos, no more meteor breaches with no flow"
+  - rscadd: "Fire alarms will trigger when the area gets too cold for humans"

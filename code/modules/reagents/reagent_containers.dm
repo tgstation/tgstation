@@ -145,8 +145,8 @@
 	reagents.expose_temperature(1000)
 	..()
 
-/obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	reagents.expose_temperature(exposed_temperature)
+/obj/item/reagent_containers/fire_act(temperature, volume)
+	reagents.expose_temperature(temperature)
 
 /// Updates the icon of the container when the reagents change. Eats signal args
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)
