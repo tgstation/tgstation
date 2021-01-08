@@ -22,6 +22,12 @@
 	var/canprint = TRUE
 	var/list/icons_available = list()
 	var/icon_directory = 'icons/effects/icons.dmi'
+	///Whether we've warned during this recording that the tape is almost up.
+	var/seconds_warned = FALSE
+	///Seconds under which to warn that the tape is almost up.
+	var/seconds_to_warn = 60 SECONDS
+	///What color we talk in.
+	var/say_color = COLOR_MAROON
 
 
 /obj/item/taperecorder/Initialize(mapload)
@@ -30,10 +36,19 @@
 		mytape = new starting_tape_type(src)
 	update_icon()
 
+/obj/item/taperecorder/proc/readout()
+	var/readout = "<span class='notice'><b>INSERT TAPE</b></span>"
+	if(mytape)
+		var/mins = round(mytape.used_capacity / 60)
+		var/secs = mytape.used_capacity - mins * 60
+		readout = "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
+	return readout
 
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
-	. += "The wire panel is [open_panel ? "opened" : "closed"]."
+	if(in_range(src, user) || isobserver(user))
+		. += "<span class='notice'>The wire panel is [open_panel ? "opened" : "closed"]. The display reads:</span>"
+		. += "[readout()]"
 
 /obj/item/taperecorder/AltClick(mob/user)
 	. = ..()
@@ -119,6 +134,11 @@
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
 
+		var/seconds_left = (mytape.max_capacity - mytape.used_capacity) SECONDS
+		if((seconds_left < seconds_to_warn) && !seconds_warned)
+			seconds_warned = TRUE
+			say("<font color='[say_color]'>[seconds_left] seconds left!</font>") //this is said after it hears something which isn't ideal but it works
+
 /obj/item/taperecorder/verb/record()
 	set name = "Start Recording"
 	set category = "Object"
@@ -133,9 +153,9 @@
 		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
-		say("<font colour=maroon>Recording started.</font>")
 		playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
-		recording = 1
+		recording = TRUE
+		say("<font color='[say_color]'>Recording started.</font>")
 		update_icon()
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
@@ -148,7 +168,7 @@
 		recording = FALSE
 		update_icon()
 	else
-		say("<font color=maroon>The tape is full!</font>")
+		say("<font color='[say_color]'>The tape is full!</font>")
 
 
 /obj/item/taperecorder/verb/stop()
@@ -159,18 +179,16 @@
 		return
 
 	if(recording)
+		say("<font color='[say_color]'>Recording stopped.</font>")
 		recording = FALSE
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("<font color=maroon>Recording stopped.</font>")
-		return
 	else if(playing)
 		playing = FALSE
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("<font color=maroon>Playback stopped.</font>")
+		say("<font color='[say_color]'>Playback stopped.</font>")
+	seconds_warned = FALSE
 	update_icon()
-
 
 /obj/item/taperecorder/verb/play()
 	set name = "Play Tape"
@@ -185,9 +203,9 @@
 	if(playing)
 		return
 
-	playing = 1
+	playing = TRUE
 	update_icon()
-	say("<font color=maroon>Playback started.</font>")
+	say("<font color='[say_color]'>Playback started.</font>")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
@@ -198,16 +216,16 @@
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		say("<font color=maroon>[mytape.storedinfo[i]]</font>")
+		say("[mytape.storedinfo[i]]") //no maroon because it's not the tape recorder's voice, it's just tinny
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
-			say("<font color=maroon>End of recording.</font>")
+			say("<font color='[say_color]'>End of recording.</font>")
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
-			say("<font color=maroon>Skipping [playsleepseconds] seconds of silence.</font>")
+			say("<font color='[say_color]'>Skipping [playsleepseconds] seconds of silence.</font>")
 			playsleepseconds = 1
 		i++
 
@@ -254,14 +272,16 @@
 	if(recording || playing)
 		return
 
-	say("<font color=maroon>Transcript printed.</font>")
+	say("<font color='[say_color]'>Transcript printed.</font>")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
 		t1 += "[mytape.storedinfo[i]]<BR>"
 	P.info = t1
-	P.name = "paper- 'Transcript'"
+	var/tapename = mytape.name
+	var/prototapename = initial(mytape.name)
+	P.name = "paper- 'Tape Transcript[tapename == prototapename ? "" : " - [tapename]"]'"
 	P.update_icon_state()
 	usr.put_in_hands(P)
 	canprint = FALSE
