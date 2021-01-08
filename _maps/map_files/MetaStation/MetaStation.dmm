@@ -2509,6 +2509,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
+/obj/effect/landmark/start/security_officer,
 /turf/open/floor/plasteel/dark,
 /area/security/range)
 "agf" = (
@@ -59717,6 +59718,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/effect/landmark/start/security_officer,
 /turf/open/floor/plasteel,
 /area/security/main)
 "cZS" = (
@@ -59741,6 +59743,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/effect/landmark/start/security_officer,
 /turf/open/floor/plasteel,
 /area/security/main)
 "daA" = (
@@ -66249,6 +66252,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
+"gtH" = (
+/obj/structure/cable,
+/obj/effect/landmark/start/security_officer,
+/turf/open/floor/plasteel,
+/area/security/main)
 "gtO" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -110857,7 +110865,7 @@ amk
 bnh
 aoF
 bni
-ars
+gtH
 asI
 nnB
 amD
