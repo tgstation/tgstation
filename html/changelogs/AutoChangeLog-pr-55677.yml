@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - code_imp: "Checking \"escape on the emergency shuttle without being in custody\" is done by area, not by turf"
