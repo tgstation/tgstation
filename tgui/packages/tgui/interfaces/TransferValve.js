@@ -5,10 +5,9 @@ import { Window } from '../layouts';
 export const TransferValve = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    tank_one,
-    tank_two,
+    payload,
     attached_device,
-    valve,
+    failed,
   } = data;
   return (
     <Window
@@ -19,9 +18,9 @@ export const TransferValve = (props, context) => {
           <LabeledList>
             <LabeledList.Item label="Valve Status">
               <Button
-                icon={valve ? "unlock" : "lock"}
-                content={valve ? "Open" : "Closed"}
-                disabled={!tank_one || !tank_two}
+                icon={failed ? "unlock" : "lock"}
+                content={failed ? "Open" : "Closed"}
+                disabled={!payload || failed}
                 onClick={() => act('toggle')} />
             </LabeledList.Item>
           </LabeledList>
@@ -51,32 +50,15 @@ export const TransferValve = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Attachment One">
+        <Section title="Payload">
           <LabeledList>
-            <LabeledList.Item label="Attachment">
-              {tank_one ? (
+            <LabeledList.Item label="Tank Payload">
+              {payload ? (
                 <Button
                   icon={"eject"}
-                  content={tank_one}
-                  disabled={!tank_one}
-                  onClick={() => act('tankone')} />
-              ) : (
-                <Box color="average">
-                  No Tank
-                </Box>
-              )}
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-        <Section title="Attachment Two">
-          <LabeledList>
-            <LabeledList.Item label="Attachment">
-              {tank_two ? (
-                <Button
-                  icon={"eject"}
-                  content={tank_two}
-                  disabled={!tank_two}
-                  onClick={() => act('tanktwo')} />
+                  content={payload}
+                  disabled={!payload || failed}
+                  onClick={() => act('payload')} />
               ) : (
                 <Box color="average">
                   No Tank
