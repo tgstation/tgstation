@@ -138,7 +138,7 @@
 		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
-		to_chat(usr, "<span class='notice'>Recording started.</span>")
+		say("Recording started.")
 		playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 		recording = 1
 		update_icon()
@@ -153,7 +153,7 @@
 		recording = FALSE
 		update_icon()
 	else
-		to_chat(usr, "<span class='notice'>The tape is full.</span>")
+		say("The tape is full!")
 
 
 /obj/item/taperecorder/verb/stop()
@@ -168,13 +168,12 @@
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
+		say("Recording stopped.")
 		return
 	else if(playing)
 		playing = FALSE
-		var/turf/T = get_turf(src)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
+		say("Playback stopped.")
 	update_icon()
 
 
@@ -193,7 +192,7 @@
 
 	playing = 1
 	update_icon()
-	to_chat(usr, "<span class='notice'>Playing started.</span>")
+	say("Playback started.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
@@ -217,16 +216,16 @@
 			playsleepseconds = 1
 		i++
 
-	playing = FALSE
+	stop()
 	update_icon()
 
 
 /obj/item/taperecorder/attack_self(mob/user)
 	if(!mytape)
-		to_chat(user, "<span class='notice'>The [src] does not have a tape inside.</span>")
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 		return
 	if(mytape.ruined)
-		to_chat(user, "<span class='notice'>The tape inside the [src] appears to be broken.</span>")
+		to_chat(user, "<span class='warning'>\The tape inside \the [src] is broken!</span>")
 		return
 
 	update_available_icons()
@@ -257,12 +256,12 @@
 	if(!mytape)
 		return
 	if(!canprint)
-		to_chat(usr, "<span class='notice'>The recorder can't print that fast!</span>")
+		to_chat(usr, "<span class='warning'>The recorder can't print that fast!</span>")
 		return
 	if(recording || playing)
 		return
 
-	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
+	say("Transcript printed.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
@@ -283,7 +282,7 @@
 
 /obj/item/tape
 	name = "tape"
-	desc = "A magnetic tape that can hold up to ten minutes of content."
+	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
 	icon_state = "tape_white"
 	icon = 'icons/obj/device.dmi'
 	inhand_icon_state = "analyzer"
@@ -293,21 +292,54 @@
 	custom_materials = list(/datum/material/iron=20, /datum/material/glass=5)
 	force = 1
 	throwforce = 0
+	obj_flags = UNIQUE_RENAME //my mixtape
+	drop_sound = 'sound/items/handling/tape_drop.ogg'
+	pickup_sound = 'sound/items/handling/tape_pickup.ogg'
 	var/max_capacity = 600
 	var/used_capacity = 0
 	var/list/storedinfo = list()
 	var/list/timestamp = list()
+	var/used_capacity_otherside = 0 //Separate my side
+	var/list/storedinfo_otherside = list()
+	var/list/timestamp_otherside = list()
 	var/ruined = FALSE
+	var/list/icons_available = list()
+	var/icon_directory = 'icons/effects/tape_radial.dmi'
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
 	..()
 
-/obj/item/tape/attack_self(mob/user)
-	if(!ruined)
-		to_chat(user, "<span class='notice'>You pull out all the tape!</span>")
-		ruin()
+/obj/item/tape/proc/update_available_icons()
+	icons_available = list()
 
+	if(!ruined)
+		icons_available += list("Unwind tape" = image(icon = icon_directory, icon_state = "tape_unwind"))
+	icons_available += list("Flip tape" = image(icon = icon_directory, icon_state = "tape_flip"))
+
+/obj/item/tape/attack_self(mob/user)
+	update_available_icons()
+	if(icons_available)
+		var/selection = show_radial_menu(user, src, icons_available, radius = 38, require_near = TRUE, tooltips = TRUE)
+		if(!selection)
+			return
+		switch(selection)
+			if("Flip tape")
+				if(loc != user)
+					return
+				flip()
+				to_chat(user, "<span class='notice'>You turn \the [src] over.</span>")
+				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', get_clamped_volume(), FALSE)
+			if("Unwind tape")
+				if(loc != user)
+					return
+				ruin()
+				to_chat(user, "<span class='warning'>You pull out all the tape!</span>")
+
+/obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(prob(50))
+		flip()
+	. = ..()
 
 /obj/item/tape/proc/ruin()
 	//Lets not add infinite amounts of overlays when our fireact is called
@@ -316,17 +348,29 @@
 		add_overlay("ribbonoverlay")
 	ruined = TRUE
 
-
 /obj/item/tape/proc/fix()
 	cut_overlay("ribbonoverlay")
 	ruined = FALSE
 
+/obj/item/tape/proc/flip()
+	//first we save a copy of our current side
+	var/list/storedinfo_currentside = storedinfo.Copy()
+	var/list/timestamp_currentside = timestamp.Copy()
+	var/used_capacity_currentside = used_capacity
+	//then we overwite our current side with our other side
+	storedinfo = storedinfo_otherside.Copy()
+	timestamp = timestamp_otherside.Copy()
+	used_capacity = used_capacity_otherside
+	//then we overwrite our other side with the saved side
+	storedinfo_otherside = storedinfo_currentside.Copy()
+	timestamp_otherside = timestamp_currentside.Copy()
+	used_capacity_otherside = used_capacity_currentside
 
 /obj/item/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && (I.tool_behaviour == TOOL_SCREWDRIVER || istype(I, /obj/item/pen)))
+	if(ruined && (I.tool_behaviour == TOOL_SCREWDRIVER))
 		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
 		if(I.use_tool(src, user, 120))
-			to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
+			to_chat(user, "<span class='notice'>You wind the tape back in.</span>")
 			fix()
 
 //Random colour tapes
