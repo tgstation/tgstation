@@ -312,7 +312,7 @@
 
 /obj/item/food/grown/rose/pickup(mob/living/carbon/human/user)
 	..()
-	if(!user.gloves && (seed.get_gene(/datum/plant_gene/trait/sticky) || prob(10)))
+	if(!user.gloves && (seed.get_gene(/datum/plant_gene/trait/sticky) || prob(33)))
 		to_chat(user, "<span class='danger'>You prick your hand on \the [name]'s thorns. Ouch.</span>")
 		var/obj/item/bodypart/affecting = user.get_active_hand()
 		if(affecting?.receive_damage(2))
