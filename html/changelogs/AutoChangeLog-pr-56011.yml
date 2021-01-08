@@ -1,0 +1,4 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - bugfix: "Mimics can no longer eat an unlimited amount of stuff and are instead limited to 10 mobs and 50 things overall. This means player mimics are no longer able to cause significant lag by opening and closing themselves."
