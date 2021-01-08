@@ -54,7 +54,7 @@
 	var/thrown_items = 0
 
 	for(var/iter in current_turf.contents)
-		if(thrown_items < BACKBLAST_MAX_ITEM_KNOCKBACK)
+		if(thrown_items > BACKBLAST_MAX_ITEM_KNOCKBACK)
 			break
 		if(isitem(iter))
 			var/obj/item/I = iter
