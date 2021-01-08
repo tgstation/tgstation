@@ -10,6 +10,7 @@
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
 	var/datum/bounty/civilian_bounty
+	var/list/datum/bounty/bounties
 	var/bounty_timer = 0
 
 /datum/bank_account/New(newname, job, modifier = 1)

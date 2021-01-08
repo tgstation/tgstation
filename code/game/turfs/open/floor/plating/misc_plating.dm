@@ -215,12 +215,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_ICE)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_ICE)
 
-/turf/open/floor/plating/ice/colder
-	temperature = 140
-
-/turf/open/floor/plating/ice/temperate
-	temperature = 255.37
-
 /turf/open/floor/plating/ice/break_tile()
 	return
 
@@ -259,9 +253,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_SNOWED)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_SNOWED)
 	planetary_atmos = TRUE
-
-/turf/open/floor/plating/snowed/colder
-	temperature = 140
 
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37

@@ -923,9 +923,10 @@
  * Returns what this holder's reagents taste like
  *
  * Arguments:
+ * * mob/living/taster - who is doing the tasting. Some mobs can pick up specific flavours.
  * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
  */
-/datum/reagents/proc/generate_taste_message(minimum_percent=15,mob/living/taster)
+/datum/reagents/proc/generate_taste_message(mob/living/taster, minimum_percent)
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
 	if(minimum_percent <= 100)
