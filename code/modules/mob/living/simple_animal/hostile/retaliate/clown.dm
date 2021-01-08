@@ -415,7 +415,7 @@
 
 /obj/effect/proc_holder/regurgitate/fire(mob/living/carbon/user)
 	if(active)
-		user.icon_state = initial(icon_state)
+		user.icon_state = initial(user.icon_state)
 		remove_ranged_ability("<span class='notice'>Your throat muscles relax.</span>")
 	else
 		user.icon_state = "glutton_tongue"
@@ -440,7 +440,7 @@
 
 	var/obj/item/projected_morsel = pick_n_take(pouch_owner.prank_pouch)
 	projected_morsel.forceMove(pouch_owner.loc)
-	projected_morsel.throw_at(target, 8, 3, pouch_owner)
+	projected_morsel.throw_at(target, 8, 2, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
 	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
 
