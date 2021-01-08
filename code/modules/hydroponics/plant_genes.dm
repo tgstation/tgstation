@@ -188,11 +188,14 @@
 	reagent_id = /datum/reagent/carbon
 	rate = 0.1
 
-// Various traits affecting the product.
+/// Traits that effect the grown product..
 /datum/plant_gene/trait
 	var/rate = 0.05
 	var/examine_line = ""
-	var/trait_id // must be set and equal for any two traits of the same type
+	/// Must be set and equal for any two traits of the same type
+	var/trait_id
+	/// Flags that modify the final product.
+	var/trait_flags
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
@@ -408,6 +411,7 @@
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
 	rate = 2
+	trait_flags = TRAIT_HALVES_YIELD
 
 /datum/plant_gene/trait/maxchem/on_new(obj/item/food/grown/G, newloc)
 	..()
@@ -605,6 +609,7 @@
  */
 /datum/plant_gene/trait/chem_heating
 	name = "Endothermic Activity"
+	trait_flags = TRAIT_HALVES_YIELD
 
 /datum/plant_gene/trait/chem_heating/can_add(obj/item/seeds/S)
 	if(S.get_gene(/datum/plant_gene/trait/chem_cooling))
@@ -617,6 +622,7 @@
  */
 /datum/plant_gene/trait/chem_cooling
 	name = "Exothermic Activity"
+	trait_flags = TRAIT_HALVES_YIELD
 
 /datum/plant_gene/trait/chem_cooling/can_add(obj/item/seeds/S)
 	if(S.get_gene(/datum/plant_gene/trait/chem_heating))
