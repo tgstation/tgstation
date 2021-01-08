@@ -10,7 +10,9 @@
 
 /obj/effect/dummy/phased_mob/Destroy()
 	// Eject contents if deleted somehow
-	var/area/destination_area = get_turf(src)
+	var/atom/drop_to = drop_location()
+	var/turf/just_in_case = get_turf(drop_to)
+	var/area/destination_area = just_in_case.loc
 	var/failed_areacheck = FALSE
 	if(destination_area.area_flags & NOTELEPORT)
 		failed_areacheck = TRUE
@@ -47,15 +49,16 @@
 	if (movedelay > world.time || !direction)
 		return
 	var/turf/newloc = get_step(src,direction)
-	var/area/destination_area = newloc.loc
 	if(!newloc)
 		return
+	var/area/destination_area = newloc.loc
 	movedelay = world.time + movespeed
 	if(newloc.flags_1 & NOJAUNT_1)
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
 		return
 	if(destination_area.area_flags & NOTELEPORT)
 		to_chat(user, "<span class='danger'>Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous.</span>")
+		return
 	return newloc
 
 /// React to signals by deleting the effect. Used for bloodcrawl.
