@@ -105,7 +105,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_SKITTISH))
-			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
+			. += "<span class='notice'>If you bump into [src] while running, you will jump inside.</span>"
 
 /obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -448,14 +448,16 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/CtrlShiftClick(mob/living/user)
-	if(!HAS_TRAIT(user, TRAIT_SKITTISH))
-		return ..()
-	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(user.loc))
+/obj/structure/closet/Bumped(atom/movable/AM)
+	. = ..()
+	if(!isliving(AM))
 		return
-	dive_into(user)
+	var/mob/living/bumper = AM
+	if(HAS_TRAIT(bumper, TRAIT_SKITTISH) && bumper.m_intent == MOVE_INTENT_RUN && bumper.stat == CONSCIOUS)
 
-/obj/structure/closet/proc/togglelock(mob/living/user, silent)
+		dive_into(bumper)
+
+/obj/structure/closet/proc/togglelock(mob/living/user, silent = FALSE)
 	if(secure && !broken)
 		if(allowed(user))
 			if(iscarbon(user))
@@ -524,22 +526,32 @@
 	return
 
 /obj/structure/closet/proc/dive_into(mob/living/user)
-	var/turf/T1 = get_turf(user)
-	var/turf/T2 = get_turf(src)
+	var/turf/turf = get_turf(src)
 	if(!opened)
 		if(locked)
-			togglelock(user, TRUE)
+			togglelock(user, silent = TRUE)
 		if(!open(user))
-			to_chat(user, "<span class='warning'>It won't budge!</span>")
+			// No message if unable to open, since this is on Bump, spammy potential
 			return
-	step_towards(user, T2)
-	T1 = get_turf(user)
-	if(T1 == T2)
-		user.set_resting(TRUE) //so people can jump into crates without slamming the lid on their head
-		if(!close(user))
-			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.set_resting(FALSE)
-			return
-		user.set_resting(FALSE)
-		togglelock(user)
-		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
+
+	// If it's a crate, "dive for cover" and start resting so people can jump into crates without slamming the lid on their head
+	if(horizontal)
+		// need to rest before moving, otherwise "can't get crate to close" message will be printed erroneously
+		user.set_resting(TRUE, silent = TRUE)
+
+	user.forceMove(turf)
+
+	if(!close(user))
+		to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
+		if(horizontal)
+			user.set_resting(FALSE, silent = TRUE)
+		return
+
+	togglelock(user, silent = TRUE)
+
+	if(horizontal)
+		user.set_resting(FALSE, silent = TRUE)
+
+	turf.visible_message("<span class='warning'>[user] dives into [src]!</span>")
+	// If you run into a locker, you don't want to run out immediately
+	user.Immobilize(0.5 SECONDS)
