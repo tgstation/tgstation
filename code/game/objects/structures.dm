@@ -8,7 +8,7 @@
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.6
 	pass_flags_self = PASSSTRUCTURE
-	var/broken
+	var/broken = FALSE
 
 /obj/structure/Initialize()
 	if (!armor)
