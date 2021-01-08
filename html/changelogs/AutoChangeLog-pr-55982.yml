@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Fix a rare case where setting the HFR moderator filter to a gas not present in the moderator mix would cause parts of HFR to stop functioning."
