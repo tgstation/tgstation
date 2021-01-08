@@ -15,6 +15,7 @@
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
+	var/climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/Initialize()
@@ -22,7 +23,7 @@
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
 	update_icon()
-	AddElement(/datum/element/climbable, climb_time = 10, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = opened ? climb_time : climb_time * 0.5, climb_stun = 0)
 
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -48,6 +49,17 @@
 		return
 	if(manifest)
 		tear_manifest(user)
+
+/obj/structure/closet/crate/after_open(mob/living/user, force)
+	. = ..()
+	RemoveElement(/datum/element/climbable)
+	AddElement(/datum/element/climbable, climb_time = climb_time * 0.5, climb_stun = 0)
+
+/obj/structure/closet/crate/after_close(mob/living/user)
+	. = ..()
+	RemoveElement(/datum/element/climbable)
+	AddElement(/datum/element/climbable, climb_time = climb_time, climb_stun = 0)
+
 
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()

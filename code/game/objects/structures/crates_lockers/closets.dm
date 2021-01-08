@@ -168,7 +168,12 @@
 		density = FALSE
 	dump_contents()
 	update_icon()
+	after_open(user, force)
 	return TRUE
+
+///Proc to override for effects after opening a door
+/obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
+	return
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
 	if(contents.len >= storage_capacity)
@@ -219,7 +224,13 @@
 	opened = FALSE
 	density = TRUE
 	update_icon()
+	after_close(user)
 	return TRUE
+
+///Proc to override for effects after closing a door
+/obj/structure/closet/proc/after_close(mob/living/user)
+	return
+
 
 /obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
