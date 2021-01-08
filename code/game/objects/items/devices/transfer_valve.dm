@@ -163,7 +163,7 @@
 
 /obj/item/transfer_valve/proc/calculate_power() //Other dependencies now only have to call this proc and merge_gases to get the explosion range.
 	if (deltaW > 1e5) //Only allows for explosions for differences in delta W. This is to prevent Hypernob abuse.
-		var/range_update = deltaW / 1e5
+		var/range_update = deltaW / 1.5e5
 		return range_update
 	else
 		return 0

@@ -955,6 +955,7 @@ nobiliumsuppression = INFINITY
 	min_requirements = list(
 		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
 		/datum/gas/hydrogen = 150,
+		"TEMP" = 20
 	)
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response/react(datum/gas_mixture/air, datum/holder)
