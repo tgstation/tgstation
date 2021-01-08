@@ -91,7 +91,7 @@
 			if (!animal.dextrous)
 				return
 		if(living_target.mobility_flags & MOBILITY_MOVE)
-			climb_structure(climbed_thing, living_target)
+			INVOKE_ASYNC(src, .proc/climb_structure, climbed_thing, living_target)
 			return
 
 ///Tries to climb onto the target if the forced movement of the mob allows it
