@@ -21,7 +21,7 @@
 	damage = 20
 	range = 10 // actually overwritten in the backblast element
 	alpha = 0
-	pass_flags = PASSMOB
+	pass_flags = PASSTABLE | PASSMOB
 	sharpness = SHARP_NONE
 	shrapnel_type = null
 	embedding = null
@@ -41,8 +41,8 @@
 	/// A lazylist of all the items we've already knocked back, so we don't do it again
 	var/list/launched_items
 
-/// we only try to knock back the first 5 items per tile
-#define BACKBLAST_MAX_ITEM_KNOCKBACK	5
+/// we only try to knock back the first 6 items per tile
+#define BACKBLAST_MAX_ITEM_KNOCKBACK	6
 
 /obj/projectile/bullet/incendiary/backblast/Move()
 	. = ..()
@@ -54,9 +54,11 @@
 	var/thrown_items = 0
 
 	for(var/iter in current_turf.contents)
+		if(thrown_items < BACKBLAST_MAX_ITEM_KNOCKBACK)
+			break
 		if(isitem(iter))
 			var/obj/item/I = iter
-			if(thrown_items < BACKBLAST_MAX_ITEM_KNOCKBACK || I.anchored || LAZYFIND(launched_items, I))
+			if(I.anchored || LAZYFIND(launched_items, I))
 				continue
 			thrown_items++
 			I.throw_at(throw_at_turf, knockback_range, knockback_range)
