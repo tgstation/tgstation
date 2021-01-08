@@ -164,7 +164,6 @@
  *
  * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
  */
-
 /datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
 	for(var/datum/plant_gene/reagent/reagent in seed.genes)
 		if(reagent.reagent_id != reagent_id || reagent.rate <= rate)
@@ -188,7 +187,7 @@
 	reagent_id = /datum/reagent/carbon
 	rate = 0.1
 
-/// Traits that effect the grown product..
+/// Traits that affect the grown product.
 /datum/plant_gene/trait
 	var/rate = 0.05
 	var/examine_line = ""
