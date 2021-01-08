@@ -63,7 +63,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		blob_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	START_PROCESSING(SSobj, src)
 
 /mob/camera/blob/proc/validate_location()
@@ -252,6 +251,23 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
+
+/// Allows dead chat to orbit the blob and give advice as long as they are orbiting.
+/mob/camera/blob/proc/request_ghost_aide()
+	if (!isnull(GetComponent(/datum/component/ghost_court)))
+		return
+
+	AddComponent(
+		/datum/component/ghost_court, \
+		"[src] is requesting assistance consuming the station. Orbit them to communicate with the blob directly.", \
+		CALLBACK(src, .proc/on_ghost_court_talk), \
+	)
+
+/mob/camera/blob/proc/on_ghost_court_talk(mob/dead/observer/ghost, message, list/orbiting_ghosts)
+	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Undermind\] [ghost]</b> howls, \"[message]\"</font>"
+	log_talk(message, LOG_SAY, tag = "blob ghosts")
+	for (var/listener in orbiting_ghosts + src)
+		to_chat(listener, rendered)
 
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return

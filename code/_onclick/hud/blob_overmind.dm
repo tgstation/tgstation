@@ -18,6 +18,18 @@
 		var/mob/camera/blob/B = usr
 		B.blob_help()
 
+/atom/movable/screen/blob/ghost_court
+	icon_state = "ui_ghostcourt"
+	name = "Request Underminds"
+	desc = "Harness the power of the dead to assist you."
+
+/atom/movable/screen/blob/ghost_court/Click()
+	if (isovermind(usr))
+		var/mob/camera/blob/blob = usr
+		blob.request_ghost_aide()
+		to_chat(usr, "<span class='notice'>You devote energy into expanding your reach...</span>")
+		qdel(src)
+
 /atom/movable/screen/blob/jump_to_node
 	icon_state = "ui_tonode"
 	name = "Jump to Node"
@@ -142,6 +154,11 @@
 
 	using = new /atom/movable/screen/blob/blob_help()
 	using.screen_loc = "WEST:6,NORTH:-3"
+	using.hud = src
+	static_inventory += using
+
+	using = new /atom/movable/screen/blob/ghost_court()
+	using.screen_loc = "WEST:6,NORTH:-35"
 	using.hud = src
 	static_inventory += using
 
