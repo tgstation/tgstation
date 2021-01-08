@@ -92,16 +92,16 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "al" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "am" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "an" = (
 /obj/structure/table/wood,
 /obj/item/candle/infinite,
@@ -146,7 +146,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "au" = (
 /obj/structure/chair/wood,
 /turf/open/floor/plasteel/cult,
@@ -167,7 +167,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ay" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -194,7 +194,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aC" = (
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium,
@@ -472,7 +472,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bk" = (
 /obj/structure/chair/wood,
 /obj/machinery/light{
