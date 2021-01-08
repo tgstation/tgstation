@@ -1,4 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the examine text for death players (death players not appearing as dead)"

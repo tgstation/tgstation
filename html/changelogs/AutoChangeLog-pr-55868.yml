@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "You can now turn on stun batons that have exactly enough charge left in them to stun someone."
-  - bugfix: "Thrown stun batons can now debuff most of the types of creatures that melee stun baton strikes can."

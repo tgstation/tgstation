@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Extra AIs created by players will no longer lose their laws shortly after they are created."

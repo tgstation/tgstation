@@ -1,5 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen has upgraded the defense firmware in their vending machines, they are somewhat more difficult to fight, if for some reason that was required."
-  - tweak: "Brand Intelligence event takes less long to convert vending machines"
