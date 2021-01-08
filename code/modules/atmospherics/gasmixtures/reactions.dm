@@ -346,29 +346,25 @@ nobiliumsuppression = INFINITY
 	var/turf/open/location = isturf(holder) ? holder : null
 	var/burned_fuel = 0
 	
-	if(MINIMUM_H2_OXYBURN_ENERGY < air.thermal_energy() && cached_gases[/datum/gas/oxygen][MOLES] >= cached_gases[/datum/gas/hydrogen][MOLES] * 0.5)
-		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES] * 0.98 //Small ammounts of inefficiency
-
+	if(MINIMUM_H2_OXYBURN_ENERGY < air.thermal_energy() && cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/hydrogen][MOLES])
+		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES] //Small ammounts of inefficiency
 	else
 		burned_fuel = min(cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/hydrogen][MOLES]) / HYDROGEN_BURN_OXY_FACTOR
 		
 	if(burned_fuel)
-		if(cached_gases[/datum/gas/hydrogen][MOLES] - burned_fuel < 0 || cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel * 0.5 < 0)
+		if(cached_gases[/datum/gas/hydrogen][MOLES] - burned_fuel * 0.1 < 0 || cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel < 0)
 			return NO_REACTION
 
-		var/new_heat_capacity = air.heat_capacity()
-		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel
-		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel * 0.5
+		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel * 0.1 // 2.8e7 per mole, slow reaction rate.
+		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel // HUGE amounts of o2 being eaten.
 		
 		ASSERT_GAS(/datum/gas/water_vapor, air)
-		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel * 0.5
+		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel * 0.1
 
 		energy_released = (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
-
-		if(istype(holder, /obj/item/transfer_valve))
-			air.temperature = (temperature * old_heat_capacity + energy_released) / new_heat_capacity
-		else
-			air.temperature = min((temperature * old_heat_capacity + energy_released) / new_heat_capacity, 1e8) //Cant exceed e8, fusion heat cap
+		
+		if(air.heat_capacity() > MINIMUM_HEAT_CAPACITY)
+			air.temperature = ((temperature * old_heat_capacity) + energy_released) / air.heat_capacity()
 
 		cached_results["fire"] += burned_fuel
 

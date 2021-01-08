@@ -103,7 +103,7 @@
 	//snowflake check to only take "made" bombs
 	if(istype(O, /obj/item/transfer_valve))
 		var/obj/item/transfer_valve/T = O
-		if(!T.tank_one || !T.tank_two || !T.attached_device)
+		if(!T.ready() || T.failed)
 			return FALSE
 	return TRUE
 

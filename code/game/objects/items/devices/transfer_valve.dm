@@ -9,20 +9,18 @@
 	w_class = WEIGHT_CLASS_BULKY
 
 	var/obj/item/tank/payload
-	var/obj/item/tank/tank_one
-	var/obj/item/tank/tank_two
 	var/obj/item/assembly/attached_device
-	var/datum/gas_mixture/thermonuclear
+	var/datum/gas_mixture/gasmix
 	var/mob/attacher = null
 	var/range = FALSE
 	var/failed = 0
-	var/deltaW
+	var/deltaW = 0
 
 /obj/item/transfer_valve/Initialize()
 	. = ..()
 
-	thermonuclear = new(100) //liters
-	thermonuclear.temperature = T20C
+	gasmix = new(100) //liters
+	gasmix.temperature = T20C
 	
 	add_overlay("valve_hotmix")
 
@@ -146,20 +144,21 @@
 
 
 /obj/item/transfer_valve/proc/merge_gases()
+	if (!payload.air_contents)
+		return
 	var/datum/gas_mixture/payload_content = payload.air_contents
 	var/old_energy = payload_content.temperature * payload_content.heat_capacity()
 	var/injected_energy = 6e7 //0.03 moles of Hyper-Noblium at 1 million kelvins
 	var/energy_after_reacting = 0
-	
-	if (!payload_content)
-		return
-	thermonuclear.merge(payload_content)
 
-	ASSERT_GAS(/datum/gas/hypernoblium, thermonuclear)
-	thermonuclear.gases[/datum/gas/hypernoblium][MOLES] += 0.03
-	thermonuclear.temperature = (injected_energy + old_energy) / thermonuclear.heat_capacity()
-	thermonuclear.react()
-	energy_after_reacting = thermonuclear.temperature * thermonuclear.heat_capacity()
+	gasmix.merge(payload_content)
+	payload_content = null
+
+	ASSERT_GAS(/datum/gas/hypernoblium, gasmix)
+	gasmix.gases[/datum/gas/hypernoblium][MOLES] += 0.03
+	gasmix.temperature = (injected_energy + old_energy) / gasmix.heat_capacity()
+	gasmix.react()
+	energy_after_reacting = gasmix.temperature * gasmix.heat_capacity()
 	deltaW = energy_after_reacting - (injected_energy + old_energy)
 
 /obj/item/transfer_valve/proc/calculate_power() //Other dependencies now only have to call this proc and merge_gases to get the explosion range.
@@ -167,7 +166,7 @@
 		var/range_update = deltaW / 1e5
 		return range_update
 	else
-		return FALSE
+		return 0
 
 /obj/item/transfer_valve/proc/handle_explosion()
 	var/turf/epicenter = get_turf(loc)
@@ -175,7 +174,7 @@
 	qdel(src)
 
 /obj/item/transfer_valve/proc/activate()
-	if(!failed)
+	if(!failed && ready())
 		log_activation()
 		merge_gases()
 		range = calculate_power()
@@ -232,84 +231,3 @@
 				. = TRUE
 
 	update_icon()
-
-/obj/item/transfer_valve/helium_bomb
-	name = "Generation V Payload Device"
-	desc = "Cutting edge experimental weaponry, allowing for Helium-based thermonuclear reactions commonly seen in stars."
-
-	var/equation_random
-	var/random_multiplier_x
-	var/random_multiplier_y
-
-/obj/item/transfer_valve/helium_bomb/Initialize()
-	. = ..()
-	equation_random = pick("equation_1", "equation_2", "equation_3", "equation_4", "equation_5", "equation_6")
-	random_multiplier_x = rand(-200,200) / 100
-	random_multiplier_y = rand(-200,200) / 100
-
-/obj/item/transfer_valve/helium_bomb/merge_gases()
-	var/datum/gas_mixture/payload_content = payload.air_contents
-	thermonuclear.merge(payload_content)
-	thermonuclear.temperature = payload_content.temperature
-
-	var/helium = thermonuclear.gases[/datum/gas/helium][MOLES]
-	var/tritium = thermonuclear.gases[/datum/gas/tritium][MOLES]
-	var/hydrogen = thermonuclear.gases[/datum/gas/hydrogen][MOLES]
-	var/gas_to_graph_scale_factor = 1000
-	var/helium_graph_amount = clamp(helium / gas_to_graph_scale_factor, 0, 6.28)
-	var/tritium_graph_amount = clamp(tritium / gas_to_graph_scale_factor, 0, 6.28)
-	var/hydrogen_graph_amount = clamp(hydrogen / gas_to_graph_scale_factor, 0, 6.28)
-	var/hydrogen_and_isotopes = tritium + hydrogen
-	var/constant = 0
-	var/list/x_component = new
-	var/list/x_component_helium = new
-	var/list/y_component = new
-	var/y_value = 0
-	var/helium_helium_fuse_efficiency = 0
-	var/fused_helium_amount = 0
-	var/fused_hydrogen_helium_amount = 0
-	var/fused_hydrogen_amount = 0
-	
-	if (helium > 10 && (hydrogen > 10 && tritium > 10))
-		// HELIUM TO HELIUM FUSION EFFICIENCY CALCULATION
-		x_component["equation_1"] = (1/2 * tritium_graph_amount) - (1 / (4 * random_multiplier_x) * sin(2 * tritium_graph_amount * random_multiplier_x)) // Integral of sin^2(kx)
-		x_component["equation_2"] = (1/2 * tritium_graph_amount) - (1 / (2 * random_multiplier_x) * sin(2 * tritium_graph_amount * random_multiplier_x)) // Integral of cos^2(kx)
-		x_component["equation_3"] = tritium_graph_amount // Integral of 1, sort of.
-		x_component["equation_4"] = (1/2 * tritium_graph_amount) - (1 / (2 * random_multiplier_x) * sin(2 * tritium_graph_amount * random_multiplier_x)) // Integral of cos^2(kx)
-		x_component["equation_5"] = tritium_graph_amount // Integral of 1, sort of.
-		x_component["equation_6"] = (1/2 * tritium_graph_amount) - (1 / (4 * random_multiplier_x) * sin(2 * tritium_graph_amount * random_multiplier_x)) // Integral of sin^2(kx)
-
-		x_component_helium["equation_1"] = (1/2 * helium_graph_amount) - (1 / (4 * random_multiplier_x) * sin(2 * helium_graph_amount * random_multiplier_x)) // Integral of sin^2(kx)
-		x_component_helium["equation_2"] = (1/2 * helium_graph_amount) - (1 / (2 * random_multiplier_x) * sin(2 * helium_graph_amount * random_multiplier_x)) // Integral of cos^2(kx)
-		x_component_helium["equation_3"] = helium_graph_amount // Integral of 1, sort of.
-		x_component_helium["equation_4"] = (1/2 * helium_graph_amount) - (1 / (2 * random_multiplier_x) * sin(2 * helium_graph_amount * random_multiplier_x)) // Integral of cos^2(kx)
-		x_component_helium["equation_5"] = helium_graph_amount // Integral of 1, sort of.
-		x_component_helium["equation_6"] = (1/2 * helium_graph_amount) - (1 / (4 * random_multiplier_x) * sin(2 * helium_graph_amount * random_multiplier_x)) // Integral of sin^2(kx)
-
-		y_component["equation_1"] = 1 / random_multiplier_y * tan(hydrogen_graph_amount * random_multiplier_y) // Integral of 1 / cos^2(ky)
-		y_component["equation_2"] = -1 / random_multiplier_y * COT(hydrogen_graph_amount * random_multiplier_y) // Integral of 1 / sin^2(ky)
-		y_component["equation_3"] = 1 / random_multiplier_y * tan(hydrogen_graph_amount * random_multiplier_y) // Integral of 1 / cos^2(ky)
-		y_component["equation_4"] = hydrogen_graph_amount // Integral of 1, sort of.
-		y_component["equation_5"] = -1 / random_multiplier_y * COT(hydrogen_graph_amount * random_multiplier_y) // Integral of 1 / sin^2(ky)
-		y_component["equation_6"] = hydrogen_graph_amount // Integral of 1, sort of.
-
-		constant = y_component[equation_random] - x_component[equation_random] // Calculate the special constant for the specific trit-h2 coordinate
-		y_value = clamp(x_component_helium[equation_random] + constant, 0, 6.28) // Calculate the f(x) (y coord)
-
-		helium_helium_fuse_efficiency = y_value + helium_graph_amount / 12.56 // Efficiency is f(x) + x for the graph. (x coord + y coord)
-		message_admins(y_value)
-		message_admins(helium_helium_fuse_efficiency)
-
-		// AMOUNT CALCULATION
-		fused_helium_amount = (helium_helium_fuse_efficiency * helium) / 2 //First rate, beautiful, very energetic reaction. 2 Helium fuses together. Optimal and what one should be striving for.
-		fused_hydrogen_helium_amount = min(hydrogen_and_isotopes / 3, (helium - (fused_helium_amount * 2))) // Second rate, less energetic reaction. 3 Hydrogen + 1 Helium. If the hydrogen isnt enough to accomodate, some helium is left lying around. Woops!
-		fused_hydrogen_amount = hydrogen_and_isotopes - (fused_hydrogen_helium_amount * 3) // Pretty much tritium/hydrogen burn. Only occurs if we dont have enough helium to be fused into by the hydrogen.
-
-		// ENERGY CALCULATION
-		deltaW += fused_helium_amount * 4e14 // 4e14 for two moles consumed. 2e14 per mol.
-		deltaW += fused_hydrogen_helium_amount * 4e10 //4e13 for four moles consumed. 1e10 per mol.
-		deltaW += fused_hydrogen_amount * FIRE_HYDROGEN_ENERGY_RELEASED //2.8e7 per mol. Regular tritfire bomb. Will not happen if we have enough helium in mix.
-
-	else
-		failed = TRUE
-	

@@ -114,32 +114,26 @@
 /obj/machinery/research/explosive_compressor/proc/do_implosion()
 	var/required_radius = get_required_radius(inserted_core.anomaly_type)
 	// By now, we should be sure that we have a core, a TTV, and that the TTV has both tanks in place.
-	var/datum/gas_mixture/mix1 = inserted_bomb.tank_one.air_contents
-	var/datum/gas_mixture/mix2 = inserted_bomb.tank_two.air_contents
-	// Snowflaked tank explosion
-	var/datum/gas_mixture/mix = new(70) // Standard tank volume, 70L
-	mix.merge(mix1)
-	mix.merge(mix2)
-	mix.react()
-	if(mix.return_pressure() < TANK_FRAGMENT_PRESSURE)
-		// They failed so miserably we're going to give them their bomb back.
+	if (!inserted_bomb.failed)
+		inserted_bomb.merge_gases()
+		var/range = inserted_bomb.calculate_power()
+	
+		if (range > required_radius)
+			inserted_core.create_core(drop_location(), TRUE, TRUE)
+			say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")
+		else
+			inserted_core.forceMove(drop_location())
+			say("Transfer valve resulted in negligible explosive power. Core ejected.")
+	
+	else
 		inserted_bomb.forceMove(drop_location())
-		inserted_bomb = null
+		say("Transfer valve already used. Core and valve ejected")
 		inserted_core.forceMove(drop_location())
-		inserted_core = null
-		say("Transfer valve resulted in negligible explosive power. Items ejected.")
-		return
-	mix.react()		// build more pressure
-	var/pressure = mix.return_pressure()
-	var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-	if(range < required_radius)
-		inserted_bomb.forceMove(src)
-		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
-		return
-	QDEL_NULL(inserted_bomb)	// bomb goes poof
-	inserted_core.create_core(drop_location(), TRUE, TRUE)
+		inserted_bomb.forceMove(drop_location())
+		
 	inserted_core = null
-	say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")
+	inserted_bomb = null
+
 
 #undef MAX_RADIUS_REQUIRED
 #undef MIN_RADIUS_REQUIRED
