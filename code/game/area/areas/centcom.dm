@@ -145,7 +145,7 @@
 	has_gravity = STANDARD_GRAVITY
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT
 	flags_1 = NONE
-	ambientsounds = HIGHSEC
+	ambience_index = AMBIENCE_DANGER
 	network_root_id = SYNDICATE_NETWORK_ROOT
 
 /area/syndicate_mothership/control

@@ -1089,8 +1089,8 @@
 				filtering = FALSE
 		if(filtering && moderator_internal.gases[filter_type])
 			var/datum/gas_mixture/removed = moderator_internal.remove_specific(filter_type, 20)
-			removed.temperature = moderator_internal.temperature
-			linked_output.airs[1].merge(removed)
+			if(removed)
+				linked_output.airs[1].merge(removed)
 
 		var/datum/gas_mixture/internal_remove
 		if(internal_fusion.gases[/datum/gas/helium][MOLES] > 0)
