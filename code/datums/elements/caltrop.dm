@@ -29,7 +29,7 @@
 	src.probability = probability
 	src.flags = flags
 
-	RegisterSignal(target, list(COMSIG_MOVABLE_CROSSED), .proc/Crossed)
+	RegisterSignal(target, COMSIG_MOVABLE_CROSSED, .proc/Crossed)
 
 /datum/element/caltrop/proc/Crossed(atom/caltrop, atom/movable/AM)
 	SIGNAL_HANDLER
