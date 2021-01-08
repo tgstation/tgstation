@@ -65,12 +65,12 @@
 	else
 		myseed = new myseed(src)
 	if(spread)
-		myseed.potency -= round(myseed.potency * 0.25) // Reduce potency of the little mushie if it's spreading
+		myseed.adjust_potency(-round(myseed.potency * 0.25)) // Reduce potency of the little mushie if it's spreading
 	if(mutate_stats) //baby mushrooms have different stats :3
 		myseed.adjust_potency(rand(-4,3))
 		myseed.adjust_yield(rand(-3,2))
 		myseed.adjust_production(rand(-3,3))
-		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
+		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, MAX_PLANT_ENDURANCE) // adjust_endurance has a min value of 10, need to edit directly
 	if(myseed.production >= 1) //In case production is varedited to -1 or less which would cause unlimited or negative delay.
 		delay_spread = delay_spread - (11 - myseed.production) * 100 //Because lower production speed stat gives faster production speed, which should give faster mushroom spread. Range 200-1100 deciseconds.
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)

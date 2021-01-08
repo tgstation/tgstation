@@ -49,11 +49,13 @@
 	else
 		returned_message += "<span class='info'><B>No plant found.</B></span>\n"
 
-	returned_message += "<span class='info'>- Weed level: <span class='notice'>[scanned_tray.weedlevel] / 10</span>\n"
-	returned_message += "- Pest level: <span class='notice'>[scanned_tray.pestlevel] / 10</span>\n"
-	returned_message += "- Toxicity level: <span class='notice'>[scanned_tray.toxic] / 100</span>\n"
+	returned_message += "<span class='info'>- Weed level: <span class='notice'>[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]</span>\n"
+	returned_message += "- Pest level: <span class='notice'>[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]</span>\n"
+	returned_message += "- Toxicity level: <span class='notice'>[scanned_tray.toxic] / [MAX_TRAY_TOXINS]</span>\n"
 	returned_message += "- Water level: <span class='notice'>[scanned_tray.waterlevel] / [scanned_tray.maxwater]</span>\n"
 	returned_message += "- Nutrition level: <span class='notice'>[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]</span>\n"
+	if(scanned_tray.yieldmod != 1)
+		returned_message += "- Yield modifier on harvest: <span class='notice'>[scanned_tray.yieldmod]x</span>\n"
 	returned_message += "*---------*</span>"
 
 	return returned_message

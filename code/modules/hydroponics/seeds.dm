@@ -227,7 +227,7 @@
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			t_amount++
 			if(t_prod.seed)
-				t_prod.seed.instability = round(instability * 0.5)
+				t_prod.seed.set_instability(round(instability * 0.5))
 			continue
 		else
 			t_prod = new product(output_loc, src)
@@ -320,7 +320,7 @@
 		yield = clamp(yield + adjustamt, 0, max_yield)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-			yield = 1 // Mushrooms always have a minimum yield of 1.
+			yield = FUNGAL_METAB_YIELD_MIN // Mushrooms always have a minimum yield.
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
 		if(C)
 			C.value = yield
@@ -395,7 +395,7 @@
 //Directly setting stats
 
 /**
- * Sets the plant's yield stat to the value of adjustamt. (Max 10)
+ * Sets the plant's yield stat to the value of adjustamt. (Max 10, or 5 with some traits)
  */
 /obj/item/seeds/proc/set_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
@@ -409,7 +409,7 @@
 		yield = clamp(adjustamt, 0, max_yield)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-			yield = 1 // Mushrooms always have a minimum yield of 1.
+			yield = FUNGAL_METAB_YIELD_MIN // Mushrooms always have a minimum yield.
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
 		if(C)
 			C.value = yield
@@ -636,12 +636,12 @@
 	if(new_trait?.can_add(src))
 		genes += new_trait.Copy()
 
-	// Adjust stats based on graft stats.
-	src.lifespan	= round(clamp(max(src.lifespan,		(src.lifespan	+(2/3)*(snip.lifespan	-src.lifespan)		)),0,100))
-	src.endurance	= round(clamp(max(src.endurance,	(src.endurance	+(2/3)*(snip.endurance	-src.endurance)		)),0,100))
-	src.production	= round(clamp(max(src.production,	(src.production	+(2/3)*(snip.production	-src.production)	)),0,100))
-	src.weed_rate	= round(clamp(max(src.weed_rate,	(src.weed_rate	+(2/3)*(snip.weed_rate	-src.weed_rate)		)),0,100))
-	src.weed_chance	= round(clamp(max(src.weed_chance,	(src.weed_chance+(2/3)*(snip.weed_chance-src.weed_chance)	)),0,100))
-	src.yield		= round(clamp(max(src.yield,		(src.yield		+(2/3)*(snip.yield		-src.yield)			)),0,10	))
+	// Adjust stats based on graft stats
+	set_lifespan(round(clamp(max(lifespan,		(lifespan	+ (2/3)*(snip.lifespan - lifespan)		)), 0, MAX_PLANT_LIFESPAN)))
+	set_endurance(round(clamp(max(endurance,	(endurance	+ (2/3)*(snip.endurance - endurance)	)), 0, MAX_PLANT_ENDURANCE)))
+	set_production(round(clamp(max(production,	(production	+ (2/3)*(snip.production - production)	)), 0, MAX_PLANT_PRODUCTION)))
+	set_weed_rate(round(clamp(max(weed_rate,	(weed_rate	+ (2/3)*(snip.weed_rate - weed_rate)	)), 0, MAX_PLANT_WEEDRATE)))
+	set_weed_chance(round(clamp(max(weed_chance,(weed_chance+ (2/3)*(snip.weed_chance - weed_chance))), 0, MAX_PLANT_WEEDCHANCE)))
+	set_yield(round(clamp(max(yield,			(yield		+ (2/3)*(snip.yield - yield)			)), 0, MAX_PLANT_YIELD)))
 
 	return TRUE

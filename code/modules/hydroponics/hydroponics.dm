@@ -118,7 +118,7 @@
 	else if(istype(Proj , /obj/projectile/energy/florarevolution))
 		if(myseed)
 			if(myseed.mutatelist.len > 0)
-				myseed.instability = (myseed.instability/2)
+				myseed.set_instability((myseed.instability/2))
 		mutatespecie()
 	else
 		return ..()
@@ -209,7 +209,7 @@
 				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
 					if(myseed.potency >=30)
 						myseed.adjust_potency(-rand(2,6)) //Pests eat leaves and nibble on fruit, lowering potency.
-						myseed.potency = min((myseed.potency),30,100)
+						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
 				else
 					adjustHealth(2 / rating)
 					adjustPests(-1 / rating)
@@ -218,7 +218,7 @@
 				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
 					if(myseed.potency >=30)
 						myseed.adjust_potency(-rand(1,4))
-						myseed.potency = min((myseed.potency),30,100)
+						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
 
 				else
 					adjustHealth(1 / rating)
@@ -233,7 +233,7 @@
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				if(myseed.yield >=3)
 					myseed.adjust_yield(-rand(1,2)) //Weeds choke out the plant's ability to bear more fruit.
-					myseed.yield = min((myseed.yield),3,10)
+					myseed.set_yield(min((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
 
 //This is the part with pollination
 			pollinate()
@@ -245,7 +245,7 @@
 			if(myseed.instability >= 60)
 				if(prob((myseed.instability)/2) && !self_sustaining && length(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
 					mutatespecie()
-					myseed.instability = myseed.instability/2
+					myseed.set_instability(myseed.instability/2)
 			if(myseed.instability >= 40)
 				if(prob(myseed.instability))
 					hardmutate()
@@ -280,7 +280,7 @@
 		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed && myseed.yield >= 3)
 				myseed.adjust_yield(-rand(1,2)) //Loses even more yield per tick, quickly dropping to 3 minimum.
-				myseed.yield = min((myseed.yield),YIELD_WEED_MINIMUM,YIELD_WEED_MAXIMUM)
+				myseed.set_yield(min((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
 			if(!myseed)
 				weedinvasion()
 			needs_update = 1
@@ -490,9 +490,9 @@
 		if(!Adjacent(T) && range <= 1)
 			continue
 		if(T.myseed && !T.dead)
-			T.myseed.potency =  round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)),0,100))
-			T.myseed.instability =  round(clamp((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability)),0,100))
-			T.myseed.yield =  round(clamp((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield)),0,10))
+			T.myseed.set_potency(round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)), 0, MAX_PLANT_POTENCY)))
+			T.myseed.set_instability(round(clamp((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability)), 0, MAX_PLANT_INSTABILITY)))
+			T.myseed.set_yield(round(clamp((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield)), 0, MAX_PLANT_YIELD)))
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				var/list/datum/plant_gene/reagent/possible_reagents = list()
 				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
@@ -732,7 +732,7 @@
 			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
-			myseed.endurance = (myseed.endurance/2)
+			myseed.set_endurance(myseed.endurance/2)
 			flowergun.cell.use(flowergun.cell.charge)
 			flowergun.update_icon()
 			to_chat(user, "<span class='notice'>[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!</span>")
@@ -845,7 +845,7 @@
  * * adjustamt - Determines how much the plant_health will be adjusted upwards or downwards.
  */
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
-	toxic = clamp(toxic + adjustamt, 0, 100)
+	toxic = clamp(toxic + adjustamt, 0, MAX_TRAY_TOXINS)
 
 /**
  * Adjust Pests.
@@ -853,7 +853,7 @@
  * * adjustamt - Determines how much the pest level will be adjusted upwards or downwards.
  */
 /obj/machinery/hydroponics/proc/adjustPests(adjustamt)
-	pestlevel = clamp(pestlevel + adjustamt, 0, 10)
+	pestlevel = clamp(pestlevel + adjustamt, 0, MAX_TRAY_PESTS)
 
 /**
  * Adjust Weeds.
@@ -861,7 +861,7 @@
  * * adjustamt - Determines how much the weed level will be adjusted upwards or downwards.
  */
 /obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
-	weedlevel = clamp(weedlevel + adjustamt, 0, 10)
+	weedlevel = clamp(weedlevel + adjustamt, 0, MAX_TRAY_WEEDS)
 
 /**
  * Spawn Plant.
