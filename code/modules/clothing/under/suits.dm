@@ -41,6 +41,7 @@
 	icon_state = "blacksuit"
 	inhand_icon_state = "blacksuit"
 	can_adjust = TRUE
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/suit/black/skirt
 	name = "black suitskirt"
