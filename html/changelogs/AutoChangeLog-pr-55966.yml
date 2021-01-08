@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - bugfix: "Stomachs no longer save flavor forever."

@@ -1,0 +1,5 @@
+author: "kopoba"
+delete-after: True
+changes: 
+  - tweak: "Yellow slime core slightly brighter"
+  - bugfix: "Yellow slime core and cakehats light is 360° as it should be"
