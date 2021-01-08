@@ -75,7 +75,7 @@
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	///The stuff that makes you open doors and shit
 	var/list/access = list()
-	///Access that cannot be removed by the ID console
+	///Access that cannot be removed by the ID console. Do not add access levels that are actually visible in the console here if a HoP knowing what kind of ID he's modifying is a concern.
 	var/list/StickyAccess = list()
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
@@ -360,7 +360,7 @@ update_label()
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	StickyAccess = list(ACCESS_SYNDICATE) //Maint access isn't sticky to prevent HoPs executing people for having immutable access to maint.
+	StickyAccess = list(ACCESS_SYNDICATE)
 	///Can anyone forge the ID or just syndicate?
 	var/anyone = FALSE
 	///have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
