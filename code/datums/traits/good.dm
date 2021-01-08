@@ -82,7 +82,7 @@
 /datum/quirk/fan_mime
 	name = "Mime Fan"
 	desc = "You enjoy mime antics and get a mood boost from wearing your mime pin."
-	value = 4
+	value = 2
 	mob_trait = TRAIT_FAN_MIME
 	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"
 	lose_text = "<span class='danger'>The mime doesn't seem so great.</span>"
@@ -148,7 +148,7 @@
 /datum/quirk/musician
 	name = "Musician"
 	desc = "You can tune handheld musical instruments to play melodies that clear certain negative effects and soothe the soul."
-	value = 4
+	value = 2
 	mob_trait = TRAIT_MUSICIAN
 	gain_text = "<span class='notice'>You know everything about musical instruments.</span>"
 	lose_text = "<span class='danger'>You forget how musical instruments work.</span>"

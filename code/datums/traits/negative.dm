@@ -630,7 +630,7 @@
 /datum/quirk/junkie/smoker
 	name = "Smoker"
 	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
-	value = -2
+	value = -4
 	gain_text = "<span class='danger'>You could really go for a smoke right about now.</span>"
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
