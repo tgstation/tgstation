@@ -892,10 +892,6 @@
 	//Cap off values
 	for(var/datum/reagent/R in reagent_list)
 		R.volume = round(R.volume, 0.01)//To prevent runaways.
-	//pH check, handled at the end to reduce calls.
-	if(istype(my_atom, /obj/item/reagent_containers))
-		var/obj/item/reagent_containers/RC = my_atom
-		RC.pH_check()
 	previous_reagent_list = list() //reset it to 0 - because any change will be different now.
 	update_total()
 	handle_reactions() //Should be okay without. Each step checks.

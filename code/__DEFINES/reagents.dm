@@ -45,10 +45,6 @@
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
 
-//container_flags
-#define PH_WEAK 		(1 << 0)
-#define TEMP_WEAK 		(1 << 1)
-
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001 //stops floating point errors causing issues with checking reagent amounts
 #define CHEMICAL_VOLUME_MINIMUM 0.001 //The smallest amount of volume allowed - prevents tiny numbers
