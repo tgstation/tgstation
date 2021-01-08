@@ -53,7 +53,7 @@
 	returned_message += "- Pest level: <span class='notice'>[scanned_tray.pestlevel] / 10</span>\n"
 	returned_message += "- Toxicity level: <span class='notice'>[scanned_tray.toxic] / 100</span>\n"
 	returned_message += "- Water level: <span class='notice'>[scanned_tray.waterlevel] / [scanned_tray.maxwater]</span>\n"
-	returned_message += "- Nutrition level: <span class='notice'>[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]</span></span>\n"
+	returned_message += "- Nutrition level: <span class='notice'>[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]</span>\n"
 	returned_message += "*---------*</span>"
 
 	return returned_message
@@ -124,13 +124,16 @@
 		if(istype(traits, /datum/plant_gene/trait/plant_type))
 			continue
 		all_traits += "[(all_traits == "") ? "" : ", "][traits.get_name()]"
-	text += "- Plant Traits: <span class='notice'>[all_traits]</span>\n"
+	text += "- Plant Traits: <span class='notice'>[all_traits? all_traits : "None."]</span>\n"
+	var/datum/plant_gene/scanned_graft_result = scanned.graft_gene? new scanned.graft_gene : new /datum/plant_gene/trait/repeated_harvest
+	text += "- Grafting this plant would give: <span class='notice'>[scanned_graft_result.get_name()]</span>\n"
+	QDEL_NULL(scanned_graft_result) //graft genes are stored as typepaths so if we want to get their formatted name we need a datum ref - musn't forget to clean up afterwards
 	text += "*---------*"
 	var/unique_text = scanned.get_unique_analyzer_text()
 	if(unique_text)
 		text += "\n"
 		text += unique_text
-		text += "*---------*"
+		text += "\n*---------*"
 	return text
 
 /**

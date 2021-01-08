@@ -86,7 +86,7 @@
 
 /obj/item/seeds/replicapod/get_unique_analyzer_text()
 	if(contains_sample)
-		return "\n It contains a blood sample with blood DNA (UE) \"[sampleDNA]\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
+		return "It contains a blood sample with blood DNA (UE) \"[sampleDNA]\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
 	else
 		return FALSE
 

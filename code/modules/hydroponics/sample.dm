@@ -13,7 +13,7 @@
 		add_overlay(filling)
 
 /obj/item/seeds/sample/get_unique_analyzer_text()
-	return "\nThe DNA of this sample is damaged beyond recovery, it can't support life on its own.\n"
+	return "The DNA of this sample is damaged beyond recovery, it can't support life on its own."
 
 /obj/item/seeds/sample/alienweed
 	name = "alien weed sample"
