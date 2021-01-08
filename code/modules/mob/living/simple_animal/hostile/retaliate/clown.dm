@@ -362,7 +362,13 @@
 
 ///This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency and the peels are retained in the pouch.
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
-	if(istype(eaten_atom, /obj/item/food/pie/cream) || istype(eaten_atom, /obj/item/food/grown/tomato) || istype(eaten_atom, /obj/item/food/meatclown))
+
+	var/static/funny_items = list(/obj/item/food/pie/cream,
+								/obj/item/food/grown/tomato,
+								/obj/item/food/meatclown)
+
+	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
+	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
 
@@ -373,7 +379,6 @@
 		qdel(eaten_atom)
 	else
 		qdel(eaten_atom)
-	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
@@ -396,6 +401,10 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	prank_pouch -= AM
 
 ///This ability will let you fire one random item from your pouch,
 /obj/effect/proc_holder/regurgitate
@@ -438,7 +447,7 @@
 		remove_ranged_ability("<span class='notice'>Your prank pouch is empty,.</span>")
 		return
 
-	var/obj/item/projected_morsel = pick_n_take(pouch_owner.prank_pouch)
+	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)
 	projected_morsel.forceMove(pouch_owner.loc)
 	projected_morsel.throw_at(target, 8, 2, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
