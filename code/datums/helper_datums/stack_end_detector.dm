@@ -23,7 +23,7 @@
 
 /// Returns true if the stack is still going. Calling before the canary has been primed also returns true
 /datum/stack_end_detector/proc/check()
-	return istype(_WF.resolve(), /datum/stack_canary)
+	return !!_WF.resolve()
 
 /// Stack canary. Will go away if the stack it was primed by is ended by byond for return or stack overflow reasons.
 /datum/stack_canary
