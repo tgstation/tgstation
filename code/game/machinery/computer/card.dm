@@ -476,6 +476,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
 
 					inserted_modify_id.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					inserted_modify_id.access += inserted_modify_id.StickyAccess
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -583,6 +584,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if (inserted_modify_id)
 		inserted_modify_id.update_label()
+		inserted_modify_id.access += inserted_modify_id.StickyAccess
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
