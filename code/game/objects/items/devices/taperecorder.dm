@@ -42,20 +42,15 @@
 /obj/item/taperecorder/proc/update_available_icons()
 	icons_available = list()
 
-	if(recording)
-		icons_available += list("Stop Recording" = image(icon = icon_directory, icon_state = "record_stop"))
-	else
-		if(!playing)
-			icons_available += list("Record" = image(icon = icon_directory, icon_state = "record"))
+	if(!playing && !recording)
+		icons_available += list("Record" = image(icon = icon_directory, icon_state = "record"))
+		icons_available += list("Play" = image(icon = icon_directory, icon_state = "play"))
+		if(canprint)
+			icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "print"))
 
-	if(playing)
-		icons_available += list("Pause" = image(icon = icon_directory, icon_state = "pause"))
-	else
-		if(!recording)
-			icons_available += list("Play" = image(icon = icon_directory, icon_state = "play"))
+	if(playing || recording)
+		icons_available += list("Stop" = image(icon = icon_directory, icon_state = "stop"))
 
-	if(canprint && !recording && !playing)
-		icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "print"))
 	if(mytape)
 		icons_available += list("Eject" = image(icon = icon_directory, icon_state = "eject"))
 
@@ -138,7 +133,7 @@
 		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
-		say("Recording started.")
+		say("<font colour=maroon>Recording started.</font>")
 		playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 		recording = 1
 		update_icon()
@@ -153,7 +148,7 @@
 		recording = FALSE
 		update_icon()
 	else
-		say("The tape is full!")
+		say("<font color=maroon>The tape is full!</font>")
 
 
 /obj/item/taperecorder/verb/stop()
@@ -168,12 +163,12 @@
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("Recording stopped.")
+		say("<font color=maroon>Recording stopped.</font>")
 		return
 	else if(playing)
 		playing = FALSE
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("Playback stopped.")
+		say("<font color=maroon>Playback stopped.</font>")
 	update_icon()
 
 
@@ -192,7 +187,7 @@
 
 	playing = 1
 	update_icon()
-	say("Playback started.")
+	say("<font color=maroon>Playback started.</font>")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
@@ -203,16 +198,16 @@
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		say(mytape.storedinfo[i])
+		say("<font color=maroon>[mytape.storedinfo[i]]</font>")
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
-			say("End of recording.")
+			say("<font color=maroon>End of recording.</font>")
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14)
 			sleep(10)
-			say("Skipping [playsleepseconds] seconds of silence")
+			say("<font color=maroon>Skipping [playsleepseconds] seconds of silence.</font>")
 			playsleepseconds = 1
 		i++
 
@@ -234,9 +229,7 @@
 		if(!selection)
 			return
 		switch(selection)
-			if("Pause")
-				stop()
-			if("Stop Recording")  // yes we actually need 2 seperate stops for the same proc- Hopek
+			if("Stop")
 				stop()
 			if("Record")
 				record()
@@ -261,7 +254,7 @@
 	if(recording || playing)
 		return
 
-	say("Transcript printed.")
+	say("<font color=maroon>Transcript printed.</font>")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
@@ -329,7 +322,7 @@
 					return
 				flip()
 				to_chat(user, "<span class='notice'>You turn \the [src] over.</span>")
-				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', get_clamped_volume(), FALSE)
+				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
