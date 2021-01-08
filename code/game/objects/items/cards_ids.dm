@@ -360,7 +360,7 @@ update_label()
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	StickyAccess = list(ACCESS_SYNDICATE) //Maint access isn't sticky to prevent the HoP executing people for having immutable access to maint.
+	StickyAccess = list(ACCESS_SYNDICATE) //Maint access isn't sticky to prevent HoPs executing people for having immutable access to maint.
 	///Can anyone forge the ID or just syndicate?
 	var/anyone = FALSE
 	///have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
@@ -452,6 +452,7 @@ update_label()
 /obj/item/card/id/syndicate/nuke_leader
 	name = "lead agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
+	StickyAccess = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"
@@ -461,6 +462,7 @@ update_label()
 	assignment = "Syndicate Overlord"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE)
+	StickyAccess = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
 	registered_age = null
 
@@ -472,6 +474,7 @@ update_label()
 	assignment = "Syndicate Operative"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	StickyAccess = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
 
 /obj/item/card/id/syndicate_command/captain_id
@@ -482,6 +485,7 @@ update_label()
 	assignment = "Syndicate Ship Captain"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	StickyAccess = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare
