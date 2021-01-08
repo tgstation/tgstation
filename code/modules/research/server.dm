@@ -22,7 +22,6 @@
 	. = ..()
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 	SSresearch.servers |= src
-	current_temp = get_env_temp()
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
@@ -77,10 +76,10 @@
 	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
-	var/turf/L = loc
+	var/turf/open/L = loc
 	if(isturf(L))
 		return L.temperature
-	return 0
+	return 0 //what
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(machine_stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -101,7 +100,7 @@
 					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
 
 				env.merge(removed)
-				air_update_turf()
+				air_update_turf(FALSE, FALSE)
 
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()

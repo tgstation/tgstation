@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Certain ID card access changes are now game logged with an accompanying admin notification and entry in the player's logging panel under \"Show All\""
