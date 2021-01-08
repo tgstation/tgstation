@@ -141,6 +141,10 @@
 	name = "Cybersun Cybernetics Access System"
 	encode_info = AUGMENT_SYNDICATE_LEVEL
 
+/obj/item/organ/cyberimp/cyberlink/admin
+	name = "G.O.D. Cybernetics System"
+	encode_info = AUGMENT_ADMIN_LEVEL
+
 /obj/item/autosurgeon/organ/cyberlink_nt_low
 	starting_organ = /obj/item/organ/cyberimp/cyberlink/nt_low
 	uses = 1
@@ -157,4 +161,7 @@
 	starting_organ = /obj/item/organ/cyberimp/cyberlink/syndicate
 	uses = 1
 
+/obj/item/autosurgeon/organ/cyberlink_admin
+	starting_organ = /obj/item/organ/cyberimp/cyberlink/admin
+	uses = 1
 
