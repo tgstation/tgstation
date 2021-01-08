@@ -30,7 +30,7 @@
 //hydrogen reaction
 #define HYDROGEN_BURN_OXY_FACTOR			100
 #define HYDROGEN_BURN_H2_FACTOR				10
-#define MINIMUM_H2_OXYBURN_ENERGY 			2000000	//This is calculated to help prevent singlecap bombs(Overpowered hydrogen/oxygen single tank bombs)
+#define MINIMUM_H2_OXYBURN_ENERGY 			6e7	//This is calculated to help prevent singlecap bombs(Overpowered hydrogen/oxygen single tank bombs)
 //ammonia reaction
 #define AMMONIA_FORMATION_FACTOR			250
 #define AMMONIA_FORMATION_ENERGY			1000
