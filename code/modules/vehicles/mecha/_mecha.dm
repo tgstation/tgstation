@@ -198,6 +198,10 @@
 	diag_hud_set_mechstat()
 	update_icon()
 
+/obj/mecha/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/M in occupants)
 		var/mob/living/occupant = M
@@ -219,7 +223,7 @@
 	LAZYCLEARLIST(equipment)
 	if(loc)
 		loc.assume_air(cabin_air)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 	else
 		qdel(cabin_air)
 	cabin_air = null
@@ -395,7 +399,7 @@
 				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(DT_PROB_RATE(0.05, delta_time))
 				if(loc)
 					loc.assume_air(leaked_gas)
-					air_update_turf()
+					air_update_turf(FALSE, FALSE)
 				else
 					qdel(leaked_gas)
 
