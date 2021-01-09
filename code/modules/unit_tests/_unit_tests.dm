@@ -64,6 +64,7 @@
 #include "serving_tray.dm"
 #include "siunit.dm"
 #include "spawn_humans.dm"
+#include "spawn_mobs.dm"
 #include "species_whitelists.dm"
 #include "stomach.dm"
 #include "subsystem_init.dm"

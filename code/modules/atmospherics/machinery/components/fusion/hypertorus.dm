@@ -579,7 +579,7 @@
 	if(moderator_internal.total_moles() > 0)
 		remove_moderator = moderator_internal.remove(moderator_moles)
 		loc.assume_air(remove_moderator)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 	qdel(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process_atmos()
@@ -1089,8 +1089,8 @@
 				filtering = FALSE
 		if(filtering && moderator_internal.gases[filter_type])
 			var/datum/gas_mixture/removed = moderator_internal.remove_specific(filter_type, 20)
-			removed.temperature = moderator_internal.temperature
-			linked_output.airs[1].merge(removed)
+			if(removed)
+				linked_output.airs[1].merge(removed)
 
 		var/datum/gas_mixture/internal_remove
 		if(internal_fusion.gases[/datum/gas/helium][MOLES] > 0)

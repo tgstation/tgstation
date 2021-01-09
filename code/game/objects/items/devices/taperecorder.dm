@@ -65,11 +65,13 @@
 			return
 		mytape = I
 		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
 		update_icon()
 
 
 /obj/item/taperecorder/proc/eject(mob/user)
 	if(mytape)
+		playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
 		to_chat(user, "<span class='notice'>You remove [mytape] from [src].</span>")
 		stop()
 		user.put_in_hands(mytape)
@@ -137,6 +139,7 @@
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		to_chat(usr, "<span class='notice'>Recording started.</span>")
+		playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 		recording = 1
 		update_icon()
 		mytape.timestamp += mytape.used_capacity
@@ -164,11 +167,13 @@
 		recording = FALSE
 		mytape.timestamp += mytape.used_capacity
 		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
+		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
 		return
 	else if(playing)
 		playing = FALSE
 		var/turf/T = get_turf(src)
+		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		T.visible_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
 	update_icon()
 
@@ -189,9 +194,10 @@
 	playing = 1
 	update_icon()
 	to_chat(usr, "<span class='notice'>Playing started.</span>")
+	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
-	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
+	for(var/i = 1, used <= max, sleep(10 * playsleepseconds))
 		if(!mytape)
 			break
 		if(playing == FALSE)
@@ -257,12 +263,14 @@
 		return
 
 	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
+	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
 		t1 += "[mytape.storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
+	P.update_icon_state()
 	usr.put_in_hands(P)
 	canprint = FALSE
 	addtimer(VARSET_CALLBACK(src, canprint, TRUE), 30 SECONDS)
@@ -315,7 +323,7 @@
 
 
 /obj/item/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && I.tool_behaviour == TOOL_SCREWDRIVER || istype(I, /obj/item/pen))
+	if(ruined && (I.tool_behaviour == TOOL_SCREWDRIVER || istype(I, /obj/item/pen)))
 		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
 		if(I.use_tool(src, user, 120))
 			to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
