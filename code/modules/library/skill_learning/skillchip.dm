@@ -418,7 +418,7 @@
 
 /obj/item/skillchip/disk_verifier
 	name = "K33P-TH4T-D15K skillchip"
-	auto_trait = TRAIT_DISK_VERIFIER
+	auto_traits = list(TRAIT_DISK_VERIFIER)
 	skill_name = "Nuclear Disk Verification"
 	skill_description = "Nuclear authentication disks have an extremely long serial number for verification. This skillchip stores that number, which allows the user to automatically spot forgeries."
 	skill_icon = "save"
