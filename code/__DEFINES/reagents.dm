@@ -48,6 +48,7 @@
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001 //stops floating point errors causing issues with checking reagent amounts
 #define CHEMICAL_VOLUME_MINIMUM 0.001 //The smallest amount of volume allowed - prevents tiny numbers
+#define CHEMICAL_VOLUME_ROUNDING 0.01 //Round to this, to prevent extreme decimal magic
 #define CHEMICAL_NORMAL_PH 7.000
 
 //reagent bitflags, used for altering how they works
