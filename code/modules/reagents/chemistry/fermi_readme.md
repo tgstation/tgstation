@@ -80,7 +80,7 @@ Reaction rates are determined by the current temperature of the reagents holder.
 ```
 
 The amount added is based off the recipies’ required_temp, optimal_temp, overheat_temp and temp_exponent_factor. See below:
-![image](https://user-images.githubusercontent.com/33956696/103941429-bc054080-5126-11eb-856d-7965c2a9cb1f.png)
+![image](https://user-images.githubusercontent.com/33956696/104081088-5e571e00-5224-11eb-8834-87aa36b3e45f.png)
 
 the y axis is the normalised value of growth, which is then muliplied by the rate_up_lim. You can see that temperatures below the required_temp produce no result (the reaction doesn't start, or if it is reacting, the reaction will stop). Between the required and optimal is a region that is defined by the temp_exponent_factor, so in this case the value is ^2, so we see exponential growth. Between the optimal_temp and the overheat_temp is the optimal phase - where the rate factor is 1. After that it continues to react, but will call overheated() per timestep. Presently the default for overheated() is to reduce the yield of the product (i.e. it's faster but you get less). The rate_up_lim is the maximum rate the reaction can go at optimal temperatures, so in this case a rate factor of 1 i.e. a temperature between 500+ will produce 10u, or a temperature of 400 will roughly produce 4u per step (independant of product ratio produced, if you put 10, it will only create 10 maximum regardless of how much product is defined in the results list). 
 
