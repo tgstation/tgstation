@@ -1,0 +1,8 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new device and security bounty. Use the new In-spect Scanner to scan areas on patrol for all new inspection bounties."
+  - rscadd: "You can now craft new prisoner suits/skirts with cloth."
+  - rscdel: "Removed the bounty for selling riot shotguns."
+  - tweak: "You can now wash uniforms with any kind of restraint to dye a jumpsuit/skirt into a prison jumpsuit/skirt."
+  - soundadd: "Adds a bleeping sound used by the In-Spect Scanner."
