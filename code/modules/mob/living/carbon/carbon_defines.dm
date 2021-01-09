@@ -105,3 +105,5 @@
 
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
+
+	COOLDOWN_DECLARE(bleeding_message_cd)

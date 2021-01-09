@@ -49,6 +49,13 @@
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
+/datum/wound/pierce/get_bleed_rate_of_change()
+	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+		return BLOOD_FLOW_INCREASING
+	if(limb.current_gauze)
+		return BLOOD_FLOW_DECREASING
+	return BLOOD_FLOW_STEADY
+
 /datum/wound/pierce/handle_process()
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 

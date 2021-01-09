@@ -18,7 +18,7 @@
 	var/initial_flow
 	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed of the wound
 	var/minimum_flow
-	/// How fast our blood flow will naturally decrease per tick, not only do larger cuts bleed more faster, they clot slower
+	/// How much our blood_flow will naturally decrease per tick, not only do larger cuts bleed more blood faster, they clot slower (higher number = clot quicker, negative = opening up)
 	var/clot_rate
 
 	/// Once the blood flow drops below minimum_flow, we demote it to this type of wound. If there's none, we're all better
@@ -83,6 +83,14 @@
 		return
 
 	return bleed_amt
+
+/datum/wound/slash/get_bleed_rate_of_change()
+	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+		return BLOOD_FLOW_INCREASING
+	if(limb.current_gauze || clot_rate > 0)
+		return BLOOD_FLOW_DECREASING
+	if(clot_rate < 0)
+		return BLOOD_FLOW_INCREASING
 
 /datum/wound/slash/handle_process()
 	if(victim.stat == DEAD)
