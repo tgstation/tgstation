@@ -2,7 +2,7 @@
 	name = "wayfinding pinpointer synthesizer"
 	icon = 'icons/obj/machines/wayfinding.dmi'
 	icon_state = "pinpointersynth"
-	desc = "A machine given the thankless job of trying to sell wayfinding pinpointers. They point to common locations."
+	desc = "A machine given the thankless job of trying to sell these pinpointers. They point to common locations."
 	density = FALSE
 	layer = HIGH_OBJ_LAYER
 	///List of user-specific cooldowns to prevent pinpointer spam.
@@ -105,9 +105,12 @@
 		qdel(WP)
 		set_expression("veryhappy", 2 SECONDS)
 		var/refund = "some credits."
+		var/whatyoudid = "recycling"
 		if(!money)
-			refund = prob(funnyprob) : "pulse rifle! Just kidding it's a costume." ? "freshly synthesized costume!" //it loves the costumes
-		var/whatyoudid = prob(funnyprob) : "recycling" ? "feeding me"
+			refund = "freshly synthesised costume!"
+			if(prob(funnyprob))
+				refund = "pulse rifle! Just kidding it's a costume."
+				whatyoudid = "feeding me"
 		say("<span class='robot'>Thank you for [whatyoudid], [user.first_name()]! Here is a [refund]</span>")
 
 /obj/machinery/pinpointer_dispenser/proc/set_expression(type, duration)
