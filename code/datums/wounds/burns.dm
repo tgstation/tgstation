@@ -57,7 +57,7 @@
 		flesh_damage = max(0, flesh_damage - 1)
 		flesh_healing = max(0, flesh_healing - bandage_factor)
 
-	if(infestation <= WOUND_INFECTION_MODERATE && limb.burn_damage < 10) // if we have little/no infection, the limb doesn't have much burn damage, and our nutrition is good, heal some flesh
+	if(infestation <= WOUND_INFECTION_MODERATE && limb.burn_dam < 10) // if we have little/no infection, the limb doesn't have much burn damage, and our nutrition is good, heal some flesh
 		switch(victim.nutrition)
 			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
 				flesh_healing += 0.6
