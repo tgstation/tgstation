@@ -16,7 +16,7 @@
 	active_msg = "You prepare to curse a target..."
 	deactive_msg = "You dispel the curse..."
 	/// List of mobs which are allowed to be a target of the spell
-	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
+	var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human))
 
 /obj/effect/proc_holder/spell/pointed/duffelbagcurse/cast(list/targets, mob/user)
 	if(!targets.len)
@@ -34,7 +34,7 @@
 
 	var/obj/item/storage/backpack/duffelbag/cursed/C = new get_turf(target)
 
-	target.visible_message("<span class='danger'>A stinky duffel bag appears on you!</span>", \
+	target.visible_message("<span class='danger'>A stinky duffel bag appears on [target]!</span>", \
 						   "<span class='danger'>You feel something attaching itself to you!</span>")
 	target.flash_act()
 	if(target.dropItemToGround(target.back))

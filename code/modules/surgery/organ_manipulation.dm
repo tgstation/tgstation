@@ -1,6 +1,6 @@
 /datum/surgery/organ_manipulation
 	name = "Organ manipulation"
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_real_bodypart = 1
 	steps = list(

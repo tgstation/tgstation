@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "You are no longer able to teleport rigged power cells across the station to remotely detonate departments using the BRPED. Rigged cells will instead explode inside the BRPED when you attempt to transfer them. That's right, you can now rig BRPEDs to explode when people use them."

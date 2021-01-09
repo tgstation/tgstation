@@ -1,6 +1,0 @@
-author: "sergeirocks100"
-delete-after: True
-changes: 
-  - rscadd: "The vacant offices on Ice Box and Delta are now public access."
-  - rscadd: "The Ice Box vacant office airlock has been turned into a plain airlock to reflect the fact it no longer needs engineering access to open. It has also been renamed to reflect the fact that Vacant Office B no longer exists."
-  - tweak: "The Meta vacant office airlock has a name now when it was unnamed before."

@@ -467,7 +467,7 @@
 	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
 		var/turf/T = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
-			if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
+			if(ishuman(rev_mind.current))
 				return FALSE
 	return TRUE
 
@@ -618,7 +618,9 @@
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
+		if(!ismonkey(M))
+			continue
 		if (M.HasDisease(D))
 			if(M.onCentCom() || M.onSyndieBase())
 				escaped_monkeys++

@@ -9,6 +9,7 @@
 	var/allowed_turf = /turf/open/lava
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
+	key_type = /obj/item/oar
 
 /obj/vehicle/ridden/lavaboat/Initialize()
 	. = ..()
