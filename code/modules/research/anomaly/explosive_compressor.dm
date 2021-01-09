@@ -126,7 +126,6 @@
 			say("Transfer valve resulted in negligible explosive power. Core ejected.")
 	
 	else
-		inserted_bomb.forceMove(drop_location())
 		say("Transfer valve already used. Core and valve ejected")
 		inserted_core.forceMove(drop_location())
 		inserted_bomb.forceMove(drop_location())

@@ -30,9 +30,6 @@
 
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/spawner/newbomb/timer/syndicate/Initialize()
-	. = ..()
-
 /obj/effect/spawner/newbomb/timer
 	assembly_type = /obj/item/assembly/timer
 
