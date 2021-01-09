@@ -37,11 +37,15 @@
 	update_icon()
 
 /obj/item/taperecorder/proc/readout()
-	var/readout = "<span class='notice'><b>INSERT TAPE</b></span>"
+	var/readout = "<span class='notice'><b>NO TAPE INSERTED</b></span>"
 	if(mytape)
-		var/mins = round(mytape.used_capacity / 60)
-		var/secs = mytape.used_capacity - mins * 60
-		readout = "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
+		if(playing)
+			readout = "<span class='notice'><b>PLAYING</b></span>" //this should just tell you the time it's at but I can't figure it out
+		else
+			var/time = mytape.used_capacity
+			var/mins = round(time / 60)
+			var/secs = time - mins * 60
+			readout = "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
 	return readout
 
 /obj/item/taperecorder/examine(mob/user)
@@ -157,8 +161,6 @@
 		recording = TRUE
 		say("<font color='[say_color]'>Recording started.</font>")
 		update_icon()
-		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		while(recording && used < max)
@@ -181,7 +183,6 @@
 	if(recording)
 		say("<font color='[say_color]'>Recording stopped.</font>")
 		recording = FALSE
-		mytape.timestamp += mytape.used_capacity
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 	else if(playing)
 		playing = FALSE
@@ -216,7 +217,7 @@
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		say("[mytape.storedinfo[i]]") //no maroon because it's not the tape recorder's voice, it's just tinny
+		say("[mytape.storedinfo[i]]")
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
@@ -310,14 +311,16 @@
 	pickup_sound = 'sound/items/handling/tape_pickup.ogg'
 	var/max_capacity = 600
 	var/used_capacity = 0
+	///Numbered list of chat messages the recorder has heard with spans and prepended timestamps. Used for playback and transcription.
 	var/list/storedinfo = list()
+	///Numbered list of seconds the messages in the previous list appear at on the tape. Used by playback to get the timing right.
 	var/list/timestamp = list()
 	var/used_capacity_otherside = 0 //Separate my side
 	var/list/storedinfo_otherside = list()
 	var/list/timestamp_otherside = list()
 	var/ruined = FALSE
 	var/list/icons_available = list()
-	var/icon_directory = 'icons/effects/tape_radial.dmi'
+	var/icon_file = 'icons/effects/tape_radial.dmi'
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	ruin()
@@ -327,8 +330,8 @@
 	icons_available = list()
 
 	if(!ruined)
-		icons_available += list("Unwind tape" = image(icon = icon_directory, icon_state = "tape_unwind"))
-	icons_available += list("Flip tape" = image(icon = icon_directory, icon_state = "tape_flip"))
+		icons_available += list("Unwind tape" = image(icon_file, "tape_unwind"))
+	icons_available += list("Flip tape" = image(icon_file, "tape_flip"))
 
 /obj/item/tape/attack_self(mob/user)
 	update_available_icons()
