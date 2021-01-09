@@ -744,7 +744,7 @@
 #include "code\game\world.dm"
 #include "code\game\area\ai_monitored.dm"
 #include "code\game\area\areas.dm"
-#include "code\game\area\Space_Station_13_areas.dm"
+#include "code\game\area\space_station_13_areas.dm"
 #include "code\game\area\areas\away_content.dm"
 #include "code\game\area\areas\centcom.dm"
 #include "code\game\area\areas\holodeck.dm"
