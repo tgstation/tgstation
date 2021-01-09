@@ -91,7 +91,7 @@
 		var/datum/reagent/R = reagent
 		qdel(R)
 	reagent_list = null
-	if(isReacting) //If false, reaction list should be cleaned up 
+	if(isReacting) //If false, reaction list should be cleaned up
 		for(var/reaction in reaction_list)
 			var/datum/equilibrium/E = reaction
 			qdel(E)
@@ -223,13 +223,13 @@
 			//and zero, to prevent removing more than the holder has stored
 			amount = clamp(amount, 0, R.volume)
 			if(!ignore_pH && total_volume)
-				pH = clamp((((pH - R.pH) / total_volume) * amount) + pH, 0, 14) 
+				pH = clamp((((pH - R.pH) / total_volume) * amount) + pH, 0, 14)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
-				handle_reactions() 
+				handle_reactions()
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
-				
+
 			return TRUE
 
 	return FALSE
@@ -467,7 +467,7 @@
 			transfer_log[T.type] = transfer_amount
 			if(is_type_in_list(target_atom, list(/mob/living/carbon, /obj/item/organ/stomach)))
 				R.process_mob_reagent_purity(T.type, transfer_amount * multiplier, T.purity)
-	
+
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
 		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
@@ -493,7 +493,7 @@
 	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
-	amount = min(amount, R.maximum_volume-R.total_volume)
+	amount = min(round(amount, CHEMICAL_VOLUME_ROUNDING), R.maximum_volume-R.total_volume)
 	var/trans_data = null
 	for (var/CR in cached_reagents)
 		var/datum/reagent/current_reagent = CR
@@ -828,20 +828,20 @@
 			//Add it if it doesn't exist in the list
 			if(!exists)
 				isReacting = TRUE//Prevent any on_reaction() procs from infinite looping
-				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list. 
+				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list.
 				if(E.toDelete)//failed startup checks
 					debug_world("[E.reaction.type] failed startup")
 					qdel(E)
 				else
 					reaction_list += E
 					debug_world("Setting up reaction for [selected_reaction.type]")
-	
-	if(reaction_list.len)		
+
+	if(reaction_list.len)
 		isReacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
 		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
 	else
 		isReacting = FALSE
-		
+
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 
@@ -853,7 +853,7 @@
 	//See equilibrium.dm for mechanics
 	var/mix_message
 	//Checover the reaction list
-	for(var/datum/equilibrium/E in reaction_list) 
+	for(var/datum/equilibrium/E in reaction_list)
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//if it's been flagged to delete
 		if(E.toDelete)
@@ -891,7 +891,7 @@
 	isReacting = FALSE
 	//Cap off values
 	for(var/datum/reagent/R in reagent_list)
-		R.volume = round(R.volume, 0.01)//To prevent runaways.
+		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
 	previous_reagent_list = list() //reset it to 0 - because any change will be different now.
 	update_total()
 	handle_reactions() //Should be okay without. Each step checks.
@@ -964,7 +964,7 @@
 		//select the reaction with the most extreme temperature requirements
 		for(var/V in possible_reactions)
 			var/datum/chemical_reaction/competitor = V
-			if(selected_reaction.is_cold_recipe) 
+			if(selected_reaction.is_cold_recipe)
 				if(competitor.required_temp <= selected_reaction.required_temp)
 					selected_reaction = competitor
 			else
