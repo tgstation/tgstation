@@ -31,15 +31,12 @@
 	if(prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,12)]"
 
-/turf/open/floor/plating/asteroid/update_icon_state()
-	icon_state = (postdig_icon_change && dug) ? "[base_icon_state]_dug" : base_icon_state
-
 /// Drops itemstack when dug and changes icon
 /turf/open/floor/plating/asteroid/proc/getDug()
 	dug = TRUE
 	new digResult(src, 5)
 	if(postdig_icon_change)
-		update_icon_state()
+		icon_state = "[base_icon_state]_dug"
 
 /// If the user can dig the turf
 /turf/open/floor/plating/asteroid/proc/can_dig(mob/user)
