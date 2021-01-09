@@ -14,7 +14,7 @@ If 1: normal
 If above inverse_chem_val: normal + impure
 If below: inverse
 
-## How reactions mechanics work
+# How reactions mechanics work
 
 For the effects starting/during/at the end of a reaction see below:
 
@@ -26,23 +26,23 @@ In brief:
 
 Holder.dm now sets up reactions, while equilibrium.dm runs them. Holder itself is processed when there is a list of reactions, but the equilibrium does the calculating. In essence, it holds onto a list of objects to run. Handle_reactions() is used to update the reaction list, with a few checks at the start to prevent any unnecessary updates.
 
-When a reaction is detected:
-If it’s REACTION_INSTANT then it’ll use a method similar to the old mechanics.
-If not then it’ll set up an equilibrium, which checks to see if the reaction is valid on creation.
-If it’s valid, then on_reaction is called.
-If the reaction’s temperature is over the overheat_temp overheated() is called
-When equilibriums detect they’re invalid, they flag for deletion and holder.dm deletes them.
-If there’s a list of reactions, then the holder starts processing.
+#### When a reaction is detected:
+- If it’s REACTION_INSTANT then it’ll use a method similar to the old mechanics.
+- If not then it’ll set up an equilibrium, which checks to see if the reaction is valid on creation.
+- If it’s valid, then on_reaction is called.
+- If the reaction’s temperature is over the overheat_temp overheated() is called
+- When equilibriums detect they’re invalid, they flag for deletion and holder.dm deletes them.
+- If there’s a list of reactions, then the holder starts processing.
 
-When holder is processing:
-Each equilibrium is processed, and it handles it’s own reaction. For each step it handles every reaction.
-At the start, the equilibrium checks it’s conditions and calculates how much it can make in this step.
-It checks the temp, reagents and catalyst.
-If it’s overheated, call overheated()
-If it’s too impure call overly_impure()
-The offset of optimal pH and temp is calculated, and these correlate with purity and yield.
+#### When holder is processing:
+- Each equilibrium is processed, and it handles it’s own reaction. For each step it handles every reaction.
+- At the start, the equilibrium checks it’s conditions and calculates how much it can make in this step.
+- It checks the temp, reagents and catalyst.
+- If it’s overheated, call overheated()
+- If it’s too impure call overly_impure()
+- The offset of optimal pH and temp is calculated, and these correlate with purity and yield.
 
-
+#### How a holder stops reacting:
 When one of the checks fails in the equilibrium object, it is flagged for deletion. The holder will detect this and call reaction_finish() and delete the equilibrium object – ending that reaction.
 
 ## Recipe and processing mechanics
@@ -148,7 +148,7 @@ datum/chemical_reaction
 	var/overheat_temp 			= 50 
 ```
 
-## Reagents
+# Reagents
 The new vars that are introduced are below:
 ```c
 datum/reagent
@@ -166,13 +166,13 @@ datum/reagent
     var/chemical_flags 
 ```
 
-`pH` is the innate pH of the reagent and is used to calculate the pH of a reagents datum on addition/removal. This does not change and is a reference value. The reagents datum pH changes.
-`purity` is the INTERNAL value for splitting. This is set to 1 after splitting so that it doesn't infinite split
-`creation_purity` is the purity of the reagent on creation. This won't change. If you want to write code that checks the purity in any of the methods, use this.
-`impure_chem` is the datum type that is created provided that it's `creation_purity` is above the `inverse_chem_val`. When the reagent is consumed it will split into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_IMPURE flag it will split at the end of the reaction in the `datum/reagents` holder
-`inverse_chem_val` if a reagent's purity is below this value it will 100% convert into `inverse_chem`. If above it will split into `impure_chem`. See the note on purity effects above
-`inverse_chem` is the datum type that is created provided that it's `creation_purity` is below the `inverse_chem_val`. When the reagent is consumed it will 100% convert into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will 100% convert at the end of the reaction in the `datum/reagents` holder
-`failed_chem` is the chem that the product is 100% converted into if the purity is below the associated `datum/chemical_recipies`' `PurityMin` AT THE END OF A REACTION. 
+- `pH` is the innate pH of the reagent and is used to calculate the pH of a reagents datum on addition/removal. This does not change and is a reference value. The reagents datum pH changes.
+- `purity` is the INTERNAL value for splitting. This is set to 1 after splitting so that it doesn't infinite split
+- `creation_purity` is the purity of the reagent on creation. This won't change. If you want to write code that checks the purity in any of the methods, use this.
+- `impure_chem` is the datum type that is created provided that it's `creation_purity` is above the `inverse_chem_val`. When the reagent is consumed it will split into this OR if the associated `datum/chemical_recipe` has a REACTION_CLEAR_IMPURE flag it will split at the end of the reaction in the `datum/reagents` holder
+- `inverse_chem_val` if a reagent's purity is below this value it will 100% convert into `inverse_chem`. If above it will split into `impure_chem`. See the note on purity effects above
+- `inverse_chem` is the datum type that is created provided that it's `creation_purity` is below the `inverse_chem_val`. When the reagent is consumed it will 100% convert into this OR if the associated  `datum/chemical_recipe` has a REACTION_CLEAR_INVERSE flag it will 100% convert at the end of the reaction in the `datum/reagents` holder
+- `failed_chem` is the chem that the product is 100% converted into if the purity is below the associated `datum/chemical_recipies`' `PurityMin` AT THE END OF A REACTION. 
 
 When writing any reagent code ALWAYS use creation_purity. Purity is kept for internal mechanics only and won’t reflect the purity on creation.
 
@@ -192,7 +192,7 @@ datum/reagent
 
 While you might think reagent_flags is a more sensible name - it is already used for beakers. Hopefully this doesn't trip anyone up.
 
-## Relivant vars from the holder.dm / reagents datum
+# Relivant vars from the holder.dm / reagents datum
 
 There are a few variables that are useful to know about 
 ```c
@@ -206,7 +206,7 @@ datum/reagents
 	///Hard check to see if the reagents is presently reacting
 	var/isReacting = FALSE
 ```
-
-pH is a result of the sum of all reagents, as well as any changes from buffers and reactions.
-isReacting is a bool that can be used outside to ensure that you don't touch a reagents that is reacting.
-previous_reagent_list is a list of the previous reagents (just the typepaths, not the objects) that was present on the last handle_reactions() method. This is to prevent pointless method calls.
+- chem_temp is the temperature used in the `datum/chemical_recipe`
+- pH is a result of the sum of all reagents, as well as any changes from buffers and reactions. This is the pH used in `datum/chemical_recipe`.
+- isReacting is a bool that can be used outside to ensure that you don't touch a reagents that is reacting.
+- previous_reagent_list is a list of the previous reagents (just the typepaths, not the objects) that was present on the last handle_reactions() method. This is to prevent pointless method calls.
