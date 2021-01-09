@@ -7,7 +7,7 @@
 	custom_price = PAYCHECK_MEDIUM * 3
 	w_class = WEIGHT_CLASS_SMALL
 
-	/// Traits automatically granted by this chip, optional
+	/// Traits automatically granted by this chip, optional. Lazylist.
 	var/list/auto_traits
 	/// Skill name shown on UI
 	var/skill_name
@@ -142,9 +142,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	if(auto_traits)
-		for(var/trait in auto_traits)
-			ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -177,9 +176,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	if(auto_traits)
-		for(var/trait in auto_traits)
-			REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
