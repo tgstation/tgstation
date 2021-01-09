@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "The nanite program \"Subdermal ID\" will now also scan ID cards
+that the host is pulling when triggered."

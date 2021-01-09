@@ -1,0 +1,7 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Hydroponics trays on examine now print messages about weeds and
+pests in the right order."
+  - bugfix: "Examining a hydroponics tray by clicking it when adjacent as a
+human now gives the same message as when examining."

@@ -14,6 +14,7 @@
 	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
+	var/list/processor_contents
 
 /obj/machinery/processor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -40,6 +41,7 @@
 		themob.gib(TRUE,TRUE,TRUE)
 	else
 		qdel(what)
+	LAZYREMOVE(processor_contents, what)
 
 /obj/machinery/processor/proc/select_recipe(X)
 	for (var/type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
@@ -84,6 +86,7 @@
 		user.visible_message("<span class='notice'>[user] put [O] into [src].</span>", \
 			"<span class='notice'>You put [O] into [src].</span>")
 		user.transferItemToLoc(O, src, TRUE)
+		LAZYADD(processor_contents, O)
 		return 1
 	else
 		if(user.a_intent != INTENT_HARM)
@@ -103,9 +106,10 @@
 		var/mob/living/pushed_mob = user.pulling
 		visible_message("<span class='warning'>[user] stuffs [pushed_mob] into [src]!</span>")
 		pushed_mob.forceMove(src)
+		LAZYADD(processor_contents, pushed_mob)
 		user.stop_pulling()
 		return
-	if(contents.len == 0)
+	if(!LAZYLEN(processor_contents))
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return TRUE
 	processing = TRUE
@@ -115,7 +119,7 @@
 	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 	use_power(500)
 	var/total_time = 0
-	for(var/O in src.contents)
+	for(var/O in processor_contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
@@ -124,7 +128,7 @@
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = (total_time / rating_speed)*5) //start shaking
 	sleep(total_time / rating_speed)
-	for(var/atom/movable/O in src.contents)
+	for(var/atom/movable/O in processor_contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How do you put it in?")
@@ -146,6 +150,11 @@
 			return
 	dump_inventory_contents()
 	add_fingerprint(usr)
+
+/obj/machinery/processor/dump_inventory_contents()
+	. = ..()
+	if(!LAZYLEN(processor_contents))
+		processor_contents.Cut()
 
 /obj/machinery/processor/container_resist_act(mob/living/user)
 	user.forceMove(drop_location())
@@ -188,6 +197,7 @@
 		return
 
 	visible_message("<span class='notice'>[picked_slime] is sucked into [src].</span>")
+	LAZYADD(processor_contents, picked_slime)
 	picked_slime.forceMove(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
@@ -195,6 +205,7 @@
 	if (istype(S))
 		var/C = S.cores
 		if(S.stat != DEAD)
+			LAZYREMOVE(processor_contents, S)
 			S.forceMove(drop_location())
 			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
 			return
