@@ -42616,9 +42616,9 @@
 /obj/machinery/cell_charger,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Research Director's Desk";
+	department = "Research Lab";
 	departmentType = 5;
-	name = "Research Director's RC";
+	name = "Research RC";
 	pixel_x = 32;
 	receive_ore_updates = 1
 	},
@@ -51053,9 +51053,11 @@
 	},
 /obj/structure/cable,
 /obj/machinery/requests_console{
-	department = "Kitchen";
-	departmentType = 2;
-	pixel_x = -30
+	department = "Robotics";
+	departmentType = 5;
+	name = "Robotics RC";
+	pixel_x = -30;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -51146,8 +51148,9 @@
 	dir = 4
 	},
 /obj/machinery/requests_console{
-	department = "Kitchen";
-	departmentType = 2;
+	department = "Toxins Test Range";
+	departmentType = 5;
+	name = "Toxins Test RC";
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/dark,
@@ -53091,9 +53094,9 @@
 	},
 /obj/machinery/requests_console{
 	department = "Toxins Lab";
-	name = "Toxins RC";
-	pixel_x = -32;
-	receive_ore_updates = 1
+	departmentType = 5;
+	name = "Toxins RC;
+	pixel_x = -32
 	},
 /obj/effect/turf_decal/siding{
 	dir = 10
@@ -54313,8 +54316,9 @@
 	dir = 10
 	},
 /obj/machinery/requests_console{
-	department = "Kitchen";
-	departmentType = 2;
+	department = "Genetics";
+	departmentType = 5;
+	name = "Genetics RC";
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel/dark,
@@ -59111,9 +59115,9 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
+	department = "Xenobiology";
+	departmentType = 5;
+	name = "Xenobiology RC";
 	pixel_x = 30;
 	receive_ore_updates = 1
 	},
@@ -65954,6 +65958,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"fRe" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/button/door{
+	id = "cytologylockdown";
+	name = "Cytology Lockdown";
+	pixel_x = -24;
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "fRf" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -75310,9 +75327,11 @@
 	dir = 8
 	},
 /obj/machinery/requests_console{
-	department = "Security";
+	department = "Xenobiology";
 	departmentType = 5;
-	pixel_y = -30
+	name = "Xenobiology RC";
+	pixel_y = -30;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -76460,19 +76479,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/tcom)
-"rLO" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/button/door{
-	id = "cytologylockdown";
-	name = "Cytology Lockdown";
-	pixel_x = -24;
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "rMb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
@@ -125228,7 +125234,7 @@ daP
 dbZ
 ddd
 dDA
-rLO
+fRe
 diT
 oXi
 tcg
