@@ -41,7 +41,7 @@
 
 	///Will objects this area be needing power?
 	var/requires_power = TRUE
-	/// This gets overridden to 1 for space in area/Initialize().
+	/// This gets overridden to 1 for space in area/.
 	var/always_unpowered = FALSE
 
 	var/power_equip = TRUE
@@ -51,8 +51,9 @@
 	var/has_gravity = FALSE
 
 	var/parallax_movedir = 0
-
-	var/list/ambientsounds = GENERIC
+	
+	var/ambience_index = AMBIENCE_GENERIC
+	var/list/ambientsounds
 	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 	var/list/firedoors
@@ -134,7 +135,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Initialize(mapload)
 	icon_state = ""
-
+	if(!ambientsounds)
+		ambientsounds = GLOB.ambience_assoc[ambience_index]
 	if(requires_power)
 		luminosity = 0
 	else
