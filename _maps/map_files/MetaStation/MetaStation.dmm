@@ -76846,7 +76846,7 @@
 	pixel_y = 9
 	},
 /obj/item/storage/fancy/donut_box{
-	pixel_x = 3;
+	pixel_x = 4;
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/tile/red{
