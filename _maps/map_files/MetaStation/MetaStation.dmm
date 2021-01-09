@@ -53095,7 +53095,7 @@
 /obj/machinery/requests_console{
 	department = "Toxins Lab";
 	departmentType = 5;
-	name = "Toxins RC;
+	name = "Toxins RC";
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/siding{
