@@ -870,7 +870,7 @@
 	LAZYSET(occupants, pilot_mob, NONE)
 	pilot_mob.mecha = src
 	pilot_mob.forceMove(src)
-		update_appearance()
+	update_appearance()
 
 ///Handles an actual AI (simple_animal mecha pilot) exiting the mech
 /obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)

@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	set_light(light_range, light_power, GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/update_icon_state()
-	icon_state = "[initial(icon_state)][lowertext(picked_color)]-on"
+	icon_state = "[icon_prefix][lowertext(picked_color)]-on"
 	return ..()
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user)
