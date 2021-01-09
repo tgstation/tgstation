@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	novariants = TRUE
 	cost = 1
 	source = /datum/robot_energy_storage/beacon
-	var/picked_color = "random"
+	var/picked_color = "Random"
 
 /obj/item/stack/marker_beacon/ten //miners start with 10 of these
 	amount = 10
@@ -80,12 +80,14 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	anchored = TRUE
 	light_range = 2
 	light_power = 3
+	var/icon_prefix = "marker"
 	var/remove_speed = 15
 	var/picked_color
 
 /obj/structure/marker_beacon/Initialize(mapload, set_color)
 	. = ..()
-	picked_color = set_color
+	if(set_color)
+		picked_color = set_color
 	update_appearance()
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
@@ -152,3 +154,11 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	if(input_color)
 		picked_color = input_color
 		update_appearance()
+
+
+/* Preset marker beacon types, for mapping */
+
+/obj/structure/marker_beacon/burgundy
+	picked_color = "Burgundy"
+	// set icon_state to make it clear for mappers
+	icon_state = "markerburgundy-on"

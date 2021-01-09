@@ -1,0 +1,6 @@
+author: "prodirus"
+delete-after: True
+changes: 
+  - bugfix: "Tape recorder cassette can no longer be rewound with a pen if it is not unwound."
+  - bugfix: "Tape recorder transcript should look like it has text written on it!"
+  - bugfix: "Tape recorder can now play full tapes."
