@@ -173,10 +173,7 @@
 		. = TRUE
 		apply_focus_overlay()
 		//Only items can be thrown 10 tiles everything else only 1 tile
-		if (isitem(focus))
-			focus.throw_at(target, 10, 1,user)
-		else
-			focus.throw_at(target, 1, 1,user)
+		focus.throw_at(target, focus.tk_throw_range, 1,user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_icon()
 
