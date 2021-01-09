@@ -451,7 +451,7 @@
 
 	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
 		randomize_human(H)
-		H.fully_replace_character_name(null, anonymous_name(H))
+		H.fully_replace_character_name(null, SSticker.anonymousnames.anonymous_name(H))
 
 	H.dna.update_dna_identity()
 	if(mind)

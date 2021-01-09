@@ -4,10 +4,19 @@ Darko
 Gray
 Honko
 Inverse
+Runespear
+Shado
+Shadowdancer
+Smith
+Spellstone
+Stormcaller
+Unseen
+Weatherwax
+Windshearer
+Worldshaker
+Yagg
 le Fay
 of Void
-Shado
-Smith
 the All Knowing
 the Amazing
 the Bandit Killer
@@ -18,6 +27,7 @@ the Conquerer
 the Deathless
 the Destroyer
 the Dragon Spooker
+the Dragoncaller
 the Emperor
 the Gray
 the Great
@@ -31,10 +41,59 @@ the Sorcelator
 the Spiral King
 the Unending
 the Unstoppable
+the Waxmancer
 the Weeping
 the White
 the Wise
 the Wizzard
-Unseen
-Weatherwax
-Yagg
+Infinitum
+Nauseam
+Borealis
+Fide
+Volente
+Sequitur
+Rasa
+the Annoying
+the Unseen
+the Obscure
+the Annoyed
+the Empty
+Voidfall
+Starfall
+Azurepelt
+Doomancer
+the Necromancer
+Midnight
+Who-was-blood
+Who-was-stone
+Who-was-light
+the Dappled
+Mountain-Mother
+the Moldywarp
+Evilton
+Among-many
+Deathbringer
+Lifereaper
+Shorekeeper
+Namekeeper
+Truenamer
+Evergreen
+the Drunk
+the Incoherent
+the Excoherent
+Starlightqueen
+Starlightking
+Meatsmith
+the Manual
+the Herb
+the Wife
+Voidstabber
+the Jaunter
+the Ethereal
+the Wandsmith
+the Alchemist
+Snape
+Mother-of-dragons
+the Impaler
+the Colourless
+Suneater
