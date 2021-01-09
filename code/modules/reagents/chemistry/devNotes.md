@@ -18,5 +18,5 @@ if you're reading this in the PR. I forgot to remove this or I'm in the middle o
 
 - atomise universal indicator for ghetto chem
 - atomise do like an otter, add acid to water (though will plumbing make this too much?)
-- atomise beaker changes out that I accidentally pressed push on
+- atomise beaker changes out - done
 - are all the pHes in? Maybe add more? (maybe ask the person reading this if they'd be willing to help suggest pHes for reagents?)

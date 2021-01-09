@@ -32,17 +32,17 @@
 	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
 	var/required_temp = 100
 	//FermiChem! - See fermi_readme.md
-	var/OptimalTempMax			= 500			// Upper end for above
-	var/overheatTemp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
-	var/OptimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/OptimalpHMax 			= 9	        	// Higest value for above
-	var/ReactpHLim 				= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
-	var/CurveSharpT 			= 2         	// How sharp the temperature exponential curve is (to the power of value)
-	var/CurveSharppH 			= 1         	// How sharp the pH exponential curve is (to the power of value)
-	var/ThermicConstant 		= 1         	// Temperature change per 1u produced
-	var/HIonRelease 			= 0.01       	// pH change per 1u reaction
-	var/RateUpLim 				= 20			// Optimal/max rate possible if all conditions are perfect
-	var/PurityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	var/optimal_temp			= 500			// Upper end for above
+	var/overheat_temp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
+	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/optimal_pH_max 			= 9	        	// Higest value for above
+	var/determin_pH_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
+	var/temp_exponent_factor 	= 2         	// How sharp the temperature exponential curve is (to the power of value)
+	var/pH_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
+	var/thermic_constant		= 1         	// Temperature change per 1u produced
+	var/H_ion_release 			= 0.01       	// pH change per 1u reaction
+	var/rate_up_lim 			= 20			// Optimal/max rate possible if all conditions are perfect
+	var/purity_min 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 
 /datum/chemical_reaction/New()
@@ -111,17 +111,16 @@
 		var/datum/reagent/R = holder.has_reagent(id)
 		if(!R)
 			continue
-		if(R.purity < PurityMin)
+		if(R.purity < purity_min)
 			var/cached_volume = R.volume
 			holder.remove_reagent(R.type, cached_volume, FALSE)
 			holder.add_reagent(R.failed_chem, cached_volume, FALSE, added_purity = 1)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[type] failed reactions")
+			continue
 
-	//REACTION_CLEAR handler
-	if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
-		for(var/id in results)
-			var/datum/reagent/R = holder.has_reagent(id)
-			if(!R || R.purity == 1)
+		//REACTION_CLEAR handler
+		if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
+			if(R.purity == 1) //Failures can delete R
 				continue
 
 			var/cached_volume = R.volume
@@ -159,7 +158,7 @@
 	return
 
 /**
- * Occurs when a reation is too impure (i.e. it's below PurityMin)
+ * Occurs when a reation is too impure (i.e. it's below purity_min)
  * Will be called every tick in the reaction that it is too impure
  * If you want this to be a once only proc (i.e. the reaction is stopped after) set reaction.toDelete = TRUE
  * The above is useful if you're writing an explosion

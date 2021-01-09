@@ -30,7 +30,7 @@ Instant reactions AREN'T handled here. See holder.dm
 
 //Check to make sure our input vars are sensible - truncated version of check_conditions (as the setup in holder.dm checks for that already)
 /datum/equilibrium/proc/check_inital_conditions()
-	if(holder.chem_temp > reaction.overheatTemp)//This is here so grenades can be made
+	if(holder.chem_temp > reaction.overheat_temp)//This is here so grenades can be made
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheats")
 		reaction.overheated(holder, src)//Though the proc will likely have to be created to be an explosion.
 
@@ -43,7 +43,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			debug_world("[reaction.type] Failed initial cold temp checks")
 			return FALSE //Not cold enough
 			
-	if(! ((holder.pH >= (reaction.OptimalpHMin - reaction.ReactpHLim)) && (holder.pH <= (reaction.OptimalpHMax + reaction.ReactpHLim)) ))//To prevent pointless reactions
+	if(! ((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range)) ))//To prevent pointless reactions
 		debug_world("[reaction.type] Failed initial pH checks")
 		return FALSE
 	return TRUE
@@ -55,7 +55,7 @@ Instant reactions AREN'T handled here. See holder.dm
 		debug_world("fermiEnd due to the atom/reagents no longer existing.")
 		return FALSE
 	//Are we overheated?
-	if(holder.chem_temp > reaction.overheatTemp)
+	if(holder.chem_temp > reaction.overheat_temp)
 		debug_world("[reaction.type] Overheated")
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
 		reaction.overheated(holder, src)
@@ -66,7 +66,7 @@ Instant reactions AREN'T handled here. See holder.dm
 
 	//If the product/reactants are too impure
 	for(var/datum/reagent/R in holder.reagent_list)
-		if (R.purity < reaction.PurityMin)//If purity is below the min, call the proc
+		if (R.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
 			reaction.overly_impure(holder, src)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
@@ -132,22 +132,22 @@ Instant reactions AREN'T handled here. See holder.dm
 	//Begin checks
 	//Calculate DeltapH (Deviation of pH from optimal)
 	//Within mid range
-	if (cached_pH >= reaction.OptimalpHMin  && cached_pH <= reaction.OptimalpHMax)
+	if (cached_pH >= reaction.optimal_pH_min  && cached_pH <= reaction.optimal_pH_max)
 		deltapH = 1
 	//Lower range
-	else if (cached_pH < reaction.OptimalpHMin)
-		if (cached_pH < (reaction.OptimalpHMin - reaction.ReactpHLim))
+	else if (cached_pH < reaction.optimal_pH_min)
+		if (cached_pH < (reaction.optimal_pH_min - reaction.determin_pH_range))
 			deltapH = 0
 			//If outside pH range, 0
 		else
-			deltapH = (((cached_pH - (reaction.OptimalpHMin - reaction.ReactpHLim))**reaction.CurveSharppH)/((reaction.ReactpHLim**reaction.CurveSharppH))) //main pH calculation
+			deltapH = (((cached_pH - (reaction.optimal_pH_min - reaction.determin_pH_range))**reaction.pH_exponent_factor)/((reaction.determin_pH_range**reaction.pH_exponent_factor))) //main pH calculation
 	//Upper range
-	else if (cached_pH > reaction.OptimalpHMax)
-		if (cached_pH > (reaction.OptimalpHMax + reaction.ReactpHLim))
+	else if (cached_pH > reaction.optimal_pH_max)
+		if (cached_pH > (reaction.optimal_pH_max + reaction.determin_pH_range))
 			deltapH = 0
 			//If outside pH range, 0
 		else
-			deltapH = (((- cached_pH + (reaction.OptimalpHMax + reaction.ReactpHLim))**reaction.CurveSharppH)/(reaction.ReactpHLim**reaction.CurveSharppH))//Reverse - to + to prevent math operation failures.
+			deltapH = (((- cached_pH + (reaction.optimal_pH_max + reaction.determin_pH_range))**reaction.pH_exponent_factor)/(reaction.determin_pH_range**reaction.pH_exponent_factor))//Reverse - to + to prevent math operation failures.
 	
 	//This should never proc, but it's a catch incase someone puts in incorrect values
 	else
@@ -155,9 +155,9 @@ Instant reactions AREN'T handled here. See holder.dm
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
-		if (cached_temp < reaction.OptimalTempMax && cached_temp >= reaction.required_temp)
-			deltaT = (((cached_temp - reaction.required_temp)**reaction.CurveSharpT)/((reaction.OptimalTempMax - reaction.required_temp)**reaction.CurveSharpT))
-		else if (cached_temp >= reaction.OptimalTempMax)
+		if (cached_temp < reaction.optimal_temp && cached_temp >= reaction.required_temp)
+			deltaT = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
+		else if (cached_temp >= reaction.optimal_temp)
 			deltaT = 1
 		else
 			debug_world("[reaction.type] Failed temp checks")
@@ -165,9 +165,9 @@ Instant reactions AREN'T handled here. See holder.dm
 			toDelete = TRUE
 			return
 	else
-		if (cached_temp > reaction.OptimalTempMax && cached_temp <= reaction.required_temp)
-			deltaT = (((cached_temp - reaction.required_temp)**reaction.CurveSharpT)/((reaction.OptimalTempMax - reaction.required_temp)**reaction.CurveSharpT))
-		else if (cached_temp <= reaction.OptimalTempMax)
+		if (cached_temp > reaction.optimal_temp && cached_temp <= reaction.required_temp)
+			deltaT = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
+		else if (cached_temp <= reaction.optimal_temp)
 			deltaT = 1
 		else
 			debug_world("[reaction.type] Failed cold temp checks")
@@ -181,7 +181,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	purity *= reactant_purity(reaction)
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/deltaChemFactor = (reaction.RateUpLim*deltaT)*delta_time//add/remove factor
+	var/deltaChemFactor = (reaction.rate_up_lim*deltaT)*delta_time//add/remove factor
 	var/totalStepAdded = 0
 	//keep limited
 	if(deltaChemFactor > targetVol)
@@ -204,8 +204,8 @@ Instant reactions AREN'T handled here. See holder.dm
 
 		
 	//Apply pH changes and thermal output of reaction to beaker
-	holder.chem_temp = round(cached_temp + (reaction.ThermicConstant * totalStepAdded))
-	holder.pH += (reaction.HIonRelease * totalStepAdded)
+	holder.chem_temp = round(cached_temp + (reaction.thermic_constant* totalStepAdded))
+	holder.pH += (reaction.H_ion_release * totalStepAdded)
 	//Call any special reaction steps
 	reaction.reaction_step(src, totalStepAdded, purity)//proc that calls when step is done
 

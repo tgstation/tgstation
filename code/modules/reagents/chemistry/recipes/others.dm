@@ -627,30 +627,30 @@
 	required_reagents = list(/datum/reagent/lye = 1, /datum/reagent/consumable/ethanol = 2, /datum/reagent/water = 2)
 	//FermiChem vars:
 	required_temp 	= 250
-	OptimalTempMax 	= 500
-	overheatTemp  	= 9999 
-	OptimalpHMin 	= 0
-	OptimalpHMax 	= 14
-	ReactpHLim 		= 0
-	CurveSharpT 	= 4
-	CurveSharppH 	= 0
-	ThermicConstant = 0
-	HIonRelease 	= 0.01
-	RateUpLim 		= 15
-	PurityMin		= 0
+	optimal_temp 	= 500
+	overheat_temp  	= 9999 
+	optimal_pH_min 	= 0
+	optimal_pH_max 	= 14
+	determin_pH_range 		= 0
+	temp_exponent_factor 	= 4
+	pH_exponent_factor 	= 0
+	thermic_constant= 0
+	H_ion_release 	= 0.01
+	rate_up_lim 		= 15
+	purity_min		= 0
 
 /datum/chemical_reaction/acidic_buffer
 	results = list(/datum/reagent/acidic_buffer = 10)
 	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/consumable/ethanol = 3, /datum/reagent/oxygen = 3, /datum/reagent/water = 3)
 	required_temp 	= 250
-	OptimalTempMax 	= 500
-	overheatTemp  	= 9999 
-	OptimalpHMin 	= 0
-	OptimalpHMax 	= 14
-	ReactpHLim 		= 0
-	CurveSharpT 	= 4
-	CurveSharppH 	= 0
-	ThermicConstant = 0
-	HIonRelease 	= -0.01
-	RateUpLim 		= 20
-	PurityMin		= 0
+	optimal_temp 	= 500
+	overheat_temp  	= 9999 
+	optimal_pH_min 	= 0
+	optimal_pH_max 	= 14
+	determin_pH_range 		= 0
+	temp_exponent_factor 	= 4
+	pH_exponent_factor 	= 0
+	thermic_constant= 0
+	H_ion_release 	= -0.01
+	rate_up_lim 		= 20
+	purity_min		= 0

@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/impure_chem		 = /datum/reagent/impure			// What chemical path is made when metabolised as a function of purity
 	var/inverse_chem_val = 0.2								// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem	 = /datum/reagent/impure/toxic		// What chem is metabolised when purity is below inverse_chem_val
-	var/failed_chem		 = /datum/reagent/consumable/failed_reaction //what chem is made at the end of a reaction IF the purity is below the recipies PurityMin
+	var/failed_chem		 = /datum/reagent/consumable/failed_reaction //what chem is made at the end of a reaction IF the purity is below the recipies purity_min
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
