@@ -87,7 +87,7 @@ export const ListInput = (props, context) => {
               }}
               buttons={(
                 <Button
-                  icon="cog"
+                  icon="search"
                   color="transparent"
                   selected={showSearchBar}
                   tooltip="Search Bar"
