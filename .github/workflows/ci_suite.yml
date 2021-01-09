@@ -20,7 +20,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
       - name: Install Tools
         run: |
-          pip3 install setuptools
+          pip3 install setuptools wheel
           bash tools/ci/install_build_tools.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
           pip3 install -r tools/requirements.txt
