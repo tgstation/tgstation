@@ -12,19 +12,19 @@
 	log_admin("[key_name(admin)] has clown op'ed [key_name(new_owner)].")
 
 /datum/antagonist/nukeop/clownop/apply_innate_effects(mob/living/mob_override)
-	..()
+	. = ..()
 	var/mob/living/L = owner.current || mob_override
 	ADD_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
 
 /datum/antagonist/nukeop/clownop/remove_innate_effects(mob/living/mob_override)
-	..()
+	. = ..()
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
 
 /datum/antagonist/nukeop/clownop/equip_op()
 	. = ..()
-	var/mob/living/L = owner.current
-	var/obj/item/organ/liver/liver = L.getorganslot(ORGAN_SLOT_LIVER)
+	var/mob/living/current_mob = owner.current
+	var/obj/item/organ/liver/liver = current_mob.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, CLOWNOP_TRAIT)
 
@@ -43,12 +43,12 @@
 	challengeitem = /obj/item/nuclear_challenge/clownops
 
 /datum/antagonist/nukeop/leader/clownop/apply_innate_effects(mob/living/mob_override)
-	..()
+	. = ..()
 	var/mob/living/L = owner.current || mob_override
 	ADD_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
 
 /datum/antagonist/nukeop/leader/clownop/remove_innate_effects(mob/living/mob_override)
-	..()
+	. = ..()
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L, TRAIT_NAIVE, CLOWNOP_TRAIT)
 

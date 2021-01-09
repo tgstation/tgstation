@@ -61,8 +61,7 @@
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 
-	/// Traits added to the liver of the mob assigned this job
-	/// (used for the classic "cops heal from donuts" reaction, among others)
+	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, among others)
 	var/list/liver_traits = null
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
@@ -93,7 +92,7 @@
 
 	var/obj/item/organ/liver/liver = H.getorganslot(ORGAN_SLOT_LIVER)
 
-	if(liver && liver_traits)
+	if(liver)
 		for(var/t in liver_traits)
 			ADD_TRAIT(liver, t, JOB_TRAIT)
 
