@@ -3,11 +3,11 @@
  *
  * This proc should be used to create alerts that the caller will wait for a response from.
  * Arguments:
- * * user - The user to show the alert to.
- * * message - The content of the alert, shown in the body of the TGUI window.
- * * title - The title of the list input, shown on the top of the TGUI window.
+ * * user - The user to show the input box to.
+ * * message - The content of the input box, shown in the body of the TGUI window.
+ * * title - The title of the input box, shown on the top of the TGUI window.
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * timeout - The timeout of the alert, after which the list input will close and qdel itself. Set to zero for no timeout.
+ * * timeout - The timeout of the input box, after which the input box will close and qdel itself. Set to zero for no timeout.
  */
 /proc/tgui_input_list(mob/user, message, title, list/buttons, timeout = 0)
 	if (!user)
@@ -30,12 +30,12 @@
  *
  * This proc should be used to create inputs that invoke a callback with the user's chosen option.
  * Arguments:
- * * user - The user to show the alert to.
- * * message - The content of the alert, shown in the body of the TGUI window.
- * * title - The of the alert modal, shown on the top of the TGUI window.
+ * * user - The user to show the input box to.
+ * * message - The content of the input box, shown in the body of the TGUI window.
+ * * title - The title of the input box, shown on the top of the TGUI window.
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * callback - The callback to be invoked when a choice is made.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  */
 /proc/tgui_input_list_async(mob/user, message, title, list/buttons, datum/callback/callback, timeout = 60 SECONDS)
 	if (!user)
@@ -64,11 +64,11 @@
 	var/list/buttons
 	/// The button that the user has pressed, null if no selection has been made
 	var/choice
-	/// The time at which the tgui_modal was created, for displaying timeout progress.
+	/// The time at which the tgui_list_input was created, for displaying timeout progress.
 	var/start_time
-	/// The lifespan of the tgui_modal, after which the window will close and delete itself.
+	/// The lifespan of the tgui_list_input, after which the window will close and delete itself.
 	var/timeout
-	/// Boolean field describing if the tgui_modal was closed by the user.
+	/// Boolean field describing if the tgui_list_input was closed by the user.
 	var/closed
 
 /datum/tgui_list_input/New(mob/user, message, title, list/buttons, timeout)
@@ -148,7 +148,7 @@
  * An asynchronous version of tgui_list_input to be used with callbacks instead of waiting on user responses.
  */
 /datum/tgui_list_input/async
-	/// The callback to be invoked by the tgui_modal upon having a choice made.
+	/// The callback to be invoked by the tgui_list_input upon having a choice made.
 	var/datum/callback/callback
 
 /datum/tgui_list_input/async/New(mob/user, message, title, list/buttons, callback, timeout)
