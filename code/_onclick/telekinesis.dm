@@ -93,6 +93,7 @@
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
+	///Object focused / selected by the TK user
 	var/atom/movable/focus
 	var/mob/living/carbon/tk_user
 
@@ -171,7 +172,11 @@
 	else
 		. = TRUE
 		apply_focus_overlay()
-		focus.throw_at(target, 10, 1,user)
+		//Only items can be thrown 10 tiles everything else only 1 tile
+		if (isitem(focus))
+			focus.throw_at(target, 10, 1,user)
+		else
+			focus.throw_at(target, 1, 1,user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_icon()
 
