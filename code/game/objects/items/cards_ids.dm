@@ -76,7 +76,7 @@
 	///The stuff that makes you open doors and shit
 	var/list/access = list()
 	///Access that cannot be removed by the ID console. Do not add access levels that are actually visible in the console here if a HoP knowing what kind of ID he's modifying is a concern.
-	var/list/sticky_access = list()
+	var/list/sticky_access
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
 	///The job name registered on the card (for example: Assistant)
