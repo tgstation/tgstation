@@ -18,7 +18,7 @@
 
 /// Used in [the backblast element][/datum/element/backblast]
 /obj/projectile/bullet/incendiary/backblast
-	damage = 20
+	damage = 15
 	range = 10 // actually overwritten in the backblast element
 	alpha = 0
 	pass_flags = PASSTABLE | PASSMOB
@@ -32,9 +32,10 @@
 	damage_type = BURN
 	flag = BOMB
 	speed = 1.2
-	wound_bonus = 50
+	wound_bonus = 30
 	bare_wound_bonus = 30
-	wound_falloff_tile = -3
+	wound_falloff_tile = -4
+	fire_stacks = 3
 
 	/// Lazy attempt at knockback, any items this plume hits will be knocked back this far. Decrements with each tile passed.
 	var/knockback_range = 7
@@ -50,19 +51,19 @@
 		return
 	knockback_range--
 	var/turf/current_turf = get_turf(src)
-	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 70)
+	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
 	var/thrown_items = 0
 
 	for(var/iter in current_turf.contents)
 		if(thrown_items > BACKBLAST_MAX_ITEM_KNOCKBACK)
 			break
 		if(isitem(iter))
-			var/obj/item/I = iter
-			if(I.anchored || LAZYFIND(launched_items, I))
+			var/obj/item/iter_item = iter
+			if(iter_item.anchored || LAZYFIND(launched_items, iter_item) || iter_item.throwing)
 				continue
 			thrown_items++
-			I.throw_at(throw_at_turf, knockback_range, knockback_range)
-			LAZYADD(launched_items, I)
+			iter_item.throw_at(throw_at_turf, knockback_range, knockback_range)
+			LAZYADD(launched_items, iter_item)
 		else if(isliving(iter))
 			var/mob/living/incineratee = iter
 			incineratee.take_bodypart_damage(0, damage, wound_bonus=wound_bonus, bare_wound_bonus=bare_wound_bonus)
