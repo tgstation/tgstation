@@ -1,0 +1,19 @@
+/**
+ * Copyright (c) 2020 bobbahbrown (https://github.com/bobbahbrown)
+ * SPDX-License-Identifier: MIT
+ */
+
+ @use '../colors.scss';
+
+ .ListInput__Loader {
+   width: 100%;
+   position: relative;
+   height: 4px;
+ }
+
+ .ListInput__LoaderProgress {
+   position: absolute;
+   transition: background-color 500ms, width 500ms;
+   background-color: colors.bg(colors.$primary);
+   height: 100%;
+ }
