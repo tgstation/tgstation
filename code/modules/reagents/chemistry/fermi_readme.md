@@ -80,7 +80,7 @@ Reaction rates are determined by the current temperature of the reagents holder.
 ```
 
 The amount added is based off the recipies’ required_temp, optimal_temp, overheat_temp and temp_exponent_factor. See below:
-![image](https://user-images.githubusercontent.com/33956696/103941344-9d06ae80-5126-11eb-951d-aa5302641eb9.png)
+![image](https://user-images.githubusercontent.com/33956696/103941429-bc054080-5126-11eb-856d-7965c2a9cb1f.png)
 
 the y axis is the normalised value of growth, which is then muliplied by the rate_up_lim. You can see that temperatures below the required_temp produce no result (the reaction doesn't start, or if it is reacting, the reaction will stop). Between the required and optimal is a region that is defined by the temp_exponent_factor, so in this case the value is ^2, so we see exponential growth. Between the optimal_temp and the overheat_temp is the optimal phase - where the rate factor is 1. After that it continues to react, but will call overheated() per timestep. Presently the default for overheated() is to reduce the yield of the product (i.e. it's faster but you get less). The rate_up_lim is the maximum rate the reaction can go at optimal temperatures, so in this case a rate factor of 1 i.e. a temperature between 500+ will produce 10u, or a temperature of 400 will roughly produce 4u per step (independant of product ratio produced, if you put 10, it will only create 10 maximum regardless of how much product is defined in the results list). 
 
@@ -92,15 +92,15 @@ As for how you define the reaction variables for a reaction, there are a few new
 ```c
 /datum/chemical_reaction
 	...
-	var/OptimalpHMin 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Optimal phase minimum)
-	var/OptimalpHMax 			= 9	        	// Higest value for above (Optimal phase maximum)
-	var/ReactpHLim 			= 4         	// How far out pH wil react, giving impurity place (deterministic phase range)
-	var/CurveSharppH 			= 1         	// How sharp the pH exponential curve is (to the power of value)
-	var/PurityMin 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure(). In addition, if the product's purity is below this value at the end, the product will be 100% converted into the reagent's failed_chem. Set to 0 to disable this.
+	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/optimal_pH_max 			= 9	        	// Higest value for above
+	var/determin_pH_range 		= 4         	// How far out pH wil react, givsing impurity place (Exponential phase)
+	var/pH_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
+	var/purity_min 				= 0.15 			// If purity is below 0.15, it calls overly_impure(). In addition, if the product's purity is below this value at the end, the product will be 100% converted into the reagent's failed_chem. Set to 0 to disable this.
 ```
 
 For this default reaction, the curve looks like this:
-![image](https://user-images.githubusercontent.com/33956696/103941429-bc054080-5126-11eb-856d-7965c2a9cb1f.png)
+![image](https://user-images.githubusercontent.com/33956696/104081030-0fa98400-5224-11eb-822e-ffc614799ddc.png)
 
 The y axis is the purity of the product made for that time step. This is recalculated based off the beaker's sum pH for every tick in the reaction. The rate in which your product is made based off the temperature (If you want me to describe that too I can.) So say our reaction has 10u of a purity 1 of product in there, and for our step we're making another 10u with our pH at (roughly) 3, from the curve our purity is (roughly) 0.5. So we will be adding 10u of 0.5 purity to 10u of 1 purity, resulting in 20u of 0.75 purity product. (Though - to note the reactant's purities also modify the purity of volume created on top of this).
 
