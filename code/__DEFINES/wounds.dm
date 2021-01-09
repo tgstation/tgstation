@@ -44,7 +44,7 @@
 #define WOUND_DETERMINATION_MAX			10
 
 /// While someone has determination in their system, their bleed rate is slightly reduced
-#define WOUND_DETERMINATION_BLEED_MOD	0.9
+#define WOUND_DETERMINATION_BLEED_MOD	0.85
 
 // ~wound global lists
 // list in order of highest severity to lowest
