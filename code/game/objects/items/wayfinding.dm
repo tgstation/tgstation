@@ -2,24 +2,26 @@
 	name = "wayfinding pinpointer synthesizer"
 	icon = 'icons/obj/machines/wayfinding.dmi'
 	icon_state = "pinpointersynth"
-	desc = "A machine given the thankless job of trying to sell these pinpointers."
+	desc = "A machine given the thankless job of trying to sell wayfinding pinpointers. They point to common locations."
 	density = FALSE
 	layer = HIGH_OBJ_LAYER
 	///List of user-specific cooldowns to prevent pinpointer spam.
 	var/list/user_spawn_cooldowns = list()
 	///List of user-specific cooldowns to prevent message spam.
 	var/list/user_interact_cooldowns = list()
-	///time per person to spawn another pinpointer
+	///Time per person to spawn another pinpointer.
 	var/spawn_cooldown = 2 MINUTES
-	///time per person for subsequent interactions
+	///Time per person for subsequent interactions.
 	var/interact_cooldown = 4 SECONDS
-	///how much money it starts with to cover wayfinder refunds
+	///How much money the dispenser starts with to cover wayfinder refunds.
 	var/start_bal = 200
-	///how much money recycling a pinpointer rewards you
+	///How much money recycling a pinpointer rewards you.
 	var/refund_amt = 40
 	var/datum/bank_account/synth_acc = new /datum/bank_account/remote
 	var/ppt_cost = 0 //Jan 9 '21: 2560 had its difficulties for NT as well
 	var/expression_timer
+	///Jokes are behind this probability to avoid being tedious.
+	var/funnyprob = 5
 
 /obj/machinery/pinpointer_dispenser/Initialize(mapload)
 	. = ..()
@@ -35,6 +37,7 @@
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
 	if(world.time < user_interact_cooldowns[user.real_name])
+		to_chat(user, "<span class='notice'>It doesn't respond. Give it a few seconds!</span>")
 		set_expression("veryhappy", 2 SECONDS)
 		return
 
@@ -97,16 +100,15 @@
 				H.put_in_hands(HC)
 		else
 			money = FALSE
-			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume)) //I don't think anyone wants this
+			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
 			new costume(user.loc)
 		qdel(WP)
 		set_expression("veryhappy", 2 SECONDS)
 		var/refund = "some credits."
 		if(!money)
-			refund = "a freshly synthesized costume!"
-			if(prob(1))
-				refund = "a pulse rifle! Just kidding it's a costume."
-		say("<span class='robot'>Thank you for feeding me, [user.first_name()]! Here is [refund]</span>") //it loves the costumes
+			refund = prob(funnyprob) : "pulse rifle! Just kidding it's a costume." ? "freshly synthesized costume!" //it loves the costumes
+		var/whatyoudid = prob(funnyprob) : "recycling" ? "feeding me"
+		say("<span class='robot'>Thank you for [whatyoudid], [user.first_name()]! Here is a [refund]</span>")
 
 /obj/machinery/pinpointer_dispenser/proc/set_expression(type, duration)
 	cut_overlays()
