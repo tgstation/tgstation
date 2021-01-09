@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Proto-Nitrate's response to Tritium now functions correctly when there was previously no Hydrogen in the air."
