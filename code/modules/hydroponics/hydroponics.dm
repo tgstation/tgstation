@@ -118,7 +118,7 @@
 	else if(istype(Proj , /obj/projectile/energy/florarevolution))
 		if(myseed)
 			if(myseed.mutatelist.len > 0)
-				myseed.set_instability((myseed.instability/2))
+				myseed.set_instability(myseed.instability/2)
 		mutatespecie()
 	else
 		return ..()
