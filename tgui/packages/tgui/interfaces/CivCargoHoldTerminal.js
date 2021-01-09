@@ -121,7 +121,7 @@ const BountyPickBox = (props, context) => {
             icon="check"
             color="green"
             content={id_bounty_names[0]}
-            onClick={() => act('pick', { 'value': 0 })}>
+            onClick={() => act('pick', { 'value': 1 })}>
             <Box fontSize="14px">
               Payout: {id_bounty_values[0]}
             </Box>
@@ -136,7 +136,7 @@ const BountyPickBox = (props, context) => {
             icon="check"
             color="green"
             content={id_bounty_names[1]}
-            onClick={() => act('pick', { 'value': 1 })}>
+            onClick={() => act('pick', { 'value': 2 })}>
             <Box fontSize="14px">
               Payout: {id_bounty_values[1]}
             </Box>
@@ -150,7 +150,7 @@ const BountyPickBox = (props, context) => {
             icon="check"
             color="green"
             content={id_bounty_names[2]}
-            onClick={() => act('pick', { 'value': 2 })}>
+            onClick={() => act('pick', { 'value': 3 })}>
             <Box fontSize="14px">
               Payout: {id_bounty_values[2]}
             </Box>
