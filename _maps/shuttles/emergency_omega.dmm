@@ -22,11 +22,11 @@
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ae" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "af" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -36,7 +36,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ag" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -109,10 +109,10 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "al" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "am" = (
 /obj/machinery/door/airlock/command{
 	name = "Emergency Recovery Airlock";
@@ -125,7 +125,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "an" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -186,12 +186,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ar" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "as" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21";
@@ -252,7 +252,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aw" = (
 /obj/machinery/status_display/ai,
 /turf/closed/wall/mineral/titanium/nodiagonal,

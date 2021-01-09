@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "AIs that lose power can access their APC once more (after the same short hacking delay is complete)."
