@@ -404,10 +404,7 @@
 			R = find_record("name", perpname, GLOB.data_core.medical)
 			if(R)
 				. += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
-			var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
-			if(quirkstring)
-				. += "<span class='notice ml-1'>Detected physiological traits:</span>"
-				. += "<span class='notice ml-2'>[quirkstring]</span>"
+			. += "<a href='?src=[REF(src)];hud=m;quirk=1'>\[See quirks\]</a>"
 
 		if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
 			if(!user.stat && user != src)
