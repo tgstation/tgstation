@@ -1012,7 +1012,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return ..()
 
 /obj/machinery/vending/attack_tk_grab(mob/user)
-	to_chat(user, "<span class='warning'>The vending machine is too heavy.</span>")
+	to_chat(user, "<span class='warning'>[src] is too heavy.</span>")
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/vending/custom
