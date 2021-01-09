@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "The tesla will actually move like it ought to, instead of ping ponging about"

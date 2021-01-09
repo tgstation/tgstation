@@ -42,7 +42,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "ag" = (
 /turf/closed/indestructible/riveted/plastinum,
 /area/shuttle/escape/luxury)
@@ -107,7 +107,7 @@
 /area/shuttle/escape/luxury)
 "at" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "au" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -366,7 +366,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "bk" = (
 /obj/machinery/light{
 	dir = 1
@@ -503,7 +503,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "bE" = (
 /obj/machinery/light{
 	dir = 1
@@ -966,7 +966,7 @@
 	},
 /obj/machinery/scanner_gate/luxury_shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 
 (1,1,1) = {"
 aa
