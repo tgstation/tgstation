@@ -77749,7 +77749,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing/chamber)
 "tlB" = (
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/open/space/basic,
@@ -77923,11 +77922,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"ttP" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ttV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -117560,7 +117554,7 @@ aaa
 aaa
 aaa
 lMJ
-ttP
+lMJ
 lMJ
 aaa
 aaa
@@ -117568,7 +117562,7 @@ aaa
 aaa
 aaa
 lMJ
-ttP
+lMJ
 lMJ
 aaa
 aaa
@@ -117576,7 +117570,7 @@ aaa
 aaa
 aaa
 lMJ
-ttP
+lMJ
 lMJ
 aaa
 aaa
@@ -117584,7 +117578,7 @@ aaa
 aaa
 aaa
 lMJ
-ttP
+lMJ
 lMJ
 aaa
 aaa
