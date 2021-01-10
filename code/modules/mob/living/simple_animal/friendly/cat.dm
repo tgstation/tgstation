@@ -41,6 +41,7 @@
 	held_state = "cat2"
 	pet_bonus = TRUE
 	pet_bonus_emote = "purrs!"
+	can_rest = TRUE
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

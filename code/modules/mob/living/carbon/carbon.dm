@@ -1,3 +1,6 @@
+/mob/living/carbon
+	can_rest = TRUE
+
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000)
