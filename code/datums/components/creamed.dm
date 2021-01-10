@@ -39,12 +39,10 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	A.add_overlay(creamface)
 
 /datum/component/creamed/Destroy(force, silent)
-	var/atom/A = parent
+	var/mob/living/A = parent
 	A.cut_overlay(creamface)
 	qdel(creamface)
-	if(isAI(A))
-		var/mob/living/silicon/AI/M
-		M.adjust_blurriness(-1)
+	A.adjust_blurriness(-1)
 	if(ishuman(A))
 		SEND_SIGNAL(A, COMSIG_CLEAR_MOOD_EVENT, "creampie")
 	return ..()
