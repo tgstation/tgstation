@@ -44,6 +44,7 @@
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch = 100)
 
 	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/organ)
+	food_type = list(/obj/item/organ)
 	var/obj/item/udder/gutlunch/udder = null
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize()
@@ -92,11 +93,6 @@
 			else
 				udder.milkAnimal(O, user)
 			regenerate_icons()
-		if(is_type_in_typecache(O,wanted_objects))
-			udder.generateMilk()
-			regenerate_icons()
-			visible_message("<span class='notice'>[src] slurps up [O].</span>")
-			qdel(O)
 	else
 		..()
 
