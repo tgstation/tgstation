@@ -37,10 +37,6 @@
 		burnt_states = list("panelscorched")
 	. = ..()
 
-/turf/open/floor/plating/update_icon()
-	if(!..())
-		return
-
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
