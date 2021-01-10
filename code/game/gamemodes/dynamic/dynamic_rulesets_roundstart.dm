@@ -12,7 +12,7 @@
 	antag_datum = /datum/antagonist/traitor/
 	minimum_required_age = 0
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("Cyborg")
+	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
 	weight = 5
 	cost = 10	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
@@ -521,6 +521,40 @@
 
 /datum/dynamic_ruleset/roundstart/families/round_result()
 	return handler.set_round_result_analogue()
+
+
+//////////////////////////////////////////////
+//                                          //
+//         Malfunctioning AI                //
+//                              		    //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/malf
+	name = "Malfunctioning AI"
+	antag_datum = /datum/antagonist/traitor
+	antag_flag = ROLE_MALF
+	exclusive_roles = list("AI")
+	minimum_required_age = 0
+	required_candidates = 1
+	weight = 5
+	cost = 10
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+
+/datum/dynamic_ruleset/roundstart/malf/pre_execute()
+	. = ..()
+	var/mob/living/silicon/ai/M = pick_n_take(candidates)
+	assigned += M.mind
+	for(var/mind in assigned)
+		var/datum/mind/ai = mind
+		ai.special_role = ROLE_MALF
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/malf/execute()
+	var/datum/antagonist/traitor/AI = new
+	for(var/mind in assigned)
+		var/datum/mind/ai = mind
+		ai.add_antag_datum(AI)
+	return TRUE
 
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 
