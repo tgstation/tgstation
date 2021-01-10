@@ -37,11 +37,3 @@
 	SIGNAL_HANDLER
 
 	scale(source, storage_scaling)
-
-/obj/item/flashlight/seclite/Initialize()
-	. = ..()
-	AddElement(/datum/element/item_scaling, 0.5, 1)
-
-/obj/item/melee/baton/loaded/Initialize()
-	. = ..()
-	AddElement(/datum/element/item_scaling, 0.5, 1)
