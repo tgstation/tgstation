@@ -1,6 +1,6 @@
 /mob/living
 	///Can this mob rest?
-	var can_rest = FALSE
+	var/can_rest = FALSE
 
 /mob/living/Initialize()
 	. = ..()
