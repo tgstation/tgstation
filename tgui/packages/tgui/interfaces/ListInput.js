@@ -129,10 +129,8 @@ export const ListInput = (props, context) => {
                 />
               )}
             >
-              <Flex
-                wrap="wrap"
-              >
-                {displayedArray.map((button, index) => (
+              <Flex wrap>
+                {displayedArray.map(button => (
                   <Flex.Item key={button} basis="100%">
                     <Button
                       color="transparent"
@@ -141,8 +139,12 @@ export const ListInput = (props, context) => {
                       width="100%"
                       selected={selectedButton === button}
                       onClick={() => {
-                        (selectedButton === button)
-                          ? act("choose", { choice: button }): setSelectedButton(button);
+                        if (selectedButton === button) {
+                          act("choose", { choice: button });
+                        }
+                        else {
+                          setSelectedButton(button);
+                        }
                         setLastCharCode(null);
                       }}
                     />
@@ -154,7 +156,7 @@ export const ListInput = (props, context) => {
           {showSearchBar && (
             <Flex.Item mt={1}>
               <Input
-                width="100%"
+                fluid
                 onInput={(e, value) => setDisplayedArray(
                   buttons.filter(val =>
                     val.toLowerCase().search(value.toLowerCase()) !== -1
@@ -164,22 +166,26 @@ export const ListInput = (props, context) => {
             </Flex.Item>
           )}
           <Flex.Item mt={1}>
-            <Flex>
-              <Button
-                width="50%"
-                height="100%"
-                color="good"
-                content="Confirm"
-                disabled={selectedButton === null}
-                onClick={() => act("choose", { choice: selectedButton })}
-              />
-              <Button
-                width="50%"
-                height="100%"
-                color="bad"
-                content="Cancel"
-                onClick={() => act("cancel")}
-              />
+            <Flex textAlign="center">
+              <Flex.Item grow={1} basis={0}>
+                <Button
+                  fluid
+                  color="bad"
+                  lineHeight={2}
+                  content="Cancel"
+                  onClick={() => act("cancel")}
+                />
+              </Flex.Item>
+              <Flex.Item grow={1} basis={0} ml={1}>
+                <Button
+                  fluid
+                  color="good"
+                  lineHeight={2}
+                  content="Confirm"
+                  disabled={selectedButton === null}
+                  onClick={() => act("choose", { choice: selectedButton })}
+                />
+              </Flex.Item>
             </Flex>
           </Flex.Item>
         </Flex>
