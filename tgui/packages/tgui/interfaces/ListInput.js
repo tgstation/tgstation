@@ -52,7 +52,7 @@ export const ListInput = (props, context) => {
               title={message}
               tabIndex={0}
               onKeyDown={e => {
-                const charCode = String.fromCharCode(e.keyCode);
+                const charCode = String.fromCharCode(e.keyCode).toLowerCase();
                 if (!charCode || lastScrollTime > performance.now()) return;
                 lastScrollTime = performance.now() + 150;
 
@@ -71,7 +71,7 @@ export const ListInput = (props, context) => {
                 }
                 else {
                   const resultArray = displayedArray.filter(value =>
-                    value.substring(0, 1) === String.fromCharCode(e.keyCode)
+                    value.substring(0, 1).toLowerCase() === charCode
                   );
 
                   if (resultArray.length > 0) {
