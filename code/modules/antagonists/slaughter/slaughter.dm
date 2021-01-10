@@ -259,6 +259,9 @@
 		if(!M)
 			continue
 
+		// Unregister the signal first, otherwise it'll trigger the "ling revived inside us" code
+		UnregisterSignal(M, COMSIG_MOB_STATCHANGE)
+
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
@@ -266,14 +269,22 @@
 			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/bloodcrawl_swallow(mob/living/victim)
-	if(consumed_mobs)
-		// Keep their corpse so rescue is possible
-		consumed_mobs += victim
-	else
-		// Be safe and just eject the corpse
-		victim.forceMove(get_turf(victim))
-		victim.exit_blood_effect()
-		victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, looking highly confused. And dead.</span>")
+	// Keep their corpse so rescue is possible
+	consumed_mobs += victim
+	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
+
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/on_victim_statchange(mob/victim, new_stat)
+	if(!isliving(victim))
+		return
+
+	var/mob/living/living_victim = victim
+	if(new_stat != DEAD)
+		// Someone we've eaten has spontaneously revived; maybe nanites, maybe a ling
+		living_victim.forceMove(get_turf(src))
+		living_victim.exit_blood_effect()
+		living_victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, with a confused look on their face.</span>")
+		consumed_mobs -= living_victim
+		UnregisterSignal(living_victim, COMSIG_MOB_STATCHANGE)
 
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"
