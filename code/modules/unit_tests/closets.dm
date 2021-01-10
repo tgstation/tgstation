@@ -17,9 +17,12 @@
 
 	for(var/_closettype in typesof(/obj/structure/closet))
 		// Spawn each closet on its own turf, so they don't interfere.
-		var/turf/closet_turf
-		while(closet_turf == null || istype(closet_turf, /turf/closed))
+		var/turf/closet_turf = popleft(test_turfs)
+		while(istype(closet_turf, /turf/closed))
 			closet_turf = popleft(test_turfs)
+
+		if(!closet_turf)
+			Fail("Ran out of unused turfs to spawn closets on.")
 
 		var/obj/structure/closet/closet = allocate(_closettype, closet_turf)
 

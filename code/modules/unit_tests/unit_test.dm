@@ -16,7 +16,7 @@ GLOBAL_VAR_INIT(failed_any_test, FALSE)
 GLOBAL_VAR(test_log)
 
 /// Set to false to disable cleanup after testing, leaving test environments and server running for inspection
-#define CLEANUP_AFTER_TEST TRUE
+#define CLEANUP_AFTER_TEST FALSE
 // although so many of the unit tests just spawn humans to then choke and die in space :(
 
 /datum/unit_test
