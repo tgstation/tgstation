@@ -544,9 +544,7 @@
 	. = ..()
 	var/mob/living/silicon/ai/M = pick_n_take(candidates)
 	assigned += M.mind
-	for(var/mind in assigned)
-		var/datum/mind/ai = mind
-		ai.special_role = ROLE_MALF
+	M.mind.special_role = ROLE_MALF
 	return TRUE
 
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
