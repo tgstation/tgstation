@@ -116,7 +116,7 @@
 	if(!inserted_scan_id || !inserted_scan_id.registered_account)
 		return
 	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
-	if(pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES))
+	if((pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES)) || pot_acc.bounties)
 		var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
 		to_chat(usr, "<span class='warning'>Internal ID network spools coiling, try again in [curr_time] minutes!</span>")
 		return FALSE
@@ -130,7 +130,7 @@
 	pot_acc.bounties = crumbs
 
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
-	if(inserted_scan_id?.registered_account)
+	if(!inserted_scan_id?.registered_account)
 		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
