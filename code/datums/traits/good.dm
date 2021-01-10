@@ -62,7 +62,7 @@
 /datum/quirk/fan_clown
 	name = "Clown Fan"
 	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
-	value = 4
+	value = 2
 	mob_trait = TRAIT_FAN_CLOWN
 	gain_text = "<span class='notice'>You are a big fan of clowns.</span>"
 	lose_text = "<span class='danger'>The clown doesn't seem so great.</span>"
