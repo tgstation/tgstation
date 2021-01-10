@@ -37,6 +37,7 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
+	var/divable = TRUE /// whether a skittish person can dive inside this closet. disable if opening the closet causes "bad things" to happen.
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -102,10 +103,9 @@
 		. += "<span class='notice'>The parts are <b>welded</b> together.</span>"
 	else if(secure && !opened)
 		. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
-	if(isliving(user))
-		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_SKITTISH))
-			. += "<span class='notice'>If you bump into [src] while running, you will jump inside.</span>"
+
+	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
+		. += "<span class='notice'>If you bump into [p_them()] while running, you will jump inside.</span>"
 
 /obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -448,15 +448,6 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/Bumped(atom/movable/AM)
-	. = ..()
-	if(!isliving(AM))
-		return
-	var/mob/living/bumper = AM
-	if(HAS_TRAIT(bumper, TRAIT_SKITTISH) && bumper.m_intent == MOVE_INTENT_RUN && bumper.stat == CONSCIOUS)
-
-		dive_into(bumper)
-
 /obj/structure/closet/proc/togglelock(mob/living/user, silent = FALSE)
 	if(secure && !broken)
 		if(allowed(user))
@@ -524,34 +515,3 @@
 
 /obj/structure/closet/return_temperature()
 	return
-
-/obj/structure/closet/proc/dive_into(mob/living/user)
-	var/turf/turf = get_turf(src)
-	if(!opened)
-		if(locked)
-			togglelock(user, silent = TRUE)
-		if(!open(user))
-			// No message if unable to open, since this is on Bump, spammy potential
-			return
-
-	// If it's a crate, "dive for cover" and start resting so people can jump into crates without slamming the lid on their head
-	if(horizontal)
-		// need to rest before moving, otherwise "can't get crate to close" message will be printed erroneously
-		user.set_resting(TRUE, silent = TRUE)
-
-	user.forceMove(turf)
-
-	if(!close(user))
-		to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-		if(horizontal)
-			user.set_resting(FALSE, silent = TRUE)
-		return
-
-	togglelock(user, silent = TRUE)
-
-	if(horizontal)
-		user.set_resting(FALSE, silent = TRUE)
-
-	turf.visible_message("<span class='warning'>[user] dives into [src]!</span>")
-	// If you run into a locker, you don't want to run out immediately
-	user.Immobilize(0.5 SECONDS)

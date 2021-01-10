@@ -12,6 +12,9 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 
+	// Stops people from "diving into" a crate you can't open normally
+	divable = FALSE
+
 /obj/structure/closet/crate/large/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(manifest)
