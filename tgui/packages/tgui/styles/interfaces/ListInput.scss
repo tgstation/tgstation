@@ -6,6 +6,11 @@
  @use '../colors.scss';
  @use '../base.scss';
 
+
+.ListInput__Section .Section__title{
+  flex-shrink: 0;
+}
+
 .ListInput__Section .Section__titleText {
   font-size: base.em(12px);
 }
