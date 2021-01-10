@@ -80,10 +80,14 @@
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer)
 	S.name = "statue of [name]"
+	ADD_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return TRUE
+
+/mob/living/carbon/human/proc/unpetrify()
+	REMOVE_TRAIT(src, TRAIT_NOBLEED, MAGIC_TRAIT)
 
 /mob/living/simple_animal/pet/dog/corgi/petrify(statue_timer)
 	if(!isturf(loc))

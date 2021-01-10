@@ -1138,7 +1138,7 @@
 	return ..()
 
 /mob/living/carbon/human/is_bleeding()
-	if(NOBLOOD in dna.species.species_traits || bleedsuppress)
+	if(NOBLOOD in dna.species.species_traits)
 		return FALSE
 	return ..()
 
