@@ -5,11 +5,11 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
-	//Which growth stage are we currently on? Stages give hints to the organ holder that this is in them.
+	///What stage of growth the embryo is at. Developed embryos give the host symptoms suggesting that an embryo is inside them.
 	var/stage = 0
-	// Are we bursting out of the poor sucker who's the xeno mom?
+	/// Are we bursting out of the poor sucker who's the xeno mom?
 	var/bursting = FALSE
-	// How long does it take to increase a stage? Contained in a var so it can be var-edited.
+	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
 
 /obj/item/organ/body_egg/alien_embryo/Initialize()
@@ -54,13 +54,13 @@
 			to_chat(owner, "<span class='danger'>You feel something tearing its way out of your stomach...</span>")
 			owner.adjustToxLoss(10)
 
+/// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
 	if(stage >= 6)
 		return
-	INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
 	if(++stage < 6)
+		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
 		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
-// Are we already fully grown or somehow overgrown? Stop. Otherwise, update the HUD icon, then increase the stage by 1, if it is still less than six, let's do this proc again in one minute!
 
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
