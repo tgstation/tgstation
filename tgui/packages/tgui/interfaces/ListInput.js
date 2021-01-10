@@ -24,16 +24,22 @@ export const ListInput = (props, context) => {
   } = data;
 
   // Search
-  const [showSearchBar, setShowSearchBar] = useLocalState(context, "search_bar", false);
-  const [displayedArray, setDisplayedArray] = useLocalState(context, "displayed_array", buttons);
+  const [showSearchBar, setShowSearchBar] = useLocalState(
+    context, 'search_bar', false);
+  const [displayedArray, setDisplayedArray] = useLocalState(
+    context, 'displayed_array', buttons);
 
   // KeyPress
-  const [searchArray, setSearchArray] = useLocalState(context, "search_array", []);
-  const [searchIndex, setSearchIndex] = useLocalState(context, "search_index", 0);
-  const [lastCharCode, setLastCharCode] = useLocalState(context, "last_char_code", null);
+  const [searchArray, setSearchArray] = useLocalState(
+    context, 'search_array', []);
+  const [searchIndex, setSearchIndex] = useLocalState(
+    context, 'search_index', 0);
+  const [lastCharCode, setLastCharCode] = useLocalState(
+    context, 'last_char_code', null);
 
   // Selected Button
-  const [selectedButton, setSelectedButton] = useLocalState(context, "selected_button", buttons[0]);
+  const [selectedButton, setSelectedButton] = useLocalState(
+    context, 'selected_button', buttons[0]);
   return (
     <Window
       title={title}
@@ -43,10 +49,7 @@ export const ListInput = (props, context) => {
     >
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content>
-        <Flex
-          direction="column"
-          height="100%"
-        >
+        <Flex direction="column" height="100%">
           <Flex.Item grow={1}>
             <Section
               scrollable
