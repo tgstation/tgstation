@@ -866,8 +866,6 @@
 
 //This ends a single instance of an ongoing reaction
 /datum/reagents/proc/end_reaction(datum/equilibrium/E)
-	if(GLOB.Debug2)
-		message_admins("(fermichem) Reaction [E.reaction] finished reactedVol:[E.reactedVol], targetVol:[E.targetVol]")
 	//end reaction proc
 	E.reaction.reaction_finish(src, E.reactedVol)
 	if(E.reaction.mix_sound)
