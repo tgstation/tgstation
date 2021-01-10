@@ -595,7 +595,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if (inserted_modify_id)
 		inserted_modify_id.update_label()
-		inserted_modify_id.access += inserted_modify_id.sticky_access
+		if(inserted_modify_id.sticky_access)
+			inserted_modify_id.access += inserted_modify_id.sticky_access
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
