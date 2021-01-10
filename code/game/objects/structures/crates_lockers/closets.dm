@@ -37,7 +37,8 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
-	var/divable = TRUE /// whether a skittish person can dive inside this closet. disable if opening the closet causes "bad things" to happen.
+	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
+	var/divable = TRUE
 
 
 /obj/structure/closet/Initialize(mapload)
