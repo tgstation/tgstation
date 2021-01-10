@@ -809,10 +809,15 @@
 			if(!ai_pilots.len) //Mech does not have an AI for a pilot
 				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
 				return
-			AI = input(user,"Which AI do you wish to card?", "AI Selection") in sortList(ai_pilots)
+			if(ai_pilots.len > 1)
+				AI = input(user,"Which AI do you wish to card?", "AI Selection") as null|anything in sortList(ai_pilots)
+			else
+				AI = ai_pilots[1]
 			if(!AI)
-				to_chat(user, "<span class='warning'>No AI selected.</span>")
 				return
+			if(!(AI in occupants) || !user.Adjacent(src))
+				return //User sat on the selection window and things changed.
+
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = TRUE
 			AI.radio_enabled = FALSE
