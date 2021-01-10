@@ -83,9 +83,20 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
-	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
-		udder.milkAnimal(O, user)
-		regenerate_icons()
+	if(stat == CONSCIOUS)
+		if(istype(O, /obj/item/reagent_containers/glass))
+			if(O.reagents.has_reagent(/datum/reagent/liquidgibs, 5))
+				udder.generateMilk()
+				visible_message("<span class='notice'>[src] drinks from [O].</span>")
+				O.reagents.remove_reagent(/datum/reagent/liquidgibs, 5)
+			else
+				udder.milkAnimal(O, user)
+			regenerate_icons()
+		if(is_type_in_typecache(O,wanted_objects))
+			udder.generateMilk()
+			regenerate_icons()
+			visible_message("<span class='notice'>[src] slurps up [O].</span>")
+			qdel(O)
 	else
 		..()
 
