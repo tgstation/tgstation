@@ -13,14 +13,14 @@
 	var/spawn_cooldown = 2 MINUTES
 	///Time per person for subsequent interactions.
 	var/interact_cooldown = 4 SECONDS
-	///How much money the dispenser starts with to cover wayfinder refunds.
+	///How many credits the dispenser account starts with to cover wayfinder refunds.
 	var/start_bal = 200
-	///How much money recycling a pinpointer rewards you.
+	///How many credits recycling a pinpointer rewards you.
 	var/refund_amt = 40
 	var/datum/bank_account/synth_acc = new /datum/bank_account/remote
 	var/ppt_cost = 0 //Jan 9 '21: 2560 had its difficulties for NT as well
 	var/expression_timer
-	///Jokes are behind this probability to avoid being tedious.
+	///Avoid being Reddit.
 	var/funnyprob = 5
 
 /obj/machinery/pinpointer_dispenser/Initialize(mapload)
@@ -33,18 +33,18 @@
 
 	desc += " [ppt_cost ? "Only [ppt_cost] credits! " : ""]It also synthesises costumes for some reason."
 
-	set_expression("happy") //actual first law of robotics it needs to be friendly in an insincere way
+	set_expression("happy") //actual first law of robotics it needs to be friendly in a mindless way
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
 	if(world.time < user_interact_cooldowns[user.real_name])
-		to_chat(user, "<span class='notice'>It doesn't respond. Give it a few seconds!</span>")
+		to_chat(user, "<span class='notice'>It just grins at you. Maybe you should give it a few seconds?</span>")
 		set_expression("veryhappy", 2 SECONDS)
 		return
 
 	user_interact_cooldowns[user.real_name] = world.time + interact_cooldown
 
 	for(var/obj/item/pinpointer/wayfinding/WP in user.GetAllContents())
-		set_expression("happy", 2 SECONDS)
+		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>You already have a pinpointer!</span>")
 		return
 
@@ -52,7 +52,7 @@
 	var/dispense = TRUE
 	var/obj/item/pinpointer/wayfinding/pointat
 	for(var/obj/item/pinpointer/wayfinding/WP in range(7, user))
-		set_expression("happy", 2 SECONDS)
+		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>[WP.owner == user.real_name ? "Your" : "A"] pinpointer is there!</span>")
 		pointat(WP)
 		return
@@ -89,7 +89,7 @@
 	if(istype(I, /obj/item/pinpointer/wayfinding))
 		var/obj/item/pinpointer/wayfinding/WP = I
 		to_chat(user, "<span class='notice'>You put \the [WP] in the return slot.</span>")
-		var/money = TRUE
+		var/refundiscredits = TRUE
 		if(synth_acc.has_money(refund_amt) && !WP.roundstart && WP.owner != user.real_name) //exploiters bring a friend
 			synth_acc._adjust_money(-refund_amt)
 			var/obj/item/holochip/HC = new /obj/item/holochip(loc)
@@ -99,17 +99,18 @@
 				var/mob/living/carbon/human/H = user
 				H.put_in_hands(HC)
 		else
-			money = FALSE
+			refundiscredits = FALSE
 			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
 			new costume(user.loc)
 		qdel(WP)
 		set_expression("veryhappy", 2 SECONDS)
 		var/refund = "some credits."
 		var/whatyoudid = "recycling"
-		if(!money)
+		if(!refundiscredits)
 			refund = "freshly synthesised costume!"
 			if(prob(funnyprob))
 				refund = "pulse rifle! Just kidding it's a costume."
+			else if(prob(funnyprob))
 				whatyoudid = "feeding me"
 		say("<span class='robot'>Thank you for [whatyoudid], [user.first_name()]! Here is a [refund]</span>")
 
@@ -120,10 +121,9 @@
 	if(duration)
 		expression_timer = addtimer(CALLBACK(src, .proc/set_expression, "happy"), duration, TIMER_STOPPABLE)
 
-///A glib facsimile of actual pointing
-/obj/machinery/pinpointer_dispenser/proc/pointat(atom)
-	visible_message("<span class='name'>[src]</span> points at [atom].")
-	new /obj/effect/temp_visual/point(atom,invisibility)
+/obj/machinery/pinpointer_dispenser/pointat(A)
+	. = ..()
+	visible_message("<span class='name'>[src]</span> points at [A].")
 
 //Pinpointer itself
 /obj/item/pinpointer/wayfinding //Help players new to a station find their way around
