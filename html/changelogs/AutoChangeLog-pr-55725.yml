@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "squashing behavior is now an element, now anything could theoretically be squished!"

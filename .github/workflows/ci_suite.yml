@@ -23,7 +23,7 @@ jobs:
           pip3 install setuptools
           bash tools/ci/install_build_tools.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
-          pip3 install -r tools/requirements.txt
+          tools/bootstrap/python -c ''
       - name: Run Linters
         run: |
           bash tools/ci/check_filedirs.sh tgstation.dme

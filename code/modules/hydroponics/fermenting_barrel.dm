@@ -12,7 +12,7 @@
 
 /obj/structure/fermenting_barrel/Initialize()
 	// Bluespace beakers, but without the portability or efficiency in circuits.
-	create_reagents(300, DRAINABLE | AMOUNT_VISIBLE)
+	create_reagents(300, DRAINABLE)
 	. = ..()
 
 /obj/structure/fermenting_barrel/examine(mob/user)
@@ -60,11 +60,11 @@
 	open = !open
 	if(open)
 		reagents.flags &= ~(DRAINABLE)
-		reagents.flags |= REFILLABLE
+		reagents.flags |= REFILLABLE | TRANSPARENT
 		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
 	else
 		reagents.flags |= DRAINABLE
-		reagents.flags &= ~(REFILLABLE)
+		reagents.flags &= ~(REFILLABLE | TRANSPARENT)
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()
 
