@@ -42,6 +42,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	var/atom/A = parent
 	A.cut_overlay(creamface)
 	qdel(creamface)
+	if(isAI(A))
+		var/mob/living/silicon/AI/M
+		M.adjust_blurriness(-1)
 	if(ishuman(A))
 		SEND_SIGNAL(A, COMSIG_CLEAR_MOOD_EVENT, "creampie")
 	return ..()
