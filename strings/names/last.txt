@@ -112,7 +112,6 @@ Curry
 Cypret
 David
 Davies
-Davis
 Dawkins
 Day
 Dean
@@ -278,7 +277,6 @@ Larson
 Lauffer
 Laurenzi
 Leach
-Lee
 Leech
 Leichter
 Leslie
@@ -311,7 +309,6 @@ Matthews
 Mcclymonds
 Mccullough
 Mccune
-McDonald
 McDonohugh
 Mcfall
 Mcintosh
@@ -426,7 +423,6 @@ Roberts
 Robertson
 Robinson
 Roby
-Rockwell
 Rogers
 Rohtin
 Rose
