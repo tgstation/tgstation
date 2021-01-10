@@ -448,7 +448,7 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/proc/togglelock(mob/living/user, silent = FALSE)
+/obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
 		if(allowed(user))
 			if(iscarbon(user))
