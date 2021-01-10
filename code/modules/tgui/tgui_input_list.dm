@@ -62,6 +62,8 @@
 	var/message
 	/// The list of buttons (responses) provided on the TGUI window
 	var/list/buttons
+	/// Buttons (strings specifically) mapped to the actual value (e.g. a mob or a verb)
+	var/list/buttons_map
 	/// The button that the user has pressed, null if no selection has been made
 	var/choice
 	/// The time at which the tgui_list_input was created, for displaying timeout progress.
@@ -75,13 +77,17 @@
 	src.title = title
 	src.message = message
 	src.buttons = list()
+	src.buttons_map = list()
+
+	// Gets rid of illegal characters
+	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
 
 	for(var/i in buttons)
-		src.buttons += i
+		var/string_key = whitelistedWords.Replace("[i]", "")
 
-	// need to do this because byond macros are removed on json_encode
-	// the value of the buttons need to match the parameters in ui_act
-	src.buttons = json_decode(json_encode(src.buttons))
+		src.buttons += string_key
+		src.buttons_map[string_key] = i
+
 
 	if (timeout)
 		src.timeout = timeout
@@ -134,7 +140,7 @@
 		if("choose")
 			if (!(params["choice"] in buttons))
 				return
-			choice = params["choice"]
+			choice = buttons_map[params["choice"]]
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
