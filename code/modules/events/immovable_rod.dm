@@ -183,8 +183,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	for(var/mob/M in urange(8, src))
-		if(!M.stat)
-			shake_camera(M, 2, 3)
+		if(M.stat != CONSCIOUS)
+			continue
+		shake_camera(M, 2, 3)
+
 	if(wizard)
 		user.visible_message("<span class='boldwarning'>[src] transforms into [wizard] as [user] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [wizard] as you suplex them!</span>")
 		to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [user] somehow manages to grab you, slamming you into the ground!</span>")
@@ -198,4 +200,4 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		new /obj/effect/anomaly/flux(drop_location())
 		qdel(src)
 
-	. = TRUE
+	return TRUE
