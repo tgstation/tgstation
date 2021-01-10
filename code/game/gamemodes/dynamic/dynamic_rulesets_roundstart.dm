@@ -544,6 +544,7 @@
 	. = ..()
 	var/mob/living/silicon/ai/M = pick_n_take(candidates)
 	assigned += M.mind
+	M.mind.restricted_roles = restricted_roles
 	M.mind.special_role = ROLE_MALF
 	return TRUE
 
