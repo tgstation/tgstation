@@ -357,8 +357,17 @@ window.onerror = function (msg, url, line, col, error) {
   return true;
 };
 
-// Catch unhandled rejections
-window.onunhandledrejection = window.onerror;
+// Catch unhandled promise rejections
+window.onunhandledrejection = function (e) {
+  var msg = 'UnhandledRejection';
+  if (e.reason) {
+    msg += ': ' + (e.reason.message || e.reason.description || e.reason);
+    if (e.reason.stack) {
+      e.reason.stack = 'UnhandledRejection: ' + e.reason.stack;
+    }
+  }
+  window.onerror(msg, null, null, null, e.reason);
+};
 
 // Helper for augmenting stack traces on fatal errors
 window.__augmentStack__ = function (stack, error) {
