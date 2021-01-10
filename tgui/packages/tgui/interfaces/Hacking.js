@@ -15,8 +15,9 @@ export const Hacking = (props, context) => {
     <Window
       width={500}
       height={768}
-      theme="hackerman">
-      <Window.Content>
+      theme="hackerman"
+      resizable>
+      <Window.Content scrollable>
         <Section title="CYBERNETICS HACKING INTERFACE ">
           {toArray(games).map((array, i) => (
             <Section
