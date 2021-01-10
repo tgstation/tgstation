@@ -9,8 +9,8 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Section, Input } from '../components';
 import { Window } from '../layouts';
 
-let ARROW_KEY_UP = 38;
-let ARROW_KEY_DOWN = 40;
+const ARROW_KEY_UP = 38;
+const ARROW_KEY_DOWN = 40;
 
 let lastScrollTime = 0;
 
