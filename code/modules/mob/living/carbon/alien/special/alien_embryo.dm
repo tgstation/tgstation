@@ -57,11 +57,10 @@
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
 	if(stage >= 6)
 		return
-	if(stage < 6)
-		stage++
-		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
-		if(stage > 6)
-			addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+	stage++
+	INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
+	if(stage > 6)
+		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
