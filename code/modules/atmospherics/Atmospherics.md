@@ -31,7 +31,7 @@ Now then, into the breach.
 
 ## 3. The Air Controller
 
-![Cyclical graph of one atmos tick](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/Cycle.png)
+![Cyclical graph of one atmos tick](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/Cycle.png)
 
 *Figure 3.1: The structure of one air controller tick. Not totally accurate, but it will do*
 
@@ -161,7 +161,7 @@ As for react(), it is where all the behavior of the reaction is defined. The pro
 This is a rather large subject, we will need to cover gas flow, turf sleeping, superconduction, and much more. Strap in and enjoy the ride!
 
 ### Active Turfs
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/FlowVisuals.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/FlowVisuals.png)
 
 *Figure 5.1: A visual of the algorithm `process_cell()` implements, ignoring our optimizations*
 
@@ -181,8 +181,8 @@ If we just used active turfs sleeping would be easy as pie, we could do it turf 
 
 ### Excited Groups
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/Unsettled.png)
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/Settled.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/Unsettled.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/Settled.png)
 
 *Figure 5.2.1-5.2.2: Settled VS Unsettled gases, this is what excited groups do*
 
@@ -228,7 +228,7 @@ There's one more major aspect of environmental atmos to cover, and while it's no
 
 ### Superconduction, or why var names really matter
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/Superconduction.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/Superconduction.png)
 
 *Figure 5.3: The death of a pug, and a visual description of what superconduction does*
 
@@ -265,7 +265,7 @@ First, some new vocab.
 
 The MC entry for SSAir is very helpful for debugging, and it is good to understand before I talk about cost.
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/SSAirAtRest.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/SSAirAtRest.png)
 
 *Figure 6.1: SSAir sitting doing little to nothing turf wise, only processing pipenets and atmos machines*
 
@@ -291,7 +291,7 @@ See that image from before? Notice how the cost of SSAir at rest is about 40ms? 
 
 The atmos subsystem was used as a testing ground for the robustness of the master-controller. It used to have a wait of 2 seconds, but that was lowered to 0.5 as it was thought that the system could handle it. It can! But this can have annoying side effects. As you know, we edge right up against 1/10th of the wait when sitting at rest, and if we start to make diffs...
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/GasTypes.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/GasTypes.png)
 
 *Figure 6.2: SSAir when a high amount of active turfs are operating, with a large selection of gastypes for each tile*
 
@@ -303,7 +303,7 @@ For this reason, and because excited groups spread gas out so much, we want to k
 
 react() is called for every active turf, and every pipenet. On each react call for reasons I don't want to go into right now, we need to iterate over every reaction and do a preliminary test. Therefor, the more datum reactions we have, the slower those two processes go.
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/LargeExcitedGroup.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/LargeExcitedGroup.png)
 
 *Figure 6.3: The effects of a large excited group on overtime*
 
@@ -313,7 +313,7 @@ On the whole excited groups are the only major source of overrun, consider this 
 
 ## 7. What we want atmos code to be
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/DiffsSettling.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/DiffsSettling.png)
 
 *Figure 7.1: Diffs settling out as they should, around their sources*
 
@@ -329,7 +329,7 @@ Performance and gameplay are much more important then realism. In all your work 
 
 ## 8. Pipelines and pipeline machinery
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/PipelineVisuals.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/PipelineVisuals.png)
 
 *Figure 8.1: The structure of pipelines shown in color, components are a mix*
 
@@ -408,7 +408,7 @@ To start with, you should enable the `TESTING` define in compile_options.dm, thi
 
 Past that you'll want to turn on excited group highlighting, to do this open the atmos control panel in the debug tab and toggle both personal view and display all. Display all makes turfs display their group and personal view shows/hides the groups from you, it's faster to toggle this, and this way you don't piss off the other debuggers on live.
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/AtmosControlPanel.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/AtmosControlPanel.png)
 
 *Figure B.1: The atmospherics control panel*
 
@@ -418,27 +418,27 @@ The rest of the panel is where things get more interesting, it's a readout of ex
 
 ### What to look for
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/StartingOut.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/StartingOut.png)
 
 An excited group can contain 2 things, sources of diffs, and dead tiles.
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/MovingForward.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/MovingForward.png)
 
 Of course, if left unchecked active turfs will spread further and further out, slowly lowering the amount of dead tiles.
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/SleepWorking.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/SleepWorking.png)
 
 Excited group breakdown causes them to recede and wrap around the things causing them
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/CleanupTroubles.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/CleanupTroubles.png)
 
 Cleanup causes a major recession due to turfs becoming suddenly no longer having an excited group
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/StrangeGrowth.png)
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/OddGrowth%2BMonkey.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/StrangeGrowth.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/OddGrowth%2BMonkey.png)
 
 Due to how process_cell() works, active turfs will spread strangely when low on diffs
 
-![](https://raw.githubusercontent.com/LemonInTheDark/documentation-assets/atmos-pics/atmos/Flickering.png)
+![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/Flickering.png)
 
 They will also occasionally nap, then immediately wake back up. This is either because of a discrepancy between `compare()` and `LAST_SHARE_CHECK`, or just the result of sleeping being a thing.
