@@ -1278,7 +1278,8 @@
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
+	var/area/destination_area = turf_to_teleport_to.loc
+	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE) || destination_area.area_flags & NOTELEPORT)
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)

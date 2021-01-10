@@ -1,4 +1,0 @@
-author: "NotRanged"
-delete-after: True
-changes: 
-  - admin: "Cancelling a vote now leaves a log and message."

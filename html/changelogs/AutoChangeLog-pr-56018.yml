@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - tweak: "Vend-a-trays can now accept any item."

@@ -665,7 +665,7 @@
 
 //ANIMAL RIDING
 
-/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(user.incapacitated())
 		return
 	for(var/atom/movable/A in get_turf(src))
