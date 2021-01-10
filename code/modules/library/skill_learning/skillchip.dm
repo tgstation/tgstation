@@ -7,8 +7,8 @@
 	custom_price = PAYCHECK_MEDIUM * 3
 	w_class = WEIGHT_CLASS_SMALL
 
-	/// Trait automatically granted by this chip, optional
-	var/auto_trait
+	/// Traits automatically granted by this chip, optional. Lazylist.
+	var/list/auto_traits
 	/// Skill name shown on UI
 	var/skill_name
 	/// Skill description shown on UI
@@ -142,8 +142,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	if(auto_trait)
-		ADD_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -176,8 +176,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	if(auto_trait)
-		REMOVE_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
@@ -369,7 +369,7 @@
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
 	desc = "Underwater edition."
-	auto_trait = TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE
+	auto_traits = list(TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE)
 	skill_name = "Underwater Basketweaving"
 	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
 	skill_icon = "shopping-basket"
@@ -379,7 +379,7 @@
 /obj/item/skillchip/wine_taster
 	name = "WINE skillchip"
 	desc = "Wine.Is.Not.Equal version 5."
-	auto_trait = TRAIT_WINE_TASTER
+	auto_traits = list(TRAIT_WINE_TASTER)
 	skill_name = "Wine Tasting"
 	skill_description = "Recognize wine vintage from taste alone. Never again lack an opinion when presented with an unknown drink."
 	skill_icon = "wine-bottle"
@@ -388,7 +388,7 @@
 
 /obj/item/skillchip/bonsai
 	name = "Hedge 3 skillchip"
-	auto_trait = TRAIT_BONSAI
+	auto_traits = list(TRAIT_BONSAI)
 	skill_name = "Hedgetrimming"
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
 	skill_icon = "spa"
@@ -409,7 +409,7 @@
 
 /obj/item/skillchip/light_remover
 	name = "N16H7M4R3 skillchip"
-	auto_trait = TRAIT_LIGHTBULB_REMOVER
+	auto_traits = list(TRAIT_LIGHTBULB_REMOVER)
 	skill_name = "Lightbulb Removing"
 	skill_description = "Stop failing taking out lightbulbs today, no gloves needed!"
 	skill_icon = "lightbulb"
@@ -418,7 +418,7 @@
 
 /obj/item/skillchip/disk_verifier
 	name = "K33P-TH4T-D15K skillchip"
-	auto_trait = TRAIT_DISK_VERIFIER
+	auto_traits = list(TRAIT_DISK_VERIFIER)
 	skill_name = "Nuclear Disk Verification"
 	skill_description = "Nuclear authentication disks have an extremely long serial number for verification. This skillchip stores that number, which allows the user to automatically spot forgeries."
 	skill_icon = "save"

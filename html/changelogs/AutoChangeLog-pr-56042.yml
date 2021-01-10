@@ -1,0 +1,4 @@
+author: "spessbro"
+delete-after: True
+changes: 
+  - bugfix: "fridge locks have been repaired"
