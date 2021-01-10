@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stack, TextArea } from '../components';
 import { formatMoney } from '../format';
@@ -29,7 +28,7 @@ export const RequestKioskContent = (props, context) => {
   const color = 'rgba(13, 13, 213, 0.7)';
   const backColor = 'rgba(0, 0, 69, 0.5)';
   return (
-    <Fragment>
+    <>
       <Section>
         <LabeledList>
           <LabeledList.Item
@@ -150,6 +149,6 @@ export const RequestKioskContent = (props, context) => {
           </Collapsible>
         </Flex.Item>
       </Flex>
-    </Fragment>
+    </>
   );
 };

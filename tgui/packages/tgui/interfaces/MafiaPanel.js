@@ -394,7 +394,7 @@ const MafiaAdmin = (props, context) => {
           Almost all of these are all built to help me debug
           the game (ow, debugging a 12 player game!) So they are
           rudamentary and prone to breaking at the drop of a hat.
-          Make sure you know what you're doing when you press one.
+          Make sure you know what you&apos;re doing when you press one.
           Also because an admin did it: do not gib/delete/dust
           anyone! It will runtime the game to death
         </Collapsible>

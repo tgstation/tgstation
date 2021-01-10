@@ -1,5 +1,4 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
@@ -36,7 +35,7 @@ export const InsertedSkillchip = (props, context) => {
     <Section
       title="Inserted Skillchip"
       buttons={
-        <Fragment>
+        <>
           <Button
             icon="syringe"
             disabled={!implantable || !!working}
@@ -49,7 +48,7 @@ export const InsertedSkillchip = (props, context) => {
             disabled={!!working}
             onClick={() => act("eject")}
             content="Eject" />
-        </Fragment>
+        </>
       }>
       <Stack fill align="center">
         <Stack.Item>

@@ -207,7 +207,7 @@ const EjectMaterial = (props, context) => {
     setRemoveMaterials(sheets || 1);
   }
   return (
-    <Fragment>
+    <>
       <NumberInput
         width="30px"
         animated
@@ -228,7 +228,7 @@ const EjectMaterial = (props, context) => {
           ref: ref,
           amount: removeMaterials,
         })} />
-    </Fragment>
+    </>
   );
 };
 
@@ -510,7 +510,7 @@ const Queue = (props, context) => {
           scrollable
           title="Queue"
           buttons={(
-            <Fragment>
+            <>
               <Button.Confirm
                 disabled={!queue.length}
                 color="bad"
@@ -530,7 +530,7 @@ const Queue = (props, context) => {
                   icon="play"
                   onClick={() => act("build_queue")} />
               )}
-            </Fragment>
+            </>
           )}>
           <Stack fill vertical>
             <Stack.Item>
@@ -590,9 +590,9 @@ const QueueList = (props, context) => {
 
   if (!queue.length) {
     return (
-      <Fragment>
+      <>
         No parts in queue.
-      </Fragment>
+      </>
     );
   }
 

@@ -425,7 +425,7 @@ const ViewTabHolder = (props, context) => {
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
     <Section title="View" fill buttons={(
-      <Fragment>
+      <>
         {(!!data.customDropoff && data.effectReverse===1) && (
           <Button
             inline
@@ -482,7 +482,7 @@ const ViewTabHolder = (props, context) => {
             act('refreshView');
           }}
         />
-      </Fragment>
+      </>
     )}>
       <Stack fill vertical>
         <Stack.Item>
@@ -517,7 +517,7 @@ const TabPod = (props, context) => {
 const TabBay = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Button
         content="Teleport"
         icon="street-view"
@@ -527,14 +527,14 @@ const TabBay = (props, context) => {
         disabled={!data.oldArea}
         icon="undo-alt"
         onClick={() => act('teleportBack')} />
-    </Fragment>
+    </>
   );
 };
 
 const TabDrop = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Button
         content="Teleport"
         icon="street-view"
@@ -544,7 +544,7 @@ const TabDrop = (props, context) => {
         disabled={!data.oldArea}
         icon="undo-alt"
         onClick={() => act('teleportBack')} />
-    </Fragment>
+    </>
   );
 };
 
@@ -822,7 +822,7 @@ class PresetsPage extends Component {
         fill
         title="Presets"
         buttons={(
-          <Fragment>
+          <>
             {settingName === 0 && (
               <Button
                 color="transparent"
@@ -855,9 +855,10 @@ class PresetsPage extends Component {
               tooltip="Deletes the selected preset"
               tooltipPosition="bottom-left"
               onClick={() => this.deletePreset(presetIndex)} />
-          </Fragment>)}>
+          </>
+        )}>
         {settingName === 1 && (
-          <Fragment>
+          <>
             <Button
               inline
               icon="check"
@@ -892,7 +893,7 @@ class PresetsPage extends Component {
               placeholder="Preset Name"
               onChange={(e, value) => setText(value)} />
             <Divider horizontal />
-          </Fragment>
+          </>
         )}
         {(!presets || presets.length === 0) && (
           <span style={pod_grey}>
@@ -1005,7 +1006,7 @@ const Bays = (props, context) => {
       fill
       title="Bay"
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="trash"
             color="transparent"
@@ -1028,7 +1029,7 @@ const Bays = (props, context) => {
               options at the top left.`}
             tooltipOverrideLong
             tooltipPosition="bottom-right" />
-        </Fragment>
+        </>
       )}>
       {BAYS.map((bay, i) => (
         <Button
@@ -1049,7 +1050,7 @@ const Timing = (props, context) => {
       fill
       title="Time"
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="undo"
             color="transparent"
@@ -1072,19 +1073,19 @@ const Timing = (props, context) => {
             tooltipOverrideLong
             tooltipPosition="bottom-right"
             onClick={() => act('toggleRevDelays')} />
-        </Fragment>
+        </>
       )}>
       <DelayHelper
         delay_list={DELAYS}
       />
       {data.custom_rev_delay && (
-        <Fragment>
+        <>
           <Divider horizontal />
           <DelayHelper
             delay_list={REV_DELAYS}
             reverse
           />
-        </Fragment>
+        </>
       )||""}
     </Section>
   );

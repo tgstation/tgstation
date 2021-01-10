@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Stack, Table } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { NtosWindow } from '../layouts';
 

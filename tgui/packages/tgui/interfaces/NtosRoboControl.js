@@ -1,6 +1,5 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, Flex, LabeledList, ProgressBar, Section, Stack } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 const getMuleByRef = (mules, ref) => {
@@ -65,7 +64,7 @@ const RobotInfo = (props, context) => {
         border: `4px solid ${color}`,
       }}
       buttons={mule && (
-        <Fragment>
+        <>
           <Button
             icon="play"
             tooltip="Go to Destination."
@@ -85,7 +84,7 @@ const RobotInfo = (props, context) => {
             onClick={() => act('home', {
               robot: mule.mule_ref,
             })} />
-        </Fragment>
+        </>
       )}>
       <Stack>
         <Stack.Item grow={1} basis={0}>
@@ -100,7 +99,7 @@ const RobotInfo = (props, context) => {
               {robot.mode}
             </LabeledList.Item>
             {mule && (
-              <Fragment>
+              <>
                 <LabeledList.Item label="Loaded Cargo">
                   {data.load || "N/A"}
                 </LabeledList.Item>
@@ -121,13 +120,13 @@ const RobotInfo = (props, context) => {
                       bad: [-Infinity, 20],
                     }} />
                 </LabeledList.Item>
-              </Fragment>
+              </>
             )}
           </LabeledList>
         </Stack.Item>
         <Stack.Item width="150px">
           {mule && (
-            <Fragment>
+            <>
               <Button
                 fluid
                 content="Set Destination"
@@ -173,10 +172,10 @@ const RobotInfo = (props, context) => {
                 onClick={() => act('report', {
                   robot: mule.mule_ref,
                 })} />
-            </Fragment>
+            </>
           )}
           {!mule && (
-            <Fragment>
+            <>
               <Button
                 fluid
                 content="Stop Patrol"
@@ -201,7 +200,7 @@ const RobotInfo = (props, context) => {
                 onClick={() => act('ejectpai', {
                   robot: robot.bot_ref,
                 })} />
-            </Fragment>
+            </>
           )}
         </Stack.Item>
       </Stack>

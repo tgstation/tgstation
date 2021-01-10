@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { formatSiUnit } from '../format';
 
 export const meta = {

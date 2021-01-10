@@ -12,7 +12,7 @@ export const ChemFilterPane = (props, context) => {
       title={title}
       minHeight="240px"
       buttons={(
-        <Fragment>
+        <>
           <Input
             placeholder="Reagent"
             width="140px"
@@ -24,7 +24,7 @@ export const ChemFilterPane = (props, context) => {
               which: titleKey,
               name: reagentName,
             })} />
-        </Fragment>
+        </>
       )}>
       {list.map(filter => (
         <Fragment key={filter}>
