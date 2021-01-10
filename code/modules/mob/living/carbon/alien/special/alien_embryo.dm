@@ -60,7 +60,7 @@
 	INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
 	if(++stage < 6)
 		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
-
+// Are we already fully grown or somehow overgrown? Stop. Otherwise, update the HUD icon, then increase the stage by 1, if it is still less than six, let's do this proc again in one minute!
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
@@ -84,8 +84,8 @@
 
 	if(!candidates.len || !owner)
 		bursting = FALSE
-		stage = 5
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)	//We stop growing at stage 5, so if we go back a stage, we need to be able to advance again.
+		stage = 5	// If no ghosts sign up for the Larva, let's regress our growth by one minute, we will try again!
+		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
 		return
 
 	var/mob/dead/observer/ghost = pick(candidates)
