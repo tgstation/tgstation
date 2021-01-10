@@ -77,14 +77,17 @@
 
 	switch(scan_mode)
 		if(PLANT_SCANMODE_STATS)
-			returned_message += get_analyzer_text_traits(our_seed)
+			if(our_seed && istype(our_seed))
+				returned_message += get_analyzer_text_traits(our_seed)
+			else
+				returned_message += "*---------*\nNo genes found.\n*---------*"
 		if(PLANT_SCANMODE_CHEMICALS)
 			if(scanned_object.reagents) //we have reagents contents
 				returned_message += get_analyzer_text_chem_contents(scanned_object)
-			else if (our_seed.reagents_add) //we have a seed with reagent genes
+			else if (our_seed.reagents_add?.len) //we have a seed with reagent genes
 				returned_message += get_analyzer_text_chem_genes(our_seed)
 			else
-				returned_message += "No reagents found.\n"
+				returned_message += "*---------*\nNo reagents found.\n*---------*"
 
 	returned_message += "</span>\n"
 	return returned_message
@@ -147,7 +150,7 @@
  */
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_genes(obj/item/seeds/scanned)
 	var/text = ""
-	text += "- Plant Reagents -\n"
+	text += "- Plant Reagent Genes -\n"
 	text += "*---------*\n<span class='notice'>"
 	for(var/datum/plant_gene/reagent/G in scanned.genes)
 		text += "- [G.get_name()] -\n"
@@ -164,7 +167,7 @@
 /obj/item/plant_analyzer/proc/get_analyzer_text_chem_contents(obj/item/scanned_plant)
 	var/text = ""
 	var/reagents_text = ""
-	text += "<br><span class='info'>*Plant Reagents*</span>"
+	text += "<br><span class='info'>- Plant Reagents -</span>"
 	text += "<br><span class='info'>Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]</span>"
 	var/chem_cap = 0
 	for(var/reagent_id in scanned_plant.reagents.reagent_list)
