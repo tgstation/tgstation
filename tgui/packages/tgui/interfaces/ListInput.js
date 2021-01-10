@@ -39,12 +39,14 @@ export const ListInput = (props, context) => {
     >
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content>
-        <Section fill>
-          <Flex
-            height={showSearchBar? "80%" : "90%"}
-          >
+        <Flex
+          direction="column"
+          height="100%"
+        >
+          <Flex.Item grow={1}>
             <Section
               scrollable
+              className="ListInput__Section"
               width="100%"
               fill
               title={message}
@@ -99,7 +101,6 @@ export const ListInput = (props, context) => {
                   compact
                 />
               )}
-              level={2}
             >
               <Flex
                 wrap="wrap"
@@ -122,9 +123,9 @@ export const ListInput = (props, context) => {
                 ))}
               </Flex>
             </Section>
-          </Flex>
+          </Flex.Item>
           {showSearchBar && (
-            <Flex width="100%" mt={1}>
+            <Flex.Item mt={1}>
               <Input
                 width="100%"
                 onInput={(e, value) => setDisplayedArray(
@@ -133,26 +134,28 @@ export const ListInput = (props, context) => {
                   )
                 )}
               />
-            </Flex>
+            </Flex.Item>
           )}
-          <Flex width="100%" mt={1}>
-            <Button
-              height="100%"
-              width="100%"
-              color="good"
-              content="Confirm"
-              disabled={selectedButton === null}
-              onClick={() => act("choose", { choice: selectedButton })}
-            />
-            <Button
-              height="100%"
-              width="100%"
-              color="bad"
-              content="Cancel"
-              onClick={() => act("cancel")}
-            />
-          </Flex>
-        </Section>
+          <Flex.Item mt={1}>
+            <Flex>
+              <Button
+                width="50%"
+                height="100%"
+                color="good"
+                content="Confirm"
+                disabled={selectedButton === null}
+                onClick={() => act("choose", { choice: selectedButton })}
+              />
+              <Button
+                width="50%"
+                height="100%"
+                color="bad"
+                content="Cancel"
+                onClick={() => act("cancel")}
+              />
+            </Flex>
+          </Flex.Item>
+        </Flex>
       </Window.Content>
     </Window>
   );

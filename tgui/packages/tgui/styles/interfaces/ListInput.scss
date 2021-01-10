@@ -4,6 +4,11 @@
  */
 
  @use '../colors.scss';
+ @use '../base.scss';
+
+.ListInput__Section .Section__titleText {
+  font-size: base.em(12px);
+}
 
  .ListInput__Loader {
    width: 100%;
