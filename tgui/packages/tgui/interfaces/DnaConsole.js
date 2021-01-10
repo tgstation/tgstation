@@ -5,7 +5,7 @@ import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section } from '../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const SUBJECT_CONCIOUS = 0;
@@ -779,8 +779,8 @@ const DnaConsoleSequencer = (props, context) => {
   ));
   return (
     <Fragment>
-      <Flex spacing={1} mb={1}>
-        <Flex.Item width={mutations.length <= 8 && "154px" || "174px"}>
+      <Stack mb={1}>
+        <Stack.Item width={mutations.length <= 8 && "154px" || "174px"}>
           <Section
             title="Sequences"
             height="214px"
@@ -800,16 +800,16 @@ const DnaConsoleSequencer = (props, context) => {
                 }} />
             ))}
           </Section>
-        </Flex.Item>
-        <Flex.Item grow={1} basis={0}>
+        </Stack.Item>
+        <Stack.Item grow={1} basis={0}>
           <Section
             title="Sequence Info"
             minHeight="100%">
             <MutationInfo
               mutation={mutation} />
           </Section>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
       {subjectStatus === SUBJECT_DEAD && (
         <Section color="bad">
           Genetic sequence corrupted. Subject diagnostic report: DECEASED.
@@ -1041,8 +1041,6 @@ const DnaConsoleEnzymes = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     isScannerConnected,
-    stdDevAcc,
-    stdDevStr,
   } = data;
   if (!isScannerConnected) {
     return (
@@ -1053,17 +1051,17 @@ const DnaConsoleEnzymes = (props, context) => {
   }
   return (
     <Fragment>
-      <Flex spacing={1} mb={1}>
-        <Flex.Item width="155px">
+      <Stack mb={1}>
+        <Stack.Item width="155px">
           <RadiationEmitterSettings />
-        </Flex.Item>
-        <Flex.Item width="140px">
+        </Stack.Item>
+        <Stack.Item width="140px">
           <RadiationEmitterProbs />
-        </Flex.Item>
-        <Flex.Item grow={1} basis={0}>
+        </Stack.Item>
+        <Stack.Item grow={1} basis={0}>
           <RadiationEmitterPulseBoard />
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
       <GeneticMakeupBuffers />
     </Fragment>
   );

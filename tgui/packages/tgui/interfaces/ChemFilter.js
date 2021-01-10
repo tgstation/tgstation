@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Flex, Input, Section } from '../components';
+import { Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const ChemFilterPane = (props, context) => {
@@ -56,22 +56,22 @@ export const ChemFilter = (props, context) => {
       height={300}
       resizable>
       <Window.Content scrollable>
-        <Flex spacing={1}>
-          <Flex.Item grow={1}>
+        <Stack>
+          <Stack.Item grow>
             <ChemFilterPane
               title="Left"
               list={left}
               reagentName={leftName}
               onReagentInput={value => setLeftName(value)} />
-          </Flex.Item>
-          <Flex.Item grow={1}>
+          </Stack.Item>
+          <Stack.Item grow>
             <ChemFilterPane
               title="Right"
               list={right}
               reagentName={rightName}
               onReagentInput={value => setRightName(value)} />
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );

@@ -47,6 +47,10 @@ $shadow-offset: 0 0 !default;
   margin-top: base.em(-1px);
 }
 
+.Section__rest {
+  position: relative;
+}
+
 .Section__content {
   padding: 0.66em 0.5em;
 }
@@ -57,13 +61,7 @@ $shadow-offset: 0 0 !default;
   height: 100%;
 }
 
-
-.Section--scrollable .Section__content {
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-.Section--fill .Section__content {
+.Section--fill .Section__rest {
   flex-grow: 1;
 }
 
@@ -74,7 +72,7 @@ $shadow-offset: 0 0 !default;
   border-collapse: collapse;
   border-spacing: 0;
 
-  & .Section__content {
+  & .Section__rest {
     display: table-row !important;
     height: 100% !important;
   }
@@ -83,6 +81,16 @@ $shadow-offset: 0 0 !default;
 .Section--scrollable {
   overflow-x: hidden;
   overflow-y: hidden;
+}
+
+.Section--scrollable .Section__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .Section--level--1 .Section__titleText {

@@ -9,6 +9,15 @@ import { Flex, Section, Tabs } from '../components';
 import { Pane, Window } from '../layouts';
 
 const r = require.context('../stories', false, /\.stories\.js$/);
+
+/**
+ * @returns {{
+ *   meta: {
+ *     title: string,
+ *     render: () => any,
+ *   },
+ * }[]}
+ */
 const getStories = () => r.keys().map(path => r(path));
 
 export const KitchenSink = (props, context) => {

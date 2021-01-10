@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, TextArea } from '../components';
+import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stack, TextArea } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -54,14 +54,14 @@ export const RequestKioskContent = (props, context) => {
               <Section
                 key={request.name}
                 width="300px">
-                <Flex spacing={1} align="baseline">
-                  <Flex.Item bold width="310px">
+                <Stack align="baseline">
+                  <Stack.Item bold width="310px">
                     {request.owner}
-                  </Flex.Item>
-                  <Flex.Item width="100px">
+                  </Stack.Item>
+                  <Stack.Item width="100px">
                     {formatMoney(request.value) + ' cr'}
-                  </Flex.Item>
-                  <Flex.Item>
+                  </Stack.Item>
+                  <Stack.Item>
                     <Button
                       fluid
                       icon="pen-fancy"
@@ -77,8 +77,8 @@ export const RequestKioskContent = (props, context) => {
                       onClick={() => act('deleteRequest', {
                         request: request.acc_number,
                       })} />
-                  </Flex.Item>
-                </Flex>
+                  </Stack.Item>
+                </Stack>
                 <Section align="center">
                   <i>&quot;{request.description}&quot;</i>
                 </Section>
