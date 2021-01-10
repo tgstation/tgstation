@@ -59,7 +59,8 @@
 	if(petrified_mob)
 		petrified_mob.status_flags &= ~GODMODE
 		petrified_mob.forceMove(loc)
-		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE, TRAIT_NOBLEED)
+		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
+		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLEED, MAGIC_TRAIT)
 		petrified_mob.take_overall_damage((petrified_mob.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= "mimic"
 		petrified_mob = null
