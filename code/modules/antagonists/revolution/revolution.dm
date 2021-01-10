@@ -346,7 +346,8 @@
 
 /// Updates the state of the world depending on if revs won or loss.
 /// Returns who won, at which case this method should no longer be called.
-/datum/team/revolution/proc/process_victory()
+/// If revs_win_injection_amount is passed, then that amount of threat will be added if the revs win.
+/datum/team/revolution/proc/process_victory(revs_win_injection_amount)
 	if (check_rev_victory())
 		. = REVOLUTION_VICTORY
 	else if (check_heads_victory())
@@ -392,6 +393,11 @@
 		for (var/job_name in GLOB.command_positions + GLOB.security_positions)
 			var/datum/job/job = SSjob.GetJob(job_name)
 			job.total_positions = 0
+
+		if (revs_win_injection_amount)
+			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			dynamic.create_threat(revs_win_injection_amount)
+			dynamic.threat_log += "[worldtime2text()]: Revolution victory. Added [revs_win_injection_amount] threat."
 
 		priority_announce("A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials. \
 		For the safety of our staff, we have blacklisted your station for new employment of security and command. \
