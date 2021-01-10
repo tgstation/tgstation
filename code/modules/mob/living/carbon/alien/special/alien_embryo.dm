@@ -6,7 +6,7 @@
 	icon_state = "larva0_dead"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	//Which growth stage are we currently on? Stages give hints to the organ holder that this is in them.
-	var/stage = -1	//Once we initialise, we call our first growth cycle which immediately puts us to stage 0.
+	var/stage = 0
 	// Are we bursting out of the poor sucker who's the xeno mom?
 	var/bursting = FALSE
 	// How long does it take to increase a stage? Contained in a var so it can be var-edited.
@@ -18,7 +18,7 @@
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
-	if(stage < 4)
+	if(stage < 5)
 		to_chat(finder, "<span class='notice'>It's small and weak, barely the size of a foetus.</span>")
 	else
 		to_chat(finder, "<span class='notice'>It's grown quite large, and writhes slightly as you look at it.</span>")
@@ -28,7 +28,7 @@
 /obj/item/organ/body_egg/alien_embryo/on_life()
 	. = ..()
 	switch(stage)
-		if(2, 3)
+		if(3, 4)
 			if(prob(2))
 				owner.emote("sneeze")
 			if(prob(2))
@@ -37,7 +37,7 @@
 				to_chat(owner, "<span class='danger'>Your throat feels sore.</span>")
 			if(prob(2))
 				to_chat(owner, "<span class='danger'>Mucous runs down the back of your throat.</span>")
-		if(4)
+		if(5)
 			if(prob(2))
 				owner.emote("sneeze")
 			if(prob(2))
@@ -55,16 +55,16 @@
 			owner.adjustToxLoss(10)
 
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
-	if(stage >= 5)
+	if(stage >= 6)
 		return
-	if(stage < 5)
+	if(stage < 6)
 		stage++
 		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
-		if(stage >= 5)
+		if(stage > 6)
 			addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
-	if(stage == 5 && prob(50))
+	if(stage == 6 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
 			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
 				AttemptGrow(0)
@@ -86,7 +86,7 @@
 
 	if(!candidates.len || !owner)
 		bursting = FALSE
-		stage = 4
+		stage = 5
 		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)	//We stop growing at stage 5, so if we go back a stage, we need to be able to advance again.
 		return
 
