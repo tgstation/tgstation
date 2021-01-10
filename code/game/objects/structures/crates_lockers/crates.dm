@@ -102,7 +102,6 @@
 		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
 		if(prob(12))
 			new	/obj/item/storage/bag/trash/filled(src)
-	new /obj/effect/spawner/scatter/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -238,8 +237,7 @@
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
-	for(var/i in 1 to 3)
-		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
+	new /obj/item/stack/sheet/mineral/gold(src, 3, FALSE)
 	new /obj/item/storage/belt/champion(src)
 
 /obj/structure/closet/crate/silvercrate

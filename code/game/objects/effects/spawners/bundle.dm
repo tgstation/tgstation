@@ -206,3 +206,10 @@
 	name = "moisture trap spawner"
 	items = list(/obj/effect/spawner/scatter/moisture,
 				/obj/structure/moisture_trap)
+
+/obj/effect/spawner/bundle/filled_trashcart
+	name = "filled trashcart spawner"
+	items = list(
+		/obj/structure/closet/crate/trashcart/filled,
+		/obj/effect/spawner/scatter/grime,
+	)

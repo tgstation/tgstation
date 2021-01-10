@@ -201,4 +201,8 @@
 	if(prob(30))
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
-	return
+
+	// Number of items is between 31-35, which is higher than normal storage capacity (30)
+	// Randomly cull items until it doesn't leak any items when opened
+	while(length(contents) > storage_capacity)
+		qdel(pick(contents))

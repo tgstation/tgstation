@@ -15,6 +15,10 @@ GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
 GLOBAL_VAR(test_log)
 
+/// Set to false to disable cleanup after testing, leaving test environments and server running for inspection
+#define CLEANUP_AFTER_TEST TRUE
+// although so many of the unit tests just spawn humans to then choke and die in space :(
+
 /datum/unit_test
 	//Bit of metadata for the future maybe
 	var/list/procs_tested
@@ -28,31 +32,59 @@ GLOBAL_VAR(test_log)
 	/// The type of turf to allocate for the testing zone
 	var/test_turf_type = /turf/open/floor/plasteel
 
+	/// The type of turf IF ANY to have the outer testing zone set to
+	var/border_test_turf_type = null
+
+	/// How many turfs the reserved area is wide
+	var/reservation_width = 5
+	/// How many turfs the reserved area is high
+	var/reservation_height = 5
+	/// Whether to force gravity in the testing area
+	var/gravity = FALSE
+
 	//internal shit
 	var/focus = FALSE
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
 
+
 	var/static/datum/turf_reservation/turf_reservation
 
 /datum/unit_test/New()
 	if (isnull(turf_reservation))
-		turf_reservation = SSmapping.RequestBlockReservation(5, 5)
+		turf_reservation = SSmapping.RequestBlockReservation(reservation_width, reservation_height)
 
 	for (var/turf/reserved_turf in turf_reservation.reserved_turfs)
-		reserved_turf.ChangeTurf(test_turf_type)
+		var/turf_type = test_turf_type
+		if(border_test_turf_type)
+			if(reserved_turf.x == turf_reservation.bottom_left_coords[1] || reserved_turf.x == turf_reservation.top_right_coords[1] || reserved_turf.y == turf_reservation.bottom_left_coords[2] || reserved_turf.y == turf_reservation.top_right_coords[2])
+				turf_type = border_test_turf_type
+
+		reserved_turf.ChangeTurf(turf_type)
+		if(gravity)
+			reserved_turf.AddElement(/datum/element/forced_gravity)
 
 	allocated = new
 	run_loc_bottom_left = locate(turf_reservation.bottom_left_coords[1], turf_reservation.bottom_left_coords[2], turf_reservation.bottom_left_coords[3])
 	run_loc_top_right = locate(turf_reservation.top_right_coords[1], turf_reservation.top_right_coords[2], turf_reservation.top_right_coords[3])
 
 /datum/unit_test/Destroy()
-	//clear the test area
+	if(CLEANUP_AFTER_TEST)
+		clear_test_area()
+		QDEL_LIST(allocated)
+	else
+		// Drop references to all test contents so they don't get swept up by GC
+		allocated = null
+		turf_reservation = null
+		run_loc_top_right = null
+		run_loc_bottom_left = null
+	return ..()
+
+/// Clear the test area of all movable atoms.
+/datum/unit_test/proc/clear_test_area()
 	for(var/atom/movable/AM in block(run_loc_bottom_left, run_loc_top_right))
 		qdel(AM)
-	QDEL_LIST(allocated)
-	return ..()
 
 /datum/unit_test/proc/Run()
 	Fail("Run() called parent or not implemented")
@@ -110,4 +142,7 @@ GLOBAL_VAR(test_log)
 
 		CHECK_TICK
 
-	SSticker.force_ending = TRUE
+	if(CLEANUP_AFTER_TEST)
+		SSticker.force_ending = TRUE
+
+#undef CLEANUP_AFTER_TEST

@@ -94,26 +94,28 @@
 		new /obj/item/tank/jetpack/carbondioxide(src)
 
 /obj/structure/closet/syndicate/resources/everything
-	desc = "It's an emergency storage closet for repairs."
+	desc = "It's an emergency storage closet for repairs. It looks like it can hold more things than normal."
+	// Debug closet, it can hold double the items.
+	storage_capacity = 60
 
 /obj/structure/closet/syndicate/resources/everything/PopulateContents()
 	var/list/resources = list(
-	/obj/item/stack/sheet/metal,
-	/obj/item/stack/sheet/glass,
-	/obj/item/stack/sheet/mineral/gold,
-	/obj/item/stack/sheet/mineral/silver,
-	/obj/item/stack/sheet/mineral/plasma,
-	/obj/item/stack/sheet/mineral/uranium,
-	/obj/item/stack/sheet/mineral/diamond,
-	/obj/item/stack/sheet/mineral/bananium,
-	/obj/item/stack/sheet/plasteel,
-	/obj/item/stack/sheet/mineral/titanium,
-	/obj/item/stack/sheet/mineral/plastitanium,
-	/obj/item/stack/rods,
-	/obj/item/stack/sheet/bluespace_crystal,
-	/obj/item/stack/sheet/mineral/abductor,
-	/obj/item/stack/sheet/plastic,
-	/obj/item/stack/sheet/mineral/wood
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/mineral/gold,
+		/obj/item/stack/sheet/mineral/silver,
+		/obj/item/stack/sheet/mineral/plasma,
+		/obj/item/stack/sheet/mineral/uranium,
+		/obj/item/stack/sheet/mineral/diamond,
+		/obj/item/stack/sheet/mineral/bananium,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/sheet/mineral/titanium,
+		/obj/item/stack/sheet/mineral/plastitanium,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet/bluespace_crystal,
+		/obj/item/stack/sheet/mineral/abductor,
+		/obj/item/stack/sheet/plastic,
+		/obj/item/stack/sheet/mineral/wood
 	)
 
 	for(var/i = 0, i<2, i++)
