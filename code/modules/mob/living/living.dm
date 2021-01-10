@@ -1,3 +1,7 @@
+/mob/living
+	///Can this mob rest?
+	var can_rest = FALSE
+
 /mob/living/Initialize()
 	. = ..()
 	register_init_signals()
@@ -471,8 +475,13 @@
 
 ///Proc to hook behavior to the change of value in the resting variable.
 /mob/living/proc/set_resting(new_resting, silent = TRUE, instant = FALSE)
+	if(!can_rest)
+		get_up(instant)
+		update_resting()
+		return
 	if(new_resting == resting)
 		return
+
 	. = resting
 	resting = new_resting
 	if(new_resting)
