@@ -100,24 +100,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
-/// Forces the user to stay unconscious.
-#define TRAIT_KNOCKEDOUT		"knockedout"
-/// Prevents voluntary movement.
-#define TRAIT_IMMOBILIZED		"immobilized"
-/// Prevents voluntary standing or staying up on its own.
-#define TRAIT_FLOORED			"floored"
-/// Forces user to stay standing
-#define TRAIT_FORCED_STANDING	"forcedstanding"
-/// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
-#define TRAIT_HANDS_BLOCKED		"handsblocked"
-/// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
-#define TRAIT_UI_BLOCKED		"uiblocked"
-/// Inability to pull things. Turned into a trait from [MOBILITY_PULL] to be able to track sources.
-#define TRAIT_PULL_BLOCKED		"pullblocked"
-/// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
-#define TRAIT_RESTRAINED		"restrained"
-/// Doesn't miss attacks
-#define TRAIT_PERFECT_ATTACKER "perfect_attacker"
+#define TRAIT_KNOCKEDOUT		"knockedout" /// Forces the user to stay unconscious.
+#define TRAIT_IMMOBILIZED		"immobilized" /// Prevents voluntary movement.
+#define TRAIT_FLOORED			"floored" /// Prevents voluntary standing or staying up on its own.
+#define TRAIT_FORCED_STANDING	"forcedstanding" /// Forces user to stay standing
+#define TRAIT_HANDS_BLOCKED		"handsblocked" /// Prevents usage of manipulation appendages (picking, holding or using items, manipulating storage).
+#define TRAIT_UI_BLOCKED		"uiblocked" /// Inability to access UI hud elements. Turned into a trait from [MOBILITY_UI] to be able to track sources.
+#define TRAIT_PULL_BLOCKED		"pullblocked" /// Inability to pull things. Turned into a trait from [MOBILITY_PULL] to be able to track sources.
+#define TRAIT_RESTRAINED		"restrained" /// Abstract condition that prevents movement if being pulled and might be resisted against. Handcuffs and straight jackets, basically.
+#define TRAIT_PERFECT_ATTACKER "perfect_attacker" /// Doesn't miss attacks
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_CRITICAL_CONDITION	"critical-condition" //In some kind of critical condition. Is able to succumb.
 #define TRAIT_BLIND 			"blind"
