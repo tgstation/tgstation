@@ -192,7 +192,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = TRUE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)

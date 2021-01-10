@@ -1,0 +1,4 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - tweak: "Telekinesis users can now only throw items 10 tiles far, everything else (like lockers, machines, etc) can only be thrown 1 tile far"

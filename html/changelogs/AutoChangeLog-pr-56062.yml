@@ -1,0 +1,5 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug that caused every cytological sample to contain a virus."
+  - bugfix: "Fixed a bug that multiplied the cytology virus growth penalty and spaceacillin consumption."

@@ -1,0 +1,5 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - bugfix: "ID cards that start with syndicate access don't loose syndicate access upon modification at the ID console anymore."
+  - code_imp: "ID cards now have sticky access, which is readded if removed at the ID console."

@@ -258,8 +258,11 @@
 
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 
+/obj/structure/fans/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 //Invisible, indestructible fans
 /obj/structure/fans/tiny/invisible
 	name = "air flow blocker"

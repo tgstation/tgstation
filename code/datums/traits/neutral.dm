@@ -257,15 +257,12 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/organ/tongue/old_tongue = locate() in H.internal_organs
 	var/obj/item/organ/tongue/tied/new_tongue = new(get_turf(H))
-	var/obj/item/clothing/gloves/old_gloves = locate() in H
 	var/obj/item/clothing/gloves/radio/gloves = new(get_turf(H))
 	old_tongue.Remove(H)
 	new_tongue.Insert(H)
 	qdel(old_tongue)
-	qdel(old_gloves)
-	H.put_in_hands(gloves)
-	H.equip_to_slot(gloves, ITEM_SLOT_GLOVES)
-	H.regenerate_icons()
+	if(!H.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES, bypass_equip_delay_self = TRUE))
+		H.put_in_hands(gloves)
 
 /datum/quirk/tongue_tied/post_add()
 	to_chat(quirk_holder, "<span class='boldannounce'>Because you speak with your hands, having them full hinders your ability to communicate!</span>")
