@@ -58,7 +58,7 @@
 	if(stage >= 6)
 		return
 	INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
-	if(++stage > 6)
+	if(++stage < 6)
 		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
