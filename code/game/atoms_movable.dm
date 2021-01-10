@@ -97,7 +97,7 @@
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
 		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
 			CanAtmosPass = ATMOS_PASS_YES
-			air_update_turf(TRUE)
+			air_update_turf(TRUE, FALSE)
 		loc.handle_atom_del(src)
 
 	if(opacity)
@@ -737,7 +737,8 @@
 
 	if(pulledby)
 		pulledby.stop_pulling()
-
+	if (quickstart && (throwing || SSthrowing.state == SS_RUNNING)) //Avoid stack overflow edgecases.
+		quickstart = FALSE
 	throwing = TT
 	if(spin)
 		SpinAnimation(5, 1)

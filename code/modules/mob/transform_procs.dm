@@ -25,12 +25,13 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
+	uncuff()
 	return src
 
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize()
+/mob/living/carbon/proc/humanize(species = /datum/species/human)
 	if (notransform || transformation_timer)
 		return
 
@@ -45,15 +46,15 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
-	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, species), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
-/mob/living/carbon/proc/finish_humanize()
+/mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
 	transformation_timer = null
 	to_chat(src, "<B>You are now a human.</B>")
 	notransform = FALSE
 	icon = initial(icon)
 	invisibility = 0
-	set_species(/datum/species/human)
+	set_species(species)
 	return src
 
 /mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)

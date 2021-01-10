@@ -87,7 +87,14 @@
 /** Updates the custom materials list of this stack.
  */
 /obj/item/stack/proc/update_custom_materials()
-	set_custom_materials(mats_per_unit, amount)
+	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
+
+/**
+ * Override to make things like metalgen accurately set custom materials
+ */
+/obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
+	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
+
 
 /obj/item/stack/on_grind()
 	. = ..()
@@ -124,7 +131,7 @@
 
 /obj/item/stack/examine(mob/user)
 	. = ..()
-	if (is_cyborg)
+	if(is_cyborg)
 		if(singular_name)
 			. += "There is enough energy for [get_amount()] [singular_name]\s."
 		else
@@ -346,7 +353,7 @@
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
 	if(check && zero_amount())
 		return FALSE
-	if (is_cyborg)
+	if(is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return FALSE
@@ -387,7 +394,7 @@
  * - _amount: The number of units to add to this stack.
  */
 /obj/item/stack/proc/add(_amount)
-	if (is_cyborg)
+	if(is_cyborg)
 		source.add_charge(_amount * cost)
 	else
 		amount += _amount
@@ -404,7 +411,9 @@
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
-	if(!check.is_cyborg && (mats_per_unit != check.mats_per_unit)) // Cyborg stacks don't have materials. This lets them recycle sheets and floor tiles.
+	if(mats_per_unit != check.mats_per_unit)
+		return FALSE
+	if(is_cyborg)	// No merging cyborg stacks into other stacks
 		return FALSE
 	return TRUE
 
