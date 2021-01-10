@@ -1,7 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - rscadd: "Added a new cytology clown mob, the banana glutton!"
-  - rscdel: "Removed the old clown blob mob."
-  - bugfix: "The cytology clown mob cell lines now have properly assigned reagents."
-  - imageadd: "The old clown blob sprite has been partially resprited."

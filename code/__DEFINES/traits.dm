@@ -220,6 +220,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PASSTABLE			"passtable"
 #define TRAIT_NOFLASH			"noflash" //Makes you immune to flashes
 #define TRAIT_XENO_IMMUNE		"xeno_immune"//prevents xeno huggies implanting skeletons
+#define TRAIT_FLASH_SENSITIVE	"flash_sensitive"//Makes you flashable from any direction
 #define TRAIT_NAIVE				"naive"
 #define TRAIT_PRIMITIVE			"primitive"
 #define TRAIT_GUNFLIP			"gunflip"
@@ -241,12 +242,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
-// through force of will, or equipment.
+// through force of will, or equipment. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_MADNESS_IMMUNE "supermatter_madness_immune"
 
 // You can stare into the abyss, and it turns pink.
 // Being close enough to the supermatter makes it heal at higher temperatures
-// and emit less heat. A trait applied to a mind.
+// and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
 
 //SKILLS
