@@ -386,18 +386,7 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
-	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 24), TEXT_SOUTH = list(0, 24), TEXT_EAST = list(-16, 24), TEXT_WEST = list(16, 24)))
-	riding.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	riding.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	riding.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
-	riding.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
-
-	//these 0 offsets are needed for the riding component to work properly with base pixel offset mobs for some cursed reason.
-	riding.set_vehicle_dir_offsets(SOUTH, 0, 0)
-	riding.set_vehicle_dir_offsets(NORTH, 0, 0)
-	riding.set_vehicle_dir_offsets(EAST, 0, 0)
-	riding.set_vehicle_dir_offsets(WEST, 0, 0)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

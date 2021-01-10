@@ -288,6 +288,8 @@
 
 		// Directly change the new holding_brain.
 		skillchip.holding_brain = replacement_brain
+		//And move the actual obj into the new brain (contents)
+		skillchip.forceMove(replacement_brain)
 
 		// Directly add them to the skillchip list in the new brain.
 		LAZYADD(replacement_brain.skillchips, skillchip)

@@ -644,6 +644,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robust,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp)
+	quirk_holder?.mind?.store_memory("Your favorite cigarette packets are [initial(drug_container_type.name)]s.")
 	. = ..()
 
 /datum/quirk/junkie/smoker/announce_drugs()
