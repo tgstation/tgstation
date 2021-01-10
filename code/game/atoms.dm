@@ -1773,13 +1773,11 @@
 /**
  * Point at an atom
  *
- * Moved from pointed() verb in mob.dm
- *
  * Intended to enable and standardise the pointing animation for all atoms
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/proc/pointat(atom/A as mob|obj|turf in view())
+/atom/proc/pointat(atom/A)
 	if(!src || !isturf(src.loc))
 		return FALSE
 
