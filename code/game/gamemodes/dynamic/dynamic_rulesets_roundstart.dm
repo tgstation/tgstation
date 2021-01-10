@@ -549,13 +549,6 @@
 		ai.special_role = ROLE_MALF
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/malf/execute()
-	var/datum/antagonist/traitor/AI = new
-	for(var/mind in assigned)
-		var/datum/mind/ai = mind
-		ai.add_antag_datum(AI)
-	return TRUE
-
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 
 //////////////////////////////////////////////
