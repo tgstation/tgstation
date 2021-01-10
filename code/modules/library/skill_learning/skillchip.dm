@@ -427,7 +427,7 @@
 
 /obj/item/skillchip/entrails_reader
 	name = "3NTR41LS skillchip"
-	auto_trait = TRAIT_ENTRAILS_READER
+	auto_traits = list(TRAIT_ENTRAILS_READER)
 	skill_name = "Entrails Reader"
 	skill_description = "Be able to learn about a person's life, by looking at their internal organs. Not to be confused with looking into the future."
 	skill_icon = "lungs"
