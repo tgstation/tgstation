@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	A.add_overlay(creamface)
 
 /datum/component/creamed/Destroy(force, silent)
-	var/mob/living/A = parent
+	var/atom/A = parent
 	A.cut_overlay(creamface)
 	qdel(creamface)
 	if(ishuman(A))
