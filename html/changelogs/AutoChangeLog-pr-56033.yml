@@ -1,4 +1,0 @@
-author: "EgorDinamit"
-delete-after: True
-changes: 
-  - bugfix: "fixed a bug with fulltile pod window spawner"
