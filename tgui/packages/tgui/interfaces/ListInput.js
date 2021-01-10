@@ -36,6 +36,7 @@ export const ListInput = (props, context) => {
       title={title}
       width={325}
       height={325}
+      resizable
     >
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content>
