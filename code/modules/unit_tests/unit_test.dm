@@ -15,8 +15,9 @@ GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
 GLOBAL_VAR(test_log)
 
-/// Set to false to disable cleanup after testing, leaving test environments and server running for inspection
-#define CLEANUP_AFTER_TEST FALSE
+/// Uncomment to disable cleanup after testing, leaving test environments and server running for inspection
+// #define UNIT_TEST_NO_CLEANUP
+
 // although so many of the unit tests just spawn humans to then choke and die in space :(
 
 /datum/unit_test
@@ -40,7 +41,7 @@ GLOBAL_VAR(test_log)
 	/// How many turfs the reserved area is high
 	var/reservation_height = 5
 	/// Whether to force gravity in the testing area
-	var/gravity = FALSE
+	var/gravity = TRUE
 
 	//internal shit
 	var/focus = FALSE
@@ -70,15 +71,16 @@ GLOBAL_VAR(test_log)
 	run_loc_top_right = locate(turf_reservation.top_right_coords[1], turf_reservation.top_right_coords[2], turf_reservation.top_right_coords[3])
 
 /datum/unit_test/Destroy()
-	if(CLEANUP_AFTER_TEST)
-		clear_test_area()
-		QDEL_LIST(allocated)
-	else
-		// Drop references to all test contents so they don't get swept up by GC
-		allocated = null
-		turf_reservation = null
-		run_loc_top_right = null
-		run_loc_bottom_left = null
+#ifdef UNIT_TESTS_NO_CLEANUP
+	// Drop references to all test contents so they don't get swept up by GC
+	allocated = null
+	turf_reservation = null
+	run_loc_top_right = null
+	run_loc_bottom_left = null
+#else
+	clear_test_area()
+	QDEL_LIST(allocated)
+#endif
 	return ..()
 
 /// Clear the test area of all movable atoms.
@@ -142,7 +144,7 @@ GLOBAL_VAR(test_log)
 
 		CHECK_TICK
 
-	if(CLEANUP_AFTER_TEST)
-		SSticker.force_ending = TRUE
-
-#undef CLEANUP_AFTER_TEST
+	#ifdef UNIT_TESTS_NO_CLEANUP
+	#else
+	SSticker.force_ending = TRUE
+	#endif

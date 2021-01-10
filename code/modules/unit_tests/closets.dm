@@ -13,13 +13,15 @@
 	gravity = TRUE
 
 /datum/unit_test/closet_contents/Run()
-	var/list/test_turfs = block(run_loc_bottom_left, run_loc_top_right)
+	var/list/floor_turfs = list()
+
+	for(var/_turf in block(run_loc_bottom_left, run_loc_top_right))
+		if(isopenturf(_turf))
+			floor_turfs += _turf
 
 	for(var/_closettype in typesof(/obj/structure/closet))
 		// Spawn each closet on its own turf, so they don't interfere.
-		var/turf/closet_turf = popleft(test_turfs)
-		while(istype(closet_turf, /turf/closed))
-			closet_turf = popleft(test_turfs)
+		var/turf/closet_turf = popleft(floor_turfs)
 
 		if(!closet_turf)
 			Fail("Ran out of unused turfs to spawn closets on.")
