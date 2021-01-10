@@ -589,6 +589,7 @@
 #include "code\datums\elements\_element.dm"
 #include "code\datums\elements\art.dm"
 #include "code\datums\elements\atmos_sensitive.dm"
+#include "code\datums\elements\backblast.dm"
 #include "code\datums\elements\bed_tucking.dm"
 #include "code\datums\elements\bsa_blocker.dm"
 #include "code\datums\elements\cleaning.dm"
