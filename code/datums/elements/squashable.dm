@@ -41,7 +41,7 @@
 	var/should_squash = prob(squash_chance)
 
 	if(should_squash && on_squash_callback)
-		if(on_squash_callback.Invoke(crossing_movable))
+		if(on_squash_callback.Invoke(target, crossing_movable))
 			return //Everything worked, we're done!
 	if(isliving(crossing_movable))
 		var/mob/living/crossing_mob = crossing_movable

@@ -103,11 +103,6 @@
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
 	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
 		living_target.visible_message("<span class='danger'>[living_target] steps onto [cockroach]'s spike!</span>", "<span class='userdanger'>You step onto [cockroach]'s spike!</span>")
-	else if(HAS_TRAIT(living_target, TRAIT_PACIFISM))
-		living_target.visible_message("<span class='notice'>[living_target] carefully steps over [cockroach].</span>", "<span class='notice'>You carefully step over [cockroach] to avoid hurting it.</span>")
-	else if(HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
-		living_target.visible_message("<span class='danger'>[living_target] steps onto [cockroach]'s spike, but is unfazed!</span>", "<span class='userdanger'>You step onto [cockroach]'s spike, but you're unaffected!</span>")
-	else
-		living_target.visible_message("<span class='notice'>[living_target] squashes [cockroach], not even noticing its spike.</span>", "<span class='notice'>You squashed [cockroach], not even noticing its spike.</span>")
-		cockroach.adjustBruteLoss(1) //kills a normal cockroach
-	return TRUE
+		return TRUE
+	living_target.visible_message("<span class='notice'>[living_target] squashes [cockroach], not even noticing its spike.</span>", "<span class='notice'>You squashed [cockroach], not even noticing its spike.</span>")
+	return FALSE
