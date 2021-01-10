@@ -810,19 +810,15 @@
 	update_previous_reaction_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
-		debug_world("determining [selected_reaction.type]")
 		if((selected_reaction.reactionFlags & REACTION_INSTANT) || (flags & INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
 			update_total()
-			debug_world("[selected_reaction.type] is instant")
 			continue
 		else
-			debug_world("[selected_reaction.type] is processive")
 			var/exists = FALSE
 			for(var/datum/equilibrium/E in reaction_list)
 				if(E.reaction.type == selected_reaction.type) //Don't add duplicates
-					debug_world("Reaction [selected_reaction.type] is already processing")
 					exists = TRUE
 
 			//Add it if it doesn't exist in the list
@@ -830,11 +826,9 @@
 				isReacting = TRUE//Prevent any on_reaction() procs from infinite looping
 				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list.
 				if(E.toDelete)//failed startup checks
-					debug_world("[E.reaction.type] failed startup")
 					qdel(E)
 				else
 					reaction_list += E
-					debug_world("Setting up reaction for [selected_reaction.type]")
 
 	if(reaction_list.len)
 		isReacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
@@ -902,7 +896,6 @@
 	for(var/R in previous_reagent_list)
 		if(has_reagent(R))
 			total_matching_reagents++
-	debug_world("[reagent_list.len] vs [previous_reagent_list.len] counted at [total_matching_reagents]")
 	if(total_matching_reagents != reagent_list.len)
 		return TRUE
 	return FALSE
@@ -985,7 +978,6 @@
 	if(R.chemical_flags & REAGENT_DONOTSPLIT)
 		R.purity = 1
 		return
-	debug_world("Reagent processing: [my_atom.type] [R.type]: [R.volume]u added [added_volume] with [R.purity] purity")
 	if(R.purity < 0)
 		WARNING("Purity below 0 for chem: [type]!")
 		R.purity = 0
@@ -998,13 +990,11 @@
 			Ri.name = R.name//Negative effects are hidden
 			if(Ri.chemical_flags & REAGENT_INVISIBLE)
 				Ri.chemical_flags |= (REAGENT_INVISIBLE)
-		debug_world("REAGENT INVERSION: (impure): added [added_volume] of [R.inverse_chem]")
 	else if (R.impure_chem)
 		var/impureVol = added_volume * (1 - R.purity) //turns impure ratio into impure chem
 		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
 			remove_reagent(R.type, impureVol, FALSE)
 		add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1-R.creation_purity)
-		debug_world("REAGENT CONVERSION: (mixed purity): set [R.type] to [added_volume] and added [impureVol] of [R.impure_chem]")
 	R.purity = 1 //prevent this process from repeating (this is why creation_purity exists)
 
 /// Updates [/datum/reagents/var/total_volume]

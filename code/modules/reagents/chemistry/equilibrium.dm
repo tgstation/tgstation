@@ -24,7 +24,6 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(!calculate_yield())
 		toDelete = TRUE
 		return
-	debug_world("Trying to call on_reaction for [Cr.type]")
 	reaction.on_reaction(holder, multiplier) 
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 
@@ -36,15 +35,12 @@ Instant reactions AREN'T handled here. See holder.dm
 
 	if(!reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.required_temp) //This check is done before in holder, BUT this is here to ensure if it dips under it'll stop
-			debug_world("[reaction.type] Failed initial temp checks")
 			return FALSE //Not hot enough
 	else
 		if(holder.chem_temp > reaction.required_temp)
-			debug_world("[reaction.type] Failed initial cold temp checks")
 			return FALSE //Not cold enough
 			
 	if(! ((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range)) ))//To prevent pointless reactions
-		debug_world("[reaction.type] Failed initial pH checks")
 		return FALSE
 	return TRUE
 
@@ -52,11 +48,9 @@ Instant reactions AREN'T handled here. See holder.dm
 /datum/equilibrium/proc/check_conditions()
 	//Have we exploded?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
-		debug_world("fermiEnd due to the atom/reagents no longer existing.")
 		return FALSE
 	//Are we overheated?
 	if(holder.chem_temp > reaction.overheat_temp)
-		debug_world("[reaction.type] Overheated")
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
 		reaction.overheated(holder, src)
 
@@ -81,11 +75,9 @@ Instant reactions AREN'T handled here. See holder.dm
 				total_matching_reagents++
 	
 	if(!(total_matching_reagents == reaction.required_reagents.len))
-		debug_world("[reaction.type] Failed reagent checks")
 		return FALSE
 
 	if(!(total_matching_catalysts == reaction.required_catalysts.len))
-		debug_world("[reaction.type] Failed catalyst checks")
 		return FALSE
 
 	//All good!
@@ -106,9 +98,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	for(var/P in reaction.results)
 		targetVol += (reaction.results[P]*multiplier)
 		productRatio += reaction.results[P]
-	debug_world("(Fermichem) reaction [reaction.type] has a target volume of: [targetVol] with a multipler of [multiplier]")
 	if(targetVol == 0 || multiplier == INFINITY)
-		debug_world("[reaction.type] Failed volume calculation checks [multiplier] | [targetVol]")
 		return FALSE
 	return TRUE
 
@@ -160,7 +150,6 @@ Instant reactions AREN'T handled here. See holder.dm
 		else if (cached_temp >= reaction.optimal_temp)
 			deltaT = 1
 		else
-			debug_world("[reaction.type] Failed temp checks")
 			deltaT = 0
 			toDelete = TRUE
 			return
@@ -170,7 +159,6 @@ Instant reactions AREN'T handled here. See holder.dm
 		else if (cached_temp <= reaction.optimal_temp)
 			deltaT = 1
 		else
-			debug_world("[reaction.type] Failed cold temp checks")
 			deltaT = 0
 			toDelete = TRUE
 			return
@@ -200,6 +188,8 @@ Instant reactions AREN'T handled here. See holder.dm
 		holder.add_reagent(P, stepAdd, null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
 		reactedVol += stepAdd//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make targetVol in the calculate yield equal to all of the products, and make the vol check add totalStep)
 		totalStepAdded += stepAdd
+
+	//Kept in so that people who want to write fermireactions can contact me with this log so I can help them
 	debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], deltaChemFactor [deltaChemFactor] Pfactor [productRatio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
 
 		
