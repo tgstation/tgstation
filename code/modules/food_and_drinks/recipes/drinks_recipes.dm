@@ -262,6 +262,8 @@
 /datum/chemical_reaction/acidspit
 	results = list(/datum/reagent/consumable/ethanol/acid_spit = 6)
 	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/consumable/ethanol/wine = 5)
+	optimal_pH_min 			= 0         	//Our reaction is very acidic, so lets shift our range
+	optimal_pH_max 			= 7	        	
 
 /datum/chemical_reaction/amasec
 	results = list(/datum/reagent/consumable/ethanol/amasec = 10)
@@ -346,6 +348,8 @@
 /datum/chemical_reaction/triple_citrus
 	results = list(/datum/reagent/consumable/triple_citrus = 5)
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/orangejuice = 1)
+	optimal_pH_min 			= 0         	//Our reaction is very acidic, so lets shift our range
+	optimal_pH_max 			= 7	        	
 
 /datum/chemical_reaction/grape_soda
 	results = list(/datum/reagent/consumable/grape_soda = 2)
