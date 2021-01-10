@@ -61,6 +61,8 @@
 	if(++stage < 6)
 		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
 // Are we already fully grown or somehow overgrown? Stop. Otherwise, update the HUD icon, then increase the stage by 1, if it is still less than six, let's do this proc again in one minute!
+
+
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
@@ -68,7 +70,6 @@
 				AttemptGrow(0)
 				return
 		AttemptGrow()
-
 
 
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
