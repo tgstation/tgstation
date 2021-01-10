@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed high pop server crashes caused by the gravity generator going out."
+  - bugfix: "Paraplegics can once again stand up and shout! in zero G."
