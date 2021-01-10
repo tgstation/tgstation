@@ -65,6 +65,14 @@ $shadow-offset: 0 0 !default;
   flex-grow: 1;
 }
 
+.Section--fill .Section__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .Section--iefix.Section--fill {
   display: table !important;
   width: 100% !important;
@@ -84,11 +92,6 @@ $shadow-offset: 0 0 !default;
 }
 
 .Section--scrollable .Section__content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   overflow-y: scroll;
   overflow-x: hidden;
 }
