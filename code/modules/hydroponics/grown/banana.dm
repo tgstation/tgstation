@@ -62,7 +62,7 @@
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/grown/bananapeel/Initialize()
+/obj/item/grown/bananapeel/Initialize(mapload)
 	. = ..()
 	if(prob(40))
 		if(prob(60))
