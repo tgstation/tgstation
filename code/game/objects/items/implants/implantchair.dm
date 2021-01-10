@@ -171,7 +171,7 @@
 		return FALSE
 	H.set_species(/datum/species/human, 1)//lizards go home
 	purrbation_remove(H)//remove cats
-	H.dna.remove_all_mutations()//hulks out
+	H.dna.remove_all_mutations()//powergamers out
 	return TRUE
 
 

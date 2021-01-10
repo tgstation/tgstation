@@ -84,8 +84,6 @@
 
 IGNORE_PROC_IF_NOT_TARGET(attack_hand)
 
-IGNORE_PROC_IF_NOT_TARGET(attack_hulk)
-
 IGNORE_PROC_IF_NOT_TARGET(attack_paw)
 
 IGNORE_PROC_IF_NOT_TARGET(attack_alien)

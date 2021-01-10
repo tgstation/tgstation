@@ -35,13 +35,12 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSSED, .proc/on_Crossed)
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, .proc/on_startpulling)
 	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, .proc/on_try_syringe)
-	RegisterSignal(new_pawn, COMSIG_ATOM_HULK_ATTACK, .proc/on_attack_hulk)
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_MOVABLE_CROSSED, COMSIG_LIVING_START_PULL,\
-	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED))
+	COMSIG_LIVING_TRY_SYRINGE, COMSIG_CARBON_CUFF_ATTEMPTED))
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/able_to_run()
@@ -202,10 +201,6 @@ have ways of interacting with a specific mob and control it.
 	// chance of monkey retaliation
 	if(prob(MONKEY_SYRINGE_RETALIATION_PROB))
 		retaliate(user)
-
-/datum/ai_controller/monkey/proc/on_attack_hulk(datum/source, mob/user)
-	SIGNAL_HANDLER
-	retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_attempt_cuff(datum/source, mob/user)
 	SIGNAL_HANDLER

@@ -84,7 +84,7 @@
 		owner.remove_overlay(layer_used)
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
-	grant_spell() //we do checks here so nothing about hulk getting magic
+	grant_spell() //we do checks here so nothing about people who shouldn't get magic getting magic
 	if(!modified)
 		addtimer(CALLBACK(src, .proc/modify, 5)) //gonna want children calling ..() to run first
 

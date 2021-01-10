@@ -76,9 +76,6 @@
 /obj/machinery/porta_turret_cover/attack_animal(mob/living/simple_animal/user)
 	parent_turret.attack_animal(user)
 
-/obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user)
-	return parent_turret.attack_hulk(user)
-
 /obj/machinery/porta_turret_cover/can_be_overridden()
 	. = 0
 

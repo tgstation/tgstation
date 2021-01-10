@@ -3652,7 +3652,6 @@
 	read_only = 1
 	},
 /obj/item/firing_pin/dna,
-/obj/item/dnainjector/hulkmut,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
 "hU" = (

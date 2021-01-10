@@ -302,9 +302,6 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/attack_paw(mob/user)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user)
-	promptExit(user)
-
 /turf/closed/indestructible/hoteldoor/attack_larva(mob/user)
 	promptExit(user)
 

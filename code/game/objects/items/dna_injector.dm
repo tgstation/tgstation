@@ -80,17 +80,6 @@
 	icon_state = "dnainjector0"
 	desc += " This one is used up."
 
-
-/obj/item/dnainjector/antihulk
-	name = "\improper DNA injector (Anti-Hulk)"
-	desc = "Cures green skin."
-	remove_mutations = list(HULK)
-
-/obj/item/dnainjector/hulkmut
-	name = "\improper DNA injector (Hulk)"
-	desc = "This will make you big and strong, but give you a bad skin condition."
-	add_mutations = list(HULK)
-
 /obj/item/dnainjector/xraymut
 	name = "\improper DNA injector (X-ray)"
 	desc = "Finally you can see what the Captain does."
@@ -484,11 +473,6 @@
 		return TRUE
 	else
 		return FALSE
-
-/obj/item/dnainjector/timed/hulk
-	name = "\improper DNA injector (Hulk)"
-	desc = "This will make you big and strong, but give you a bad skin condition."
-	add_mutations = list(HULK)
 
 /obj/item/dnainjector/timed/h2m
 	name = "\improper DNA injector (Human > Monkey)"

@@ -56,16 +56,6 @@
 		manual_emote("[pet_bonus_emote]")
 	SEND_SIGNAL(petter, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 
-/mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	playsound(loc, "punch", 25, TRUE, -1)
-	visible_message("<span class='danger'>[user] punches [src]!</span>", \
-					"<span class='userdanger'>You're punched by [user]!</span>", null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, "<span class='danger'>You punch [src]!</span>")
-	adjustBruteLoss(15)
-
 /mob/living/simple_animal/attack_paw(mob/living/carbon/human/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)

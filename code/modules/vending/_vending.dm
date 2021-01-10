@@ -996,7 +996,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/mob/living/L = AM
-	if(tilted || !istype(L) || !prob(20 * (throwingdatum.speed - L.throw_speed))) // hulk throw = +20%, neckgrab throw = +20%
+	if(tilted || !istype(L) || !prob(20 * (throwingdatum.speed - L.throw_speed))) //neckgrab throw = +20%
 		return
 
 	tilt(L)

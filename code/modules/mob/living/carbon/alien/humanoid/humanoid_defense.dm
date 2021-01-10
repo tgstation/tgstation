@@ -1,19 +1,4 @@
 
-
-/mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	adjustBruteLoss(15)
-	var/hitverb = "hit"
-	if(mob_size < MOB_SIZE_LARGE)
-		safe_throw_at(get_edge_target_turf(src, get_dir(user, src)), 2, 1, user)
-		hitverb = "slam"
-	playsound(loc, "punch", 25, TRUE, -1)
-	visible_message("<span class='danger'>[user] [hitverb]s [src]!</span>", \
-					"<span class='userdanger'>[user] [hitverb]s you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, "<span class='danger'>You [hitverb] [src]!</span>")
-
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M)
 	if(..())
 		switch(M.a_intent)

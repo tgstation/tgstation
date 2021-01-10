@@ -192,20 +192,6 @@
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
 
-
-/mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	var/hulk_verb = pick("smash","pummel")
-	if(check_shields(user, 15, "the [hulk_verb]ing"))
-		return
-	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
-	visible_message("<span class='danger'>[user] [hulk_verb]ed [src]!</span>", \
-					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
-	to_chat(user, "<span class='danger'>You [hulk_verb] [src]!</span>")
-	apply_damage(15, BRUTE, wound_bonus=10)
-
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
 		return

@@ -289,14 +289,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	else if(!opened)
 		..()
 
-/mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	spark_system.start()
-	step_away(src, user, 15)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, src, get_turf(user), 15), 3)
-
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()

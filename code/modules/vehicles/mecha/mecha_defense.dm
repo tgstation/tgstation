@@ -87,16 +87,6 @@
 		attack_generic(user, animal_damage, user.melee_damage_type, MELEE, play_soundeffect)
 		return 1
 
-
-/obj/vehicle/sealed/mecha/hulk_damage()
-	return 15
-
-/obj/vehicle/sealed/mecha/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(.)
-		log_message("Attack by hulk. Attacker - [user].", LOG_MECHA, color="red")
-		log_combat(user, src, "punched", "hulk powers")
-
 /obj/vehicle/sealed/mecha/blob_act(obj/structure/blob/B)
 	log_message("Attack by blob. Attacker - [B].", LOG_MECHA, color="red")
 	take_damage(30, BRUTE, MELEE, 0, get_dir(src, B))

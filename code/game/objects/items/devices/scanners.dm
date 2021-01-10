@@ -340,25 +340,6 @@ GENE SCANNER
 		if(advanced && H.has_dna())
 			render_list += "<span class='info ml-1'>Genetic Stability: [H.dna.stability]%.</span>\n"
 
-		// Species and body temperature
-		var/datum/species/S = H.dna.species
-		var/mutant = H.dna.check_mutation(HULK) \
-			|| S.mutantlungs != initial(S.mutantlungs) \
-			|| S.mutantbrain != initial(S.mutantbrain) \
-			|| S.mutantheart != initial(S.mutantheart) \
-			|| S.mutanteyes != initial(S.mutanteyes) \
-			|| S.mutantears != initial(S.mutantears) \
-			|| S.mutanthands != initial(S.mutanthands) \
-			|| S.mutanttongue != initial(S.mutanttongue) \
-			|| S.mutantliver != initial(S.mutantliver) \
-			|| S.mutantstomach != initial(S.mutantstomach) \
-			|| S.mutantappendix != initial(S.mutantappendix) \
-			|| S.flying_species != initial(S.flying_species)
-
-		render_list += "<span class='info ml-1'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>\n"
-		render_list += "<span class='info ml-1'>Core temperature: [round(H.coretemperature-T0C,0.1)] &deg;C ([round(H.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
-	render_list += "<span class='info ml-1'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
-
 	// Time of death
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
 		render_list += "<span class='info ml-1'>Time of Death: [M.tod]</span>\n"

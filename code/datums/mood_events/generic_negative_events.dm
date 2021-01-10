@@ -115,10 +115,6 @@
 	var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
 	description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
 
-/datum/mood_event/hulk //Entire duration of having the hulk mutation
-	description = "<span class='warning'>HULK SMASH!</span>\n"
-	mood_change = -4
-
 /datum/mood_event/epilepsy //Only when the mutation causes a seizure
 	description = "<span class='warning'>I should have paid attention to the epilepsy warning.</span>\n"
 	mood_change = -3

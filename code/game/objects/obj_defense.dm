@@ -79,19 +79,6 @@
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
 
-///Called to get the damage that hulks will deal to the obj.
-/obj/proc/hulk_damage()
-	return 150 //the damage hulks do on punches to this object, is affected by melee armor
-
-/obj/attack_hulk(mob/living/carbon/human/user)
-	..()
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>", "<span class='danger'>You smash [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-	if(density)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-	take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
 	if (!..())

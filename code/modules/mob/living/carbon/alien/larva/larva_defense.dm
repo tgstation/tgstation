@@ -20,13 +20,6 @@
 							"<span class='danger'>You avoid [M]'s kick!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 			to_chat(M, "<span class='warning'>Your kick misses [src]!</span>")
 
-/mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user)
-	. = ..()
-	if(!.)
-		return
-	adjustBruteLoss(5 + rand(1,9))
-	new /datum/forced_movement(src, get_step_away(user,src, 30), 1)
-
 /mob/living/carbon/alien/larva/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)
 		visual_effect_icon = ATTACK_EFFECT_BITE

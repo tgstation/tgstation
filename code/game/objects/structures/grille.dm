@@ -91,14 +91,6 @@
 /obj/structure/grille/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/grille/hulk_damage()
-	return 60
-
-/obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
-	if(shock(user, 70))
-		return
-	. = ..()
-
 /obj/structure/grille/attack_hand(mob/living/user)
 	. = ..()
 	if(.)

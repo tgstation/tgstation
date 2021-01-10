@@ -174,7 +174,7 @@
 
 /obj/item/storage/backpack/genetics
 	name = "genetics backpack"
-	desc = "A bag designed to be super tough, just in case someone hulks out on you."
+	desc = "A bag designed to be super tough, just in case your monkey freaks out on you."
 	icon_state = "genepack"
 	inhand_icon_state = "genepack"
 
