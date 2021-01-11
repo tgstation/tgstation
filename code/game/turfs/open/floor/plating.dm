@@ -10,6 +10,7 @@
 /turf/open/floor/plating
 	name = "plating"
 	icon_state = "plating"
+	base_icon_state = "plating"
 	intact = FALSE
 	baseturfs = /turf/baseturf_bottom
 	footstep = FOOTSTEP_PLATING
@@ -35,16 +36,6 @@
 	if (!burnt_states)
 		burnt_states = list("panelscorched")
 	. = ..()
-	if(!attachment_holes || (!broken && !burnt))
-		icon_plating = icon_state
-	else
-		icon_plating = initial(icon_state)
-
-/turf/open/floor/plating/update_icon()
-	if(!..())
-		return
-	if(!broken && !burnt)
-		icon_state = icon_plating //Because asteroids are 'platings' too.
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -97,7 +88,7 @@
 	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
 		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
 			to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-			icon_state = icon_plating
+			icon_state = base_icon_state
 			burnt = FALSE
 			broken = FALSE
 
@@ -106,7 +97,7 @@
 	..()
 	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
 		to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-		icon_state = icon_plating
+		icon_state = base_icon_state
 		burnt = FALSE
 		broken = FALSE
 

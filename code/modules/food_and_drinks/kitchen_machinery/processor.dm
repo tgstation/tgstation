@@ -70,6 +70,7 @@
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
 				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+					LAZYADD(processor_contents, S)
 					loaded++
 
 		if(loaded)
