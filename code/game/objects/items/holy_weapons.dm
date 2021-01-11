@@ -8,7 +8,7 @@
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 
 /obj/item/clothing/suit/armor/riot/chaplain/clock
