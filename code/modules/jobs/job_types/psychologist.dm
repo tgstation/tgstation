@@ -14,6 +14,8 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SRV
 
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
 
 /datum/outfit/job/psychologist
