@@ -43,7 +43,7 @@
 	if(contents.len <= 1)
 		var/obj/item/tcgcard_deck/deck = parent
 		var/obj/item/tcgcard/card = contents[1]
-		card.forceMove(card.drop_location())
+		remove_from_storage(card, card.drop_location())
 		card.flipped = deck.flipped
 		card.update_icon_state()
 		qdel(parent)
