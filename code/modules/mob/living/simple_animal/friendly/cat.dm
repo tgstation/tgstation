@@ -6,7 +6,6 @@
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
-	gender = MALE
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows.", "mews.")
@@ -68,7 +67,6 @@
 /mob/living/simple_animal/pet/cat/breadcat
 	name = "bread cat"
 	desc = "It's a cat... with a bread!"
-	gender = MALE
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
@@ -268,6 +266,7 @@
 	name = "Jerry"
 	desc = "Tom is VERY amused."
 	inept_hunter = TRUE
+	gender = MALE
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
