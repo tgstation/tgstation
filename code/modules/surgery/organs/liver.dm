@@ -25,14 +25,21 @@
 	. = ..()
 	// If the liver handles foods like a clown, it honks like a bike horn
 	// Don't think about it too much.
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_comedy)
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_add_comedy_metabolism)
 
-/obj/item/organ/liver/proc/on_comedy()
+/* Signal handler for the liver gaining the TRAIT_COMEDY_METABOLISM trait
+ *
+ * Adds the "squeak" component, so clown livers will act just like their
+ * bike horns, and honk when you hit them with things, or throw them
+ * against things, or step on them.
+ *
+ * The removal of the component, if this liver loses that trait, is handled
+ * by the component itself.
+ */
+/obj/item/organ/liver/proc/on_add_comedy_metabolism()
 	// Are clown "bike" horns made from the livers of ex-clowns?
 	// Would that make the clown more or less likely to honk it
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
-	// Component has its own listening to remove itself if the liver
-	// ceases to have the COMEDY_METABOLISM trait
 
 /obj/item/organ/liver/examine(mob/user)
 	. = ..()

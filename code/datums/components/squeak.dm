@@ -41,7 +41,7 @@
 
 	if(istype(parent, /obj/item/organ/liver))
 		// Liver squeaking is depending on them functioning like a clown's liver
-		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM),		.proc/cleanup)
+		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_comedy_metabolism_removal)
 
 	override_squeak_sounds = custom_sounds
 	if(chance_override)
@@ -121,7 +121,7 @@
 	if(old_dir != new_dir)
 		play_squeak()
 
-/datum/component/squeak/proc/cleanup(datum/source, trait)
+/datum/component/squeak/proc/on_comedy_metabolism_removal(datum/source, trait)
 	SIGNAL_HANDLER
 
 	qdel(src)
