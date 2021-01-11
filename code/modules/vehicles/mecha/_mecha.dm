@@ -435,7 +435,7 @@
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
 
-	if(occupants)
+	if(LAZYLEN(occupants))
 		for(var/i in occupants)
 			var/mob/living/occupant = i
 			if(cell)
@@ -862,13 +862,14 @@
 
 ///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
-	if(pilot_mob?.Adjacent(src))
-		if(occupants)
-			return
-		LAZYADD(occupants, src)
-		pilot_mob.mecha = src
-		pilot_mob.forceMove(src)
-		update_icon()
+	if(!pilot_mob?.Adjacent(src))
+		return
+	if(LAZYLEN(occupants))
+		return
+	LAZYSET(occupants, pilot_mob, NONE)
+	pilot_mob.mecha = src
+	pilot_mob.forceMove(src)
+	update_icon()
 
 ///Handles an actual AI (simple_animal mecha pilot) exiting the mech
 /obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)

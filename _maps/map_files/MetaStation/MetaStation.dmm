@@ -57860,7 +57860,7 @@
 	},
 /obj/item/seeds/cannabis/ultimate,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/starboard/aft)
 "cPg" = (
 /obj/machinery/hydroponics/soil{
 	pixel_y = 8

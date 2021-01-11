@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - rscadd: "Mechanical Curtains, a button only operated variant of Fancy Curtains"
