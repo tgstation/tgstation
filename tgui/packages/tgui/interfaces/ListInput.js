@@ -150,8 +150,11 @@ export const ListInput = (props, context) => {
                         }
                         setLastCharCode(null);
                       }}
-                      onComponentDidMount={dom =>
-                        selectedButton === button && dom.focus()}
+                      onComponentDidMount={node => {
+                        if (selectedButton === button) {
+                          node.focus();
+                        }
+                      }}
                     />
                   </Flex.Item>
                 ))}
