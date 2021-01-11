@@ -324,6 +324,8 @@
 	var/author = chosen["ckey"]
 	var/png = "data/paintings/[persistence_id]/[chosen["md5"]].png"
 	if(!title)
+		title = "Untitled Artwork" //Prevents NO TITLE paintings. If the NO TITLE issue still comes up, it could be a DB-related issue.
+	if(!title)
 		message_admins("<span class='notice'>Painting with NO TITLE loaded on a [persistence_id] frame in [get_area(src)]. Please delete it, it is saved in the database with no name and will create bad assets.</span>")
 	if(!fexists(png))
 		stack_trace("Persistent painting [chosen["md5"]].png was not found in [persistence_id] directory.")
