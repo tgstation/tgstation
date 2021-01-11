@@ -270,6 +270,21 @@
 		S.Insert(C)
 		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
+/// "Enemy of the Revolutionary", given to heads and security when the revolution wins
+/datum/antagonist/revolution_enemy
+	name = "Enemy of the Revolution"
+	show_in_antagpanel = FALSE
+
+/datum/antagonist/revolution_enemy/on_gain()
+	owner.special_role = "revolution enemy"
+
+	var/datum/objective/survive/survive = new /datum/objective/survive
+	survive.owner = owner
+	survive.explanation_text = "The station has been overrun by revolutionaries, stay alive until the end."
+	objectives += survive
+
+	return ..()
+
 /datum/team/revolution
 	name = "Revolution"
 	var/max_headrevs = 3
@@ -384,12 +399,20 @@
 			if (isnull(mind))
 				continue
 
-			if (!(mind.assigned_role in GLOB.command_positions))
+			if (!(mind.assigned_role in GLOB.command_positions + GLOB.security_positions))
 				continue
 
-			var/mob/living/carbon/head_body = mind.current
-			if (istype(head_body) && head_body.stat == DEAD)
-				head_body.makeUncloneable()
+			var/mob/living/carbon/target_body = mind.current
+
+			mind.add_antag_datum(/datum/antagonist/revolution_enemy)
+
+			if (!istype(target_body))
+				continue
+
+			if (target_body.stat == DEAD)
+				target_body.makeUncloneable()
+			else
+				mind.announce_objectives()
 
 		for (var/job_name in GLOB.command_positions + GLOB.security_positions)
 			var/datum/job/job = SSjob.GetJob(job_name)
