@@ -138,6 +138,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	///Who threw the item
 	var/mob/thrownby = null
+	///Items can by default thrown up to 10 tiles by TK users
+	tk_throw_range = 10
 
 	///the icon to indicate this object is being dragged
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
