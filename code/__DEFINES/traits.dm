@@ -238,6 +238,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE			"cant_ride"
 
+#define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
+
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
 // through force of will, or equipment. Present on /mob or /datum/mind
