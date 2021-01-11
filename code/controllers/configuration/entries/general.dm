@@ -502,3 +502,5 @@
 /datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API
 
 /datum/config_entry/string/centcom_source_whitelist
+
+/datum/config_entry/flag/sql_game_log //enables game logging to SQL, and disables log to file
