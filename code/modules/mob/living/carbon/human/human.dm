@@ -366,6 +366,12 @@
 				if(health_status && health_status != "Cancel")
 					R.fields["m_stat"] = health_status
 				return
+			if(href_list["quirk"])
+				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
+				if(quirkstring)
+					to_chat(usr,  "<span class='notice ml-1'>Detected physiological traits:\n</span><span class='notice ml-2'>[quirkstring]</span>")
+				else
+					to_chat(usr,  "<span class='notice ml-1'>No physiological traits found.</span>")
 			return //Medical HUD ends here.
 
 		if(href_list["hud"] == "s")
