@@ -10,16 +10,16 @@
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
-	///Initial scaling set to overworld_scaling, being placed in storage should resize to storage_scaling.
+	///Initial scaling set to overworld_scaling when item is spawned.
 	scale(target, overworld_scaling)
 
 	src.overworld_scaling = overworld_scaling
 	src.storage_scaling = storage_scaling
 
-	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/scale_storage) //Object added to an inventory/hand slot.
-	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/scale_overworld) //Object dropped or thrown on a turf.
-	RegisterSignal(target, COMSIG_STORAGE_ENTERED, .proc/scale_storage) //Object placed in a storage component.
-	RegisterSignal(target, COMSIG_STORAGE_EXITED, .proc/scale_overworld) //Object removed from a storage component.
+	///Object scaled when placed in an equipment slot OR when entering a storage component.
+	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_STORAGE_ENTERED), .proc/scale_storage)
+	///Object scaled when dropped/thrown OR when exiting a storage component.
+	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_STORAGE_EXITED), .proc/scale_overworld)
 
 /datum/element/item_scaling/Detach(datum/target)
 	. = ..()
