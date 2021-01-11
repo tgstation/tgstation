@@ -35,8 +35,7 @@ SUBSYSTEM_DEF(movement_loop)
 	currentrun += loop
 	lookup[moving] = loop //Cache the datum so lookups are cheap
 	var/list/arguments = args.Copy(3) //Send all the arguments past override to the new datum
-	loop.setup(arglist(arguments))
-	return TRUE
+	return loop.setup(arglist(arguments))
 
 ///Stops an object from being processed, assuming it is being processed
 /datum/controller/subsystem/movement_loop/proc/stop_looping(atom/moving)
@@ -225,12 +224,11 @@ SUBSYSTEM_DEF(movement_loop)
 /datum/move_loop/proc/kill()
 	SHOULD_CALL_PARENT(TRUE)
 	if(moving)
+		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
 		UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
 
 /datum/move_loop/proc/handle_delete()
 	SHOULD_CALL_PARENT(TRUE)
-	if(moving)
-		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
 	SSmovement_loop.remove_from_loop(moving, src)
 
 /datum/move_loop/process(delta_time)
