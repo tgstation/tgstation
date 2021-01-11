@@ -152,7 +152,7 @@
 				var/datum/reagents/tmp_holder = new(1000)
 				tmp_holder.my_atom = src
 				reagents.trans_to(tmp_holder, leak_vol, methods=NONE)
-				tmp_holder.create_foam(/datum/effect_system/foam_spread, rand(0, clamp(log(100, vent_moles+1), 0, 2)))
+				tmp_holder.create_foam(/datum/effect_system/foam_spread, rand(1, clamp(log(100, vent_moles+1), 1, 3)))
 				qdel(tmp_holder)
 				return
 
@@ -268,6 +268,7 @@
 
 
 #undef CONDENSER_RATE_BIN_SCALE
+#undef CONDENSER_VENT_RATIO
 #undef CONDENSER_LEAK_BASE
 #undef CONDENSER_LEAK_RATE
 #undef CONDENSER_LEAK_SCALE
