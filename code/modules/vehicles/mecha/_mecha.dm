@@ -803,13 +803,12 @@
 				to_chat(user, "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
 				return
 			var/list/ai_pilots = list()
-			for(var/mob/occupant in occupants)
-				if(isAI(occupant))
-					ai_pilots += occupant
+			for(var/mob/living/silicon/ai/aipilot in occupants)
+				ai_pilots += aipilot
 			if(!ai_pilots.len) //Mech does not have an AI for a pilot
 				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
 				return
-			if(ai_pilots.len > 1)
+			if(ai_pilots.len > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
 				AI = input(user,"Which AI do you wish to card?", "AI Selection") as null|anything in sortList(ai_pilots)
 			else
 				AI = ai_pilots[1]
