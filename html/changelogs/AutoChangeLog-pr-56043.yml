@@ -1,4 +1,0 @@
-author: "spessbro"
-delete-after: True
-changes: 
-  - code_imp: "stops force defaulting to TRUE when opening large cardboard boxes and supplypods"

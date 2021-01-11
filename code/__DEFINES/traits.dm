@@ -236,6 +236,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE			"cant_ride"
 
+#define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
+
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
 // through force of will, or equipment. Present on /mob or /datum/mind
@@ -266,6 +268,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
+
+// If present on a mob or mobmind, allows them to "suplex" an immovable rod
+// turning it into a glorified potted plant, and giving them an
+// achievement. Can also be used on rod-form wizards.
+// Normally only present in the mind of a Research Director.
+#define TRAIT_ROD_SUPLEX "rod_suplex"
 
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
