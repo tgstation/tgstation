@@ -212,6 +212,20 @@
 	if(overmind)
 		overmind.blobstrain.extinguish_reaction(src)
 
+/obj/structure/blob/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_ANALYZER)
+		user.changeNext_move(CLICK_CD_MELEE)
+		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
+		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
+		if(overmind)
+			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+			to_chat(user, chemeffectreport(user).Join("\n"))
+		else
+			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
+		to_chat(user, typereport(user).Join("\n"))
+	else
+		return ..()
+
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	RETURN_TYPE(/list)
 	. = list()
