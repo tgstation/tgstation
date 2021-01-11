@@ -342,8 +342,7 @@ GENE SCANNER
 
 		// Species and body temperature
 		var/datum/species/S = H.dna.species
-		var/mutant = H.dna.species.mutant_bodyparts \
-			|| S.mutantlungs != initial(S.mutantlungs) \
+		var/mutant = S.mutantlungs != initial(S.mutantlungs) \
 			|| S.mutantbrain != initial(S.mutantbrain) \
 			|| S.mutantheart != initial(S.mutantheart) \
 			|| S.mutanteyes != initial(S.mutanteyes) \
