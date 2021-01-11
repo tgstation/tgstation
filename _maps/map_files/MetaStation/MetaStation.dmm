@@ -37871,9 +37871,6 @@
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "bPc" = (
-/obj/machinery/firealarm{
-	pixel_y = 26
-	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
@@ -79039,7 +79036,6 @@
 /area/science/mixing/chamber)
 "wQP" = (
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room";
 	req_access_txt = "28"
