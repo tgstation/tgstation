@@ -1,6 +1,8 @@
 #define POPCOUNT_SURVIVORS "survivors"					//Not dead at roundend
 #define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcom/shuttles marked as escaped
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" 	//Emergency shuttle only.
+#define PERSONAL_LAST_ROUND "personal last round"
+#define SERVER_LAST_ROUND "server last round"
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
@@ -384,17 +386,17 @@
 	fdel(filename)
 	text2file(content, filename)
 
-/datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, your_last_round = FALSE, server_last_round = FALSE)
+/datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, report_type = null)
 	var/datum/browser/roundend_report = new(C, "roundend")
 	roundend_report.width = 800
 	roundend_report.height = 600
 	var/content
 	var/filename = C.roundend_report_file()
-	if(your_last_round) //Look at this player's last round
+	if(report_type == PERSONAL_LAST_ROUND) //Look at this player's last round
 		content = file2text(filename)
-	else if (server_last_round) //Look at the last round that this server has seen
+	else if (report_type == SERVER_LAST_ROUND) //Look at the last round that this server has seen
 		content = file2text("data/last_roundend/server_last_roundend_report.html")
-	else //Make a new report based on the current round and show that to the player
+	else //report_type is null, so make a new report based on the current round and show that to the player
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
 		remove_verb(C, /client/proc/show_previous_roundend_report)
