@@ -420,18 +420,6 @@
 
 	result += "<div class='panel redborder'>"
 
-	var/num_revs = 0
-	var/num_survivors = 0
-	for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
-		if(survivor.ckey)
-			num_survivors++
-			if(survivor.mind)
-				if(is_revolutionary(survivor))
-					num_revs++
-	if(num_survivors)
-		result += "Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B><br>"
-
-
 	var/list/targets = list()
 	var/list/datum/mind/headrevs
 	var/list/datum/mind/revs
@@ -444,6 +432,17 @@
 		revs = ex_revs
 	else
 		revs = get_antag_minds(/datum/antagonist/rev, TRUE)
+
+	var/num_revs = 0
+	var/num_survivors = 0
+	for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
+		if(survivor.ckey)
+			num_survivors += 1
+			if ((survivor.mind in revs) || (survivor.mind in headrevs))
+				num_revs += 1
+
+	if(num_survivors)
+		result += "Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B><br>"
 
 	if(headrevs.len)
 		var/list/headrev_part = list()
