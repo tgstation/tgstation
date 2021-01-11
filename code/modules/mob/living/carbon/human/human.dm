@@ -1090,7 +1090,7 @@
 		density = old_density
 
 	if(target.loc == loc)
-		buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
+		buckle_mob(target, force = TRUE, check_loc = TRUE, buckle_mob_flags = CARRIER_NEEDS_ARM)
 
 /mob/living/carbon/human/proc/piggyback(mob/living/carbon/target)
 	if(!can_piggyback(target))
@@ -1106,7 +1106,7 @@
 		target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 		return
 
-	buckle_mob(target, TRUE, TRUE, RIDER_NEEDS_ARMS)
+	buckle_mob(target, force = TRUE, check_loc = TRUE, buckle_mob_flags = RIDER_NEEDS_ARMS)
 
 /mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(!is_type_in_typecache(target, can_ride_typecache))
