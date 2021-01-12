@@ -171,6 +171,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
 #define TRAIT_EASILY_WOUNDED		"easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED		"hard_limb_wound"
+#define TRAIT_NEVER_WOUNDED		"never_wounded"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
@@ -441,6 +442,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
 #define SKILLCHIP_TRAIT "skillchip"
+#define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"
 #define LACKING_LOCOMOTION_APPENDAGES_TRAIT "lacking-locomotion-appengades" //trait associated to not having locomotion appendages nor the ability to fly or float
