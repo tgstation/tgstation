@@ -196,7 +196,6 @@
 
 /mob/living/silicon/ai/Destroy()
 	GLOB.ai_list -= src
-	SSshuttle.autoEvac()
 	QDEL_NULL(eyeobj) // No AI, no Eye
 	QDEL_NULL(spark_system)
 	QDEL_NULL(malf_picker)
