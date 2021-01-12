@@ -68,6 +68,9 @@
 
 	var/bounty_types = CIV_JOB_BASIC
 
+	/// Should this job be allowed to be picked for the bureaucratic error event?
+	var/allow_bureaucratic_error = TRUE
+
 /datum/job/New()
 	. = ..()
 	var/list/jobs_changes = GetMapChanges()
