@@ -22,10 +22,6 @@
 		eyeobj.setLoc(get_turf(src))
 		set_eyeobj_visible(FALSE)
 
-
-	GLOB.shuttle_caller_list -= src
-	SSshuttle.autoEvac()
-
 	ShutOffDoomsdayDevice()
 
 	if(explosive)
