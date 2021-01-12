@@ -11,6 +11,8 @@
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/atom/movable/screen/mood/screen_obj
+	///Lazy lists of callbacks that are currently running on a "timer" managed by mood. This ia a list of callback || Next run time. This is used by things such as depression.
+	var/list/timed_mood_events
 
 	var/static/list/mood_trait_map = list(
 		TRAIT_JOLLY = /datum/mood_event/jolly,
@@ -203,6 +205,13 @@
 		if(9)
 			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
+
+	for(var/i in timed_mood_events)
+		var/datum/callback/timed_callback = i
+		var/next_time = timed_mood_events[timed_callback]
+		if(world.time >= next_time)
+			timed_callback.Invoke()
+			LAZYREMOVE(timed_mood_events, timed_callback)
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
@@ -424,29 +433,28 @@
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
 
+///Adds a timed callback managed by mood. Kind of like timers but mood specific to prevent bumming the timer subsystem.
+/datum/component/mood/proc/add_timed_mood_event(datum/callback/callback_used, delay)
+	LAZYSET(timed_mood_events, callback_used, world.time + delay)
+
 ///Signal handler for adding of "mood traits" such as TRAIT_JOLLY, immediately schedules a call of "mood_episode" with the appropriate trait
 /datum/component/mood/proc/add_mood_trait(datum/source, trait)
 	SIGNAL_HANDLER
 
 	// First episode occurs immediately, subsequent occur every 2-6 minutes
 
-	// Use of an immediate timer with UNIQUE means a short loss/gain
-	// of the trait won't trigger the mood immediately.
-	addtimer(CALLBACK(src, .proc/mood_episode, mood_trait_map[trait], trait), 0, TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+	add_timed_mood_event(CALLBACK(src, .proc/mood_episode, mood_trait_map[trait], trait), 0)
 
 ///Proc called by `add_mood_trait`, which triggers the given mood event, only if the host mob still has the passed trait, and then reschedules.
 /datum/component/mood/proc/mood_episode(datum/mood_event/mood_event, trait)
 	if(HAS_TRAIT(parent, trait))
 		add_event(null, trait, mood_event)
-
-		addtimer(CALLBACK(src, .proc/mood_episode, mood_event, trait), rand(2 MINUTES, 6 MINUTES), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		add_timed_mood_event(CALLBACK(src, .proc/mood_episode, mood_event, trait), rand(2 MINUTES, 6 MINUTES))
 
 ///Signal handler for losing a "mood trait", like TRAIT_JOLLY. Clears any associated mood events.
 /datum/component/mood/proc/remove_mood_trait(datum/source, trait)
 	SIGNAL_HANDLER
-
 	clear_event(null, trait)
-
 
 
 #undef MINOR_INSANITY_PEN
