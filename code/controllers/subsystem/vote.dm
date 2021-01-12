@@ -314,6 +314,8 @@ SUBSYSTEM_DEF(vote)
 			return
 		if("cancel")
 			if(usr.client.holder)
+				usr.log_message("[key_name_admin(usr)] cancelled a vote.", LOG_ADMIN)
+				message_admins("[key_name_admin(usr)] has cancelled the current vote.")
 				reset()
 		if("toggle_restart")
 			if(usr.client.holder && trialmin)

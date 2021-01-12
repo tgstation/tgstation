@@ -128,6 +128,9 @@
 	var/dextrous = FALSE
 	var/dextrous_hud_type = /datum/hud/dextrous
 
+	///If the creature should have an innate TRAIT_MOVE_FLYING trait added on init that is also toggled off/on on death/revival.
+	var/is_flying_animal = FALSE
+
 	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
 	var/AIStatus = AI_ON
 	///once we have become sentient, we can never go back.
@@ -178,6 +181,8 @@
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
 		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
+	if(is_flying_animal)
+		ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 
 	if(speak)
 		speak = string_list(speak)
@@ -214,6 +219,15 @@
 
 	return ..()
 
+/mob/living/simple_animal/vv_edit_var(var_name, var_value)
+	. = ..()
+	switch(var_name)
+		if(NAMEOF(src, is_flying_animal))
+			if(stat != DEAD)
+				if(!is_flying_animal)
+					REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
+				else
+					ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
 	if(!is_type_in_list(O, food_type))
@@ -449,7 +463,6 @@
 			new i(loc)
 
 /mob/living/simple_animal/death(gibbed)
-	movement_type &= ~FLYING
 	if(nest)
 		nest.spawned_mobs -= src
 		nest = null
@@ -466,6 +479,8 @@
 		del_on_death = FALSE
 		qdel(src)
 	else
+		if(is_flying_animal)
+			REMOVE_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 		health = 0
 		icon_state = icon_dead
 		if(flip_on_death)
@@ -499,7 +514,6 @@
 /mob/living/simple_animal/extinguish_mob()
 	return
 
-
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
 	if(!.)
@@ -507,8 +521,8 @@
 	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
-	setMovetype(initial(movement_type))
-
+	if(is_flying_animal)
+		ADD_TRAIT(src, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -651,7 +665,7 @@
 
 //ANIMAL RIDING
 
-/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if(user.incapacitated())
 		return
 	for(var/atom/movable/A in get_turf(src))
@@ -702,3 +716,14 @@
 	if(user.incapacitated())
 		return
 	return relaydrive(user, direction)
+
+/mob/living/simple_animal/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
+	stop_automated_movement = TRUE
+
+/mob/living/simple_animal/proc/stop_deadchat_plays()
+	stop_automated_movement = FALSE

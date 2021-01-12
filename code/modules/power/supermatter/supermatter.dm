@@ -111,7 +111,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
@@ -702,18 +702,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(produces_gas)
 			removed.garbage_collect()
 			env.merge(removed)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power)))
 		// Someone (generally a Psychologist), when looking at the SM
 		// within hallucination range makes it easier to manage.
-		if(HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER))
+		if(HAS_TRAIT(l, TRAIT_SUPERMATTER_SOOTHER) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_SOOTHER)))
 			toAdd = 0.05
 			psy_overlay = TRUE
 		// If they can see it without being immune (mesons, Psychologist)
-		if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+		if (!(HAS_TRAIT(l, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (l.mind && HAS_TRAIT(l.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)

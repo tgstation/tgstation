@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - rscadd: "You can now view a server's last round (not just yours specifically) via the OOC tab > Server's Last Round"

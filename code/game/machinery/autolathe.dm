@@ -345,6 +345,11 @@
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=25'>x25</a>"
 			if(max_multiplier > 0 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=[max_multiplier]'>x[max_multiplier]</a>"
+		else
+			if(!disabled && can_build(D, 5))
+				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=5'>x5</a>"
+			if(!disabled && can_build(D, 10))
+				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 
 		dat += "[get_design_cost(D)]<br>"
 

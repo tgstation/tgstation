@@ -847,22 +847,6 @@
 	build_path = /obj/item/weaponcrafting/receiver
 	category = list("hacked", "Security")
 
-/datum/design/shotgun_slug
-	name = "Shotgun Slug"
-	id = "shotgun_slug"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
-	build_path = /obj/item/ammo_casing/shotgun
-	category = list("hacked", "Security")
-
-/datum/design/buckshot_shell
-	name = "Buckshot Shell"
-	id = "buckshot_shell"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
-	build_path = /obj/item/ammo_casing/shotgun/buckshot
-	category = list("hacked", "Security")
-
 /datum/design/shotgun_dart
 	name = "Shotgun Dart"
 	id = "shotgun_dart"

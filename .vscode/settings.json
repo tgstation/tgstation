@@ -14,5 +14,6 @@
 		}
 	],
 	"files.eol": "\n",
-	"gitlens.advanced.blame.customArguments": ["-w"]
+	"gitlens.advanced.blame.customArguments": ["-w"],
+	"tgstationTestExplorer.project.resultsType": "json"
 }

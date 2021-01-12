@@ -36,7 +36,6 @@
 
 
 
-
 ///Haunted item controller defines
 
 ///Chance for haunted item to haunt someone
@@ -52,3 +51,11 @@
 #define BB_HAUNT_TARGET "BB_haunt_target"
 ///Amount of successful hits in a row this item has had
 #define BB_HAUNTED_THROW_ATTEMPT_COUNT "BB_haunted_throw_attempt_count"
+
+///Vending machine AI controller blackboard keys
+
+#define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"
+#define BB_VENDING_TILT_COOLDOWN "BB_vending_tilt_cooldown"
+#define BB_VENDING_UNTILT_COOLDOWN "BB_vending_untilt_cooldown"
+#define BB_VENDING_BUSY_TILTING "BB_vending_busy_tilting"
+#define BB_VENDING_LAST_HIT_SUCCESFUL "BB_vending_last_hit_succesful"

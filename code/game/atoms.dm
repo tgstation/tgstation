@@ -580,6 +580,10 @@
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
 	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
+///Used to insert text after the name but before the description in examine()
+/atom/proc/get_name_chaser(mob/user, list/name_chaser = list())
+	return name_chaser
+
 /**
  * Called when a mob examines (shift click or verb) this atom
  *
@@ -591,6 +595,7 @@
 /atom/proc/examine(mob/user)
 	. = list("[get_examine_string(user, TRUE)].")
 
+	. += get_name_chaser(user)
 	if(desc)
 		. += desc
 
@@ -1754,7 +1759,6 @@
 		var/atom/atom_orbiter = o
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
-
 
 /**
 * Instantiates the AI controller of this atom. Override this if you want to assign variables first.

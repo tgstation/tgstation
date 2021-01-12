@@ -73,16 +73,19 @@
 
 		pixel_x = 0
 		pixel_y = 0
-		shocked_things.Cut()
-		tesla_zap(src, 3, TESLA_DEFAULT_POWER, shocked_targets = shocked_things)
+		shocked_things.Cut(1, shocked_things.len / 1.3)
+		var/list/shocking_info = list()
+		tesla_zap(src, 3, TESLA_DEFAULT_POWER, shocked_targets = shocking_info)
 
 		pixel_x = -32
 		pixel_y = -32
 		for (var/ball in orbiting_balls)
 			var/range = rand(1, clamp(orbiting_balls.len, 2, 3))
 			var/list/temp_shock = list()
-			tesla_zap(ball, range, TESLA_MINI_POWER/7*range, shocked_targets = temp_shock)
-			shocked_things += temp_shock
+			//We zap off the main ball instead of ourselves to make things looks proper
+			tesla_zap(src, range, TESLA_MINI_POWER/7*range, shocked_targets = temp_shock)
+			shocking_info += temp_shock
+		shocked_things += shocking_info
 
 /obj/energy_ball/examine(mob/user)
 	. = ..()
@@ -91,9 +94,10 @@
 
 /obj/energy_ball/proc/move(move_amount)
 	var/list/dirs = GLOB.alldirs.Copy()
-	for (var/i in 1 to 30)
-		var/atom/real_thing = pick(shocked_things)
-		dirs += get_dir(src, real_thing) //Carry some momentum yeah? Just a bit tho
+	if(shocked_things.len)
+		for (var/i in 1 to 30)
+			var/atom/real_thing = pick(shocked_things)
+			dirs += get_dir(src, real_thing) //Carry some momentum yeah? Just a bit tho
 	for (var/i in 0 to move_amount)
 		var/move_dir = pick(dirs) //ensures teslas don't just sit around
 		if (target && prob(10))
@@ -335,10 +339,12 @@
 		power /= 1.5
 
 	else
-		power = closest_atom.zap_act(power, zap_flags, shocked_targets)
+		power = closest_atom.zap_act(power, zap_flags)
 	if(prob(20))//I know I know
-		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets.Copy())//No pass by ref, it's a bad play
-		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets.Copy())
+		var/list/shocked_copy = shocked_targets.Copy()
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_copy)//Normally I'd copy here so grounding rods work properly, but it fucks with movement
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
+		shocked_targets += shocked_copy
 	else
 		tesla_zap(closest_atom, next_range, power, zap_flags, shocked_targets)
 
