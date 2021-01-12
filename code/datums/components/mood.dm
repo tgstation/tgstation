@@ -435,7 +435,7 @@
 
 ///Adds a timed callback managed by mood. Kind of like timers but mood specific to prevent bumming the timer subsystem.
 /datum/component/mood/proc/add_timed_mood_event(datum/callback/callback_used, delay)
-	LAZYSET(timed_mood_events, callback_used, delay)
+	LAZYSET(timed_mood_events, callback_used, world.time + delay)
 
 ///Signal handler for adding of "mood traits" such as TRAIT_JOLLY, immediately schedules a call of "mood_episode" with the appropriate trait
 /datum/component/mood/proc/add_mood_trait(datum/source, trait)
