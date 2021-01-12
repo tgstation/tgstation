@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "Many HFR reactions and processes no longer change their behaviour based on the amount of space lag."
