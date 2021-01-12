@@ -32,6 +32,8 @@
 
 	create_internal_organs()
 
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, ROUNDSTART_TRAIT)
+
 	. = ..()
 
 /mob/living/carbon/alien/create_internal_organs()

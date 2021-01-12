@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Psychologist immunity to supermatter hallucinations, and the
-ability to make it \"calmer\", is now provided by a skillchip, rather than
-innate."

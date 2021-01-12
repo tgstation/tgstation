@@ -11,6 +11,9 @@
 
 /obj/machinery/capture_the_flag/medisim/Initialize(mapload)
 	. = ..()
+	// Ensure that the historical simulation is extra bloody.
+	player_traits -= TRAIT_NEVER_WOUNDED
+
 	start_ctf() //both machines initialize, so both will call start_ctf instead of toggle_id_ctf calling it for both, twice.
 
 /obj/machinery/capture_the_flag/medisim/victory()

@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscadd: "The PM9 rocket launcher now creates big plumes of fire as backblast when fired! Make sure you're not up against a wall or your friends!"
-  - tweak: "Standard rockets for the PM9 deal more damage on impact and create flames upon exploding."
