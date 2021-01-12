@@ -22,8 +22,12 @@
 	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_STORAGE_EXITED), .proc/scale_overworld)
 
 /datum/element/item_scaling/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED, COMSIG_STORAGE_ENTERED,\
-	COMSIG_STORAGE_EXITED))
+	UnregisterSignal(target, list(
+		COMSIG_ITEM_PICKUP,
+		 COMSIG_ITEM_DROPPED,
+		 COMSIG_STORAGE_ENTERED,
+		COMSIG_STORAGE_EXITED,
+	))
 	return ..()
 
 ///Applies a scale transform to an identity matrix and replaces the object's tranform matrix.
