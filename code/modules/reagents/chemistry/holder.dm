@@ -70,7 +70,7 @@
 	///cached list of reagents
 	var/list/datum/reagent/previous_reagent_list = new/list()
 	///Hard check to see if the reagents is presently reacting
-	var/isReacting = FALSE
+	var/is_reacting = FALSE
 
 /datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
@@ -91,7 +91,7 @@
 		var/datum/reagent/R = reagent
 		qdel(R)
 	reagent_list = null
-	if(isReacting) //If false, reaction list should be cleaned up
+	if(is_reacting) //If false, reaction list should be cleaned up
 		for(var/reaction in reaction_list)
 			var/datum/equilibrium/E = reaction
 			qdel(E)
@@ -168,7 +168,7 @@
 				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
-			if(!no_react && !isReacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
+			if(!no_react && !is_reacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return TRUE
 
@@ -417,7 +417,7 @@
 	if(!no_react)
 		R.reaction_list = reaction_list.Copy()
 		R.previous_reagent_list = previous_reagent_list.Copy()
-		R.isReacting = isReacting
+		R.is_reacting = is_reacting
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/trans_data = null
@@ -529,7 +529,7 @@
 	//pass over previous ongoing reactions before handle_reactions is called
 	R.reaction_list = reaction_list.Copy()
 	R.previous_reagent_list = previous_reagent_list.Copy()
-	R.isReacting = isReacting
+	R.is_reacting = is_reacting
 
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
@@ -739,7 +739,7 @@
 	if(flags & NO_REACT)
 		return 0 //Yup, no reactions here. No siree.
 
-	if(isReacting)//Prevent wasteful calculations
+	if(is_reacting)//Prevent wasteful calculations
 		if(!(has_changed_state()))
 			return 0
 
@@ -823,7 +823,7 @@
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
-				isReacting = TRUE//Prevent any on_reaction() procs from infinite looping
+				is_reacting = TRUE//Prevent any on_reaction() procs from infinite looping
 				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list.
 				if(E.to_delete)//failed startup checks
 					qdel(E)
@@ -831,17 +831,17 @@
 					reaction_list += E
 
 	if(reaction_list.len)
-		isReacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
+		is_reacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
 		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
 	else
-		isReacting = FALSE
+		is_reacting = FALSE
 
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 
 //Reaction loop handler
 /datum/reagents/process(delta_time)
-	if(!isReacting)
+	if(!is_reacting)
 		finish_reacting()
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
@@ -880,7 +880,7 @@
 //This stops the holder from processing at the end of a series of reactions (i.e. when all the equilibriums are completed)
 /datum/reagents/proc/finish_reacting()
 	STOP_PROCESSING(SSprocessing, src)
-	isReacting = FALSE
+	is_reacting = FALSE
 	//Cap off values
 	for(var/datum/reagent/R in reagent_list)
 		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
@@ -1001,7 +1001,7 @@
 	total_volume = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		if((R.volume < 0.05) && !isReacting)
+		if((R.volume < 0.05) && !is_reacting)
 			del_reagent(R.type)
 		else if(R.volume <= CHEMICAL_VOLUME_MINIMUM)//For clarity
 			del_reagent(R.type)

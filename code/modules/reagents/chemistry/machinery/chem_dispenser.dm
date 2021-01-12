@@ -29,7 +29,7 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
-	var/pHaccuracy = 1
+	var/pH_accuracy = 1
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -205,7 +205,7 @@
 		data["beakerCurrentVolume"] = round(beakerCurrentVolume, 0.01)
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
-		data["beakerCurrentpH"] = round(beaker.reagents.pH, pHaccuracy)
+		data["beakerCurrentpH"] = round(beaker.reagents.pH, pH_accuracy)
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
@@ -393,7 +393,7 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
-		pHaccuracy = 10**(-(M.rating-1))
+		pH_accuracy = 10**(-(M.rating-1))
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)

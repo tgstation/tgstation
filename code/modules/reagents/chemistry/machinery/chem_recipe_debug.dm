@@ -49,7 +49,7 @@
 /obj/machinery/chem_recipe_debug/process(delta_time)
 	if(processing == FALSE)
 		setup_reactions()
-	if(reagents.isReacting == TRUE)
+	if(reagents.is_reacting == TRUE)
 		return
 	if(index >= cached_reactions.len)
 		say("Completed testing, problem reactions are:")
