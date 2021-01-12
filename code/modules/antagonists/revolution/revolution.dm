@@ -205,9 +205,20 @@
 	new_rev.silent = FALSE
 	to_chat(old_owner, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
 
+/// Checks if the revolution succeeded, and lets them know.
+/datum/antagonist/rev/proc/announce_victorious()
+	. = rev_team.check_rev_victory()
+
+	if (!.)
+		return
+
+	to_chat(owner, "<span class='deconversion_message bold'>[victory_message]</span>")
+	var/policy = get_policy(ROLE_REV_SUCCESSFUL)
+	if (policy)
+		to_chat(owner, policy)
+
 /datum/antagonist/rev/farewell()
-	if (rev_team.check_rev_victory())
-		to_chat(owner, "<span class='deconversion_message bold'>[victory_message]</span>")
+	if (announce_victorious())
 		return
 
 	if(ishuman(owner.current))
@@ -218,8 +229,7 @@
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
 /datum/antagonist/rev/head/farewell()
-	if (rev_team.check_rev_victory())
-		to_chat(owner, "<span class='deconversion_message bold'>[victory_message]</span>")
+	if (announce_victorious())
 		return
 
 	if((ishuman(owner.current)))
