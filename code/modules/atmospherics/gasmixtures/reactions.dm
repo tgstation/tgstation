@@ -162,9 +162,9 @@ nobiliumsuppression = INFINITY
 	var/burned_fuel = 0
 
 	if(MINIMUM_TRIT_OXYBURN_ENERGY < air.thermal_energy() && cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/tritium][MOLES])
-		burned_fuel = min(cached_gases[/datum/gas/tritium][MOLES])
+		burned_fuel = cached_gases[/datum/gas/tritium][MOLES]
 	else
-		burned_fuel = min(cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/tritium][MOLES]) / TRITIUM_BURN_OXY_FACTOR
+		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES] / TRITIUM_BURN_OXY_FACTOR
 	
 	if(burned_fuel)
 		if(cached_gases[/datum/gas/tritium][MOLES] - burned_fuel * 0.1 < 0 || cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel < 0)
@@ -347,9 +347,9 @@ nobiliumsuppression = INFINITY
 	var/burned_fuel = 0
 	
 	if(MINIMUM_H2_OXYBURN_ENERGY < air.thermal_energy() && cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/hydrogen][MOLES])
-		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES] //Small ammounts of inefficiency
+		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES]
 	else
-		burned_fuel = min(cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/hydrogen][MOLES]) / HYDROGEN_BURN_OXY_FACTOR
+		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES] / HYDROGEN_BURN_OXY_FACTOR
 		
 	if(burned_fuel)
 		if(cached_gases[/datum/gas/hydrogen][MOLES] - burned_fuel * 0.1 < 0 || cached_gases[/datum/gas/oxygen][MOLES] - burned_fuel < 0)
