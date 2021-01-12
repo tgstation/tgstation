@@ -163,7 +163,7 @@
 			iter_reagent.creation_purity = iter_reagent.purity
 			update_total()
 
-			iter_reagent.on_merge(data, my_atom, amount)
+			iter_reagent.on_merge(data, amount)
 			if(reagtemp != cached_temp)
 				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
 

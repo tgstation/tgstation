@@ -2473,7 +2473,6 @@
 	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	
-
 /datum/reagent/basic_buffer
 	name = "Strong basic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."

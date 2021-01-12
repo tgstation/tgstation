@@ -1,3 +1,7 @@
+/*
+* A debug chem tester that will process through all recipies automatically and try to react them.
+* Highlights low purity reactions and and reactions that don't happen
+*/
 /obj/machinery/chem_recipe_debug
 	name = "chemical reaction tester"
 	density = TRUE
@@ -46,6 +50,9 @@
 	index = 1
 	processing = TRUE
 
+/*
+* The main loop that sets up, creates and displays results from a reaction
+*/
 /obj/machinery/chem_recipe_debug/process(delta_time)
 	if(processing == FALSE)
 		setup_reactions()
@@ -69,17 +76,17 @@
 				var/obj/item/reagent_containers/glass/beaker/bluespace/B = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
 				reagents.trans_to(B)
 				B.name = "[cached_reactions[index]]"
-				problem_string += "<span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
+				problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
 				continue
 			say("Reaction has a product [R] [R2.volume]u purity of [R2.purity]")
 			if(R2.purity < 0.9)
-				problem_string += "Reaction has a product [R] [R2.volume]u <span class='boldwarning'>purity of [R2.purity]</span> index:[index]\n"
+				problem_string += "Reaction [cached_reactions[index]] has a product [R] [R2.volume]u <span class='boldwarning'>purity of [R2.purity]</span> index:[index]\n"
 				majorImpurity++
 			else if (R2.purity < 1)
-				problem_string += "Reaction has a product [R] [R2.volume]u <span class='warning'>purity of [R2.purity]</span> index:[index]\n"
+				problem_string += "Reaction [cached_reactions[index]] has a product [R] [R2.volume]u <span class='warning'>purity of [R2.purity]</span> index:[index]\n"
 				minorImpurity++
 			if(R2.volume < C.results[R])
-				problem_string += "Reaction has a product [R] <span class='warning'>[R2.volume]u</span> purity of [R2.purity] index:[index]\n"
+				problem_string += "Reaction [cached_reactions[index]] has a product [R] <span class='warning'>[R2.volume]u</span> purity of [R2.purity] index:[index]\n"
 		reagents.clear_reagents()
 		index++
 	var/datum/chemical_reaction/C = cached_reactions[index]
@@ -87,6 +94,8 @@
 		say("Unable to find reaction on index: [index]")
 	for(var/R in C.required_reagents)
 		reagents.add_reagent(R, C.required_reagents[R]*20)
+	for(var/cat in C.required_catalysts)
+		reagents.add_reagent(cat, C.required_reagents[cat])
 	reagents.chem_temp = C.optimal_temp
 	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.pH] index [index] of [cached_reactions.len]")
 	if(C.reaction_flags & REACTION_INSTANT)

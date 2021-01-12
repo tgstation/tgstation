@@ -29,6 +29,7 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
+	///How accurate the pH meter is on the display (orders of magnitude) increased by upgrades
 	var/pH_accuracy = 1
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"

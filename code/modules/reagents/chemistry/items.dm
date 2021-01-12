@@ -150,7 +150,7 @@
 		return
 	var/out_message
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
-	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.pH, 0.1)]\n"
+	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.pH, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	if(cont.reagents.is_reacting)
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
