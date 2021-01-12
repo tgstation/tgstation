@@ -369,8 +369,9 @@
 			W.handle_process()
 
 /mob/living/carbon/proc/handle_death()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		R.on_mob_dead(src)
+	for(var/r in reagents.reagent_list)
+		var/datum/reagent/chem
+		chem.on_mob_dead(src)
 
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
