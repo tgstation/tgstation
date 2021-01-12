@@ -79,7 +79,6 @@ const exec = (executable, ...args) => {
     child.stderr.on('data', data => {
       process.stderr.write(data);
     });
-    child.stdin.end();
     child.on('exit', code => {
       children.delete(child);
       if (code !== 0) {
