@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "skateboards and wheelys dont move multiple tiles anymore"
