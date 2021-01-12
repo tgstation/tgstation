@@ -20,7 +20,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 	pin = null
 	flight_x_offset = 18
@@ -80,6 +80,7 @@
 	name = "\improper Mind Flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
@@ -112,7 +113,7 @@
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
@@ -200,6 +201,7 @@
 	name = "bluespace wormhole projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null
 	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
@@ -307,6 +309,7 @@
 	name = "temperature gun"
 	icon_state = "freezegun"
 	desc = "A gun that changes temperatures."
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = "/obj/item/stock_parts/cell/high"
 	pin = null
@@ -321,6 +324,7 @@
 	icon_state = "instagib"
 	inhand_icon_state = "instagib"
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
 	charge_sections = 5
@@ -345,6 +349,7 @@
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	inhand_icon_state = "gravity_gun"
 	icon_state = "gravity_gun"
