@@ -35,7 +35,7 @@
 	name = "pulse carbine"
 	desc = "A compact variant of the pulse rifle with less firepower but easier storage."
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "pulse_carbine"
 	worn_icon_state = "gun"
 	inhand_icon_state = null
