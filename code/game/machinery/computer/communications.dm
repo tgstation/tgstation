@@ -96,8 +96,8 @@
 		if ("answerMessage")
 			if (!authenticated(usr))
 				return
-			var/answer_index = text2num(params["answer"])
-			var/message_index = text2num(params["message"])
+			var/answer_index = params["answer"]
+			var/message_index = params["message"]
 			if (!answer_index || !message_index || answer_index < 1 || message_index < 1)
 				return
 			var/datum/comm_message/message = messages[message_index]
