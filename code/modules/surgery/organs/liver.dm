@@ -105,6 +105,19 @@
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
 
+/obj/item/organ/liver/on_death()
+	. = ..()
+	var/mob/living/carbon/C = owner
+	if(!istype(C))
+		return
+	if(C.stat != DEAD)
+		return
+	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(C, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+		return
+	for(var/reagent in C.reagents.reagent_list)
+		var/datum/reagent/R = reagent
+		R.on_mob_dead(C)
+
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN
 #undef HAS_PAINFUL_TOXIN

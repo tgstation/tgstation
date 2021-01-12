@@ -7,17 +7,24 @@ The crux of the fermimechanics are handled here
 Instant reactions AREN'T handled here. See holder.dm
 */
 /datum/equilibrium
-	var/datum/chemical_reaction/reaction //The chemical reaction that is presently being processed
-	var/datum/reagents/holder //The location the processing is taking place
+	///The chemical reaction that is presently being processed
+	var/datum/chemical_reaction/reaction 
+	///The location/reeagents datum the processing is taking place
+	var/datum/reagents/holder 
+	///How much product we can make multiplied by the input recipe's products/required_reagents numerical values
 	var/multiplier = INFINITY
+	///The sum total of each of the product's numerical's values. This is so the addition/deletion is kept at the right values for multiple product reactions
 	var/product_ratio = 0
-	var/target_vol = INFINITY//The target volume the reaction is headed towards.
-	var/reacted_vol = 0 //How much of the reaction has been made so far. Mostly used for subprocs
-	var/to_delete = FALSE //If we're done with this reaction so that holder can clear it
+	///The target volume the reaction is headed towards. This is updated every tick, so isn't the total value for the reaction, it's just a way to ensure we can't make more than is possible.
+	var/target_vol = INFINITY
+	///How much of the reaction has been made so far. Mostly used for subprocs, but it keeps track across the whole reaction and is added to every step.
+	var/reacted_vol = 0 
+	///If we're done with this reaction so that holder can clear it.
+	var/to_delete = FALSE 
 
-/datum/equilibrium/New(datum/chemical_reaction/Cr, datum/reagents/R)
-	reaction = Cr
-	holder = R
+/datum/equilibrium/New(datum/chemical_reaction/input_reaction, datum/reagents/input_holder)
+	reaction = input_reaction
+	holder = input_holder
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
 		to_delete = TRUE
 		return

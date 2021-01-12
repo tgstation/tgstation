@@ -11,6 +11,7 @@
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
+	///How many pages the booklet holds
 	var/number_of_pages = 50
 
 //A little janky with pockets

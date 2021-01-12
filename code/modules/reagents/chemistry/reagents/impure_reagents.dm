@@ -3,26 +3,27 @@
 //Invert = Whole conversion
 
 //Causes slight liver damage, and that's it.
-/datum/reagent/impure
+/datum/reagent/impurity
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
-	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either
+	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
+	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT 
 	pH = 3
 
-/datum/reagent/impure/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impurity/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(!L)//Though, lets be safe
-		C.adjustToxLoss(2, FALSE)//Incase of no liver!
+		C.adjustToxLoss(1, FALSE)//Incase of no liver!
 		return ..()
 	C.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.5*REM)
 	return ..()
 
-/datum/reagent/impure/toxic
+/datum/reagent/impurity/toxic
 	name = "Toxic sludge"
 	description = "Toxic chemical isomers made from impure reactions. Causes toxin damage"
 	pH = 2
 
-/datum/reagent/impure/toxic/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impurity/toxic/on_mob_life(mob/living/carbon/C)
 	C.adjustToxLoss(1, FALSE)
 	return ..()
 

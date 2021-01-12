@@ -89,6 +89,6 @@
 		reagents.add_reagent(R, C.required_reagents[R]*20)
 	reagents.chem_temp = C.optimal_temp
 	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.pH] index [index] of [cached_reactions.len]")
-	if(C.reactionFlags & REACTION_INSTANT)
+	if(C.reaction_flags & REACTION_INSTANT)
 		say("This reaction is instant")
 

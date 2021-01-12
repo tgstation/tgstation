@@ -56,14 +56,14 @@ Lets go over the reaction vars below. These can be edited and set on a per chemi
 	var/overheat_temp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it procs overheated()
 	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	var/optimal_pH_max 			= 9	        	// Higest value for above
-	var/determin_pH_range 				= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
-	var/temp_exponent_factor 			= 2         	// How sharp the temperature exponential curve is (to the power of value)
-	var/pH_exponent_factor 			= 1         	// How sharp the pH exponential curve is (to the power of value)
+	var/determin_pH_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
+	var/temp_exponent_factor 	= 2         	// How sharp the temperature exponential curve is (to the power of value)
+	var/pH_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
 	var/thermic_constant		= 1         	// Temperature change per 1u produced
 	var/H_ion_release 			= 0.01       	// pH change per 1u reaction
-	var/rate_up_lim 				= 20			// Optimal/max rate possible if all conditions are perfect
+	var/rate_up_lim 			= 20			// Optimal/max rate possible if all conditions are perfect
 	var/purity_min 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	var/reaction_flags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 ```
 
 ### How temperature ranges are set and how reaction rate is determined
@@ -94,7 +94,7 @@ As for how you define the reaction variables for a reaction, there are a few new
 	...
 	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	var/optimal_pH_max 			= 9	        	// Higest value for above
-	var/determin_pH_range 		= 4         	// How far out pH wil react, givsing impurity place (Exponential phase)
+	var/determin_pH_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
 	var/pH_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
 	var/purity_min 				= 0.15 			// If purity is below 0.15, it calls overly_impure(). In addition, if the product's purity is below this value at the end, the product will be 100% converted into the reagent's failed_chem. Set to 0 to disable this.
 ```
@@ -131,7 +131,7 @@ Reaction_flags can be used to set these defines:
 #define REACTION_INSTANT        //Used to create instant reactions
 
 datum/chemical_reaction
-	var/reactionFlags	
+	var/reaction_flags	
 ```
 
 For REACTION_CLEAR – this causes the purity mechanics to resolve in the beaker at the end of the reaction, instead of when added to a mob.
@@ -159,9 +159,9 @@ datum/reagent
 	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1	
 	//impure chem values (see fermi_readme.dm for more details):
-	var/impure_chem		 = /datum/reagent/impure			// What chemical path is made when metabolised as a function of purity
+	var/impure_chem		 = /datum/reagent/impurity			// What chemical path is made when metabolised as a function of purity
 	var/inverse_chem_val = 0.2								// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
-	var/inverse_chem	 = /datum/reagent/impure/toxic		// What chem is metabolised when purity is below inverse_chem_val
+	var/inverse_chem	 = /datum/reagent/impurity/toxic		// What chem is metabolised when purity is below inverse_chem_val
 	var/failed_chem		 = /datum/reagent/consumable/failed_reaction //what chem is made at the end of a reaction IF the purity is below the recipies purity_min
     var/chemical_flags 
 ```
@@ -204,7 +204,7 @@ datum/reagents
 	///cached list of reagents
 	var/list/datum/reagent/previous_reagent_list = new/list()
 	///Hard check to see if the reagents is presently reacting
-	var/isReacting = FALSE
+	var/is_reacting = FALSE
 ```
 - chem_temp is the temperature used in the `datum/chemical_recipe`
 - pH is a result of the sum of all reagents, as well as any changes from buffers and reactions. This is the pH used in `datum/chemical_recipe`.

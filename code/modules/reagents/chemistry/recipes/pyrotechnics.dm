@@ -1,7 +1,7 @@
 /datum/chemical_reaction/reagent_explosion
 	var/strengthdiv = 10
 	var/modifier = 0
-	reactionFlags = REACTION_INSTANT
+	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
 	explode(holder, created_volume)
@@ -289,7 +289,7 @@
 /datum/chemical_reaction/flash_powder
 	results = list(/datum/reagent/flash_powder = 3)
 	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/potassium = 1, /datum/reagent/sulfur = 1 )
-	reactionFlags = REACTION_INSTANT
+	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))

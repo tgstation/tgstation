@@ -29,21 +29,33 @@
 
 	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
 	var/is_cold_recipe = FALSE
+	///FermiChem! - See fermi_readme.md
 	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
 	var/required_temp = 100
-	///FermiChem! - See fermi_readme.md
-	var/optimal_temp = 500 // Upper end for above (i.e. the end of the curve section defined by temp_exponent_factor)
-	var/overheat_temp = 900 // Temperature at which reaction explodes - If any reaction is this hot, it explodes!
-	var/optimal_pH_min = 5 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/optimal_pH_max = 9 // Higest value for above
-	var/determin_pH_range = 4 // How far out pH wil react, giving impurity place (Exponential phase)
-	var/temp_exponent_factor = 2 // How sharp the temperature exponential curve is (to the power of value)
-	var/pH_exponent_factor = 1 // How sharp the pH exponential curve is (to the power of value)
-	var/thermic_constant = 1 // Temperature change per 1u produced
-	var/H_ion_release = 0.01 // pH change per 1u reaction
-	var/rate_up_lim	= 20 // Optimal/max rate possible if all conditions are perfect
-	var/purity_min = 0.15 // If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/reactionFlags // bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	/// Upper end for above (i.e. the end of the curve section defined by temp_exponent_factor)
+	var/optimal_temp = 500 
+	/// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
+	var/overheat_temp = 900
+	/// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase) 
+	var/optimal_pH_min = 5 
+	/// Higest value for above
+	var/optimal_pH_max = 9 
+	/// How far out pH wil react, giving impurity place (Exponential phase)
+	var/determin_pH_range = 4 
+	/// How sharp the temperature exponential curve is (to the power of value)
+	var/temp_exponent_factor = 2 
+	/// How sharp the pH exponential curve is (to the power of value)
+	var/pH_exponent_factor = 1
+	/// Temperature change per 1u produced 
+	var/thermic_constant = 1 
+	/// pH change per 1u reaction
+	var/H_ion_release = 0.01 
+	/// Optimal/max rate possible if all conditions are perfect
+	var/rate_up_lim	= 20 
+	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	var/purity_min = 0.15 
+	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	var/reaction_flags
 
 /datum/chemical_reaction/New()
 	. = ..()
@@ -66,7 +78,7 @@
  * Only procs at the START of a reaction
  * use reaction_step() for each step of a reaction
  * or reaction_end() when the reaction stops
- * If reactionFlags & REACTION_INSTANT then this is the only proc that is called.
+ * If reaction_flags & REACTION_INSTANT then this is the only proc that is called.
  *
  * Proc where the additional magic happens.
  * You dont want to handle mob spawning in this since there is a dedicated proc for that.client
@@ -81,7 +93,7 @@
 /**
  * Stuff that occurs in the middle of a reaction
  * Only procs DURING a reaction
- * If reactionFlags & REACTION_INSTANT then this isn't called
+ * If reaction_flags & REACTION_INSTANT then this isn't called
  *
  * Arguments:
  * * holder - the datum that holds this reagent, be it a beaker or anything else
@@ -94,8 +106,8 @@
 /**
  * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).
  * Only procs at the END of reaction
- * If reactionFlags & REACTION_INSTANT then this isn't called
- * if reactionFlags REACTION_CLEAR_IMPURE then the impurity chem is handled here, producing the result in the beaker instead of in a mob
+ * If reaction_flags & REACTION_INSTANT then this isn't called
+ * if reaction_flags REACTION_CLEAR_IMPURE then the impurity chem is handled here, producing the result in the beaker instead of in a mob
  * Likewise for REACTION_CLEAR_INVERSE the inverse chem is produced at the end of the reaction in the beaker
  * You should be calling ..() if you're writing a child function of this proc otherwise purity methods won't work correctly
  *
@@ -119,17 +131,17 @@
 			continue
 
 		//REACTION_CLEAR handler
-		if(reactionFlags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
+		if(reaction_flags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
 			if(R.purity == 1) //Failures can delete R
 				continue
 
 			var/cached_volume = R.volume
-			if((reactionFlags & REACTION_CLEAR_INVERSE) && R.inverse_chem)
+			if((reaction_flags & REACTION_CLEAR_INVERSE) && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
 					holder.remove_reagent(R.type, cached_volume, FALSE)
 					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
 
-			if((reactionFlags & REACTION_CLEAR_IMPURE) && R.impure_chem)
+			if((reaction_flags & REACTION_CLEAR_IMPURE) && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
 				holder.remove_reagent(R.type, (impureVol), FALSE)
 				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)

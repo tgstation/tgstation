@@ -768,7 +768,7 @@
 			var/is_cold_recipe = C.is_cold_recipe
 			var/meets_temp_requirement = FALSE
 			var/granularity = 1
-			if(!C.reactionFlags & REACTION_INSTANT)
+			if(!C.reaction_flags & REACTION_INSTANT)
 				granularity = 0.01
 
 			for(var/B in cached_required_reagents)
@@ -810,7 +810,7 @@
 	update_previous_reaction_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
-		if((selected_reaction.reactionFlags & REACTION_INSTANT) || (flags & INSTANT_REACT)) //If we have instant reactions, we process them here
+		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
 			update_total()
