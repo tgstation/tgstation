@@ -825,7 +825,7 @@
 			if(!exists)
 				isReacting = TRUE//Prevent any on_reaction() procs from infinite looping
 				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list.
-				if(E.toDelete)//failed startup checks
+				if(E.to_delete)//failed startup checks
 					qdel(E)
 				else
 					reaction_list += E
@@ -850,7 +850,7 @@
 	for(var/datum/equilibrium/E in reaction_list)
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//if it's been flagged to delete
-		if(E.toDelete)
+		if(E.to_delete)
 			mix_message += end_reaction(E)
 			continue
 		//otherwise continue reacting
@@ -867,7 +867,7 @@
 //This ends a single instance of an ongoing reaction
 /datum/reagents/proc/end_reaction(datum/equilibrium/E)
 	//end reaction proc
-	E.reaction.reaction_finish(src, E.reactedVol)
+	E.reaction.reaction_finish(src, E.reacted_vol)
 	if(E.reaction.mix_sound)
 		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
 	qdel(E)

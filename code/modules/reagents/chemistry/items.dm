@@ -1,5 +1,7 @@
-#define DETAILED_CHEM_OUTPUT 1
-#define SHORTENED_CHEM_OUTPUT 0
+///if the pHmeter gives a detailed output
+#define DETAILED_CHEM_OUTPUT 1 
+///if the pH meter gives a shorter output
+#define SHORTENED_CHEM_OUTPUT 0 
 
 /obj/item/pHbooklet
 	name = "pH indicator booklet"
@@ -117,7 +119,8 @@
 	icon = 'icons/obj/chemical.dmi'
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
-	var/scanmode = DETAILED_CHEM_OUTPUT
+	///level of detail for output for the meter
+	var/scanmode = DETAILED_CHEM_OUTPUT 
 
 /obj/item/pHmeter/attack_self(mob/user)
 	if(!scanmode)
