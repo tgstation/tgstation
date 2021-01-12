@@ -10,9 +10,10 @@
 
 /obj/effect/dummy/phased_mob/Destroy()
 	// Eject contents if deleted somehow
-	var/atom/drop_to = drop_location()
-	var/turf/just_in_case = get_turf(drop_to)
-	var/area/destination_area = just_in_case.loc
+	var/atom/dest = drop_location()
+	if(!dest) //You're in nullspace you clown
+		return ..()
+	var/area/destination_area = get_area(dest)
 	var/failed_areacheck = FALSE
 	if(destination_area.area_flags & NOTELEPORT)
 		failed_areacheck = TRUE
