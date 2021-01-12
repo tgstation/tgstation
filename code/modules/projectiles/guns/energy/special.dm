@@ -22,7 +22,6 @@
 	icon_state = "ioncarbine"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
-	pin = null
 	flight_x_offset = 18
 	flight_y_offset = 11
 
@@ -31,7 +30,6 @@
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
-	pin = null
 	ammo_x_offset = 1
 
 /obj/item/gun/energy/decloner/update_overlays()
@@ -112,11 +110,10 @@
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
-	pin = null
 
 
 /obj/item/gun/energy/plasmacutter
