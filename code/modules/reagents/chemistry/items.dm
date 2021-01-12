@@ -3,6 +3,9 @@
 ///if the pH meter gives a shorter output
 #define SHORTENED_CHEM_OUTPUT 0 
 
+/*
+* a pH booklet that contains pH paper pages that will change color depending on the pH of the reagents datum it's attacked onto
+*/
 /obj/item/pHbooklet
 	name = "pH indicator booklet"
 	desc = "A booklet containing paper soaked in universal indicator."
@@ -59,16 +62,20 @@
 		add_fingerprint(user)
 		return
 
+/*
+* pH paper will change color depending on the pH of the reagents datum it's attacked onto
+*/
 /obj/item/pHpaper
 	name = "pH indicator strip"
 	desc = "A piece of paper that will change colour depending on the pH of a solution."
 	icon_state = "pHpaper"
 	icon = 'icons/obj/chemical.dmi'
 	item_flags = NOBLUDGEON
-	color = "#f5c352"
-	var/used = FALSE
+	color = "#f5c352"	
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
+	///If the paper was used, and therefore cannot change color again
+	var/used = FALSE
 
 /obj/item/pHpaper/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
 	if(!istype(cont))
@@ -113,6 +120,9 @@
 	name = "used [name]"
 	used = TRUE
 
+/*
+* pH meter that will give a detailed or truncated analysis of all the reagents in of an object with a reagents datum attached to it. Only way of detecting purity for now.
+*/
 /obj/item/pHmeter
 	name = "Chemistry Analyser"
 	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."

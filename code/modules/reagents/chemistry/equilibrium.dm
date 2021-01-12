@@ -1,15 +1,19 @@
 /*
-An object/datum to contain the vars for each of the reactions currently ongoing in a holder/reagents datum
-This way all information is kept within one accessable object
-equilibrium is a unique name as reaction is already too close to chemical_reaction
-This is set up this way to reduce holder.dm bloat as well as reduce confusing list overhead
-The crux of the fermimechanics are handled here
-Instant reactions AREN'T handled here. See holder.dm
+* #/datum/equilibrium
+*
+* A dynamic reaction object that processes the reaction that it is set within it. Relies on a reagents holder to call and operate the functions.
+*
+* An object/datum to contain the vars for each of the reactions currently ongoing in a holder/reagents datum
+* This way all information is kept within one accessable object
+* equilibrium is a unique name as reaction is already too close to chemical_reaction
+* This is set up this way to reduce holder.dm bloat as well as reduce confusing list overhead
+* The crux of the fermimechanics are handled here
+* Instant reactions AREN'T handled here. See holder.dm
 */
 /datum/equilibrium
 	///The chemical reaction that is presently being processed
 	var/datum/chemical_reaction/reaction 
-	///The location/reeagents datum the processing is taking place
+	///The location/reagents datum the processing is taking place
 	var/datum/reagents/holder 
 	///How much product we can make multiplied by the input recipe's products/required_reagents numerical values
 	var/multiplier = INFINITY
@@ -22,6 +26,13 @@ Instant reactions AREN'T handled here. See holder.dm
 	///If we're done with this reaction so that holder can clear it.
 	var/to_delete = FALSE 
 
+/* 
+* Creates and sets up a new equlibrium object
+* 
+* Arguments:
+* * input_reaction - the chemical_reaction datum that will be processed
+* * input_holder - the reagents datum that the output will be put into
+*/
 /datum/equilibrium/New(datum/chemical_reaction/input_reaction, datum/reagents/input_holder)
 	reaction = input_reaction
 	holder = input_holder
@@ -34,7 +45,12 @@ Instant reactions AREN'T handled here. See holder.dm
 	reaction.on_reaction(holder, multiplier) 
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 
-//Check to make sure our input vars are sensible - truncated version of check_conditions (as the setup in holder.dm checks for that already)
+/* 
+* Check to make sure our input vars are sensible - truncated version of check_reagent_properties() 
+* 
+* (as the setup in holder.dm checks for that already - this is a way to reduce calculations on New())
+* Don't call this unless you know what you're doing, this is an internal proc
+*/
 /datum/equilibrium/proc/check_inital_conditions()
 	if(holder.chem_temp > reaction.overheat_temp)//This is here so grenades can be made
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheats")
@@ -51,7 +67,12 @@ Instant reactions AREN'T handled here. See holder.dm
 		return FALSE
 	return TRUE
 
-//Check to make sure our input vars are sensible - temp, pH, catalyst and explosion
+/* 
+* Check to make sure our input vars are sensible - is the holder overheated? does it have the required reagents? Does it have the required calalysts?
+*
+* If you're adding more checks for reactions, this is the proc to edit
+* otherwise, generally, don't call this directed except internally
+*/
 /datum/equilibrium/proc/check_reagent_properties()
 	//Have we exploded?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
@@ -91,7 +112,13 @@ Instant reactions AREN'T handled here. See holder.dm
 	//All good!
 	return TRUE
 
-//Calculates how much we're aiming to create
+/*
+* Calculates how much we're aiming to create
+*
+* Specifically calcuates multiplier, product_ratio, target_vol
+* Also checks to see if these numbers are sane, returns a TRUE/FALSE
+* Generally an internal proc
+*/
 /datum/equilibrium/proc/calculate_yield()
 	if(to_delete)
 		return FALSE
@@ -109,9 +136,16 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(target_vol == 0 || multiplier == INFINITY)
 		return FALSE
 	return TRUE
-
-//Main reaction processor
-//Increments reaction by a timestep
+/*
+* Main reaction processor - Increments the reaction by a timestep
+*
+* First checks the holder to make sure it can continue
+* Then calculates the purity and volume produced.TRUE
+* Then adds/removes reagents
+* Then alters the holder pH and temperature, and calls reaction_step
+* Arguments:
+* * delta_time - the time displacement between the last call and the current
+*/
 /datum/equilibrium/proc/react_timestep(delta_time)
 	if(!check_reagent_properties())
 		to_delete = TRUE
@@ -218,7 +252,12 @@ Instant reactions AREN'T handled here. See holder.dm
 	holder.update_total()//do NOT recalculate reactions
 	return
 
-//Currently calculates it irrespective of required reagents at the start, but this should be changed if this is powergamed
+/*
+* Calculates the total sum normalised purity of ALL reagents in a holder
+*
+* Currently calculates it irrespective of required reagents at the start, but this should be changed if this is powergamed to required reagents
+* It's not currently because overly_impure affects all reagents
+*/
 /datum/equilibrium/proc/reactant_purity(datum/chemical_reaction/C)
 	var/list/cached_reagents = holder.reagent_list
 	var/i = 0

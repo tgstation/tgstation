@@ -46,20 +46,33 @@
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
 
 //Used in holder.dm/equlibrium.dm to set values and volume limits
-#define CHEMICAL_QUANTISATION_LEVEL 0.0001 //stops floating point errors causing issues with checking reagent amounts
-#define CHEMICAL_VOLUME_MINIMUM 0.001 //The smallest amount of volume allowed - prevents tiny numbers
-#define CHEMICAL_VOLUME_ROUNDING 0.01 //Round to this, to prevent extreme decimal magic
-#define CHEMICAL_NORMAL_PH 7.000
+///stops floating point errors causing issues with checking reagent amounts
+#define CHEMICAL_QUANTISATION_LEVEL 0.0001 
+///The smallest amount of volume allowed - prevents tiny numbers
+#define CHEMICAL_VOLUME_MINIMUM 0.001 
+///Round to this, to prevent extreme decimal magic and to keep reagent volumes in line with perceived values.
+#define CHEMICAL_VOLUME_ROUNDING 0.01 
+///Default pH for reagents datum
+#define CHEMICAL_NORMAL_PH 7.000 
 
 //reagent bitflags, used for altering how they works
-#define REAGENT_DEAD_PROCESS		(1<<0)	//allows on_mob_dead() if present in a dead body
-#define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing - ignores all purity effects
-#define REAGENT_INVISIBLE			(1<<2)	//Doesn't appear on handheld health analyzers.
-#define REAGENT_SNEAKYNAME          (1<<3)  //When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting for purity effects
+///allows on_mob_dead() if present in a dead body
+#define REAGENT_DEAD_PROCESS		(1<<0)	
+///Do not split the chem at all during processing - ignores all purity effects
+#define REAGENT_DONOTSPLIT			(1<<1)	
+///Doesn't appear on handheld health analyzers.
+#define REAGENT_INVISIBLE			(1<<2)	
+///When inverted, the inverted chem uses the name of the original chem
+#define REAGENT_SNEAKYNAME          (1<<3)  
+///Retains initial volume of chem when splitting for purity effects
+#define REAGENT_SPLITRETAINVOL      (1<<4)  
 
 //Chemical reaction flags, for determining reaction specialties
-#define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
-#define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough
-#define REACTION_CLEAR_RETAIN		(1<<2)	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
-#define REACTION_INSTANT            (1<<3)  //Used to create instant reactions
+///Convert into impure/pure on reaction completion
+#define REACTION_CLEAR_IMPURE       (1<<0)  
+///Convert into inverse on reaction completion when purity is low enough
+#define REACTION_CLEAR_INVERSE      (1<<1)  
+///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
+#define REACTION_CLEAR_RETAIN		(1<<2)	
+///Used to create instant reactions
+#define REACTION_INSTANT            (1<<3)  
