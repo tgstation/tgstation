@@ -382,7 +382,7 @@
 	fdel(filename)
 	text2file(content, filename)
 	//Place a copy in the root folder, to be overwritten each round. 
-	filename = "data/last_roundend/server_last_roundend_report.html"
+	filename = "data/server_last_roundend_report.html"
 	fdel(filename)
 	text2file(content, filename)
 
@@ -395,7 +395,7 @@
 	if(report_type == PERSONAL_LAST_ROUND) //Look at this player's last round
 		content = file2text(filename)
 	else if (report_type == SERVER_LAST_ROUND) //Look at the last round that this server has seen
-		content = file2text("data/last_roundend/server_last_roundend_report.html")
+		content = file2text("data/server_last_roundend_report.html")
 	else //report_type is null, so make a new report based on the current round and show that to the player
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
