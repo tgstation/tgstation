@@ -190,10 +190,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 // Checks if there are HIGHLANDER_RULESETs and calls the rule's round_result() proc
 /datum/game_mode/dynamic/set_round_result()
-	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags & HIGHLANDER_RULESET)
-			if(rule.check_finished()) // Only the rule that actually finished the round sets round result.
-				return rule.round_result()
 	// If it got to this part, just pick one highlander if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGHLANDER_RULESET)
@@ -250,9 +246,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	if(force_ending)
 		return TRUE
-	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags & HIGHLANDER_RULESET)
-			return rule.check_finished()
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())

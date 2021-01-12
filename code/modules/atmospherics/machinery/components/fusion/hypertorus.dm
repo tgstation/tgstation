@@ -579,7 +579,7 @@
 	if(moderator_internal.total_moles() > 0)
 		remove_moderator = moderator_internal.remove(moderator_moles)
 		loc.assume_air(remove_moderator)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 	qdel(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/process_atmos()
