@@ -129,7 +129,7 @@
 					holder.remove_reagent(R.type, cached_volume, FALSE)
 					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
 
-			else if ((reactionFlags & REACTION_CLEAR_IMPURE) && R.impure_chem)
+			if((reactionFlags & REACTION_CLEAR_IMPURE) && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
 				holder.remove_reagent(R.type, (impureVol), FALSE)
 				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
