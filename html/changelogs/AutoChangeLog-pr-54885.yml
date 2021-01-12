@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed floorbots applying floor tiles onto already tiled turfs."
+  - bugfix: "Fixed floorbot issues with material tiles."
+  - bugfix: "Fixed emagged floorbots spawning lattice when deconstructing floor into plating."

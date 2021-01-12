@@ -7146,12 +7146,6 @@
 /obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel,
 /area/security/main)
-"apU" = (
-/obj/structure/table,
-/obj/item/folder/red,
-/obj/item/storage/secure/briefcase,
-/turf/open/floor/plasteel,
-/area/security/main)
 "apV" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red{
@@ -7165,12 +7159,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/security/main)
-"apW" = (
-/obj/structure/table,
-/obj/item/folder/red,
-/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel,
 /area/security/main)
 "apX" = (
@@ -20718,16 +20706,6 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
-"aXm" = (
-/obj/machinery/mineral/ore_redemption{
-	dir = 4;
-	input_dir = 8;
-	output_dir = 4
-	},
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
-/area/construction/storage_wing)
 "aXn" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -22735,19 +22713,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
-"bby" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering - Entrance";
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "bbz" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line,
@@ -32911,10 +32876,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"bBG" = (
-/obj/structure/cable,
-/turf/open/floor/goonplaque,
-/area/hallway/primary/port)
 "bBH" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -66022,6 +65983,19 @@
 /obj/item/stack/sheet/metal/twenty,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
+"fJp" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/camera{
+	c_tag = "Engineering - Entrance";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "fJR" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/turf_decal/stripes/line{
@@ -66118,6 +66092,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"fRv" = (
+/obj/machinery/mineral/ore_redemption{
+	dir = 4;
+	input_dir = 8;
+	output_dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/construction/storage_wing)
 "fRx" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -67591,6 +67575,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"hJP" = (
+/obj/structure/table,
+/obj/item/folder/red,
+/obj/item/assembly/flash/handheld,
+/obj/item/inspector{
+	pixel_x = 5
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 "hKX" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/dirt,
@@ -72673,6 +72666,15 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"oDe" = (
+/obj/structure/table,
+/obj/item/folder/red,
+/obj/item/storage/secure/briefcase,
+/obj/item/inspector{
+	pixel_x = -5
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 "oDq" = (
 /obj/structure/table,
 /obj/item/training_toolbox,
@@ -77592,6 +77594,10 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
+"vaT" = (
+/obj/structure/cable,
+/turf/open/floor/goonplaque,
+/area/hallway/primary/port)
 "vaY" = (
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
@@ -97293,7 +97299,7 @@ nOZ
 bkg
 lDf
 boc
-bBG
+vaT
 bsy
 bua
 bvW
@@ -99852,7 +99858,7 @@ bqk
 aSZ
 nMU
 aVM
-aXm
+fRv
 bmk
 bmk
 bmk
@@ -110363,7 +110369,7 @@ akP
 ami
 anx
 dCb
-apU
+oDe
 iOo
 asF
 aiD
@@ -110877,7 +110883,7 @@ akR
 amk
 bnh
 aoF
-apW
+hJP
 iOo
 asH
 aiD
@@ -120928,7 +120934,7 @@ yfS
 aBI
 aYs
 aZI
-bby
+fJp
 dgz
 aBI
 byK

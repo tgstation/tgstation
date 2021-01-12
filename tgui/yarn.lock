@@ -8233,6 +8233,7 @@ fsevents@~2.1.2:
   resolution: "tgui-panel@workspace:packages/tgui-panel"
   dependencies:
     common: "workspace:*"
+    dompurify: ^2.0.12
     inferno: ^7.4.2
     tgui: "workspace:*"
     tgui-dev-server: "workspace:*"
