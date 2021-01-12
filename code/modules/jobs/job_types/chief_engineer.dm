@@ -27,6 +27,8 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_ENG
 
+	liver_traits = list(TRAIT_ENGINEER_METABOLISM, TRAIT_ROYAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
