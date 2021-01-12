@@ -23,7 +23,11 @@ function Remove-Quiet {
 }
 
 function task-install {
-  yarn install
+  if (Test-Path 'env:TG_BUILD_TGS_MODE') {
+    yarn install --silent --non-interactive --no-progress
+  } else {
+    yarn install
+  }
 }
 
 ## Runs webpack
