@@ -31,19 +31,19 @@
 	var/is_cold_recipe = FALSE
 	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
 	var/required_temp = 100
-	//FermiChem! - See fermi_readme.md
-	var/optimal_temp			= 500			// Upper end for above
-	var/overheat_temp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
-	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/optimal_pH_max 			= 9	        	// Higest value for above
-	var/determin_pH_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
-	var/temp_exponent_factor 	= 2         	// How sharp the temperature exponential curve is (to the power of value)
-	var/pH_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
-	var/thermic_constant		= 1         	// Temperature change per 1u produced
-	var/H_ion_release 			= 0.01       	// pH change per 1u reaction
-	var/rate_up_lim 			= 20			// Optimal/max rate possible if all conditions are perfect
-	var/purity_min 				= 0.15 			// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/reactionFlags							// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	///FermiChem! - See fermi_readme.md
+	var/optimal_temp = 500 // Upper end for above (i.e. the end of the curve section defined by temp_exponent_factor)
+	var/overheat_temp = 900 // Temperature at which reaction explodes - If any reaction is this hot, it explodes!
+	var/optimal_pH_min = 5 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/optimal_pH_max = 9 // Higest value for above
+	var/determin_pH_range = 4 // How far out pH wil react, giving impurity place (Exponential phase)
+	var/temp_exponent_factor = 2 // How sharp the temperature exponential curve is (to the power of value)
+	var/pH_exponent_factor = 1 // How sharp the pH exponential curve is (to the power of value)
+	var/thermic_constant = 1 // Temperature change per 1u produced
+	var/H_ion_release = 0.01 // pH change per 1u reaction
+	var/rate_up_lim	= 20 // Optimal/max rate possible if all conditions are perfect
+	var/purity_min = 0.15 // If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
+	var/reactionFlags // bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 
 /datum/chemical_reaction/New()
 	. = ..()
@@ -119,17 +119,17 @@
 			continue
 
 		//REACTION_CLEAR handler
-		if(reactionFlags == REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE)
+		if(reactionFlags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
 			if(R.purity == 1) //Failures can delete R
 				continue
 
 			var/cached_volume = R.volume
-			if(reactionFlags == REACTION_CLEAR_INVERSE && R.inverse_chem)
+			if((reactionFlags & REACTION_CLEAR_INVERSE) && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
 					holder.remove_reagent(R.type, cached_volume, FALSE)
 					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
 
-			else if (reactionFlags == REACTION_CLEAR_IMPURE && R.impure_chem)
+			else if ((reactionFlags & REACTION_CLEAR_IMPURE) && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
 				holder.remove_reagent(R.type, (impureVol), FALSE)
 				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
@@ -155,7 +155,6 @@
 		if(!R)
 			return
 		R.volume =  round((R.volume*0.98), 0.01) //Slowly lower yield per tick
-	return
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
@@ -171,7 +170,6 @@
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
 	for(var/datum/reagent/R in holder.reagent_list)
 		R.purity = clamp((R.purity-0.01), 0, 1) //slowly reduce purity of other reagents
-	return
 
 /**
  * Magical mob spawning when chemicals react

@@ -2254,7 +2254,7 @@
 	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
 
 /datum/reagent/yuck/on_mob_add(mob/living/L)
-	..()
+	. = ..()
 	if(HAS_TRAIT(L, TRAIT_NOHUNGER)) //they can't puke
 		holder.del_reagent(type)
 
@@ -2373,7 +2373,7 @@
 
 /datum/reagent/gravitum/on_mob_add(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
-	..()
+	return ..()
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
 	L.RemoveElement(/datum/element/forced_gravity, 0)
@@ -2467,11 +2467,11 @@
 		return
 	if(holder.pH < pH)
 		holder.my_atom.visible_message("<span class='warning'>The beaker fizzes as the buffer is added, to no effect.</b></span>")
-		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 		return
 	holder.pH = clamp((((holder.pH * (holder.total_volume-(volume*strength)))+(pH * (volume*strength)) )/holder.total_volume), 0, 14) //This is BEFORE removal
 	holder.my_atom.visible_message("<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
-	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, 1)
+	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	
 
@@ -2495,10 +2495,10 @@
 		return
 	if(holder.pH > pH)
 		holder.my_atom.visible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</b></span>")
-		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 		return 
 	holder.pH = clamp((((holder.pH * (holder.total_volume-(volume*strength)))+(pH * (volume*strength)) )/holder.total_volume), 0, 14)
 	holder.my_atom.visible_message("<span class='warning'>The beaker froths as the pH changes!</b></span>")
-	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, 1)
+	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 

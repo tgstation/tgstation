@@ -10,19 +10,19 @@ Instant reactions AREN'T handled here. See holder.dm
 	var/datum/chemical_reaction/reaction //The chemical reaction that is presently being processed
 	var/datum/reagents/holder //The location the processing is taking place
 	var/multiplier = INFINITY
-	var/productRatio = 0
-	var/targetVol = INFINITY//The target volume the reaction is headed towards.
-	var/reactedVol = 0 //How much of the reaction has been made so far. Mostly used for subprocs
-	var/toDelete = FALSE //If we're done with this reaction so that holder can clear it
+	var/product_ratio = 0
+	var/target_vol = INFINITY//The target volume the reaction is headed towards.
+	var/reacted_vol = 0 //How much of the reaction has been made so far. Mostly used for subprocs
+	var/to_delete = FALSE //If we're done with this reaction so that holder can clear it
 
 /datum/equilibrium/New(datum/chemical_reaction/Cr, datum/reagents/R)
 	reaction = Cr
 	holder = R
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
-		toDelete = TRUE
+		to_delete = TRUE
 		return
 	if(!calculate_yield())
-		toDelete = TRUE
+		to_delete = TRUE
 		return
 	reaction.on_reaction(holder, multiplier) 
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
@@ -45,7 +45,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	return TRUE
 
 //Check to make sure our input vars are sensible - temp, pH, catalyst and explosion
-/datum/equilibrium/proc/check_conditions()
+/datum/equilibrium/proc/check_reagent_properties()
 	//Have we exploded?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
 		return FALSE
@@ -85,31 +85,31 @@ Instant reactions AREN'T handled here. See holder.dm
 
 //Calculates how much we're aiming to create
 /datum/equilibrium/proc/calculate_yield()
-	if(toDelete)
+	if(to_delete)
 		return FALSE
 	if(!reaction)
 		WARNING("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
 		return FALSE
 	multiplier = INFINITY
-	productRatio = 0
-	targetVol = 0
+	product_ratio = 0
+	target_vol = 0
 	for(var/B in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
 	for(var/P in reaction.results)
-		targetVol += (reaction.results[P]*multiplier)
-		productRatio += reaction.results[P]
-	if(targetVol == 0 || multiplier == INFINITY)
+		target_vol += (reaction.results[P]*multiplier)
+		product_ratio += reaction.results[P]
+	if(target_vol == 0 || multiplier == INFINITY)
 		return FALSE
 	return TRUE
 
 //Main reaction processor
 //Increments reaction by a timestep
 /datum/equilibrium/proc/react_timestep(delta_time)
-	if(!check_conditions())
-		toDelete = TRUE
+	if(!check_reagent_properties())
+		to_delete = TRUE
 		return
 	if(!calculate_yield())
-		toDelete = TRUE
+		to_delete = TRUE
 		return
 
 
@@ -141,7 +141,7 @@ Instant reactions AREN'T handled here. See holder.dm
 	
 	//This should never proc, but it's a catch incase someone puts in incorrect values
 	else
-		WARNING("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_pH] for set recipie pH vars. It's likely the recipe vars are wrong.")
+		stack_trace("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_pH] for set recipie pH vars. It's likely the recipe vars are wrong.")
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
@@ -151,7 +151,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			deltaT = 1
 		else
 			deltaT = 0
-			toDelete = TRUE
+			to_delete = TRUE
 			return
 	else
 		if (cached_temp > reaction.optimal_temp && cached_temp <= reaction.required_temp)
@@ -160,7 +160,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			deltaT = 1
 		else
 			deltaT = 0
-			toDelete = TRUE
+			to_delete = TRUE
 			return
 
 	purity = deltapH//set purity equal to pH offset
@@ -172,25 +172,25 @@ Instant reactions AREN'T handled here. See holder.dm
 	var/deltaChemFactor = (reaction.rate_up_lim*deltaT)*delta_time//add/remove factor
 	var/totalStepAdded = 0
 	//keep limited
-	if(deltaChemFactor > targetVol)
-		deltaChemFactor = targetVol
+	if(deltaChemFactor > target_vol)
+		deltaChemFactor = target_vol
 	else if (deltaChemFactor < CHEMICAL_VOLUME_MINIMUM)
 		deltaChemFactor = CHEMICAL_VOLUME_MINIMUM
 	deltaChemFactor = round(deltaChemFactor, CHEMICAL_QUANTISATION_LEVEL)
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/B in reaction.required_reagents)
-		holder.remove_reagent(B, ((deltaChemFactor/productRatio) * reaction.required_reagents[B]), safety = 1, ignore_pH = TRUE)
+		holder.remove_reagent(B, ((deltaChemFactor/product_ratio) * reaction.required_reagents[B]), safety = 1, ignore_pH = TRUE)
 
 	for(var/P in reaction.results)
 		//create the products
-		var/stepAdd = (deltaChemFactor/productRatio) * reaction.results[P]
+		var/stepAdd = (deltaChemFactor/product_ratio) * reaction.results[P]
 		holder.add_reagent(P, stepAdd, null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
-		reactedVol += stepAdd//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make targetVol in the calculate yield equal to all of the products, and make the vol check add totalStep)
+		reacted_vol += stepAdd//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make target_vol in the calculate yield equal to all of the products, and make the vol check add totalStep)
 		totalStepAdded += stepAdd
 
 	//Kept in so that people who want to write fermireactions can contact me with this log so I can help them
-	debug_world("Reaction vars: PreReacted:[reactedVol] of [targetVol]. deltaT [deltaT], multiplier [multiplier], deltaChemFactor [deltaChemFactor] Pfactor [productRatio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
+	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. deltaT [deltaT], multiplier [multiplier], deltaChemFactor [deltaChemFactor] Pfactor [product_ratio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
 
 		
 	//Apply pH changes and thermal output of reaction to beaker
@@ -220,7 +220,7 @@ Instant reactions AREN'T handled here. See holder.dm
 			cachedPurity += R.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case
-		WARNING("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
+		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cachedPurity/i
 
 

@@ -325,9 +325,9 @@
 /datum/chemical_reaction/ammonia
 	results = list(/datum/reagent/ammonia = 3)
 	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
-	optimal_pH_min 			= 1         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	optimal_pH_max 			= 12	        	// Higest value for above
-	H_ion_release			= 0.3			// Result is basic, so lets show that by transitioning it quickly
+	optimal_pH_min = 1         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	optimal_pH_max = 12	        	// Higest value for above
+	H_ion_release = 0.3			// Result is basic, so lets show that by transitioning it quickly
 
 /datum/chemical_reaction/diethylamine
 	results = list(/datum/reagent/diethylamine = 2)
@@ -344,7 +344,7 @@
 /datum/chemical_reaction/weedkiller
 	results = list(/datum/reagent/toxin/plantbgone/weedkiller = 5)
 	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/ammonia = 4)
-	H_ion_release			= -0.05		// Push towards acidic
+	H_ion_release = -0.05		// Push towards acidic
 
 /datum/chemical_reaction/pestkiller
 	results = list(/datum/reagent/toxin/pestkiller = 5)
@@ -630,31 +630,31 @@
 	results = list(/datum/reagent/basic_buffer = 5)
 	required_reagents = list(/datum/reagent/lye = 1, /datum/reagent/consumable/ethanol = 2, /datum/reagent/water = 2)
 	//FermiChem vars:
-	required_temp 	= 250
-	optimal_temp 	= 500
-	overheat_temp  	= 9999 
-	optimal_pH_min 	= 0
-	optimal_pH_max 	= 14
-	determin_pH_range 		= 0
-	temp_exponent_factor 	= 4
-	pH_exponent_factor 	= 0
-	thermic_constant= 0
-	H_ion_release 	= 0.01
-	rate_up_lim 		= 15
-	purity_min		= 0
+	required_temp = 250
+	optimal_temp = 500
+	overheat_temp = 9999 
+	optimal_pH_min = 0
+	optimal_pH_max = 14
+	determin_pH_range = 0
+	temp_exponent_factor = 4
+	pH_exponent_factor = 0
+	thermic_constant = 0
+	H_ion_release = 0.01
+	rate_up_lim = 15
+	purity_min = 0
 
 /datum/chemical_reaction/acidic_buffer
 	results = list(/datum/reagent/acidic_buffer = 10)
 	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/consumable/ethanol = 3, /datum/reagent/oxygen = 3, /datum/reagent/water = 3)
-	required_temp 	= 250
-	optimal_temp 	= 500
-	overheat_temp  	= 9999 
-	optimal_pH_min 	= 0
-	optimal_pH_max 	= 14
-	determin_pH_range 		= 0
-	temp_exponent_factor 	= 4
-	pH_exponent_factor 	= 0
-	thermic_constant= 0
-	H_ion_release 	= -0.01
-	rate_up_lim 		= 20
-	purity_min		= 0
+	required_temp = 250
+	optimal_temp = 500
+	overheat_temp = 9999 
+	optimal_pH_min = 0
+	optimal_pH_max = 14
+	determin_pH_range = 0
+	temp_exponent_factor = 4
+	pH_exponent_factor = 0
+	thermic_constant = 0
+	H_ion_release = -0.01
+	rate_up_lim = 20
+	purity_min = 0

@@ -10,14 +10,16 @@
 	var/index = 1
 	var/processing = FALSE
 	var/problem_string
+	var/minorImpurity
+	var/majorImpurity
 
 
 /obj/machinery/chem_recipe_debug/Initialize()
-	.=..()
+	. = ..()
 	create_reagents(500)
 
 /obj/machinery/chem_recipe_debug/attackby(obj/item/I, mob/user, params)
-	.=..()
+	. = .()
 	if(processing)
 		say("currently processing reaction [index]: [cached_reactions[index]] of [cached_reactions.len]")
 		return
@@ -52,6 +54,7 @@
 	if(index >= cached_reactions.len)
 		say("Completed testing, problem reactions are:")
 		say("[problem_string]")
+		say("Reactions with minor impurity: [minorImpurity], reactions with major impurity: [majorImpurity]")
 		processing = FALSE
 		end_processing()
 	if(reagents.reagent_list)
@@ -63,13 +66,18 @@
 				say("<span class='warning'>Unable to find product [R] in holder after reaction! reagents found are:</span>")
 				for(var/R3 in reagents.reagent_list)
 					say("[R3]")
+				var/obj/item/reagent_containers/glass/beaker/bluespace/B = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
+				reagents.trans_to(B)
+				B.name = "[cached_reactions[index]]"
 				problem_string += "<span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
 				continue
 			say("Reaction has a product [R] [R2.volume]u purity of [R2.purity]")
 			if(R2.purity < 0.9)
 				problem_string += "Reaction has a product [R] [R2.volume]u <span class='boldwarning'>purity of [R2.purity]</span> index:[index]\n"
+				majorImpurity++
 			else if (R2.purity < 1)
 				problem_string += "Reaction has a product [R] [R2.volume]u <span class='warning'>purity of [R2.purity]</span> index:[index]\n"
+				minorImpurity++
 			if(R2.volume < C.results[R])
 				problem_string += "Reaction has a product [R] <span class='warning'>[R2.volume]u</span> purity of [R2.purity] index:[index]\n"
 		reagents.clear_reagents()

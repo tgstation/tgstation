@@ -1,28 +1,31 @@
+#define DETAILED_CHEM_OUTPUT 1
+#define SHORTENED_CHEM_OUTPUT 0
+
 /obj/item/pHbooklet
 	name = "pH indicator booklet"
 	desc = "A booklet containing paper soaked in universal indicator."
 	icon_state = "pHbooklet"
 	icon = 'icons/obj/chemical.dmi'
 	item_flags = NOBLUDGEON
-	var/numberOfPages = 50
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
+	var/number_of_pages = 50
 
 //A little janky with pockets
 /obj/item/pHbooklet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
-		if(numberOfPages == 50)
+		if(number_of_pages == 50)
 			icon_state = "pHbooklet_open"
-		if(numberOfPages >= 1)
+		if(number_of_pages >= 1)
 			var/obj/item/pHpaper/P = new /obj/item/pHpaper
 			P.add_fingerprint(user)
 			P.forceMove(user.loc)
 			user.put_in_active_hand(P)
 			to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
-			numberOfPages--
-			playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+			number_of_pages--
+			playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 			add_fingerprint(user)
-			if(numberOfPages == 0)
+			if(number_of_pages == 0)
 				icon_state = "pHbooklet_empty"
 			return
 		else
@@ -36,16 +39,16 @@
 
 /obj/item/pHbooklet/MouseDrop()
 	var/mob/living/user = usr
-	if(numberOfPages >= 1)
+	if(number_of_pages >= 1)
 		var/obj/item/pHpaper/P = new /obj/item/pHpaper
 		P.add_fingerprint(user)
 		P.forceMove(user)
 		user.put_in_active_hand(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
-		numberOfPages--
-		playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+		number_of_pages--
+		playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		add_fingerprint(user)
-		if(numberOfPages == 0)
+		if(number_of_pages == 0)
 			icon_state = "pHbookletEmpty"
 		return
 	else
@@ -114,15 +117,15 @@
 	icon = 'icons/obj/chemical.dmi'
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
-	var/scanmode = 1
+	var/scanmode = DETAILED_CHEM_OUTPUT
 
 /obj/item/pHmeter/attack_self(mob/user)
 	if(!scanmode)
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a detailed report.</span>")
-		scanmode = 1
+		scanmode = DETAILED_CHEM_OUTPUT
 	else
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a reduced report.</span>")
-		scanmode = 0
+		scanmode = SHORTENED_CHEM_OUTPUT
 
 /obj/item/pHmeter/afterattack(atom/A, mob/user, proximity)
 	. = ..()

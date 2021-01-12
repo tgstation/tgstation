@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/volume = 0
 	/// pH of the reagent
 	var/pH = 7
-	///Purity of the reagent
+	///Purity of the reagent - for use with internal reaction mechanics only. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
 	var/purity = 1
 	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
@@ -82,13 +82,13 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
-	// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
+	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL
 	var/chemical_flags 
-	//impure chem values (see fermi_readme.dm for more details):
-	var/impure_chem		 = /datum/reagent/impure			// What chemical path is made when metabolised as a function of purity
-	var/inverse_chem_val = 0.2								// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
-	var/inverse_chem	 = /datum/reagent/impure/toxic		// What chem is metabolised when purity is below inverse_chem_val
-	var/failed_chem		 = /datum/reagent/consumable/failed_reaction //what chem is made at the end of a reaction IF the purity is below the recipies purity_min
+	///impure chem values (see fermi_readme.dm for more details on impure/inverse/failed mechanics):
+	var/impure_chem		 = /datum/reagent/impure			/// What chemical path is made when metabolised as a function of purity
+	var/inverse_chem_val = 0.2								/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
+	var/inverse_chem	 = /datum/reagent/impure/toxic		/// What chem is metabolised when purity is below inverse_chem_val
+	var/failed_chem		 = /datum/reagent/consumable/failed_reaction ///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -164,13 +164,12 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 /// Called when a reagent is inside of a mob when they are dead
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/C)
-	if(!chemical_flags & REAGENT_DEAD_PROCESS)
+	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
 		return
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency)
-	return
 
 /// Called by [/datum/reagents/proc/conditional_update_move]
 /datum/reagent/proc/on_move(mob/M)
