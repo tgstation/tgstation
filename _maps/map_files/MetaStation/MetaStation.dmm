@@ -5486,14 +5486,8 @@
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "aoB" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /obj/machinery/rnd/production/techfab/department/security,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/dark,
 /area/security/main)
 "aoJ" = (
 /obj/machinery/door/window/eastright{
@@ -63404,6 +63398,9 @@
 	pixel_x = -24;
 	pixel_y = 1
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "ehi" = (
@@ -68203,7 +68200,6 @@
 /obj/machinery/light_switch{
 	pixel_x = 25
 	},
-/obj/machinery/rnd/production/techfab/department/security,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "jZN" = (
@@ -69994,6 +69990,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/security/main)
 "mfN" = (
@@ -71932,13 +71929,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"oIN" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel,
-/area/security/main)
 "oJL" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small{
@@ -76142,6 +76132,9 @@
 	pixel_y = -30
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "txO" = (
@@ -109587,7 +109580,7 @@ vHH
 hOy
 ifz
 ehf
-oIN
+ugy
 aiD
 ahC
 awh
