@@ -59,7 +59,8 @@ Instant reactions AREN'T handled here. See holder.dm
 	var/total_matching_reagents = 0
 
 	//If the product/reactants are too impure
-	for(var/datum/reagent/R in holder.reagent_list)
+	for(var/r in holder.reagent_list)
+		var/datum/reagent/R = r
 		if (R.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
 			reaction.overly_impure(holder, src)
@@ -222,5 +223,4 @@ Instant reactions AREN'T handled here. See holder.dm
 	if(!i)//I've never seen it get here with 0, but in case
 		WARNING("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cachedPurity/i
-
 
