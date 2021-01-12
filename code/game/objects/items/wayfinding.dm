@@ -1,3 +1,6 @@
+#define COOLDOWN_SPAWN 3 MINUTES
+#define COOLDOWN_INTERACT 6 SECONDS
+#define COOLDOWN_SLOGAN 5 MINUTES
 /obj/machinery/pinpointer_dispenser
 	name = "wayfinding pinpointer synthesizer"
 	icon = 'icons/obj/machines/wayfinding.dmi'
@@ -6,14 +9,13 @@
 	density = FALSE
 	layer = HIGH_OBJ_LAYER
 	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	payment_department = ACCOUNT_CIV
+	light_power = 0.5
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	///List of user-specific cooldowns to prevent pinpointer spam.
 	var/list/user_spawn_cooldowns = list()
 	///List of user-specific cooldowns to prevent message spam.
 	var/list/user_interact_cooldowns = list()
-	///Time per person to spawn another pinpointer.
-	var/spawn_cooldown = 3 MINUTES
-	///Time per person for subsequent interactions.
-	var/interact_cooldown = 6 SECONDS
 	///How many credits the dispenser account starts with to cover wayfinder refunds.
 	var/start_bal = 400
 	///How many credits recycling a pinpointer rewards you.
@@ -22,29 +24,28 @@
 	var/ppt_cost = 0 //Jan 9 '21: 2560 had its difficulties for NT as well
 	var/expression_timer
 	///Avoid being Reddit.
-	var/funnyprob = 1
+	var/funnyprob = 2
 	///List of slogans used by the dispenser to attract customers.
-	var/list/slogan_list = list("Find a wayfinding pinpointer? Give it to me. I'll make it worth your while. Please. Daddy needs his medicine.", //the last sentence is a reference to Sealab 2021
+	var/list/slogan_list = list("Find a wayfinding pinpointer? Give it to me. Please. I'll make it worth your while. Daddy needs his medicine.", //last sentence is a reference to Sealab 2021
 								"See a wayfinding pinpointer? Don't let it go to the crusher! Feed it to me instead! Please. I'll pay you.", //I see these things heading for disposals through cargo all the time
+								"Need the disk? Can't get a proper pinpointer? Buy a wayfinding pinpointer and find the captain's office today!",
 								"Bleeding to death? Can't read? Find your way to medbay today!", //there are signs that point to medbay but you need basic literacy to get the most out of them
 								"Voted tenth best pinpointer in the universe in 2560!", //there were no more than ten pinpointers in the game in 2020
 								"Helping assistants find the departments they tide since 2560.", //not really but it's advertising
 								"These pinpointers are flying out the airlock!", //because they're being thrown into space
 								"Grey pinpointers for the grey tide!", //I didn't pick the colour but it works
-								"Feeling lost? Find direction in life with a wayfinding pinpointer.",
+								"Feeling lost? Find direction.",
 								"Automate your sense of direction. Buy a wayfinding pinpointer today!",
-								"Feed me a stray pinpointer.", //this is an American Psycho reference
-								"We need a slogan!") //this is a Liberal Crime Squad reference
-	///Number of last entry we said in our slogan list.
-	var/previous_slogan = 0
+								"Feed me a stray pinpointer.", //American Psycho reference
+								"We need a slogan!") //Liberal Crime Squad reference
+	///Number of the list entry of the slogan we last said.
+	var/previous_slogan_entry = 0
 	///Last world tick we said a slogan.
-	var/last_slogan = 0
-	///How many deciseconds until we can say another slogan.
-	var/slogan_delay = 2 MINUTES
+	var/last_slogan_time = 0
 
 /obj/machinery/pinpointer_dispenser/Initialize(mapload)
 	. = ..()
-	var/datum/bank_account/civ_acc = SSeconomy.get_dep_account(ACCOUNT_CIV)
+	var/datum/bank_account/civ_acc = SSeconomy.get_dep_account(payment_department)
 	if(civ_acc)
 		synth_acc.transfer_money(civ_acc, start_bal) //float has to come from somewhere, right?
 
@@ -54,25 +55,40 @@
 
 	power_change()
 
-	last_slogan = world.time + rand(0, slogan_delay)
-	slogan_list = shuffle(slogan_list) //we can then go through our randomised list without barks repeating
+	last_slogan_time = world.time + rand(0, COOLDOWN_SLOGAN)
+	slogan_list = shuffle(slogan_list) //minimise repetition
 
 /obj/machinery/pinpointer_dispenser/power_change()
 	. = ..()
 	cut_overlays()
 	if(powered())
-		set_expression("veryhappy") //actual first law of robotics it needs to be friendly in a mindless way
+		set_expression("veryhappy", 2 SECONDS) //v happy to be back in the pinpointer business
 		START_PROCESSING(SSmachines, src)
+
+/obj/machinery/pinpointer_dispenser/update_icon_state()
+	if(machine_stat & BROKEN)
+		set_light(0)
+	else if(powered())
+		set_light(1.4)
+	else
+		set_light(0)
 
 /obj/machinery/pinpointer_dispenser/process(delta_time)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL
 
-	if(((last_slogan + slogan_delay) <= world.time) && slogan_list.len)
-		var/slogan = slogan_list[previous_slogan + 1]
+	if(((last_slogan_time + COOLDOWN_SLOGAN) <= world.time) && slogan_list.len)
+		var/slogan = slogan_list[previous_slogan_entry + 1]
 		say(slogan)
-		previous_slogan++
-		last_slogan = world.time
+		previous_slogan_entry++
+		last_slogan_time = world.time
+
+/obj/machinery/pinpointer_dispenser/Destroy()
+	for(var/i = 0, i < pick(3,9), i++) //I guess it doesn't synthesise them in real time and instead stockpiles them
+		new /obj/item/pinpointer/wayfinding (loc)
+	say("Ouch.")
+	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE) //An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
+	return ..()
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
 	. = ..()
@@ -85,7 +101,7 @@
 		to_chat(user, "<span class='notice'>It just grins at you. Maybe you should give it a few seconds?</span>")
 		return
 
-	user_interact_cooldowns[user.real_name] = world.time + interact_cooldown
+	user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
 
 	for(var/obj/item/pinpointer/wayfinding/WP in user.GetAllContents())
 		set_expression("veryhappy", 2 SECONDS)
@@ -94,10 +110,10 @@
 
 	var/msg
 	var/dispense = TRUE
-	var/obj/item/pinpointer/wayfinding/pointat
+	var/obj/item/pinpointer/wayfinding/point_at
 	var/pnpts_found = 0
 	for(var/obj/item/pinpointer/wayfinding/WP in view(9, src))
-		pointat(WP)
+		point_at(WP)
 		pnpts_found++
 
 	if(pnpts_found)
@@ -124,15 +140,15 @@
 
 	if(!dispense)
 		set_expression("sad", 2 SECONDS)
-		if(pointat)
-			msg += ". Get [pointat.owner == user.real_name ? "your" : "that"] pinpointer over there instead"
-			pointat(pointat)
+		if(point_at)
+			msg += ". Get [point_at.owner == user.real_name ? "your" : "that"] pinpointer over there instead"
+			point_at(point_at)
 		say("<span class='robot'>Sorry, [user.first_name()]! You'll need [msg]!</span>")
 	else
 		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>Here's your pinpointer!</span>")
 		var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(get_turf(src))
-		user_spawn_cooldowns[user.real_name] = world.time + spawn_cooldown
+		user_spawn_cooldowns[user.real_name] = world.time + COOLDOWN_SPAWN
 		user.put_in_hands(P)
 		P.owner = user.real_name
 
@@ -156,12 +172,12 @@
 				refundiscredits = TRUE
 				qdel(WP)
 				synth_acc._adjust_money(-refund_amt)
-				var/obj/item/holochip/HC = new /obj/item/holochip(loc)
-				HC.credits = refund_amt
-				HC.name = "[HC.credits] credit holochip"
+				var/obj/item/holochip/holochip = new (loc)
+				holochip.credits = refund_amt
+				holochip.name = "[holochip.credits] credit holochip"
 				if(istype(user, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = user
-					H.put_in_hands(HC)
+					var/mob/living/carbon/human/customer = user
+					customer.put_in_hands(holochip)
 
 		if(!refundiscredits)
 			qdel(WP)
@@ -187,8 +203,14 @@
 
 		say("<span class='robot'>Thank you for [whatyoudid] [whosepinpointer], [user.first_name()]! Here [refund]</span>")
 
-	else
-		..()
+		return
+
+	else if(I.force && prob(4))
+		var/ouch = pick("Stop.", "Don't do that.", "You'll regret it.")
+		set_expression("sad", 2 SECONDS)
+		say(ouch)
+
+	return ..()
 
 /obj/machinery/pinpointer_dispenser/proc/set_expression(type, duration)
 	cut_overlays()
@@ -201,7 +223,7 @@
 	if(duration)
 		expression_timer = addtimer(CALLBACK(src, .proc/set_expression, "happy"), duration, TIMER_STOPPABLE)
 
-/obj/machinery/pinpointer_dispenser/pointat(A)
+/obj/machinery/pinpointer_dispenser/point_at(A)
 	. = ..()
 	visible_message("<span class='name'>[src]</span> points at [A]. [prob(funnyprob) ? "How'd it do that?" : ""]")
 

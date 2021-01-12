@@ -576,7 +576,7 @@
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	pointat(A)
+	point_at(A)
 
 	return TRUE
 

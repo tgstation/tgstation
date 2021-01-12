@@ -1777,8 +1777,8 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/proc/pointat(atom/A)
-	if(!src || !isturf(src.loc))
+/atom/proc/point_at(atom/A)
+	if(!isturf(loc))
 		return FALSE
 
 	var/turf/tile = get_turf(A)
