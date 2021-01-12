@@ -20,7 +20,6 @@
 	intact = TRUE
 	tiled_dirt = TRUE
 
-	var/icon_plating = "plating"
 	var/broken = FALSE
 	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops

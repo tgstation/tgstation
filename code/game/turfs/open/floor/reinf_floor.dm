@@ -27,7 +27,7 @@
 
 /turf/open/floor/engine/make_plating(force = FALSE)
 	if(force)
-		..()
+		return ..()
 	return //unplateable
 
 /turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
