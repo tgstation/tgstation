@@ -195,7 +195,7 @@
 	result = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	reqs = list(/obj/item/gun/energy/kinetic_accelerator = 1,
 				/obj/item/stack/cable_coil = 5,
-				/obj/item/weaponcrafting/gunkit/temperature = 1,
+				/obj/item/weaponcrafting/gunkit/ebow = 1,
 				/datum/reagent/uranium/radium = 15)
 	time = 200
 	category = CAT_WEAPONRY
