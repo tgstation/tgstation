@@ -1,0 +1,4 @@
+author: "EgorDinamit"
+delete-after: True
+changes: 
+  - bugfix: "removes double/triple catwalks on DeltaStation."

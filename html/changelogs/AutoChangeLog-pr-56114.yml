@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - tweak: "When opening the tgui list input, it'll automatically focus the first element to allow for easier navigating, replicating the behaviour from the default input box."
