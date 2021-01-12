@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - rscadd: "Added new input list TGUI UI for whenever the need to select something from a list is needed. These have been applied to the Drop Bomb verb for admins and the holopad communicator."

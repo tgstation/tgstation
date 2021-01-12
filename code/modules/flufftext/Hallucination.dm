@@ -759,7 +759,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			lock.airlock = next_airlock
 			LAZYADD(locks, lock)
 
-		if (!airlocks_to_hit.len)
+		if (!LAZYLEN(airlocks_to_hit))
 			locking = FALSE
 			next_action = 10 SECONDS
 			return
