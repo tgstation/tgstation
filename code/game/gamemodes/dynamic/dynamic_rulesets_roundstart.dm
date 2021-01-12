@@ -542,10 +542,10 @@
 
 /datum/dynamic_ruleset/roundstart/malf/pre_execute()
 	. = ..()
-	var/mob/living/silicon/ai/M = pick_n_take(candidates)
-	assigned += M.mind
-	M.mind.restricted_roles = restricted_roles
-	M.mind.special_role = ROLE_MALF
+	var/mob/living/silicon/ai/picked = pick_n_take(candidates)
+	assigned += picked.mind
+	picked.mind.restricted_roles = restricted_roles
+	picked.mind.special_role = ROLE_MALF
 	return TRUE
 
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
