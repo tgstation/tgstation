@@ -426,6 +426,7 @@
 
 		for (var/job_name in GLOB.command_positions + GLOB.security_positions)
 			var/datum/job/job = SSjob.GetJob(job_name)
+			job.allow_bureaucratic_error = FALSE
 			job.total_positions = 0
 
 		if (revs_win_injection_amount)
