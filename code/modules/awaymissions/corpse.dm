@@ -93,6 +93,7 @@
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
 		M.gender = mob_gender
+		M.body_type = mob_gender
 	if(faction)
 		M.faction = list(faction)
 	if(disease)
