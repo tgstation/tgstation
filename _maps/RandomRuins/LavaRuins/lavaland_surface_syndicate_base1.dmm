@@ -3300,9 +3300,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jr" = (
-/obj/effect/spawner/randomsnackvend{
-	hacked = 1
-	},
+/obj/effect/spawner/randomsnackvend/contraband,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -3397,9 +3395,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jD" = (
-/obj/effect/spawner/randomcolavend{
-	hacked = 1
-	},
+/obj/effect/spawner/randomcolavend/contraband,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
