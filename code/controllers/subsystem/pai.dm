@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
 
-	flags = SS_NO_INIT|SS_NO_FIRE|SS_BACKGROUND
+	flags = SS_NO_INIT|SS_NO_FIRE
 
 	var/list/candidates = list()
 	var/ghost_spam = FALSE
