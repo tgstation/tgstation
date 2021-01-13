@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - tweak: "Hulks now get more damage from freeze damage, take it in brute, and get the damage at higher temps than normal"
