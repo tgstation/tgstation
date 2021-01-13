@@ -38,9 +38,9 @@
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
-	coffer = new /datum/action/cooldown/domain
+	domain = new /datum/action/cooldown/domain
 	riot = new /datum/action/cooldown/riot
-	coffer.Grant(src)
+	domain.Grant(src)
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
 
@@ -56,7 +56,7 @@
 	if(prob(20))
 		riot.Trigger()
 	else if(prob(50))
-		coffer.Trigger()
+		domain.Trigger()
 	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
@@ -101,11 +101,11 @@
 		if (do_after(src,3 SECONDS, target))
 			var/loot = rand(1,100)
 			switch(loot)
-				if(1 to 5)					
-					to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
+				if(1 to 5)
+					to_chat(src, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
 					var/pickedcoin = pick(GLOB.ratking_coins)
 					for(var/i = 1 to rand(1,3))
-						new pickedcoin(T)
+						new pickedcoin(get_turf(src))
 				if(6 to 33)
 					src.say(pick("Treasure!","Our precious!","Cheese!"))
 					to_chat(src, "<span class='notice'>Score! You find some cheese!</span>")
