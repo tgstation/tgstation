@@ -472,8 +472,6 @@
 ///Proc to hook behavior to the change of value in the resting variable.
 /mob/living/proc/set_resting(new_resting, silent = TRUE, instant = FALSE)
 	if(!(mobility_flags & MOBILITY_REST))
-		get_up(instant)
-		update_resting()
 		return
 	if(new_resting == resting)
 		return
