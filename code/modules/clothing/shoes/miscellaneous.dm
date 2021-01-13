@@ -518,3 +518,38 @@
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
 	inhand_icon_state = "JackFrostShoes_worn"
+
+/obj/item/clothing/shoes/gunboots //admin boots that fire gunshots randomly while walking
+	name = "gunboots"
+	desc = "This is what all those research points added up to, the ultimate workplace hazard."
+	icon_state = "jackboots"
+	inhand_icon_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	/// What projectile do we shoot?
+	var/projectile_type = /obj/projectile/bullet/c10mm
+	/// Each step, this is the chance we fire a shot
+	var/shot_prob = 50
+
+/obj/item/clothing/shoes/gunboots/step_action()
+	. = ..()
+	if(!prob(shot_prob) || !isliving(loc))
+		return
+
+	var/mob/living/wearer = loc
+	var/obj/projectile/P = new projectile_type(get_turf(wearer))
+	var/turf/random_target = get_offset_target_turf(get_turf(wearer), rand(-3, 3), rand(-3,3))
+
+	//Shooting Code:
+	P.spread = 0
+	P.original = random_target
+	P.fired_from = wearer
+	P.firer = wearer // don't hit ourself that would be really annoying
+	P.impacted = list(wearer = TRUE) // don't hit the target we hit already with the flak
+	P.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	P.preparePixelProjectile(random_target, wearer)
+	wearer.visible_message("<span class='danger'>[wearer]'s [src.name] fires [P]!</span>", blind_message = "<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
+	P.fire()
+
+
