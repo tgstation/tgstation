@@ -34,17 +34,21 @@
 	dat += "Remaining glasses: [glasses]<br>"
 	dat += "Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"
 	for(var/datum/reagent/R in reagents.reagent_list)
+	for(var/i=1 to length(reagents.reagent_list))
+		var/datum/reagent/R = reagents.reagent_list[i]
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];disposeI=[R.type]'>Purge</a>"
+		dat += "<a href='?src=[REF(src)];disposeI=[i]'>Purge</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];pour=[R.type]'>Pour in a glass</a>"
-		dat += "<a href='?src=[REF(src)];mix=[R.type]'>Add to the mixer</a><br>"
+			dat += "<a href='?src=[REF(src)];pour=[i]'>Pour in a glass</a>"
+		dat += "<a href='?src=[REF(src)];mix=[i]'>Add to the mixer</a><br>"
 	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
 	for(var/datum/reagent/R in mixer.reagents.reagent_list)
+	for(var/i=1 to length(mixer.reagents.reagent_list))
+		var/datum/reagent/R = mixer.reagents.reagent_list[i]
 		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];transfer=[R.type]'>Transfer back</a>"
+		dat += "<a href='?src=[REF(src)];transfer=[i]'>Transfer back</a>"
 		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];m_pour=[R.type]'>Pour in a glass</a>"
+			dat += "<a href='?src=[REF(src)];m_pour=[i]'>Pour in a glass</a>"
 		dat += "<br>"
 	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
 	for(var/V in stored_food)
@@ -113,7 +117,7 @@
 		return
 
 	if(href_list["disposeI"])
-		reagents.del_reagent(href_list["disposeI"])
+		reagents.del_reagent(reagents.reagent_list[text2num(href_list["disposeI"])]?.type)
 
 	if(href_list["dispense"])
 		if(stored_food[href_list["dispense"]]-- <= 0)
@@ -139,16 +143,16 @@
 		else
 			var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
 			if(href_list["pour"])
-				reagents.trans_id_to(DG, href_list["pour"], portion)
+				reagents.trans_id_to(DG, reagents.reagent_list[text2num(href_list["pour"])]?.type, portion)
 			if(href_list["m_pour"])
-				mixer.reagents.trans_id_to(DG, href_list["m_pour"], portion)
+				mixer.reagents.trans_id_to(DG, mixer.reagents.reagent_list[text2num(href_list["m_pour"])]?.type, portion)
 
 	if(href_list["mix"])
-		if(reagents.trans_id_to(mixer, href_list["mix"], portion) == 0)
+		if(reagents.trans_id_to(mixer, reagents.reagent_list[text2num(href_list["mix"])]?.type, portion) == 0)
 			to_chat(usr, "<span class='warning'>[mixer] is full!</span>")
 
 	if(href_list["transfer"])
-		if(mixer.reagents.trans_id_to(src, href_list["transfer"], portion) == 0)
+		if(mixer.reagents.trans_id_to(src, mixer.reagents.reagent_list[text2num(href_list["transfer"])]?.type, portion) == 0)
 			to_chat(usr, "<span class='warning'>[src] is full!</span>")
 
 	updateDialog()
