@@ -489,9 +489,9 @@
 		if(!Adjacent(T) && range <= 1)
 			continue
 		if(T.myseed && !T.dead)
-			T.myseed.set_potency(round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)), 0, MAX_PLANT_POTENCY)))
-			T.myseed.set_instability(round(clamp((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability)), 0, MAX_PLANT_INSTABILITY)))
-			T.myseed.set_yield(round(clamp((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield)), 0, MAX_PLANT_YIELD)))
+			T.myseed.set_potency(round((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency))))
+			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
+			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				var/list/datum/plant_gene/reagent/possible_reagents = list()
 				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)

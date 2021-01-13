@@ -639,12 +639,12 @@
 		genes += new_trait.Copy()
 
 	// Adjust stats based on graft stats
-	set_lifespan(round(clamp(max(lifespan,		(lifespan	+ (2/3)*(snip.lifespan - lifespan)		)), 0, MAX_PLANT_LIFESPAN)))
-	set_endurance(round(clamp(max(endurance,	(endurance	+ (2/3)*(snip.endurance - endurance)	)), 0, MAX_PLANT_ENDURANCE)))
-	set_production(round(clamp(max(production,	(production	+ (2/3)*(snip.production - production)	)), 0, MAX_PLANT_PRODUCTION)))
-	set_weed_rate(round(clamp(max(weed_rate,	(weed_rate	+ (2/3)*(snip.weed_rate - weed_rate)	)), 0, MAX_PLANT_WEEDRATE)))
-	set_weed_chance(round(clamp(max(weed_chance,(weed_chance+ (2/3)*(snip.weed_chance - weed_chance))), 0, MAX_PLANT_WEEDCHANCE)))
-	set_yield(round(clamp(max(yield,			(yield		+ (2/3)*(snip.yield - yield)			)), 0, MAX_PLANT_YIELD)))
+	set_lifespan(round(max(lifespan,		(lifespan	+ (2/3)*(snip.lifespan - lifespan)			))))
+	set_endurance(round(max(endurance,		(endurance	+ (2/3)*(snip.endurance - endurance)		))))
+	set_production(round(max(production,	(production	+ (2/3)*(snip.production - production)		))))
+	set_weed_rate(round(max(weed_rate,		(weed_rate	+ (2/3)*(snip.weed_rate - weed_rate)		))))
+	set_weed_chance(round(max(weed_chance,	(weed_chance+ (2/3)*(snip.weed_chance - weed_chance)	))))
+	set_yield(round(max(yield,				(yield		+ (2/3)*(snip.yield - yield)				))))
 
 	// Add in any reagents, too.
 	reagents_from_genes()
