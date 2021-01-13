@@ -12,8 +12,11 @@
 	if(!check_rights(R_FUN))
 		return
 	var/list/options = list("Random", "Uprising of Assistants", "Medical", "Engineering", "Science", "Cargo", "Service", "Security")
-	var/picked_department
 	picked_department = input(usr,"Which department should revolt?","Select a department") as null|anything in options
+
+	//if they cancel just do the event as if it wasn't with admin intervention
+	if(!picked_department)
+		return
 
 	if(picked_department == "Random")
 		picked_department = pick(options - "Random")
@@ -79,10 +82,8 @@
 						H.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
 
 	if(citizens.len)
-		var/message
-		for(var/job in jobs_to_revolt)
-			message += "[job], "
-		message_admins("The nation of [nation_name] has been formed. Affected jobs are [message] and any new crewmembers with these jobs will join the secession")
+		var/jobs_english_list = english_list(jobs_to_revolt)
+		message_admins("The nation of [nation_name] has been formed. Affected jobs are [jobs_english_list]. Any new crewmembers with these jobs will join the secession.")
 		if(announcement)
 			var/announce_text = "The new independent state of [nation_name] has formed from the ashes of the [department] department!"
 			if("department" == "Uprising of Assistants") //the text didn't really work otherwise

@@ -13,10 +13,12 @@
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	. = ..()
 
-/datum/team/nation/proc/new_possible_separatist(mob/living/crewmember, rank)
+/datum/team/nation/proc/new_possible_separatist(datum/source, mob/living/crewmember, rank)
+	SIGNAL_HANDLER
+
 	if(rank in potential_recruits)
 		//surely we can trust the player who just joined the game to have a mind.
-		living.mind.add_antag_datum(/datum/antagonist/separatist,src)
+		crewmember.mind.add_antag_datum(/datum/antagonist/separatist,src)
 
 /datum/antagonist/separatist
 	name = "Separatists"
