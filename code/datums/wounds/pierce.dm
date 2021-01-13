@@ -50,7 +50,7 @@
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/pierce/get_bleed_rate_of_change()
-	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
 	if(limb.current_gauze)
 		return BLOOD_FLOW_DECREASING
@@ -64,8 +64,8 @@
 		if(prob(5))
 			to_chat(victim, "<span class='notice'>You feel the [lowertext(name)] in your [limb.name] firming up from the cold!</span>")
 
-	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
-		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		blood_flow += 0.5 // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
 		blood_flow -= limb.current_gauze.absorption_rate * gauzed_clot_rate

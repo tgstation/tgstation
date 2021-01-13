@@ -343,10 +343,10 @@
 /**
  * get_bleed_rate_of_change() is used in [/mob/living/carbon/proc/bleed_warn] to gauge whether this wound (if bleeding) is becoming worse, better, or staying the same over time
  *
- * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/herapin)
+ * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin)
  */
 /datum/wound/proc/get_bleed_rate_of_change()
-	if(blood_flow && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 

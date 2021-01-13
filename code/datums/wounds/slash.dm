@@ -83,7 +83,7 @@
 	return bleed_amt
 
 /datum/wound/slash/get_bleed_rate_of_change()
-	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
 	if(limb.current_gauze || clot_rate > 0)
 		return BLOOD_FLOW_DECREASING
@@ -102,8 +102,8 @@
 
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
-	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
-		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		blood_flow += 0.5 // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
 		if(clot_rate > 0)

@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define BLOOD_FLOW_DECREASING	-1
 /// Our wound is bleeding but is holding steady at the same rate.
 #define BLOOD_FLOW_STEADY		0
-/// Our wound is bleeding and actively getting worse, like if we're a critical slash or if we're afflicted with herapin
+/// Our wound is bleeding and actively getting worse, like if we're a critical slash or if we're afflicted with heparin
 #define BLOOD_FLOW_INCREASING	1
 
 /// How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding

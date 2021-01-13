@@ -75,12 +75,10 @@
 	if(!blood_volume)
 		return
 	blood_volume = max(blood_volume - amt, 0)
-	if (prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
-		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
-			if(amt >= 10)
-				add_splatter_floor(src.loc)
-			else
-				add_splatter_floor(src.loc, 1)
+
+	//Blood loss still happens in locker, floor stays clean
+	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
+		add_splatter_floor(loc, (amt >= 10))
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -141,8 +139,8 @@
 			bleeding_severity = "Your heartbeat thrashes wildly trying to keep up with your bloodloss"
 
 	var/rate_of_change = ", but it's getting better." // if there's no wounds actively getting bloodier or maintaining the same flow, we must be getting better!
-	if(reagents?.has_reagent(/datum/reagent/medicine/coagulant)) // if we have coagulant, we're getting better
-		rate_of_change = ", but the medicine in your veins is helping the clotting!"
+	if(HAS_TRAIT(src, TRAIT_COAGULATING)) // if we have coagulant, we're getting better quick
+		rate_of_change = ", but it's clotting up quickly!"
 	else
 		// flick through our wounds to see if there are any bleeding ones getting worse or holding flow (maybe move this to handle_blood and cache it so we don't need to cycle through the wounds so much)
 		for(var/i in all_wounds)

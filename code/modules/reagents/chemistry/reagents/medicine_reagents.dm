@@ -1367,6 +1367,14 @@
 	/// For tracking when we tell the person we're no longer bleeding
 	var/was_working
 
+/datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/M)
+	ADD_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+	return ..()
+
+/datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+	return ..()
+
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(!M.blood_volume || !M.all_wounds)
