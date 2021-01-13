@@ -28,9 +28,6 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/reagent_containers/syringe/on_reagent_change(changetype)
-	update_icon()
-
 /obj/item/reagent_containers/syringe/pickup(mob/user)
 	..()
 	update_icon()
@@ -70,10 +67,7 @@
 			return
 
 	// chance of monkey retaliation
-	if(ismonkey(target) && prob(MONKEY_SYRINGE_RETALIATION_PROB))
-		var/mob/living/carbon/monkey/M
-		M = target
-		M.retaliate(user)
+	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE, user)
 
 	switch(mode)
 		if(SYRINGE_DRAW)

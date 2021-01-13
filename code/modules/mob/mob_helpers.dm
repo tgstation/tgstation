@@ -286,6 +286,12 @@
 	if(hud_used?.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
+///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
+/mob/proc/get_realname_string()
+	if(real_name && real_name != name)
+		return " \[[real_name]\]"
+	return ""
+
 ///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
 /mob/proc/is_blind()
 	SHOULD_BE_PURE(TRUE)
@@ -441,14 +447,6 @@
 		message_admins("No ghosts were willing to take control of [ADMIN_LOOKUPFLW(M)])")
 		return FALSE
 
-///Is the mob a flying mob
-/mob/proc/is_flying()
-	return (movement_type & FLYING)
-
-///Is the mob a floating mob
-/mob/proc/is_floating()
-	return (movement_type & FLOATING)
-
 ///Clicks a random nearby mob with the source from this mob
 /mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()
@@ -493,7 +491,7 @@
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
 	
-	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)]" = colored_message)
+	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 

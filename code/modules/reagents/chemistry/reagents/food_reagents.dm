@@ -57,7 +57,7 @@
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
-		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
+		M.heal_bodypart_damage(brute = brute_heal, burn = burn_heal)
 		. = 1
 	..()
 
@@ -117,6 +117,11 @@
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 * REAGENTS_METABOLISM //45% as calorie dense as corn oil.
 
+/datum/reagent/consumable/nutriment/organ_tissue
+	name = "Organ Tissue"
+	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
+	taste_description = "rich earthy pungent"
+
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
 	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
@@ -133,6 +138,9 @@
 	if(!holder || (holder.chem_temp <= fry_temperature))
 		return
 	if(!isitem(exposed_obj) || istype(exposed_obj, /obj/item/food/deepfryholder))
+		return
+	if(is_type_in_typecache(exposed_obj, GLOB.oilfry_blacklisted_items) || (exposed_obj.resistance_flags & INDESTRUCTIBLE))
+		exposed_obj.loc.visible_message("<span class='notice'>The hot oil has no effect on [exposed_obj]!</span>")
 		return
 	exposed_obj.loc.visible_message("<span class='warning'>[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow.</span>")
 	var/obj/item/food/deepfryholder/fry_target = new(exposed_obj.drop_location(), exposed_obj)
@@ -311,7 +319,7 @@
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(!ishuman(exposed_mob) && !ismonkey(exposed_mob))
+	if(!ishuman(exposed_mob))
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
@@ -420,11 +428,11 @@
 			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
 			M.Paralyze(10)
 			M.Jitter(10)
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.job == "Cook")
+	else
+		var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
 			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
-				H.heal_bodypart_damage(1,1, 0)
+				M.heal_bodypart_damage(brute = 1, burn = 1)
 				. = 1
 	..()
 
@@ -435,8 +443,9 @@
 	taste_description = "childhood whimsy"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
-	if(M.mind && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1,1, 0)
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		M.heal_bodypart_damage(brute = 1, burn = 1)
 		. = 1
 	..()
 
@@ -858,3 +867,16 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	taste_mult = 2
 	taste_description = "fizzy sweetness"
+
+/datum/reagent/consumable/gravy
+	name = "Gravy"
+	description = "A mixture of flour, water, and the juices of cooked meat."
+	taste_description = "gravy"
+	color = "#623301"
+	taste_mult = 1.2
+
+/datum/reagent/consumable/pancakebatter
+	name = "pancake batter"
+	description = "A very milky batter. 5 units of this on the griddle makes a mean pancake."
+	taste_description = "milky batter"
+	color = "#fccc98"

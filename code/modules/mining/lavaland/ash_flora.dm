@@ -144,8 +144,7 @@
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
-	// min dmg 3, max dmg 6, prob(70)
-	AddComponent(/datum/component/caltrop, 3, 6, 70)
+	AddElement(/datum/element/caltrop, min_damage = 3, max_damage = 6, probability = 70)
 
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly

@@ -253,6 +253,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(fexists(roundend_report_file()))
 		add_verb(src, /client/proc/show_previous_roundend_report)
 
+	if(fexists("data/last_roundend/server_last_roundend_report.html"))
+		add_verb(src, /client/proc/show_servers_last_roundend_report)
+
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
 
@@ -278,8 +281,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					else
 						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
 						log_admin_private("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
-
+	var/reconnecting = FALSE
 	if(GLOB.player_details[ckey])
+		reconnecting = TRUE
 		player_details = GLOB.player_details[ckey]
 		player_details.byond_version = full_version
 	else
@@ -376,7 +380,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		add_admin_verbs()
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
-
+	if (mob && reconnecting)
+		var/stealth_admin = mob.client?.holder?.fakekey
+		var/announce_leave = mob.client?.prefs?.broadcast_login_logout
+		if (!stealth_admin)
+			deadchat_broadcast(" has reconnected.", "<b>[mob][mob.get_realname_string()]</b>", follow_target = mob, turf_target = get_turf(mob), message_type = DEADCHAT_LOGIN_LOGOUT, admin_only=!announce_leave)
 	add_verbs_from_config()
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -446,6 +454,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	return ..()
 
 /client/Destroy()
+	if(mob)
+		var/stealth_admin = mob.client?.holder?.fakekey
+		var/announce_join = mob.client?.prefs?.broadcast_login_logout
+		if (!stealth_admin)
+			deadchat_broadcast(" has disconnected.", "<b>[mob][mob.get_realname_string()]</b>", follow_target = mob, turf_target = get_turf(mob), message_type = DEADCHAT_LOGIN_LOGOUT, admin_only=!announce_join)
+	
 	GLOB.clients -= src
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
@@ -1069,3 +1083,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
+
+/client/proc/open_filter_editor(atom/in_atom)
+	if(holder)
+		holder.filteriffic = new /datum/filter_editor(in_atom)
+		holder.filteriffic.ui_interact(mob)

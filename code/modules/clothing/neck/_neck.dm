@@ -208,7 +208,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	var/datum/export_report/ex = export_item_and_contents(I, allowed_categories = (ALL), dry_run=TRUE)
+	var/datum/export_report/ex = export_item_and_contents(I, dry_run=TRUE)
 	var/price = 0
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]

@@ -13,6 +13,14 @@
 /datum/map_generator/cave_generator/icemoon/surface
 	flora_spawn_chance = 4
 	mob_spawn_list = null
-	initial_closed_chance = 40
+	initial_closed_chance = 53
 	birth_limit = 5
 	death_limit = 4
+	smoothing_iterations = 10
+
+/datum/map_generator/cave_generator/icemoon/deep
+	closed_turf_types = list(/turf/closed/mineral/random/snow/underground = 1)
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/ice_demon = 50, /obj/structure/spawner/ice_moon/demonic_portal = 3, \
+						  /mob/living/simple_animal/hostile/asteroid/ice_whelp = 30, /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp = 3, \
+						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 3)
+	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6, /obj/structure/flora/ash/chilly = 1)
