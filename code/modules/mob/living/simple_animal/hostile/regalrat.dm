@@ -32,13 +32,13 @@
 	faction = list("rat")
 	var/rummaging = FALSE
 	///The spell that the rat uses to scrounge up junk.
-	var/datum/action/cooldown/coffer
+	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/riot
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
-	coffer = new /datum/action/cooldown/coffer
+	coffer = new /datum/action/cooldown/domain
 	riot = new /datum/action/cooldown/riot
 	coffer.Grant(src)
 	riot.Grant(src)
@@ -123,15 +123,7 @@
 			playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 		C.deconstruct()
 
-	if (target.reagents && istype(target,/obj) && target.is_injectable(src,TRUE))
-		src.visible_message("<span class='warning'>[src] starts licking the [target] passionately!</span>","<span class='notice'>You start licking the [target]...</span>")
-		rummaging = TRUE
-		if (do_after(src,2 SECONDS, target) && target)
-			target.reagents.add_reagent(/datum/reagent/rat_spit,1,no_react = TRUE)
-			to_chat(src, "<span class='notice'>You finish licking the [target].</span>")
-		rummaging = FALSE
-		return
-	else if(istype(target, /obj/item/food/cheesewedge))
+	if(istype(target, /obj/item/food/cheesewedge))
 		cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
 
 	else if(istype(target, /obj/item/food/cheesewheel))
@@ -139,6 +131,14 @@
 
 	else if(istype(target, /obj/item/food/royalcheese))
 		cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
+	else if (target.reagents && istype(target,/obj) && target.is_injectable(src,TRUE))
+		src.visible_message("<span class='warning'>[src] starts licking the [target] passionately!</span>","<span class='notice'>You start licking the [target]...</span>")
+		rummaging = TRUE
+		if (do_after(src,2 SECONDS, target) && target)
+			target.reagents.add_reagent(/datum/reagent/rat_spit,1,no_react = TRUE)
+			to_chat(src, "<span class='notice'>You finish licking the [target].</span>")
+		rummaging = FALSE
+		return
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
@@ -176,7 +176,7 @@
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
 
-/datum/action/cooldown/coffer/Trigger()
+/datum/action/cooldown/domain/Trigger()
 	. = ..()
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
