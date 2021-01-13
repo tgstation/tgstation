@@ -132,7 +132,7 @@
 
 	else if(istype(target, /obj/item/food/royalcheese))
 		cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
-	else if (target.reagents && istype(target,/obj) && target.is_injectable(src,TRUE))
+	else if (target.reagents && isobj(target) && target.is_injectable(src,TRUE))
 		src.visible_message("<span class='warning'>[src] starts licking the [target] passionately!</span>","<span class='notice'>You start licking the [target]...</span>")
 		busy = TRUE
 		if (do_after(src,2 SECONDS, target) && target)
