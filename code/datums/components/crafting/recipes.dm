@@ -173,7 +173,7 @@
 	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
 
 /datum/crafting_recipe/beam_rifle
-	name = "Particule Acceleration Rifle"
+	name = "Particle Acceleration Rifle"
 	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
 	result = /obj/item/gun/energy/beam_rifle
 	reqs = list(/obj/item/gun/energy/e_gun = 1,
