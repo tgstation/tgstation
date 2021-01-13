@@ -327,7 +327,7 @@
 	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
 	optimal_pH_min = 1         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	optimal_pH_max = 12	        	// Higest value for above
-	H_ion_release = 0.3			// Result is basic, so lets show that by transitioning it quickly
+	H_ion_release = 0.15			// Result is basic, so lets show that by transitioning it quickly
 
 /datum/chemical_reaction/diethylamine
 	results = list(/datum/reagent/diethylamine = 2)

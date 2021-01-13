@@ -76,7 +76,7 @@
 				var/obj/item/reagent_containers/glass/beaker/bluespace/B = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
 				reagents.trans_to(B)
 				B.name = "[cached_reactions[index]]"
-				problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
+				//problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
 				continue
 			say("Reaction has a product [R] [R2.volume]u purity of [R2.purity]")
 			if(R2.purity < 0.9)
