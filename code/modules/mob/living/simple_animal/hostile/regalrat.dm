@@ -30,8 +30,9 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	unique_name = TRUE
 	faction = list("rat")
-	var/rummaging = FALSE
-	///The spell that the rat uses to scrounge up junk.
+	//check if the rat is busy/rummaging through stuff, as to prevent multitasking
+	var/busy = FALSE
+	///The spell that the rat uses to generate miasma
 	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/riot
@@ -92,12 +93,12 @@
 		heal_bodypart_damage(1)
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (rummaging)
+	if (busy)
 		return
 	. = ..()
 	if(istype(target, /obj/machinery/disposal))
 		src.visible_message("<span class='warning'>[src] starts rummaging through the [target].</span>","<span class='notice'>You rummage through the [target]...</span>")
-		rummaging = TRUE
+		busy = TRUE
 		if (do_after(src,3 SECONDS, target))
 			var/loot = rand(1,100)
 			switch(loot)
@@ -114,16 +115,16 @@
 					var/pickedtrash = pick(GLOB.ratking_trash)
 					to_chat(src, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 					new pickedtrash(get_turf(src))
-		rummaging = FALSE
+		busy = FALSE
 		return
-	if(istype(target, /obj/structure/cable))
+	else if(istype(target, /obj/structure/cable))
 		var/obj/structure/cable/C = target
 		if(C.avail())
 			apply_damage(15)
 			playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 		C.deconstruct()
 
-	if(istype(target, /obj/item/food/cheesewedge))
+	else if(istype(target, /obj/item/food/cheesewedge))
 		cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
 
 	else if(istype(target, /obj/item/food/cheesewheel))
@@ -133,11 +134,11 @@
 		cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
 	else if (target.reagents && istype(target,/obj) && target.is_injectable(src,TRUE))
 		src.visible_message("<span class='warning'>[src] starts licking the [target] passionately!</span>","<span class='notice'>You start licking the [target]...</span>")
-		rummaging = TRUE
+		busy = TRUE
 		if (do_after(src,2 SECONDS, target) && target)
 			target.reagents.add_reagent(/datum/reagent/rat_spit,1,no_react = TRUE)
 			to_chat(src, "<span class='notice'>You finish licking the [target].</span>")
-		rummaging = FALSE
+		busy = FALSE
 		return
 
 /**
@@ -361,14 +362,16 @@
 
 /datum/reagent/rat_spit/on_mob_metabolize(mob/living/L)
 	..()
+	if(HAS_TRAIT(L, TRAIT_AGEUSIA))
+		return
 	to_chat(L, "<span class='notice'>This food has a funny taste!</span>")
 
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
-		to_chat(M, "<span class='notice'>That food was awful!</span>")
+		to_chat(M, "<span class='notice'>You feel queasy!</span>")
 		M.adjust_disgust(3)
 	else if(prob(10))
-		to_chat(M, "<span class='warning'>That food did not sit up well!</span>")
+		to_chat(M, "<span class='warning'>That food does not sit up well!</span>")
 		M.adjust_disgust(5)
 	else if(prob(5))
 		M.vomit()
