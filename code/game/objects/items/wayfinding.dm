@@ -38,8 +38,8 @@
 								"Automate your sense of direction. Buy a wayfinding pinpointer today!",
 								"Feed me a stray pinpointer.", //American Psycho reference
 								"We need a slogan!") //Liberal Crime Squad reference
-	///Number of the list entry of the slogan we last said.
-	var/previous_slogan_entry = 0
+	///Number of the list entry of the slogan we're up to.
+	var/slogan_entry = 0
 	///Time between each slogan announcement.
 	COOLDOWN_DECLARE(slogan_cooldown)
 
@@ -79,10 +79,11 @@
 
 	if(!length(slogan_list) || !COOLDOWN_FINISHED(src, slogan_cooldown))
 		return
-	if(++previous_slogan_entry > length(slogan_list))
-		previous_slogan_entry = 1
-	var/slogan = slogan_list[previous_slogan_entry]
+	if(++slogan_entry > length(slogan_list))
+		slogan_entry = 1
+	var/slogan = slogan_list[slogan_entry]
 	say(slogan)
+	COOLDOWN_START(src, slogan_cooldown, COOLDOWN_SLOGAN)
 
 /obj/machinery/pinpointer_dispenser/Destroy()
 	for(var/i = 0, i < pick(3,9), i++) //I guess it doesn't synthesise them in real time and instead stockpiles them
