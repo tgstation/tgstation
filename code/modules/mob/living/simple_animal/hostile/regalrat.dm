@@ -111,7 +111,7 @@
 					to_chat(src, "<span class='notice'>Score! You find some cheese!</span>")
 					new /obj/item/food/cheesewedge(get_turf(src))
 				else
-					var/pickedtrash = pick(/obj/item/trash/candy,/obj/item/trash/raisins,/obj/item/trash/chips,/obj/item/trash/can,/obj/item/grown/bananapeel)
+					var/pickedtrash = pick(GLOB.ratking_trash)
 					to_chat(src, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 					new pickedtrash(get_turf(src))
 		rummaging = FALSE
