@@ -1041,11 +1041,13 @@
 
 	//If they dragged themselves to you and you're currently aggressively grabbing them try to piggyback
 	if(user == M && can_piggyback(M))
-		return piggyback(M)
+		piggyback(M)
+		return TRUE
 
 	//If you dragged them to you and you're aggressively grabbing try to fireman carry them
 	if(can_be_firemanned(M))
-		return fireman_carry(M)
+		fireman_carry(M)
+		return TRUE
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
