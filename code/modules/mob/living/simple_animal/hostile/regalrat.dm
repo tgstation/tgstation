@@ -30,6 +30,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	unique_name = TRUE
 	faction = list("rat")
+	var/rummaging = FALSE
 	///The spell that the rat uses to scrounge up junk.
 	var/datum/action/cooldown/coffer
 	///The Spell that the rat uses to recruit/convert more rats.
@@ -82,9 +83,55 @@
 	else if(user != src && istype(user,/mob/living/simple_animal/hostile/regalrat))
 		. += "<span class='warning'>Who is this foolish false king? This will not stand!</span>"
 
-/mob/living/simple_animal/hostile/regalrat/AttackingTarget()
+/mob/living/simple_animal/hostile/regalrat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
-	if(istype(target, /obj/item/food/cheesewedge))
+	if(stat == DEAD || !environment)
+		return
+	var/miasma_percentage = environment.gases[/datum/gas/miasma][MOLES] / environment.total_moles()
+	if(miasma_percentage>=0.25)
+		heal_bodypart_damage(1)
+
+/mob/living/simple_animal/hostile/regalrat/AttackingTarget()
+	if (rummaging)
+		return
+	. = ..()
+	if(istype(target, /obj/machinery/disposal))
+		src.visible_message("<span class='warning'>[src] starts rummaging through the [target].</span>","<span class='notice'>You rummage through the [target]...</span>")
+		rummaging = TRUE
+		if (do_after(src,3 SECONDS, target))
+			var/loot = rand(1,100)
+			switch(loot)
+				if(1 to 5)					
+					to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
+					var/pickedcoin = pick(GLOB.ratking_coins)
+					for(var/i = 1 to rand(1,3))
+						new pickedcoin(T)
+				if(6 to 33)
+					src.say(pick("Treasure!","Our precious!","Cheese!"))
+					to_chat(src, "<span class='notice'>Score! You find some cheese!</span>")
+					new /obj/item/food/cheesewedge(get_turf(src))
+				else
+					var/pickedtrash = pick(/obj/item/trash/candy,/obj/item/trash/raisins,/obj/item/trash/chips,/obj/item/trash/can,/obj/item/grown/bananapeel)
+					to_chat(src, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
+					new pickedtrash(get_turf(src))
+		rummaging = FALSE
+		return
+	if(istype(target, /obj/structure/cable))
+		var/obj/structure/cable/C = target
+		if(C.avail())
+			apply_damage(15)
+			playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
+		C.deconstruct()
+
+	if (target.reagents && istype(target,/obj) && target.is_injectable(src,TRUE))
+		src.visible_message("<span class='warning'>[src] starts licking the [target] passionately!</span>","<span class='notice'>You start licking the [target]...</span>")
+		rummaging = TRUE
+		if (do_after(src,2 SECONDS, target) && target)
+			target.reagents.add_reagent(/datum/reagent/rat_spit,1,no_react = TRUE)
+			to_chat(src, "<span class='notice'>You finish licking the [target].</span>")
+		rummaging = FALSE
+		return
+	else if(istype(target, /obj/item/food/cheesewedge))
 		cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
 
 	else if(istype(target, /obj/item/food/cheesewheel))
@@ -109,55 +156,38 @@
 	else
 		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 
-
-/mob/living/simple_animal/hostile/regalrat/controlled
-	name = "regal rat"
-
 /mob/living/simple_animal/hostile/regalrat/controlled/Initialize()
 	. = ..()
 	INVOKE_ASYNC(src, .proc/get_player)
+	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
+	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
+	name = kingdom + " " + title
 
 
 /**
- *This action creates trash, money, dirt, and cheese.
+ *Increase the rat king's domain
  */
-/datum/action/cooldown/coffer
-	name = "Fill Coffers"
-	desc = "Your newly granted regality and poise let you scavenge for lost junk, but more importantly, cheese."
+
+/datum/action/cooldown/domain
+	name = "Rat King's Domain"
+	desc = "Corrupts this area to be more suitable for your rat army."
+	cooldown_time = 6 SECONDS
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
-	cooldown_time = 50
 
 /datum/action/cooldown/coffer/Trigger()
 	. = ..()
-	if(!.)
-		return
 	var/turf/T = get_turf(owner)
-	var/loot = rand(1,100)
-	switch(loot)
-		if(1 to 5)
-			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
-			new /obj/item/food/cheesewedge(T)
-		if(6 to 10)
-			var/pickedcoin = pick(GLOB.ratking_coins)
-			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
-			for(var/i = 1 to rand(1,3))
-				new pickedcoin(T)
-		if(11)
-			to_chat(owner, "<span class='notice'>You find a... Hunh. This coin doesn't look right.</span>")
-			var/rarecoin = rand(1,2)
-			if (rarecoin == 1)
-				new /obj/item/coin/twoheaded(T)
-			else
-				new /obj/item/coin/antagtoken(T)
-		if(12 to 40)
-			var/pickedtrash = pick(GLOB.ratking_trash)
-			to_chat(owner, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
-			new /obj/effect/decal/cleanable/dirt(T)
-			new pickedtrash(T)
-		if(41 to 100)
-			to_chat(owner, "<span class='notice'>Drat. Nothing.</span>")
+	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
+	switch (rand(1,10))
+		if (8)
+			new /obj/effect/decal/cleanable/vomit(T)
+		if (9)
+			new /obj/effect/decal/cleanable/vomit/old(T)
+		if (10)
+			new /obj/effect/decal/cleanable/oil/slippery(T)
+		else
 			new /obj/effect/decal/cleanable/dirt(T)
 	StartCooldown()
 
@@ -171,7 +201,7 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
-	cooldown_time = 80
+	cooldown_time = 4 SECONDS
 	///Checks to see if there are any nearby mice. Does not count Rats.
 
 /datum/action/cooldown/riot/Trigger()
@@ -314,3 +344,32 @@
 #undef MINOR_HEAL
 #undef MEDIUM_HEAL
 #undef MAJOR_HEAL
+
+
+
+/**
+ *Spittle; harmless reagent that is added by rat king, and makes you disgusted.
+ */
+
+/datum/reagent/rat_spit
+	name = "Rat Spit"
+	description = "Something coming from a rat. Dear god! Who knows where it's been!"
+	reagent_state = LIQUID
+	color = "#C8C8C8"
+	metabolization_rate = 0.03 * REAGENTS_METABOLISM
+	taste_description = "something funny"
+
+/datum/reagent/rat_spit/on_mob_metabolize(mob/living/L)
+	..()
+	to_chat(L, "<span class='notice'>This food has a funny taste!</span>")
+
+/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/M)
+	if(prob(15))
+		to_chat(M, "<span class='notice'>That food was awful!</span>")
+		M.adjust_disgust(3)
+	else if(prob(10))
+		to_chat(M, "<span class='warning'>That food did not sit up well!</span>")
+		M.adjust_disgust(5)
+	else if(prob(5))
+		M.vomit()
+	..()
