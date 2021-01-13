@@ -49,6 +49,7 @@
 
 /obj/effect/spawner/randomcolavend/contraband/Initialize(mapload)
 ..()
+..()
 	var/random_vendor = pick(subtypesof(/obj/machinery/vending/cola))
 	var/obj/machinery/vending/cola/vend = new random_vendor(loc)
 	vend.extended_inventory = TRUE
