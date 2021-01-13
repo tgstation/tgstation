@@ -40,8 +40,8 @@
 								"We need a slogan!") //Liberal Crime Squad reference
 	///Number of the list entry of the slogan we last said.
 	var/previous_slogan_entry = 0
-	///Last world tick we said a slogan.
-	var/last_slogan_time = 0
+	///Time between each slogan announcement.
+	COOLDOWN_DECLARE(slogan_cooldown)
 
 /obj/machinery/pinpointer_dispenser/Initialize(mapload)
 	. = ..()
