@@ -222,13 +222,13 @@
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/B in reaction.required_reagents)
-		holder.remove_reagent(B, ((deltaChemFactor/product_ratio) * reaction.required_reagents[B]), safety = 1, ignore_pH = TRUE)
+		holder.remove_reagent(B, ((deltaChemFactor/product_ratio) * reaction.required_reagents[B]), safety = 1, ignore_pH = FALSE)
 
 	for(var/P in reaction.results)
 		//create the products
 		var/stepAdd = (deltaChemFactor/product_ratio) * reaction.results[P]
-		holder.add_reagent(P, stepAdd, null, cached_temp, purity, ignore_pH = TRUE) //Calculate reactions only recalculates if a NEW reagent is added
-		reacted_vol += stepAdd//for multiple products - presently it doesn't work for multiple, but the code just needs a lil tweak when it works to do so (make target_vol in the calculate yield equal to all of the products, and make the vol check add totalStep)
+		holder.add_reagent(P, stepAdd, null, cached_temp, purity, ignore_pH = FALSE) //Calculate reactions only recalculates if a NEW reagent is added
+		reacted_vol += stepAdd
 		totalStepAdded += stepAdd
 
 	//Kept in so that people who want to write fermireactions can contact me with this log so I can help them
