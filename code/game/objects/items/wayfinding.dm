@@ -55,7 +55,7 @@
 
 	power_change()
 
-	last_slogan_time = world.time + rand(0, COOLDOWN_SLOGAN)
+	COOLDOWN_START(src, slogan_cooldown, COOLDOWN_SLOGAN)
 	slogan_list = shuffle(slogan_list) //minimise repetition
 
 /obj/machinery/pinpointer_dispenser/power_change()
