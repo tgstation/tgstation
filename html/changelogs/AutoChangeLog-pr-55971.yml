@@ -1,0 +1,5 @@
+author: "Son of Space"
+delete-after: True
+changes: 
+  - rscadd: "Completely redid MetaSec's Offices"
+  - bugfix: "pruned windows in maint by the upload on Meta"
