@@ -77,11 +77,12 @@
 	if(machine_stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL
 
-	if(((last_slogan_time + COOLDOWN_SLOGAN) <= world.time) && slogan_list.len)
-		var/slogan = slogan_list[previous_slogan_entry + 1]
-		say(slogan)
-		previous_slogan_entry++
-		last_slogan_time = world.time
+	if(!length(slogan_list) || !COOLDOWN_FINISHED(src, slogan_cooldown))
+		return
+	if(++previous_slogan_entry > length(slogan_list))
+		previous_slogan_entry = 1
+	var/slogan = slogan_list[previous_slogan_entry]
+	say(slogan)
 
 /obj/machinery/pinpointer_dispenser/Destroy()
 	for(var/i = 0, i < pick(3,9), i++) //I guess it doesn't synthesise them in real time and instead stockpiles them
