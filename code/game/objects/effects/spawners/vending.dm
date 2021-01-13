@@ -19,7 +19,6 @@
 	desc = "Automagically transforms into a random hacked snack vendor. If you see this while in a shift, please create a bug report."
 
 /obj/effect/spawner/randomsnackvend/contraband/Initialize(mapload)
-
 	var/random_vendor = pick(subtypesof(/obj/machinery/vending/snack))
 	var/obj/machinery/vending/snack/vend = new random_vendor(loc)
 	vend.extended_inventory = TRUE
@@ -48,7 +47,6 @@
 	desc = "Automagically transforms into a random hacked cola vendor. If you see this while in a shift, please create a bug report."
 
 /obj/effect/spawner/randomcolavend/contraband/Initialize(mapload)
-
 	var/random_vendor = pick(subtypesof(/obj/machinery/vending/cola))
 	var/obj/machinery/vending/cola/vend = new random_vendor(loc)
 	vend.extended_inventory = TRUE
