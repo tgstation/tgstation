@@ -214,8 +214,8 @@
 
 		//Any other type of pinpointer has a small chance of making it throw up
 		if(prob(funnyprob))
-			var/atom/movable/vomit_projectile = new /obj/item/pinpointer/wayfinding (user.loc)
-			vomit_projectile.throw_at(user, 1, 1, quickstart=FALSE)
+			I.forceMove(user.loc)
+			I.throw_at(user, 1, 1, quickstart=FALSE)
 			say("BLEURRRRGH!")
 			visible_message("<span class='warning'>\The [src] smartly rejects [I].</span>")
 
