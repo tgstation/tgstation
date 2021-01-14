@@ -1,0 +1,4 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - bugfix: "Elevators / Lifts can now move down via an elevator button and also no longer try to move when already at the target floor"
