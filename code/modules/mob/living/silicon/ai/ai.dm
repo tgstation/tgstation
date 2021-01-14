@@ -102,6 +102,7 @@
 
 	var/datum/robot_control/robot_control
 	var/announcing_vox = 0 // Stores the time of the last announcement
+	var/last_used_voice // Last used VOX voice.
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()

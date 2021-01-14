@@ -105,10 +105,10 @@
 					passed_characters -= character_name
 		else
 			passed_characters += usable_characters
-	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in passed_characters
+	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice", last_used_voice) as null|anything in passed_characters
 	if(!character_to_use)
 		return
-	var/max_characters = 300 // magic number but its the cap 15 allows
+	var/max_characters = 200 // magic number but its the cap 15 allows
 	var/input_prompt = "Use the power of 15.ai to say anything! ([max_characters] character maximum)"
 	if(character_to_use == DECTALK)
 		max_characters = 1000 // DECTalk has a lot of text based configuration. Would you deny the AI the right to sing?
@@ -129,11 +129,12 @@
 		to_chat(src, "<span class='notice'>You have too many characters! You used [length(message)] characters, you need to lower this to [max_characters] or lower.</span>")
 		return
 	last_announcement = message
+	last_used_voice = character_to_use
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
-	message_admins("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
+	log_game("[key_name(src)] started making a 15.AI announcement as [character_to_use] with the following message: [message]")
+	message_admins("[key_name(src)] started making a 15.AI announcement as [character_to_use] with the following message: [message]")
 	play_vox_word(message, character_to_use, src, src.z, null)
 
 
