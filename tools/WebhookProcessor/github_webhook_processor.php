@@ -262,7 +262,7 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags) && check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove))
+	if(check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove)) // "Work In Progress" doesn't exist anymore but it's just for removal so whatever
 		$tags[] = 'Needs Review';
 
 	return array($tags, $remove);
@@ -289,7 +289,7 @@ function get_reviews($payload){
 
 function check_ready_for_review($payload, $labels = null, $remove = array()){
 	$r4rlabel = 'Needs Review';
-	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
+	$labels_which_should_not_be_ready = array('Do Not Merge', 'Merge Conflict');
 	$has_label_already = false;
 	$should_not_have_label = false;
 	if($labels == null)
@@ -302,6 +302,9 @@ function check_ready_for_review($payload, $labels = null, $remove = array()){
 		if($L == $r4rlabel)
 			$has_label_already = true;
 	}
+
+	if($payload['pull_request']['draft'])
+		$should_not_have_label = true;
 
 	if($has_label_already && $should_not_have_label){
 		$remove[] = $r4rlabel;
