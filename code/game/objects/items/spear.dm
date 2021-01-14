@@ -29,6 +29,7 @@
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	update_icon()
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
@@ -59,7 +60,6 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	set_explosive(new /obj/item/grenade/iedcasing/spawned()) //For admin-spawned explosive lances
-	update_icon()
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
