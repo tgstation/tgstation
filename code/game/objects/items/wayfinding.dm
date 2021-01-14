@@ -211,13 +211,13 @@
 	else if(istype(I, /obj/item/pinpointer))
 		set_expression("sad", 2 SECONDS)
 		user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
-		to_chat(user, "<span class='warning'>\The [src] smartly rejects [I].</span>")
 
-		//Any other type of pinpointer has a very small chance of making it throw up
+		//Any other type of pinpointer has a small chance of making it throw up
 		if(prob(funnyprob))
 			var/atom/movable/vomit_projectile = new /obj/item/pinpointer/wayfinding (user.loc)
-			vomit_projectile.throw_at(user, 1, 1, spin=FALSE, quickstart=FALSE)
+			vomit_projectile.throw_at(user, 1, 1, quickstart=FALSE)
 			say("BLEURRRRGH!")
+			visible_message("<span class='warning'>\The [src] smartly rejects [I].</span>")
 
 		return
 
