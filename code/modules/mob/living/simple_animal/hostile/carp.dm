@@ -233,6 +233,8 @@
 	bonus_tame_chance = 0
 	pet_bonus = TRUE
 	pet_bonus_emote = "bloops happily!"
+	health = 150
+	maxHealth = 150
 
 /mob/living/simple_animal/hostile/carp/cayenne/lia
 	name = "Lia"
