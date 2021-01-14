@@ -26,9 +26,9 @@
 	///Avoid being Reddit.
 	var/funnyprob = 2
 	///List of slogans used by the dispenser to attract customers.
-	var/list/slogan_list = list("Find a wayfinding pinpointer? Give it to me. Please. I'll make it worth your while. Daddy needs his medicine.", //last sentence is a reference to Sealab 2021
-								"See a wayfinding pinpointer? Don't let it go to the crusher! Feed it to me instead! Please. I'll pay you.", //I see these things heading for disposals through cargo all the time
-								"Need the disk? Can't get a proper pinpointer? Buy a wayfinding pinpointer and find the captain's office today!",
+	var/list/slogan_list = list("Find a wayfinding pinpointer? Give it to me! I'll make it worth your while. Please. Daddy needs his medicine.", //last sentence is a reference to Sealab 2021
+								"See a wayfinding pinpointer? Don't let it go to the crusher! Recycle it with me instead and I'll pay you for it.", //I see these things heading for disposals through cargo all the time
+								"Need the disk? Can't get a pinpointer? Buy a wayfinding pinpointer and find the captain's office today!",
 								"Bleeding to death? Can't read? Find your way to medbay today!", //there are signs that point to medbay but you need basic literacy to get the most out of them
 								"Voted tenth best pinpointer in the universe in 2560!", //there were no more than ten pinpointers in the game in 2020
 								"Helping assistants find the departments they tide since 2560.", //not really but it's advertising
@@ -40,8 +40,8 @@
 								"We need a slogan!") //Liberal Crime Squad reference
 	///Number of the list entry of the slogan we're up to.
 	var/slogan_entry = 0
-	///Time between each slogan announcement.
-	COOLDOWN_DECLARE(slogan_cooldown)
+	///Cooldown to prevent slogans being said too often.
+	COOLDOWN_DECLARE(next_slogan_tick)
 
 /obj/machinery/pinpointer_dispenser/Initialize(mapload)
 	. = ..()
@@ -55,7 +55,7 @@
 
 	power_change()
 
-	COOLDOWN_START(src, slogan_cooldown, COOLDOWN_SLOGAN)
+	COOLDOWN_START(src, next_slogan_tick, COOLDOWN_SLOGAN)
 	slogan_list = shuffle(slogan_list) //minimise repetition
 
 /obj/machinery/pinpointer_dispenser/power_change()
@@ -77,19 +77,20 @@
 	if(machine_stat & (BROKEN|NOPOWER))
 		return PROCESS_KILL
 
-	if(!length(slogan_list) || !COOLDOWN_FINISHED(src, slogan_cooldown))
+	if(!length(slogan_list) || !COOLDOWN_FINISHED(src, next_slogan_tick))
 		return
 	if(++slogan_entry > length(slogan_list))
 		slogan_entry = 1
 	var/slogan = slogan_list[slogan_entry]
 	say(slogan)
-	COOLDOWN_START(src, slogan_cooldown, COOLDOWN_SLOGAN)
+	COOLDOWN_START(src, next_slogan_tick, COOLDOWN_SLOGAN)
 
 /obj/machinery/pinpointer_dispenser/Destroy()
-	for(var/i = 0, i < pick(3,9), i++) //I guess it doesn't synthesise them in real time and instead stockpiles them
+	for(var/i = 0, i < pick(3,9), i++) //Doesn't synthesise them in real time and instead stockpiles completed ones (though this is not how the cooldown works)
 		new /obj/item/pinpointer/wayfinding (loc)
 	say("Ouch.")
-	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE) //An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
+	//An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
+	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
 	return ..()
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
@@ -100,7 +101,7 @@
 
 	if(world.time < user_interact_cooldowns[user.real_name])
 		set_expression("veryhappy", 2 SECONDS)
-		to_chat(user, "<span class='notice'>It just grins at you. Maybe you should give it a few seconds?</span>")
+		to_chat(user, "<span class='notice'>Maybe you should give it a bit?</span>")
 		return
 
 	user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
@@ -125,7 +126,7 @@
 
 	if(world.time < user_spawn_cooldowns[user.real_name])
 		var/secsleft = (user_spawn_cooldowns[user.real_name] - world.time) / 10
-		msg += "to wait [secsleft/60 > 1 ? "[round(secsleft/60,1)] more minute\s" : "[round(secsleft)] more second\s"] before I can dispense another pinpointer"
+		msg += "to wait [secsleft/60 > 1 ? "[round(secsleft/60,1)] more minute\s" : "[round(secsleft)] more second\s"] before I can give you another pinpointer"
 		dispense = FALSE
 
 	var/datum/bank_account/cust_acc = user.get_bank_account()
@@ -166,11 +167,11 @@
 		var/refundiscredits = FALSE
 		var/itsmypinpointer = TRUE
 
-		//will they meet the conditions to get a credit reward for recycling?
+		//Will they meet the conditions to get a credit reward for recycling?
 		if(WP.owner != user.real_name)
 			itsmypinpointer = FALSE
 
-			if(synth_acc.has_money(refund_amt) && !WP.roundstart) //is the pinpointer not from the quirk?
+			if(synth_acc.has_money(refund_amt) && !WP.roundstart) //can it afford to refund and is the pinpointer not from the quirk
 				refundiscredits = TRUE
 				qdel(WP)
 				synth_acc._adjust_money(-refund_amt)
@@ -188,29 +189,40 @@
 
 		set_expression("veryhappy", 2 SECONDS)
 
-		var/refund = "are [refund_amt] credits."
-		var/whatyoudid = "recycling"
-		var/whosepinpointer = "your pinpointer" //to imply they got a costume instead of money because it was their pinpointer they recycled
-
+		var/is_a_thing = "are [refund_amt] credit\s."
 		if(!refundiscredits)
-			refund = "is a freshly synthesised costume!"
+			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))
-				refund = "is a pulse rifle! Just kidding it's a costume."
+				is_a_thing = "is a pulse rifle! Just kidding it's a costume."
 
+		var/recycling = "recycling"
 		if(prob(funnyprob))
-			whatyoudid = "feeding me"
+			recycling = "feeding me"
 
+		//To imply they got a costume instead of money because it was their pinpointer they recycled
+		var/the_pinpointer = "your pinpointer"
 		if(!itsmypinpointer)
-			whosepinpointer = "that pinpointer"
+			the_pinpointer = "that pinpointer"
 
-		say("<span class='robot'>Thank you for [whatyoudid] [whosepinpointer], [user.first_name()]! Here [refund]</span>")
+		say("<span class='robot'>Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]</span>")
 
 		return
 
-	else if(I.force && prob(4))
-		var/ouch = pick("Stop.", "Don't do that.", "You'll regret it.")
+	else if(istype(I, /obj/item/pinpointer))
 		set_expression("sad", 2 SECONDS)
-		say(ouch)
+		user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
+		to_chat(user, "<span class='warning'>\The [src] smartly rejects [I].</span>")
+
+		//Any other type of pinpointer has a very small chance of making it throw up
+		if(prob(funnyprob))
+			var/atom/movable/vomit_projectile = new /obj/item/pinpointer/wayfinding (user.loc)
+			vomit_projectile.throw_at(user, 1, 1, spin=FALSE, quickstart=FALSE)
+			say("BLEURRRRGH!")
+
+		return
+
+	else if(I.force)
+		set_expression("sad", 2 SECONDS)
 
 	return ..()
 
