@@ -6,8 +6,9 @@ same holodeck_access flag as it (e.g. the station holodeck has the holodeck_acce
 flag). These program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
 ui calls load_program() with the id of the selected program.
 load_program() -> map_template/load() on map_template/holodeck.
+
 holodeck map templates:
-1. have an update_blacklist that doesnt allow placing on non holofloors
+1. have an update_blacklist that doesnt allow placing on non holofloors (except for engine floors so you can repair it)
 2. has should_place_on_top = FALSE, so that the baseturfs list doesnt pull a kilostation oom crash
 3. has returns_created = TRUE, so that SSatoms gives the map template a list of spawned atoms
 all the fancy flags and shit are added to holodeck objects in finish_spawn()
@@ -151,13 +152,14 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement)
-	turf_blacklist.Cut()
+	. = list()
 	for (var/_turf in get_affected_turfs(placement))
 		var/turf/possible_blacklist = _turf
 		if (!istype(possible_blacklist, /turf/open/floor/holofloor))
 			if (istype(possible_blacklist, /turf/open/floor/engine))
 				continue
-			turf_blacklist += possible_blacklist
+			. += possible_blacklist
+	return .
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)

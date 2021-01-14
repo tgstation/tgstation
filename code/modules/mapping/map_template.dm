@@ -12,7 +12,6 @@
 
 	var/returns_created_atoms = FALSE
 	var/list/created_atoms = list()
-	var/list/turf_blacklist = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -142,7 +141,7 @@
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
 
-	update_blacklist(T)
+	var/list/turf_blacklist = update_blacklist(T)
 
 	//parsed.returns_created_atoms = returns_created_atoms
 	parsed.turf_blacklist = turf_blacklist
