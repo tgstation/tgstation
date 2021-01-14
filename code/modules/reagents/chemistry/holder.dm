@@ -111,9 +111,9 @@
  * * no_react - prevents reactions being triggered by this addition
  * * added_purity - override to force a purity when added
  * * added_pH - override to force a pH when added
- * * ignore_pH - bypass the pH update when adding a reagent, in an addition to an empty beaker this will default to 7
+ * * override_base_pH - bypass the pH update when adding a reagent, causing it to retain the pH of the solution it's being added to
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = INFINITY, added_pH, no_react = 0, ignore_pH = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = INFINITY, added_pH, no_react = 0, override_base_pH = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -141,7 +141,6 @@
 
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
-	var/cached_pH = pH
 
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
 	var/old_heat_capacity = 0
@@ -150,17 +149,16 @@
 			var/datum/reagent/iter_reagent = r
 			old_heat_capacity += iter_reagent.specific_heat * iter_reagent.volume
 
-	//cacluate reagent based pH shift.
-	if(!ignore_pH)
-		pH = ((cached_pH * cached_total)+(added_pH * amount))/(cached_total + amount)
-
 	//add the reagent to the existing if it exists
 	for(var/r in cached_reagents)
 		var/datum/reagent/iter_reagent = r
 		if (iter_reagent.type == reagent)
-			iter_reagent.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
-			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /((iter_reagent.volume + amount)) //This should add the purity to the product
+			if(override_base_pH)
+				added_pH = iter_reagent.pH
+			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
+			iter_reagent.pH = ((iter_reagent.pH*(iter_reagent.volume))+(added_pH*amount))/(iter_reagent.volume+amount)
+			iter_reagent.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
 			update_total()
 
 			iter_reagent.on_merge(data, amount)
@@ -179,6 +177,7 @@
 	new_reagent.volume = amount
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
+	new_reagent.pH = added_pH
 	if(data)
 		new_reagent.data = data
 		new_reagent.on_new(data)
@@ -203,8 +202,7 @@
 
 
 /// Remove a specific reagent
-// ignore_pH again removes reagents ignoring the pH
-/datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE, ignore_pH = FALSE)//Added a safety check for the trans_id_to
+/datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE)//Added a safety check for the trans_id_to
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
@@ -222,8 +220,6 @@
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
 			amount = clamp(amount, 0, R.volume)
-			if(!ignore_pH && total_volume)
-				pH = clamp((((pH - R.pH) / total_volume) * amount) + pH, 0, 14)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
@@ -231,7 +227,6 @@
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : R, amount)
 
 			return TRUE
-
 	return FALSE
 
 /// Remove an amount of reagents without caring about what they are
@@ -431,14 +426,14 @@
 			var/transfer_amount = T.volume * part
 			if(preserve_data)
 				trans_data = copy_data(T)
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(T, target, methods, part, show_message)
 				else
 					R.expose_single(T, target_atom, methods, part, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
-			remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
+			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
 			if(is_type_in_list(target_atom, list(/mob/living/carbon, /obj/item/organ/stomach)))
 				R.process_mob_reagent_purity(T.type, transfer_amount * multiplier, T.purity)
@@ -455,7 +450,7 @@
 			var/transfer_amount = amount
 			if(amount > T.volume)
 				transfer_amount = T.volume
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -463,7 +458,7 @@
 				else
 					R.expose_single(T, target_atom, methods, transfer_amount, show_message)
 				T.on_transfer(target_atom, methods, transfer_amount * multiplier)
-			remove_reagent(T.type, transfer_amount, ignore_pH = TRUE)
+			remove_reagent(T.type, transfer_amount)
 			transfer_log[T.type] = transfer_amount
 			if(is_type_in_list(target_atom, list(/mob/living/carbon, /obj/item/organ/stomach)))
 				R.process_mob_reagent_purity(T.type, transfer_amount * multiplier, T.purity)
@@ -539,7 +534,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity)
+		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity, added_pH = T.pH)
 
 	src.update_total()
 	R.update_total()
@@ -737,9 +732,13 @@
 /// High potential for infinite loops if you're editing this.
 /datum/reagents/proc/handle_reactions()
 	if(flags & NO_REACT)
+		if(is_reacting)
+			finish_reacting()
 		return 0 //Yup, no reactions here. No siree.
 
 	if(is_reacting)//Prevent wasteful calculations
+		if(datum_flags != DF_ISPROCESSING)//If we're reacting - but not processing (i.e. we've transfered)
+			START_PROCESSING(SSprocessing, src)
 		if(!(has_changed_state()))
 			return 0
 
@@ -839,7 +838,15 @@
 	if(.)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 
-//Reaction loop handler
+/*
+* Main Reaction loop handler, Do not call this directly
+*
+* Checks to see if there's a reaction, then processes over the reaction list, removing them if flagged
+* If any are ended, it displays the reaction message and removes it from the reaction list
+* If the list is empty at the end it finishes reacting.
+* Arguments:
+* * delta_time - the time between each time step
+*/
 /datum/reagents/process(delta_time)
 	if(!is_reacting)
 		finish_reacting()
@@ -864,7 +871,14 @@
 	else
 		update_total()
 
-//This ends a single instance of an ongoing reaction
+/*
+* This ends a single instance of an ongoing reaction
+*
+* Arguments:
+* * E - the equilibrium that will be ended
+* Returns:
+* * mix_message - the associated mix message of a reaction
+*/
 /datum/reagents/proc/end_reaction(datum/equilibrium/E)
 	//end reaction proc
 	E.reaction.reaction_finish(src, E.reacted_vol)
@@ -877,7 +891,11 @@
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return E.reaction.mix_message
 
-//This stops the holder from processing at the end of a series of reactions (i.e. when all the equilibriums are completed)
+/*
+* This stops the holder from processing at the end of a series of reactions (i.e. when all the equilibriums are completed)
+*
+* Also resets reaction variables to be null/empty/FALSE so that it can restart correctly in the future
+*/
 /datum/reagents/proc/finish_reacting()
 	STOP_PROCESSING(SSprocessing, src)
 	is_reacting = FALSE
@@ -888,7 +906,22 @@
 	update_total()
 	handle_reactions() //Should be okay without. Each step checks.
 
-//Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
+/*
+* Force stops the current holder/reagents datum from reacting
+*
+* Calls end_reaction() for each equlilbrium datum in reaction_list and finish_reacting()
+* Usually only called when a datum is transfered into a NO_REACT container
+*/
+/datum/reagents/proc/force_stop_reacting()
+	var/mix_message
+	for(var/datum/equilibrium/E in reaction_list)
+		mix_message += end_reaction(E)
+	if(mix_message)
+		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message]</span>")
+	finish_reacting()
+
+
+///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 /datum/reagents/proc/has_changed_state()
 	var/total_matching_reagents = 0
 	for(var/R in previous_reagent_list)
@@ -903,8 +936,8 @@
 	for(var/datum/reagent/R in reagent_list)
 		previous_reagent_list += R.type
 
-//Old reaction mechanics, edited to work on one only
-//This is changed from the old - purity of the reagents will affect yield
+///Old reaction mechanics, edited to work on one only
+///This is changed from the old - purity of the reagents will affect yield
 /datum/reagents/proc/instant_react(datum/chemical_reaction/selected_reaction)
 	var/list/cached_required_reagents = selected_reaction.required_reagents
 	var/list/cached_results = selected_reaction.results
@@ -947,8 +980,8 @@
 
 	selected_reaction.on_reaction(src, multiplier)
 
-//Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
-//Presently unused
+///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
+///Presently unused
 /datum/reagents/proc/get_priority_instant_reaction(list/possible_reactions)
 	if(possible_reactions.len)
 		var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
@@ -1007,9 +1040,8 @@
 			del_reagent(R.type)
 		else
 			total_volume += R.volume
+	recalculate_sum_pH()
 
-	if(!reagent_list || !total_volume) //Ensure that this is true
-		pH = CHEMICAL_NORMAL_PH
 
 /**
  * Applies the relevant expose_ proc for every reagent in this holder
@@ -1210,6 +1242,66 @@
 	chem_temp = _temperature
 	SEND_SIGNAL(src, COMSIG_REAGENTS_TEMP_CHANGE, _temperature, .)
 
+/*
+* Adjusts the base pH of all of the reagents in a beaker
+*
+* - moves it towards acidic
+* + moves it towards basic
+* Arguments:
+* * value - How much to adjust the base pH by
+*/
+/datum/reagents/proc/adjust_all_reagents_pH(value, lower_limit = 0, upper_limit = 14)
+	for(var/reagent in reagent_list)
+		var/datum/reagent/R = reagent
+		R.pH = clamp(R.pH + value, lower_limit, upper_limit)
+
+/*
+* Adjusts the base pH of all of the listed types
+*
+* - moves it towards acidic
+* + moves it towards basic
+* Arguments:
+* * input_reagents_list - list of reagents to adjust
+* * value - How much to adjust the base pH by
+*/
+/datum/reagents/proc/adjust_specific_reagent_list_pH(list/input_reagents_list, value, lower_limit = 0, upper_limit = 14)
+	for(var/reagent in input_reagents_list)
+		var/datum/reagent/R = get_reagent(reagent)
+		if(!R) //We can call this with missing reagents.
+			continue
+		R.pH = clamp(R.pH + value, lower_limit, upper_limit)
+
+/*
+* Adjusts the base pH of a specific type
+*
+* - moves it towards acidic
+* + moves it towards basic
+* Arguments:
+* * input_reagent - type path of the reagent
+* * value - How much to adjust the base pH by
+* * lower_limit - how low the pH can go
+* * upper_limit - how high the pH can go
+*/
+/datum/reagents/proc/adjust_specific_reagent_pH(input_reagent, value, lower_limit = 0, upper_limit = 14)
+	var/datum/reagent/R = get_reagent(input_reagent)
+	if(!R) //We can call this with missing reagents.
+		debug_world("Unable to find [R]")
+		return FALSE
+	R.pH = clamp(R.pH + value, lower_limit, upper_limit)
+
+/*
+* Updates the reagents datum pH based off the volume weighted sum of the reagent_list's reagent pH
+*/
+/datum/reagents/proc/recalculate_sum_pH()
+	if(!reagent_list || !total_volume) //Ensure that this is true
+		pH = CHEMICAL_NORMAL_PH
+		return
+	var/total_pH = 0
+	for(var/reagent in reagent_list)
+		var/datum/reagent/R = get_reagent(reagent) //we need the specific instance
+		total_pH += (R.pH * R.volume)
+	//Keep limited
+	pH = clamp(total_pH/total_volume, 0, 14)
 
 /**
  * Used in attack logs for reagents in pills and such

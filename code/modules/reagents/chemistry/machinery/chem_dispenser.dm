@@ -29,8 +29,8 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
-	///How accurate the pH meter is on the display (orders of magnitude) increased by upgrades
-	var/pH_accuracy = 1
+	///If the UI has the pH meter shown
+	var/show_pH = TRUE
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -193,6 +193,7 @@
 	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
 	data["maxEnergy"] = cell.maxcharge * powerefficiency
 	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["showpH"] = show_pH
 
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
@@ -206,7 +207,7 @@
 		data["beakerCurrentVolume"] = round(beakerCurrentVolume, 0.01)
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
-		data["beakerCurrentpH"] = round(beaker.reagents.pH, pH_accuracy)
+		data["beakerCurrentpH"] = round(beaker.reagents.pH, 0.01)
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
@@ -394,7 +395,6 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
-		pH_accuracy = 10**(-(M.rating-1))
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -487,6 +487,7 @@
 	working_state = null
 	nopower_state = null
 	pass_flags = PASSTABLE
+	show_pH = FALSE
 	dispensable_reagents = list(
 		/datum/reagent/water,
 		/datum/reagent/consumable/ice,

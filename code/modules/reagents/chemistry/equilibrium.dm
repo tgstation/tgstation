@@ -207,39 +207,42 @@
 
 	purity = deltapH//set purity equal to pH offset
 
-	//Then adjust purity of result with beaker reagent purity.
+	//Then adjust purity of result with beaker reagent purity. 
 	purity *= reactant_purity(reaction)
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/deltaChemFactor = (reaction.rate_up_lim*deltaT)*delta_time//add/remove factor
-	var/totalStepAdded = 0
+	var/delta_chem_factor = (reaction.rate_up_lim*deltaT)*delta_time//add/remove factor
+	var/total_step_added = 0
 	//keep limited
-	if(deltaChemFactor > target_vol)
-		deltaChemFactor = target_vol
-	else if (deltaChemFactor < CHEMICAL_VOLUME_MINIMUM)
-		deltaChemFactor = CHEMICAL_VOLUME_MINIMUM
-	deltaChemFactor = round(deltaChemFactor, CHEMICAL_QUANTISATION_LEVEL)
+	if(delta_chem_factor > target_vol)
+		delta_chem_factor = target_vol
+	else if (delta_chem_factor < CHEMICAL_VOLUME_MINIMUM)
+		delta_chem_factor = CHEMICAL_VOLUME_MINIMUM
+	delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL)
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/B in reaction.required_reagents)
-		holder.remove_reagent(B, ((deltaChemFactor/product_ratio) * reaction.required_reagents[B]), safety = 1, ignore_pH = FALSE)
+		holder.remove_reagent(B, ((delta_chem_factor/product_ratio) * reaction.required_reagents[B]), safety = TRUE)
+		//Apply pH changes
+		holder.adjust_specific_reagent_pH(B, ((delta_chem_factor/product_ratio) * reaction.required_reagents[B])*reaction.H_ion_release)
 
 	for(var/P in reaction.results)
 		//create the products
-		var/stepAdd = (deltaChemFactor/product_ratio) * reaction.results[P]
-		holder.add_reagent(P, stepAdd, null, cached_temp, purity, ignore_pH = FALSE) //Calculate reactions only recalculates if a NEW reagent is added
-		reacted_vol += stepAdd
-		totalStepAdded += stepAdd
+		var/step_add = (delta_chem_factor/product_ratio) * reaction.results[P]
+		holder.add_reagent(P, step_add, null, cached_temp, purity, override_base_pH = TRUE)
+		//Apply pH changes
+		holder.adjust_specific_reagent_pH(P, step_add*reaction.H_ion_release)
+		reacted_vol += step_add
+		total_step_added += step_add
 
 	//Kept in so that people who want to write fermireactions can contact me with this log so I can help them
-	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. deltaT [deltaT], multiplier [multiplier], deltaChemFactor [deltaChemFactor] Pfactor [product_ratio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
+	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. deltaT [deltaT], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
 
 		
-	//Apply pH changes and thermal output of reaction to beaker
-	holder.chem_temp = round(cached_temp + (reaction.thermic_constant* totalStepAdded))
-	holder.pH += (reaction.H_ion_release * totalStepAdded)
+	//Apply thermal output of reaction to beaker
+	holder.chem_temp = round(cached_temp + (reaction.thermic_constant* total_step_added))
 	//Call any special reaction steps
-	reaction.reaction_step(src, totalStepAdded, purity)//proc that calls when step is done
+	reaction.reaction_step(src, total_step_added, purity)//proc that calls when step is done
 
 	//Give a chance of sounds
 	if (prob(20))
@@ -248,7 +251,6 @@
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 
 	//Make sure things are limited
-	holder.pH = clamp(holder.pH, 0, 14)
 	holder.update_total()//do NOT recalculate reactions
 	return
 
@@ -261,12 +263,12 @@
 /datum/equilibrium/proc/reactant_purity(datum/chemical_reaction/C)
 	var/list/cached_reagents = holder.reagent_list
 	var/i = 0
-	var/cachedPurity
+	var/cached_purity
 	for(var/datum/reagent/R in holder.reagent_list)
 		if (R in cached_reagents)
-			cachedPurity += R.purity
+			cached_purity += R.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case
 		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
-	return cachedPurity/i
+	return cached_purity/i
 

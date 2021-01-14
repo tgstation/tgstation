@@ -197,7 +197,7 @@ export const ChemDispenser = (props, context) => {
                   units of {chemical.name}
                 </Box>
               ))}
-              {(beakerContents.length > 0 && (
+              {((beakerContents.length > 0 && !!data.showpH) && (
                 <Box>
                   pH:
                   <AnimatedNumber
