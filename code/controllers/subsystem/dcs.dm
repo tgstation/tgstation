@@ -23,12 +23,12 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 		return
 	. = elements_by_type[element_id] = new eletype
 
-/**
- * Generates an id for bespoke elements when given the argument list
- * Generating the id here is a bit complex because we need to support named arguments
- * Named arguments can appear in any order and we need them to appear after ordered arguments
- * We assume that no one will pass in a named argument with a value of null
- **/
+/****
+	* Generates an id for bespoke elements when given the argument list
+	* Generating the id here is a bit complex because we need to support named arguments
+	* Named arguments can appear in any order and we need them to appear after ordered arguments
+	* We assume that no one will pass in a named argument with a value of null
+	**/
 /datum/controller/subsystem/processing/dcs/proc/GetIdFromArguments(list/arguments)
 	var/datum/element/eletype = arguments[1]
 	var/list/fullid = list("[eletype]")

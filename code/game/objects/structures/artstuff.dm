@@ -324,6 +324,8 @@
 	var/author = chosen["ckey"]
 	var/png = "data/paintings/[persistence_id]/[chosen["md5"]].png"
 	if(!title)
+		title = "Untitled Artwork" //Should prevent NULL named art from loading as NULL, if you're still getting the admin log chances are persistence is broken
+	if(!title)
 		message_admins("<span class='notice'>Painting with NO TITLE loaded on a [persistence_id] frame in [get_area(src)]. Please delete it, it is saved in the database with no name and will create bad assets.</span>")
 	if(!fexists(png))
 		stack_trace("Persistent painting [chosen["md5"]].png was not found in [persistence_id] directory.")
@@ -353,7 +355,7 @@
 		stack_trace("Invalid persistence_id - [persistence_id]")
 		return
 	if(!C.painting_name)
-		return
+		C.painting_name = "Untitled Artwork"
 	var/data = C.get_data_string()
 	var/md5 = md5(lowertext(data))
 	var/list/current = SSpersistence.paintings[persistence_id]

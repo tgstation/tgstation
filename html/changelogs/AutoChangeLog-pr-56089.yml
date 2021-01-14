@@ -1,0 +1,4 @@
+author: "interestingusernam3"
+delete-after: True
+changes: 
+  - bugfix: "Prevents forcing a lot of different kinds of mobs that shouldn't be able to rest to rest."
