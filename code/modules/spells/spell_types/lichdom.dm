@@ -78,7 +78,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	color = COLOR_VERY_DARK_LIME_GREEN
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 3
 	light_color = COLOR_VERY_DARK_LIME_GREEN
 	var/resurrections = 0

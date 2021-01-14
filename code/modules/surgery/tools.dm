@@ -68,7 +68,7 @@
 	icon_state = "cautery_a"
 	hitsound = 'sound/items/welder.ogg'
 	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 1
 	light_color = COLOR_SOFT_RED
 
@@ -295,7 +295,7 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 1
 	light_color = LIGHT_COLOR_GREEN
 	sharpness = SHARP_EDGED

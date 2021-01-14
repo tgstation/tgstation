@@ -23,7 +23,7 @@
 	bubble_icon = "machine"
 	speech_span = SPAN_ROBOT
 	faction = list("neutral", "silicon" , "turret")
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 3
 	light_power = 0.9
 

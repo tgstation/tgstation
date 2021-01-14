@@ -19,7 +19,7 @@
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC // show jobs
 	path_image_color = "#2cac12"
 	auto_patrol = TRUE
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 7
 	light_power = 3
 

@@ -234,7 +234,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 2
 	duration = 8
 	var/target

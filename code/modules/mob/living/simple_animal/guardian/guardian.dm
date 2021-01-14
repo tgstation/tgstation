@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/ectoplasm = 1)
 	AIStatus = AI_OFF
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 3
 	light_on = FALSE
 	hud_type = /datum/hud/guardian

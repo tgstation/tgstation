@@ -35,7 +35,7 @@
 	healable = 0
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	del_on_death = TRUE
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 6
 	light_on = FALSE
 	var/mode = MINEDRONE_COLLECT

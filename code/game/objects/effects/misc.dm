@@ -71,7 +71,7 @@
 	name = "lighting fx obj"
 	desc = "Tell a coder if you're seeing this."
 	icon_state = "nothing"
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_WHITE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

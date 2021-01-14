@@ -13,7 +13,7 @@
 	radio = /obj/item/radio/borg
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = STATIC_LIGHT
 	light_on = FALSE
 
 	var/custom_name = ""

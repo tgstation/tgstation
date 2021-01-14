@@ -17,7 +17,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 300)
-	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_system = STATIC_LIGHT //Used as a flash here.
 	light_range = FLASH_LIGHT_RANGE
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER

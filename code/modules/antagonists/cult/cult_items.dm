@@ -93,7 +93,7 @@
 	throw_speed = 1
 	throw_range = 3
 	sharpness = SHARP_EDGED
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 4
 	light_color = COLOR_RED
 	attack_verb_continuous = list("cleaves", "slashes", "tears", "lacerates", "hacks", "rips", "dices", "carves")

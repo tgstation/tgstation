@@ -16,7 +16,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
 	armour_penetration = 35
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_range = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
 	light_on = FALSE

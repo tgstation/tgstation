@@ -29,7 +29,7 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	COOLDOWN_DECLARE(mecha_bump_smash)
-	light_system = MOVABLE_LIGHT
+	light_system = STATIC_LIGHT
 	light_on = FALSE
 	light_range = 4
 	///What direction will the mech face when entered/powered on? Defaults to South.
