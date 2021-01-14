@@ -140,8 +140,8 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
-
-	var/list/turf_blacklist = update_blacklist(T)
+	var/list/turf_blacklist = list()
+	turf_blacklist += update_blacklist(T)
 
 	//parsed.returns_created_atoms = returns_created_atoms
 	parsed.turf_blacklist = turf_blacklist
@@ -156,7 +156,6 @@
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
-	turf_blacklist.Cut()
 
 	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
