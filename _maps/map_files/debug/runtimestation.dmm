@@ -2187,6 +2187,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"ks" = (
+/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/head/beekeeper_head,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "kQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -2208,6 +2213,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"lE" = (
+/obj/item/toy/plush/beeplushie,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "lX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -2408,6 +2417,10 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/science/nanite)
+"ya" = (
+/obj/item/clothing/suit/hooded/bee_costume,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "yK" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2673,6 +2686,11 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/medical/medbay)
+"Sl" = (
+/obj/effect/turf_decal/stripes/line,
+/mob/living/simple_animal/hostile/poison/bees,
+/turf/open/floor/plasteel,
+/area/construction)
 "Td" = (
 /obj/machinery/light{
 	dir = 4
@@ -6438,7 +6456,7 @@ cA
 bE
 bE
 ef
-cY
+Sl
 dn
 dn
 dn
@@ -6527,8 +6545,8 @@ XC
 co
 bA
 wS
-bE
-bE
+ks
+lE
 cN
 dW
 dn
@@ -6619,7 +6637,7 @@ cd
 bu
 bu
 cB
-bE
+ya
 bE
 cN
 cY

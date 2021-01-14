@@ -181,6 +181,7 @@
 		path_hud.add_to_hud(src)
 		path_hud.add_hud_to(src)
 
+	ADD_TRAIT(src, TRAIT_BEE_FRIENDLY, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -193,9 +194,6 @@
 	qdel(access_card)
 	qdel(bot_core)
 	return ..()
-
-/mob/living/simple_animal/bot/bee_friendly()
-	return TRUE
 
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()

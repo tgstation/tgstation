@@ -69,6 +69,8 @@
 		LoadComponent(/datum/component/bloodysoles)
 	if(!icon_state)
 		item_flags |= ABSTRACT
+	if(clothing_flags & THICKMATERIAL)
+		AddElement(/datum/element/bee_protection)
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()

@@ -254,6 +254,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 #define TRAIT_DONUT_LOVER "donut_lover"
 
+/*
+* Trait that renders you immune to both to targeting and attacks from bees.
+*
+* Scoped to /mob/living. Generally granted by wearing thick clothing, or being
+* something that bees don't see as a threat (other bees, drones, butterflies,
+* podperson).
+*/
+#define TRAIT_BEE_FRIENDLY "bee_friendly"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic

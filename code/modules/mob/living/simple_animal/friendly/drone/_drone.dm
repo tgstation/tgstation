@@ -143,6 +143,9 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 
+	// Why would bees pay attention to drones?
+	ADD_TRAIT(src, TRAIT_BEE_FRIENDLY, INNATE_TRAIT)
+
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
@@ -315,10 +318,6 @@
 
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
-
-/mob/living/simple_animal/drone/bee_friendly()
-	// Why would bees pay attention to drones?
-	return TRUE
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff, flags = NONE)
 	return FALSE //So they don't die trying to fix wiring

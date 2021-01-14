@@ -590,6 +590,7 @@
 #include "code\datums\elements\atmos_sensitive.dm"
 #include "code\datums\elements\backblast.dm"
 #include "code\datums\elements\bed_tucking.dm"
+#include "code\datums\elements\bee_protection.dm"
 #include "code\datums\elements\bsa_blocker.dm"
 #include "code\datums\elements\caltrop.dm"
 #include "code\datums\elements\cleaning.dm"

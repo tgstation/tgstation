@@ -5,27 +5,6 @@
 #define BEE_RESOURCE_HONEYCOMB_COST		100		//The amount of bee_resources for a new honeycomb to be produced, percentage cost 1-100
 #define BEE_RESOURCE_NEW_BEE_COST		50		//The amount of bee_resources for a new bee to be produced, percentage cost 1-100
 
-
-
-/mob/proc/bee_friendly()
-	return 0
-
-
-/mob/living/simple_animal/hostile/poison/bees/bee_friendly()
-	return 1
-
-
-/mob/living/carbon/human/bee_friendly()
-	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
-		return 1
-	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
-		var/obj/item/clothing/CS = wear_suit
-		var/obj/item/clothing/CH = head
-		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
-			return 1
-	return 0
-
-
 /obj/structure/beebox
 	name = "apiary"
 	desc = "Dr. Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR. BEES!"
@@ -197,7 +176,7 @@
 
 /obj/structure/beebox/interact(mob/user)
 	. = ..()
-	if(!user.bee_friendly())
+	if(!HAS_TRAIT(user, TRAIT_BEE_FRIENDLY))
 		//Time to get stung!
 		var/bees = FALSE
 		for(var/b in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!

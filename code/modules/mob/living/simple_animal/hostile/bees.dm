@@ -63,6 +63,7 @@
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_BEE_FRIENDLY, INNATE_TRAIT) // no friendly fire
 	generate_bee_visuals()
 	AddComponent(/datum/component/swarming)
 
@@ -134,20 +135,19 @@
 	add_overlay("[icon_base]_wings")
 
 
-//We don't attack beekeepers/people dressed as bees//Todo: bee costume
+//We don't attack beekeepers/people dressed as bees
 /mob/living/simple_animal/hostile/poison/bees/CanAttack(atom/the_target)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(isliving(the_target))
-		var/mob/living/H = the_target
-		return !H.bee_friendly()
+		return !HAS_TRAIT(the_target, TRAIT_BEE_FRIENDLY)
 
 
 /mob/living/simple_animal/hostile/poison/bees/Found(atom/A)
 	if(isliving(A))
-		var/mob/living/H = A
-		return !H.bee_friendly()
+		var/mob/living/living_target = A
+		return !HAS_TRAIT(living_target, TRAIT_BEE_FRIENDLY)
 	if(istype(A, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = A
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
