@@ -733,7 +733,7 @@
 /datum/reagents/proc/handle_reactions()
 	if(flags & NO_REACT)
 		if(is_reacting)
-			finish_reacting()
+			force_stop_reacting() //Force anything that is trying to to stop
 		return 0 //Yup, no reactions here. No siree.
 
 	if(is_reacting)//Prevent wasteful calculations
@@ -850,10 +850,10 @@
 /datum/reagents/process(delta_time)
 	if(!is_reacting)
 		finish_reacting()
+	//sum of output messages.
+	var/mix_message
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
-	var/mix_message
-	//Checover the reaction list
 	for(var/datum/equilibrium/E in reaction_list)
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//if it's been flagged to delete
