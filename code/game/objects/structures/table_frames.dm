@@ -108,6 +108,6 @@
 				return
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
 			if(do_after(user, 20, target = src) && material.use(1))
-				make_new_table(toConstruct, null, type)
+				make_new_table(toConstruct, null, null)
 	else
 		return ..()
