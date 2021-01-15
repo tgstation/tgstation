@@ -1,4 +1,0 @@
-author: "EgorDinamit"
-delete-after: True
-changes: 
-  - bugfix: "Ghost roles can no longer spawn as a male with female body_type and vice-versa."
