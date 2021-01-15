@@ -65,10 +65,10 @@
 	var/list/datum/reagent/addiction_list
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
-	///list of reactions currently on going
-	var/list/datum/equilibrium/reaction_list = list()
-	///cached list of reagents typepaths (not object references)
-	var/list/datum/reagent/previous_reagent_list = list()
+	///list of reactions currently on going, this is a lazylist for optimisation
+	var/list/datum/equilibrium/reaction_list
+	///cached list of reagents typepaths (not object references), this is a lazylist for optimisation
+	var/list/datum/reagent/previous_reagent_list
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 
@@ -310,7 +310,7 @@
 			//Clear from relevant lists
 			LAZYREMOVE(addiction_list, R)
 			reagent_list -= R
-			previous_reagent_list -= R.type
+			LAZYREMOVE(previous_reagent_list, R.type)
 			qdel(R)
 			update_total()
 			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
@@ -816,14 +816,15 @@
 			continue
 		else
 			var/exists = FALSE
-			for(var/datum/equilibrium/E in reaction_list)
+			for(var/e in reaction_list)
+				var/datum/equilibrium/E
 				if(E.reaction.type == selected_reaction.type) //Don't add duplicates
 					exists = TRUE
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
 				is_reacting = TRUE//Prevent any on_reaction() procs from infinite looping
-				var/datum/equilibrium/E = new /datum/equilibrium(selected_reaction, src) //Otherwise we add them to the processing list.
+				var/datum/equilibrium/E = new (selected_reaction, src) //Otherwise we add them to the processing list.
 				if(E.to_delete)//failed startup checks
 					qdel(E)
 				else
@@ -851,7 +852,7 @@
 	if(!is_reacting)
 		finish_reacting()
 	//sum of output messages.
-	var/mix_message = list()
+	var/list/mix_message = list()
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
 	for(var/e in reaction_list)
@@ -904,7 +905,7 @@
 	for(var/r in reagent_list)
 		var/datum/reagent/R = r
 		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
-	previous_reagent_list = list() //reset it to 0 - because any change will be different now.
+	LAZYCLEARLIST(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	handle_reactions() //Should be okay without. Each step checks.
 
@@ -935,10 +936,10 @@
 	return FALSE
 
 /datum/reagents/proc/update_previous_reagent_list()
-	previous_reagent_list = list()
+	LAZYCLEARLIST(previous_reagent_list)
 	for(var/r in reagent_list)
 		var/datum/reagent/R = r
-		previous_reagent_list += R.type
+		LAZYADD(previous_reagent_list, R.type)
 
 ///Old reaction mechanics, edited to work on one only
 ///This is changed from the old - purity of the reagents will affect yield
@@ -946,7 +947,7 @@
 	var/list/cached_required_reagents = selected_reaction.required_reagents
 	var/list/cached_results = selected_reaction.results
 	var/datum/cached_my_atom = my_atom
-	var/list/multiplier = INFINITY
+	var/multiplier = INFINITY
 	for(var/B in cached_required_reagents)
 		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
 
@@ -971,42 +972,41 @@
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
 			for(var/mob/M in seen)
-				to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+				visible_message(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
-			var/obj/item/slime_extract/ME2 = my_atom
-			ME2.Uses--
-			if(ME2.Uses <= 0) // give the notification that the slime core is dead
+			var/obj/item/slime_extract/extract = my_atom
+			extract.Uses--
+			if(extract.Uses <= 0) // give the notification that the slime core is dead
 				for(var/mob/M in seen)
-					to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
-					ME2.name = "used slime extract"
-					ME2.desc = "This extract has been used up."
+					visible_message(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+				extract.name = "used slime extract"
+				extract.desc = "This extract has been used up."
 
 	selected_reaction.on_reaction(src, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused
 /datum/reagents/proc/get_priority_instant_reaction(list/possible_reactions)
-	if(possible_reactions.len)
-		var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
-		//select the reaction with the most extreme temperature requirements
-		for(var/V in possible_reactions)
-			var/datum/chemical_reaction/competitor = V
-			if(selected_reaction.is_cold_recipe)
-				if(competitor.required_temp <= selected_reaction.required_temp)
-					selected_reaction = competitor
-			else
-				if(competitor.required_temp >= selected_reaction.required_temp)
-					selected_reaction = competitor
-		return selected_reaction
-	else
+	if(!length(possible_reactions))
 		return FALSE
+	var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
+	//select the reaction with the most extreme temperature requirements
+	for(var/V in possible_reactions)
+		var/datum/chemical_reaction/competitor = V
+		if(selected_reaction.is_cold_recipe)
+			if(competitor.required_temp <= selected_reaction.required_temp)
+				selected_reaction = competitor
+		else
+			if(competitor.required_temp >= selected_reaction.required_temp)
+				selected_reaction = competitor
+	return selected_reaction
 
 //Processes the reagents in the holder and converts them
 /datum/reagents/proc/process_mob_reagent_purity(reagent, added_volume, added_purity)
 	var/datum/reagent/R = has_reagent(reagent)
 	if(!R)
-		WARNING("Tried to process reagent purity for [reagent], but 0 volume was found right after it was added!")
+		stack_trace("Tried to process reagent purity for [reagent], but 0 volume was found right after it was added!")
 		return
 	if (R.purity == 1)
 		return
@@ -1014,7 +1014,7 @@
 		R.purity = 1
 		return
 	if(R.purity < 0)
-		WARNING("Purity below 0 for chem: [type]!")
+		stack_trace("Purity below 0 for chem: [type]!")
 		R.purity = 0
 
 	if ((R.inverse_chem_val > R.purity) && (R.inverse_chem))//Turns all of a added reagent into the inverse chem

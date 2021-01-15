@@ -180,7 +180,8 @@
  * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
  */
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
-	for(var/datum/reagent/R in holder.reagent_list)
+	for(var/r in holder.reagent_list)
+		var/datum/reagent/R
 		R.purity = clamp((R.purity-0.01), 0, 1) //slowly reduce purity of other reagents
 
 /**

@@ -100,7 +100,7 @@
 
 		for(var/B in reaction.required_reagents)
 			var/datum/reagent/R0 = B
-			if(R0 == R.type) // required_reagents = list(/datum/reagent/consumable/sugar = 1) /datum/reagent/consumable/sugar
+			if(R0 == R.type) 
 				total_matching_reagents++
 	
 	if(!(total_matching_reagents == reaction.required_reagents.len))

@@ -33,9 +33,9 @@
 		number_of_pages--
 		playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		add_fingerprint(user)
-		if(number_of_pages == 0)
+		if(!number_of_pages)
 			icon_state = "pHbooklet_empty"
-		return	
+		return
 	var/I = user.get_active_held_item()
 	if(!I)
 		user.put_in_active_hand(src)
