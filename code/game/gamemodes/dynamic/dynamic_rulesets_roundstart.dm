@@ -19,10 +19,12 @@
 	scaling_cost = 10
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
-	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
+	var/autotraitor_cooldown = (15 MINUTES)
+	COOLDOWN_DECLARE(autotraitor_cooldown_check)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
 	. = ..()
+	COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
 	var/num_traitors = antag_cap[indice_pop] * (scaled_times + 1)
 	for (var/i = 1 to num_traitors)
 		var/mob/M = pick_n_take(candidates)
@@ -33,10 +35,8 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/traitor/rule_process()
-	if (autotraitor_cooldown > 0)
-		autotraitor_cooldown--
-	else
-		autotraitor_cooldown = 450 // 15 minutes
+	if (COOLDOWN_FINISHED(src, autotraitor_cooldown_check))
+		COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
 		message_admins("Checking if we can turn someone into a traitor.")
 		log_game("DYNAMIC: Checking if we can turn someone into a traitor.")
 		mode.picking_specific_rule(/datum/dynamic_ruleset/midround/autotraitor)
