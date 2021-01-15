@@ -454,7 +454,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	if(ruleset.pre_execute())
 		var/added_threat = ruleset.cost + (ruleset.scaling_cost * scaled_times)
-		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up[scaled_times] times." : ""]"
+		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [scaled_times] times." : ""]"
 		if(ruleset.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		if(ruleset.flags & HIGHLANDER_RULESET)
