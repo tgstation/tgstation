@@ -817,6 +817,12 @@
  */
 /mob/MouseDrop_T(atom/dropping, atom/user)
 	. = ..()
+
+	// Our mouse drop has already been handled by something else. Most likely buckling code.
+	// Since it has already been handled, we don't need to show inventory.
+	if(.)
+		return
+
 	if(ismob(dropping) && src == user && dropping != user)
 		var/mob/M = dropping
 		var/mob/U = user

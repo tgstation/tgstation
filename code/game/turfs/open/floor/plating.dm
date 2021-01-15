@@ -66,19 +66,8 @@
 				for(var/M in O.buckled_mobs)
 					to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
 					return
-			var/obj/item/stack/tile/W = C
-			if(!W.use(1))
-				return
-			if(istype(W, /obj/item/stack/tile/material))
-				var/turf/newturf = PlaceOnTop(/turf/open/floor/material, flags = CHANGETURF_INHERIT_AIR)
-				newturf.set_custom_materials(W.mats_per_unit)
-			else if(W.turf_type)
-				var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
-				if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-					var/obj/item/stack/tile/light/L = W
-					var/turf/open/floor/light/F = T
-					F.state = L.state
-
+			var/obj/item/stack/tile/tile = C
+			tile.place_tile(src)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
 			if(!iscyborg(user))

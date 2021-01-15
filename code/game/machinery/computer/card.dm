@@ -448,8 +448,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							inserted_modify_id.access += access_type
 							if(access_type in ACCESS_ALERT_ADMINS)
 								message_admins("[ADMIN_LOOKUPFLW(usr)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
-							log_game("[key_name(usr)] added [get_access_desc(access_type)] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
-							usr.log_message("added [get_access_desc(access_type)] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]", LOG_GAME)
+							LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "added [get_access_desc(access_type)]")
+
 						playsound(src, "terminal_type", 50, FALSE)
 		if ("assign")
 			if (authenticated == 2)
@@ -486,8 +486,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if(logged_access in inserted_modify_id.access)
 							message_admins("[ADMIN_LOOKUPFLW(usr)] assigned the job [jobdatum.title] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
 							break
-					log_game("[key_name(usr)] assigned the job [jobdatum.title] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
-					usr.log_message("assigned the job [jobdatum.title] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]", LOG_GAME)
+					LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "assigned the job [jobdatum.title]")
+
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
