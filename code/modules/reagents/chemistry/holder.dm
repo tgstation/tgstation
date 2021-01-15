@@ -94,6 +94,7 @@
 	if(is_reacting) //If false, reaction list should be cleaned up
 		force_stop_reacting()
 	QDEL_LIST(reaction_list)
+	previous_reagent_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
@@ -522,7 +523,7 @@
 
 	//pass over previous ongoing reactions before handle_reactions is called
 	R.reaction_list = LAZYLISTDUPLICATE(reaction_list)
-		R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
+	R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	R.is_reacting = is_reacting
 
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
@@ -817,7 +818,7 @@
 		else
 			var/exists = FALSE
 			for(var/e in reaction_list)
-				var/datum/equilibrium/E
+				var/datum/equilibrium/E = e
 				if(E.reaction.type == selected_reaction.type) //Don't add duplicates
 					exists = TRUE
 
@@ -884,6 +885,7 @@
 /datum/reagents/proc/end_reaction(datum/equilibrium/E)
 	//end reaction proc
 	E.reaction.reaction_finish(src, E.reacted_vol)
+	var/reaction_message = E.reaction.mix_message
 	if(E.reaction.mix_sound)
 		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
 	qdel(E)
@@ -891,7 +893,7 @@
 	//Reaction occured
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
-	return E.reaction.mix_message
+	return reaction_message
 
 /*
 * This stops the holder from processing at the end of a series of reactions (i.e. when all the equilibriums are completed)
