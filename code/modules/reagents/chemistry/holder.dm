@@ -1020,11 +1020,11 @@
 	if ((R.inverse_chem_val > R.purity) && (R.inverse_chem))//Turns all of a added reagent into the inverse chem
 		remove_reagent(R.type, added_volume, FALSE)
 		add_reagent(R.inverse_chem, added_volume, FALSE, added_purity = 1-R.creation_purity)
-		var/datum/reagent/Ri = has_reagent(R.inverse_chem)
-		if(Ri.chemical_flags & REAGENT_SNEAKYNAME)
-			Ri.name = R.name//Negative effects are hidden
-			if(Ri.chemical_flags & REAGENT_INVISIBLE)
-				Ri.chemical_flags |= (REAGENT_INVISIBLE)
+		var/datum/reagent/inverse_reagent = has_reagent(R.inverse_chem)
+		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
+			inverse_reagent.name = R.name//Negative effects are hidden
+			if(inverse_reagent.chemical_flags & REAGENT_INVISIBLE)
+				inverse_reagent.chemical_flags |= (REAGENT_INVISIBLE)
 	else if (R.impure_chem)
 		var/impureVol = added_volume * (1 - R.purity) //turns impure ratio into impure chem
 		if(!(R.chemical_flags & REAGENT_SPLITRETAINVOL))
