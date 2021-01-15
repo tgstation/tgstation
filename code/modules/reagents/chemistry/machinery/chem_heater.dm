@@ -117,11 +117,13 @@
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["currentpH"] = beaker ? round(beaker.reagents.pH, 0.01)  : null
 
-	var/beakerContents[0]
-	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = round(R.volume, 0.01)))) // list in a list because Byond merges the first list...
-	data["beakerContents"] = beakerContents
+	var/list/beaker_contents = list()
+	for(var/r in beaker?.reagents.reagent_list)
+		var/datum/reagent/reagent = r
+		beaker_contents.len++
+		beaker_contents[length(beaker_contents)] = list("name" = R.name, "volume" = round(R.volume, 0.01))
+	data["beakerContents"] = beaker_contents
+
 	return data
 
 /obj/machinery/chem_heater/ui_act(action, params)

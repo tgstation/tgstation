@@ -22,45 +22,43 @@
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(number_of_pages == 50)
 			icon_state = "pHbooklet_open"
-		if(number_of_pages >= 1)
-			var/obj/item/pHpaper/P = new /obj/item/pHpaper
-			P.add_fingerprint(user)
-			P.forceMove(user.loc)
-			user.put_in_active_hand(P)
-			to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
-			number_of_pages--
-			playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-			add_fingerprint(user)
-			if(number_of_pages == 0)
-				icon_state = "pHbooklet_empty"
-			return
-		else
+		if(!number_of_pages)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			add_fingerprint(user)
 			return
-	. = ..()
-	var/I = user.get_active_held_item()
-	if(!I)
-		user.put_in_active_hand(src)
-
-/obj/item/pHbooklet/MouseDrop()
-	var/mob/living/user = usr
-	if(number_of_pages >= 1)
-		var/obj/item/pHpaper/P = new /obj/item/pHpaper
-		P.add_fingerprint(user)
-		P.forceMove(user)
-		user.put_in_active_hand(P)
-		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
+		var/obj/item/pHpaper/page = new(get_turf(user))
+		page.add_fingerprint(user)
+		user.put_in_active_hand(page)
+		to_chat(user, "<span class='notice'>You take [page] out of \the [src].</span>")
 		number_of_pages--
 		playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		add_fingerprint(user)
 		if(number_of_pages == 0)
-			icon_state = "pHbookletEmpty"
+			icon_state = "pHbooklet_empty"
+		return	
+	var/I = user.get_active_held_item()
+	if(!I)
+		user.put_in_active_hand(src)
+	return ..()
+
+/obj/item/pHbooklet/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	var/mob/living/user = usr
+	if(!isliving(user))
 		return
-	else
+	if(!number_of_pages)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		add_fingerprint(user)
 		return
+	var/obj/item/pHpaper/P = new /obj/item/pHpaper
+	P.add_fingerprint(user)
+	P.forceMove(user)
+	user.put_in_active_hand(P)
+	to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
+	number_of_pages--
+	playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	add_fingerprint(user)
+	if(!number_of_pages)
+		icon_state = "pHbookletEmpty"		
 
 /*
 * pH paper will change color depending on the pH of the reagents datum it's attacked onto
@@ -77,8 +75,9 @@
 	///If the paper was used, and therefore cannot change color again
 	var/used = FALSE
 
-/obj/item/pHpaper/afterattack(obj/item/reagent_containers/cont, mob/user, proximity)
-	if(!istype(cont))
+/obj/item/pHpaper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	var/obj/item/reagent_containers/cont = target
+	if(!cont)
 		return
 	if(used == TRUE)
 		to_chat(user, "<span class='warning'>[src] has already been used!</span>")
@@ -141,11 +140,11 @@
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a reduced report.</span>")
 		scanmode = SHORTENED_CHEM_OUTPUT
 
-/obj/item/pHmeter/afterattack(atom/A, mob/user, proximity)
+/obj/item/pHmeter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!istype(A, /obj/item/reagent_containers))
+	if(!istype(target, /obj/item/reagent_containers))
 		return
-	var/obj/item/reagent_containers/cont = A
+	var/obj/item/reagent_containers/cont = target
 	if(LAZYLEN(cont.reagents.reagent_list) == null)
 		return
 	var/list/out_message = list()

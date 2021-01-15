@@ -2451,7 +2451,8 @@
 	color = "#fbc314"
 	pH = 0
 	data = list("pH" = 0)
-	var/strength = 20
+	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the pH will decrease by 0.3
+	var/strength = 15
 
 //Consumes self on addition and shifts pH
 /datum/reagent/acidic_buffer/on_new(list/data)
@@ -2481,7 +2482,8 @@
 	color = "#3853a4"
 	pH = 14
 	data = list("pH" = 14)
-	var/strength = 20
+	///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the pH will increase by 0.3
+	var/strength = 15
 
 /datum/reagent/basic_buffer/on_new(list/data)
 	. = ..()

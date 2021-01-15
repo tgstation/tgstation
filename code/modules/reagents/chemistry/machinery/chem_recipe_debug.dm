@@ -10,11 +10,17 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	///List of every reaction in the game kept locally for easy access
 	var/list/cached_reactions = list()
+	///What index in the cached_reactions we're in
 	var/index = 1
+	///If the machine is currently processing through the list
 	var/processing = FALSE
+	///Final output that highlights all of the reactions with inoptimal purity/voolume at base
 	var/problem_string
+	///The count of reactions that resolve between 1 - 0.9 purity
 	var/minorImpurity
+	///The count of reactions that resolve below 0.9 purity
 	var/majorImpurity
 
 

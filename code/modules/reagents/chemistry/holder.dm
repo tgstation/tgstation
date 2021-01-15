@@ -67,7 +67,7 @@
 	var/flags
 	///list of reactions currently on going
 	var/list/datum/equilibrium/reaction_list = new/list()
-	///cached list of reagents
+	///cached list of reagents typepaths (not object references)
 	var/list/datum/reagent/previous_reagent_list = new/list()
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
@@ -92,9 +92,8 @@
 		qdel(R)
 	reagent_list = null
 	if(is_reacting) //If false, reaction list should be cleaned up
-		for(var/reaction in reaction_list)
-			var/datum/equilibrium/E = reaction
-			qdel(E)
+		force_stop_reacting()
+	QDEL_LIST(reaction_list)
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
@@ -113,7 +112,7 @@
  * * added_pH - override to force a pH when added
  * * override_base_pH - bypass the pH update when adding a reagent, causing it to retain the pH of the solution it's being added to
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = INFINITY, added_pH, no_react = 0, override_base_pH = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = null, added_pH, no_react = 0, override_base_pH = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -126,7 +125,7 @@
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
-	if(added_purity == INFINITY) //Because purity additions can be 0
+	if(isnull(added_purity)) //Because purity additions can be 0
 		added_purity = D.creation_purity //Usually 1
 
 	if(!added_pH)
