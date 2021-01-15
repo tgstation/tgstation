@@ -23,7 +23,6 @@
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
-	H.dna.add_mutation(HULK)
 	H.dna.add_mutation(XRAY)
 	H.dna.add_mutation(SPACEMUT)
 	H.dna.add_mutation(TK)

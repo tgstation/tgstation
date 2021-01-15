@@ -762,7 +762,7 @@
 		else
 			species_color = ""
 
-		if(!dropping_limb && H.dna.check_mutation(HULK))
+		if(!dropping_limb)
 			mutation_color = "00aa00"
 		else
 			mutation_color = ""

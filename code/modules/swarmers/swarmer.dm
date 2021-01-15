@@ -459,9 +459,5 @@
 		return
 	if((!isanimal(target) && !ishuman(target)) || isswarmer(target))
 		return
-	if(ishuman(target))
-		var/mob/living/carbon/human/possibleHulk = target
-		if(!possibleHulk.dna || !possibleHulk.dna.check_mutation(HULK))
-			return
 	var/mob/living/simple_animal/hostile/swarmer/swarmer = firer
 	swarmer.teleport_target(target)

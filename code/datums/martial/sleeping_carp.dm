@@ -103,8 +103,6 @@
 		return BULLET_ACT_HIT
 	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return BULLET_ACT_HIT
-	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
-		return BULLET_ACT_HIT
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
 	if(A.in_throw_mode)
