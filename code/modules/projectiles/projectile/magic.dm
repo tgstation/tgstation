@@ -411,7 +411,7 @@
 			M.apply_damage(40, BRUTE, pick(BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_PRECISE_GROIN)) //hit in the balls by a locker
 			M.Knockdown(40) //i guess we'll give them a chance
 			playsound(M, 'sound/weapons/smash.ogg', 50)
-			return PROJECTILE_PIERCE_PHASE
+			return PROJECTILE_PIERCE_HIT
 		if(!locker_temp_instance.insertion_allowed(M))
 			return
 		M.forceMove(src)
