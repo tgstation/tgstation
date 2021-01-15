@@ -54,8 +54,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/handle_loop_end()
 	SIGNAL_HANDLER
-	if(!QDELETED(src))
-		qdel(src)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/check_for_target()
 	if(QDELETED(src))

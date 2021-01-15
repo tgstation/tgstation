@@ -161,8 +161,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/proc/handle_stopping()
 	SIGNAL_HANDLER
-	if(!QDELETED(src))
-		qdel(src)
+	qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf

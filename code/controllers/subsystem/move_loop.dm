@@ -223,9 +223,9 @@ SUBSYSTEM_DEF(movement_loop)
 
 /datum/move_loop/proc/kill()
 	SHOULD_CALL_PARENT(TRUE)
-	if(moving)
-		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
+	if(!QDELETED(moving))
 		UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
+		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
 
 /datum/move_loop/proc/handle_delete()
 	SIGNAL_HANDLER

@@ -36,9 +36,9 @@
 	notify = FALSE
 
 /obj/effect/immovablerod/wizard/Moved()
+	. = ..()
 	if(get_dist(start_turf, get_turf(src)) >= max_distance)
 		qdel(src)
-	return ..()
 
 /obj/effect/immovablerod/wizard/Destroy()
 	if(wizard)
