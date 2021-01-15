@@ -35,6 +35,9 @@
 
 /// Sets up the proper signals and fills the list of materials with the appropriate references.
 /datum/component/material_container/Initialize(list/init_mats, max_amt = 0, _mat_container_flags=NONE, list/allowed_mats=init_mats, list/allowed_items, datum/callback/_insertion_check, datum/callback/_precondition, datum/callback/_after_insert)
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	materials = list()
 	max_amount = max(0, max_amt)
 	mat_container_flags = _mat_container_flags

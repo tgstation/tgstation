@@ -32,20 +32,20 @@
 	source.AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), null, RAW | MEAT | GROSS, null, 30, list("Fleshy"))
 
 
-/datum/material/meat/mob
+/datum/material/meat/mob_meat
 	init_flags = MATERIAL_INIT_BESPOKE
 
-/datum/material/meat/mob/Initialize(_id, mob/living/source)
+/datum/material/meat/mob_meat/Initialize(_id, mob/living/source)
 	if(!istype(source))
 		return FALSE
 
 	name = "[source?.name ? "[source.name]'s" : "mystery"] [initial(name)]"
 	return ..()
 
-/datum/material/meat/species
+/datum/material/meat/species_meat
 	init_flags = MATERIAL_INIT_BESPOKE
 
-/datum/material/meat/species/Initialize(_id, datum/species/source)
+/datum/material/meat/species_meat/Initialize(_id, datum/species/source)
 	if(!istype(source))
 		return FALSE
 
