@@ -108,6 +108,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// The maximum time the recurring midround ruleset timer is allowed to be.
 	var/midround_delay_max = (35 MINUTES)
 
+	/// If above this threat, increase the chance of injection
+	var/higher_injection_chance_minimum_threat = 70
+
+	/// The chance of injection increase when above higher_injection_chance_minimum_threat
+	var/higher_injection_chance = 15
+
+	/// If below this threat, decrease the chance of injection
+	var/lower_injection_chance_minimum_threat = 30
+
+	/// The chance of injection decrease when above lower_injection_chance_minimum_threat
+	var/lower_injection_chance = 15
+
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
@@ -665,10 +677,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
 	if (current_players[CURRENT_DEAD_PLAYERS].len > current_players[CURRENT_LIVING_PLAYERS].len)
 		chance -= 30 // More than half the crew died? ew, let's calm down on antags
-	if (threat > 70)
-		chance += 15
-	if (threat < 30)
-		chance -= 15
+	if (threat > higher_injection_chance_minimum_threat)
+		chance += higher_injection_chance
+	if (threat < lower_injection_chance_minimum_threat)
+		chance -= lower_injection_chance
 	return round(max(0,chance))
 
 /// Removes type from the list
