@@ -133,7 +133,7 @@
 	var/scanmode = DETAILED_CHEM_OUTPUT 
 
 /obj/item/pHmeter/attack_self(mob/user)
-	if(!scanmode)
+	if(scanmode == SHORTENED_CHEM_OUTPUT)
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a detailed report.</span>")
 		scanmode = DETAILED_CHEM_OUTPUT
 	else

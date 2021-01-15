@@ -23,11 +23,12 @@
 	///The count of reactions that resolve below 0.9 purity
 	var/majorImpurity
 
-
+///Create reagents datum
 /obj/machinery/chem_recipe_debug/Initialize()
 	. = ..()
 	create_reagents(500)
 
+///Enable the machine
 /obj/machinery/chem_recipe_debug/attackby(obj/item/I, mob/user, params)
 	. = .()
 	if(processing)
@@ -37,6 +38,7 @@
 	setup_reactions()
 	begin_processing()
 
+///Enable the machine
 /obj/machinery/chem_recipe_debug/AltClick(mob/living/user)
 	. = ..()
 	if(processing)
@@ -46,6 +48,7 @@
 	setup_reactions()
 	begin_processing()
 
+///Resets the index, and creates the cached_reaction list from all possible reactions
 /obj/machinery/chem_recipe_debug/proc/setup_reactions()
 	cached_reactions = list()
 	for(var/V in GLOB.chemical_reactions_list)
