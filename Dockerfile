@@ -1,14 +1,24 @@
-FROM ubuntu:xenial as base
+# base = ubuntu + full apt update
+FROM ubuntu:xenial AS base
 
-WORKDIR /byond
-COPY dependencies.sh .
-RUN . ./dependencies.sh \
+RUN dpkg --add-architecture i386 \
     && apt-get update \
-    && apt-get install -y \
+    && apt-get upgrade -y \
+    && apt-get dist-upgrade -y
+
+# byond = base + byond installed globally
+FROM base AS byond
+WORKDIR /byond
+
+RUN apt-get install -y --no-install-recommends \
         curl \
         unzip \
         make \
-        libstdc++6 \
+        libstdc++6:i386
+
+COPY dependencies.sh .
+
+RUN . ./dependencies.sh \
     && curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
     && unzip byond.zip \
     && cd byond \
@@ -19,14 +29,18 @@ RUN . ./dependencies.sh \
     && cd .. \
     && rm -rf byond byond.zip /var/lib/apt/lists/*
 
+# build = byond + tgstation compiled and deployed to /deploy
+FROM byond AS build
+WORKDIR /tgstation
+
+COPY . .
+
+RUN DreamMaker -max_errors 0 tgstation.dme \
+    && tools/deploy.sh /deploy \
+	&& rm /deploy/*.dll
+
+# rust_g = base + rust_g compiled to /rust_g
 FROM base as rust_g
-
-RUN dpkg --add-architecture i386 \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        git \
-        ca-certificates
-
 WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
@@ -41,43 +55,23 @@ RUN apt-get install -y --no-install-recommends \
 
 COPY dependencies.sh .
 
-RUN /bin/bash -c "source dependencies.sh \
-    && git fetch --depth 1 origin \$RUST_G_VERSION" \
+RUN . dependencies.sh \
+    && git fetch --depth 1 origin \$RUST_G_VERSION \
     && git checkout FETCH_HEAD \
     && env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target i686-unknown-linux-gnu
 
-FROM base as dm_base
-
+# final = byond + runtime deps + rust_g + build
+FROM byond
 WORKDIR /tgstation
 
-FROM dm_base as build
+RUN apt-get install -y --no-install-recommends \
+        libmariadb2 \
+        mariadb-client \
+        libssl1.0.0
 
-COPY . .
-
-RUN DreamMaker -max_errors 0 tgstation.dme \
-    && tools/deploy.sh /deploy \
-	&& rm /deploy/*.dll
-
-FROM dm_base
-
-EXPOSE 1337
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends software-properties-common \
-    && add-apt-repository ppa:ubuntu-toolchain-r/test \
-    && apt-get update \
-    && apt-get upgrade -y \
-    && apt-get dist-upgrade -y \
-    && apt-get install -y --no-install-recommends \
-    libmariadb2 \
-    mariadb-client \
-    libssl1.0.0 \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /root/.byond/bin
-
-COPY --from=rust_g /rust_g/target/release/librust_g.so /root/.byond/bin/rust_g
 COPY --from=build /deploy ./
+COPY --from=rust_g /rust_g/target/release/librust_g.so ./librust_g.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
-
 ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]
+EXPOSE 1337
