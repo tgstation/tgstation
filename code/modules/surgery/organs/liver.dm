@@ -107,11 +107,11 @@
 
 /obj/item/organ/liver/on_death()
 	. = ..()
-	var/mob/living/carbon/C = owner
-	if(!istype(C))
-		return
-	if(C.stat != DEAD)
-		return
+	if(!iscarbon(carbon_owner))
+		CRASH("on_death() called for [src] ([type]) with invalid owner ([isnull(owner) ? "null" : owner.type])")
+	var/mob/living/carbon/carbon_owner = owner
+	if(carbon_owner.stat != DEAD)
+		CRASH("on_death() called for [src] ([type]) with not-dead owner ([owner])")
 	if((organ_flags & ORGAN_FAILING) && HAS_TRAIT(C, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 		return
 	for(var/reagent in C.reagents.reagent_list)

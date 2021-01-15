@@ -123,7 +123,7 @@
 	if(to_delete)
 		return FALSE
 	if(!reaction)
-		WARNING("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
+		stack_trace("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
 		return FALSE
 	multiplier = INFINITY
 	product_ratio = 0
@@ -271,4 +271,3 @@
 	if(!i)//I've never seen it get here with 0, but in case
 		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cached_purity/i
-
