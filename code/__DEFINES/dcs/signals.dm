@@ -911,7 +911,7 @@
 // Movement loop signals
 
 ///from /datum/move_loop/handle_delete():
-#define COMSIG_MOVELOOP_END "loop_end"
+#define COMSIG_MOVELOOP_END "moveloop_end"
 ///from /datum/move_loop/process():
 #define COMSIG_MOVELOOP_PROCESS_CHECK "process_check"
 	#define MOVELOOP_STOP_PROCESSING (1<<0)
