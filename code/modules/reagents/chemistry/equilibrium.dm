@@ -46,9 +46,9 @@
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 
 /datum/equilibrium/Destroy()
-	. = ..()
 	holder = null
 	reaction = null
+	return ..()
 
 /* 
 * Check to make sure our input vars are sensible - truncated version of check_reagent_properties() 
