@@ -1,4 +1,4 @@
-//this datum is used by the events controller to dictate how it selects events
+//this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
 	var/name						//The human-readable name of the event
 	var/typepath					//The typepath of the event datum /datum/round_event

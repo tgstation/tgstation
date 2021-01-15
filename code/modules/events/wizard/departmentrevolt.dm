@@ -1,43 +1,53 @@
 /datum/round_event_control/wizard/deprevolt //stationwide!
 	name = "Departmental Uprising"
-	weight = 0 //An order that requires order in a round of chaos was maybe not the best idea. Requiescat in pace departmental uprising August 2014 - March 2015
+	weight = 0 //An order that requires order in a round of chaos was maybe not the best idea. Requiescat in pace departmental uprising August 2014 - March 2015 //hello motherfucker i fixed your shit in 2021
 	typepath = /datum/round_event/wizard/deprevolt
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 
+	var/list/independent_departments = list() ///departments that are already independent, these will be unallowed to be randomly picked
 	var/picked_department
 	var/announce = FALSE
+	var/dangerous_nation = TRUE
 
 /datum/round_event_control/wizard/deprevolt/admin_setup()
 	if(!check_rights(R_FUN))
 		return
-	var/list/options = list("Random", "Uprising of Assistants", "Medical", "Engineering", "Science", "Cargo", "Service", "Security")
+	var/list/options = list("Random", "Uprising of Assistants", "Medical", "Engineering", "Science", "Supply", "Service", "Security")
 	picked_department = input(usr,"Which department should revolt?","Select a department") as null|anything in options
 
-	//if they cancel just do the event as if it wasn't with admin intervention
-	if(!picked_department)
+	var/announce_question = alert(usr, "Announce This New Independent State?", "Secession", "Announce", "No Announcement")
+	if(announce_question == "Announce")
+		announce = TRUE
+
+	var/dangerous_question = alert(usr, "Dangerous Nation? This means they will fight other nations.", "Conquest", "Yes", "No")
+	if(dangerous_question == "No")
+		dangerous_nation = FALSE
+
+	//this is down here to allow the random system to pick a department whilst considering other independent departments
+	if(!picked_department || picked_department == "Random")
 		return
 
-	if(picked_department == "Random")
-		picked_department = pick(options - "Random")
-
-	var/question = alert(usr, "Announce This New Independent State?", "Secession", "Announce", "No Announcement")
-	if(question == "Announce")
-		announce = TRUE
+/datum/round_event/wizard/deprevolt/setup()
+	var/datum/round_event_control/wizard/deprevolt/event_control = control
+	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
+		event_control.independent_departments |= separatist_datum.nation.nation_department
 
 /datum/round_event/wizard/deprevolt/start()
 
-	var/datum/round_event_control/wizard/deprevolt/C = control
+	var/datum/round_event_control/wizard/deprevolt/event_control = control
 
 	var/announcement = FALSE
 	var/department
-	if(C.announce)
+	if(event_control.announce)
 		announcement = TRUE
-	if(C.picked_department)
-		department = C.picked_department
-		C.picked_department = null
+	if(event_control.picked_department)
+		department = event_control.picked_department
+		event_control.picked_department = null
 	else
-		department = pick(list("Uprising of Assistants", "Medical", "Engineering", "Science", "Cargo", "Service", "Security"))
+		department = pick(list("Uprising of Assistants", "Medical", "Engineering", "Science", "Supply", "Service", "Security") - event_control.independent_departments)
+		if(!department)
+			message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
 	var/list/jobs_to_revolt	= list()
 	var/nation_name
 	var/list/citizens = list()
@@ -66,19 +76,29 @@
 			nation_name = pick("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 
 	nation_name += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
+	if(department == "Uprising of Assistants")
+		var/prefix = pick("roving clans", "barbaric tribes", "tides", "bandit kingdom", "tribal society", "marauder clans", "horde")
+		nation_name = "The [prefix] of [nation_name]"
 
-	var/datum/team/nation/nation = new(null, jobs_to_revolt)
+	var/datum/team/nation/nation = new(null, jobs_to_revolt, department)
 	nation.name = nation_name
+	var/department_target //dodges unfortunate runtime
+	if(!event_control.independent_departments.len)
+		department_target = null
+	else
+		department_target = pick(event_control.independent_departments)
+	nation.generate_nation_objectives(event_control.dangerous_nation, department_target)
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
 		if(H.mind)
 			var/datum/mind/M = H.mind
-			if(M.assigned_role && !(M.has_antag_datum(/datum/antagonist)))
+			if(M.assigned_role)
 				for(var/job in jobs_to_revolt)
 					if(M.assigned_role == job)
 						citizens += H
-						M.add_antag_datum(/datum/antagonist/separatist,nation)
+						M.add_antag_datum(/datum/antagonist/separatist, nation, department)
+						nation.add_member(M)
 						H.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
 
 	if(citizens.len)
