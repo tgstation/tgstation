@@ -406,9 +406,12 @@
 	. = ..()
 	if(isliving(A) && locker_suck)
 		var/mob/living/M = A
-		if(M.anti_magic_check())			// no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
-			return PROJECTILE_DELETE_WITHOUT_HITTING
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] brutally hits [A]!</span>", "<span class='boldwarning'>You are hit by a a locker!")
+			M.apply_damage(40, BRUTE, pick(BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_PRECISE_GROIN)) //hit in the balls by a locker
+			M.Knockdown(40) //i guess we'll give them a chance
+			playsound(M, 'sound/weapons/smash.ogg', 50)
+			return PROJECTILE_PIERCE_PHASE
 		if(!locker_temp_instance.insertion_allowed(M))
 			return
 		M.forceMove(src)
