@@ -408,12 +408,19 @@
 		var/mob/living/M = A
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] brutally hits [A]!</span>", "<span class='boldwarning'>You are hit by a a locker!")
-			M.apply_damage(40, BRUTE, pick(BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_PRECISE_GROIN)) //hit in the balls by a locker
-			M.Knockdown(40) //i guess we'll give them a chance
+			var/hit_zone = pick(BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_PRECISE_GROIN) //hit in the balls by a locker
+			M.apply_damage(20, BRUTE, hit_zone, M.run_armor_check(hit_zone, MELEE))
+
+			//launch very hard
+			var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
+			M.safe_throw_at(throw_target, 300, 2, null, TRUE, FALSE, null, MOVE_FORCE_OVERPOWERING)
+
 			playsound(M, 'sound/weapons/smash.ogg', 50)
 			return PROJECTILE_PIERCE_HIT
+
 		if(!locker_temp_instance.insertion_allowed(M))
 			return
+
 		M.forceMove(src)
 		return PROJECTILE_PIERCE_PHASE
 
