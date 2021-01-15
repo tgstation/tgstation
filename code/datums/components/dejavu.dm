@@ -71,8 +71,12 @@
 
 	//comes after healing so new limbs comically drop to the floor
 	if(starting_turf)
-		var/atom/movable/master = parent
-		master.forceMove(starting_turf)
+		var/area/destination_area = starting_turf.loc
+		if(destination_area.area_flags & NOTELEPORT)
+			to_chat(parent, "<span class='warning'>For some reason, your head aches and fills with mental fog when you try to think of where you were... It feels like you're now going against some dull, unstoppable universal force.</span>")
+		else
+			var/atom/movable/master = parent
+			master.forceMove(starting_turf)
 
 	rewinds_remaining --
 	if(rewinds_remaining)

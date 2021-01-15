@@ -82,7 +82,6 @@
 /obj/machinery/camera/xray{
 	c_tag = "Medbay";
 	dir = 9;
-	name = "security camera";
 	network = list("fsci");
 	screen_loc = ""
 	},
@@ -1092,7 +1091,6 @@
 /obj/machinery/camera/xray{
 	c_tag = "Conference room";
 	dir = 8;
-	name = "security camera";
 	network = list("fsc");
 	screen_loc = ""
 	},
@@ -1181,7 +1179,6 @@
 /obj/machinery/camera/xray{
 	c_tag = "Cargo pod";
 	dir = 6;
-	name = "security camera";
 	network = list("fsci");
 	screen_loc = ""
 	},

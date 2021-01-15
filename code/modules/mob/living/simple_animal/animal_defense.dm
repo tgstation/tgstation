@@ -29,7 +29,7 @@
 			log_combat(M, src, "shoved", "pushing it")
 			M.visible_message("<span class='danger'>[M.name] shoves [src], pushing [p_them()]!</span>",
 				"<span class='danger'>You shove [src], pushing [p_them()]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
-			to_chat(src, "<span class='userdanger'>You're pushed by [name]!</span>")
+			to_chat(src, "<span class='userdanger'>You're pushed by [M.name]!</span>")
 			return TRUE
 
 		if("harm")
@@ -66,7 +66,7 @@
 	to_chat(user, "<span class='danger'>You punch [src]!</span>")
 	adjustBruteLoss(15)
 
-/mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/attack_paw(mob/living/carbon/human/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
