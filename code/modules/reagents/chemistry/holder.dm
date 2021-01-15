@@ -916,7 +916,7 @@
 * Usually only called when a datum is transfered into a NO_REACT container
 */
 /datum/reagents/proc/force_stop_reacting()
-	var/mix_message = list()
+	var/list/mix_message = list()
 	for(var/e in reaction_list)
 		var/datum/equilibrium/E = e
 		mix_message += end_reaction(E)
@@ -972,14 +972,14 @@
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
 			for(var/mob/M in seen)
-				visible_message(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+				my_atom.visible_message(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
 			extract.Uses--
 			if(extract.Uses <= 0) // give the notification that the slime core is dead
 				for(var/mob/M in seen)
-					visible_message(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+					my_atom.visible_message(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
@@ -1002,7 +1002,13 @@
 				selected_reaction = competitor
 	return selected_reaction
 
-//Processes the reagents in the holder and converts them
+/*Processes the reagents in the holder and converts them, only called in a mob/living/carbon on addition
+*
+* Arguments:
+* * reagent - the added reagent datum/object
+* * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
+* * added_purity - the purity of the added volume
+*/
 /datum/reagents/proc/process_mob_reagent_purity(reagent, added_volume, added_purity)
 	var/datum/reagent/R = has_reagent(reagent)
 	if(!R)
