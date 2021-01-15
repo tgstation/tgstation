@@ -18,7 +18,7 @@
 	var/atom/us = source
 	us.UnregisterSignal(get_turf(us), COMSIG_TURF_EXPOSE)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
-		us.atmos_end(null, null)
+		us.atmos_end()
 		SSair.atom_process -= us
 		us.flags_1 &= ~ATMOS_IS_PROCESSING_1
 	return ..()
@@ -46,7 +46,7 @@
 	var/turf/open/spot = loc
 	if(!istype(loc, /turf/open))
 		//If you end up in a locker or a wall reconsider your life decisions
-		atmos_end(null, null)
+		atmos_end()
 		SSair.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
@@ -62,7 +62,6 @@
 		atmos_end(air, air.temperature)
 		SSair.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
-		message_admins("gained")
 		return
 	atmos_expose(air, air.temperature)
 
