@@ -206,6 +206,11 @@
 	desc = "A small bottle of atropine."
 	list_reagents = list(/datum/reagent/medicine/atropine = 30)
 
+/obj/item/reagent_containers/glass/bottle/acidic_buffer
+	name = "acidic buffer bottle"
+	desc = "A small bottle of acidic buffer."
+	list_reagents = list(/datum/reagent/acidic_buffer = 30)
+
 /obj/item/reagent_containers/glass/bottle/romerol
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."

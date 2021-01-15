@@ -118,6 +118,10 @@
 	new /obj/item/storage/box/pillbottles(src)
 	new /obj/item/storage/box/medigels(src)
 	new /obj/item/storage/box/medigels(src)
+	new /obj/item/pHbooklet(src)
+	new /obj/item/pHbooklet(src)
+	new /obj/item/reagent_containers/dropper(src)
+	new /obj/item/reagent_containers/glass/bottle/acidic_buffer(src) //hopefully they get the hint
 
 /obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
 	name = "advanced chemical closet"

@@ -410,15 +410,7 @@
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
-		for(var/reaction in reaction_list)
-			var/datum/equilibrium/E = reaction
-			var/datum/equilibrium/new_E = new (E.reaction, src)
-			if(new_E.to_delete)//failed startup checks
-				qdel(new_E)
-			else
-				LAZYADD(R.reaction_list, new_E)
-		R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
-		R.is_reacting = is_reacting
+		transfer_reactions(R)
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/trans_data = null
@@ -528,16 +520,8 @@
 		return
 
 	//pass over previous ongoing reactions before handle_reactions is called
-	for(var/reaction in reaction_list)
-		var/datum/equilibrium/E = reaction
-		var/datum/equilibrium/new_E = new (E.reaction, src)
-		if(new_E.to_delete)//failed startup checks
-			qdel(new_E)
-		else
-			LAZYADD(R.reaction_list, new_E)
-	R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
-	R.is_reacting = is_reacting
-
+	transfer_reactions(R)
+	
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
@@ -782,7 +766,7 @@
 			var/is_cold_recipe = C.is_cold_recipe
 			var/meets_temp_requirement = FALSE
 			var/granularity = 1
-			if(!C.reaction_flags & REACTION_INSTANT)
+			if(!(C.reaction_flags & REACTION_INSTANT))
 				granularity = 0.01
 
 			for(var/B in cached_required_reagents)
@@ -898,12 +882,15 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/E)
+	if(E.holder != src)
+		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[E.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[E.holder.my_atom.type]")
+		LAZYREMOVE(reaction_list, E)
 	E.reaction.reaction_finish(src, E.reacted_vol)
 	var/reaction_message = E.reaction.mix_message
 	if(E.reaction.mix_sound)
 		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
-	qdel(E)
-	//removal from reaction_list is handled in equilibrium.Destroy()
+	qdel(E)	
+	//LAZYREMOVE(reaction_list, E) //You might think this is unneeded, but it just doesn't work without this.
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message
@@ -939,6 +926,36 @@
 		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 	finish_reacting()
 
+/*
+* Transfers the reaction_list to a new reagents datum
+*
+* Arguments:
+* * target - the datum/reagents that this src is being transfered into
+*/
+/datum/reagents/proc/transfer_reactions(datum/reagents/target)
+	if(QDELETED(target))
+		CRASH("transfer_reactions() had a [target] ([target.type]) passed to it when it was set to qdel, or it isn't a reagents datum.")
+		return
+	if(!reaction_list)
+		return
+	for(var/reaction in reaction_list)
+		var/datum/equilibrium/reaction_source = reaction
+		var/exists = FALSE
+		for(var/reaction2 in target.reaction_list) //Don't add duplicates
+			var/datum/equilibrium/reaction_target = reaction2
+			if(reaction_source.reaction.type == reaction_target.reaction.type) 
+				exists = TRUE
+		if(exists)
+			continue
+
+		var/datum/equilibrium/new_E = new (reaction_source.reaction, target)
+		if(new_E.to_delete)//failed startup checks
+			qdel(new_E)
+		else
+			LAZYADD(target.reaction_list, new_E)
+	target.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
+	target.is_reacting = is_reacting
+	
 
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 /datum/reagents/proc/has_changed_state()

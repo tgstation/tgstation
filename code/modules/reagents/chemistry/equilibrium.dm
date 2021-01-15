@@ -41,12 +41,9 @@
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
 		to_delete = TRUE
 		return
-	/*if(!calculate_yield())
-		to_delete = TRUE
-		return*/
 	reaction.on_reaction(holder, multiplier) 
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
-	react_timestep(1)
+	react_timestep(1)//Get an initial step going so there's not a delay between setup and start
 
 /datum/equilibrium/Destroy()
 	LAZYREMOVE(holder.reaction_list, src)
@@ -61,18 +58,16 @@
 * Don't call this unless you know what you're doing, this is an internal proc
 */
 /datum/equilibrium/proc/check_inital_conditions()
-	if(holder.chem_temp > reaction.overheat_temp)//This is here so grenades can be made
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheats")
-		reaction.overheated(holder, src)//Though the proc will likely have to be created to be an explosion.
-
+	//These temp checks might not be needed
 	if(!reaction.is_cold_recipe)
-		if(holder.chem_temp < reaction.required_temp) //This check is done before in holder, BUT this is here to ensure if it dips under it'll stop
+		if(holder.chem_temp < reaction.required_temp) 
 			return FALSE //Not hot enough
 	else
 		if(holder.chem_temp > reaction.required_temp)
 			return FALSE //Not cold enough
-			
-	if(! ((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range)) ))//To prevent pointless reactions
+	//Consider purity gating too? - probably not, purity is hard to determine
+	//To prevent reactions outside of the pH window from starting.
+	if(! ((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range)) ))
 		return FALSE
 	return TRUE
 
@@ -87,13 +82,13 @@
 	if(!holder.my_atom || holder.reagent_list.len == 0)
 		return FALSE
 	//Are we overheated?
-	if(holder.chem_temp > reaction.overheat_temp)
+	if(holder.chem_temp > reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
 		reaction.overheated(holder, src)
 
 	//set up catalyst checks
 	var/total_matching_catalysts = 0
-	var/total_matching_reagents = 0
+	//Reagents check should be handled in the calculate_yield() from multiplier
 
 	//If the product/reactants are too impure
 	for(var/r in holder.reagent_list)
@@ -106,14 +101,6 @@
 			var/datum/reagent/R0 = P
 			if(R0 == R.type)
 				total_matching_catalysts++
-
-		for(var/B in reaction.required_reagents)
-			var/datum/reagent/R0 = B
-			if(R0 == R.type) 
-				total_matching_reagents++
-	
-	if(!(total_matching_reagents == reaction.required_reagents.len))
-		return FALSE
 
 	if(!(total_matching_catalysts == reaction.required_catalysts.len))
 		return FALSE
@@ -156,14 +143,13 @@
 * * delta_time - the time displacement between the last call and the current
 */
 /datum/equilibrium/proc/react_timestep(delta_time)
-	if(!check_reagent_properties())
-		to_delete = TRUE
-		return
 	if(!calculate_yield())
 		to_delete = TRUE
 		return
-
-
+	if(!check_reagent_properties())
+		to_delete = TRUE
+		return
+	s
 	var/deltaT = 0 //how far off optimal temp we care
 	var/deltapH = 0 //How far off the pH we are
 	var/cached_pH = holder.pH
@@ -200,7 +186,7 @@
 			deltaT = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
 		else if (cached_temp >= reaction.optimal_temp)
 			deltaT = 1
-		else
+		else //too hot
 			deltaT = 0
 			to_delete = TRUE
 			return
@@ -209,7 +195,7 @@
 			deltaT = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
 		else if (cached_temp <= reaction.optimal_temp)
 			deltaT = 1
-		else
+		else //Too cold
 			deltaT = 0
 			to_delete = TRUE
 			return
@@ -279,3 +265,5 @@
 	if(!i)//I've never seen it get here with 0, but in case
 		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cached_purity/i
+
+/datum/equilibrium/proc/get_total(datum/chemical_reaction/C)
