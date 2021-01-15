@@ -94,7 +94,6 @@
 	if(is_reacting) //If false, reaction list should be cleaned up
 		force_stop_reacting()
 	QDEL_LIST(reaction_list)
-	QDEL_LIST(previous_reagent_list)
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null

@@ -121,7 +121,7 @@
 	for(var/r in beaker?.reagents.reagent_list)
 		var/datum/reagent/reagent = r
 		beaker_contents.len++
-		beaker_contents[length(beaker_contents)] = list("name" = R.name, "volume" = round(R.volume, 0.01))
+		beaker_contents[length(beaker_contents)] = list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))
 	data["beakerContents"] = beaker_contents
 
 	return data

@@ -45,6 +45,8 @@
 	var/mob/living/user = usr
 	if(!isliving(user))
 		return
+	if(user.stat > SOFT_CRIT)
+		return
 	if(!number_of_pages)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		add_fingerprint(user)
@@ -77,7 +79,7 @@
 
 /obj/item/pHpaper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	var/obj/item/reagent_containers/cont = target
-	if(!cont)
+	if(!istype(cont))
 		return
 	if(used == TRUE)
 		to_chat(user, "<span class='warning'>[src] has already been used!</span>")
@@ -154,7 +156,7 @@
 	if(cont.reagents.is_reacting)
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
 	for(var/datum/reagent/R in cont.reagents.reagent_list)
-		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Base pH:</b> [R.pH].":"<b>Base pH:</b> [R.pH].")]\n"
+		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Base pH:</b> [initial(R.pH)], <b>Current pH:</b> [R.pH].":"<b>Current pH:</b> [R.pH].")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")
