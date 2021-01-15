@@ -46,14 +46,16 @@
 	create_candidates(config.roundstart_players)
 	gamemode.pre_setup()
 
-	// var/list/snapshots = list()
-
-	// snapshots["0"] = snapshot()
+	var/total_antags = 0
+	for (var/_ruleset in gamemode.executed_rules)
+		var/datum/dynamic_ruleset/ruleset = _ruleset
+		total_antags += ruleset.assigned.len
 
 	return list(
 		"roundstart_players" = config.roundstart_players,
 		"threat_level" = gamemode.threat_level,
 		"snapshot" = list(
+			"antag_percent" = total_antags / config.roundstart_players,
 			"remaining_threat" = gamemode.mid_round_budget,
 			"rulesets" = gamemode.executed_rules.Copy(),
 		),

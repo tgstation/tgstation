@@ -104,6 +104,23 @@
 		return FALSE
 	return (threat_level >= requirements[indice_pop])
 
+/// When picking rulesets, if dynamic picks the same one multiple times, it will "scale up".
+/// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
+/// This function is here to ensure the antag ratio is kept under control while scaling up.
+/// Returns how much threat to actually spend in the end.
+/datum/dynamic_ruleset/proc/scale_up(max_scale)
+	var/antag_fraction = 0
+	for(var/_ruleset in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
+		var/datum/dynamic_ruleset/ruleset = _ruleset
+		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.antag_cap[indice_pop]) / mode.roundstart_pop_ready
+
+	for(var/i in 1 to max_scale)
+		if(antag_fraction < 0.25)
+			scaled_times += 1
+			antag_fraction += antag_cap[indice_pop] / mode.roundstart_pop_ready // we added new antags, gotta update the %
+
+	return scaled_times * scaling_cost
+
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
 	return

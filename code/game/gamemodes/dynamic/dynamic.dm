@@ -450,11 +450,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: Picked a ruleset: [ruleset.name], scaled [scaled_times] times")
 
 	ruleset.trim_candidates()
-	ruleset.scaled_times = scaled_times
+	var/added_threat = ruleset.scale_up(scaled_times)
 
 	if(ruleset.pre_execute())
-		var/added_threat = ruleset.cost + (ruleset.scaling_cost * scaled_times)
-		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [scaled_times] times." : ""]"
+		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [ruleset.scaled_times]/[scaled_times] times." : ""]"
 		if(ruleset.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		if(ruleset.flags & HIGHLANDER_RULESET)
