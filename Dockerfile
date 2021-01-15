@@ -4,7 +4,9 @@ FROM ubuntu:xenial AS base
 RUN dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get upgrade -y \
-    && apt-get dist-upgrade -y
+    && apt-get dist-upgrade -y \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates
 
 # byond = base + byond installed globally
 FROM base AS byond
@@ -27,20 +29,23 @@ RUN . ./dependencies.sh \
     && chmod 644 /usr/local/byond/man/man6/* \
     && apt-get purge -y --auto-remove curl unzip make \
     && cd .. \
-    && rm -rf byond byond.zip /var/lib/apt/lists/*
+    && rm -rf byond byond.zip
 
 # build = byond + tgstation compiled and deployed to /deploy
 FROM byond AS build
 WORKDIR /tgstation
 
+RUN apt-get install -y --no-install-recommends \
+        curl
+
 COPY . .
 
-RUN DreamMaker -max_errors 0 tgstation.dme \
+RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build \
     && tools/deploy.sh /deploy \
 	&& rm /deploy/*.dll
 
 # rust_g = base + rust_g compiled to /rust_g
-FROM base as rust_g
+FROM base AS rust_g
 WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
@@ -48,15 +53,16 @@ RUN apt-get install -y --no-install-recommends \
         libssl-dev:i386 \
         curl \
         gcc-multilib \
-    && curl https://sh.rustup.rs -sSf | sh -s -- -y \
+        git \
+    && curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal \
     && ~/.cargo/bin/rustup target add i686-unknown-linux-gnu \
     && git init \
     && git remote add origin https://github.com/tgstation/rust-g
 
 COPY dependencies.sh .
 
-RUN . dependencies.sh \
-    && git fetch --depth 1 origin \$RUST_G_VERSION \
+RUN . ./dependencies.sh \
+    && git fetch --depth 1 origin "${RUST_G_VERSION}" \
     && git checkout FETCH_HEAD \
     && env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target i686-unknown-linux-gnu
 
@@ -70,7 +76,7 @@ RUN apt-get install -y --no-install-recommends \
         libssl1.0.0
 
 COPY --from=build /deploy ./
-COPY --from=rust_g /rust_g/target/release/librust_g.so ./librust_g.so
+COPY --from=rust_g /rust_g/target/i686-unknown-linux-gnu/release/librust_g.so ./librust_g.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
 ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]
