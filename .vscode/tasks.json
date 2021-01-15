@@ -11,7 +11,10 @@
 				"$dreammaker",
 				"$eslint-stylish"
 			],
-			"group": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"label": "Build All"
 		},
 		{
