@@ -538,18 +538,18 @@
 		return
 
 	var/mob/living/wearer = loc
-	var/obj/projectile/P = new projectile_type(get_turf(wearer))
+	var/obj/projectile/shot = new projectile_type(get_turf(wearer))
 	var/turf/random_target = get_offset_target_turf(get_turf(wearer), rand(-3, 3), rand(-3,3))
 
 	//Shooting Code:
-	P.spread = 0
-	P.original = random_target
-	P.fired_from = wearer
-	P.firer = wearer // don't hit ourself that would be really annoying
-	P.impacted = list(wearer = TRUE) // don't hit the target we hit already with the flak
-	P.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	P.preparePixelProjectile(random_target, wearer)
-	wearer.visible_message("<span class='danger'>[wearer]'s [src.name] fires [P]!</span>", blind_message = "<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
-	P.fire()
+	shot.spread = 0
+	shot.original = random_target
+	shot.fired_from = wearer
+	shot.firer = wearer // don't hit ourself that would be really annoying
+	shot.impacted = list(wearer = TRUE) // just to make sure we don't hit the wearer
+	shot.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	shot.preparePixelProjectile(random_target, wearer)
+	wearer.visible_message("<span class='danger'>[wearer]'s [src.name] fires [shot]!</span>", blind_message = "<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
+	shot.fire()
 
 
