@@ -41,8 +41,7 @@
 			],
 			"restricted_roles": [
 				"Cyborg"
-			],
-			"autotraitor_cooldown": 450
+			]
 		}
 	},
 	"Midround": {},
