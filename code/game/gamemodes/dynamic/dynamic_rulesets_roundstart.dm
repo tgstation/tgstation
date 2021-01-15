@@ -12,7 +12,7 @@
 	antag_datum = /datum/antagonist/traitor/
 	minimum_required_age = 0
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("Cyborg")
+	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
 	weight = 5
 	cost = 10	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
@@ -380,6 +380,8 @@
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
+	/// How much threat should be injected when the revolution wins?
+	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -412,7 +414,7 @@
 	if(revolution.members.len)
 		revolution.update_objectives()
 		revolution.update_heads()
-		SSshuttle.registerHostileEnvironment(src)
+		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	return FALSE
@@ -422,27 +424,12 @@
 	..()
 
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
-	if(check_rev_victory())
-		finished = REVOLUTION_VICTORY
-		return RULESET_STOP_PROCESSING
-	else if (check_heads_victory())
-		finished = STATION_VICTORY
-		SSshuttle.clearHostileEnvironment(src)
-		revolution.save_members()
-		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
-			if(M.has_antag_datum(/datum/antagonist/rev/head))
-				var/datum/antagonist/rev/head/R = M.has_antag_datum(/datum/antagonist/rev/head)
-				R.remove_revolutionary(FALSE, "gamemode")
-				if(M.current)
-					var/mob/living/carbon/C = M.current
-					if(istype(C) && C.stat == DEAD)
-						C.makeUncloneable()
-			if(M.has_antag_datum(/datum/antagonist/rev))
-				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
-				R.remove_revolutionary(FALSE, "gamemode")
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-			We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
-		return RULESET_STOP_PROCESSING
+	var/winner = revolution.process_victory(revs_win_threat_injection)
+	if (isnull(winner))
+		return
+
+	finished = winner
+	return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.
 /datum/dynamic_ruleset/roundstart/revs/proc/check_eligible(datum/mind/M)
@@ -451,33 +438,8 @@
 		return TRUE
 	return FALSE
 
-/datum/dynamic_ruleset/roundstart/revs/check_finished()
-	if(finished == REVOLUTION_VICTORY)
-		return TRUE
-	else
-		return ..()
-
-/datum/dynamic_ruleset/roundstart/revs/proc/check_rev_victory()
-	for(var/datum/objective/mutiny/objective in revolution.objectives)
-		if(!(objective.check_completion()))
-			return FALSE
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/revs/proc/check_heads_victory()
-	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
-		var/turf/T = get_turf(rev_mind.current)
-		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
-			if(ishuman(rev_mind.current))
-				return FALSE
-	return TRUE
-
 /datum/dynamic_ruleset/roundstart/revs/round_result()
-	if(finished == REVOLUTION_VICTORY)
-		SSticker.mode_result = "win - heads killed"
-		SSticker.news_report = REVS_WIN
-	else if(finished == STATION_VICTORY)
-		SSticker.mode_result = "loss - rev heads killed"
-		SSticker.news_report = REVS_LOSE
+	revolution.round_result(finished)
 
 //////////////////////////////////////////////
 //                                          //
@@ -521,6 +483,32 @@
 
 /datum/dynamic_ruleset/roundstart/families/round_result()
 	return handler.set_round_result_analogue()
+
+
+//////////////////////////////////////////////
+//                                          //
+//         Malfunctioning AI                //
+//                              		    //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/malf
+	name = "Malfunctioning AI"
+	antag_datum = /datum/antagonist/traitor
+	antag_flag = ROLE_MALF
+	exclusive_roles = list("AI")
+	minimum_required_age = 0
+	required_candidates = 1
+	weight = 5
+	cost = 10
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+
+/datum/dynamic_ruleset/roundstart/malf/pre_execute()
+	. = ..()
+	var/mob/living/silicon/ai/picked = pick_n_take(candidates)
+	assigned += picked.mind
+	picked.mind.restricted_roles = restricted_roles
+	picked.mind.special_role = ROLE_MALF
+	return TRUE
 
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 

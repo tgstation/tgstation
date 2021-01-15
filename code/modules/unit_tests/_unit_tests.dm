@@ -32,6 +32,11 @@
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
 #define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
 
+/// Constants indicating unit test completion status
+#define UNIT_TEST_PASSED 0
+#define UNIT_TEST_FAILED 1
+#define UNIT_TEST_SKIPPED 2
+
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"

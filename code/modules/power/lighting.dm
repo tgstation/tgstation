@@ -916,11 +916,8 @@
 /obj/item/light/Initialize()
 	. = ..()
 	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE)
+	AddElement(/datum/element/caltrop, min_damage = force)
 	update()
-
-/obj/item/light/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/caltrop, force)
 
 /obj/item/light/Crossed(atom/movable/AM)
 	. = ..()
