@@ -44,18 +44,22 @@ RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build \
     && tools/deploy.sh /deploy \
 	&& rm /deploy/*.dll
 
+# rust = base + rustc and i686 target
+FROM base AS rust
+RUN apt-get install -y --no-install-recommends \
+        curl && \
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal \
+    && ~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+
 # rust_g = base + rust_g compiled to /rust_g
-FROM base AS rust_g
+FROM rust AS rust_g
 WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
         pkg-config:i386 \
         libssl-dev:i386 \
-        curl \
         gcc-multilib \
         git \
-    && curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal \
-    && ~/.cargo/bin/rustup target add i686-unknown-linux-gnu \
     && git init \
     && git remote add origin https://github.com/tgstation/rust-g
 
