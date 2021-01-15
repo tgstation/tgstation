@@ -42,3 +42,10 @@
 #define BB_VENDING_UNTILT_COOLDOWN "BB_vending_untilt_cooldown"
 #define BB_VENDING_BUSY_TILTING "BB_vending_busy_tilting"
 #define BB_VENDING_LAST_HIT_SUCCESFUL "BB_vending_last_hit_succesful"
+
+///Dog AI controller blackboard keys
+
+#define BB_DOG_FETCH "BB_dog_fetch"
+#define BB_DOG_THROW_LISTENERS "BB_dog_throw_listeners"
+
+#define AI_DOG_THROW_LISTEN_RANGE	7
