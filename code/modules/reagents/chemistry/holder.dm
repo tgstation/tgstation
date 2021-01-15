@@ -935,7 +935,6 @@
 /datum/reagents/proc/transfer_reactions(datum/reagents/target)
 	if(QDELETED(target))
 		CRASH("transfer_reactions() had a [target] ([target.type]) passed to it when it was set to qdel, or it isn't a reagents datum.")
-		return
 	if(!reaction_list)
 		return
 	for(var/reaction in reaction_list)

@@ -149,7 +149,7 @@
 	if(!check_reagent_properties())
 		to_delete = TRUE
 		return
-	s
+	
 	var/deltaT = 0 //how far off optimal temp we care
 	var/deltapH = 0 //How far off the pH we are
 	var/cached_pH = holder.pH
