@@ -228,6 +228,7 @@ SUBSYSTEM_DEF(movement_loop)
 		UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
 
 /datum/move_loop/proc/handle_delete()
+	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 	SSmovement_loop.remove_from_loop(moving, src)
 
@@ -253,10 +254,10 @@ SUBSYSTEM_DEF(movement_loop)
 	var/direction
 
 /datum/move_loop/move/setup(atom/moving, delay, timeout, dir)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	direction = dir
-	return TRUE
 
 /datum/move_loop/move/move()
 	moving.Move(get_step(moving, direction), direction)
@@ -267,8 +268,9 @@ SUBSYSTEM_DEF(movement_loop)
 	var/atom/target
 
 /datum/move_loop/has_target/setup(atom/moving, delay, timeout, atom/chasing)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	if(!isatom(chasing))
 		handle_delete()
 		return FALSE
@@ -278,7 +280,6 @@ SUBSYSTEM_DEF(movement_loop)
 	if(!isturf(target))
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because of reasons
 
-	return TRUE
 
 /datum/move_loop/has_target/kill()
 	if(!isturf(target))
@@ -300,11 +301,10 @@ SUBSYSTEM_DEF(movement_loop)
 	var/distance = 0
 
 /datum/move_loop/has_target/dist_bound/setup(atom/moving, delay, timeout, atom/chasing, dist = 0)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	distance = dist
-
-	return TRUE
 
 
 /datum/move_loop/has_target/dist_bound/proc/check_dist()
@@ -323,7 +323,8 @@ SUBSYSTEM_DEF(movement_loop)
 	return (get_dist(moving, target) >= distance) //If you get too close, stop moving
 
 /datum/move_loop/has_target/dist_bound/move_to/move()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	step_to(moving, target)
 
@@ -334,7 +335,8 @@ SUBSYSTEM_DEF(movement_loop)
 	return (get_dist(moving, target) <= distance) //If you get too far out, stop moving away
 
 /datum/move_loop/has_target/dist_bound/move_away/move()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	step_away(moving, target)
 
@@ -352,7 +354,8 @@ SUBSYSTEM_DEF(movement_loop)
 	var/y_rate = 1
 
 /datum/move_loop/has_target/move_towards/setup(atom/moving, delay, timeout, atom/chasing, home = FALSE)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	src.home = home
 	update_slope()
@@ -362,7 +365,6 @@ SUBSYSTEM_DEF(movement_loop)
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
 		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 
-	return TRUE
 
 /datum/move_loop/has_target/move_towards/kill()
 	if(home)
@@ -446,8 +448,9 @@ SUBSYSTEM_DEF(movement_loop)
 	var/list/potential_directions
 
 /datum/move_loop/move_rand/setup(atom/moving, delay, timeout, list/directions)
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	potential_directions = directions
 
 /datum/move_loop/move_rand/move()

@@ -135,7 +135,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(isturf(clong))
 		SSexplosions.medturf += clong
 
-	for(var/atom/thing in get_turf(clong))
+	for(var/t in get_turf(clong))
+		var/atom/movable/thing = t
 		if(thing == src)
 			continue
 		if(special_target && thing == special_target)
@@ -146,8 +147,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			var/datum/effect_system/smoke_spread/smoke = new
 			smoke.set_up(2, get_turf(src))
 			smoke.start()
-			qdel(src)
 			qdel(thing)
+			qdel(src)
+			return
 
 		else if(isobj(thing))
 			if(thing.density)

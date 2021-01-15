@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
 	SSaugury.unregister_doom(src)
-	. = ..()
+	return ..()
 
 /obj/effect/meteor/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	. = ..()
