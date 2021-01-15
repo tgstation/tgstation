@@ -1,4 +1,4 @@
-FROM i386/ubuntu:xenial as base
+FROM ubuntu:xenial as base
 
 WORKDIR /byond
 COPY dependencies.sh .
@@ -21,19 +21,21 @@ RUN . ./dependencies.sh \
 
 FROM base as rust_g
 
-RUN apt-get update \
+RUN dpkg --add-architecture i386 \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
-    git \
-    ca-certificates
+        git \
+        ca-certificates
 
 WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
-    libssl-dev \
-    pkg-config \
-    curl \
-    gcc-multilib \
-    && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu \
+        pkg-config:i386 \
+        libssl-dev:i386 \
+        curl \
+        gcc-multilib \
+    && curl https://sh.rustup.rs -sSf | sh -s -- -y \
+    && ~/.cargo/bin/rustup target add i686-unknown-linux-gnu \
     && git init \
     && git remote add origin https://github.com/tgstation/rust-g
 
@@ -42,7 +44,7 @@ COPY dependencies.sh .
 RUN /bin/bash -c "source dependencies.sh \
     && git fetch --depth 1 origin \$RUST_G_VERSION" \
     && git checkout FETCH_HEAD \
-    && ~/.cargo/bin/cargo build --release
+    && env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target i686-unknown-linux-gnu
 
 FROM base as dm_base
 
