@@ -66,9 +66,9 @@
 	/// various flags, see code\__DEFINES\reagents.dm
 	var/flags
 	///list of reactions currently on going
-	var/list/datum/equilibrium/reaction_list = new/list()
+	var/list/datum/equilibrium/reaction_list = list()
 	///cached list of reagents typepaths (not object references)
-	var/list/datum/reagent/previous_reagent_list = new/list()
+	var/list/datum/reagent/previous_reagent_list = list()
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 
@@ -807,7 +807,8 @@
 
 	update_previous_reaction_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
-	for(var/datum/chemical_reaction/selected_reaction in possible_reactions)
+	for(var/pr in possible_reactions)
+		var/datum/chemical_reaction/selected_reaction = pr
 		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
@@ -850,10 +851,11 @@
 	if(!is_reacting)
 		finish_reacting()
 	//sum of output messages.
-	var/mix_message
+	var/mix_message = list()
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
-	for(var/datum/equilibrium/E in reaction_list)
+	for(var/e in reaction_list)
+		var/datum/equilibrium/E = e
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//if it's been flagged to delete
 		if(E.to_delete)
@@ -862,8 +864,8 @@
 		//otherwise continue reacting
 		E.react_timestep(delta_time)
 
-	if(mix_message)
-		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message]</span>")
+	if(length(mix_message))
+		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 
 	if(!reaction_list.len)
 		finish_reacting()
@@ -899,7 +901,8 @@
 	STOP_PROCESSING(SSprocessing, src)
 	is_reacting = FALSE
 	//Cap off values
-	for(var/datum/reagent/R in reagent_list)
+	for(var/r in reagent_list)
+		var/datum/reagent/R = r
 		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
 	previous_reagent_list = list() //reset it to 0 - because any change will be different now.
 	update_total()
@@ -912,11 +915,12 @@
 * Usually only called when a datum is transfered into a NO_REACT container
 */
 /datum/reagents/proc/force_stop_reacting()
-	var/mix_message
-	for(var/datum/equilibrium/E in reaction_list)
+	var/mix_message = list()
+	for(var/e in reaction_list)
+		var/datum/equilibrium/E = e
 		mix_message += end_reaction(E)
-	if(mix_message)
-		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message]</span>")
+	if(length(mix_message))
+		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 	finish_reacting()
 
 
@@ -932,7 +936,8 @@
 
 /datum/reagents/proc/update_previous_reaction_list()
 	previous_reagent_list = list()
-	for(var/datum/reagent/R in reagent_list)
+	for(var/r in reagent_list)
+		var/datum/reagent/R = r
 		previous_reagent_list += R.type
 
 ///Old reaction mechanics, edited to work on one only

@@ -582,7 +582,8 @@
 	if(!reagent)
 		return FALSE
 	var/canMove = TRUE
-	for(var/datum/equilibrium/E in holder.reaction_list)
+	for(var/e in holder.reaction_list)
+		var/datum/equilibrium/E = e
 		for(var/result in E.reaction.results)
 			var/datum/reagent/R = result
 			if(R == reagent.type)

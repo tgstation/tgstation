@@ -252,7 +252,6 @@
 
 	//Make sure things are limited
 	holder.update_total()//do NOT recalculate reactions
-	return
 
 /*
 * Calculates the total sum normalised purity of ALL reagents in a holder
