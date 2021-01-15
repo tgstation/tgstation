@@ -144,7 +144,7 @@
 
 /datum/crafting_recipe/advancedegun
 	name = "Advanced Energy Gun"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/e_gun/nuclear
 	reqs = list(/obj/item/gun/energy/e_gun = 1,
 				/obj/item/stack/cable_coil = 5,
@@ -159,7 +159,7 @@
 
 /datum/crafting_recipe/tempgun
 	name = "Temperature Gun"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/temperature
 	reqs = list(/obj/item/gun/energy/e_gun = 1,
 				/obj/item/stack/cable_coil = 5,
@@ -174,7 +174,7 @@
 
 /datum/crafting_recipe/beam_rifle
 	name = "Particle Acceleration Rifle"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/beam_rifle
 	reqs = list(/obj/item/gun/energy/e_gun = 1,
 				/obj/item/assembly/signaler/anomaly/flux = 1,
@@ -191,7 +191,7 @@
 
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	reqs = list(/obj/item/gun/energy/kinetic_accelerator = 1,
 				/obj/item/stack/cable_coil = 5,
@@ -207,7 +207,7 @@
 
 /datum/crafting_recipe/xraylaser
 	name = "X-ray Laser Gun"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/xray
 	reqs = list(/obj/item/gun/energy/laser = 1,
 				/obj/item/stack/cable_coil = 5,
@@ -222,7 +222,7 @@
 
 /datum/crafting_recipe/hellgun
 	name = "Hellfire Laser Gun"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/laser/hellgun
 	reqs = list(/obj/item/gun/energy/laser = 1,
 				/obj/item/stack/cable_coil = 5,
@@ -237,7 +237,7 @@
 
 /datum/crafting_recipe/ioncarbine
 	name = "Ion Carbine"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/ionrifle/carbine
 	reqs = list(/obj/item/gun/energy/laser = 1,
 				/obj/item/stack/cable_coil = 5,
@@ -252,7 +252,7 @@
 
 /datum/crafting_recipe/decloner
 	name = "Biological Demolecularisor"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/decloner
 	reqs = list(/obj/item/gun/energy/laser = 1,
 				/obj/item/stack/cable_coil = 5,
@@ -269,7 +269,7 @@
 
 /datum/crafting_recipe/teslarevolver
 	name = "Tesla Revolver"
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	result = /obj/item/gun/energy/tesla_revolver
 	reqs = list(/obj/item/assembly/signaler/anomaly/flux = 1,
 				/obj/item/stack/cable_coil = 5,
