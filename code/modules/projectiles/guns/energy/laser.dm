@@ -117,7 +117,6 @@
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
-	pin = null
 	ammo_x_offset = 3
 
 ////////Laser Tag////////////////////
