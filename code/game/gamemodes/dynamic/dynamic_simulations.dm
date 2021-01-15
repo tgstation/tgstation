@@ -12,6 +12,7 @@
 	else
 		gamemode.generate_threat()
 
+	gamemode.generate_budgets()
 	gamemode.set_cooldowns()
 
 /datum/dynamic_simulation/proc/create_candidates(players)
@@ -53,7 +54,7 @@
 		"roundstart_players" = config.roundstart_players,
 		"threat_level" = gamemode.threat_level,
 		"snapshot" = list(
-			"remaining_threat" = gamemode.threat,
+			"remaining_threat" = gamemode.mid_round_budget,
 			"rulesets" = gamemode.executed_rules.Copy(),
 		),
 	)

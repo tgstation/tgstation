@@ -16,6 +16,7 @@ GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
 // lower value rounds closer to the average.
 GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
 // If enabled only picks a single starting rule and executes only autotraitor midround ruleset.
+// TODO: Make this work with Dynamic 2021
 GLOBAL_VAR_INIT(dynamic_classic_secret, FALSE)
 // If enabled does not accept or execute any rulesets.
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
@@ -40,8 +41,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0
-	/// Set at the beginning of the round. Spent by the mode to "purchase" rules.
-	var/threat = 0
+	/// Set at the beginning of the round. Spent by the mode to "purchase" rules. Everything else goes in the postround budget.
+	var/round_start_budget = 0
+	/// Set at the beginning of the round. Spent by midrounds and latejoins.
+	var/mid_round_budget = 0
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list()
 	/// List of roundstart rules used for selecting the rules.
@@ -59,16 +62,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	  * 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
 	  */
 	var/pop_per_requirement = 6
-	/// The requirement used for checking if a second rule should be selected. Index based on pop_per_requirement.
-	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
-	/// The probability for a second ruleset with index being every ten threat.
-	var/list/second_rule_prob = list(0,0,60,80,80,80,100,100,100,100)
-	/// The requirement used for checking if a third rule should be selected. Index based on pop_per_requirement.
-	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
-	/// The probability for a third ruleset with index being every ten threat.
-	var/list/third_rule_prob = list(0,0,0,0,60,60,80,90,100,100)
-	/// The amount of additional rulesets waiting to be picked.
-	var/extra_rulesets_amount = 0
 	/// Number of players who were ready on roundstart.
 	var/roundstart_pop_ready = 0
 	/// List of candidates used on roundstart rulesets.
@@ -125,7 +118,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 
-	dat += "Threat to Spend: <b>[threat]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
@@ -172,7 +165,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			create_threat(threatadd)
 			threat_log += "[worldtime2text()]: [key_name(usr)] increased threat by [threatadd] threat."
 		else
-			spend_threat(-threatadd)
+			spend_midround_budget(-threatadd)
 			threat_log += "[worldtime2text()]: [key_name(usr)] decreased threat by [-threatadd] threat."
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
@@ -287,7 +280,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(istext(entry))
 			out += "[entry]<BR>"
 
-	out += "<B>Remaining threat/threat_level:</B> [threat]/[threat_level]"
+	out += "<B>Remaining threat/threat_level:</B> [mid_round_budget]/[threat_level]"
 
 	usr << browse(out.Join(), "window=threatlog;size=700x500")
 
@@ -298,7 +291,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
 
-	threat = threat_level
+/// Generates the midround and roundstart budgets
+/datum/game_mode/dynamic/proc/generate_budgets()
+	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
+	round_start_budget = round((lorentz_to_threat(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
+	mid_round_budget = threat_level - round_start_budget
 
 /datum/game_mode/dynamic/can_start()
 	message_admins("Dynamic mode parameters for the round:")
@@ -309,11 +306,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"].")
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
-		threat = threat_level
 	else
 		generate_threat()
+	generate_budgets()
 	set_cooldowns()
-	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
+	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
 	return TRUE
 
 /datum/game_mode/dynamic/proc/set_cooldowns()
@@ -405,104 +402,68 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
 		if (!rule.weight)
 			continue
-		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(roundstart_pop_ready, threat_level) && round_start_budget >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
 				drafted_rules[rule] = rule.weight
 
-	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
-	extra_rulesets_amount = 0
-	if (GLOB.dynamic_classic_secret)
-		extra_rulesets_amount = 0
-	else
-		var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1))	// 0-9 threat = 1, 10-19 threat = 2 ...
-		if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[threat_indice]))
-			extra_rulesets_amount++
-			if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[threat_indice]))
-				extra_rulesets_amount++
-	log_game("DYNAMIC: Trying to roll [extra_rulesets_amount + 1] roundstart rulesets. Picking from [drafted_rules.len] eligible rulesets.")
+	var/list/rulesets_picked = list()
 
-	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-		log_game("DYNAMIC: First ruleset picked successfully. [extra_rulesets_amount] remaining.")
-		while(extra_rulesets_amount > 0 && drafted_rules.len > 0)	// We had enough threat for one or two more rulesets
-			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-				if (rule.cost > threat)
-					drafted_rules -= rule
-			if(drafted_rules.len)
-				picking_roundstart_rule(drafted_rules)
-				extra_rulesets_amount--
-				log_game("DYNAMIC: Additional ruleset picked successfully, now [executed_rules.len] picked. [extra_rulesets_amount] remaining.")
-	else
-		if(threat >= 10)
-			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
-		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
-		return FALSE
-	return TRUE
+	// Kept in case a ruleset can't be initialized for whatever reason, we want to be able to only spend what we can use.
+	var/round_start_budget_left = round_start_budget
 
-/// Picks a random roundstart rule from the list given as an argument and executes it.
-/datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list(), forced = FALSE)
-	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
-	if(!starting_rule)
-		log_game("DYNAMIC: Couldn't pick a starting ruleset. No rulesets available")
-		return FALSE
+	while (round_start_budget_left > 0)
+		var/datum/dynamic_ruleset/roundstart/ruleset = pickweightAllowZero(drafted_rules)
+		if (isnull(ruleset))
+			log_game("DYNAMIC: No more rules can be applied, stopping with [round_start_budget] left.")
+			break
 
-	if(!forced)
-		if(only_ruleset_executed)
-			log_game("DYNAMIC: Picking [starting_rule.name] failed due to only_ruleset_executed.")
-			return FALSE
-		// Check if a blocking ruleset has been executed.
-		else if(check_blocking(starting_rule.blocking_rules, executed_rules))	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
-			drafted_rules -= starting_rule
-			if(drafted_rules.len <= 0)
-				log_game("DYNAMIC: Picking [starting_rule.name] failed due to blocking_rules and no more rulesets available. Report this.")
-				return FALSE
-			starting_rule = pickweight(drafted_rules)
-		// Check if the ruleset is highlander and if a highlander ruleset has been executed
-		else if(starting_rule.flags & HIGHLANDER_RULESET)	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
-			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-				if(highlander_executed)
-					drafted_rules -= starting_rule
-					if(drafted_rules.len <= 0)
-						log_game("DYNAMIC: Picking [starting_rule.name] failed due to no highlander stacking and no more rulesets available. Report this.")
-						return FALSE
-					starting_rule = pickweight(drafted_rules)
-		// With low pop and high threat there might be rulesets that get executed with no valid candidates.
-		else if(!starting_rule.ready())	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
-			drafted_rules -= starting_rule
-			if(drafted_rules.len <= 0)
-				log_game("DYNAMIC: Picking [starting_rule.name] failed because there were not enough candidates and no more rulesets available. Report this.")
-				return FALSE
-			starting_rule = pickweight(drafted_rules)
+		var/cost = (ruleset in rulesets_picked) ? ruleset.scaling_cost : ruleset.cost
+		if (cost == 0)
+			stack_trace("[ruleset] cost 0, this is going to result in an infinite loop.")
+			drafted_rules[ruleset] = null
+			continue
 
-	log_game("DYNAMIC: Picked a ruleset: [starting_rule.name]")
+		if (cost > round_start_budget_left)
+			drafted_rules[ruleset] = null
+			continue
 
-	roundstart_rules -= starting_rule
-	drafted_rules -= starting_rule
+		if (check_blocking(ruleset.blocking_rules, rulesets_picked))
+			drafted_rules[ruleset] = null
+			continue
 
-	starting_rule.trim_candidates()
+		round_start_budget_left -= cost
 
-	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
-	if(starting_rule.pre_execute())
-		spend_threat(starting_rule.cost + added_threat)
-		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost + added_threat]. [starting_rule.scaling_cost ? "Scaled up[starting_rule.scaled_times]/3 times." : ""]"
-		if(starting_rule.flags & HIGHLANDER_RULESET)
-			highlander_executed = TRUE
-		else if(starting_rule.flags & ONLY_RULESET)
+		rulesets_picked[ruleset] += 1
+		if (ruleset.flags & HIGHLANDER_RULESET)
+			drafted_rules[ruleset] = null
+
+	for (var/ruleset in rulesets_picked)
+		spend_roundstart_budget(picking_roundstart_rule(ruleset, rulesets_picked[ruleset]))
+
+	log_game("DYNAMIC: [round_start_budget] round start budget was left, donating it to midrounds.")
+	mid_round_budget += round_start_budget
+
+/// Initializes the round start ruleset provided to it. Returns how much threat to spend.
+/datum/game_mode/dynamic/proc/picking_roundstart_rule(datum/dynamic_ruleset/roundstart/ruleset, scaled_times = 0, forced = FALSE)
+	log_game("DYNAMIC: Picked a ruleset: [ruleset.name], scaled [scaled_times] times")
+
+	ruleset.trim_candidates()
+	ruleset.scaled_times = scaled_times
+
+	if(ruleset.pre_execute())
+		var/added_threat = ruleset.cost + (ruleset.scaling_cost * scaled_times)
+		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up[scaled_times] times." : ""]"
+		if(ruleset.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
-		executed_rules += starting_rule
-		for(var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-			if(check_blocking(rule.blocking_rules, executed_rules))
-				drafted_rules -= rule
-			if(highlander_executed && rule.flags & HIGHLANDER_RULESET)
-				drafted_rules -= rule
-			if(!rule.ready())
-				drafted_rules -= rule // And removing rules that are no longer eligible
-
-		return TRUE
+		if(ruleset.flags & HIGHLANDER_RULESET)
+			highlander_executed = TRUE
+		executed_rules += ruleset
+		return added_threat
 	else
-		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
-	return FALSE
+		stack_trace("The starting rule \"[ruleset.name]\" failed to pre_execute.")
+	return 0
 
 /// Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
@@ -576,10 +537,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if(highlander_executed)
 					return FALSE
 
-	if((new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= threat) || forced)
+	if((new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= mid_round_budget) || forced)
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
-			spend_threat(new_rule.cost)
+			spend_midround_budget(new_rule.cost)
 			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
 			new_rule.pre_execute()
 			if (new_rule.execute()) // This should never fail since ready() returned 1
@@ -599,7 +560,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
-	spend_threat(rule.cost)
+	spend_midround_budget(rule.cost)
 	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
 	rule.pre_execute()
 	if (rule.execute())
@@ -647,7 +608,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
 				if (!rule.weight)
 					continue
-				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
+				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && mid_round_budget >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 						continue
@@ -677,9 +638,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
 	if (current_players[CURRENT_DEAD_PLAYERS].len > current_players[CURRENT_LIVING_PLAYERS].len)
 		chance -= 30 // More than half the crew died? ew, let's calm down on antags
-	if (threat > higher_injection_chance_minimum_threat)
+	if (mid_round_budget > higher_injection_chance_minimum_threat)
 		chance += higher_injection_chance
-	if (threat < lower_injection_chance_minimum_threat)
+	if (mid_round_budget < lower_injection_chance_minimum_threat)
 		chance -= lower_injection_chance
 	return round(max(0,chance))
 
@@ -694,7 +655,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/check_blocking(list/blocking_list, list/rule_list)
 	if(blocking_list.len > 0)
 		for(var/blocking in blocking_list)
-			for(var/datum/executed in rule_list)
+			for(var/_executed in rule_list)
+				var/datum/executed = _executed
 				if(blocking == executed.type)
 					return TRUE
 	return FALSE
@@ -727,7 +689,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (!rule.weight)
 				continue
-			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
+			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && mid_round_budget >= rule.cost)
 				// Classic secret : only autotraitor/minor roles
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue
@@ -760,17 +722,21 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
-	threat = min(threat_level,threat+regain)
+	mid_round_budget = min(threat_level, mid_round_budget + regain)
 
 /// Generate threat and increase the threat_level if it goes beyond, capped at 100
 /datum/game_mode/dynamic/proc/create_threat(gain)
-	threat = min(100, threat+gain)
-	if(threat > threat_level)
-		threat_level = threat
+	mid_round_budget = min(100, mid_round_budget + gain)
+	if(mid_round_budget > threat_level)
+		threat_level = mid_round_budget
 
-/// Expend threat, can't fall under 0.
-/datum/game_mode/dynamic/proc/spend_threat(cost)
-	threat = max(threat-cost,0)
+/// Expend round start threat, can't fall under 0.
+/datum/game_mode/dynamic/proc/spend_roundstart_budget(cost)
+	round_start_budget = max(round_start_budget - cost,0)
+
+/// Expend midround threat, can't fall under 0.
+/datum/game_mode/dynamic/proc/spend_midround_budget(cost)
+	mid_round_budget = max(mid_round_budget - cost,0)
 
 /// Turns the value generated by lorentz distribution to threat value between 0 and 100.
 /datum/game_mode/dynamic/proc/lorentz_to_threat(x)

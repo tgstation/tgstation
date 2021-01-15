@@ -1,6 +1,3 @@
-#define EXTRA_RULESET_PENALTY 20	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
-#define POP_SCALING_PENALTY 50		// Discourages scaling up rulesets if ratio of antags to crew is high.
-
 #define REVOLUTION_VICTORY 1
 #define STATION_VICTORY 2
 
@@ -106,29 +103,6 @@
 	if(maximum_players > 0 && population > maximum_players)
 		return FALSE
 	return (threat_level >= requirements[indice_pop])
-
-/// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the additional threat from scaling up.
-/datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
-	remaining_threat_level -= cost
-	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set.
-		var/antag_fraction = 0
-		var/new_prob = 0
-		for(var/R in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
-			var/datum/dynamic_ruleset/ruleset = R
-			antag_fraction += ((1 + ruleset.scaled_times) * ruleset.antag_cap[indice_pop]) / mode.roundstart_pop_ready
-
-		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
-		for(var/i in 1 to 3) //Can scale a max of 3 times
-			if(remaining_threat_level >= scaling_cost && antag_fraction < 0.25)
-				new_prob = base_prob + (remaining_threat_level) - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (antag_fraction * POP_SCALING_PENALTY)
-				if (!prob(new_prob))
-					break
-				remaining_threat_level -= scaling_cost
-				scaled_times++
-				antag_fraction += antag_cap[indice_pop] / mode.roundstart_pop_ready // we added new antags, gotta update the %
-
-		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, % of players that are antags: [antag_fraction*100]%.")
-		return scaled_times * scaling_cost
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
