@@ -29,7 +29,7 @@ other types of metals and chemistry for reagents).
 	var/id = DESIGN_ID_IGNORE
 	/// Bitflags indicating what machines this design is compatable with. ([IMPRINTER]|[PROTOLATHE]|[AUTOLATHE]|[CRAFTLATHE]|[MECHFAB]|[BIOGENERATOR]|[LIMBGROWER]|[SMELTER]|[NANITE_COMPILER])
 	var/build_type = null
-	/// List of materials required to create one unit of the product. Format is typepath|category = amount
+	/// List of materials required to create one unit of the product. Format is (typepath or caregory) -> amount
 	var/list/materials = list()
 	/// The amount of time required to create one unit of the product.
 	var/construction_time

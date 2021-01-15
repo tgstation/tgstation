@@ -14,12 +14,8 @@
 	var/total_amount = 0
 	/// The maximum amount of materials this material container can contain
 	var/max_amount
-	/// Unused?
-	var/sheet_type
 	/// Map of material ref -> amount
 	var/list/materials //Map of key = material ref | Value = amount
-	/// Unused?
-	var/disable_attackby
 	/// The list of materials that this material container can accept
 	var/list/allowed_materials
 	/// The typecache of things that this material container can accept
@@ -54,7 +50,7 @@
 	precondition = _precondition
 	after_insert = _after_insert
 
-	for(var/mat in init_mats) //Make the assoc list ref | amount
+	for(var/mat in init_mats) //Make the assoc list material reference -> amount
 		var/mat_ref = GET_MATERIAL_REF(mat)
 		if(isnull(mat_ref))
 			continue

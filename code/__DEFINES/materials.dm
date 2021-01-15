@@ -9,7 +9,7 @@
 
 /// Used to make a material initialize at roundstart.
 #define MATERIAL_INIT_MAPLOAD	(1<<0)
-/// Used to make a material init bespoke.
+/// Used to make a material type able to be instantiated on demand after roundstart.
 #define MATERIAL_INIT_BESPOKE	(1<<1)
 
 //Material Container Flags.
