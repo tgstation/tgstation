@@ -2,7 +2,7 @@
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
-	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits."
+	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits. Comes with a growth scanning mode and a chemical scanning mode."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	inhand_icon_state = "analyzer"
@@ -13,6 +13,10 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
 	var/scan_mode = PLANT_SCANMODE_STATS
+
+/obj/item/plant_analyzer/examine()
+	. = ..()
+	. += "<span class='notice'>Activate it in your hand to change the [src] between growth statistics mode and chemical reagents mode.</span>"
 
 /obj/item/plant_analyzer/attack_self(mob/user)
 	. = ..()
