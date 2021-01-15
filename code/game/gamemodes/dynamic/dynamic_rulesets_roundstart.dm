@@ -15,8 +15,8 @@
 	restricted_roles = list("Cyborg")
 	required_candidates = 1
 	weight = 5
-	cost = 10	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
-	scaling_cost = 10
+	cost = 8	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
+	scaling_cost = 5
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 	var/autotraitor_cooldown = (15 MINUTES)
@@ -105,8 +105,8 @@
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
-	cost = 15
-	scaling_cost = 15
+	cost = 12
+	scaling_cost = 10
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
 
@@ -142,8 +142,8 @@
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
-	cost = 20
-	scaling_cost = 15
+	cost = 15
+	scaling_cost = 5
 	requirements = list(50,45,45,40,35,20,20,15,10,10)
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 
@@ -186,7 +186,7 @@
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 1
 	weight = 2
-	cost = 30
+	cost = 20
 	requirements = list(90,90,70,40,30,20,10,10,10,10)
 	var/list/roundstart_wizards = list()
 
@@ -229,7 +229,7 @@
 	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
 	required_candidates = 2
 	weight = 3
-	cost = 35
+	cost = 20
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,2,2,3,3,4,4,4,4,4)
@@ -287,7 +287,7 @@
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 5
 	weight = 3
-	cost = 40
+	cost = 20
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,2,2,3,3,3,4,4,5,5)
@@ -373,7 +373,7 @@
 	required_candidates = 3
 	weight = 2
 	delay = 7 MINUTES
-	cost = 35
+	cost = 20
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
 	antag_cap = list(3,3,3,3,3,3,3,3,3,3)
 	flags = HIGHLANDER_RULESET
