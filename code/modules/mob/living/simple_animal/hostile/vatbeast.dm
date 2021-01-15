@@ -4,6 +4,7 @@
 	desc = "A strange molluscoidal creature carrying a busted growing vat.\nYou wonder if this burden is a voluntary undertaking in order to achieve comfort and protection, or simply because the creature is fused to its metal shell?"
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "vat_beast"
+	icon_living = "vat_beast"
 	icon_dead = "vat_beast_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mob_size = MOB_SIZE_LARGE
@@ -21,14 +22,14 @@
 	attack_sound = 'sound/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
-	food_type = list(/obj/item/reagent_containers/food/snacks/fries, /obj/item/reagent_containers/food/snacks/cheesyfries, /obj/item/reagent_containers/food/snacks/cornchips, /obj/item/reagent_containers/food/snacks/carrotfries)
+	food_type = list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries)
 	tame_chance = 30
 
 	var/obj/effect/proc_holder/tentacle_slap/tentacle_slap
 
 /mob/living/simple_animal/hostile/vatbeast/Initialize()
 	. = ..()
-	tentacle_slap = new
+	tentacle_slap = new(src)
 	AddAbility(tentacle_slap)
 	add_cell_sample()
 
@@ -40,14 +41,7 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
-	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 15), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-10, 15), TEXT_WEST = list(10, 15)))
-	riding.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	riding.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	riding.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	riding.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-	riding.drive_verb = "ride"
-	riding.override_allow_spacemove = TRUE
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	faction = list("neutral")
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
@@ -85,7 +79,7 @@
 	if(.)
 		return
 
-	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/vatbeast) || ranged_ability_user.stat)
+	if(owner.stat)
 		remove_ranged_ability()
 		return
 
@@ -97,12 +91,10 @@
 
 	var/mob/living/living_target = target
 
-	var/mob/living/simple_animal/hostile/vatbeast/vatbeast = ranged_ability_user
-
-	vatbeast.visible_message("<span class='warning>[vatbeast] slaps [living_target] with its tentacle!</span>", "<span class='notice'>You slap [living_target] with your tentacle.</span>")
-	playsound(vatbeast, 'sound/effects/assslap.ogg', 90)
-	var/atom/throw_target = get_edge_target_turf(target, vatbeast.dir)
-	living_target.throw_at(throw_target, 6, 4, vatbeast)
+	owner.visible_message("<span class='warning>[owner] slaps [living_target] with its tentacle!</span>", "<span class='notice'>You slap [living_target] with your tentacle.</span>")
+	playsound(owner, 'sound/effects/assslap.ogg', 90)
+	var/atom/throw_target = get_edge_target_turf(target, ranged_ability_user.dir)
+	living_target.throw_at(throw_target, 6, 4, owner)
 	living_target.apply_damage(30)
 	current_cooldown = world.time + cooldown
 	remove_ranged_ability()

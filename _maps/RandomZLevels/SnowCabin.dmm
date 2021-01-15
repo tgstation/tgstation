@@ -426,7 +426,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/freezer,
@@ -438,9 +437,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "bl" = (
-/obj/machinery/vending/autodrobe{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bm" = (
@@ -594,9 +591,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bN" = (
-/obj/machinery/vending/boozeomat{
-	req_access_txt = "0"
-	},
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bO" = (
@@ -845,10 +840,10 @@
 /area/awaymission/cabin)
 "cG" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
-/obj/item/reagent_containers/food/snacks/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
+/obj/item/food/meat/slab/synthmeat,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cH" = (
@@ -1103,7 +1098,6 @@
 	anchored = 1;
 	density = 1;
 	desc = "Generates power from lava!";
-	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi';
 	icon_state = "turbine";
 	name = "geothermal generator"
@@ -1120,8 +1114,7 @@
 	melee_damage_lower = 10;
 	melee_damage_upper = 20;
 	name = "fat space polar bear";
-	speed = 3;
-	wander = 1
+	speed = 3
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
@@ -1284,14 +1277,13 @@
 	melee_damage_lower = 10;
 	melee_damage_upper = 20;
 	name = "fat space polar bear";
-	speed = 3;
-	wander = 1
+	speed = 3
 	},
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ea" = (
-/obj/item/reagent_containers/food/snacks/carpmeat,
-/obj/item/reagent_containers/food/snacks/carpmeat,
+/obj/item/food/carpmeat,
+/obj/item/food/carpmeat,
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "eb" = (
@@ -1725,10 +1717,7 @@
 /area/awaymission/cabin/lumbermill)
 "ff" = (
 /obj/structure/table/wood,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "fg" = (
@@ -1959,7 +1948,6 @@
 /obj/structure/ladder/unbreakable{
 	desc = "Who left the grate open?";
 	height = 1;
-	icon = 'icons/obj/structures.dmi';
 	icon_state = "ladder01";
 	id = "dealwentoffwithoutahitchBRO";
 	name = "Grate";
@@ -1983,17 +1971,17 @@
 /area/awaymission/cabin/caves/mountain)
 "fG" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fH" = (
 /obj/effect/decal/cleanable/insectguts,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fI" = (
 /obj/effect/decal/cleanable/greenglow,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fJ" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2019,7 +2007,7 @@
 /mob/living/simple_animal/mouse{
 	faction = list("sewer")
 	},
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "fM" = (
 /obj/effect/turf_decal/tile/blue,
@@ -2339,8 +2327,7 @@
 /area/awaymission/cabin/caves/mountain)
 "gp" = (
 /obj/structure/sign/poster/contraband/pwr_game{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
@@ -2380,12 +2367,11 @@
 /obj/effect/decal/cleanable/insectguts,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/security,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gv" = (
 /obj/structure/ladder/unbreakable{
 	desc = "Finally.";
-	height = 0;
 	icon_state = "ladder10";
 	id = "whyisitcalledladder10andnotladder1";
 	name = "Freedom"
@@ -2416,27 +2402,26 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder/unbreakable{
 	desc = "Yeah, I'll just go back to jail instead of this. It's not like there is an escape out of here, right?";
-	height = 0;
 	icon_state = "ladder10";
 	id = "dealwentoffwithoutahitchBRO";
 	name = "Sewer Ladder"
 	},
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gz" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/security,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/greenglow,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gC" = (
 /obj/effect/baseturf_helper/asteroid/snow,
@@ -2509,7 +2494,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/item/mop,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gJ" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2538,8 +2523,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/reagent_containers/food/snacks/egg/rainbow{
-	anchored = 0;
+/obj/item/food/egg/rainbow{
 	desc = "Was an egg really worth this much effort?";
 	name = "easter egg"
 	},
@@ -2554,30 +2538,12 @@
 "gM" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
+/obj/item/key/atv,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "gN" = (
@@ -2652,7 +2618,7 @@
 "gT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "gU" = (
 /obj/structure/flora{
@@ -2722,7 +2688,6 @@
 /obj/structure/cable,
 /obj/item/reagent_containers/food/drinks/mug/coco{
 	desc = "Still hot!";
-	pixel_x = 0;
 	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/drinks/mug/coco{
@@ -2907,7 +2872,6 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/mug/coco{
 	desc = "Still hot!";
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
@@ -2944,7 +2908,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "hL" = (
 /obj/structure/sign/nanotrasen,
@@ -3149,8 +3113,7 @@
 /area/awaymission/cabin)
 "io" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -3710,7 +3673,7 @@
 "jL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "jM" = (
 /obj/machinery/space_heater,
@@ -3758,7 +3721,6 @@
 	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
 	force = 4;
 	name = "weak hatchet";
-	pixel_x = 0;
 	throwforce = 4
 	},
 /obj/item/hatchet{
@@ -3796,7 +3758,6 @@
 	pixel_y = 4
 	},
 /obj/item/radio/off{
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /obj/item/radio/off{
@@ -4075,7 +4036,6 @@
 	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
 	force = 4;
 	name = "weak hatchet";
-	pixel_x = 0;
 	throwforce = 4
 	},
 /obj/item/hatchet{
@@ -4242,7 +4202,7 @@
 /obj/effect/mob_spawn/human/corpse/damaged,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "kS" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -4274,7 +4234,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "kY" = (
 /obj/effect/decal/remains/human,
@@ -4293,7 +4253,7 @@
 	name = "sewer skeleton";
 	wander = 0
 	},
-/turf/open/indestructible/hoteltile,
+/turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
 "la" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -5069,10 +5029,7 @@
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/cabin/caves)
 "mZ" = (
-/obj/item/key{
-	desc = "A small grey key meant to be placed inside a vehicle. There is nothing special about this key at all besides that.";
-	name = "ATV key"
-	},
+/obj/item/key/atv,
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
 	},
@@ -5270,9 +5227,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "nN" = (
-/obj/machinery/light/small{
-	dir = 2
-	},
+/obj/machinery/light/small,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nO" = (

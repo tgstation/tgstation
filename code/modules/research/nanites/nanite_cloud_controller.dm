@@ -4,6 +4,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "nanite_cloud_controller"
 	circuit = /obj/item/circuitboard/computer/nanite_cloud_controller
+	icon_screen = "nanite_cloud_controller_screen"
 
 	var/obj/item/disk/nanite_program/disk
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
@@ -162,7 +163,8 @@
 	return data
 
 /obj/machinery/computer/nanite_cloud_controller/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("eject")
@@ -189,7 +191,7 @@
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
-			if(disk && disk.program)
+			if(disk?.program)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)

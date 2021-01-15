@@ -120,7 +120,7 @@
 	result = /obj/item/reagent_containers/food/drinks/bottle/candycornliquor
 	time = 30
 	reqs = list(/datum/reagent/consumable/ethanol/whiskey = 100,
-				/obj/item/reagent_containers/food/snacks/candy_corn = 1,
+				/obj/item/food/candy_corn = 1,
 				/obj/item/reagent_containers/food/drinks/bottle = 1)
 	category = CAT_DRINK
 
@@ -129,7 +129,7 @@
 	result = /obj/item/reagent_containers/food/drinks/bottle/kong
 	time = 30
 	reqs = list(/datum/reagent/consumable/ethanol/whiskey = 100,
-				/obj/item/reagent_containers/food/snacks/monkeycube = 1,
+				/obj/item/food/monkeycube = 1,
 				/obj/item/reagent_containers/food/drinks/bottle = 1)
 	category = CAT_DRINK
 
@@ -139,8 +139,8 @@
 	time = 30
 	reqs = list(/obj/item/storage/bag/trash = 1,
 	            /obj/item/food/breadslice/moldy = 1,
-	            /obj/item/reagent_containers/food/snacks/grown = 4,
-	            /obj/item/reagent_containers/food/snacks/candy_corn = 2,
+	            /obj/item/food/grown = 4,
+	            /obj/item/food/candy_corn = 2,
 	            /datum/reagent/water = 15)
 	category = CAT_DRINK
 
@@ -149,7 +149,7 @@
 	result = /obj/item/reagent_containers/food/drinks/colocup/lean
 	time = 30
 	reqs = list(/obj/item/reagent_containers/food/drinks/colocup = 1,
-				/obj/item/reagent_containers/food/snacks/chewable/gumball = 2,
+				/obj/item/food/chewable/gumball = 2,
 				/datum/reagent/medicine/morphine = 5,
 				/datum/reagent/consumable/space_up = 15)
 	category = CAT_DRINK

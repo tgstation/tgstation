@@ -104,7 +104,8 @@
 	return data
 
 /obj/machinery/computer/holodeck/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)
@@ -134,10 +135,10 @@
 			obj_flags ^= EMAGGED
 			say("Safeties restored. Restarting...")
 
-/obj/machinery/computer/holodeck/process()
-	if(damaged && prob(10))
+/obj/machinery/computer/holodeck/process(delta_time)
+	if(damaged && DT_PROB(5, delta_time))
 		for(var/turf/T in linked)
-			if(prob(5))
+			if(DT_PROB(2.5, delta_time))
 				do_sparks(2, 1, T)
 				return
 
@@ -287,6 +288,9 @@
 		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in added)
 		S.flags_1 |= NODECONSTRUCT_1
+	if(istype(program, /area/holodeck/rec_center/thunderdome1218) && !SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM])
+		say("Special note from \"1218 AD\" developer: I see you too are interested in the REAL dark ages of humanity! I've made this program also unlock some interesting shuttle designs on any communication console around. Have fun!")
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM] = TRUE
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
 	// Emagging a machine creates an anomaly in the derez systems.

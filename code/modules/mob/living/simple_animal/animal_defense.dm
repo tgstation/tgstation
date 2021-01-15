@@ -29,7 +29,7 @@
 			log_combat(M, src, "shoved", "pushing it")
 			M.visible_message("<span class='danger'>[M.name] shoves [src], pushing [p_them()]!</span>",
 				"<span class='danger'>You shove [src], pushing [p_them()]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, list(src))
-			to_chat(src, "<span class='userdanger'>You're pushed by [name]!</span>")
+			to_chat(src, "<span class='userdanger'>You're pushed by [M.name]!</span>")
 			return TRUE
 
 		if("harm")
@@ -66,7 +66,7 @@
 	to_chat(user, "<span class='danger'>You punch [src]!</span>")
 	adjustBruteLoss(15)
 
-/mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/attack_paw(mob/living/carbon/human/M)
 	if(..()) //successful monkey bite.
 		if(stat != DEAD)
 			var/damage = rand(1, 3)
@@ -124,7 +124,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE)
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = MELEE, actuallydamage = TRUE)
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
 		temp_damage = 0
@@ -135,12 +135,13 @@
 		visible_message("<span class='warning'>[src] looks unharmed!</span>")
 		return FALSE
 	else
-		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
+		if(actuallydamage)
+			apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 		return TRUE
 
-/mob/living/simple_animal/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src)
+	Proj.on_hit(src, 0, piercing_hit)
 	return BULLET_ACT_HIT
 
 /mob/living/simple_animal/ex_act(severity, target, origin)

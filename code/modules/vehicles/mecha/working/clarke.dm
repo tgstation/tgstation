@@ -14,13 +14,12 @@
 	max_equip = 7
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED
-	/// Handles an internal ore box for Clarke
-	var/obj/structure/ore_box/box
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS
+	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize()
 	. = ..()
-	box = new /obj/structure/ore_box(src)
+	box = new(src)
 	var/obj/item/mecha_parts/mecha_equipment/orebox_manager/ME = new(src)
 	ME.attach(src)
 
@@ -30,12 +29,12 @@
 
 /obj/vehicle/sealed/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	if(.)
+	if(. && !HAS_TRAIT(H, TRAIT_DIAGNOSTIC_HUD))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 		hud.add_hud_to(H)
 
 /obj/vehicle/sealed/mecha/working/clarke/remove_occupant(mob/M)
-	if(isliving(M))
+	if(isliving(M) && HAS_TRAIT_FROM(M, TRAIT_DIAGNOSTIC_HUD, src))
 		var/mob/living/L = M
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 		hud.remove_hud_from(L)

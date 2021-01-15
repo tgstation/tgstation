@@ -29,11 +29,17 @@
 	///When you take a bite you cant jam it in for surgery anymore.
 	var/useable = TRUE
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	///The size of the reagent container
+	var/reagent_vol = 10
 
 /obj/item/organ/Initialize()
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
-		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, 10, null, null, null, CALLBACK(src, .proc/OnEatFrom))
+		AddComponent(/datum/component/edible,\
+			initial_reagents = food_reagents,\
+			foodtypes = RAW | MEAT | GROSS,\
+			volume = reagent_vol,\
+			after_eat = CALLBACK(src, .proc/OnEatFrom))
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -79,13 +85,13 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/process()
-	on_death() //Kinda hate doing it like this, but I really don't want to call process directly.
+/obj/item/organ/process(delta_time)
+	on_death(delta_time) //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/proc/on_death()	//runs decay when outside of a person
+/obj/item/organ/proc/on_death(delta_time = 2)	//runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
-	applyOrganDamage(maxHealth * decay_factor)
+	applyOrganDamage(maxHealth * decay_factor * 0.5 * delta_time)
 
 /obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
 	if(organ_flags & ORGAN_FAILING)
@@ -150,11 +156,11 @@
 	applyOrganDamage(d - damage)
 
 /** check_damage_thresholds
-  * input: M (a mob, the owner of the organ we call the proc on)
-  * output: returns a message should get displayed.
-  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
-  *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
-  */
+ * input: M (a mob, the owner of the organ we call the proc on)
+ * output: returns a message should get displayed.
+ * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
+ *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+ */
 /obj/item/organ/proc/check_damage_thresholds(M)
 	if(damage == prev_damage)
 		return
@@ -220,13 +226,13 @@
 
 
 /** get_availability
-  * returns whether the species should innately have this organ.
-  *
-  * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
-  * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
-  * Arguments:
-  * S - species, needed to return whether the species has an organ specific trait
-  */
+ * returns whether the species should innately have this organ.
+ *
+ * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
+ * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
+ * Arguments:
+ * S - species, needed to return whether the species has an organ specific trait
+ */
 /obj/item/organ/proc/get_availability(datum/species/S)
 	return TRUE
 

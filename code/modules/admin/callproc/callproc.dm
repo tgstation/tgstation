@@ -114,7 +114,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 //adv proc call this, ya nerds
 /world/proc/WrapAdminProcCall(datum/target, procname, list/arguments)
 	if(target == GLOBAL_PROC)
-		return call(procname)(arglist(arguments))
+		return call("/proc/[procname]")(arglist(arguments))
 	else if(target != world)
 		return call(target, procname)(arglist(arguments))
 	else
@@ -199,4 +199,4 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		. += "</font>"
 
 	else
-		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? returnval : "null"]</font>"
+		. = "<font color='blue'>[procname] returned: [!isnull(returnval) ? html_encode(returnval) : "null"]</font>"

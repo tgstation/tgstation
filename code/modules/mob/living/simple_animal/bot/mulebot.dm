@@ -32,6 +32,7 @@
 	bot_core_type = /obj/machinery/bot_core/mulebot
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
+	var/network_id = NETWORK_BOTS_CARGO
 	/// unique identifier in case there are multiple mulebots.
 	var/id
 
@@ -55,6 +56,8 @@
 	var/bloodiness = 0 ///If we've run over a mob, how many tiles will we leave tracks on while moving
 	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
 
+
+
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 	if(prob(0.666) && mapload)
@@ -70,18 +73,12 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 12), TEXT_SOUTH = list(0, 12), TEXT_EAST = list(0, 12), TEXT_WEST = list(0, 12)))
-	D.ride_check_rider_incapacitated = TRUE //so mobs fall off when the vehicle is shot.
-	D.set_vehicle_dir_layer(SOUTH, layer) //vehicles default to ABOVE_MOB_LAYER while moving, let's make sure that doesn't happen while a mob is riding us.
-	D.set_vehicle_dir_layer(NORTH, layer)
-	D.set_vehicle_dir_layer(EAST, layer)
-	D.set_vehicle_dir_layer(WEST, layer)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
 
-/mob/living/simple_animal/bot/mulebot/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/ntnet_interface)
+	if(network_id)
+		AddComponent(/datum/component/ntnet_interface, network_id)
+
 
 /mob/living/simple_animal/bot/mulebot/handle_atom_del(atom/A)
 	if(A == load)
@@ -122,10 +119,6 @@
 /mob/living/simple_animal/bot/mulebot/proc/has_power(bypass_open_check)
 	return (!open || bypass_open_check) && cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
-/mob/living/simple_animal/bot/mulebot/update_mobility()
-	. = ..()
-	if(!on)
-		mobility_flags |= MOBILITY_STAND //base bots removes all mobility flags when turned off, resulting in the bot becoming passable. we don't want this since it's a large device that should block things.
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
@@ -188,7 +181,7 @@
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("[base_icon]-emagged", src)
-	playsound(src, "sparks", 100, FALSE)
+	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
@@ -266,8 +259,11 @@
 	return data
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
-	if(..() || (locked && !usr.has_unlimited_silicon_privilege))
+	. = ..()
+
+	if(. || (locked && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
@@ -416,7 +412,7 @@
 	if (!istype(L))
 		return
 
-	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
 	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
@@ -515,7 +511,7 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	if(path && path.len)
+	if(path?.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
@@ -701,7 +697,7 @@
 							break
 				else			// otherwise, look for crates only
 					AM = locate(/obj/structure/closet/crate) in get_step(loc,loaddir)
-				if(AM && AM.Adjacent(src))
+				if(AM?.Adjacent(src))
 					load(AM)
 					if(report_delivery)
 						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)
@@ -811,6 +807,8 @@
 		unload()
 
 /mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
 		unload(get_dir(loc, A))
 	else
@@ -831,7 +829,7 @@
 /mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
 	var/mob/living/L = user
 
-	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
 		return
 
 	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!

@@ -7,11 +7,11 @@
 	instrument_flags = INSTRUMENT_LEGACY
 	volume_multiplier = 1		//not as loud as synth'd
 
-/datum/instrument/hardcoded/accordian
-	name = "Accordian"
-	id = "accordian"
+/datum/instrument/hardcoded/accordion
+	name = "Accordion"
+	id = "accordion"
 	legacy_instrument_ext = "mid"
-	legacy_instrument_path = "accordian"
+	legacy_instrument_path = "accordion"
 
 /datum/instrument/hardcoded/bikehorn
 	name = "Bike Horn"

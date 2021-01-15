@@ -157,7 +157,7 @@
 		add_overlay(mutable_appearance(icon, "comp-o2", FLY_LAYER))
 	else if(rpm>500)
 		add_overlay(mutable_appearance(icon, "comp-o1", FLY_LAYER))
-	 //TODO: DEFERRED
+	//TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
 // rpms, TurbGenG modifies the shape of the curve - the lower the value the less straight the curve is.
@@ -266,12 +266,13 @@
 	return data
 
 /obj/machinery/power/turbine/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
 		if("toggle_power")
-			if(compressor && compressor.turbine)
+			if(compressor?.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")
@@ -327,12 +328,13 @@
 	return data
 
 /obj/machinery/computer/turbine_computer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
 		if("toggle_power")
-			if(compressor && compressor.turbine)
+			if(compressor?.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")

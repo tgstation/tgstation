@@ -105,13 +105,13 @@
 	popup.open()
 
 /obj/machinery/icecream_vat/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/icecream))
-		var/obj/item/reagent_containers/food/snacks/icecream/I = O
+	if(istype(O, /obj/item/food/icecream))
+		var/obj/item/food/icecream/I = O
 		if(!I.ice_creamed)
 			if(product_types[dispense_flavour] > 0)
 				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
-				if(beaker && beaker.reagents.total_volume)
+				if(beaker?.reagents.total_volume)
 					I.add_ice_cream(flavour_name, beaker.reagents)
 				else
 					I.add_ice_cream(flavour_name)
@@ -182,7 +182,7 @@
 		var/cone_name = get_flavour_name(dispense_cone)
 		if(product_types[dispense_cone] >= 1)
 			product_types[dispense_cone] -= 1
-			var/obj/item/reagent_containers/food/snacks/icecream/I = new(src.loc)
+			var/obj/item/food/icecream/I = new(src.loc)
 			I.set_cone_type(cone_name)
 			src.visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
 		else
@@ -209,23 +209,22 @@
 		usr << browse(null,"window=icecreamvat")
 	return
 
-/obj/item/reagent_containers/food/snacks/icecream
+/obj/item/food/icecream
 	name = "ice cream cone"
 	desc = "Delicious waffle cone, but no ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("cream" = 2, "waffle" = 1)
+	bite_consumption = 4
+	foodtypes = DAIRY | SUGAR
+	max_volume = 20
 	var/ice_creamed = 0
 	var/cone_type
-	bitesize = 4
-	foodtype = DAIRY | SUGAR
 
-/obj/item/reagent_containers/food/snacks/icecream/Initialize()
-	. = ..()
-	reagents.maximum_volume = 20
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(cone_name)
+
+/obj/item/food/icecream/proc/set_cone_type(cone_name)
 	cone_type = cone_name
 	icon_state = "icecream_cone_[cone_name]"
 	switch (cone_type)
@@ -237,35 +236,29 @@
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R = null)
+/obj/item/food/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R = null)
 	name = "[flavour_name] icecream"
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")
 			desc = "A delicious [cone_type] cone filled with vanilla ice cream. All the other ice creams take content from it."
 			reagents.add_reagent(/datum/reagent/consumable/vanilla, 3)
-			filling_color = "#ECE1C1"
 		if ("chocolate")
 			desc = "A delicious [cone_type] cone filled with chocolate ice cream. Surprisingly, made with real cocoa."
 			reagents.add_reagent(/datum/reagent/consumable/coco, 3)
-			filling_color = "#93673B"
 		if ("strawberry")
 			desc = "A delicious [cone_type] cone filled with strawberry ice cream. Definitely not made with real strawberries."
 			reagents.add_reagent(/datum/reagent/consumable/berryjuice, 3)
-			filling_color = "#EFB4B4"
 		if ("blue")
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
 			reagents.add_reagent(/datum/reagent/consumable/ethanol/singulo, 3)
-			filling_color = "#ACBCED"
 		if ("mob")
 			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
 			reagents.add_reagent(/datum/reagent/liquidgibs, 3)
-			filling_color = "#EFB4B4"
 		if ("custom")
 			if(R && R.total_volume >= 4) //consumable reagents have stronger taste so higher volume will allow non-food flavourings to break through better.
 				var/mutable_appearance/flavoring = mutable_appearance(icon,"icecream_custom")
 				var/datum/reagent/master = R.get_master_reagent()
 				flavoring.color = master.color
-				filling_color = master.color
 				name = "[master.name] icecream"
 				desc = "A delicious [cone_type] cone filled with artisanal icecream. Made with real [master.name]. Ain't that something."
 				R.trans_to(src, 4)
@@ -278,7 +271,7 @@
 		src.add_overlay("icecream_[flavour_name]")
 	ice_creamed = 1
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_mob_flavor(mob/M)
+/obj/item/food/icecream/proc/add_mob_flavor(mob/M)
 	add_ice_cream("mob")
 	name = "[M.name] icecream"
 

@@ -161,7 +161,7 @@
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.whisper(invocation, language = /datum/language/common)
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
-						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
+		"<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
 	empulse(owner, 2, 5)
 	charges--
 	if(charges<=0)
@@ -203,7 +203,7 @@
 		to_chat(owner, "<span class='warning'>A ritual dagger appears in your hand!</span>")
 	else
 		owner.visible_message("<span class='warning'>A ritual dagger appears at [owner]'s feet!</span>", \
-			 "<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
+			"<span class='cultitalic'>A ritual dagger materializes at your feet.</span>")
 	SEND_SOUND(owner, sound('sound/effects/magic.ogg', FALSE, 0, 25))
 	charges--
 	if(charges <= 0)
@@ -305,7 +305,7 @@
 		button_icon_state = "back"
 	else
 		owner.visible_message("<span class='warning'>A flash of light shines from [owner]'s hand!</span>", \
-			 "<span class='cultitalic'>You invoke the counterspell, revealing nearby runes.</span>")
+			"<span class='cultitalic'>You invoke the counterspell, revealing nearby runes.</span>")
 		charges--
 		owner.whisper(invocation, language = /datum/language/common)
 		SEND_SOUND(owner, sound('sound/magic/enter_blood.ogg',0,1,25))
@@ -526,7 +526,7 @@
 								"<span class='userdanger'>[user] begins shaping dark magic shackles around your wrists!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/restraints/handcuffs/energy/cult/used(C)
+				C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult/used(C))
 				C.update_handcuffed()
 				C.silent += 5
 				to_chat(user, "<span class='notice'>You shackle [C].</span>")
@@ -743,7 +743,7 @@
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
-					user.Beam(H,icon_state="sendbeam",time=15)
+					user.Beam(H, icon_state="sendbeam", time = 15)
 			else
 				if(H.stat == DEAD)
 					to_chat(user,"<span class='warning'>[H.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it.</span>")
@@ -754,7 +754,7 @@
 				if(H.blood_volume > BLOOD_VOLUME_SAFE)
 					H.blood_volume -= 100
 					uses += 50
-					user.Beam(H,icon_state="drainbeam",time=10)
+					user.Beam(H, icon_state="drainbeam", time = 1 SECONDS)
 					playsound(get_turf(H), 'sound/magic/enter_blood.ogg', 50)
 					H.visible_message("<span class='danger'>[user] drains some of [H]'s blood!</span>")
 					to_chat(user,"<span class='cultitalic'>Your blood rite gains 50 charges from draining [H]'s blood.</span>")
@@ -775,7 +775,7 @@
 					M.visible_message("<span class='warning'>[M] is partially healed by [user]'s blood magic!</span>")
 					uses = 0
 				playsound(get_turf(M), 'sound/magic/staff_healing.ogg', 25)
-				user.Beam(M,icon_state="sendbeam",time=10)
+				user.Beam(M, icon_state="sendbeam", time = 1 SECONDS)
 		if(istype(target, /obj/effect/decal/cleanable/blood))
 			blood_draw(target, user)
 		..()
@@ -795,7 +795,7 @@
 		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
 			qdel(TH)
 		if(temp)
-			user.Beam(T,icon_state="drainbeam",time=15)
+			user.Beam(T,icon_state="drainbeam", time = 15)
 			new /obj/effect/temp_visual/cult/sparks(get_turf(user))
 			playsound(T, 'sound/magic/enter_blood.ogg', 50)
 			to_chat(user, "<span class='cultitalic'>Your blood rite has gained [round(temp)] charge\s from blood sources around you!</span>")
@@ -824,7 +824,7 @@
 						to_chat(user, "<span class='cultitalic'>A [rite.name] appears in your hand!</span>")
 					else
 						user.visible_message("<span class='warning'>A [rite.name] appears at [user]'s feet!</span>", \
-							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
+							"<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
 			if("Blood Bolt Barrage (300)")
 				if(uses < BLOOD_BARRAGE_COST)
 					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BARRAGE_COST] charges to perform this rite.</span>")

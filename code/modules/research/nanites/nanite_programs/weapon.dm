@@ -42,6 +42,7 @@
 		if(target == src)
 			return
 		target.software_error()
+		host_mob.investigate_log("[target] nanite program received a software error due to Memory Leak program.", INVESTIGATE_NANITES)
 
 /datum/nanite_program/aggressive_replication
 	name = "Aggressive Replication"
@@ -87,11 +88,7 @@
 	addtimer(CALLBACK(src, .proc/boom), clamp((nanites.nanite_volume * 0.35), 25, 150))
 
 /datum/nanite_program/explosive/proc/boom()
-	var/nanite_amount = nanites.nanite_volume
-	var/dev_range = FLOOR(nanite_amount/200, 1) - 1
-	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
-	var/light_range = FLOOR(nanite_amount/50, 1) - 1
-	explosion(host_mob, dev_range, heavy_range, light_range)
+	dyn_explosion(get_turf(host_mob), nanites.nanite_volume / 50)
 	qdel(nanites)
 
 //TODO make it defuse if triggered again
@@ -125,10 +122,6 @@
 
 /datum/nanite_program/emp/on_trigger(comm_message)
 	empulse(host_mob, 1, 2)
-
-/datum/nanite_program/pyro/active_effect()
-	host_mob.adjust_fire_stacks(1)
-	host_mob.IgniteMob()
 
 /datum/nanite_program/pyro
 	name = "Sub-Dermal Combustion"

@@ -1,7 +1,7 @@
 /obj/item/skillchip/job/engineer
 	name = "Engineering C1-RCU-1T skillchip"
 	desc = "Endorsed by Poly."
-	auto_trait = TRAIT_KNOW_ENGI_WIRES
+	auto_traits = list(TRAIT_KNOW_ENGI_WIRES)
 	skill_name = "Engineering Circuitry"
 	skill_description = "Recognise airlock and APC wire layouts and understand their functionality at a glance."
 	skill_icon = "sitemap"

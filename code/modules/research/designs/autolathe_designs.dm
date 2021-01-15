@@ -376,6 +376,15 @@
 	category = list("initial", "Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/spoon
+	name = "Spoon"
+	id = "spoon"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 120)
+	build_path = /obj/item/kitchen/spoon
+	category = list("initial", "Tool Designs", "Dinnerware")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/plastic_spoon
 	name = "Plastic Spoon"
 	id = "plastic_spoon"
@@ -526,7 +535,7 @@
 	name = "Bonesetter"
 	id = "bonesetter"
 	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(/datum/material/iron = 1000)
+	materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500)
 	build_path = /obj/item/bonesetter
 	category = list("initial", "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
@@ -836,22 +845,6 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 15000)
 	build_path = /obj/item/weaponcrafting/receiver
-	category = list("hacked", "Security")
-
-/datum/design/shotgun_slug
-	name = "Shotgun Slug"
-	id = "shotgun_slug"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
-	build_path = /obj/item/ammo_casing/shotgun
-	category = list("hacked", "Security")
-
-/datum/design/buckshot_shell
-	name = "Buckshot Shell"
-	id = "buckshot_shell"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 4000)
-	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list("hacked", "Security")
 
 /datum/design/shotgun_dart
@@ -1202,3 +1195,11 @@
 	build_path = /obj/item/swab
 	category = list("initial","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/chisel
+	name = "Chisel"
+	id = "chisel"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 75)
+	build_path = /obj/item/chisel
+	category = list("initial","Tools")

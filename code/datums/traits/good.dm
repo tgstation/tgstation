@@ -37,18 +37,18 @@
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 
-/datum/quirk/drunkhealing/on_process()
+/datum/quirk/drunkhealing/on_process(delta_time)
 	var/mob/living/carbon/C = quirk_holder
 	switch(C.drunkenness)
 		if (6 to 40)
-			C.adjustBruteLoss(-0.1, FALSE)
-			C.adjustFireLoss(-0.05, FALSE)
+			C.adjustBruteLoss(-0.1*delta_time, FALSE)
+			C.adjustFireLoss(-0.05*delta_time, FALSE)
 		if (41 to 60)
-			C.adjustBruteLoss(-0.4, FALSE)
-			C.adjustFireLoss(-0.2, FALSE)
+			C.adjustBruteLoss(-0.4*delta_time, FALSE)
+			C.adjustFireLoss(-0.2*delta_time, FALSE)
 		if (61 to INFINITY)
-			C.adjustBruteLoss(-0.8, FALSE)
-			C.adjustFireLoss(-0.4, FALSE)
+			C.adjustBruteLoss(-0.8*delta_time, FALSE)
+			C.adjustFireLoss(-0.4*delta_time, FALSE)
 
 /datum/quirk/empath
 	name = "Empath"
@@ -101,7 +101,7 @@
 
 /datum/quirk/freerunning
 	name = "Freerunning"
-	desc = "You're great at quick moves! You can climb tables more quickly."
+	desc = "You're great at quick moves! You can climb tables more quickly and take no damage from short falls."
 	value = 2
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
@@ -126,8 +126,8 @@
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 
-/datum/quirk/jolly/on_process()
-	if(prob(0.05))
+/datum/quirk/jolly/on_process(delta_time)
+	if(DT_PROB(0.05, delta_time))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
 
 /datum/quirk/light_step
@@ -178,37 +178,6 @@
 	if(!eyes || eyes.lighting_alpha)
 		return
 	eyes.Insert(H) //refresh their eyesight and vision
-
-/datum/quirk/photographer
-	name = "Photographer"
-	desc = "You carry your camera and personal photo album everywhere you go and can snap photos faster."
-	value = 1
-	mob_trait = TRAIT_PHOTOGRAPHER
-	gain_text = "<span class='notice'>You know everything about photography.</span>"
-	lose_text = "<span class='danger'>You forget how photo cameras work.</span>"
-	medical_record_text = "Patient mentions photography as a stress-relieving hobby."
-
-/datum/quirk/photographer/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/storage/photo_album/photo_album = new(get_turf(H))
-	var/list/album_slots = list (
-		"backpack" = ITEM_SLOT_BACKPACK,
-		"hands" = ITEM_SLOT_HANDS
-	)
-	H.equip_in_one_of_slots(photo_album, album_slots , qdel_on_fail = TRUE)
-	photo_album.persistence_id = "personal_[H.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
-	photo_album.persistence_load()
-	photo_album.name = "[H.real_name]'s photo album"
-	var/obj/item/camera/camera = new(get_turf(H))
-	var/list/camera_slots = list (
-		"neck" = ITEM_SLOT_NECK,
-		"left pocket" = ITEM_SLOT_LPOCKET,
-		"right pocket" = ITEM_SLOT_RPOCKET,
-		"backpack" = ITEM_SLOT_BACKPACK,
-		"hands" = ITEM_SLOT_HANDS
-	)
-	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
-	H.regenerate_icons()
 
 /datum/quirk/selfaware
 	name = "Self-Aware"

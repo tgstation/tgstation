@@ -1,12 +1,12 @@
 /**
-  * # Religious Sects
-  *
-  * Religious Sects are a way to convert the fun of having an active 'god' (admin) to code-mechanics so you aren't having to press adminwho.
-  *
-  * Sects are not meant to overwrite the fun of choosing a custom god/religion, but meant to enhance it.
-  * The idea is that Space Jesus (or whoever you worship) can be an evil bloodgod who takes the lifeforce out of people, a nature lover, or all things righteous and good. You decide!
-  *
-  */
+ * # Religious Sects
+ *
+ * Religious Sects are a way to convert the fun of having an active 'god' (admin) to code-mechanics so you aren't having to press adminwho.
+ *
+ * Sects are not meant to overwrite the fun of choosing a custom god/religion, but meant to enhance it.
+ * The idea is that Space Jesus (or whoever you worship) can be an evil bloodgod who takes the lifeforce out of people, a nature lover, or all things righteous and good. You decide!
+ *
+ */
 /datum/religion_sect
 /// Name of the religious sect
 	var/name = "Religious Sect Base Type"
@@ -154,7 +154,7 @@
 	var/did_we_charge = FALSE
 	var/obj/item/organ/stomach/ethereal/eth_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
-		eth_stomach.adjust_charge(3)
+		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
 
 	//if we're not targetting a robot part we stop early
@@ -189,4 +189,31 @@
 	adjust_favor(round(the_cell.charge/300), L)
 	to_chat(L, "<span class='notice'>You offer [the_cell]'s power to [GLOB.deity], pleasing them.</span>")
 	qdel(I)
+	return TRUE
+
+/**** Ever-Burning Candle sect ****/
+
+/datum/religion_sect/candle_sect
+	name = "Ever-Burning Candle"
+	desc = "A sect dedicated to candles."
+	convert_opener = "May you be the wax to keep the Ever-Burning Candle burning, acolyte.<br>Sacrificing burning corpses with a lot of burn damage and candles grants you favor"
+	alignment = ALIGNMENT_NEUT
+	max_favor = 10000
+	desired_items = list(/obj/item/candle)
+	rites_list = list(/datum/religion_rites/fireproof, /datum/religion_rites/burning_sacrifice, /datum/religion_rites/infinite_candle)
+	altar_icon_state = "convertaltar-red"
+
+//candle sect bibles don't heal or do anything special apart from the standard holy water blessings
+/datum/religion_sect/candle_sect/sect_bless(mob/living/blessed, mob/living/user)
+	return TRUE
+
+/datum/religion_sect/candle_sect/on_sacrifice(obj/item/candle/offering, mob/living/user)
+	if(!istype(offering))
+		return
+	if(!offering.lit)
+		to_chat(user, "<span class='notice'>The candle needs to be lit to be offered!</span>")
+		return
+	to_chat(user, "<span class='notice'>Another candle for [GLOB.deity]'s collection</span>")
+	adjust_favor(20, user) //it's not a lot but hey there's a pacifist favor option at least
+	qdel(offering)
 	return TRUE

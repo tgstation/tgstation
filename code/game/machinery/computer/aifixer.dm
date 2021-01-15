@@ -46,8 +46,10 @@
 	return data
 
 /obj/machinery/computer/aifixer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	if(!occupier)
 		restoring = FALSE
 

@@ -7,13 +7,14 @@
 	can_unwrench = TRUE
 	hide = TRUE
 	layer = GAS_SCRUBBER_LAYER
+	shift_underlay_only = FALSE
 
 	pipe_state = "pvent"
 
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions, piping_layer = piping_layer)
+		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
 		add_overlay(cap)
 	icon_state = "passive_vent"
 
@@ -24,7 +25,7 @@
 	var/datum/gas_mixture/internal = airs[1]
 
 	if(internal.equalize(external))
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/passive_vent/can_crawl_through()

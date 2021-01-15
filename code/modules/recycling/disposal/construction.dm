@@ -19,7 +19,7 @@
 		return
 	density = anchorvalue ? initial(pipe_type.density) : FALSE
 
-/obj/structure/disposalconstruct/Initialize(loc, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
+/obj/structure/disposalconstruct/Initialize(mapload, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
 	. = ..()
 	if(make_from)
 		pipe_type = make_from.type
@@ -135,11 +135,7 @@
 					return TRUE
 
 		else	// Disposal or outlet
-			var/found_trunk = FALSE
-			for(var/obj/structure/disposalpipe/CP in T)
-				if(istype(CP, /obj/structure/disposalpipe/trunk))
-					found_trunk = TRUE
-					break
+			var/found_trunk = locate(/obj/structure/disposalpipe/trunk) in T
 
 			if(!found_trunk)
 				to_chat(user, "<span class='warning'>The [pipename] requires a trunk underneath it in order to work!</span>")

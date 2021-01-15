@@ -28,18 +28,18 @@
 /// Used for direct injection of reagents.
 #define INJECT			(1<<4)
 
-
-//defines passed through to the on_reagent_change proc
-#define DEL_REAGENT		1	// reagent deleted (fully cleared)
-#define ADD_REAGENT		2	// reagent added
-#define REM_REAGENT		3	// reagent removed (may still exist)
-#define CLEAR_REAGENTS	4	// all reagents were cleared
-
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
-#define THRESHOLD_UNHUSK 50 //Health treshold for synthflesh and rezadone to unhusk someone
+///Health threshold for synthflesh and rezadone to unhusk someone
+#define UNHUSK_DAMAGE_THRESHOLD 50
+///Amount of synthflesh required to unhusk someone
+#define SYNTHFLESH_UNHUSK_AMOUNT 100
 
 //used by chem masters and pill presses
 #define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
 #define RANDOM_PILL_STYLE 22 //Dont change this one though
+
+//used by chem master
+#define CONDIMASTER_STYLE_AUTO "auto"
+#define CONDIMASTER_STYLE_FALLBACK "_"
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"

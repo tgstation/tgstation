@@ -11,6 +11,8 @@
 	targetable_wound = /datum/wound/burn
 
 /datum/surgery/debride/can_start(mob/living/user, mob/living/carbon/target)
+	if(!istype(target))
+		return FALSE
 	if(..())
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
 		var/datum/wound/burn/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)

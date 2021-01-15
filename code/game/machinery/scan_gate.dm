@@ -196,8 +196,10 @@
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("set_mode")
 			var/new_mode = params["new_mode"]
@@ -227,7 +229,7 @@
 			var/new_nutrition = params["new_nutrition"]
 			var/nutrition_list = list(
 				"Starving",
-  				"Obese"
+				"Obese"
 			)
 			if(new_nutrition && (new_nutrition in nutrition_list))
 				switch(new_nutrition)

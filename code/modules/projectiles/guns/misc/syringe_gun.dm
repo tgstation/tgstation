@@ -18,6 +18,7 @@
 /obj/item/gun/syringe/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
+	recharge_newshot()
 
 /obj/item/gun/syringe/handle_atom_del(atom/A)
 	. = ..()
@@ -59,6 +60,9 @@
 	return TRUE
 
 /obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
+	if(istype(A, /obj/item/reagent_containers/syringe/bluespace))
+		to_chat(user, "<span class='notice'>[A] is too big to load into [src].</span>")
+		return TRUE
 	if(istype(A, /obj/item/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(A, src))
@@ -95,6 +99,7 @@
 	force = 2 //Also very weak because it's smaller
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
+	syringes = list(new /obj/item/reagent_containers/syringe())
 
 /obj/item/gun/syringe/dna
 	name = "modified syringe gun"

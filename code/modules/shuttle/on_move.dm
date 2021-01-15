@@ -38,7 +38,7 @@ All ShuttleMove procs go here
 
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
-			if(istype(thing, /obj/singularity) && !istype(thing, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+			if(istype(thing, /obj/singularity) || istype(thing, /obj/energy_ball))
 				continue
 			if(!thing.anchored)
 				step(thing, shuttle_dir)
@@ -58,9 +58,9 @@ All ShuttleMove procs go here
 	newT.CopyOnTop(src, 1, depth, TRUE)
 	//Air stuff
 	newT.blocks_air = TRUE
-	newT.air_update_turf(TRUE)
+	newT.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
 	if(isopenturf(newT))
 		var/turf/open/new_open = newT
 		new_open.copy_air_with_tile(src)
@@ -84,9 +84,9 @@ All ShuttleMove procs go here
 
 /turf/proc/lateShuttleMove(turf/oldT)
 	blocks_air = initial(blocks_air)
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, blocks_air)
 	oldT.blocks_air = initial(oldT.blocks_air)
-	oldT.air_update_turf(TRUE)
+	oldT.air_update_turf(TRUE, oldT.blocks_air)
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -371,10 +371,24 @@ All ShuttleMove procs go here
 	if(moving_dock == src)
 		. |= MOVE_CONTENTS
 
-/obj/docking_port/stationary/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
+// Never move the stationary docking port, otherwise things get WEIRD
+/obj/docking_port/stationary/onShuttleMove()
+	return FALSE
+
+// Special movable stationary port, for your mothership shenanigans
+/obj/docking_port/stationary/movable/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(!moving_dock.can_move_docking_ports || old_dock == src)
 		return FALSE
-	. = ..()
+
+	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
+		return
+
+	if(loc != oldT) // This is for multi tile objects
+		return
+
+	loc = newT
+
+	return TRUE
 
 /obj/docking_port/stationary/public_mining_dock/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	id = "mining_public" //It will not move with the base, but will become enabled as a docking point.

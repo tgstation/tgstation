@@ -33,6 +33,9 @@
 	var/use_command = FALSE  // If true, broadcasts will be large and BOLD.
 	var/command = FALSE  // If true, use_command can be toggled at will.
 
+	///makes anyone who is talking through this anonymous.
+	var/anonymize = FALSE
+
 	// Encryption key handling
 	var/obj/item/encryptionkey/keyslot
 	var/translate_binary = FALSE  // If true, can hear the special binary channel.
@@ -101,7 +104,7 @@
 
 /obj/item/radio/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)
 	if(unscrewed && !isAI(user))
@@ -142,7 +145,8 @@
 	return data
 
 /obj/item/radio/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("frequency")
@@ -186,6 +190,21 @@
 				. = TRUE
 
 /obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language, list/message_mods)
+	if(HAS_TRAIT(M, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
+		var/mob/living/carbon/mute = M
+		if(istype(mute))
+			var/empty_indexes = mute.get_empty_held_indexes() //How many hands the player has empty
+			var/obj/item/clothing/gloves/radio/G = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
+			if(!istype(G))
+				return FALSE
+			if(length(empty_indexes) == 1)
+				message = stars(message)
+			if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
+				return FALSE
+			if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
+				return FALSE
+			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
+				return FALSE
 	if(!spans)
 		spans = list(M.speech_span)
 	if(!language)

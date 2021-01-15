@@ -10,10 +10,6 @@
 /obj/effect/landmark/singularity_act()
 	return
 
-// Please stop bombing the Observer-Start landmark.
-/obj/effect/landmark/ex_act()
-	return
-
 /obj/effect/landmark/singularity_pull()
 	return
 
@@ -314,7 +310,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	return INITIALIZE_HINT_QDEL
 
 //objects with the stationloving component (nuke disk) respawn here.
-//also blobs that have their spawn forcemoved (running out of time when picking their spawn spot), santa and respawning devils
+//also blobs that have their spawn forcemoved (running out of time when picking their spawn spot) and santa
 /obj/effect/landmark/blobstart
 	name = "blobstart"
 	icon_state = "blob_start"

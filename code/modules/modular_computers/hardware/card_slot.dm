@@ -1,5 +1,5 @@
 /obj/item/computer_hardware/card_slot
-	name = "identification card authentication module"	// \improper breaks the find_hardware_by_name proc
+	name = "primary RFID card module"	// \improper breaks the find_hardware_by_name proc
 	desc = "A module allowing this computer to read or write data on ID cards. Necessary for some programs to run properly."
 	power_usage = 10 //W
 	icon_state = "card_mini"
@@ -14,7 +14,7 @@
 	. = ..()
 
 /obj/item/computer_hardware/card_slot/Destroy()
-	try_eject()
+	try_eject(forced = TRUE)
 	return ..()
 
 /obj/item/computer_hardware/card_slot/GetAccess()
@@ -100,14 +100,16 @@
 		to_chat(user, "<span class='notice'>You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"].</span>")
 
 /**
-  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.
+ *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.
 */
 /obj/item/computer_hardware/card_slot/proc/swap_slot()
 	expansion_hw = !expansion_hw
 	if(expansion_hw)
 		device_type = MC_CARD2
+		name = "secondary RFID card module"
 	else
 		device_type = MC_CARD
+		name = "primary RFID card module"
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
 	. = ..()
@@ -116,5 +118,6 @@
 		. += "There appears to be something loaded in the card slots."
 
 /obj/item/computer_hardware/card_slot/secondary
+	name = "secondary RFID card module"
 	device_type = MC_CARD2
 	expansion_hw = TRUE

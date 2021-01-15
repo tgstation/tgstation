@@ -49,12 +49,12 @@
 	return covering_part
 
 /mob/living/carbon/human/on_hit(obj/projectile/P)
-	if(dna && dna.species)
+	if(dna?.species)
 		dna.species.on_hit(P, src)
 
 
-/mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone)
-	if(dna && dna.species)
+/mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	if(dna?.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
 			return spec_return
@@ -74,7 +74,7 @@
 				// Find a turf near or on the original location to bounce to
 				if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
 					P.force_hit = TRUE //The thing we're in passed the bullet to us. Pass it back, and tell it to take the damage.
-					loc.bullet_act(P)
+					loc.bullet_act(P, def_zone, piercing_hit)
 					return BULLET_ACT_HIT
 				if(P.starting)
 					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
@@ -95,10 +95,11 @@
 				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
-			P.on_hit(src, 100, def_zone)
+			P.on_hit(src, 100, def_zone, piercing_hit)
 			return BULLET_ACT_HIT
 
-	return ..(P, def_zone)
+	return ..()
+
 ///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 /mob/living/carbon/human/proc/check_reflect(def_zone)
 	if(wear_suit)
@@ -132,7 +133,11 @@
 		var/final_block_chance = wear_neck.block_chance - (clamp((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
-  return FALSE
+	if(head)
+		var/final_block_chance = head.block_chance - (clamp((armour_penetration-head.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(head.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
@@ -141,7 +146,7 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(dna && dna.species)
+	if(dna?.species)
 		var/spec_return = dna.species.spec_hitby(AM, src)
 		if(spec_return)
 			return spec_return
@@ -173,7 +178,10 @@
 	if(user == src)
 		affecting = get_bodypart(check_zone(user.zone_selected)) //stabbing yourself always hits the right target
 	else
-		affecting = get_bodypart(ran_zone(user.zone_selected))
+		var/zone_hit_chance = 80
+		if(body_position == LYING_DOWN) // half as likely to hit a different zone if they're on the ground
+			zone_hit_chance += 10
+		affecting = get_bodypart(ran_zone(user.zone_selected, zone_hit_chance))
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
 
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
@@ -205,7 +213,7 @@
 		var/mob/living/carbon/human/H = user
 		dna.species.spec_attack_hand(H, src)
 
-/mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/carbon/human/attack_paw(mob/living/carbon/human/M)
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
@@ -241,7 +249,9 @@
 
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/damage = rand(1, 3)
+			var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
+			if(!damage)
+				return
 			if(check_shields(M, damage, "the [M.name]"))
 				return FALSE
 			if(stat != DEAD)
@@ -260,7 +270,7 @@
 	if(M.a_intent == INTENT_HARM)
 		if (w_uniform)
 			w_uniform.add_fingerprint(M)
-		var/damage = prob(90) ? 20 : 0
+		var/damage = prob(90) ? rand(M.melee_damage_lower, M.melee_damage_upper) : 0
 		if(!damage)
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
 			visible_message("<span class='danger'>[M] lunges at [src]!</span>", \
@@ -301,7 +311,9 @@
 	. = ..()
 	if(!.)
 		return //successful larva bite.
-	var/damage = rand(1, 3)
+	var/damage = rand(L.melee_damage_lower, L.melee_damage_upper)
+	if(!damage)
+		return
 	if(check_shields(L, damage, "the [L.name]"))
 		return FALSE
 	if(stat != DEAD)
@@ -334,10 +346,12 @@
 	. = ..()
 	if(!.) // slime attack failed
 		return
-	var/damage = rand(5, 25)
+	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	if(!damage)
+		return
 	var/wound_mod = -45 // 25^1.4=90, 90-45=45
 	if(M.is_adult)
-		damage = rand(10, 35)
+		damage += rand(5, 10)
 		wound_mod = -90 // 35^1.4=145, 145-90=55
 
 	if(check_shields(M, damage, "the [M.name]"))
@@ -617,9 +631,9 @@
 
 		inventory_items_to_kill += held_items
 
-	for(var/obj/item/I in inventory_items_to_kill)
-		I.acid_act(acidpwr, acid_volume)
-	return 1
+	for(var/obj/item/inventory_item in inventory_items_to_kill)
+		inventory_item.acid_act(acidpwr, acid_volume)
+	return TRUE
 
 ///Overrides the point value that the mob is worth
 /mob/living/carbon/human/singularity_act()
@@ -638,7 +652,7 @@
 	if(src == M)
 		if(has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
 			to_chat(src, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
-			if(do_after(src, 35, null, src))
+			if(do_after(src, 3.5 SECONDS, src))
 				to_chat(src, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 				remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 			return
@@ -653,10 +667,6 @@
 
 		..()
 
-/mob/living/carbon/human/RestrainedClickOn(atom/A)
-	. = ..()
-	if(src == A)
-		check_self_for_injuries()
 
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)
@@ -714,7 +724,7 @@
 		if(status == "OK" || status == "no damage")
 			no_damage = TRUE
 		var/isdisabled = ""
-		if(LB.is_disabled())
+		if(LB.bodypart_disabled)
 			isdisabled = " is disabled"
 			if(no_damage)
 				isdisabled += " but otherwise"

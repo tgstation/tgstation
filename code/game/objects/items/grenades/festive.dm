@@ -7,7 +7,8 @@
 	icon_state = "sparkler"
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
-	var/burntime = 60
+	/// Burn time in seconds
+	var/burntime = 120
 	var/lit = FALSE
 
 /obj/item/sparkler/fire_act(exposed_temperature, exposed_volume)
@@ -38,9 +39,9 @@
 	playsound(src, 'sound/effects/fuse.ogg', 20, TRUE)
 	update_icon()
 
-/obj/item/sparkler/process()
-	burntime--
-	if(burntime < 1)
+/obj/item/sparkler/process(delta_time)
+	burntime -= delta_time
+	if(burntime <= 0)
 		new /obj/item/stack/rods(drop_location())
 		qdel(src)
 	else
@@ -78,12 +79,12 @@
 	var/ignition_msg = W.ignition_effect(src, user)
 	if(ignition_msg && !active)
 		visible_message(ignition_msg)
-		preprime(user)
+		arm_grenade(user)
 	else
 		return ..()
 
 /obj/item/grenade/firecracker/fire_act(exposed_temperature, exposed_volume)
-	prime()
+	detonate()
 
 /obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
 	if(active)
@@ -97,7 +98,7 @@
 	else
 		to_chat(user, "<span class='danger'>You've already removed all of the fuse!</span>")
 
-/obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volume = 80)
+/obj/item/grenade/firecracker/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 80)
 	var/turf/T = get_turf(src)
 	log_grenade(user, T)
 	if(user)
@@ -107,9 +108,9 @@
 	playsound(src, 'sound/effects/fuse.ogg', volume, TRUE)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
-	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
+	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/firecracker/prime(mob/living/lanced_by)
+/obj/item/grenade/firecracker/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	var/explosion_loc = get_turf(src)

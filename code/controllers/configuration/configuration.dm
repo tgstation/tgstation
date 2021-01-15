@@ -21,6 +21,9 @@
 	var/motd
 	var/policy
 
+	/// If the configuration is loaded
+	var/loaded = FALSE
+
 	var/static/regex/ic_filter_regex
 
 /datum/controller/configuration/proc/admin_reload()
@@ -52,6 +55,8 @@
 	LoadMOTD()
 	LoadPolicy()
 	LoadChatFilter()
+
+	loaded = TRUE
 
 	if (Master)
 		Master.OnConfigLoad()
@@ -263,9 +268,9 @@ special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-    "Assistant" : "Don't kill everyone",
-    "/datum/antagonist/highlander" : "<b>Kill everyone</b>",
-    "Ash Walker" : "Kill all spacemans"
+	"Assistant" : "Don't kill everyone",
+	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
+	"Ash Walker" : "Kill all spacemans"
 }
 
 */

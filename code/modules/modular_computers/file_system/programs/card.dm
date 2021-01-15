@@ -15,6 +15,7 @@
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
+	program_icon = "id-card"
 
 	var/is_centcom = FALSE
 	var/minor = FALSE
@@ -94,8 +95,9 @@
 	return FALSE
 
 /datum/computer_file/program/card_mod/ui_act(action, params)
-	if(..())
-		return TRUE
+	. = ..()
+	if(.)
+		return
 
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/card_slot/card_slot2
@@ -130,7 +132,7 @@
 			if(!authenticated)
 				return
 			var/contents = {"<h4>Access Report</h4>
-						<u>Prepared By:</u> [user_id_card && user_id_card.registered_name ? user_id_card.registered_name : "Unknown"]<br>
+						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
 						<hr>
 						<u>Assignment:</u> [target_id_card.assignment]<br>
@@ -211,6 +213,11 @@
 						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
 						return
 					new_access = job.get_access()
+					for(var/logged_access in ACCESS_ALERT_ADMINS)
+						if(logged_access in new_access)
+							message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+							break
+					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")
 				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
 				target_id_card.access |= new_access
 				target_id_card.assignment = target
@@ -226,12 +233,19 @@
 					target_id_card.access -= access_type
 				else
 					target_id_card.access |= access_type
+					if(access_type in ACCESS_ALERT_ADMINS)
+						message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+					LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_access_desc(access_type)]")
 				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
 			if(!computer || !authenticated || minor)
 				return
 			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
+
+			message_admins("[ADMIN_LOOKUPFLW(user)] just added All Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added All Access")
+
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_denyall")
@@ -246,7 +260,17 @@
 			var/region = text2num(params["region"])
 			if(isnull(region))
 				return
-			target_id_card.access |= get_region_accesses(region)
+
+			var/list/region_accesses = get_region_accesses(region)
+			target_id_card.access |= region_accesses
+
+			for(var/logged_access in ACCESS_ALERT_ADMINS)
+				if(logged_access in region_accesses)
+					message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_region_accesses_name(region)] region access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+
+			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_region_accesses_name(region)] region access")
+
+
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_denyregion")
@@ -320,32 +344,31 @@
 /datum/computer_file/program/card_mod/ui_data(mob/user)
 	var/list/data = get_header_data()
 
+	data["station_name"] = station_name()
+
 	var/obj/item/computer_hardware/card_slot/card_slot2
 	var/obj/item/computer_hardware/printer/printer
 
 	if(computer)
 		card_slot2 = computer.all_components[MC_CARD2]
 		printer = computer.all_components[MC_PRINT]
-
-	data["station_name"] = station_name()
-
-	if(computer)
 		data["have_id_slot"] = !!(card_slot2)
-		data["have_printer"] = !!printer
+		data["have_printer"] = !!(printer)
 	else
 		data["have_id_slot"] = FALSE
 		data["have_printer"] = FALSE
 
 	data["authenticated"] = authenticated
+	if(!card_slot2)
+		return data //We're just gonna error out on the js side at this point anyway
 
-	if(computer)
-		var/obj/item/card/id/id_card = card_slot2.stored_card
-		data["has_id"] = !!id_card
-		data["id_name"] = id_card ? id_card.name : "-----"
-		if(id_card)
-			data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
-			data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
-			data["access_on_card"] = id_card.access
+	var/obj/item/card/id/id_card = card_slot2.stored_card
+	data["has_id"] = !!id_card
+	data["id_name"] = id_card ? id_card.name : "-----"
+	if(id_card)
+		data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
+		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
+		data["access_on_card"] = id_card.access
 
 	return data
 

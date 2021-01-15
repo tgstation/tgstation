@@ -70,7 +70,7 @@
 	. = ..()
 	if(get_dir(loc, target) & dir)
 		var/checking = FLYING | FLOATING
-		return . || mover.movement_type & checking
+		return . || mover.throwing || mover.movement_type & checking
 	return TRUE
 
 /obj/structure/railing/corner/CanPass()
@@ -80,8 +80,8 @@
 /obj/structure/railing/CheckExit(atom/movable/mover, turf/target)
 	..()
 	if(get_dir(loc, target) & dir)
-		var/checking = UNSTOPPABLE | FLYING | FLOATING
-		return !density || mover.movement_type & checking || mover.move_force >= MOVE_FORCE_EXTREMELY_STRONG
+		var/checking = PHASING | FLYING | FLOATING
+		return !density || mover.throwing || mover.movement_type & checking || mover.move_force >= MOVE_FORCE_EXTREMELY_STRONG
 	return TRUE
 
 /obj/structure/railing/corner/CheckExit()
@@ -104,6 +104,5 @@
 		return TRUE
 
 /obj/structure/railing/proc/after_rotation(mob/user,rotation_type)
-	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(user)

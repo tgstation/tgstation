@@ -46,7 +46,7 @@
 	var/list/team_keys = list()
 	/// List of outfit datums/types indexed by team id, can be empty
 	var/list/outfits = list()
-	/// Default team outfit if outfits[team] is empty
+	/// Default team outfit if `outfits[team]` is empty
 	var/default_outfit = /datum/outfit/job/assistant
 
 	/// Is the arena template loading in
@@ -78,9 +78,9 @@
 			team_hud_index[team] = length(GLOB.huds)
 
 /**
-  * Loads the arenas from config directory.
-  * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
-  */
+ * Loads the arenas from config directory.
+ * THESE ARE FULLY CACHED FOR QUICK SWITCHING SO KEEP TRACK OF THE AMOUNT
+ */
 /obj/machinery/computer/arena/proc/LoadDefaultArenas()
 	if(default_arenas_loaded)
 		return

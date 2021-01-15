@@ -67,7 +67,7 @@
 	if(isobserver(src) && O.deadchat_name)
 		name = "[O.deadchat_name]"
 	else
-		if(mind && mind.name)
+		if(mind?.name)
 			name = "[mind.name]"
 		else
 			name = real_name
@@ -95,25 +95,21 @@
 /mob/proc/hivecheck()
 	return FALSE
 
-///Check if the mob has a ling hivemind
-/mob/proc/lingcheck()
-	return LINGHIVE_NONE
-
 ///The amount of items we are looking for in the message
 #define MESSAGE_MODS_LENGTH 6
 /**
-  * Extracts and cleans message of any extenstions at the begining of the message
-  * Inserts the info into the passed list, returns the cleaned message
-  *
-  * Result can be
-  * * SAY_MODE (Things like aliens, channels that aren't channels)
-  * * MODE_WHISPER (Quiet speech)
-  * * MODE_SING (Singing)
-  * * MODE_HEADSET (Common radio channel)
-  * * RADIO_EXTENSION the extension we're using (lots of values here)
-  * * RADIO_KEY the radio key we're using, to make some things easier later (lots of values here)
-  * * LANGUAGE_EXTENSION the language we're trying to use (lots of values here)
-  */
+ * Extracts and cleans message of any extenstions at the begining of the message
+ * Inserts the info into the passed list, returns the cleaned message
+ *
+ * Result can be
+ * * SAY_MODE (Things like aliens, channels that aren't channels)
+ * * MODE_WHISPER (Quiet speech)
+ * * MODE_SING (Singing)
+ * * MODE_HEADSET (Common radio channel)
+ * * RADIO_EXTENSION the extension we're using (lots of values here)
+ * * RADIO_KEY the radio key we're using, to make some things easier later (lots of values here)
+ * * LANGUAGE_EXTENSION the language we're trying to use (lots of values here)
+ */
 /mob/proc/get_message_mods(message, list/mods)
 	for(var/I in 1 to MESSAGE_MODS_LENGTH)
 		// Prevents "...text" from being read as a radio message
@@ -127,7 +123,8 @@
 		else if(key == "%" && !mods[MODE_SING])
 			mods[MODE_SING] = TRUE
 		else if(key == ";" && !mods[MODE_HEADSET])
-			mods[MODE_HEADSET] = TRUE
+			if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
+				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
 			mods[RADIO_KEY] = lowertext(message[1 + length(key)])
 			mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]

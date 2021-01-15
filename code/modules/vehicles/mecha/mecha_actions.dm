@@ -1,4 +1,4 @@
-//////////////////////MECHA ACTIONS\\\\\\\\\\\\\\\\\\\\\
+/***************** MECHA ACTIONS *****************/
 
 /obj/vehicle/sealed/mecha/generate_action_type()
 	. = ..()
@@ -128,6 +128,10 @@
 		toggle_strafe()
 
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
+	if(!(mecha_flags & CANSTRAFE))
+		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>This mecha does not support strafing.</span>")
+		return
+
 	strafe = !strafe
 
 	to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")
@@ -160,7 +164,7 @@
 		chassis.leg_overload_mode = !chassis.leg_overload_mode
 	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
 	chassis.log_message("Toggled leg actuators overload.", LOG_MECHA)
-	if(!chassis.leg_overload_mode)
+	if(chassis.leg_overload_mode)
 		chassis.movedelay = min(1, round(chassis.movedelay * 0.5))
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		to_chat(owner, "[icon2html(chassis, owner)]<span class='danger'>You enable leg actuators overload.</span>")

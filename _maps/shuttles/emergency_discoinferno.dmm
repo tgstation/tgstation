@@ -88,7 +88,7 @@
 "q" = (
 /obj/structure/statue/plasma/scientist{
 	anchored = 1;
-	oreAmount = 50
+	custom_materials = list(/datum/material/plasma = 100000)
 	},
 /turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)

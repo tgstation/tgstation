@@ -31,7 +31,7 @@
 	return (BRUTELOSS)
 
 /obj/item/instrument/attack_self(mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return TRUE
 	interact(user)
@@ -40,7 +40,7 @@
 	ui_interact(user)
 
 /obj/item/instrument/ui_interact(mob/living/user)
-	if(!isliving(user) || user.stat || user.restrained())
+	if(!isliving(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
 	user.set_machine(src)
@@ -83,7 +83,7 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = 125
+	custom_price = PAYCHECK_ASSISTANT * 2.5
 	instrument_range = 1
 
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
@@ -93,15 +93,15 @@
 	RegisterSignal(src, COMSIG_SONG_END, .proc/stop_playing)
 
 /**
-  * Called by a component signal when our song starts playing.
-  */
+ * Called by a component signal when our song starts playing.
+ */
 /obj/item/instrument/piano_synth/headphones/proc/start_playing()
 	icon_state = "[initial(icon_state)]_on"
 	update_icon()
 
 /**
-  * Called by a component signal when our song stops playing.
-  */
+ * Called by a component signal when our song stops playing.
+ */
 /obj/item/instrument/piano_synth/headphones/proc/stop_playing()
 	icon_state = "[initial(icon_state)]"
 	update_icon()
@@ -114,7 +114,7 @@
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
-	custom_premium_price = 1800
+	custom_premium_price = PAYCHECK_ASSISTANT * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
 /obj/item/instrument/banjo
 	name = "banjo"
@@ -134,7 +134,7 @@
 	attack_verb_continuous = list("plays metal on", "serenades", "crashes", "smashes")
 	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
 	hitsound = 'sound/weapons/stringsmash.ogg'
-	allowed_instrument_ids = "guitar"
+	allowed_instrument_ids = list("guitar","csteelgt","cnylongt", "ccleangt", "cmutedgt")
 
 /obj/item/instrument/eguitar
 	name = "electric guitar"
@@ -151,21 +151,21 @@
 	name = "glockenspiel"
 	desc = "Smooth metal bars perfect for any marching band."
 	icon_state = "glockenspiel"
-	allowed_instrument_ids = "glockenspiel"
+	allowed_instrument_ids = list("glockenspiel","crvibr", "sgmmbox", "r3celeste")
 	inhand_icon_state = "glockenspiel"
 
 /obj/item/instrument/accordion
 	name = "accordion"
 	desc = "Pun-Pun not included."
 	icon_state = "accordion"
-	allowed_instrument_ids = "accordion"
+	allowed_instrument_ids = list("crack", "crtango", "accordion")
 	inhand_icon_state = "accordion"
 
 /obj/item/instrument/trumpet
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
-	allowed_instrument_ids = "trombone"
+	allowed_instrument_ids = "crtrumpet"
 	inhand_icon_state = "trumpet"
 
 /obj/item/instrument/trumpet/spectral
@@ -213,7 +213,7 @@
 	name = "trombone"
 	desc = "How can any pool table ever hope to compete?"
 	icon_state = "trombone"
-	allowed_instrument_ids = "trombone"
+	allowed_instrument_ids = list("crtrombone", "crbrass", "trombone")
 	inhand_icon_state = "trombone"
 
 /obj/item/instrument/trombone/spectral
@@ -245,7 +245,7 @@
 	name = "harmonica"
 	desc = "For when you get a bad case of the space blues."
 	icon_state = "harmonica"
-	allowed_instrument_ids = "harmonica"
+	allowed_instrument_ids = list("crharmony", "harmonica")
 	inhand_icon_state = "harmonica"
 	slot_flags = ITEM_SLOT_MASK
 	force = 5
@@ -272,7 +272,7 @@
 	inhand_icon_state = "bike_horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
-	allowed_instrument_ids = "bikehorn"
+	allowed_instrument_ids = list("bikehorn", "honk")
 	attack_verb_continuous = list("beautifully honks")
 	attack_verb_simple = list("beautifully honk")
 	w_class = WEIGHT_CLASS_TINY
@@ -308,3 +308,16 @@
 			var/atom/A = V
 			instruments[initial(A.name)] = A
 	return instruments
+
+/obj/item/instrument/musicalmoth
+	name = "musical moth"
+	desc = "Despite its popularity, this controversial musical toy was eventually banned due to its unethically sampled sounds of moths screaming in agony."
+	icon_state = "mothsician"
+	allowed_instrument_ids = "mothscream"
+	attack_verb_continuous = list("flutters", "flaps")
+	attack_verb_simple = list("flutter", "flap")
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	hitsound = 'sound/voice/moth/scream_moth.ogg'
+	custom_price = PAYCHECK_HARD * 2.37
+	custom_premium_price = PAYCHECK_HARD * 2.37

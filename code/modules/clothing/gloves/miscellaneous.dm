@@ -9,7 +9,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	custom_price = 75
+	custom_price = PAYCHECK_ASSISTANT * 1.5
 	undyeable = TRUE
 
 /obj/item/clothing/gloves/botanic_leather
@@ -145,6 +145,12 @@
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
 	icon_state = "wizard"
 	inhand_icon_state = "purplegloves"
+
+/obj/item/clothing/gloves/radio
+	name = "translation gloves"
+	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."
+	icon_state = "radio_g"
+	inhand_icon_state = "radio_g"
 
 /obj/item/clothing/gloves/color/plasmaman/head_of_personnel
 	name = "head of personnel's envirogloves"

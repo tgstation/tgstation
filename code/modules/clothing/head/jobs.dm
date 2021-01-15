@@ -99,16 +99,16 @@
 	. += "<span class='notice'>Alt-click to take a candy corn.</span>"
 
 /obj/item/clothing/head/fedora/det_hat/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		..()
-		if(loc == user)
-			if(candy_cooldown < world.time)
-				var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
-				user.put_in_hands(CC)
-				to_chat(user, "<span class='notice'>You slip a candy corn from your hat.</span>")
-				candy_cooldown = world.time+1200
-			else
-				to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
+	. = ..()
+	if(loc != user || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		return
+	if(candy_cooldown < world.time)
+		var/obj/item/food/candy_corn/CC = new /obj/item/food/candy_corn(src)
+		user.put_in_hands(CC)
+		to_chat(user, "<span class='notice'>You slip a candy corn from your hat.</span>")
+		candy_cooldown = world.time+1200
+	else
+		to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")
 
 
 //Mime
@@ -127,7 +127,7 @@
 
 /obj/item/clothing/head/beret/archaic
 	name = "archaic beret"
-	desc = "An absolutely ancient beret, allegedly worn by the first mime to ever step foot on a NanoTrasen station."
+	desc = "An absolutely ancient beret, allegedly worn by the first mime to ever step foot on a Nanotrasen station."
 	icon_state = "archaicberet"
 	dog_fashion = null
 
@@ -272,6 +272,13 @@
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
+
+//Science
+
+/obj/item/clothing/head/beret/science
+	name = "science beret"
+	desc = "A science-themed beret for our hardworking scientists."
+	icon_state = "sciberet"
 
 //Curator
 /obj/item/clothing/head/fedora/curator

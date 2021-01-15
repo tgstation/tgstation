@@ -274,7 +274,7 @@
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	icon_state = "engineering"
-	desc = "You can use a screwdriver to switch between heater and freezer."
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	var/pipe_layer = PIPING_LAYER_DEFAULT
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
@@ -282,57 +282,61 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 1)
 
-#define PATH_FREEZER /obj/machinery/atmospherics/components/unary/thermomachine/freezer
-#define PATH_HEATER  /obj/machinery/atmospherics/components/unary/thermomachine/heater
-
-/obj/item/circuitboard/machine/thermomachine/Initialize()
+/obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
-	if(!build_path)
-		if(prob(50))
-			name = "Freezer (Machine Board)"
-			build_path = PATH_FREEZER
-		else
-			name = "Heater (Machine Board)"
-			build_path = PATH_HEATER
-
-/obj/item/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/obj/item/circuitboard/new_type
-		var/new_setting
-		switch(build_path)
-			if(PATH_FREEZER)
-				new_type = /obj/item/circuitboard/machine/thermomachine/heater
-				new_setting = "Heater"
-			if(PATH_HEATER)
-				new_type = /obj/item/circuitboard/machine/thermomachine/freezer
-				new_setting = "Freezer"
-		name = initial(new_type.name)
-		build_path = initial(new_type.build_path)
-		I.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
-		return
-
-	if(I.tool_behaviour == TOOL_MULTITOOL)
+	if (istype(I))
 		pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
 		to_chat(user, "<span class='notice'>You change the circuitboard to layer [pipe_layer].</span>")
-		return
-
-	. = ..()
 
 /obj/item/circuitboard/machine/thermomachine/examine()
 	. = ..()
 	. += "<span class='notice'>It is set to layer [pipe_layer].</span>"
 
-/obj/item/circuitboard/machine/thermomachine/heater
-	name = "Heater (Machine Board)"
-	build_path = PATH_HEATER
+/obj/item/circuitboard/machine/HFR_fuel_input
+	name = "HFR Fuel Input (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5)
 
-/obj/item/circuitboard/machine/thermomachine/freezer
-	name = "Freezer (Machine Board)"
-	build_path = PATH_FREEZER
+/obj/item/circuitboard/machine/HFR_waste_output
+	name = "HFR Waste Output (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5)
 
-#undef PATH_FREEZER
-#undef PATH_HEATER
+/obj/item/circuitboard/machine/HFR_moderator_input
+	name = "HFR Moderator Input (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5)
+
+/obj/item/circuitboard/machine/HFR_core
+	name = "HFR core (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/atmospherics/components/unary/hypertorus/core
+	req_components = list(
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/stack/sheet/glass = 10,
+		/obj/item/stack/sheet/plasteel = 10)
+
+/obj/item/circuitboard/machine/HFR_corner
+	name = "HFR Corner (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/hypertorus/corner
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5)
+
+/obj/item/circuitboard/machine/HFR_interface
+	name = "HFR Interface (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/hypertorus/interface
+	req_components = list(
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/stack/sheet/glass = 10,
+		/obj/item/stack/sheet/plasteel = 5)
 
 //Generic
 
@@ -489,7 +493,7 @@
 /obj/item/circuitboard/machine/vendor
 	name = "Custom Vendor (Machine Board)"
 	desc = "You can turn the \"brand selection\" dial using a screwdriver."
-	custom_premium_price = 100
+	custom_premium_price = PAYCHECK_ASSISTANT * 1.5
 	build_path = /obj/machinery/vending/custom
 	req_components = list(/obj/item/vending_refill/custom = 1)
 
@@ -502,6 +506,7 @@
 		/obj/machinery/vending/games = "\improper Good Clean Fun",
 		/obj/machinery/vending/autodrobe = "AutoDrobe",
 		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
+		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
 		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
 		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
 		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
@@ -520,6 +525,7 @@
 		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
 		/obj/machinery/vending/clothing = "ClothesMate",
 		/obj/machinery/vending/medical = "NanoMed Plus",
+		/obj/machinery/vending/drugs = "NanoDrug Plus",
 		/obj/machinery/vending/wallmed = "NanoMed",
 		/obj/machinery/vending/assist  = "Vendomat",
 		/obj/machinery/vending/engivend = "Engi-Vend",
@@ -733,7 +739,7 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/stasis
-	name = "Lifeform Stasis Unit (Machine Board)"
+	name = "\improper Lifeform Stasis Unit (Machine Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/stasis
 	req_components = list(
@@ -984,7 +990,12 @@
 	build_path = /obj/machinery/deepfryer
 	req_components = list(/obj/item/stock_parts/micro_laser = 1)
 	needs_anchored = FALSE
-
+/obj/item/circuitboard/machine/griddle
+	name = "circuit board (Griddle)"
+	icon_state = "service"
+	build_path = /obj/machinery/griddle
+	req_components = list(/obj/item/stock_parts/micro_laser = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/dish_drive
 	name = "Dish Drive (Machine Board)"

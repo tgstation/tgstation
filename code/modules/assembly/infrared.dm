@@ -167,7 +167,7 @@
 	listeningTo = newloc
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(QDELETED(src))
 		return
@@ -177,7 +177,7 @@
 		var/obj/item/I = offender
 		if (I.item_flags & ABSTRACT)
 			return
-	return refreshBeam()
+	INVOKE_ASYNC(src, .proc/refreshBeam)
 
 /obj/item/assembly/infra/setDir()
 	. = ..()
@@ -201,7 +201,8 @@
 	return data
 
 /obj/item/assembly/infra/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -223,7 +224,8 @@
 	icon_state = "ibeam"
 	anchored = TRUE
 	density = FALSE
-	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE|LETPASSTHROW
+	pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE
+	pass_flags_self = LETPASSTHROW
 	var/obj/item/assembly/infra/master
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)

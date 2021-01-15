@@ -21,13 +21,12 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
-		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
+		/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard,\
 		/mob/living/simple_animal/hostile/construct/juggernaut)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
 		LAZYREMOVE(user.mob_spell_list, src)
-		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
 	if(user.buckled)
 		user.buckled.unbuckle_mob(src,force=TRUE)
@@ -78,11 +77,11 @@
 				return
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
@@ -130,12 +129,11 @@
 	var/mob/living/stored
 	var/mob/living/shape
 	var/restoring = FALSE
-	var/datum/soullink/shapeshift/slink
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/source
 
-/obj/shapeshift_holder/Initialize(mapload,obj/effect/proc_holder/spell/targeted/shapeshift/source,mob/living/caster)
+/obj/shapeshift_holder/Initialize(mapload,obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
 	. = ..()
-	src.source = source
+	source = _source
 	shape = loc
 	if(!istype(shape))
 		CRASH("shapeshift holder created outside mob/living")
@@ -151,15 +149,17 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 		shape.blood_volume = stored.blood_volume;
 
-	slink = soullink(/datum/soullink/shapeshift, stored , shape)
-	slink.source = src
+	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/shape_death)
+	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
 
 /obj/shapeshift_holder/Destroy()
+	// Restore manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
+	// because restore() qdel'd src.
 	if(!restoring)
 		restore()
 	stored = null
 	shape = null
-	. = ..()
+	return ..()
 
 /obj/shapeshift_holder/Moved()
 	. = ..()
@@ -174,14 +174,16 @@
 	if(AM == stored && !restoring)
 		restore()
 
-/obj/shapeshift_holder/proc/casterDeath()
+/obj/shapeshift_holder/proc/caster_death()
+	SIGNAL_HANDLER
 	//Something kills the stored caster through direct damage.
 	if(source.revert_on_death)
 		restore(death=TRUE)
 	else
 		shape.death()
 
-/obj/shapeshift_holder/proc/shapeDeath()
+/obj/shapeshift_holder/proc/shape_death()
+	SIGNAL_HANDLER
 	//Shape dies.
 	if(source.die_with_shapeshifted_form)
 		if(source.revert_on_death)
@@ -190,8 +192,11 @@
 		restore()
 
 /obj/shapeshift_holder/proc/restore(death=FALSE)
+	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
+	// when caster and shape both die at the same time.
+	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	restoring = TRUE
-	qdel(slink)
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
 	if(shape.mind)
@@ -207,16 +212,10 @@
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	if(source.convert_damage)
 		stored.blood_volume = shape.blood_volume;
-	qdel(shape)
+
+	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
+	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
+	if(!QDELETED(shape))
+		QDEL_NULL(shape)
+
 	qdel(src)
-
-/datum/soullink/shapeshift
-	var/obj/shapeshift_holder/source
-
-/datum/soullink/shapeshift/ownerDies(gibbed, mob/living/owner)
-	if(source)
-		source.casterDeath(gibbed)
-
-/datum/soullink/shapeshift/sharerDies(gibbed, mob/living/sharer)
-	if(source)
-		source.shapeDeath(gibbed)

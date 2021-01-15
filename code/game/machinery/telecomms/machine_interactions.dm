@@ -79,7 +79,8 @@
 	return data
 
 /obj/machinery/telecomms/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(!issilicon(usr))

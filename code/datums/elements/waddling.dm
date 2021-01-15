@@ -13,12 +13,14 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
+
 /datum/element/waddling/proc/LivingWaddle(mob/living/target)
 	SIGNAL_HANDLER
 
-	if(target.incapacitated() || !(target.mobility_flags & MOBILITY_STAND))
+	if(target.incapacitated() || target.body_position == LYING_DOWN)
 		return
 	Waddle(target)
+
 
 /datum/element/waddling/proc/Waddle(atom/movable/target)
 	SIGNAL_HANDLER

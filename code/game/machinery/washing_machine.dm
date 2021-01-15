@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_RD = /obj/item/clothing/under/rank/rnd/research_director,
 		DYE_CMO = /obj/item/clothing/under/rank/medical/chief_medical_officer,
 		DYE_REDCOAT = /obj/item/clothing/under/costume/redcoat,
+		DYE_PRISONER = /obj/item/clothing/under/rank/prisoner,
 		DYE_SYNDICATE = /obj/item/clothing/under/syndicate,
 		DYE_CENTCOM = /obj/item/clothing/under/rank/centcom/commander
 	),
@@ -44,6 +45,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_CE = /obj/item/clothing/under/rank/engineering/chief_engineer/skirt,
 		DYE_RD = /obj/item/clothing/under/rank/rnd/research_director/skirt,
 		DYE_CMO = /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt,
+		DYE_PRISONER = /obj/item/clothing/under/rank/prisoner/skirt,
 	),
 	DYE_REGISTRY_GLOVES = list(
 		DYE_RED = /obj/item/clothing/gloves/color/red,
@@ -165,18 +167,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/machinery/washing_machine/process()
+/obj/machinery/washing_machine/process(delta_time)
 	if(!busy)
 		animate(src, transform=matrix(), time=2)
 		return PROCESS_KILL
 	if(anchored)
-		if(prob(5))
+		if(DT_PROB(2.5, delta_time))
 			var/matrix/M = new
 			M.Translate(rand(-1, 1), rand(0, 1))
 			animate(src, transform=M, time=1)
 			animate(transform=matrix(), time=1)
 	else
-		if(prob(1))
+		if(DT_PROB(0.5, delta_time))
 			step(src, pick(GLOB.cardinals))
 		var/matrix/M = new
 		M.Translate(rand(-3, 3), rand(-1, 3))
@@ -234,7 +236,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
-	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(loc)
+	new /obj/item/food/meat/slab/corgi(loc)
 	qdel(src)
 
 /mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/WM)

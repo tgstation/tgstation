@@ -4,7 +4,7 @@
 /datum/blackmarket_item/consumable/clown_tears
 	name = "Bowl of Clown's Tears"
 	desc = "Guaranteed fresh from Weepy Boggins Tragic Kitchen"
-	item = /obj/item/reagent_containers/food/snacks/soup/clownstears
+	item = /obj/item/food/soup/clownstears
 	stock = 1
 
 	price_min = 520

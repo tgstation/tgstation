@@ -42,13 +42,13 @@
 	return
 
 /obj/item/antag_spawner/contract/Topic(href, href_list)
-	..()
-	var/mob/living/carbon/human/H = usr
+	. = ..()
 
-	if(H.stat || H.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
-	if(!ishuman(H))
-		return 1
+	if(!ishuman(usr))
+		return TRUE
+	var/mob/living/carbon/human/H = usr
 
 	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
@@ -247,7 +247,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(T)
+	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
 	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
 	S.key = C.key
 	S.mind.assigned_role = S.name

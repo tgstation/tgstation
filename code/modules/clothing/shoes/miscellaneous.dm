@@ -52,12 +52,14 @@
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
 	can_be_tied = FALSE
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
 	icon_state = "black"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	species_exception = null
 
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
@@ -76,7 +78,7 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 75)
 	can_be_bloody = FALSE
-	custom_price = 600
+	custom_price = PAYCHECK_EASY * 3
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/galoshes/dry
@@ -97,10 +99,11 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/enabled_waddle = TRUE
 	lace_time = 20 SECONDS // how the hell do these laces even work??
+	species_exception = list(/datum/species/golem/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
@@ -184,6 +187,7 @@
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -295,20 +299,29 @@
 
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50)
+	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
 	icon_state = "wheelys"
+	worn_icon_state = "wheelys"
 	inhand_icon_state = "wheelys"
+	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	clothing_flags = LARGE_WORN_ICON
 	actions_types = list(/datum/action/item_action/wheelys)
-	var/wheelToggle = FALSE //False means wheels are not popped out
-	var/obj/vehicle/ridden/scooter/wheelys/W
+	///False means wheels are not popped out
+	var/wheelToggle = FALSE
+	///The vehicle associated with the shoes
+	var/obj/vehicle/ridden/scooter/skateboard/wheelys/wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys
 
 /obj/item/clothing/shoes/wheelys/Initialize()
 	. = ..()
-	W = new /obj/vehicle/ridden/scooter/wheelys(null)
+	AddElement(/datum/element/update_icon_updates_onmob)
+	wheels = new wheels(null)
+	wheels.link_shoes(src)
 
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
@@ -316,25 +329,53 @@
 	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
-	if(!(W.is_occupant(user)))
+	if(!(wheels.is_occupant(user)))
 		wheelToggle = FALSE
 	if(wheelToggle)
-		W.unbuckle_mob(user)
+		wheels.unbuckle_mob(user)
 		wheelToggle = FALSE
 		return
-	W.forceMove(get_turf(user))
-	W.buckle_mob(user)
+	wheels.forceMove(get_turf(user))
+	wheels.buckle_mob(user)
 	wheelToggle = TRUE
 
 /obj/item/clothing/shoes/wheelys/dropped(mob/user)
 	if(wheelToggle)
-		W.unbuckle_mob(user)
+		wheels.unbuckle_mob(user)
 		wheelToggle = FALSE
 	..()
 
+/obj/item/clothing/shoes/wheelys/proc/toggle_wheels(status)
+	if (status)
+		worn_icon_state = "[initial(icon_state)]-on"
+	else
+		worn_icon_state = "[initial(icon_state)]"
+	playsound(src, 'sound/weapons/tap.ogg', 10, TRUE)
+	update_icon()
+
 /obj/item/clothing/shoes/wheelys/Destroy()
-	QDEL_NULL(W)
+	QDEL_NULL(wheels)
 	. = ..()
+
+/obj/item/clothing/shoes/wheelys/rollerskates
+	name = "roller skates"
+	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
+	icon_state = "rollerskates"
+	worn_icon_state = "rollerskates"
+	slowdown = SHOES_SLOWDOWN+1
+	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
+	custom_premium_price = PAYCHECK_EASY * 5
+	custom_price = PAYCHECK_EASY * 5
+
+/obj/item/clothing/shoes/wheelys/skishoes
+	name = "ski shoes"
+	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
+	icon_state = "skishoes"
+	worn_icon_state = "skishoes"
+	slowdown = SHOES_SLOWDOWN+1
+	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
+	custom_premium_price = PAYCHECK_EASY * 1.6
+	custom_price = PAYCHECK_EASY * 1.6
 
 /obj/item/clothing/shoes/kindle_kicks
 	name = "Kindle Kicks"
@@ -382,7 +423,7 @@
 	icon_state = "cowboy_brown"
 	permeability_coefficient = 0.05 //these are quite tall
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
-	custom_price = 60
+	custom_price = PAYCHECK_EASY
 	var/list/occupants = list()
 	var/max_occupants = 4
 	can_be_tied = FALSE
@@ -408,7 +449,7 @@
 
 /obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
 	. = ..()
-	if(user.stat || !(user.mobility_flags & MOBILITY_USE) || user.restrained() || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(occupants.len >= max_occupants)
 		to_chat(user, "<span class='warning'>[src] are full!</span>")
@@ -464,6 +505,7 @@
 	name = "grilling sandals"
 	icon_state = "cookflops"
 	can_be_tied = FALSE
+	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"

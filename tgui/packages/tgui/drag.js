@@ -178,6 +178,8 @@ export const dragStartHandler = event => {
     window.screenLeft - event.screenX,
     window.screenTop - event.screenY,
   ];
+  // Focus click target
+  event.target?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
   document.addEventListener('mouseup', dragEndHandler);
   dragMoveHandler(event);
@@ -214,6 +216,8 @@ export const resizeStartHandler = (x, y) => event => {
     window.innerWidth,
     window.innerHeight,
   ];
+  // Focus click target
+  event.target?.focus();
   document.addEventListener('mousemove', resizeMoveHandler);
   document.addEventListener('mouseup', resizeEndHandler);
   resizeMoveHandler(event);

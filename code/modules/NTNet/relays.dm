@@ -22,7 +22,7 @@
 	// Denial of Service attack variables
 	var/dos_overload = 0		// Amount of DoS "packets" in this relay's buffer
 	var/dos_capacity = 500		// Amount of DoS "packets" in buffer required to crash the relay
-	var/dos_dissipate = 1		// Amount of DoS "packets" dissipated over time.
+	var/dos_dissipate = 0.5		// Amount of DoS "packets" dissipated over time.
 
 
 ///Proc called to change the value of the `relay_enabled` variable and append behavior related to its change.
@@ -64,7 +64,7 @@
 	else
 		icon_state = "bus_off"
 
-/obj/machinery/ntnet_relay/process()
+/obj/machinery/ntnet_relay/process(delta_time)
 	if(is_operational)
 		use_power = ACTIVE_POWER_USE
 	else
@@ -72,19 +72,19 @@
 
 	update_icon()
 
-	if(dos_overload)
-		dos_overload = max(0, dos_overload - dos_dissipate)
+	if(dos_overload > 0)
+		dos_overload = max(0, dos_overload - dos_dissipate * delta_time)
 
 	// If DoS traffic exceeded capacity, crash.
 	if((dos_overload > dos_capacity) && !dos_failure)
 		set_dos_failure(TRUE)
 		update_icon()
-		SSnetworks.station_network.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
+		SSnetworks.add_log("Quantum relay switched from normal operation mode to overload recovery mode.")
 	// If the DoS buffer reaches 0 again, restart.
 	if((dos_overload == 0) && dos_failure)
 		set_dos_failure(FALSE)
 		update_icon()
-		SSnetworks.station_network.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
+		SSnetworks.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
 /obj/machinery/ntnet_relay/ui_interact(mob/user, datum/tgui/ui)
@@ -102,18 +102,19 @@
 	return data
 
 /obj/machinery/ntnet_relay/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("restart")
 			dos_overload = 0
 			set_dos_failure(FALSE)
 			update_icon()
-			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			SSnetworks.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 			return TRUE
 		if("toggle")
 			set_relay_enabled(!relay_enabled)
-			SSnetworks.station_network.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
+			SSnetworks.add_log("Quantum relay manually [relay_enabled ? "enabled" : "disabled"].")
 			update_icon()
 			return TRUE
 
@@ -122,15 +123,15 @@
 	component_parts = list()
 
 	if(SSnetworks.station_network)
-		SSnetworks.station_network.relays.Add(src)
+		SSnetworks.relays.Add(src)
 		NTNet = SSnetworks.station_network
-		SSnetworks.station_network.add_log("New quantum relay activated. Current amount of linked relays: [NTNet.relays.len]")
+		SSnetworks.add_log("New quantum relay activated. Current amount of linked relays: [SSnetworks.relays.len]")
 	. = ..()
 
 /obj/machinery/ntnet_relay/Destroy()
 	if(SSnetworks.station_network)
-		SSnetworks.station_network.relays.Remove(src)
-		SSnetworks.station_network.add_log("Quantum relay connection severed. Current amount of linked relays: [NTNet.relays.len]")
+		SSnetworks.relays.Remove(src)
+		SSnetworks.add_log("Quantum relay connection severed. Current amount of linked relays: [SSnetworks.relays.len]")
 		NTNet = null
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)

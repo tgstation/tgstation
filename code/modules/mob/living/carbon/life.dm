@@ -21,12 +21,6 @@
 			handle_blood()
 
 		if(stat != DEAD)
-			var/bprv = handle_bodyparts()
-			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
-				update_stamina() //needs to go before updatehealth to remove stamcrit
-				updatehealth()
-
-		if(stat != DEAD)
 			handle_brain_damage()
 
 	else
@@ -34,7 +28,11 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
-		LoadComponent(/datum/component/rot/corpse)
+	else
+		var/bprv = handle_bodyparts()
+		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+			update_stamina() //needs to go before updatehealth to remove stamcrit
+			updatehealth()
 
 	check_cremation()
 
@@ -125,7 +123,7 @@
 
 	if(breath)
 		loc.assume_air(breath)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 
 /mob/living/carbon/proc/has_smoke_protection()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
@@ -136,6 +134,8 @@
 //Third link in a breath chain, calls handle_breath_temperature()
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
+		failed_last_breath = FALSE
+		clear_alert("not_enough_oxy")
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
@@ -150,8 +150,8 @@
 			return FALSE
 		adjustOxyLoss(1)
 
-		failed_last_breath = 1
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		failed_last_breath = TRUE
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		return FALSE
 
 	var/safe_oxy_min = 16
@@ -176,15 +176,15 @@
 		if(O2_partialpressure > 0)
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
 			adjustOxyLoss(min(5*ratio, 3))
-			failed_last_breath = 1
+			failed_last_breath = TRUE
 			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]*ratio
 		else
 			adjustOxyLoss(3)
-			failed_last_breath = 1
-		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+			failed_last_breath = TRUE
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
-		failed_last_breath = 0
+		failed_last_breath = FALSE
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
@@ -212,7 +212,7 @@
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+		throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
 
@@ -230,7 +230,7 @@
 		if(SA_partialpressure > safe_tox_max*3)
 			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_tox_max)
 			adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-			throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+			throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
 		else
 			clear_alert("too_much_tox")
 	else
@@ -341,10 +341,10 @@
 
 /mob/living/carbon/proc/handle_organs()
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			if(O.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
-				O.on_life()
+		for(var/organ_slot in GLOB.organ_process_order)
+			var/obj/item/organ/organ = getorganslot(organ_slot)
+			if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+				organ.on_life()
 	else
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
 			return
@@ -369,18 +369,18 @@
 
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used && hud_used.lingchemdisplay)
+	if(mind && hud_used?.lingchemdisplay)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			changeling.regenerate()
 			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
+			hud_used.lingchemdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>")
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 
 /mob/living/carbon/handle_mutations_and_radiation()
-	if(dna && dna.temporary_mutations.len)
+	if(dna?.temporary_mutations.len)
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -404,7 +404,7 @@
 					dna.temporary_mutations.Remove(mut)
 					continue
 		for(var/datum/mutation/human/HM in dna.mutations)
-			if(HM && HM.timed)
+			if(HM?.timed)
 				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
@@ -511,10 +511,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
-			throw_alert("drunk", /obj/screen/alert/drunk)
+			throw_alert("drunk", /atom/movable/screen/alert/drunk)
+			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 			clear_alert("drunk")
+			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
@@ -699,7 +701,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			amount = (amount > 0) ? min(amount, BODYTEMP_HEATING_MAX) : max(amount, BODYTEMP_COOLING_MAX)
 
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
-		bodytemperature = clamp(bodytemperature + amount,min_temp,max_temp)
+		bodytemperature = clamp(bodytemperature + amount, min_temp, max_temp)
 
 
 ///////////
@@ -722,6 +724,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		fullness += 0.6 * bits.volume / bits.metabolization_rate //not food takes up space
 
 	return fullness
+
+/mob/living/carbon/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
+	. = ..()
+	if(.)
+		return
+	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	if(!belly)
+		return FALSE
+	return belly.reagents.has_reagent(reagent, amount, needs_metabolizing)
 
 /////////
 //LIVER//

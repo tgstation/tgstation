@@ -28,7 +28,7 @@
 
 /datum/chemical_reaction/salglu_solution
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
-	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
+	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 
 /datum/chemical_reaction/mine_salve
 	results = list(/datum/reagent/medicine/mine_salve = 3)
@@ -151,7 +151,7 @@
 
 /datum/chemical_reaction/granibitaluri
 	results = list(/datum/reagent/medicine/granibitaluri = 3)
-	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/carbon = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/consumable/salt = 1, /datum/reagent/carbon = 1, /datum/reagent/toxin/acid = 1)
 	required_catalysts = list(/datum/reagent/iron = 5)
 
 ///medical stacks

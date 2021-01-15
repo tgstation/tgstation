@@ -41,6 +41,7 @@
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 
+
 /obj/machinery/door/examine(mob/user)
 	. = ..()
 	if(red_alert_access)
@@ -62,7 +63,7 @@
 	. = ..()
 	set_init_door_layer()
 	update_freelook_sight()
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 	GLOB.airlocks += src
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -87,6 +88,7 @@
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
@@ -96,6 +98,17 @@
 			try_to_crowbar(null, user)
 			return TRUE
 	return FALSE
+
+/**
+ * Called when attempting to remove the seal from an airlock
+ *
+ * Here because we need to call it and return if there was a seal so we don't try to open the door
+ * or try its safety lock while it's sealed
+ * Arguments:
+ * * user - the mob attempting to remove the seal
+ */
+/obj/machinery/door/proc/try_remove_seal(mob/user)
+	return
 
 /obj/machinery/door/Bumped(atom/movable/AM)
 	. = ..()
@@ -110,7 +123,7 @@
 			if(world.time - M.last_bumped <= 10)
 				return	//Can bump-open one airlock per second. This is to prevent shock spam.
 			M.last_bumped = world.time
-			if(M.restrained() && !check_access(null))
+			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null))
 				return
 			if(try_safety_unlock(M))
 				return
@@ -131,13 +144,14 @@
 /obj/machinery/door/Move()
 	var/turf/T = loc
 	. = ..()
-	move_update_air(T)
+	if(density) //Gotta be closed my friend
+		move_update_air(T)
 
 /obj/machinery/door/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)
 		return
-
+	// Snowflake handling for PASSGLASS.
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
@@ -153,20 +167,23 @@
 			open()
 		else
 			do_animate("deny")
-	return
 
 /obj/machinery/door/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
+	if(try_remove_seal(user))
+		return
 	if(try_safety_unlock(user))
 		return
 	return try_to_activate_door(user)
 
+
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
-	..()
+	return ..()
+
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)
@@ -287,7 +304,7 @@
 	update_icon()
 	set_opacity(0)
 	operating = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
@@ -317,7 +334,7 @@
 	if(visible && !glass)
 		set_opacity(1)
 	operating = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
 
 	if(!can_crush)
@@ -344,9 +361,6 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Paralyze(100)
-		else if(ismonkey(L)) //For monkeys
-			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.Paralyze(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
@@ -411,5 +425,10 @@
 	. = ..()
 	if(. && !(machine_stat & NOPOWER))
 		autoclose_in(DOOR_CLOSE_WAIT)
+
+/obj/machinery/door/zap_act(power, zap_flags)
+	zap_flags &= ~ZAP_OBJ_DAMAGE
+	. = ..()
+
 
 #undef DOOR_CLOSE_WAIT

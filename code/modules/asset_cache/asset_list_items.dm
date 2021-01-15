@@ -48,7 +48,8 @@
 		"smmon_4.gif" = 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" = 'icons/program_icons/smmon_5.gif',
 		"smmon_6.gif" = 'icons/program_icons/smmon_6.gif',
-		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif'
+		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif',
+		"robotact.gif" = 'icons/program_icons/robotact.gif'
 	)
 
 /datum/asset/simple/radar_assets
@@ -245,6 +246,10 @@
 		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
 		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
 		"ascension" = 'icons/UI_Icons/Achievements/Misc/ascension.png',
+		"ashascend" = 'icons/UI_Icons/Achievements/Misc/ashascend.png',
+		"fleshascend" = 'icons/UI_Icons/Achievements/Misc/fleshascend.png',
+		"rustascend" = 'icons/UI_Icons/Achievements/Misc/rustascend.png',
+		"voidascend" = 'icons/UI_Icons/Achievements/Misc/voidascend.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 		"changeling" = 'icons/UI_Icons/Achievements/Mafia/mafia.png',
 		"chaplain" = 'icons/UI_Icons/Achievements/Mafia/town.png',
@@ -254,7 +259,7 @@
 	)
 
 /datum/asset/spritesheet/simple/pills
-	name ="pills"
+	name = "pills"
 	assets = list(
 		"pill1" = 'icons/UI_Icons/Pills/pill1.png',
 		"pill2" = 'icons/UI_Icons/Pills/pill2.png',
@@ -280,6 +285,27 @@
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
 
+/datum/asset/spritesheet/simple/condiments
+	name = "condiments"
+	assets = list(
+		CONDIMASTER_STYLE_FALLBACK = 'icons/UI_Icons/Condiments/emptycondiment.png',
+		"enzyme" = 'icons/UI_Icons/Condiments/enzyme.png',
+		"flour" = 'icons/UI_Icons/Condiments/flour.png',
+		"mayonnaise" = 'icons/UI_Icons/Condiments/mayonnaise.png',
+		"milk" = 'icons/UI_Icons/Condiments/milk.png',
+		"blackpepper" = 'icons/UI_Icons/Condiments/peppermillsmall.png',
+		"rice" = 'icons/UI_Icons/Condiments/rice.png',
+		"sodiumchloride" = 'icons/UI_Icons/Condiments/saltshakersmall.png',
+		"soymilk" = 'icons/UI_Icons/Condiments/soymilk.png',
+		"soysauce" = 'icons/UI_Icons/Condiments/soysauce.png',
+		"sugar" = 'icons/UI_Icons/Condiments/sugar.png',
+		"ketchup" = 'icons/UI_Icons/Condiments/ketchup.png',
+		"capsaicin" = 'icons/UI_Icons/Condiments/hotsauce.png',
+		"frostoil" = 'icons/UI_Icons/Condiments/coldsauce.png',
+		"bbqsauce" = 'icons/UI_Icons/Condiments/bbqsauce.png',
+		"cornoil" = 'icons/UI_Icons/Condiments/oliveoil.png',
+	)
+
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()
 	for(var/path in typesof(/datum/language))
@@ -294,6 +320,35 @@
 	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi'))
 		InsertAll("", each, GLOB.alldirs)
 	..()
+
+/datum/asset/spritesheet/supplypods
+	name = "supplypods"
+
+/datum/asset/spritesheet/supplypods/register()
+	for (var/style in 1 to length(GLOB.podstyles))
+		if (style == STYLE_SEETHROUGH)
+			Insert("pod_asset[style]", icon('icons/obj/supplypods.dmi' , "seethrough-icon"))
+			continue
+		var/base = GLOB.podstyles[style][POD_BASE]
+		if (!base)
+			Insert("pod_asset[style]", icon('icons/obj/supplypods.dmi', "invisible-icon"))
+			continue
+		var/icon/podIcon = icon('icons/obj/supplypods.dmi', base)
+		var/door = GLOB.podstyles[style][POD_DOOR]
+		if (door)
+			door = "[base]_door"
+			podIcon.Blend(icon('icons/obj/supplypods.dmi', door), ICON_OVERLAY)
+		var/shape = GLOB.podstyles[style][POD_SHAPE]
+		if (shape == POD_SHAPE_NORML)
+			var/decal = GLOB.podstyles[style][POD_DECAL]
+			if (decal)
+				podIcon.Blend(icon('icons/obj/supplypods.dmi', decal), ICON_OVERLAY)
+			var/glow = GLOB.podstyles[style][POD_GLOW]
+			if (glow)
+				glow = "pod_glow_[glow]"
+				podIcon.Blend(icon('icons/obj/supplypods.dmi', glow), ICON_OVERLAY)
+		Insert("pod_asset[style]", podIcon)
+	return ..()
 
 // Representative icons for each research design
 /datum/asset/spritesheet/research_designs
@@ -421,3 +476,31 @@
 /datum/asset/spritesheet/mafia/register()
 	InsertAll("", 'icons/obj/mafia.dmi')
 	..()
+
+/datum/asset/simple/portraits
+	var/tab = "use subtypes of this please"
+	assets = list()
+
+/datum/asset/simple/portraits/New()
+	if(!SSpersistence.paintings || !SSpersistence.paintings[tab] || !length(SSpersistence.paintings[tab]))
+		return
+	for(var/p in SSpersistence.paintings[tab])
+		var/list/portrait = p
+		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
+		if(fexists(png))
+			assets[portrait["title"]] = png
+	..() //this is where it registers all these assets we added to the list
+
+/datum/asset/simple/portraits/library
+	tab = "library"
+
+/datum/asset/simple/portraits/library_secure
+	tab = "library_secure"
+
+/datum/asset/simple/portraits/library_private
+	tab = "library_private"
+
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)

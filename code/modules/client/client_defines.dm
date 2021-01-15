@@ -11,14 +11,14 @@
 	show_verb_panel = FALSE
 	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
- 	///Needs to implement InterceptClickOn(user,params,atom) proc
+	///Needs to implement InterceptClickOn(user,params,atom) proc
 	var/datum/click_intercept = null
 	///Used for admin AI interaction
 	var/AI_Interact = FALSE
 
- 	///Used to cache this client's bans to save on DB queries
+	///Used to cache this client's bans to save on DB queries
 	var/ban_cache = null
- 	///Contains the last message sent by this client - used to protect against copy-paste spamming.
+	///Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message = ""
 	///contins a number of how many times a message identical to last_message was sent.
 	var/last_message_count = 0
@@ -59,7 +59,7 @@
 		////////////////////////////////////
 	///Used to determine how old the account is - in days.
 	var/player_age = -1
- 	///Date that this account was first seen in the server
+	///Date that this account was first seen in the server
 	var/player_join_date = null
 	///So admins know why it isn't working - Used to determine what other accounts previously logged in from this ip
 	var/related_accounts_ip = "Requires database"
@@ -72,7 +72,7 @@
 
 	preload_rsc = PRELOAD_RSC
 
-	var/obj/screen/click_catcher/void
+	var/atom/movable/screen/click_catcher/void
 
 	///used to make a special mouse cursor, this one for mouse up icon
 	var/mouse_up_icon = null
@@ -89,11 +89,11 @@
 	var/lastping = 0
 	///Average ping of the client
 	var/avgping = 0
- 	///world.time they connected
+	///world.time they connected
 	var/connection_time
- 	///world.realtime they connected
+	///world.realtime they connected
 	var/connection_realtime
- 	///world.timeofday they connected
+	///world.timeofday they connected
 	var/connection_timeofday
 
 	///If the client is currently in player preferences
@@ -103,13 +103,13 @@
 	///Used for limiting the rate of clicks sends by the client to avoid abuse
 	var/list/clicklimiter
 
- 	///lazy list of all credit object bound to this client
+	///lazy list of all credit object bound to this client
 	var/list/credits
 
- 	///these persist between logins/logouts during the same round.
+	///these persist between logins/logouts during the same round.
 	var/datum/player_details/player_details
 
-	///Should only be a key-value list of north/south/east/west = obj/screen.
+	///Should only be a key-value list of north/south/east/west = atom/movable/screen.
 	var/list/char_render_holders
 
 	///Amount of keydowns in the last keysend checking interval
@@ -144,11 +144,17 @@
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
+	/// our current tab
+	var/stat_tab
+
+	/// whether our browser is ready or not yet
+	var/statbrowser_ready = FALSE
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
 	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
-	/// list of tabs containing verbs
-	var/list/verb_tabs = list()
-	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
+	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
 	var/list/parallax_layers
@@ -164,12 +170,14 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 4
 	var/parallax_animate_timer
+	///Are we locking our movement input?
+	var/movement_locked = FALSE
 
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to
 	 * a map, it's put in here as well.
 	 *
-	 * Format: list(<mapname> = list(/obj/screen))
+	 * Format: list(<mapname> = list(/atom/movable/screen))
 	 */
 	var/list/screen_maps = list()
 
@@ -184,3 +192,18 @@
 	/// rate limiting for the crew manifest
 	var/crew_manifest_delay
 
+	/// A buffer of currently held keys.
+	var/list/keys_held = list()
+	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
+	var/list/key_combos_held = list()
+	/*
+	** These next two vars are to apply movement for keypresses and releases made while move delayed.
+	** Because discarding that input makes the game less responsive.
+	*/
+	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
+
+	/// If the client is currently under the restrictions of the interview system
+	var/interviewee = FALSE

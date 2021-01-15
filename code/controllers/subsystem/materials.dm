@@ -16,12 +16,16 @@ SUBSYSTEM_DEF(materials)
 	var/list/materialtypes_by_category
 	///A cache of all material combinations that have been used
 	var/list/list/material_combos
-	///List of stackcrafting recipes for materials using rigid materials
-	var/list/rigid_stack_recipes = list(
+	///List of stackcrafting recipes for materials using base recipes
+	var/list/base_stack_recipes = list(
 		new /datum/stack_recipe("Chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
 		new /datum/stack_recipe("Toilet", /obj/structure/toilet/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
 		new /datum/stack_recipe("Sink Frame", /obj/structure/sinkframe, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
 		new /datum/stack_recipe("Floor tile", /obj/item/stack/tile/material, 1, 4, 20, applies_mats = TRUE),
+	)
+	///List of stackcrafting recipes for materials using rigid recipes
+	var/list/rigid_stack_recipes = list(
+		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
 	)
 
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
@@ -31,7 +35,11 @@ SUBSYSTEM_DEF(materials)
 	materialtypes_by_category = list()
 	material_combos = list()
 	for(var/type in subtypesof(/datum/material))
-		var/datum/material/ref = new type
+		var/datum/material/ref = type
+		if(!(initial(ref.init_flags) & MATERIAL_INIT_MAPLOAD))
+			continue // Do not initialize
+
+		ref = new ref
 		materials[type] = ref
 		for(var/c in ref.categories)
 			materials_by_category[c] += list(ref)

@@ -93,7 +93,9 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.transform = owner.transform.Scale(1, 0.8)
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(1, 0.8)
+	owner.transform = new_transform.Multiply(owner.transform)
 	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
@@ -101,10 +103,11 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.transform = owner.transform.Scale(1, 1.25)
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(1, 1.25)
+	owner.transform = new_transform.Multiply(owner.transform)
 	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
-
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
@@ -170,18 +173,23 @@
 /datum/mutation/human/race
 	name = "Monkified"
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
+	text_gain_indication = "You feel unusually monkey-like."
+	text_lose_indication = "You feel like your old self."
 	quality = NEGATIVE
 	time_coeff = 2
 	locked = TRUE //Species specific, keep out of actual gene pool
+	var/datum/species/original_species = /datum/species/human
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	. = owner.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+	if(!ismonkey(owner))
+		original_species = owner.dna.species.type
+	. = owner.monkeyize()
 
-/datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
-	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
-		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+/datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
+	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
+		. = owner.humanize(original_species)
 
 /datum/mutation/human/glow
 	name = "Glowy"
@@ -407,7 +415,7 @@
 
 	if(prob(99.5)) //The brawl mutation
 		return
-	if(owner.buckled || !(owner.mobility_flags & MOBILITY_STAND) || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
+	if(owner.buckled || owner.body_position == LYING_DOWN || HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
 		return //remove the 'edge' cases
 	to_chat(owner, "<span class='danger'>You trip over your own feet.</span>")
 	owner.Knockdown(30)
@@ -432,7 +440,7 @@
 		return TRUE
 	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
 
-/datum/mutation/human/martyrdom/proc/bloody_shower(new_stat)
+/datum/mutation/human/martyrdom/proc/bloody_shower(datum/source, new_stat)
 	SIGNAL_HANDLER
 
 	if(new_stat != HARD_CRIT)
@@ -440,7 +448,7 @@
 	var/list/organs = owner.getorganszone(BODY_ZONE_HEAD, 1)
 
 	for(var/obj/item/organ/I in organs)
-		I.Remove(owner, TRUE)
+		qdel(I)
 
 	explosion(get_turf(owner), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in view(2,owner))
@@ -460,7 +468,7 @@
 
 /datum/mutation/human/headless
 	name = "H.A.R.S."
-	desc = "A mutation that makes the body reject the head. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate head organs."
+	desc = "A mutation that makes the body reject the head, the brain receding into the chest. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate non-vital head organs."
 	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = "<span class='warning'>Something feels off.</span>"
@@ -470,9 +478,8 @@
 	if(.)//cant add
 		return TRUE
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-	if(brain) //so this doesn't instantly kill you
-		brain.organ_flags &= ~ORGAN_VITAL
-		qdel(brain)
+	if(brain)
+		brain.zone = BODY_ZONE_CHEST
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
@@ -488,12 +495,15 @@
 	. = ..()
 	if(.)
 		return TRUE
+	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
+		brain.zone = BODY_ZONE_HEAD
 	UnregisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")
 		return TRUE
-	owner.dna.species.regenerate_organs(owner, excluded_zones = list(BODY_ZONE_CHEST)) //only regenerate head
+	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
 	owner.visible_message("<span class='warning'>[owner]'s head returns with a sickening crunch!</span>", "<span class='warning'>Your head regrows with a sickening crack! Ouch.</span>")
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)

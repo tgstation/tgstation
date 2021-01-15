@@ -1,12 +1,12 @@
 GLOBAL_LIST_EMPTY(allbountyboards)
 GLOBAL_LIST_EMPTY(request_list)
 /**
-  * A machine that acts basically like a quest board.
-  * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
-  */
+ * A machine that acts basically like a quest board.
+ * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
+ */
 /obj/machinery/bounty_board
 	name = "bounty board"
-	desc = "Alows you to place requests for goods and services across the station, as well as pay those who actually did it."
+	desc = "Allows you to place requests for goods and services across the station, as well as pay those who actually did it."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "request_kiosk"
 	light_color = LIGHT_COLOR_GREEN
@@ -72,7 +72,10 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(request.applicants)
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
-	var/obj/item/card/id/id_card = user.get_idcard()
+	var/obj/item/card/id/id_card
+	if(isliving(user))
+		var/mob/living/L = user
+		id_card = L.get_idcard()
 	if(id_card?.registered_account)
 		current_user = id_card.registered_account
 	if(current_user)
@@ -84,8 +87,10 @@ GLOBAL_LIST_EMPTY(request_list)
 	return data
 
 /obj/machinery/bounty_board/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
@@ -161,9 +166,9 @@ GLOBAL_LIST_EMPTY(request_list)
 	result_path = /obj/machinery/bounty_board
 
 /**
-  * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
-  * All of this is passed to the Request Console UI in order to present in organized way.
-  */
+ * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
+ * All of this is passed to the Request Console UI in order to present in organized way.
+ */
 /datum/station_request
 	///Name of the Request Owner.
 	var/owner

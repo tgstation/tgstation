@@ -23,9 +23,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_infect_attack)
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/try_infect_equipped)
-		if(istype(parent, /obj/item/reagent_containers/food/snacks))
-			RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
-		else if(istype(parent, /obj/item/reagent_containers/food/drinks))
+		RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
+		if(istype(parent, /obj/item/reagent_containers/food/drinks))
 			RegisterSignal(parent, COMSIG_DRINK_DRANK, .proc/try_infect_drink)
 		else if(istype(parent, /obj/item/reagent_containers/glass))
 			RegisterSignal(parent, COMSIG_GLASS_DRANK, .proc/try_infect_drink)
@@ -51,9 +50,10 @@
 /datum/component/infective/proc/clean(datum/source, clean_types)
 	SIGNAL_HANDLER
 
+	. = NONE
 	if(clean_types & required_clean_types)
 		qdel(src)
-		return TRUE
+		return COMPONENT_CLEANED
 
 /datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
 	SIGNAL_HANDLER

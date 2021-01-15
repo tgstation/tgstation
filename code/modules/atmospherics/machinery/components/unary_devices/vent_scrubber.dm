@@ -13,12 +13,12 @@
 	welded = FALSE
 	layer = GAS_SCRUBBER_LAYER
 	hide = TRUE
+	shift_underlay_only = FALSE
 
-	var/id_tag = null
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
-	var/volume_rate = 200
+	var/volume_rate = 400
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
 	var/list/turf/adjacent_turfs = list()
 
@@ -30,10 +30,9 @@
 	pipe_state = "scrubber"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
-	..()
 	if(!id_tag)
-		id_tag = assign_uid_vents()
-
+		id_tag = SSnetworks.assign_random_name()
+	. = ..()
 	for(var/f in filter_types)
 		if(istext(f))
 			filter_types -= f
@@ -69,8 +68,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions, piping_layer = piping_layer)
+		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions)
 		add_overlay(cap)
+	else
+		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -117,7 +118,7 @@
 	var/area/scrub_area = get_area(src)
 	if(!GLOB.air_scrub_names[id_tag])
 		// If we do not have a name, assign one
-		name = "\proper [scrub_area.name] air scrubber [assign_random_name()]"
+		name = "\proper [scrub_area.name] air scrubber [id_tag]"
 		GLOB.air_scrub_names[id_tag] = name
 
 	scrub_area.air_scrub_info[id_tag] = signal.data
@@ -135,32 +136,32 @@
 	check_turfs()
 	..()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos(delta_time)
 	..()
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
 		on = FALSE
 		return FALSE
-	scrub(loc)
+	scrub(loc, delta_time)
 	if(widenet)
 		for(var/turf/tile in adjacent_turfs)
-			scrub(tile)
+			scrub(tile, delta_time)
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile, delta_time = 0.5)
 	if(!istype(tile))
 		return FALSE
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/list/env_gases = environment.gases
 
-	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE)
+	if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
 		return FALSE
 
 	if(scrubbing & SCRUBBING)
 		if(length(env_gases & filter_types))
-			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+			var/transfer_moles = min(1, volume_rate * delta_time / environment.volume)*environment.total_moles()
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
@@ -186,16 +187,16 @@
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
-			tile.air_update_turf()
+			tile.air_update_turf(FALSE, FALSE)
 
 	else //Just siphoning all air
 
-		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
+		var/transfer_moles = environment.total_moles() * (volume_rate * delta_time / environment.volume)
 
 		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
 
 		air_contents.merge(removed)
-		tile.air_update_turf()
+		tile.air_update_turf(FALSE, FALSE)
 
 	update_parents()
 

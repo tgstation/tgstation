@@ -31,7 +31,7 @@
 	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/door_buttons/proc/removeMe()
@@ -78,9 +78,11 @@
 					controller.cycleClose(door)
 		else
 			controller.onlyClose(door)
-		sleep(20)
-		busy = FALSE
-		update_icon()
+		addtimer(CALLBACK(src, .proc/not_busy), 2 SECONDS)
+
+/obj/machinery/door_buttons/access_button/proc/not_busy()
+	busy = FALSE
+	update_icon()
 
 /obj/machinery/door_buttons/access_button/update_icon_state()
 	if(machine_stat & NOPOWER)
@@ -208,7 +210,7 @@
 	INVOKE_ASYNC(src, .proc/do_openDoor, A)
 
 /obj/machinery/door_buttons/airlock_controller/proc/do_openDoor(obj/machinery/door/airlock/A)
-	if(A && A.open())
+	if(A?.open())
 		if(machine_stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
 			A.bolt()
 	goIdle(TRUE)

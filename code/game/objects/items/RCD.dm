@@ -208,7 +208,7 @@ RLD
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_premium_price = 1700
+	custom_premium_price = PAYCHECK_HARD * 10
 	max_matter = 160
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
@@ -230,9 +230,30 @@ RLD
 	/// Integrated airlock electronics for setting access to a newly built airlocks
 	var/obj/item/electronics/airlock/airlock_electronics
 
-/obj/item/construction/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
-	return (BRUTELOSS)
+/obj/item/construction/rcd/suicide_act(mob/living/user)
+	var/turf/T = get_turf(user)
+
+	if(!isopenturf(T)) // Oh fuck
+		user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		return BRUTELOSS
+
+	mode = RCD_FLOORWALL
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(checkResource(16, user)) // It takes 16 resources to construct a wall
+		var/success = T.rcd_act(user, src, RCD_FLOORWALL)
+		T = get_turf(user)
+		// If the RCD placed a floor instead of a wall, having a wall without plating under it is cursed
+		// There isn't an easy programmatical way to check if rcd_act will place a floor or a wall, so just repeat using it for free
+		if(success && isopenturf(T))
+			T.rcd_act(user, src, RCD_FLOORWALL)
+		useResource(16, user)
+		activate()
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user.gib()
+		return MANUAL_SUICIDE
+
+	user.visible_message("<span class='suicide'>[user] pulls the trigger... But there is not enough ammo!</span>")
+	return SHAME
 
 /obj/item/construction/rcd/verb/toggle_window_glass_verb()
 	set name = "RCD : Toggle Window Glass"
@@ -308,10 +329,10 @@ RLD
 	if(!user)
 		return
 	var/list/computer_dirs = list(
-		"NORTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "cnorth"),
-		"EAST" = image(icon = 'icons/mob/radial.dmi', icon_state = "ceast"),
-		"SOUTH" = image(icon = 'icons/mob/radial.dmi', icon_state = "csouth"),
-		"WEST" = image(icon = 'icons/mob/radial.dmi', icon_state = "cwest")
+		"NORTH" = image(icon = 'icons/hud/radial.dmi', icon_state = "cnorth"),
+		"EAST" = image(icon = 'icons/hud/radial.dmi', icon_state = "ceast"),
+		"SOUTH" = image(icon = 'icons/hud/radial.dmi', icon_state = "csouth"),
+		"WEST" = image(icon = 'icons/hud/radial.dmi', icon_state = "cwest")
 		)
 	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -333,8 +354,8 @@ RLD
 	var/list/solid_or_glass_choices = list(
 		"Solid" = get_airlock_image(/obj/machinery/door/airlock),
 		"Glass" = get_airlock_image(/obj/machinery/door/airlock/glass),
-		"Windoor" = image(icon = 'icons/mob/radial.dmi', icon_state = "windoor"),
-		"Secure Windoor" = image(icon = 'icons/mob/radial.dmi', icon_state = "secure_windoor")
+		"Windoor" = image(icon = 'icons/hud/radial.dmi', icon_state = "windoor"),
+		"Secure Windoor" = image(icon = 'icons/hud/radial.dmi', icon_state = "secure_windoor")
 	)
 
 	var/list/solid_choices = list(
@@ -470,10 +491,10 @@ RLD
 	if(!user)
 		return
 	var/static/list/choices = list(
-		"Chair" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair"),
-		"Stool" = image(icon = 'icons/mob/radial.dmi', icon_state = "stool"),
-		"Table" = image(icon = 'icons/mob/radial.dmi', icon_state = "table"),
-		"Glass Table" = image(icon = 'icons/mob/radial.dmi', icon_state = "glass_table")
+		"Chair" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair"),
+		"Stool" = image(icon = 'icons/hud/radial.dmi', icon_state = "stool"),
+		"Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "table"),
+		"Glass Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "glass_table")
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -502,16 +523,29 @@ RLD
 		return FALSE
 	var/delay = rcd_results["delay"] * delay_mod
 	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
-	if(checkResource(rcd_results["cost"], user))
-		if(do_after(user, delay, target = A))
-			if(checkResource(rcd_results["cost"], user))
-				if(A.rcd_act(user, src, rcd_results["mode"]))
-					rcd_effect.end_animation()
-					useResource(rcd_results["cost"], user)
-					activate()
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					return TRUE
-	qdel(rcd_effect)
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
+		var/turf/target_turf = get_turf(A)
+		if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(rcd_effect)
+			return FALSE
+	if(!do_after(user, delay, target = A))
+		qdel(rcd_effect)
+		return FALSE
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(!A.rcd_act(user, src, rcd_results["mode"]))
+		qdel(rcd_effect)
+		return FALSE
+	rcd_effect.end_animation()
+	useResource(rcd_results["cost"], user)
+	activate()
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	return TRUE
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
@@ -528,15 +562,15 @@ RLD
 /obj/item/construction/rcd/attack_self(mob/user)
 	..()
 	var/list/choices = list(
-		"Airlock" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlock"),
-		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
-		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
-		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
+		"Airlock" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlock"),
+		"Deconstruct" = image(icon= 'icons/hud/radial.dmi', icon_state = "delete"),
+		"Grilles & Windows" = image(icon = 'icons/hud/radial.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/hud/radial.dmi', icon_state = "wallfloor")
 	)
 	if(upgrade & RCD_UPGRADE_FRAMES)
 		choices += list(
-		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
-		"Computer Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "computer_dir"),
+		"Machine Frames" = image(icon = 'icons/hud/radial.dmi', icon_state = "machine"),
+		"Computer Frames" = image(icon = 'icons/hud/radial.dmi', icon_state = "computer_dir"),
 		)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		choices += list(
@@ -544,21 +578,21 @@ RLD
 		)
 	if(upgrade & RCD_UPGRADE_FURNISHING)
 		choices += list(
-		"Furnishing" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair")
+		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
 	if(mode == RCD_AIRLOCK)
 		choices += list(
-		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
-		"Change Airlock Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlocktype")
+		"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
+		"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
 		)
 	else if(mode == RCD_WINDOWGRILLE)
 		choices += list(
-		"Change Window Glass" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowtype"),
-		"Change Window Size" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowsize")
+		"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
+		"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
 		)
 	else if(mode == RCD_FURNISHING)
 		choices += list(
-		"Change Furnishing Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "chair")
+		"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -729,7 +763,7 @@ RLD
 	if(!range_check(A,user))
 		return
 	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
+		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
 	rcd_create(A,user)
 
 
@@ -806,7 +840,7 @@ RLD
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
@@ -820,7 +854,7 @@ RLD
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 					if(do_after(user, floordelay, target = A))
@@ -832,7 +866,7 @@ RLD
 						for(var/direction in GLOB.cardinals)
 							var/turf/C = get_step(W, direction)
 							var/list/dupes = checkdupes(C)
-							if(start.CanAtmosPass(C) && !dupes.len)
+							if((isspaceturf(C) || TURF_SHARES(C)) && !dupes.len)
 								candidates += C
 						if(!candidates.len)
 							to_chat(user, "<span class='warning'>Valid target not found...</span>")
@@ -866,7 +900,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
@@ -911,6 +945,7 @@ RLD
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
 	icon_state = "plumberer2"
+	worn_icon_state = "plumbing"
 	icon = 'icons/obj/tools.dmi'
 	slot_flags = ITEM_SLOT_BELT
 

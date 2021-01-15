@@ -2,7 +2,6 @@
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
-	custom_price = 50
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
@@ -35,7 +34,7 @@
 
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	var/last_alarm = 0
+	COOLDOWN_DECLARE(last_alarm)
 	var/area/myarea = null
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
@@ -50,6 +49,10 @@
 	update_icon()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
+
+/obj/machinery/firealarm/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/firealarm/Destroy()
 	LAZYREMOVE(myarea.firealarms, src)
@@ -116,17 +119,18 @@
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
-	playsound(src, "sparks", 50, TRUE)
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !machine_stat)
-		alarm()
-	..()
+/obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && detecting && !machine_stat
+
+/obj/machinery/firealarm/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	alarm()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
-	if(!is_operational || (last_alarm+FIREALARM_COOLDOWN > world.time))
+	if(!is_operational || !COOLDOWN_FINISHED(src, last_alarm))
 		return
-	last_alarm = world.time
+	COOLDOWN_START(src, last_alarm, FIREALARM_COOLDOWN)
 	var/area/A = get_area(src)
 	A.firealert(src)
 	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
@@ -253,7 +257,7 @@
 
 				else if(W.tool_behaviour == TOOL_WRENCH)
 					user.visible_message("<span class='notice'>[user] removes the fire alarm assembly from the wall.</span>", \
-										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
+						"<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.forceMove(user.drop_location())
 					W.play_tool_sound(src)

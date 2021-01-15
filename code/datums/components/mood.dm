@@ -10,7 +10,7 @@
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
-	var/obj/screen/mood/screen_obj
+	var/atom/movable/screen/mood/screen_obj
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -25,6 +25,8 @@
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
+
+	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
 
 	var/mob/living/owner = parent
 	if(owner.hud_used)
@@ -170,26 +172,26 @@
 			break
 
 ///Called on SSmood process
-/datum/component/mood/process()
+/datum/component/mood/process(delta_time)
 	switch(mood_level)
 		if(1)
-			setSanity(sanity-0.3, SANITY_INSANE)
+			setSanity(sanity-0.3*delta_time, SANITY_INSANE)
 		if(2)
-			setSanity(sanity-0.15, SANITY_INSANE)
+			setSanity(sanity-0.15*delta_time, SANITY_INSANE)
 		if(3)
-			setSanity(sanity-0.1, SANITY_CRAZY)
+			setSanity(sanity-0.1*delta_time, SANITY_CRAZY)
 		if(4)
-			setSanity(sanity-0.05, SANITY_UNSTABLE)
+			setSanity(sanity-0.05*delta_time, SANITY_UNSTABLE)
 		if(5)
 			setSanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
 		if(6)
-			setSanity(sanity+0.2, SANITY_UNSTABLE)
+			setSanity(sanity+0.2*delta_time, SANITY_UNSTABLE)
 		if(7)
-			setSanity(sanity+0.3, SANITY_UNSTABLE)
+			setSanity(sanity+0.3*delta_time, SANITY_UNSTABLE)
 		if(8)
-			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			setSanity(sanity+0.4*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
-			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
 
 ///Sets sanity to the specified amount and applies effects.
@@ -310,7 +312,7 @@
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	if(hud && hud.infodisplay)
+	if(hud?.infodisplay)
 		hud.infodisplay -= screen_obj
 	QDEL_NULL(screen_obj)
 
@@ -400,5 +402,19 @@
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
 
+
+///Causes direct drain of someone's sanity, call it with a numerical value corresponding how badly you want to hurt their sanity
+/datum/component/mood/proc/direct_sanity_drain(datum/source, amount)
+	SIGNAL_HANDLER
+	setSanity(sanity + amount, override = TRUE)
+
+///Called when parent slips.
+/datum/component/mood/proc/on_slip(datum/source)
+	SIGNAL_HANDLER
+
+	add_event(null, "slipped", /datum/mood_event/slipped)
+
+
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+

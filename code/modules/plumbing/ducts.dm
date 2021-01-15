@@ -137,7 +137,8 @@ All the important duct code:
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
 	var/opposite_dir = turn(direction, 180)
-	if(duct_layer != DUCT_LAYER_DEFAULT) //plumbing devices don't support multilayering. 3 is the default layer so we only use that. We can change this later
+
+	if(duct_layer != P.ducting_layer)
 		return FALSE
 
 	if(!P.active)
@@ -389,7 +390,7 @@ All the important duct code:
 	singular_name = "duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "ducts"
-	custom_materials = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=500)
 	w_class = WEIGHT_CLASS_TINY
 	novariants = FALSE
 	max_amount = 50

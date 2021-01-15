@@ -14,10 +14,10 @@
 	var/rip_and_tear = FALSE
 	var/equip_ert = TRUE
 	var/forge_objectives_for_ert = TRUE
+	can_elimination_hijack = ELIMINATION_PREVENT
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	if(random_names)
@@ -37,16 +37,6 @@
 
 /datum/antagonist/ert/proc/update_name()
 	owner.current.fully_replace_character_name(owner.current.real_name,"[role] [pick(name_source)]")
-
-/datum/antagonist/ert/deathsquad/New()
-	. = ..()
-	name_source = GLOB.commando_names
-
-/datum/antagonist/ert/deathsquad/apply_innate_effects(mob/living/mob_override)
-	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
-
-/datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
-	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
 
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
@@ -79,6 +69,10 @@
 	outfit = /datum/outfit/centcom/death_commando
 	role = "Trooper"
 	rip_and_tear = TRUE
+
+/datum/antagonist/ert/deathsquad/New()
+	. = ..()
+	name_source = GLOB.commando_names
 
 /datum/antagonist/ert/medic/inquisitor
 	outfit = /datum/outfit/centcom/ert/medic/inquisitor
@@ -208,7 +202,7 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		var/obj/screen/wanted/giving_wanted_lvl = new /obj/screen/wanted()
+		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
 		H.wanted_lvl = giving_wanted_lvl
 		giving_wanted_lvl.hud = H
 		H.infodisplay += giving_wanted_lvl
@@ -241,7 +235,7 @@
 	if(policy)
 		to_chat(owner, policy)
 	var/mob/living/M = owner.current
-	M.playsound_local(M, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
+	M.playsound_local(M, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /datum/antagonist/ert/families/undercover_cop
 	name = "Undercover Cop"

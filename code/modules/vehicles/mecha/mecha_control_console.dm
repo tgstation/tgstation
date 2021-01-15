@@ -38,7 +38,7 @@
 		if(istype(M, /obj/vehicle/sealed/mecha/working/ripley))
 			var/obj/vehicle/sealed/mecha/working/ripley/RM = M
 			mech_data += list(
-				cargo_space = round((RM.cargo.len / RM.cargo_capacity) * 100)
+				cargo_space = round((LAZYLEN(RM.cargo) / RM.cargo_capacity) * 100)
 		)
 
 		data["mechs"] += list(mech_data)
@@ -46,7 +46,8 @@
 	return data
 
 /obj/machinery/computer/mecha/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -85,8 +86,8 @@
 	var/obj/vehicle/sealed/mecha/chassis
 
 /**
-  * Returns a html formatted string describing attached mech status
-  */
+ * Returns a html formatted string describing attached mech status
+ */
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!chassis)
 		return FALSE
@@ -101,7 +102,7 @@
 				<b>Active Equipment:</b> [chassis.selected || "None"]"}
 	if(istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
 		var/obj/vehicle/sealed/mecha/working/ripley/RM = chassis
-		answer += "<br><b>Used Cargo Space:</b> [round((RM.cargo.len / RM.cargo_capacity * 100), 0.01)]%"
+		answer += "<br><b>Used Cargo Space:</b> [round((LAZYLEN(RM.cargo) / RM.cargo_capacity * 100), 0.01)]%"
 
 	return answer
 
@@ -125,8 +126,8 @@
 	chassis = M
 
 /**
-  * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
-  */
+ * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
+ */
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	if(recharging)
 		return
@@ -136,8 +137,8 @@
 		recharging = TRUE
 
 /**
-  * Resets recharge variable, allowing tracker to be EMP pulsed again
-  */
+ * Resets recharge variable, allowing tracker to be EMP pulsed again
+ */
 /obj/item/mecha_parts/mecha_tracking/proc/recharge()
 	recharging = FALSE
 

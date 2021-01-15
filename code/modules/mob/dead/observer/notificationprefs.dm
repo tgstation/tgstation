@@ -39,7 +39,8 @@
 		))
 
 /datum/notificationpanel/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch (action)
 		if ("toggle_ignore")

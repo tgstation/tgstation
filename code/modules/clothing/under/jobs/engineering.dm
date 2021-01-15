@@ -18,7 +18,7 @@
 	icon_state = "chief_skirt"
 	inhand_icon_state = "gy_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
@@ -35,7 +35,7 @@
 	icon_state = "atmos_skirt"
 	inhand_icon_state = "atmos_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/engineering/engineer
@@ -45,6 +45,7 @@
 	inhand_icon_state = "engi_suit"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 60, ACID = 20)
 	resistance_flags = NONE
+	species_exception = list(/datum/species/golem/uranium)
 
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"
@@ -59,6 +60,6 @@
 	icon_state = "engine_skirt"
 	inhand_icon_state = "engi_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
+	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 

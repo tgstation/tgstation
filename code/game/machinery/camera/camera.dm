@@ -38,7 +38,6 @@
 
 	// Upgrades bitflag
 	var/upgrades = 0
-	var/datum/component/empprotection/emp_component
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
@@ -85,10 +84,10 @@
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_icon()
 
-/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
-		network += "[idnum][i]"
+		network += "[port.id]_[i]"
 
 /obj/machinery/proc/create_prox_monitor()
 	if(!proximity_monitor)
@@ -105,7 +104,6 @@
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
 	QDEL_NULL(assembly)
-	QDEL_NULL(emp_component)
 	if(bug)
 		bug.bugged_cameras -= src.c_tag
 		if(bug.current == src)
@@ -467,7 +465,7 @@
 
 /obj/machinery/camera/get_remote_view_fullscreens(mob/user)
 	if(view_range == short_range) //unfocused
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 /obj/machinery/camera/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras

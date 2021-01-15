@@ -21,7 +21,7 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
 	max_integrity = 100
-
+	item_flags = XENOMORPH_HOLDABLE
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
@@ -29,6 +29,10 @@
 	var/strength = 5
 
 	var/attached = 0
+
+/obj/item/clothing/mask/facehugger/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
@@ -43,6 +47,7 @@
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
 	inhand_icon_state = "facehugger_impregnated"
+	worn_icon_state = "facehugger_dead"
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -52,9 +57,6 @@
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
 	return O.attack_obj(src, user)
-
-/obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
-	return attack_hand(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user)
@@ -80,10 +82,11 @@
 	if (sterile)
 		. += "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
+/obj/item/clothing/mask/facehugger/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return (exposed_temperature > 300)
 
-/obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		Die()
+/obj/item/clothing/mask/facehugger/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	Die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
 	. = ..()
@@ -128,7 +131,7 @@
 		return FALSE
 	if(iscarbon(M))
 		// disallowed carbons
-		if(isalien(M) || istruedevil(M))
+		if(isalien(M))
 			return FALSE
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
@@ -252,10 +255,6 @@
 		return FALSE
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
 		return FALSE
-
-	if(ismonkey(M))
-		return TRUE
-
 	var/mob/living/carbon/C = M
 	if(ishuman(C) && !(ITEM_SLOT_MASK in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C

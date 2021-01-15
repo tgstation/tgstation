@@ -41,7 +41,13 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = 750
+	custom_premium_price = PAYCHECK_HARD
+
+/obj/item/clothing/suit/armor/vest/cuirass
+	name = "cuirass"
+	desc = "A lighter plate armor used to still keep out those pesky arrows, while retaining the ability to move."
+	icon_state = "cuirass"
+	inhand_icon_state = "armor"
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -287,3 +293,14 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list(MELEE = 25, BULLET = 20, LASER = 20, ENERGY = 30, BOMB = 20, BIO = 50, RAD = 20, FIRE = -10, ACID = 50, WOUND = 10)
+
+/obj/item/clothing/suit/armor/elder_atmosian
+	name = "Elder Atmosian Armor"
+	desc = "A superb armor made with the toughest and rarest materials available to man."
+	icon_state = "knight_grey"
+	inhand_icon_state = "knight_greyscale"
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
+	armor = list(MELEE = 15, BULLET = 10, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 10, RAD = 20, FIRE = 65, ACID = 40, WOUND = 15)
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

@@ -1,4 +1,4 @@
-//Holds defibs and recharges them from the powernet
+//Holds defibs does NOT recharge them
 //You can activate the mount with an empty hand to grab the paddles
 //Not being adjacent will cause the paddles to snap back
 /obj/machinery/defibrillator_mount
@@ -7,8 +7,7 @@
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
 	density = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
+	use_power = NO_POWER_USE
 	power_channel = AREA_USAGE_EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_HEADS, ACCESS_SECURITY) //used to control clamps
 	processing_flags = NONE
@@ -176,6 +175,7 @@
 	name = "PENLITE defibrillator mount"
 	desc = "Holds defibrillators. You can grab the paddles if one is mounted. This PENLITE variant also allows for slow, passive recharging of the defibrillator."
 	icon_state = "penlite_mount"
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
@@ -193,13 +193,13 @@
 		begin_processing()
 
 
-/obj/machinery/defibrillator_mount/charging/process()
+/obj/machinery/defibrillator_mount/charging/process(delta_time)
 	var/obj/item/stock_parts/cell/C = get_cell()
 	if(!C || !is_operational)
 		return PROCESS_KILL
 	if(C.charge < C.maxcharge)
-		use_power(100)
-		C.give(80)
+		use_power(50 * delta_time)
+		C.give(40 * delta_time)
 		update_icon()
 
 //wallframe, for attaching the mounts easily

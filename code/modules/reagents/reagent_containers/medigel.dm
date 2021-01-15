@@ -4,6 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "medigel"
 	inhand_icon_state = "spraycan"
+	worn_icon_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -22,7 +23,7 @@
 	var/self_delay = 30
 	var/squirt_mode = 0
 	var/squirt_amount = 5
-	custom_price = 350
+	custom_price = PAYCHECK_MEDIUM * 2
 	unique_reskin = list(
 		"Blue" = "medigel_blue",
 		"Cyan" = "medigel_cyan",
@@ -94,7 +95,7 @@
 	icon_state = "synthgel"
 	current_skin = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 60)
-	custom_price = 600
+	custom_price = PAYCHECK_MEDIUM * 5
 
 /obj/item/reagent_containers/medigel/sterilizine
 	name = "sterilizer gel"
@@ -102,4 +103,4 @@
 	icon_state = "medigel_blue"
 	current_skin = "medigel_blue"
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
-	custom_price = 175
+	custom_price = PAYCHECK_MEDIUM * 2

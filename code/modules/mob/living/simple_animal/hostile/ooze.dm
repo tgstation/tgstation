@@ -3,6 +3,7 @@
 	name = "Ooze"
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "gelatinous"
+	icon_living = "gelatinous"
 	icon_dead = "gelatinous_dead"
 	mob_biotypes = MOB_ORGANIC
 	pass_flags = PASSTABLE | PASSGRILLE
@@ -36,7 +37,7 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -49,6 +50,8 @@
 	eat_atom(attacked_target)
 
 /mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)
@@ -98,7 +101,7 @@
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
 	if(hud_used) //clientless oozes
-		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>"
+		hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>")
 
 
 ///* Gelatinious Ooze code below *\\\\
@@ -150,7 +153,7 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "metabolic_boost"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 24 SECONDS
 	var/nutrition_cost = 10
 	var/active = FALSE
@@ -199,14 +202,14 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "consume"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
 
 ///Register for owner death
 /datum/action/consume/New(Target)
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_owner_death)
 	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 
 /datum/action/consume/proc/handle_mob_deletion()
@@ -276,6 +279,7 @@
 	name = "Sholean grapes"
 	desc = "A botryoidal ooze from Sholus VII.\nXenobiologists consider it to be one of the calmer and more agreeable species on the planet, but so far little is known about its behaviour in the wild.\nIt undulates in a comforting manner."
 	icon_state = "grapes"
+	icon_living = "grapes"
 	icon_dead = "grapes_dead"
 	speed = 1
 	health = 200
@@ -424,7 +428,7 @@
 	background_icon_state = "bg_hive"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	button_icon_state = "gel_cocoon"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 10 SECONDS
 
 ///Try to put the pulled mob in a cocoon

@@ -60,7 +60,7 @@
 	lose_text = ""
 	var/paralysis_type
 	var/list/paralysis_traits = list()
-	 //for descriptions
+	//for descriptions
 
 /datum/brain_trauma/severe/paralysis/New(specific_type)
 	if(specific_type)
@@ -104,13 +104,13 @@
 	..()
 	for(var/X in paralysis_traits)
 		ADD_TRAIT(owner, X, "trauma_paralysis")
-	owner.update_disabled_bodyparts()
+
 
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
 		REMOVE_TRAIT(owner, X, "trauma_paralysis")
-	owner.update_disabled_bodyparts()
+
 
 /datum/brain_trauma/severe/paralysis/paraplegic
 	random_gain = FALSE

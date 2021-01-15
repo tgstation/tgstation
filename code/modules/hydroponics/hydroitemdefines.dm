@@ -201,6 +201,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
 	inhand_icon_state = "secateurs"
+	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -219,6 +220,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
 	inhand_icon_state = "secateurs"
+	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -246,8 +248,8 @@
 
 /obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez

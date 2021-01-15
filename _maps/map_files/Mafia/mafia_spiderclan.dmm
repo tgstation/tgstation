@@ -6,7 +6,7 @@
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/obj/item/reagent_containers/food/snacks/sashimi,
+/obj/item/food/sashimi,
 /turf/open/floor/carpet/black,
 /area/mafia)
 "c" = (
@@ -64,7 +64,7 @@
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/obj/item/reagent_containers/food/snacks/sashimi,
+/obj/item/food/sashimi,
 /turf/open/floor/wood,
 /area/mafia)
 "p" = (

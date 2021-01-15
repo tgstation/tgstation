@@ -7,6 +7,8 @@
 	var/static/list/falling_atoms = list() // Atoms currently falling into chasms
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/singularity,
+		/obj/energy_ball,
+		/obj/narsie,
 		/obj/docking_port,
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
@@ -67,7 +69,7 @@
 		return FALSE
 	if(!isliving(AM) && !isobj(AM))
 		return FALSE
-	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || (AM.movement_type & FLOATING))
+	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || (AM.movement_type & (FLOATING|FLYING)))
 		return FALSE
 	//Flies right over the chasm
 	if(ismob(AM))
@@ -76,8 +78,6 @@
 			var/mob/buckled_to = M.buckled
 			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
 				return FALSE
-		if(M.is_flying())
-			return FALSE
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(istype(H.belt, /obj/item/wormhole_jaunter))

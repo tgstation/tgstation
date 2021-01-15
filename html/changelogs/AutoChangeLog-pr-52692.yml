@@ -1,5 +1,0 @@
-author: "ArcaneMusic + Kryson on Sprites"
-delete-after: True
-changes: 
-  - rscadd: "A migratory pack of Lobstrosities have appeared outside of icebox station, be advised of their charging attack."
-  - code_imp: "Hostile simplemobs may now charge at targets."

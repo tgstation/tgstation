@@ -1,10 +1,10 @@
 /**
-  * Determines what happens to an atom when a swarmer interacts with it
-  *
-  * Determines behavior upon being interacted on by a swarmer.
-  * Arguments:
-  * * S - A reference to the swarmer doing the interaction
-  */
+ * Determines what happens to an atom when a swarmer interacts with it
+ *
+ * Determines behavior upon being interacted on by a swarmer.
+ * Arguments:
+ * * S - A reference to the swarmer doing the interaction
+ */
 #define DANGEROUS_DELTA_P 250	//Value in kPa where swarmers arent allowed to break a wall or window with this difference in pressure.
 
 ///Finds the greatest difference in pressure across a turf, only considers open turfs.
@@ -48,13 +48,14 @@
 	return actor.Integrate(src)
 
 /**
-  * Return used to determine how many resources a swarmer gains when consuming an object
-  */
+ * Return used to determine how many resources a swarmer gains when consuming an object
+ */
 /obj/proc/integrate_amount()
 	return 0
 
 /obj/item/integrate_amount() //returns the amount of resources gained when eating this item
-	if(custom_materials && (custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)] || custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)]))
+	var/list/mats = get_material_composition(ALL) // Ensures that items made from plasteel, and plas/titanium/plastitaniumglass get integrated correctly.
+	if(length(mats) && (mats[SSmaterials.GetMaterialRef(/datum/material/iron)] || mats[SSmaterials.GetMaterialRef(/datum/material/glass)]))
 		return 1
 	return ..()
 
@@ -132,10 +133,6 @@
 	actor.dis_integrate(src)
 	if(!QDELETED(actor)) //If it got blown up no need to turn it off.
 		toggle_cam(actor, FALSE)
-	return TRUE
-
-/obj/machinery/particle_accelerator/control_box/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)
-	actor.dis_integrate(src)
 	return TRUE
 
 /obj/machinery/field/generator/swarmer_act(mob/living/simple_animal/hostile/swarmer/actor)

@@ -29,7 +29,7 @@
 		return
 	if (!bypasscache)
 		var/datum/ipintel/cachedintel = SSipintel.cache[ip]
-		if (cachedintel && cachedintel.is_valid())
+		if (cachedintel?.is_valid())
 			cachedintel.cache = TRUE
 			return cachedintel
 

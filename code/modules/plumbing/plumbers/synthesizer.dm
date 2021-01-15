@@ -32,7 +32,6 @@
 		/datum/reagent/potassium,
 		/datum/reagent/uranium/radium,
 		/datum/reagent/silicon,
-		/datum/reagent/silver,
 		/datum/reagent/sodium,
 		/datum/reagent/stable_plasma,
 		/datum/reagent/consumable/sugar,
@@ -46,12 +45,12 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
-/obj/machinery/plumbing/synthesizer/process()
+/obj/machinery/plumbing/synthesizer/process(delta_time)
 	if(machine_stat & NOPOWER || !reagent_id || !amount)
 		return
-	if(reagents.total_volume >= amount) //otherwise we get leftovers, and we need this to be precise
+	if(reagents.total_volume >= amount*delta_time*0.5) //otherwise we get leftovers, and we need this to be precise
 		return
-	reagents.add_reagent(reagent_id, amount)
+	reagents.add_reagent(reagent_id, amount*delta_time*0.5)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -80,7 +79,8 @@
 	return data
 
 /obj/machinery/plumbing/synthesizer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)
