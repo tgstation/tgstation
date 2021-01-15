@@ -196,17 +196,18 @@
 /// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
 	for(var/mob/dead/new_player/P in candidates)
-		if (!P.client || !P.mind) // Are they connected?
+		var/client/client = GET_CLIENT(P)
+		if (!client || !P.mind) // Are they connected?
 			candidates.Remove(P)
-		else if(!mode.check_age(P.client, minimum_required_age))
+		else if(!mode.check_age(client, minimum_required_age))
 			candidates.Remove(P)
 		else if(P.mind.special_role) // We really don't want to give antag to an antag.
 			candidates.Remove(P)
 		else if(antag_flag_override)
-			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
+			if(!(antag_flag_override in client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				candidates.Remove(P)
 		else
-			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
+			if(!(antag_flag in client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
 
 /// Do your checks if the ruleset is ready to be executed here.

@@ -293,14 +293,16 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		threat = threat_level
 	else
 		generate_threat()
+	set_cooldowns()
+	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
+	return TRUE
 
+/datum/game_mode/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
 	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
-	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
-	return TRUE
 
 /datum/game_mode/dynamic/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
