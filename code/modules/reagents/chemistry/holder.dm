@@ -409,8 +409,8 @@
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
-		R.reaction_list = reaction_list.Copy()
-		R.previous_reagent_list = previous_reagent_list.Copy()
+		R.reaction_list = LAZYCOPY(reaction_list)
+		R.previous_reagent_list = LAZYCOPY(previous_reagent_list)
 		R.is_reacting = is_reacting
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -521,8 +521,8 @@
 		return
 
 	//pass over previous ongoing reactions before handle_reactions is called
-	R.reaction_list = reaction_list.Copy()
-	R.previous_reagent_list = previous_reagent_list.Copy()
+	R.reaction_list = LAZYCOPY(reaction_list)
+		R.previous_reagent_list = LAZYCOPY(previous_reagent_list)
 	R.is_reacting = is_reacting
 
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
@@ -805,7 +805,7 @@
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 				possible_reactions  += C
 
-	update_previous_reaction_list()
+	update_previous_reagent_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/pr in possible_reactions)
 		var/datum/chemical_reaction/selected_reaction = pr
@@ -827,9 +827,9 @@
 				if(E.to_delete)//failed startup checks
 					qdel(E)
 				else
-					reaction_list += E
+					LAZYADD(reaction_list, E)
 
-	if(reaction_list.len)
+	if(LAZYLEN(reaction_list))
 		is_reacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
 		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
 	else
@@ -867,7 +867,7 @@
 	if(length(mix_message))
 		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 
-	if(!reaction_list.len)
+	if(!LAZYLEN(reaction_list))
 		finish_reacting()
 	else
 		update_total()
@@ -886,7 +886,7 @@
 	if(E.reaction.mix_sound)
 		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
 	qdel(E)
-	reaction_list -= E
+	LAZYREMOVE(reaction_list, E)
 	//Reaction occured
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
@@ -934,7 +934,7 @@
 		return TRUE
 	return FALSE
 
-/datum/reagents/proc/update_previous_reaction_list()
+/datum/reagents/proc/update_previous_reagent_list()
 	previous_reagent_list = list()
 	for(var/r in reagent_list)
 		var/datum/reagent/R = r
