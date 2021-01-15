@@ -121,7 +121,7 @@
 
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent]
 	if(!glob_reagent)
-		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
+		stack_trace("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
 	var/datum/reagent/D = GLOB.chemical_reagents_list[reagent]
@@ -409,8 +409,8 @@
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
-		R.reaction_list = LAZYCOPY(reaction_list)
-		R.previous_reagent_list = LAZYCOPY(previous_reagent_list)
+		R.reaction_list = LAZYLISTDUPLICATE(reaction_list)
+		R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 		R.is_reacting = is_reacting
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -521,8 +521,8 @@
 		return
 
 	//pass over previous ongoing reactions before handle_reactions is called
-	R.reaction_list = LAZYCOPY(reaction_list)
-		R.previous_reagent_list = LAZYCOPY(previous_reagent_list)
+	R.reaction_list = LAZYLISTDUPLICATE(reaction_list)
+		R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	R.is_reacting = is_reacting
 
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
@@ -905,7 +905,7 @@
 	for(var/r in reagent_list)
 		var/datum/reagent/R = r
 		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
-	LAZYCLEARLIST(previous_reagent_list) //reset it to 0 - because any change will be different now.
+	LAZYNULLLIST(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	handle_reactions() //Should be okay without. Each step checks.
 
@@ -936,7 +936,7 @@
 	return FALSE
 
 /datum/reagents/proc/update_previous_reagent_list()
-	LAZYCLEARLIST(previous_reagent_list)
+	LAZYNULLLIST(previous_reagent_list)
 	for(var/r in reagent_list)
 		var/datum/reagent/R = r
 		LAZYADD(previous_reagent_list, R.type)
