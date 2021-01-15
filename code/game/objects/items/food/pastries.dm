@@ -820,7 +820,7 @@
 /obj/item/food/pancakes/proc/On_Consume(eater, feeder)
 	if(istype(loc, /obj/item/food/pancakes)) //this is a pancake on the stack
 		var/obj/item/food/pancakes/stack = loc
-		addtimer(CALLBACK(stack, .update_icon),1) //remove the stack's last pancake we ate.
+		addtimer(CALLBACK(stack, /atom/.proc/update_icon),1) //remove the stack's last pancake we ate.
 
 /obj/item/food/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
 	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
