@@ -11,6 +11,10 @@ $host.ui.RawUI.WindowTitle = "starting :: node $args"
 $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
+# This forces UTF-8 encoding across all powershell built-ins
+$OutputEncoding = [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+
 function ExtractVersion {
 	param([string] $Path, [string] $Key)
 	foreach ($Line in Get-Content $Path) {
