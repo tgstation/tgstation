@@ -71,9 +71,8 @@ FROM byond
 WORKDIR /tgstation
 
 RUN apt-get install -y --no-install-recommends \
-        libmariadb2 \
-        mariadb-client \
-        libssl1.0.0
+        libssl1.0.0:i386 \
+        zlib1g:i386
 
 COPY --from=build /deploy ./
 COPY --from=rust_g /rust_g/target/i686-unknown-linux-gnu/release/librust_g.so ./librust_g.so
