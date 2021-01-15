@@ -57,16 +57,9 @@
 		flesh_damage = max(0, flesh_damage - 1)
 		flesh_healing = max(0, flesh_healing - bandage_factor)
 
-	if(infestation <= WOUND_INFECTION_MODERATE && limb.burn_dam < 10) // if we have little/no infection, the limb doesn't have much burn damage, and our nutrition is good, heal some flesh
-		switch(victim.nutrition)
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				flesh_healing += 0.6
-			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				if(prob(75))
-					flesh_healing += 0.6
-			if(NUTRITION_LEVEL_FULL to NUTRITION_LEVEL_FAT)
-				if(prob(50))
-					flesh_healing += 0.6
+	// if we have little/no infection, the limb doesn't have much burn damage, and our nutrition is good, heal some flesh
+	if(infestation <= WOUND_INFECTION_MODERATE && (limb.burn_dam < 5) && (nutrition >= NUTRITION_LEVEL_FED))
+		flesh_healing += 0.2
 
 	// here's the check to see if we're cleared up
 	if((flesh_damage <= 0) && (infestation <= WOUND_INFECTION_MODERATE))
@@ -163,7 +156,7 @@
 /datum/wound/burn/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb == 0)
 		var/oopsie = "Type: [name]\nSeverity: [severity_text()]"
-		oopsie += "<div class='ml-3'>Infection Level: <span class='deadsay'>The bodypart has suffered complete sepsis and is not savable. Amputate or augment limb immediately.</span></div>"
+		oopsie += "<div class='ml-3'>Infection Level: <span class='deadsay'>The bodypart has suffered complete sepsis and must be removed. Amputate or augment limb immediately.</span></div>"
 		return oopsie
 
 	. = ..()
@@ -185,7 +178,7 @@
 			. += "\tSurgical debridement, antiobiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
 
 		if(flesh_damage > 0)
-			. += "Flesh damage detected: Application of ointment or regenerative mesh, or ingestion of \"Miner's Salve\", will speed flesh recovery. Good nutrition, rest, and keeping the wound clean can also slowly repair flesh.\n"
+			. += "Flesh damage detected: Application of ointment, regenerative mesh, Synthflesh, or ingestion of \"Miner's Salve\" will repair damaged flesh. Good nutrition, rest, and keeping the wound clean can also slowly repair flesh.\n"
 	. += "</div>"
 
 /*
