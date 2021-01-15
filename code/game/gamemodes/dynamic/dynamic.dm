@@ -5,13 +5,6 @@
 
 #define RULESET_STOP_PROCESSING 1
 
-// -- Injection delays
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
-GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
-
-GLOBAL_VAR_INIT(dynamic_midround_delay_min, (15 MINUTES))
-GLOBAL_VAR_INIT(dynamic_midround_delay_max, (35 MINUTES))
-
 // Are HIGHLANDER_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // A number between -5 and +5.
@@ -84,10 +77,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/current_rules = list()
 	/// List of executed rulesets.
 	var/list/executed_rules = list()
-	/// When world.time is over this number the mode tries to inject a latejoin ruleset.
-	var/latejoin_injection_cooldown = 0
-	/// When world.time is over this number the mode tries to inject a midround ruleset.
-	var/midround_injection_cooldown = 0
 	/// When TRUE GetInjectionChance returns 100.
 	var/forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
@@ -100,6 +89,24 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/only_ruleset_executed = FALSE
 	/// Dynamic configuration, loaded on pre_setup
 	var/list/configuration = null
+
+	/// When world.time is over this number the mode tries to inject a latejoin ruleset.
+	var/latejoin_injection_cooldown = 0
+
+	/// The minimum time the recurring latejoin ruleset timer is allowed to be.
+	var/latejoin_delay_min = (5 MINUTES)
+
+	/// The maximum time the recurring latejoin ruleset timer is allowed to be.
+	var/latejoin_delay_max = (25 MINUTES)
+
+	/// When world.time is over this number the mode tries to inject a midround ruleset.
+	var/midround_injection_cooldown = 0
+
+	/// The minimum time the recurring midround ruleset timer is allowed to be.
+	var/midround_delay_min = (15 MINUTES)
+
+	/// The maximum time the recurring midround ruleset timer is allowed to be.
+	var/midround_delay_max = (35 MINUTES)
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -298,11 +305,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return TRUE
 
 /datum/game_mode/dynamic/proc/set_cooldowns()
-	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
+	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 
-	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
+	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
+	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time
 
 /datum/game_mode/dynamic/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
@@ -613,8 +620,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
-		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
+		var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
+		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time)
 
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
@@ -723,8 +730,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					drafted_rules[rule] = rule.get_weight()
 
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
-			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+			var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
+			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 
 /// Apply configurations to rule.
 /datum/game_mode/dynamic/proc/configure_ruleset(datum/dynamic_ruleset/ruleset)
