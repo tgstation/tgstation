@@ -148,7 +148,7 @@
 	var/obj/item/reagent_containers/cont = A
 	if(LAZYLEN(cont.reagents.reagent_list) == null)
 		return
-	var/out_message
+	var/list/out_message = list()
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
 	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.pH, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
@@ -158,5 +158,5 @@
 		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Base pH:</b> [R.pH].":"<b>Base pH:</b> [R.pH].")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
-	to_chat(user, "[out_message]</span>")
+	to_chat(user, "[out_message.Join()]</span>")
 	desc = "An electrode attached to a small circuit box that will analyse a beaker. It can be toggled to give a reduced or extended report. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.pH, 0.1)]."
