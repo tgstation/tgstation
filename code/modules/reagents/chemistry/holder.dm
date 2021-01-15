@@ -410,7 +410,13 @@
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
-		R.reaction_list = LAZYLISTDUPLICATE(reaction_list)
+		for(var/reaction in reaction_list)
+			var/datum/equilibrium/E = reaction
+			var/datum/equilibrium/new_E = new (E.reaction, src)
+			if(new_E.to_delete)//failed startup checks
+				qdel(new_E)
+			else
+				LAZYADD(R.reaction_list, new_E)
 		R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 		R.is_reacting = is_reacting
 
@@ -522,7 +528,13 @@
 		return
 
 	//pass over previous ongoing reactions before handle_reactions is called
-	R.reaction_list = LAZYLISTDUPLICATE(reaction_list)
+	for(var/reaction in reaction_list)
+		var/datum/equilibrium/E = reaction
+		var/datum/equilibrium/new_E = new (E.reaction, src)
+		if(new_E.to_delete)//failed startup checks
+			qdel(new_E)
+		else
+			LAZYADD(R.reaction_list, new_E)
 	R.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	R.is_reacting = is_reacting
 
@@ -731,16 +743,19 @@
 /// Also UPDATES the reaction list
 /// High potential for infinite loops if you're editing this.
 /datum/reagents/proc/handle_reactions()
+	if(QDELING(src))
+		CRASH("[my_atom] is trying to handle reactions while being flagged for deletion. It presently has [length(reagent_list)] number of reactants in it. If that is over 0 then something terrible happened.")
+
 	if(flags & NO_REACT)
 		if(is_reacting)
 			force_stop_reacting() //Force anything that is trying to to stop
-		return 0 //Yup, no reactions here. No siree.
+		return FALSE //Yup, no reactions here. No siree.
 
 	if(is_reacting)//Prevent wasteful calculations
 		if(datum_flags != DF_ISPROCESSING)//If we're reacting - but not processing (i.e. we've transfered)
 			START_PROCESSING(SSprocessing, src)
 		if(!(has_changed_state()))
-			return 0
+			return FALSE
 
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
@@ -858,11 +873,11 @@
 	//See equilibrium.dm for mechanics
 	for(var/e in reaction_list)
 		var/datum/equilibrium/E = e
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//if it's been flagged to delete
 		if(E.to_delete)
 			mix_message += end_reaction(E)
 			continue
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//otherwise continue reacting
 		E.react_timestep(delta_time)
 
@@ -883,14 +898,12 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/E)
-	//end reaction proc
 	E.reaction.reaction_finish(src, E.reacted_vol)
 	var/reaction_message = E.reaction.mix_message
 	if(E.reaction.mix_sound)
 		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
 	qdel(E)
-	LAZYREMOVE(reaction_list, E)
-	//Reaction occured
+	//removal from reaction_list is handled in equilibrium.Destroy()
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message

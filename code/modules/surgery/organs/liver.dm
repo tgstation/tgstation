@@ -108,6 +108,8 @@
 /obj/item/organ/liver/on_death()
 	. = ..()
 	var/mob/living/carbon/carbon_owner = owner
+	if(!owner)//If we're outside of a mob
+		return
 	if(!iscarbon(carbon_owner))
 		CRASH("on_death() called for [src] ([type]) with invalid owner ([isnull(owner) ? "null" : owner.type])")
 	if(carbon_owner.stat != DEAD)

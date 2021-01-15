@@ -36,16 +36,20 @@
 /datum/equilibrium/New(datum/chemical_reaction/input_reaction, datum/reagents/input_holder)
 	reaction = input_reaction
 	holder = input_holder
+	if(!holder || !reaction)
+		CRASH("A new [type] was set up, with incorrect/null input vars!")
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
 		to_delete = TRUE
 		return
-	if(!calculate_yield())
+	/*if(!calculate_yield())
 		to_delete = TRUE
-		return
+		return*/
 	reaction.on_reaction(holder, multiplier) 
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
+	react_timestep(1)
 
 /datum/equilibrium/Destroy()
+	LAZYREMOVE(holder.reaction_list, src)
 	holder = null
 	reaction = null
 	return ..()
