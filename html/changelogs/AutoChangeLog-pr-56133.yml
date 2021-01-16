@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - rscadd: "Guns are no longer directly printable from the protolathe."
-  - rscadd: "Gun kits to craft the various prototype firearms once printable from the security protolathe."
-  - balance: "Large energy crossbows now are bulky, like most other printed weapons."
-  - balance: "Crafted weapons now come with a firing pin."
