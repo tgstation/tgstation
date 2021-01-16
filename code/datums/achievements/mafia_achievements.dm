@@ -52,6 +52,12 @@
 	database_id = MAFIA_MEDAL_HOP
 	icon = "town"
 
+/datum/award/achievement/mafia/warden
+	name = "Warden Victory"
+	desc = "Make changelings think you're detective, go on lockdown, actual detective investigates you and dies. Cha cha real smooth!"
+	database_id = MAFIA_MEDAL_WARDEN
+	icon = "town"
+
 /datum/award/achievement/mafia/hos
 	name = "Head of Security Victory"
 	desc = "Certified not shitcurity."

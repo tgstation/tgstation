@@ -15,6 +15,8 @@
 	var/phase = MAFIA_PHASE_SETUP
 	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
+	///if enabled, the game has fallen under half pop and is sped up
+	var/speed_up = FALSE
 	///for debugging and testing a full game, or adminbuse. If this is not empty, it will use this as a setup. clears when game is over
 	var/list/custom_setup = list()
 	///first day has no voting, and thus is shorter
@@ -158,6 +160,20 @@
 	turn += 1
 	phase = MAFIA_PHASE_DAY
 	if(!check_victory())
+		if(!speed_up)//lets check if the game should be sped up, if not already.
+			var/living_players = 0
+			for(var/i in all_roles)
+				var/datum/mafia_role/player = i
+				if(player.game_status == MAFIA_ALIVE)
+					living_players += 1
+			if(living_players < all_roles.len / 2)
+				speed_up = TRUE
+				send_message("<span class='bold notice'>With only [living_players] living players left, the game timers have been sped up.</span>")
+				day_phase_period /= 2
+				voting_phase_period /= 2
+				judgement_phase_period /= 2
+				judgement_lynch_period /= 2
+				night_phase_period /= 2
 		if(turn == 1)
 			send_message("<span class='notice'><b>The selected map is [current_map.name]!</b></br>[current_map.description]</span>")
 			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
@@ -368,6 +384,13 @@
 	custom_setup = list()
 	turn = 0
 	votes = list()
+
+	day_phase_period = initial(day_phase_period)
+	voting_phase_period = initial(voting_phase_period)
+	judgement_phase_period = initial(judgement_phase_period)
+	judgement_lynch_period = initial(judgement_lynch_period)
+	night_phase_period = initial(night_phase_period)
+
 	//map gen does not deal with landmarks
 	QDEL_LIST(landmarks)
 	QDEL_NULL(town_center_landmark)
@@ -426,7 +449,7 @@
 	var/datum/mafia_role/victim = get_vote_winner("Mafia")
 	if(victim)
 		var/datum/mafia_role/killer = get_random_voter("Mafia")
-		if(SEND_SIGNAL(killer,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"mafia killing",victim) & MAFIA_PREVENT_ACTION)
+		if(!victim.can_action(src, killer, "changeling murder"))
 			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [victim.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
 		else
 			send_message("<span class='danger'>[killer.body.real_name] has attacked [victim.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
@@ -717,7 +740,7 @@
 					to_chat(usr, "<span class='notice'>You will now get messages from the game.</span>")
 					spectators += C.ckey
 				return TRUE
-	if(user_role.game_status == MAFIA_DEAD)
+	if(user_role && user_role.game_status == MAFIA_DEAD)
 		return
 	//User actions (just living)
 	switch(action)
@@ -789,7 +812,7 @@
 /**
   * Returns a semirandom setup, with...
   * Town, Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
-  * Mafia, 3 normal mafia
+  * Mafia, 2 normal mafia and one special role
   * Neutral, two disruption roles, sometimes one is a killing.
   *
   * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
@@ -798,7 +821,8 @@
 	var/invests_left = 2
 	var/protects_left = 1
 	var/miscs_left = 1
-	var/mafiareg_left = 3
+	var/mafiareg_left = 2
+	var/mafiaspe_left = 1
 	var/killing_role = prob(50)
 	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
 	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + killing_role + disruptors)
@@ -823,6 +847,9 @@
 		else if(mafiareg_left)
 			add_setup_role(random_setup, MAFIA_REGULAR)
 			mafiareg_left--
+		else if(mafiaspe_left)
+			add_setup_role(random_setup, MAFIA_SPECIAL)
+			mafiaspe_left--
 		else if(killing_role)
 			add_setup_role(random_setup, NEUTRAL_KILL)
 			killing_role--

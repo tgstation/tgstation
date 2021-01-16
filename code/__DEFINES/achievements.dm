@@ -45,6 +45,7 @@
 #define MAFIA_MEDAL_LAWYER			"Lawyer"
 #define MAFIA_MEDAL_HOP				"Head of Personnel"
 #define MAFIA_MEDAL_HOS				"Head of Security"
+#define MAFIA_MEDAL_WARDEN			"Warden"
 #define MAFIA_MEDAL_CHANGELING		"CHANGELING"
 #define MAFIA_MEDAL_THOUGHTFEEDER	"Thoughtfeeder"
 #define MAFIA_MEDAL_TRAITOR			"Traitor"

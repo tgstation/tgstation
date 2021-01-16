@@ -30,6 +30,7 @@
 #define ROLE_CAN_KILL		(1<<1) //has the ability to kill at night and thus, blocks the game from ending with other teams alive.
 #define ROLE_REVEALED		(1<<2) //role is public to all other players in the game.
 #define ROLE_VULNERABLE		(1<<3) //can not be defended, protected, or any other form of protection. all kills succeed no matter what.
+#define ROLE_ROLEBLOCKED	(1<<4) //cannot perform any actions that night, preselected actions fail
 
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2
@@ -41,11 +42,11 @@
 #define MAFIA_ALIVE 1
 #define MAFIA_DEAD 2
 
+#define COMSIG_MAFIA_ON_VISIT "mafia_onvisit"
+#define MAFIA_VISIT_INTERRUPTED 1
+
 #define COMSIG_MAFIA_ON_KILL "mafia_onkill"
 #define MAFIA_PREVENT_KILL 1
-
-#define COMSIG_MAFIA_CAN_PERFORM_ACTION "mafia_can_perform_action"
-#define MAFIA_PREVENT_ACTION 1
 
 //in order of events + game end
 

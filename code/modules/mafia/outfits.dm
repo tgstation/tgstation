@@ -77,6 +77,16 @@
 	head = /obj/item/clothing/head/hos/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 
+/datum/outfit/mafia/warden
+	name = "Mafia Warden"
+
+	uniform = /obj/item/clothing/under/rank/security/warden
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest/warden/alt
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/warden
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+
 //mafia
 
 /datum/outfit/mafia/changeling
