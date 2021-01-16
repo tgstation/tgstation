@@ -155,3 +155,27 @@
 #define SPLASHSCREEN_LAYER 54
 #define SPLASHSCREEN_PLANE 54
 #define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
+
+//test, do not merge
+#define CLICKCATCHER_PLANE -7
+#define PLANE_SPACE -6
+#define PLANE_SPACE_PARALLAX -5
+#define OPENSPACE_PLANE -4 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -3 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define FLOOR_PLANE -2
+#define GAME_PLANE -1
+#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+#define EMISSIVE_BLOCKER_PLANE 1
+#define EMISSIVE_PLANE 2
+#define EMISSIVE_UNBLOCKABLE_PLANE 3
+#define LIGHTING_PLANE 4
+#define O_LIGHTING_VISUAL_PLANE 5
+#define ABOVE_LIGHTING_PLANE 6
+#define BYOND_LIGHTING_PLANE 7
+#define CAMERA_STATIC_PLANE 8
+#define RUNECHAT_PLANE 9
+#define ATMOS_GROUP_PLANE 10
+#define FULLSCREEN_PLANE 11
+#define HUD_PLANE 12
+#define ABOVE_HUD_PLANE 13
+#define SPLASHSCREEN_PLANE 14
