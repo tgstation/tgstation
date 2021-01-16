@@ -86,6 +86,7 @@
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
+	ADD_TRAIT(src, TRAIT_CANT_RIDE, INNATE_TRAIT)
 
 	is_adult = new_is_adult
 

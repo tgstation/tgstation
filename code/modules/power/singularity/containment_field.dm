@@ -19,14 +19,14 @@
 
 /obj/machinery/field/containment/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
 
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
 	FG2.fields -= src
 	CanAtmosPass = ATMOS_PASS_YES
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

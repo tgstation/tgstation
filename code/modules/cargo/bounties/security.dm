@@ -1,10 +1,3 @@
-/datum/bounty/item/security/riotshotgun
-	name = "Riot Shotguns"
-	description = "Hooligans have boarded CentCom! Ship riot shotguns quick, or things are going to get dirty."
-	reward = CARGO_CRATE_VALUE * 10
-	required_count = 2
-	wanted_types = list(/obj/item/gun/ballistic/shotgun/riot)
-
 /datum/bounty/item/security/recharger
 	name = "Rechargers"
 	description = "Nanotrasen military academy is conducting marksmanship exercises. They request that rechargers be shipped."
@@ -45,3 +38,38 @@
 	reward = CARGO_CRATE_VALUE * 2
 	required_count = 5
 	wanted_types = list(/obj/item/restraints/handcuffs)
+
+
+///Bounties that require you to perform documentation and inspection of your department to send to centcom.
+/datum/bounty/item/security/paperwork
+	name = "Routine Security Inspection"
+	description = "Perform a routine security inspection using an in-spect scanner on the following general area on station:"
+	required_count = 1
+	wanted_types = list(/obj/item/report)
+	reward = CARGO_CRATE_VALUE * 5
+	var/area/demanded_area
+
+/datum/bounty/item/security/paperwork/New()
+	///list of areas for security to choose from to perform an inspection.
+	var/static/list/possible_areas = list(\
+		/area/maintenance,\
+		/area/library,\
+		/area/crew_quarters,\
+		/area/hallway/primary,\
+		/area/lawoffice,\
+		/area/security/main,\
+		/area/security/prison,\
+		/area/security/range,\
+		/area/security/checkpoint)
+	demanded_area = pick(possible_areas)
+	name = name + ": [initial(demanded_area.name)]"
+	description = initial(description) + " [initial(demanded_area.name)]"
+
+/datum/bounty/item/security/paperwork/applies_to(obj/O)
+	. = ..()
+	if(!istype(O, /obj/item/report))
+		return FALSE
+	var/obj/item/report/slip = O
+	if(istype(slip.scanned_area, demanded_area))
+		return TRUE
+	return FALSE

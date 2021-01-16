@@ -140,6 +140,9 @@
 
 	create_modularInterface()
 
+	module = new /obj/item/robot_module(src)
+	module.rebuild_modules()
+
 	if(lawupdate)
 		make_laws()
 		if(!TryConnectToAI())
@@ -152,8 +155,6 @@
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
-	module = new /obj/item/robot_module(src)
-	module.rebuild_modules()
 	update_icons()
 	. = ..()
 
@@ -561,14 +562,14 @@
 		set_light_color(COLOR_RED) //This should only matter for doomsday borgs, as any other time the lamp will be off and the color not seen
 		set_light_range(1) //Again, like above, this only takes effect when the light is forced on by doomsday mode.
 		lamp_enabled = FALSE
-		lampButton.update_icon()
+		lampButton?.update_icon()
 		update_icons()
 		return
 	set_light_range(lamp_intensity)
 	set_light_color(lamp_doom? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 	set_light_on(TRUE)
 	lamp_enabled = TRUE
-	lampButton.update_icon()
+	lampButton?.update_icon()
 	update_icons()
 
 /mob/living/silicon/robot/proc/deconstruct()
