@@ -158,7 +158,7 @@
 	handle_mist()
 	if(can_refill)
 		reagents.add_reagent(reagent_id, refill_rate * delta_time)
-		update_appearance()
+	update_appearance()
 	if(reagents.total_volume == reagents.maximum_volume)
 		return PROCESS_KILL
 
