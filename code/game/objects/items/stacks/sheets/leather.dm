@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	/// Kelvin to start drying
 	var/drying_threshold_temperature = 500
 
-/obj/item/stack/sheet/wethide/Initialize(mapload, new_amount, merge)
+/obj/item/stack/sheet/wethide/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	AddElement(/datum/element/dryable, /obj/item/stack/sheet/leather)
 
