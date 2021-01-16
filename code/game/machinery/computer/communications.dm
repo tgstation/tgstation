@@ -44,6 +44,7 @@
 /obj/machinery/computer/communications/Initialize()
 	. = ..()
 	GLOB.shuttle_caller_list += src
+	AddComponent(/datum/component/gps, "Secured Communications Signal")
 
 /// Are we NOT a silicon, AND we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_non_silicon_captain(mob/user)
@@ -95,8 +96,15 @@
 		if ("answerMessage")
 			if (!authenticated(usr))
 				return
-			var/answer_index = text2num(params["answer"])
-			var/message_index = text2num(params["message"])
+
+			var/answer_index = params["answer"]
+			var/message_index = params["message"]
+
+			// If either of these aren't numbers, then bad voodoo.
+			if(!isnum(answer_index) || !isnum(message_index))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] provided an invalid index type when replying to a message on [src] [ADMIN_JMP(src)]. This should not happen. Please check with a maintainer and/or consult tgui logs.")
+				CRASH("Non-numeric index provided when answering comms console message.")
+
 			if (!answer_index || !message_index || answer_index < 1 || message_index < 1)
 				return
 			var/datum/comm_message/message = messages[message_index]

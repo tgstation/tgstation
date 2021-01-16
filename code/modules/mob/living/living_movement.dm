@@ -51,10 +51,6 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-
-/mob/living/can_zFall(turf/T, levels)
-	return ..()
-
 /mob/living/canZMove(dir, turf/target)
 	return can_zTravel(target, dir) && (movement_type & FLYING | FLOATING)
 

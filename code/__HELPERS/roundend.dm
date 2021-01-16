@@ -1,6 +1,8 @@
 #define POPCOUNT_SURVIVORS "survivors"					//Not dead at roundend
 #define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcom/shuttles marked as escaped
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" 	//Emergency shuttle only.
+#define PERSONAL_LAST_ROUND "personal last round"
+#define SERVER_LAST_ROUND "server last round"
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
@@ -359,20 +361,48 @@
 /client/proc/roundend_report_file()
 	return "data/roundend_reports/[ckey].html"
 
-/datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, previous = FALSE)
+/**
+ * Log the round-end report as an HTML file
+ *
+ * Composits the roundend report, and saves it in two locations.
+ * The report is first saved along with the round's logs
+ * Then, the report is copied to a fixed directory specifically for 
+ * housing the server's last roundend report. In this location, 
+ * the file will be overwritten at the end of each shift.
+ */
+/datum/controller/subsystem/ticker/proc/log_roundend_report()
+	var/filename = "[GLOB.log_directory]/round_end_data.html"
+	var/list/parts = list()
+	parts += "<div class='panel stationborder'>"
+	parts += GLOB.survivor_report
+	parts += "</div>"
+	parts += GLOB.common_report
+	var/content = parts.Join()
+	//Log the rendered HTML in the round log directory
+	fdel(filename)
+	text2file(content, filename)
+	//Place a copy in the root folder, to be overwritten each round. 
+	filename = "data/server_last_roundend_report.html"
+	fdel(filename)
+	text2file(content, filename)
+
+/datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, report_type = null)
 	var/datum/browser/roundend_report = new(C, "roundend")
 	roundend_report.width = 800
 	roundend_report.height = 600
 	var/content
 	var/filename = C.roundend_report_file()
-	if(!previous)
+	if(report_type == PERSONAL_LAST_ROUND) //Look at this player's last round
+		content = file2text(filename)
+	else if (report_type == SERVER_LAST_ROUND) //Look at the last round that this server has seen
+		content = file2text("data/server_last_roundend_report.html")
+	else //report_type is null, so make a new report based on the current round and show that to the player
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
 		remove_verb(C, /client/proc/show_previous_roundend_report)
 		fdel(filename)
 		text2file(content, filename)
-	else
-		content = file2text(filename)
+
 	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
@@ -409,8 +439,9 @@
 /datum/controller/subsystem/ticker/proc/display_report(popcount)
 	GLOB.common_report = build_roundend_report()
 	GLOB.survivor_report = survivor_report(popcount)
+	log_roundend_report()
 	for(var/client/C in GLOB.clients)
-		show_roundend_report(C, FALSE)
+		show_roundend_report(C)
 		give_show_report_button(C)
 		CHECK_TICK
 
@@ -581,7 +612,7 @@
 
 /datum/action/report/Trigger()
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
-		SSticker.show_roundend_report(owner.client, FALSE)
+		SSticker.show_roundend_report(owner.client)
 
 /datum/action/report/IsAvailable()
 	return 1
