@@ -170,12 +170,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/is_blocked_turf(exclude_mobs, list/excluded_objects = list())
 	if(density)
 		return TRUE
-	var/list/excluded_typecache = typecacheof(excluded_objects)
 	for(var/i in contents)
 		var/atom/thing = i
-		if(excluded_typecache[thing.type])
-			continue
-		if(thing.density && (!exclude_mobs || !ismob(thing)))
+		var/excuded = FALSE
+		for(var/excluded in excluded_objects)
+			if(istype(thing, excluded))
+				excuded = TRUE
+		if(!excuded && thing.density && (!exclude_mobs || !ismob(thing)))
 			return TRUE
 	return FALSE
 

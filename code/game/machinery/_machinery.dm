@@ -564,7 +564,7 @@
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
 		var/turf/ground = get_turf(src)
-		var/list/excluded_objects = list(src)
+		var/list/excluded_objects = list(type)
 		if(anchorables)
 			excluded_objects += anchorables
 		if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_objects = excluded_objects))

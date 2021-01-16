@@ -64,6 +64,8 @@
 		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
+	if(anchorables)
+		anchorables = string_list(anchorables)
 
 	. = ..() //Do this after, else mat datums is mad.
 
