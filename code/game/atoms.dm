@@ -1777,7 +1777,7 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/proc/point_at(atom/A)
+/atom/movable/proc/point_at(atom/A)
 	if(!isturf(loc))
 		return FALSE
 

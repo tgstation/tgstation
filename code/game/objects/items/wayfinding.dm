@@ -94,7 +94,7 @@
 	say("Ouch.")
 	//An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
 	if(!isnull(loc))
-		explosion(get_truf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
+		explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
 	return ..()
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
@@ -182,7 +182,7 @@
 				var/obj/item/holochip/holochip = new (loc)
 				holochip.credits = refund_amt
 				holochip.name = "[holochip.credits] credit holochip"
-				if(istype(user, /mob/living/carbon/human))
+				if(ishuman(user))
 					var/mob/living/carbon/human/customer = user
 					customer.put_in_hands(holochip)
 
