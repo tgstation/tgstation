@@ -44,9 +44,7 @@
 	var/scaled_times = 0
 	/// Used for the roundend report
 	var/total_cost = 0
-	/// A flag that determines how the ruleset is handled
-	/// HIGHLANDER_RULESET are rulesets can end the round.
-	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
+	/// A flag that determines how the ruleset is handled. Check __DEFINES/dynamic.dm for an explanation of the accepted values.
 	var/flags = NONE
 	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
 	var/pop_per_requirement = 0

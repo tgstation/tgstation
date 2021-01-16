@@ -60,7 +60,6 @@
 	cost = 5
 	requirements = list(40,30,20,10,10,10,10,10,10,10)
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
 
 //////////////////////////////////////////////
 //                                          //

@@ -875,10 +875,6 @@
 		<b>No stacking:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_no_stacking=1'> <b>[GLOB.dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
 		<br/>Unless the threat goes above [GLOB.dynamic_stacking_limit], only one "round-ender" ruleset will be drafted. <br/>
 		<br/>
-		<b>Classic secret mode:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_classic_secret=1'> <b>[GLOB.dynamic_classic_secret ? "ON" : "OFF"]</b></a>.
-		<br/>Only one roundstart ruleset will be drafted. Only traitors and minor roles will latespawn. <br/>
-		<br/>
-		<br/>
 		<b>Forced threat level:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
 		<br/>The value threat is set to if it is higher than -1.<br/>
 		<br/>

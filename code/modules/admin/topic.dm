@@ -722,19 +722,6 @@
 		log_admin("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
 		message_admins("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
 		dynamic_mode_options(usr)
-
-	else if(href_list["f_dynamic_classic_secret"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(!SSticker.is_mode("dynamic"))
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-
-		GLOB.dynamic_classic_secret = !GLOB.dynamic_classic_secret
-		log_admin("[key_name(usr)] set 'classic_secret' to [GLOB.dynamic_classic_secret].")
-		message_admins("[key_name(usr)] set 'classic_secret' to [GLOB.dynamic_classic_secret].")
-		dynamic_mode_options(usr)
-
 	else if(href_list["f_dynamic_stacking_limit"])
 		if(!check_rights(R_ADMIN))
 			return

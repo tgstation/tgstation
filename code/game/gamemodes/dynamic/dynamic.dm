@@ -10,9 +10,6 @@ GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
 // Higher value will favour extreme rounds and
 // lower value rounds closer to the average.
 GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
-// If enabled only picks a single starting rule and executes only autotraitor midround ruleset.
-// TODO: Make this work with Dynamic 2021
-GLOBAL_VAR_INIT(dynamic_classic_secret, FALSE)
 // If enabled does not accept or execute any rulesets.
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
 // How high threat is required for HIGHLANDER_RULESETs stacking.
@@ -128,7 +125,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
-	dat += "Classic secret (only autotraitor): <a href='?src=\ref[src];[HrefToken()];classic_secret=1'><b>[GLOB.dynamic_classic_secret ? "On" : "Off"]</b></a><br/>"
 	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
 	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
@@ -160,8 +156,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
 	else if (href_list["no_stacking"])
 		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
-	else if (href_list["classic_secret"])
-		GLOB.dynamic_classic_secret = !GLOB.dynamic_classic_secret
 	else if (href_list["adjustthreat"])
 		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
 		if(!threatadd)
@@ -299,10 +293,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/can_start()
 	message_admins("Dynamic mode parameters for the round:")
 	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
-	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"].")
+	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit].")
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
-	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit], Classic secret is [GLOB.dynamic_classic_secret ? "Enabled" : "Disabled"].")
+	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit].")
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
 	else
@@ -618,9 +612,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (!rule.weight)
 					continue
 				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && mid_round_budget >= rule.cost)
-					// Classic secret : only autotraitor/minor roles
-					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-						continue
 					// If admins have disabled dynamic from picking from the ghost pool
 					if(rule.ruletype == "Latejoin" && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
 						continue
@@ -699,9 +690,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if (!rule.weight)
 				continue
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && mid_round_budget >= rule.cost)
-				// Classic secret : only autotraitor/minor roles
-				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-					continue
 				// No stacking : only one round-ender, unless threat level > stacking_limit.
 				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)

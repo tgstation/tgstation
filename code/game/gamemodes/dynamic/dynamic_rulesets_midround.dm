@@ -171,7 +171,6 @@
 	cost = 10
 	requirements = list(50,40,30,20,10,10,10,10,10,10)
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
