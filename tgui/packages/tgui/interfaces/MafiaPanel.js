@@ -7,22 +7,18 @@ import { Window } from '../layouts';
 export const MafiaPanel = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    players,
     actions,
     phase,
     roleinfo,
     role_theme,
     admin_controls,
-    judgement_phase,
-    timeleft,
-    all_roles,
   } = data;
   return (
     <Window
       title="Mafia"
       theme={role_theme}
       width={650}
-      height={600}
+      height={580}
       resizable>
       <Window.Content>
         <Stack fill vertical>
@@ -36,7 +32,7 @@ export const MafiaPanel = (props, context) => {
               <MafiaRole />
             </Stack.Item>
           )}
-          {!!actions && actions.map(action => (
+          {actions?.map(action => (
             <Stack.Item key={action}>
               <Button
                 onClick={() => act('mf_action', {
@@ -52,27 +48,29 @@ export const MafiaPanel = (props, context) => {
             </Stack.Item>
           )}
           {phase !== 'No Game' && (
-            <>
-              <Stack.Item>
-                <MafiaPlayers />
-              </Stack.Item>
-              <Stack.Item grow>
-                <Stack fill vertical>
-                  <Stack.Item>
-                    <MafiaListOfRoles />
-                  </Stack.Item>
-                  {!!roleinfo && (
+            <Stack.Item grow>
+              <Stack fill>
+                <Stack.Item grow={1.34} basis={0}>
+                  <MafiaPlayers />
+                </Stack.Item>
+                <Stack.Item grow={1} basis={0}>
+                  <Stack fill vertical>
                     <Stack.Item grow>
-                      <Section fill scrollable>
-                        {roleinfo?.action_log?.map(line => (
-                          <Box key={line}>{line}</Box>
-                        ))}
-                      </Section>
+                      <MafiaListOfRoles />
                     </Stack.Item>
-                  )}
-                </Stack>
-              </Stack.Item>
-            </>
+                    {!!roleinfo && (
+                      <Stack.Item height="80px">
+                        <Section fill scrollable>
+                          {roleinfo?.action_log?.map(line => (
+                            <Box key={line}>{line}</Box>
+                          ))}
+                        </Section>
+                      </Stack.Item>
+                    )}
+                  </Stack>
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
           )}
           {!!admin_controls && (
             <Stack.Item>
@@ -137,6 +135,7 @@ const MafiaLobby = (props, context) => {
         <Stack
           key={lobbyist}
           className="candystripe"
+          p={1}
           align="baseline">
           <Stack.Item grow>
             {lobbyist.name}
@@ -166,9 +165,17 @@ const MafiaRole = (props, context) => {
       title={phase}
       minHeight="100px"
       maxHeight="50px"
-      buttons={
-        <TimeDisplay auto="down" value={timeleft} />
-      }>
+      buttons={(
+        <Box
+          style={{
+            'font-family': 'Consolas, monospace',
+            'font-size': '14px',
+            'line-height': 1.5,
+            'font-weight': 'bold',
+          }}>
+          <TimeDisplay auto="down" value={timeleft} />
+        </Box>
+      )}>
       <Stack align="center">
         <Stack.Item grow>
           <Box bold>
@@ -210,7 +217,10 @@ const MafiaListOfRoles = (props, context) => {
   } = data;
   return (
     <Section
+      fill
+      scrollable
       title="Roles and Notes"
+      minHeight="120px"
       buttons={
         <>
           <Button
@@ -234,8 +244,7 @@ const MafiaListOfRoles = (props, context) => {
           />
         </>
       }>
-      <Flex
-        direction="column">
+      <Flex direction="column">
         {all_roles?.map(r => (
           <Flex.Item
             key={r}
@@ -331,40 +340,27 @@ const MafiaPlayers = (props, context) => {
     players,
   } = data;
   return (
-    <Section title="Players">
+    <Section fill scrollable title="Players">
       <Flex direction="column">
-        {!!players && players.map(player => (
+        {players?.map(player => (
           <Flex.Item
             height="30px"
             className="Section__title candystripe"
             key={player.ref}>
-            <Flex
-              height="18px"
-              justify="space-between"
-              align="center">
-              <Flex.Item basis={16}>
-                {!!player.alive && (
-                  <Box>{player.name}</Box>
-                )}
-                {!player.alive && (
-                  <Box color="red">{player.name}</Box>
-                )}
-              </Flex.Item>
-              <Flex.Item>
-                {!player.alive && (
-                  <Box color="red">DEAD</Box>
-                )}
-              </Flex.Item>
-              <Flex.Item>
+            <Stack height="18px" align="center">
+              <Stack.Item grow color={!player.alive && 'red'}>
+                {player.name} {!player.alive && '(DEAD)'}
+              </Stack.Item>
+              <Stack.Item shrink={0}>
                 {player.votes !== undefined
                   && !!player.alive
                   && `Votes: ${player.votes}`}
-              </Flex.Item>
-              <Flex.Item grow={1} />
-              <Flex.Item>
+              </Stack.Item>
+              <Stack.Item shrink={0} minWidth="42px" textAlign="center">
                 {player.actions?.map(action => (
                   <Button
                     key={action}
+                    fluid
                     onClick={() => act('mf_targ_action', {
                       atype: action,
                       target: player.ref,
@@ -372,10 +368,10 @@ const MafiaPlayers = (props, context) => {
                     {action}
                   </Button>
                 ))}
-              </Flex.Item>
-            </Flex>
-          </Flex.Item>)
-        )}
+              </Stack.Item>
+            </Stack>
+          </Flex.Item>
+        ))}
       </Flex>
     </Section>
   );
