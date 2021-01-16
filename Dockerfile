@@ -41,8 +41,7 @@ RUN apt-get install -y --no-install-recommends \
 COPY . .
 
 RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build \
-    && tools/deploy.sh /deploy \
-	&& rm /deploy/*.dll
+    && tools/deploy.sh /deploy
 
 # rust = base + rustc and i686 target
 FROM base AS rust
