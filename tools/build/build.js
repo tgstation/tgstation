@@ -17,8 +17,11 @@ const taskTgui = new Task('tgui')
   .depends('tgui/**/package.json')
   .depends('tgui/packages/**/*.js')
   .depends('tgui/packages/**/*.jsx')
-  .provides('tgui/public/*.bundle.*')
-  .provides('tgui/public/*.chunk.*')
+  .provides('tgui/public/tgui.bundle.css')
+  .provides('tgui/public/tgui.bundle.js')
+  .provides('tgui/public/tgui-common.chunk.js')
+  .provides('tgui/public/tgui-panel.bundle.css')
+  .provides('tgui/public/tgui-panel.bundle.js')
   .build(async () => {
     if (process.platform === 'win32') {
       await exec('powershell.exe',
