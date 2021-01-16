@@ -26,12 +26,13 @@
 		name = "weakened [initial(name)]"
 		desc = "[damaged_desc]"
 		atmosblock = FALSE
+		air_update_turf(TRUE, FALSE)
 	else
 		icon_state = initial(icon_state)
 		name = initial(name)
 		desc = initial(desc)
 		atmosblock = TRUE
-	air_update_turf(1)
+		air_update_turf(TRUE, TRUE)
 
 /obj/structure/blob/shield/reflective
 	name = "reflective blob"

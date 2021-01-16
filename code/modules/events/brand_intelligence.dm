@@ -19,8 +19,7 @@
 		"Your money can buy happiness!", \
 		"Engage direct marketing!", \
 		"Advertising is legalized lying! But don't let that put you off our great deals!", \
-		"You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.",
-	)
+		"You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.")
 
 
 /datum/round_event/brand_intelligence/announce(fake)
@@ -59,22 +58,20 @@
 	if(!vendingMachines.len)	//if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
 			if(prob(70) && !QDELETED(upriser))
-				var/mob/living/simple_animal/hostile/mimic/copy/M = new(upriser.loc, upriser, null, 1) // it will delete upriser on creation and override any machine checks
-				M.faction = list("profit")
-				M.speak = string_list(rampant_speeches.Copy())
-				M.speak_chance = 7
+				upriser.ai_controller = new /datum/ai_controller/vending_machine(upriser)
+				infectedMachines.Remove(upriser)
 			else
 				explosion(upriser.loc, -1, 1, 2, 4, 0)
 				qdel(upriser)
 
 		kill()
 		return
-	if(ISMULTIPLE(activeFor, 4))
+	if(ISMULTIPLE(activeFor, 2))
 		var/obj/machinery/vending/rebel = pick(vendingMachines)
 		vendingMachines.Remove(rebel)
 		infectedMachines.Add(rebel)
 		rebel.shut_up = 0
 		rebel.shoot_inventory = 1
 
-		if(ISMULTIPLE(activeFor, 8))
+		if(ISMULTIPLE(activeFor, 4))
 			originMachine.speak(pick(rampant_speeches))
