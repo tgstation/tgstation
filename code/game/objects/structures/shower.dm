@@ -6,10 +6,6 @@
 #define SHOWER_BOILING_TEMP 400
 #define SHOWER_REACTION_MULTIPLIER 0.025
 
-/// Whether the shower can automatically refill with it's reagent.
-#define SHOWER_CAN_REFILL			(1<<0)
-/// Whether players can toggle whether the shower automatically refills with it's reagent.
-#define SHOWER_CAN_TOGGLE_REFILL	(1<<1)
 
 /obj/machinery/shower
 	name = "shower"
@@ -30,8 +26,10 @@
 	var/reagent_capacity = 200
 	///How many units the shower refills every second.
 	var/refill_rate = 0.5
-	/// Whether the shower can refill.
-	var/can_refill = (SHOWER_CAN_REFILL|SHOWER_CAN_TOGGLE_REFILL)
+	/// Whether or not the shower's water reclaimer is operating.
+	var/can_refill = TRUE
+	/// Whether to allow players to toggle the water reclaimer.
+	var/can_toggle_refill = TRUE
 
 /obj/machinery/shower/Initialize()
 	. = ..()
@@ -75,11 +73,11 @@
 
 /obj/machinery/shower/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(. || !(can_refill & SHOWER_CAN_TOGGLE_REFILL))
+	if(. || !can_toggle_refill)
 		return
 
-	can_refill ^= SHOWER_CAN_REFILL
-	to_chat(user, "<span class=notice>You [(can_refill & SHOWER_CAN_REFILL) ? "en" : "dis"]able the shower's water recycler.</span>")
+	can_refill = !can_refill
+	to_chat(user, "<span class=notice>You [can_refill ? "en" : "dis"]able the shower's water recycler.</span>")
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	return TRUE
 
@@ -158,7 +156,7 @@
 	on = FALSE
 	soundloop.stop()
 	handle_mist()
-	if(can_refill & SHOWER_CAN_REFILL)
+	if(can_refill)
 		reagents.add_reagent(reagent_id, refill_rate * delta_time)
 	update_icon()
 	if(reagents.total_volume == reagents.maximum_volume)
@@ -216,3 +214,9 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 #undef SHOWER_REACTION_MULTIPLIER
+#undef SHOWER_BOILING_TEMP
+#undef SHOWER_BOILING
+#undef SHOWER_NORMAL_TEMP
+#undef SHOWER_NORMAL
+#undef SHOWER_FREEZING_TEMP
+#undef SHOWER_FREEZING
