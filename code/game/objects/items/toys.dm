@@ -1495,3 +1495,43 @@
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
+
+
+/*
+ * Eldrich Toys
+ */
+
+/obj/item/toy/eldrich_book
+	name = "Codex Cicatrix"
+	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "book"
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb_continuous = list("sacrifices", "transmutes", "graspes", "curses")
+	attack_verb_simple = list("sacrifice", "transmute", "graspe", "curse")
+	var/open = FALSE
+
+/obj/item/toy/eldrich_book/attack_self(mob/user)
+	open = !open
+	update_icon()
+
+/obj/item/toy/eldrich_book/update_icon()
+	icon_state = open ? "book_open" : "book"
+
+/*
+ * Fake tear
+ */
+
+/obj/item/toy/reality_pierce
+	name = "Pierced reality"
+	desc = "Hah. You thought it was the real deal!"
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "pierced_illusion"
+
+/obj/item/storage/box/heretic_box
+	name = "box of pierced realities"
+	desc = "A box containing toys resembling pierced realities."
+
+/obj/item/storage/box/heretic_box/PopulateContents()
+	for(var/i in 1 to rand(1,4))
+		new /obj/item/toy/reality_pierce(src)
