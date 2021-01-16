@@ -57803,7 +57803,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
-/area/space)
+/area/science/research)
 "eSm" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/light_construct{
