@@ -432,9 +432,9 @@
 	else
 		var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
-			if(prob(20)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
+			if(DT_PROB(10, delta_time)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				M.heal_bodypart_damage(brute = 1, burn = 1)
-				. = 1
+				. = TRUE
 	..()
 
 /datum/reagent/consumable/sprinkles

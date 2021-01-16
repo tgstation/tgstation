@@ -56,7 +56,7 @@
 		return BLOOD_FLOW_DECREASING
 	return BLOOD_FLOW_STEADY
 
-/datum/wound/pierce/handle_process()
+/datum/wound/pierce/handle_process(delta_time, times_fired)
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
 	if(victim.bodytemperature < (BODYTEMP_NORMAL -  10))

@@ -1394,7 +1394,7 @@
 		if(!was_working)
 			to_chat(M, "<span class='green'>You can feel your flowing blood start thickening!</span>")
 			was_working = TRUE
-		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - clot_rate)
+		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - (clot_rate * REM * delta_time))
 	else if(was_working)
 		was_working = FALSE
 

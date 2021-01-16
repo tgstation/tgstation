@@ -90,7 +90,7 @@
 	if(clot_rate < 0)
 		return BLOOD_FLOW_INCREASING
 
-/datum/wound/slash/handle_process()
+/datum/wound/slash/handle_process(delta_time, times_fired)
 	if(victim.stat == DEAD)
 		blood_flow -= max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN) * delta_time
 		if(blood_flow < minimum_flow)
