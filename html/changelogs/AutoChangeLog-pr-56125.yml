@@ -1,5 +1,0 @@
-author: "Avunia Takiya"
-delete-after: True
-changes: 
-  - bugfix: "Brioche cakes don't look like errors anymore, visually"
-  - rscadd: "Brioche cakes and its slices have a specific taste now"
