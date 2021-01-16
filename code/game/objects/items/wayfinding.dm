@@ -117,7 +117,6 @@
 
 	var/msg
 	var/dispense = TRUE
-	var/obj/item/pinpointer/wayfinding/point_at
 	var/pnpts_found = 0
 	for(var/obj/item/pinpointer/wayfinding/WP in view(9, src))
 		point_at(WP)
@@ -147,9 +146,6 @@
 
 	if(!dispense)
 		set_expression("sad", 2 SECONDS)
-		if(point_at)
-			msg += ". Get [point_at.owner == user.real_name ? "your" : "that"] pinpointer over there instead"
-			point_at(point_at)
 		say("<span class='robot'>Sorry, [user.first_name()]! You'll need [msg]!</span>")
 	else
 		set_expression("veryhappy", 2 SECONDS)
