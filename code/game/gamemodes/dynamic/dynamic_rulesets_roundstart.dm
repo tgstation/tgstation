@@ -529,6 +529,7 @@
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	flags = LONE_RULESET
 
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()
 	. = ..()
@@ -579,6 +580,7 @@
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	flags = LONE_RULESET
 	var/players_per_carrier = 30
 	var/monkeys_to_win = 1
 	var/escaped_monkeys = 0
@@ -640,6 +642,7 @@
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	flags = LONE_RULESET
 	var/meteordelay = 2000
 	var/nometeors = FALSE
 	var/rampupdelta = 5
