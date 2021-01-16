@@ -26,7 +26,7 @@
 				to_chat(affected_mob, "<span class='notice'>Your stomach flutters.</span>")
 			if(DT_PROB(2.5, delta_time))
 				to_chat(affected_mob, "<span class='notice'>You feel panicky.</span>")
-			if(DT_PROB(2, delta_time))
+			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You're overtaken with panic!</span>")
 				affected_mob.add_confusion(rand(2,3))
 		if(4)

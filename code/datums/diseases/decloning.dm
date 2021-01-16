@@ -33,7 +33,7 @@
 				affected_mob.emote("itch")
 			if(DT_PROB(1, delta_time))
 				affected_mob.emote("drool")
-			if(prob(3))
+			if(DT_PROB(1.5, delta_time))
 				affected_mob.adjustCloneLoss(1, FALSE)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, "<span class='danger'>Your skin feels strange.</span>")

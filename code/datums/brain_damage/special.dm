@@ -57,42 +57,43 @@
 	COOLDOWN_DECLARE(portal_cooldown)
 
 /datum/brain_trauma/special/bluespace_prophet/on_life(delta_time, times_fired)
-	if(COOLDOWN_FINISHED(src, portal_cooldown))
-		COOLDOWN_START(src, portal_cooldown, 10 SECONDS)
+	if(!COOLDOWN_FINISHED(src, portal_cooldown))
+		return
 
-		var/list/turf/possible_turfs = list()
-		for(var/turf/T in range(owner, 8))
-			if(T.density)
-				continue
+	COOLDOWN_START(src, portal_cooldown, 10 SECONDS)
+	var/list/turf/possible_turfs = list()
+	for(var/turf/T in range(owner, 8))
+		if(T.density)
+			continue
 
-			var/clear = TRUE
-			for(var/obj/O in T)
-				if(O.density)
-					clear = FALSE
-					break
-			if(clear)
-				possible_turfs += T
+		var/clear = TRUE
+		for(var/obj/O in T)
+			if(O.density)
+				clear = FALSE
+				break
+		if(clear)
+			possible_turfs += T
 
-		if(!LAZYLEN(possible_turfs))
-			return
+	if(!LAZYLEN(possible_turfs))
+		return
 
-		var/turf/first_turf = pick(possible_turfs)
-		if(!first_turf)
-			return
+	var/turf/first_turf = pick(possible_turfs)
+	if(!first_turf)
+		return
 
-		possible_turfs -= (possible_turfs & range(first_turf, 3))
+	possible_turfs -= (possible_turfs & range(first_turf, 3))
 
-		var/turf/second_turf = pick(possible_turfs)
-		if(!second_turf)
-			return
+	var/turf/second_turf = pick(possible_turfs)
+	if(!second_turf)
+		return
 
-		var/obj/effect/hallucination/simple/bluespace_stream/first = new(first_turf, owner)
-		var/obj/effect/hallucination/simple/bluespace_stream/second = new(second_turf, owner)
+	var/obj/effect/hallucination/simple/bluespace_stream/first = new(first_turf, owner)
+	var/obj/effect/hallucination/simple/bluespace_stream/second = new(second_turf, owner)
 
-		first.linked_to = second
-		second.linked_to = first
-		first.seer = owner
-		second.seer = owner
+	first.linked_to = second
+	second.linked_to = first
+	first.seer = owner
+	second.seer = owner
 
 /obj/effect/hallucination/simple/bluespace_stream
 	name = "bluespace stream"
@@ -141,7 +142,8 @@
 		if(QDELETED(linked_target))
 			linked_target = null
 			linked = FALSE
-		else if(!returning && COOLDOWN_FINISHED(src, snapback_cooldown))
+			return
+		if(!returning && COOLDOWN_FINISHED(src, snapback_cooldown))
 			start_snapback()
 		return
 	if(DT_PROB(2, delta_time))

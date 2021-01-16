@@ -160,7 +160,8 @@
 /datum/symptom/heal/metabolism/Heal(mob/living/carbon/C, datum/disease/advance/A, actual_power)
 	if(!istype(C))
 		return
-	C.reagents.metabolize(C, triple_metabolism ? 4 : 2, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
+	var/metabolic_boost = triple_metabolism ? 2 : 1
+	C.reagents.metabolize(C, metabolic_boost * (SSmobs.wait / (1 SECONDS)), 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
 	C.overeatduration = max(C.overeatduration - 2, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
