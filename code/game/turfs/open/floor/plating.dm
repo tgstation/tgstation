@@ -10,6 +10,7 @@
 /turf/open/floor/plating
 	name = "plating"
 	icon_state = "plating"
+	base_icon_state = "plating"
 	intact = FALSE
 	baseturfs = /turf/baseturf_bottom
 	footstep = FOOTSTEP_PLATING
@@ -35,16 +36,6 @@
 	if (!burnt_states)
 		burnt_states = list("panelscorched")
 	. = ..()
-	if(!attachment_holes || (!broken && !burnt))
-		icon_plating = icon_state
-	else
-		icon_plating = initial(icon_state)
-
-/turf/open/floor/plating/update_icon()
-	if(!..())
-		return
-	if(!broken && !burnt)
-		icon_state = icon_plating //Because asteroids are 'platings' too.
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -75,19 +66,8 @@
 				for(var/M in O.buckled_mobs)
 					to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
 					return
-			var/obj/item/stack/tile/W = C
-			if(!W.use(1))
-				return
-			if(istype(W, /obj/item/stack/tile/material))
-				var/turf/newturf = PlaceOnTop(/turf/open/floor/material, flags = CHANGETURF_INHERIT_AIR)
-				newturf.set_custom_materials(W.mats_per_unit)
-			else if(W.turf_type)
-				var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
-				if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-					var/obj/item/stack/tile/light/L = W
-					var/turf/open/floor/light/F = T
-					F.state = L.state
-
+			var/obj/item/stack/tile/tile = C
+			tile.place_tile(src)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
 			if(!iscyborg(user))
@@ -97,7 +77,7 @@
 	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
 		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
 			to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-			icon_state = icon_plating
+			icon_state = base_icon_state
 			burnt = FALSE
 			broken = FALSE
 
@@ -106,7 +86,7 @@
 	..()
 	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
 		to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-		icon_state = icon_plating
+		icon_state = base_icon_state
 		burnt = FALSE
 		broken = FALSE
 

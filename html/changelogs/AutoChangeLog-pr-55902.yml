@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "The toxin purge nanite programs no longer runtime when applied to simple mobs."

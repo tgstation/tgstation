@@ -237,8 +237,10 @@
 
 						if (brain.overrides_aicore_laws)
 							A = new /mob/living/silicon/ai(loc, brain.laws, B)
+							brain.laws = null //Brain's law datum is being donated, so we need the brain to let it go or the GC will eat it
 						else
 							A = new /mob/living/silicon/ai(loc, laws, B)
+							laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())

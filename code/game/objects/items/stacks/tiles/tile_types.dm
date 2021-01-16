@@ -94,6 +94,11 @@
 	else
 		return ..()
 
+/obj/item/stack/tile/proc/place_tile(turf/open/T)
+	if(!turf_type || !use(1))
+		return
+	. = T.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
+
 //Grass
 /obj/item/stack/tile/grass
 	name = "grass tile"
@@ -420,6 +425,11 @@
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	merge_type = /obj/item/stack/tile/material
+
+/obj/item/stack/tile/material/place_tile(turf/open/T)
+	. = ..()
+	var/turf/open/floor/material/F = .
+	F?.set_custom_materials(mats_per_unit)
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"
