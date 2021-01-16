@@ -26,10 +26,6 @@
 	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_icon()
-	. = ..()
-	update_layer()
-
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_overlays()
 	. = ..()
 

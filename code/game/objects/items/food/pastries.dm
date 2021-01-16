@@ -777,7 +777,12 @@
 	return ..()
 
 /obj/item/food/pancakes/update_icon(updates=ALL)
-	. = ..(updates & ~UPDATE_OVERLAYS) // Don't update overlays. We're doing that here
+	if(!(updates & UPDATE_OVERLAYS))
+		return ..()
+
+	updates &= ~UPDATE_OVERLAYS
+	. = ..() // Don't update overlays. We're doing that here
+
 	if(contents.len < LAZYLEN(overlays))
 		overlays -= overlays[overlays.len]
 	. |= UPDATE_OVERLAYS

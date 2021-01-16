@@ -30,10 +30,6 @@
 	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
 
-/obj/machinery/atmospherics/pipe/manifold/update_icon()
-	. = ..()
-	update_layer()
-
 /obj/machinery/atmospherics/pipe/manifold/update_overlays()
 	. = ..()
 

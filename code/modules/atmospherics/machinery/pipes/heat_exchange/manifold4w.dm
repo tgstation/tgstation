@@ -24,10 +24,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/SetInitDirections()
 	initialize_directions = initial(initialize_directions)
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/update_icon()
-	. = ..()
-	update_layer()
-
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/update_overlays()
 	. = ..()
 

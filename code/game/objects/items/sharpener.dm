@@ -62,6 +62,10 @@
 		name = "worn out [name]" //whetstone becomes used whetstone
 	update_appearance()
 
+/obj/item/sharpener/update_name()
+	name = "[!uses ? "worn out " : null][initial(name)]"
+	return ..()
+
 /**
 * # Super whetstone
 *

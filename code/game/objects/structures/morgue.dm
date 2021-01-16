@@ -175,22 +175,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if (!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
 		return
-	else
-		if(contents.len == 1)  // Empty
-			icon_state = "morgue1"
-		else
-			icon_state = "morgue2" // Dead, brainded mob.
-			var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
-			if(!length(compiled)) // No mobs?
-				icon_state = "morgue3"
-				return
 
 	if(contents.len == 1)  // Empty
 		icon_state = "morgue1"
 		return
 
 	icon_state = "morgue2" // Dead, brainded mob.
-	var/list/compiled = GetAllContents(/mob/living) // Search for mobs in all contents.
+	var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
 	if(!length(compiled)) // No mobs?
 		icon_state = "morgue3"
 		return
