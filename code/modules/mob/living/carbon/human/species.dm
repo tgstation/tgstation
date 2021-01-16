@@ -1840,11 +1840,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/damage_mod = coldmod * humi.physiology.cold_mod * (is_hulk ? HULK_COLD_DAMAGE_MOD : 1)
 		switch(humi.coretemperature)
 			if(201 to cold_damage_limit)
-				humi.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * humi.physiology.cold_mod * delta_time, BURN)
+				humi.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * delta_time, BURN)
 			if(120 to 200)
-				humi.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * humi.physiology.cold_mod * delta_time, BURN)
+				humi.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * delta_time, BURN)
 			else
-				humi.apply_damage(COLD_DAMAGE_LEVEL_3 * coldmod * humi.physiology.cold_mod * delta_time, BURN)
+				humi.apply_damage(COLD_DAMAGE_LEVEL_3 * coldmod * delta_time, BURN)
 
 /**
  * Used to apply burn wounds on random limbs
