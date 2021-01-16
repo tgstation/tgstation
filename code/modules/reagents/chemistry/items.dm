@@ -51,9 +51,8 @@
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		add_fingerprint(user)
 		return
-	var/obj/item/pHpaper/P = new /obj/item/pHpaper
+	var/obj/item/pHpaper/P = new(get_turf(user))
 	P.add_fingerprint(user)
-	P.forceMove(user)
 	user.put_in_active_hand(P)
 	to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	number_of_pages--
