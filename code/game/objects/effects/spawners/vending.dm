@@ -11,7 +11,7 @@
 
 	var/random_vendor = pick(subtypesof(/obj/machinery/vending/snack))
 	var/obj/machinery/vending/snack/vend = new random_vendor(loc)
-	vend.extended_inventory = TRUE
+	vend.extended_inventory = hacked
 
 	return INITIALIZE_HINT_QDEL
 
@@ -29,6 +29,6 @@
 
 	var/random_vendor = pick(subtypesof(/obj/machinery/vending/cola))
 	var/obj/machinery/vending/cola/vend = new random_vendor(loc)
-	vend.extended_inventory = TRUE
+	vend.extended_inventory = hacked
 
 	return INITIALIZE_HINT_QDEL

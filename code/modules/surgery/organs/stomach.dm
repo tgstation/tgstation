@@ -12,13 +12,14 @@
 	desc = "Onaka ga suite imasu."
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = STANDARD_ORGAN_DECAY
+	decay_factor = STANDARD_ORGAN_DECAY * 1.15 // ~13 minutes, the stomach is one of the first organs to die
 
 	low_threshold_passed = "<span class='info'>Your stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
 	high_threshold_passed = "<span class='warning'>Your stomach flares up with constant pain- you can hardly stomach the idea of food right now!</span>"
 	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
+	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5)
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 
@@ -161,6 +162,8 @@
 /obj/item/organ/stomach/bone
 	desc = "You have no idea what this strange ball of bones does."
 	metabolism_efficiency = 0.05 //very bad
+	var/milk_brute_healing = 1.5
+	var/milk_burn_healing = 1.5
 
 /obj/item/organ/stomach/bone/on_life()
 	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
@@ -169,32 +172,20 @@
 		if(milk.volume > 10)
 			reagents.remove_reagent(milk.type, milk.volume - 10)
 			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(1.5,0, 0)
+
+		body.heal_bodypart_damage(brute = milk_brute_healing, burn = milk_burn_healing)
 		for(var/i in body.all_wounds)
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(2)
 		reagents.remove_reagent(milk.type, milk.metabolization_rate)
 	return ..()
 
-/obj/item/organ/stomach/plasmaman
+/obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 	metabolism_efficiency = 0.12
-
-/obj/item/organ/stomach/plasmaman/on_life()
-	var/datum/reagent/consumable/milk/milk = locate(/datum/reagent/consumable/milk) in reagents.reagent_list
-	if(milk)
-		var/mob/living/carbon/body = owner
-		if(milk.volume > 10)
-			reagents.remove_reagent(milk.type, milk.volume - 10)
-			to_chat(owner, "<span class='warning'>The excess milk is dripping off your bones!</span>")
-		body.heal_bodypart_damage(1.5,0, 0)
-		for(var/i in body.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(2)
-		reagents.remove_reagent(milk.type, milk.metabolization_rate)
-	return ..()
+	milk_burn_healing = 0
 
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"

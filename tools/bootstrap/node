@@ -1,0 +1,83 @@
+#!/bin/sh
+# bootstrap/node
+#
+# Node-finding script for all `sh` environments, including Linux, MSYS2,
+# Git for Windows, and GitHub Desktop. Invokable from CLI or automation.
+#
+# If a node.exe installed by `node_.ps1` is present, it will be used.
+# Otherwise, this script requires a system `node` to be provided.
+set -e
+
+# Convenience variables
+Bootstrap="$(dirname "$0")"
+Cache="$Bootstrap/.cache"
+if [ "$TG_BOOTSTRAP_CACHE" ]; then
+	Cache="$TG_BOOTSTRAP_CACHE"
+fi
+OldPWD="$PWD"
+cd "$Bootstrap/../.."
+. ./dependencies.sh  # sets NODE_VERSION_PRECISE
+cd "$OldPWD"
+NodeVersion="$NODE_VERSION_PRECISE"
+NodeFullVersion="node-v$NodeVersion-win-x64"
+NodeDir="$Cache/$NodeFullVersion"
+NodeExe="$NodeDir/node.exe"
+Log="$Cache/last-command.log"
+
+# If a bootstrapped Node is not present, search on $PATH.
+if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
+	if [ "$TG_BOOTSTRAP_NODE_LINUX" ]; then
+		NodeFullVersion="node-v$NodeVersion-linux-x64"
+		NodeDir="$Cache/$NodeFullVersion/bin"
+		NodeExe="$NodeDir/node"
+
+		if [ ! -f "$NodeExe" ]; then
+			Archive="$(realpath "$Cache/node-v$NodeVersion.tar.gz")"
+			curl "https://nodejs.org/download/release/v$NodeVersion/$NodeFullVersion.tar.gz" -o "$Archive"
+			(cd "$Cache" && tar xf "$Archive")
+		fi
+	elif command -v node >/dev/null 2>&1; then
+		NodeExe="node"
+	else
+		echo
+		if command -v apt-get >/dev/null 2>&1; then
+			# Ubuntu advice
+			echo "Please install Node using your system's package manager:"
+			echo "    sudo apt-get install nodejs"
+		elif uname | grep -q MSYS; then
+			# MSYS2 (not packaged) or Git for Windows advice
+			echo "Please run bootstrap/node.bat instead of bootstrap/node once"
+			echo "to install Node automatically, or install it from https://nodejs.org/"
+		elif command -v pacman >/dev/null 2>&1; then
+			# Arch advice
+			echo "Please install Node using your system's package manager:"
+			echo "    sudo pacman -S nodejs"
+		else
+			# Generic advice
+			echo "Please install Node from https://nodejs.org/ or using your system's package manager."
+		fi
+		echo
+		exit 1
+	fi
+fi
+
+# Cheap shell function if tee.exe is not available
+if ! command -v tee >/dev/null 2>&1; then
+	tee() {
+		# Fudge: assume $1 is always "-a"
+		while read -r line; do
+			echo "$line" >> "$2"
+			echo "$line"
+		done
+	}
+fi
+
+# Invoke Node with all command-line arguments
+mkdir -p "$Cache"
+printf '%s\n' "$NodeExe" "$@" > "$Log"
+printf -- '---\n' >> "$Log"
+exec 4>&1
+PATH="$(readlink -f "$NodeDir"):$PATH"  # Set PATH so that recursive calls find it
+exitstatus=$({ { set +e; "$NodeExe" "$@" 2>&1 3>&-; printf %s $? >&3; } 4>&- | tee -a "$Log" 1>&4; } 3>&1)
+exec 4>&-
+exit "$exitstatus"

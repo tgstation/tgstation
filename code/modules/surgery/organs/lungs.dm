@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = STANDARD_ORGAN_DECAY
+	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, lungs are one of the last organs to die (of the ones we have)
 
 	low_threshold_passed = "<span class='warning'>You feel short of breath.</span>"
 	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
@@ -276,9 +276,9 @@
 		if(safe_toxins_max && SA_pp > safe_toxins_max*3)
 			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_toxins_max)
 			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
-			H.throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
+			H.throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
 		else
-			H.clear_alert("too_much_tox")
+			H.clear_alert("too_much_n2o")
 
 
 	// BZ

@@ -41,11 +41,37 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	if(!temp)
 		return
 	name = temp.name
-	desc = temp.desc
+	desc = "<i>[temp.desc]</i>"
 	icon = icon(temp.icon)
 	icon_state = temp.icon_state
 	id = temp.id
 	series = temp.series
+
+// This totally isn't overengineered to hell, shut up
+/**
+ * Alright so some brief details here, we store all "immutable" (Think like power) card variables in a global list, indexed by id
+ * This proc gets the card's associated card datum to play with
+ */
+/obj/item/tcgcard/proc/extract_datum()
+	var/list/cached_cards = GLOB.cached_cards[series]
+	if(!cached_cards)
+		return null
+	if(!cached_cards["ALL"][id])
+		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[GLOB.cached_cards.len]}")
+	return cached_cards["ALL"][id]
+
+/obj/item/tcgcard/get_name_chaser(mob/user, list/name_chaser = list())
+	if(flipped)
+		return ..()
+	var/datum/card/data_holder = extract_datum()
+
+	name_chaser += "Faction: [data_holder.faction]"
+	name_chaser += "Cost: [data_holder.summoncost]"
+	name_chaser += "Type: [data_holder.cardtype] - [data_holder.cardsubtype]"
+	name_chaser += "Power/Resolve: [data_holder.power]/[data_holder.resolve]"
+	if(data_holder.rules) //This can sometimes be empty
+		name_chaser += "Ruleset: [data_holder.rules]"
+	return name_chaser
 
 GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
@@ -87,9 +113,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard/update_icon_state()
 	. = ..()
 	if(!flipped)
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		var/datum/card/template = extract_datum()
 		name = template.name
-		desc = template.desc
+		desc = "<i>[template.desc]</i>"
 		icon_state = template.icon_state
 
 	else
@@ -155,11 +181,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		desc = "It's the back of a trading card... no peeking!"
 		icon_state = "cardback"
 	else
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		var/datum/card/template = extract_datum()
 		name = template.name
-		desc = template.desc
+		desc = "<i>[template.desc]</i>"
 		icon_state = template.icon_state
 	flipped = !flipped
+
 /**
  * A stack item that's not actually a stack because ORDER MATTERS with a deck of cards!
  * The "top" card of the deck will always be the bottom card in the stack for our purposes.
@@ -167,7 +194,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck
 	name = "Trading Card Pile"
 	desc = "A stack of TCG cards."
-	icon = DEFAULT_TCG_DMI_ICON
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "deck_up"
 	obj_flags = UNIQUE_RENAME
 	var/flipped = FALSE
@@ -266,6 +293,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		final_card.zoom_out()
 		qdel(src)
 
+
 /**
  * The user shuffles the order of the deck, then closes any visability into the deck's storage to prevent cheesing.
  * *User: The person doing the shuffling, used in visable message and closing UI.
@@ -280,6 +308,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	if(visable)
 		user.visible_message("<span class='notice'>[user] shuffles \the [src]!</span>", \
 						"<span class='notice'>You shuffle \the [src]!</span>")
+
 
 /**
  * The user flips the deck, turning it into a face up/down pile, and reverses the order of the cards from top to bottom.
@@ -299,7 +328,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
-	icon = DEFAULT_TCG_DMI_ICON
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_ASSISTANT * 1.5 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
@@ -329,7 +358,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
 	desc = "Contains six cards of varying rarity from the 2560 Core Set. Collect them all!"
-	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "cardpack_series1"
 	series = "coreset2020"
 	contains_coin = 10
@@ -337,7 +365,6 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack/resin
 	name = "Trading Card Pack: Resin Frontier Booster Pack"
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
-	icon = 'icons/runtime/tcg/xenos.dmi'
 	icon_state = "cardpack_resin"
 	series = "resinfront"
 	contains_coin = 0
@@ -393,9 +420,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	qdel(src)
 
 /obj/item/coin/thunderdome
-	name = "Thunderdome Flipper"
-	desc = "A Thunderdome TCG flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
-	icon = DEFAULT_TCG_DMI_ICON
+	name = "\improper TGC Flipper"
+	desc = "A TGC flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "coin_nanotrasen"
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
@@ -416,12 +443,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/storage/card_binder
 	name = "card binder"
 	desc = "The perfect way to keep your collection of cards safe and valuable."
-	icon = DEFAULT_TCG_DMI_ICON
+	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "binder"
 	inhand_icon_state = "album"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
-	resistance_flags = FLAMMABLE
+	resistance_flags = FLAMMABLE //burn your enemies' collections, for only you can Collect Them All!
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
