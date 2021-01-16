@@ -99,7 +99,16 @@ GLOBAL_PROTECT(exp_to_update)
 		return -1
 	var/list/play_records = list()
 	while(exp_read.NextRow())
-		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
+	/// CHANGES START
+	// Grab what the database's job title is
+	var/job_title = exp.read.item[1]
+	// See if this is in our NT-to-Syndie dictionary
+	if(SSjob.name_occupations_dict[job_title])
+	// If it is, use the Syndie name from the dictionary
+		job_title = SSjob.name_occupations_dict[job_title]
+	// Add entry to play_records under the appropriate job title.
+	play_records[job_title] = text2num(exp_read.item[2])
+	/// CHANGES END
 	qdel(exp_read)
 
 	for(var/rtype in SSjob.name_occupations)

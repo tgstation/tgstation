@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(job)
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
 	var/initial_players_to_assign = 0 	//used for checking against population caps
-
+	var/list/name_occupations_dict = list()
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
@@ -59,7 +59,10 @@ SUBSYSTEM_DEF(job)
 			testing("Removed [job.type] due to map config")
 			continue
 		occupations += job
-		name_occupations[job.title] = job
+		/// CHANGES START
+		// Eg name_occupation_dict["Captain"] = "Admiral"
+		name_occupations_dict[job.old_title] = job.title
+		/// CHANGES_START
 		type_occupations[J] = job
 
 	return TRUE
