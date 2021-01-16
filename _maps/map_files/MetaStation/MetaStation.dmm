@@ -8627,8 +8627,17 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "awU" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "roboticsprivacy2";
+	name = "Robotics Privacy Control";
+	pixel_x = 25;
+	pixel_y = -24;
+	req_access_txt = "29"
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "awV" = (
@@ -46067,7 +46076,7 @@
 /turf/closed/wall/r_wall,
 /area/science/storage)
 "crS" = (
-/obj/structure/sign/warning/biohazard,
+/obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/science/storage)
 "crZ" = (
@@ -47044,18 +47053,18 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "czh" = (
-/obj/machinery/button/door{
-	id = "Skynet_launch";
-	name = "Mech Bay Door Control";
-	pixel_x = 26;
-	pixel_y = 6;
-	req_one_access_txt = "29"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/science/lab)
 "czt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Science Toxins Corridor";
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "czD" = (
@@ -47203,8 +47212,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cAH" = (
-/obj/structure/sign/warning/biohazard,
-/turf/closed/wall/r_wall,
+/obj/machinery/door/poddoor/shutters{
+	id = "toxinsaccess";
+	name = "Toxins Access"
+	},
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "cAP" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -52371,6 +52383,9 @@
 /obj/item/radio/intercom{
 	pixel_x = -26
 	},
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_x = -9
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "dat" = (
@@ -55138,14 +55153,15 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dss" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/camera{
-	c_tag = "Science Toxins Secure";
-	dir = 4
-	},
 /obj/machinery/light_switch{
 	pixel_x = -22;
 	pixel_y = 8
+	},
+/obj/machinery/button/door/incinerator_vent_toxmix{
+	id = "toxinsaccess";
+	name = "Toxins Access";
+	pixel_x = -26;
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/white,
 /area/science/storage)
@@ -55550,6 +55566,9 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/camera{
+	c_tag = "Science Hallway - Research"
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dyL" = (
@@ -56482,6 +56501,7 @@
 	name = "Cytology Access";
 	req_access_txt = "55"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
 "dOR" = (
@@ -56540,9 +56560,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "dRv" = (
-/obj/machinery/mecha_part_fabricator,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/mecha_part_fabricator{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -57128,10 +57150,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "erc" = (
-/obj/machinery/camera{
-	c_tag = "Science Toxins Corridor";
-	dir = 4
-	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "esU" = (
@@ -57501,9 +57520,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Science Hallway - Research"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/purple,
@@ -58295,10 +58311,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/bodycontainer/morgue{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/white/full,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "fkP" = (
@@ -60640,11 +60656,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "gXq" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -65977,7 +65993,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/storage)
 "ltO" = (
@@ -67399,6 +67414,10 @@
 /obj/item/cautery,
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -10;
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
@@ -70221,6 +70240,23 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"oPN" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/westleft{
+	name = "Robotics Desk";
+	req_access_txt = "29"
+	},
+/obj/machinery/door/firedoor,
+/obj/item/assembly/prox_sensor{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "roboticsprivacy2";
+	name = "Robotics Shutters"
+	},
+/turf/open/floor/plasteel/white,
+/area/science/robotics/lab)
 "oPW" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -70307,12 +70343,10 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "oSA" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "oTh" = (
@@ -73964,12 +73998,15 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "ryq" = (
-/obj/structure/table,
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/clothing/mask/gas,
-/obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable,
+/obj/machinery/camera{
+	c_tag = "Science Toxins Secure";
+	dir = 4
+	},
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/radio/intercom{
+	pixel_x = -28;
+	pixel_y = -9
+	},
 /turf/open/floor/plasteel/white,
 /area/science/storage)
 "ryw" = (
@@ -74695,8 +74732,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "scO" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/wall/r_wall,
+/obj/machinery/door/poddoor/shutters{
+	id = "toxinsaccess";
+	name = "Toxins Access"
+	},
+/turf/open/floor/plasteel/white,
 /area/science/storage)
 "scY" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -75389,6 +75429,9 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "sEC" = (
@@ -75802,6 +75845,7 @@
 /area/medical/storage)
 "sZA" = (
 /obj/machinery/light,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/storage)
 "taf" = (
@@ -75894,9 +75938,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -28
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
@@ -76304,11 +76345,13 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "ttZ" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/airalarm/directional/west,
-/obj/item/radio/intercom{
-	pixel_y = -30
-	},
+/obj/structure/table,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/clothing/mask/gas,
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/storage)
 "tuW" = (
@@ -76755,8 +76798,8 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
@@ -77448,6 +77491,14 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
+"ura" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "roboticsprivacy2";
+	name = "Robotics Shutters"
+	},
+/turf/open/floor/plating,
+/area/science/robotics/lab)
 "urv" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/tinted,
@@ -78778,14 +78829,15 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "vyQ" = (
-/obj/machinery/atmospherics/pipe/simple/dark/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "Gas to Chamber"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
@@ -110055,7 +110107,7 @@ cvG
 cyo
 cxB
 cyo
-czh
+cyo
 xIm
 cyo
 cCm
@@ -112876,8 +112928,8 @@ xHg
 ipr
 nKi
 cDi
-jMU
-jMU
+ura
+oPN
 cDi
 kIu
 kIu
@@ -113128,7 +113180,7 @@ tMM
 sBj
 gsj
 tdH
-eWd
+czh
 eEi
 ipr
 kNa
@@ -126525,7 +126577,7 @@ dbt
 cSn
 cSg
 cRi
-ddq
+cTA
 ddq
 ddq
 ddq
