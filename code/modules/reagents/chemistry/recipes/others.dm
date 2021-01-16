@@ -629,6 +629,7 @@
 /datum/chemical_reaction/basic_buffer
 	results = list(/datum/reagent/basic_buffer = 5)
 	required_reagents = list(/datum/reagent/lye = 1, /datum/reagent/consumable/ethanol = 2, /datum/reagent/water = 2)
+	required_catalysts = list(/datum/reagent/toxin/acid = 1)
 	//FermiChem vars:
 	required_temp = 250
 	optimal_temp = 500

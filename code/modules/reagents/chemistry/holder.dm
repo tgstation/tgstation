@@ -906,7 +906,7 @@
 	for(var/r in reagent_list)
 		var/datum/reagent/R = r
 		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
-	LAZYNULLLIST(previous_reagent_list) //reset it to 0 - because any change will be different now.
+	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	handle_reactions() //Should be okay without. Each step checks.
 
@@ -966,7 +966,7 @@
 	return FALSE
 
 /datum/reagents/proc/update_previous_reagent_list()
-	LAZYNULLLIST(previous_reagent_list)
+	LAZYNULL(previous_reagent_list)
 	for(var/r in reagent_list)
 		var/datum/reagent/R = r
 		LAZYADD(previous_reagent_list, R.type)
