@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "Fire alarms that have been triggered by atmos issues will now auto resolve when those issues go away."
+  - rscadd: "Fire alarms that are being triggered by atmos issues have a blinking overlay around their frame, keep an eye out for the problem children."
