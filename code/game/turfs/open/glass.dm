@@ -13,8 +13,11 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	var/stateDamage = "glass"
 
 /turf/open/floor/glass/Initialize()
+	if (!broken_states)
+		broken_states = string_list(list("[stateDamage]-damaged1", "[stateDamage]-damaged2", "[stateDamage]-damaged3", "[stateDamage]-damaged4", "[stateDamage]-damaged5"))
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	..()
 	return INITIALIZE_HINT_LATELOAD
@@ -29,3 +32,4 @@
 	icon = 'icons/turf/floors/reinf_glass.dmi'
 	icon_state = "reinf_glass-0"
 	base_icon_state = "reinf_glass"
+	stateDamage = "reinf_glass"
