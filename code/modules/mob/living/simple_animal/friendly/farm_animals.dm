@@ -46,7 +46,7 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
@@ -176,7 +176,7 @@
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
-/mob/living/simple_animal/cow/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/cow/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
@@ -280,7 +280,7 @@
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/chick/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
@@ -290,7 +290,7 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/chick/holo/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	amount_grown = 0
 
@@ -368,7 +368,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/chicken/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return

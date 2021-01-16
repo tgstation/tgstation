@@ -98,7 +98,7 @@
 		color_selection()
 
 
-/mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	tiredness = max(tiredness - (0.5 * delta_time), 0)
 	for(var/mob/living/consumed_mob in src)

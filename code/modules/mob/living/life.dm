@@ -9,7 +9,7 @@
  * - delta_time: The amount of time that has elapsed since this last fired.
  * - times_fired: The number of times SSmobs has fired
  */
-/mob/living/proc/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/proc/Life(delta_time = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
 	if (client)

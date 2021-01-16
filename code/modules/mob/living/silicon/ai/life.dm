@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/silicon/ai/Life(delta_time = SSMOBS_DT, times_fired)
 	if (stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist

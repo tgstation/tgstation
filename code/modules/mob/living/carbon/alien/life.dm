@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/carbon/alien/Life(delta_time = SSMOBS_DT, times_fired)
 	findQueen()
 	return..()
 

@@ -1,4 +1,4 @@
-/mob/living/carbon/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/carbon/Life(delta_time = SSMOBS_DT, times_fired)
 
 	if(notransform)
 		return

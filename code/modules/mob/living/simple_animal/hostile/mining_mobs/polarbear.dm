@@ -45,7 +45,7 @@
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/hostile/asteroid/polarbear/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return

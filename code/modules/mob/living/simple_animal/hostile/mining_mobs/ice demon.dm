@@ -67,7 +67,7 @@
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return

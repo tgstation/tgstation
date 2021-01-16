@@ -25,7 +25,7 @@
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-/mob/living/simple_animal/crab/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/crab/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	//CRAB movement
 	if(!ckey && !stat)

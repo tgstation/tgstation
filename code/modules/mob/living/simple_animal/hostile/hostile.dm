@@ -76,7 +76,7 @@
 	targets_from = null
 	return ..()
 
-/mob/living/simple_animal/hostile/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/hostile/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //dead
 		walk(src, 0) //stops walking

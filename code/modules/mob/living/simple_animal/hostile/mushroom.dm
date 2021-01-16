@@ -48,7 +48,7 @@
 	else
 		. += "<span class='info'>It looks like it's been roughed up.</span>"
 
-/mob/living/simple_animal/hostile/mushroom/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/hostile/mushroom/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-1 * delta_time)

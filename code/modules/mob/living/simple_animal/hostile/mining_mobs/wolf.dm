@@ -52,7 +52,7 @@
 		retreat_message_said = TRUE
 	retreat_distance = 30
 
-/mob/living/simple_animal/hostile/asteroid/wolf/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/hostile/asteroid/wolf/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return

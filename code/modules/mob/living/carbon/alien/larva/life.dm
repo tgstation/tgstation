@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/alien/larva/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/carbon/alien/larva/Life(delta_time = SSMOBS_DT, times_fired)
 	if (notransform)
 		return
 	if(..() && !IS_IN_STASIS(src)) //not dead and not in stasis

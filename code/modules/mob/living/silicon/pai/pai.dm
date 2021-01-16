@@ -287,7 +287,7 @@
 	. = ..()
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
-/mob/living/silicon/pai/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/silicon/pai/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(QDELETED(src) || stat == DEAD)
 		return

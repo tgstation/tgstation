@@ -199,7 +199,7 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
-/mob/living/simple_animal/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
 		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)

@@ -1,4 +1,4 @@
-/mob/living/silicon/robot/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/silicon/robot/Life(delta_time = SSMOBS_DT, times_fired)
 	if (src.notransform)
 		return
 

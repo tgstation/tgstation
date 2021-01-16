@@ -6,21 +6,26 @@
 	var/SStun = 0 // stun variable
 
 
-/mob/living/simple_animal/slime/Life(delta_time = SSmobs.wait / (1 SECONDS), times_fired)
+/mob/living/simple_animal/slime/Life(delta_time = SSMOBS_DT, times_fired)
 	if (notransform)
 		return
-	if(..())
-		if(buckled)
-			handle_feeding(delta_time, times_fired)
-		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
-			handle_nutrition(delta_time, times_fired)
-			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
-				return
-			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len * delta_time) //Slimes are such snowflakes
-			handle_targets(delta_time, times_fired)
-			if (!ckey)
-				handle_mood(delta_time, times_fired)
-				handle_speech(delta_time, times_fired)
+	. = ..()
+	if(!.)
+		return
+
+	if(buckled)
+		handle_feeding(delta_time, times_fired)
+	if(stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
+		return
+	handle_nutrition(delta_time, times_fired)
+	if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
+		return
+	reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len * delta_time) //Slimes are such snowflakes
+	handle_targets(delta_time, times_fired)
+	if(ckey)
+		return
+	handle_mood(delta_time, times_fired)
+	handle_speech(delta_time, times_fired)
 
 
 // Unlike most of the simple animals, slimes support UNCONSCIOUS. This is an ugly hack.
