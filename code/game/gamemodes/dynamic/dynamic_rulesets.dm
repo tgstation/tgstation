@@ -109,6 +109,9 @@
 /// This function is here to ensure the antag ratio is kept under control while scaling up.
 /// Returns how much threat to actually spend in the end.
 /datum/dynamic_ruleset/proc/scale_up(max_scale)
+	if (!scaling_cost)
+		return 0
+
 	var/antag_fraction = 0
 	for(var/_ruleset in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
 		var/datum/dynamic_ruleset/ruleset = _ruleset

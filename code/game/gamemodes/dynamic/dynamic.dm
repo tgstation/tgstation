@@ -1,7 +1,9 @@
-#define ONLY_RULESET       1
+#define ONLY_RULESET 1
 #define HIGHLANDER_RULESET 2
-#define TRAITOR_RULESET    4
-#define MINOR_RULESET      8
+#define TRAITOR_RULESET 4
+#define MINOR_RULESET 8
+/// This ruleset can only be picked once
+#define LONE_RULESET 16
 
 #define RULESET_STOP_PROCESSING 1
 
@@ -36,15 +38,21 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	announce_span = "danger"
 	announce_text = "Dynamic mode!" // This needs to be changed maybe
 
-	reroll_friendly = FALSE;
+	reroll_friendly = FALSE
 
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0
+
 	/// Set at the beginning of the round. Spent by the mode to "purchase" rules. Everything else goes in the postround budget.
 	var/round_start_budget = 0
+
 	/// Set at the beginning of the round. Spent by midrounds and latejoins.
 	var/mid_round_budget = 0
+
+	/// The initial round start budget for logging purposes, set once at the beginning of the round.
+	var/initial_round_start_budget = 0
+
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list()
 	/// List of roundstart rules used for selecting the rules.
@@ -112,6 +120,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	/// The chance of injection decrease when above lower_injection_chance_minimum_threat
 	var/lower_injection_chance = 15
+
+	/// A list of recorded "snapshots" of the round, stored in the dynamic.json log
+	var/list/datum/dynamic_snapshot/snapshots
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -288,6 +299,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/generate_budgets()
 	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
 	round_start_budget = round((lorentz_to_threat(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
+	initial_round_start_budget = round_start_budget
 	mid_round_budget = threat_level - round_start_budget
 
 /datum/game_mode/dynamic/can_start()
@@ -372,6 +384,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
 
+// TODO: Dynamic 2021
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
 /datum/game_mode/dynamic/proc/rigged_roundstart()
 	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
@@ -429,7 +442,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		round_start_budget_left -= cost
 
 		rulesets_picked[ruleset] += 1
+
 		if (ruleset.flags & HIGHLANDER_RULESET)
+			for (var/_other_ruleset in drafted_rules)
+				var/datum/dynamic_ruleset/other_ruleset = _other_ruleset
+				if (other_ruleset.flags & HIGHLANDER_RULESET)
+					drafted_rules[other_ruleset] = null
+
+		if (ruleset.flags & LONE_RULESET)
 			drafted_rules[ruleset] = null
 
 	for (var/ruleset in rulesets_picked)
@@ -452,7 +472,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(ruleset.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		executed_rules += ruleset
-		return added_threat
+		return ruleset.cost + added_threat
 	else
 		stack_trace("The starting rule \"[ruleset.name]\" failed to pre_execute.")
 	return 0
@@ -463,6 +483,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(rule.execute())
 		if(rule.persistent)
 			current_rules += rule
+		new_snapshot(rule)
 		return TRUE
 	rule.clean_up()	// Refund threat, delete teams and so on.
 	executed_rules -= rule
@@ -572,6 +593,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	rule.clean_up()
 	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
+	new_snapshot(rule)
 	return FALSE
 
 /datum/game_mode/dynamic/process()
