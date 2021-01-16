@@ -199,7 +199,7 @@
 ///Compile all the overlays for an atom from the cache lists
 // |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
+	do {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
 		if(LAZYLEN(rm)){\
@@ -217,7 +217,7 @@
 			}\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
-	}
+	} while (FALSE)
 
 /**
 	Create a new timer and add it to the queue.
