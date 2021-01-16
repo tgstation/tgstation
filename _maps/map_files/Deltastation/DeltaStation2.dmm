@@ -7172,11 +7172,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
-"asj" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ask" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -106111,12 +106106,6 @@
 	},
 /turf/open/floor/glass,
 /area/maintenance/space_hut/observatory)
-"eVg" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "eVx" = (
 /obj/machinery/light{
 	dir = 8
@@ -171202,7 +171191,7 @@ ajr
 aaa
 hUm
 vpk
-asj
+vVc
 wIU
 aaa
 aaa
@@ -171717,8 +171706,8 @@ aaa
 kUH
 jwg
 yhJ
-eVg
-asj
+vVc
+vVc
 vVc
 vVc
 abj
@@ -171973,7 +171962,7 @@ aaa
 aaa
 pCQ
 xBA
-asj
+vVc
 ybr
 aaa
 aaa

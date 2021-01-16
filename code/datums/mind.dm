@@ -80,6 +80,9 @@
 	///Skill multiplier list, just slap your multiplier change onto this with the type it is coming from as key.
 	var/list/experience_multiplier_reasons = list()
 
+	/// A lazy list of statuses to add next to this mind in the traitor panel
+	var/list/special_statuses
+
 /datum/mind/New(_key)
 	key = _key
 	martial_art = default_martial_art
