@@ -26,12 +26,18 @@
 	///What reagent should the shower be filled with when initially built.
 	var/reagent_id = /datum/reagent/water
 	///How much reagent capacity should the shower begin with when built.
-	var/reaction_volume = 200
+	var/reagent_capacity = 200
+	///How many units the shower refills every second.
+	var/refill_rate = 0.5
+	/// Whether or not the shower's water reclaimer is operating.
+	var/can_refill = TRUE
+	/// Whether to allow players to toggle the water reclaimer.
+	var/can_toggle_refill = TRUE
 
 /obj/machinery/shower/Initialize()
 	. = ..()
-	create_reagents(reaction_volume)
-	reagents.add_reagent(reagent_id, reaction_volume)
+	create_reagents(reagent_capacity)
+	reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(list(src), FALSE)
 	AddComponent(/datum/component/plumbing/simple_demand)
 
@@ -67,6 +73,17 @@
 		to_chat(user, "<span class='notice'>The water temperature seems to be [current_temperature].</span>")
 	else
 		return ..()
+
+/obj/machinery/shower/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(. || !can_toggle_refill)
+		return
+
+	can_refill = !can_refill
+	to_chat(user, "<span class=notice>You [can_refill ? "en" : "dis"]able the shower's water recycler.</span>")
+	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+	return TRUE
+
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -128,7 +145,7 @@
 	if(isliving(target))
 		check_heat(target)
 
-/obj/machinery/shower/process()
+/obj/machinery/shower/process(delta_time)
 	if(on && reagents.total_volume)
 		wash_atom(loc)
 		for(var/am in loc)
@@ -137,12 +154,13 @@
 				wash_atom(movable_content)	// Reagent exposure is handled in wash_atom
 
 		reagents.remove_any(SHOWER_SPRAY_VOLUME)
-	else
-		reagents.add_reagent(reagent_id, 1)
-		on = FALSE
-		soundloop.stop()
-		handle_mist()
-		update_icon()
+		return
+	on = FALSE
+	soundloop.stop()
+	handle_mist()
+	if(can_refill)
+		reagents.add_reagent(reagent_id, refill_rate * delta_time)
+	update_icon()
 	if(reagents.total_volume == reagents.maximum_volume)
 		return PROCESS_KILL
 

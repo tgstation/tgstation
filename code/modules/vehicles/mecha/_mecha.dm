@@ -1202,8 +1202,7 @@
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
 					if(A.custom_materials)
-						for(var/i in A.custom_materials)
-							A.custom_materials[i] = A.custom_materials[i] * (A.rounds/initial(A.rounds))
+						A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
 					A.update_name()
 					return TRUE
 
