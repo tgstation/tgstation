@@ -222,9 +222,9 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	for (var/_atom in spawned)
 		var/atom/atoms = _atom
 
-		if (isturf(atoms)) //ssatoms
-			var/turf/holo_turf = atoms
-			spawned -= holo_turf
+		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis)) //ssatoms
+			spawned -= atoms
+			continue
 
 		atoms.flags_1 |= HOLOGRAM_1
 
