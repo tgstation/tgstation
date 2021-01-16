@@ -31,7 +31,7 @@
 	unique_name = TRUE
 	faction = list("rat")
 	//check if the rat is busy/rummaging through stuff, as to prevent multitasking
-	var/busy = FALSE
+	var/DOING_INTERACTION = FALSE
 	///The spell that the rat uses to generate miasma
 	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
@@ -93,13 +93,13 @@
 		heal_bodypart_damage(1)
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (busy)
+	if (DOING_INTERACTION)
 		return
 	. = ..()
 	if(istype(target, /obj/machinery/disposal))
 		src.visible_message("<span class='warning'>[src] starts rummaging through the [target].</span>","<span class='notice'>You rummage through the [target]...</span>")
-		busy = TRUE
-		if (do_after(src,3 SECONDS, target))
+		DOING_INTERACTION = TRUE
+		if (do_after(src, 3 SECONDS, target))
 			var/loot = rand(1,100)
 			switch(loot)
 				if(1 to 5)
@@ -108,38 +108,40 @@
 					for(var/i = 1 to rand(1,3))
 						new pickedcoin(get_turf(src))
 				if(6 to 33)
-					src.say(pick("Treasure!","Our precious!","Cheese!"))
+					say(pick("Treasure!","Our precious!","Cheese!"))
 					to_chat(src, "<span class='notice'>Score! You find some cheese!</span>")
 					new /obj/item/food/cheesewedge(get_turf(src))
 				else
 					var/pickedtrash = pick(GLOB.ratking_trash)
 					to_chat(src, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 					new pickedtrash(get_turf(src))
-		busy = FALSE
+		DOING_INTERACTION = FALSE
 		return
-	else if(istype(target, /obj/structure/cable))
-		var/obj/structure/cable/C = target
-		if(C.avail())
-			apply_damage(15)
-			playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
-		C.deconstruct()
-
-	else if(istype(target, /obj/item/food/cheesewedge))
-		cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
-
-	else if(istype(target, /obj/item/food/cheesewheel))
-		cheese_heal(target, MEDIUM_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
-
-	else if(istype(target, /obj/item/food/royalcheese))
-		cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
-	else if (target.reagents && isobj(target) && target.is_injectable(src,TRUE))
-		src.visible_message("<span class='warning'>[src] starts licking the [target] passionately!</span>","<span class='notice'>You start licking the [target]...</span>")
-		busy = TRUE
-		if (do_after(src,2 SECONDS, target) && target)
+	else if (target.reagents && isobj(target) && target.is_injectable(src, TRUE))
+		src.visible_message("<span class='warning'>[src] starts licking [target] passionately!</span>","<span class='notice'>You start licking [target]...</span>")
+		DOING_INTERACTION = TRUE
+		if (do_after(src, 2 SECONDS, target) && target)
 			target.reagents.add_reagent(/datum/reagent/rat_spit,1,no_react = TRUE)
-			to_chat(src, "<span class='notice'>You finish licking the [target].</span>")
-		busy = FALSE
+			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
+		DOING_INTERACTION = FALSE
 		return
+	else 
+		switch (target.type)
+			if (/obj/structure/cable)
+				var/obj/structure/cable/coil = target
+				if(coil.avail())
+					apply_damage(10)
+					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
+				coil.deconstruct()
+
+			if(/obj/item/food/cheesewedge)
+				cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
+				
+			if(/obj/item/food/cheesewheel)
+				cheese_heal(target, MEDIUM_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
+
+			if(/obj/item/food/royalcheese)
+				cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
@@ -202,7 +204,7 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
-	cooldown_time = 4 SECONDS
+	cooldown_time = 8 SECONDS
 	///Checks to see if there are any nearby mice. Does not count Rats.
 
 /datum/action/cooldown/riot/Trigger()
