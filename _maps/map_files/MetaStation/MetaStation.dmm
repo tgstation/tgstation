@@ -54757,10 +54757,6 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -10;
-	pixel_y = -1
-	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 4
 	},
