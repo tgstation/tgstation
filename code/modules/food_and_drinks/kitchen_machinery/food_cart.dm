@@ -33,8 +33,7 @@
 	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
 	dat += "Remaining glasses: [glasses]<br>"
 	dat += "Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"
-	for(var/datum/reagent/R in reagents.reagent_list)
-	for(var/i=1 to length(reagents.reagent_list))
+	for(var/i in 1 to length(reagents.reagent_list))
 		var/datum/reagent/R = reagents.reagent_list[i]
 		dat += "[R.name]: [R.volume] "
 		dat += "<a href='?src=[REF(src)];disposeI=[i]'>Purge</a>"
