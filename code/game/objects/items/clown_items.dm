@@ -171,7 +171,7 @@
 
 /obj/item/bikehorn
 	name = "bike horn"
-	desc = "A horn off of a bicycle."
+	desc = "A horn off of a bicycle. Rumour has it that they're made from recycled clowns."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"

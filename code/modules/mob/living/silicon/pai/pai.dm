@@ -22,6 +22,7 @@
 	head_icon = 'icons/mob/pai_item_head.dmi'
 	radio = /obj/item/radio/headset/silicon/pai
 	can_buckle_to = FALSE
+	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 

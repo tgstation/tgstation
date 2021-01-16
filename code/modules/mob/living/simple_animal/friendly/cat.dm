@@ -6,7 +6,6 @@
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
-	gender = MALE
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows.", "mews.")
@@ -30,6 +29,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
+	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
@@ -68,7 +68,6 @@
 /mob/living/simple_animal/pet/cat/breadcat
 	name = "bread cat"
 	desc = "It's a cat... with a bread!"
-	gender = MALE
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
@@ -268,6 +267,7 @@
 	name = "Jerry"
 	desc = "Tom is VERY amused."
 	inept_hunter = TRUE
+	gender = MALE
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"

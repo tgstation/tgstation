@@ -787,6 +787,14 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
 
+/datum/reagent/toxin/heparin/on_mob_metabolize(mob/living/M)
+	ADD_TRAIT(M, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
+	return ..()
+
+/datum/reagent/toxin/heparin/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
+	return ..()
+
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
 	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."

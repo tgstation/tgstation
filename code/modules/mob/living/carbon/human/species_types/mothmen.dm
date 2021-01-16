@@ -88,6 +88,6 @@
 	if(H.dna.features["original_moth_antennae"] != null)
 		H.dna.features["moth_antennae"] = H.dna.features["original_moth_antennae"]
 
-	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae" == "Burnt Off"])
+	if(H.dna.features["original_moth_antennae"] == null && H.dna.features["moth_antennae"] == "Burnt Off")
 		H.dna.features["moth_antennae"] = "Plain"
 	handle_mutant_bodyparts(H)

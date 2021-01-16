@@ -471,6 +471,8 @@
 
 ///Proc to hook behavior to the change of value in the resting variable.
 /mob/living/proc/set_resting(new_resting, silent = TRUE, instant = FALSE)
+	if(!(mobility_flags & MOBILITY_REST))
+		return
 	if(new_resting == resting)
 		return
 	. = resting
@@ -800,7 +802,7 @@
 			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLEED))
 		return
 	..()
 

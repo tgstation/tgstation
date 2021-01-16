@@ -417,14 +417,15 @@
 		return FALSE
 	return TRUE
 
-/obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+///Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.
+/obj/item/stack/proc/merge(obj/item/stack/S, limit)
 	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
 	else
-		transfer = min(transfer, S.max_amount - S.amount)
+		transfer = min(transfer, (limit ? limit : S.max_amount) - S.amount)
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)

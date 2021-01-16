@@ -36,6 +36,10 @@
 /mob/living/simple_animal/hostile/cockroach/Initialize()
 	. = ..()
 	add_cell_sample()
+	make_squashable()
+
+/mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
+	AddElement(/datum/element/squashable, squash_chance = 50, squash_damage = 1)
 
 /mob/living/simple_animal/hostile/cockroach/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
@@ -68,26 +72,6 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/cockroach/Crossed(atom/movable/AM)
-	. = ..()
-	if(isliving(AM))
-		var/mob/living/A = AM
-		if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
-			if(HAS_TRAIT(A, TRAIT_PACIFISM))
-				A.visible_message("<span class='notice'>[A] carefully steps over [src].</span>", "<span class='notice'>You carefully step over [src] to avoid hurting it.</span>")
-				return
-			if(prob(squish_chance))
-				A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
-				adjustBruteLoss(1) //kills a normal cockroach
-			else
-				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
-	else if(isstructure(AM))
-		if(prob(squish_chance))
-			AM.visible_message("<span class='notice'>[src] is crushed under [AM].</span>")
-			adjustBruteLoss(1)
-		else
-			visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
-
 /mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return
 
@@ -106,20 +90,19 @@
 	sharpness = SHARP_POINTY
 	squish_chance = 0 // manual squish if relevant
 
-/mob/living/simple_animal/hostile/cockroach/hauberoach/ComponentInitialize()
+/mob/living/simple_animal/hostile/cockroach/hauberoach/Initialize()
 	. = ..()
-	AddComponent(/datum/component/caltrop, 10, 15, 100, (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
+	AddElement(/datum/element/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
 
-/mob/living/simple_animal/hostile/cockroach/hauberoach/Crossed(atom/movable/AM)
-	var/mob/living/A = AM
-	if(istype(A) && A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
-		if(!HAS_TRAIT(A, TRAIT_PIERCEIMMUNE))
-			A.visible_message("<span class='danger'>[A] steps onto [src]'s spike!</span>", "<span class='userdanger'>You step onto [src]'s spike!</span>")
-		else if(HAS_TRAIT(A, TRAIT_PACIFISM))
-			A.visible_message("<span class='notice'>[A] carefully steps over [src].</span>", "<span class='notice'>You carefully step over [src] to avoid hurting it.</span>")
-		else if(HAS_TRAIT(A, TRAIT_PIERCEIMMUNE))
-			A.visible_message("<span class='danger'>[A] steps onto [src]'s spike, but is unfazed!</span>", "<span class='userdanger'>You step onto [src]'s spike, but you're unaffected!</span>")
-		else
-			A.visible_message("<span class='notice'>[A] squashes [src], not even noticing its spike.</span>", "<span class='notice'>You squashed [src], not even noticing its spike.</span>")
-			adjustBruteLoss(1) //kills a normal cockroach
-	..()
+/mob/living/simple_animal/hostile/cockroach/hauberoach/make_squashable()
+	AddElement(/datum/element/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
+
+///Proc used to override the squashing behavior of the normal cockroach.
+/mob/living/simple_animal/hostile/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
+	if(!istype(living_target))
+		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
+	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
+		living_target.visible_message("<span class='danger'>[living_target] steps onto [cockroach]'s spike!</span>", "<span class='userdanger'>You step onto [cockroach]'s spike!</span>")
+		return TRUE
+	living_target.visible_message("<span class='notice'>[living_target] squashes [cockroach], not even noticing its spike.</span>", "<span class='notice'>You squashed [cockroach], not even noticing its spike.</span>")
+	return FALSE
