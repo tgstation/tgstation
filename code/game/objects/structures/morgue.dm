@@ -37,8 +37,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	GLOB.bodycontainers -= src
 	open()
 	if(connected)
-		qdel(connected)
-		connected = null
+		QDEL_NULL(connected)
 	return ..()
 
 /obj/structure/bodycontainer/on_log(login)
@@ -150,9 +149,12 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
 	icon_state = "morgue1"
 	dir = EAST
+	/// Whether or not this morgue beeps to alert parameds of revivable corpses.
 	var/beeper = TRUE
-	var/beep_cooldown = 50
-	var/next_beep = 0
+	/// The minimum time between beeps.
+	var/beep_cooldown = 5 SECONDS
+	/// The cooldown to prevent this from spamming beeps.
+	COOLDOWN_DECLARE(next_beep)
 
 /obj/structure/bodycontainer/morgue/Initialize()
 	. = ..()
@@ -172,7 +174,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/update_icon_state()
 	. = ..()
-	if (!connected || connected.loc != src) // Open or tray is gone.
+	if(!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
 		return
 
@@ -180,7 +182,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		icon_state = "morgue1"
 		return
 
-	icon_state = "morgue2" // Dead, brainded mob.
 	var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
 	if(!length(compiled)) // No mobs?
 		icon_state = "morgue3"
@@ -190,10 +191,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		var/mob/living/mob_occupant = get_mob_or_brainmob(M)
 		if(mob_occupant.client && !mob_occupant.suiciding && !(HAS_TRAIT(mob_occupant, TRAIT_BADDNA)))
 			icon_state = "morgue4" // Revivable
-			if(mob_occupant.stat == DEAD && beeper && (world.time > next_beep))
+			if(mob_occupant.stat == DEAD && beeper && COOLDOWN_FINISHED(src, next_beep))
 				playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
-				next_beep = world.time + beep_cooldown
-			break
+				COOLDOWN_START(src, next_beep, beep_cooldown)
+			return
+
+	icon_state = "morgue2" // Dead, brainded mob.
+	return
 
 
 /obj/item/paper/guides/jobs/medical/morgue
