@@ -33,7 +33,11 @@ fi
 
 ## Fall back to running Yarn from the repo
 if ! hash yarn 2>/dev/null; then
-  alias yarn="node '${base_dir}/.yarn/releases/yarn.cjs'"
+  yarn_releases=("${base_dir}"/.yarn/releases/yarn-*.cjs)
+  yarn_release="${yarn_releases[0]}"
+  yarn() {
+    node "${yarn_release}" "${@}"
+  }
 fi
 
 

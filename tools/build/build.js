@@ -23,7 +23,7 @@ const taskTgui = new Task('tgui')
     if (process.platform === 'win32') {
       await exec('powershell.exe',
         '-NoLogo', '-ExecutionPolicy', 'Bypass',
-        '-File', 'tgui/bin/tgui.ps1');
+        '-File', 'tgui/bin/tgui_.ps1');
     }
     else {
       await exec('tgui/bin/tgui');
