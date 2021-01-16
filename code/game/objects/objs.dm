@@ -46,6 +46,9 @@
 	/// broadcasted to as long as the other guys network is on the same branch or above.
 	var/network_id = null
 
+	///List of object types that the item can be anchored on top of, such as a table
+	var/list/anchorables = null
+
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))
 		if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
