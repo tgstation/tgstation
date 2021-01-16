@@ -84,7 +84,6 @@
 	flags = new_flags
 
 /datum/reagents/Destroy()
-	. = ..()
 	//We're about to delete all reagents, so lets cleanup
 	addiction_list = null
 	for(var/reagent in reagent_list)
@@ -93,12 +92,12 @@
 	reagent_list = null
 	if(is_reacting) //If false, reaction list should be cleaned up
 		force_stop_reacting()
-	QDEL_LIST(reaction_list)
+	QDEL_LAZYLIST(reaction_list)
 	previous_reagent_list = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 	my_atom = null
-
+	return ..()
 
 /**
  * Adds a reagent to this holder

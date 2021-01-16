@@ -51,6 +51,8 @@
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		add_fingerprint(user)
 		return
+	if(number_of_pages == 50)
+		icon_state = "pHbooklet_open"
 	var/obj/item/pHpaper/P = new(get_turf(user))
 	P.add_fingerprint(user)
 	user.put_in_active_hand(P)
