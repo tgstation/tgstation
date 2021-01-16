@@ -412,11 +412,11 @@
 			M.apply_damage(20, BRUTE, hit_zone, M.run_armor_check(hit_zone, MELEE))
 
 			//launch very hard
-			var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
+			var/atom/throw_target = get_edge_target_turf(M, get_dir(firer, get_step_away(M, firer)))
 			M.safe_throw_at(throw_target, 300, 2, null, TRUE, FALSE, null, MOVE_FORCE_OVERPOWERING)
 
 			playsound(M, 'sound/weapons/smash.ogg', 50)
-			return PROJECTILE_PIERCE_HIT
+			return PROJECTILE_PIERCE_PHASE
 
 		if(!locker_temp_instance.insertion_allowed(M))
 			return
