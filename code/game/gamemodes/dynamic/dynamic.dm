@@ -590,10 +590,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.candidates.Cut()
 		if (rule.persistent)
 			current_rules += rule
+		new_snapshot(rule)
 		return TRUE
 	rule.clean_up()
 	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
-	new_snapshot(rule)
 	return FALSE
 
 /datum/game_mode/dynamic/process()
