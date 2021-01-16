@@ -359,6 +359,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		roundstart()
 
+	log_game("DYNAMIC: [round_start_budget] round start budget was left, donating it to midrounds.")
+	mid_round_budget += round_start_budget
+
 	var/starting_rulesets = ""
 	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
 		starting_rulesets += "[DR.name], "
@@ -372,7 +375,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
 
-// TODO: Dynamic 2021
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
 /datum/game_mode/dynamic/proc/rigged_roundstart()
 	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
@@ -386,7 +388,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(roundstart_pop_ready, TRUE))
-			picking_roundstart_rule(list(rule), forced = TRUE)
+			var/cost = rule.cost
+			var/scaled_times = 0
+			if (!(rule.flags & LONE_RULESET))
+				scaled_times = round(max(round_start_budget - cost, 0) / rule.scaling_cost)
+				cost += rule.scaling_cost * scaled_times
+
+			spend_roundstart_budget(picking_roundstart_rule(rule, scaled_times, forced = TRUE))
 
 /datum/game_mode/dynamic/proc/roundstart()
 	if (GLOB.dynamic_forced_extended)
@@ -442,9 +450,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	for (var/ruleset in rulesets_picked)
 		spend_roundstart_budget(picking_roundstart_rule(ruleset, rulesets_picked[ruleset]))
-
-	log_game("DYNAMIC: [round_start_budget] round start budget was left, donating it to midrounds.")
-	mid_round_budget += round_start_budget
 
 /// Initializes the round start ruleset provided to it. Returns how much threat to spend.
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(datum/dynamic_ruleset/roundstart/ruleset, scaled_times = 0, forced = FALSE)
