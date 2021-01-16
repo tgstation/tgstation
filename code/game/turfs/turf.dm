@@ -171,10 +171,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(density)
 		return TRUE
 	for(var/i in contents)
-		var/atom/thing = i
+		var/atom/movable/thing = i
 		var/excuded = FALSE
 		for(var/excluded in excluded_objects)
-			if(ispath(thing.type, excluded))
+			if(istype(thing, excluded))
 				excuded = TRUE
 		if(!excuded && thing.density && (!exclude_mobs || !ismob(thing)))
 			return TRUE
