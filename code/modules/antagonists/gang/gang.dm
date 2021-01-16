@@ -545,6 +545,6 @@
 		return FALSE // didnt pass the bar check, no point in continuing to loop
 	var/obj/machinery/ore_silo/S = GLOB.ore_silo_default
 	var/datum/component/material_container/mat_container = S.GetComponent(/datum/component/material_container)
-	if(mat_container.materials[SSmaterials.GetMaterialRef(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
+	if(mat_container.materials[GET_MATERIAL_REF(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
 		return FALSE
 	return TRUE

@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		addiction_type = type
 
 	if(material)
-		material = SSmaterials.GetMaterialRef(material)
+		material = GET_MATERIAL_REF(material)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

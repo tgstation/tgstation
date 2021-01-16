@@ -13,7 +13,6 @@
 	inhand_icon_state = "tesla"
 	ammo_type = list(/obj/item/ammo_casing/energy/tesla_revolver)
 	can_flashlight = FALSE
-	pin = null
 	shaded_charge = 1
 
 /obj/item/gun/energy/e_gun/advtaser
