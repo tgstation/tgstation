@@ -818,19 +818,25 @@
   * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
   */
 /datum/mafia_controller/proc/generate_random_setup()
-	var/invests_left = 2
+	var/invests_left = 3
 	var/protects_left = 1
-	var/miscs_left = 1
+	var/miscs_left = 1 //actually 2, remove this when fullmerging
 	var/mafiareg_left = 2
 	var/mafiaspe_left = 1
 	var/killing_role = prob(50)
 	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
-	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + killing_role + disruptors)
+
+	//FOR TESTMERGE: ABOVE IS 11, OVERFLOW FOR TESTMERGE SET TO JUST BE WARDEN
+
+	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + 1 + mafiareg_left + killing_role + disruptors)
 
 	var/list/random_setup = list()
 	for(var/i in 1 to MAFIA_MAX_PLAYER_COUNT) //should match the number of roles to add
 		if(overflow_left)
-			add_setup_role(random_setup, TOWN_OVERFLOW)
+			//TEST FOR TESTMERGES
+			//add_setup_role(random_setup, TOWN_OVERFLOW)
+			//REMOVE THIS BEFORE FULLMERGE vvv
+			random_setup[/datum/mafia_role/warden] = 1
 			overflow_left--
 		else if(invests_left)
 			add_setup_role(random_setup, TOWN_INVEST)
@@ -839,10 +845,11 @@
 			add_setup_role(random_setup, TOWN_PROTECT)
 			protects_left--
 		else if(miscs_left)
+			//TEST FOR TESTMERGES
 			//add_setup_role(random_setup, TOWN_MISC)
-			//FORCING HEAD OF SECURITY FOR TESTMERGE
 			//REMOVE THIS BEFORE FULLMERGE vvv
 			random_setup[/datum/mafia_role/hos] = 1
+			random_setup[/datum/mafia_role/hop] = 1
 			miscs_left--
 		else if(mafiareg_left)
 			add_setup_role(random_setup, MAFIA_REGULAR)
