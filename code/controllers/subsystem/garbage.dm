@@ -284,12 +284,6 @@ SUBSYSTEM_DEF(garbage)
 ///
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE, ...)
-	if(isweakref(D))
-		var/datum/weakref/weakref = D
-		D = weakref.resolve()
-		if(!D)
-			return
-
 	if(!istype(D))
 		del(D)
 		return
