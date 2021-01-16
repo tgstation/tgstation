@@ -100,7 +100,7 @@
 		add_filter("emissive_block-[i] (initial(blocker_plane.name))", i++, alpha_mask_filter(render_source = initial(blocker_plane.blocker_target), flags = MASK_INVERSE))
 
 /// The plane master used for emissive turfs and turf overlays
-/atom/movable/screen/plane_master/emissive/turf
+/atom/movable/screen/plane_master/emissive/emissive_turf
 	name = "emissive turf plane master"
 	plane = EMISSIVE_TURF_PLANE
 	layer = EMISSIVE_TURF_LAYER
@@ -108,7 +108,7 @@
 	emissive_target = EMISSIVE_TURF_RENDER_TARGET
 
 /// The plane master used for emissive structures and structure overlays
-/atom/movable/screen/plane_master/emissive/structure
+/atom/movable/screen/plane_master/emissive/emissive_structure
 	name = "emissive structure plane master"
 	plane = EMISSIVE_STRUCTURE_PLANE
 	layer = EMISSIVE_STRUCTURE_LAYER
@@ -116,7 +116,7 @@
 	emissive_target = EMISSIVE_STRUCTURE_RENDER_TARGET
 
 /// The plane master used for emissive items and item overlays
-/atom/movable/screen/plane_master/emissive/item
+/atom/movable/screen/plane_master/emissive/emissive_item
 	name = "emissive item plane master"
 	plane = EMISSIVE_ITEM_PLANE
 	layer = EMISSIVE_ITEM_LAYER
@@ -124,7 +124,7 @@
 	emissive_target = EMISSIVE_ITEM_RENDER_TARGET
 
 /// The plane master used for emissive mobs and mob overlays
-/atom/movable/screen/plane_master/emissive/mob
+/atom/movable/screen/plane_master/emissive/emissive_mob
 	name = "emissive mob plane master"
 	plane = EMISSIVE_MOB_PLANE
 	layer = EMISSIVE_MOB_LAYER
@@ -163,7 +163,7 @@
 	var/blocker_target = EMISSIVE_BLOCKER_RENDER_TARGET
 
 /// The emissive blocker plane master used by structures to block... something. Presumably whatever's under turfs. (NOTE: Not actually implemented because adding this to every turf would be expensive and there's no reason to use this yet)
-/atom/movable/screen/plane_master/emissive_blocker/turf
+/atom/movable/screen/plane_master/emissive_blocker/turf_emissive
 	name = "turf emissive blocker plane master"
 	plane = TURF_EMISSIVE_BLOCKER_PLANE
 	layer = EMISSIVE_TURF_LAYER
@@ -171,7 +171,7 @@
 	blocker_target = TURF_EMISSIVE_BLOCKER_RENDER_TARGET
 
 /// The emissive blocker plane master used by structures to block emissive turfs and turf overlays
-/atom/movable/screen/plane_master/emissive_blocker/structure
+/atom/movable/screen/plane_master/emissive_blocker/structure_emissive
 	name = "structure emissive blocker plane master"
 	plane = STRUCTURE_EMISSIVE_BLOCKER_PLANE
 	layer = EMISSIVE_STRUCTURE_LAYER
@@ -179,7 +179,7 @@
 	blocker_target = STRUCTURE_EMISSIVE_BLOCKER_RENDER_TARGET
 
 /// The emissive blocker plane master used by items to block emissive turfs, structures and overlays thereof
-/atom/movable/screen/plane_master/emissive_blocker/item
+/atom/movable/screen/plane_master/emissive_blocker/item_emissive
 	name = "item emissive blocker plane master"
 	plane = ITEM_EMISSIVE_BLOCKER_PLANE
 	layer = EMISSIVE_ITEM_LAYER
@@ -187,7 +187,7 @@
 	blocker_target = ITEM_EMISSIVE_BLOCKER_RENDER_TARGET
 
 /// The emissive blocker plane master used by items to block emissive turfs, structures, items and overlays thereof
-/atom/movable/screen/plane_master/emissive_blocker/mob
+/atom/movable/screen/plane_master/emissive_blocker/mob_emissive
 	name = "mob emissive blocker plane master"
 	plane = MOB_EMISSIVE_BLOCKER_PLANE
 	layer = EMISSIVE_MOB_LAYER

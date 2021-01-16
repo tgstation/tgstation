@@ -1708,7 +1708,7 @@
 /datum/reagent/carpet/neon
 	name = "Neon Carpet"
 	description = "For those who like the 1980s, vegas, and debugging."
-	color = "#000000"
+	color = COLOR_ALMOST_BLACK
 	taste_description = "neon"
 	carpet_type = /turf/open/floor/carpet/emissive/neon
 

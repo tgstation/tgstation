@@ -23,8 +23,8 @@
 	return ..()
 
 /datum/element/emissive_blocker/Detach(datum/source, force)
-	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS)
+	return ..()
 
 /// Re-applies the emissive blocker vis overlay
 /datum/element/emissive_blocker/proc/update_blocker(atom/source, list/overlays)
