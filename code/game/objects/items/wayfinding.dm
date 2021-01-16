@@ -93,7 +93,8 @@
 		new /obj/item/pinpointer/wayfinding (loc)
 	say("Ouch.")
 	//An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
-	explosion(src, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
+	if(!isnull(loc))
+		explosion(get_truf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
 	return ..()
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
