@@ -18,14 +18,14 @@
 	cost = 8	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
 	scaling_cost = 5
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
-	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
+	antag_cap = list("denominator" = 24)
 	var/autotraitor_cooldown = (15 MINUTES)
 	COOLDOWN_DECLARE(autotraitor_cooldown_check)
 
-/datum/dynamic_ruleset/roundstart/traitor/pre_execute()
+/datum/dynamic_ruleset/roundstart/traitor/pre_execute(population)
 	. = ..()
 	COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
-	var/num_traitors = antag_cap[indice_pop] * (scaled_times + 1)
+	var/num_traitors = get_antag_cap(population) * (scaled_times + 1)
 	for (var/i = 1 to num_traitors)
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -58,13 +58,13 @@
 	cost = 15
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
-	antag_cap = list(2,2,2,2,2,2,2,2,2,2)	// Can pick 3 per team, but rare enough it doesn't matter.
+	antag_cap = 2	// Can pick 3 per team, but rare enough it doesn't matter.
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2
 
-/datum/dynamic_ruleset/roundstart/traitorbro/pre_execute()
+/datum/dynamic_ruleset/roundstart/traitorbro/pre_execute(population)
 	. = ..()
-	var/num_teams = (antag_cap[indice_pop]/min_team_size) * (scaled_times + 1) // 1 team per scaling
+	var/num_teams = (get_antag_cap(population)/min_team_size) * (scaled_times + 1) // 1 team per scaling
 	for(var/j = 1 to num_teams)
 		if(candidates.len < min_team_size || candidates.len < required_candidates)
 			break
@@ -108,11 +108,11 @@
 	cost = 12
 	scaling_cost = 10
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
-	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
+	antag_cap = list("denominator" = 29)
 
-/datum/dynamic_ruleset/roundstart/changeling/pre_execute()
+/datum/dynamic_ruleset/roundstart/changeling/pre_execute(population)
 	. = ..()
-	var/num_changelings = antag_cap[indice_pop] * (scaled_times + 1)
+	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
 	for (var/i = 1 to num_changelings)
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -145,12 +145,12 @@
 	cost = 15
 	scaling_cost = 5
 	requirements = list(50,45,45,40,35,20,20,15,10,10)
-	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
+	antag_cap = list("denominator" = 24)
 
 
-/datum/dynamic_ruleset/roundstart/heretics/pre_execute()
+/datum/dynamic_ruleset/roundstart/heretics/pre_execute(population)
 	. = ..()
-	var/num_ecult = antag_cap[indice_pop] * (scaled_times + 1)
+	var/num_ecult = get_antag_cap(population) * (scaled_times + 1)
 
 	for (var/i = 1 to num_ecult)
 		var/mob/picked_candidate = pick_n_take(candidates)
@@ -233,16 +233,16 @@
 	cost = 20
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	flags = HIGHLANDER_RULESET
-	antag_cap = list(2,2,2,3,3,4,4,4,4,4)
+	antag_cap = list("denominator" = 20, "offset" = 1)
 	var/datum/team/cult/main_cult
 
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
-	required_candidates = antag_cap[indice_pop]
+/datum/dynamic_ruleset/roundstart/bloodcult/ready(population, forced = FALSE)
+	required_candidates = get_antag_cap(population)
 	. = ..()
 
-/datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
+/datum/dynamic_ruleset/roundstart/bloodcult/pre_execute(population)
 	. = ..()
-	var/cultists = antag_cap[indice_pop]
+	var/cultists = get_antag_cap(population)
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
 			break
@@ -291,17 +291,17 @@
 	cost = 20
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGHLANDER_RULESET
-	antag_cap = list(2,2,2,3,3,3,4,4,5,5)
+	antag_cap = list("denominator" = 18, "offset" = 1)
 	var/datum/team/nuclear/nuke_team
 
-/datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
-	required_candidates = antag_cap[indice_pop]
+/datum/dynamic_ruleset/roundstart/nuclear/ready(population, forced = FALSE)
+	required_candidates = get_antag_cap(population)
 	. = ..()
 
-/datum/dynamic_ruleset/roundstart/nuclear/pre_execute()
+/datum/dynamic_ruleset/roundstart/nuclear/pre_execute(population)
 	. = ..()
 	// If ready() did its job, candidates should have 5 or more members in it
-	var/operatives = antag_cap[indice_pop]
+	var/operatives = get_antag_cap(population)
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)
 			break
@@ -376,7 +376,7 @@
 	delay = 7 MINUTES
 	cost = 20
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
-	antag_cap = list(3,3,3,3,3,3,3,3,3,3)
+	antag_cap = 3
 	flags = HIGHLANDER_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
@@ -386,9 +386,9 @@
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
-/datum/dynamic_ruleset/roundstart/revs/pre_execute()
+/datum/dynamic_ruleset/roundstart/revs/pre_execute(population)
 	. = ..()
-	var/max_candidates = antag_cap[indice_pop]
+	var/max_candidates = get_antag_cap(population)
 	for(var/i = 1 to max_candidates)
 		if(candidates.len <= 0)
 			break
@@ -460,14 +460,14 @@
 	requirements = list(101,101,101,101,101,70,40,10,10,10)
 	flags = HIGHLANDER_RULESET
 	minimum_players = 36
-	antag_cap = list(6,6,6,6,6,6,6,6,6,6)
+	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
-/datum/dynamic_ruleset/roundstart/families/pre_execute()
+/datum/dynamic_ruleset/roundstart/families/pre_execute(population)
 	..()
 	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gangs_to_generate = (antag_cap[indice_pop] / 2)
+	handler.gangs_to_generate = (get_antag_cap(population) / 2)
 	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
 	handler.use_dynamic_timing = TRUE
 	return handler.pre_setup_analogue()

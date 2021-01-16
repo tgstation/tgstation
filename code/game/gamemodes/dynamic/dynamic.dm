@@ -397,7 +397,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.acceptable(roundstart_pop_ready, threat_level)	// Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
-		if (rule.ready(TRUE))
+		if (rule.ready(roundstart_pop_ready, TRUE))
 			picking_roundstart_rule(list(rule), forced = TRUE)
 
 /datum/game_mode/dynamic/proc/roundstart()
@@ -411,7 +411,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (rule.acceptable(roundstart_pop_ready, threat_level) && round_start_budget >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
-			if (rule.ready() && rule.candidates.len > 0)
+			if (rule.ready(roundstart_pop_ready) && rule.candidates.len > 0)
 				drafted_rules[rule] = rule.weight
 
 	var/list/rulesets_picked = list()
@@ -463,9 +463,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: Picked a ruleset: [ruleset.name], scaled [scaled_times] times")
 
 	ruleset.trim_candidates()
-	var/added_threat = ruleset.scale_up(scaled_times)
+	var/added_threat = ruleset.scale_up(roundstart_pop_ready, scaled_times)
 
-	if(ruleset.pre_execute())
+	if(ruleset.pre_execute(roundstart_pop_ready))
 		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [ruleset.scaled_times]/[scaled_times] times." : ""]"
 		if(ruleset.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
@@ -550,12 +550,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if(highlander_executed)
 					return FALSE
 
-	if((new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= mid_round_budget) || forced)
+	var/population = current_players[CURRENT_LIVING_PLAYERS].len
+	if((new_rule.acceptable(population, threat_level) && new_rule.cost <= mid_round_budget) || forced)
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
 			spend_midround_budget(new_rule.cost)
 			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
-			new_rule.pre_execute()
+			new_rule.pre_execute(population)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGHLANDER_RULESET)
 					highlander_executed = TRUE
@@ -575,7 +576,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	spend_midround_budget(rule.cost)
 	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
-	rule.pre_execute()
+	rule.pre_execute(current_players[CURRENT_LIVING_PLAYERS].len)
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		if(rule.flags & HIGHLANDER_RULESET)

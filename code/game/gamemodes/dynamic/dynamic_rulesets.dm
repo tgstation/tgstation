@@ -66,13 +66,17 @@
 	var/maximum_players = 0
 	/// Calculated during acceptable(), used in scaling and team sizes.
 	var/indice_pop = 0
-	/// Population scaling. Used by team antags and scaling for solo antags.
-	var/list/antag_cap = list()
 	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
 	var/base_prob = 60
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
 	var/delay = 0
+
+	/// Judges the amount of antagonists to apply, for both solo and teams.
+	/// Note that some antagonists (such as traitors, lings, heretics, etc) will add more based on how many times they've been scaled.
+	/// Written as a linear equation--ceil(x/denominator) + offset, or as a fixed constant.
+	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
+	var/antag_cap = 0
 
 
 /datum/dynamic_ruleset/New()
@@ -93,9 +97,6 @@
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
 	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-	if(antag_cap.len && requirements.len != antag_cap.len)
-		message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
-		log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
@@ -108,21 +109,28 @@
 /// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
 /// This function is here to ensure the antag ratio is kept under control while scaling up.
 /// Returns how much threat to actually spend in the end.
-/datum/dynamic_ruleset/proc/scale_up(max_scale)
+/datum/dynamic_ruleset/proc/scale_up(population, max_scale)
 	if (!scaling_cost)
 		return 0
 
 	var/antag_fraction = 0
 	for(var/_ruleset in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
 		var/datum/dynamic_ruleset/ruleset = _ruleset
-		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.antag_cap[indice_pop]) / mode.roundstart_pop_ready
+		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.get_antag_cap(population)) / mode.roundstart_pop_ready
 
 	for(var/i in 1 to max_scale)
 		if(antag_fraction < 0.25)
 			scaled_times += 1
-			antag_fraction += antag_cap[indice_pop] / mode.roundstart_pop_ready // we added new antags, gotta update the %
+			antag_fraction += get_antag_cap(population) / mode.roundstart_pop_ready // we added new antags, gotta update the %
 
 	return scaled_times * scaling_cost
+
+/// Returns what the antag cap with the given population is.
+/datum/dynamic_ruleset/proc/get_antag_cap(population)
+	if (isnum(antag_cap))
+		return antag_cap
+
+	return CEILING(population / antag_cap["denominator"], 1) + (antag_cap["offset"] || 0)
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
@@ -131,7 +139,7 @@
 /// Called on game mode pre_setup for roundstart rulesets.
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE
-/datum/dynamic_ruleset/proc/pre_execute()
+/datum/dynamic_ruleset/proc/pre_execute(population)
 	if(exclusive_roles.len)
 		restricted_roles |= get_all_jobs() - exclusive_roles
 	return TRUE
@@ -203,5 +211,5 @@
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE
-/datum/dynamic_ruleset/roundstart/ready(forced = FALSE)
+/datum/dynamic_ruleset/roundstart/ready(population, forced = FALSE)
 	return ..()

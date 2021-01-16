@@ -232,7 +232,7 @@
 	flags = HIGHLANDER_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
 	minimum_players = 36
-	antag_cap = list(6,6,6,6,6,6,6,6,6,6)
+	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
