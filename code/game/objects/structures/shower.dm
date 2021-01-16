@@ -124,7 +124,7 @@
 	target.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
 	target.wash(CLEAN_WASH)
 	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
-	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * min(SHOWER_SPRAY_VOLUME / (reagents.total_volume || SHOWER_SPRAY_VOLUME), 1))
+	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(isliving(target))
 		check_heat(target)
 
@@ -199,3 +199,9 @@
 
 #undef SHOWER_SPRAY_VOLUME
 #undef SHOWER_EXPOSURE_MULTIPLIER
+#undef SHOWER_BOILING_TEMP
+#undef SHOWER_BOILING
+#undef SHOWER_NORMAL_TEMP
+#undef SHOWER_NORMAL
+#undef SHOWER_FREEZING_TEMP
+#undef SHOWER_FREEZING
