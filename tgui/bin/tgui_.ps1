@@ -65,6 +65,7 @@ function task-clean {
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
+  Remove-Quiet -Recurse -Force ".yarn\webpack"
   Remove-Quiet -Recurse -Force ".yarn\build-state.yml"
   Remove-Quiet -Recurse -Force ".yarn\install-state.gz"
   Remove-Quiet -Force ".pnp.js"

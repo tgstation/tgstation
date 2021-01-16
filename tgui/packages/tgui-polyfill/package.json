@@ -3,7 +3,7 @@
   "name": "tgui-polyfill",
   "version": "4.3.0",
   "dependencies": {
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.2",
     "regenerator-runtime": "^0.13.7"
   }
 }

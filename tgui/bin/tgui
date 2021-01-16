@@ -81,6 +81,7 @@ task-clean() {
   ## Yarn artifacts
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
+  rm -rf .yarn/webpack
   rm -rf .yarn/build-state.yml
   rm -rf .yarn/install-state.gz
   rm -f .pnp.js
@@ -181,7 +182,7 @@ fi
 ## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
-  task-eslint
+  task-eslint --fix
   task-webpack --mode=production
   exit 0
 fi
