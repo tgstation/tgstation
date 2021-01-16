@@ -89,7 +89,7 @@
 	COOLDOWN_START(src, next_slogan_tick, COOLDOWN_SLOGAN)
 
 /obj/machinery/pinpointer_dispenser/Destroy()
-	for(var/i = 0, i < pick(3,9), i++) //Doesn't synthesise them in real time and instead stockpiles completed ones (though this is not how the cooldown works)
+	for(var/i in 1 to rand(3, 9)) //Doesn't synthesise them in real time and instead stockpiles completed ones (though this is not how the cooldown works)
 		new /obj/item/pinpointer/wayfinding (loc)
 	say("Ouch.")
 	//An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
