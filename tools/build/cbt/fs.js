@@ -56,7 +56,7 @@ const compareFiles = nodes => {
           }
         } catch {
           // Always needs a rebuild if any target doesn't exist.
-          return true;
+          return `target '${node.path}' is missing`;
         }
         continue;
       }
@@ -83,14 +83,21 @@ const compareFiles = nodes => {
   }
   // Doesn't need rebuild if there is no source, but target exists.
   if (!bestSource) {
-    return !bestTarget;
+    if (bestTarget) {
+      return false;
+    } else {
+      return 'no known sources or targets';
+    }
   }
   // Always needs a rebuild if no targets were specified (e.g. due to GLOB).
   if (!bestTarget) {
-    return true;
+    return 'no targets were specified';
   }
   // Needs rebuild if source is newer than target
-  return bestSource.mtime > bestTarget.mtime;
+  if (bestSource.mtime > bestTarget.mtime) {
+    return `source '${bestSource.path}' is newer than target '${bestTarget.path}'`;
+  }
+  return false;
 };
 
 /**
