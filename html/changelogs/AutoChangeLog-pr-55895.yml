@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to toggle showers' water regeneration with a multitool."
