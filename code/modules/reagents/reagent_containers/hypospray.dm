@@ -217,7 +217,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon_state()
 	. = ..()
-	if(reagents.total_volume > 30)
+	if(reagents.total_volume >= volume)
 		icon_state = base_icon_state
 		return
 	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? 1 : 0]"

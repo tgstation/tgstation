@@ -406,7 +406,7 @@
 
 /datum/plant_gene/trait/maxchem/on_new(obj/item/food/grown/G, newloc)
 	..()
-	G.reagents.maximum_volume *= rate
+	G.max_volume *= rate
 
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"

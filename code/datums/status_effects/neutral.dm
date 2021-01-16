@@ -292,3 +292,19 @@
 /// Something fishy is going on here...
 /datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
 	slap_item = null
+
+/*
+ * A status effect used for preventing caltrop message spam
+ *
+ * While a mob has this status effect, they won't recieve any messages about
+ * stepping on caltrops. But they will be stunned and damaged regardless.
+ *
+ * The status effect itself has no effect, other than to disappear after
+ * a second.
+ */
+/datum/status_effect/caltropped
+	id = "caltropped"
+	duration = 1 SECONDS
+	tick_interval = INFINITY
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null

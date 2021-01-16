@@ -159,7 +159,7 @@
 				computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
-					to_chat(usr, "<span class='notice'>[src] dispenses a ticket!</span>")
+					to_chat(usr, "<span class='notice'>[computer] dispenses a ticket!</span>")
 					ticket_count -= 1
 					printer.stored_paper -= 1
 				else

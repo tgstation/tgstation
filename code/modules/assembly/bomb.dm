@@ -196,7 +196,7 @@
 		ground_zero.assume_air(bomb_mixture)
 		ground_zero.hotspot_expose(1000, 125)
 
-	ground_zero.air_update_turf()
+	ground_zero.air_update_turf(FALSE, FALSE)
 
 /obj/item/tank/proc/release()	//This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
@@ -204,7 +204,7 @@
 	if(!T)
 		return
 	T.assume_air(removed)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 /obj/item/onetankbomb/return_analyzable_air()
 	if(bombtank)

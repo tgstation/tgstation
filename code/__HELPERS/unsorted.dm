@@ -414,30 +414,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/*
-	Gets all contents of contents and returns them all in a list.
-*/
 
-/atom/proc/GetAllContents(T, ignore_flag_1)
+///Returns the src and all recursive contents as a list.
+/atom/proc/GetAllContents()
+	. = list(src)
+	var/i = 0
+	while(i < length(.))
+		var/atom/A = .[++i]
+		. += A.contents
+
+///identical to getallcontents but returns a list of atoms of the type passed in the argument.
+/atom/proc/get_all_contents_type(type)
 	var/list/processing_list = list(src)
-	if(T)
-		. = list()
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-			//This is also why we don't need to check against assembled as we go along
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-				if(istype(A,T))
-					. += A
-	else
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-		return processing_list
+	. = list()
+	while(length(processing_list))
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		processing_list += A.contents
+		if(istype(A, type))
+			. += A
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
 	if(!length(ignore_typecache))

@@ -140,6 +140,9 @@
 
 	create_modularInterface()
 
+	module = new /obj/item/robot_module(src)
+	module.rebuild_modules()
+
 	if(lawupdate)
 		make_laws()
 		if(!TryConnectToAI())
@@ -152,8 +155,6 @@
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
-	module = new /obj/item/robot_module(src)
-	module.rebuild_modules()
 	update_icons()
 	. = ..()
 

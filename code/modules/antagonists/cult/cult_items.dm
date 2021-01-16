@@ -361,13 +361,13 @@
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
 	icon_state = "cult_sharpener"
-	used = 0
+	uses = 1
 	increment = 5
 	max = 40
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon_state()
-	icon_state = "cult_sharpener[used ? "_used" : ""]"
+	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
@@ -834,7 +834,8 @@
 		return
 	var/C = user.client
 	if(ishuman(user) && C)
-		angle = mouse_angle_from_client(C)
+		var/list/angle_vector = calculate_projectile_angle_and_pixel_offsets(user, params)
+		angle = angle_vector[1]
 	else
 		qdel(src)
 		return

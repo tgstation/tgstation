@@ -59,18 +59,12 @@ class DMM:
 
     def generate_new_key(self):
         free_keys = self._ensure_free_keys(1)
+        max_key = max_key_for(self.key_length)
         # choose one of the free keys at random
-        key = 0
-        while free_keys:
-            if key not in self.dictionary:
-                # this construction is used to avoid needing to construct the
-                # full set in order to random.choice() from it
-                if random.random() < 1 / free_keys:
-                    return key
-                free_keys -= 1
-            key += 1
-
-        raise RuntimeError("ran out of keys, this shouldn't happen")
+        key = random.randint(0, max_key - 1)
+        while key in self.dictionary:
+            key = random.randint(0, max_key - 1)
+        return key
 
     def overwrite_key(self, key, fixed, bad_keys):
         try:

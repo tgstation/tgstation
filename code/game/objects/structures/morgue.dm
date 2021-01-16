@@ -175,6 +175,15 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if (!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
 		return
+	else
+		if(contents.len == 1)  // Empty
+			icon_state = "morgue1"
+		else
+			icon_state = "morgue2" // Dead, brainded mob.
+			var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
+			if(!length(compiled)) // No mobs?
+				icon_state = "morgue3"
+				return
 
 	if(contents.len == 1)  // Empty
 		icon_state = "morgue1"
@@ -290,7 +299,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
-	for(var/i_scream in GetAllContents(/mob/living))
+	for(var/i_scream in get_all_contents_type(/mob/living))
 		var/obj/item/food/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)
