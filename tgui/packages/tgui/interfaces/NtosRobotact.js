@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, LabeledList, ProgressBar, Section, Slider, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
@@ -70,7 +69,7 @@ export const NtosRobotactContent = (props, context) => {
         </Tabs>
       </Flex.Item>
       {tab_main === 1 && (
-        <Fragment>
+        <>
           <Flex
             direction={"row"}>
             <Flex.Item
@@ -269,14 +268,14 @@ export const NtosRobotactContent = (props, context) => {
               fill
               scrollable
               buttons={(
-                <Fragment>
+                <>
                   <Button
                     content="State Laws"
                     onClick={() => act('lawstate')} />
                   <Button
                     icon="volume-off"
                     onClick={() => act('lawchannel')} />
-                </Fragment>
+                </>
               )}>
               {laws.map(law => (
                 <Box
@@ -287,7 +286,7 @@ export const NtosRobotactContent = (props, context) => {
               ))}
             </Section>
           </Flex.Item>
-        </Fragment>
+        </>
       )}
       {tab_main === 2 && (
         <Flex.Item>

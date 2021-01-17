@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "tgui",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "dependencies": {
     "common": "workspace:*",
-    "dompurify": "^2.0.12",
-    "inferno": "^7.4.2",
-    "inferno-vnode-flags": "^7.4.2",
-    "marked": "^1.1.1",
+    "dompurify": "^2.2.6",
+    "inferno": "^7.4.7",
+    "inferno-vnode-flags": "^7.4.7",
+    "marked": "^1.2.7",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"
   }
