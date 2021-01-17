@@ -45,7 +45,12 @@
 
 ///Dog AI controller blackboard keys
 
-#define BB_DOG_FETCH "BB_dog_fetch"
+#define BB_DOG_FETCHING "BB_dog_fetching"
+#define BB_DOG_CARRY_ITEM "BB_dog_carry_item"
+#define BB_DOG_FETCH_TARGET "BB_dog_fetch_target"
+#define BB_DOG_FETCH_TARGET_IGNORE "BB_dog_fetch_target_ignorelist"
+#define BB_DOG_FETCH_THROWER "BB_dog_fetch_thrower"
 #define BB_DOG_THROW_LISTENERS "BB_dog_throw_listeners"
+#define BB_DOG_DELIVERING "BB_dog_delivering"
 
 #define AI_DOG_THROW_LISTEN_RANGE	7

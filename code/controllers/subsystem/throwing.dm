@@ -188,6 +188,9 @@ SUBSYSTEM_DEF(throwing)
 		if(T && thrownthing.has_gravity(T))
 			T.zFall(thrownthing)
 
+	if(thrownthing)
+		SEND_SIGNAL(thrownthing, COMSIG_MOVABLE_THROW_LANDED, src)
+
 	qdel(src)
 
 /datum/thrownthing/proc/hit_atom(atom/A)

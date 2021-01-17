@@ -424,6 +424,8 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	ai_controller = /datum/ai_controller/dog
+	stop_automated_movement = TRUE
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE
