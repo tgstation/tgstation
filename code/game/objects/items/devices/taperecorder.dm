@@ -12,8 +12,10 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
-	throwforce = 0
+	throwforce = 2
 	speech_span = SPAN_TAPE_RECORDER
+	drop_sound = 'sound/items/handling/taperecorder_drop.ogg'
+	pickup_sound = 'sound/items/handling/taperecorder_pickup.ogg'
 	var/recording = FALSE
 	var/playing = FALSE
 	var/playsleepseconds = 0
@@ -27,11 +29,14 @@
 	var/time_warned = FALSE
 	///Seconds under which to warn that the tape is almost up.
 	var/time_left_warning = 60 SECONDS
+	///Sound loop that plays when recording or playing back.
+	var/datum/looping_sound/tape_recorder_hiss/soundloop
 
 /obj/item/taperecorder/Initialize(mapload)
 	. = ..()
 	if(starting_tape_type)
 		mytape = new starting_tape_type(src)
+	soundloop = new(list(src))
 	update_icon()
 
 /obj/item/taperecorder/proc/readout()
@@ -69,6 +74,12 @@
 
 	if(mytape)
 		icons_available += list("Eject" = image(icon = icon_directory, icon_state = "eject"))
+
+/obj/item/taperecorder/proc/update_sound()
+	if(!playing && !recording)
+		soundloop.stop()
+	else
+		soundloop.start()
 
 /obj/item/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/tape))
@@ -154,6 +165,7 @@
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
 		say("Recording started.")
+		update_sound()
 		update_icon()
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
@@ -189,6 +201,7 @@
 		playing = FALSE
 	time_warned = FALSE
 	update_icon()
+	update_sound()
 
 /obj/item/taperecorder/verb/play()
 	set name = "Play Tape"
@@ -205,6 +218,7 @@
 
 	playing = TRUE
 	update_icon()
+	update_sound()
 	say("Playback started.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
