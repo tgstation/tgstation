@@ -59,6 +59,7 @@ SUBSYSTEM_DEF(job)
 			testing("Removed [job.type] due to map config")
 			continue
 		occupations += job
+		name_occupations[job.title] = job
 		/// CHANGES START
 		// Eg name_occupation_dict["Captain"] = "Admiral"
 		if(job.old_title == "NOPE")//if we didn't change it then set it to what it is normally
