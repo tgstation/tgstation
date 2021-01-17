@@ -6,8 +6,8 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-const PnpPlugin = require(`pnp-webpack-plugin`);
+const ExtractCssPlugin = require('mini-css-extract-plugin');
+const { createBabelConfig } = require('./babel.config.js');
 
 const createStats = verbose => ({
   assets: verbose,
@@ -16,16 +16,20 @@ const createStats = verbose => ({
   children: false,
   chunks: false,
   colors: true,
+  entrypoints: true,
   hash: false,
+  modules: false,
+  performance: false,
   timings: verbose,
   version: verbose,
-  modules: false,
 });
 
 module.exports = (env = {}, argv) => {
+  const mode = argv.mode === 'production' ? 'production' : 'development';
   const config = {
-    mode: argv.mode === 'production' ? 'production' : 'development',
+    mode,
     context: path.resolve(__dirname),
+    target: ['web', 'es3', 'browserslist:ie 8'],
     entry: {
       'tgui': [
         './packages/tgui-polyfill',
@@ -41,19 +45,12 @@ module.exports = (env = {}, argv) => {
         ? path.resolve(__dirname, './public/.tmp')
         : path.resolve(__dirname, './public'),
       filename: '[name].bundle.js',
-      chunkFilename: '[name].chunk.js',
+      chunkFilename: '[name].bundle.js',
+      chunkLoadTimeout: 15000,
     },
     resolve: {
       extensions: ['.js', '.jsx'],
       alias: {},
-      plugins: [
-        PnpPlugin,
-      ],
-    },
-    resolveLoader: {
-      plugins: [
-        PnpPlugin.moduleLoader(module),
-      ],
     },
     module: {
       rules: [
@@ -62,26 +59,7 @@ module.exports = (env = {}, argv) => {
           use: [
             {
               loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['@babel/preset-env', {
-                    modules: 'commonjs',
-                    useBuiltIns: 'entry',
-                    corejs: '3.6',
-                    spec: false,
-                    loose: true,
-                    targets: {
-                      ie: '8',
-                    },
-                  }],
-                ],
-                plugins: [
-                  '@babel/plugin-transform-jscript',
-                  'babel-plugin-inferno',
-                  'babel-plugin-transform-remove-console',
-                  'common/string.babel-plugin.cjs',
-                ],
-              },
+              options: createBabelConfig({ mode }),
             },
           ],
         },
@@ -89,34 +67,32 @@ module.exports = (env = {}, argv) => {
           test: /\.scss$/,
           use: [
             {
-              loader: ExtractCssChunks.loader,
+              loader: ExtractCssPlugin.loader,
               options: {
-                hmr: argv.hot,
+                esModule: false,
               },
             },
             {
               loader: 'css-loader',
-              options: {},
+              options: {
+                esModule: false,
+              },
             },
             {
               loader: 'sass-loader',
-              options: {},
             },
           ],
         },
         {
           test: /\.(png|jpg|svg)$/,
           use: [
-            {
-              loader: 'url-loader',
-              options: {},
-            },
+            'url-loader',
           ],
         },
       ],
     },
     optimization: {
-      noEmitOnErrors: true,
+      emitOnErrors: false,
       splitChunks: {
         chunks: 'initial',
         name: 'tgui-common',
@@ -126,6 +102,10 @@ module.exports = (env = {}, argv) => {
       hints: false,
     },
     devtool: false,
+    cache: {
+      type: 'filesystem',
+      cacheLocation: path.resolve(__dirname, `.yarn/webpack/${mode}`),
+    },
     stats: createStats(true),
     plugins: [
       new webpack.EnvironmentPlugin({
@@ -133,10 +113,9 @@ module.exports = (env = {}, argv) => {
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
-      new ExtractCssChunks({
+      new ExtractCssPlugin({
         filename: '[name].bundle.css',
-        chunkFilename: '[name].chunk.css',
-        orderWarning: true,
+        chunkFilename: '[name].bundle.css',
       }),
     ],
   };
@@ -153,7 +132,6 @@ module.exports = (env = {}, argv) => {
   // Production build specific options
   if (argv.mode === 'production') {
     const TerserPlugin = require('terser-webpack-plugin');
-    const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     config.optimization.minimizer = [
       new TerserPlugin({
         extractComments: false,
@@ -166,28 +144,10 @@ module.exports = (env = {}, argv) => {
         },
       }),
     ];
-    config.plugins = [
-      ...config.plugins,
-      new OptimizeCssAssetsPlugin({
-        assetNameRegExp: /\.css$/g,
-        cssProcessor: require('cssnano'),
-        cssProcessorPluginOptions: {
-          preset: ['default', {
-            discardComments: {
-              removeAll: true,
-            },
-          }],
-        },
-        canPrint: true,
-      }),
-    ];
   }
 
   // Development build specific options
   if (argv.mode !== 'production') {
-    if (argv.hot) {
-      config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    }
     config.devtool = 'cheap-module-source-map';
   }
 
