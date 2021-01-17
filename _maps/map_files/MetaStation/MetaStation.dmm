@@ -68977,6 +68977,15 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
+/obj/item/raw_anomaly_core/random{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/raw_anomaly_core/random,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "nNe" = (
