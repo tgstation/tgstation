@@ -22,10 +22,10 @@
 	var/canprint = TRUE
 	var/list/icons_available = list()
 	var/icon_directory = 'icons/effects/icons.dmi'
-	///Whether we've warned during this recording that the tape is almost up.
-	var/seconds_warned = FALSE
+	///Whether we've warned during this recording session that the tape is almost up.
+	var/time_warned = FALSE
 	///Seconds under which to warn that the tape is almost up.
-	var/seconds_to_warn = 60 SECONDS
+	var/time_left_warning = 60 SECONDS
 	///What color we talk in.
 	var/say_color = COLOR_MAROON
 
@@ -41,7 +41,7 @@
 		if(playing)
 			return "<span class='notice'><b>PLAYING</b></span>"
 		else
-			var/time = mytape.used_capacity
+			var/time = mytape.used_capacity / 10 //deciseconds / 10 = seconds
 			var/mins = round(time / 60)
 			var/secs = time - mins * 60
 			return "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
@@ -135,12 +135,8 @@
 	. = ..()
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [message]"
 
-		var/seconds_left = (mytape.max_capacity - mytape.used_capacity) SECONDS
-		if((seconds_left < seconds_to_warn) && !seconds_warned)
-			seconds_warned = TRUE
-			say("<font color='[say_color]'>[seconds_left] seconds left!</font>") //this is said after it hears something which isn't ideal but it works
 
 /obj/item/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -155,21 +151,27 @@
 	if(playing)
 		return
 
+	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
+
 	if(mytape.used_capacity < mytape.max_capacity)
-		playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 		recording = TRUE
 		say("<font color='[say_color]'>Recording started.</font>")
 		update_icon()
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		while(recording && used < max)
-			mytape.used_capacity++
-			used++
-			sleep(10)
-		recording = FALSE
-		update_icon()
+			mytape.used_capacity += 1 SECONDS
+			used += 1 SECONDS
+			if(max - used < time_left_warning && !time_warned)
+				time_warned = TRUE
+				say("<font color='[say_color]'>[(max - used) / 10] seconds left!</font>") //deciseconds / 10 = seconds
+			sleep(1 SECONDS)
+		if(used >= max)
+			say("<font color='[say_color]'>Tape full.</font>")
+		stop()
 	else
 		say("<font color='[say_color]'>The tape is full!</font>")
+		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
 /obj/item/taperecorder/verb/stop()
@@ -187,7 +189,7 @@
 		playing = FALSE
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		say("<font color='[say_color]'>Playback stopped.</font>")
-	seconds_warned = FALSE
+	time_warned = FALSE
 	update_icon()
 
 /obj/item/taperecorder/verb/play()
@@ -209,7 +211,7 @@
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
-	for(var/i = 1, used <= max, sleep(10 * playsleepseconds))
+	for(var/i = 1, used <= max, sleep(playsleepseconds))
 		if(!mytape)
 			break
 		if(playing == FALSE)
@@ -219,14 +221,14 @@
 		say("[mytape.storedinfo[i]]")
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
-			sleep(10)
+			sleep(1 SECONDS)
 			say("<font color='[say_color]'>End of recording.</font>")
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
-		if(playsleepseconds > 14)
-			sleep(10)
+		if(playsleepseconds > 14 SECONDS)
+			sleep(1 SECONDS)
 			say("<font color='[say_color]'>Skipping [playsleepseconds] seconds of silence.</font>")
-			playsleepseconds = 1
+			playsleepseconds = 1 SECONDS
 		i++
 
 	stop()
@@ -308,13 +310,13 @@
 	obj_flags = UNIQUE_RENAME //my mixtape
 	drop_sound = 'sound/items/handling/tape_drop.ogg'
 	pickup_sound = 'sound/items/handling/tape_pickup.ogg'
-	var/max_capacity = 600
-	var/used_capacity = 0
+	var/max_capacity = 10 MINUTES
+	var/used_capacity = 0 SECONDS
 	///Numbered list of chat messages the recorder has heard with spans and prepended timestamps. Used for playback and transcription.
 	var/list/storedinfo = list()
 	///Numbered list of seconds the messages in the previous list appear at on the tape. Used by playback to get the timing right.
 	var/list/timestamp = list()
-	var/used_capacity_otherside = 0 //Separate my side
+	var/used_capacity_otherside = 0 SECONDS //Separate my side
 	var/list/storedinfo_otherside = list()
 	var/list/timestamp_otherside = list()
 	var/ruined = FALSE
