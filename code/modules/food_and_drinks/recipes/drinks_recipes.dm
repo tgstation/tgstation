@@ -5,7 +5,7 @@
 	temp_exponent_factor = 1
 	optimal_pH_min = 2
 	optimal_pH_max = 10
-	thermic_constant = 0.1
+	thermic_constant = 0
 	H_ion_release = 0
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////

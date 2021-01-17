@@ -405,6 +405,10 @@
 /datum/chemical_reaction/cryostylane
 	results = list(/datum/reagent/cryostylane = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
+	is_cold_recipe = TRUE //This is kind of a strange reaction that I will come back to tweak later
+	required_temp = 1000
+	optimal_temp = 20
+	overheat_temp = 1
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // cools the fuck down

@@ -41,9 +41,14 @@
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
 		to_delete = TRUE
 		return
-	reaction.on_reaction(holder, multiplier) 
+	/*if(!length(reaction.results)) //DO NOT FORGET TO ENABLE THIS CHECK - Come back to and revise the affected reactions in the next PR, this is a sloppy fix.
+		holder.instant_react(reaction)
+		to_delete = TRUE
+		return*/
+	reaction.on_reaction(holder, multiplier)
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 	react_timestep(1)//Get an initial step going so there's not a delay between setup and start
+	
 
 /datum/equilibrium/Destroy()
 	LAZYREMOVE(holder.reaction_list, src)
@@ -59,12 +64,18 @@
 */
 /datum/equilibrium/proc/check_inital_conditions()
 	//These temp checks might not be needed
-	if(!reaction.is_cold_recipe)
+	/*if(!reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.required_temp) 
 			return FALSE //Not hot enough
 	else
 		if(holder.chem_temp > reaction.required_temp)
 			return FALSE //Not cold enough
+	*/
+	//Make sure we have the right multipler for on_reaction()
+	for(var/B in reaction.required_reagents)
+		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
+	if(multiplier == INFINITY)
+		return FALSE
 	//Consider purity gating too? - probably not, purity is hard to determine
 	//To prevent reactions outside of the pH window from starting.
 	if(! ((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range)) ))

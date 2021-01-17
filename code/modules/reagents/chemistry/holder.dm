@@ -84,6 +84,7 @@
 	flags = new_flags
 
 /datum/reagents/Destroy()
+	//. = ..() //Why does relocating this cause reagent_list to become bad in add_reagent??
 	//We're about to delete all reagents, so lets cleanup
 	addiction_list = null
 	for(var/reagent in reagent_list)
@@ -916,7 +917,8 @@
 		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
-	handle_reactions() //Should be okay without. Each step checks.
+	if(!QDELING(src))
+		handle_reactions() //Should be okay without. Each step checks.
 
 /*
 * Force stops the current holder/reagents datum from reacting

@@ -26,7 +26,7 @@
 ///Create reagents datum
 /obj/machinery/chem_recipe_debug/Initialize()
 	. = ..()
-	create_reagents(500)
+	create_reagents(5000)//I want to make sure everything fits
 
 ///Enable the machine
 /obj/machinery/chem_recipe_debug/attackby(obj/item/I, mob/user, params)
@@ -85,7 +85,7 @@
 				var/obj/item/reagent_containers/glass/beaker/bluespace/B = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
 				reagents.trans_to(B)
 				B.name = "[cached_reactions[index]]"
-				//problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
+				problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
 				continue
 			say("Reaction has a product [R] [R2.volume]u purity of [R2.purity]")
 			if(R2.purity < 0.9)
@@ -104,7 +104,7 @@
 	for(var/R in C.required_reagents)
 		reagents.add_reagent(R, C.required_reagents[R]*20)
 	for(var/cat in C.required_catalysts)
-		reagents.add_reagent(cat, C.required_reagents[cat])
+		reagents.add_reagent(cat, C.required_catalysts[cat])
 	reagents.chem_temp = C.optimal_temp
 	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.pH] index [index] of [cached_reactions.len]")
 	if(C.reaction_flags & REACTION_INSTANT)
