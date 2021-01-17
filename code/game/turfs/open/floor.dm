@@ -29,7 +29,7 @@
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
-		broken_states = string_list(list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+		broken_states = "[base_icon_state]"
 	else
 		broken_states = string_list(broken_states)
 	if(burnt_states)
@@ -44,6 +44,9 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
+/turf/open/floor/proc/setup_broken_states()
+	broken_states = string_list(list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+	return
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
