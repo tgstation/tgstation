@@ -52,10 +52,12 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/use_charge)
 
 /obj/item/clothing/gloves/color/yellow/sprayon/proc/use_charge()
+	SIGNAL_HANDLER
+
 	charges_remaining--
 	if(charges_remaining <= 0)
-		var/turf/T = get_turf(src)
-		T.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
+		var/turf/location = get_turf(src)
+		location.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
 		qdel(src)
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
