@@ -6,7 +6,10 @@
  */
 
 const { resolve: resolvePath } = require('path');
-const { Task, runTasks, exec, regQuery } = require('./cbt');
+const { resolveGlob } = require('./cbt/fs');
+const { exec } = require('./cbt/process');
+const { Task, runTasks } = require('./cbt/task');
+const { regQuery } = require('./cbt/winreg');
 
 // Change working directory to project root
 process.chdir(resolvePath(__dirname, '../../'));
@@ -14,23 +17,25 @@ process.chdir(resolvePath(__dirname, '../../'));
 const taskTgui = new Task('tgui')
   .depends('tgui/.yarn/releases/*')
   .depends('tgui/yarn.lock')
+  .depends('tgui/webpack.config.js')
   .depends('tgui/**/package.json')
   .depends('tgui/packages/**/*.js')
   .depends('tgui/packages/**/*.jsx')
   .provides('tgui/public/tgui.bundle.css')
   .provides('tgui/public/tgui.bundle.js')
-  .provides('tgui/public/tgui-common.chunk.js')
+  .provides('tgui/public/tgui-common.bundle.js')
   .provides('tgui/public/tgui-panel.bundle.css')
   .provides('tgui/public/tgui-panel.bundle.js')
   .build(async () => {
-    if (process.platform === 'win32') {
-      await exec('powershell.exe',
-        '-NoLogo', '-ExecutionPolicy', 'Bypass',
-        '-File', 'tgui/bin/tgui.ps1');
-    }
-    else {
-      await exec('tgui/bin/tgui');
-    }
+    // Instead of calling `tgui/bin/tgui`, we reproduce the whole pipeline
+    // here for maximum compilation speed.
+    const yarnRelease = resolveGlob('./tgui/.yarn/releases/yarn-*.cjs')[0]
+      .replace('/tgui/', '/');
+    const yarn = args => exec('node', [yarnRelease, ...args], {
+      cwd: './tgui',
+    });
+    await yarn(['install']);
+    await yarn(['run', 'webpack-cli', '--mode=production']);
   });
 
 const taskDm = new Task('dm')
@@ -64,11 +69,11 @@ const taskDm = new Task('dm')
     } else {
       compiler = 'DreamMaker';
     }
-    await exec(compiler, 'tgstation.dme');
+    await exec(compiler, ['tgstation.dme']);
   });
 
 // Frontend
-let tasksToRun = [
+const tasksToRun = [
   taskTgui,
   taskDm,
 ];
