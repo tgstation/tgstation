@@ -17,6 +17,8 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	burnt_states = list("panelscorched")
+	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 
 	var/attachment_holes = TRUE
 
@@ -30,12 +32,6 @@
 	else
 		. += "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>"
 
-/turf/open/floor/plating/Initialize()
-	if (!broken_states)
-		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
-	if (!burnt_states)
-		burnt_states = list("panelscorched")
-	. = ..()
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())

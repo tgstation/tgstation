@@ -13,6 +13,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	broken_states = list("glass-damaged1", "glass-damaged2", "glass-damaged3")
 
 /turf/open/floor/glass/Initialize()
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
@@ -23,9 +24,6 @@
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency, TRUE)
 
-/turf/open/floor/glass/setup_broken_states()
-	broken_states = string_list(list("[base_icon_state]-damaged1", "[base_icon_state]-damaged2", "[base_icon_state]-damaged3", "[base_icon_state]-damaged4", "[base_icon_state]-damaged5"))
-	return
 
 /turf/open/floor/glass/reinforced
 	name = "Reinforced glass floor"
@@ -33,3 +31,4 @@
 	icon = 'icons/turf/floors/reinf_glass.dmi'
 	icon_state = "reinf_glass-0"
 	base_icon_state = "reinf_glass"
+	broken_states = list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")

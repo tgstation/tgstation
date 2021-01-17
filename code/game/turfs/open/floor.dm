@@ -29,7 +29,7 @@
 
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
-		broken_states = "[base_icon_state]"
+		setup_broken_states()
 	else
 		broken_states = string_list(broken_states)
 	if(burnt_states)
