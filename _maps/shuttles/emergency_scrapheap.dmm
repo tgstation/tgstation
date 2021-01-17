@@ -93,7 +93,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ar" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Cockpit";
@@ -111,7 +111,7 @@
 "at" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "au" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
@@ -150,10 +150,10 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ay" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "az" = (
 /obj/structure/grille,
 /obj/machinery/door/airlock/public/glass{
@@ -175,7 +175,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aD" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -184,13 +184,13 @@
 /obj/item/extinguisher,
 /obj/item/crowbar,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aE" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aF" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/titanium/blue,

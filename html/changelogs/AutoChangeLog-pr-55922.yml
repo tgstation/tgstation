@@ -1,5 +1,0 @@
-author: "Guillaume H. Prata / Papaporo Paprito"
-delete-after: True
-changes: 
-  - rscadd: "NT shipped new uniform to the station. Jumpskirts can now be adjusted to expose chest/arms just like Jumpsuits already could."
-  - bugfix: "Fix some suits that should expose only the arms fully exposing the chest. Also fix the Botany Jumpsuit having the old style when adjusted."

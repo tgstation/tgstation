@@ -127,7 +127,7 @@
 		var/turf/T = get_turf(src)
 		if(T)
 			T.assume_air(air_contents)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 		playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	qdel(src)
 
@@ -298,7 +298,7 @@
 	if(cached_gases[/datum/gas/hydrogen])
 		gas_change = TRUE
 		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen] -= pulse_strength / 1000
+		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
 		ASSERT_GAS(/datum/gas/tritium, air_contents)
 		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
 		strength -= pulse_strength

@@ -1,4 +1,0 @@
-author: "cat"
-delete-after: True
-changes: 
-  - refactor: "refactored ambient sounds to use global lists"

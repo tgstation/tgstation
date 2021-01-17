@@ -5011,12 +5011,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/central)
-"aiG" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
-/turf/open/floor/plasteel/dark,
-/area/security/main)
 "aiH" = (
 /obj/structure/table/reinforced,
 /obj/item/crowbar/red,
@@ -5034,18 +5028,6 @@
 /obj/item/clothing/head/helmet/justice/escape{
 	name = "justice helmet"
 	},
-/turf/open/floor/plasteel/dark,
-/area/security/main)
-"aiK" = (
-/obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/item/clothing/accessory/armband/deputy,
-/obj/effect/turf_decal/tile/red,
-/obj/item/food/donut,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "aiL" = (
@@ -55636,16 +55618,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"bJW" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/spawner/randomarcade{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/fitness/recreation)
 "bJX" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/space_heater,
@@ -70097,18 +70069,6 @@
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat/atmos)
-"chP" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/atmos)
 "chQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -74570,19 +74530,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"cpO" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/newscaster{
-	pixel_x = -30
-	},
-/obj/effect/spawner/randomarcade{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/fitness/recreation)
 "cpP" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
@@ -89308,6 +89255,19 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"jUV" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_x = -30
+	},
+/obj/effect/spawner/randomarcade{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/recreation)
 "kfw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
@@ -90051,6 +90011,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
+"pjk" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat/atmos)
 "pjq" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -91333,6 +91305,19 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port)
+"wrN" = (
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/effect/turf_decal/tile/red,
+/obj/item/food/donut,
+/obj/item/inspector,
+/turf/open/floor/plasteel/dark,
+/area/security/main)
 "wsg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 5
@@ -91507,6 +91492,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xyF" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/spawner/randomarcade{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/fitness/recreation)
 "xzI" = (
 /obj/machinery/camera{
 	c_tag = "Prison Cells";
@@ -91662,6 +91657,13 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
 /area/security/prison)
+"ygA" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/inspector,
+/turf/open/floor/plasteel/dark,
+/area/security/main)
 "yio" = (
 /turf/closed/wall,
 /area/medical/psychology)
@@ -104915,10 +104917,10 @@ beX
 cnL
 awD
 bGR
-bJW
-bJW
-cpO
-bJW
+xyF
+xyF
+jUV
+xyF
 cuD
 aSL
 cJB
@@ -109311,7 +109313,7 @@ aog
 aSV
 aia
 cBu
-aiG
+ygA
 cyK
 cri
 cHe
@@ -110339,7 +110341,7 @@ aQS
 cwK
 aic
 aiy
-aiK
+wrN
 ajf
 cKn
 agS
@@ -119249,7 +119251,7 @@ auf
 bmD
 ccl
 adt
-chP
+pjk
 chO
 agf
 ceF
