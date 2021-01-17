@@ -195,7 +195,7 @@
 
 	var/raw_msg = message
 	if(visible_message_flags & EMOTE_MESSAGE)
-		message = "<b>[src]</b> [message]"
+		message = "<span class='emote'><b>[src]</b> [message]</span>"
 
 	for(var/mob/M in hearers)
 		if(!M.client)
@@ -240,7 +240,7 @@
 		hearers -= src
 	var/raw_msg = message
 	if(audible_message_flags & EMOTE_MESSAGE)
-		message = "<b>[src]</b> [message]"
+		message = "<span class='emote'><b>[src]</b> [message]</span>"
 	for(var/mob/M in hearers)
 		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags) && M.can_hear())
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
@@ -571,20 +571,12 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc))
-		return FALSE
 	if(client && !(A in view(client.view, src)))
 		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	var/turf/tile = get_turf(A)
-	if (!tile)
-		return FALSE
-
-	var/turf/our_tile = get_turf(src)
-	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
+	point_at(A)
 
 	return TRUE
 
@@ -817,6 +809,12 @@
  */
 /mob/MouseDrop_T(atom/dropping, atom/user)
 	. = ..()
+
+	// Our mouse drop has already been handled by something else. Most likely buckling code.
+	// Since it has already been handled, we don't need to show inventory.
+	if(.)
+		return
+
 	if(ismob(dropping) && src == user && dropping != user)
 		var/mob/M = dropping
 		var/mob/U = user

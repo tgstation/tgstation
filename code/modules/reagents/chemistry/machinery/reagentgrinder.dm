@@ -12,6 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
+	anchorables = list(/obj/structure/table)
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10

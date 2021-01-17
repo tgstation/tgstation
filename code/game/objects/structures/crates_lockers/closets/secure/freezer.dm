@@ -10,7 +10,7 @@
 	. = ..()
 	recursive_organ_check(src)
 
-/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = TRUE)
+/obj/structure/closet/secure_closet/freezer/open(mob/living/user, force = FALSE)
 	if(opened || !can_open(user, force))	//dupe check just so we don't let the organs decay when someone fails to open the locker
 		return FALSE
 	recursive_organ_check(src)
@@ -64,7 +64,7 @@
 		new /obj/item/food/meat/slab/monkey(src)
 
 /obj/structure/closet/secure_closet/freezer/meat/open
-	req_access = null
+	req_access = list()
 	locked = FALSE
 
 /obj/structure/closet/secure_closet/freezer/gulag_fridge

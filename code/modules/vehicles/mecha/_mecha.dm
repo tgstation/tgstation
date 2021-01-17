@@ -198,6 +198,10 @@
 	diag_hud_set_mechstat()
 	update_icon()
 
+/obj/mecha/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/M in occupants)
 		var/mob/living/occupant = M
@@ -219,7 +223,7 @@
 	LAZYCLEARLIST(equipment)
 	if(loc)
 		loc.assume_air(cabin_air)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 	else
 		qdel(cabin_air)
 	cabin_air = null
@@ -395,7 +399,7 @@
 				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(DT_PROB_RATE(0.05, delta_time))
 				if(loc)
 					loc.assume_air(leaked_gas)
-					air_update_turf()
+					air_update_turf(FALSE, FALSE)
 				else
 					qdel(leaked_gas)
 
@@ -435,7 +439,7 @@
 				else //just delete the cabin gas, we're in space or some shit
 					qdel(removed)
 
-	if(occupants)
+	if(LAZYLEN(occupants))
 		for(var/i in occupants)
 			var/mob/living/occupant = i
 			if(cell)
@@ -694,7 +698,13 @@
 	if(phasing && get_charge() >= phasing_energy_drain && !throwing)
 		if(phase_state)
 			flick(phase_state, src)
-		forceMove(get_step(src,dir))//This is jank I hate it thanks, this should be done thrugh move not this dumb shit
+		var/turf/destination = get_step(src,dir)
+		var/area/destination_area = destination.loc
+		if(destination_area.area_flags & NOTELEPORT)
+			to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>A dull, universal force is preventing you from phasing here!</span>")
+			spark_system.start()
+		else
+			forceMove(destination)//This is jank I hate it thanks, this should be done thrugh move not this dumb shit
 		use_power(phasing_energy_drain)
 		addtimer(VARSET_CALLBACK(src, movedelay, TRUE), movedelay*3)
 		return
@@ -802,10 +812,21 @@
 			if(!construction_state) //Mech must be in maint mode to allow carding.
 				to_chat(user, "<span class='warning'>[name] must have maintenance protocols active in order to allow a transfer.</span>")
 				return
-			if(!locate(AI) in occupants) //Mech does not have an AI for a pilot
+			var/list/ai_pilots = list()
+			for(var/mob/living/silicon/ai/aipilot in occupants)
+				ai_pilots += aipilot
+			if(!ai_pilots.len) //Mech does not have an AI for a pilot
 				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
 				return
-			for(var/mob/living/silicon/ai in occupants)
+			if(ai_pilots.len > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
+				AI = input(user,"Which AI do you wish to card?", "AI Selection") as null|anything in sortList(ai_pilots)
+			else
+				AI = ai_pilots[1]
+			if(!AI)
+				return
+			if(!(AI in occupants) || !user.Adjacent(src))
+				return //User sat on the selection window and things changed.
+
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = TRUE
 			AI.radio_enabled = FALSE
@@ -862,13 +883,14 @@
 
 ///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
-	if(pilot_mob?.Adjacent(src))
-		if(occupants)
-			return
-		LAZYADD(occupants, src)
-		pilot_mob.mecha = src
-		pilot_mob.forceMove(src)
-		update_icon()
+	if(!pilot_mob?.Adjacent(src))
+		return
+	if(LAZYLEN(occupants))
+		return
+	LAZYSET(occupants, pilot_mob, NONE)
+	pilot_mob.mecha = src
+	pilot_mob.forceMove(src)
+	update_icon()
 
 ///Handles an actual AI (simple_animal mecha pilot) exiting the mech
 /obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
@@ -1180,8 +1202,7 @@
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
 					if(A.custom_materials)
-						for(var/i in A.custom_materials)
-							A.custom_materials[i] = A.custom_materials[i] * (A.rounds/initial(A.rounds))
+						A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
 					A.update_name()
 					return TRUE
 

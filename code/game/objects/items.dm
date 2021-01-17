@@ -138,6 +138,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	///Who threw the item
 	var/mob/thrownby = null
+	///Items can by default thrown up to 10 tiles by TK users
+	tk_throw_range = 10
 
 	///the icon to indicate this object is being dragged
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -349,6 +351,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(anchored)
 		return
 
+	. = TRUE
+
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
 		var/can_handle_hot = FALSE
@@ -392,10 +396,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
+	. = FALSE
 	pickup(user)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
+		return TRUE
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
@@ -1059,7 +1065,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				found_mats++
 
 		//if there's glass in it and the glass is more than 60% of the item, then we can shatter it
-		if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)] >= total_material_amount * 0.60)
+		if(custom_materials[GET_MATERIAL_REF(/datum/material/glass)] >= total_material_amount * 0.60)
 			if(prob(66)) //66% chance to break it
 				/// The glass shard that is spawned into the source item
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)

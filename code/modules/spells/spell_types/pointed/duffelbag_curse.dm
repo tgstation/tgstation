@@ -34,7 +34,7 @@
 
 	var/obj/item/storage/backpack/duffelbag/cursed/C = new get_turf(target)
 
-	target.visible_message("<span class='danger'>A stinky duffel bag appears on you!</span>", \
+	target.visible_message("<span class='danger'>A stinky duffel bag appears on [target]!</span>", \
 						   "<span class='danger'>You feel something attaching itself to you!</span>")
 	target.flash_act()
 	if(target.dropItemToGround(target.back))

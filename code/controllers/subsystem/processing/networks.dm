@@ -220,7 +220,7 @@ SUBSYSTEM_DEF(networks)
 	log_text += "\[[station_time_timestamp()]\]"
 	if(network)
 		var/datum/ntnet/net = network
-		if(!net)
+		if(!istype(net))
 			net = networks[network]
 		if(net) // bad network?
 			log_text += "{[net.network_id]}"

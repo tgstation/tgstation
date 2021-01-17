@@ -1,9 +1,9 @@
 #define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
 ///Used when setting the mode of the canisters, enabling us to switch the overlays
 //These are used as icon states later down the line for tier overlays
-#define CANISTER_TIER_1					"tier 1"
-#define CANISTER_TIER_2					"tier 2"
-#define CANISTER_TIER_3					"tier 3"
+#define CANISTER_TIER_1					1
+#define CANISTER_TIER_2					2
+#define CANISTER_TIER_3					3
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -73,6 +73,10 @@
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon
 	)
 
+/obj/machinery/portable_atmospherics/canister/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='alert'>Error - Unauthorized User.</span>")
@@ -83,7 +87,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
+		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
@@ -351,7 +355,7 @@
 	. = ..()
 	var/isBroken = machine_stat & BROKEN
 	///Function is used to actually set the overlays
-	. += "[mode]-[isBroken]"
+	. += "tier [mode]-[isBroken]"
 	if(isBroken)
 		return
 	if(holding)
@@ -368,10 +372,12 @@
 	else if(pressure >= 10)
 		. += "can-0"
 
-/obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > (temperature_resistance * mode))
-		take_damage(5, BURN, 0)
 
+/obj/machinery/portable_atmospherics/canister/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > temperature_resistance * mode
+
+/obj/machinery/portable_atmospherics/canister/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0)
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -422,7 +428,7 @@
 	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 	obj_break()
 	density = FALSE
@@ -457,7 +463,7 @@
 		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
 
 		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()

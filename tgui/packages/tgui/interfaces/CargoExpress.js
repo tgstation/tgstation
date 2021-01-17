@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
@@ -26,7 +25,7 @@ export const CargoExpress = (props, context) => {
 const CargoExpressContent = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Section
         title="Cargo Express"
         buttons={(
@@ -59,6 +58,6 @@ const CargoExpressContent = (props, context) => {
         </LabeledList>
       </Section>
       <CargoCatalog express />
-    </Fragment>
+    </>
   );
 };
