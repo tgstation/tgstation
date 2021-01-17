@@ -142,4 +142,5 @@
 		/obj/item/camera/spooky = 1
 		)
 
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 	chameleon_extras = /obj/item/stamp/chap

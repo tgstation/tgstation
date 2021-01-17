@@ -1,5 +1,6 @@
 /obj/item/restraints
 	breakouttime = 600
+	dye_color = DYE_PRISONER
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -46,16 +47,12 @@
 	if(!istype(C))
 		return
 
+	SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user)
+
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
-
-	// chance of monkey retaliation
-	if(ismonkey(C) && prob(MONKEY_CUFF_RETALIATION_PROB))
-		var/mob/living/carbon/monkey/M
-		M = C
-		M.retaliate(user)
 
 	if(!C.handcuffed)
 		if(C.canBeHandcuffed())

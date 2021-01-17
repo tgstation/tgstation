@@ -10,9 +10,6 @@
 		M.wreckage = null // So the mech doesn't explode.
 	..()
 
-/datum/bounty/item/mech/mark_high_priority(scale_reward)
-	return ..(max(scale_reward * 0.7, 1.2))
-
 /datum/bounty/item/mech/ripleymk2
 	name = "APLU MK-II \"Ripley\""
 	reward = CARGO_CRATE_VALUE * 26

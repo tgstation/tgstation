@@ -39,7 +39,6 @@
 "h" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small{
-	icon_state = "bulb";
 	dir = 1
 	},
 /obj/item/food/spaghetti/pastatomato{

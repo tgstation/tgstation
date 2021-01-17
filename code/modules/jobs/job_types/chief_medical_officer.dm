@@ -25,6 +25,8 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_MED
 
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM, TRAIT_ROYAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
 	bounty_types = CIV_JOB_MED
 
@@ -53,7 +55,7 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
-
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
 
 /datum/outfit/job/cmo/hardsuit

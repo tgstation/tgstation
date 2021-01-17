@@ -23,9 +23,9 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 60)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT
@@ -53,6 +53,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
+	light_system = MOVABLE_LIGHT
 	flags_cover = HEADCOVERSEYES
 	heat = 999
 
@@ -147,7 +148,7 @@
 	inhand_icon_state = "hardhat0_pumpkin"
 	hat_type = "pumpkin"
 	clothing_flags = SNUG_FIT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
@@ -197,7 +198,7 @@
 	inhand_icon_state = "cardborg_h"
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 

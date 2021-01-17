@@ -21,7 +21,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 
-	mind_traits = list(TRAIT_DISK_VERIFIER)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
 
@@ -56,6 +56,7 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
 
+	skillchips = list(/obj/item/skillchip/disk_verifier)
 	implants = list(/obj/item/implant/mindshield)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 

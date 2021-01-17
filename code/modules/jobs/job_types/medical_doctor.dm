@@ -15,6 +15,8 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
 	bounty_types = CIV_JOB_MED
 
@@ -39,5 +41,7 @@
 	box = /obj/item/storage/box/survival/syndie
 	pda_slot = ITEM_SLOT_LPOCKET
 	l_hand = /obj/item/storage/firstaid/medical
+
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	chameleon_extras = /obj/item/gun/syringe

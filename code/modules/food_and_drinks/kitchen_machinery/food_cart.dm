@@ -1,168 +1,135 @@
-#define STORAGE_CAPACITY 30
-#define LIQUID_CAPACIY 200
-#define MIXER_CAPACITY 100
 
 /obj/machinery/food_cart
 	name = "food cart"
-	desc = "New generation hot dog stand."
+	desc = "A compact unpackable mobile cooking stand. Wow! When unpacked, it reminds you of those greasy gamer setups some people on NTNet have."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "foodcart"
 	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
-	var/food_stored = 0
-	var/glasses = 0
-	var/portion = 10
-	var/selected_drink
-	var/list/stored_food = list()
-	var/obj/item/reagent_containers/mixer
+	req_access = list(ACCESS_KITCHEN)
+	flags_1 = NODECONSTRUCT_1
+	var/unpacked = FALSE
+	var/obj/machinery/griddle/stand/cart_griddle
+	var/obj/machinery/smartfridge/food/cart_smartfridge
+	var/obj/structure/table/reinforced/cart_table
+	var/obj/effect/food_cart_stand/cart_tent
+	var/static/list/packed_things
 
 /obj/machinery/food_cart/Initialize()
 	. = ..()
-	create_reagents(LIQUID_CAPACIY, OPENCONTAINER | NO_REACT)
-	mixer = new /obj/item/reagent_containers(src, MIXER_CAPACITY)
-	mixer.name = "Mixer"
+	cart_griddle = new(src)
+	cart_smartfridge = new(src)
+	cart_table = new(src)
+	cart_tent = new(src)
+	packed_things = list(cart_table, cart_smartfridge, cart_tent, cart_griddle) //middle, left, left, right
+	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	RegisterSignal(cart_table, COMSIG_PARENT_QDELETING, .proc/lost_part)
 
 /obj/machinery/food_cart/Destroy()
-	QDEL_NULL(mixer)
+	if(cart_griddle)
+		QDEL_NULL(cart_griddle)
+	if(cart_smartfridge)
+		QDEL_NULL(cart_smartfridge)
+	if(cart_table)
+		QDEL_NULL(cart_table)
+	QDEL_NULL(cart_tent)
 	return ..()
 
-/obj/machinery/food_cart/ui_interact(mob/user)
+/obj/machinery/food_cart/examine(mob/user)
 	. = ..()
-	var/dat
-	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
-	dat += "Remaining glasses: [glasses]<br>"
-	dat += "Portion: <a href='?src=[REF(src)];portion=1'>[portion]</a><br>"
-	for(var/datum/reagent/R in reagents.reagent_list)
-		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];disposeI=[R.type]'>Purge</a>"
-		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];pour=[R.type]'>Pour in a glass</a>"
-		dat += "<a href='?src=[REF(src)];mix=[R.type]'>Add to the mixer</a><br>"
-	dat += "</div><br><b>MIXER CONTENTS</b><br><div class='statusDisplay'>"
-	for(var/datum/reagent/R in mixer.reagents.reagent_list)
-		dat += "[R.name]: [R.volume] "
-		dat += "<a href='?src=[REF(src)];transfer=[R.type]'>Transfer back</a>"
-		if (glasses > 0)
-			dat += "<a href='?src=[REF(src)];m_pour=[R.type]'>Pour in a glass</a>"
-		dat += "<br>"
-	dat += "</div><br><b>STORED FOOD</b><br><div class='statusDisplay'>"
-	for(var/V in stored_food)
-		if(stored_food[V] > 0)
-			dat += "<b>[V]: [stored_food[V]]</b> <a href='?src=[REF(src)];dispense=[V]'>Dispense</a><br>"
-	dat += "</div><br><a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"
-
-	var/datum/browser/popup = new(user, "foodcart","Food Cart", 500, 350, src)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/food_cart/proc/isFull()
-	return food_stored >= STORAGE_CAPACITY
-
-/obj/machinery/food_cart/attackby(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_WRENCH)
-		default_unfasten_wrench(user, O, 0)
-		return TRUE
-	if(istype(O, /obj/item/reagent_containers/food/drinks/drinkingglass))
-		var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = O
-		if(!DG.reagents.total_volume) //glass is empty
-			qdel(DG)
-			glasses++
-			to_chat(user, "<span class='notice'>[src] accepts the drinking glass, sterilizing it.</span>")
-	else if(IS_EDIBLE(O))
-		if(isFull())
-			to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
+	if(!(machine_stat & BROKEN))
+		if(cart_griddle.machine_stat & BROKEN)
+			. += "<span class='warning'>The stand's <b>griddle</b> is completely broken!</span>"
 		else
-			var/obj/item/S = O
-			if(!user.transferItemToLoc(S, src))
-				return
-			food_stored++
-			if(stored_food[sanitize(S.name)])
-				stored_food[sanitize(S.name)]++
-			else
-				stored_food[sanitize(S.name)] = 1
-	else if(istype(O, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = O
-		if(G.get_amount() >= 1)
-			G.use(1)
-			glasses += 4
-			to_chat(user, "<span class='notice'>[src] accepts a sheet of glass.</span>")
-	else if(istype(O, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/T = O
-		for(var/obj/item/S in T.contents)
-			if(isFull())
-				to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
-				break
-			else
-				if(!IS_EDIBLE(S))
-					continue
-				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
-					food_stored++
-					if(stored_food[sanitize(S.name)])
-						stored_food[sanitize(S.name)]++
-					else
-						stored_food[sanitize(S.name)] = 1
-	else if(O.is_drainable())
+			. += "<span class='notice'>The stand's <b>griddle</b> is intact.</span>"
+		. += "<span class='notice'>The stand's <b>fridge</b> seems fine.</span>" //weirdly enough, these fridges don't break
+		. += "<span class='notice'>The stand's <b>table</b> seems fine.</span>"
+
+/obj/machinery/food_cart/proc/pack_up()
+	if(!unpacked)
 		return
+	visible_message("<span class='notice'>[src] retracts all of it's unpacked components.</span>")
+	for(var/o in packed_things)
+		var/obj/object = o
+		UnregisterSignal(object, COMSIG_MOVABLE_MOVED)
+		object.forceMove(src)
+	anchored = FALSE
+	unpacked = FALSE
+
+/obj/machinery/food_cart/proc/unpack(mob/user)
+	if(unpacked)
+		return
+	if(!check_setup_place())
+		to_chat(user, "<span class='warning'>There isn't enough room to unpack here! Bad spaces were marked in red.</span>")
+		return
+	visible_message("<span class='notice'>[src] expands into a full stand.</span>")
+	anchored = TRUE
+	var/iteration = 1
+	var/turf/grabbed_turf = get_step(get_turf(src), EAST)
+	for(var/angle in list(0, -45, -45, 45))
+		var/turf/T = get_step(grabbed_turf, turn(SOUTH, angle))
+		var/obj/thing = packed_things[iteration]
+		thing.forceMove(T)
+		RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/lost_part)
+		iteration++
+	unpacked = TRUE
+
+/obj/machinery/food_cart/attack_hand(mob/living/user)
+	. = ..()
+	if(machine_stat & BROKEN)
+		to_chat(user, "<span class='warning'>[src] is completely busted.</span>")
+		return
+	var/obj/item/card/id/id_card = user.get_idcard(hand_first = TRUE)
+	if(!check_access(id_card))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		return
+	to_chat(user, "<span class='notice'>You attempt to [unpacked ? "pack up" :"unpack"] [src]...</span>")
+	if(!do_after(user, 5 SECONDS, src))
+		to_chat(user, "<span class='warning'>Your [unpacked ? "" :"un"]packing of [src] was interrupted!</span>")
+		return
+	if(unpacked)
+		pack_up()
 	else
-		. = ..()
-	updateDialog()
+		unpack(user)
 
-/obj/machinery/food_cart/Topic(href, href_list)
-	if(..())
-		return
-
-	if(href_list["disposeI"])
-		reagents.del_reagent(href_list["disposeI"])
-
-	if(href_list["dispense"])
-		if(stored_food[href_list["dispense"]]-- <= 0)
-			stored_food[href_list["dispense"]] = 0
+/obj/machinery/food_cart/proc/check_setup_place()
+	var/has_space = TRUE
+	var/turf/grabbed_turf = get_step(get_turf(src), EAST)
+	for(var/angle in list(0, -45, 45))
+		var/turf/T = get_step(grabbed_turf, turn(SOUTH, angle))
+		if(T && !T.density)
+			new /obj/effect/temp_visual/cart_space(T)
 		else
-			for(var/obj/O in contents)
-				if(sanitize(O.name) == href_list["dispense"])
-					O.forceMove(drop_location())
-					food_stored--
-					break
-				log_combat(usr, src, "dispensed [O] from", null, "with [stored_food[href_list["dispense"]]] remaining")
+			has_space = FALSE
+			new /obj/effect/temp_visual/cart_space/bad(T)
+	return has_space
 
-	if(href_list["portion"])
-		portion = clamp(input("How much drink do you want to dispense per glass?") as num|null, 0, 50)
+/obj/machinery/food_cart/proc/lost_part(atom/movable/source, force)
+	SIGNAL_HANDLER
 
-		if (isnull(portion))
-			return
+	//okay, so it's deleting the fridge or griddle which are more important. We're gonna break the machine then
+	UnregisterSignal(cart_griddle, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(cart_smartfridge, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(cart_table, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(cart_tent, COMSIG_MOVABLE_MOVED)
+	obj_break()
 
-	if(href_list["pour"] || href_list["m_pour"])
-		if(glasses-- <= 0)
-			to_chat(usr, "<span class='warning'>There are no glasses left!</span>")
-			glasses = 0
-		else
-			var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = new(loc)
-			if(href_list["pour"])
-				reagents.trans_id_to(DG, href_list["pour"], portion)
-			if(href_list["m_pour"])
-				mixer.reagents.trans_id_to(DG, href_list["m_pour"], portion)
+/obj/machinery/food_cart/obj_break(damage_flag)
+	. = ..()
+	pack_up()
+	if(cart_griddle)
+		QDEL_NULL(cart_griddle)
+	if(cart_smartfridge)
+		QDEL_NULL(cart_smartfridge)
+	if(cart_table)
+		QDEL_NULL(cart_table)
+	QDEL_NULL(cart_tent)
 
-	if(href_list["mix"])
-		if(reagents.trans_id_to(mixer, href_list["mix"], portion) == 0)
-			to_chat(usr, "<span class='warning'>[mixer] is full!</span>")
-
-	if(href_list["transfer"])
-		if(mixer.reagents.trans_id_to(src, href_list["transfer"], portion) == 0)
-			to_chat(usr, "<span class='warning'>[src] is full!</span>")
-
-	updateDialog()
-
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null,"window=foodcart")
-	return
-
-/obj/machinery/food_cart/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 4)
-	qdel(src)
-
-#undef STORAGE_CAPACITY
-#undef LIQUID_CAPACIY
-#undef MIXER_CAPACITY
+/obj/effect/food_cart_stand
+	name = "food cart tent"
+	desc = "Something to battle the sun, for there are no breaks for the burger flippers."
+	icon = 'icons/obj/3x3.dmi'
+	icon_state = "stand"
+	layer = ABOVE_MOB_LAYER//big mobs will still go over the tent, this is fine and cool

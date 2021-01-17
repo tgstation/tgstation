@@ -26,7 +26,7 @@
 	maxbodytemp = INFINITY
 	healable = 0
 	faction = list("cult")
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
@@ -94,7 +94,7 @@
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
-				Beam(M,icon_state="sendbeam",time=4)
+				Beam(M, icon_state="sendbeam", time = 4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
@@ -276,6 +276,13 @@
 						and shells to place those soulstones into.</b>"
 	can_repair_constructs = TRUE
 	can_repair_self = TRUE
+	///The health HUD applied to this mob.
+	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
+
+/mob/living/simple_animal/hostile/construct/artificer/Initialize()
+	. = ..()
+	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
+	datahud.add_hud_to(src)
 
 /mob/living/simple_animal/hostile/construct/artificer/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?

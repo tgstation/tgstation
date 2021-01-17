@@ -58,6 +58,8 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
 
+	skillchips = list(/obj/item/skillchip/job/research_director)
+
 	chameleon_extras = /obj/item/stamp/rd
 
 /datum/outfit/job/rd/rig

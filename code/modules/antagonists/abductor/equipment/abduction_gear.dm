@@ -758,7 +758,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alienhelmet"
 	inhand_icon_state = "alienhelmet"
 	blockTracking = TRUE
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 // Operating Table / Beds / Lockers
 

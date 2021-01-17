@@ -1,3 +1,10 @@
+/*
+The contents of this file were originally licensed under CC-BY-NC-SA 3.0 as part of Goonstation(https://ss13.co).
+However, /tg/station and derivative codebases have been granted the right to use this code under the terms of the AGPL.
+The original authors are: cogwerks, pistoleer, spyguy, angriestibm, marquesas, and stuntwaffle.
+If you make a derivative work from this code, you must include this notification header alongside it.
+*/
+
 /mob/living/carbon/human/proc/wrestling_help()
 	set name = "Recall Teachings"
 	set desc = "Remember how to wrestle."

@@ -18,13 +18,13 @@
 		overflow.total_positions = -1 // Ensures infinite slots as this role. Assistant will still be open for those that cant play it.
 		for(var/job in jobs)
 			var/datum/job/current = job
-			if(current.title == "AI" || current.title == SSjob.overflow_role) // AI currently doesnt support latejoining past one total.
+			if(!current.allow_bureaucratic_error)
 				continue
 			current.total_positions = 0
 	else	// Adds/removes a random amount of job slots from all jobs.
 		for(var/job in jobs)
 			var/datum/job/current = job
-			if(current.title == "AI" || current.title == SSjob.overflow_role) // AI currently doesnt support latejoining past one total.
+			if(!current.allow_bureaucratic_error)
 				continue
 			var/ran = rand(-2,4)
 			current.total_positions = max(current.total_positions + ran, 0)
