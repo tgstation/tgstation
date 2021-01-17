@@ -21,7 +21,7 @@
 	var/open_panel = FALSE
 	var/canprint = TRUE
 	var/list/icons_available = list()
-	var/icon_directory = 'icons/effects/icons.dmi'
+	var/icon_directory = 'icons/hud/radial_taperecorder.dmi'
 	///Whether we've warned during this recording session that the tape is almost up.
 	var/time_warned = FALSE
 	///Seconds under which to warn that the tape is almost up.
