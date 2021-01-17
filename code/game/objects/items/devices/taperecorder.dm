@@ -183,12 +183,12 @@
 
 	if(recording)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		recording = FALSE
 		say("<font color='[say_color]'>Recording stopped.</font>")
+		recording = FALSE
 	else if(playing)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		playing = FALSE
 		say("<font color='[say_color]'>Playback stopped.</font>")
+		playing = FALSE
 	time_warned = FALSE
 	update_icon()
 
