@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - tweak: "Long-To-Short-Range-Bluespace-Transceiver timers changed from T1: 90s -> 40s  T2: 70s -> 30s  T3: 60s -> 20s  T4: 60s -> 10s"
