@@ -217,12 +217,11 @@
 		if(playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
-			say("<font color='[say_color]'>Tape empty.</font>")
+			say("<font color='[say_color]'>End of recording.</font>")
 			break
 		say("[mytape.storedinfo[i]]")
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
-			say("<font color='[say_color]'>End of recording.</font>")
 			sleep(1 SECONDS)
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
