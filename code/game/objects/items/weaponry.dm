@@ -948,3 +948,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return TRUE
 	return FALSE
+
+/obj/item/melee/moonlight_greatsword
+	name = "moonlight greatsword"
+	desc = "Don't tell anyone you put any points into dex, though."
+	icon_state = "swordon"
+	inhand_icon_state = "swordon"
+	worn_icon_state = "swordon"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	block_chance = 20
+	sharpness = SHARP_EDGED
+	force = 14
+	throwforce = 12
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
