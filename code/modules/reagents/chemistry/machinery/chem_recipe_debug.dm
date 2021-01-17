@@ -18,6 +18,8 @@
 	var/processing = FALSE
 	///Final output that highlights all of the reactions with inoptimal purity/voolume at base
 	var/problem_string
+	///Final output that highlights all of the reactions with inoptimal purity/voolume at base
+	var/impure_string
 	///The count of reactions that resolve between 1 - 0.9 purity
 	var/minorImpurity
 	///The count of reactions that resolve below 0.9 purity
@@ -68,8 +70,10 @@
 	if(reagents.is_reacting == TRUE)
 		return
 	if(index >= cached_reactions.len)
-		say("Completed testing, problem reactions are:")
+		say("Completed testing, missing reactions products (may have exploded) are:")
 		say("[problem_string]")
+		say("Problem with results are:")
+		say("[impure_string]")
 		say("Reactions with minor impurity: [minorImpurity], reactions with major impurity: [majorImpurity]")
 		processing = FALSE
 		end_processing()
@@ -89,13 +93,13 @@
 				continue
 			say("Reaction has a product [R] [R2.volume]u purity of [R2.purity]")
 			if(R2.purity < 0.9)
-				problem_string += "Reaction [cached_reactions[index]] has a product [R] [R2.volume]u <span class='boldwarning'>purity of [R2.purity]</span> index:[index]\n"
+				impure_string += "Reaction [cached_reactions[index]] has a product [R] [R2.volume]u <span class='boldwarning'>purity of [R2.purity]</span> index:[index]\n"
 				majorImpurity++
 			else if (R2.purity < 1)
-				problem_string += "Reaction [cached_reactions[index]] has a product [R] [R2.volume]u <span class='warning'>purity of [R2.purity]</span> index:[index]\n"
+				impure_string += "Reaction [cached_reactions[index]] has a product [R] [R2.volume]u <span class='warning'>purity of [R2.purity]</span> index:[index]\n"
 				minorImpurity++
 			if(R2.volume < C.results[R])
-				problem_string += "Reaction [cached_reactions[index]] has a product [R] <span class='warning'>[R2.volume]u</span> purity of [R2.purity] index:[index]\n"
+				impure_string += "Reaction [cached_reactions[index]] has a product [R] <span class='warning'>[R2.volume]u</span> purity of [R2.purity] index:[index]\n"
 		reagents.clear_reagents()
 		index++
 	var/datum/chemical_reaction/C = cached_reactions[index]

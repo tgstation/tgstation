@@ -100,8 +100,8 @@
 			reaction.overly_impure(holder, src)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
 		for(var/P in reaction.required_catalysts)
-			var/datum/reagent/R0 = P
-			if(R0 == R.type)
+			var/datum/reagent/catalyst = P
+			if(catalyst == R.type)
 				total_matching_catalysts++
 
 	if(!(total_matching_catalysts == reaction.required_catalysts.len))

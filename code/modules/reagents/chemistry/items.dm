@@ -45,7 +45,7 @@
 	var/mob/living/user = usr
 	if(!isliving(user))
 		return
-	if(user.stat > SOFT_CRIT)
+	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!number_of_pages)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")

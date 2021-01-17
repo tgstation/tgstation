@@ -84,7 +84,6 @@
 	flags = new_flags
 
 /datum/reagents/Destroy()
-	//. = ..() //Why does relocating this cause reagent_list to become bad in add_reagent??
 	//We're about to delete all reagents, so lets cleanup
 	addiction_list = null
 	for(var/reagent in reagent_list)
