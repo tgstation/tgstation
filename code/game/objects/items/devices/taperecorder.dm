@@ -221,8 +221,8 @@
 		say("[mytape.storedinfo[i]]")
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
-			sleep(1 SECONDS)
 			say("<font color='[say_color]'>End of recording.</font>")
+			sleep(1 SECONDS)
 		else
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14 SECONDS)
@@ -264,6 +264,8 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
+	if(!mytape.storedinfo.len)
+		return
 	if(!can_use(usr))
 		return
 	if(!mytape)
@@ -283,7 +285,7 @@
 	P.info = t1
 	var/tapename = mytape.name
 	var/prototapename = initial(mytape.name)
-	P.name = "paper- 'Tape Transcript[tapename == prototapename ? "" : " - [tapename]"]'"
+	P.name = "paper- '[tapename == prototapename ? "Tape" : "[tapename]"] Transcript'"
 	P.update_icon_state()
 	usr.put_in_hands(P)
 	canprint = FALSE
