@@ -13,6 +13,7 @@
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
 	throwforce = 0
+	speech_span = SPAN_TAPE_RECORDER
 	var/recording = FALSE
 	var/playing = FALSE
 	var/playsleepseconds = 0
@@ -26,9 +27,6 @@
 	var/time_warned = FALSE
 	///Seconds under which to warn that the tape is almost up.
 	var/time_left_warning = 60 SECONDS
-	///What color we talk in.
-	var/say_color = COLOR_MAROON
-
 
 /obj/item/taperecorder/Initialize(mapload)
 	. = ..()
@@ -155,7 +153,7 @@
 
 	if(mytape.used_capacity < mytape.max_capacity)
 		recording = TRUE
-		say("<font color='[say_color]'>Recording started.</font>")
+		say("Recording started.")
 		update_icon()
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
@@ -164,13 +162,13 @@
 			used += 1 SECONDS
 			if(max - used < time_left_warning && !time_warned)
 				time_warned = TRUE
-				say("<font color='[say_color]'>[(max - used) / 10] seconds left!</font>") //deciseconds / 10 = seconds
+				say("[(max - used) / 10] seconds left!") //deciseconds / 10 = seconds
 			sleep(1 SECONDS)
 		if(used >= max)
-			say("<font color='[say_color]'>Tape full.</font>")
+			say("Tape full.")
 		stop()
 	else
-		say("<font color='[say_color]'>The tape is full!</font>")
+		say("The tape is full!")
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
@@ -183,11 +181,11 @@
 
 	if(recording)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("<font color='[say_color]'>Recording stopped.</font>")
+		say("Recording stopped.")
 		recording = FALSE
 	else if(playing)
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
-		say("<font color='[say_color]'>Playback stopped.</font>")
+		say("Playback stopped.")
 		playing = FALSE
 	time_warned = FALSE
 	update_icon()
@@ -207,7 +205,7 @@
 
 	playing = TRUE
 	update_icon()
-	say("<font color='[say_color]'>Playback started.</font>")
+	say("Playback started.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
@@ -217,7 +215,7 @@
 		if(playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
-			say("<font color='[say_color]'>End of recording.</font>")
+			say("End of recording.")
 			break
 		say("[mytape.storedinfo[i]]")
 		if(mytape.storedinfo.len < i + 1)
@@ -227,7 +225,7 @@
 			playsleepseconds = mytape.timestamp[i + 1] - mytape.timestamp[i]
 		if(playsleepseconds > 14 SECONDS)
 			sleep(1 SECONDS)
-			say("<font color='[say_color]'>Skipping [playsleepseconds] seconds of silence.</font>")
+			say("Skipping [playsleepseconds] seconds of silence.")
 			playsleepseconds = 1 SECONDS
 		i++
 
@@ -275,7 +273,7 @@
 	if(recording || playing)
 		return
 
-	say("<font color='[say_color]'>Transcript printed.</font>")
+	say("Transcript printed.")
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
