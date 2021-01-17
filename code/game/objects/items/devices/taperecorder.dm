@@ -37,16 +37,15 @@
 	update_icon()
 
 /obj/item/taperecorder/proc/readout()
-	var/readout = "<span class='notice'><b>NO TAPE INSERTED</b></span>"
 	if(mytape)
 		if(playing)
-			readout = "<span class='notice'><b>PLAYING</b></span>" //this should just tell you the time it's at but I can't figure it out
+			return "<span class='notice'><b>PLAYING</b></span>"
 		else
 			var/time = mytape.used_capacity
 			var/mins = round(time / 60)
 			var/secs = time - mins * 60
-			readout = "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
-	return readout
+			return "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
+	return "<span class='notice'><b>NO TAPE INSERTED</b></span>"
 
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
