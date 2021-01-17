@@ -16,7 +16,7 @@
 	. = list()
 	var/list/cached_comp = composition
 	for(var/comp_mat in cached_comp)
-		var/datum/material/component_material = SSmaterials.GetMaterialRef(comp_mat)
+		var/datum/material/component_material = GET_MATERIAL_REF(comp_mat)
 		var/list/component_composition = component_material.return_composition(cached_comp[comp_mat], breakdown_flags)
 		for(var/comp_comp_mat in component_composition)
 			.[comp_comp_mat] += component_composition[comp_comp_mat] * amount

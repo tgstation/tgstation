@@ -28,10 +28,15 @@
 		. += "<span class='notice'>The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.</span>"
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	if (recipe.output && loc && !QDELETED(src))
-		for(var/i = 0, i < (rating_amount * recipe.multiplier), i++)
-			new recipe.output(drop_location())
-	if (isliving(what))
+	if(recipe.output && loc && !QDELETED(src))
+		var/list/cached_mats = recipe.preserve_materials && what.custom_materials
+		var/cached_multiplier = recipe.multiplier
+		for(var/i in 1 to cached_multiplier)
+			var/atom/processed_food = new recipe.output(drop_location())
+			if(cached_mats)
+				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
+
+	if(isliving(what))
 		var/mob/living/themob = what
 		themob.gib(TRUE,TRUE,TRUE)
 	else
