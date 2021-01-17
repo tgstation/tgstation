@@ -575,7 +575,7 @@
 
 	var/implants = list()
 	for(var/j in 1 to 8)
-		var/obj/item/implantcase/deathrattle/case = new /obj/item/implantcase/deathrattle(src)
+		var/obj/item/implantcase/deathrattle/case = new (src)
 		implants += case.imp
 
 	var/datum/deathrattle_group/group = new
