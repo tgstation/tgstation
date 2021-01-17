@@ -1,3 +1,4 @@
+
 import { createSearch, decodeHtmlEntities, multiline } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
@@ -77,7 +78,7 @@ export const GenericUplink = (props, context) => {
         </Box>
       )}
       buttons={(
-        <Fragment>
+        <>
           Search
           <Input
             autoFocus
@@ -94,7 +95,7 @@ export const GenericUplink = (props, context) => {
               content="Lock"
               onClick={() => act('lock')} />
           )}
-        </Fragment>
+        </>
       )}>
       <Flex>
         {searchText.length === 0 && (

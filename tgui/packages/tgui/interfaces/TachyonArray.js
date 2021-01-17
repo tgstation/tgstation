@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -60,7 +59,7 @@ export const TachyonArrayContent = (props, context) => {
               level="2"
               title={activeRecord.name}
               buttons={(
-                <Fragment>
+                <>
                   <Button.Confirm
                     icon="trash"
                     content="Delete"
@@ -74,7 +73,7 @@ export const TachyonArrayContent = (props, context) => {
                     onClick={() => act('print_record', {
                       'ref': activeRecord.ref,
                     })} />
-                </Fragment>
+                </>
               )}>
               <LabeledList>
                 <LabeledList.Item label="Timestamp">
