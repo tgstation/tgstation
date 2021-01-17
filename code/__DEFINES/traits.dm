@@ -176,11 +176,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
+
 /* Traits which cause "recurring moods", such as occasionally getting
 * a positive or negative moodlet for JOLLY and DEPRESSION respectively. */
 #define TRAIT_DEPRESSION        "depression"
 #define TRAIT_JOLLY             "jolly"
 #define TRAIT_NEUTRAL           "neutral"
+
 #define TRAIT_NOCRITDAMAGE		"no_crit"
 #define TRAIT_NOSLIPWATER		"noslip_water"
 #define TRAIT_NOSLIPALL			"noslip_all"
