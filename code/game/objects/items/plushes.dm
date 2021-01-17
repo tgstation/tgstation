@@ -781,3 +781,10 @@
 	icon_state = "goatplush"
 	desc = "A nice, gentle goat plushie. It looks like someone repaired it very lovingly. You're reminded of happier, more innocent days looking at this plush."
 	inhand_icon_state = "goatplush"
+
+/obj/item/toy/plush/talking/geschutzt
+	name = "Geschutzt"
+	desc = "The last apostle. You somehow managed to never notice this one, yet it looks very familiar to someone you cherish. You notice some new additions however...a red beret with a star hair pin, blue hair and bow ties, a juicebox, and a peculiar golden box a certain goat used to carry around. You feel a sense of nostalgia that makes you wanna cry looking at this.."
+	messages = list("Bitte verlass mich nicht...", "Bleib bei mir...", "Beschütze mich, Zevachya ...", "*sobs*", "Bitte verletzt mich nicht ....", "Ich möchte nicht, dass du leidest ...")
+	icon_state = "geschutzt"
+	inhand_icon_state = "geschutzt"
