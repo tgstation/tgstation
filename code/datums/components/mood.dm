@@ -48,6 +48,7 @@
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
+	QDEL_LIST(timed_mood_events)
 	unmodify_hud()
 	return ..()
 
