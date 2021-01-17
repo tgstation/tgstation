@@ -646,6 +646,7 @@
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, GONBOLA_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, GONBOLA_TRAIT)
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, GONBOLA_TRAIT)
+	return ..()
 
 /datum/status_effect/trance
 	id = "trance"
