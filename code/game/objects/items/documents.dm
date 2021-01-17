@@ -71,7 +71,7 @@
 
 /obj/item/inspector/attack_self(mob/user)
 	. = ..()
-	if(do_after(user, 50, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
 		print_report()
 
 ///Prints out a report for bounty purposes, and plays a short audio blip.
