@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Exosuit console EMP logging now properly outputs the mech's occupants to chat and logs."
+  - bugfix: "Mechs no longer runtime when exosuit consoles EMP them and will now properly play sounds and give notifications to their occupants when this happens."
