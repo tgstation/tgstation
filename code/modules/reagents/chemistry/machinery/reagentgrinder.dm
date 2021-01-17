@@ -86,6 +86,8 @@
 	. = ..()
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
+	if(operating)//Prevent alt click early removals
+		return
 	replace_beaker(user)
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
