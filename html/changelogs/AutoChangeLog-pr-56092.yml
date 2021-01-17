@@ -1,4 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes: 
-  - bugfix: "Update_Parallax no longer runtimes when observing a player without client"

@@ -92,6 +92,10 @@ if ls _maps/*.json | grep -P "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
     st=1
 fi;
+if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
+    echo "Custom icon helper found. Please include dmis as standard assets instead for built-in maps."
+    st=1
+fi;
 for json in _maps/*.json
 do
     map_path=$(jq -r '.map_path' $json)

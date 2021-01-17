@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - tweak: "After some setbacks in the employee navigation sector, Nanotrasen in its infinite wisdom have given the wayfinding pinpointer dispenser a personality lift in the hope of selling more pinpointers"
-  - tweak: "Based on overwhelming demand, wayfinding pinpointers are now free. You can still refund them at the dispenser though"
-  - code_imp: "Moves some of the pointing code from the mob pointed() verb to an atom pointat() proc so everything can be made to point fingers at everything else and the animation is consistent. Now the wayfinding dispenser points like you do!"
