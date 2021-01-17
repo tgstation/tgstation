@@ -1,5 +1,6 @@
 /datum/job/geneticist
 	title = "Genetics Researcher"
+	old_title = "Geneticist"
 	department_head = list("Research Director")
 	faction = "Station"
 	total_positions = 2

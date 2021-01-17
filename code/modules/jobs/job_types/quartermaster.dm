@@ -1,5 +1,6 @@
 /datum/job/qm
 	title = "Deck Officer"
+	old_title = "Quartermaster"
 	department_head = list("Head of Personnel")
 	faction = "Station"
 	total_positions = 1

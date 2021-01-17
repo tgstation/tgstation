@@ -1,5 +1,6 @@
 /datum/job/chief_engineer
 	title = "Chief Engineering Officer"
+	old_title = "Chief Engineer"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
 	head_announce = list("Engineering")

@@ -16,7 +16,7 @@
 	jobtype = /datum/job/prisoner
 
 	uniform = /obj/item/clothing/under/rank/centcom/officer
-	shoes = /obj/item/clothing/shoes/sneakers/red
+	shoes = /obj/item/clothing/shoes/sneakers/black
 	id = /obj/item/card/id/prisoner
 	ears = null
 	belt = null

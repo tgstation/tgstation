@@ -1,5 +1,6 @@
 /datum/job/hop
 	title = "Corporate Liaison"
+	old_title = "Head of Personnel"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
 	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)

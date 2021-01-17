@@ -101,7 +101,7 @@ GLOBAL_PROTECT(exp_to_update)
 	while(exp_read.NextRow())
 	/// CHANGES START
 	// Grab what the database's job title is
-	var/job_title = exp.read.item[1]
+	var/job_title = exp_read.item[1]
 	// See if this is in our NT-to-Syndie dictionary
 	if(SSjob.name_occupations_dict[job_title])
 	// If it is, use the Syndie name from the dictionary

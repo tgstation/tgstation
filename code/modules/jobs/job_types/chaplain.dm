@@ -1,5 +1,6 @@
 /datum/job/chaplain
 	title = "Tiger Fanatic"
+	old_title = "Chaplain"
 	department_head = list("Head of Personnel")
 	faction = "Station"
 	total_positions = 1
