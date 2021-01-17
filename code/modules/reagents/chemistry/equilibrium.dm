@@ -41,13 +41,12 @@
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
 		to_delete = TRUE
 		return
-	/*if(!length(reaction.results)) //DO NOT FORGET TO ENABLE THIS CHECK - Come back to and revise the affected reactions in the next PR, this is a sloppy fix.
-		holder.instant_react(reaction)
+	if(!length(reaction.results)) //Come back to and revise the affected reactions in the next PR, this is a placeholder fix.
+		holder.instant_react(reaction) //Even if this check fails, there's a backup - look inside of calculate_yield()
 		to_delete = TRUE
-		return*/
+		return
 	reaction.on_reaction(holder, multiplier)
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
-	react_timestep(1)//Get an initial step going so there's not a delay between setup and start
 	
 
 /datum/equilibrium/Destroy()
@@ -63,18 +62,10 @@
 * Don't call this unless you know what you're doing, this is an internal proc
 */
 /datum/equilibrium/proc/check_inital_conditions()
-	//These temp checks might not be needed
-	/*if(!reaction.is_cold_recipe)
-		if(holder.chem_temp < reaction.required_temp) 
-			return FALSE //Not hot enough
-	else
-		if(holder.chem_temp > reaction.required_temp)
-			return FALSE //Not cold enough
-	*/
 	//Make sure we have the right multipler for on_reaction()
 	for(var/B in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
-	if(multiplier == INFINITY)
+	if(multiplier == INFINITY) 
 		return FALSE
 	//Consider purity gating too? - probably not, purity is hard to determine
 	//To prevent reactions outside of the pH window from starting.
@@ -132,11 +123,26 @@
 	if(!reaction)
 		stack_trace("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
 		return FALSE
+
 	multiplier = INFINITY
-	product_ratio = 0
-	target_vol = 0
 	for(var/B in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
+	
+	if(!length(reaction.results)) //Incase of no reagent product
+		product_ratio = 1
+		target_vol = INFINITY
+		for(var/B in reaction.required_reagents)
+			target_vol = min(target_vol, multiplier * reaction.required_reagents[B])
+		if(target_vol == 0 || multiplier == 0)
+			return FALSE
+		//Sanity Check
+		if(target_vol == INFINITY || multiplier == INFINITY) //I don't see how this can happen, but I'm not bold enough to let infinities roll around for free
+			to_delete = TRUE
+			CRASH("Tried to calculate target vol for [reaction.type] with no products, but could not find required reagents for the reaction. If it got here, something is really broken with the recipe.")
+		return TRUE
+
+	product_ratio = 0
+	target_vol = 0
 	for(var/P in reaction.results)
 		target_vol += (reaction.results[P]*multiplier)
 		product_ratio += reaction.results[P]
@@ -251,8 +257,8 @@
 	reaction.reaction_step(src, total_step_added, purity)//proc that calls when step is done
 
 	//Give a chance of sounds
-	if (prob(20))
-		holder.my_atom.visible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]</span>")
+	if (prob(10))
+		holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]</span>")
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 
@@ -277,4 +283,5 @@
 		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cached_purity/i
 
-/datum/equilibrium/proc/get_total(datum/chemical_reaction/C)
+/datum/equilibrium/proc/get_total_possible_volume()
+	return target_vol + reacted_vol

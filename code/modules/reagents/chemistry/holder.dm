@@ -817,6 +817,7 @@
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/pr in possible_reactions)
 		var/datum/chemical_reaction/selected_reaction = pr
+		debug_world("Adding [selected_reaction.type]")
 		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
@@ -825,8 +826,10 @@
 		else
 			var/exists = FALSE
 			for(var/e in reaction_list)
-				var/datum/equilibrium/E = e
-				if(E.reaction.type == selected_reaction.type) //Don't add duplicates
+				var/datum/equilibrium/E_exist = e
+				debug_world("This exists already: [E_exist.reaction.type]")
+				if(E_exist.reaction.type == selected_reaction.type) //Don't add duplicates
+					debug_world("Selected reactions are the same.")
 					exists = TRUE
 
 			//Add it if it doesn't exist in the list
@@ -834,9 +837,12 @@
 				is_reacting = TRUE//Prevent any on_reaction() procs from infinite looping
 				var/datum/equilibrium/E = new (selected_reaction, src) //Otherwise we add them to the processing list.
 				if(E.to_delete)//failed startup checks
+					debug_world("Deleting [E.reaction.type]")
 					qdel(E)
 				else
 					LAZYADD(reaction_list, E)
+					debug_world("Adding to list [E.reaction.type]")
+					E.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO E.NEW()
 
 	if(LAZYLEN(reaction_list))
 		is_reacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
@@ -872,9 +878,9 @@
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//otherwise continue reacting
 		E.react_timestep(delta_time)
-
-	if(length(mix_message))
-		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
+	
+	if(length(mix_message)) //This is only at the end
+		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 
 	if(!LAZYLEN(reaction_list))
 		finish_reacting()
@@ -932,7 +938,7 @@
 		var/datum/equilibrium/E = e
 		mix_message += end_reaction(E)
 	if(length(mix_message))
-		my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
+		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 	finish_reacting()
 
 /*
@@ -1012,7 +1018,7 @@
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
 			for(var/mob/M in seen)
-				my_atom.visible_message(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+				my_atom.audible_message(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
@@ -1337,7 +1343,6 @@
 /datum/reagents/proc/adjust_specific_reagent_pH(input_reagent, value, lower_limit = 0, upper_limit = 14)
 	var/datum/reagent/R = get_reagent(input_reagent)
 	if(!R) //We can call this with missing reagents.
-		debug_world("Unable to find [R]")
 		return FALSE
 	R.pH = clamp(R.pH + value, lower_limit, upper_limit)
 

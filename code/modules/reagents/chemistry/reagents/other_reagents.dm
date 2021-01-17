@@ -2467,13 +2467,13 @@
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	if(holder.pH <= pH)
-		holder.my_atom.visible_message("<span class='warning'>The beaker fizzes as the buffer is added, to no effect.</span>")
+		holder.my_atom.audible_message("<span class='warning'>The beaker fizzes as the buffer is added, to no effect.</span>")
 		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 		holder.remove_reagent(type, volume)
 		return
 	var/pH_change = -((volume/holder.total_volume)*strength)
 	holder.adjust_all_reagents_pH(pH_change, pH, 14)
-	holder.my_atom.visible_message("<span class='warning'>The beaker froths as the pH changes!</span>")
+	holder.my_atom.audible_message("<span class='warning'>The beaker froths as the pH changes!</span>")
 	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, volume)
 	
@@ -2497,13 +2497,13 @@
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return
 	if(holder.pH >= pH)
-		holder.my_atom.visible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</span>")
+		holder.my_atom.audible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</span>")
 		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 		holder.remove_reagent(type, volume)
 		return 
 	var/pH_change = (volume/holder.total_volume)*strength
 	holder.adjust_all_reagents_pH(pH_change, 0, pH)
-	holder.my_atom.visible_message("<span class='warning'>The beaker froths as the pH changes!</span>")
+	holder.my_atom.audible_message("<span class='warning'>The beaker froths as the pH changes!</span>")
 	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, volume)
 	
