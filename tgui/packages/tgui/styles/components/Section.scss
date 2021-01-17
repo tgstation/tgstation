@@ -65,7 +65,7 @@ $shadow-offset: 0 0 !default;
   flex-grow: 1;
 }
 
-.Section--fill .Section__content {
+.Section--fill.Section--scrollable .Section__content {
   position: absolute;
   top: 0;
   left: 0;
