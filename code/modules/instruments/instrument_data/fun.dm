@@ -17,3 +17,8 @@
 	name = "Chime"
 	id = "chime"
 	real_samples = list("79"='sound/machines/chime.ogg')
+
+/datum/instrument/fun/meow
+	name = "Cat"
+	id = "meow"
+	real_samples = list("67"='sound/misc/meow.ogg')

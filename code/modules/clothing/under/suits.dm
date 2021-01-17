@@ -220,3 +220,11 @@
 	icon_state = "stolen_captain_uniform"
 	inhand_icon_state = "nothing"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
+
+/obj/item/clothing/under/suit/prince
+	name = "Prince Uniform"
+	desc = "A formal uniform fit for your position, specially made with four sleeves."
+	icon_state = "prince"
+	inhand_icon_state = "prince"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS

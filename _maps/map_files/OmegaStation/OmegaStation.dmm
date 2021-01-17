@@ -3214,7 +3214,7 @@
 "pcz" = (/obj/effect/turf_decal/tile/green{dir = 8},/obj/effect/turf_decal/tile/green{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 1},/turf/open/floor/plastic,/area/medical/virology)
 "pcV" = (/obj/machinery/door/window/brigdoor{dir = 8; name = "Creature Pen"; req_access_txt = "47"},/obj/machinery/door/poddoor/preopen{id = "xeno2"; name = "Creature Cell #2"},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/science/xenobiology)
 "pfI" = (/obj/structure/window/reinforced,/obj/effect/turf_decal/trimline/yellow/filled/warning,/turf/open/floor/engine,/area/science/misc_lab/range)
-"pgw" = (/obj/structure/table/wood/fancy,/obj/item/storage/book/bible,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/grimy,/area/chapel/main)
+"pgw" = (/obj/structure/table/wood/fancy,/obj/item/reagent_containers/food/drinks/bottle/holywater{pixel_x = 5; pixel_y = 7},/obj/item/storage/book/bible{pixel_x = -6; pixel_y = -3},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/grimy,/area/chapel/main)
 "pgN" = (/obj/structure/chair/stool/bar,/turf/open/floor/wood{icon_state = "wood-broken5"},/area/maintenance/port)
 "phG" = (/obj/item/beacon,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/hallway/secondary/entry)
 "piv" = (/turf/closed/wall,/area/security/checkpoint)

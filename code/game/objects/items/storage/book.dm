@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible/proc/bless(mob/living/L, mob/living/user)
 	if(GLOB.religious_sect)
 		return GLOB.religious_sect.sect_bless(L,user)
-	if(!ishuman(L))
+	if(!ishuman(L) || HAS_TRAIT(L, TRAIT_UNHOLY))
 		return
 	var/mob/living/carbon/human/H = L
 	for(var/X in H.bodyparts)
@@ -165,9 +165,15 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			to_chat(user, "<span class='warning'>You can't heal yourself!</span>")
 			return
 
+		if(HAS_TRAIT(M, TRAIT_UNHOLY))
+			M.adjustFireLoss(10, 70)
+			M.emote("cough")
+			M.visible_message("<span class='danger'>Steaming blood begins to leak from [M]'s eyes!</span>", "<span class='userdanger'>Your blood is starting to boil!</span>")
+			M.Unconscious(60)
+
 		if(prob(60) && bless(M, user))
 			smack = FALSE
-		else if(iscarbon(M))
+		else if(iscarbon(M) || !HAS_TRAIT(M, TRAIT_UNHOLY))
 			var/mob/living/carbon/C = M
 			if(!istype(C.head, /obj/item/clothing/head/helmet))
 				C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)

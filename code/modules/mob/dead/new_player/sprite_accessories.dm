@@ -626,10 +626,16 @@
 /datum/sprite_accessory/hair/possessed
 	name = "Possessed"
 	icon_state = "hair_possessed"
+	locked = TRUE
 
 /datum/sprite_accessory/hair/poofy
 	name = "Poofy"
 	icon_state = "hair_poofy"
+
+/datum/sprite_accessory/hair/prince
+	name = "Prince"
+	icon_state = "hair_prince"
+	locked = TRUE
 
 /datum/sprite_accessory/hair/quiff
 	name = "Quiff"

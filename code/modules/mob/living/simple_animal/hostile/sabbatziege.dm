@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/megafauna/sabbat
 	name = "Sabbatziege"
-	desc = "Looking at this hulking beast makes you feel more at ease. Almost too much at ease. Better keep a hold of yourself."
+	desc = "Looking at this hulking beast makes you feel more at ease. Almost too much at ease. Better keep a hold of yourself- Oh, no wait. That's just Zev."
 	icon = 'icons/mob/sabbatziege.dmi'
 	icon_state = "sabbat"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -31,9 +31,6 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	light_power = 1
-	light_range = 15
-	light_color = LIGHT_COLOR_HOLY_MAGIC
 	mouse_opacity = MOUSE_OPACITY_ICON
 	attack_action_types = list(/datum/action/innate/megafauna_attack/blessing,
 							   /datum/action/innate/megafauna_attack/summon)
@@ -52,13 +49,6 @@
 	chosen_message = "<span class='colossus'>You are now summoning your apostles.</span>"
 	chosen_attack_num = 2
 
-/datum/action/innate/megafauna_attack/vanquish
-	name = "Vanquish"
-	icon_icon = 'icons/turf/walls/wall.dmi'
-	button_icon_state = "wall"
-	chosen_message = "<span class='colossus'>You are now showing mercy.</span>"
-	chosen_attack_num = 3
-
 /mob/living/simple_animal/hostile/megafauna/sabbat/OpenFire()
 	if(client)
 		switch(chosen_attack)
@@ -70,20 +60,7 @@
 				summon_apostle3()
 		return
 
-/mob/living/simple_animal/hostile/megafauna/sabbat/ClickOn(mob/living/carbon/target)
-	if(chosen_attack == 2)
-		summon_apostle1()
-		summon_apostle2()
-		summon_apostle3()
-	else
-		target.revive(full_heal = TRUE, admin_revive = TRUE)
-		target.grab_ghost(force = TRUE)
-		to_chat(target, "<span class='notice'>Rejoice! The lord has looked upon you!</span>")
-
-/mob/living/simple_animal/hostile/megafauna/sabbat/proc/blessing(mob/living/carbon/target)
-	target.revive(full_heal = TRUE, admin_revive = TRUE)
-	target.grab_ghost(force = TRUE)
-	to_chat(target, "<span class='notice'>Rejoice! The lord has looked upon you!</span>")
+/mob/living/simple_animal/hostile/megafauna/sabbat/proc/blessing()
 
 /mob/living/simple_animal/hostile/megafauna/sabbat/proc/summon_apostle1()
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
