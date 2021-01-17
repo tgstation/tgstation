@@ -4,6 +4,7 @@
   "version": "4.3.0",
   "dependencies": {
     "core-js": "^3.8.2",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "whatwg-fetch": "^3.5.0"
   }
 }
