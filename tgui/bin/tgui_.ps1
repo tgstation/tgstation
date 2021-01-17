@@ -4,6 +4,18 @@
 ## Initial set-up
 ## --------------------------------------------------------
 
+## Enable strict mode and stop of first cmdlet error
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+$PSDefaultParameterValues['*:ErrorAction'] = 'Stop'
+
+## Validates exit code of external commands
+function Throw-On-Native-Failure {
+  if (-not $?) {
+    exit 1
+  }
+}
+
 ## Normalize current directory
 $basedir = Split-Path $MyInvocation.MyCommand.Path
 $basedir = Resolve-Path "$($basedir)\.."
@@ -15,7 +27,9 @@ Set-Location $basedir
 ## --------------------------------------------------------
 
 function yarn {
-  node.exe ".yarn\releases\yarn-2.3.3.cjs" @Args
+  $YarnRelease = Get-ChildItem -Filter ".yarn\releases\yarn-*.cjs" | Select-Object -First 1
+  node ".yarn\releases\$YarnRelease" @Args
+  Throw-On-Native-Failure
 }
 
 function Remove-Quiet {
@@ -51,6 +65,7 @@ function task-clean {
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
+  Remove-Quiet -Recurse -Force ".yarn\webpack"
   Remove-Quiet -Recurse -Force ".yarn\build-state.yml"
   Remove-Quiet -Recurse -Force ".yarn\install-state.gz"
   Remove-Quiet -Force ".pnp.js"
@@ -63,44 +78,46 @@ function task-clean {
 ## Main
 ## --------------------------------------------------------
 
-if ($Args[0] -eq "--clean") {
-  task-clean
-  exit 0
-}
+if ($Args.Length -gt 0) {
+  if ($Args[0] -eq "--clean") {
+    task-clean
+    exit 0
+  }
 
-if ($Args[0] -eq "--dev") {
-  $Rest = $Args | Select-Object -Skip 1
-  task-install
-  task-dev-server @Rest
-  exit 0
-}
+  if ($Args[0] -eq "--dev") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-dev-server @Rest
+    exit 0
+  }
 
-if ($Args[0] -eq "--lint") {
-  $Rest = $Args | Select-Object -Skip 1
-  task-install
-  task-eslint @Rest
-  exit 0
-}
+  if ($Args[0] -eq "--lint") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-eslint @Rest
+    exit 0
+  }
 
-if ($Args[0] -eq "--lint-harder") {
-  $Rest = $Args | Select-Object -Skip 1
-  task-install
-  task-eslint -c ".eslintrc-harder.yml" @Rest
-  exit 0
-}
+  if ($Args[0] -eq "--lint-harder") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-eslint -c ".eslintrc-harder.yml" @Rest
+    exit 0
+  }
 
-if ($Args[0] -eq "--fix") {
-  $Rest = $Args | Select-Object -Skip 1
-  task-install
-  task-eslint --fix @Rest
-  exit 0
-}
+  if ($Args[0] -eq "--fix") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-eslint --fix @Rest
+    exit 0
+  }
 
-## Analyze the bundle
-if ($Args[0] -eq "--analyze") {
-  task-install
-  task-webpack --mode=production --analyze
-  exit 0
+  ## Analyze the bundle
+  if ($Args[0] -eq "--analyze") {
+    task-install
+    task-webpack --mode=production --analyze
+    exit 0
+  }
 }
 
 ## Make a production webpack build
