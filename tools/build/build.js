@@ -23,7 +23,7 @@ const taskTgui = new Task('tgui')
   .depends('tgui/packages/**/*.jsx')
   .provides('tgui/public/tgui.bundle.css')
   .provides('tgui/public/tgui.bundle.js')
-  .provides('tgui/public/tgui-common.chunk.js')
+  .provides('tgui/public/tgui-common.bundle.js')
   .provides('tgui/public/tgui-panel.bundle.css')
   .provides('tgui/public/tgui-panel.bundle.js')
   .build(async () => {
