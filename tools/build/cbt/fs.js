@@ -113,8 +113,29 @@ const stat = path => {
   }
 };
 
+/**
+ * Resolves a glob pattern and returns files that are safe
+ * to call `stat` on.
+ */
+const resolveGlob = globPath => {
+  const unsafePaths = glob.sync(globPath, {
+    strict: false,
+    silent: true,
+  });
+  const safePaths = [];
+  for (let path of unsafePaths) {
+    try {
+      stat(path);
+      safePaths.push(path);
+    }
+    catch {}
+  }
+  return safePaths;
+};
+
 module.exports = {
   Flags,
   stat,
+  resolveGlob,
   compareFiles,
 };
