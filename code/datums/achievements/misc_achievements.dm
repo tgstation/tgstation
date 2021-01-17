@@ -144,7 +144,7 @@
 
 /datum/award/achievement/misc/void_ascension
 	name = "All that perish"
-	desc = "Place of a diffrent being, diffrent time. Everything ends there... but maybe it is just the beginning?"
+	desc = "Place of a different being, different time. Everything ends there... but maybe it is just the beginning?"
 	database_id = MEDAL_VOID_ASCENSION
 	icon = "voidascend"
 
