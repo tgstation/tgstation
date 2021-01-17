@@ -357,8 +357,17 @@ window.onerror = function (msg, url, line, col, error) {
   return true;
 };
 
-// Catch unhandled rejections
-window.onunhandledrejection = window.onerror;
+// Catch unhandled promise rejections
+window.onunhandledrejection = function (e) {
+  var msg = 'UnhandledRejection';
+  if (e.reason) {
+    msg += ': ' + (e.reason.message || e.reason.description || e.reason);
+    if (e.reason.stack) {
+      e.reason.stack = 'UnhandledRejection: ' + e.reason.stack;
+    }
+  }
+  window.onerror(msg, null, null, null, e.reason);
+};
 
 // Helper for augmenting stack traces on fatal errors
 window.__augmentStack__ = function (stack, error) {
@@ -394,6 +403,32 @@ if (!Function.prototype.bind) (function () {
     };
   };
 })();
+
+if (!Array.prototype['forEach']) {
+  Array.prototype.forEach = function (callback, thisArg) {
+    if (this == null) {
+      throw new TypeError('Array.prototype.forEach called on null or undefined');
+    }
+    var T, k;
+    var O = Object(this);
+    var len = O.length >>> 0;
+    if (typeof callback !== "function") {
+      throw new TypeError(callback + ' is not a function');
+    }
+    if (arguments.length > 1) {
+      T = thisArg;
+    }
+    k = 0;
+    while (k < len) {
+      var kValue;
+      if (k in O) {
+        kValue = O[k];
+        callback.call(T, kValue, k, O);
+      }
+      k++;
+    }
+  };
+}
 </script>
 
 <style>

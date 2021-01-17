@@ -1,8 +1,6 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Flex, LabeledControls, NoticeBox, RoundGauge, Section } from '../components';
-import { FlexItem } from '../components/Flex';
 import { Window } from '../layouts';
 
 const TAB2NAME = [
@@ -576,7 +574,7 @@ export const Secrets = (props, context) => {
             <Section
               title="Secrets"
               buttons={(
-                <Fragment>
+                <>
                   <Button
                     color="blue"
                     icon="address-card"
@@ -587,7 +585,8 @@ export const Secrets = (props, context) => {
                     icon="eye"
                     content="Show Admins"
                     onClick={() => act("show_admins")} />
-                </Fragment>)}>
+                </>
+              )}>
               <Flex
                 mx={-0.5}
                 align="stretch"
@@ -667,7 +666,7 @@ export const Secrets = (props, context) => {
             <Section
               fill={false}
               title={TAB2NAME[tabIndex-1].title
-            +" Or: "+TAB2NAME[tabIndex-1].blurb}>
+                + " Or: " + TAB2NAME[tabIndex-1].blurb}>
               <TabComponent />
             </Section>
           </Flex.Item>
