@@ -63,7 +63,7 @@
 	if(!playing && !recording)
 		icons_available += list("Record" = image(icon = icon_directory, icon_state = "record"))
 		icons_available += list("Play" = image(icon = icon_directory, icon_state = "play"))
-		if(canprint)
+		if(canprint && !mytape.storedinfo.len)
 			icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "print"))
 
 	if(playing || recording)
