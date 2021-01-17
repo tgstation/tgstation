@@ -22,6 +22,8 @@
 	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
+	// If true you can mine the mineral turf with your hands
+	var/weak_turf = FALSE
 
 /turf/closed/mineral/Initialize()
 	. = ..()
@@ -79,6 +81,23 @@
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		return attack_hand(user)
+
+/turf/closed/mineral/attack_hand(mob/user)
+	if(weak_turf)
+		var/turf/T = user.loc
+		if (!isturf(T))
+			return
+		if(last_act + 20 > world.time)//prevents message spam
+			return
+		last_act = world.time
+		to_chat(user, "<span class='notice'>You start pulling out pieces of rock with your hands...</span>")
+
+		if(do_after(user, 60, target = src))
+			if(ismineralturf(src))
+				to_chat(user, "<span class='notice'>You finish pulling apart the rock.</span>")
+				gets_drilled(user, FALSE)
+	else
+		. = ..()
 
 /turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
 	if (mineralType && (mineralAmt > 0))
@@ -242,6 +261,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	weak_turf = TRUE
 
 /turf/closed/mineral/random/snow/Change_Ore(ore_type, random = 0)
 	. = ..()

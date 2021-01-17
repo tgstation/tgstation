@@ -42,7 +42,7 @@
 /area/icemoon/surface/outdoors)
 "i" = (
 /turf/template_noop,
-/area/icemoon/surface/outdoors/unexplored)
+/area/template_noop)
 "j" = (
 /obj/structure/sink/kitchen,
 /turf/open/floor/wood,
@@ -93,9 +93,14 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "u" = (
-/obj/structure/ladder,
+/obj/structure/ladder{
+	travel_time = 40
+	},
 /turf/open/floor/wood,
 /area/ruin/unpowered)
+"z" = (
+/turf/open/openspace/icemoon,
+/area/template_noop)
 "L" = (
 /turf/open/openspace/icemoon/ruins,
 /area/icemoon/surface/outdoors)
@@ -849,7 +854,7 @@ a
 a
 a
 d
-d
+z
 i
 i
 i

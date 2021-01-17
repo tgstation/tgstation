@@ -227,7 +227,7 @@
 				var/mob/living/L = a
 				if(!QDELETED(L) && L.client)
 					return FALSE
-			return TRUE 
+			return TRUE
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)

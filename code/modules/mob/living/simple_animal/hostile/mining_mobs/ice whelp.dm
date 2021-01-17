@@ -10,8 +10,8 @@
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
-	speed = 30
-	move_to_delay = 30
+	speed = 12
+	move_to_delay = 12
 	ranged = TRUE
 	ranged_cooldown_time = 50
 	maxHealth = 300

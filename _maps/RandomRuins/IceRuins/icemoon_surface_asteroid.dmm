@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random,
-/area/icemoon/surface/outdoors/unexplored)
+/turf/open/genturf,
+/area/mine/unexplored)
 "b" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored)
+/area/icemoon/surface)
 "c" = (
 /turf/closed/wall/mineral/bronze,
 /area/icemoon/surface)
@@ -91,6 +91,12 @@
 "V" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /turf/open/floor/bronze,
+/area/icemoon/surface)
+"Z" = (
+/mob/living/simple_animal/hostile/megafauna/clockwork_defender,
+/turf/open/floor/bronze{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/icemoon/surface)
 
 (1,1,1) = {"
@@ -912,7 +918,7 @@ a
 a
 A
 x
-A
+Z
 A
 a
 a

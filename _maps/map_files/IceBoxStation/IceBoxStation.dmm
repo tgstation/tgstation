@@ -67,7 +67,7 @@
 	width = 23
 	},
 /turf/open/genturf,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "aah" = (
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
@@ -32560,7 +32560,7 @@
 "bzu" = (
 /obj/machinery/rnd/server,
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/openspace/icemoon,
 /area/science/server)
 "bzv" = (
 /obj/structure/cable,
@@ -33050,14 +33050,14 @@
 "bAy" = (
 /obj/effect/landmark/blobstart,
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/openspace/icemoon,
 /area/science/server)
 "bAz" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/openspace/icemoon,
 /area/science/server)
 "bAA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -33576,7 +33576,7 @@
 /area/maintenance/aft)
 "bBS" = (
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/openspace/icemoon,
 /area/science/server)
 "bBT" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -55501,7 +55501,7 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/openspace,
+/turf/open/openspace/icemoon,
 /area/science/server)
 "uzt" = (
 /obj/structure/table/wood,

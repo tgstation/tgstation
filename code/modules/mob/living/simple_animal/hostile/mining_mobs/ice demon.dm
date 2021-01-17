@@ -9,13 +9,13 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("telepathically cries")
-	speed = 5
-	move_to_delay = 5
+	speed = 2
+	move_to_delay = 2
 	projectiletype = /obj/projectile/temp/basilisk/ice
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
 	ranged_message = "manifests ice"
-	ranged_cooldown_time = 30
+	ranged_cooldown_time = 15
 	minimum_distance = 3
 	retreat_distance = 3
 	maxHealth = 150
@@ -26,8 +26,8 @@
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	vision_range = 7
-	aggro_vision_range = 7
+	vision_range = 9
+	aggro_vision_range = 9
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
@@ -51,6 +51,7 @@
 	temperature = -75
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
+	ranged_cooldown = world.time + ranged_cooldown_time
 	// Sentient ice demons teleporting has been linked to server crashes
 	if(client)
 		return ..()
