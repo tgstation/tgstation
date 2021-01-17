@@ -69,8 +69,6 @@
  * * gibbed - Was the mob gibbed?
 */
 /mob/living/proc/death(gibbed)
-	SEND_SIGNAL(src, COMSIG_LIVING_PREDEATH, gibbed)
-
 	set_stat(DEAD)
 	unset_machine()
 	timeofdeath = world.time

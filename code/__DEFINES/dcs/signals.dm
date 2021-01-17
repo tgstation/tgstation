@@ -442,10 +442,6 @@
 #define COMSIG_LIVING_AFTERPHASEIN "living_phasein"
 
 ///from base of mob/living/death(): (gibbed)
-// Sent before any of the other death code has run, mob is still alive.
-#define COMSIG_LIVING_PREDEATH "living_predeath"
-
-///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
 ///sent from borg recharge stations: (amount, repairs)
