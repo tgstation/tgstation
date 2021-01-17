@@ -253,18 +253,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return(BRUTELOSS)
 
 /obj/item/katana/cursed
-	slot_flags = null
-	item_flags = DROPDEL
+	name = "cursed katana"
+	desc = "Power comes at a price."
+	slot_flags = null  // cannot escape NODROP by putting on belt.
+	var/datum/brain_trauma/magic/stalker/curse
 
 /obj/item/katana/cursed/equipped(mob/living/carbon/human/user)
 	. = ..()
 	if(!istype(user))
 		return
-	user.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_MAGIC)
-
-/obj/item/katana/cursed/Initialize()
-	. = ..()
+	curse = user.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_MAGIC)
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/katana/cursed/dropped(mob/user)
+	. = ..()
+	qdel(curse)
+	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/wirerod
 	name = "wired rod"
