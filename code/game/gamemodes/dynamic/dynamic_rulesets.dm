@@ -26,7 +26,7 @@
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
 	var/list/restricted_roles = list()
-	/// If set, rule will only accept candidates from those roles.
+	/// If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/enemy_roles = list()
@@ -137,9 +137,7 @@
 /// Called on game mode pre_setup for roundstart rulesets.
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE
-/datum/dynamic_ruleset/proc/pre_execute(population)
-	if(exclusive_roles.len)
-		restricted_roles |= get_all_jobs() - exclusive_roles
+/datum/dynamic_ruleset/proc/pre_execute()
 	return TRUE
 
 /// Called on post_setup on roundstart and when the rule executes on midround and latejoin.

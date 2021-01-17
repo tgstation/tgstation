@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
@@ -20,7 +19,7 @@ export const SpawnersMenu = (props, context) => {
               title={spawner.name + ' (' + spawner.amount_left + ' left)'}
               level={2}
               buttons={(
-                <Fragment>
+                <>
                   <Button
                     content="Jump"
                     onClick={() => act('jump', {
@@ -31,7 +30,7 @@ export const SpawnersMenu = (props, context) => {
                     onClick={() => act('spawn', {
                       name: spawner.name,
                     })} />
-                </Fragment>
+                </>
               )}>
               <Box
                 bold

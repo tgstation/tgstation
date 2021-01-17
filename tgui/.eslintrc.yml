@@ -1,4 +1,4 @@
-parser: babel-eslint
+parser: '@babel/eslint-parser'
 parserOptions:
   ecmaVersion: 2019
   sourceType: module
@@ -583,7 +583,7 @@ rules:
   ## Rule enforces consistent usage of destructuring assignment in component
   # react/destructuring-assignment: [error, always, { ignoreClassFields: true }]
   ## Prevent missing displayName in a React component definition
-  react/display-name: error
+  # react/display-name: error
   ## Forbid certain props on Components
   # react/forbid-component-props: error
   ## Forbid certain props on DOM Nodes
