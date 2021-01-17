@@ -182,12 +182,12 @@
 		return
 
 	if(recording)
-		say("<font color='[say_color]'>Recording stopped.</font>")
+		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 		recording = FALSE
-		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
+		say("<font color='[say_color]'>Recording stopped.</font>")
 	else if(playing)
-		playing = FALSE
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
+		playing = FALSE
 		say("<font color='[say_color]'>Playback stopped.</font>")
 	time_warned = FALSE
 	update_icon()
@@ -217,6 +217,7 @@
 		if(playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
+			say("<font color='[say_color]'>Tape empty.</font>")
 			break
 		say("[mytape.storedinfo[i]]")
 		if(mytape.storedinfo.len < i + 1)
@@ -232,7 +233,6 @@
 		i++
 
 	stop()
-	update_icon()
 
 
 /obj/item/taperecorder/attack_self(mob/user)
