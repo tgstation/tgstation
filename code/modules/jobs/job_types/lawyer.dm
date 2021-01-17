@@ -1,10 +1,11 @@
 /datum/job/lawyer
-	title = "Lawyer"
+	title = "Corporate Lawyer"
+	old_title = "Lawyer"
 	department_head = list("Head of Personnel")
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the head of personnel"
+	supervisors = "the corporate liaison"
 	selection_color = "#bbe291"
 	var/lawyers = 0 //Counts lawyer amount
 
@@ -21,17 +22,23 @@
 	display_order = JOB_DISPLAY_ORDER_LAWYER
 
 /datum/outfit/job/lawyer
-	name = "Lawyer"
+	name = "Corporate Lawyer"
 	jobtype = /datum/job/lawyer
 
-	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
-	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
-	suit = /obj/item/clothing/suit/toggle/lawyer
+	l_pocket = /obj/item/pda/lawyer
+	uniform = /obj/item/clothing/under/suit/black_really
+	glasses = /obj/item/clothing/glasses/sunglasses/big
+	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/armor/vest
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET
 	l_hand = /obj/item/storage/briefcase/lawyer
-	l_pocket = /obj/item/laser_pointer
-	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 	chameleon_extras = /obj/item/stamp/law
 
@@ -40,10 +47,10 @@
 	if(visualsOnly)
 		return ..()
 
-	var/static/use_purple_suit = FALSE //If there is one lawyer, they get the default blue suit. If another lawyer joins the round, they start with a purple suit.
-	if(use_purple_suit)
-		uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
-		suit = /obj/item/clothing/suit/toggle/lawyer/purple
-	else
-		use_purple_suit = TRUE
+	//var/static/use_purple_suit = FALSE //If there is one lawyer, they get the default blue suit. If another lawyer joins the round, they start with a purple suit.
+	//if(use_purple_suit)
+	//	uniform = /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
+	//	suit = /obj/item/clothing/suit/toggle/lawyer/purple
+	//else
+	//	use_purple_suit = TRUE
 	..()

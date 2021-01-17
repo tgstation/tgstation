@@ -8,11 +8,11 @@ SUBSYSTEM_DEF(job)
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
 	var/initial_players_to_assign = 0 	//used for checking against population caps
-
+	var/list/name_occupations_dict = list()
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
-	var/overflow_role = "Assistant"
+	var/overflow_role = "Lackey"
 
 	var/list/level_order = list(JP_HIGH,JP_MEDIUM,JP_LOW)
 
@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
 	generate_selectable_species()
-	set_overflow_role(CONFIG_GET(string/overflow_job))
+	set_overflow_role("Lackey")
 	return ..()
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
@@ -62,6 +62,12 @@ SUBSYSTEM_DEF(job)
 			continue
 		occupations += job
 		name_occupations[job.title] = job
+		/// CHANGES START
+		// Eg name_occupation_dict["Captain"] = "Admiral"
+		if(job.old_title == "NOPE")//if we didn't change it then set it to what it is normally
+			job.old_title = job.title
+		name_occupations_dict[job.old_title] = job.title
+		/// CHANGES_START
 		type_occupations[J] = job
 
 	return TRUE
@@ -503,7 +509,7 @@ SUBSYSTEM_DEF(job)
 		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
-	var/datum/job/J = SSjob.GetJob("Security Officer")
+	var/datum/job/J = SSjob.GetJob("Master at Arms")
 	if(!J)
 		CRASH("setup_officer_positions(): Security officer job is missing")
 

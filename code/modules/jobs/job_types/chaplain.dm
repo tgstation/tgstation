@@ -1,10 +1,11 @@
 /datum/job/chaplain
-	title = "Chaplain"
+	title = "Tiger Fanatic"
+	old_title = "Chaplain"
 	department_head = list("Head of Personnel")
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "the corporate liaison, unless overriden by a tiger cooperative leader"
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/chaplain
@@ -32,7 +33,7 @@
 			B.icon_state = GLOB.bible_icon_state
 		if(GLOB.bible_inhand_icon_state)
 			B.inhand_icon_state = GLOB.bible_inhand_icon_state
-		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Chaplain.</span>")
+		to_chat(H, "<span class='boldnotice'>There is already an established religion onboard the station. You are an acolyte of [GLOB.deity]. Defer to the Main Fanatic.</span>")
 		H.equip_to_slot_or_del(B, ITEM_SLOT_BACKPACK)
 		var/nrt = GLOB.holy_weapon_type || /obj/item/nullrod
 		var/obj/item/nullrod/N = new nrt(H)
@@ -118,20 +119,28 @@
 	SSblackbox.record_feedback("text", "religion_deity", 1, "[new_deity]", 1)
 
 /datum/outfit/job/chaplain
-	name = "Chaplain"
+	name = "Tiger Fanatic"
 	jobtype = /datum/job/chaplain
 
-	belt = /obj/item/pda/chaplain
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/chaplain
+	l_pocket = /obj/item/pda/syndicate
+	uniform = /obj/item/clothing/under/pants/tan
+	r_pocket = /obj/item/food/donkpocket/warm/teriyaki
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/bearpelt
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	mask = /obj/item/clothing/mask/gas/tiki_mask
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET
 	backpack_contents = list(
 		/obj/item/stamp/chap = 1,
 		/obj/item/camera/spooky = 1
 		)
 
 	skillchips = list(/obj/item/skillchip/entrails_reader)
-
-	backpack = /obj/item/storage/backpack/cultpack
-	satchel = /obj/item/storage/backpack/cultpack
-
 	chameleon_extras = /obj/item/stamp/chap

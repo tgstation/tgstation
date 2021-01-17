@@ -3,9 +3,9 @@
 
 /obj/machinery/syndicatebomb
 	icon = 'icons/obj/assemblies.dmi'
-	name = "syndicate bomb"
-	icon_state = "syndicate-bomb"
-	desc = "A large and menacing device. Can be bolted down with a wrench."
+	name = "nanotrasen bomb"
+	icon_state = "training-bomb"
+	desc = "A large and menacing floating box, sent directly from NT. Wrenching it will activate it's gravitational hooks, preventing it from being moved."
 
 	anchored = FALSE
 	density = FALSE
@@ -215,8 +215,8 @@
 
 /obj/machinery/syndicatebomb/training
 	name = "training bomb"
-	icon_state = "training-bomb"
-	desc = "A salvaged syndicate device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
+	icon_state = "syndicate-bomb"
+	desc = "A salvaged nanotrasen device gutted of its explosives to be used as a training aid for aspiring bomb defusers."
 	payload = /obj/item/bombcore/training
 
 /obj/machinery/syndicatebomb/emp
@@ -296,7 +296,7 @@
 
 /obj/item/bombcore/training
 	name = "dummy payload"
-	desc = "A Nanotrasen replica of a syndicate payload. It's not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
+	desc = "A Syndicate replica of a nanotrasen payload. It's not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
 	var/defusals = 0
 	var/attempts = 0
 

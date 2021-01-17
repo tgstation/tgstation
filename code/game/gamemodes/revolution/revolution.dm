@@ -173,7 +173,7 @@
 /datum/game_mode/revolution/generate_report()
 	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \
 		who then follow their orders without question and work towards dethroning departmental leaders. Watch for behavior such as this with caution. If the crew attempts a mutiny, you and \
-		your heads of staff are fully authorized to execute them using lethal weaponry - they will be later cloned and interrogated at Central Command."
+		your heads of staff are fully authorized to execute them using lethal weaponry - they will be later cloned and interrogated at Syndicate Command."
 
 /datum/game_mode/revolution/extended
 	name = "extended_revolution"

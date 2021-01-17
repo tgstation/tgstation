@@ -3,7 +3,7 @@
 	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
 	icon_state = "syndicate"
 	inhand_icon_state = "bl_suit"
-	has_sensor = NO_SENSORS
+	//has_sensor = NO_SENSORS
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 40)
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
@@ -14,7 +14,7 @@
 	desc = "A non-descript and slightly suspicious looking skirtleneck."
 	icon_state = "syndicate_skirt"
 	inhand_icon_state = "bl_suit"
-	has_sensor = NO_SENSORS
+	//has_sensor = NO_SENSORS
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 40)
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP

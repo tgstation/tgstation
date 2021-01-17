@@ -1279,6 +1279,13 @@
 		)
 	generate_items_inside(items_inside, src)
 
+/obj/item/storage/box/space
+	name = "boxed space suit and helmet"
+
+/obj/item/storage/box/space/PopulateContents()
+	new /obj/item/clothing/head/helmet/space(src)
+	new /obj/item/clothing/suit/space(src)
+
 /obj/item/storage/box/tail_pin
 	name = "pin the tail on the corgi supplies"
 	desc = "For ages 10 and up. ...Why is this even on a space station? Aren't you a little old for babby games?" //Intentional typo.

@@ -11,4 +11,4 @@
 	anomaly_path = /obj/effect/anomaly/bluespace
 
 /datum/round_event/anomaly/anomaly_bluespace/announce(fake)
-	priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+	priority_announce("Warning. Anomalous, potentially dangerous signal detected in [impact_area.name]. Investigate.", "Anomaly Alert")

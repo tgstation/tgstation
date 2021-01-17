@@ -161,7 +161,7 @@
 	icon_state = "pda-miner"
 
 /obj/item/pda/syndicate
-	default_cartridge = /obj/item/cartridge/virus/syndicate
+	//default_cartridge = /obj/item/cartridge/virus/syndicate
 	icon_state = "pda-syndi"
 	name = "military PDA"
 	owner = "John Doe"

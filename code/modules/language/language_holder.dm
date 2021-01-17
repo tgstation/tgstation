@@ -305,6 +305,7 @@ Key procs
 
 /datum/language_holder/synthetic
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM),
 								/datum/language/uncommon = list(LANGUAGE_ATOM),
 								/datum/language/machine = list(LANGUAGE_ATOM),
 								/datum/language/draconic = list(LANGUAGE_ATOM),
@@ -313,6 +314,7 @@ Key procs
 								/datum/language/voltaic = list(LANGUAGE_ATOM),
 								/datum/language/nekomimetic = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/codespeak = list(LANGUAGE_ATOM),
 							/datum/language/uncommon = list(LANGUAGE_ATOM),
 							/datum/language/machine = list(LANGUAGE_ATOM),
 							/datum/language/draconic = list(LANGUAGE_ATOM),

@@ -176,13 +176,13 @@
 
 			var/emagged = obj_flags & EMAGGED
 			if (emagged)
-				message_syndicate(message, usr)
-				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>")
-			else
 				message_centcom(message, usr)
-				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
+				to_chat(usr, "<span class='notice'>Message Transmitted to Syndicate Command.</span>")
+			else
+				message_syndicate(message, usr)
+				to_chat(usr, "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO NANOTRASEN HIGH COMMAND.</span>")
 
-			var/associates = emagged ? "the Syndicate": "CentCom"
+			var/associates = emagged ? "CentCom" : "the Syndicate"
 			usr.log_talk(message, LOG_SAY, tag = "message to [associates]")
 			deadchat_broadcast(" has messaged [associates], \"[message]\" at <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type = DEADCHAT_ANNOUNCEMENT)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
@@ -225,7 +225,7 @@
 			var/reason = trim(html_encode(params["reason"]), MAX_MESSAGE_LEN)
 			nuke_request(reason, usr)
 			to_chat(usr, "<span class='notice'>Request sent.</span>")
-			usr.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
+			usr.log_message("has requested the nuclear codes from the Syndicate with reason \"[reason]\"", LOG_SAY)
 			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", 'sound/ai/commandreport.ogg')
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)

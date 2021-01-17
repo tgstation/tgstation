@@ -1,36 +1,43 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"o" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pod_1)
 "B" = (
-/turf/closed/wall/mineral/titanium,
+/turf/template_noop,
 /area/shuttle/pod_1)
 "G" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
 /obj/machinery/status_display/evac{
 	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32
 	},
-/turf/open/floor/mineral/titanium/blue,
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/plating,
 /area/shuttle/pod_1)
 "N" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
 /obj/docking_port/mobile/pod{
 	port_direction = 2
 	},
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/door/airlock/hatch{
+	name = "Escape Pod Hatch"
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pod_1)
 "Q" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_1)
-"U" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/machinery/porta_turret/centcom_shuttle/weak,
+/obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/airless,
+/area/shuttle/pod_1)
+"U" = (
 /obj/item/radio/intercom{
 	pixel_x = 25
 	},
@@ -40,7 +47,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pod_1)
 "Z" = (
 /obj/structure/shuttle/engine/propulsion/burst,
@@ -49,8 +59,8 @@
 
 (1,1,1) = {"
 B
-B
-B
+o
+o
 Z
 "}
 (2,1,1) = {"
@@ -61,7 +71,7 @@ N
 "}
 (3,1,1) = {"
 B
-B
-B
+o
+o
 Z
 "}

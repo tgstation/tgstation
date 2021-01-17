@@ -29,6 +29,9 @@
 	announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
 	announcement += "<br>"
 
+	if(sound != 'sound/ai/attention.ogg')
+		sound = 'sound/ai/syndicate.ogg'
+
 	var/s = sound(sound)
 	for(var/mob/M in GLOB.player_list)
 		if(!isnewplayer(M) && M.can_hear())

@@ -4,7 +4,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "the corporate liaison"
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/bartender
@@ -20,13 +20,23 @@
 	name = "Bartender"
 	jobtype = /datum/job/bartender
 
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	belt = /obj/item/pda/bar
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	belt = /obj/item/storage/belt/military
+	l_pocket = /obj/item/pda/syndicate
+	uniform = /obj/item/clothing/under/syndicate
+	r_pocket = /obj/item/flashlight/seclite
+	glasses = /obj/item/clothing/glasses/sunglasses/chemical
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/beret/black
 	suit = /obj/item/clothing/suit/armor/vest
+
+	backpack = /obj/item/storage/backpack/duffelbag/syndie
+	satchel = /obj/item/storage/backpack/duffelbag/syndie
+	duffelbag = /obj/item/storage/backpack/duffelbag/syndie
+	box = /obj/item/storage/box/survival/syndie
+	pda_slot = ITEM_SLOT_LPOCKET
 	backpack_contents = list(/obj/item/storage/box/beanbag=1)
-	shoes = /obj/item/clothing/shoes/laceup
 
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

@@ -70,7 +70,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Janitor"
 
 /obj/effect/landmark/start/cargo_technician
-	name = "Cargo Technician"
+	name = "Deck Crewman"
 	icon_state = "Cargo Technician"
 
 /obj/effect/landmark/start/bartender
@@ -86,7 +86,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Mime"
 
 /obj/effect/landmark/start/quartermaster
-	name = "Quartermaster"
+	name = "Deck Officer"
 	icon_state = "Quartermaster"
 
 /obj/effect/landmark/start/atmospheric_technician
@@ -102,7 +102,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Shaft Miner"
 
 /obj/effect/landmark/start/security_officer
-	name = "Security Officer"
+	name = "Master at Arms"
 	icon_state = "Security Officer"
 
 /obj/effect/landmark/start/botanist
@@ -110,27 +110,27 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Botanist"
 
 /obj/effect/landmark/start/head_of_security
-	name = "Head of Security"
+	name = "Chief Master at Arms"
 	icon_state = "Head of Security"
 
 /obj/effect/landmark/start/captain
-	name = "Captain"
+	name = "Admiral"
 	icon_state = "Captain"
 
 /obj/effect/landmark/start/detective
-	name = "Detective"
+	name = "Investigative Officer"
 	icon_state = "Detective"
 
 /obj/effect/landmark/start/warden
-	name = "Warden"
+	name = "Brig Officer"
 	icon_state = "Warden"
 
 /obj/effect/landmark/start/chief_engineer
-	name = "Chief Engineer"
+	name = "Chief Engineering Officer"
 	icon_state = "Chief Engineer"
 
 /obj/effect/landmark/start/head_of_personnel
-	name = "Head of Personnel"
+	name = "Corporate Liaison"
 	icon_state = "Head of Personnel"
 
 /obj/effect/landmark/start/librarian
@@ -138,15 +138,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Curator"
 
 /obj/effect/landmark/start/lawyer
-	name = "Lawyer"
+	name = "Corporate Lawyer"
 	icon_state = "Lawyer"
 
 /obj/effect/landmark/start/station_engineer
-	name = "Station Engineer"
+	name = "Engine Technician"
 	icon_state = "Station Engineer"
 
 /obj/effect/landmark/start/medical_doctor
-	name = "Medical Doctor"
+	name = "Medical Officer"
 	icon_state = "Medical Doctor"
 
 /obj/effect/landmark/start/paramedic
@@ -154,23 +154,23 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Paramedic"
 
 /obj/effect/landmark/start/scientist
-	name = "Scientist"
+	name = "Researcher"
 	icon_state = "Scientist"
 
 /obj/effect/landmark/start/chemist
-	name = "Chemist"
+	name = "Explosives Technician"
 	icon_state = "Chemist"
 
 /obj/effect/landmark/start/roboticist
-	name = "Roboticist"
+	name = "Robotics Technician"
 	icon_state = "Roboticist"
 
 /obj/effect/landmark/start/research_director
-	name = "Research Director"
+	name = "Chief Research Officer"
 	icon_state = "Research Director"
 
 /obj/effect/landmark/start/geneticist
-	name = "Geneticist"
+	name = "Genetics Researcher"
 	icon_state = "Geneticist"
 
 /obj/effect/landmark/start/chief_medical_officer
@@ -178,7 +178,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Chief Medical Officer"
 
 /obj/effect/landmark/start/virologist
-	name = "Virologist"
+	name = "Bioweapons Technician"
 	icon_state = "Virologist"
 
 /obj/effect/landmark/start/psychologist
@@ -186,7 +186,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Psychologist"
 
 /obj/effect/landmark/start/chaplain
-	name = "Chaplain"
+	name = "Tiger Fanatic"
 	icon_state = "Chaplain"
 
 /obj/effect/landmark/start/cyborg
