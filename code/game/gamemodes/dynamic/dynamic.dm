@@ -204,7 +204,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	var/shown_threat
 	if(prob(FAKE_REPORT_CHANCE))
-		shown_threat = rand(1 to 100)
+		shown_threat = rand(1, 100)
 	else
 		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 	switch(round(shown_threat))
