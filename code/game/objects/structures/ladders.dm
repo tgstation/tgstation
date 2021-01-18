@@ -9,7 +9,6 @@
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
 	var/crafted = FALSE
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	/// Optional travel time for ladder in deciseconds
 	var/travel_time = 0
 
