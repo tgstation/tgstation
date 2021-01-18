@@ -83,10 +83,16 @@
 	//Have we exploded?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
 		return FALSE
+
 	//Are we overheated?
-	if(holder.chem_temp > reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-		reaction.overheated(holder, src)
+	if(reaction.is_cold_recipe)
+		if(holder.chem_temp < reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			reaction.overheated(holder, src)
+	else
+		if(holder.chem_temp > reaction.overheat_temp)
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			reaction.overheated(holder, src)
 
 	//set up catalyst checks
 	var/total_matching_catalysts = 0
@@ -230,7 +236,7 @@
 		delta_chem_factor = target_vol
 	else if (delta_chem_factor < CHEMICAL_VOLUME_MINIMUM)
 		delta_chem_factor = CHEMICAL_VOLUME_MINIMUM
-	delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL)
+	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/B in reaction.required_reagents)
@@ -247,9 +253,9 @@
 		reacted_vol += step_add
 		total_step_added += step_add
 
-	#ifdef TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
+	//#ifdef TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
 	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. deltaT [deltaT], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
-	#endif
+	//#endif
 		
 	//Apply thermal output of reaction to beaker
 	holder.chem_temp = round(cached_temp + (reaction.thermic_constant* total_step_added))
@@ -257,7 +263,7 @@
 	reaction.reaction_step(src, total_step_added, purity)//proc that calls when step is done
 
 	//Give a chance of sounds
-	if (prob(10))
+	if (prob(5))
 		holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]</span>")
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)

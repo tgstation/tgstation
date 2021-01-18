@@ -872,7 +872,9 @@
 		var/datum/equilibrium/E = e
 		//if it's been flagged to delete
 		if(E.to_delete)
-			mix_message += end_reaction(E)
+			var/temp_mix_message = end_reaction(E)
+			if(!text_in_list(temp_mix_message, mix_message))
+				mix_message += temp_mix_message
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
 		//otherwise continue reacting
@@ -996,6 +998,8 @@
 	for(var/B in cached_required_reagents)
 		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
 
+	if(multiplier == 0)
+		return FALSE
 	var/sum_purity = 0
 	for(var/B in cached_required_reagents)
 		var/datum/reagent/R = has_reagent(B)
