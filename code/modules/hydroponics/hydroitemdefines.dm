@@ -16,7 +16,7 @@
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
-	. += "<span class='notice'>Activate it in your hand to change the [src] between growth statistics mode and chemical reagents mode.</span>"
+	. += "<span class='notice'>Activate it in your hand to change \the [src] between a growth statistics mode and a chemical reagents mode.</span>"
 
 /obj/item/plant_analyzer/attack_self(mob/user)
 	. = ..()
