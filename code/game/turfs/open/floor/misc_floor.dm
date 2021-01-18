@@ -122,10 +122,10 @@
 	slowdown = -0.3
 
 /turf/open/floor/noslip/setup_broken_states()
-	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
+	return list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 
 /turf/open/floor/noslip/setup_burnt_states()
-	burnt_states = list("noslip-scorched1","noslip-scorched2")
+	return list("noslip-scorched1","noslip-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -183,7 +183,7 @@
 	floor_tile = /obj/item/stack/tile/plastic
 
 /turf/open/floor/plastic/setup_broken_states()
-	broken_states = list("plastic-damaged1","plastic-damaged2")
+	return list("plastic-damaged1","plastic-damaged2")
 
 /turf/open/floor/eighties
 	name = "retro floor"
@@ -192,7 +192,7 @@
 	floor_tile = /obj/item/stack/tile/eighties
 
 /turf/open/floor/eighties/setup_broken_states()
-	broken_states = list("eighties_damaged")
+	return list("eighties_damaged")
 
 /turf/open/floor/plating/rust
 	name = "rusted plating"

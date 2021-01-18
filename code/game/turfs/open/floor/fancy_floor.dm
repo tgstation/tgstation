@@ -18,7 +18,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/wood/setup_broken_states()
-	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
+	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
 /turf/open/floor/wood/examine(mob/user)
 	. = ..()
@@ -84,7 +84,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/grass/setup_broken_states()
-	broken_states = list("sand")
+	return list("sand")
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
@@ -132,7 +132,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/grass/snow/setup_broken_states()
-	broken_states = list("snow_dug")
+	return list("snow_dug")
 
 /turf/open/floor/grass/snow/spawniconchange()
 	return
@@ -200,7 +200,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/carpet/setup_broken_states()
-	broken_states = list("damaged")
+	return list("damaged")
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()
@@ -400,7 +400,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/fakespace/setup_broken_states()
-	broken_states = list("damaged")
+	return list("damaged")
 
 /turf/open/floor/fakespace/Initialize()
 	. = ..()

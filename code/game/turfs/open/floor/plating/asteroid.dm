@@ -25,7 +25,7 @@
 	var/postdig_icon_change = TRUE
 
 /turf/open/floor/plating/asteroid/setup_broken_states()
-	broken_states = list("asteroid_dug")
+	return list("asteroid_dug")
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -103,7 +103,7 @@
 	digResult = /obj/item/stack/ore/glass/basalt
 
 /turf/open/floor/plating/asteroid/basalt/setup_broken_states()
-	broken_states = list("basalt_dug")
+	return list("basalt_dug")
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
@@ -160,7 +160,7 @@
 	digResult = /obj/item/stack/sheet/mineral/snow
 
 /turf/open/floor/plating/asteroid/snow/setup_broken_states()
-	broken_states = list("snow_dug")
+	return list("snow_dug")
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -195,7 +195,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/asteroid/snow/ice/setup_broken_states()
-	broken_states = list("snow-ice")
+	return list("snow-ice")
 /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

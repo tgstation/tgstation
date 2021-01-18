@@ -41,7 +41,7 @@
 	floor_variance = 30
 
 /turf/open/floor/plating/asteroid/basalt/wasteland/setup_broken_states()
-	broken_states = list("wasteland")
+	return list("wasteland")
 
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()

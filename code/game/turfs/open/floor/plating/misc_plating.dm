@@ -17,7 +17,7 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/plating/abductor/setup_broken_states()
-	broken_states = list("alienpod1")
+	return list("alienpod1")
 
 /turf/open/floor/plating/abductor/Initialize()
 	. = ..()
@@ -141,7 +141,7 @@
 	baseturfs = /turf/open/floor/plating/beach/sand
 
 /turf/open/floor/plating/beach/sand/setup_broken_states()
-	broken_states = list("sand")
+	return list("sand")
 
 /turf/open/floor/plating/beach/coastline_t
 	name = "coastline"
@@ -151,7 +151,7 @@
 	baseturfs = /turf/open/floor/plating/beach/coastline_t
 
 /turf/open/floor/plating/beach/sand/coastline_t/setup_broken_states()
-	broken_states = list("sandwater_t")
+	return list("sandwater_t")
 
 /turf/open/floor/plating/beach/coastline_b //need to make this water subtype.
 	name = "coastline"
@@ -164,7 +164,7 @@
 	heavyfootstep = FOOTSTEP_LAVA
 
 /turf/open/floor/plating/beach/sand/coastline_b/setup_broken_states()
-	broken_states = list("sandwater_b")
+	return list("sandwater_b")
 
 /turf/open/floor/plating/beach/water
 	gender = PLURAL
@@ -179,14 +179,14 @@
 	heavyfootstep = FOOTSTEP_LAVA
 
 /turf/open/floor/plating/beach/water/setup_broken_states()
-	broken_states = list("water")
+	return list("water")
 
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 	icon_state = "sandwater_inner"
 	baseturfs = /turf/open/floor/plating/beach/coastline_t/sandwater_inner
 
 /turf/open/floor/plating/beach/water/coastline_t/sandwater_inner/setup_broken_states()
-	broken_states = list("sandwater_inner")
+	return list("sandwater_inner")
 
 /turf/open/floor/plating/ironsand
 	gender = PLURAL
@@ -200,7 +200,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/ironsand/setup_broken_states()
-	broken_states = list("ironsand1")
+	return list("ironsand1")
 
 /turf/open/floor/plating/ironsand/Initialize()
 	. = ..()
@@ -308,7 +308,7 @@
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
 
 /turf/open/floor/plating/grass/setup_broken_states()
-	broken_states = list("damaged")
+	return list("damaged")
 
 /turf/open/floor/plating/grass/Initialize()
 	. = ..()
@@ -335,4 +335,4 @@
 	tiled_dirt = FALSE
 
 /turf/open/floor/plating/sandy_dirt/setup_broken_states()
-	broken_states = list("sand_damaged")
+	return list("sand_damaged")

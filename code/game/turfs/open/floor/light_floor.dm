@@ -24,7 +24,7 @@
 	var/static/list/lighttile_designs
 
 /turf/open/floor/light/setup_broken_states()
-	broken_states = list("light_broken")
+	return list("light_broken")
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()

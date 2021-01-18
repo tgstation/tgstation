@@ -21,10 +21,10 @@
 	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/setup_broken_states()
-	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
+	return list("platingdmg1", "platingdmg2", "platingdmg3")
 
 /turf/open/floor/plating/setup_burnt_states()
-	burnt_states = list("panelscorched")
+	return list("panelscorched")
 
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()

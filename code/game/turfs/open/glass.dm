@@ -15,7 +15,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/glass/setup_broken_states()
-	broken_states = list("glass-damaged1", "glass-damaged2", "glass-damaged3")
+	return list("glass-damaged1", "glass-damaged2", "glass-damaged3")
 
 
 /turf/open/floor/glass/Initialize()
@@ -36,4 +36,4 @@
 	base_icon_state = "reinf_glass"
 
 /turf/open/floor/glass/reinforced/setup_broken_states()
-	broken_states = list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")
+	return list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")
