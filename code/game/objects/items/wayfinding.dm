@@ -75,6 +75,7 @@
 		set_light(1.4)
 	else
 		set_light(0)
+	return ..()
 
 /obj/machinery/pinpointer_dispenser/process(delta_time)
 	if(machine_stat & (BROKEN|NOPOWER))

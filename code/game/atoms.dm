@@ -697,7 +697,7 @@
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
 	SHOULD_CALL_PARENT(TRUE)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
