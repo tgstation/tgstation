@@ -7,10 +7,6 @@
 			"windows": {
 				"command": ".\\tools\\build\\build.bat"
 			},
-			"problemMatcher": [
-				"$dreammaker",
-				"$eslint-stylish"
-			],
 			"group": {
 				"kind": "build",
 				"isDefault": true
