@@ -206,7 +206,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(prob(FAKE_REPORT_CHANCE))
 		shown_threat = rand(1 to 100)
 	else
-		shown_threat = clamp(shown_threat + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
+		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 	switch(round(shown_threat))
 		if(0 to 19)
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
