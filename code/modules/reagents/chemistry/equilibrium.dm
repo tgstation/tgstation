@@ -253,9 +253,9 @@
 		reacted_vol += step_add
 		total_step_added += step_add
 
-	//#ifdef TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
+	#ifdef TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
 	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. deltaT [deltaT], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
-	//#endif
+	#endif
 		
 	//Apply thermal output of reaction to beaker
 	holder.chem_temp = round(cached_temp + (reaction.thermic_constant* total_step_added))
