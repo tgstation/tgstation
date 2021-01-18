@@ -36,7 +36,9 @@
 	if (burnt_states)
 		stack_trace("burnt_states defined at the object level for [type], move it to setup_burnt_states()")
 	else
-		burnt_states = string_list(setup_burnt_states())
+		var/list/new_burnt_states = setup_burnt_states()
+		if(new_burnt_states)
+			burnt_states = string_list(new_burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))

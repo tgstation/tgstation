@@ -21,8 +21,7 @@
 	icons = typelist("icons", icons)
 
 /turf/open/floor/mineral/setup_broken_states()
-	if(!broken_states)
-		return list("[initial(icon_state)]_dam")
+	return list("[initial(icon_state)]_dam")
 
 /turf/open/floor/mineral/update_icon()
 	. = ..()
