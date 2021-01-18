@@ -63,7 +63,12 @@ process.on('uncaughtException', exceptionHandler);
 
 class ExitError extends Error {}
 
-const exec = (executable, ...args) => {
+/**
+ * @param {string} executable
+ * @param {string[]} args
+ * @param {import('child_process').SpawnOptionsWithoutStdio} options
+ */
+const exec = (executable, args, options) => {
   return new Promise((resolve, reject) => {
     // If executable exists relative to the current directory,
     // use that executable, otherwise spawn should fall back to
@@ -71,7 +76,7 @@ const exec = (executable, ...args) => {
     if (stat(executable)) {
       executable = resolvePath(executable);
     }
-    const child = spawn(executable, args);
+    const child = spawn(executable, args, options);
     children.add(child);
     child.stdout.on('data', data => {
       process.stdout.write(data);

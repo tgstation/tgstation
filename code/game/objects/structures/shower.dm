@@ -4,7 +4,10 @@
 #define SHOWER_NORMAL_TEMP 300
 #define SHOWER_BOILING "boiling"
 #define SHOWER_BOILING_TEMP 400
-#define SHOWER_REACTION_MULTIPLIER 0.025
+/// The volume of it's internal reagents the shower applies to everything it sprays.
+#define SHOWER_SPRAY_VOLUME 5
+/// How much the volume of the shower's spay reagents are amplified by when it sprays something.
+#define SHOWER_EXPOSURE_MULTIPLIER 2	// Showers effectively double exposed reagents
 
 
 /obj/machinery/shower
@@ -134,25 +137,24 @@
 	if(on && reagents.total_volume)
 		wash_atom(AM)
 
-/obj/machinery/shower/proc/wash_atom(atom/A)
-	A.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
-	A.wash(CLEAN_WASH)
-	SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
-	reagents.expose(A, TOUCH)
-	if(isliving(A))
-		check_heat(A)
+/obj/machinery/shower/proc/wash_atom(atom/target)
+	target.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
+	target.wash(CLEAN_WASH)
+	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
+	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
+	if(isliving(target))
+		check_heat(target)
 
 /obj/machinery/shower/process(delta_time)
 	if(on && reagents.total_volume)
-		reagents.remove_any(2.5 * delta_time)
 		wash_atom(loc)
 		for(var/am in loc)
 			var/atom/movable/movable_content = am
-			reagents.expose(movable_content, TOUCH, SHOWER_REACTION_MULTIPLIER * delta_time) //There's not many reagents leaving the sink at once! This should make for a 10 unit reaction
 			if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-				wash_atom(movable_content)
-		return
+				wash_atom(movable_content)	// Reagent exposure is handled in wash_atom
 
+		reagents.remove_any(SHOWER_SPRAY_VOLUME)
+		return
 	on = FALSE
 	soundloop.stop()
 	handle_mist()
@@ -213,7 +215,8 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-#undef SHOWER_REACTION_MULTIPLIER
+#undef SHOWER_SPRAY_VOLUME
+#undef SHOWER_EXPOSURE_MULTIPLIER
 #undef SHOWER_BOILING_TEMP
 #undef SHOWER_BOILING
 #undef SHOWER_NORMAL_TEMP
