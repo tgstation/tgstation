@@ -243,8 +243,8 @@
 			return
 		t_amount++
 		product_name = parent.myseed.plantname
-	if(getYield() >= 1)
-		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
+	if(product_count >= 1)
+		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
 	parent.update_tray(user)
 
 	return result
@@ -316,7 +316,7 @@
 		var/max_yield = MAX_PLANT_YIELD
 		for(var/datum/plant_gene/trait/T in genes)
 			if(T.trait_flags & TRAIT_HALVES_YIELD)
-				max_yield = round(max_yield/2 + 0.1) //Round up
+				max_yield = round(max_yield/2)
 				break
 
 		yield = clamp(yield + adjustamt, 0, max_yield)
@@ -405,7 +405,7 @@
 		var/max_yield = MAX_PLANT_YIELD
 		for(var/datum/plant_gene/trait/T in genes)
 			if(T.trait_flags & TRAIT_HALVES_YIELD)
-				max_yield = round(max_yield/2 + 0.1) //Round up
+				max_yield = round(max_yield/2)
 				break
 
 		yield = clamp(adjustamt, 0, max_yield)
