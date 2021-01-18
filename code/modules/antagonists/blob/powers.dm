@@ -1,4 +1,3 @@
-#define BLOB_REROLL_CHOICES 6
 #define BLOB_REROLL_RADIUS 60
 
 /mob/camera/blob/proc/can_buy(cost = 15)
@@ -60,8 +59,8 @@
 		blob_core = core
 		core.update_icon()
 	update_health_hud()
-	placed = 1
-	announcement_time = world.time + 6000
+	placed = TRUE
+	announcement_time = world.time + OVERMIND_ANNOUNCEMENT_MAX_TIME
 	return TRUE
 
 /mob/camera/blob/verb/transport_core()
@@ -100,7 +99,7 @@
 		if(!(A.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
 			to_chat(src, "<span class='warning'>This type of blob must be placed on the station!</span>")
 			return
-		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
+		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
 			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
 			return //handholdotron 2000
 	if(minSeparation)
@@ -125,45 +124,45 @@
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
-	set name = "Create/Upgrade Shield Blob (15)"
+	set name = "Create/Upgrade Shield Blob ([BLOB_UPGRADE_STRONG_COST])"
 	set desc = "Create a shield blob, which will block fire and is hard to kill. Using this on an existing shield blob turns it into a reflective blob, capable of reflecting most projectiles but making it twice as weak to brute attacks."
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
 	var/obj/structure/blob/shield/S = locate(/obj/structure/blob/shield) in T
 	if(S)
-		if(!can_buy(BLOB_REFLECTOR_COST))
+		if(!can_buy(BLOB_UPGRADE_REFLECTOR_COST))
 			return
 		if(S.obj_integrity < S.max_integrity * 0.5)
-			add_points(BLOB_REFLECTOR_COST)
+			add_points(BLOB_UPGRADE_REFLECTOR_COST)
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified properly!</span>")
 			return
 		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
 		S.change_to(/obj/structure/blob/shield/reflective, src)
 	else
-		createSpecial(15, /obj/structure/blob/shield, 0, FALSE, T)
+		createSpecial(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
-	set name = "Create Resource Blob (40)"
+	set name = "Create Resource Blob ([BLOB_STRUCTURE_RESOURCE_COST]])"
 	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/structure/blob/resource, 4, TRUE)
+	createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/resource, 4, TRUE)
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
-	set name = "Create Node Blob (50)"
+	set name = "Create Node Blob ([BLOB_STRUCTURE_NODE_COST]])"
 	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(50, /obj/structure/blob/node, 5, FALSE)
+	createSpecial(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/node, 5, FALSE)
 
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
-	set name = "Create Factory Blob (60)"
+	set name = "Create Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(60, /obj/structure/blob/factory, 7, TRUE)
+	createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/factory, 7, TRUE)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
-	set name = "Create Blobbernaut (40)"
+	set name = "Create Blobbernaut ([BLOBMOB_BLOBBERNAUT_RESOURCE_COST])"
 	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/structure/blob/factory/B = locate(/obj/structure/blob/factory) in T
@@ -176,7 +175,7 @@
 	if(B.obj_integrity < B.max_integrity * 0.5)
 		to_chat(src, "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>")
 		return
-	if(!can_buy(40))
+	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
 		return
 
 	B.naut = TRUE	//temporary placeholder to prevent creation of more than one per factory.
@@ -207,12 +206,12 @@
 		to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
 	else
 		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
-		add_points(40)
+		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
 		B.naut = null
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
-	set name = "Relocate Core (80)"
+	set name = "Relocate Core ([BLOB_POWER_RELOCATE_COST])"
 	set desc = "Swaps the locations of your core and the selected node."
 	var/turf/T = get_turf(src)
 	var/obj/structure/blob/node/B = locate(/obj/structure/blob/node) in T
@@ -226,7 +225,7 @@
 	if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
 		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
 		return
-	if(!can_buy(80))
+	if(!can_buy(BLOB_POWER_RELOCATE_COST))
 		return
 	var/turf/old_turf = get_turf(blob_core)
 	var/olddir = blob_core.dir
@@ -260,7 +259,7 @@
 
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
-	set name = "Expand/Attack Blob ([BLOB_SPREAD_COST])"
+	set name = "Expand/Attack Blob ([BLOB_EXPAND_COST])"
 	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear, instead attacks it, damaging mobs and objects and refunding [BLOB_ATTACK_REFUND] points."
 	var/turf/T = get_turf(src)
 	expand_blob(T)
@@ -274,7 +273,7 @@
 	if(!possibleblobs.len)
 		to_chat(src, "<span class='warning'>There is no blob adjacent to the target tile!</span>")
 		return
-	if(can_buy(BLOB_SPREAD_COST))
+	if(can_buy(BLOB_EXPAND_COST))
 		var/attacksuccess = FALSE
 		for(var/mob/living/L in T)
 			if(ROLE_BLOB in L.faction) //no friendly/dead fire
@@ -289,7 +288,7 @@
 				add_points(BLOB_ATTACK_REFUND)
 			else
 				to_chat(src, "<span class='warning'>There is a blob there!</span>")
-				add_points(BLOB_SPREAD_COST) //otherwise, refund all of the cost
+				add_points(BLOB_EXPAND_COST) //otherwise, refund all of the cost
 		else
 			var/list/cardinalblobs = list()
 			var/list/diagonalblobs = list()
@@ -311,7 +310,7 @@
 					playsound(OB, 'sound/effects/splat.ogg', 50, TRUE)
 					add_points(BLOB_ATTACK_REFUND)
 				else
-					add_points(BLOB_SPREAD_COST) //if we're attacking diagonally and didn't hit anything, refund
+					add_points(BLOB_EXPAND_COST) //if we're attacking diagonally and didn't hit anything, refund
 		if(attacksuccess)
 			last_attack = world.time + CLICK_CD_MELEE
 		else
@@ -350,11 +349,11 @@
 
 /mob/camera/blob/verb/strain_reroll()
 	set category = "Blob"
-	set name = "Reactive Strain Adaptation (40)"
+	set name = "Reactive Strain Adaptation ([BLOB_POWER_REROLL_COST])"
 	set desc = "Replaces your strain with a random, different one."
 
-	if (!free_strain_rerolls && blob_points < BLOB_REROLL_COST)
-		to_chat(src, "<span class='warning'>You need at least [BLOB_REROLL_COST] resources to reroll your strain again!</span>")
+	if (!free_strain_rerolls && blob_points < BLOB_POWER_REROLL_COST)
+		to_chat(src, "<span class='warning'>You need at least [BLOB_POWER_REROLL_COST] resources to reroll your strain again!</span>")
 		return
 
 	open_reroll_menu()
@@ -365,7 +364,7 @@
 		strain_choices = list()
 
 		var/list/new_strains = GLOB.valid_blobstrains.Copy() - blobstrain.type
-		for (var/_ in 1 to BLOB_REROLL_CHOICES)
+		for (var/_ in 1 to BLOB_POWER_REROLL_CHOICES)
 			var/datum/blobstrain/strain = pick_n_take(new_strains)
 
 			var/image/strain_icon = image('icons/mob/blob.dmi', "blob_core")
@@ -386,7 +385,7 @@
 	if (isnull(strain_result))
 		return
 
-	if (!free_strain_rerolls && !can_buy(BLOB_REROLL_COST))
+	if (!free_strain_rerolls && !can_buy(BLOB_POWER_REROLL_COST))
 		return
 
 	for (var/_other_strain in GLOB.valid_blobstrains)
@@ -426,5 +425,4 @@
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")
 
-#undef BLOB_REROLL_CHOICES
 #undef BLOB_REROLL_RADIUS

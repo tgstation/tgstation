@@ -13,7 +13,7 @@
 
 /datum/blobstrain/reagent/blobbernaut_attack(mob/living/L)
 	var/mob_protection = L.get_permeability_protection()
-	reagent.expose_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+	reagent.expose_mob(L, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
 /datum/blobstrain/reagent/on_sporedeath(mob/living/spore)
 	spore.reagents.add_reagent(reagent.type, 10)

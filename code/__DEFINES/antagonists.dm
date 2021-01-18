@@ -24,16 +24,6 @@
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
 
-
-//Blob
-/// blob gets a free reroll every X time
-#define BLOB_REROLL_TIME 2400
-#define BLOB_SPREAD_COST 4
-/// blob refunds this much if it attacks and doesn't spread
-#define BLOB_ATTACK_REFUND 2
-#define BLOB_REFLECTOR_COST 15
-
-
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"
@@ -85,8 +75,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_FLESH "Flesh"
 #define PATH_VOID "Void"
 
-/// How much does it cost to reroll strains?
-#define BLOB_REROLL_COST 40
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
