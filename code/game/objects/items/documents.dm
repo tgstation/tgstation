@@ -69,13 +69,10 @@
 	throw_range = 1
 	throw_speed = 1
 
-/obj/item/inspector/attack(mob/living/M, mob/living/user)
-	. = ..()
-	print_report()
-
 /obj/item/inspector/attack_self(mob/user)
 	. = ..()
-	print_report()
+	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
+		print_report()
 
 ///Prints out a report for bounty purposes, and plays a short audio blip.
 /obj/item/inspector/proc/print_report()
@@ -86,19 +83,17 @@
 
 /obj/item/report
 	name = "encrypted station inspection"
-	desc = "Contains detailed information about the station's current status, too bad you can't really read it. You can almost make out some of the words..."
+	desc = "Contains detailed information about the station's current status, too bad you can't really read it."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "slipfull"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
 
-/obj/item/report/examine_more(mob/user)
+/obj/item/report/examine(mob/user)
 	. = ..()
-	var/list/msg = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
 	if(scanned_area?.name)
-		msg += "\the [src] contains data on [scanned_area.name]."
+		. += "<span class='notice'>\The [src] contains data on [scanned_area.name].</span>"
 	else if(scanned_area)
-		msg += "\the [src] contains data on an vague area on station, you should throw it away."
+		. += "<span class='notice'>\The [src] contains data on a vague area on station, you should throw it away.</span>"
 	else
-		msg += "Wait a minute, this thing's blank! You should throw it away."
-	return msg
+		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"

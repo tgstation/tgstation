@@ -1,5 +1,4 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, Knob, LabeledControls, LabeledList, RoundGauge, Section, Tooltip } from '../components';
 import { formatSiUnit } from '../format';
@@ -40,7 +39,7 @@ export const Canister = (props, context) => {
             <Section
               title="Canister"
               buttons={(
-                <Fragment>
+                <>
                   {!!isPrototype && (
                     <Button
                       mr={1}
@@ -55,7 +54,7 @@ export const Canister = (props, context) => {
                     icon="pencil-alt"
                     content="Relabel"
                     onClick={() => act('relabel')} />
-                </Fragment>
+                </>
               )}>
               <LabeledControls>
                 <LabeledControls.Item

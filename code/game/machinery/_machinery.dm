@@ -564,7 +564,10 @@
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
 		var/turf/ground = get_turf(src)
-		if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_object = src))
+		var/list/excluded_objects = list(type)
+		if(anchorables)
+			excluded_objects += anchorables
+		if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_objects = excluded_objects))
 			to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
 			return CANT_UNFASTEN
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
@@ -576,7 +579,7 @@
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
-			if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_object = src))//i know what you tryin to sneak in
+			if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_objects = excluded_objects))//i know what you tryin to sneak in
 				to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
 				return CANT_UNFASTEN
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")

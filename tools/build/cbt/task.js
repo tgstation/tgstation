@@ -35,8 +35,9 @@ class Task {
   async run() {
     // Consider dependencies first, and skip the task if it
     // doesn't need a rebuild.
+    let needsRebuild = 'empty dependency list';
     if (this.deps.length > 0) {
-      const needsRebuild = compareFiles(this.deps);
+      needsRebuild = compareFiles(this.deps);
       if (!needsRebuild) {
         console.warn(` => Skipping '${this.name}'`);
         return;
@@ -45,7 +46,7 @@ class Task {
     if (!this.script) {
       return;
     }
-    console.warn(` => Starting '${this.name}'`);
+    console.warn(` => Starting '${this.name}': ${needsRebuild}`);
     const startedAt = Date.now();
     await this.script();
     const time = ((Date.now() - startedAt) / 1000) + 's';
