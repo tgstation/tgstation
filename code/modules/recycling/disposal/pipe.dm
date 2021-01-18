@@ -97,7 +97,7 @@
 		floorturf = T
 		if(floorturf.floor_tile)
 			new floorturf.floor_tile(T)
-		floorturf.force_plating(TRUE)
+		floorturf.force_plating(floorturf.forced_plating)
 
 	if(direction)		// direction is specified
 		if(isspaceturf(T)) // if ended in space, then range is unlimited
