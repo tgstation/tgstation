@@ -1515,7 +1515,7 @@
 	open = !open
 	update_icon()
 
-/obj/item/toy/eldrich_book/update_icon()
+/obj/item/toy/eldrich_book/update_icon_state()
 	icon_state = open ? "book_open" : "book"
 
 /*
