@@ -33,6 +33,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/adminEmergencyNoRecall = FALSE
 	var/lastMode = SHUTTLE_IDLE
 	var/lastCallTime = 6000
+	var/calledAt = 0 //The time the shuttle was called at.
 	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
 	var/list/tradeBlockade = list() //Things blocking cargo from leaving.
 	var/supplyBlocked = FALSE

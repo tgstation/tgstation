@@ -123,9 +123,12 @@
 		else
 			return forge_single_human_objective()
 
+/**
+ * Select, create and add a single objective to the traitor.  Automatically determines target, and other parameters.
+ */
 /datum/antagonist/traitor/proc/forge_single_human_objective() //Returns how many objectives are added
 	.=1
-	if(prob(50))
+	if(prob(50)) //Objectives that target another player
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new
@@ -142,12 +145,18 @@
 			kill_objective.owner = owner
 			kill_objective.find_target()
 			add_objective(kill_objective)
-	else
+	else //Objectives that do not specifically target another player
 		if(prob(15) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
 			var/datum/objective/download/download_objective = new
 			download_objective.owner = owner
 			download_objective.gen_amount_goal()
 			add_objective(download_objective)
+		else if(prob(5) && !(locate(/datum/objective/call_at_time) in objectives))
+			var/datum/objective/call_at_time/random/call_at_time = new
+			add_objective(call_at_time)
+		else if(prob(5) && !(locate(/datum/objective/call_limit) in objectives))
+			var/datum/objective/call_limit/random/call_limit = new
+			add_objective(call_limit)
 		else
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner

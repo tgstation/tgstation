@@ -316,6 +316,12 @@
 
 	. = ..()
 
+/**
+ * Sets the emergency shuttle to be on it's way.
+ *
+ * Calls the emergency shuttle, increments/sets appropriate information, sends an announcement to crew, and changes the current shuttle status.
+ */
+ 
 /obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, area/signalOrigin, reason, redAlert, set_coefficient=null)
 	if(!isnum(set_coefficient))
 		var/security_num = seclevel2num(get_security_level())
@@ -337,6 +343,7 @@
 			return
 
 	SSshuttle.emergencyCallAmount++
+	SSshuttle.calledAt = world.time - SSticker.round_start_time
 
 	if(prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin

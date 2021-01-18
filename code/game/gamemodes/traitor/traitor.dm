@@ -25,6 +25,8 @@
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/antag_datum = /datum/antagonist/traitor //what type of antag to create
+	var/overwrite_objectives = FALSE //do we overwrite the objectives, and force all traitors to have the same objectives?
+	var/overwrite_objectives_with = list() //what objectives do we overwrite with?  Utilize typepaths, not objective objects.
 	var/traitors_required = TRUE //Will allow no traitors
 
 
@@ -68,6 +70,11 @@
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in pre_traitors)
 		var/datum/antagonist/traitor/new_antag = new antag_datum()
+		if(overwrite_objectives)
+			new_antag.give_objectives = FALSE
+			for(var/objectivePath in overwrite_objectives_with)
+				var/datum/objective = new objectivePath()
+				new_antag.add_objective(objective)
 		addtimer(CALLBACK(traitor, /datum/mind.proc/add_antag_datum, new_antag), rand(10,100))
 		GLOB.pre_setup_antags -= traitor
 	..()
@@ -89,8 +96,16 @@
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
 
+/**
+ * adds a late join traitor, and gives them their objectives.
+ */
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
 	var/datum/antagonist/traitor/new_antag = new antag_datum()
+	if(overwrite_objectives)
+		new_antag.give_objectives = FALSE
+		for(var/objectivePath in overwrite_objectives_with)
+			var/datum/objective = new objectivePath()
+			new_antag.add_objective(objective)
 	character.add_antag_datum(new_antag)
 
 /datum/game_mode/traitor/generate_report()

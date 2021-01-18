@@ -366,6 +366,73 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			return FALSE
 	return SSshuttle.emergency.is_hijacked()
 
+/**
+ * # Shuttle call once objective
+ *
+ * An objective for a traitor to have the shuttle be called only once.
+ */
+/datum/objective/call_limit
+	name = "Shuttle call limit"
+	var/calls = 1
+	var/exact = TRUE
+
+/datum/objective/call_limit/New()
+	. = ..()
+	update_explanation_text()
+
+/datum/objective/call_limit/update_explanation_text()
+	..()
+	explanation_text = "Ensure that the emergency shuttle is called [exact? "exactly" : "at most"] [calls] time[(calls != 1)?"s":""]."
+
+/datum/objective/call_limit/check_completion()
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	if(exact)
+		return SSshuttle.emergencyCallAmount == calls
+	else
+		return SSshuttle.emergencyCallAmount <= calls
+
+/**
+ * # Shuttle call limit objective
+ *
+ * Objective to have the shuttle either called a specified amount of times, or at most a specific number of times.
+ */
+/datum/objective/call_limit/random/New(var/call_amount = rand(1,5), var/exact_amount = pick(TRUE,FALSE))
+	calls = rand(1,5)
+	exact = pick(TRUE,FALSE)
+
+/**
+ * # Shuttle call at time objective
+ *
+ * A traitor objective to have the shuttle be called between the thirty and fourty five minute mark
+ */
+/datum/objective/call_at_time
+	name = "Shuttle call limit"
+	var/call_after = 30 //This is in minutes.
+	var/opportunity_window = 15 //This is in minutes.
+
+/datum/objective/call_at_time/New()
+	. = ..()
+	update_explanation_text()
+
+/datum/objective/call_at_time/update_explanation_text()
+	..()
+	explanation_text = "Ensure that the final calling of the emergency shuttle is between [call_after] and [call_after + opportunity_window] minutes into the shift."
+
+/datum/objective/call_at_time/check_completion()
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	return (SSshuttle.calledAt >= call_after MINUTES) && (SSshuttle.calledAt < (call_after + opportunity_window) MINUTES)
+
+/**
+ * # Shuttle call at random time objective
+ *
+ * A version of the Shuttle call at time objective that has random requirements.  Parameters are callAfter, which is the number of minutes that the shuttle should be called after, and opportunityWindow, which is the number of minutes after callAfter that the traitor can have the shuttle called and succeed.
+ */
+/datum/objective/call_at_time/random/New(var/callAfter = rand(30,45), var/opportunityWindow= rand(10,15))
+	call_after = callAfter
+	opportunity_window = opportunityWindow
+
 /datum/objective/elimination
 	name = "elimination"
 	explanation_text = "Slaughter all loyalist crew aboard the shuttle. You, and any likeminded individuals, must be the only remaining people on the shuttle."

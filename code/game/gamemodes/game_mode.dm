@@ -15,7 +15,7 @@
 /datum/game_mode
 	var/name = "invalid"
 	var/config_tag = null
-	var/votable = 1
+	var/votable = TRUE
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/report_type = "invalid" //gamemodes with the same report type will not show up in the command report together.
