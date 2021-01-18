@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		else
 			required_temp = rand(min_temp, max_temp-50) 
 			optimal_temp = rand(required_temp+10, max_temp-25) 
-			overheat_temp = rand(optimal_temp, max_temp)
+			overheat_temp = rand(optimal_temp, max_temp+50)
 			thermic_constant = (rand(0, 100)/100)// 0 - 1
 	
 	if(randomize_req_pH)
@@ -282,24 +282,28 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			var/datum/reagent/R = GLOB.chemical_reagents_list[rid]
 			dat += "<li>[recipe.required_catalysts[rid]]u of [R.name]</li>"
 		dat += "</ul>"
-	dat += "Mix slowly"
+	dat += "</ul>Mix slowly<ul>"
 	if(recipe.required_container)
 		var/obj/item/I = recipe.required_container
 		dat += " in [initial(I.name)]"
 	if(recipe.required_temp != 0)
 		if(recipe.is_cold_recipe)
-			dat += " below [recipe.required_temp] degrees"
-			dat += " but not below [recipe.overheat_temp] degrees"
+			dat += " <li>below [recipe.required_temp] degrees"
+			dat += " but not below [recipe.overheat_temp] degrees</li>"
 		else
 			dat += " above [recipe.required_temp] degrees"
 			dat += " but not above [recipe.overheat_temp] degrees"
 		if(recipe.thermic_constant > 0)
-			dat += " taking care of it's exothermic nature"
+			dat += "<li> taking care of it's exothermic nature</li>"
 		else if(recipe.thermic_constant < 0)
-			dat += " taking care of it's endothermic nature"
+			dat += "<li> taking care of it's endothermic nature</li>"
+	var/datum/chemical_reaction/randomized/random_recipe = recipe
+	if(random_recipe)
+		if(random_recipe.randomize_req_pH)
+			dat += "<li> keeping your pH between [recipe.optimal_pH_min] and [recipe.optimal_pH_max]</li>"
+		if(random_recipe.randomize_impurity_minimum)
+			dat += "<li> and your purity above [recipe.purity_min]</li>"
 	dat += "</ul>"
-	dat += " keeping your pH between [recipe.optimal_pH_min] and [recipe.optimal_pH_max]"
-	dat += " and your purity above [recipe.purity_min]"
 	dat += "."
 	info = dat.Join("")
 	update_icon()
