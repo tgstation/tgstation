@@ -273,18 +273,23 @@
 	consumed_mobs += victim
 	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
 
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/on_victim_statchange(mob/victim, new_stat)
-	if(!isliving(victim))
-		return
+/* Handle signal from a consumed mob changing stat.
+ *
+ * A signal handler for if one of the laughter demon's consumed mobs has
+ * changed stat. If they're no longer dead (because they were dead when
+ * swallowed), eject them so they can't rip their way out from the inside.
+ */
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/on_victim_statchange(mob/living/victim, new_stat)
+	SIGNAL_HANDLER
 
-	var/mob/living/living_victim = victim
-	if(new_stat != DEAD)
-		// Someone we've eaten has spontaneously revived; maybe nanites, maybe a ling
-		living_victim.forceMove(get_turf(src))
-		living_victim.exit_blood_effect()
-		living_victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, with a confused look on their face.</span>")
-		consumed_mobs -= living_victim
-		UnregisterSignal(living_victim, COMSIG_MOB_STATCHANGE)
+	if(new_stat == DEAD)
+		return
+	// Someone we've eaten has spontaneously revived; maybe nanites, maybe a changeling
+	victim.forceMove(get_turf(src))
+	victim.exit_blood_effect()
+	victim.visible_message("<span class='warning'>[victim] falls out of the air, covered in blood, with a confused look on their face.</span>")
+	consumed_mobs -= victim
+	UnregisterSignal(victim, COMSIG_MOB_STATCHANGE)
 
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"
