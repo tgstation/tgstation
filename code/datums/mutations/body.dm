@@ -96,7 +96,6 @@
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1, 0.8)
 	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
@@ -106,7 +105,6 @@
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1, 1.25)
 	owner.transform = new_transform.Multiply(owner.transform)
-	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
