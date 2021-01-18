@@ -23,6 +23,6 @@
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/ice_demon = 50, /obj/structure/spawner/ice_moon/demonic_portal = 3, \
 						  /mob/living/simple_animal/hostile/asteroid/ice_whelp = 30, /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp = 3, \
 						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 3, \
-						  SPAWN_MEGAFAUNA = 4)
-	megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/colossus = 4, /mob/living/simple_animal/hostile/megafauna/hierophant = 1)
+						  SPAWN_MEGAFAUNA = 2)
+	megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/colossus = 1)
 	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6, /obj/structure/flora/ash/chilly = 1)
