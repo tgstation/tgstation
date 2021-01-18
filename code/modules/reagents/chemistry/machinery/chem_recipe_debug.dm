@@ -24,11 +24,13 @@
 	var/minorImpurity
 	///The count of reactions that resolve below 0.9 purity
 	var/majorImpurity
+	///If we failed to react this current chem so use a lower temp
+	var/failed = 0
 
 ///Create reagents datum
 /obj/machinery/chem_recipe_debug/Initialize()
 	. = ..()
-	create_reagents(5000)//I want to make sure everything fits
+	create_reagents(9000)//I want to make sure everything fits
 
 ///Enable the machine
 /obj/machinery/chem_recipe_debug/attackby(obj/item/I, mob/user, params)
@@ -63,6 +65,7 @@
 
 /*
 * The main loop that sets up, creates and displays results from a reaction
+* warning: this code is a hot mess
 */
 /obj/machinery/chem_recipe_debug/process(delta_time)
 	if(processing == FALSE)
@@ -89,7 +92,9 @@
 				var/obj/item/reagent_containers/glass/beaker/bluespace/B = new /obj/item/reagent_containers/glass/beaker/bluespace(loc)
 				reagents.trans_to(B)
 				B.name = "[cached_reactions[index]]"
-				problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
+				if(failed > 0)
+					problem_string += "[cached_reactions[index]] <span class='warning'>Unable to find product [R] in holder after reaction! index:[index]</span>\n"
+				failed++
 				continue
 			say("Reaction has a product [R] [R2.volume]u purity of [R2.purity]")
 			if(R2.purity < 0.9)
@@ -101,7 +106,11 @@
 			if(R2.volume < C.results[R])
 				impure_string += "Reaction [cached_reactions[index]] has a product [R] <span class='warning'>[R2.volume]u</span> purity of [R2.purity] index:[index]\n"
 		reagents.clear_reagents()
-		index++
+		if(failed > 1)
+			index++
+			failed = 0
+		if(failed == 0)
+			index++
 	var/datum/chemical_reaction/C = cached_reactions[index]
 	if(!C)
 		say("Unable to find reaction on index: [index]")
@@ -109,7 +118,11 @@
 		reagents.add_reagent(R, C.required_reagents[R]*20)
 	for(var/cat in C.required_catalysts)
 		reagents.add_reagent(cat, C.required_catalysts[cat])
-	reagents.chem_temp = C.optimal_temp
+	if(failed == 0)
+		reagents.chem_temp = C.optimal_temp
+	if(failed == 1)
+		reagents.chem_temp = C.required_temp+25
+		failed++
 	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.pH] index [index] of [cached_reactions.len]")
 	if(C.reaction_flags & REACTION_INSTANT)
 		say("This reaction is instant")

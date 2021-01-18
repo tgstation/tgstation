@@ -999,8 +999,8 @@
 	var/sum_purity = 0
 	for(var/B in cached_required_reagents)
 		var/datum/reagent/R = has_reagent(B)
-		remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 		sum_purity += R.purity
+		remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 	sum_purity /= cached_required_reagents.len
 
 	for(var/P in selected_reaction.results)

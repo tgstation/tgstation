@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	//Increase default leniency because these are already hard enough
 	optimal_pH_min = 1 
 	optimal_pH_max = 13
-	temp_exponent_factor = 1
+	temp_exponent_factor = 0
 	pH_exponent_factor = 1
 	H_ion_release = 0
 
@@ -51,6 +51,8 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	var/randomize_req_temperature = TRUE
 	var/min_temp = 1
 	var/max_temp = 600
+	///If the reaction can be exothermic or endothermic randomly too
+	var/exo_or_endothermic = FALSE
 
 	///If pH is randomised
 	var/randomize_req_pH = FALSE
@@ -95,14 +97,16 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			overheat_temp = rand(min_temp, optimal_temp-10)
 			if(overheat_temp >= 200) //Otherwise it can disappear when you're mixing and I don't want this to happen here
 				overheat_temp = 200
-			thermic_constant = (rand(-100, 0)/100)
+			if(exo_or_endothermic)
+				thermic_constant = (rand(-200, 200)/100)
 		else
 			required_temp = rand(min_temp, max_temp-50) 
 			optimal_temp = rand(required_temp+10, max_temp-25) 
 			overheat_temp = rand(optimal_temp, max_temp+50)
 			if(overheat_temp <= 400)
 				overheat_temp = 400
-			thermic_constant = (rand(0, 200)/100)// 0 - 2
+			if(exo_or_endothermic)
+				thermic_constant = (rand(-200, 200)/100)// 0 - 2
 	
 	if(randomize_req_pH)
 		optimal_pH_min = min_pH + rand(0, inoptimal_range_pH)
