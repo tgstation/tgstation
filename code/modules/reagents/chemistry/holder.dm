@@ -993,7 +993,7 @@
 	for(var/B in cached_required_reagents)
 		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
 
-	if(multiplier == 0)
+	if(multiplier == 0)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the no results handlier catches a misflagged reaction
 		return FALSE
 	var/sum_purity = 0
 	for(var/B in cached_required_reagents)
@@ -1015,15 +1015,13 @@
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
-			for(var/M in seen)
-				my_atom.audible_message(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+			my_atom.audible_message("<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
 			extract.Uses--
 			if(extract.Uses <= 0) // give the notification that the slime core is dead
-				for(var/M in seen)
-					my_atom.visible_message(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+				my_atom.visible_message("<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
