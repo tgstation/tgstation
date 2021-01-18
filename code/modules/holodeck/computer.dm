@@ -31,7 +31,8 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	idle_power_usage = 10
 	active_power_usage = 50
 
-	var/area/holodeck/linked //the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
+	///the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
+	var/area/holodeck/linked
 
 	var/area/mappedstartarea = /area/holodeck/rec_center //change this to a different area if youre making a second holodeck different from the station one
 	var/program = "holodeck_offline" //what program is loaded right now
@@ -94,9 +95,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 /obj/machinery/computer/holodeck/proc/generate_program_list()
 	for(var/typekey in subtypesof(program_type))
 		var/datum/map_template/holodeck/program = typekey
-		var/list/info_this = list()
-		info_this["id"] = initial(program.template_id)
-		info_this["name"] = initial(program.name)
+		var/list/info_this = list("id" = initial(program.template_id), "name" = initial(program.name))
 		if(initial(program.restricted) && (initial(program.access_flags) & holodeck_access))
 			LAZYADD(emag_programs, list(info_this))
 		else if (initial(program.access_flags) & holodeck_access)
@@ -151,15 +150,13 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 			say("Safeties reset. Restarting...")
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
-/datum/map_template/holodeck/update_blacklist(turf/placement)
-	. = list()
+/datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
 	for (var/_turf in get_affected_turfs(placement))
 		var/turf/possible_blacklist = _turf
 		if (!istype(possible_blacklist, /turf/open/floor/holofloor))
 			if (istype(possible_blacklist, /turf/open/floor/engine))
 				continue
-			. += possible_blacklist
-	return .
+			input_blacklist += possible_blacklist
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)

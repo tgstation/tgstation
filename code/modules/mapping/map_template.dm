@@ -141,7 +141,7 @@
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
 	var/list/turf_blacklist = list()
-	turf_blacklist += update_blacklist(T)
+	update_blacklist(T, turf_blacklist)
 
 	//parsed.returns_created_atoms = returns_created_atoms
 	parsed.turf_blacklist = turf_blacklist
@@ -163,7 +163,7 @@
 /datum/map_template/proc/post_load()
 	return
 
-/datum/map_template/proc/update_blacklist(turf/T)
+/datum/map_template/proc/update_blacklist(turf/T, list/input_blacklist)
 	return
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
