@@ -97,10 +97,7 @@
 		floorturf = T
 		if(floorturf.floor_tile)
 			new floorturf.floor_tile(T)
-		if(istype(floorturf, /turf/open/floor/engine))
-			floorturf.make_plating(TRUE)
-		else
-			floorturf.make_plating()
+		floorturf.force_plating(TRUE)
 
 	if(direction)		// direction is specified
 		if(isspaceturf(T)) // if ended in space, then range is unlimited
