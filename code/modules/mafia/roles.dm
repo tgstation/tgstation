@@ -39,10 +39,10 @@
 	. = ..()
 
 /**
-  * Tests if a visitor can actually perform an action on this role. Verbose on purpose!
-  *
-  * Will return false if: Your visit is interrupted, or you are dead.
-  */
+ * Tests if a visitor can actually perform an action on this role. Verbose on purpose!
+ *
+ * Will return false if: Your visit is roleblocked, they have perished, or your visit was interrupted
+ */
 /datum/mafia_role/proc/can_action(datum/mafia_controller/game, datum/mafia_role/visitor, action)
 	if(role_flags & ROLE_ROLEBLOCKED)
 		to_chat(visitor,"<span class='danger'>Your [action] was blocked!</span>")
@@ -50,16 +50,16 @@
 	if(game_status != MAFIA_ALIVE) //They're already dead
 		to_chat(visitor,"<span class='danger'>[body.real_name] perished before you could visit!</span>")
 		return FALSE
-	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_VISIT,game,visitor) & MAFIA_VISIT_INTERRUPTED) //Roleblocked by a lawyer, or visited a warden. something that prevents you by visiting that person
+	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_VISIT,game,visitor) & MAFIA_VISIT_INTERRUPTED) //visited a warden. something that prevents you by visiting that person
 		to_chat(visitor,"<span class='danger'>Your [action] was interrupted!</span>")
 		return FALSE
 	return TRUE
 
 /**
-  * Tests kill immunities, if nothing prevents the kill, kills this role.
-  *
-  * Does not count as visiting, see visit proc.
-  */
+ * Tests kill immunities, if nothing prevents the kill, kills this role.
+ *
+ * Does not count as visiting, see visit proc.
+ */
 /datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch=FALSE)
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_KILL,game,attacker,lynch) & MAFIA_PREVENT_KILL)
 		return FALSE

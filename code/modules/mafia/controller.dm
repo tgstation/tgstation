@@ -814,13 +814,10 @@
 		. += L[key]
 
 /**
-  * Returns a semirandom setup, with...
-  * Town, Two invest roles, two protect roles, one killing role, and two supportive roles.
-  * Mafia, 2 normal mafia and one special role
-  * Neutral, two disruption roles, sometimes one is a killing.
-  *
-  * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
-  */
+ * Returns a semirandom setup with 12 roles. balance not guaranteed!
+ *
+ * please check the variables at the top of the proc to see how much of each role types it picks
+ */
 /datum/mafia_controller/proc/generate_random_setup()
 	var/invests_left = 2
 	var/protects_left = 2
