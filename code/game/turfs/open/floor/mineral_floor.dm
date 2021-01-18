@@ -17,11 +17,12 @@
 
 
 /turf/open/floor/mineral/Initialize()
-	if(!broken_states)
-		broken_states = list("[initial(icon_state)]_dam")
 	. = ..()
 	icons = typelist("icons", icons)
 
+/turf/open/floor/mineral/setup_broken_states()
+	if(!broken_states)
+		broken_states = list("[initial(icon_state)]_dam")
 
 /turf/open/floor/mineral/update_icon()
 	. = ..()
