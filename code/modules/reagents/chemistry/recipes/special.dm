@@ -93,12 +93,16 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			required_temp = rand(min_temp+50, max_temp) 
 			optimal_temp = rand(min_temp+25, required_temp-10) 
 			overheat_temp = rand(min_temp, optimal_temp-10)
+			if(overheat_temp >= 200) //Otherwise it can disappear when you're mixing and I don't want this to happen here
+				overheat_temp = 200
 			thermic_constant = (rand(-100, 0)/100)
 		else
 			required_temp = rand(min_temp, max_temp-50) 
 			optimal_temp = rand(required_temp+10, max_temp-25) 
 			overheat_temp = rand(optimal_temp, max_temp+50)
-			thermic_constant = (rand(0, 100)/100)// 0 - 1
+			if(overheat_temp <= 400)
+				overheat_temp = 400
+			thermic_constant = (rand(0, 200)/100)// 0 - 2
 	
 	if(randomize_req_pH)
 		optimal_pH_min = min_pH + rand(0, inoptimal_range_pH)
@@ -285,13 +289,13 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	dat += "</ul>Mix slowly<ul>"
 	if(recipe.required_container)
 		var/obj/item/I = recipe.required_container
-		dat += " in [initial(I.name)]"
+		dat += "<li> in a [initial(I.name)]</li>"
 	if(recipe.required_temp != 0)
 		if(recipe.is_cold_recipe)
-			dat += " <li>below [recipe.required_temp] degrees"
+			dat += " <li>cooling it below [recipe.required_temp] degrees"
 			dat += " but not below [recipe.overheat_temp] degrees</li>"
 		else
-			dat += " above [recipe.required_temp] degrees"
+			dat += " <li>heating it above [recipe.required_temp] degrees"
 			dat += " but not above [recipe.overheat_temp] degrees"
 		if(recipe.thermic_constant > 0)
 			dat += "<li> taking care of it's exothermic nature</li>"
