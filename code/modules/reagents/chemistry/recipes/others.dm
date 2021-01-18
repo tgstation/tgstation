@@ -516,6 +516,7 @@
 /datum/chemical_reaction/lye
 	results = list(/datum/reagent/lye = 3)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
+	required_temp = 10 //So hercuri still shows life.
 
 /datum/chemical_reaction/lye2
 	results = list(/datum/reagent/lye = 2)
