@@ -30,10 +30,8 @@
 /turf/open/floor/Initialize(mapload)
 	if (!broken_states)
 		setup_broken_states()
-	else
-		broken_states = string_list(broken_states)
-	if(burnt_states)
-		burnt_states = string_list(burnt_states)
+	if(!burnt_states)
+		setup_burnt_states()
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
@@ -46,6 +44,8 @@
 
 /turf/open/floor/proc/setup_broken_states()
 	broken_states = string_list(list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+
+/turf/open/floor/proc/setup_burnt_states()
 	return
 
 /turf/open/floor/Destroy()

@@ -17,10 +17,14 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	burnt_states = list("panelscorched")
-	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 
 	var/attachment_holes = TRUE
+
+/turf/open/floor/plating/setup_broken_states()
+	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
+
+/turf/open/floor/plating/setup_burnt_states()
+	burnt_states = list("panelscorched")
 
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()

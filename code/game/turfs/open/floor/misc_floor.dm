@@ -119,9 +119,13 @@
 	name = "high-traction floor"
 	icon_state = "noslip"
 	floor_tile = /obj/item/stack/tile/noslip
-	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
-	burnt_states = list("noslip-scorched1","noslip-scorched2")
 	slowdown = -0.3
+
+/turf/open/floor/noslip/setup_broken_states()
+	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
+
+/turf/open/floor/noslip/setup_burnt_states()
+	burnt_states = list("noslip-scorched1","noslip-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -177,6 +181,8 @@
 	heat_capacity = 900
 	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
+
+/turf/open/floor/plastic/setup_broken_states()
 	broken_states = list("plastic-damaged1","plastic-damaged2")
 
 /turf/open/floor/eighties
@@ -184,6 +190,8 @@
 	desc = "This one takes you back."
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
+
+/turf/open/floor/eighties/setup_broken_states()
 	broken_states = list("eighties_damaged")
 
 /turf/open/floor/plating/rust
