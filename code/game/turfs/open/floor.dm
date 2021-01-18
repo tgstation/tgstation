@@ -24,6 +24,7 @@
 	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops
 	var/forced_plating = FALSE
+	var/pop_tile = TRUE
 	var/list/broken_states
 	var/list/burnt_states
 

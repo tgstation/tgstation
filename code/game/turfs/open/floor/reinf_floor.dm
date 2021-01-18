@@ -12,6 +12,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	forced_plating = TRUE
+	pop_tile = FALSE
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
