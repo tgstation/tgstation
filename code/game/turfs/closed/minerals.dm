@@ -92,7 +92,7 @@
 		last_act = world.time
 		to_chat(user, "<span class='notice'>You start pulling out pieces of rock with your hands...</span>")
 
-		if(do_after(user, 60, target = src))
+		if(do_after(user, 15 SECONDS, target = src))
 			if(ismineralturf(src))
 				to_chat(user, "<span class='notice'>You finish pulling apart the rock.</span>")
 				gets_drilled(user, FALSE)

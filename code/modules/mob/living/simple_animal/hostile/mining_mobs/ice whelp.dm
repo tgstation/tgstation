@@ -13,7 +13,7 @@
 	speed = 12
 	move_to_delay = 12
 	ranged = TRUE
-	ranged_cooldown_time = 50
+	ranged_cooldown_time = 5 SECONDS
 	maxHealth = 300
 	health = 300
 	obj_damage = 40
