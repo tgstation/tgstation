@@ -937,7 +937,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape/brig)
 "ka" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/camera{
@@ -1847,7 +1847,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape/brig)
 "uX" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
@@ -2446,7 +2446,7 @@
 /area/shuttle/escape/monastery)
 "Ax" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape/brig)
 "Ay" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -3750,7 +3750,7 @@
 "OY" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape/brig)
 "Pb" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -4174,7 +4174,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape/brig)
 "SV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -4781,7 +4781,7 @@
 	req_one_access_txt = "63"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape/brig)
 "Zj" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
@@ -4800,7 +4800,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape/brig)
 "Zr" = (
 /obj/machinery/power/apc{
 	dir = 1;
