@@ -64,11 +64,13 @@
 	return ..()
 
 
-/obj/structure/table_frame/proc/make_new_table(table_type, custom_materials, _buildstack) //makes sure the new table made retains what we had as a frame
-	var/obj/structure/table/T = new table_type(loc, _buildstack)
+/obj/structure/table_frame/proc/make_new_table(table_type, custom_materials, carpet_type) //makes sure the new table made retains what we had as a frame
+	var/obj/structure/table/T = new table_type(loc)
 	T.frame = type
 	T.framestack = framestack
 	T.framestackamount = framestackamount
+	if (carpet_type)
+		T.buildstack = carpet_type
 	if(custom_materials)
 		T.set_custom_materials(custom_materials)
 	qdel(src)
@@ -97,17 +99,18 @@
 	if (istype(I, /obj/item/stack))
 		var/obj/item/stack/material = I
 		var/toConstruct // stores the table variant
+		var/carpet_type // stores the carpet type used for construction in case of poker tables
 		if(istype(I, /obj/item/stack/sheet/mineral/wood))
 			toConstruct = /obj/structure/table/wood
 		else if(istype(I, /obj/item/stack/tile/carpet))
 			toConstruct = /obj/structure/table/wood/poker
-
+			carpet_type = I.type
 		if (toConstruct)
 			if(material.get_amount() < 1)
 				to_chat(user, "<span class='warning'>You need one [material.name] sheet to do this!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
 			if(do_after(user, 20, target = src) && material.use(1))
-				make_new_table(toConstruct, null, type)
+				make_new_table(toConstruct, null, carpet_type)
 	else
 		return ..()

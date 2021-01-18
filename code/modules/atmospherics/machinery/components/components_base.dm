@@ -75,8 +75,8 @@
 /obj/machinery/atmospherics/components/nullifyNode(i)
 	if(parents[i])
 		nullifyPipenet(parents[i])
-		QDEL_NULL(airs[i])
-	..()
+	QDEL_NULL(airs[i])
+	return ..()
 
 /obj/machinery/atmospherics/components/on_construction()
 	..()
@@ -95,6 +95,18 @@
 	var/i = parents.Find(reference)
 	reference.other_airs -= airs[i]
 	reference.other_atmosmch -= src
+	/**
+	 *  We explicitly qdel pipeline when this particular pipeline
+	 *  is projected to have no member and cause GC problems.
+	 *  We have to do this because components don't qdel pipelines
+	 *  while pipes must and will happily wreck and rebuild everything
+	 *	again every time they are qdeleted.
+	 */
+	if(!length(reference.other_atmosmch) && !length(reference.members))
+		if(QDESTROYING(reference))
+			parents[i] = null
+			CRASH("nullifyPipenet() called on qdeleting [reference] indexed on parents\[[i]\]")
+		qdel(reference)
 	parents[i] = null
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
