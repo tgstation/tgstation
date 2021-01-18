@@ -419,6 +419,7 @@
 	results = list(/datum/reagent/cryostylane = 1)
 	required_reagents = list(/datum/reagent/cryostylane = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
+	thermic_constant = -1
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
