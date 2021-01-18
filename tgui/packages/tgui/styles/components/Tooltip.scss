@@ -6,6 +6,7 @@
 @use '../base.scss';
 @use '../functions.scss' as *;
 
+$color: #ffffff !default;
 $background-color: #000000 !default;
 $border-radius: base.$border-radius !default;
 
@@ -32,6 +33,7 @@ $border-radius: base.$border-radius !default;
     content: attr(data-tooltip);
     transition: all 150ms;
     background-color: $background-color;
+    color: $color;
     box-shadow: 0.1em 0.1em 1.25em -0.1em rgba(0, 0, 0, 0.5);
     border-radius: $border-radius;
   }

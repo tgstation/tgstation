@@ -21,7 +21,6 @@
 /obj/machinery/biogenerator/Initialize()
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
-	create_reagents(1000)
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
@@ -61,9 +60,6 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
-
-/obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
-	update_icon()
 
 /obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
@@ -192,13 +188,13 @@
 		update_icon()
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
-	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
 		return FALSE
-	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
+	if (materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency > points)
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
+			points -= materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		return TRUE
 
@@ -301,7 +297,7 @@
 			cat["items"] += list(list(
 				"id" = D.id,
 				"name" = D.name,
-				"cost" = D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency,
+				"cost" = D.materials[GET_MATERIAL_REF(/datum/material/biomass)]/efficiency,
 			))
 		data["categories"] += list(cat)
 

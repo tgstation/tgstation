@@ -1,7 +1,7 @@
 import { sortBy } from "common/collections";
 import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
+import { Blink, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from "../components";
 import { Window } from "../layouts";
 import { sanitizeText } from "../sanitize";
 
@@ -103,6 +103,40 @@ const MessageModal = (props, context) => {
         )}
       </Flex>
     </Modal>
+  );
+};
+
+const NoConnectionModal = () => {
+  return (
+    <Dimmer>
+      <Flex direction="column" textAlign="center" width="300px">
+        <Flex.Item>
+          <Icon
+            color="red"
+            name="wifi"
+            size={10}
+          />
+
+          <Blink>
+            <div
+              style={{
+                background: "#db2828",
+                bottom: "60%",
+                left: "25%",
+                height: "10px",
+                position: "relative",
+                transform: "rotate(45deg)",
+                width: "150px",
+              }}
+            />
+          </Blink>
+        </Flex.Item>
+
+        <Flex.Item fontSize="16px">
+          A connection to the station cannot be established.
+        </Flex.Item>
+      </Flex>
+    </Dimmer>
   );
 };
 
@@ -302,37 +336,36 @@ const PageMain = (props, context) => {
   return (
     <Box>
       <Section title="Emergency Shuttle">
-        {
-          shuttleCalled
-            ? <Button.Confirm
-              icon="space-shuttle"
-              content="Recall Emergency Shuttle"
-              color="bad"
-              disabled={!canRecallShuttles || !shuttleRecallable}
-              tooltip={(
-                canRecallShuttles && (
-                  !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
-                ) || (
-                  "You do not have permission to recall the emergency shuttle."
-                )
-              )}
-              tooltipPosition="bottom-right"
-              onClick={() => act("recallShuttle")}
-            />
-            : <Button
-              icon="space-shuttle"
-              content="Call Emergency Shuttle"
-              disabled={shuttleCanEvacOrFailReason !== 1}
-              tooltip={
-                shuttleCanEvacOrFailReason !== 1
-                  ? shuttleCanEvacOrFailReason
-                  : undefined
-              }
-              tooltipPosition="bottom-right"
-              onClick={() => setCallingShuttle(true)}
-            />
-        }
-
+        {shuttleCalled && (
+          <Button.Confirm
+            icon="space-shuttle"
+            content="Recall Emergency Shuttle"
+            color="bad"
+            disabled={!canRecallShuttles || !shuttleRecallable}
+            tooltip={(
+              canRecallShuttles && (
+                !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
+              ) || (
+                "You do not have permission to recall the emergency shuttle."
+              )
+            )}
+            tooltipPosition="bottom-right"
+            onClick={() => act("recallShuttle")}
+          />
+        ) || (
+          <Button
+            icon="space-shuttle"
+            content="Call Emergency Shuttle"
+            disabled={shuttleCanEvacOrFailReason !== 1}
+            tooltip={
+              shuttleCanEvacOrFailReason !== 1
+                ? shuttleCanEvacOrFailReason
+                : undefined
+            }
+            tooltipPosition="bottom-right"
+            onClick={() => setCallingShuttle(true)}
+          />
+        )}
         {!!shuttleCalledPreviously && (
           shuttleLastCalled && (
             <Box>
@@ -601,7 +634,7 @@ const PageMessages = (props, context) => {
               color={message.answered === answerIndex + 1 ? "good" : undefined}
               key={answerIndex}
               onClick={message.answered ? undefined : () => act("answerMessage", {
-                message: messageIndex + 1,
+                message: parseInt(messageIndex, 10) + 1,
                 answer: answerIndex + 1,
               })}
             />
@@ -648,6 +681,7 @@ export const CommunicationsConsole = (props, context) => {
     authorizeName,
     canLogOut,
     emagged,
+    hasConnection,
     page,
   } = data;
 
@@ -658,6 +692,8 @@ export const CommunicationsConsole = (props, context) => {
       theme={emagged ? "syndicate" : undefined}
       resizable>
       <Window.Content scrollable>
+        {!hasConnection && <NoConnectionModal />}
+
         {(canLogOut || !authenticated)
           ? (
             <Section title="Authentication">

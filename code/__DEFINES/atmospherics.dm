@@ -27,7 +27,7 @@
 /// -14C - Temperature used for kitchen cold room, medical freezer, etc.
 #define COLD_ROOM_TEMP			259.15
 
-///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
+///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity
 #define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005)
@@ -49,17 +49,25 @@
 
 
 //EXCITED GROUPS
+/**
+ * Some further context on breakdown. Unlike dismantle, the breakdown ticker doesn't reset itself when a tile is added
+ * This is because we cannot expect maps to have small spaces, so we need to even ourselves out often
+ * We do this to avoid equalizing a large space in one tick, with some significant amount of say heat diff
+ * This way large areas don't suddenly all become cold at once, it acts more like a wave
+ *
+ * Because of this and the behavior of share(), the breakdown cycles value can be tweaked directly to effect how fast we want gas to move
+ */
 /// number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
-#define EXCITED_GROUP_BREAKDOWN_CYCLES				4
+#define EXCITED_GROUP_BREAKDOWN_CYCLES				5
 /// number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
-#define EXCITED_GROUP_DISMANTLE_CYCLES				16
+#define EXCITED_GROUP_DISMANTLE_CYCLES				(EXCITED_GROUP_BREAKDOWN_CYCLES * 2) + 1 //Reset after 2 breakdowns
 /// Ratio of air that must move to/from a tile to reset group processing
 #define MINIMUM_AIR_RATIO_TO_SUSPEND				0.1
 /// Minimum ratio of air that must move to/from a tile
 #define MINIMUM_AIR_RATIO_TO_MOVE					0.001
-/// Minimum amount of air that has to move before a group processing can be suspended
+/// Minimum amount of air that has to move before a group processing can be suspended (Round about 10)
 #define MINIMUM_AIR_TO_SUSPEND						(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)
-/// Either this must be active
+/// Either this must be active (round about 0.1) //Might need to raise this a tad to better support space leaks. we'll see
 #define MINIMUM_MOLES_DELTA_TO_MOVE					(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE)
 /// or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)
@@ -67,8 +75,13 @@
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4
 /// Minimum temperature difference before the gas temperatures are just set to be equal
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5
-#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+10)
-#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+200)
+#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+80)
+#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+400)
+
+//Excited Group Cleanup helper defines
+#define EX_CLEANUP_BREAKDOWN 1
+#define EX_CLEANUP_DISMANTLE 2
+#define EX_CLEANUP_TURFS 3
 
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
@@ -157,6 +170,10 @@
 #define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 40)
 /// The body temperature limit the human body can take before it will take wound damage.
 #define BODYTEMP_HEAT_WOUND_LIMIT			(BODYTEMP_NORMAL + 90) // 400.5 k
+/// The modifier on cold damage limit hulks get ontop of their regular limit
+#define BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER 25
+/// The modifier on cold damage hulks get.
+#define HULK_COLD_DAMAGE_MOD 2
 
 /// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_HELM_MIN_TEMP_PROTECT			2.0
@@ -422,6 +439,8 @@
 #define INCINERATOR_ATMOS_AIRLOCK_CONTROLLER	"atmos_incinerator_airlock_controller"
 #define INCINERATOR_ATMOS_AIRLOCK_INTERIOR 		"atmos_incinerator_airlock_interior"
 #define INCINERATOR_ATMOS_AIRLOCK_EXTERIOR 		"atmos_incinerator_airlock_exterior"
+#define TEST_ROOM_ATMOS_MAINVENT_1				"atmos_test_room_mainvent_1"
+#define TEST_ROOM_ATMOS_MAINVENT_2				"atmos_test_room_mainvent_2"
 
 //Syndicate lavaland base incinerator (lavaland_surface_syndicate_base1.dmm)
 #define INCINERATOR_SYNDICATELAVA_IGNITER 				"syndicatelava_igniter"
@@ -486,11 +505,14 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
+#define NORMAL_TURF 1
+#define MAKE_ACTIVE 2
+#define KILL_EXCITED 3
 #ifdef TESTING
 GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
-#define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
+#define CALCULATE_ADJACENT_TURFS(T, state) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = state}
 #else
-#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
+#define CALCULATE_ADJACENT_TURFS(T, state) SSadjacent_air.queue[T] = state
 #endif
 
 //If you're doing spreading things related to atmos, DO NOT USE CANATMOSPASS, IT IS NOT CHEAP. use this instead, the info is cached after all. it's tweaked just a bit to allow for circular checks

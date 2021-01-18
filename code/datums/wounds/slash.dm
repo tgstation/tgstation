@@ -18,14 +18,12 @@
 	var/initial_flow
 	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed of the wound
 	var/minimum_flow
-	/// How fast our blood flow will naturally decrease per tick, not only do larger cuts bleed more faster, they clot slower
+	/// How much our blood_flow will naturally decrease per tick, not only do larger cuts bleed more blood faster, they clot slower (higher number = clot quicker, negative = opening up)
 	var/clot_rate
 
 	/// Once the blood flow drops below minimum_flow, we demote it to this type of wound. If there's none, we're all better
 	var/demotes_to
 
-	/// How much staunching per type (cautery, suturing, bandaging) you can have before that type is no longer effective for this cut NOT IMPLEMENTED
-	var/max_per_type
 	/// The maximum flow we've had so far
 	var/highest_flow
 
@@ -84,6 +82,14 @@
 
 	return bleed_amt
 
+/datum/wound/slash/get_bleed_rate_of_change()
+	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		return BLOOD_FLOW_INCREASING
+	if(limb.current_gauze || clot_rate > 0)
+		return BLOOD_FLOW_DECREASING
+	if(clot_rate < 0)
+		return BLOOD_FLOW_INCREASING
+
 /datum/wound/slash/handle_process()
 	if(victim.stat == DEAD)
 		blood_flow -= max(clot_rate, WOUND_SLASH_DEAD_CLOT_MIN)
@@ -96,8 +102,8 @@
 
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
-	if(victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
-		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		blood_flow += 0.5 // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
 		if(clot_rate > 0)
@@ -254,7 +260,6 @@
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 2
 	minimum_flow = 0.5
-	max_per_type = 3
 	clot_rate = 0.12
 	threshold_minimum = 20
 	threshold_penalty = 10
@@ -272,7 +277,6 @@
 	initial_flow = 3.25
 	minimum_flow = 2.75
 	clot_rate = 0.06
-	max_per_type = 4
 	threshold_minimum = 50
 	threshold_penalty = 25
 	demotes_to = /datum/wound/slash/moderate
@@ -290,7 +294,6 @@
 	initial_flow = 4.25
 	minimum_flow = 4
 	clot_rate = -0.05 // critical cuts actively get worse instead of better
-	max_per_type = 5
 	threshold_minimum = 80
 	threshold_penalty = 40
 	demotes_to = /datum/wound/slash/severe

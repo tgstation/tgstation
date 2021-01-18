@@ -18,6 +18,8 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_ENG
 
+	liver_traits = list(TRAIT_ENGINEER_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_STATION_ENGINEER
 	bounty_types = CIV_JOB_ENG
 
@@ -40,7 +42,7 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
 
-	skillchip_path = /obj/item/skillchip/job/engineer
+	skillchips = list(/obj/item/skillchip/job/engineer)
 
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"

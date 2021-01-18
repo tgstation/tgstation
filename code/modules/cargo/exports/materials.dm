@@ -16,10 +16,11 @@
 
 	var/obj/item/I = O
 	var/list/mat_comp = I.get_material_composition(BREAKDOWN_FLAGS_EXPORT)
-	if(isnull(mat_comp[SSmaterials.GetMaterialRef(material_id)]))
+	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : GET_MATERIAL_REF(material_id)
+	if(isnull(mat_comp[mat_ref]))
 		return 0
 
-	var/amount = mat_comp[SSmaterials.GetMaterialRef(material_id)]
+	var/amount = mat_comp[mat_ref]
 	if(istype(I, /obj/item/stack/ore))
 		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
@@ -111,6 +112,6 @@
 
 /datum/export/material/metal_hydrogen
 	cost = CARGO_CRATE_VALUE * 1.05
-	unit_name = "of metallic hydrogen"
+	message = "cm3 of metallic hydrogen"
 	material_id = /datum/material/metalhydrogen
 	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen

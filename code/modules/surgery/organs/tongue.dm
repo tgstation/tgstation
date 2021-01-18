@@ -8,6 +8,10 @@
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
 	var/say_mod = null
+
+	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
+	var/sense_of_taste = TRUE
+
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
@@ -41,12 +45,24 @@
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
+	/* This could be slightly simpler, by making the removal of the
+	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
+	* then you can distinguish between ageusia from no tongue, and
+	* ageusia from having a non-tasting tongue.
+	*/
+	REMOVE_TRAIT(M, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	if(!sense_of_taste)
+		ADD_TRAIT(M, TRAIT_AGEUSIA, ORGAN_TRAIT)
+
 /obj/item/organ/tongue/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 	UnregisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.RegisterSignal(M, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	REMOVE_TRAIT(M, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
+	ADD_TRAIT(M, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 /obj/item/organ/tongue/could_speak_language(language)
 	return is_type_in_typecache(language, languages_possible)
@@ -103,10 +119,14 @@
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
 	var/static/regex/fly_buzz = new("z+", "g")
 	var/static/regex/fly_buZZ = new("Z+", "g")
+	var/static/regex/fly_buss = new("s+", "g")
+	var/static/regex/fly_buSS = new("S+", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = fly_buzz.Replace(message, "zzz")
 		message = fly_buZZ.Replace(message, "ZZZ")
+		message = fly_buss.Replace(message, "z")
+		message = fly_buSS.Replace(message, "Z")
 	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/fly/Initialize(mapload)
@@ -118,7 +138,7 @@
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
-	taste_sensitivity = 101 // ayys cannot taste anything.
+	sense_of_taste = FALSE
 	modifies_speech = TRUE
 	var/mothership
 
@@ -216,7 +236,7 @@
 	say_mod = "rattles"
 	attack_verb_continuous = list("bites", "chatters", "chomps", "enamelles", "bones")
 	attack_verb_simple = list("bite", "chatter", "chomp", "enamel", "bone")
-	taste_sensitivity = 101 // skeletons cannot taste anything
+	sense_of_taste = FALSE
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -277,7 +297,9 @@
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
 /obj/item/organ/tongue/snail
-	name = "snailtongue"
+	name = "radula"
+	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
+	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/snail/handle_speech(datum/source, list/speech_args)
@@ -297,7 +319,7 @@
 	say_mod = "crackles"
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
-	taste_sensitivity = 101 // Not a tongue, they can't taste shit
+	sense_of_taste = FALSE
 	var/static/list/languages_possible_ethereal = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
