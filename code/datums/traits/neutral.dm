@@ -328,3 +328,7 @@
 	desc = "You feel your heart squeezing onto its last fibres of life."
 	value = 0
 	mob_trait = TRAIT_UNHOLY
+
+/datum/quirk/unholy/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.AddElement(/datum/element/unholy)

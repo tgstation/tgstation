@@ -177,8 +177,7 @@
 
 
 //Reshia
-//Reshia
-/obj/item/clothing/under/suit/reshia
+/obj/item/clothing/under/suit/reshia 
 	name = "Red Ribbon"
 	desc = "A red ribbon that uncomfortably constricts your neck."
 	icon = 'icons/obj/clothing/under/suits.dmi'

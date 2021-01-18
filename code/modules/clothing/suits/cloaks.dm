@@ -39,19 +39,22 @@
 	desc = "A stylish cape. It's crooked because you can't figure out how to wear it. Don't tell anyone."
 	icon_state = "prince"
 	resistance_flags = FIRE_PROOF
-/*
-In case I can manage to get this to work later. Figure out how to make it so it's when the WEARER moves.
+	var/handled = FALSE
 
-/obj/item/clothing/neck/cloak/prince/Move(mob/user, atom/newloc, direct)
-	for(var/mob/living/L in get_hearers_in_view(2, user))
-		if(HAS_TRAIT(L, TRAIT_UNHOLY))
-			L.adjustFireLoss(2, 0)
-			L.set_fire_stacks(min(5, L.fire_stacks + 3))
-			L.IgniteMob()
-			if(prob(25))
-				L.emote("cough")
-	. = ..()
-*/
+/obj/item/clothing/neck/cloak/prince/equipped(mob/user, slot)
+	if(slot != ITEM_SLOT_NECK)
+		return
+	if(iscarbon(user) && !handled)
+		handled = TRUE
+		ADD_TRAIT(user, TRAIT_HOLY, "cape")
+		to_chat(user, "<span class='notice'>The cape glows around your neck.</span.?>")
+		user.AddElement(/datum/element/holy_light)
+
+/obj/item/clothing/neck/cloak/prince/dropped(mob/user)
+	if(handled)
+		handled = FALSE
+		REMOVE_TRAIT(user, TRAIT_HOLY, "cape")
+		user.RemoveElement(/datum/element/holy_light)
 
 /obj/item/clothing/neck/cloak/rd
 	name = "research director's cloak"
