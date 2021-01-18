@@ -293,7 +293,7 @@
 	var/alive_mafia = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
 	var/list/total_victors = list() //if this list gets filled with anyone, they win. list because side antags can with with people
-	var/blocked_victory = FALSE //if a solo antagonist is stopping the town or mafia from finishing the game.
+	var/blocked_victory = FALSE //if a solo antagonist is stopping the town or mafia from finishing the game, or town has a killing role and it cannot auto resolve.
 
 	///PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
 
@@ -307,6 +307,8 @@
 				total_town += R
 				if(R.game_status == MAFIA_ALIVE)
 					anti_mafia_power += R.vote_potential
+				if(R.role_flags & ROLE_CAN_KILL) //the game cannot autoresolve with killing roles (unless a solo wins anyways, like traitors who are immune)
+					blocked_victory = TRUE
 			if(MAFIA_TEAM_SOLO)
 				if(R.game_status == MAFIA_ALIVE)
 					anti_mafia_power += R.vote_potential
@@ -336,7 +338,7 @@
 			award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
-	else if(alive_mafia >= anti_mafia_power)
+	else if(alive_mafia >= anti_mafia_power && )
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		for(var/datum/mafia_role/changeling in total_mafia)
 			award_role(changeling.winner_award, changeling)

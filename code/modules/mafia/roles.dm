@@ -701,7 +701,7 @@
 	RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/nightkill_immunity)
 	RegisterSignal(game,COMSIG_MAFIA_NIGHT_KILL_PHASE,.proc/try_to_kill)
 
-/datum/mafia_role/traitor/check_total_victory(alive_town, alive_mafia) //serial killers just want teams dead
+/datum/mafia_role/traitor/check_total_victory(alive_town, alive_mafia) //serial killers just want teams dead, they cannot be stopped by killing roles anyways
 	return alive_town + alive_mafia <= 1
 
 /datum/mafia_role/traitor/block_team_victory(alive_town, alive_mafia) //no team can win until they're dead
