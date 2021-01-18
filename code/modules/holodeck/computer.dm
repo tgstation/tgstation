@@ -378,12 +378,8 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	offline_program = "holodeck_offline"
-	holodeck_access = CUSTOM_HOLODECK_ONE
+	holodeck_access = HOLODECK_DEBUG | STATION_HOLODECK
 	mappedstartarea = /area/holodeck/rec_center/offstation_one
-
-/obj/machinery/computer/holodeck/offstation/LateInitialize()
-	holodeck_access |= STATION_HOLODECK
-	. = ..()
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD
