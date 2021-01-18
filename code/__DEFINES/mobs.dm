@@ -397,3 +397,25 @@
 #define SQUASHED_SHOULD_BE_DOWN (1<<0)
 ///Whether or not to gib when the squashed mob is moved over
 #define SQUASHED_SHOULD_BE_GIBBED (1<<0)
+
+/*
+ * Defines for "AI emotions", allowing the AI to expression emotions
+ * with status displays via emotes.
+ */
+
+#define AI_EMOTION_VERY_HAPPY "Very Happy"
+#define AI_EMOTION_HAPPY "Happy"
+#define AI_EMOTION_NEUTRAL "Neutral"
+#define AI_EMOTION_UNSURE "Unsure"
+#define AI_EMOTION_CONFUSED "Confused"
+#define AI_EMOTION_SAD "Sad"
+#define AI_EMOTION_BSOD "BSOD"
+#define AI_EMOTION_BLANK "Blank"
+#define AI_EMOTION_PROBLEMS "Problems?"
+#define AI_EMOTION_AWESOME "Awesome"
+#define AI_EMOTION_FACEPALM "Facepalm"
+#define AI_EMOTION_THINKING "Thinking"
+#define AI_EMOTION_FRIEND_COMPUTER "Friend Computer"
+#define AI_EMOTION_DORFY "Dorfy"
+#define AI_EMOTION_BLUE_GLOW "Blue Glow"
+#define AI_EMOTION_RED_GLOW "Red Glow"
