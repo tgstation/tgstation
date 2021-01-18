@@ -25,19 +25,19 @@
 	icon_state = "chapel"
 
 /turf/open/floor/holofloor/chapel/bottom_left
-	direction = 8
+	direction = WEST
 
 /turf/open/floor/holofloor/chapel/top_right
-	direction = 4
+	direction = EAST
 
 /turf/open/floor/holofloor/chapel/bottom_right
 
 /turf/open/floor/holofloor/chapel/top_left
-	direction = 1
+	direction = NORTH
 
 /turf/open/floor/holofloor/chapel/Initialize(mapload)
 	. = ..()
-	if (direction != 2)
+	if (direction != SOUTH)
 		src.setDir(direction)
 
 /turf/open/floor/holofloor/white
