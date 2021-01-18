@@ -414,7 +414,7 @@
 	name = "Lawyer"
 	desc = "You can choose a person during the day to provide extensive legal advice to during the night, preventing night actions."
 	revealed_outfit = /datum/outfit/mafia/lawyer
-	role_type = TOWN_PROTECT
+	role_type = TOWN_SUPPORT
 	hud_icon = "hudlawyer"
 	revealed_icon = "lawyer"
 	winner_award = /datum/award/achievement/mafia/lawyer
@@ -473,7 +473,8 @@
 /datum/mafia_role/hop
 	name = "Head of Personnel"
 	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
-	role_type = TOWN_MISC
+	role_type = TOWN_SUPPORT
+	role_flags = ROLE_UNIQUE
 	hud_icon = "hudheadofpersonnel"
 	revealed_icon = "headofpersonnel"
 	revealed_outfit = /datum/outfit/mafia/hop
@@ -496,8 +497,8 @@
 /datum/mafia_role/hos
 	name = "Head of Security"
 	desc = "You can decide to execute during the night, visiting someone killing, and revealing them. If they are innocent, you will die at the start of the next night."
-	role_type = TOWN_MISC
-	role_flags = ROLE_CAN_KILL
+	role_type = TOWN_KILLING
+	role_flags = ROLE_CAN_KILL | ROLE_UNIQUE
 	revealed_outfit = /datum/outfit/mafia/hos
 	revealed_icon = "headofsecurity"
 	hud_icon = "hudheadofsecurity"
@@ -532,7 +533,7 @@
 	if(!target.can_action(game, src, "execution")) //roleblocking a warden moment
 		return
 	if(!target.kill(game,src,FALSE))//protection
-		to_chat(body,"<span class='danger'>Your attempt at executing [target.body.real_name] was prevented!</span>")
+		to_chat(body,"<span class='danger'>Your attempt at executing [target.body.real_name] was prevented, or [target.body.real_name] is immune!</span>")
 	else
 		to_chat(target.body, "<span class='userdanger'>You have been executed by the Head of Security!</span>")
 		target.reveal_role(game, verbose = TRUE)
@@ -555,7 +556,7 @@
 	name = "Warden"
 	desc = "You can lockdown during the night once, killing any visitors. WARNING: This kills fellow town members, too!"
 
-	role_type = TOWN_MISC
+	role_type = TOWN_KILLING
 	role_flags = ROLE_CAN_KILL
 	revealed_outfit = /datum/outfit/mafia/warden
 	revealed_icon = "warden"

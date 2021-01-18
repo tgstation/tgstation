@@ -293,7 +293,8 @@
 	var/alive_mafia = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
 	var/list/total_victors = list() //if this list gets filled with anyone, they win. list because side antags can with with people
-	var/blocked_victory = FALSE //if a solo antagonist is stopping the town or mafia from finishing the game, or town has a killing role and it cannot auto resolve.
+	var/blocked_victory = FALSE //if a solo antagonist is stopping the town or mafia from finishing the game.
+	var/town_can_kill = FALSE //Town has a killing role and it cannot allow mafia to win
 
 	///PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
 
@@ -308,7 +309,7 @@
 				if(R.game_status == MAFIA_ALIVE)
 					anti_mafia_power += R.vote_potential
 				if(R.role_flags & ROLE_CAN_KILL) //the game cannot autoresolve with killing roles (unless a solo wins anyways, like traitors who are immune)
-					blocked_victory = TRUE
+					town_can_kill = TRUE
 			if(MAFIA_TEAM_SOLO)
 				if(R.game_status == MAFIA_ALIVE)
 					anti_mafia_power += R.vote_potential
@@ -338,7 +339,7 @@
 			award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
-	else if(alive_mafia >= anti_mafia_power && )
+	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		for(var/datum/mafia_role/changeling in total_mafia)
 			award_role(changeling.winner_award, changeling)
@@ -705,6 +706,7 @@
 					if(role_count > 0)
 						debug_setup[found_path] = role_count
 				custom_setup = debug_setup
+				try_autostart()//don't worry, this fails if there's a game in progress
 			if("cancel_setup")
 				custom_setup = list()
 	switch(action) //both living and dead
@@ -813,67 +815,61 @@
 
 /**
   * Returns a semirandom setup, with...
-  * Town, Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
+  * Town, Two invest roles, two protect roles, one killing role, and two supportive roles.
   * Mafia, 2 normal mafia and one special role
   * Neutral, two disruption roles, sometimes one is a killing.
   *
   * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
   */
 /datum/mafia_controller/proc/generate_random_setup()
-	var/invests_left = 3
-	var/protects_left = 1
-	var/miscs_left = 1 //actually 2, remove this when fullmerging
+	var/invests_left = 2
+	var/protects_left = 2
+	var/killings_left = 1
+	var/supports_left = 2
+
 	var/mafiareg_left = 2
 	var/mafiaspe_left = 1
-	var/killing_role = prob(50)
-	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
 
-	//FOR TESTMERGE: ABOVE IS 11, OVERFLOW FOR TESTMERGE SET TO JUST BE WARDEN
-
-	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + 1 + mafiareg_left + killing_role + disruptors)
+	var/neutral_killing_role = prob(50)
+	// 1-2 disruptors to equal up to 12, depending on if there was a killing role
 
 	var/list/random_setup = list()
+	var/list/unique_roles_added = list()
 	for(var/i in 1 to MAFIA_MAX_PLAYER_COUNT) //should match the number of roles to add
-		if(overflow_left)
-			//TEST FOR TESTMERGES
-			//add_setup_role(random_setup, TOWN_OVERFLOW)
-			//REMOVE THIS BEFORE FULLMERGE vvv
-			random_setup[/datum/mafia_role/warden] = 1
-			overflow_left--
-		else if(invests_left)
-			add_setup_role(random_setup, TOWN_INVEST)
+		if(invests_left)
+			add_setup_role(random_setup, unique_roles_added, TOWN_INVEST)
 			invests_left--
 		else if(protects_left)
-			add_setup_role(random_setup, TOWN_PROTECT)
+			add_setup_role(random_setup, unique_roles_added, TOWN_PROTECT)
 			protects_left--
-		else if(miscs_left)
-			//TEST FOR TESTMERGES
-			//add_setup_role(random_setup, TOWN_MISC)
-			//REMOVE THIS BEFORE FULLMERGE vvv
-			random_setup[/datum/mafia_role/hos] = 1
-			random_setup[/datum/mafia_role/hop] = 1
-			miscs_left--
+		else if(killings_left)
+			add_setup_role(random_setup, unique_roles_added, TOWN_KILLING)
+			killings_left--
+		else if(supports_left)
+			add_setup_role(random_setup, unique_roles_added, TOWN_SUPPORT)
+			supports_left--
 		else if(mafiareg_left)
-			add_setup_role(random_setup, MAFIA_REGULAR)
+			add_setup_role(random_setup, unique_roles_added, MAFIA_REGULAR)
 			mafiareg_left--
 		else if(mafiaspe_left)
-			add_setup_role(random_setup, MAFIA_SPECIAL)
+			add_setup_role(random_setup, unique_roles_added, MAFIA_SPECIAL)
 			mafiaspe_left--
-		else if(killing_role)
-			add_setup_role(random_setup, NEUTRAL_KILL)
-			killing_role--
+		else if(neutral_killing_role)
+			add_setup_role(random_setup, unique_roles_added, NEUTRAL_KILL)
+			neutral_killing_role--
 		else
-			add_setup_role(random_setup, NEUTRAL_DISRUPT)
+			add_setup_role(random_setup, unique_roles_added, NEUTRAL_DISRUPT)
+	debug = random_setup
 	return random_setup
 
 /**
- * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one
+ * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one. unique roles can only get added once.
  */
-/datum/mafia_controller/proc/add_setup_role(setup_list, wanted_role_type)
+/datum/mafia_controller/proc/add_setup_role(setup_list, banned_roles, wanted_role_type)
 	var/list/role_type_paths = list()
 	for(var/path in typesof(/datum/mafia_role))
 		var/datum/mafia_role/instance = path
-		if(initial(instance.role_type) == wanted_role_type)
+		if(initial(instance.role_type) == wanted_role_type && !(path in banned_roles))
 			role_type_paths += instance
 
 	var/mafia_path = pick(role_type_paths)
@@ -888,6 +884,8 @@
 		setup_list[found_role] += 1
 		return
 	setup_list[mafia_path] = 1
+	if(initial(mafia_path_type.role_flags) & ROLE_UNIQUE) //check to see if we should no longer consider this okay to add to the game
+		banned_roles += mafia_path
 
 /**
  * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.
