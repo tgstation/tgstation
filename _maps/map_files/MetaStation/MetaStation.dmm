@@ -71972,6 +71972,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"pWE" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "pWO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/purple{
@@ -77021,6 +77025,7 @@
 /area/science/mixing)
 "tMB" = (
 /obj/item/plant_analyzer,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "tMJ" = (
@@ -81093,6 +81098,7 @@
 /area/science/mixing)
 "xbk" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "xbP" = (
@@ -119163,7 +119169,7 @@ cJb
 wki
 dvY
 xDk
-ciL
+pWE
 aOt
 ciL
 yfw
