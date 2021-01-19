@@ -213,6 +213,11 @@
 						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
 						return
 					new_access = job.get_access()
+					for(var/logged_access in ACCESS_ALERT_ADMINS)
+						if(logged_access in new_access)
+							message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+							break
+					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")
 				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
 				target_id_card.access |= new_access
 				target_id_card.assignment = target
@@ -228,12 +233,19 @@
 					target_id_card.access -= access_type
 				else
 					target_id_card.access |= access_type
+					if(access_type in ACCESS_ALERT_ADMINS)
+						message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+					LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_access_desc(access_type)]")
 				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
 			if(!computer || !authenticated || minor)
 				return
 			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
+
+			message_admins("[ADMIN_LOOKUPFLW(user)] just added All Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added All Access")
+
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_denyall")
@@ -248,7 +260,17 @@
 			var/region = text2num(params["region"])
 			if(isnull(region))
 				return
-			target_id_card.access |= get_region_accesses(region)
+
+			var/list/region_accesses = get_region_accesses(region)
+			target_id_card.access |= region_accesses
+
+			for(var/logged_access in ACCESS_ALERT_ADMINS)
+				if(logged_access in region_accesses)
+					message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_region_accesses_name(region)] region access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+
+			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_region_accesses_name(region)] region access")
+
+
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_denyregion")

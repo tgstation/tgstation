@@ -2990,12 +2990,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"agE" = (
-/obj/structure/table,
-/obj/item/folder/red,
-/obj/item/pen,
-/turf/open/floor/plasteel,
-/area/security/main)
 "agF" = (
 /obj/structure/toilet/greyscale{
 	dir = 4
@@ -3227,17 +3221,6 @@
 /obj/effect/landmark/start/security_officer,
 /obj/structure/chair{
 	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/security/main)
-"ahh" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -43557,24 +43540,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
-"ckN" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/sofa/right{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/break_room)
 "ckO" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
@@ -49935,6 +49900,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"gop" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/inspector,
+/turf/open/floor/plasteel,
+/area/security/main)
 "goT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52272,6 +52249,20 @@
 /obj/machinery/meter/atmos/layer4,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"mhU" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/sign/departments/restroom{
+	pixel_y = -32
+	},
+/obj/machinery/light/small,
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/break_room)
 "miW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -52646,6 +52637,24 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
+"ncB" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/break_room)
 "ndD" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -55693,6 +55702,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"uZX" = (
+/obj/structure/table,
+/obj/item/folder/red,
+/obj/item/pen,
+/obj/item/inspector,
+/turf/open/floor/plasteel,
+/area/security/main)
 "vad" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -57014,9 +57030,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"ydz" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors)
 "ydA" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -57074,20 +57087,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
-"yfS" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/structure/sign/departments/restroom{
-	pixel_y = -32
-	},
-/obj/machinery/light/small,
-/obj/structure/chair/sofa/left{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/break_room)
 "yiW" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -65714,11 +65713,11 @@ boP
 boP
 boP
 boP
-asE
+boP
 asE
 xzN
 asE
-asE
+boP
 boP
 boP
 boP
@@ -65971,12 +65970,12 @@ boP
 boP
 boP
 boP
-asU
+boP
 bgl
 auP
 bgl
-asU
-asU
+boP
+boP
 boP
 boP
 boP
@@ -66233,7 +66232,7 @@ arB
 sHE
 asE
 aAC
-asU
+boP
 boP
 boP
 boP
@@ -67262,7 +67261,7 @@ aQH
 azz
 aAF
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -67519,7 +67518,7 @@ ayl
 ayl
 aAE
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -67776,7 +67775,7 @@ ayl
 ayl
 bgi
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -68033,7 +68032,7 @@ ayn
 azA
 bgh
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -69060,8 +69059,8 @@ awZ
 aQH
 azB
 awW
-asU
-ydz
+boP
+boP
 boP
 boP
 boP
@@ -69317,8 +69316,8 @@ bbb
 ayl
 beN
 arB
-asU
-ydz
+boP
+boP
 boP
 boP
 boP
@@ -69574,8 +69573,8 @@ aDD
 ayl
 beM
 aAC
-asU
-ydz
+boP
+boP
 boP
 boP
 boP
@@ -69831,8 +69830,8 @@ aIK
 ayl
 beM
 asE
-ydz
-ydz
+boP
+boP
 boP
 boP
 boP
@@ -90340,8 +90339,8 @@ adh
 adm
 afk
 afZ
-agE
-ahh
+uZX
+gop
 ahM
 aiv
 abp
@@ -98123,7 +98122,7 @@ bHb
 bIw
 slW
 bKT
-yfS
+mhU
 xXp
 gdg
 bNd
@@ -98380,7 +98379,7 @@ bHa
 xSj
 hGO
 lyl
-ckN
+ncB
 xXp
 lzt
 bNd
