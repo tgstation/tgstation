@@ -1,0 +1,619 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/railing{
+	color = "#4C3117";
+	dir = 9;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"ad" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	color = "#4C3117";
+	dir = 1;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"af" = (
+/turf/template_noop,
+/area/template_noop)
+"ah" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"ak" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/railing{
+	color = "#4C3117";
+	dir = 8;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"al" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"am" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/railing{
+	color = "#4C3117";
+	dir = 5;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"an" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	color = "#4C3117";
+	dir = 4;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"ao" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"au" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"av" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"ay" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aB" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/piratepad,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aF" = (
+/obj/machinery/computer/monitor/secret,
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"aG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/computer/piratepad_control{
+	dir = 8
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/melee/transforming/energy/sword/pirate{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/obj/item/melee/transforming/energy/sword/pirate{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/melee/transforming/energy/sword/pirate{
+	pixel_x = 13;
+	pixel_y = 6
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/closet/cabinet,
+/obj/item/storage/bag/money/vault,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 3;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 8;
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aQ" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	color = "#4C3117";
+	dir = 1;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"aV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/closet/cabinet,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"be" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/machinery/loot_locator,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"bk" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/gun/energy/laser{
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"bl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#4C3117";
+	dir = 4;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"bm" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/gun/energy/laser{
+	pixel_y = 3
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"bo" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate,
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"bt" = (
+/obj/machinery/computer/shuttle/pirate,
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"bu" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"bv" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/mob_spawn/human/pirate/skeleton/captain,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"bx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"by" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"ep" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"ey" = (
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"eA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#4C3117";
+	dir = 8;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"fW" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/item/storage/box/lethalshot,
+/obj/item/gun/ballistic/shotgun/automatic/combat{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"fY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/railing{
+	color = "#4C3117";
+	dir = 4;
+	name = "wooden railing"
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"gY" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"km" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"pV" = (
+/obj/effect/mob_spawn/human/pirate/skeleton/gunner,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"yi" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"zw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/backpack/duffelbag/syndie/x4{
+	pixel_y = 8
+	},
+/obj/item/grenade/smokebomb{
+	pixel_x = -5
+	},
+/obj/item/grenade/smokebomb{
+	pixel_x = 5
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"zO" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"Cv" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"Gk" = (
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"Oe" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+"OL" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/shuttle/pirate/flying_dutchman)
+"RY" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/orange,
+/area/shuttle/pirate/flying_dutchman)
+"WB" = (
+/obj/effect/mob_spawn/human/pirate/skeleton,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
+
+(1,1,1) = {"
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+OL
+OL
+OL
+OL
+OL
+af
+"}
+(2,1,1) = {"
+af
+af
+af
+af
+ac
+eA
+eA
+eA
+eA
+eA
+eA
+eA
+ak
+OL
+OL
+bk
+bm
+fW
+OL
+OL
+"}
+(3,1,1) = {"
+af
+af
+af
+ac
+aQ
+ey
+ey
+ey
+ey
+ey
+ey
+WB
+gY
+OL
+aK
+RY
+Gk
+ep
+aH
+OL
+"}
+(4,1,1) = {"
+af
+af
+ac
+aQ
+ao
+ay
+Oe
+ey
+ey
+ey
+ao
+ay
+zO
+OL
+zw
+Gk
+Gk
+bo
+gY
+OL
+"}
+(5,1,1) = {"
+ey
+ey
+ad
+ey
+gY
+OL
+bx
+ey
+ey
+ey
+gY
+OL
+ah
+OL
+aO
+Gk
+Gk
+bt
+bv
+OL
+"}
+(6,1,1) = {"
+af
+af
+am
+an
+au
+av
+yi
+pV
+ey
+ey
+au
+av
+Cv
+aB
+bx
+Gk
+Gk
+aF
+gY
+OL
+"}
+(7,1,1) = {"
+af
+af
+af
+am
+an
+ey
+ey
+ey
+ey
+ey
+ey
+ey
+gY
+OL
+aV
+km
+Gk
+bu
+by
+OL
+"}
+(8,1,1) = {"
+af
+af
+af
+af
+am
+bl
+bl
+bl
+ay
+bl
+bl
+bl
+fY
+OL
+OL
+be
+aD
+aG
+OL
+OL
+"}
+(9,1,1) = {"
+af
+af
+af
+af
+af
+af
+af
+af
+ah
+af
+af
+af
+af
+af
+OL
+OL
+OL
+OL
+OL
+af
+"}
+(10,1,1) = {"
+af
+af
+af
+af
+af
+af
+af
+af
+ah
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+"}
+(11,1,1) = {"
+af
+af
+af
+af
+af
+af
+af
+af
+al
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+"}

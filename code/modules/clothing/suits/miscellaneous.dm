@@ -54,11 +54,21 @@
 	allowed = list(/obj/item/melee/transforming/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/pirate/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
+
 /obj/item/clothing/suit/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
 	inhand_icon_state = "hgpirate"
+
+/obj/item/clothing/suit/pirate/captain/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
 
 
 /obj/item/clothing/suit/cyborg_suit

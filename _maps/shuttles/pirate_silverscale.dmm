@@ -1,0 +1,1070 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/tank/air,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"ae" = (
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"ag" = (
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
+/obj/machinery/computer/shuttle/pirate,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"ah" = (
+/obj/effect/turf_decal/siding/green{
+	dir = 1
+	},
+/obj/machinery/computer/monitor/secret,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"ak" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"al" = (
+/obj/effect/turf_decal/siding/green{
+	dir = 5
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"am" = (
+/obj/effect/turf_decal/siding/green,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"ao" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 6
+	},
+/obj/machinery/computer/piratepad_control{
+	dir = 8
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"ar" = (
+/obj/effect/turf_decal/siding/red,
+/obj/structure/table/wood/fancy/green,
+/obj/item/gun/energy/laser{
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"as" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 6
+	},
+/obj/structure/table/wood/fancy/orange,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"aw" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 9
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/storage/backpack/duffelbag/syndie/x4{
+	pixel_y = 8
+	},
+/obj/item/grenade/smokebomb{
+	pixel_x = -5
+	},
+/obj/item/grenade/smokebomb{
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"ax" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/storage/box/lethalshot,
+/obj/item/gun/ballistic/shotgun/automatic/combat{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"ay" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"az" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"aB" = (
+/obj/effect/turf_decal/siding/green{
+	dir = 6
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"aC" = (
+/obj/effect/turf_decal/siding/green{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"aH" = (
+/obj/structure/shuttle/engine/propulsion/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"aN" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/reagent_dispensers/watertank,
+/turf/template_noop,
+/area/shuttle/pirate)
+"aO" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/template_noop,
+/area/shuttle/pirate)
+"aU" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = -32
+	},
+/obj/structure/mirror{
+	pixel_y = -28
+	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/obj/effect/mob_spawn/human/pirate/silverscale,
+/turf/open/floor/wood,
+/area/shuttle/pirate)
+"aW" = (
+/obj/effect/turf_decal/siding/green{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"bf" = (
+/obj/effect/turf_decal/siding/green,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"bk" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing,
+/turf/template_noop,
+/area/shuttle/pirate)
+"br" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"bv" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 5
+	},
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"bF" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 10
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/gun/energy/laser{
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"bH" = (
+/obj/effect/turf_decal/siding/red,
+/obj/structure/table/wood/fancy/orange,
+/obj/item/melee/transforming/energy/sword/pirate{
+	pixel_x = 13;
+	pixel_y = 6
+	},
+/obj/item/melee/transforming/energy/sword/pirate{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/melee/transforming/energy/sword/pirate{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"bI" = (
+/obj/machinery/suit_storage_unit/pirate,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"bK" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 6
+	},
+/obj/structure/table/reinforced,
+/obj/item/defibrillator/loaded,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"bX" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/shuttle/pirate)
+"cR" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Treasure Hunting Wing"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"ek" = (
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"ep" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"ey" = (
+/turf/template_noop,
+/area/template_noop)
+"eA" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 9
+	},
+/obj/machinery/space_heater,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"eE" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"fe" = (
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/effect/turf_decal/stripes/end,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"it" = (
+/obj/effect/turf_decal/siding/brown,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"iT" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/pirate)
+"jG" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 10
+	},
+/obj/structure/curtain,
+/obj/machinery/shower{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/pirate)
+"jX" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"kf" = (
+/obj/effect/turf_decal/siding/yellow,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"km" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"lb" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"mD" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"oe" = (
+/obj/effect/turf_decal/siding/brown/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"ox" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/door/window,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"qE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"sh" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 4
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"tQ" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"uq" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"vP" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medical Wing"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"vZ" = (
+/obj/machinery/door/airlock/gold{
+	name = "Cockpit"
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"wA" = (
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/item/retractor{
+	pixel_x = 4
+	},
+/obj/item/hemostat{
+	pixel_x = -4
+	},
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/obj/structure/table/reinforced,
+/obj/item/surgicaldrill,
+/obj/item/cautery,
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"wP" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
+/obj/structure/sign/warning{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"wW" = (
+/obj/effect/turf_decal/siding/brown,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"xt" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"ya" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/machinery/door/airlock/diamond/glass,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"yi" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"Aj" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Ce" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"Dr" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 5
+	},
+/obj/machinery/piratepad,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"Et" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"FV" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"FX" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/yellow{
+	dir = 6
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"Gq" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"GI" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"Hy" = (
+/obj/structure/statue/silver/janitor,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"JT" = (
+/turf/closed/wall/mineral/silver,
+/area/shuttle/pirate)
+"Kf" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"La" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Wing"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Ld" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Lk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Lt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/obj/machinery/door/airlock/diamond/glass,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"LA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"Mu" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	aidisabled = 1;
+	name = "Royal Shuttle APC";
+	pixel_x = -23
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"MN" = (
+/obj/machinery/loot_locator,
+/obj/effect/turf_decal/siding/brown{
+	dir = 8
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"NB" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/yellow{
+	dir = 5
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"NV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"Oe" = (
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+"OL" = (
+/obj/effect/turf_decal/siding/red,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"Pb" = (
+/obj/machinery/door/airlock/hatch,
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"PW" = (
+/obj/effect/turf_decal/siding/red{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"Qd" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 10
+	},
+/obj/structure/closet/crate,
+/obj/item/storage/bag/money/vault,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 3;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 8;
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"Qj" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Wing"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Ro" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"Rt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/yellow/end{
+	dir = 4
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"RE" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/supply/visible,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"RY" = (
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Tm" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 5
+	},
+/obj/effect/mob_spawn/human/pirate/silverscale/captain,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"TK" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"TN" = (
+/obj/effect/turf_decal/siding/yellow/end{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/box/lights/bulbs,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 4
+	},
+/obj/item/multitool,
+/obj/item/flashlight{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 10
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"Ur" = (
+/obj/effect/turf_decal/siding/blue,
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"UV" = (
+/obj/effect/turf_decal/siding/yellow{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"VP" = (
+/obj/effect/turf_decal/siding/blue,
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/structure/window/reinforced/spawner{
+	dir = 8
+	},
+/turf/open/floor/mineral/silver,
+/area/shuttle/pirate)
+"YG" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 32
+	},
+/obj/structure/mirror{
+	pixel_y = -28
+	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 1
+	},
+/obj/effect/mob_spawn/human/pirate/silverscale/gunner,
+/turf/open/floor/wood,
+/area/shuttle/pirate)
+"ZC" = (
+/obj/effect/turf_decal/siding/brown{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/mineral/gold,
+/area/shuttle/pirate)
+
+(1,1,1) = {"
+ey
+ey
+ey
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+ey
+ey
+ey
+"}
+(2,1,1) = {"
+ey
+JT
+JT
+JT
+eA
+aa
+JT
+aw
+ak
+bF
+JT
+Ld
+JT
+JT
+JT
+ey
+"}
+(3,1,1) = {"
+ey
+br
+TN
+Mu
+Et
+kf
+JT
+ax
+Oe
+ar
+JT
+RY
+br
+ep
+aH
+ey
+"}
+(4,1,1) = {"
+ey
+br
+FV
+RE
+NB
+FX
+La
+ay
+uq
+OL
+Pb
+km
+br
+ep
+aH
+ey
+"}
+(5,1,1) = {"
+ey
+br
+Rt
+wP
+UV
+fe
+JT
+az
+NV
+bH
+JT
+Aj
+br
+ep
+aH
+ey
+"}
+(6,1,1) = {"
+ey
+JT
+br
+JT
+Qj
+JT
+JT
+PW
+yi
+as
+JT
+JT
+JT
+JT
+JT
+ey
+"}
+(7,1,1) = {"
+ey
+Gq
+ey
+JT
+aC
+aW
+JT
+cR
+JT
+JT
+JT
+JT
+aN
+bk
+ey
+ey
+"}
+(8,1,1) = {"
+ey
+Kf
+iT
+br
+ae
+bf
+JT
+Ce
+JT
+bI
+aU
+JT
+bX
+bk
+ey
+ey
+"}
+(9,1,1) = {"
+ey
+Hy
+ek
+br
+ag
+am
+vZ
+NV
+xt
+Oe
+Oe
+xt
+bX
+bX
+ey
+ey
+"}
+(10,1,1) = {"
+ey
+Kf
+iT
+br
+ah
+bf
+JT
+Ce
+JT
+bI
+YG
+JT
+bX
+bk
+ey
+ey
+"}
+(11,1,1) = {"
+ey
+Gq
+ey
+JT
+al
+aB
+JT
+vP
+JT
+JT
+JT
+JT
+aO
+bk
+ey
+ey
+"}
+(12,1,1) = {"
+ey
+JT
+br
+JT
+Lt
+JT
+JT
+lb
+ox
+jG
+JT
+JT
+JT
+JT
+JT
+ey
+"}
+(13,1,1) = {"
+ey
+br
+TK
+MN
+tQ
+Qd
+JT
+GI
+NV
+VP
+JT
+qE
+br
+ep
+aH
+ey
+"}
+(14,1,1) = {"
+ey
+br
+ZC
+LA
+LA
+it
+ya
+eE
+jX
+Ro
+Pb
+Lk
+br
+ep
+aH
+ey
+"}
+(15,1,1) = {"
+ey
+br
+Tm
+sh
+oe
+wW
+JT
+mD
+Oe
+Ur
+JT
+RY
+br
+ep
+aH
+ey
+"}
+(16,1,1) = {"
+ey
+JT
+JT
+JT
+Dr
+ao
+JT
+bv
+wA
+bK
+JT
+Ld
+JT
+JT
+JT
+ey
+"}
+(17,1,1) = {"
+ey
+ey
+ey
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+JT
+ey
+ey
+ey
+"}

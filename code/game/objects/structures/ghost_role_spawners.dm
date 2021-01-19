@@ -566,6 +566,8 @@
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
+///Pirates
+
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"
 	desc = "A cryo sleeper smelling faintly of rum."
@@ -573,7 +575,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/skeleton
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE
@@ -583,7 +584,7 @@
 	short_desc = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
 	assignedrole = "Space Pirate"
-	var/rank = "Mate"
+	var/rank = "Deserter"
 
 /obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
@@ -599,11 +600,53 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/pirate/captain
-	rank = "Captain"
-	outfit = /datum/outfit/pirate/space/captain
+	rank = "Renegade Leader"
+	outfit = /datum/outfit/pirate/captain
 
 /obj/effect/mob_spawn/human/pirate/gunner
+	rank = "Rogue"
+
+/obj/effect/mob_spawn/human/pirate/skeleton
+	name = "pirate remains"
+	desc = "Some unanimated bones. They feel like they could spring to life any moment!"
+	random = TRUE
+	density = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	mob_name = "a space pirate"
+	mob_species = /datum/species/skeleton
+	outfit = /datum/outfit/pirate
+	rank = "Mate"
+
+/obj/effect/mob_spawn/human/pirate/skeleton/generate_pirate_name()
+	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
+	var/endings = strings(PIRATE_NAMES_FILE, "endings")
+	return "[rank] [pick(beggings)][pick(endings)]"
+
+/obj/effect/mob_spawn/human/pirate/skeleton/captain
+	rank = "Captain"
+	outfit = /datum/outfit/pirate/captain
+
+/obj/effect/mob_spawn/human/pirate/skeleton/gunner
 	rank = "Gunner"
+
+/obj/effect/mob_spawn/human/pirate/silverscale
+	name = "lizard statue"
+	desc = "On closer inspection, it appears to be a dormant creature."
+	random = TRUE
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	mob_name = "a space pirate"
+	mob_species = /datum/species/lizard/silverscale
+	outfit = /datum/outfit/pirate/space
+	rank = "Peer"
+
+/obj/effect/mob_spawn/human/pirate/silverscale/captain
+	rank = "Noble"
+	outfit = /datum/outfit/pirate/space/captain
+
+/obj/effect/mob_spawn/human/pirate/silverscale/gunner
+	rank = "Grandee"
 
 //Forgotten syndicate ship
 

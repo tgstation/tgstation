@@ -111,3 +111,23 @@ Lizard subspecies: ASHWALKERS
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/lizard/ash
+
+/*
+Lizard subspecies: SILVER SCALED
+*/
+/datum/species/lizard/silverscale
+	name = "Silver Scale"
+	id = "silverlizard"
+	limbs_id = "lizard"
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
+	species_language_holder = /datum/language_holder/lizard/silver
+
+/datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+	C.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff30", "size" = 2))
+
+/datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/C)
+	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+	C.remove_filter("silver_glint")
+	..()

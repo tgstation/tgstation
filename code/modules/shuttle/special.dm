@@ -405,3 +405,29 @@
 
 /obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.
+
+// flying dutchman cannons.
+/obj/machinery/power/emitter/energycannon/cannon
+	name = "cannon"
+	desc = "It's just the entry model. With a bit more booty, you could have gotten the cannon used by that most fearsome scoundrel Renee Rottingham himself."
+	projectile_type = /obj/projectile/bullet/cannonball
+	icon = 'icons/obj/machines/magic_emitter.dmi'
+	icon_state = "wabbajack_statue"
+	icon_state_on = "wabbajack_statue_on"
+	projectile_sound = 'sound/effects/meteorimpact.ogg'
+	active = FALSE
+	allow_switch_interact = FALSE
+	var/loaded = FALSE
+
+/obj/projectile/bullet/cannonball
+	name ="cannonball"
+	icon_state= "bolter"
+	damage = 50
+	embedding = null
+	shrapnel_type = null
+	ricochets_max = 0 //it's a cannonball!
+
+/obj/projectile/bullet/cannonball/on_hit(atom/target, blocked = FALSE)
+	..()
+	explosion(target, -1, 0, 2)
+	return BULLET_ACT_HIT
