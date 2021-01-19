@@ -1177,6 +1177,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Nanite Lab"
 	icon_state = "nanite"
 
+/area/science/scichem
+	name = "SciChem"
+	icon_state = "scichem"
+
 //Storage
 /area/storage
 	sound_environment = SOUND_AREA_STANDARD_STATION

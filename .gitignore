@@ -234,3 +234,6 @@ tools/LinuxOneShot/TGS_Logs
 
 # Common build tooling
 !/tools/build
+_maps/map_files/IceBoxStation/IcemoonUnderground_Below.old.dmm
+_maps/map_files/IceBoxStation/IcemoonUnderground_Above.old.dmm
+_maps/map_files/IceBoxStation/IceBoxStation.old.dmm
