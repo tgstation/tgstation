@@ -631,14 +631,14 @@
 	rank = "Gunner"
 
 /obj/effect/mob_spawn/human/pirate/silverscale
-	name = "lizard statue"
-	desc = "On closer inspection, it appears to be a dormant creature."
+	name = "elegant sleeper"
+	desc = "Cozy. You get the feeling you aren't supposed to be here, though..."
 	random = TRUE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
 	mob_species = /datum/species/lizard/silverscale
-	outfit = /datum/outfit/pirate/space
+	outfit = /datum/outfit/pirate/silverscale
 	rank = "Peer"
 
 /obj/effect/mob_spawn/human/pirate/silverscale/captain

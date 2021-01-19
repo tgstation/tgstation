@@ -92,6 +92,54 @@
 		message = lizard_eckS.Replace(message, "ECKS$1")
 	speech_args[SPEECH_MESSAGE] = message
 
+/obj/item/organ/tongue/lizard/silver
+	name = "silver tongue"
+	desc = "A genetic branch of the high society Silver Scales that gives them their silverizing properties. To them, it is everything, and society traitors have their tongue forcibly revoked. Oddly enough, it itself is just blue."
+	icon_state = "silvertongue"
+	actions_types = list(/datum/action/item_action/organ_action/statue)
+
+/datum/action/item_action/organ_action/statue
+	name = "Become Statue"
+	desc = "Become an elegant silver statue. It's durability and yours are directly tied together, so make sure you're careful."
+	var/ability_cooldown = 0
+	var/obj/structure/statue/custom/statue
+
+/datum/action/item_action/organ_action/statue/New(Target)
+	. = ..()
+	statue = new(null)
+
+/datum/action/item_action/organ_action/statue/Trigger()
+	. = ..()
+	if(!iscarbon(owner))
+		to_chat(owner, "<span class='warning'>Your body rejects the powers of the tongue!</span>")
+		return
+	var/mob/living/carbon/becoming_statue = owner
+	if(ability_cooldown >= world.time)
+		to_chat(becoming_statue, "<span class='warning'>You just used the ability, wait a little bit!</span>")
+		return
+	var/is_statue = becoming_statue.loc == statue
+	to_chat(becoming_statue, "<span class='notice'>You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!</span>")
+	if(!do_after(becoming_statue, 5 SECONDS, target = statue))
+		to_chat(becoming_statue, "<span class='warning'>Your transformation is interrupted!</span>")
+		ability_cooldown = world.time + 3 SECONDS
+		return
+	ability_cooldown = world.time + 10 SECONDS
+
+	if(statue.name == initial(statue.name)) //statue has not been set up
+		statue.name = "statue of [becoming_statue.real_name]"
+		statue.desc = "statue depicting [becoming_statue.real_name]"
+		statue.set_custom_materials(list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT*5))
+
+	if(is_statue)
+		statue.visible_message("<span class='danger'>[statue] becomes animated!</span>")
+		becoming_statue.forceMove(get_turf(statue))
+		statue.moveToNullspace()
+	else
+		becoming_statue.visible_message("<span class='notice'>[becoming_statue] hardens into a silver statue.</span>", "<span class='notice'>You have become a silver statue!</span>")
+		statue.set_visuals(becoming_statue.appearance)
+		statue.forceMove(get_turf(becoming_statue))
+		becoming_statue.forceMove(statue)
+
 /obj/item/organ/tongue/fly
 	name = "proboscis"
 	desc = "A freakish looking meat tube that apparently can take in liquids."

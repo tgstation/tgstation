@@ -131,7 +131,7 @@
 	head = /obj/item/clothing/head/pirate/armored
 
 /datum/outfit/pirate/space
-	name = "EVA Space Pirate"
+	name = "Space Pirate (EVA)"
 	suit = /obj/item/clothing/suit/space/pirate
 	head = /obj/item/clothing/head/helmet/space/pirate/bandana
 	mask = /obj/item/clothing/mask/breath
@@ -140,8 +140,27 @@
 	id = /obj/item/card/id
 
 /datum/outfit/pirate/space/captain
-	name = "EVA Space Pirate Captain"
+	name = "Space Pirate Captain (EVA)"
 	head = /obj/item/clothing/head/helmet/space/pirate
+
+/datum/outfit/pirate/silverscale
+	name = "Silver Scale Member"
+
+	head = /obj/item/clothing/head/collectable/tophat
+	glasses = /obj/item/clothing/glasses/monocle
+	uniform = /obj/item/clothing/under/suit/charcoal
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	gloves = /obj/item/clothing/gloves/color/black
+
+	id = /obj/item/card/id/silver
+
+/datum/outfit/pirate/silverscale/post_equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/card/id/W = H.wear_id
+	if(W)
+		W.assignment = "Silver Scale Member"
+		W.update_label()
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/H)
 	H.faction |= "pirate"
