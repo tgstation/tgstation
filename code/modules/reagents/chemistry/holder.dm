@@ -836,7 +836,7 @@
 					qdel(equilibrium)
 				else
 					//Adding is done in new()
-					equilibrium.reaction.on_reaction(holder, multiplier)
+					equilibrium.reaction.on_reaction(src, equilibrium.multiplier)
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
