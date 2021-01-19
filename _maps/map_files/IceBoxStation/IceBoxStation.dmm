@@ -36222,18 +36222,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
-"bID" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rnd";
-	name = "research lab shutters"
-	},
-/obj/machinery/autolathe,
-/obj/machinery/door/window/southleft{
-	name = "Research and Development Desk";
-	req_one_access_txt = "7"
-	},
-/turf/open/floor/plating,
-/area/science/lab)
 "bIE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -37951,12 +37939,12 @@
 /area/science/misc_lab)
 "bOw" = (
 /obj/structure/table,
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
@@ -40448,9 +40436,13 @@
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "bXh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/drone_dispenser,
-/obj/effect/mob_spawn/drone,
+/obj/structure/table,
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bXk" = (
@@ -51320,13 +51312,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "jHW" = (
-/obj/structure/table,
-/obj/item/stack/sheet/glass/fifty{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/mineral/plasma,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -104341,7 +104327,7 @@ bbF
 aYV
 bck
 aYV
-bID
+bgb
 bhC
 biW
 biW
