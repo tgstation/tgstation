@@ -109,25 +109,32 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()
-	if(!on || !nodes[1])
+	if(is_operational)
+		if(!on || !nodes[1])
+			return
+		var/datum/gas_mixture/air_contents = airs[1]
+
+		var/air_heat_capacity = air_contents.heat_capacity()
+		var/combined_heat_capacity = heat_capacity + air_heat_capacity
+		var/old_temperature = air_contents.temperature
+
+		if(combined_heat_capacity > 0)
+			var/combined_energy = heat_capacity * target_temperature + air_heat_capacity * air_contents.temperature
+			air_contents.temperature = combined_energy/combined_heat_capacity
+
+		var/temperature_delta= abs(old_temperature - air_contents.temperature)
+		if(temperature_delta > 1)
+			active_power_usage = (heat_capacity * temperature_delta) / 10 + idle_power_usage
+			update_parents()
+		else
+			active_power_usage = idle_power_usage
+		return 1
+	else if(!is_operational)
+		on = FALSE
+		active_power_usage = 0
+		idle_power_usage = 0
 		return
-	var/datum/gas_mixture/air_contents = airs[1]
-
-	var/air_heat_capacity = air_contents.heat_capacity()
-	var/combined_heat_capacity = heat_capacity + air_heat_capacity
-	var/old_temperature = air_contents.temperature
-
-	if(combined_heat_capacity > 0)
-		var/combined_energy = heat_capacity * target_temperature + air_heat_capacity * air_contents.temperature
-		air_contents.temperature = combined_energy/combined_heat_capacity
-
-	var/temperature_delta= abs(old_temperature - air_contents.temperature)
-	if(temperature_delta > 1)
-		active_power_usage = (heat_capacity * temperature_delta) / 10 + idle_power_usage
-		update_parents()
-	else
-		active_power_usage = idle_power_usage
-	return 1
+	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(!on)
