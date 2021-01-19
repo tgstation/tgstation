@@ -1509,7 +1509,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("sacrifices", "transmutes", "graspes", "curses")
 	attack_verb_simple = list("sacrifice", "transmute", "grasp", "curse")
-	var/book_state = FALSE	//helps determine the icon state of this item when it's used on self
+	/// Helps determine the icon state of this item when it's used on self.
+	var/book_state = FALSE
 
 /obj/item/toy/eldrich_book/attack_self(mob/user)
 	book_state = !book_state
