@@ -754,68 +754,68 @@
 
 	. = 0
 	var/list/possible_reactions = list()
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
-			if(!reaction)
+	for(var/_reagent in cached_reagents)
+		var/datum/reagent/reagent = _reagent
+		for(var/_reaction in cached_reactions[reagent.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			if(!_reaction)
 				continue
 
-			var/datum/chemical_reaction/C = reaction
-			var/list/cached_required_reagents = C.required_reagents
+			var/datum/chemical_reaction/reaction = _reaction
+			var/list/cached_required_reagents = reaction.required_reagents
 			var/total_required_reagents = cached_required_reagents.len
 			var/total_matching_reagents = 0
-			var/list/cached_required_catalysts = C.required_catalysts
+			var/list/cached_required_catalysts = reaction.required_catalysts
 			var/total_required_catalysts = cached_required_catalysts.len
 			var/total_matching_catalysts= 0
 			var/matching_container = FALSE
 			var/matching_other = FALSE
-			var/required_temp = C.required_temp
-			var/is_cold_recipe = C.is_cold_recipe
+			var/required_temp = reaction.required_temp
+			var/is_cold_recipe = reaction.is_cold_recipe
 			var/meets_temp_requirement = FALSE
 			var/granularity = 1
-			if(!(C.reaction_flags & REACTION_INSTANT))
+			if(!(reaction.reaction_flags & REACTION_INSTANT))
 				granularity = 0.01
 
-			for(var/B in cached_required_reagents)
-				if(!has_reagent(B, (cached_required_reagents[B]*granularity)))
+			for(var/req_reagent in cached_required_reagents)
+				if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent]*granularity)))
 					break
 				total_matching_reagents++
-			for(var/B in cached_required_catalysts)
-				if(!has_reagent(B, (cached_required_catalysts[B]*granularity)))
+			for(var/_catalyst in cached_required_catalysts)
+				if(!has_reagent(_catalyst, (cached_required_catalysts[_catalyst]*granularity)))
 					break
 				total_matching_catalysts++
 			if(cached_my_atom)
-				if(!C.required_container)
+				if(!reaction.required_container)
 					matching_container = TRUE
 				else
-					if(cached_my_atom.type == C.required_container)
+					if(cached_my_atom.type == reaction.required_container)
 						matching_container = TRUE
-				if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+				if (isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					matching_container = FALSE
-				if(!C.required_other)
+				if(!reaction.required_other)
 					matching_other = TRUE
 
 				else if(istype(cached_my_atom, /obj/item/slime_extract))
-					var/obj/item/slime_extract/M = cached_my_atom
+					var/obj/item/slime_extract/extract = cached_my_atom
 
-					if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
+					if(extract.Uses > 0) // added a limit to slime cores -- Muskets requested this
 						matching_other = TRUE
 			else
-				if(!C.required_container)
+				if(!reaction.required_container)
 					matching_container = TRUE
-				if(!C.required_other)
+				if(!reaction.required_other)
 					matching_other = TRUE
 
 			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 				meets_temp_requirement = TRUE
 
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
-				possible_reactions  += C
+				possible_reactions  += reaction
 
 	update_previous_reagent_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
-	for(var/pr in possible_reactions)
-		var/datum/chemical_reaction/selected_reaction = pr
+	for(var/_possible_reaction in possible_reactions)
+		var/datum/chemical_reaction/selected_reaction = _possible_reaction
 		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
@@ -823,20 +823,20 @@
 			continue
 		else
 			var/exists = FALSE
-			for(var/e in reaction_list)
-				var/datum/equilibrium/E_exist = e
+			for(var/_equilibrium in reaction_list)
+				var/datum/equilibrium/E_exist = _equilibrium
 				if(E_exist.reaction.type == selected_reaction.type) //Don't add duplicates
 					exists = TRUE
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
 				is_reacting = TRUE//Prevent any on_reaction() procs from infinite looping
-				var/datum/equilibrium/E = new (selected_reaction, src) //Otherwise we add them to the processing list.
-				if(E.to_delete)//failed startup checks
-					qdel(E)
+				var/datum/equilibrium/equilibrium = new (selected_reaction, src) //Otherwise we add them to the processing list.
+				if(equilibrium.to_delete)//failed startup checks
+					qdel(equilibrium)
 				else
-					LAZYADD(reaction_list, E)
-					E.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO E.NEW()
+					LAZYADD(reaction_list, equilibrium)
+					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
 		is_reacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
@@ -863,17 +863,17 @@
 	var/list/mix_message = list()
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
-	for(var/e in reaction_list)
-		var/datum/equilibrium/E = e
+	for(var/_equilibrium in reaction_list)
+		var/datum/equilibrium/equilibrium = _equilibrium
 		//if it's been flagged to delete
-		if(E.to_delete)
-			var/temp_mix_message = end_reaction(E)
+		if(equilibrium.to_delete)
+			var/temp_mix_message = end_reaction(equilibrium)
 			if(!text_in_list(temp_mix_message, mix_message))
 				mix_message += temp_mix_message
 			continue
-		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[E.reaction.type] total reaction steps")
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
 		//otherwise continue reacting
-		E.react_timestep(delta_time)
+		equilibrium.react_timestep(delta_time)
 	
 	if(length(mix_message)) //This is only at the end
 		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
@@ -891,15 +891,15 @@
 * Returns:
 * * mix_message - the associated mix message of a reaction
 */
-/datum/reagents/proc/end_reaction(datum/equilibrium/E)
-	if(E.holder != src)
-		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[E.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[E.holder.my_atom.type]")
-		LAZYREMOVE(reaction_list, E)
-	E.reaction.reaction_finish(src, E.reacted_vol)
-	var/reaction_message = E.reaction.mix_message
-	if(E.reaction.mix_sound)
-		playsound(get_turf(my_atom), E.reaction.mix_sound, 80, TRUE)
-	qdel(E)	
+/datum/reagents/proc/end_reaction(datum/equilibrium/equilibrium)
+	if(equilibrium.holder != src)
+		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
+		LAZYREMOVE(reaction_list, equilibrium)
+	equilibrium.reaction.reaction_finish(src, equilibrium.reacted_vol)
+	var/reaction_message = equilibrium.reaction.mix_message
+	if(equilibrium.reaction.mix_sound)
+		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
+	qdel(equilibrium)	
 	//LAZYREMOVE(reaction_list, E) //You might think this is unneeded, but it just doesn't work without this.
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
@@ -914,9 +914,9 @@
 	STOP_PROCESSING(SSprocessing, src)
 	is_reacting = FALSE
 	//Cap off values
-	for(var/r in reagent_list)
-		var/datum/reagent/R = r
-		R.volume = round(R.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
+	for(var/_reagent in reagent_list)
+		var/datum/reagent/reagent = _reagent
+		reagent.volume = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	if(!QDELING(src))
@@ -930,9 +930,9 @@
 */
 /datum/reagents/proc/force_stop_reacting()
 	var/list/mix_message = list()
-	for(var/e in reaction_list)
-		var/datum/equilibrium/E = e
-		mix_message += end_reaction(E)
+	for(var/_equilibrium in reaction_list)
+		var/datum/equilibrium/equilibrium = _equilibrium
+		mix_message += end_reaction(equilibrium)
 	if(length(mix_message))
 		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 	finish_reacting()
@@ -970,8 +970,8 @@
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 /datum/reagents/proc/has_changed_state()
 	var/total_matching_reagents = 0
-	for(var/R in previous_reagent_list)
-		if(has_reagent(R))
+	for(var/reagent in previous_reagent_list)
+		if(has_reagent(reagent))
 			total_matching_reagents++
 	if(total_matching_reagents != reagent_list.len)
 		return TRUE
@@ -979,9 +979,9 @@
 
 /datum/reagents/proc/update_previous_reagent_list()
 	LAZYNULL(previous_reagent_list)
-	for(var/r in reagent_list)
-		var/datum/reagent/R = r
-		LAZYADD(previous_reagent_list, R.type)
+	for(var/_reagent in reagent_list)
+		var/datum/reagent/reagent = _reagent
+		LAZYADD(previous_reagent_list, reagent.type)
 
 ///Old reaction mechanics, edited to work on one only
 ///This is changed from the old - purity of the reagents will affect yield
@@ -990,23 +990,23 @@
 	var/list/cached_results = selected_reaction.results
 	var/datum/cached_my_atom = my_atom
 	var/multiplier = INFINITY
-	for(var/B in cached_required_reagents)
-		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
+	for(var/reagent in cached_required_reagents)
+		multiplier = min(multiplier, round(get_reagent_amount(reagent) / cached_required_reagents[reagent]))
 
 	if(multiplier == 0)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
 		return FALSE
 	var/sum_purity = 0
-	for(var/B in cached_required_reagents)
-		var/datum/reagent/R = has_reagent(B)
-		sum_purity += R.purity
-		remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+	for(var/_reagent in cached_required_reagents)
+		var/datum/reagent/reagent = has_reagent(_reagent)
+		sum_purity += reagent.purity
+		remove_reagent(_reagent, (multiplier * cached_required_reagents[_reagent]), safety = 1)
 	sum_purity /= cached_required_reagents.len
 
-	for(var/P in selected_reaction.results)
+	for(var/product in selected_reaction.results)
 		multiplier = max(multiplier, 1) //this shouldn't happen ...
-		var/yield = (cached_results[P]*multiplier)*sum_purity
-		SSblackbox.record_feedback("tally", "chemical_reaction", yield, P)
-		add_reagent(P, yield, null, chem_temp, sum_purity)
+		var/yield = (cached_results[product]*multiplier)*sum_purity
+		SSblackbox.record_feedback("tally", "chemical_reaction", yield, product)
+		add_reagent(product, yield, null, chem_temp, sum_purity)
 
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)
@@ -1034,8 +1034,8 @@
 		return FALSE
 	var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
 	//select the reaction with the most extreme temperature requirements
-	for(var/V in possible_reactions)
-		var/datum/chemical_reaction/competitor = V
+	for(var/_reaction in possible_reactions)
+		var/datum/chemical_reaction/competitor = _reaction
 		if(selected_reaction.is_cold_recipe)
 			if(competitor.required_temp <= selected_reaction.required_temp)
 				selected_reaction = competitor
@@ -1051,10 +1051,10 @@
 * * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
 * * added_purity - the purity of the added volume
 */
-/datum/reagents/proc/process_mob_reagent_purity(reagent, added_volume, added_purity)
-	var/datum/reagent/R = has_reagent(reagent)
+/datum/reagents/proc/process_mob_reagent_purity(_reagent, added_volume, added_purity)
+	var/datum/reagent/R = has_reagent(_reagent)
 	if(!R)
-		stack_trace("Tried to process reagent purity for [reagent], but 0 volume was found right after it was added!")
+		stack_trace("Tried to process reagent purity for [_reagent], but 0 volume was found right after it was added!")
 		return
 	if (R.purity == 1)
 		return
