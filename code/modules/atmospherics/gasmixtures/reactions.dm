@@ -167,7 +167,7 @@ nobiliumsuppression = INFINITY
 
 	else
 		burned_fuel = cached_gases[/datum/gas/tritium][MOLES]
-		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel * TRITIUM_BURN_RADIOACTIVITY_FACTOR
+		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel / TRITIUM_BURN_RADIOACTIVITY_FACTOR
 		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
 
 	if(burned_fuel)
@@ -349,7 +349,7 @@ nobiliumsuppression = INFINITY
 		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel
 	else
 		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES]
-		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel * HYDROGEN_BURN_H2_FACTOR
+		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel / HYDROGEN_BURN_H2_FACTOR
 		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
 
 	if(burned_fuel)
