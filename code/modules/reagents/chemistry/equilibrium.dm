@@ -45,6 +45,7 @@
 		holder.instant_react(reaction) //Even if this check fails, there's a backup - look inside of calculate_yield()
 		to_delete = TRUE
 		return
+	LAZYADD(holder.reaction_list, src)
 	reaction.on_reaction(holder, multiplier)
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 	

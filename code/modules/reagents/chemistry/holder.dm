@@ -528,7 +528,7 @@
 
 	//pass over previous ongoing reactions before handle_reactions is called
 	transfer_reactions(R)
-	
+
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
@@ -537,7 +537,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity, added_ph = T.ph)
+		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity, added_ph = T.ph, no_react = TRUE)
 
 	src.update_total()
 	R.update_total()
@@ -835,7 +835,7 @@
 				if(equilibrium.to_delete)//failed startup checks
 					qdel(equilibrium)
 				else
-					LAZYADD(reaction_list, equilibrium)
+					//Adding is done in new()
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
