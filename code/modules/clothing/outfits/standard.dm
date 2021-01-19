@@ -155,12 +155,21 @@
 
 	id = /obj/item/card/id/silver
 
+	var/scale_assignment = "Silver Scale Member"
+
 /datum/outfit/pirate/silverscale/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
-		W.assignment = "Silver Scale Member"
+		W.assignment = scale_assignment
 		W.update_label()
+
+/datum/outfit/pirate/silverscale/captain
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	l_pocket = /obj/item/lighter
+	head = /obj/item/clothing/head/crown
+
+	scale_assignment = "Silver Scale VIP"
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/H)
 	H.faction |= "pirate"

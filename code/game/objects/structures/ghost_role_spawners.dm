@@ -618,11 +618,6 @@
 	outfit = /datum/outfit/pirate
 	rank = "Mate"
 
-/obj/effect/mob_spawn/human/pirate/skeleton/generate_pirate_name()
-	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
-	var/endings = strings(PIRATE_NAMES_FILE, "endings")
-	return "[rank] [pick(beggings)][pick(endings)]"
-
 /obj/effect/mob_spawn/human/pirate/skeleton/captain
 	rank = "Captain"
 	outfit = /datum/outfit/pirate/captain
@@ -639,11 +634,20 @@
 	mob_name = "a space pirate"
 	mob_species = /datum/species/lizard/silverscale
 	outfit = /datum/outfit/pirate/silverscale
-	rank = "Peer"
+	rank = "High-born"
+
+/obj/effect/mob_spawn/human/pirate/silverscale/generate_pirate_name()
+	var/first_name
+	if(gender == MALE)
+		first_name = pick(GLOB.lizard_names_male)
+	else
+		first_name = pick(GLOB.lizard_names_female)
+
+	return "[rank] [first_name]-Silverscale"
 
 /obj/effect/mob_spawn/human/pirate/silverscale/captain
 	rank = "Noble"
-	outfit = /datum/outfit/pirate/space/captain
+	outfit = /datum/outfit/pirate/silverscale/captain
 
 /obj/effect/mob_spawn/human/pirate/silverscale/gunner
 	rank = "Grandee"
