@@ -163,9 +163,6 @@
 	name = "\proper a meteor with engines strapped to it"
 	luminosity = NONE
 
-/area/shuttle/escape/monastery
-	name = "A magnificent corporate monastery."
-
 /area/shuttle/transport
 	name = "Transport Shuttle"
 

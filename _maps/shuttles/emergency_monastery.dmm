@@ -7,41 +7,41 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "af" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ap" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ar" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "as" = (
 /obj/structure/window/reinforced,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "aF" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "aH" = (
 /obj/structure/grille/broken,
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "aN" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -49,7 +49,7 @@
 	layer = 2.9
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "aO" = (
 /obj/structure/sign/plaques/kiddie{
 	desc = "It reads: PRIVATE EXHIBIT -  Please inquire with library staff for guided tours.";
@@ -63,18 +63,18 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "aR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "aT" = (
 /obj/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "aW" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -82,7 +82,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bb" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -92,7 +92,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bc" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -101,12 +101,12 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bd" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "be" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -115,7 +115,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bf" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -132,7 +132,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bl" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -140,7 +140,7 @@
 	layer = 2.9
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bn" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -152,14 +152,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bq" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bu" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_y = -32
@@ -170,14 +170,14 @@
 	},
 /obj/item/pestle,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bv" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bx" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/structure/window/reinforced{
@@ -185,7 +185,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "by" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/painting/library_private{
@@ -193,7 +193,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bC" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -208,7 +208,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bJ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -222,12 +222,12 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bK" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/watermelon/holy,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "bT" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -235,7 +235,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "cu" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -244,15 +244,15 @@
 	},
 /obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "cx" = (
 /obj/machinery/vending/games,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "cC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "cL" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
@@ -277,7 +277,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "cP" = (
 /obj/item/radio/intercom{
 	pixel_x = 27
@@ -297,7 +297,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "cY" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Transit";
@@ -306,7 +306,7 @@
 	},
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "cZ" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -314,7 +314,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dl" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/neutral{
@@ -332,13 +332,13 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/closed/wall,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "do" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -353,14 +353,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dp" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dq" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel"
@@ -377,16 +377,16 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "du" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dF" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/power/terminal,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dG" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel"
@@ -402,7 +402,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dJ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -413,13 +413,13 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dR" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -437,7 +437,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dX" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -446,7 +446,7 @@
 	dir = 1
 	},
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "dY" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
@@ -457,7 +457,7 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ed" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -472,7 +472,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eg" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Dock Port";
@@ -480,7 +480,7 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "en" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -496,7 +496,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eu" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -507,17 +507,17 @@
 	pixel_y = -22
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eA" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eM" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -525,10 +525,10 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eQ" = (
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eR" = (
 /obj/structure/sign/painting/library_private{
 	pixel_x = 32
@@ -538,7 +538,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eU" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -556,7 +556,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "eW" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -568,7 +568,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fi" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Dock Staboard";
@@ -576,34 +576,34 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fm" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fn" = (
 /obj/effect/spawner/xmastree,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fq" = (
 /obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fv" = (
 /obj/structure/bookcase/random/religion,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fx" = (
 /obj/structure/flora/ausbushes,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fz" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -619,14 +619,14 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fA" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -645,7 +645,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fL" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -653,7 +653,7 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "fT" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
@@ -663,20 +663,20 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/camera,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "gb" = (
 /obj/item/paper{
 	text = "Lord, today let our dreams runneth on prayer. Amen."
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "gl" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "gL" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -691,17 +691,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "gW" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "hq" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "hC" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/structure/window/reinforced{
@@ -709,19 +709,19 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "hI" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "Air Out"
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "hN" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "hV" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -732,7 +732,7 @@
 	layer = 2.9
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "hZ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -741,36 +741,36 @@
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ib" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "io" = (
 /obj/structure/lattice,
 /turf/closed/mineral,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "it" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iv" = (
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iw" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iB" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/photocopier,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iE" = (
 /obj/item/storage/crayons{
 	pixel_x = 4;
@@ -782,14 +782,14 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iI" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iJ" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -798,7 +798,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iK" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
@@ -808,27 +808,27 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iM" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iS" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iT" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iV" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Cloister Port";
@@ -839,7 +839,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "iW" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -853,7 +853,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jd" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -863,7 +863,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jf" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
@@ -872,16 +872,16 @@
 	dir = 5
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jn" = (
 /obj/machinery/door/poddoor/massdriver_chapel,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
@@ -890,7 +890,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jt" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -901,10 +901,10 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jx" = (
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jG" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -914,23 +914,23 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jS" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jU" = (
 /obj/item/shovel/spade,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "jW" = (
 /obj/structure/window/reinforced,
 /obj/structure/chair/wood{
@@ -947,13 +947,13 @@
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kh" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ki" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -963,20 +963,20 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kn" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ko" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -996,17 +996,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kt" = (
 /obj/structure/table/wood,
 /obj/item/instrument/saxophone,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kv" = (
 /obj/structure/sign/warning/vacuum/external,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kw" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1016,7 +1016,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kI" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -1026,27 +1026,27 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kJ" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kM" = (
 /obj/structure/table/wood/fancy,
 /obj/item/folder,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kN" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "kV" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1058,64 +1058,64 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/super_station_crash,
+/obj/effect/station_crash/devastating,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "lc" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "lj" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "lB" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "lE" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "lP" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/box/bodybags,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "lX" = (
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "me" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mh" = (
 /obj/effect/spawner/lootdrop/gross_decal_spawner,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mm" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mn" = (
 /obj/structure/chair/wood,
 /obj/item/radio/intercom/chapel{
 	pixel_x = -27
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1123,25 +1123,25 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "my" = (
 /obj/structure/toilet{
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mH" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mK" = (
 /obj/machinery/camera{
 	c_tag = "Chapel Office Tunnel";
@@ -1157,7 +1157,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mP" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel"
@@ -1170,7 +1170,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "mQ" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/light/small{
@@ -1178,7 +1178,7 @@
 	},
 /obj/item/seeds/watermelon/holy,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/cable,
@@ -1186,11 +1186,11 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nf" = (
 /obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nl" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -1199,10 +1199,10 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nr" = (
 /turf/closed/wall,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nt" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Crematorium"
@@ -1210,12 +1210,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nK" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nO" = (
 /obj/machinery/door/window/eastleft{
 	dir = 1;
@@ -1223,33 +1223,33 @@
 	req_one_access_txt = "22"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "nQ" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oa" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ob" = (
 /obj/machinery/skill_station,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "od" = (
 /obj/machinery/vending/wardrobe/curator_wardrobe,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "om" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
 	},
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ov" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -1260,14 +1260,14 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1287,7 +1287,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oH" = (
 /obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
@@ -1297,13 +1297,13 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oI" = (
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1324,7 +1324,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oS" = (
 /obj/structure/chair/wood{
 	dir = 1
@@ -1333,13 +1333,13 @@
 	pixel_x = 29
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oT" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oV" = (
 /obj/structure/table/wood,
 /obj/item/food/breadslice/plain,
@@ -1350,13 +1350,13 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "oZ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pa" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1378,7 +1378,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pr" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -1388,13 +1388,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pv" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pw" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/structure/cable,
@@ -1402,11 +1402,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pA" = (
 /obj/structure/flora/ausbushes/leafybush,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -1415,23 +1415,23 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pD" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pO" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "pS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qi" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -1441,18 +1441,18 @@
 	},
 /obj/item/pen,
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qj" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qm" = (
 /obj/item/flashlight/lantern{
 	icon_state = "lantern-on"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qp" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Monastery Cemetary"
@@ -1464,7 +1464,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qr" = (
 /obj/item/radio/intercom{
 	pixel_y = 26
@@ -1490,18 +1490,18 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qx" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qA" = (
 /obj/structure/window/reinforced,
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qJ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1512,11 +1512,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qT" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "qU" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1526,14 +1526,14 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "rb" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "rk" = (
 /obj/structure/chair/wood,
 /obj/machinery/firealarm{
@@ -1541,19 +1541,19 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ru" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Access"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "rw" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "rF" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1566,7 +1566,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "rV" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1586,7 +1586,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "rW" = (
 /obj/structure/filingcabinet,
 /obj/effect/turf_decal/tile/neutral{
@@ -1600,37 +1600,37 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "rX" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sa" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sf" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sg" = (
 /obj/structure/table/wood,
 /obj/item/stack/package_wrap,
 /obj/item/coin/gold,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sk" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1650,7 +1650,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -1660,7 +1660,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sq" = (
 /obj/effect/landmark/start/chaplain,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -1670,7 +1670,7 @@
 	dir = 10
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sz" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1681,7 +1681,7 @@
 	},
 /obj/structure/chair/wood,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sC" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/newscaster{
@@ -1698,7 +1698,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sD" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/sign/painting/library_secure{
@@ -1709,13 +1709,13 @@
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "sT" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1728,12 +1728,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "td" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "th" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Monastery Transit"
@@ -1755,7 +1755,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "tm" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/box/matches{
@@ -1764,17 +1764,17 @@
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "tz" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/fancy/candle_box,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "tT" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "tV" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -1799,40 +1799,40 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ua" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ub" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/bookmanagement,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "uc" = (
 /obj/structure/bookcase/random/religion,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "un" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "uu" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ux" = (
 /obj/machinery/light/small,
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "uC" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -1841,7 +1841,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "uO" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -1851,17 +1851,17 @@
 "uX" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "va" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vj" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -1874,14 +1874,14 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vk" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vE" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Access"
@@ -1889,7 +1889,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vF" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1908,7 +1908,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vJ" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel"
@@ -1916,7 +1916,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vO" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Access"
@@ -1924,20 +1924,20 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vR" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vU" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vW" = (
 /obj/machinery/camera{
 	c_tag = "Chapel Office";
@@ -1945,7 +1945,7 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "vY" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
@@ -1958,7 +1958,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wh" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1974,7 +1974,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wl" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1992,12 +1992,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wp" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wq" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -2014,11 +2014,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wx" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2034,7 +2034,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wz" = (
 /obj/machinery/mass_driver/chapelgun,
 /obj/machinery/door/window/eastleft{
@@ -2043,11 +2043,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wG" = (
 /obj/structure/chair,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wM" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -2073,7 +2073,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "wS" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Secondary Dock";
@@ -2081,7 +2081,7 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xd" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -2093,11 +2093,11 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xm" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -2109,7 +2109,7 @@
 	},
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel/showroomfloor,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xs" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -2128,13 +2128,13 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xt" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xv" = (
 /obj/structure/table/wood,
 /obj/item/kirbyplants{
@@ -2152,11 +2152,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xB" = (
 /obj/machinery/vending/wardrobe/chap_wardrobe,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2178,7 +2178,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "xZ" = (
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet{
@@ -2186,31 +2186,31 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yc" = (
 /turf/closed/wall/mineral/iron,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yh" = (
 /obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yl" = (
 /obj/structure/sign/painting/library{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yo" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yr" = (
 /obj/structure/closet,
 /obj/machinery/light/small,
@@ -2218,13 +2218,13 @@
 /obj/item/storage/book/bible,
 /obj/item/storage/book/bible,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yA" = (
 /obj/machinery/door/morgue{
 	name = "Private Exhibit";
@@ -2237,24 +2237,24 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yC" = (
 /obj/structure/flora/ausbushes,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yE" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yO" = (
 /obj/structure/closet{
 	name = "beekeeping wardrobe"
@@ -2269,7 +2269,7 @@
 /obj/item/melee/flyswatter,
 /obj/item/melee/flyswatter,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yP" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -2282,25 +2282,25 @@
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yS" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "yZ" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zb" = (
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zh" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/stack/sheet/glass/fifty{
@@ -2314,7 +2314,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zj" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -2331,7 +2331,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zm" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2350,7 +2350,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zp" = (
 /obj/item/storage/bag/plants,
 /obj/structure/extinguisher_cabinet{
@@ -2359,7 +2359,7 @@
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/plants/portaseeder,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zr" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -2368,23 +2368,23 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zw" = (
 /obj/machinery/door/airlock/external{
 	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zB" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zF" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small{
@@ -2392,12 +2392,12 @@
 	},
 /obj/item/storage/crayons,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zP" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/mug/tea,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zQ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -2405,19 +2405,19 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zU" = (
 /obj/structure/dresser,
 /obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "zX" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ab" = (
 /obj/structure/closet{
 	name = "beekeeping supplies"
@@ -2429,21 +2429,21 @@
 /obj/item/honey_frame,
 /obj/item/honey_frame,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ac" = (
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Am" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "An" = (
 /obj/structure/table/wood,
 /obj/item/trash/plate,
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ax" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -2456,16 +2456,16 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "AF" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/harebell,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "AM" = (
 /obj/structure/flora/tree/jungle/small,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "AW" = (
 /obj/item/clothing/under/misc/burial,
 /obj/item/clothing/under/misc/burial,
@@ -2473,7 +2473,7 @@
 /obj/item/clothing/under/misc/burial,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ba" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2487,21 +2487,21 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Bh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Bp" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/beebox,
 /obj/item/queen_bee/bought,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "BA" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
@@ -2510,7 +2510,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "BC" = (
 /obj/structure/table/wood/fancy,
 /obj/structure/sign/painting/library_secure{
@@ -2525,7 +2525,7 @@
 	},
 /obj/machinery/light/dim,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "BQ" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cell1";
@@ -2538,7 +2538,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "BR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 1
@@ -2547,7 +2547,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "BX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -2556,12 +2556,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Cg" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Cn" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/reagent_containers/glass/bucket,
@@ -2569,33 +2569,33 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "CA" = (
 /obj/item/hatchet,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "CJ" = (
 /obj/structure/bookcase/random/adult,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "CM" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "CN" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "CR" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/storage/fancy/candle_box,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Dc" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -2608,13 +2608,13 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/cable,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Dk" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Dn" = (
 /obj/item/paint/paint_remover{
 	pixel_y = 8
@@ -2625,7 +2625,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Dr" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Kitchen";
@@ -2633,22 +2633,22 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ds" = (
 /obj/machinery/holopad,
 /obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/chapel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Dv" = (
 /obj/item/storage/book/bible,
 /obj/structure/cable,
 /obj/structure/altar_of_gods,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "DE" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "DG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -2658,7 +2658,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "DM" = (
 /obj/machinery/door/airlock{
 	name = "Dining Room"
@@ -2670,40 +2670,40 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "DS" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "DV" = (
 /obj/structure/bed,
 /obj/item/bedsheet/green,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "DW" = (
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "DY" = (
 /obj/structure/cable,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Eb" = (
 /obj/structure/water_source/puddle,
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "En" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Eo" = (
 /obj/machinery/door/airlock{
 	name = "Garden"
@@ -2719,7 +2719,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ep" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Art Storage";
@@ -2731,7 +2731,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Eu" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Library"
@@ -2740,7 +2740,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ew" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -2752,24 +2752,24 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ex" = (
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "EL" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/carrot,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "EN" = (
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ET" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "EU" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/wheat,
@@ -2777,20 +2777,20 @@
 	dir = 8
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Fa" = (
 /obj/structure/table/wood,
 /obj/item/disk/nuclear/fake,
 /obj/item/barcodescanner,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ff" = (
 /obj/structure/flora/ausbushes/genericbush,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Fh" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
@@ -2804,7 +2804,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Fm" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/holywater{
@@ -2812,12 +2812,12 @@
 	pixel_y = 2
 	},
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Fp" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Fx" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -2829,7 +2829,7 @@
 	layer = 3.1
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "FA" = (
 /obj/machinery/button/crematorium{
 	id = "foo";
@@ -2839,12 +2839,12 @@
 	id = "foo"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "FK" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "FO" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Office"
@@ -2860,20 +2860,20 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "FY" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Gb" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Gk" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/harebell,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Gu" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -2881,15 +2881,15 @@
 /obj/structure/easel,
 /obj/item/canvas/twentythree_nineteen,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Gv" = (
 /obj/structure/chair/wood,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Gy" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "GB" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/cable,
@@ -2900,22 +2900,22 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "GN" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "GU" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Hc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Hf" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cell2";
@@ -2928,10 +2928,10 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ho" = (
 /turf/closed/mineral,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Hw" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
@@ -2945,40 +2945,40 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "HD" = (
 /turf/open/floor/plasteel/chapel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "HL" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/poppy,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "HO" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "HS" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ig" = (
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ih" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Il" = (
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Iv" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen"
@@ -2990,7 +2990,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Iw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -2999,7 +2999,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "IA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3013,11 +3013,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "IK" = (
 /obj/structure/destructible/cult/tome,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "IL" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -3031,19 +3031,19 @@
 	pixel_y = 29
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "IM" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "IR" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "IT" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3056,32 +3056,32 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jf" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jg" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jl" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jp" = (
 /obj/structure/table,
 /obj/item/crowbar,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jt" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lantern{
@@ -3089,7 +3089,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ju" = (
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -3103,7 +3103,7 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jv" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -3112,14 +3112,14 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jy" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Jz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
@@ -3128,7 +3128,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "JA" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Garden"
@@ -3140,7 +3140,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "JG" = (
 /turf/template_noop,
 /area/template_noop)
@@ -3149,13 +3149,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "JS" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "JW" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Art Storage"
@@ -3165,14 +3165,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "JX" = (
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "JZ" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 40;
@@ -3183,40 +3183,40 @@
 	width = 80
 	},
 /turf/closed/mineral,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Kd" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Kf" = (
 /obj/structure/table/wood,
 /obj/item/nullrod,
 /turf/open/floor/carpet/black,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Kg" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Kl" = (
 /obj/machinery/chem_master/condimaster,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Km" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Kp" = (
 /obj/structure/table,
 /obj/item/trash/plate,
 /obj/item/kitchen/fork,
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Kw" = (
 /obj/machinery/door/window/eastleft{
 	base_state = "right";
@@ -3226,7 +3226,7 @@
 	req_one_access_txt = "22"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "KE" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
@@ -3236,13 +3236,13 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "KH" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-08"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "KR" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -3262,7 +3262,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "KV" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -3272,7 +3272,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "La" = (
 /obj/structure/cable,
 /obj/structure/extinguisher_cabinet{
@@ -3281,12 +3281,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Li" = (
 /obj/structure/bookcase/random/adult,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ll" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
@@ -3295,7 +3295,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Lq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -3304,18 +3304,18 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Lu" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Lz" = (
 /obj/item/clothing/suit/apron/chef,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "LC" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -3326,10 +3326,10 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "LK" = (
 /turf/closed/wall/r_wall,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "LP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -3338,7 +3338,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "LQ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3358,7 +3358,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "LU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -3367,7 +3367,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "LV" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
@@ -3393,12 +3393,12 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "LX" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Mb" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small{
@@ -3406,14 +3406,14 @@
 	},
 /obj/item/instrument/violin,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Mc" = (
 /obj/machinery/door/window/northright{
 	name = "Secure Art Exhibit";
 	req_access_txt = "37"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Md" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -3424,7 +3424,7 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Mf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -3433,7 +3433,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Mi" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/tile/neutral{
@@ -3454,24 +3454,24 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ms" = (
 /obj/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
 	},
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Mt" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "MC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "MF" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Art Gallery"
@@ -3485,7 +3485,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ML" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
@@ -3507,7 +3507,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "MX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -3517,7 +3517,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "MZ" = (
 /obj/structure/table/wood,
 /obj/item/clothing/head/pharaoh,
@@ -3533,13 +3533,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Na" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Nb" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/structure/window/reinforced{
@@ -3551,7 +3551,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Nf" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/flour,
@@ -3559,7 +3559,7 @@
 /obj/item/kitchen/knife,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ng" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3580,29 +3580,29 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Nh" = (
 /obj/item/wrench,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Nm" = (
 /obj/structure/sign/painting/library_private{
 	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Np" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Nt" = (
 /obj/structure/sign/painting/library_private{
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Nw" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Library"
@@ -3613,25 +3613,25 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "NJ" = (
 /obj/structure/table,
 /obj/item/storage/crayons,
 /obj/item/wrench,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "NS" = (
 /obj/machinery/newscaster{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "NX" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "NZ" = (
 /obj/machinery/door/airlock{
 	name = "Garden"
@@ -3648,7 +3648,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Oc" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Library"
@@ -3660,7 +3660,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Og" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3672,7 +3672,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Oi" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -3686,30 +3686,30 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Om" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/fancy/candle_box,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Or" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ov" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "OB" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "OH" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Monastery Maintenance";
@@ -3719,11 +3719,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "OJ" = (
-/obj/effect/super_station_crash,
+/obj/effect/station_crash/devastating,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "OK" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3736,17 +3736,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "OM" = (
 /obj/item/cultivator,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "OW" = (
 /obj/item/seeds/banana,
 /obj/item/seeds/grass,
 /obj/item/seeds/grape,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "OY" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/plastitanium/red/brig,
@@ -3761,50 +3761,50 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Pu" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Pv" = (
 /obj/item/flashlight/lantern{
 	icon_state = "lantern-on"
 	},
 /turf/open/floor/plating/asteroid,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Py" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/sugarcane,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Pz" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "PA" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "PB" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "PC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "PD" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/poppy,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "PN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3825,7 +3825,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "PU" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Library"
@@ -3834,7 +3834,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qg" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Library"
@@ -3842,7 +3842,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qj" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -3852,7 +3852,7 @@
 	},
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qm" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3869,26 +3869,26 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qs" = (
 /obj/structure/table/wood,
 /obj/item/newspaper,
 /obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qt" = (
 /obj/structure/sign/painting/library_private{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qv" = (
 /obj/item/storage/box/matches{
 	pixel_x = -3;
@@ -3896,7 +3896,7 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Qw" = (
 /obj/structure/sign/painting/library_secure{
 	pixel_y = -32
@@ -3906,11 +3906,11 @@
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "QG" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "QH" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -3919,13 +3919,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "QY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rc" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3939,24 +3939,24 @@
 	},
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rd" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/light/small,
 /obj/item/seeds/poppy,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rg" = (
 /obj/structure/bed,
 /obj/item/bedsheet/yellow,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rp" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rs" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/small{
@@ -3967,7 +3967,7 @@
 	},
 /obj/machinery/power/terminal,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rv" = (
 /obj/structure/closet/crate,
 /obj/item/canvas/twentythree_twentythree,
@@ -3985,7 +3985,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rx" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/light/small{
@@ -3996,7 +3996,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Rz" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -4005,19 +4005,19 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "RA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "RG" = (
 /obj/structure/bookcase/random/nonfiction,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "RJ" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Art Gallery";
@@ -4025,11 +4025,11 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "RQ" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "RZ" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/sugarcane,
@@ -4037,20 +4037,20 @@
 	dir = 4
 	},
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Sb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Sc" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/poppy,
 /obj/item/food/grown/harebell,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Se" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Office"
@@ -4066,17 +4066,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Sg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Si" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/book/bible,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Sk" = (
 /obj/item/toy/crayon/spraycan{
 	pixel_x = 4;
@@ -4089,7 +4089,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Sq" = (
 /obj/structure/table/wood/fancy,
 /obj/item/candle,
@@ -4103,21 +4103,21 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Sr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ss" = (
 /obj/machinery/light/dim{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Su" = (
 /obj/item/wrench,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Sx" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4132,19 +4132,19 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "SC" = (
 /obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel{
 	dir = 4
 	},
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "SJ" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "SK" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -4152,7 +4152,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "SQ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
@@ -4160,14 +4160,14 @@
 /obj/item/stack/rods/fifty,
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "SR" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "SU" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -4183,11 +4183,11 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Tc" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Te" = (
 /obj/structure/table/wood,
 /obj/item/camera,
@@ -4203,14 +4203,14 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ti" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Tk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -4220,63 +4220,63 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Tm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Tp" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Tt" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Tx" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/trophy{
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "TJ" = (
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "TK" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "TR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "TU" = (
 /obj/machinery/computer/emergency_shuttle{
 	use_power = 0
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ua" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ud" = (
 /obj/item/toy/crayon/black,
 /obj/item/toy/crayon/white{
@@ -4300,14 +4300,14 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Up" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ut" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4323,12 +4323,12 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "UC" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/wheat,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "UJ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -4339,13 +4339,13 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "UK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "UQ" = (
 /obj/machinery/door/airlock/external{
 	name = "Pod Docking Bay"
@@ -4354,7 +4354,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "UR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4370,7 +4370,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "UW" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern{
@@ -4387,28 +4387,28 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Vg" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Vi" = (
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Vl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Vt" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Vu" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4424,7 +4424,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Vv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/painting/library_private{
@@ -4434,17 +4434,17 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "VA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "VE" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "VF" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4455,7 +4455,7 @@
 	name = "Outlet Injector"
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "VM" = (
 /obj/machinery/mass_driver/chapelgun,
 /obj/structure/window/reinforced{
@@ -4464,13 +4464,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "VN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 6
 	},
 /turf/closed/wall,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "VU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -4479,7 +4479,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "VV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 6
@@ -4488,11 +4488,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "We" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Wh" = (
 /obj/machinery/door/airlock/external{
 	name = "Dock Access"
@@ -4504,43 +4504,43 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Wl" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Wo" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Wp" = (
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ws" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Wz" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WF" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WH" = (
 /obj/structure/cable,
 /obj/machinery/light/dim{
@@ -4548,7 +4548,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WJ" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -4556,21 +4556,21 @@
 	},
 /obj/item/soap/homemade,
 /turf/open/floor/plasteel/showroomfloor,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WM" = (
 /obj/structure/displaycase/trophy,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WO" = (
 /obj/machinery/light/dim{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WQ" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "WW" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4584,7 +4584,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Xb" = (
 /obj/structure/table/wood,
 /obj/item/kirbyplants{
@@ -4592,11 +4592,11 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Xm" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Xs" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -4605,13 +4605,13 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Xu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Xx" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -4621,7 +4621,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "XF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -4631,26 +4631,26 @@
 	name = "Outlet Injector"
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "XK" = (
 /obj/structure/closet/crate/bin,
 /obj/item/reagent_containers/glass/rag,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "XL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "XN" = (
 /obj/structure/chair/wood,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "XP" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -4660,7 +4660,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "XQ" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -4670,7 +4670,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "XZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -4678,21 +4678,21 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Yc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ye" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Yi" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4708,31 +4708,31 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Ym" = (
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "YB" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "YC" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "YD" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "YE" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -4742,11 +4742,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "YO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "YU" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -4757,12 +4757,12 @@
 	layer = 2.9
 	},
 /turf/open/space/basic,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "YZ" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/books,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Zb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -4771,10 +4771,10 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Zf" = (
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Zh" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
@@ -4785,14 +4785,14 @@
 "Zj" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Zl" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "Zn" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -4812,12 +4812,12 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ZA" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/photo_album,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ZF" = (
 /obj/machinery/newscaster{
 	pixel_x = -32;
@@ -4826,7 +4826,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ZM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -4836,7 +4836,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ZP" = (
 /obj/machinery/door/window/northright{
 	base_state = "left";
@@ -4845,7 +4845,7 @@
 	req_access_txt = "37"
 	},
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ZU" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Library"
@@ -4855,11 +4855,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 "ZZ" = (
 /obj/structure/cable,
 /turf/open/floor/carpet,
-/area/shuttle/escape/monastery)
+/area/shuttle/escape)
 
 (1,1,1) = {"
 JG
