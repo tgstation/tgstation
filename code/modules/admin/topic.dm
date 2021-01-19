@@ -1105,7 +1105,9 @@
 				return
 			if("No")
 				move = FALSE
-
+		if(QDELETED(H))
+			to_chat(usr, "<span class='danger'>Subject was deleted already. Transform canceled.</span>")
+			return
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)].")
 		H.AIize(TRUE, H.client, move)
