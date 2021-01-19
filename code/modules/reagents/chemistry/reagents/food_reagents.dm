@@ -273,7 +273,7 @@
 	description = "A special oil that noticeably chills the body. Extracted from chilly peppers and slimes."
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
-	pH = 13 //HMM! I wonder
+	ph = 13 //HMM! I wonder
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
 	var/cooling = 0
@@ -322,7 +322,7 @@
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "scorching agony"
 	penetrates_skin = NONE
-	pH = 7.4
+	ph = 7.4
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -398,7 +398,7 @@
 	color = "#E700E7" // rgb: 231, 0, 231
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
-	pH = 11
+	ph = 11
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
 	if(!M.slurring)
@@ -642,7 +642,7 @@
 	description = "A blinding substance extracted from certain onions."
 	color = "#c0c9a0"
 	taste_description = "bitterness"
-	pH = 5
+	ph = 5
 
 /datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -686,7 +686,7 @@
 	description = "An ichor, derived from a certain mushroom, makes for a bad time."
 	color = "#1d043d"
 	taste_description = "bitter mushroom"
-	pH = 12
+	ph = 12
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -707,7 +707,7 @@
 	description = "A stimulating ichor which causes luminescent fungi to grow on the skin. "
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
-	pH = 11.2
+	ph = 11.2
 	//Lazy list of mobs affected by the luminosity of this reagent.
 	var/list/mobs_affected
 
@@ -741,7 +741,7 @@
 	color = "#d3a308"
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
-	pH = 10.4
+	ph = 10.4
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
@@ -756,7 +756,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
-	pH = 9.2
+	ph = 9.2
 
 
 /datum/reagent/consumable/liquidelectricity
@@ -808,7 +808,7 @@
 	quality = FOOD_AMAZING
 	taste_mult = 100
 	can_synth = FALSE
-	pH = 6.1
+	ph = 6.1
 
 /datum/reagent/consumable/nutriment/peptides
 	name = "Peptides"

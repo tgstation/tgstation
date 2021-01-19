@@ -69,7 +69,7 @@
 		return FALSE
 	//Consider purity gating too? - probably not, purity is hard to determine
 	//To prevent reactions outside of the pH window from starting.
-	if(!((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range))))
+	if(!((holder.ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (holder.ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
 		return FALSE
 	return TRUE
 
@@ -175,31 +175,31 @@
 	
 	var/delta_t = 0 //how far off optimal temp we care
 	var/delta_ph = 0 //How far off the pH we are
-	var/cached_pH = holder.pH
+	var/cached_ph = holder.ph
 	var/cached_temp = holder.chem_temp
 	var/purity = 1 //purity of the current step
 
 	//Begin checks
 	//Calculate DeltapH (Deviation of pH from optimal)
 	//Within mid range
-	if (cached_pH >= reaction.optimal_pH_min  && cached_pH <= reaction.optimal_pH_max)
+	if (cached_ph >= reaction.optimal_ph_min  && cached_ph <= reaction.optimal_ph_max)
 		delta_ph = 1 //100% purity for this step
 	//Lower range
-	else if (cached_pH < reaction.optimal_pH_min) //If we're outside of the optimal lower bound
-		if (cached_pH < (reaction.optimal_pH_min - reaction.determin_pH_range)) //If we're outside of the deterministic bound
+	else if (cached_ph < reaction.optimal_ph_min) //If we're outside of the optimal lower bound
+		if (cached_ph < (reaction.optimal_ph_min - reaction.determin_ph_range)) //If we're outside of the deterministic bound
 			delta_ph = 0 //0% purity			
 		else //We're in the deterministic phase
-			delta_ph = (((cached_pH - (reaction.optimal_pH_min - reaction.determin_pH_range))**reaction.pH_exponent_factor)/((reaction.determin_pH_range**reaction.pH_exponent_factor))) //main pH calculation
+			delta_ph = (((cached_ph - (reaction.optimal_ph_min - reaction.determin_ph_range))**reaction.ph_exponent_factor)/((reaction.determin_ph_range**reaction.ph_exponent_factor))) //main pH calculation
 	//Upper range
-	else if (cached_pH > reaction.optimal_pH_max) //If we're above of the optimal lower bound
-		if (cached_pH > (reaction.optimal_pH_max + reaction.determin_pH_range))  //If we're outside of the deterministic bound
+	else if (cached_ph > reaction.optimal_ph_max) //If we're above of the optimal lower bound
+		if (cached_ph > (reaction.optimal_ph_max + reaction.determin_ph_range))  //If we're outside of the deterministic bound
 			delta_ph = 0 //0% purity
 		else  //We're in the deterministic phase
-			delta_ph = (((- cached_pH + (reaction.optimal_pH_max + reaction.determin_pH_range))**reaction.pH_exponent_factor)/(reaction.determin_pH_range**reaction.pH_exponent_factor))//Reverse - to + to prevent math operation failures.
+			delta_ph = (((- cached_ph + (reaction.optimal_ph_max + reaction.determin_ph_range))**reaction.ph_exponent_factor)/(reaction.determin_ph_range**reaction.ph_exponent_factor))//Reverse - to + to prevent math operation failures.
 	
 	//This should never proc, but it's a catch incase someone puts in incorrect values
 	else
-		stack_trace("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_pH] for set recipie pH vars. It's likely the recipe vars are wrong.")
+		stack_trace("[holder.my_atom] attempted to determine FermiChem pH for '[reaction.type]' which had an invalid pH of [cached_ph] for set recipie pH vars. It's likely the recipe vars are wrong.")
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
@@ -240,14 +240,14 @@
 	for(var/reagent in reaction.required_reagents)
 		holder.remove_reagent(reagent, ((delta_chem_factor/product_ratio) * reaction.required_reagents[reagent]), safety = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_pH(reagent, ((delta_chem_factor/product_ratio) * reaction.required_reagents[reagent])*reaction.H_ion_release)
+		holder.adjust_specific_reagent_ph(reagent, ((delta_chem_factor/product_ratio) * reaction.required_reagents[reagent])*reaction.H_ion_release)
 
 	for(var/product in reaction.results)
 		//create the products
 		var/step_add = (delta_chem_factor/product_ratio) * reaction.results[product]
-		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_pH = TRUE)
+		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_pH(product, step_add*reaction.H_ion_release)
+		holder.adjust_specific_reagent_ph(product, step_add*reaction.H_ion_release)
 		reacted_vol += step_add
 		total_step_added += step_add
 

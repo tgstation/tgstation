@@ -87,7 +87,7 @@
 		return
 	if(!LAZYLEN(cont.reagents.reagent_list))
 		return
-	switch(round(cont.reagents.pH, 1))
+	switch(round(cont.reagents.ph, 1))
 		if(14 to INFINITY)
 			color = "#462c83"
 		if(13 to 14)
@@ -118,7 +118,7 @@
 			color = "#ef1d26"
 		if(-INFINITY to 1)
 			color = "#c6040c"
-	desc += " The paper looks to be around a pH of [round(cont.reagents.pH, 1)]"
+	desc += " The paper looks to be around a pH of [round(cont.reagents.ph, 1)]"
 	name = "used [name]"
 	used = TRUE
 
@@ -152,13 +152,13 @@
 		return
 	var/list/out_message = list()
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
-	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.pH, 0.01)]\n"
+	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	if(cont.reagents.is_reacting)
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
 	for(var/datum/reagent/R in cont.reagents.reagent_list)
-		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Base pH:</b> [initial(R.pH)], <b>Current pH:</b> [R.pH].":"<b>Current pH:</b> [R.pH].")]\n"
+		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Base pH:</b> [initial(R.ph)], <b>Current pH:</b> [R.ph].":"<b>Current pH:</b> [R.ph].")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")
-	desc = "An electrode attached to a small circuit box that will analyse a beaker. It can be toggled to give a reduced or extended report. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.pH, 0.1)]."
+	desc = "An electrode attached to a small circuit box that will analyse a beaker. It can be toggled to give a reduced or extended report. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."

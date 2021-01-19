@@ -137,8 +137,8 @@ export const ChemDispenser = (props, context) => {
                 width="129.5px"
                 lineHeight={1.75}
                 content={chemical.title}
-                tooltip={"pH: " + chemical.pH}
-                backgroundColor={hasCol ? chemical.pHCol : "primary"}
+                tooltip={"pH: " + chemical.ph}
+                backgroundColor={hasCol ? chemical.phCol : "primary"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />

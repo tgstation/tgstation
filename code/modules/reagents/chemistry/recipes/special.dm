@@ -35,10 +35,10 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 /datum/chemical_reaction/randomized
 
 	//Increase default leniency because these are already hard enough
-	optimal_pH_min = 1 
-	optimal_pH_max = 13
+	optimal_ph_min = 1 
+	optimal_ph_max = 13
 	temp_exponent_factor = 0
-	pH_exponent_factor = 1
+	ph_exponent_factor = 1
 	H_ion_release = 0
 
 	var/persistent = FALSE
@@ -55,13 +55,13 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	var/exo_or_endothermic = FALSE
 
 	///If pH is randomised
-	var/randomize_req_pH = FALSE
+	var/randomize_req_ph = FALSE
 	///Lowest pH value possible
-	var/min_pH = 0
+	var/min_ph = 0
 	///Highest pH value possible
-	var/max_pH = 14
+	var/max_ph = 14
 	///How much the range can deviate, and also affects impure range
-	var/inoptimal_range_pH = 3
+	var/inoptimal_range_ph = 3
 
 	///If the impurity failure threshold is randomized between 0 - 0.4
 	var/randomize_impurity_minimum = FALSE
@@ -108,10 +108,10 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			if(exo_or_endothermic)
 				thermic_constant = (rand(-200, 200)/100)// 0 - 2
 	
-	if(randomize_req_pH)
-		optimal_pH_min = min_pH + rand(0, inoptimal_range_pH)
-		optimal_pH_max = max((max_pH + rand(0, inoptimal_range_pH)), (min_pH + 1)) //Always ensure we've a window of 1
-		determin_pH_range = inoptimal_range_pH
+	if(randomize_req_ph)
+		optimal_ph_min = min_ph + rand(0, inoptimal_range_ph)
+		optimal_ph_max = max((max_ph + rand(0, inoptimal_range_ph)), (min_ph + 1)) //Always ensure we've a window of 1
+		determin_ph_range = inoptimal_range_ph
 		H_ion_release = (rand(0, 25)/100)// 0 - 0.25
 	
 	if(randomize_impurity_minimum)
@@ -201,9 +201,9 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	overheat_temp = recipe_data["overheat_temp"]
 	thermic_constant = recipe_data["thermic_constant"]
 
-	optimal_pH_min = recipe_data["optimal_pH_min"]
-	optimal_pH_max = recipe_data["optimal_pH_max"]
-	determin_pH_range = recipe_data["determin_pH_range"]
+	optimal_ph_min = recipe_data["optimal_ph_min"]
+	optimal_ph_max = recipe_data["optimal_ph_max"]
+	determin_ph_range = recipe_data["determin_ph_range"]
 	H_ion_release = recipe_data["H_ion_release"]
 
 	purity_min = recipe_data["purity_min"]
@@ -307,8 +307,8 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			dat += "<li> taking care of it's endothermic nature</li>"
 	var/datum/chemical_reaction/randomized/random_recipe = recipe
 	if(random_recipe)
-		if(random_recipe.randomize_req_pH)
-			dat += "<li> keeping your pH between [recipe.optimal_pH_min] and [recipe.optimal_pH_max]</li>"
+		if(random_recipe.randomize_req_ph)
+			dat += "<li> keeping your pH between [recipe.optimal_ph_min] and [recipe.optimal_ph_max]</li>"
 		if(random_recipe.randomize_impurity_minimum)
 			dat += "<li> and your purity above [recipe.purity_min]</li>"
 	dat += "</ul>"

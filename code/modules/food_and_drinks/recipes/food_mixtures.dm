@@ -11,8 +11,8 @@
 /datum/chemical_reaction/food
 	optimal_temp = 400
 	temp_exponent_factor = 1
-	optimal_pH_min = 2
-	optimal_pH_max = 10
+	optimal_ph_min = 2
+	optimal_ph_max = 10
 	thermic_constant = 0
 	H_ion_release = 0
 

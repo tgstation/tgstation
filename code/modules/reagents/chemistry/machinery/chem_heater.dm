@@ -115,7 +115,7 @@
 	data["currentTemp"] = beaker ? beaker.reagents.chem_temp : null
 	data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
-	data["currentpH"] = beaker ? round(beaker.reagents.pH, 0.01)  : null
+	data["currentpH"] = beaker ? round(beaker.reagents.ph, 0.01)  : null
 
 	var/list/beaker_contents = list()
 	for(var/r in beaker?.reagents.reagent_list)

@@ -195,7 +195,7 @@
 			if("Psychologist")
 				heirloom_type = /obj/item/storage/pill_bottle
 			if("Chemist")
-				heirloom_type = pick(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet, /obj/item/reagent_containers/glass/bottle/acidic_buffer, /obj/item/reagent_containers/glass/bottle/basic_buffer)
+				heirloom_type = pick(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
 			if("Virologist")
 				heirloom_type = /obj/item/reagent_containers/syringe
 			//Engineering

@@ -325,8 +325,8 @@
 /datum/chemical_reaction/ammonia
 	results = list(/datum/reagent/ammonia = 3)
 	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
-	optimal_pH_min = 1  // Lets increase our range for this basic chem
-	optimal_pH_max = 12	
+	optimal_ph_min = 1  // Lets increase our range for this basic chem
+	optimal_ph_max = 12	
 	H_ion_release = -0.02 //handmade is more neutral
 
 /datum/chemical_reaction/diethylamine
@@ -631,11 +631,11 @@
 	required_temp = 250
 	optimal_temp = 500
 	overheat_temp = 9999 
-	optimal_pH_min = 0
-	optimal_pH_max = 14
-	determin_pH_range = 0
+	optimal_ph_min = 0
+	optimal_ph_max = 14
+	determin_ph_range = 0
 	temp_exponent_factor = 4
-	pH_exponent_factor = 0
+	ph_exponent_factor = 0
 	thermic_constant = 0
 	H_ion_release = 0.01
 	rate_up_lim = 15
@@ -647,11 +647,11 @@
 	required_temp = 250
 	optimal_temp = 500
 	overheat_temp = 9999 
-	optimal_pH_min = 0
-	optimal_pH_max = 14
-	determin_pH_range = 0
+	optimal_ph_min = 0
+	optimal_ph_max = 14
+	determin_ph_range = 0
 	temp_exponent_factor = 4
-	pH_exponent_factor = 0
+	ph_exponent_factor = 0
 	thermic_constant = 0
 	H_ion_release = -0.01
 	rate_up_lim = 20

@@ -54,11 +54,11 @@ Lets go over the reaction vars below. These can be edited and set on a per chemi
     var/required_temp			= 100
     var/optimal_temp			= 500			// Upper end for above
 	var/overheat_temp 			= 900 			// Temperature at which reaction explodes - If any reaction is this hot, it procs overheated()
-	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/optimal_pH_max 			= 9	        	// Higest value for above
-	var/determin_pH_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
+	var/optimal_ph_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/optimal_ph_max 			= 9	        	// Higest value for above
+	var/determin_ph_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
 	var/temp_exponent_factor 	= 2         	// How sharp the temperature exponential curve is (to the power of value)
-	var/pH_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
+	var/ph_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
 	var/thermic_constant		= 1         	// Temperature change per 1u produced
 	var/H_ion_release 			= 0.01       	// pH change per 1u reaction
 	var/rate_up_lim 			= 20			// Optimal/max rate possible if all conditions are perfect
@@ -92,10 +92,10 @@ As for how you define the reaction variables for a reaction, there are a few new
 ```dm
 /datum/chemical_reaction
 	...
-	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
-	var/optimal_pH_max 			= 9	        	// Higest value for above
-	var/determin_pH_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
-	var/pH_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
+	var/optimal_ph_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/optimal_ph_max 			= 9	        	// Higest value for above
+	var/determin_ph_range 		= 4         	// How far out pH wil react, giving impurity place (Exponential phase)
+	var/ph_exponent_factor 		= 1         	// How sharp the pH exponential curve is (to the power of value)
 	var/purity_min 				= 0.15 			// If purity is below 0.15, it calls overly_impure(). In addition, if the product's purity is below this value at the end, the product will be 100% converted into the reagent's failed_chem. Set to 0 to disable this.
 ```
 
@@ -104,7 +104,7 @@ For this default reaction, the curve looks like this:
 
 The y axis is the purity of the product made for that time step. This is recalculated based off the beaker's sum pH for every tick in the reaction. The rate in which your product is made based off the temperature (If you want me to describe that too I can.) So say our reaction has 10u of a purity 1 of product in there, and for our step we're making another 10u with our pH at (roughly) 3, from the curve our purity is (roughly) 0.5. So we will be adding 10u of 0.5 purity to 10u of 1 purity, resulting in 20u of 0.75 purity product. (Though - to note the reactant's purities also modify the purity of volume created on top of this).
 
-If you're designing a reaction you can define an optimal range between the OptimalpHMin to OptimalpHMax (5 - 7 in this case) and a deterministic region set by the ReactpHLim (5 - 4, 9 + 4 aka between 1 to 5 and 9 to 13). This deterministic region is exponential, so if you set it to 2 then it’ll exponentially grow, but since our CurveSharppH = 1, it’s linear (basically normalise the range in the determinsitic region, then put that to the power of CurveSharppH). Finally values outside of these ranges will prevent reactions from starting, but if a reaction drifts out during a reaction, the purity of volume created for each step will be 0 (It does not stop ongoing reactions). It’s entirely possible to design a reaction without a deterministic or optimal phase if you wanted.
+If you're designing a reaction you can define an optimal range between the OptimalpHMin to OptimalpHMax (5 - 7 in this case) and a deterministic region set by the ReactpHLim (5 - 4, 9 + 4 aka between 1 to 5 and 9 to 13). This deterministic region is exponential, so if you set it to 2 then it’ll exponentially grow, but since our CurveSharpph = 1, it’s linear (basically normalise the range in the determinsitic region, then put that to the power of CurveSharppH). Finally values outside of these ranges will prevent reactions from starting, but if a reaction drifts out during a reaction, the purity of volume created for each step will be 0 (It does not stop ongoing reactions). It’s entirely possible to design a reaction without a deterministic or optimal phase if you wanted.
 
 Though to note; if your purity dips below the PurityMin of a reaction it’ll call the overly_impure() function – which by default reduces the purity of all reagents in the beaker. Additionally, if the purity at the end of a reaction is below the PurityMin, it’ll convert into the failed chem defined by the product’s failed_chem defined in it's reagent datum. For default the PurityMin is 0.15, and is pretty difficult to fail. This is all customisable however, if you wanted to use these hooks to design a even more unique reaction, just don’t call the parent proc when using methods.
 
@@ -153,7 +153,7 @@ The new vars that are introduced are below:
 ```dm
 /datum/reagent
 	/// pH of the reagent
-	var/pH = 7
+	var/ph = 7
 	///Purity of the reagent
 	var/purity = 1
 	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
@@ -200,7 +200,7 @@ There are a few variables that are useful to know about
 	/// Current temp of the holder volume
 	var/chem_temp = 150
 	///pH of the whole system
-	var/pH = CHEMICAL_NORMAL_PH //aka 7
+	var/ph = CHEMICAL_NORMAL_PH //aka 7
 	///cached list of reagents
 	var/list/datum/reagent/previous_reagent_list = new/list()
 	///Hard check to see if the reagents is presently reacting

@@ -56,7 +56,7 @@
 	/// Current temp of the holder volume
 	var/chem_temp = 150
 	///pH of the whole system
-	var/pH = CHEMICAL_NORMAL_PH
+	var/ph = CHEMICAL_NORMAL_PH
 	/// unused
 	var/last_tick = 1
 	/// see [/datum/reagents/proc/metabolize] for usage
@@ -109,10 +109,10 @@
  * * reagtemp - Temperature of this reagent, will be equalized
  * * no_react - prevents reactions being triggered by this addition
  * * added_purity - override to force a purity when added
- * * added_pH - override to force a pH when added
- * * override_base_pH - bypass the pH update when adding a reagent, causing it to retain the pH of the solution it's being added to
+ * * added_ph - override to force a pH when added
+ * * override_base_ph - bypass the pH update when adding a reagent, causing it to retain the pH of the solution it's being added to
  */
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = null, added_pH, no_react = 0, override_base_pH = FALSE)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = null, added_ph, no_react = 0, override_base_ph = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -128,8 +128,8 @@
 	if(isnull(added_purity)) //Because purity additions can be 0
 		added_purity = D.creation_purity //Usually 1
 
-	if(!added_pH)
-		added_pH = D.pH
+	if(!added_ph)
+		added_ph = D.ph
 
 	update_total()
 	var/cached_total = total_volume
@@ -152,11 +152,11 @@
 	for(var/r in cached_reagents)
 		var/datum/reagent/iter_reagent = r
 		if (iter_reagent.type == reagent)
-			if(override_base_pH)
-				added_pH = iter_reagent.pH
+			if(override_base_ph)
+				added_ph = iter_reagent.ph
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
-			iter_reagent.pH = ((iter_reagent.pH*(iter_reagent.volume))+(added_pH*amount))/(iter_reagent.volume+amount)
+			iter_reagent.ph = ((iter_reagent.ph*(iter_reagent.volume))+(added_ph*amount))/(iter_reagent.volume+amount)
 			iter_reagent.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
 			update_total()
 
@@ -180,7 +180,7 @@
 	new_reagent.volume = amount
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
-	new_reagent.pH = added_pH
+	new_reagent.ph = added_ph
 	if(data)
 		new_reagent.data = data
 		new_reagent.on_new(data)
@@ -431,7 +431,7 @@
 			var/transfer_amount = T.volume * part
 			if(preserve_data)
 				trans_data = copy_data(T)
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.ph, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(T, target, methods, part, show_message)
@@ -455,7 +455,7 @@
 			var/transfer_amount = amount
 			if(amount > T.volume)
 				transfer_amount = T.volume
-			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.pH, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.ph, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -500,7 +500,7 @@
 		if(current_reagent.type == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
-			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.pH, no_react = TRUE)
+			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.ph, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			break
 
@@ -537,7 +537,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity, added_pH = T.pH)
+		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity, added_ph = T.ph)
 
 	src.update_total()
 	R.update_total()
@@ -1092,7 +1092,7 @@
 			del_reagent(R.type)
 		else
 			total_volume += R.volume
-	recalculate_sum_pH()
+	recalculate_sum_ph()
 
 
 /**
@@ -1304,10 +1304,10 @@
 * Arguments:
 * * value - How much to adjust the base pH by
 */
-/datum/reagents/proc/adjust_all_reagents_pH(value, lower_limit = 0, upper_limit = 14)
+/datum/reagents/proc/adjust_all_reagents_ph(value, lower_limit = 0, upper_limit = 14)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
-		R.pH = clamp(R.pH + value, lower_limit, upper_limit)
+		R.ph = clamp(R.ph + value, lower_limit, upper_limit)
 
 /*
 * Adjusts the base pH of all of the listed types
@@ -1318,12 +1318,12 @@
 * * input_reagents_list - list of reagents to adjust
 * * value - How much to adjust the base pH by
 */
-/datum/reagents/proc/adjust_specific_reagent_list_pH(list/input_reagents_list, value, lower_limit = 0, upper_limit = 14)
+/datum/reagents/proc/adjust_specific_reagent_list_ph(list/input_reagents_list, value, lower_limit = 0, upper_limit = 14)
 	for(var/reagent in input_reagents_list)
 		var/datum/reagent/R = get_reagent(reagent)
 		if(!R) //We can call this with missing reagents.
 			continue
-		R.pH = clamp(R.pH + value, lower_limit, upper_limit)
+		R.ph = clamp(R.ph + value, lower_limit, upper_limit)
 
 /*
 * Adjusts the base pH of a specific type
@@ -1336,25 +1336,25 @@
 * * lower_limit - how low the pH can go
 * * upper_limit - how high the pH can go
 */
-/datum/reagents/proc/adjust_specific_reagent_pH(input_reagent, value, lower_limit = 0, upper_limit = 14)
+/datum/reagents/proc/adjust_specific_reagent_ph(input_reagent, value, lower_limit = 0, upper_limit = 14)
 	var/datum/reagent/R = get_reagent(input_reagent)
 	if(!R) //We can call this with missing reagents.
 		return FALSE
-	R.pH = clamp(R.pH + value, lower_limit, upper_limit)
+	R.ph = clamp(R.ph + value, lower_limit, upper_limit)
 
 /*
 * Updates the reagents datum pH based off the volume weighted sum of the reagent_list's reagent pH
 */
-/datum/reagents/proc/recalculate_sum_pH()
+/datum/reagents/proc/recalculate_sum_ph()
 	if(!reagent_list || !total_volume) //Ensure that this is true
-		pH = CHEMICAL_NORMAL_PH
+		ph = CHEMICAL_NORMAL_PH
 		return
-	var/total_pH = 0
+	var/total_ph = 0
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = get_reagent(reagent) //we need the specific instance
-		total_pH += (R.pH * R.volume)
+		total_ph += (R.ph * R.volume)
 	//Keep limited
-	pH = clamp(total_pH/total_volume, 0, 14)
+	ph = clamp(total_ph/total_volume, 0, 14)
 
 /**
  * Used in attack logs for reagents in pills and such

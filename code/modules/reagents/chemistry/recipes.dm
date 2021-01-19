@@ -37,15 +37,15 @@
 	/// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
 	var/overheat_temp = 900
 	/// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase) 
-	var/optimal_pH_min = 5 
+	var/optimal_ph_min = 5 
 	/// Higest value for above
-	var/optimal_pH_max = 9 
+	var/optimal_ph_max = 9 
 	/// How far out pH wil react, giving impurity place (Exponential phase)
-	var/determin_pH_range = 4 
+	var/determin_ph_range = 4 
 	/// How sharp the temperature exponential curve is (to the power of value)
 	var/temp_exponent_factor = 2 
 	/// How sharp the pH exponential curve is (to the power of value)
-	var/pH_exponent_factor = 1
+	var/ph_exponent_factor = 1
 	/// Temperature change per 1u produced 
 	var/thermic_constant = 1 
 	/// pH change per 1u reaction

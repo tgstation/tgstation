@@ -81,7 +81,7 @@
 		processing = FALSE
 		end_processing()
 	if(reagents.reagent_list)
-		say("Reaction completed for [cached_reactions[index]] final temperature = [reagents.chem_temp], pH = [reagents.pH].")
+		say("Reaction completed for [cached_reactions[index]] final temperature = [reagents.chem_temp], ph = [reagents.ph].")
 		var/datum/chemical_reaction/C = cached_reactions[index]
 		for(var/R in C.results)
 			var/datum/reagent/R2 =  reagents.get_reagent(R)
@@ -123,7 +123,7 @@
 	if(failed == 1)
 		reagents.chem_temp = C.required_temp+25
 		failed++
-	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.pH] index [index] of [cached_reactions.len]")
+	say("Reacting <span class='nicegreen'>[cached_reactions[index]]</span> starting pH: [reagents.ph] index [index] of [cached_reactions.len]")
 	if(C.reaction_flags & REACTION_INSTANT)
 		say("This reaction is instant")
 
