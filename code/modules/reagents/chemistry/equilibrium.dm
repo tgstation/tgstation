@@ -46,7 +46,6 @@
 		to_delete = TRUE
 		return
 	LAZYADD(holder.reaction_list, src)
-	reaction.on_reaction(holder, multiplier)
 	SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] attempts")
 	
 
@@ -290,3 +289,7 @@
 
 /datum/equilibrium/proc/get_total_possible_volume()
 	return target_vol + reacted_vol
+
+/datum/equilibrium/proc/force_clear_reactive_agents()
+	for(var/reagent in reaction.required_reagents)
+		holder.remove_reagent(reagent, (multiplier * reaction.required_reagents[reagent]), safety = 1)

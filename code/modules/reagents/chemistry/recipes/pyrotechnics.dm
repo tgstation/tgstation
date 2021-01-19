@@ -329,6 +329,7 @@
 /datum/chemical_reaction/smoke_powder
 	results = list(/datum/reagent/smoke_powder = 3)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/phosphorus = 1)
+	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))

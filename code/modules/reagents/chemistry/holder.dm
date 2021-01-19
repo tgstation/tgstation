@@ -526,9 +526,6 @@
 	if(amount < 0)
 		return
 
-	//pass over previous ongoing reactions before handle_reactions is called
-	transfer_reactions(R)
-
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
@@ -538,6 +535,9 @@
 		if(preserve_data)
 			trans_data = T.data
 		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity, added_ph = T.ph, no_react = TRUE)
+
+	//pass over previous ongoing reactions before handle_reactions is called
+	transfer_reactions(R)
 
 	src.update_total()
 	R.update_total()
@@ -836,6 +836,7 @@
 					qdel(equilibrium)
 				else
 					//Adding is done in new()
+					equilibrium.reaction.on_reaction(holder, multiplier)
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
@@ -892,7 +893,9 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/equilibrium)
-	if(equilibrium.holder != src)
+	if(equilibrium.holder != src) //When called from Destroy() eqs are nulled in smoke. This is very strange. This is probably causing it to spam smoke because of the runtime interupting the removal.
+		if(!equilibrium.holder.my_atom)
+			equilibrium.holder.my_atom = "nulled"
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
 	equilibrium.reaction.reaction_finish(src, equilibrium.reacted_vol)
@@ -957,6 +960,8 @@
 				exists = TRUE
 		if(exists)
 			continue
+		if(!reaction_source.holder)
+			CRASH("reaction_source is missing a holder in transfer_reactions()!")
 
 		var/datum/equilibrium/new_E = new (reaction_source.reaction, target)
 		if(new_E.to_delete)//failed startup checks
