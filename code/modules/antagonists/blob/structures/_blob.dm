@@ -10,7 +10,8 @@
 	layer = BELOW_MOB_LAYER
 	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
-	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	var/point_return = 0 
 	max_integrity = 30
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
 	var/health_regen = BLOB_REGULAR_HP_REGEN //how much health this blob regens when pulsed
@@ -22,6 +23,9 @@
 	var/mob/camera/blob/overmind
 	var/strong_reinforce_range = 0 // Cores and nodes can have this, possibly due to strains
 	var/reflector_reinforce_range = 0
+	var/max_spores = 0 
+	var/list/spores	= list()
+
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
