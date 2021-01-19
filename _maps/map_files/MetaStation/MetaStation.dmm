@@ -15554,9 +15554,6 @@
 	dir = 4;
 	pixel_x = -12
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aOu" = (
@@ -77833,6 +77830,7 @@
 /obj/item/cultivator,
 /obj/item/reagent_containers/glass/bucket,
 /obj/structure/rack,
+/obj/item/vending_refill/hydroseeds,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "uus" = (
