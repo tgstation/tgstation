@@ -47,9 +47,13 @@ if (!(Test-Path $NodeExe -PathType Leaf)) {
 		"https://nodejs.org/download/release/v$NodeVersion/$NodeFullVersion.zip" `
 		-OutFile $Archive `
 		-ErrorAction Stop
-
-	[System.IO.Compression.ZipFile]::ExtractToDirectory($Archive, $Cache)
-
+	$tmp = "$Cache/tmp"
+	if (Test-Path $tmp) {
+		Remove-Item $tmp -Recurse
+	}
+	[System.IO.Compression.ZipFile]::ExtractToDirectory($Archive, $tmp)
+	Move-Item $tmp/node-* $Cache
+	Remove-Item $tmp
 	Remove-Item $Archive
 }
 
