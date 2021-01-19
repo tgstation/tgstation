@@ -20,6 +20,12 @@
 
 	var/attachment_holes = TRUE
 
+/turf/open/floor/plating/setup_broken_states()
+	return list("platingdmg1", "platingdmg2", "platingdmg3")
+
+/turf/open/floor/plating/setup_burnt_states()
+	return list("panelscorched")
+
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()
 	if(broken || burnt)
@@ -30,12 +36,6 @@
 	else
 		. += "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>"
 
-/turf/open/floor/plating/Initialize()
-	if (!broken_states)
-		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
-	if (!burnt_states)
-		burnt_states = list("panelscorched")
-	. = ..()
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())

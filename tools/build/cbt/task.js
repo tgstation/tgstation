@@ -4,26 +4,33 @@
  * @license MIT
  */
 
-const { compareFiles, Flags } = require('./fs');
+const { compareFiles, Glob, File } = require('./fs');
 
 class Task {
   constructor(name) {
     this.name = name;
-    this.deps = [];
+    this.sources = [];
+    this.targets = [];
     this.script = null;
   }
 
   depends(path) {
-    const glob = path.includes('*');
-    const flags = Flags.SOURCE | (glob ? Flags.GLOB : Flags.FILE);
-    this.deps.push({ path, flags });
+    if (path.includes('*')) {
+      this.sources.push(new Glob(path));
+    }
+    else {
+      this.sources.push(new File(path));
+    }
     return this;
   }
 
   provides(path) {
-    const glob = path.includes('*');
-    const flags = Flags.TARGET | (glob ? Flags.GLOB : Flags.FILE);
-    this.deps.push({ path, flags });
+    if (path.includes('*')) {
+      this.targets.push(new Glob(path));
+    }
+    else {
+      this.targets.push(new File(path));
+    }
     return this;
   }
 
@@ -33,13 +40,29 @@ class Task {
   }
 
   async run() {
+    /**
+     * @returns {File[]}
+     */
+    const getFiles = files => files
+      .flatMap(file => {
+        if (file instanceof Glob) {
+          return file.toFiles();
+        }
+        if (file instanceof File) {
+          return file;
+        }
+      })
+      .filter(Boolean);
+    // Normalize all our dependencies by converting globs to files
+    const fileSources = getFiles(this.sources);
+    const fileTargets = getFiles(this.targets);
     // Consider dependencies first, and skip the task if it
     // doesn't need a rebuild.
-    let needsRebuild = 'empty dependency list';
-    if (this.deps.length > 0) {
-      needsRebuild = compareFiles(this.deps);
+    let needsRebuild = 'no targets';
+    if (fileTargets.length > 0) {
+      needsRebuild = compareFiles(fileSources, fileTargets);
       if (!needsRebuild) {
-        console.warn(` => Skipping '${this.name}'`);
+        console.warn(` => Skipping '${this.name}' (up to date)`);
         return;
       }
     }
@@ -48,13 +71,21 @@ class Task {
     }
     console.warn(` => Starting '${this.name}': ${needsRebuild}`);
     const startedAt = Date.now();
+    // Run the script
     await this.script();
+    // Touch all targets so that they don't rebuild again
+    if (fileTargets.length > 0) {
+      for (const file of fileTargets) {
+        file.touch();
+      }
+    }
     const time = ((Date.now() - startedAt) / 1000) + 's';
     console.warn(` => Finished '${this.name}' in ${time}`);
   }
 }
 
 const runTasks = async tasks => {
+  const startedAt = Date.now();
   // Run all if none of the tasks were specified in command line
   const runAll = !tasks.some(task => process.argv.includes(task.name));
   for (const task of tasks) {
@@ -62,7 +93,8 @@ const runTasks = async tasks => {
       await task.run();
     }
   }
-  console.log(' => Done');
+  const time = ((Date.now() - startedAt) / 1000) + 's';
+  console.log(` => Done in ${time}`);
   process.exit();
 };
 
