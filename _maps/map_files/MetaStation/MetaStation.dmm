@@ -219,7 +219,7 @@
 	},
 /obj/item/toy/plush/beeplushie{
 	desc = "Maybe hugging this will make you feel better about yourself.";
-	name = "therapy plush"
+	name = "Therabee"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
