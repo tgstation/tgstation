@@ -48,7 +48,7 @@ When one of the checks fails in the equilibrium object, it is flagged for deleti
 ## Recipe and processing mechanics
 
 Lets go over the reaction vars below. These can be edited and set on a per chemical_reaction basis
-```c
+```dm
 /datum/chemical_reaction
 	...
     var/required_temp			= 100
@@ -70,7 +70,7 @@ Lets go over the reaction vars below. These can be edited and set on a per chemi
 
 Reaction rates are determined by the current temperature of the reagents holder. There are a few variables related to this:
 
-```c
+```dm
 /datum/chemical_reaction
     var/required_temp			= 100
     var/optimal_temp			= 500			// Upper end for above
@@ -89,7 +89,7 @@ the y axis is the normalised value of growth, which is then muliplied by the rat
 Optimal pH ranges are set on a per recipe basis - though at the moment all recipes use a default recipe, so they all have the same window (except for the buffers). Hopefully either as a community effort/or in future PRs we can create unique profiles for the present reactions in the game. 
 
 As for how you define the reaction variables for a reaction, there are a few new variables for the chemical_recipe datum. I'll go over specifically how pH works for the default reaction.
-```c
+```dm
 /datum/chemical_reaction
 	...
 	var/optimal_pH_min 			= 5         	// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
@@ -111,7 +111,7 @@ Though to note; if your purity dips below the PurityMin of a reaction it’ll ca
 
 ### Conditional changes in reagents datum per timestep
 
-```c
+```dm
 /datum/chemical_reaction
 	...
 	var/thermic_constant		= 1         	// Temperature change per 1u produced
@@ -124,13 +124,13 @@ The thermic_constant is how much the temperature changes per u created, so for 1
 
 Reaction_flags can be used to set these defines:
 
-```c
+```dm
 #define REACTION_CLEAR_IMPURE   //Convert into impure/pure on reaction completion in the datum/reagents holder instead of on consumption
 #define REACTION_CLEAR_INVERSE  //Convert into inverse on reaction completion when purity is low enough in the datum/reagents holder instead of on consumption
 #define REACTION_CLEAR_RETAIN	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above. This is so that it can split again after splitting from a reaction (i.e. if your impure_chem or inverse_chem has it's own impure_chem/inverse_chem and you want it to split again on consumption). 
 #define REACTION_INSTANT        //Used to create instant reactions
 
-datum/chemical_reaction
+/datum/chemical_reaction
 	var/reaction_flags	
 ```
 
@@ -140,8 +140,8 @@ For REACTION_CLEAR – this causes the purity mechanics to resolve in the beaker
 
 Is_cold_recipie requires you to set your overheat_temp and optimal_temp descend instead.
 Eg:
-```c
-datum/chemical_reaction
+```dm
+/datum/chemical_reaction
 	...
 	var/required_temp			= 300
 	var/optimal_temp			= 200
@@ -150,8 +150,8 @@ datum/chemical_reaction
 
 # Reagents
 The new vars that are introduced are below:
-```c
-datum/reagent
+```dm
+/datum/reagent
 	/// pH of the reagent
 	var/pH = 7
 	///Purity of the reagent
@@ -179,14 +179,14 @@ When writing any reagent code ALWAYS use creation_purity. Purity is kept for int
 See above for purity mechanics, but this is where you set the reagents that are created. If you’re making an impure reagent I recommend looking at impure_reagents.dm to see how they’re set up and consider using the `datum/reagents/impure` as a parent.
 
 The flags you can set for `var/chemical_flags` are:
-```c 
+```dm 
 #define REAGENT_DEAD_PROCESS		(1<<0)	//allows on_mob_dead() if present in a dead body
 #define REAGENT_DONOTSPLIT			(1<<1)	//Do not split the chem at all during processing - ignores all purity effects
 #define REAGENT_INVISIBLE			(1<<2)	//Doesn't appear on handheld health analyzers.
 #define REAGENT_SNEAKYNAME          (1<<3)  //When inverted, the inverted chem uses the name of the original chem
 #define REAGENT_SPLITRETAINVOL      (1<<4)  //Retains initial volume of chem when splitting for purity effects 
 
-datum/reagent
+/datum/reagent
 	var/chemical_flags 
 ```
 
@@ -195,8 +195,8 @@ While you might think reagent_flags is a more sensible name - it is already used
 # Relivant vars from the holder.dm / reagents datum
 
 There are a few variables that are useful to know about 
-```c
-datum/reagents
+```dm
+/datum/reagents
 	/// Current temp of the holder volume
 	var/chem_temp = 150
 	///pH of the whole system

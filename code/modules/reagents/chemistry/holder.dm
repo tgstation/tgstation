@@ -816,7 +816,7 @@
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
 	for(var/pr in possible_reactions)
 		var/datum/chemical_reaction/selected_reaction = pr
-		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & INSTANT_REACT)) //If we have instant reactions, we process them here
+		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
 			update_total()
@@ -993,7 +993,7 @@
 	for(var/B in cached_required_reagents)
 		multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
 
-	if(multiplier == 0)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the no results handlier catches a misflagged reaction
+	if(multiplier == 0)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
 		return FALSE
 	var/sum_purity = 0
 	for(var/B in cached_required_reagents)

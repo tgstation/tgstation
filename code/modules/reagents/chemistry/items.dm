@@ -1,4 +1,4 @@
-///if the pHmeter gives a detailed output
+///if the ph_meter gives a detailed output
 #define DETAILED_CHEM_OUTPUT 1 
 ///if the pH meter gives a shorter output
 #define SHORTENED_CHEM_OUTPUT 0 
@@ -6,7 +6,7 @@
 /*
 * a pH booklet that contains pH paper pages that will change color depending on the pH of the reagents datum it's attacked onto
 */
-/obj/item/pHbooklet
+/obj/item/ph_booklet
 	name = "pH indicator booklet"
 	desc = "A booklet containing paper soaked in universal indicator."
 	icon_state = "pHbooklet"
@@ -18,7 +18,7 @@
 	var/number_of_pages = 50
 
 //A little janky with pockets
-/obj/item/pHbooklet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/ph_booklet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(number_of_pages == 50)
 			icon_state = "pHbooklet_open"
@@ -26,7 +26,7 @@
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			add_fingerprint(user)
 			return
-		var/obj/item/pHpaper/page = new(get_turf(user))
+		var/obj/item/ph_paper/page = new(get_turf(user))
 		page.add_fingerprint(user)
 		user.put_in_active_hand(page)
 		to_chat(user, "<span class='notice'>You take [page] out of \the [src].</span>")
@@ -41,7 +41,7 @@
 		user.put_in_active_hand(src)
 	return ..()
 
-/obj/item/pHbooklet/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/ph_booklet/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	var/mob/living/user = usr
 	if(!isliving(user))
 		return
@@ -53,7 +53,7 @@
 		return
 	if(number_of_pages == 50)
 		icon_state = "pHbooklet_open"
-	var/obj/item/pHpaper/P = new(get_turf(user))
+	var/obj/item/ph_paper/P = new(get_turf(user))
 	P.add_fingerprint(user)
 	user.put_in_active_hand(P)
 	to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
@@ -66,7 +66,7 @@
 /*
 * pH paper will change color depending on the pH of the reagents datum it's attacked onto
 */
-/obj/item/pHpaper
+/obj/item/ph_paper
 	name = "pH indicator strip"
 	desc = "A piece of paper that will change colour depending on the pH of a solution."
 	icon_state = "pHpaper"
@@ -78,7 +78,7 @@
 	///If the paper was used, and therefore cannot change color again
 	var/used = FALSE
 
-/obj/item/pHpaper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/ph_paper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	var/obj/item/reagent_containers/cont = target
 	if(!istype(cont))
 		return
@@ -125,7 +125,7 @@
 /*
 * pH meter that will give a detailed or truncated analysis of all the reagents in of an object with a reagents datum attached to it. Only way of detecting purity for now.
 */
-/obj/item/pHmeter
+/obj/item/ph_meter
 	name = "Chemistry Analyser"
 	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."
 	icon_state = "pHmeter"
@@ -135,7 +135,7 @@
 	///level of detail for output for the meter
 	var/scanmode = DETAILED_CHEM_OUTPUT 
 
-/obj/item/pHmeter/attack_self(mob/user)
+/obj/item/ph_meter/attack_self(mob/user)
 	if(scanmode == SHORTENED_CHEM_OUTPUT)
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a detailed report.</span>")
 		scanmode = DETAILED_CHEM_OUTPUT
@@ -143,7 +143,7 @@
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a reduced report.</span>")
 		scanmode = SHORTENED_CHEM_OUTPUT
 
-/obj/item/pHmeter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/ph_meter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!istype(target, /obj/item/reagent_containers))
 		return

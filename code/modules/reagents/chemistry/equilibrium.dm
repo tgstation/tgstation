@@ -63,13 +63,13 @@
 */
 /datum/equilibrium/proc/check_inital_conditions()
 	//Make sure we have the right multipler for on_reaction()
-	for(var/B in reaction.required_reagents)
-		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
+	for(var/single_reagent in reaction.required_reagents)
+		multiplier = min(multiplier, round((holder.get_reagent_amount(single_reagent) / reaction.required_reagents[single_reagent]), CHEMICAL_QUANTISATION_LEVEL))
 	if(multiplier == INFINITY) 
 		return FALSE
 	//Consider purity gating too? - probably not, purity is hard to determine
 	//To prevent reactions outside of the pH window from starting.
-	if(! ((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range)) ))
+	if(!((holder.pH >= (reaction.optimal_pH_min - reaction.determin_pH_range)) && (holder.pH <= (reaction.optimal_pH_max + reaction.determin_pH_range))))
 		return FALSE
 	return TRUE
 
@@ -100,14 +100,14 @@
 
 	//If the product/reactants are too impure
 	for(var/r in holder.reagent_list)
-		var/datum/reagent/R = r
-		if (R.purity < reaction.purity_min)//If purity is below the min, call the proc
+		var/datum/reagent/reagent = r
+		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
 			reaction.overly_impure(holder, src)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
-		for(var/P in reaction.required_catalysts)
-			var/datum/reagent/catalyst = P
-			if(catalyst == R.type)
+		for(var/c in reaction.required_catalysts)
+			var/datum/reagent/catalyst = c
+			if(catalyst == reagent.type)
 				total_matching_catalysts++
 
 	if(!(total_matching_catalysts == reaction.required_catalysts.len))
@@ -131,14 +131,14 @@
 		return FALSE
 
 	multiplier = INFINITY
-	for(var/B in reaction.required_reagents)
-		multiplier = min(multiplier, round((holder.get_reagent_amount(B) / reaction.required_reagents[B]), CHEMICAL_QUANTISATION_LEVEL))
+	for(var/reagent in reaction.required_reagents)
+		multiplier = min(multiplier, round((holder.get_reagent_amount(reagent) / reaction.required_reagents[reagent]), CHEMICAL_QUANTISATION_LEVEL))
 	
 	if(!length(reaction.results)) //Incase of no reagent product
 		product_ratio = 1
 		target_vol = INFINITY
-		for(var/B in reaction.required_reagents)
-			target_vol = min(target_vol, multiplier * reaction.required_reagents[B])
+		for(var/reagent in reaction.required_reagents)
+			target_vol = min(target_vol, multiplier * reaction.required_reagents[reagent])
 		if(target_vol == 0 || multiplier == 0)
 			return FALSE
 		//Sanity Check
@@ -149,9 +149,9 @@
 
 	product_ratio = 0
 	target_vol = 0
-	for(var/P in reaction.results)
-		target_vol += (reaction.results[P]*multiplier)
-		product_ratio += reaction.results[P]
+	for(var/product in reaction.results)
+		target_vol += (reaction.results[product]*multiplier)
+		product_ratio += reaction.results[product]
 	if(target_vol == 0 || multiplier == INFINITY)
 		return FALSE
 	return TRUE
@@ -173,8 +173,8 @@
 		to_delete = TRUE
 		return
 	
-	var/deltaT = 0 //how far off optimal temp we care
-	var/deltapH = 0 //How far off the pH we are
+	var/delta_t = 0 //how far off optimal temp we care
+	var/delta_ph = 0 //How far off the pH we are
 	var/cached_pH = holder.pH
 	var/cached_temp = holder.chem_temp
 	var/purity = 1 //purity of the current step
@@ -183,21 +183,19 @@
 	//Calculate DeltapH (Deviation of pH from optimal)
 	//Within mid range
 	if (cached_pH >= reaction.optimal_pH_min  && cached_pH <= reaction.optimal_pH_max)
-		deltapH = 1
+		delta_ph = 1 //100% purity for this step
 	//Lower range
-	else if (cached_pH < reaction.optimal_pH_min)
-		if (cached_pH < (reaction.optimal_pH_min - reaction.determin_pH_range))
-			deltapH = 0
-			//If outside pH range, 0
-		else
-			deltapH = (((cached_pH - (reaction.optimal_pH_min - reaction.determin_pH_range))**reaction.pH_exponent_factor)/((reaction.determin_pH_range**reaction.pH_exponent_factor))) //main pH calculation
+	else if (cached_pH < reaction.optimal_pH_min) //If we're outside of the optimal lower bound
+		if (cached_pH < (reaction.optimal_pH_min - reaction.determin_pH_range)) //If we're outside of the deterministic bound
+			delta_ph = 0 //0% purity			
+		else //We're in the deterministic phase
+			delta_ph = (((cached_pH - (reaction.optimal_pH_min - reaction.determin_pH_range))**reaction.pH_exponent_factor)/((reaction.determin_pH_range**reaction.pH_exponent_factor))) //main pH calculation
 	//Upper range
-	else if (cached_pH > reaction.optimal_pH_max)
-		if (cached_pH > (reaction.optimal_pH_max + reaction.determin_pH_range))
-			deltapH = 0
-			//If outside pH range, 0
-		else
-			deltapH = (((- cached_pH + (reaction.optimal_pH_max + reaction.determin_pH_range))**reaction.pH_exponent_factor)/(reaction.determin_pH_range**reaction.pH_exponent_factor))//Reverse - to + to prevent math operation failures.
+	else if (cached_pH > reaction.optimal_pH_max) //If we're above of the optimal lower bound
+		if (cached_pH > (reaction.optimal_pH_max + reaction.determin_pH_range))  //If we're outside of the deterministic bound
+			delta_ph = 0 //0% purity
+		else  //We're in the deterministic phase
+			delta_ph = (((- cached_pH + (reaction.optimal_pH_max + reaction.determin_pH_range))**reaction.pH_exponent_factor)/(reaction.determin_pH_range**reaction.pH_exponent_factor))//Reverse - to + to prevent math operation failures.
 	
 	//This should never proc, but it's a catch incase someone puts in incorrect values
 	else
@@ -206,30 +204,30 @@
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
 		if (cached_temp < reaction.optimal_temp && cached_temp >= reaction.required_temp)
-			deltaT = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
+			delta_t = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
 		else if (cached_temp >= reaction.optimal_temp)
-			deltaT = 1
+			delta_t = 1
 		else //too hot
-			deltaT = 0
+			delta_t = 0
 			to_delete = TRUE
 			return
 	else
 		if (cached_temp > reaction.optimal_temp && cached_temp <= reaction.required_temp)
-			deltaT = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
+			delta_t = (((cached_temp - reaction.required_temp)**reaction.temp_exponent_factor)/((reaction.optimal_temp - reaction.required_temp)**reaction.temp_exponent_factor))
 		else if (cached_temp <= reaction.optimal_temp)
-			deltaT = 1
+			delta_t = 1
 		else //Too cold
-			deltaT = 0
+			delta_t = 0
 			to_delete = TRUE
 			return
 
-	purity = deltapH//set purity equal to pH offset
+	purity = delta_ph//set purity equal to pH offset
 
 	//Then adjust purity of result with beaker reagent purity. 
 	purity *= reactant_purity(reaction)
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/delta_chem_factor = (reaction.rate_up_lim*deltaT)*delta_time//add/remove factor
+	var/delta_chem_factor = (reaction.rate_up_lim*delta_t)*delta_time//add/remove factor
 	var/total_step_added = 0
 	//keep limited
 	if(delta_chem_factor > target_vol)
@@ -239,22 +237,22 @@
 	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
 
 	//Calculate how much product to make and how much reactant to remove factors..
-	for(var/B in reaction.required_reagents)
-		holder.remove_reagent(B, ((delta_chem_factor/product_ratio) * reaction.required_reagents[B]), safety = TRUE)
+	for(var/reagent in reaction.required_reagents)
+		holder.remove_reagent(reagent, ((delta_chem_factor/product_ratio) * reaction.required_reagents[reagent]), safety = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_pH(B, ((delta_chem_factor/product_ratio) * reaction.required_reagents[B])*reaction.H_ion_release)
+		holder.adjust_specific_reagent_pH(reagent, ((delta_chem_factor/product_ratio) * reaction.required_reagents[reagent])*reaction.H_ion_release)
 
-	for(var/P in reaction.results)
+	for(var/product in reaction.results)
 		//create the products
-		var/step_add = (delta_chem_factor/product_ratio) * reaction.results[P]
-		holder.add_reagent(P, step_add, null, cached_temp, purity, override_base_pH = TRUE)
+		var/step_add = (delta_chem_factor/product_ratio) * reaction.results[product]
+		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_pH = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_pH(P, step_add*reaction.H_ion_release)
+		holder.adjust_specific_reagent_pH(product, step_add*reaction.H_ion_release)
 		reacted_vol += step_add
 		total_step_added += step_add
 
 	#ifdef TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
-	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. deltaT [deltaT], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a deltapH of [deltapH]. DeltaTime: [delta_time]")
+	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
 	#endif
 		
 	//Apply thermal output of reaction to beaker
@@ -281,9 +279,9 @@
 	var/list/cached_reagents = holder.reagent_list
 	var/i = 0
 	var/cached_purity
-	for(var/datum/reagent/R in holder.reagent_list)
-		if (R in cached_reagents)
-			cached_purity += R.purity
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if (reagent in cached_reagents)
+			cached_purity += reagent.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case
 		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")

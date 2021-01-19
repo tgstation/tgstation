@@ -11,6 +11,7 @@
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
+///Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled
 #define LAZYLISTDUPLICATE(L) (L ? L.Copy() : null )
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
@@ -24,9 +25,9 @@
 #define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 #define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
 #define QDEL_LAZYLIST(L) for(var/I in L) qdel(I); L = null;
-//Not to be used with actual lazy lists, as these don't null it on clearing.
-#define LAZYCOPY(L) (L ? L.Copy() : list() ) //Use LAZYLISTDUPLICATE instead - legacy code
-#define LAZYCLEARLIST(L) if(L) L.Cut() // Use LAZYCLEARLIST instead - legacy code
+//These methods don't null the list
+#define LAZYCOPY(L) (L ? L.Copy() : list() ) //Use LAZYLISTDUPLICATE instead if you're wanting it to null with no entries
+#define LAZYCLEARLIST(L) if(L) L.Cut() // Consider LAZYCLEARLIST instead 
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverseRange(L.Copy())
 

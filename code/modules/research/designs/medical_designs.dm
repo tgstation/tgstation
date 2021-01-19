@@ -77,7 +77,7 @@
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 	materials = list(/datum/material/glass = 2500, /datum/material/gold = 1000, /datum/material/titanium = 1000)
-	build_path = /obj/item/pHmeter
+	build_path = /obj/item/ph_meter
 	category = list("Medical Designs")
 
 /datum/design/bluespacesyringe
