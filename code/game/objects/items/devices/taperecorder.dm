@@ -24,7 +24,7 @@
 	var/open_panel = FALSE
 	var/canprint = TRUE
 	var/list/icons_available = list()
-	var/icon_directory = 'icons/hud/radial_taperecorder.dmi'
+	var/radial_icon_file = 'icons/hud/radial_taperecorder.dmi'
 	///Whether we've warned during this recording session that the tape is almost up.
 	var/time_warned = FALSE
 	///Seconds under which to warn that the tape is almost up.
@@ -64,16 +64,16 @@
 	icons_available = list()
 
 	if(!playing && !recording)
-		icons_available += list("Record" = image(icon = icon_directory, icon_state = "record"))
-		icons_available += list("Play" = image(icon = icon_directory, icon_state = "play"))
+		icons_available += list("Record" = image(radial_icon_file,"record"))
+		icons_available += list("Play" = image(radial_icon_file,"play"))
 		if(canprint && mytape?.storedinfo.len)
-			icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "print"))
+			icons_available += list("Print Transcript" = image(radial_icon_file,"print"))
 
 	if(playing || recording)
-		icons_available += list("Stop" = image(icon = icon_directory, icon_state = "stop"))
+		icons_available += list("Stop" = image(radial_icon_file,"stop"))
 
 	if(mytape)
-		icons_available += list("Eject" = image(icon = icon_directory, icon_state = "eject"))
+		icons_available += list("Eject" = image(radial_icon_file,"eject"))
 
 /obj/item/taperecorder/proc/update_sound()
 	if(!playing && !recording)
@@ -101,7 +101,7 @@
 		update_icon()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
-	mytape.ruin() //Fires destroy the tape
+	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
 	..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -153,7 +153,7 @@
 
 	if(!can_use(usr))
 		return
-	if(!mytape || mytape.ruined)
+	if(!mytape || mytape.unspooled)
 		return
 	if(recording)
 		return
@@ -209,7 +209,7 @@
 
 	if(!can_use(usr))
 		return
-	if(!mytape || mytape.ruined)
+	if(!mytape || mytape.unspooled)
 		return
 	if(recording)
 		return
@@ -250,7 +250,7 @@
 	if(!mytape)
 		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
 		return
-	if(mytape.ruined)
+	if(mytape.unspooled)
 		to_chat(user, "<span class='warning'>\The tape inside \the [src] is broken!</span>")
 		return
 
@@ -323,6 +323,8 @@
 	obj_flags = UNIQUE_RENAME //my mixtape
 	drop_sound = 'sound/items/handling/tape_drop.ogg'
 	pickup_sound = 'sound/items/handling/tape_pickup.ogg'
+	///Because we can't expect God to do all the work.
+	var/initial_icon_state
 	var/max_capacity = 10 MINUTES
 	var/used_capacity = 0 SECONDS
 	///Numbered list of chat messages the recorder has heard with spans and prepended timestamps. Used for playback and transcription.
@@ -332,20 +334,32 @@
 	var/used_capacity_otherside = 0 SECONDS //Separate my side
 	var/list/storedinfo_otherside = list()
 	var/list/timestamp_otherside = list()
-	var/ruined = FALSE
+	var/unspooled = FALSE
 	var/list/icons_available = list()
-	var/icon_file = 'icons/effects/tape_radial.dmi'
+	var/radial_icon_file = 'icons/hud/radial_tape.dmi'
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
-	ruin()
+	unspool()
 	..()
+
+/obj/item/tape/Initialize()
+	. = ..()
+	initial_icon_state = icon_state //random tapes will set this after choosing their icon
+
+	var/mycolor = random_short_color()
+	name += " ([mycolor])" //multiple tapes can get confusing fast
+	if(icon_state == "tape_greyscale")
+		add_atom_colour("#[mycolor]", FIXED_COLOUR_PRIORITY)
+
+	if(prob(50))
+		tapeflip()
 
 /obj/item/tape/proc/update_available_icons()
 	icons_available = list()
 
-	if(!ruined)
-		icons_available += list("Unwind tape" = image(icon_file, "tape_unwind"))
-	icons_available += list("Flip tape" = image(icon_file, "tape_flip"))
+	if(!unspooled)
+		icons_available += list("Unwind tape" = image(radial_icon_file,"tape_unwind"))
+	icons_available += list("Flip tape" = image(radial_icon_file,"tape_flip"))
 
 /obj/item/tape/attack_self(mob/user)
 	update_available_icons()
@@ -357,32 +371,31 @@
 			if("Flip tape")
 				if(loc != user)
 					return
-				flip()
+				tapeflip()
 				to_chat(user, "<span class='notice'>You turn \the [src] over.</span>")
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
-				ruin()
+				unspool()
 				to_chat(user, "<span class='warning'>You pull out all the tape!</span>")
 
 /obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(prob(50))
-		flip()
+		tapeflip()
 	. = ..()
 
-/obj/item/tape/proc/ruin()
-	//Lets not add infinite amounts of overlays when our fireact is called
-	//repeatedly
-	if(!ruined)
+/obj/item/tape/proc/unspool()
+	//Let's not add infinite amounts of overlays when our fire_act is called repeatedly
+	if(!unspooled)
 		add_overlay("ribbonoverlay")
-	ruined = TRUE
+	unspooled = TRUE
 
-/obj/item/tape/proc/fix()
+/obj/item/tape/proc/respool()
 	cut_overlay("ribbonoverlay")
-	ruined = FALSE
+	unspooled = FALSE
 
-/obj/item/tape/proc/flip()
+/obj/item/tape/proc/tapeflip()
 	//first we save a copy of our current side
 	var/list/storedinfo_currentside = storedinfo.Copy()
 	var/list/timestamp_currentside = timestamp.Copy()
@@ -396,17 +409,22 @@
 	timestamp_otherside = timestamp_currentside.Copy()
 	used_capacity_otherside = used_capacity_currentside
 
+	if(icon_state == initial_icon_state)
+		icon_state = "[initial_icon_state]_reverse"
+	else if(icon_state == "[initial_icon_state]_reverse") //so flipping doesn't overwrite an unexpected icon_state (e.g. an admin's)
+		icon_state = initial_icon_state
+
 /obj/item/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && (I.tool_behaviour == TOOL_SCREWDRIVER))
+	if(unspooled && (I.tool_behaviour == TOOL_SCREWDRIVER))
 		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
 		if(I.use_tool(src, user, 120))
 			to_chat(user, "<span class='notice'>You wind the tape back in.</span>")
-			fix()
+			respool()
 
 //Random colour tapes
 /obj/item/tape/random
 	icon_state = "random_tape"
 
 /obj/item/tape/random/Initialize()
+	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple", "greyscale")]"
 	. = ..()
-	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
