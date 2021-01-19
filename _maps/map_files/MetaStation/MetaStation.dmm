@@ -48319,8 +48319,8 @@
 "cIl" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -119417,7 +119417,7 @@ qey
 pbc
 nOc
 dyc
-hEi
+dxQ
 ciL
 dvY
 xbk
