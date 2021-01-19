@@ -11,8 +11,17 @@
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
+	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/PopulateContents()
+/obj/structure/closet/crate/necropolis/tendril/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
+
+/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/I, mob/user, params)
+	SIGNAL_HANDLER
+
+	if(!istype(I, /obj/item/skeleton_key) || spawned_loot)
+		return FALSE
 	var/loot = rand(1,21)
 	switch(loot)
 		if(1)
@@ -67,6 +76,15 @@
 			new /obj/item/bedsheet/cult(src)
 		if(21)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+	spawned_loot = TRUE
+	qdel(I)
+	to_chat(user, "<span class='notice'>You disable the magic lock, revealing the loot.</span>")
+	return TRUE
+
+/obj/structure/closet/crate/necropolis/tendril/can_open(mob/living/user, force = FALSE)
+	if(!spawned_loot)
+		return FALSE
+	return ..()
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -1324,6 +1342,12 @@
 			new /obj/item/wisp_lantern(src)
 		if(3)
 			new /obj/item/prisoncube(src)
+
+/obj/item/skeleton_key
+	name = "skeleton key"
+	desc = "spooky"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "skeleton_key"
 
 #undef HIEROPHANT_BLINK_RANGE
 #undef HIEROPHANT_BLINK_COOLDOWN
