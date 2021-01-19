@@ -68,13 +68,6 @@
 	/// Optional, force this threat level instead of picking randomly through the lorentz distribution
 	var/forced_threat_level
 
-	/// How long should the round be?
-	var/round_time = (90 MINUTES)
-
-	/// Meant to represent the revolving door action of a round.
-	/// A list of [time, "joined" | "died"] action point.
-	var/list/action_points
-
 /client/proc/run_dynamic_simulations()
 	set name = "Run Dynamic Simulations"
 	set category = "Debug"
@@ -88,7 +81,6 @@
 
 	var/list/outputs = list()
 
-	// TODO: Put these numbers in a configuration file somewhere
 	var/datum/dynamic_simulation_config/dynamic_config = new
 
 	if (roundstart_players)
