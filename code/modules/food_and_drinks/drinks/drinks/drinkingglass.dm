@@ -25,14 +25,14 @@
 		return
 	. = ..()
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	name = largest_reagent.glass_name || initial(name)
+	name = largest_reagent?.glass_name || initial(name)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_desc(updates)
 	if(renamedByPlayer)
 		return
 	. = ..()
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	desc = largest_reagent.glass_desc || initial(desc)
+	desc = largest_reagent?.glass_desc || initial(desc)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
 	. = ..()
@@ -41,7 +41,7 @@
 		return
 
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	if(largest_reagent.glass_icon_state)
+	if(largest_reagent?.glass_icon_state)
 		icon_state = largest_reagent.glass_icon_state
 	return NONE
 
