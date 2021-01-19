@@ -23,8 +23,7 @@
 			continue
 
 		// Deliberately the same message framing as nanite message + ghost deathrattle
-		var/msg = "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'><b>[name]</b> has died at <b>[area]</b>.</span>\""
-		to_chat(implant.imp_in, msg)
+		to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'><b>[name]</b> has died at <b>[area]</b>.</span>\"")
 
 /datum/deathrattle_group/proc/register(obj/item/implant/deathrattle/implant)
 	implant.group = src
@@ -41,7 +40,7 @@
 
 /obj/item/implant/deathrattle/Destroy()
 	group = null
-	. = ..()
+	return ..()
 
 /obj/item/implant/deathrattle/can_be_implanted_in(mob/living/target)
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...
@@ -55,12 +54,13 @@
 
 /obj/item/implant/deathrattle/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
-	if(.)
-		RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
+	if(!.)
+		return
 
-		if(!group)
-			var/msg = "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>Warning: No other linked implants detected.</span>\""
-			to_chat(target, msg)
+	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
+
+	if(!group)
+		to_chat(target, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>Warning: No other linked implants detected.</span>\"")
 
 
 /obj/item/implantcase/deathrattle
