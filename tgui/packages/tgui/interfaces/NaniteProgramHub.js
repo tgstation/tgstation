@@ -1,5 +1,4 @@
 import { map } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -29,7 +28,7 @@ export const NaniteProgramHub = (props, context) => {
         <Section
           title="Program Disk"
           buttons={(
-            <Fragment>
+            <>
               <Button
                 icon="eject"
                 content="Eject"
@@ -38,7 +37,7 @@ export const NaniteProgramHub = (props, context) => {
                 icon="minus-circle"
                 content="Delete Program"
                 onClick={() => act('clear')} />
-            </Fragment>
+            </>
           )}>
           {has_disk ? (
             has_program ? (
@@ -64,7 +63,7 @@ export const NaniteProgramHub = (props, context) => {
         <Section
           title="Programs"
           buttons={(
-            <Fragment>
+            <>
               <Button
                 icon={detail_view ? 'info' : 'list'}
                 content={detail_view ? 'Detailed' : 'Compact'}
@@ -73,7 +72,7 @@ export const NaniteProgramHub = (props, context) => {
                 icon="sync"
                 content="Sync Research"
                 onClick={() => act('refresh')} />
-            </Fragment>
+            </>
           )}>
           {programs !== null ? (
             <Flex>

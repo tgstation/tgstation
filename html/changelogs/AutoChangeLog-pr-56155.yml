@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - admin: "Tweaked how logging ID access changes works, added Investigate verb menu entry for id_card_changes and they are now also logged to id_card_changes.html, accessible from Current and Server Logs."

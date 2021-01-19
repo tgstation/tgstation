@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -33,7 +32,7 @@ export const StackingConsoleContent = (props, context) => {
     contents = [],
   } = data;
   return (
-    <Fragment>
+    <>
       <Section>
         <LabeledList>
           <LabeledList.Item label="Stacking Amount">
@@ -66,6 +65,6 @@ export const StackingConsoleContent = (props, context) => {
           </LabeledList>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };
