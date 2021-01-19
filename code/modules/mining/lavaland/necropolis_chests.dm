@@ -11,6 +11,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
+	integrity_failure = 0 ///prevents bust_open to fire
 	var/spawned_loot = FALSE /// var to check if it got opened by a key
 
 /obj/structure/closet/crate/necropolis/tendril/Initialize()
@@ -1348,6 +1349,7 @@
 	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds monopoly."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "skeleton_key"
+	w_class = WEIGHT_CLASS_SMALL
 
 #undef HIEROPHANT_BLINK_RANGE
 #undef HIEROPHANT_BLINK_COOLDOWN

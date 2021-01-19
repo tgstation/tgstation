@@ -822,6 +822,7 @@
 	blacklist = list(/obj/item/grown/log/steel)
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
+
 /datum/crafting_recipe/skeleton_key
 	name = "Skeleton Key"
 	time = 30
