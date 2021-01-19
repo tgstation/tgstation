@@ -68,6 +68,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
+	COOLDOWN_DECLARE(beeping_cooldown)
 
 /obj/item/inspector/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -79,9 +80,12 @@
 
 ///Prints out a report for bounty purposes, and plays a short audio blip.
 /obj/item/inspector/proc/print_report()
+	if(!COOLDOWN_FINISHED(src, beeping_cooldown))
+		return
 	// Create our report
 	var/obj/item/report/slip = new(get_turf(src))
 	slip.scanned_area = get_area(src)
+	COOLDOWN_START(src, beeping_cooldown, 3 SECONDS)
 	playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
 
 /obj/item/report
