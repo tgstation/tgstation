@@ -92,19 +92,11 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	inhand_icon_state = "meson"
+	clothing_traits = list(TRAIT_SUPERMATTER_MADNESS_IMMUNE)
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
-
-/obj/item/clothing/glasses/meson/equipped(mob/user, slot)
-	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
-		ADD_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE, CLOTHING_TRAIT)
-
-/obj/item/clothing/glasses/meson/dropped(mob/user)
-	. = ..()
-	REMOVE_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -246,15 +238,7 @@
 	icon_state = "sunhudbeer"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
 	clothing_flags = SCAN_REAGENTS
-
-/obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/user, slot)
-	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
-		ADD_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
-
-/obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/user)
-	. = ..()
-	REMOVE_TRAIT(user, TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+	clothing_traits = list(TRAIT_BOOZE_SLIDER)
 
 /obj/item/clothing/glasses/sunglasses/chemical
 	name = "science glasses"
