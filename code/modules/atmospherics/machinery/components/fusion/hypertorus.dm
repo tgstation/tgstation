@@ -466,7 +466,7 @@
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
 			corner.update_icon()
-		corners = null
+		corners = list()
 	QDEL_NULL(soundloop)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_fuel()
