@@ -60469,7 +60469,6 @@
 "gHY" = (
 /obj/structure/rack,
 /obj/item/seeds/tower,
-/obj/item/seeds/lavaland/ember,
 /obj/item/seeds/cannabis,
 /obj/item/seeds/cannabis,
 /obj/item/seeds/cannabis,
@@ -77834,7 +77833,6 @@
 /obj/item/cultivator,
 /obj/item/reagent_containers/glass/bucket,
 /obj/structure/rack,
-/obj/item/vending_refill/hydroseeds,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "uus" = (
