@@ -15,7 +15,6 @@
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
-	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
 
 
@@ -36,7 +35,6 @@ GLOBAL_LIST_INIT(tendrils, list())
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
-	AddComponent(/datum/component/gps, "Eerie Signal")
 	GLOB.tendrils += src
 
 /obj/structure/spawner/lavaland/deconstruct(disassembled)
