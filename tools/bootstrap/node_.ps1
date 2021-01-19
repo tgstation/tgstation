@@ -48,7 +48,9 @@ if (!(Test-Path $NodeExe -PathType Leaf)) {
 		-OutFile $Archive `
 		-ErrorAction Stop
 	$tmp = "$Cache/tmp"
-	if(Test-Path $tmp) { Remove-Item $tmp -Recurse }
+	if (Test-Path $tmp) {
+		Remove-Item $tmp -Recurse
+	}
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($Archive, $tmp)
 	Move-Item $tmp/node-* $Cache
 	Remove-Item $tmp
