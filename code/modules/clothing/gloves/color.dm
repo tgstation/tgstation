@@ -187,26 +187,17 @@
 	inhand_icon_state = "latex"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
+	clothing_traits = list(TRAIT_QUICK_CARRY)
 	transfer_prints = TRUE
 	resistance_flags = NONE
-	var/carrytrait = TRAIT_QUICK_CARRY
-
-/obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
-	..()
-	if(slot == ITEM_SLOT_GLOVES)
-		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
-
-/obj/item/clothing/gloves/color/latex/dropped(mob/user)
-	..()
-	REMOVE_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
 	desc = "Pricy sterile gloves that are thicker than latex. Transfers intimate paramedic knowledge into the user via nanochips."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	transfer_prints = FALSE
-	carrytrait = TRAIT_QUICKER_CARRY
 
 /obj/item/clothing/gloves/color/latex/nitrile/infiltrator
 	name = "infiltrator gloves"
@@ -225,7 +216,7 @@
 	inhand_icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0.8
 	permeability_coefficient = 0.3
-	carrytrait = TRAIT_QUICK_BUILD
+	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 
 /obj/item/clothing/gloves/color/white

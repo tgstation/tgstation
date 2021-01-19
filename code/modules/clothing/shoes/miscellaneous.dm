@@ -26,15 +26,7 @@
 	inhand_icon_state = "sneakboots"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-
-/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	if(slot == ITEM_SLOT_FEET)
-		ADD_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
-
-/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/living/carbon/human/user)
-	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
-	return ..()
+	clothing_traits = list(TRAIT_SILENT_FOOTSTEPS)
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
