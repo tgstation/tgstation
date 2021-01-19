@@ -428,3 +428,6 @@
 /obj/item/tape/random/Initialize()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple", "greyscale")]"
 	. = ..()
+
+/obj/item/tape/dyed
+	icon_state = "greyscale"
