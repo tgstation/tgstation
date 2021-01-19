@@ -36,8 +36,10 @@
 /datum/equilibrium/New(datum/chemical_reaction/input_reaction, datum/reagents/input_holder)
 	reaction = input_reaction
 	holder = input_holder
-	if(!holder || !reaction)
-		CRASH("A new [type] was set up, with incorrect/null input vars!")
+	if(!holder || !reaction) //sanity check
+		stack_trace("A new [type] was set up, with incorrect/null input vars!")
+		to_delete = TRUE
+		return
 	if(!check_inital_conditions()) //If we're outside of the scope of the reaction vars
 		to_delete = TRUE
 		return
@@ -82,6 +84,12 @@
 /datum/equilibrium/proc/check_reagent_properties()
 	//Have we exploded?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
+		return FALSE
+	if(!holder)
+		stack_trace("an equilibrium is missing it's holder.")
+		return FALSE
+	if(!reaction)
+		stack_trace("an equilibrium is missing it's reaction.")
 		return FALSE
 
 	//Are we overheated?

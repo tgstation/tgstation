@@ -893,9 +893,12 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/equilibrium)
+	if(!equilibrium.holder || !equilibrium.reaction) //Somehow I'm getting empty equilibrium. This is here to handle them
+		LAZYREMOVE(reaction_list, equilibrium)
+		qdel(equilibrium)
+		stack_trace("The equilibrium datum currently processing in this reagents datum had a nulled holder or nulled reaction. src holder:[my_atom] || src type:[my_atom.type] ") //Shouldn't happen. Does happen
+		return
 	if(equilibrium.holder != src) //When called from Destroy() eqs are nulled in smoke. This is very strange. This is probably causing it to spam smoke because of the runtime interupting the removal.
-		if(!equilibrium.holder.my_atom)
-			equilibrium.holder.my_atom = "nulled"
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
 	equilibrium.reaction.reaction_finish(src, equilibrium.reacted_vol)
@@ -903,7 +906,6 @@
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
 	qdel(equilibrium)	
-	//LAZYREMOVE(reaction_list, E) //You might think this is unneeded, but it just doesn't work without this.
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message
@@ -963,11 +965,10 @@
 		if(!reaction_source.holder)
 			CRASH("reaction_source is missing a holder in transfer_reactions()!")
 
-		var/datum/equilibrium/new_E = new (reaction_source.reaction, target)
+		var/datum/equilibrium/new_E = new (reaction_source.reaction, target)//addition to reaction_list is done in new()
 		if(new_E.to_delete)//failed startup checks
 			qdel(new_E)
-		else
-			LAZYADD(target.reaction_list, new_E)
+
 	target.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	target.is_reacting = is_reacting
 	

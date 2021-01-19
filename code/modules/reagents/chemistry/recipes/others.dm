@@ -277,11 +277,12 @@
 /datum/chemical_reaction/surfactant
 	results = list(/datum/reagent/fluorosurfactant = 5)
 	required_reagents = list(/datum/reagent/fluorine = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
+	reaction_flags = REACTION_INSTANT 
 
 /datum/chemical_reaction/foam
 	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
 	mob_react = FALSE
-	//reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT 
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	holder.create_foam(/datum/effect_system/foam_spread,2*created_volume,notification="<span class='danger'>The solution spews out foam!</span>")
