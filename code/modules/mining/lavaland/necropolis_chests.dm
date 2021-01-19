@@ -5,19 +5,19 @@
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
-	desc = "It's watching you closely."
+	desc = "It's watching you closely. You need a skeleton key to open it."
 	icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
-	var/spawned_loot = FALSE
+	var/spawned_loot = FALSE /// var to check if it got opened by a key
 
 /obj/structure/closet/crate/necropolis/tendril/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
 
-/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/I, mob/user, params)
+/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/I, mob/user, params) ///proc that handles key checking and generating loot
 	SIGNAL_HANDLER
 
 	if(!istype(I, /obj/item/skeleton_key) || spawned_loot)
@@ -1345,7 +1345,7 @@
 
 /obj/item/skeleton_key
 	name = "skeleton key"
-	desc = "spooky"
+	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds monopoly."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "skeleton_key"
 
