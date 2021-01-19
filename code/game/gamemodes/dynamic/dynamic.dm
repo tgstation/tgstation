@@ -2,14 +2,6 @@
 
 // Are HIGHLANDER_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
-// A number between -5 and +5.
-// A negative value will give a more peaceful round and
-// a positive value will give a round with higher threat.
-GLOBAL_VAR_INIT(dynamic_curve_centre, 0)
-// A number between 0.5 and 4.
-// Higher value will favour extreme rounds and
-// lower value rounds closer to the average.
-GLOBAL_VAR_INIT(dynamic_curve_width, 1.8)
 // If enabled does not accept or execute any rulesets.
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
 // How high threat is required for HIGHLANDER_RULESETs stacking.
@@ -111,6 +103,28 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// The chance of injection decrease when above lower_injection_chance_minimum_threat
 	var/lower_injection_chance = 15
 
+	/// A number between -5 and +5.
+	/// A negative value will give a more peaceful round and
+	/// a positive value will give a round with higher threat.
+	var/threat_curve_centre = 0
+
+	/// A number between 0.5 and 4.
+	/// Higher value will favour extreme rounds and
+	/// lower value rounds closer to the average.
+	var/threat_curve_width = 1.8
+
+	/// A number between -5 and +5.
+	/// Equivalent to threat_curve_centre, but for the budget split.
+	/// A negative value will weigh towards midround rulesets, and a positive
+	/// value will weight towards roundstart ones.
+	var/roundstart_split_curve_centre = 0
+
+	/// A number between 0.5 and 4.
+	/// Equivalent to threat_curve_width, but for the budget split.
+	/// Higher value will favour more variance in splits and
+	/// lower value rounds closer to the average.
+	var/roundstart_split_curve_width = 1.8
+
 	/// A list of recorded "snapshots" of the round, stored in the dynamic.json log
 	var/list/datum/dynamic_snapshot/snapshots
 
@@ -122,7 +136,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
-	dat += "Parameters: centre = [GLOB.dynamic_curve_centre] ; width = [GLOB.dynamic_curve_width].<br/>"
+	dat += "Parameters: centre = [threat_curve_centre] ; width = [threat_curve_width].<br/>"
+	dat += "Split parameters: centre = [roundstart_split_curve_centre] ; width = [roundstart_split_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
 	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
 	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
@@ -278,24 +293,24 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/game_mode/dynamic/proc/generate_threat()
-	var/relative_threat = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
-	threat_level = round(lorentz_to_threat(relative_threat), 0.1)
+	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
+	threat_level = round(lorentz_to_amount(relative_threat), 0.1)
 
-	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width), 0.01)*100
+	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
 
 /// Generates the midround and roundstart budgets
 /datum/game_mode/dynamic/proc/generate_budgets()
-	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(GLOB.dynamic_curve_centre, GLOB.dynamic_curve_width)
-	round_start_budget = round((lorentz_to_threat(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
+	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(roundstart_split_curve_centre, roundstart_split_curve_width)
+	round_start_budget = round((lorentz_to_amount(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
 	initial_round_start_budget = round_start_budget
 	mid_round_budget = threat_level - round_start_budget
 
 /datum/game_mode/dynamic/can_start()
 	message_admins("Dynamic mode parameters for the round:")
-	message_admins("Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
+	message_admins("Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	message_admins("Stacking limit is [GLOB.dynamic_stacking_limit].")
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
-	log_game("DYNAMIC: Centre is [GLOB.dynamic_curve_centre], Width is [GLOB.dynamic_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
+	log_game("DYNAMIC: Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit].")
 	if(GLOB.dynamic_forced_threat_level >= 0)
 		threat_level = round(GLOB.dynamic_forced_threat_level, 0.1)
@@ -740,8 +755,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/spend_midround_budget(cost)
 	mid_round_budget = max(mid_round_budget - cost,0)
 
-/// Turns the value generated by lorentz distribution to threat value between 0 and 100.
-/datum/game_mode/dynamic/proc/lorentz_to_threat(x)
+/// Turns the value generated by lorentz distribution to number between 0 and 100.
+/// Used for threat level and splitting the budgets.
+/datum/game_mode/dynamic/proc/lorentz_to_amount(x)
 	switch (x)
 		if (-INFINITY to -20)
 			return rand(0, 10)

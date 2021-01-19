@@ -164,3 +164,7 @@ The "Dynamic" key has the following configurable values:
 	- For example: suppose you have a `higher_injection_chance_minimum_threat` of 70, and a `higher_injection_chance` of 15. This means that, if when a midround threat is trying to roll, there is 75 midround budget left, then the injection chance will go up 15%.
 - `lower_injection_chance`, `lower_injection_chance_minimum_threat` - The inverse of the `higher_injection_chance` variables. If the *current midround budget* is *below* `lower_injection_chance`, then the chance is lowered by `lower_injection_chance_minimum_threat`.
 	- For example: suppose you have a `lower_injection_chance_minimum_threat` of 30, and a `lower_injection_chance` of 15. This means if there is 20 midround budget left, then the chance will lower by 15%.
+- `threat_curve_centre` - A number between -5 and +5. A negative value will give a more peaceful round and a positive value will give a round with higher threat.
+- `threat_curve_width` - A number between 0.5 and 4. Higher value will favour extreme rounds and lower value rounds closer to the average.
+- `roundstart_split_curve_centre` - A number between -5 and +5. Equivalent to threat_curve_centre, but for the budget split. A negative value will weigh towards midround rulesets, and a positive value will weight towards roundstart ones.
+- `roundstart_split_curve_width` - A number between 0.5 and 4. Equivalent to threat_curve_width, but for the budget split. Higher value will favour more variance in splits and lower value rounds closer to the average.
