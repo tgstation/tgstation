@@ -119,7 +119,7 @@
 		return
 	var/is_statue = becoming_statue.loc == statue
 	to_chat(becoming_statue, "<span class='notice'>You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!</span>")
-	if(!do_after(becoming_statue, 5 SECONDS, target = get_turf(becoming_statue)))
+	if(!do_after(becoming_statue, (is_statue ? 2 SECONDS : 5 SECONDS), target = get_turf(becoming_statue)))
 		to_chat(becoming_statue, "<span class='warning'>Your transformation is interrupted!</span>")
 		ability_cooldown = world.time + 3 SECONDS
 		return
