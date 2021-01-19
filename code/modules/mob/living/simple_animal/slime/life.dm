@@ -118,15 +118,15 @@
 	var/loc_temp = get_temperature(environment)
 	var/divisor = 10 /// The divisor controls how fast body temperature changes, lower causes faster changes
 
-	var/diff = loc_temp - bodytemperature
-	if(abs(diff) > 50) // If the difference is great, reduce the divisor for faster stabilization
+	var/temp_delta = loc_temp - bodytemperature
+	if(abs(temp_delta) > 50) // If the difference is great, reduce the divisor for faster stabilization
 		divisor = 5
 
-	if(loc_temp < bodytemperature) // It is cold here
+	if(temp_delta < 0) // It is cold here
 		if(!on_fire) // Do not reduce body temp when on fire
-			adjust_bodytemperature((diff > 0) ? clamp(diff / divisor, 0, diff) : clamp(diff / divisor, 0, diff))
+			adjust_bodytemperature(clamp(temp_delta / divisor, temp_delta, 0))
 	else // This is a hot place
-		adjust_bodytemperature((diff > 0) ? clamp(diff / divisor, 0, diff) : clamp(diff / divisor, 0, diff))
+		adjust_bodytemperature(clamp(temp_delta / divisor, 0, temp_delta))
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature

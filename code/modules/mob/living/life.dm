@@ -96,12 +96,13 @@
 // Base mob environment handler for body temperature
 /mob/living/proc/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	var/loc_temp = get_temperature(environment)
+	var/temp_delta = loc_temp - bodytemperature
 
-	if(loc_temp < bodytemperature) // it is cold here
+	if(temp_delta < 0) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
-			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * delta_time)
+			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * delta_time, temp_delta))
 	else // this is a hot place
-		adjust_bodytemperature(min((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * delta_time)
+		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * delta_time, temp_delta))
 
 /mob/living/proc/handle_fire(delta_time, times_fired)
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly

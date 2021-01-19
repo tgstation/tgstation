@@ -378,9 +378,13 @@
 	var/atom/A = loc
 	if(isturf(A))
 		var/areatemp = get_temperature(environment)
-		var/diff = areatemp - bodytemperature
-		if(abs(diff) > 5)
-			adjust_bodytemperature((diff > 0) ? clamp(diff * delta_time / 10, 0, diff) : clamp(diff * delta_time / 10, diff, 0))
+		var/temp_delta = areatemp - bodytemperature
+		if(abs(temp_delta) > 5)
+			if(temp_delta < 0)
+				if(!on_fire)
+					adjust_bodytemperature(clamp(temp_delta * delta_time / 10, temp_delta, 0))
+			else
+				adjust_bodytemperature(clamp(temp_delta * delta_time / 10, 0, temp_delta))
 
 	if(!environment_air_is_safe())
 		adjustHealth(unsuitable_atmos_damage * delta_time)
