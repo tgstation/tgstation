@@ -119,7 +119,7 @@ Lizard subspecies: SILVER SCALED
 	name = "Silver Scale"
 	id = "silverlizard"
 	limbs_id = "lizard"
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_HOLY,TRAIT_NOBREATH,TRAIT_WINE_TASTER)
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/tongue/lizard/silver
 	///stored mutcolor for when we turn back off of a silverscale.
@@ -134,12 +134,10 @@ Lizard subspecies: SILVER SCALED
 	new_silverscale.dna.features["mcolor"] = "eeeeee"
 	new_silverscale.eye_color = "0000a0"
 	..()
-	ADD_TRAIT(new_silverscale, TRAIT_HOLY, SPECIES_TRAIT)
 	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
 /datum/species/lizard/silverscale/on_species_loss(mob/living/carbon/C)
 	var/mob/living/carbon/human/was_silverscale = C
-	REMOVE_TRAIT(was_silverscale, TRAIT_HOLY, SPECIES_TRAIT)
 	was_silverscale.dna.features["mcolor"] = old_mutcolor
 	was_silverscale.eye_color = old_eyecolor
 

@@ -646,11 +646,11 @@
 	return "[rank] [first_name]-Silverscale"
 
 /obj/effect/mob_spawn/human/pirate/silverscale/captain
-	rank = "Noble"
+	rank = "Old-guard"
 	outfit = /datum/outfit/pirate/silverscale/captain
 
 /obj/effect/mob_spawn/human/pirate/silverscale/gunner
-	rank = "Grandee"
+	rank = "Top-drawer"
 
 //Forgotten syndicate ship
 

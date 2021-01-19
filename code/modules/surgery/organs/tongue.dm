@@ -100,7 +100,7 @@
 
 /datum/action/item_action/organ_action/statue
 	name = "Become Statue"
-	desc = "Become an elegant silver statue. It's durability and yours are directly tied together, so make sure you're careful."
+	desc = "Become an elegant silver statue. Its durability and yours are directly tied together, so make sure you're careful."
 	var/ability_cooldown = 0
 	var/obj/structure/statue/custom/statue
 
@@ -119,7 +119,7 @@
 		return
 	var/is_statue = becoming_statue.loc == statue
 	to_chat(becoming_statue, "<span class='notice'>You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!</span>")
-	if(!do_after(becoming_statue, 5 SECONDS, target = statue))
+	if(!do_after(becoming_statue, 5 SECONDS, target = get_turf(becoming_statue)))
 		to_chat(becoming_statue, "<span class='warning'>Your transformation is interrupted!</span>")
 		ability_cooldown = world.time + 3 SECONDS
 		return
