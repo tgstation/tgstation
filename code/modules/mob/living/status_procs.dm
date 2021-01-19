@@ -165,7 +165,7 @@
 		return I
 
 ///////////////////////////////// PARALYZED //////////////////////////////////
-/mob/living/proc/IsParalyzed() //If we're immobilized
+/mob/living/proc/IsParalyzed() //If we're paralyzed
 	return has_status_effect(STATUS_EFFECT_PARALYZED)
 
 /mob/living/proc/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect

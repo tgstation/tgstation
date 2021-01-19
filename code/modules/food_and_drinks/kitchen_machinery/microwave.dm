@@ -319,9 +319,9 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.custom_materials && length(O.custom_materials))
-			if(O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
-				metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
+		if(LAZYLEN(O.custom_materials))
+			if(O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
+				metal += O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)]
 
 	if(metal)
 		spark()

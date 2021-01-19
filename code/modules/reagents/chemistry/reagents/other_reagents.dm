@@ -1677,15 +1677,17 @@
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M)
 	. = ..()
-	if(!M.mind?.assigned_role)
-		return
-	switch(M.mind.assigned_role)
-		if("Chief Medical Officer", "Captain", "Chief Engineer", "Research Director", "Head of Personnel")
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		// Heads of staff and the captain have a "royal metabolism"
+		if(HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM))
 			if(prob(10))
 				to_chat(M, "You feel like royalty.")
 			if(prob(5))
 				M.say(pick("Peasants..","This carpet is worth more than your contracts!","I could fire you at any time..."), forced = "royal carpet")
-		if("Quartermaster")
+
+		// The quartermaster, as a semi-head, has a "pretender royal" metabolism
+		else if(HAS_TRAIT(liver, TRAIT_PRETENDER_ROYAL_METABOLISM))
 			if(prob(15))
 				to_chat(M, "You feel like an impostor...")
 
@@ -2012,7 +2014,7 @@
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
-	if((ismonkey(M) || ishuman(M)) && current_cycle >= 10)
+	if((ishuman(M)) && current_cycle >= 10)
 		M.gorillize()
 
 /datum/reagent/growthserum
@@ -2125,9 +2127,6 @@
 	name = "synthpax"
 	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
-/datum/reagent/peaceborg
-	can_synth = FALSE
 
 /datum/reagent/peaceborg/confuse
 	name = "Dizzying Solution"
@@ -2324,13 +2323,7 @@
 	color = "#E6E6DA"
 	taste_mult = 0
 
-/datum/reagent/consumable/gravy
-	name = "Gravy"
-	description = "A mixture of flour, water, and the juices of cooked meat."
-	taste_description = "gravy"
-	color = "#623301"
-	taste_mult = 1.2
-
+// "Second wind" reagent generated when someone suffers a wound. Epinephrine, adrenaline, and stimulants are all already taken so here we are
 /datum/reagent/determination
 	name = "Determination"
 	description = "For when you need to push on a little more. Do NOT allow near plants."

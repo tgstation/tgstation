@@ -1,0 +1,4 @@
+author: "remove32"
+delete-after: True
+changes: 
+  - refactor: "add error handling to server build tool"

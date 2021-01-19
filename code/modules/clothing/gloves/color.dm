@@ -23,7 +23,7 @@
 	if(iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
 		var/mob/living/carbon/U = user
-		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, TRUE, TRUE)
+		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
 		if(success)
 			if(C == user)
 				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
@@ -32,33 +32,33 @@
 		else
 			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
 
-		qdel(src)
-
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"
 	name = "spray-on insulated gloves"
 	icon_state = "sprayon"
 	inhand_icon_state = "sprayon"
+	item_flags = DROPDEL
 	permeability_coefficient = 0
 	resistance_flags = ACID_PROOF
-	var/shocks_remaining = 10
+	var/charges_remaining = 10
 
 /obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
 	.=..()
-	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/Shocked)
+	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/use_charge)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/use_charge)
 
-/obj/item/clothing/gloves/color/yellow/sprayon/proc/Shocked()
-	shocks_remaining--
-	if(shocks_remaining < 0)
-		qdel(src) //if we run out of uses, the gloves crumble away into nothing, just like my dreams after working with .dm
+/obj/item/clothing/gloves/color/yellow/sprayon/proc/use_charge()
+	SIGNAL_HANDLER
 
-/obj/item/clothing/gloves/color/yellow/sprayon/dropped()
-	.=..()
-	qdel(src) //loose nodrop items bad
+	charges_remaining--
+	if(charges_remaining <= 0)
+		var/turf/location = get_turf(src)
+		location.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
+		qdel(src)
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
