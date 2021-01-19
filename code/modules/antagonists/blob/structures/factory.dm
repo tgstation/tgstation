@@ -3,9 +3,9 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
-	max_integrity = 200
-	health_regen = 1
-	point_return = 25
+	max_integrity = BLOB_FACTORY_MAX_HP
+	health_regen = BLOB_FACTORY_HP_REGEN
+	point_return = BLOB_REFUND_FACTORY_COST
 	resistance_flags = LAVA_PROOF
 	var/list/spores = list()
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null

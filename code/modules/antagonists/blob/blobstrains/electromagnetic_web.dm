@@ -12,11 +12,11 @@
 /datum/blobstrain/reagent/electromagnetic_web/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if(damage_type == BRUTE) //take full brute
 		switch(B.brute_resist)
-			if(0.5)
+			if(BLOB_BRUTE_RESIST)
 				return damage * 2
-			if(0.25)
+			if(BLOB_BRUTE_RESIST*0.5)
 				return damage * 4
-			if(0.1)
+			if(BLOB_BRUTE_RESIST*0.2)
 				return damage * 10
 	return damage * 1.25 //a laser will do 25 damage, which will kill any normal blob
 

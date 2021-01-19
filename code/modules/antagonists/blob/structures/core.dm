@@ -3,12 +3,14 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
-	max_integrity = 400
+	max_integrity = BLOB_CORE_MAX_HP
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 75, ACID = 90)
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed
 	resistance_flags = LAVA_PROOF
+	strong_reinforce_range = BLOB_CORE_STRONG_REINFORCE_RANGE
+	reflector_reinforce_range = BLOB_CORE_REFLECTOR_REINFORCE_RANGE
 
 /obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, placed = 0)
 	GLOB.blob_cores += src
@@ -59,10 +61,8 @@
 	if(overmind)
 		overmind.blobstrain.core_process()
 		overmind.update_health_hud()
-	Pulse_Area(overmind, 12, 4, 3)
-	for(var/obj/structure/blob/normal/B in range(1, src))
-		if(DT_PROB(2.5, delta_time))
-			B.change_to(/obj/structure/blob/shield/core, overmind)
+	Pulse_Area(overmind, 12, BLOB_CORE_PULSE_RANGE, BLOB_CORE_EXPAND_RANGE)
+	reinforce_area()
 	..()
 
 /obj/structure/blob/core/ComponentInitialize()

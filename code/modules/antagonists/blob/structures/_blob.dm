@@ -16,10 +16,12 @@
 	var/health_regen = BLOB_REGULAR_HP_REGEN //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
 	var/heal_timestamp = 0 //we got healed when?
-	var/brute_resist = 0.5 //multiplies brute damage by this
-	var/fire_resist = 1 //multiplies burn damage by this
+	var/brute_resist = BLOB_BRUTE_RESIST //multiplies brute damage by this
+	var/fire_resist = BLOB_FIRE_RESIST //multiplies burn damage by this
 	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
+	var/strong_reinforce_range = 0 // Cores and nodes can have this, possibly due to strains
+	var/reflector_reinforce_range = 0
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -83,7 +85,7 @@
 		pulsing_overmind = overmind
 	Be_Pulsed()
 	var/expanded = FALSE
-	if(prob(70) && expand())
+	if(prob(70*(1/BLOB_EXPAND_CHANCE_MULTIPLIER)) && expand())
 		expanded = TRUE
 	var/list/blobs_to_affect = list()
 	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
@@ -102,7 +104,7 @@
 			var/can_expand = TRUE
 			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
 				can_expand = FALSE
-			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity))
+			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity*BLOB_EXPAND_CHANCE_MULTIPLIER))
 				var/obj/structure/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
 				if(newB)
 					if(expanded)
@@ -322,14 +324,23 @@
 		return overmind.blobstrain.name
 	return "some kind of organic tissue"
 
+/obj/structure/blob/proc/reinforce_area()	// Used by cores and nodes to upgrade their surroundings
+	if(strong_reinforce_range)
+		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
+			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+				B.change_to(/obj/structure/blob/shield/core, overmind)
+	if(reflector_reinforce_range)
+		for(var/obj/structure/blob/shield/B in range(reflector_reinforce_range, src))
+			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
+
 /obj/structure/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
 	light_range = 0
-	obj_integrity = 21 //doesn't start at full health
-	max_integrity = 25
-	health_regen = 1
-	brute_resist = 0.25
+	max_integrity = BLOB_REGULAR_MAX_HP
+	health_regen = BLOB_REGULAR_HP_REGEN
+	brute_resist = BLOB_BRUTE_RESIST * 0.5
 
 /obj/structure/blob/normal/scannerreport()
 	if(obj_integrity <= 15)
@@ -342,14 +353,14 @@
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
-		brute_resist = 0.5
+		brute_resist = BLOB_BRUTE_RESIST
 	else if (overmind)
 		icon_state = "blob"
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
-		brute_resist = 0.25
+		brute_resist = BLOB_BRUTE_RESIST * 0.5
 	else
 		icon_state = "blob"
 		name = "dead blob"
 		desc = "A thick wall of lifeless tendrils."
-		brute_resist = 0.25
+		brute_resist = BLOB_BRUTE_RESIST * 0.5

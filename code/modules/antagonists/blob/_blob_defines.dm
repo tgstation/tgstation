@@ -14,12 +14,35 @@
 
 #define BLOB_EXPAND_COST                            4           // Price to expand onto a new tile
 #define BLOB_ATTACK_REFUND                          2           // Points 'refunded' when the expand attempt actually attacks something instead
+#define BLOB_BRUTE_RESIST                           0.5
+#define BLOB_FIRE_RESIST                            1
+#define BLOB_EXPAND_CHANCE_MULTIPLIER               1           // Increase this value to make blobs naturally expand faster
+#define BLOB_REINFORCE_CHANCE                       2.5         // The delta_time chance for cores/nodes to reinforce their surroundings
+
 
 
 // Structure properties
 #define BLOB_CORE_PULSE_RANGE                       4           // The radius up to which the core activates structures, and up to which structures can be built
+#define BLOB_CORE_EXPAND_RANGE                      3           // Radius of automatic expansion
 #define BLOB_NODE_PULSE_RANGE                       3           // Same, but for nodes
-#define BLOB_REGULAR_HP_REGEN                       2           // Health regenned when pulsed by a node/core
+
+#define BLOB_CORE_STRONG_REINFORCE_RANGE            1           // The radius of tiles surrounding the core that get upgraded
+#define BLOB_CORE_REFLECTOR_REINFORCE_RANGE         0
+
+#define BLOB_REGULAR_MAX_HP                         30
+#define BLOB_STRONG_MAX_HP                          150
+#define BLOB_REFLECTOR_MAX_HP                       150
+#define BLOB_RESOURCE_MAX_HP                        
+#define BLOB_FACTORY_MAX_HP                         200
+#define BLOB_NODE_MAX_HP
+#define BLOB_CORE_MAX_HP                            400
+
+#define BLOB_REGULAR_HP_REGEN                       1           // Health regenerated when pulsed by a node/core
+#define BLOB_STRONG_HP_REGEN                        2
+#define BLOB_REFLECTOR_HP_REGEN                     2       
+#define BLOB_RESOURCE_HP_REGEN
+#define BLOB_FACTORY_HP_REGEN                       1
+#define BLOB_CORE_HP_REGEN
 
 // Structure purchasing
 #define BLOB_UPGRADE_STRONG_COST                    15          // Upgrade and build costs here
@@ -27,6 +50,10 @@
 #define BLOB_STRUCTURE_RESOURCE_COST                40
 #define BLOB_STRUCTURE_FACTORY_COST                 60
 #define BLOB_STRUCTURE_NODE_COST                    50
+
+#define BLOB_REFUND_STRONG_COST                     4           // Points refunded when destroying the structure
+#define BLOB_REFUND_REFLECTOR_COST                  8
+#define BLOB_REFUND_FACTORY_COST                    25
 
 // Blob power properties
 #define BLOB_POWER_RELOCATE_COST                    30          // Resource cost to move your core to a different node
