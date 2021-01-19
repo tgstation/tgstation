@@ -34780,7 +34780,7 @@
 /area/science/mixing)
 "bED" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/tier_2,
+/obj/machinery/portable_atmospherics/canister/tier_1,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bEE" = (
