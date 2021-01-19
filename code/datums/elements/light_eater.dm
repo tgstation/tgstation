@@ -37,18 +37,44 @@
 		UnregisterSignal(source, COMSIG_REAGENT_EXPOSE_ATOM)
 	return ..()
 
-
 /**
- * Queues all of the lights attached to a given object and consumes all of them
+ * Makes the light eater consume all of the lights attached to the target atom.
  *
  * Arguments:
- * - [food][/atom]: The atom being searched for lights
- * - [eater][/datum]: The light eater searching for food
+ * - [food][/atom]: The atom to start the search for lights at.
+ * - [eater][/datum]: The light eater being used in this case.
  */
 /datum/element/light_eater/proc/eat_lights(atom/food, datum/eater)
-	var/list/buffet = light_eater_table_buffet(food, eater)
+	var/list/buffet = table_buffet(food)
+	if(!LAZYLEN(buffet))
+		return 0
+
+	. = 0
 	for(var/morsel in buffet)
-		devour(morsel, eater)
+		. += devour(morsel, eater)
+
+	if(!.)
+		return
+
+	food.visible_message(
+		"<span class='danger'>Something dark in [eater] lashes out at [food] and [food.p_their()] light goes out in an instant!</span>",
+		"<span class='userdanger'>You feel something dark in [eater] lash out and gnaw through your light in an instant! It recedes just as fast, but you can feel that [eater.p_theyve()] left something hungry behind.</span>",
+		"<span class='danger'>You feel a gnawing pulse eat at your sight.</span>"
+	)
+
+/**
+ * Aggregates a list of the light sources attached to the target atom.
+ *
+ * Arguments:
+ * - [comissary][/atom]: The origin node of all of the light sources to search through.
+ * - [light_eater][/datum]: The light eater being applied to the target.
+ */
+/datum/element/light_eater/proc/table_buffet(atom/commisary, datum/light_eater)
+	. = list()
+	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., light_eater)
+	for(var/nom in commisary.light_sources)
+		var/datum/light_source/morsel = nom
+		. += morsel.source_atom
 
 /**
  * Consumes the light on the target, permanently rendering it incapable of producing light
@@ -58,19 +84,14 @@
  * - [eater][/datum]: The light eater eating the morsel
  */
 /datum/element/light_eater/proc/devour(atom/morsel, datum/eater)
-	if(!light_eater_devour(morsel, eater))
-		return
+	if(morsel.light_power <= 0 || morsel.light_range <= 0 || !morsel.light_on)
+		return FALSE
+	if(SEND_SIGNAL(morsel, COMSIG_LIGHT_EATER_ACT, eater) & COMPONENT_BLOCK_LIGHT_EATER)
+		return FALSE
 
-	morsel.visible_message(
-		"<span class='danger'>Something dark in \the [eater] lashes out at \the [morsel] and [morsel.p_their()] light goes out in an instant!</span>",
-		"<span class='userdanger'>You feel something dark in \the [eater] lash out and gnaw through your light in an instant! You can feel that it's left something hungry behind.</span>",
-		"<span class='danger'>You feel a gnawing pulse eat at your sight.</span>"
-	)
-	morsel.set_light(0, 0, null, FALSE)
 	morsel.AddElement(/datum/element/light_eaten)
-
-
-
+	SEND_SIGNAL(src, COMSIG_LIGHT_EATER_DEVOUR, morsel)
+	return TRUE
 
 /////////////////////
 // SIGNAL HANDLERS //
@@ -101,8 +122,6 @@
 /datum/element/light_eater/proc/on_afterattack(obj/item/source, atom/target, mob/living/user, proximity)
 	SIGNAL_HANDLER
 	if(!proximity)
-		return NONE
-	if(isopenturf(target))
 		return NONE
 	eat_lights(target, source)
 	return NONE
