@@ -534,4 +534,4 @@
 
 /obj/item/clothing/shoes/gunboots/Initialize()
 	. = ..()
-	AddComponent(/datum/component/projectile_shooter, _projectile_type = projectile_type, _shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))
+	AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))

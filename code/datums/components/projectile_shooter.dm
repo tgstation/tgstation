@@ -3,8 +3,8 @@
 	Usage :
 		target.AddComponent(/datum/component/projectile_shooter, args)
 	Arguments :
-		_projectile_type : What projectile do we shoot?
-		_shot_prob : If we only want to go off some of the time when a signal fires, this is the percent chance for it to fire
+		projectile_type : What projectile do we shoot?
+		shot_prob : If we only want to go off some of the time when a signal fires, this is the percent chance for it to fire
 		signal_or_sig_list : Used to register the signal(s) you want to fire a shot when sent
 */
 /datum/component/projectile_shooter
@@ -13,9 +13,9 @@
 	/// If we only want to go off some of the time when a signal fires, this is the percent chance for it to fire
 	var/shot_prob
 
-/datum/component/projectile_shooter/Initialize(_projectile_type = /obj/projectile/bullet/c10mm, _shot_prob = 100, signal_or_sig_list)
-	projectile_type = _projectile_type
-	shot_prob = _shot_prob
+/datum/component/projectile_shooter/Initialize(projectile_type = /obj/projectile/bullet/c10mm, shot_prob = 100, signal_or_sig_list)
+	src.projectile_type = projectile_type
+	src.shot_prob = shot_prob
 
 	// unarmed attack is a special case for gunboots so they can shoot someone you stomp on. This happens 100% of the time you kick, ignoring shot_prob
 	if(islist(signal_or_sig_list) && (COMSIG_HUMAN_MELEE_UNARMED_ATTACK in signal_or_sig_list))
