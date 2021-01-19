@@ -220,7 +220,7 @@
 	T.visible_message("<span class='userdanger'>[src] flares briefly.</span>")
 
 	addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
-	COOLDOWN_START(src, roll_cd, 1 SECONDS)
+	COOLDOWN_START(src, roll_cd, 2.5 SECONDS)
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	. = ..()
