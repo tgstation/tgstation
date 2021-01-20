@@ -19,7 +19,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	initial_language_holder = /datum/language_holder/empty
 	var/mob/camera/blob/overmind = null
-	var/obj/structure/blob/factory/factory = null
+	var/obj/structure/blob/special/factory/factory = null
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/update_icons()
@@ -115,7 +115,7 @@
 	///Whether or not this is a fragile spore from Distributed Neurons
 	var/is_weak = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/factory/linked_node)
 	. = ..()
 	if(istype(linked_node))
 		factory = linked_node
@@ -289,7 +289,7 @@
 		if(!factory)
 			damagesources++
 		else
-			if(locate(/obj/structure/blob/core) in blobs_in_area)
+			if(locate(/obj/structure/blob/special/core) in blobs_in_area)
 				adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_CORE)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 				if(overmind)

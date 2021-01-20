@@ -1,4 +1,4 @@
-/obj/structure/blob/factory
+/obj/structure/blob/special/factory
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
@@ -7,19 +7,15 @@
 	health_regen = BLOB_FACTORY_HP_REGEN
 	point_return = BLOB_REFUND_FACTORY_COST
 	resistance_flags = LAVA_PROOF
-	var/list/spores = list()
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
-	var/max_spores = 3
-	var/spore_delay = 0
-	var/spore_cooldown = 80 //8 seconds between spores and after spore death
+	max_spores = BLOB_FACTORY_MAX_SPORES
 
-
-/obj/structure/blob/factory/scannerreport()
+/obj/structure/blob/special/factory/scannerreport()
 	if(naut)
 		return "It is currently sustaining a blobbernaut, making it fragile and unable to produce blob spores."
 	return "Will produce a blob spore every few seconds."
 
-/obj/structure/blob/factory/Destroy()
+/obj/structure/blob/special/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
@@ -30,7 +26,7 @@
 	spores = null
 	return ..()
 
-/obj/structure/blob/factory/Be_Pulsed()
+/obj/structure/blob/special/factory/Be_Pulsed()
 	. = ..()
 	if(naut)
 		return

@@ -22,12 +22,16 @@
 
 
 // Structure properties
+
 #define BLOB_CORE_PULSE_RANGE                       4           // The radius up to which the core activates structures, and up to which structures can be built
 #define BLOB_CORE_EXPAND_RANGE                      3           // Radius of automatic expansion
-#define BLOB_NODE_PULSE_RANGE                       3           // Same, but for nodes
-
 #define BLOB_CORE_STRONG_REINFORCE_RANGE            1           // The radius of tiles surrounding the core that get upgraded
 #define BLOB_CORE_REFLECTOR_REINFORCE_RANGE         0
+#define BLOB_CORE_MAX_SPORES                        1           // Spores that the core can produce for free
+
+#define BLOB_NODE_PULSE_RANGE                       3           // Same, but for nodes
+
+#define BLOB_FACTORY_MAX_SPORES                     3
 
 #define BLOB_REGULAR_MAX_HP                         30
 #define BLOB_STRONG_MAX_HP                          150
@@ -45,6 +49,7 @@
 #define BLOB_CORE_HP_REGEN
 
 // Structure purchasing
+
 #define BLOB_UPGRADE_STRONG_COST                    15          // Upgrade and build costs here
 #define BLOB_UPGRADE_REFLECTOR_COST                 15
 #define BLOB_STRUCTURE_RESOURCE_COST                40
@@ -56,6 +61,7 @@
 #define BLOB_REFUND_FACTORY_COST                    25
 
 // Blob power properties
+
 #define BLOB_POWER_RELOCATE_COST                    30          // Resource cost to move your core to a different node
 #define BLOB_POWER_REROLL_COST                      40          // Strain reroll
 #define BLOB_POWER_REROLL_FREE_TIME                 4 MINUTES   // Gain a free strain reroll every x minutes
@@ -67,6 +73,7 @@
 
 #define BLOBMOB_HEALING_MULTIPLIER                  0.0125      // Multiplies by -maxHealth and heals the blob by this amount every blob_act
 #define BLOBMOB_SPORE_HEALTH                        30          // Base spore health
+#define BLOBMOB_SPORE_SPAWN_COOLDOWN                8 SECONDS   
 #define BLOBMOB_SPORE_DMG_LOWER                     2
 #define BLOBMOB_SPORE_DMG_UPPER                     4
 #define BLOBMOB_BLOBBERNAUT_RESOURCE_COST           40          // Purchase price for making a blobbernaut

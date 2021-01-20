@@ -53,7 +53,7 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/structure/blob/core/core = new(get_turf(src), src, 1)
+		var/obj/structure/blob/special/core/core = new(get_turf(src), src, 1)
 		core.overmind = src
 		blobs_legit += src
 		blob_core = core
@@ -99,7 +99,7 @@
 		if(!(A.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
 			to_chat(src, "<span class='warning'>This type of blob must be placed on the station!</span>")
 			return
-		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
+		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
 			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
 			return //handholdotron 2000
 	if(minSeparation)
@@ -158,14 +158,14 @@
 	set category = "Blob"
 	set name = "Create Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/factory, 7, TRUE)
+	createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, 7, TRUE)
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
 	set name = "Create Blobbernaut ([BLOBMOB_BLOBBERNAUT_RESOURCE_COST])"
 	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
-	var/obj/structure/blob/factory/B = locate(/obj/structure/blob/factory) in T
+	var/obj/structure/blob/special/factory/B = locate(/obj/structure/blob/special/factory) in T
 	if(!B)
 		to_chat(src, "<span class='warning'>You must be on a factory blob!</span>")
 		return

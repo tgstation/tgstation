@@ -14,18 +14,19 @@
 	var/point_return = 0 
 	max_integrity = 30
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
-	var/health_regen = BLOB_REGULAR_HP_REGEN //how much health this blob regens when pulsed
-	var/pulse_timestamp = 0 //we got pulsed when?
-	var/heal_timestamp = 0 //we got healed when?
-	var/brute_resist = BLOB_BRUTE_RESIST //multiplies brute damage by this
-	var/fire_resist = BLOB_FIRE_RESIST //multiplies burn damage by this
-	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
+	/// how much health this blob regens when pulsed
+	var/health_regen = BLOB_REGULAR_HP_REGEN
+	/// We got pulsed when?
+	var/pulse_timestamp = 0 
+	/// we got healed when?
+	var/heal_timestamp = 0 
+	/// Multiplies brute damage by this
+	var/brute_resist = BLOB_BRUTE_RESIST
+	/// Multiplies burn damage by this 
+	var/fire_resist = BLOB_FIRE_RESIST 
+	/// If the blob blocks atmos and heat spread
+	var/atmosblock = FALSE 
 	var/mob/camera/blob/overmind
-	var/strong_reinforce_range = 0 // Cores and nodes can have this, possibly due to strains
-	var/reflector_reinforce_range = 0
-	var/max_spores = 0 
-	var/list/spores	= list()
-
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -97,7 +98,7 @@
 	shuffle_inplace(blobs_to_affect)
 	for(var/L in blobs_to_affect)
 		var/obj/structure/blob/B = L
-		if(!B.overmind && !istype(B, /obj/structure/blob/core) && prob(30))
+		if(!B.overmind && !istype(B, /obj/structure/blob/special/core) && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 			B.update_icon()
 		var/distance = get_dist(get_turf(src), get_turf(B))
@@ -328,16 +329,6 @@
 		return overmind.blobstrain.name
 	return "some kind of organic tissue"
 
-/obj/structure/blob/proc/reinforce_area()	// Used by cores and nodes to upgrade their surroundings
-	if(strong_reinforce_range)
-		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
-			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
-				B.change_to(/obj/structure/blob/shield/core, overmind)
-	if(reflector_reinforce_range)
-		for(var/obj/structure/blob/shield/B in range(reflector_reinforce_range, src))
-			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
-				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
-
 /obj/structure/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
@@ -368,3 +359,27 @@
 		name = "dead blob"
 		desc = "A thick wall of lifeless tendrils."
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
+
+/obj/structure/blob/special	// Generic type for nodes/factories/cores/resource
+
+	// Spore production vars: for core, factories, and nodes (with strains)
+	var/max_spores = 0 
+	var/list/spores	= list()
+	var/spore_delay = 0
+	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
+
+	// Area reinforcement vars: used by cores and nodes, for strains to modify
+	/// Range this blob free upgrades to strong blobs at: for the core, and for strains
+	var/strong_reinforce_range = 0 
+	/// Range this blob free upgrades to reflector blobs at: for the core, and for strains
+	var/reflector_reinforce_range = 0
+
+/obj/structure/blob/special/proc/reinforce_area(delta_time)	// Used by cores and nodes to upgrade their surroundings
+	if(strong_reinforce_range)
+		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
+			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+				B.change_to(/obj/structure/blob/shield/core, overmind)
+	if(reflector_reinforce_range)
+		for(var/obj/structure/blob/shield/B in range(reflector_reinforce_range, src))
+			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
