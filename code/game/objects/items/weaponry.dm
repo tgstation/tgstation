@@ -268,7 +268,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 //statistically similar to e-cutlasses
 /obj/item/katana/cutlass
-	name = "katana"
+	name = "cutlass"
 	desc = "A piratey sword used by buckaneers to negotiate the transfer of treasure."
 	icon_state = "cutlass"
 	inhand_icon_state = "cutlass"
