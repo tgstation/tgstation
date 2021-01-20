@@ -461,11 +461,14 @@
 		if(L.reagents && L.can_inject(null, 0))
 			var/injecting_amount = max(1, G.seed.potency*0.1) // Minimum of 1, max of 10
 			G.reagents.trans_to(L, injecting_amount, methods = INJECT)
-			to_chat(target, "<span class='danger'>The needle-like hairs of [G] pierce your skin!</span>")
+			to_chat(target, "<span class='danger'>The hollow prickles of [G] inject you with something!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
 /datum/plant_gene/trait/stinging/on_attack(obj/item/food/grown/G, atom/target, mob/user,proximity)
-	on_throw_impact(G, target)
+	if(G.reagents && G.reagents.total_volume)
+		on_throw_impact(G, target)
+		if(!G.reagents || !G.reagents.total_volume)
+			to_chat(user, "<span class='notice'>[G] sags slightly, its contents exhausted.</span>")
 
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
