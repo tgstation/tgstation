@@ -53,7 +53,7 @@
 
 	pill_user.Life()
 
-	TEST_ASSERT(pill_user.addiction_list && is_type_in_list(meth, pill_user.addiction_list), "User is not addicted to meth after eating consuming the addiction threshold")
+	TEST_ASSERT(pill_user.reagents.addiction_list && is_type_in_list(meth, pill_user.reagents.addiction_list), "User is not addicted to meth after eating consuming the addiction threshold")
 
 	// Then injected metabolism
 	syringe.volume = initial(meth.addiction_threshold)
@@ -64,7 +64,7 @@
 
 	syringe_user.Life()
 
-	TEST_ASSERT(syringe_user.addiction_list && is_type_in_list(meth, syringe_user.addiction_list), "User is not addicted to meth after injecting the addiction threshold")
+	TEST_ASSERT(syringe_user.reagents.addiction_list && is_type_in_list(meth, syringe_user.reagents.addiction_list), "User is not addicted to meth after injecting the addiction threshold")
 
 	// One half syringe
 	syringe.reagents.clear_reagents()
@@ -79,4 +79,4 @@
 
 	pill_syringe_user.Life()
 
-	TEST_ASSERT(pill_syringe_user.addiction_list && is_type_in_list(meth, pill_syringe_user.addiction_list), "User is not addicted to meth after injecting the addiction threshold")
+	TEST_ASSERT(pill_syringe_user.reagents.addiction_list && is_type_in_list(meth, pill_syringe_user.reagents.addiction_list), "User is not addicted to meth after injecting the addiction threshold")
