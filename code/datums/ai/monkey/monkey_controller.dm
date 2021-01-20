@@ -39,7 +39,7 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	return ..() //Run parent at end
 
-/datum/ai_controller/monkey/UnpossessPawn()
+/datum/ai_controller/monkey/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_MOVABLE_CROSSED, COMSIG_LIVING_START_PULL,\
 	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED))
 	return ..() //Run parent at end
@@ -134,7 +134,8 @@ have ways of interacting with a specific mob and control it.
 	var/mob/living/living_pawn = pawn
 
 	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
-		step(living_pawn, pick(GLOB.cardinals))
+		var/move_dir = pick(GLOB.alldirs)
+		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 	else if(DT_PROB(5, delta_time))
 		INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick("screech"))
 	else if(DT_PROB(1, delta_time))

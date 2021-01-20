@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
+	vis_flags = VIS_HIDE
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -145,6 +146,7 @@
 	return
 
 /atom/movable/lighting_object/wash(clean_types)
+	SHOULD_CALL_PARENT(FALSE) // lighting objects are dirty, confirmed
 	return
 
 // Override here to prevent things accidentally moving around overlays.

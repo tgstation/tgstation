@@ -47,6 +47,10 @@
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces you to [apply_method] [src].</span>")
 
+	return on_consumption(M, user)
+
+///Runs the consumption code, can be overriden for special effects
+/obj/item/reagent_containers/pill/proc/on_consumption(mob/M, mob/user)
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, M, "<span class='notice'>[pick(strings(REDPILL_FILE, "redpill_questions"))]</span>"), 50)
 
@@ -255,20 +259,26 @@
 	list_reagents = list(/datum/reagent/drug/aranesp = 10)
 	icon_state = "pill3"
 
-/obj/item/reagent_containers/pill/floorpill
-	name = "floorpill"
+///Black and white pills that spawn in maintenance and have random reagent contents
+/obj/item/reagent_containers/pill/maintenance
+	name = "maintenance pill"
 	desc = "A strange pill found in the depths of maintenance"
 	icon_state = "pill21"
-	var/static/list/names = list("maintenance pill","floorpill","mystery pill","suspicious pill","strange pill")
+	var/static/list/names = list("maintenance pill", "floor pill", "mystery pill", "suspicious pill", "strange pill", "lucky pill", "ominous pill", "eerie pill")
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
-	, "Surely, there's no way this could go bad.")
+	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
 
-/obj/item/reagent_containers/pill/floorpill/Initialize()
-	list_reagents = list(get_random_reagent_id() = rand(10,50))
+/obj/item/reagent_containers/pill/maintenance/Initialize()
+	list_reagents = list(get_random_reagent_id() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
 	name = pick(names)
-	if(prob(20))
+	if(prob(30))
 		desc = pick(descs)
+
+/obj/item/reagent_containers/pill/maintenance/on_consumption(mob/M, mob/user)
+	. = ..()
+
+	M.client?.give_award(MAINTENANCE_PILL_SCORE, M)
 
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"

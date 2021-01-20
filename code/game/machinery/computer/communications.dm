@@ -44,6 +44,7 @@
 /obj/machinery/computer/communications/Initialize()
 	. = ..()
 	GLOB.shuttle_caller_list += src
+	AddComponent(/datum/component/gps, "Secured Communications Signal")
 
 /// Are we NOT a silicon, AND we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_non_silicon_captain(mob/user)
@@ -86,14 +87,24 @@
 	if (.)
 		return
 
+	if (!has_communication())
+		return
+
 	. = TRUE
 
 	switch (action)
 		if ("answerMessage")
 			if (!authenticated(usr))
 				return
-			var/answer_index = text2num(params["answer"])
-			var/message_index = text2num(params["message"])
+
+			var/answer_index = params["answer"]
+			var/message_index = params["message"]
+
+			// If either of these aren't numbers, then bad voodoo.
+			if(!isnum(answer_index) || !isnum(message_index))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] provided an invalid index type when replying to a message on [src] [ADMIN_JMP(src)]. This should not happen. Please check with a maintainer and/or consult tgui logs.")
+				CRASH("Non-numeric index provided when answering comms console message.")
+
 			if (!answer_index || !message_index || answer_index < 1 || message_index < 1)
 				return
 			var/datum/comm_message/message = messages[message_index]
@@ -323,6 +334,7 @@
 	var/list/data = list(
 		"authenticated" = FALSE,
 		"emagged" = FALSE,
+		"hasConnection" = has_communication(),
 	)
 
 	var/ui_state = issilicon(user) ? cyborg_state : state
@@ -436,6 +448,12 @@
 		"maxMessageLength" = MAX_MESSAGE_LEN,
 	)
 
+/// Returns whether or not the communications console can communicate with the station
+/obj/machinery/computer/communications/proc/has_communication()
+	var/turf/current_turf = get_turf(src)
+	var/z_level = current_turf.z
+	return is_station_level(z_level) || is_centcom_level(z_level)
+
 /obj/machinery/computer/communications/proc/set_state(mob/user, new_state)
 	if (issilicon(user))
 		cyborg_state = new_state
@@ -495,7 +513,6 @@
 			status_signal.data["picture_state"] = data1
 
 	frequency.post_signal(src, status_signal)
-
 
 /obj/machinery/computer/communications/Destroy()
 	GLOB.shuttle_caller_list -= src
