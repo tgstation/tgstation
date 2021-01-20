@@ -15,7 +15,7 @@
 
 /datum/movespeed_modifier/slaughter
 	multiplicative_slowdown = -1
-    
+
 /datum/movespeed_modifier/resonance
 	multiplicative_slowdown = 0.75
 
