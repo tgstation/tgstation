@@ -1,11 +1,6 @@
 //These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually
 //as they handle all relevant stuff like adding it to the player's screen and such
 
-//Defines for borg module selection
-#define BORG_CHOOSE_MODULE_ONE 	   1
-#define BORG_CHOOSE_MODULE_TWO 	   2
-#define BORG_CHOOSE_MODULE_THREE   3
-
 /**
  * Returns the thing in our active hand (whatever is in our active module-slot, in this case)
  */
@@ -410,7 +405,3 @@
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
 	return (I && (I in module.modules)) //Only if it's part of our module.
-
-#undef BORG_CHOOSE_MODULE_ONE
-#undef BORG_CHOOSE_MODULE_TWO
-#undef BORG_CHOOSE_MODULE_THREE
