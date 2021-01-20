@@ -48,9 +48,10 @@
 	throw_range = 3
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
-	var/minforce = 4 //minimum force after most of the stingy bits fall off. increases with potency.
-	var/bareicon = "nettle_bare" //icon used to represent nettle once all its bonus damage is used up
-
+	/// minimum force after most of the stingy bits fall off. increases with potency.
+	var/minforce = 4
+	/// icon used to represent nettle once all its bonus damage is used up
+	var/bareicon = "nettle_bare" 
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is lightly grasping [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|TOXLOSS)
