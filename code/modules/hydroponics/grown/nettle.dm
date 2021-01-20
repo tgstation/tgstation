@@ -48,7 +48,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
-	var/minforce = 7 //minimum force after most of the stingy bits fall off
+	var/minforce = 4 //minimum force after most of the stingy bits fall off. increases with potency.
 
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is lightly grasping [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -85,7 +85,8 @@
 
 /obj/item/food/grown/nettle/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	force = round((minforce + seed.potency / 13), 1)
+	minforce = round(minforce * (1 + seed.potency / 200))
+	force = round((minforce + seed.potency / 10), 1)
 
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
@@ -93,7 +94,7 @@
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 20
-	minforce = 12
+	minforce = 8
 	wound_bonus = CANT_WOUND
 	throwforce = 15
 
