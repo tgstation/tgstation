@@ -7,8 +7,6 @@
 	add_points(-cost)
 	return TRUE
 
-// Power verbs
-
 /mob/camera/blob/proc/place_blob_core(placement_override, pop_override = FALSE)
 	if(placed && placement_override != -1)
 		return TRUE
@@ -63,24 +61,18 @@
 	announcement_time = world.time + OVERMIND_ANNOUNCEMENT_MAX_TIME
 	return TRUE
 
-/mob/camera/blob/verb/transport_core()
-	set category = "Blob"
-	set name = "Jump to Core"
-	set desc = "Move your camera to your core."
+/mob/camera/blob/proc/transport_core()
 	if(blob_core)
 		forceMove(blob_core.drop_location())
 
-/mob/camera/blob/verb/jump_to_node()
-	set category = "Blob"
-	set name = "Jump to Node"
-	set desc = "Move your camera to a selected node."
+/mob/camera/blob/proc/jump_to_node()
 	if(GLOB.blob_nodes.len)
 		var/list/nodes = list()
 		for(var/i in 1 to GLOB.blob_nodes.len)
-			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
+			var/obj/structure/blob/special/node/B = GLOB.blob_nodes[i]
 			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
-		var/obj/structure/blob/node/chosen_node = nodes[node_name]
+		var/obj/structure/blob/special/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			forceMove(chosen_node.loc)
 
@@ -99,7 +91,7 @@
 		if(!(A.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
 			to_chat(src, "<span class='warning'>This type of blob must be placed on the station!</span>")
 			return
-		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
+		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
 			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
 			return //handholdotron 2000
 	if(minSeparation)
@@ -112,21 +104,12 @@
 	var/obj/structure/blob/N = B.change_to(blobstrain, src)
 	return N
 
-/mob/camera/blob/verb/toggle_node_req()
-	set category = "Blob"
-	set name = "Toggle Node Requirement"
-	set desc = "Toggle requiring nodes to place resource and factory blobs."
+/mob/camera/blob/proc/toggle_node_req()
 	nodes_required = !nodes_required
 	if(nodes_required)
 		to_chat(src, "<span class='warning'>You now require a nearby node or core to place factory and resource blobs.</span>")
 	else
 		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource blobs.</span>")
-
-/mob/camera/blob/verb/create_shield_power()
-	set category = "Blob"
-	set name = "Create/Upgrade Shield Blob ([BLOB_UPGRADE_STRONG_COST])"
-	set desc = "Create a shield blob, which will block fire and is hard to kill. Using this on an existing shield blob turns it into a reflective blob, capable of reflecting most projectiles but making it twice as weak to brute attacks."
-	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
 	var/obj/structure/blob/shield/S = locate(/obj/structure/blob/shield) in T
@@ -142,28 +125,7 @@
 	else
 		createSpecial(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, T)
 
-/mob/camera/blob/verb/create_resource()
-	set category = "Blob"
-	set name = "Create Resource Blob ([BLOB_STRUCTURE_RESOURCE_COST]])"
-	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/resource, 4, TRUE)
-
-/mob/camera/blob/verb/create_node()
-	set category = "Blob"
-	set name = "Create Node Blob ([BLOB_STRUCTURE_NODE_COST]])"
-	set desc = "Create a node, which will power nearby factory and resource blobs."
-	createSpecial(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/node, 5, FALSE)
-
-/mob/camera/blob/verb/create_factory()
-	set category = "Blob"
-	set name = "Create Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
-	set desc = "Create a spore tower that will spawn spores to harass your enemies."
-	createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, 7, TRUE)
-
-/mob/camera/blob/verb/create_blobbernaut()
-	set category = "Blob"
-	set name = "Create Blobbernaut ([BLOBMOB_BLOBBERNAUT_RESOURCE_COST])"
-	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
+/mob/camera/blob/proc/create_blobbernaut()
 	var/turf/T = get_turf(src)
 	var/obj/structure/blob/special/factory/B = locate(/obj/structure/blob/special/factory) in T
 	if(!B)
@@ -209,12 +171,9 @@
 		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
 		B.naut = null
 
-/mob/camera/blob/verb/relocate_core()
-	set category = "Blob"
-	set name = "Relocate Core ([BLOB_POWER_RELOCATE_COST])"
-	set desc = "Swaps the locations of your core and the selected node."
+/mob/camera/blob/proc/relocate_core()
 	var/turf/T = get_turf(src)
-	var/obj/structure/blob/node/B = locate(/obj/structure/blob/node) in T
+	var/obj/structure/blob/special/node/B = locate(/obj/structure/blob/special/node) in T
 	if(!B)
 		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
 		return
@@ -234,13 +193,6 @@
 	B.forceMove(old_turf)
 	B.setDir(olddir)
 
-/mob/camera/blob/verb/revert()
-	set category = "Blob"
-	set name = "Remove Blob"
-	set desc = "Removes a blob, giving you back some resources."
-	var/turf/T = get_turf(src)
-	remove_blob(T)
-
 /mob/camera/blob/proc/remove_blob(turf/T)
 	var/obj/structure/blob/B = locate() in T
 	if(!B)
@@ -256,13 +208,6 @@
 		add_points(B.point_return)
 		to_chat(src, "<span class='notice'>Gained [B.point_return] resources from removing \the [B].</span>")
 	qdel(B)
-
-/mob/camera/blob/verb/expand_blob_power()
-	set category = "Blob"
-	set name = "Expand/Attack Blob ([BLOB_EXPAND_COST])"
-	set desc = "Attempts to create a new blob in this tile. If the tile isn't clear, instead attacks it, damaging mobs and objects and refunding [BLOB_ATTACK_REFUND] points."
-	var/turf/T = get_turf(src)
-	expand_blob(T)
 
 /mob/camera/blob/proc/expand_blob(turf/T)
 	if(world.time < last_attack)
@@ -316,13 +261,6 @@
 		else
 			last_attack = world.time + CLICK_CD_RAPID
 
-/mob/camera/blob/verb/rally_spores_power()
-	set category = "Blob"
-	set name = "Rally Spores"
-	set desc = "Rally your spores to move to a target location."
-	var/turf/T = get_turf(src)
-	rally_spores(T)
-
 /mob/camera/blob/proc/rally_spores(turf/T)
 	to_chat(src, "You rally your spores.")
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
@@ -333,25 +271,7 @@
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
-/mob/camera/blob/verb/blob_broadcast()
-	set category = "Blob"
-	set name = "Blob Broadcast"
-	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
-	var/speak_text = stripped_input(src, "What would you like to say with your minions?", "Blob Broadcast", null)
-	if(!speak_text)
-		return
-	else
-		to_chat(src, "You broadcast with your minions, <B>[speak_text]</B>")
-	for(var/BLO in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		if(BM.stat == CONSCIOUS)
-			BM.say(speak_text)
-
-/mob/camera/blob/verb/strain_reroll()
-	set category = "Blob"
-	set name = "Reactive Strain Adaptation ([BLOB_POWER_REROLL_COST])"
-	set desc = "Replaces your strain with a random, different one."
-
+/mob/camera/blob/proc/strain_reroll()
 	if (!free_strain_rerolls && blob_points < BLOB_POWER_REROLL_COST)
 		to_chat(src, "<span class='warning'>You need at least [BLOB_POWER_REROLL_COST] resources to reroll your strain again!</span>")
 		return
@@ -401,10 +321,7 @@
 
 			return
 
-/mob/camera/blob/verb/blob_help()
-	set category = "Blob"
-	set name = "*Blob Help*"
-	set desc = "Help on how to blob."
+/mob/camera/blob/proc/blob_help()
 	to_chat(src, "<b>As the overmind, you can control the blob!</b>")
 	to_chat(src, "Your blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
 	to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.description]")

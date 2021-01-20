@@ -7,7 +7,6 @@
 	health_regen = BLOB_FACTORY_HP_REGEN
 	point_return = BLOB_REFUND_FACTORY_COST
 	resistance_flags = LAVA_PROOF
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	max_spores = BLOB_FACTORY_MAX_SPORES
 
 /obj/structure/blob/special/factory/scannerreport()
@@ -28,16 +27,4 @@
 
 /obj/structure/blob/special/factory/Be_Pulsed()
 	. = ..()
-	if(naut)
-		return
-	if(spores.len >= max_spores)
-		return
-	if(spore_delay > world.time)
-		return
-	flick("blob_factory_glow", src)
-	spore_delay = world.time + spore_cooldown
-	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
-	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
-		BS.overmind = overmind
-		BS.update_icons()
-		overmind.blob_mobs.Add(BS)
+	produce_spores()

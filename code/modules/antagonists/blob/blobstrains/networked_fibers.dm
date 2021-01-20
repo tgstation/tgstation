@@ -19,7 +19,7 @@
 	if(isspaceturf(chosen_turf))
 		return
 	for(var/obj/structure/blob/possible_expander in range(1, new_blob))
-		if(possible_expander.overmind == overmind && (istype(possible_expander, /obj/structure/blob/special/core) || istype(possible_expander, /obj/structure/blob/node)))
+		if(possible_expander.overmind == overmind && (istype(possible_expander, /obj/structure/blob/special/core) || istype(possible_expander, /obj/structure/blob/special/node)))
 			new_blob.forceMove(get_turf(possible_expander))
 			possible_expander.forceMove(chosen_turf)
 			possible_expander.setDir(get_dir(new_blob, possible_expander))

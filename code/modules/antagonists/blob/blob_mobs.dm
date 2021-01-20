@@ -296,7 +296,7 @@
 					H.color = overmind.blobstrain.complementary_color
 				else
 					H.color = "#000000"
-			if(locate(/obj/structure/blob/node) in blobs_in_area)
+			if(locate(/obj/structure/blob/special/node) in blobs_in_area)
 				adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_NODE)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				if(overmind)

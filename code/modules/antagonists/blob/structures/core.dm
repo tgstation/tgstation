@@ -11,6 +11,10 @@
 	resistance_flags = LAVA_PROOF
 	strong_reinforce_range = BLOB_CORE_STRONG_REINFORCE_RANGE
 	reflector_reinforce_range = BLOB_CORE_REFLECTOR_REINFORCE_RANGE
+	claim_range	= BLOB_CORE_CLAIM_RANGE
+	pulse_range = BLOB_CORE_PULSE_RANGE
+	expand_range = BLOB_CORE_EXPAND_RANGE
+	max_spores = BLOB_CORE_MAX_SPORES
 
 /obj/structure/blob/special/core/Initialize(mapload, client/new_overmind = null, placed = 0)
 	GLOB.blob_cores += src
@@ -61,8 +65,9 @@
 	if(overmind)
 		overmind.blobstrain.core_process()
 		overmind.update_health_hud()
-	Pulse_Area(overmind, 12, BLOB_CORE_PULSE_RANGE, BLOB_CORE_EXPAND_RANGE)
+	pulse_area(overmind, claim_range, pulse_range, expand_range)
 	reinforce_area(delta_time)
+	produce_spores()
 	..()
 
 /obj/structure/blob/special/core/ComponentInitialize()

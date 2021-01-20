@@ -33,10 +33,6 @@
 	name = "Jump to Core"
 	desc = "Moves your camera to your blob core."
 
-/atom/movable/screen/blob/jump_to_core/Initialize(mapload)
-	..()
-	to_chat(world, "bruh x24")
-
 /atom/movable/screen/blob/jump_to_core/MouseEntered(location,control,params)
 	if(hud?.mymob && isovermind(hud.mymob))
 		var/mob/camera/blob/B = hud.mymob
@@ -83,7 +79,7 @@
 /atom/movable/screen/blob/resource_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_resource()
+		B.createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"
@@ -98,7 +94,7 @@
 /atom/movable/screen/blob/node_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_node()
+		B.createSpecial(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
@@ -113,7 +109,7 @@
 /atom/movable/screen/blob/factory_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_factory()
+		B.createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"
@@ -129,11 +125,9 @@
 		else
 			name = "[initial(name)] ([BLOB_POWER_REROLL_COST])"
 			desc = "Allows you to choose a new strain from [BLOB_POWER_REROLL_CHOICES] random choices for [BLOB_POWER_REROLL_COST] resources."
-	to_chat(world, "mouseentered readapt [src]")
 	..()
 
 /atom/movable/screen/blob/readapt_strain/Click()
-	to_chat(world, "we clicked on readapt somehow [src] [usr] bruh")
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
 		B.strain_reroll()
