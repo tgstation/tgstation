@@ -223,6 +223,9 @@
 /datum/plant_gene/trait/proc/on_throw_impact(obj/item/food/grown/G, atom/target)
 	return
 
+/datum/plant_gene/trait/proc/on_attack(obj/item/food/grown/G, atom/A as mob|obj, mob/user,proximity)
+	return
+
 ///This proc triggers when the tray processes and a roll is sucessful, the success chance scales with production.
 /datum/plant_gene/trait/proc/on_grow(obj/machinery/hydroponics/H)
 	return
@@ -460,6 +463,9 @@
 			G.reagents.trans_to(L, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
+
+/datum/plant_gene/trait/stinging/on_attack(obj/item/food/grown/G, atom/A as mob|obj, mob/user,proximity)
+	on_throw_impact(G, A)
 
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
