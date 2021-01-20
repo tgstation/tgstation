@@ -129,6 +129,7 @@
 				squash(hit_atom)
 
 /obj/item/food/grown/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			T.on_attack(src, target, user, proximity)
