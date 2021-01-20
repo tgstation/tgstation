@@ -461,7 +461,7 @@
 		if(L.reagents && L.can_inject(null, 0))
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
 			G.reagents.trans_to(L, injecting_amount, methods = INJECT)
-			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
+			to_chat(target, "<span class='danger'>The needle-like hairs of [G] inject you with something!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
 /datum/plant_gene/trait/stinging/on_attack(obj/item/food/grown/G, atom/target, mob/user,proximity)

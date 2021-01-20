@@ -78,14 +78,14 @@
 	if(force > minforce)
 		force = max(force - rand(0,2),minforce) // When you whack someone with it, leaves fall off
 		if(force == minforce)
-			to_chat(usr, "<span class='warning'>Many of the leaves have fallen off the nettle from violent whacking.</span>")
+			to_chat(usr, "<span class='warning'>Most of the leaves have fallen off the nettle from violent whacking.</span>")
 
 /obj/item/food/grown/nettle/basic
 	seed = /obj/item/seeds/nettle
 
 /obj/item/food/grown/nettle/basic/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	force = round((minforce + seed.potency / 10), 1)
+	force = round((minforce + seed.potency / 15), 1)
 
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
@@ -99,7 +99,7 @@
 
 /obj/item/food/grown/nettle/death/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	force = round((minforce + seed.potency / 5), 1)
+	force = round((minforce + seed.potency / 10), 1)
 
 /obj/item/food/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
