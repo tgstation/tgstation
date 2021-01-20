@@ -58,6 +58,7 @@
 /area/shuttle/pirate/flying_dutchman
 	name = "Flying Dutchman"
 	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 

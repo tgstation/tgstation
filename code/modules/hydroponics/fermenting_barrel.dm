@@ -80,3 +80,13 @@
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 8)
 	time = 50
 	category = CAT_PRIMAL
+
+//lil gunpowder barrel fer pirates since it's a nice reagent holder
+
+/obj/structure/fermenting_barrel/gunpowder
+	name = "gunpowder barrel"
+	desc = "A large wooden barrel for holding gunpowder. When open, you can top off the barrel, and when closed, you can fill buckets from the tap."
+
+/obj/structure/fermenting_barrel/gunpowder/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/gunpowder, 250)

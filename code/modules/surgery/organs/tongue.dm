@@ -107,6 +107,13 @@
 /datum/action/item_action/organ_action/statue/New(Target)
 	. = ..()
 	statue = new(null)
+	RegisterSignal(statue, COMSIG_PARENT_QDELETING, .proc/statue_destroyed)
+
+/datum/action/item_action/organ_action/statue/Destroy()
+	UnregisterSignal(statue, COMSIG_PARENT_QDELETING)
+	QDEL_NULL(statue)
+	. = ..()
+
 
 /datum/action/item_action/organ_action/statue/Trigger()
 	. = ..()
@@ -114,6 +121,9 @@
 		to_chat(owner, "<span class='warning'>Your body rejects the powers of the tongue!</span>")
 		return
 	var/mob/living/carbon/becoming_statue = owner
+	if(becoming_statue.health < 1)
+		to_chat(becoming_statue, "<span class='danger'>You are too weak to become a statue!</span>")
+		return
 	if(ability_cooldown >= world.time)
 		to_chat(becoming_statue, "<span class='warning'>You just used the ability, wait a little bit!</span>")
 		return
@@ -134,11 +144,32 @@
 		statue.visible_message("<span class='danger'>[statue] becomes animated!</span>")
 		becoming_statue.forceMove(get_turf(statue))
 		statue.moveToNullspace()
+		UnregisterSignal(mover, COMSIG_MOVABLE_MOVED)
 	else
 		becoming_statue.visible_message("<span class='notice'>[becoming_statue] hardens into a silver statue.</span>", "<span class='notice'>You have become a silver statue!</span>")
 		statue.set_visuals(becoming_statue.appearance)
 		statue.forceMove(get_turf(becoming_statue))
 		becoming_statue.forceMove(statue)
+		statue.obj_integrity = becoming_statue.health
+		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, .proc/human_left_statue)
+
+	//somehow they used an exploit/teleportation to leave statue, lets clean up
+/datum/action/item_action/organ_action/statue/proc/human_left_statue(atom/movable/mover, atom/oldloc, direction)
+	SIGNAL_HANDLER
+
+	statue.moveToNullspace()
+	UnregisterSignal(mover, COMSIG_MOVABLE_MOVED)
+
+/datum/action/item_action/organ_action/statue/proc/statue_destroyed(datum/source)
+	to_chat(owner, "<span class='userdanger'>Your existence as a living creature snaps as your statue form crumbles!</span>")
+	if(iscarbon(owner))
+		//drop everything, just in case
+		var/mob/living/carbon/dying_carbon = owner
+		for(var/obj/item/W in dying_carbon)
+			if(!dying_carbon.dropItemToGround(W))
+				qdel(W)
+				M.regenerate_icons()
+	qdel(owner)
 
 /obj/item/organ/tongue/fly
 	name = "proboscis"

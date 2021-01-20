@@ -33,11 +33,7 @@
 	var/shuttle_spawned = FALSE
 
 /datum/round_event/pirates/setup()
-	var/datum/round_event_control/pirates/event_control = control
-	if(event_control.admin_picked_pirates)
-		pirate_type = event_control.admin_picked_pirates
-	else
-		pirate_type = pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
+	pirate_type = pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
 /datum/round_event/pirates/announce(fake)
