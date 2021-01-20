@@ -164,17 +164,16 @@
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
-	duration = 50
+	duration = 600
 	var/resonance_damage = 20
 	var/damage_multiplier = 1
 	var/creator
 	var/obj/item/resonator/res
+	var/rupturing = FALSE //So it won't recurse
 
 /obj/effect/temp_visual/resonance/Initialize(mapload, set_creator, set_resonator, mode)
 	if(mode == 1)
 		duration = 20
-	else
-		duration = 600 //Up to a minute
 	if(mode == 3)
 		icon_state = "shield2"
 		name = "resonance matrix"
@@ -210,6 +209,7 @@
 	resonance_damage *= damage_multiplier
 
 /obj/effect/temp_visual/resonance/proc/burst()
+	rupturing = TRUE
 	var/turf/T = get_turf(src)
 	new /obj/effect/temp_visual/resonance_crush(T)
 	if(ismineralturf(T))
@@ -224,9 +224,9 @@
 		L.apply_damage(resonance_damage, BRUTE)
 		L.add_movespeed_modifier(/datum/movespeed_modifier/resonance)
 		addtimer(CALLBACK(L, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/resonance), 10 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
-	for(var/obj/effect/temp_visual/resonance/fields in range(1, src))
-		if(fields != src)
-			fields.burst()
+	for(var/obj/effect/temp_visual/resonance/field in range(1, src))
+		if(field != src && !field.rupturing)
+			field.burst()
 	qdel(src)
 
 /obj/effect/temp_visual/resonance_crush
