@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 /datum/blobstrain/proc/on_gain(announce = TRUE)
 	overmind.color = complementary_color
-	
+
 	if(overmind.blob_core)
 		overmind.blob_core.max_spores += core_spore_bonus
 		overmind.blob_core.claim_range += core_range_bonus
@@ -95,12 +95,13 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		to_chat(BM, "The <b><font color=\"[color]\">[name]</b></font> strain [shortdesc ? "[shortdesc]" : "[description]"]")
 
 /datum/blobstrain/proc/on_lose()
-	overmind.blob_core.max_spores -= core_spore_bonus
-	overmind.blob_core.claim_range -= core_range_bonus
-	overmind.blob_core.pulse_range -= core_range_bonus
-	overmind.blob_core.expand_range -= core_range_bonus
-	overmind.blob_core.strong_reinforce_range -= core_strong_reinforcement_range_bonus
-	overmind.blob_core.reflector_reinforce_range -= core_reflector_reinforcement_range_bonus
+	if(overmind.blob_core)
+		overmind.blob_core.max_spores -= core_spore_bonus
+		overmind.blob_core.claim_range -= core_range_bonus
+		overmind.blob_core.pulse_range -= core_range_bonus
+		overmind.blob_core.expand_range -= core_range_bonus
+		overmind.blob_core.strong_reinforce_range -= core_strong_reinforcement_range_bonus
+		overmind.blob_core.reflector_reinforce_range -= core_reflector_reinforcement_range_bonus
 
 	for(var/obj/structure/blob/special/node/N in overmind.node_blobs)
 		N.max_spores -= node_spore_bonus
