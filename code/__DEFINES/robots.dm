@@ -42,11 +42,11 @@
 #define VIBE_BOT			(1<<8)  //vibe bots
 
 //AI notification defines
-#define		NEW_BORG     1
-#define		NEW_MODULE   2
-#define		RENAME       3
-#define		AI_SHELL     4
-#define		DISCONNECT   5
+#define		NEW_BORG     		1
+#define		NEW_CONFIGURATION   2
+#define		RENAME       		3
+#define		AI_SHELL     		4
+#define		DISCONNECT   		5
 
 //Assembly defines
 #define ASSEMBLY_FIRST_STEP 	0

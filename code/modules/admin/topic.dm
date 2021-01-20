@@ -1670,8 +1670,8 @@
 								L.put_in_hands(I)
 								if(iscyborg(L))
 									var/mob/living/silicon/robot/R = L
-									if(R.module)
-										R.module.add_module(I, TRUE, TRUE)
+									if(R.configuration)
+										R.configuration.add_module(I, TRUE, TRUE)
 										R.activate_module(I)
 
 		if(pod)

@@ -45,7 +45,7 @@
 		"ref" = REF(borg),
 		"name" = "[borg]",
 		"emagged" = borg.emagged,
-		"active_module" = "[borg.module.type]",
+		"active_configuration" = "[borg.configuration.type]",
 		"lawupdate" = borg.lawupdate,
 		"lockdown" = borg.lockcharge,
 		"scrambledcodes" = borg.scrambledcodes
@@ -53,7 +53,7 @@
 	.["upgrades"] = list()
 	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-/obj/item/borg/upgrade/hypospray) //hypospray is a dummy parent for hypospray upgrades
 		var/obj/item/borg/upgrade/upgrade = upgradetype
-		if (initial(upgrade.module_type) && !is_type_in_list(borg.module, initial(upgrade.module_type))) // Upgrade requires a different module
+		if (initial(upgrade.configuration_type) && !is_type_in_list(borg.configuration, initial(upgrade.configuration_type))) // Upgrade requires a different configuration
 			continue
 		var/installed = FALSE
 		if (locate(upgradetype) in borg)
@@ -67,11 +67,11 @@
 		.["channels"] += list(list("name" = k, "installed" = (k in borg.radio.channels)))
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
 	.["modules"] = list()
-	for(var/moduletype in typesof(/obj/item/robot_module))
-		var/obj/item/robot_module/module = moduletype
+	for(var/config_type in typesof(/obj/item/robot_config))
+		var/obj/item/robot_config/configuration = config_type
 		.["modules"] += list(list(
-			"name" = initial(module.name),
-			"type" = "[module]"
+			"name" = initial(configuration.name),
+			"type" = "[configuration]"
 		))
 	.["ais"] = list(list("name" = "None", "ref" = "null", "connected" = isnull(borg.connected_ai)))
 	for(var/mob/living/silicon/ai/ai in GLOB.ai_list)
@@ -187,11 +187,11 @@
 				log_admin("[key_name(user)] added the [channel] radio channel to [key_name(borg)].")
 			borg.radio.recalculateChannels()
 		if ("setmodule")
-			var/newmodulepath = text2path(params["module"])
+			var/newmodulepath = text2path(params["configuration"])
 			if (ispath(newmodulepath))
-				borg.module.transform_to(newmodulepath)
-				message_admins("[key_name_admin(user)] changed the module of [ADMIN_LOOKUPFLW(borg)] to [newmodulepath].")
-				log_admin("[key_name(user)] changed the module of [key_name(borg)] to [newmodulepath].")
+				borg.configuration.transform_to(newmodulepath)
+				message_admins("[key_name_admin(user)] changed the configuration of [ADMIN_LOOKUPFLW(borg)] to [newmodulepath].")
+				log_admin("[key_name(user)] changed the configuration of [key_name(borg)] to [newmodulepath].")
 		if ("slavetoai")
 			var/mob/living/silicon/ai/newai = locate(params["slavetoai"]) in GLOB.ai_list
 			if (newai && newai != borg.connected_ai)

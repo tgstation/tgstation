@@ -126,18 +126,18 @@
 		// Start with checking if this design builds a cyborg module.
 		if(built_item in typesof(/obj/item/borg/upgrade))
 			var/obj/item/borg/upgrade/U = built_item
-			var/module_types = initial(U.module_flags)
+			var/module_types = initial(U.configuration_flags)
 			sub_category = list()
 			if(module_types)
-				if(module_types & BORG_MODULE_SECURITY)
+				if(module_types & BORG_CONFIGURATION_SECURITY)
 					sub_category += "Security"
-				if(module_types & BORG_MODULE_MINER)
+				if(module_types & BORG_CONFIGURATION_MINER)
 					sub_category += "Mining"
-				if(module_types & BORG_MODULE_JANITOR)
+				if(module_types & BORG_CONFIGURATION_JANITOR)
 					sub_category += "Janitor"
-				if(module_types & BORG_MODULE_MEDICAL)
+				if(module_types & BORG_CONFIGURATION_MEDICAL)
 					sub_category += "Medical"
-				if(module_types & BORG_MODULE_ENGINEERING)
+				if(module_types & BORG_CONFIGURATION_ENGINEERING)
 					sub_category += "Engineering"
 			else
 				sub_category += "All Cyborgs"
