@@ -258,7 +258,8 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 
 	spawned -= object
 	var/turf/target_turf = get_turf(object)
-	for(var/atom/movable/object_contents in object) //make sure that things inside of a holoitem are moved outside before destroying it
+	for(var/c in object) //make sure that things inside of a holoitem are moved outside before destroying it
+		var/atom/movable/object_contents = c
 		object_contents.forceMove(target_turf)
 
 	if(!silent)
