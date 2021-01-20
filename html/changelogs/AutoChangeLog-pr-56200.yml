@@ -1,7 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "fixed glass plating turning invisible when damaged"
-  - refactor: "changed some floor tile broken_state code to use a proc in initialization rather than hardcoded in"
-  - refactor: "removed initialization override for plating.dm"
-  - bugfix: "all non-iron based tiles will no longer magically turn into iron plating when broken, instead asteroid turf will become dug and stuff like grass, dirt, water etc. will not change icon when broken"
