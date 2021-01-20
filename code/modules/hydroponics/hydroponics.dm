@@ -673,6 +673,8 @@
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
+		if(plant_health <= 15) //Check health again to make sure they're not keeping inputs open to get free shears.
+			return
 		for(var/datum/plant_gene/gene in myseed.genes)
 			if(gene.name == removed_trait)
 				if(myseed.genes.Remove(gene))
