@@ -20,9 +20,13 @@
 	route = PATH_RUST
 
 /datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
+	var/mob/living/carbon/human/H = user
 	. = ..()
-	target.rust_heretic_act()
-	return TRUE
+	if(user.a_intent == INTENT_HARM)
+		target.rust_heretic_act()
+		return TRUE
+	else 
+		return FALSE
 
 /datum/eldritch_knowledge/rust_fist/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
