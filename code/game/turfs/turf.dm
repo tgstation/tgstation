@@ -182,9 +182,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/atom/movable/thing = i
 		if(thing == source_atom)
 			continue
-		if(thing.density && (!exclude_mobs || !ismob(thing)))
-			return TRUE
-		if(source_atom && !thing.CanPass(source_atom, src))
+		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
+		// it cannot pass through the thing on the turf, we consider the turf blocked.
+		if(thing.density && (!exclude_mobs || !ismob(thing)) && (source_atom && !thing.CanPass(source_atom, src)))
 			return TRUE
 	return FALSE
 
