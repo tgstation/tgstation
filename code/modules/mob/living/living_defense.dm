@@ -259,7 +259,7 @@
 				to_chat(M, "<span class='warning'>Your bite misses [src]!</span>")
 		if (INTENT_GRAB)
 			grabbedby(M)
-			return TRUE
+			return FALSE
 		if (INTENT_DISARM)
 			if (M != src)
 				M.disarm(src)
