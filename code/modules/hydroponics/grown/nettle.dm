@@ -48,7 +48,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
-	var/minforce = 5 //minimum force after most of the stingy bits fall off
+	var/minforce = 7 //minimum force after most of the stingy bits fall off
 
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is lightly grasping [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -76,7 +76,7 @@
 	if(!proximity)
 		return
 	if(force > minforce)
-		force = max(force - rand(1,3),minforce) // When you whack someone with it, leaves fall off
+		force = max(force - rand(0,2),minforce) // When you whack someone with it, leaves fall off
 		if(force == minforce)
 			to_chat(usr, "<span class='warning'>Many of the leaves have fallen off the nettle from violent whacking.</span>")
 
@@ -93,7 +93,7 @@
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
-	minforce = 10
+	minforce = 12
 	wound_bonus = CANT_WOUND
 	throwforce = 15
 
