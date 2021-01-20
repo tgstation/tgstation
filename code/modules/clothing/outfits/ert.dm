@@ -81,10 +81,11 @@
 	name = "ERT Security - High Alert"
 
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	belt = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/gun/energy/pulse/carbine/loyalpin=1)
+		/obj/item/storage/belt/security/full=1)
 
 
 /datum/outfit/centcom/ert/medic
@@ -298,7 +299,7 @@
 	belt = /obj/item/storage/belt/champion
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	r_pocket = /obj/item/bikehorn/golden
-	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
+	l_pocket = /obj/item/food/grown/banana
 	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
 		/obj/item/melee/transforming/energy/sword/bananium=1,\
 		/obj/item/shield/energy/bananium=1,\

@@ -2,7 +2,7 @@
 #define ACCESS_SECURITY 1
 /// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console
 #define ACCESS_BRIG 2
- /// Armory, gulag teleporter, execution chamber
+/// Armory, gulag teleporter, execution chamber
 #define ACCESS_ARMORY 3
 ///Detective's office, forensics lockers, security+medical records
 #define ACCESS_FORENSICS_LOCKERS 4
@@ -141,3 +141,12 @@
 #define ACCESS_MECH_SECURITY 302
 #define ACCESS_MECH_SCIENCE 303
 #define ACCESS_MECH_ENGINE 304
+
+/// A list of access levels that, when added to an ID card, will warn admins.
+#define ACCESS_ALERT_ADMINS list(ACCESS_CHANGE_IDS)
+
+/// Logging define for ID card access changes
+#define LOG_ID_ACCESS_CHANGE(user, id_card, change_description) \
+	log_game("[key_name(user)] [change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]"); \
+	user.investigate_log("([key_name(user)]) [change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", INVESTIGATE_ACCESSCHANGES); \
+	user.log_message("[change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", LOG_GAME); \

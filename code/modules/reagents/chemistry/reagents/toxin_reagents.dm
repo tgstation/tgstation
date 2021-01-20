@@ -73,19 +73,31 @@
 	material = /datum/material/plasma
 	penetrates_skin = NONE
 
+/datum/reagent/toxin/plasma/on_new(data)
+	. = ..()
+	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
+
+/datum/reagent/toxin/plasma/Destroy()
+	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
+	return ..()
+
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
-	if(C.has_reagent(/datum/reagent/medicine/epinephrine))
-		C.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
 	return ..()
 
-/datum/reagent/toxin/plasma/on_temp_change()
+/// Handles plasma boiling.
+/datum/reagent/toxin/plasma/proc/on_temp_change(datum/reagents/_holder, old_temp)
+	SIGNAL_HANDLER
 	if(holder.chem_temp < LIQUID_PLASMA_BP)
 		return
-	if(holder.my_atom)
-		var/atom/A = holder.my_atom
-		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
-		holder.del_reagent(type)
+	if(!holder.my_atom)
+		return
+
+	var/atom/A = holder.my_atom
+	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+	holder.del_reagent(type)
 
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)
 	if(!istype(exposed_turf))
@@ -112,10 +124,13 @@
 	material = /datum/material/hot_ice
 
 /datum/reagent/toxin/hot_ice/on_mob_life(mob/living/carbon/M)
-	if(M.has_reagent(/datum/reagent/medicine/epinephrine))
-		M.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	M.adjustPlasma(20)
 	M.adjust_bodytemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
+	if(ishuman(M))
+		var/mob/living/carbon/human/humi = M
+		humi.adjust_coretemperature(-7 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 	return ..()
 
 /datum/reagent/toxin/lexorin
@@ -206,7 +221,7 @@
 	. = ..()
 	exposed_mob.adjustOxyLoss(0.5*REM, 0)
 	if(methods & INGEST)
-		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.has_reagent(/datum/reagent/toxin/zombiepowder)
+		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
 		if(istype(zombiepowder))
 			zombiepowder.fakedeath_active = TRUE
 
@@ -521,7 +536,7 @@
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
 	if(prob(15))
-		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
+		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
 		holder.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
@@ -595,7 +610,7 @@
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(3))
-		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
+		holder.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
 		holder.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
 		return
 	..()
@@ -736,7 +751,7 @@
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)))
-		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
+		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
 		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
 				C.reagents.remove_reagent(R.type,1)
@@ -771,6 +786,14 @@
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
+
+/datum/reagent/toxin/heparin/on_mob_metabolize(mob/living/M)
+	ADD_TRAIT(M, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
+	return ..()
+
+/datum/reagent/toxin/heparin/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_BLOODY_MESS, /datum/reagent/toxin/heparin)
+	return ..()
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"

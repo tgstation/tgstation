@@ -45,7 +45,7 @@
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/berserker(src)
 		if(12)
 			new /obj/item/jacobs_ladder(src)
 		if(13)
@@ -136,6 +136,8 @@
 	name = "\improper Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon_state = "asclepius_dormant"
 	var/activated = FALSE
 	var/usedHand
@@ -375,9 +377,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-/obj/effect/warp_cube/ex_act(severity, target)
-	return
-
 //Meat Hook
 /obj/item/gun/magic/hook
 	name = "meat hook"
@@ -414,7 +413,7 @@
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
+		chain = firer.Beam(src, icon_state = "chain")
 	..()
 	//TODO: root the firer until the chain returns
 
@@ -516,9 +515,6 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
-/obj/effect/immortality_talisman/ex_act()
-	return
-
 /obj/effect/immortality_talisman/singularity_pull()
 	return
 
@@ -613,7 +609,11 @@
 			return
 		if(exposed_carbon.dna.species.has_innate_wings)
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
+			if(!exposed_carbon.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
+				exposed_carbon.dna.features["original_moth_wings"] = exposed_carbon.dna.features["moth_wings"]
 			exposed_carbon.dna.features["moth_wings"] = "None"
+			if(!exposed_carbon.dna.features["original_moth_antennae"]) //Stores their antennae type as well
+				exposed_carbon.dna.features["original_moth_antennae"] = exposed_carbon.dna.features["moth_antennae"]
 			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
@@ -685,10 +685,10 @@
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
-    if(!istype(A, /turf/closed/mineral))
-        return
-    A.attackby(src, H)
-    return COMPONENT_NO_ATTACK_HAND
+	if(!istype(A, /turf/closed/mineral))
+		return
+	A.attackby(src, H)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 ///Bosses
@@ -836,7 +836,7 @@
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
@@ -844,7 +844,6 @@
 		G.invisibility = GLOB.observer_default_invisibility
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)
@@ -1279,7 +1278,8 @@
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
+	var/area/destination_area = turf_to_teleport_to.loc
+	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE) || destination_area.area_flags & NOTELEPORT)
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)

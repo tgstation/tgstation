@@ -80,7 +80,7 @@
 /obj/structure/railing/CheckExit(atom/movable/mover, turf/target)
 	..()
 	if(get_dir(loc, target) & dir)
-		var/checking = UNSTOPPABLE | FLYING | FLOATING
+		var/checking = PHASING | FLYING | FLOATING
 		return !density || mover.throwing || mover.movement_type & checking || mover.move_force >= MOVE_FORCE_EXTREMELY_STRONG
 	return TRUE
 
@@ -104,6 +104,5 @@
 		return TRUE
 
 /obj/structure/railing/proc/after_rotation(mob/user,rotation_type)
-	air_update_turf(1)
 	ini_dir = dir
 	add_fingerprint(user)

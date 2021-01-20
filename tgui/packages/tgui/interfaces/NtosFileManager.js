@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
@@ -24,7 +23,8 @@ export const NtosFileManager = (props, context) => {
               name: file,
               new_name: newName,
             })}
-            onDuplicate={file => act('PRG_clone', { file: file })} />
+            onDuplicate={file => act('PRG_clone', { file: file })}
+            onToggleSilence={file => act('PRG_togglesilence', { name: file })} />
         </Section>
         {usbconnected && (
           <Section title="Data Disk">
@@ -54,6 +54,7 @@ const FileTable = props => {
     onUpload,
     onDelete,
     onRename,
+    onToggleSilence,
   } = props;
   return (
     <Table>
@@ -89,8 +90,15 @@ const FileTable = props => {
             {file.size}
           </Table.Cell>
           <Table.Cell collapsing>
+            {!!file.alert_able && (
+              <Button
+                icon={file.alert_silenced ? 'bell-slash' : 'bell'}
+                color={file.alert_silenced ? 'red' : 'default'}
+                tooltip={file.alert_silenced ? 'Unmute Alerts' : 'Mute Alerts'}
+                onClick={() => onToggleSilence(file.name)} />
+            )}
             {!file.undeletable && (
-              <Fragment>
+              <>
                 <Button.Confirm
                   icon="trash"
                   confirmIcon="times"
@@ -110,7 +118,7 @@ const FileTable = props => {
                       onClick={() => onUpload(file.name)} />
                   )
                 )}
-              </Fragment>
+              </>
             )}
           </Table.Cell>
         </Table.Row>

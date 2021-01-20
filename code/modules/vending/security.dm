@@ -10,7 +10,7 @@
 					/obj/item/restraints/handcuffs/cable/zipties = 10,
 					/obj/item/grenade/flashbang = 4,
 					/obj/item/assembly/flash/handheld = 5,
-					/obj/item/reagent_containers/food/snacks/donut = 12,
+					/obj/item/food/donut = 12,
 					/obj/item/storage/box/evidence = 6,
 					/obj/item/flashlight/seclite = 4,
 					/obj/item/restraints/legcuffs/bola/energy = 7)
@@ -23,14 +23,14 @@
 				   /obj/item/clothing/gloves/tackler = 5,
 				   /obj/item/grenade/stingbang = 1)
 	refill_canister = /obj/item/vending_refill/security
-	default_price = 650
-	extra_price = 700
+	default_price = PAYCHECK_MEDIUM
+	extra_price = PAYCHECK_HARD * 1.5
 	payment_department = ACCOUNT_SEC
 
 /obj/machinery/vending/security/pre_throw(obj/item/I)
 	if(istype(I, /obj/item/grenade))
 		var/obj/item/grenade/G = I
-		G.preprime()
+		G.arm_grenade()
 	else if(istype(I, /obj/item/flashlight))
 		var/obj/item/flashlight/F = I
 		F.on = TRUE

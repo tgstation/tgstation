@@ -37,15 +37,15 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	try_to_sting(user)
 
 /**
-  *Contrary to the name, this proc isn't just used by changeling stings. It handles the activation of the action and the deducation of its cost.
-  *The order of the proc chain is:
-  *can_sting(). Should this fail, the process gets aborted early.
-  *sting_action(). This proc usually handles the actual effect of the action.
-  *Should sting_action succeed the following will be done:
-  *sting_feedback(). Produces feedback on the performed action. Don't ask me why this isn't handled in sting_action()
-  *The deduction of the cost of this power.
-  *Returns TRUE on a successful activation.
-  */
+ *Contrary to the name, this proc isn't just used by changeling stings. It handles the activation of the action and the deducation of its cost.
+ *The order of the proc chain is:
+ *can_sting(). Should this fail, the process gets aborted early.
+ *sting_action(). This proc usually handles the actual effect of the action.
+ *Should sting_action succeed the following will be done:
+ *sting_feedback(). Produces feedback on the performed action. Don't ask me why this isn't handled in sting_action()
+ *The deduction of the cost of this power.
+ *Returns TRUE on a successful activation.
+ */
 /datum/action/changeling/proc/try_to_sting(mob/user, mob/target)
 	if(!can_sting(user, target))
 		return FALSE
@@ -66,10 +66,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 //Fairly important to remember to return 1 on success >.<
 
 /datum/action/changeling/proc/can_sting(mob/living/user, mob/target)
-	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
-		return FALSE
-	if(req_human && !ishuman(user))
-		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
+	if(!ishuman(user)) //typecast everything from mob to carbon from this point onwards
 		return FALSE
 	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(c.chem_charges < chemical_cost)
@@ -92,7 +89,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/can_be_used_by(mob/user)
 	if(!user || QDELETED(user))
 		return FALSE
-	if(!ishuman(user) && !ismonkey(user))
+	if(!ishuman(user))
 		return FALSE
 	if(req_human && !ishuman(user))
 		return FALSE

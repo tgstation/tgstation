@@ -26,6 +26,12 @@
 		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal(apply_change=FALSE))
 	else if(M.bodytemperature < (M.get_body_temp_normal(apply_change=FALSE) + 1))
 		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal(apply_change=FALSE))
+	if(ishuman(M))
+		var/mob/living/carbon/human/humi = M
+		if(humi.coretemperature > humi.get_body_temp_normal(apply_change=FALSE))
+			humi.adjust_coretemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, humi.get_body_temp_normal(apply_change=FALSE))
+		else if(humi.coretemperature < (humi.get_body_temp_normal(apply_change=FALSE) + 1))
+			humi.adjust_coretemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, humi.get_body_temp_normal(apply_change=FALSE))
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
@@ -111,8 +117,8 @@
 	M.AdjustUnconscious(-20)
 	M.AdjustImmobilized(-20)
 	M.AdjustParalyzed(-20)
-	if(M.has_reagent(/datum/reagent/toxin/mindbreaker))
-		M.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
+		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
@@ -126,10 +132,10 @@
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	if(M.has_reagent(/datum/reagent/toxin/mindbreaker))
-		M.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
-	if(M.has_reagent(/datum/reagent/toxin/histamine))
-		M.remove_reagent(/datum/reagent/toxin/histamine, 5)
+	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
+		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+	if(holder.has_reagent(/datum/reagent/toxin/histamine))
+		holder.remove_reagent(/datum/reagent/toxin/histamine, 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
 		M.adjustToxLoss(1, 0)
@@ -570,7 +576,7 @@
 	if(prob(10))
 		M.drowsyness += 1
 	M.jitteriness -= 1
-	M.remove_reagent(/datum/reagent/toxin/histamine,3)
+	holder.remove_reagent(/datum/reagent/toxin/histamine,3)
 	..()
 
 /datum/reagent/medicine/morphine
@@ -726,11 +732,11 @@
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
 	. = TRUE
-	if(M.has_reagent(/datum/reagent/toxin/lexorin))
-		M.remove_reagent(/datum/reagent/toxin/lexorin, 2)
-		M.remove_reagent(/datum/reagent/medicine/epinephrine, 1)
+	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
+		holder.remove_reagent(/datum/reagent/toxin/lexorin, 2)
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 1)
 		if(prob(20))
-			M.reagents.add_reagent(/datum/reagent/toxin/histamine, 4)
+			holder.add_reagent(/datum/reagent/toxin/histamine, 4)
 		..()
 		return
 	if(M.health <= M.crit_threshold)
@@ -824,8 +830,8 @@
 	color = "#C0C0C0" //ditto
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
-	if(C.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
-		C.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5)
+	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
+		holder.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 5)
 	if(prob(15))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
@@ -908,7 +914,7 @@
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M)
 	if(M.AdjustSleeping(-20))
 		. = 1
-	M.remove_reagent(/datum/reagent/consumable/sugar, 3)
+	holder.remove_reagent(/datum/reagent/consumable/sugar, 3)
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
@@ -1354,26 +1360,41 @@
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 20
-	/// How much base clotting we do per bleeding wound, multiplied by the below number for each bleeding wound
-	var/clot_rate = 0.25
-	/// If we have multiple bleeding wounds, we count the number of bleeding wounds, then multiply the clot rate by this^(n) before applying it to each cut, so more cuts = less clotting per cut (though still more total clotting)
-	var/clot_coeff_per_wound = 0.75
+	/// The bloodiest wound that the patient has will have its blood_flow reduced by this much each tick
+	var/clot_rate = 0.3
+	/// While this reagent is in our bloodstream, we reduce all bleeding by this factor
+	var/passive_bleed_modifier = 0.7
+	/// For tracking when we tell the person we're no longer bleeding
+	var/was_working
+
+/datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/M)
+	ADD_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+	return ..()
+
+/datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+	return ..()
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(!M.blood_volume || !M.all_wounds)
 		return
 
-	var/effective_clot_rate = clot_rate
+	var/datum/wound/bloodiest_wound
 
 	for(var/i in M.all_wounds)
 		var/datum/wound/iter_wound = i
 		if(iter_wound.blood_flow)
-			effective_clot_rate *= clot_coeff_per_wound
+			if(iter_wound.blood_flow > bloodiest_wound?.blood_flow)
+				bloodiest_wound = iter_wound
 
-	for(var/i in M.all_wounds)
-		var/datum/wound/iter_wound = i
-		iter_wound.blood_flow = max(0, iter_wound.blood_flow - effective_clot_rate)
+	if(bloodiest_wound)
+		if(!was_working)
+			to_chat(M, "<span class='green'>You can feel your flowing blood start thickening!</span>")
+			was_working = TRUE
+		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - clot_rate)
+	else if(was_working)
+		was_working = FALSE
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/M)
 	. = ..()
@@ -1396,13 +1417,30 @@
 			var/obj/item/organ/heart/our_heart = M.getorganslot(ORGAN_SLOT_HEART)
 			our_heart.applyOrganDamage(1)
 
+/datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/M)
+	if(!ishuman(M))
+		return
+
+	var/mob/living/carbon/human/blood_boy = M
+	blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
+
+/datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/M)
+	if(was_working)
+		to_chat(M, "<span class='warning'>The medicine thickening your blood loses its effect!</span>")
+	if(!ishuman(M))
+		return
+
+	var/mob/living/carbon/human/blood_boy = M
+	blood_boy.physiology?.bleed_mod /= passive_bleed_modifier
+
 // i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
 /datum/reagent/medicine/coagulant/banana_peel
 	name = "Pulped Banana Peel"
 	description = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
-	color = "#863333" // rgb: 175, 175, 0
+	color = "#50531a" // rgb: 175, 175, 0
 	taste_description = "horribly stringy, bitter pulp"
 	glass_name = "glass of banana peel pulp"
 	glass_desc = "Ancient Clown Lore says that pulped banana peels are good for your blood, but are you really going to take medical advice from a clown about bananas?"
-	metabolization_rate = REAGENTS_METABOLISM
-	clot_coeff_per_wound = 0.6
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	clot_rate = 0.2
+	passive_bleed_modifier = 0.8

@@ -47,9 +47,9 @@
 /mob/living/proc/on_hit(obj/projectile/P)
 	return BULLET_ACT_HIT
 
-/mob/living/bullet_act(obj/projectile/P, def_zone)
+/mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
-	var/on_hit_state = P.on_hit(src, armor)
+	var/on_hit_state = P.on_hit(src, armor, piercing_hit)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
 		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.irradiate, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
@@ -224,7 +224,7 @@
 	return TRUE
 
 
-/mob/living/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/attack_paw(mob/living/carbon/human/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return FALSE
@@ -379,7 +379,7 @@
 	return TRUE
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
 	if(get_eye_protection() < intensity && (override_blindness_check || !is_blind()))
@@ -401,16 +401,15 @@
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()
-	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
 
 /**
-  * Does a slap animation on an atom
-  *
-  * Uses do_attack_animation to animate the attacker attacking
-  * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
-  * Arguments:
-  * * atom/A - atom being slapped
-  */
+ * Does a slap animation on an atom
+ *
+ * Uses do_attack_animation to animate the attacker attacking
+ * then draws a hand moving across the top half of the target(where a mobs head would usually be) to look like a slap
+ * Arguments:
+ * * atom/A - atom being slapped
+ */
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
 	var/image/gloveimg = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
@@ -424,10 +423,10 @@
 	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /** Handles exposing a mob to reagents.
-  *
-  * If the methods include INGEST the mob tastes the reagents.
-  * If the methods include VAPOR it incorporates permiability protection.
-  */
+ *
+ * If the methods include INGEST the mob tastes the reagents.
+ * If the methods include VAPOR it incorporates permiability protection.
+ */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
@@ -437,6 +436,7 @@
 		taste(source)
 
 	var/touch_protection = (methods & VAPOR) ? get_permeability_protection() : 0
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_mob(src, methods, reagents[R], show_message, touch_protection)

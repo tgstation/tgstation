@@ -14,6 +14,7 @@
 #define COLOR_FLOORTILE_GRAY			"#8D8B8B"
 #define COLOR_ALMOST_BLACK				"#333333"
 #define COLOR_BLACK						"#000000"
+#define COLOR_HALF_TRANSPARENT_BLACK    "#0000007A"
 
 #define COLOR_RED						"#FF0000"
 #define COLOR_MOSTLY_PURE_RED			"#FF3300"
@@ -22,8 +23,8 @@
 #define COLOR_MAROON					"#800000"
 #define COLOR_VIVID_RED					"#FF3232"
 #define COLOR_LIGHT_GRAYISH_RED			"#E4C7C5"
-/// Warm but extremely diluted red. rgb(250, 130, 130)
 #define COLOR_SOFT_RED					"#FA8282"
+#define COLOR_BUBBLEGUM_RED				"#950A0A"
 
 #define COLOR_YELLOW					"#FFFF00"
 #define COLOR_VIVID_YELLOW				"#FBFF23"
@@ -32,6 +33,7 @@
 #define COLOR_OLIVE						"#808000"
 #define COLOR_VIBRANT_LIME				"#00FF00"
 #define COLOR_LIME						"#32CD32"
+#define COLOR_DARK_LIME					"#00aa00"
 #define COLOR_VERY_PALE_LIME_GREEN		"#DDFFD3"
 #define COLOR_VERY_DARK_LIME_GREEN		"#003300"
 #define COLOR_GREEN						"#008000"
@@ -41,6 +43,7 @@
 #define COLOR_DARK_CYAN					"#00A2FF"
 #define COLOR_TEAL						"#008080"
 #define COLOR_BLUE						"#0000FF"
+#define COLOR_STRONG_BLUE				"#1919c8"
 #define COLOR_BRIGHT_BLUE				"#2CB2E8"
 #define COLOR_MODERATE_BLUE				"#555CC2"
 #define COLOR_BLUE_LIGHT				"#33CCFF"
@@ -48,6 +51,7 @@
 #define COLOR_BLUE_GRAY					"#75A2BB"
 
 #define COLOR_PINK						"#FFC0CB"
+#define COLOR_LIGHT_PINK				"#ff3cc8"
 #define COLOR_MOSTLY_PURE_PINK			"#E4005B"
 #define COLOR_MAGENTA					"#FF00FF"
 #define COLOR_STRONG_MAGENTA			"#B800B8"
@@ -56,6 +60,7 @@
 #define COLOR_STRONG_VIOLET				"#6927c5"
 
 #define COLOR_ORANGE					"#FF9900"
+#define COLOR_MOSTLY_PURE_ORANGE		"#ff8000"
 #define COLOR_TAN_ORANGE				"#FF7B00"
 #define COLOR_BRIGHT_ORANGE				"#E2853D"
 #define COLOR_LIGHT_ORANGE				"#ffc44d"

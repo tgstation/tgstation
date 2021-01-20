@@ -9,6 +9,7 @@
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
+	anchorables = list(/obj/structure/table)
 	var/obj/item/stock_parts/cell/charging = null
 	var/charge_rate = 250
 
@@ -93,6 +94,7 @@
 
 	removecell()
 
+
 /obj/machinery/cell_charger/attack_tk(mob/user)
 	if(!charging)
 		return
@@ -101,6 +103,8 @@
 	to_chat(user, "<span class='notice'>You telekinetically remove [charging] from [src].</span>")
 
 	removecell()
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
 	return
@@ -125,7 +129,11 @@
 
 	if(charging.percent() >= 100)
 		return
-	use_power(charge_rate * delta_time)
-	charging.give(charge_rate * delta_time)	//this is 2558, efficient batteries exist
+
+	var/main_draw = use_power_from_net(charge_rate * delta_time, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	if(!main_draw)
+		return
+	charging.give(main_draw)
+	use_power(charge_rate / 100) //use a small bit for the charger itself, but power usage scales up with the part tier
 
 	update_icon()

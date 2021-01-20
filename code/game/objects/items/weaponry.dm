@@ -110,7 +110,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		loc.layer = LARGE_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
-		H.bleedsuppress = TRUE //AND WE WON'T BLEED OUT LIKE COWARDS
+		ADD_TRAIT(H, TRAIT_NOBLEED, HIGHLANDER) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
 			qdel(src)
@@ -339,18 +339,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 0
 	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
 
-/obj/item/throwing_star/magspear
-	name = "magnetic spear"
-	desc = "A reusable spear that is typically loaded into kinetic spearguns."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "magspear"
-	throwforce = 25 //kills regular carps in one hit
-	force = 10
-	throw_range = 0 //throwing these invalidates the speargun
-	attack_verb_continuous = list("stabs", "rips", "gores", "impales")
-	attack_verb_simple = list("stab", "rip", "gore", "impale")
-	embedding = list("pain_mult" = 8, "embed_chance" = 100, "fall_chance" = 0, "impact_pain_mult" = 15) //55 damage+embed on hit
-
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"
@@ -536,8 +524,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000))
+	AddElement(/datum/element/art, impressiveness)
+	AddComponent(/datum/component/beauty, 1000)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
@@ -598,7 +586,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	inhand_icon_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
-	custom_premium_price = 500
+	custom_premium_price = PAYCHECK_HARD * 5
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"
@@ -606,7 +594,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_red"
 	inhand_icon_state = "hoverboard_red"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard
-	custom_premium_price = 2015
+	custom_premium_price = PAYCHECK_COMMAND * 5.4 //If I can't make it a meme I'll make it RAD
 
 /obj/item/melee/skateboard/hoverboard/admin
 	name = "Board Of Directors"
@@ -960,3 +948,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return TRUE
 	return FALSE
+
+/obj/item/melee/moonlight_greatsword
+	name = "moonlight greatsword"
+	desc = "Don't tell anyone you put any points into dex, though."
+	icon_state = "swordon"
+	inhand_icon_state = "swordon"
+	worn_icon_state = "swordon"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	block_chance = 20
+	sharpness = SHARP_EDGED
+	force = 14
+	throwforce = 12
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")

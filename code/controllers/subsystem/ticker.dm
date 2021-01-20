@@ -408,7 +408,7 @@ SUBSYSTEM_DEF(ticker)
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
-				var/obj/screen/splash/S = new(living.client, TRUE)
+				var/atom/movable/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
 				living.client.init_verbs()
 			livings += living
@@ -605,6 +605,10 @@ SUBSYSTEM_DEF(ticker)
 	var/F = file("data/mode.txt")
 	fdel(F)
 	WRITE_FILE(F, the_mode)
+
+/// Returns if either the master mode or the forced secret ruleset matches the mode name.
+/datum/controller/subsystem/ticker/proc/is_mode(mode_name)
+	return GLOB.master_mode == mode_name || GLOB.secret_force_mode == mode_name
 
 /datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
 	set waitfor = FALSE

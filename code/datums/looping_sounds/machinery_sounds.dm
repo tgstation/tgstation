@@ -12,8 +12,9 @@
 	mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
 	mid_length = 60
 	volume = 40
-	extra_range = 10
-	falloff = 4
+	extra_range = 25
+	falloff_exponent = 10
+	falloff_distance = 5
 	vary = TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +24,15 @@
 	mid_length = 60
 	volume = 55
 	extra_range = 15
-	falloff = 5
+	vary = TRUE
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/hypertorus
+	mid_sounds = list('sound/machines/hypertorus/loops/hypertorus_nominal.ogg' = 1)
+	mid_length = 60
+	volume = 55
+	extra_range = 15
 	vary = TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +58,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 /datum/looping_sound/grill
+	mid_sounds = list('sound/machines/grill/grillsizzle.ogg' = 1)
+	mid_length = 18
+	volume = 50
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/deep_fryer
 	mid_length = 2
 	mid_sounds = list('sound/machines/fryer/deep_fryer_1.ogg' = 1, 'sound/machines/fryer/deep_fryer_2.ogg' = 1)
 	volume = 30
@@ -77,7 +94,9 @@
 	mid_sounds = list('sound/machines/tcomms/tcomms_mid1.ogg'=1,'sound/machines/tcomms/tcomms_mid2.ogg'=1,'sound/machines/tcomms/tcomms_mid3.ogg'=1,'sound/machines/tcomms/tcomms_mid4.ogg'=1,\
 										'sound/machines/tcomms/tcomms_mid5.ogg'=1,'sound/machines/tcomms/tcomms_mid6.ogg'=1,'sound/machines/tcomms/tcomms_mid7.ogg'=1)
 	mid_length = 1.8 SECONDS
-	extra_range = -4.5
+	extra_range = -11
+	falloff_distance = 1
+	falloff_exponent = 5
 	volume = 50
 
 /datum/looping_sound/computer
@@ -88,11 +107,15 @@
 	mid_length = 1.8 SECONDS
 	end_sound = 'sound/machines/computer/computer_end.ogg'
 	end_volume = 10
-	volume = 3
-	extra_range = -5.5
+	volume = 2
+	falloff_exponent = 5 //Ultra quiet very fast
+	extra_range = -12
+	falloff_distance = 1 //Instant falloff after initial tile
 
 /datum/looping_sound/gravgen
 	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg'=1,'sound/machines/gravgen/gravgen_mid2.ogg'=1,'sound/machines/gravgen/gravgen_mid3.ogg'=1,'sound/machines/gravgen/gravgen_mid4.ogg'=1,)
 	mid_length = 1.8 SECONDS
 	extra_range = 10
 	volume = 70
+	falloff_distance = 5
+	falloff_exponent = 20

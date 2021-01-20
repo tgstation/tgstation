@@ -431,19 +431,22 @@
 
 //monkey powder heehoo
 /datum/chemical_reaction/monkey_powder
-	results = list(/datum/reagent/monkey_powder = 3)
+	results = list(/datum/reagent/monkey_powder = 5)
 	required_reagents = list(/datum/reagent/consumable/banana = 1, /datum/reagent/consumable/nutriment=2,/datum/reagent/liquidgibs = 1)
 
 /datum/chemical_reaction/monkey
-	required_reagents = list(/datum/reagent/monkey_powder = 30, /datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
+	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/food/monkeycube/cube = holder.my_atom
-	if(istype(cube))
-		cube.Expand()
-	else
-		var/location = get_turf(holder.my_atom)
-		new /mob/living/carbon/monkey(location, TRUE)
+	var/mob/living/carbon/M = holder.my_atom
+	var/location = get_turf(M)
+	if(istype(M, /mob/living/carbon))
+		if(ismonkey(M))
+			M.gib()
+		else
+			M.vomit(blood = TRUE, stun = TRUE) //not having a redo of itching powder (hopefully)
+	new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
@@ -520,13 +523,13 @@
 /datum/chemical_reaction/yuck
 	results = list(/datum/reagent/yuck = 4)
 	required_reagents = list(/datum/reagent/fuel = 3)
-	required_container = /obj/item/reagent_containers/food/snacks/deadmouse
+	required_container = /obj/item/food/deadmouse
 
 
 /datum/chemical_reaction/slimejelly
 	results = list(/datum/reagent/toxin/slimejelly = 5)
 	required_reagents = list(/datum/reagent/fuel/oil = 3, /datum/reagent/uranium/radium = 2, /datum/reagent/consumable/tinlux =1)
-	required_container = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	required_container = /obj/item/food/grown/mushroom/glowshroom
 	mix_message = "The mushroom's insides bubble and pop and it becomes very limp."
 
 /datum/chemical_reaction/slime_extractification
@@ -579,10 +582,6 @@
 	required_reagents = list(/datum/reagent/water/hollowwater = 1)
 	required_catalysts = list(/datum/reagent/water/holywater = 1)
 
-/datum/chemical_reaction/gravy
-	results = list(/datum/reagent/consumable/gravy = 3)
-	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
-
 /datum/chemical_reaction/exotic_stabilizer
 	results = list(/datum/reagent/exotic_stabilizer = 2)
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)
@@ -596,3 +595,4 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/silver(location)
+

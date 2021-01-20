@@ -17,7 +17,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "ah" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space/has_grav/abandonedzoo)
 "ai" = (
 /turf/open/floor/plating/asteroid,
@@ -411,7 +411,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "bn" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/carrotfries,
+/obj/item/food/carrotfries,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "bp" = (

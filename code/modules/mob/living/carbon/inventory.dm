@@ -23,7 +23,7 @@
 	return null
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE, swap = FALSE)
+/mob/living/carbon/equip_to_slot(obj/item/I, slot, initial = FALSE, redraw_mob = FALSE)
 	if(!slot)
 		return
 	if(!istype(I))
@@ -49,31 +49,27 @@
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
-	var/obj/item/current_equip
+
 	switch(slot)
 		if(ITEM_SLOT_BACK)
-			if (back && swap)
-				back.dropped(src, TRUE)
-				current_equip = back
+			if(back)
+				return
 			back = I
 			update_inv_back()
 		if(ITEM_SLOT_MASK)
-			if (wear_mask && swap)
-				wear_mask.dropped(src, TRUE)
-				current_equip = wear_mask
+			if(wear_mask)
+				return
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(ITEM_SLOT_HEAD)
-			if (head && swap)
-				head.dropped(src, TRUE)
-				current_equip = head
+			if(head)
+				return
 			head = I
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, I)
 			head_update(I)
 		if(ITEM_SLOT_NECK)
-			if (wear_neck && swap)
-				wear_neck.dropped(src, TRUE)
-				current_equip = wear_neck
+			if(wear_neck)
+				return
 			wear_neck = I
 			update_inv_neck(I)
 		if(ITEM_SLOT_HANDCUFFED)
@@ -90,9 +86,6 @@
 				not_handled = TRUE
 		else
 			not_handled = TRUE
-
-	if (current_equip)
-		put_in_active_hand(current_equip)
 
 	//Item has been handled at this point and equipped callback can be safely called
 	//We cannot call it for items that have not been handled as they are not yet correctly
@@ -134,6 +127,7 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_inv_legcuffed()
+	update_equipment_speed_mods()
 
 //handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
@@ -161,34 +155,42 @@
 	return index && hand_bodyparts[index]
 
 /**
-  * Proc called when giving an item to another player
-  *
-  * This handles creating an alert and adding an overlay to it
-  */
+ * Proc called when giving an item to another player
+ *
+ * This handles creating an alert and adding an overlay to it
+ */
 /mob/living/carbon/proc/give()
 	var/obj/item/receiving = get_active_held_item()
 	if(!receiving)
 		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
 		return
-	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
-					"<span class='notice'>You offer [receiving]</span>", null, 2)
-	for(var/mob/living/carbon/C in orange(1, src))
+
+	if(istype(receiving, /obj/item/slapper))
+		offer_high_five(receiving)
+		return
+	visible_message("<span class='notice'>[src] is offering [receiving].</span>", \
+					"<span class='notice'>You offer [receiving].</span>", null, 2)
+	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
 		if(!CanReach(C))
 			continue
-		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
+
+		if(!C.can_hold_items())
+			continue
+
+		var/atom/movable/screen/alert/give/G = C.throw_alert("[src]", /atom/movable/screen/alert/give)
 		if(!G)
 			continue
 		G.setup(C, src, receiving)
 
 /**
-  * Proc called when the player clicks the give alert
-  *
-  * Handles checking if the player taking the item has open slots and is in range of the giver
-  * Also deals with the actual transferring of the item to the players hands
-  * Arguments:
-  * * giver - The person giving the original item
-  * * I - The item being given by the giver
-  */
+ * Proc called when the player clicks the give alert
+ *
+ * Handles checking if the player taking the item has open slots and is in range of the giver
+ * Also deals with the actual transferring of the item to the players hands
+ * Arguments:
+ * * giver - The person giving the original item
+ * * I - The item being given by the giver
+ */
 /mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
 	clear_alert("[giver]")
 	if(get_dist(src, giver) > 1)
@@ -206,3 +208,15 @@
 	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
 					"<span class='notice'>You take [I] from [giver]</span>")
 	put_in_hands(I)
+
+/// Spin-off of [/mob/living/carbon/proc/give] exclusively for high-fiving
+/mob/living/carbon/proc/offer_high_five(obj/item/slap)
+	if(has_status_effect(STATUS_EFFECT_HIGHFIVE))
+		return
+	if(!(locate(/mob/living/carbon) in orange(1, src)))
+		visible_message("<span class='danger'>[src] raises [p_their()] arm, looking around for a high-five, but there's no one around! How embarassing...</span>", \
+			"<span class='warning'>You post up, looking for a high-five, but finding no one within range! How embarassing...</span>", null, 2)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
+		return
+
+	apply_status_effect(STATUS_EFFECT_HIGHFIVE, slap)

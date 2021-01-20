@@ -11,7 +11,6 @@
 	icon_state = "mime_skirt"
 	inhand_icon_state = "mime"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -101,4 +100,4 @@
 
 /obj/item/clothing/under/rank/civilian/clown/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please

@@ -113,7 +113,7 @@
 		if(2)
 			if(scooldown < world.time)
 				if(M.health >= 0)
-					if(ishuman(M)||ismonkey(M))
+					if(ishuman(M))
 						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
@@ -386,20 +386,20 @@
 		if(O.density)
 			return FALSE
 
-	var/obj/item/reagent_containers/food/snacks/L
+	var/obj/item/food_item
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
-			L = new /obj/item/reagent_containers/food/snacks/chewable/lollipop(T)
+			food_item = new /obj/item/food/chewable/lollipop(T)
 		if(DISPENSE_ICECREAM_MODE)
-			L = new /obj/item/reagent_containers/food/snacks/icecream(T)
-			var/obj/item/reagent_containers/food/snacks/icecream/I = L
+			food_item = new /obj/item/food/icecream(T)
+			var/obj/item/food/icecream/I = food_item
 			I.add_ice_cream("vanilla")
 			I.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
 	if(ismob(A))
 		var/mob/M = A
-		into_hands = M.put_in_hands(L)
+		into_hands = M.put_in_hands(food_item)
 
 	candy--
 	check_amount()
@@ -500,20 +500,20 @@
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
-	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
+	ammo_type = /obj/item/food/chewable/gumball/cyborg
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5
 
 /obj/projectile/bullet/reusable/gumball/harmful
-	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
+	ammo_type = /obj/item/food/chewable/gumball/cyborg
 	nodamage = FALSE
 	damage = 3
 
 /obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/reagent_containers/food/snacks/chewable/gumball/S = new ammo_type(T)
+		var/obj/item/food/chewable/gumball/S = new ammo_type(T)
 		S.color = color
 		dropped = TRUE
 
@@ -531,8 +531,7 @@
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
-	ammo_type = /obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
-	embedding = null
+	ammo_type = /obj/item/food/chewable/lollipop/cyborg
 	nodamage = TRUE
 	damage = 0
 	speed = 0.5
@@ -546,7 +545,7 @@
 
 /obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
-	var/obj/item/reagent_containers/food/snacks/chewable/lollipop/S = new ammo_type(src)
+	var/obj/item/food/chewable/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
 	var/mutable_appearance/head = mutable_appearance('icons/obj/projectiles.dmi', "lollipop_2")
 	head.color = color2
@@ -555,7 +554,7 @@
 /obj/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
-		var/obj/item/reagent_containers/food/snacks/chewable/lollipop/S = new ammo_type(T)
+		var/obj/item/food/chewable/lollipop/S = new ammo_type(T)
 		S.change_head_color(color2)
 		dropped = TRUE
 
@@ -611,6 +610,12 @@
 	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
 	host = loc
+	RegisterSignal(host, COMSIG_LIVING_DEATH, .proc/on_death)
+
+/obj/item/borg/projectile_dampen/proc/on_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+
+	deactivate_field()
 
 /obj/item/borg/projectile_dampen/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -671,10 +676,6 @@
 	host = loc
 
 /obj/item/borg/projectile_dampen/cyborg_unequip(mob/user)
-	deactivate_field()
-	. = ..()
-
-/obj/item/borg/projectile_dampen/on_mob_death()
 	deactivate_field()
 	. = ..()
 

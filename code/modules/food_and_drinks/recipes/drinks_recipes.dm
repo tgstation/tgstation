@@ -354,7 +354,7 @@
 /datum/chemical_reaction/grappa
 	results = list(/datum/reagent/consumable/ethanol/grappa = 10)
 	required_reagents = list (/datum/reagent/consumable/ethanol/wine = 10)
-	required_catalysts = list (/datum/reagent/consumable/enzyme = 5)
+	required_catalysts = list (/datum/reagent/consumable/enzyme = 10)
 
 /datum/chemical_reaction/whiskey_sour
 	results = list(/datum/reagent/consumable/ethanol/whiskey_sour = 3)
@@ -388,15 +388,22 @@
 	mix_message = "The smells of fresh green grass and sand traps waft through the air as the mixture turns a friendly yellow-orange."
 
 /datum/chemical_reaction/chocolate_milk
-	results = list(/datum/reagent/consumable/milk/chocolate_milk = 2)
-	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/coco = 1)
+	results = list(/datum/reagent/consumable/milk/chocolate_milk = 5)
+	required_reagents = list(/datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/coco = 2)
 	mix_message = "The color changes as the mixture blends smoothly."
+	required_temp = 300
+	is_cold_recipe = TRUE
 
 /datum/chemical_reaction/hot_coco
-	results = list(/datum/reagent/consumable/hot_coco = 5)
+	results = list(/datum/reagent/consumable/hot_coco = 6)
 	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
 	required_temp = 320
 
+/datum/chemical_reaction/hot_coco_from_chocolate_milk
+	results = list(/datum/reagent/consumable/hot_coco = 3)
+	required_reagents = list(/datum/reagent/consumable/milk/chocolate_milk = 1, /datum/reagent/consumable/milk = 2)
+	required_temp = 320
+	
 /datum/chemical_reaction/coffee
 	results = list(/datum/reagent/consumable/coffee = 5)
 	required_reagents = list(/datum/reagent/toxin/coffeepowder = 1, /datum/reagent/water = 5)
@@ -568,3 +575,20 @@
 /datum/chemical_reaction/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+
+/datum/chemical_reaction/godfather
+	results = list(/datum/reagent/consumable/ethanol/godfather = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/whiskey = 1)
+
+/datum/chemical_reaction/godmother
+	results = list(/datum/reagent/consumable/ethanol/godmother = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/vodka = 1)
+
+/datum/chemical_reaction/amaretto_alexander
+	results = list(/datum/reagent/consumable/ethanol/amaretto_alexander = 3)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/creme_de_cacao = 1, /datum/reagent/consumable/cream = 1)
+
+/datum/chemical_reaction/ginger_amaretto
+	results = list(/datum/reagent/consumable/ethanol/ginger_amaretto = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/sol_dry = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/lemonjuice = 1)
+	

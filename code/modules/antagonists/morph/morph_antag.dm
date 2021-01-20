@@ -1,6 +1,7 @@
 /datum/antagonist/morph
 	name = "Morph"
 	show_name_in_check_antagonists = TRUE
+	show_to_ghosts = TRUE
 	show_in_antagpanel = FALSE
 	var/playstyle_string = "<span class='big bold'>You are a morph,</span> a shapeshifting abomination that can eat almost anything. \
 							You may take the form of anything you can see by shift-clicking it. This process will alert any nearby \

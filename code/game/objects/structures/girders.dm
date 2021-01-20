@@ -200,7 +200,7 @@
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()
 						if(S.material_type)
-							material_list[SSmaterials.GetMaterialRef(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+							material_list[GET_MATERIAL_REF(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
 						if(material_list)
 							newturf.set_custom_materials(material_list)
 
@@ -227,8 +227,8 @@
 	. = FALSE
 	if(state == GIRDER_DISPLACED)
 		user.visible_message("<span class='warning'>[user] disassembles the girder.</span>",
-							 "<span class='notice'>You start to disassemble the girder...</span>",
-							 "<span class='hear'>You hear clanking and banging noises.</span>")
+			"<span class='notice'>You start to disassemble the girder...</span>",
+			"<span class='hear'>You hear clanking and banging noises.</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != GIRDER_DISPLACED)
 				return

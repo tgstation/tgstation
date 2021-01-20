@@ -21,6 +21,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	pixel_x = -16
+	base_pixel_x = -16
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8

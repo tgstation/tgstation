@@ -105,12 +105,25 @@
 		return
 
 	var/atom/loc = get_turf(usr)
-	log_admin("[key_name(usr)] teleported [key_name(M)] to [AREACOORD(loc)]")
-	var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(M)] to [ADMIN_VERBOSEJMP(loc)]"
-	message_admins(msg)
-	admin_ticket_log(M, msg)
-	M.forceMove(loc)
+	M.admin_teleport(loc)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/// Proc to hook user-enacted teleporting behavior and keep logging of the event.
+/atom/movable/proc/admin_teleport(atom/new_location)
+	if(isnull(new_location))
+		log_admin("[key_name(usr)] teleported [key_name(src)] to nullspace")
+		moveToNullspace()
+	else
+		log_admin("[key_name(usr)] teleported [key_name(src)] to [AREACOORD(loc)]")
+		forceMove(new_location)
+
+/mob/admin_teleport(atom/new_location)
+	var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(src)] to [isnull(new_location) ? "nullspace" : ADMIN_VERBOSEJMP(loc)]"
+	message_admins(msg)
+	admin_ticket_log(src, msg)
+	return ..()
+
 
 /client/proc/Getkey()
 	set category = "Admin.Game"

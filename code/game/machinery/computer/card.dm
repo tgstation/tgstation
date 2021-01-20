@@ -1,5 +1,3 @@
-
-
 //Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
 //increase the slots of many jobs.
 GLOBAL_VAR_INIT(time_last_changed_position, 0)
@@ -369,27 +367,33 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
-			if(inserted_modify_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_modify_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_modify_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_modify_id))
 					inserted_modify_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_modify_id))
+				if(id_insert(L, held_item, inserted_modify_id))
 					inserted_modify_id = id_to_insert
 					updateUsrDialog()
 		if ("inserted_scan_id")
-			if(inserted_scan_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_scan_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_scan_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_scan_id))
 					inserted_scan_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_scan_id))
+				if(id_insert(L, held_item, inserted_scan_id))
 					inserted_scan_id = id_to_insert
 					updateUsrDialog()
 		if ("auth")
@@ -442,6 +446,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.access -= access_type
 						if(access_allowed == 1)
 							inserted_modify_id.access += access_type
+							if(access_type in ACCESS_ALERT_ADMINS)
+								message_admins("[ADMIN_LOOKUPFLW(usr)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
+							LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "added [get_access_desc(access_type)]")
+
 						playsound(src, "terminal_type", 50, FALSE)
 		if ("assign")
 			if (authenticated == 2)
@@ -470,6 +478,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
 
 					inserted_modify_id.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					if(inserted_modify_id.sticky_access)
+						inserted_modify_id.access += inserted_modify_id.sticky_access
+
+					// Check if we should alert admins that an ID card has been given a new access level.
+					for(var/logged_access in ACCESS_ALERT_ADMINS)
+						if(logged_access in inserted_modify_id.access)
+							message_admins("[ADMIN_LOOKUPFLW(usr)] assigned the job [jobdatum.title] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
+							break
+					LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "assigned the job [jobdatum.title]")
+
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -577,6 +595,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if (inserted_modify_id)
 		inserted_modify_id.update_label()
+		if(inserted_modify_id.sticky_access)
+			inserted_modify_id.access += inserted_modify_id.sticky_access
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)

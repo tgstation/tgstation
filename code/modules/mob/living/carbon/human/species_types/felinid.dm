@@ -5,8 +5,7 @@
 	say_mod = "meows"
 	limbs_id = "human"
 
-	mutant_bodyparts = list("ears", "tail_human")
-	default_features = list("mcolor" = "FFF", "tail_human" = "Cat", "ears" = "Cat", "wings" = "None")
+	mutant_bodyparts = list("tail_human" = "Cat", "ears" = "Cat", "wings" = "None")
 
 	mutantears = /obj/item/organ/ears/cat
 	mutant_organs = list(/obj/item/organ/tail/cat)
@@ -27,21 +26,21 @@
 	. = ..()
 
 /datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
-	return ("tail_human" in mutant_bodyparts) || ("waggingtail_human" in mutant_bodyparts)
+	return mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
 
 /datum/species/human/felinid/is_wagging_tail(mob/living/carbon/human/H)
-	return ("waggingtail_human" in mutant_bodyparts)
+	return mutant_bodyparts["waggingtail_human"]
 
 /datum/species/human/felinid/start_wagging_tail(mob/living/carbon/human/H)
-	if("tail_human" in mutant_bodyparts)
+	if(mutant_bodyparts["tail_human"])
+		mutant_bodyparts["waggingtail_human"] = mutant_bodyparts["tail_human"]
 		mutant_bodyparts -= "tail_human"
-		mutant_bodyparts |= "waggingtail_human"
 	H.update_body()
 
 /datum/species/human/felinid/stop_wagging_tail(mob/living/carbon/human/H)
-	if("waggingtail_human" in mutant_bodyparts)
+	if(mutant_bodyparts["waggingtail_human"])
+		mutant_bodyparts["tail_human"] = mutant_bodyparts["waggingtail_human"]
 		mutant_bodyparts -= "waggingtail_human"
-		mutant_bodyparts |= "tail_human"
 	H.update_body()
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)

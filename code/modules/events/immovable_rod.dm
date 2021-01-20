@@ -22,6 +22,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/aimed = alert("Aimed at current location?","Sniperod", "Yes", "No")
 	if(aimed == "Yes")
 		special_target = get_turf(usr)
+	message_admins("[key_name_admin(usr)] has aimed an immovable rod at [AREACOORD(special_target)].")
+	log_admin("[key_name_admin(usr)] has aimed an immovable rod at [AREACOORD(special_target)].")
 
 /datum/round_event/immovable_rod
 	announceWhen = 5
@@ -34,8 +36,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/startside = pick(GLOB.cardinals)
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
-	var/turf/endT = spaceDebrisFinishLoc(startside, z)
+	var/turf/endT = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
 	var/atom/rod = new /obj/effect/immovablerod(startT, endT, C.special_target)
+	C.special_target = null //Cleanup for future event rolls.
 	announce_to_ghosts(rod)
 
 /obj/effect/immovablerod
@@ -69,7 +72,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	z_original = z
 	destination = end
 	special_target = aimed_at
-	GLOB.poi_list += src
+	AddElement(/datum/element/point_of_interest)
 
 	var/special_target_valid = FALSE
 	if(special_target)
@@ -101,12 +104,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(istype(ghost))
 			ghost.ManualFollow(src)
 
-/obj/effect/immovablerod/Destroy()
-	GLOB.poi_list -= src
-	. = ..()
-
 /obj/effect/immovablerod/Moved()
-	if((z != z_original) || (loc == destination))
+	if((z != z_original))
 		qdel(src)
 	if(special_target && loc == get_turf(special_target))
 		complete_trajectory()
@@ -118,9 +117,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	destination = get_edge_target_turf(src, dir)
 	walk(src,0)
 	walk_towards(src, destination, 1)
-
-/obj/effect/immovablerod/ex_act(severity, target)
-	return
 
 /obj/effect/immovablerod/singularity_act()
 	return
@@ -178,22 +174,30 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		smeared_mob.ex_act(EXPLODE_HEAVY)
 
 /obj/effect/immovablerod/attack_hand(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/U = user
-		if(U.job in list("Research Director"))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-			for(var/mob/M in urange(8, src))
-				if(!M.stat)
-					shake_camera(M, 2, 3)
-			if(wizard)
-				U.visible_message("<span class='boldwarning'>[src] transforms into [wizard] as [U] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [wizard] as you suplex them!</span>")
-				to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [U] somehow manages to grab you, slamming you into the ground!</span>")
-				wizard.Stun(60)
-				wizard.apply_damage(25, BRUTE)
-				qdel(src)
-			else
-				U.client.give_award(/datum/award/achievement/misc/feat_of_strength, U) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
-				U.visible_message("<span class='boldwarning'>[U] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
-				new /obj/structure/festivus/anchored(drop_location())
-				new /obj/effect/anomaly/flux(drop_location())
-				qdel(src)
+	. = ..()
+	if(.)
+		return
+
+	if(!(HAS_TRAIT(user, TRAIT_ROD_SUPLEX) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ROD_SUPLEX))))
+		return
+
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	for(var/mob/M in urange(8, src))
+		if(M.stat != CONSCIOUS)
+			continue
+		shake_camera(M, 2, 3)
+
+	if(wizard)
+		user.visible_message("<span class='boldwarning'>[src] transforms into [wizard] as [user] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [wizard] as you suplex them!</span>")
+		to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [user] somehow manages to grab you, slamming you into the ground!</span>")
+		wizard.Stun(60)
+		wizard.apply_damage(25, BRUTE)
+		qdel(src)
+	else
+		user.client.give_award(/datum/award/achievement/misc/feat_of_strength, user) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
+		user.visible_message("<span class='boldwarning'>[user] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
+		new /obj/structure/festivus/anchored(drop_location())
+		new /obj/effect/anomaly/flux(drop_location())
+		qdel(src)
+
+	return TRUE

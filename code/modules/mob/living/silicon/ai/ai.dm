@@ -74,7 +74,7 @@
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
 	var/waypoint_mode = FALSE		//Waypoint mode is for selecting a turf via clicking.
 	var/call_bot_cooldown = 0		//time of next call bot command
-	var/apc_override = FALSE		//hack for letting the AI use its APC even when visionless
+	var/obj/machinery/power/apc/apc_override		//Ref of the AI's APC, used when the AI has no power in order to access their APC.
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
@@ -91,7 +91,7 @@
 	var/chnotify = 0
 
 	var/multicam_on = FALSE
-	var/obj/screen/movable/pic_in_pic/ai/master_multicam
+	var/atom/movable/screen/movable/pic_in_pic/ai/master_multicam
 	var/list/multicam_screens = list()
 	var/list/all_eyes = list()
 	var/max_multicams = 6
@@ -138,7 +138,8 @@
 	if(client)
 		INVOKE_ASYNC(src, .proc/apply_pref_name,"ai",client)
 
-	set_core_display_icon()
+	INVOKE_ASYNC(src, .proc/set_core_display_icon)
+
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
@@ -209,6 +210,7 @@
 	Bot = null
 	controlled_mech = null
 	linked_core = null
+	apc_override = null
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
@@ -237,10 +239,16 @@
 	set name = "Set AI Core Display"
 	if(incapacitated())
 		return
+	icon = initial(icon)
+	icon_state = "ai"
+	cut_overlays()
 	var/list/iconstates = GLOB.ai_core_display_screens
 	for(var/option in iconstates)
 		if(option == "Random")
 			iconstates[option] = image(icon = src.icon, icon_state = "ai-random")
+			continue
+		if(option == "Portrait")
+			iconstates[option] = image(icon = src.icon, icon_state = "ai-portrait")
 			continue
 		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option))
 
@@ -384,8 +392,19 @@
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
-	if(usr != src || incapacitated())
+	if(usr != src)
 		return
+
+	if(href_list["emergencyAPC"]) //This check comes before incapacitated() because the only time it would be useful is when we have no power.
+		if(!apc_override)
+			to_chat(src, "<span class='notice'>APC backdoor is no longer available.</span>")
+			return
+		apc_override.ui_interact(src)
+		return
+
+	if(incapacitated())
+		return
+
 	if (href_list["mach_close"])
 		if (href_list["mach_close"] == "aialerts")
 			viewalerts = 0
@@ -795,20 +814,17 @@
 		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(control_disabled || incapacitated())
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+	if(control_disabled)
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
-	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	return can_see(M) //stop AIs from leaving windows open and using then after they lose vision
+	return can_see(M) && ..() //stop AIs from leaving windows open and using then after they lose vision
 
 /mob/living/silicon/ai/proc/can_see(atom/A)
 	if(isturf(loc)) //AI in core, check if on cameras
 		//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 		//apc_override is needed here because AIs use their own APC when depowered
-		return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || apc_override
+		return ((GLOB.cameranet && GLOB.cameranet.checkTurfVis(get_turf_pixel(A))) || (A == apc_override))
 	//AI is carded/shunted
 	//view(src) returns nothing for carded/shunted AIs and they have X-ray vision so just use get_dist
 	var/list/viewscale = getviewsize(client.view)
@@ -958,7 +974,7 @@
 		return
 
 	else if(mind)
-		RegisterSignal(target, COMSIG_MOB_DEATH, .proc/disconnect_shell)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/disconnect_shell)
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
@@ -996,7 +1012,7 @@
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, "<span class='danger'>Your remote connection has been reset!</span>")
 		deployed_shell.undeploy()
-		UnregisterSignal(deployed_shell, COMSIG_MOB_DEATH)
+		UnregisterSignal(deployed_shell, COMSIG_LIVING_DEATH)
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()

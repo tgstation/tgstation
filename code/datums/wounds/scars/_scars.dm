@@ -1,11 +1,11 @@
 /**
-  * scars are cosmetic datums that are assigned to bodyparts once they recover from wounds. Each wound type and severity have their own descriptions for what the scars
-  * look like, and then each body part has a list of "specific locations" like your elbow or wrist or wherever the scar can appear, to make it more interesting than "right arm"
-  *
-  *
-  * Arguments:
-  * *
-  */
+ * scars are cosmetic datums that are assigned to bodyparts once they recover from wounds. Each wound type and severity have their own descriptions for what the scars
+ * look like, and then each body part has a list of "specific locations" like your elbow or wrist or wherever the scar can appear, to make it more interesting than "right arm"
+ *
+ *
+ * Arguments:
+ * *
+ */
 /datum/scar
 	var/obj/item/bodypart/limb
 	var/mob/living/carbon/victim
@@ -35,15 +35,15 @@
 	. = ..()
 
 /**
-  * generate() is used to actually fill out the info for a scar, according to the limb and wound it is provided.
-  *
-  * After creating a scar, call this on it while targeting the scarred bodypart with a given wound to apply the scar.
-  *
-  * Arguments:
-  * * BP- The bodypart being targeted
-  * * W- The wound being used to generate the severity and description info
-  * * add_to_scars- Should always be TRUE unless you're just storing a scar for later usage, like how cuts want to store a scar for the highest severity of cut, rather than the severity when the wound is fully healed (probably demoted to moderate)
-  */
+ * generate() is used to actually fill out the info for a scar, according to the limb and wound it is provided.
+ *
+ * After creating a scar, call this on it while targeting the scarred bodypart with a given wound to apply the scar.
+ *
+ * Arguments:
+ * * BP- The bodypart being targeted
+ * * W- The wound being used to generate the severity and description info
+ * * add_to_scars- Should always be TRUE unless you're just storing a scar for later usage, like how cuts want to store a scar for the highest severity of cut, rather than the severity when the wound is fully healed (probably demoted to moderate)
+ */
 /datum/scar/proc/generate(obj/item/bodypart/BP, datum/wound/W, add_to_scars=TRUE)
 	limb = BP
 	severity = W.severity
@@ -158,5 +158,5 @@
 
 /// Used to format a scar to save in preferences for persistent scars
 /datum/scar/proc/format_amputated(body_zone)
-	description = pick_list(FLESH_SCAR_FILE, "dismemberment")
+	description = pick_list(FLESH_SCAR_FILE, "dismember")
 	return "[SCAR_CURRENT_VERSION]|[body_zone]|[description]|amputated|[WOUND_SEVERITY_LOSS]|[BIO_FLESH_BONE]|[persistent_character_slot]"

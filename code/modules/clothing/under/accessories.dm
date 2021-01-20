@@ -73,7 +73,7 @@
 	return
 
 /obj/item/clothing/accessory/AltClick(mob/user)
-	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		if(initial(above_suit))
 			above_suit = !above_suit
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
@@ -129,7 +129,7 @@
 				delay = 0
 			else
 				user.visible_message("<span class='notice'>[user] is trying to pin [src] on [M]'s chest.</span>", \
-									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
+					"<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			var/input
 			if(!commended && user != M)
 				input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 140)
@@ -139,7 +139,7 @@
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
 						user.visible_message("<span class='notice'>[user] pins \the [src] on [M]'s chest.</span>", \
-											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
+							"<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(input)
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
@@ -219,11 +219,17 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = -10, ACID = 0) //It's made of plasma. Of course it's flammable.
 	custom_materials = list(/datum/material/plasma=1000)
 
-/obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
-		visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
-		qdel(src)
+/obj/item/clothing/accessory/medal/plasma/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
+/obj/item/clothing/accessory/medal/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/item/clothing/accessory/medal/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
+	visible_message("<span class='danger'>\The [src] bursts into flame!</span>", "<span class='userdanger'>Your [src] bursts into flame!</span>")
+	qdel(src)
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"

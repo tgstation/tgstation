@@ -13,6 +13,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	pass_flags_self = PASSGLASS
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
@@ -57,7 +58,7 @@
 		state = RWINDOW_SECURE
 
 	ini_dir = dir
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 
 	if(fulltile)
 		setDir()
@@ -72,6 +73,7 @@
 /obj/structure/window/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -92,6 +94,8 @@
 
 /obj/structure/window/singularity_pull(S, current_size)
 	..()
+	if(anchored && current_size >= STAGE_TWO)
+		set_anchored(FALSE)
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
@@ -103,8 +107,8 @@
 
 /obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return TRUE
+	if(.)
+		return
 	if(dir == FULLTILE_WINDOW_DIR)
 		return FALSE	//full tile window, you can't move into it!
 	var/attempted_dir = get_dir(loc, target)
@@ -130,11 +134,14 @@
 		return FALSE
 	return TRUE
 
+
 /obj/structure/window/attack_tk(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(src, knocksound, 50, TRUE)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
@@ -213,7 +220,7 @@
 
 /obj/structure/window/set_anchored(anchorvalue)
 	..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, anchorvalue)
 	update_nearby_icons()
 
 /obj/structure/window/proc/check_state(checked_state)
@@ -284,7 +291,7 @@
 	return TRUE
 
 /obj/structure/window/proc/after_rotation(mob/user,rotation_type)
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	ini_dir = dir
 	add_fingerprint(user)
 
@@ -298,7 +305,7 @@
 
 /obj/structure/window/Destroy()
 	density = FALSE
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	update_nearby_icons()
 	return ..()
 
@@ -307,7 +314,8 @@
 	var/turf/T = loc
 	. = ..()
 	setDir(ini_dir)
-	move_update_air(T)
+	if(anchored)
+		move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(!anchored || !density)
@@ -339,11 +347,11 @@
 		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 		. += crack_overlay
 
-/obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > T0C + heat_resistance
 
-	if(exposed_temperature > (T0C + heat_resistance))
-		take_damage(round(exposed_volume / 100), BURN, 0, 0)
-	..()
+/obj/structure/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(round(air.return_volume() / 100), BURN, 0, 0)
 
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
@@ -387,7 +395,7 @@
 	receive_ricochet_chance_mod = 1.1
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
-//If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this
+//If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 /obj/structure/window/reinforced/attackby(obj/item/I, mob/living/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
@@ -477,6 +485,10 @@
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_NO_INSULATION
+
+/obj/structure/window/plasma/ComponentInitialize()
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive)
 
 /obj/structure/window/plasma/spawnDebris(location)
 	. = list()

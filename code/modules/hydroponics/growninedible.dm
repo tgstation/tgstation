@@ -19,8 +19,8 @@
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
 
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
@@ -57,5 +57,6 @@
 	return
 
 /obj/item/grown/on_grind()
+	. = ..()
 	for(var/i in 1 to grind_results.len)
 		grind_results[grind_results[i]] = round(seed.potency)

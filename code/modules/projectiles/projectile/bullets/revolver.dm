@@ -42,7 +42,7 @@
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
-	shrapnel_type = NONE
+	shrapnel_type = null
 	sharpness = SHARP_NONE
 	embedding = null
 

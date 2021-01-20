@@ -28,6 +28,7 @@
 #define SWEDISH		/datum/mutation/human/swedish
 #define CHAV		/datum/mutation/human/chav
 #define ELVIS		/datum/mutation/human/elvis
+#define MEDIEVAL	/datum/mutation/human/medieval
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
 #define ANTIGLOWY	/datum/mutation/human/glow/anti
@@ -91,20 +92,6 @@
 #define DNA_MUTATION_BLOCKS			8
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
-//Transformation proc stuff
-#define TR_KEEPITEMS	(1<<0)
-#define TR_KEEPVIRUS	(1<<1)
-#define TR_KEEPDAMAGE	(1<<2)
-/// hashing names (e.g. monkey(e34f)) (only in monkeyize)
-#define TR_HASHNAME		(1<<3)
-#define TR_KEEPIMPLANTS	(1<<4)
-/// changelings shouldn't edit the DNA's SE when turning into a monkey
-#define TR_KEEPSE		(1<<5)
-#define TR_DEFAULTMSG	(1<<6)
-#define TR_KEEPORGANS	(1<<8)
-#define TR_KEEPSTUNS	(1<<9)
-#define TR_KEEPREAGENTS	(1<<10)
-#define TR_KEEPSTAMINADAMAGE (1<<11)
 //species traits for mutantraces
 #define MUTCOLORS		1
 #define HAIR			2
@@ -127,7 +114,6 @@
 #define AGENDER			16
 /// Do not draw eyes or eyeless overlay
 #define NOEYESPRITES	17
-
 /// Used for determining which wounds are applicable to this species.
 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
 #define HAS_FLESH	18
@@ -135,7 +121,10 @@
 #define HAS_BONE	19
 ///If we have a limb-specific overlay sprite
 #define HAS_MARKINGS 20
-
+/// Do not draw blood overlay
+#define NOBLOODOVERLAY 21
+///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
+#define NOAUGMENTS 		22
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
@@ -163,6 +152,14 @@
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
 #define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
 
+/// Xenomorph organ slots
+#define ORGAN_SLOT_XENO_PLASMAVESSEL "plasma_vessel"
+#define ORGAN_SLOT_XENO_HIVENODE "hive_node"
+#define ORGAN_SLOT_XENO_RESINSPINNER "resin_spinner"
+#define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
+#define ORGAN_SLOT_XENO_NEUROTOXINGLAND "neurotoxin_gland"
+#define ORGAN_SLOT_XENO_EGGSAC "eggsac"
+
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
 #define STANDARD_ORGAN_HEALING 		0.001
@@ -178,3 +175,36 @@
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3
+
+///Organ slot processing order for life proc
+GLOBAL_LIST_INIT(organ_process_order, list(
+	ORGAN_SLOT_BRAIN,
+	ORGAN_SLOT_APPENDIX,
+	ORGAN_SLOT_RIGHT_ARM_AUG,
+	ORGAN_SLOT_LEFT_ARM_AUG,
+	ORGAN_SLOT_STOMACH,
+	ORGAN_SLOT_STOMACH_AID,
+	ORGAN_SLOT_BREATHING_TUBE,
+	ORGAN_SLOT_EARS,
+	ORGAN_SLOT_EYES,
+	ORGAN_SLOT_LUNGS,
+	ORGAN_SLOT_HEART,
+	ORGAN_SLOT_ZOMBIE,
+	ORGAN_SLOT_THRUSTERS,
+	ORGAN_SLOT_HUD,
+	ORGAN_SLOT_LIVER,
+	ORGAN_SLOT_TONGUE,
+	ORGAN_SLOT_VOICE,
+	ORGAN_SLOT_ADAMANTINE_RESONATOR,
+	ORGAN_SLOT_HEART_AID,
+	ORGAN_SLOT_BRAIN_ANTIDROP,
+	ORGAN_SLOT_BRAIN_ANTISTUN,
+	ORGAN_SLOT_TAIL,
+	ORGAN_SLOT_PARASITE_EGG,
+	ORGAN_SLOT_REGENERATIVE_CORE,
+	ORGAN_SLOT_XENO_PLASMAVESSEL,
+	ORGAN_SLOT_XENO_HIVENODE,
+	ORGAN_SLOT_XENO_RESINSPINNER,
+	ORGAN_SLOT_XENO_ACIDGLAND,
+	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
+	ORGAN_SLOT_XENO_EGGSAC,))

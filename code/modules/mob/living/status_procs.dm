@@ -165,7 +165,7 @@
 		return I
 
 ///////////////////////////////// PARALYZED //////////////////////////////////
-/mob/living/proc/IsParalyzed() //If we're immobilized
+/mob/living/proc/IsParalyzed() //If we're paralyzed
 	return has_status_effect(STATUS_EFFECT_PARALYZED)
 
 /mob/living/proc/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect
@@ -428,7 +428,7 @@
 
 /mob/living/proc/become_nearsighted(source)
 	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /mob/living/proc/cure_husk(source)

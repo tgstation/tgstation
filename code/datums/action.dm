@@ -9,7 +9,7 @@
 	var/obj/target = null
 	var/check_flags = NONE
 	var/processing = FALSE
-	var/obj/screen/movable/action_button/button = null
+	var/atom/movable/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
 	var/transparent_when_unavailable = TRUE
 
@@ -133,7 +133,7 @@
 			button.color = rgb(255,255,255,255)
 			return 1
 
-/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
+/datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
@@ -172,7 +172,7 @@
 		I.ui_action_click(owner, src)
 	return TRUE
 
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
+/datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
@@ -304,16 +304,35 @@
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
-	var/turf/current_location = get_turf(target)
-	var/area/current_area = current_location.loc
+	var/area/current_area = get_area(target)
 	if(current_area.area_flags & NOTELEPORT)
-		to_chat(target, "[src] fizzles uselessly.")
+		to_chat(owner, "<span class='notice'>[target] fizzles uselessly.</span>")
 		return
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
 			return FALSE
 	return ..()
+
+/datum/action/item_action/berserk_mode
+	name = "Berserk"
+	desc = "Increase your movement and melee speed while also increasing your melee armor for a short amount of time."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "berserk_mode"
+	background_icon_state = "bg_demon"
+
+/datum/action/item_action/berserk_mode/Trigger()
+	if(istype(target, /obj/item/clothing/head/helmet/space/hardsuit/berserker))
+		var/obj/item/clothing/head/helmet/space/hardsuit/berserker/berzerk = target
+		if(berzerk.berserk_active)
+			to_chat(owner, "<span class='warning'>You are already berserk!</span>")
+			return
+		if(berzerk.berserk_charge < 100)
+			to_chat(owner, "<span class='warning'>You don't have a full charge.</span>")
+			return
+		berzerk.berserk_mode(owner)
+		return
+	..()
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
@@ -621,7 +640,7 @@
 
 /datum/action/cooldown/proc/StartCooldown()
 	next_use_time = world.time + cooldown_time
-	button.maptext = "<b>[round(cooldown_time/10, 0.1)]</b>"
+	button.maptext = MAPTEXT("<b>[round(cooldown_time/10, 0.1)]</b>")
 	UpdateButtonIcon()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -635,7 +654,7 @@
 		UpdateButtonIcon()
 		STOP_PROCESSING(SSfastprocess, src)
 	else
-		button.maptext = "<b>[round(timeleft/10, 0.1)]</b>"
+		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
 
 /datum/action/cooldown/Grant(mob/M)
 	..()
@@ -718,10 +737,6 @@
 /datum/action/small_sprite/megafauna/legion
 	small_icon_state = "mega_legion"
 
-/datum/action/small_sprite/megafauna/spacedragon
-	small_icon = 'icons/mob/carp.dmi'
-	small_icon_state = "carp"
-
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
@@ -741,7 +756,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "storage_gather_switch"
 
-/datum/action/item_action/storage_gather_mode/ApplyIcon(obj/screen/movable/action_button/current_button)
+/datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
 	. = ..()
 	var/old_layer = target.layer
 	var/old_plane = target.plane

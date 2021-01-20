@@ -135,11 +135,7 @@
 					return TRUE
 
 		else	// Disposal or outlet
-			var/found_trunk = FALSE
-			for(var/obj/structure/disposalpipe/CP in T)
-				if(istype(CP, /obj/structure/disposalpipe/trunk))
-					found_trunk = TRUE
-					break
+			var/found_trunk = locate(/obj/structure/disposalpipe/trunk) in T
 
 			if(!found_trunk)
 				to_chat(user, "<span class='warning'>The [pipename] requires a trunk underneath it in order to work!</span>")
