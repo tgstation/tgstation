@@ -36,6 +36,8 @@
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	COOLDOWN_DECLARE(last_alarm)
 	var/area/myarea = null
+	//Has this firealarm been triggered by its enviroment?
+	var/triggered = FALSE
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
@@ -56,6 +58,9 @@
 
 /obj/machinery/firealarm/Destroy()
 	LAZYREMOVE(myarea.firealarms, src)
+	if(triggered)
+		triggered = FALSE
+		myarea.triggered_firealarms -= 1
 	return ..()
 
 /obj/machinery/firealarm/update_icon_state()
@@ -102,6 +107,11 @@
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", layer, plane, dir)
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", layer, EMISSIVE_PLANE, dir)
 
+	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
+		. += "fire_detected"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_detected", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_detected", layer, EMISSIVE_PLANE, dir) //Pain
+
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
 
@@ -122,10 +132,24 @@
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/firealarm/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && detecting && !machine_stat
+	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
 
 /obj/machinery/firealarm/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(!detecting)
+		return
+	if(!triggered)
+		triggered = TRUE
+		myarea.triggered_firealarms += 1
+		update_icon()
 	alarm()
+
+/obj/machinery/firealarm/atmos_end(datum/gas_mixture/air, exposed_temperature)
+	if(!detecting)
+		return
+	if(triggered)
+		triggered = FALSE
+		myarea.triggered_firealarms -= 1
+		update_icon()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational || !COOLDOWN_FINISHED(src, last_alarm))
