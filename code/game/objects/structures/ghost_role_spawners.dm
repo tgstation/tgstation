@@ -585,6 +585,7 @@
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
 	assignedrole = "Space Pirate"
 	var/rank = "Deserter"
+	var/spawn_oldpod = TRUE
 
 /obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
 	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
@@ -596,7 +597,8 @@
 	return "[rank] [pick(beggings)][pick(endings)]"
 
 /obj/effect/mob_spawn/human/pirate/Destroy()
-	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
+	if(spawn_oldpod)
+		new /obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
 /obj/effect/mob_spawn/human/pirate/captain
@@ -613,6 +615,7 @@
 	density = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
+	spawn_oldpod = FALSE
 	mob_name = "a space pirate"
 	mob_species = /datum/species/skeleton
 	outfit = /datum/outfit/pirate
