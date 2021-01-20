@@ -15,10 +15,20 @@
 
 /obj/item/stack/cannonball/update_icon_state()
 	if(amount == 1)
-		icon_state = "cannonballs"
+		icon_state = "initial(icon_state)"
 	else
 		icon_state = "cannonballs_[min(amount, 14)]"
 
 
 /obj/item/stack/cannonball/fourteen
+	amount = 14
+
+/obj/item/stack/cannonball/shellball
+	name = "explosive shellball"
+	desc = "An explosive anti-materiel and counter-battery projectile cannonball. Makes great work out of any wall, for easy entrances."
+	icon_state = "cannonballs"
+	color = "#FF0000"
+	projectile_type = /obj/projectile/bullet/cannonball/explosive
+
+/obj/item/stack/cannonball/shellball/fourteen
 	amount = 14

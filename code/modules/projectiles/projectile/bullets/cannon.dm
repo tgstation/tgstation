@@ -15,3 +15,13 @@
 	if(isliving(target) && damage > 40)
 		return BULLET_ACT_FORCE_PIERCE
 	..()
+
+/obj/projectile/bullet/cannonball/explosive
+	name = "explosive shell"
+	icon_state = "cannonball"
+	color = "#FF0000"
+	damage = 40 //set to 30 before first mob impact. alongside explosion damage, will never pierce
+
+/obj/projectile/bullet/cannonball/explosive/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	explosion(target, -1, 0, 2)

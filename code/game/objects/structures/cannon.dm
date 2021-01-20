@@ -8,14 +8,16 @@
 	var/charge_ignited = FALSE
 	var/fire_delay = 15
 	var/charge_size = 15
-
+	var/fire_sound = 'sound/effects/explosion1.ogg'
 /obj/structure/cannon/Initialize()
 	. = ..()
 	create_reagents(15)
 
+/*
 /obj/structure/cannon/wash(clean_types)
 	. = ..()
 	//if(clean_types & CLEAN_SCRUB)
+*/
 
 /obj/structure/cannon/proc/fire()
 	charge_ignited = FALSE
@@ -23,14 +25,14 @@
 		if(!M.stat)
 			shake_camera(M, 3, 1)
 
-		playsound(src, break_sound, 50, TRUE)
+		playsound(src, fire_sound, 50, TRUE)
 	if(loaded_cannonball)
 		var/obj/projectile/fired_projectile = new loaded_cannonball.projectile_type(get_turf(src))
 		QDEL_NULL(loaded_cannonball)
 		fired_projectile.firer = src
 		fired_projectile.fired_from = src
 		fired_projectile.fire(dir2angle(dir))
-	//remove all reagent here
+	reagents.remove_all()
 
 /obj/structure/cannon/attackby(obj/item/W, mob/user, params)
 	var/ignition_message = W.ignition_effect(src, user)
