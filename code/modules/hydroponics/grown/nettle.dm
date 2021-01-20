@@ -49,6 +49,7 @@
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
 	var/minforce = 4 //minimum force after most of the stingy bits fall off. increases with potency.
+	var/bareicon = "nettle_bare" //icon used to represent nettle once all its bonus damage is used up
 
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is lightly grasping [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -78,7 +79,7 @@
 	if(force > minforce)
 		force = max(force - rand(0,2),minforce) // When you whack someone with it, leaves fall off
 		if(force == minforce)
-			to_chat(usr, "<span class='warning'>Most of the leaves have fallen off the nettle from violent whacking.</span>")
+			icon_state = bareicon
 
 /obj/item/food/grown/nettle/basic
 	seed = /obj/item/seeds/nettle
@@ -93,6 +94,7 @@
 	name = "deathnettle"
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
+	bareicon = "deathnettle_bare"
 	force = 20
 	minforce = 8
 	wound_bonus = CANT_WOUND
