@@ -1,34 +1,65 @@
 /datum/deathrattle_group
 	var/name
-	var/list/datum/weakref/implant_refs = list()
+	var/list/implants = list()
 
-/datum/deathrattle_group/New()
-	// Give the group a unique name for debugging, and possible future
-	// use for making custom linked groups.
-	name = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+/datum/deathrattle_group/New(name)
+	if(name)
+		src.name = name
+	else
+		// Give the group a unique name for debugging, and possible future
+		// use for making custom linked groups.
+		src.name = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
-/datum/deathrattle_group/proc/rattle(obj/item/implant/deathrattle/origin, mob/living/owner)
+/*
+ * Proc called by new implant being added to the group. Listens for the
+ * implant being implanted, removed and destroyed.
+ *
+ * If implant is already implanted in a person, then trigger the implantation
+ * code.
+ */
+/datum/deathrattle_group/proc/register(obj/item/implant/deathrattle/implant)
+	if(implant in implants)
+		return
+	RegisterSignal(implant, COMSIG_IMPLANT_IMPLANTED, .proc/on_implant_implantation)
+	RegisterSignal(implant, COMSIG_IMPLANT_REMOVED, .proc/on_implant_removal)
+	RegisterSignal(implant, COMSIG_PARENT_QDELETING, .proc/on_implant_destruction)
+
+	implants += implant
+
+	if(implant.imp_in)
+		on_implant_implantation(implant.imp_in)
+
+/datum/deathrattle_group/proc/on_implant_implantation(obj/item/implant/implant, mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	SIGNAL_HANDLER
+
+	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
+
+/datum/deathrattle_group/proc/on_implant_removal(obj/item/implant/implant, mob/living/source, silent = FALSE, special = 0)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, COMSIG_MOB_STATCHANGE)
+
+/datum/deathrattle_group/proc/on_implant_destruction(obj/item/implant/implant)
+	implants -= implant
+
+/datum/deathrattle_group/proc/on_user_statchange(mob/living/owner, new_stat)
+	SIGNAL_HANDLER
+
+	if(new_stat != DEAD)
+		return
+
 	var/name = owner.mind ? owner.mind.name : owner.real_name
 	var/area = get_area_name(get_turf(owner))
 
-	for(var/r in implant_refs)
-		var/datum/weakref/R = r
+	for(var/_implant in implants)
+		var/obj/item/implant/deathrattle/implant = _implant
 
-		var/obj/item/implant/deathrattle/implant = R.resolve()
-		if(!implant || implant == origin)
-			continue
-
-		// Not all the implants may be actually implanted in people.
-		if(!implant.imp_in)
+		// Skip the unfortunate soul, and any unimplanted implants
+		if(implant.imp_in == owner || !implant.imp_in)
 			continue
 
 		// Deliberately the same message framing as nanite message + ghost deathrattle
 		to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'><b>[name]</b> has died at <b>[area]</b>.</span>\"")
-
-/datum/deathrattle_group/proc/register(obj/item/implant/deathrattle/implant)
-	implant.group = src
-	implant_refs += WEAKREF(implant)
-
 
 /obj/item/implant/deathrattle
 	name = "deathrattle implant"
@@ -36,32 +67,9 @@
 
 	activated = FALSE
 
-	var/datum/deathrattle_group/group = null
-
-/obj/item/implant/deathrattle/Destroy()
-	group = null
-	return ..()
-
 /obj/item/implant/deathrattle/can_be_implanted_in(mob/living/target)
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...
 	return TRUE
-
-/obj/item/implant/deathrattle/proc/on_statchange(mob/mob, new_stat)
-	SIGNAL_HANDLER
-
-	if(group && new_stat == DEAD)
-		group.rattle(origin = src, owner = mob)
-
-/obj/item/implant/deathrattle/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	. = ..()
-	if(!.)
-		return
-
-	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
-
-	if(!group)
-		to_chat(target, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>Warning: No other linked implants detected.</span>\"")
-
 
 /obj/item/implantcase/deathrattle
 	name = "implant case - 'Deathrattle'"
