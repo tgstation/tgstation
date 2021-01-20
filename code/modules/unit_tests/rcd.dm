@@ -20,4 +20,4 @@
 	for(var/obj/structure/frame/machine_frame in adjacent_turf.contents)
 		frame_count++
 
-	TEST_ASSERT(frame_count != 1, "Expected RCD test to end up with 1 machine frame. It instead created [frame_count] machine frames.")
+	TEST_ASSERT(frame_count == 1, "Expected RCD test to end up with 1 machine frame. It instead created [frame_count] machine frames.")
