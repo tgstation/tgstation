@@ -3723,6 +3723,7 @@
 /obj/structure/closet,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/clothing/head/festive,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ajP" = (
