@@ -468,7 +468,7 @@
 	if(G.reagents && G.reagents.total_volume)
 		on_throw_impact(G, target)
 		if(!G.reagents || !G.reagents.total_volume)
-			to_chat(user, "<span class='notice'>[G] sags slightly, its contents exhausted.</span>")
+			to_chat(user, "<span class='notice'>[G] sags slightly, [G.p_their()] contents exhausted.</span>")
 
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
