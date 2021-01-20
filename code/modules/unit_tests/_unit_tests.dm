@@ -60,6 +60,7 @@
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
 #include "projectiles.dm"
+#include "rcd.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"
 #include "reagent_mod_procs.dm"
