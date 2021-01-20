@@ -131,10 +131,10 @@
 /obj/item/food/grown/afterattack(atom/A as mob|obj, mob/user, proximity)
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_attack(self, A, user, proximity)
+			T.on_attack(src, A, user, proximity)
 		if(seed.get_gene(/datum/plant_gene/trait/squash))
 			visible_message("<span class='warning'>[user] splats [src] against [A].</span>")
-			squash(hit_atom)
+			squash(A)
 
 /obj/item/food/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
