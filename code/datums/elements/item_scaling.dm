@@ -24,8 +24,8 @@
 /datum/element/item_scaling/Detach(datum/target)
 	UnregisterSignal(target, list(
 		COMSIG_ITEM_PICKUP,
-		 COMSIG_ITEM_DROPPED,
-		 COMSIG_STORAGE_ENTERED,
+		COMSIG_ITEM_DROPPED,
+		COMSIG_STORAGE_ENTERED,
 		COMSIG_STORAGE_EXITED,
 	))
 	return ..()
