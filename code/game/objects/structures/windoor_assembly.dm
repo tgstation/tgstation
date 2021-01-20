@@ -52,7 +52,7 @@
 	. = ..()
 
 	if(get_dir(loc, target) == dir)
-		return FALSE
+		return
 
 	if(istype(mover, /obj/structure/window))
 		var/obj/structure/window/moved_window = mover
