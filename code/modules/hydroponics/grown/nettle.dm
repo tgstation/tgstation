@@ -48,6 +48,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("stings")
 	attack_verb_simple = list("sting")
+	var/minforce = 5 //minimum force after most of the stingy bits fall off
 
 /obj/item/food/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is lightly grasping [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -74,18 +75,17 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(force > 0)
-		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
-	else
-		to_chat(usr, "<span class='warning'>All the leaves have fallen off the nettle from violent whacking.</span>")
-		qdel(src)
+	if(force > minforce)
+		force = max(force - rand(1,3),minforce) // When you whack someone with it, leaves fall off
+		if(force == minforce)
+			to_chat(usr, "<span class='warning'>Many of the leaves have fallen off the nettle from violent whacking.</span>")
 
 /obj/item/food/grown/nettle/basic
 	seed = /obj/item/seeds/nettle
 
 /obj/item/food/grown/nettle/basic/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	force = round((5 + seed.potency / 5), 1)
+	force = round((minforce + seed.potency / 10), 1)
 
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
@@ -93,12 +93,13 @@
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
+	minforce = 10
 	wound_bonus = CANT_WOUND
 	throwforce = 15
 
 /obj/item/food/grown/nettle/death/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	force = round((5 + seed.potency / 2.5), 1)
+	force = round((minforce + seed.potency / 5), 1)
 
 /obj/item/food/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
@@ -110,11 +111,11 @@
 	if(!..())
 		return
 	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
+		to_chat(M, "<span class='danger'>You are stunned by the powerful sting of [src]!</span>")
 		log_combat(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)
-		if(prob(20))
+		if(prob(10))
 			M.Unconscious(force / 0.3)
 			M.Paralyze(force / 0.75)
 		M.drop_all_held_items()
