@@ -51,6 +51,10 @@
 	pill.reagents.add_reagent(meth, initial(meth.addiction_threshold))
 	pill.attack(pill_user, pill_user)
 
+	// Set the metabolism efficiency to 1.0 so it transfers all reagents to the body in one go.
+	var/obj/item/organ/stomach/pill_belly = pill_user.getorganslot(ORGAN_SLOT_STOMACH)
+	pill_belly.metabolism_efficiency = 1
+
 	pill_user.Life()
 
 	TEST_ASSERT(pill_user.reagents.addiction_list && is_type_in_list(meth, pill_user.reagents.addiction_list), "User is not addicted to meth after eating consuming the addiction threshold")
@@ -76,6 +80,10 @@
 
 	syringe.attack(pill_syringe_user, pill_syringe_user)
 	pill_two.attack(pill_syringe_user, pill_syringe_user)
+
+	// Set the metabolism efficiency to 1.0 so it transfers all reagents to the body in one go.
+	pill_belly = pill_syringe_user.getorganslot(ORGAN_SLOT_STOMACH)
+	pill_belly.metabolism_efficiency = 1
 
 	pill_syringe_user.Life()
 
