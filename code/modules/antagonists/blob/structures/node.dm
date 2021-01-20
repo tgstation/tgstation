@@ -31,12 +31,18 @@
 	add_overlay(blob_overlay)
 	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_node_overlay"))
 
+/obj/structure/blob/special/node/creation_action()
+	if(overmind)
+		overmind.node_blobs += src
+
 /obj/structure/blob/special/node/Destroy()
 	GLOB.blob_nodes -= src
 	STOP_PROCESSING(SSobj, src)
+	if(overmind)
+		overmind.node_blobs -= src
 	return ..()
 
-/obj/structure/blob/special/node/process()
+/obj/structure/blob/special/node/process(delta_time)
 	if(overmind)
 		pulse_area(overmind, claim_range, pulse_range, expand_range)
 		reinforce_area(delta_time)

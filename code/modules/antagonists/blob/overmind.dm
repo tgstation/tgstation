@@ -25,9 +25,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/blob_points = 0
 	var/max_blob_points = OVERMIND_MAX_POINTS_DEFAULT
 	var/last_attack = 0
-	var/datum/blobstrain/blobstrain
+	var/datum/blobstrain/reagent/blobstrain
 	var/list/blob_mobs = list()
+	/// A list of all blob structures
+	var/list/all_blobs = list()
 	var/list/resource_blobs = list()
+	var/list/factory_blobs = list()
+	var/list/node_blobs = list()
 	var/free_strain_rerolls = OVERMIND_STARTING_REROLLS
 	var/last_reroll_time = 0 //time since we last rerolled, used to give free rerolls
 	var/nodes_required = TRUE //if the blob needs nodes to place resource and factory blobs

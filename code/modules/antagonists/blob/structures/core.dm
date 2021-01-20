@@ -24,6 +24,7 @@
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
 	if(overmind)
+		overmind.blobstrain.on_gain()
 		update_icon()
 	. = ..()
 

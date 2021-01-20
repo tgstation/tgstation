@@ -4,37 +4,123 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/name
 	var/description
 	var/color = "#000000"
-	var/complementary_color = "#000000" //a color that's complementary to the normal blob color
-	var/shortdesc = null //just damage and on_mob effects, doesn't include special, blob-tile only effects
-	var/effectdesc = null //any long, blob-tile specific effects
+	/// The color that stuff like healing effects and the overmind camera gets
+	var/complementary_color = "#000000"
+	/// A short description of the power and its effects
+	var/shortdesc = null 
+	/// Any long, blob-tile specific effects
+	var/effectdesc = null 
+	/// Short descriptor of what the strain does damage-wise, generally seen in the reroll menu
 	var/analyzerdescdamage = "Unknown. Report this bug to a coder, or just adminhelp."
+	/// Short descriptor of what the strain does in general, generally seen in the reroll menu
 	var/analyzerdesceffect
-	var/blobbernaut_message = "slams" //blobbernaut attack verb
-	var/message = "The blob strikes you" //message sent to any mob hit by the blob
-	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
-	var/core_regen = 2
+	/// Blobbernaut attack verb
+	var/blobbernaut_message = "slams" 
+	/// Message sent to any mob hit by the blob
+	var/message = "The blob strikes you" 
+	/// Gets added onto 'message' if the mob stuck is of type living
+	var/message_living = null
+	/// Stores world.time to figure out when to next give resources
 	var/resource_delay = 0
-	var/point_rate = 2
-	var/fire_based = FALSE // For blob-mobs and extinguishing
+	/// For blob-mobs and extinguishing-based effects
+	var/fire_based = FALSE 
 	var/mob/camera/blob/overmind
+	var/base_core_regen = BLOB_CORE_HP_REGEN
+	var/point_rate = BLOB_BASE_POINT_RATE
+
+	// Various vars that strains can buff the blob with
+	var/core_regen_bonus = 0
+	var/point_rate_bonus = 0
+
+	/// Adds to claim, pulse, and expand range
+	var/core_range_bonus = 0
+	/// The core can sustain this many extra spores with this strain
+	var/core_spore_bonus = 0
+	var/core_strong_reinforcement_range_bonus = 0
+	var/core_reflector_reinforcement_range_bonus = 0
+
+	/// Adds to claim, pulse, and expand range
+	var/node_range_bonus = 0
+	/// Nodes can sustain this any extra spores with this strain
+	var/node_spore_bonus = 0
+	var/node_strong_reinforcement_range_bonus = 0
+	var/node_reflector_reinforcement_range_bonus = 0
+
+	var/factory_spore_bonus = 0
+
+	/// Multiplies the max and current health of every blob with this value upon selecting this strain.
+	var/max_structure_health_multiplier = 1
+	var/max_mob_health_multiplier = 1
+
+	/// Makes blobbernauts inject a bonus amount of reagents, making their attacks more powerful
+	var/blobbernaut_reagentatk_bonus = 0
 
 /datum/blobstrain/New(mob/camera/blob/new_overmind)
 	if (!istype(new_overmind))
 		stack_trace("blobstrain created without overmind")
 	overmind = new_overmind
 
-/datum/blobstrain/proc/on_gain()
+/datum/blobstrain/proc/on_gain(announce = TRUE)
 	overmind.color = complementary_color
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
+	
+	if(overmind.blob_core)
+		overmind.blob_core.max_spores += core_spore_bonus
+		overmind.blob_core.claim_range += core_range_bonus
+		overmind.blob_core.pulse_range += core_range_bonus
+		overmind.blob_core.expand_range += core_range_bonus
+		overmind.blob_core.strong_reinforce_range += core_strong_reinforcement_range_bonus
+		overmind.blob_core.reflector_reinforce_range += core_reflector_reinforcement_range_bonus
+
+	for(var/obj/structure/blob/special/node/N in overmind.node_blobs)
+		N.max_spores += node_spore_bonus
+		N.claim_range += node_range_bonus
+		N.pulse_range += node_range_bonus
+		N.expand_range += node_range_bonus
+		N.strong_reinforce_range += node_strong_reinforcement_range_bonus
+		N.reflector_reinforce_range += node_reflector_reinforcement_range_bonus
+
+	for(var/obj/structure/blob/special/factory/F in overmind.factory_blobs)
+		F.max_spores += factory_spore_bonus
+
+	for(var/obj/structure/blob/B in overmind.all_blobs)
+		B.max_integrity *= max_structure_health_multiplier
+		B.obj_integrity *= max_structure_health_multiplier
 		B.update_icon()
-	for(var/BLO in overmind.blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
+
+	for(var/mob/living/simple_animal/hostile/blob/BM in overmind.blob_mobs)
+		BM.maxHealth *= max_mob_health_multiplier
+		BM.health *= max_mob_health_multiplier
 		BM.update_icons() //If it's getting a new strain, tell it what it does!
 		to_chat(BM, "Your overmind's blob strain is now: <b><font color=\"[color]\">[name]</b></font>!")
 		to_chat(BM, "The <b><font color=\"[color]\">[name]</b></font> strain [shortdesc ? "[shortdesc]" : "[description]"]")
 
 /datum/blobstrain/proc/on_lose()
+	overmind.blob_core.max_spores -= core_spore_bonus
+	overmind.blob_core.claim_range -= core_range_bonus
+	overmind.blob_core.pulse_range -= core_range_bonus
+	overmind.blob_core.expand_range -= core_range_bonus
+	overmind.blob_core.strong_reinforce_range -= core_strong_reinforcement_range_bonus
+	overmind.blob_core.reflector_reinforce_range -= core_reflector_reinforcement_range_bonus
+
+	for(var/obj/structure/blob/special/node/N in overmind.node_blobs)
+		N.max_spores -= node_spore_bonus
+		N.claim_range -= node_range_bonus
+		N.pulse_range -= node_range_bonus
+		N.expand_range -= node_range_bonus
+		N.strong_reinforce_range -= node_strong_reinforcement_range_bonus
+		N.reflector_reinforce_range -= node_reflector_reinforcement_range_bonus
+
+	for(var/obj/structure/blob/special/factory/F in overmind.factory_blobs)
+		F.max_spores -= factory_spore_bonus
+
+	for(var/obj/structure/blob/B in overmind.all_blobs)
+		B.max_integrity /= max_structure_health_multiplier
+		B.obj_integrity /= max_structure_health_multiplier
+
+	for(var/mob/living/simple_animal/hostile/blob/BM in overmind.blob_mobs)
+		BM.maxHealth /= max_mob_health_multiplier
+		BM.health /= max_mob_health_multiplier
+		
 
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)
 
@@ -48,8 +134,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 /datum/blobstrain/proc/core_process()
 	if(resource_delay <= world.time)
 		resource_delay = world.time + 10 // 1 second
-		overmind.add_points(point_rate)
-	overmind.blob_core.obj_integrity = min(overmind.blob_core.max_integrity, overmind.blob_core.obj_integrity+core_regen)
+		overmind.add_points(point_rate+point_rate_bonus)
+	overmind.blob_core.obj_integrity = min(overmind.blob_core.max_integrity, overmind.blob_core.obj_integrity+base_core_regen+core_regen_bonus)
 
 /datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people
 	send_message(L)

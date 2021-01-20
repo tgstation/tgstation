@@ -79,7 +79,7 @@
 /atom/movable/screen/blob/resource_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
+		B.createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"

@@ -32,6 +32,7 @@
 	. = ..()
 	if(owner_overmind)
 		overmind = owner_overmind
+		overmind.all_blobs += src
 		var/area/Ablob = get_area(src)
 		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
 			overmind.blobs_legit += src
@@ -51,6 +52,7 @@
 		atmosblock = FALSE
 		air_update_turf(TRUE, FALSE)
 	if(overmind)
+		overmind.all_blobs -= src
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
 	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
@@ -328,7 +330,6 @@
 		brute_resist = BLOB_BRUTE_RESIST * 0.5
 
 /obj/structure/blob/special	// Generic type for nodes/factories/cores/resource
-
 	// Core and node vars: claiming, pulsing and expanding
 	/// The radius inside which (previously dead) blob tiles are 'claimed' again by the pulsing overmind. Very rarely used.
 	var/claim_range	= 0
@@ -405,4 +406,4 @@
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
 		BS.overmind = overmind
 		BS.update_icons()
-		overmind.blob_mobs.Add(BS)()
+		overmind.blob_mobs.Add(BS)

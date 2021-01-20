@@ -10,22 +10,24 @@
 #define OVERMIND_ANNOUNCEMENT_MAX_TIME              10 MINUTES  // If the blob hasn't reached the minimum size before this time, announce their presence
 #define OVERMIND_MAX_CAMERA_STRAY                   "3x3"       // How far the overmind camera is allowed to stray from blob tiles. 3x3 is 1 tile away, 5x5 2 tiles etc
 
-// Blob defines
 
+// Generic blob defines
+
+#define BLOB_BASE_POINT_RATE                        2           // Base amount of points per process()
 #define BLOB_EXPAND_COST                            4           // Price to expand onto a new tile
 #define BLOB_ATTACK_REFUND                          2           // Points 'refunded' when the expand attempt actually attacks something instead
-#define BLOB_BRUTE_RESIST                           0.5
-#define BLOB_FIRE_RESIST                            1
+#define BLOB_BRUTE_RESIST                           0.5         // Brute damage taken gets multiplied by this value
+#define BLOB_FIRE_RESIST                            1           // Burn damage taken gets multiplied by this value
 #define BLOB_EXPAND_CHANCE_MULTIPLIER               1           // Increase this value to make blobs naturally expand faster
 #define BLOB_REINFORCE_CHANCE                       2.5         // The delta_time chance for cores/nodes to reinforce their surroundings
-
+#define BLOB_REAGENTATK_VOL                         25          // Amount of strain-reagents that get injected when the blob attacks: main source of blob damage
 
 
 // Structure properties
 
 #define BLOB_CORE_MAX_HP                            400
-#define BLOB_CORE_HP_REGEN 
-#define BLOB_CORE_CLAIM_RANGE                       12
+#define BLOB_CORE_HP_REGEN                          2           // Bases health regeneration rate every process(), can be added on by strains
+#define BLOB_CORE_CLAIM_RANGE                       12          // Range in which blob tiles are 'claimed' (converted from dead to alive, rarely useful)
 #define BLOB_CORE_PULSE_RANGE                       4           // The radius up to which the core activates structures, and up to which structures can be built
 #define BLOB_CORE_EXPAND_RANGE                      3           // Radius of automatic expansion
 #define BLOB_CORE_STRONG_REINFORCE_RANGE            1           // The radius of tiles surrounding the core that get upgraded
@@ -55,16 +57,14 @@
 #define BLOB_RESOURCE_GATHER_AMOUNT                 1           // The amount of points added to the overmind
 
 #define BLOB_REGULAR_MAX_HP                         30
-#define BLOB_STRONG_MAX_HP                          150
-#define BLOB_REFLECTOR_MAX_HP                       150
- 
-
-
-
-
 #define BLOB_REGULAR_HP_REGEN                       1           // Health regenerated when pulsed by a node/core
+
+#define BLOB_STRONG_MAX_HP                          150
 #define BLOB_STRONG_HP_REGEN                        2
-#define BLOB_REFLECTOR_HP_REGEN                     2       
+
+#define BLOB_REFLECTOR_MAX_HP                       150
+#define BLOB_REFLECTOR_HP_REGEN                     2  
+
 
 // Structure purchasing
 
@@ -87,7 +87,6 @@
 #define BLOB_POWER_REROLL_CHOICES                   6           // Possibilities to choose from; keep in mind increasing this might fuck with the radial menu
 
 
-
 // Mob defines
 
 #define BLOBMOB_HEALING_MULTIPLIER                  0.0125      // Multiplies by -maxHealth and heals the blob by this amount every blob_act
@@ -106,4 +105,3 @@
 #define BLOBMOB_BLOBBERNAUT_HEALING_CORE            0.1         // Percentage multiplier HP restored on Life() when within 2 tiles of the blob core
 #define BLOBMOB_BLOBBERNAUT_HEALING_NODE            0.05        // Same, but for a nearby node
 #define BLOBMOB_BLOBBERNAUT_HEALTH_DECAY            0.025       // Percentage multiplier HP lost when not near blob tiles or without factory
-

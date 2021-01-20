@@ -1,4 +1,4 @@
-/obj/structure/blob/resource
+/obj/structure/blob/special/resource
 	name = "resource blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
@@ -8,19 +8,19 @@
 	resistance_flags = LAVA_PROOF
 	var/resource_delay = 0
 
-/obj/structure/blob/resource/scannerreport()
+/obj/structure/blob/special/resource/scannerreport()
 	return "Gradually supplies the blob with resources, increasing the rate of expansion."
 
-/obj/structure/blob/resource/creation_action()
+/obj/structure/blob/special/resource/creation_action()
 	if(overmind)
 		overmind.resource_blobs += src
 
-/obj/structure/blob/resource/Destroy()
+/obj/structure/blob/special/resource/Destroy()
 	if(overmind)
 		overmind.resource_blobs -= src
 	return ..()
 
-/obj/structure/blob/resource/Be_Pulsed()
+/obj/structure/blob/special/resource/Be_Pulsed()
 	. = ..()
 	if(resource_delay > world.time)
 		return

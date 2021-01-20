@@ -19,7 +19,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	initial_language_holder = /datum/language_holder/empty
 	var/mob/camera/blob/overmind = null
-	var/obj/structure/blob/special/factory/factory = null
+	var/obj/structure/blob/special/factory = null
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/update_icons()
@@ -115,7 +115,7 @@
 	///Whether or not this is a fragile spore from Distributed Neurons
 	var/is_weak = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
 	if(istype(linked_node))
 		factory = linked_node

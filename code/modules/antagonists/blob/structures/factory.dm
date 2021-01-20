@@ -14,6 +14,10 @@
 		return "It is currently sustaining a blobbernaut, making it fragile and unable to produce blob spores."
 	return "Will produce a blob spore every few seconds."
 
+/obj/structure/blob/special/factory/creation_action()
+	if(overmind)
+		overmind.factory_blobs += src
+
 /obj/structure/blob/special/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
 		if(spore.factory == src)
@@ -23,6 +27,8 @@
 		to_chat(naut, "<span class='userdanger'>Your factory was destroyed! You feel yourself dying!</span>")
 		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
 	spores = null
+	if(overmind)
+		overmind.factory_blobs -= src
 	return ..()
 
 /obj/structure/blob/special/factory/Be_Pulsed()
