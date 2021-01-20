@@ -448,8 +448,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							inserted_modify_id.access += access_type
 							if(access_type in ACCESS_ALERT_ADMINS)
 								message_admins("[ADMIN_LOOKUPFLW(usr)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
-							log_game("[key_name(usr)] added [get_access_desc(access_type)] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
-							usr.log_message("added [get_access_desc(access_type)] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]", LOG_GAME)
+							LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "added [get_access_desc(access_type)]")
+
 						playsound(src, "terminal_type", 50, FALSE)
 		if ("assign")
 			if (authenticated == 2)
@@ -478,14 +478,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
 
 					inserted_modify_id.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					if(inserted_modify_id.sticky_access)
+						inserted_modify_id.access += inserted_modify_id.sticky_access
 
 					// Check if we should alert admins that an ID card has been given a new access level.
 					for(var/logged_access in ACCESS_ALERT_ADMINS)
 						if(logged_access in inserted_modify_id.access)
 							message_admins("[ADMIN_LOOKUPFLW(usr)] assigned the job [jobdatum.title] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
 							break
-					log_game("[key_name(usr)] assigned the job [jobdatum.title] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
-					usr.log_message("assigned the job [jobdatum.title] to an ID card [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]", LOG_GAME)
+					LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "assigned the job [jobdatum.title]")
+
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -593,6 +595,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if (inserted_modify_id)
 		inserted_modify_id.update_label()
+		if(inserted_modify_id.sticky_access)
+			inserted_modify_id.access += inserted_modify_id.sticky_access
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)

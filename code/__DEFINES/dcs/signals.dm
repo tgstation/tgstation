@@ -183,6 +183,9 @@
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF	"reagent_expose_turf"
 
+///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
+#define COMSIG_MATERIALS_INIT_MAT	"SSmaterials_init_mat"
+
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
 #define COMSIG_REAGENTS_NEW_REAGENT		"reagents_new_reagent"
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
@@ -638,7 +641,7 @@
 
 // /obj/item/clothing signals
 
-///from base of obj/item/clothing/shoes/proc/step_action(): ()
+///from [/mob/living/carbon/human/Move]: ()
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"
 ///from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
 #define COMSIG_SUIT_SPACE_TOGGLE "suit_space_toggle"
@@ -680,6 +683,8 @@
 
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
+///called in /obj/item/gun/process_fire (user, target, params, zone_override)
+#define COMSIG_GUN_FIRED "gun_fired"
 
 // /obj/item/grenade signals
 

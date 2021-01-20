@@ -302,7 +302,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(10))
-		M.heal_bodypart_damage(1)
+		M.heal_bodypart_damage(brute = 1)
 		. = 1
 	return ..() || .
 
@@ -455,9 +455,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
 
 /datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role == "Assistant")
-		M.heal_bodypart_damage(1,1)
-		. = 1
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_GREYTIDE_METABOLISM))
+		M.heal_bodypart_damage(brute = 1, burn = 1)
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/ale
@@ -593,7 +594,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M)
-	if(M.mind && (M.mind.assigned_role in GLOB.engineering_positions)) //Engineers lose radiation poisoning at a massive rate.
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
+		// Engineers lose radiation poisoning at a massive rate.
 		M.radiation = max(M.radiation - 25, 0)
 	return ..()
 
@@ -707,14 +710,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_metabolize(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		metabolization_rate = 0.8
-	if(M.mind != null && !HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	// if you don't have a liver, or your liver isn't an officer's liver
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		B = new()
 		M.gain_trauma(B, TRAUMA_RESILIENCE_ABSOLUTE)
 	..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
 	M.Jitter(2)
-	if(M.mind != null && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	// if you don't have a liver, or your liver isn't an officer's liver
+	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.adjustStaminaLoss(-10, 0)
 		if(prob(20))
 			new /datum/hallucination/items_other(M)
@@ -729,7 +736,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/M)
-	if(M.mind != null && !HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	// if you don't have a liver, or your liver isn't an officer's liver
+	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
 
 /datum/reagent/consumable/ethanol/irish_cream
@@ -1203,9 +1212,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink from Clown Heaven."
 
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/M)
-	if((ishuman(M) && HAS_TRAIT(M, TRAIT_CLOWNLIKE)) || ismonkey(M))
-		M.heal_bodypart_damage(1,1)
-		. = 1
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(M))
+		M.heal_bodypart_damage(brute = 1, burn = 1)
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/silencer
@@ -1545,8 +1555,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/M)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
-	if(M.mind != null && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1, 1)
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		M.heal_bodypart_damage(brute = 1, burn = 1)
 		M.adjustBruteLoss(-2,0)
 		. = 1
 	return ..()
@@ -1564,8 +1575,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/M)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
-	if(M.mind != null && HAS_TRAIT(M.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(2,2,2)
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		M.heal_bodypart_damage(brute = 2, burn = 2, stamina = 2)
 		M.adjustBruteLoss(-5,0)
 		M.adjustOxyLoss(-5,0)
 		M.adjustFireLoss(-5,0)
@@ -2055,7 +2067,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/M)
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(M?.mind?.has_antag_datum(/datum/antagonist/wizard))
-		M.heal_bodypart_damage(1,1,1)
+		M.heal_bodypart_damage(brute = 1, burn = 1, stamina = 1)
 		M.adjustOxyLoss(-1,0)
 		M.adjustToxLoss(-1,0)
 	return ..()
@@ -2149,7 +2161,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 				if(N.age > 969) //Best not let people get older than this or i might incur G-ds wrath
 					M.visible_message("<span class='notice'>[M] becomes older than any man should be.. and crumbles into dust!</span>")
-					M.dust(0,1,0)
+					M.dust(just_ash = FALSE, drop_items = TRUE, force = FALSE)
 
 	return ..()
 
