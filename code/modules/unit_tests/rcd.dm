@@ -1,5 +1,5 @@
 /datum/unit_test/rcd/Run()
-	obj/item/construction/rcd/rcd = allocate(/obj/item/construction/rcd/combat/admin)
+	var/obj/item/construction/rcd/rcd = allocate(/obj/item/construction/rcd/combat/admin)
 	var/mob/living/carbon/human/engineer = allocate(/mob/living/carbon/human)
 
 	engineer.put_in_hands(rcd, force = TRUE)
