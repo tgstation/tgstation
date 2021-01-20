@@ -50,8 +50,6 @@
 
 /obj/structure/windoor_assembly/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(.)
-		return
 
 	if(get_dir(loc, target) == dir)
 		return FALSE
@@ -62,8 +60,6 @@
 
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
 		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
-
-	return TRUE
 
 /obj/structure/windoor_assembly/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
