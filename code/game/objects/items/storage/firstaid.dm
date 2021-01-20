@@ -488,22 +488,22 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/neurine(src)
 
-/obj/item/storage/pill_bottle/floorpill
-	name = "bottle of floorpills"
+/obj/item/storage/pill_bottle/maintenance_pill
+	name = "bottle of maintenance pills"
 	desc = "An old pill bottle. It smells musty."
 
-/obj/item/storage/pill_bottle/floorpill/Initialize()
+/obj/item/storage/pill_bottle/maintenance_pill/Initialize()
 	. = ..()
 	var/obj/item/reagent_containers/pill/P = locate() in src
 	name = "bottle of [P.name]s"
 
-/obj/item/storage/pill_bottle/floorpill/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_pill/PopulateContents()
 	for(var/i in 1 to rand(1,7))
-		new /obj/item/reagent_containers/pill/floorpill(src)
+		new /obj/item/reagent_containers/pill/maintenance(src)
 
-/obj/item/storage/pill_bottle/floorpill/full/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_pill/full/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/floorpill(src)
+		new /obj/item/reagent_containers/pill/maintenance(src)
 
 ///////////////////////////////////////// Psychologist inventory pillbottles
 /obj/item/storage/pill_bottle/happinesspsych

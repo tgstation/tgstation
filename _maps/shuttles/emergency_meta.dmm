@@ -342,7 +342,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "aZ" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
@@ -383,11 +383,11 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bi" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bj" = (
 /obj/structure/table,
 /obj/item/defibrillator/loaded,
@@ -440,7 +440,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bt" = (
 /obj/structure/reagent_dispensers/peppertank,
 /turf/closed/wall/mineral/titanium,
@@ -544,14 +544,14 @@
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bE" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bF" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -560,7 +560,7 @@
 	use_power = 0
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bG" = (
 /obj/structure/table,
 /obj/item/storage/box/handcuffs{
@@ -568,7 +568,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bH" = (
 /obj/structure/table,
 /obj/item/scalpel{
@@ -711,7 +711,7 @@
 /area/shuttle/escape)
 "bU" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bV" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light{
@@ -844,7 +844,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "LY" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

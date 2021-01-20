@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		addiction_type = type
 
 	if(material)
-		material = SSmaterials.GetMaterialRef(material)
+		material = GET_MATERIAL_REF(material)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -165,9 +165,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-///called on expose_temperature
-/datum/reagent/proc/on_temp_change()
-	return
 /// Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return

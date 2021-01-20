@@ -15,7 +15,7 @@
 	power_light = FALSE
 	outdoors = TRUE
 	flags_1 = NONE
-	ambientsounds = MINING
+	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | NO_ALERTS
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
@@ -29,7 +29,7 @@
 	power_light = FALSE
 	outdoors = TRUE
 	flags_1 = NONE
-	ambientsounds = MINING
+	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CAVES_ALLOWED | NO_ALERTS
 
 /area/mine/unexplored/danger
@@ -85,7 +85,7 @@
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
 	icon_state = "security"
-	ambientsounds = HIGHSEC
+	ambience_index = AMBIENCE_DANGER
 
 
 
@@ -107,7 +107,7 @@
 	power_equip = FALSE
 	power_light = FALSE
 	requires_power = TRUE
-	ambientsounds = MINING
+	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS
 
 /area/lavaland/underground
@@ -118,7 +118,7 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambientsounds = MINING
+	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS
 
 
@@ -158,7 +158,7 @@
 	power_equip = FALSE
 	power_light = FALSE
 	requires_power = TRUE
-	ambientsounds = MINING
+	ambience_index = AMBIENCE_MINING
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS
 
 /area/icemoon/surface/outdoors // weather happens here
@@ -188,16 +188,20 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambientsounds = MINING
+	ambience_index = AMBIENCE_MINING
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS
 
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
 	area_flags = CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED | NO_ALERTS
+
 /area/icemoon/underground/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
 	map_generator = /datum/map_generator/cave_generator/icemoon
+
+/area/icemoon/underground/unexplored/rivers/deep
+	map_generator = /datum/map_generator/cave_generator/icemoon/deep
 
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"

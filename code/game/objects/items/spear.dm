@@ -29,6 +29,7 @@
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	update_icon()
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"

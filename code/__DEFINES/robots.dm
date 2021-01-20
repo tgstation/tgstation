@@ -39,6 +39,7 @@
 #define HONK_BOT			(1<<5)	// Honkbots & ED-Honks
 #define FIRE_BOT			(1<<6)  // Firebots
 #define HYGIENE_BOT			(1<<7)  // Hygienebots
+#define VIBE_BOT			(1<<8)  //vibe bots
 
 //AI notification defines
 #define		NEW_BORG     1
@@ -60,3 +61,8 @@
 #define BORG_MODULE_ALL_DISABLED (1<<0)
 #define BORG_MODULE_TWO_DISABLED (1<<1)
 #define BORG_MODULE_THREE_DISABLED (1<<2)
+
+/// Defines for borg module selection
+#define BORG_CHOOSE_MODULE_ONE 	   1
+#define BORG_CHOOSE_MODULE_TWO 	   2
+#define BORG_CHOOSE_MODULE_THREE   3
