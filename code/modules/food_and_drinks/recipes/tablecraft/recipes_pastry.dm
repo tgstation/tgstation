@@ -399,6 +399,67 @@
 	result = /obj/item/food/donkpocket/gondola
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/donkpocket/donkmousebrown
+	time = 15
+	name = "Brown Mouse-pocket"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/deadmouse = 1
+	)
+	result = /obj/item/food/donkpocket/donkmousebrown
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/donkmousebrown/check_requirements(mob/user, list/collected_requirements) //Important override so that a specific icon_state is required for the specific mouse pocket to be crafted. (So you cant make brown mouse pockets with white mice).
+	var/obj/item/food/deadmouse = collected_requirements[/obj/item/food/deadmouse][1]
+	var/mouse_state = deadmouse.icon_state //Getting the icon_state of the deadmouse and setting it equal to mouse_state.
+	if(mouse_state == "mouse_brown_dead")
+		return TRUE
+	return FALSE
+
+/datum/crafting_recipe/food/donkpocket/donkmousegrey
+	time = 15
+	name = "Grey Mouse-pocket"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/deadmouse = 1
+	)
+	result = /obj/item/food/donkpocket/donkmousegrey
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/donkmousegrey/check_requirements(mob/user, list/collected_requirements) 
+	var/obj/item/food/deadmouse = collected_requirements[/obj/item/food/deadmouse][1]
+	var/mouse_state = deadmouse.icon_state
+	if(mouse_state == "mouse_gray_dead")
+		return TRUE
+	return FALSE
+
+/datum/crafting_recipe/food/donkpocket/donkmousewhite
+	time = 15
+	name = "White Mouse-pocket"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/deadmouse = 1
+	)
+	result = /obj/item/food/donkpocket/donkmousewhite
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/donkmousewhite/check_requirements(mob/user, list/collected_requirements)
+	var/obj/item/food/deadmouse = collected_requirements[/obj/item/food/deadmouse][1]
+	var/mouse_state = deadmouse.icon_state
+	if(mouse_state == "mouse_white_dead")
+		return TRUE
+	return FALSE
+
+/datum/crafting_recipe/food/donkpocket/donkcrab
+	time = 15
+	name = "Crab-pocket"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/meat/crab = 1
+	)
+	result = /obj/item/food/donkpocket/donkcrab
+	subcategory = CAT_PASTRY
+
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/muffin

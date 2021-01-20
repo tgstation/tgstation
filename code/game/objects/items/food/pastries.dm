@@ -537,6 +537,76 @@
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtypes = GRAIN
 
+/obj/item/food/donkpocket/donkmousegrey
+	name = "\improper Grey Mouse-pocket"
+	desc = "Tastes like maintenance."
+	icon_state = "donkmousegrey"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	microwaved_type = /obj/item/food/donkpocket/warm/donkmousegrey
+	tastes = list("dough" = 2, "desperation" = 2, "hairy" = 2)
+	foodtypes= GROSS
+
+/obj/item/food/donkpocket/warm/donkmousegrey
+	name = "warm Grey Mouse-pocket"
+	desc = "Tastes like maintenance during a rad-storm."
+	icon_state = "donkmousegrey"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	tastes = list("dough" = 2, "desperation" = 2, "warm hair" = 2)
+	foodtypes = GROSS
+
+/obj/item/food/donkpocket/donkmousewhite
+	name = "\improper Brown Mouse-pocket"
+	desc = "Tastes like maintenance."
+	icon_state = "donkmousewhite"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	microwaved_type = /obj/item/food/donkpocket/warm/donkmousewhite
+	tastes = list("dough" = 2, "desperation" = 2, "hairy" = 2)
+	foodtypes = GROSS
+
+/obj/item/food/donkpocket/warm/donkmousewhite
+	name = "warm White Mouse-pocket"
+	desc = "Tastes like maintenance during a rad-storm."
+	icon_state = "donkmousewhite"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	tastes = list("dough" = 2, "desperation" = 2, "warm hair" = 2)
+	foodtypes = GROSS
+
+/obj/item/food/donkpocket/donkmousebrown
+	name = "\improper Brown Mouse-pocket"
+	desc = "Tastes like maintenance."
+	icon_state = "donkmousebrown"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	microwaved_type = /obj/item/food/donkpocket/warm/donkmousebrown
+	tastes = list("dough" = 2, "desperation" = 2, "hairy" = 2)
+	foodtypes = GROSS
+
+/obj/item/food/donkpocket/warm/donkmousebrown
+	name = "warm Brown Mouse-pocket"
+	desc = "Tastes like maintenance during a rad-storm."
+	icon_state = "donkmousebrown"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5 ,/datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	tastes = list("dough" = 2, "desperation" = 2, "warm hair" = 2)
+	foodtypes = GROSS
+
+/obj/item/food/donkpocket/donkcrab
+	name = "\improper Crab-pocket"
+	desc = "For those who like the taste of cold, microwaveable crab."
+	icon_state = "donkcrab"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	microwaved_type = /obj/item/food/donkpocket/warm/donkcrab
+	tastes = list("dough" = 2, "crab" = 2)
+	foodtypes = GRAIN
+
+
+/obj/item/food/donkpocket/warm/donkcrab
+	name = "warm Crab-pocket"
+	desc = "For those who like the taste of warm, sweaty crab."
+	icon_state = "donkcrab"
+	food_reagents  = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	microwaved_type = /obj/item/food/donkpocket/warm/donkcrab
+	tastes = list("dough" = 2, "crab" = 2)
+	foodtypes = GRAIN
+
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
 /obj/item/food/cookie
