@@ -332,12 +332,7 @@
 /area/quartermaster/warehouse)
 "ba" = (
 /obj/structure/closet/crate/freezer,
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/warehouse";
-	dir = 4;
-	name = "Cargo Warehouse APC";
-	pixel_x = 24
-	},
+/obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
@@ -491,11 +486,7 @@
 /area/mine/laborcamp)
 "by" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Camp APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "bz" = (
@@ -722,11 +713,7 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "bZ" = (
-/obj/machinery/power/apc{
-	name = "Mining EVA APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
 /obj/structure/table,
 /obj/item/pickaxe,
@@ -1005,12 +992,7 @@
 /turf/open/floor/plating,
 /area/mine/living_quarters)
 "cX" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mining Station Starboard Wing APC";
-	pixel_x = -25;
-	pixel_y = 2
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1471,12 +1453,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eg" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Port Wing APC";
-	pixel_x = 1;
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -3658,12 +3635,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Camp Security APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "vW" = (
@@ -5397,11 +5370,7 @@
 "OD" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Station Mech Bay APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/mine/mechbay)
 "OF" = (
