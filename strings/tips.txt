@@ -52,7 +52,8 @@ As a Medical Doctor, you can point your penlight at people to create a medical h
 As a Medical Doctor, you can extract implants by holding an empty implant case in your offhand while performing the extraction step.
 As a Medical Doctor, you can deal with patients who have absurd amounts of wounds by putting them in cryo. This will slowly treat all of their wounds simultaneously, but is much slower than direct treatment.
 As a Medical Doctor, Critical Slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
-As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds regeneration! Perfect for drained patients!
+As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds blood regeneration! Perfect for drained patients!
+As a Medical Doctor, almost every type of wound can be treated at least temporarily with gauze. When in doubt, wrap it up!
 As a Paramedic, your UV penlight can be used to stem infections in burn wounds! Just target the infected limb and use it on the patient.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
@@ -255,6 +256,7 @@ You can light a cigar on a supermatter crystal.
 Using sticky tape on items can make them stick to people and walls! Be careful, grenades might stick to your hand during the moment of truth!
 In a pinch, stripping yourself naked will give you a sizeable resistance to being tackled. What do you value more, your freedom or your dignity?
 Wearing riot armor makes you significantly more effective at performing tackle takedowns, but will use extra stamina with each leap! It will also significantly protect you from other tackles!
-Epipens contain a powerful coagulant that drastically reduces bleeding on all bleeding wounds. If you don't have time to properly treat someone with lots of slashes or piercings, stick them with a pen to buy some time!
+Standard epipens contain a potent coagulant that not only slow bloodloss, but also help clot whichever of your wounds is bleeding the most! If you're suffering multiple bad bleeding wounds, make sure to seek out additional treatment ASAP!
 Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the supermatter.
 If you're bleeding, you can apply pressure to the limb by grabbing yourself while targeting the bleeding limb. This will slow you down and take up a hand, but it'll slow down how fast you lose blood. Note this won't help the bleeding clot any faster.
+Laying down will help slow down bloodloss. Death will halt it entirely.

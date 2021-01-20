@@ -295,7 +295,7 @@
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
-	lace_time = 8 SECONDS
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()

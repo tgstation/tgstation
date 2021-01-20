@@ -56,7 +56,7 @@
 
 ///Override for checkliked in edible component, because all cops LOVE donuts
 /obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/H)
-	if(HAS_TRAIT(H.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM) && !HAS_TRAIT(H, TRAIT_AGEUSIA))
+	if(!HAS_TRAIT(H, TRAIT_AGEUSIA) && H.mind && HAS_TRAIT(H.mind, TRAIT_DONUT_LOVER))
 		return FOOD_LIKED
 
 //Use this donut ingame

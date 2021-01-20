@@ -12,8 +12,8 @@
 	icon_state = "sharpener"
 	desc = "A block that makes things sharp."
 	force = 5
-	///If FALSE, the whetstone can be used. If TRUE, the whetstone is a worn whetstone.
-	var/used = FALSE
+	///Amount of uses the whetstone has. Set to -1 for functionally infinite uses.
+	var/uses = 1
 	///How much force the whetstone can add to an item.
 	var/increment = 4
 	///Maximum force sharpening items with the whetstone can result in
@@ -24,7 +24,7 @@
 	var/requires_sharpness = TRUE
 
 /obj/item/sharpener/attackby(obj/item/I, mob/user, params)
-	if(used)
+	if(uses == 0)
 		to_chat(user, "<span class='warning'>The sharpening block is too worn to use again!</span>")
 		return
 	if(I.force >= max || I.throwforce >= max) //So the whetstone never reduces force or throw_force
@@ -56,11 +56,12 @@
 	I.sharpness = SHARP_EDGED //When you whetstone something, it becomes an edged weapon, even if it was previously dull or pointy
 	I.throwforce = clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]" //This adds a prefix and a space to the item's name regardless of what the prefix is
-	name = "worn out [name]" //whetstone becomes used whetstone
 	desc = "[desc] At least, it used to."
-	used = TRUE
+	uses-- //this doesn't cause issues because we check if uses == 0 earlier in this proc
+	if(uses == 0)
+		name = "worn out [name]" //whetstone becomes used whetstone
 	update_icon()
-	
+
 /**
 * # Super whetstone
 *
