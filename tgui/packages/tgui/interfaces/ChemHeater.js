@@ -1,6 +1,6 @@
 import { round, toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table} from '../components';
+import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
@@ -42,7 +42,7 @@ export const ChemHeater = (props, context) => {
                 collapsing color="label">
                 Heat
               </Table.Cell>
-              <TableCell></TableCell>
+              <TableCell />
               <Table.Cell bold collapsing color="label">
                 Buffers
               </Table.Cell>
@@ -74,7 +74,7 @@ export const ChemHeater = (props, context) => {
                   tooltip={'Inject 1u'}
                   tooltipPosition={"top"}
                   onClick={() => act('acidBuffer', {
-                    target: 1
+                    target: 1,
                   })} />
               </TableCell>
               <TableCell color={"#fbc314"}>
@@ -85,9 +85,9 @@ export const ChemHeater = (props, context) => {
                   icon={'upload'}
                   tooltip={'Draw'}
                   tooltipPosition={"top"}
-                  disabled={acidicBufferVol == 30}
+                  disabled={acidicBufferVol === 30}
                   onClick={() => act('acidBuffer', {
-                    target: -30
+                    target: -30,
                   })} />
               </TableCell>
             </TableRow>
@@ -115,7 +115,7 @@ export const ChemHeater = (props, context) => {
                   tooltip={'Inject 1u'}                  
                   disabled={!basicBufferVol}
                   onClick={() => act('basicBuffer', {
-                    target: 1
+                    target: 1,
                   })} />
               </TableCell>
               <TableCell color={"#3853a4"}>
@@ -125,9 +125,9 @@ export const ChemHeater = (props, context) => {
                 <Button
                   icon={'upload'}
                   tooltip={'Draw'}
-                  disabled={basicBufferVol == 30}
+                  disabled={basicBufferVol === 30}
                   onClick={() => act('basicBuffer', {
-                    target: -30
+                    target: -30,
                   })} />
               </TableCell>
             </TableRow>
@@ -142,10 +142,10 @@ export const ChemHeater = (props, context) => {
               </Box>
             ) || (
               activeReactions.map(reaction => (
-                <Table collapsing={false}>
+                <Table collapsing={false} key={"reactions"}>
                   <TableRow>
                     <TableCell width={'80px'} color={currentTemp > reaction.overheat ? "red" : "label"}>
-                     {reaction.name}
+                      {reaction.name}
                     </TableCell>
                     <TableCell width={'100px'} pr={'10px'}>
                       <ProgressBar
@@ -154,15 +154,15 @@ export const ChemHeater = (props, context) => {
                         maxValue={1}
                         textAlign={'center'}
                         barColor={reaction.barColor}>
-                          {"Purity"}
+                        {"Purity"}
                       </ProgressBar>
                     </TableCell>
                     <TableCell width={'80px'}>
                       {"Target:" + reaction.targetVol}
                     </TableCell>
                   </TableRow> 
-              </Table>
-            )))}
+                </Table>
+              )))}
           </Section>
         )}
         <Section
