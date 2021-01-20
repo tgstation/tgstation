@@ -1196,7 +1196,18 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 #define FOR_DVIEW_END GLOB.dview_mob.loc = null
 
-// Can a directional structure be here, or is there already something blocking it?
+/**
+ * Checks whether the target turf is in a valid state to accept a directional window
+ * or other directional pseudo-dense object such as railings.
+ *
+ * Returns FALSE if the target turf cannot accept a directional window or railing.
+ * Returns TRUE otherwise.
+ *
+ * Arguments:
+ * * dest_turf - The destination turf to check for existing windows and railings
+ * * test_dir - The prospective dir of some atom you'd like to put on this turf.
+ * * is_fulltile - Whether the thing you're attempting to move to this turf takes up the entire tile or whether it supports multiple movable atoms on its tile.
+ */
 /proc/valid_window_location(turf/dest_turf, test_dir, is_fulltile = FALSE)
 	if(!dest_turf)
 		return FALSE
