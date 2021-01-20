@@ -31,7 +31,7 @@
 	for(var/obj/structure/frame/machine_frame in adjacent_turf.contents)
 		frame_count++
 
-	TEST_ASSERT_EQUAL(frame_count, 1, "Expected RCD machine frame stacking test to end up with exactly 1 machine frame. It instead created [frame_count] machine frames.")
+	TEST_ASSERT_EQUAL(frame_count, 1, "Expected RCD machine frame stacking test to end up with exactly 1 machine frame.")
 
 	// Second test - Deconstructing stacked machines to stack frames. We'll recycle our old turf to accomplish this.
 	for(var/i in 1 to 10)
@@ -43,4 +43,4 @@
 	for(var/obj/structure/frame/machine_frame in adjacent_turf.contents)
 		frame_count++
 
-	TEST_ASSERT_EQUAL(frame_count, 1, "Expected no density machine deconstruction frame stacking test to end up with exactly 1 machine frame. It instead created [frame_count] machine frames.")
+	TEST_ASSERT_EQUAL(frame_count, 1, "Expected no density machine deconstruction frame stacking test to end up with exactly 1 machine frame.")
