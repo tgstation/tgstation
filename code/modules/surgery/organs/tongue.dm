@@ -144,7 +144,7 @@
 		statue.visible_message("<span class='danger'>[statue] becomes animated!</span>")
 		becoming_statue.forceMove(get_turf(statue))
 		statue.moveToNullspace()
-		UnregisterSignal(mover, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED)
 	else
 		becoming_statue.visible_message("<span class='notice'>[becoming_statue] hardens into a silver statue.</span>", "<span class='notice'>You have become a silver statue!</span>")
 		statue.set_visuals(becoming_statue.appearance)
@@ -168,7 +168,6 @@
 		for(var/obj/item/W in dying_carbon)
 			if(!dying_carbon.dropItemToGround(W))
 				qdel(W)
-				M.regenerate_icons()
 	qdel(owner)
 
 /obj/item/organ/tongue/fly

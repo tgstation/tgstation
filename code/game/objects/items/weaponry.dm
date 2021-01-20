@@ -266,6 +266,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
+//statistically similar to e-cutlasses
+/obj/item/katana/cutlass
+	name = "katana"
+	desc = "A piratey sword used by buckaneers to negotiate the transfer of treasure."
+	icon_state = "cutlass"
+	inhand_icon_state = "cutlass"
+	worn_icon_state = "cutlass"
+	force = 30
+	throwforce = 20
+	throw_speed = 3
+	throw_range = 5
+	armour_penetration = 35
+	block_chance = 50
+
 /obj/item/wirerod
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."

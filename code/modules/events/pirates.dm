@@ -6,7 +6,6 @@
 	min_players = 10
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
-	var/admin_picked_pirates
 
 #define PIRATES_ROGUES "Rogues"
 #define PIRATES_SILVERSCALES "Silverscales"
@@ -17,9 +16,6 @@
 		return EVENT_CANT_RUN
 
 	return ..()
-
-/datum/round_event_control/pirates/admin_setup()
-	admin_picked_pirates = alert(usr, "What pirates do you want?","Pirate Selection", "Rogues", "Silverscales","Flying Dutchman")
 
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
