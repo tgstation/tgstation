@@ -33,6 +33,9 @@
 	var/ooze_nutrition_loss = -0.15
 	var/ooze_metabolism_modifier = 2
 
+	///which foodtypes we are able to eat.
+	var/ooze_diet = MEAT
+
 /mob/living/simple_animal/hostile/ooze/Initialize()
 	. = ..()
 	create_reagents(300)
@@ -79,12 +82,15 @@
 		adjustBruteLoss(0.5)
 
 ///Returns whether or not the supplied movable atom is edible.
-/mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/potential_food)
+/mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/potential_food)
 	if(ismob(potential_food))
 		return FALSE
-	if(istype(potential_food, /obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/meal = potential_food
-		return (meal.foodtype & MEAT) //Dont forget to add edible component compat here later
+	if(!IS_EDIBLE(potential_food))
+		return FALSE
+	if(SIGNAL(ooze_diet))
+		return TRUE
+	else
+		return FALSE
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
 /mob/living/simple_animal/hostile/ooze/proc/adjust_ooze_nutrition(amount)
@@ -92,7 +98,7 @@
 	updateNutritionDisplay()
 
 ///Tries to transfer the atoms reagents then delete it
-/mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/eaten_atom)
+/mob/living/simple_animal/hostile/ooze/proc/eat_atom(atom/eaten_atom)
 	eaten_atom.reagents.trans_to(src, eaten_atom.reagents.total_volume, transfered_by = src)
 	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
@@ -289,6 +295,7 @@
 	melee_damage_upper = 12
 	obj_damage = 15
 	deathmessage = "deflates and spills its vital juices!"
+	ooze_diet = MEAT | VEGETABLES
 	///The ability lets you envelop a carbon in a healing cocoon. Useful for saving critical carbons.
 	var/datum/action/cooldown/gel_cocoon/gel_cocoon
 	///The ability to shoot a mending globule, a sticky projectile that heals over time.
