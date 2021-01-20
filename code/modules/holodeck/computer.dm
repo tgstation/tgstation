@@ -31,30 +31,50 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	idle_power_usage = 10
 	active_power_usage = 50
 
+	//new vars
+	///what access type this holodeck has, used to specify programs for another holodeck that others cant load.
+	var/holodeck_access = STATION_HOLODECK
+
+	///what area type this holodeck loads into. linked turns into the nearest instance of this area
+	var/area/mappedstartarea = /area/holodeck/rec_center
+
+	///the currently used map template
+	var/datum/map_template/holodeck/template
+
+	///bottom left corner of the loading room, used for placing
+	var/turf/bottom_left
+
+	//old vars
+
 	///the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
 	var/area/holodeck/linked
 
-	var/area/mappedstartarea = /area/holodeck/rec_center //change this to a different area if youre making a second holodeck different from the station one
-	var/program = "holodeck_offline" //what program is loaded right now
+	///what program is loaded right now or is about to be loaded
+	var/program = "holodeck_offline"
 	var/last_program
 
-	var/offline_program = "holodeck_offline" //the default program loaded by this holodeck when spawned and when deactivated
-	var/holodeck_access = STATION_HOLODECK //what access type this holodeck has, used to specify programs for another holodeck that others cant load
+	///the default program loaded by this holodeck when spawned and when deactivated
+	var/offline_program = "holodeck_offline"
 
-	var/list/program_cache //this stores all of the unrestricted holodeck map templates that this computer has access to
-	var/list/emag_programs //as above, but for restricted ones that requires the safeties to be disabled to load
+	///stores all of the unrestricted holodeck map templates that this computer has access to
+	var/list/program_cache
+	///stores all of the restricted holodeck map templates that this computer has access to
+	var/list/emag_programs
 
-	var/program_type = /datum/map_template/holodeck	// subtypes of this (but not this itself) are loadable programs
+	///subtypes of this (but not this itself) are loadable programs
+	var/program_type = /datum/map_template/holodeck
 
-	var/list/spawned = list() //every holo object created by the holodeck goes in here to track it
+	///every holo object created by the holodeck goes in here to track it
+	var/list/spawned = list()
 	var/list/effects = list() //like above, but for holo effects
 
+	///TRUE if the holodeck is using extra power because of a program, FALSE otherwise
 	var/active = FALSE
+	///increases current_cd if TRUE, causing the holodeck to take longer to allow loading new programs
 	var/damaged = FALSE
 
 	var/current_cd = 0
-	var/datum/map_template/holodeck/template
-	var/turf/bottom_left
+
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
@@ -219,11 +239,13 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	for (var/_atom in spawned)
 		var/atom/atoms = _atom
 
+
 		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis)) //ssatoms
 			spawned -= atoms
 			continue
 
 		atoms.flags_1 |= HOLOGRAM_1
+		RegisterSignal(atoms, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
 
 		if (isholoeffect(atoms))//activates holo effects and transfers them from the spawned list into the effects list
 			var/obj/effect/holodeck_effect/holo_effect = atoms
@@ -257,6 +279,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 		return
 
 	spawned -= object
+	UnregisterSignal(object, COMSIG_PARENT_PREQDELETED)
 	var/turf/target_turf = get_turf(object)
 	for(var/atom/movable/object_contents in object) //make sure that things inside of a holoitem are moved outside before destroying it
 		object_contents.forceMove(target_turf)
@@ -266,14 +289,18 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 
 	qdel(object)
 
+/obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)
+	spawned -= to_remove
+	UnregisterSignal(to_remove, COMSIG_PARENT_PREQDELETED)
+
 /obj/machinery/computer/holodeck/process(delta_time)
 	if(damaged && DT_PROB(5, delta_time))
 		for(var/turf/holo_turf in linked)
 			if(DT_PROB(2.5, delta_time))
 				do_sparks(2, 1, holo_turf)
 				return
-
-	if(!..() || program == offline_program)//we dont need to scan the holodeck if the holodeck is offline
+	. = ..()
+	if(!. || program == offline_program)//we dont need to scan the holodeck if the holodeck is offline
 		return
 
 	if(!floorcheck()) //if any turfs in the floor of the holodeck are broken
@@ -366,7 +393,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	emergency_shutdown()
 	if(linked)
 		linked.linked = null
-		linked.power_usage = new /list(AREA_USAGE_LEN)
+		linked.power_usage = list(AREA_USAGE_LEN)
 	return ..()
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
