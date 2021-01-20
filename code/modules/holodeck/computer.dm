@@ -73,6 +73,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	///increases current_cd if TRUE, causing the holodeck to take longer to allow loading new programs
 	var/damaged = FALSE
 
+	///the time stored here is the next world.time that another holodeck program can be selected
 	var/current_cd = 0
 
 
