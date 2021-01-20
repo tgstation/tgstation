@@ -306,7 +306,7 @@
 	//Instanciation
 	////////////////
 
-	for (var/turf/turf_in_blacklist in turf_blacklist)
+	for (var/turf_in_blacklist in turf_blacklist)
 		if (crds == turf_in_blacklist) //if the given turf is blacklisted, dont do anything with it
 			return
 
