@@ -27,7 +27,7 @@
 	yield = 2
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/histamine = 0.25)
+	reagents_add = list(/datum/reagent/toxin/acid = 0.5, /datum/reagent/toxin/histamine = 0.25)
 	rarity = 20
 	graft_gene = /datum/plant_gene/trait/stinging
 
@@ -83,23 +83,19 @@
 /obj/item/food/grown/nettle/basic
 	seed = /obj/item/seeds/nettle
 
-/obj/item/food/grown/nettle/basic/Initialize(mapload, obj/item/seeds/new_seed)
+/obj/item/food/grown/nettle/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	force = round((minforce + seed.potency / 15), 1)
+	force = round((minforce + seed.potency / 13), 1)
 
 /obj/item/food/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
 	name = "deathnettle"
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
-	force = 30
+	force = 20
 	minforce = 12
 	wound_bonus = CANT_WOUND
 	throwforce = 15
-
-/obj/item/food/grown/nettle/death/Initialize(mapload, obj/item/seeds/new_seed)
-	. = ..()
-	force = round((minforce + seed.potency / 10), 1)
 
 /obj/item/food/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
