@@ -289,7 +289,6 @@
 	SIGNAL_HANDLER
 
 	if(amount)
-		light_color = LIGHT_COLOR_PINK
 		name = "reinforced [initial(name)]"
 		hardsuit_type = "mining_goliath"
 		if(amount == maxamount)
