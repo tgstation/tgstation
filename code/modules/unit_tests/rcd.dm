@@ -2,7 +2,7 @@
 	var/obj/item/construction/rcd/rcd = allocate(/obj/item/construction/rcd/combat/admin)
 	var/mob/living/carbon/human/engineer = allocate(/mob/living/carbon/human)
 
-	engineer.put_in_hands(rcd, force = TRUE)
+	engineer.put_in_hands(rcd, forced = TRUE)
 
 	rcd.mode = RCD_MACHINE
 
@@ -14,7 +14,7 @@
 	var/turf/adjacent_turf = adjacent_turfs[1]
 
 	for(var/i in 1 to 10)
-		rcd_act(engineer, rcd, rcd.mode)
+		adjacent_turf.rcd_act(engineer, rcd, rcd.mode)
 
 	var/frame_count = 0
 	for(var/obj/structure/frame/machine_frame in adjacent_turf.contents)
