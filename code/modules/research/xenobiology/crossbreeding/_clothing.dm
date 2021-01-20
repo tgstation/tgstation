@@ -12,6 +12,7 @@ Slimecrossing Armor
 	inhand_icon_state = "slime"
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
+	clothing_traits = list(TRAIT_NOBREATH)
 	gas_transfer_coefficient = 0
 	permeability_coefficient = 0.5
 	flags_cover = MASKCOVERSMOUTH
@@ -20,14 +21,12 @@ Slimecrossing Armor
 /obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_MASK)
-		ADD_TRAIT(user, TRAIT_NOBREATH, "breathmask_[REF(src)]")
 		user.failed_last_breath = FALSE
 		user.clear_alert("not_enough_oxy")
 		user.apply_status_effect(/datum/status_effect/rebreathing)
 
 /obj/item/clothing/mask/nobreath/dropped(mob/living/carbon/human/user)
 	..()
-	REMOVE_TRAIT(user, TRAIT_NOBREATH, "breathmask_[REF(src)]")
 	user.remove_status_effect(/datum/status_effect/rebreathing)
 
 /obj/item/clothing/glasses/prism_glasses
@@ -101,6 +100,7 @@ Slimecrossing Armor
 	icon_state = "peaceflower"
 	inhand_icon_state = "peaceflower"
 	slot_flags = ITEM_SLOT_HEAD
+	clothing_traits = list(TRAIT_PACIFISM)
 	body_parts_covered = NONE
 	dynamic_hair_suffix = ""
 	force = 0
@@ -108,15 +108,6 @@ Slimecrossing Armor
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
-
-/obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	if(slot == ITEM_SLOT_HEAD)
-		ADD_TRAIT(user, TRAIT_PACIFISM, "peaceflower_[REF(src)]")
-
-/obj/item/clothing/head/peaceflower/dropped(mob/living/carbon/human/user)
-	..()
-	REMOVE_TRAIT(user, TRAIT_PACIFISM, "peaceflower_[REF(src)]")
 
 /obj/item/clothing/head/peaceflower/attack_hand(mob/user)
 	if(iscarbon(user))

@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "Fixed broken UI in ExosuitFabricator interface."
