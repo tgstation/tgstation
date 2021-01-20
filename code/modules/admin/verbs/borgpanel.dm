@@ -45,7 +45,7 @@
 		"ref" = REF(borg),
 		"name" = "[borg]",
 		"emagged" = borg.emagged,
-		"active_configuration" = "[borg.configuration.type]",
+		"active_module" = "[borg.configuration.type]",
 		"lawupdate" = borg.lawupdate,
 		"lockdown" = borg.lockcharge,
 		"scrambledcodes" = borg.scrambledcodes
@@ -187,7 +187,7 @@
 				log_admin("[key_name(user)] added the [channel] radio channel to [key_name(borg)].")
 			borg.radio.recalculateChannels()
 		if ("setmodule")
-			var/newmodulepath = text2path(params["configuration"])
+			var/newmodulepath = text2path(params["module"])
 			if (ispath(newmodulepath))
 				borg.configuration.transform_to(newmodulepath)
 				message_admins("[key_name_admin(user)] changed the configuration of [ADMIN_LOOKUPFLW(borg)] to [newmodulepath].")
