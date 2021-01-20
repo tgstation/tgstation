@@ -9,6 +9,7 @@
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
 	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT 
 	ph = 3
+	overdose_threshold = 0 //So that they're shown as a problem (?)
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)

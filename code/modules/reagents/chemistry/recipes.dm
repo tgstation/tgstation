@@ -45,7 +45,7 @@
 	/// How sharp the temperature exponential curve is (to the power of value)
 	var/temp_exponent_factor = 2 
 	/// How sharp the pH exponential curve is (to the power of value)
-	var/ph_exponent_factor = 1
+	var/ph_exponent_factor = 2
 	/// Temperature change per 1u produced 
 	var/thermic_constant = 1 
 	/// pH change per 1u reaction
@@ -53,7 +53,7 @@
 	/// Optimal/max rate possible if all conditions are perfect
 	var/rate_up_lim	= 20 
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/purity_min = 0.15 
+	var/purity_min = 0.25 
 	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 	var/reaction_flags = NONE
 

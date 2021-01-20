@@ -19,8 +19,10 @@
 	var/multiplier = INFINITY
 	///The sum total of each of the product's numerical's values. This is so the addition/deletion is kept at the right values for multiple product reactions
 	var/product_ratio = 0
+	///The total possible that this reaction can make presently - used for gui outputs
+	var/target_vol = 0
 	///The target volume the reaction is headed towards. This is updated every tick, so isn't the total value for the reaction, it's just a way to ensure we can't make more than is possible.
-	var/target_vol = INFINITY
+	var/step_target_vol = INFINITY
 	///How much of the reaction has been made so far. Mostly used for subprocs, but it keeps track across the whole reaction and is added to every step.
 	var/reacted_vol = 0 
 	///If we're done with this reaction so that holder can clear it.
@@ -127,7 +129,7 @@
 /*
 * Calculates how much we're aiming to create
 *
-* Specifically calcuates multiplier, product_ratio, target_vol
+* Specifically calcuates multiplier, product_ratio, step_target_vol
 * Also checks to see if these numbers are sane, returns a TRUE/FALSE
 * Generally an internal proc
 */
@@ -144,24 +146,25 @@
 	
 	if(!length(reaction.results)) //Incase of no reagent product
 		product_ratio = 1
-		target_vol = INFINITY
+		step_target_vol = INFINITY
 		for(var/reagent in reaction.required_reagents)
-			target_vol = min(target_vol, multiplier * reaction.required_reagents[reagent])
-		if(target_vol == 0 || multiplier == 0)
+			step_target_vol = min(step_target_vol, multiplier * reaction.required_reagents[reagent])
+		if(step_target_vol == 0 || multiplier == 0)
 			return FALSE
 		//Sanity Check
-		if(target_vol == INFINITY || multiplier == INFINITY) //I don't see how this can happen, but I'm not bold enough to let infinities roll around for free
+		if(step_target_vol == INFINITY || multiplier == INFINITY) //I don't see how this can happen, but I'm not bold enough to let infinities roll around for free
 			to_delete = TRUE
 			CRASH("Tried to calculate target vol for [reaction.type] with no products, but could not find required reagents for the reaction. If it got here, something is really broken with the recipe.")
 		return TRUE
 
 	product_ratio = 0
-	target_vol = 0
+	step_target_vol = 0
 	for(var/product in reaction.results)
-		target_vol += (reaction.results[product]*multiplier)
+		step_target_vol += (reaction.results[product]*multiplier)
 		product_ratio += reaction.results[product]
-	if(target_vol == 0 || multiplier == INFINITY)
+	if(step_target_vol == 0 || multiplier == INFINITY)
 		return FALSE
+	target_vol = step_target_vol + reacted_vol
 	return TRUE
 /*
 * Main reaction processor - Increments the reaction by a timestep
@@ -238,8 +241,8 @@
 	var/delta_chem_factor = (reaction.rate_up_lim*delta_t)*delta_time//add/remove factor
 	var/total_step_added = 0
 	//keep limited
-	if(delta_chem_factor > target_vol)
-		delta_chem_factor = target_vol
+	if(delta_chem_factor > step_target_vol)
+		delta_chem_factor = step_target_vol
 	else if (delta_chem_factor < CHEMICAL_VOLUME_MINIMUM)
 		delta_chem_factor = CHEMICAL_VOLUME_MINIMUM
 	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
@@ -260,7 +263,7 @@
 		total_step_added += step_add
 
 	#ifdef TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
-	debug_world("Reaction vars: PreReacted:[reacted_vol] of [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
+	debug_world("Reaction vars: PreReacted:[reacted_vol] of [step_target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
 	#endif
 		
 	//Apply thermal output of reaction to beaker
@@ -294,9 +297,6 @@
 	if(!i)//I've never seen it get here with 0, but in case
 		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cached_purity/i
-
-/datum/equilibrium/proc/get_total_possible_volume()
-	return target_vol + reacted_vol
 
 /datum/equilibrium/proc/force_clear_reactive_agents()
 	for(var/reagent in reaction.required_reagents)

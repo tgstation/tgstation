@@ -2473,7 +2473,7 @@
 		return
 	var/ph_change = -((volume/holder.total_volume)*strength)
 	holder.adjust_all_reagents_ph(ph_change, ph, 14)
-	holder.my_atom.audible_message("<span class='warning'>The beaker froths as the ph changes!</span>")
+	holder.my_atom.audible_message("<span class='warning'>The beaker fizzes as the ph changes!</span>")
 	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, volume)
 	
@@ -2507,4 +2507,21 @@
 	playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, volume)
 	
+/datum/reagent/purity_tester
+	name = "purity tester"
+	description = "This reagent will consume itself and violently react if there is a highly impure reagent in the beaker."
+	data = list("purity" = 1)
+
+/datum/reagent/purity_tester/on_new(list/data)
+	var/is_inverse = FALSE
+	for(var/_reagent in holder.reagent_list)
+		var/datum/reagent/reagent = _reagent
+		if(reagent.purity <= reagent.inverse_chem_val)
+			is_inverse = TRUE
+	if(is_inverse)
+		holder.my_atom.audible_message("<span class='warning'>The beaker bubbles violently as the reagent is added!</span>")
+		playsound(holder.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+	else
+		holder.my_atom.audible_message("<span class='warning'>The added reagent doesn't seem to do much.</span>")
+	holder.remove_reagent(type, volume)
 

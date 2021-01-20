@@ -1157,6 +1157,15 @@
 			return round(R.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return 0
 
+/// Get the purity of this reagent
+/datum/reagents/proc/get_reagent_purity(reagent)
+	var/list/cached_reagents = reagent_list
+	for(var/_reagent in cached_reagents)
+		var/datum/reagent/R = _reagent
+		if (R.type == reagent)
+			return round(R.purity, 0.01)
+	return 0 
+
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()
 	var/list/names = list()
