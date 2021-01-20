@@ -119,9 +119,12 @@ Lizard subspecies: SILVER SCALED
 	name = "Silver Scale"
 	id = "silverlizard"
 	limbs_id = "lizard"
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_HOLY,TRAIT_NOBREATH,TRAIT_WINE_TASTER)
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_HOLY,TRAIT_NOBREATH,TRAIT_VIRUSIMMUNE,TRAIT_WINE_TASTER)
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/tongue/lizard/silver
+	armor = 10 //very light silvery scales soften blows
+	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor
 	///stored eye color for when we turn back off of a silverscale.
