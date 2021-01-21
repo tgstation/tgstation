@@ -55,7 +55,6 @@
 	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	sawn_desc = "An extremely sawn-off Mosin Nagant, popularly known as an \"obrez\". There was probably a reason it wasn't manufactured this short to begin with."
 	weapon_weight = WEAPON_HEAVY
-	w_class = WEIGHT_CLASS_HUGE
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
 	slot_flags = ITEM_SLOT_BACK
@@ -71,7 +70,6 @@
 		spread = 36
 		can_bayonet = FALSE
 		update_icon()
-		w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
