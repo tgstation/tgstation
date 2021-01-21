@@ -6,9 +6,9 @@
 	name = "The Sleeping Carp"
 	id = MARTIALART_SLEEPINGCARP
 	allow_temp_override = FALSE
-	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
+	help_verb = /mob/living/proc/sleeping_carp_help
 
-/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
 		streak = ""
 		strongPunch(A,D)
@@ -24,7 +24,7 @@
 	return FALSE
 
 ///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch
-/datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/A, mob/living/D)
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -34,33 +34,33 @@
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "strong punched (Sleeping Carp)")
-	D.apply_damage(20, A.dna.species.attack_type, affecting)
+	D.apply_damage(20, A.get_attack_type(), affecting)
 	return
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
-/datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/A, mob/living/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	D.visible_message("<span class='warning'>[A] kicks [D] square in the chest, sending them flying!</span>", \
 					"<span class='userdanger'>You are kicked square in the chest by [A], sending you flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 7, 14, A)
-	D.apply_damage(15, A.dna.species.attack_type, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+	D.apply_damage(15, A.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return
 
 ///Keelhaul: Harm Grab combo, knocks people down, deals stamina damage while they're on the floor
-/datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/A, mob/living/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if(D.body_position == STANDING_UP)
-		D.apply_damage(10, A.dna.species.attack_type, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		D.apply_damage(10, A.get_attack_type(), BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
 		D.Knockdown(40)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	else
-		D.apply_damage(5, A.dna.species.attack_type, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		D.apply_damage(5, A.get_attack_type(), BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
@@ -68,14 +68,14 @@
 	log_combat(A, D, "dropkicked (Sleeping Carp)")
 	return
 
-/datum/martial_art/the_sleeping_carp/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/grab_act(mob/living/A, mob/living/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "grabbed (Sleeping Carp)")
 	return ..()
 
-/datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/harm_act(mob/living/A, mob/living/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
 		return TRUE
@@ -90,20 +90,21 @@
 	log_combat(A, D, "punched (Sleeping Carp)")
 	return TRUE
 
-/datum/martial_art/the_sleeping_carp/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/disarm_act(mob/living/A, mob/living/D)
 	add_to_streak("D",D)
 	if(check_streak(A,D))
 		return TRUE
 	log_combat(A, D, "disarmed (Sleeping Carp)")
 	return ..()
 
-/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carbon/human/A, obj/projectile/P, def_zone)
+/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/A, obj/projectile/P, def_zone)
 	. = ..()
 	if(A.incapacitated(FALSE, TRUE)) //NO STUN
 		return BULLET_ACT_HIT
 	if(!(A.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
 		return BULLET_ACT_HIT
-	if(A.dna && A.dna.check_mutation(HULK)) //NO HULK
+	var/datum/dna/dna = A.has_dna()
+	if(dna?.check_mutation(HULK)) //NO HULK
 		return BULLET_ACT_HIT
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
@@ -115,7 +116,7 @@
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
-/datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
+/datum/martial_art/the_sleeping_carp/teach(mob/living/H, make_temporary = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -124,7 +125,7 @@
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	H.faction |= "carp" //:D
 
-/datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
+/datum/martial_art/the_sleeping_carp/on_remove(mob/living/H)
 	. = ..()
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
@@ -134,7 +135,7 @@
 
 
 /// Verb added to humans who learn the art of the sleeping carp.
-/mob/living/carbon/human/proc/sleeping_carp_help()
+/mob/living/proc/sleeping_carp_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"

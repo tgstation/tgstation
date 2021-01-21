@@ -2803,14 +2803,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/melee/baseball_bat{
-	desc = "Don't tell anyone you put any points into dex, though.";
-	icon_state = "swordon";
-	inhand_icon_state = "swordon";
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi';
-	name = "moonlight greatsword";
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	},
+/obj/item/melee/moonlight_greatsword,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -9950,7 +9943,9 @@
 	name = "Psychology APC";
 	pixel_y = 24
 	},
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	name = "Big Moffer"
+	},
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "aqQ" = (
@@ -88212,7 +88207,7 @@
 /obj/effect/turf_decal/tile/red,
 /obj/item/toy/plush/pkplush{
 	desc = "Give HUG-E a hug!";
-	name = "Therapy Plush"
+	name = "TH3R4PY-X09"
 	},
 /obj/machinery/flasher{
 	id = "IsolationFlash";
