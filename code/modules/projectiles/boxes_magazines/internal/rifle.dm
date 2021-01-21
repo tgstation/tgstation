@@ -6,6 +6,16 @@
 	max_ammo = 5
 	multiload = TRUE
 
+/obj/item/ammo_box/magazine/internal/boltaction/musket
+	name = "maintenance musket internal magazine"
+	caliber = "shotgun"
+	ammo_type = /obj/item/ammo_casing/shotgun/improvised
+	max_ammo = 1
+
+/obj/item/ammo_box/magazine/internal/boltaction/musket/prime
+	name = "gray maintenance musket internal magazine"
+	max_ammo = 3
+
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted
 	max_ammo = 1
 	ammo_type = /obj/item/ammo_casing/a762/enchanted
@@ -14,6 +24,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage
 
 /obj/item/ammo_box/magazine/internal/boltaction/harpoon
-	max_ammo = 1
-	caliber = "harpoon"
+	name = "harpoon internal magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/harpoon
+	caliber = "harpoon"
+	max_ammo = 1

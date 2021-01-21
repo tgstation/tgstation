@@ -90,6 +90,25 @@
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 
+	///Gun internal magazine modification and misfiring
+	
+	///Can we modify our ammo type in this gun's internal magazine?
+	var/can_modify_ammo = FALSE
+	///our initial ammo type. Should match initial calibur, but a bit of redundency doesn't hurt.
+	var/initial_calibur
+	///our alternative ammo type.
+	var/alternative_calibur
+	///our initial fire sound. same reasons for initial calibur
+	var/initial_fire_sound
+	///our alternative fire sound, in case we want our gun to be louder or quieter or whatever
+	var/alternative_fire_sound
+	///If only our alternative ammuntion misfires and not our main ammunition, we set this to TRUE
+	var/alternative_ammo_misfires = FALSE
+	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires.
+	var/can_misfire = FALSE
+	///How likely is our gun to misfire? 
+	var/misfire_probability
+
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
 	if (!spawnwithmagazine)
@@ -304,6 +323,12 @@
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	
+	if(magazine && chambered.BB && can_misfire)
+		if(prob(misfire_probability))
+			if(blow_up(user))
+				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
+	
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
 	. = ..()
@@ -412,12 +437,16 @@
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	. += "It has [get_ammo(count_chambered)] round\s remaining."
+	. += "The [src] fires [magazine.caliber]."
+
 	if (!chambered)
 		. += "It does not seem to have a round chambered."
 	if (bolt_locked)
 		. += "The [bolt_wording] is locked back and needs to be released before firing."
 	if (suppressed)
 		. += "It has a suppressor attached that can be removed with <b>alt+click</b>."
+	if(can_misfire)
+		. += "<span class='danger'>You get the feeling this might explode if you fire it....</span>"
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
@@ -505,6 +534,46 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		sawn_off = TRUE
 		update_icon()
 		return TRUE
+
+/obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
+	if(!user.is_holding(src))
+		to_chat(user, "<span class='notice'>You need to hold [src] to modify it.</span>")
+		return TRUE
+	
+	if(!can_modify_ammo)
+		return
+	
+	if(bolt_type == BOLT_TYPE_STANDARD)
+		if(get_ammo())	
+			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
+			return
+		
+		else if(!bolt_locked)
+			to_chat(user, "<span class='notice'>You can't get at the internals while the bolt is down!</span>")
+			return
+
+	to_chat(user, "<span class='notice'>You begin to tinker with [src]...</span>")
+	I.play_tool_sound(src)
+	if(!I.use_tool(src, user, 3 SECONDS))
+		return TRUE
+	
+	if(blow_up(user))
+		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
+		return
+
+	if(magazine.caliber == initial_calibur)
+		magazine.caliber = alternative_calibur
+		if(alternative_ammo_misfires)
+			can_misfire = TRUE
+		fire_sound = alternative_fire_sound
+		to_chat(user, "<span class='notice'>You modify [src]. Now it will fire [alternative_calibur] rounds.</span>")
+	else
+		magazine.caliber = initial_calibur
+		if(alternative_ammo_misfires && magazine != initial_calibur)
+			can_misfire = FALSE
+		fire_sound = initial_fire_sound
+		to_chat(user, "<span class='notice'>You reset [src]. Now it will fire [initial_calibur] rounds.</span>")
+
 
 ///used for sawing guns, causes the gun to fire without the input of the user
 /obj/item/gun/ballistic/proc/blow_up(mob/user)

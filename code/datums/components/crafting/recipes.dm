@@ -475,15 +475,28 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
-/datum/crafting_recipe/ishotgun
-	name = "Improvised Shotgun"
-	result = /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
+/datum/crafting_recipe/musket
+	name = "Maintenance musket"
+	result = /obj/item/gun/ballistic/rifle/boltaction/musket
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/package_wrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
-	time = 100
+	time = 50
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/musket_prime
+	name = "Gray Maintenance musket"
+	result = /obj/item/gun/ballistic/rifle/boltaction/musket/prime
+	reqs = list(/obj/item/gun/ballistic/rifle/boltaction/musket = 1,
+				/obj/item/food/deadmouse = 1,
+				/datum/reagent/consumable/grey_bull = 20,
+				/obj/item/spear = 1,
+				/obj/item/storage/toolbox= 1)
+	tools = list(TOOL_SCREWDRIVER, /obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas, /obj/item/melee/baton/cattleprod)
+	time = 300 //contemplate for a bit
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 

@@ -181,67 +181,6 @@
 	if(.)
 		weapon_weight = WEAPON_MEDIUM
 
-// IMPROVISED SHOTGUN //
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised
-	name = "improvised shotgun"
-	desc = "Essentially a tube that aims shotgun shells."
-	icon_state = "ishotgun"
-	inhand_icon_state = "ishotgun"
-	w_class = WEIGHT_CLASS_BULKY
-	force = 10
-	slot_flags = null
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
-	sawn_desc = "I'm just here for the gasoline."
-	unique_reskin = null
-	var/slung = FALSE
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
-		var/obj/item/stack/cable_coil/C = A
-		if(C.use(10))
-			slot_flags = ITEM_SLOT_BACK
-			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
-			slung = TRUE
-			update_icon()
-		else
-			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon_state()
-	. = ..()
-	if(slung)
-		inhand_icon_state = "ishotgunsling"
-	if(sawn_off)
-		inhand_icon_state = "ishotgun_sawn"
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_overlays()
-	. = ..()
-	if(slung)
-		. += "ishotgunsling"
-	if(sawn_off)
-		. += "ishotgun_sawn"
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
-	. = ..()
-	if(. && slung) //sawing off the gun removes the sling
-		new /obj/item/stack/cable_coil(get_turf(src), 10)
-		slung = FALSE
-		update_icon()
-		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
-	name = "sawn-off improvised shotgun"
-	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun_sawn"
-	inhand_icon_state = "ishotgun_sawn"
-	worn_icon_state = "gun"
-	worn_icon = null
-	w_class = WEIGHT_CLASS_NORMAL
-	sawn_off = TRUE
-	slot_flags = ITEM_SLOT_BELT
-
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."

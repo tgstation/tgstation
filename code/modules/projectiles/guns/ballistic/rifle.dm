@@ -72,10 +72,10 @@
 		update_icon()
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
-	. = 0
+	. = FALSE
 	if(chambered?.BB)
 		process_fire(user, user, FALSE)
-		. = 1
+		. = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/harpoon
 	name = "ballistic harpoon gun"
@@ -86,6 +86,35 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
+
+/obj/item/gun/ballistic/rifle/boltaction/musket
+	name = "maintenance musket"
+	desc = "An excellent weapon for flushing out tunnel rats and enemy assistants, but its rifling leaves much to be desired."
+	icon_state = "musket"
+	inhand_icon_state = "musket"
+	worn_icon_state = "musket"
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/musket
+	initial_calibur = "shotgun"
+	alternative_calibur = "a762"
+	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	can_modify_ammo = TRUE
+	can_misfire = TRUE
+	misfire_probability = 10
+	can_bayonet = FALSE
+	can_be_sawn_off = FALSE
+	projectile_damage_multiplier = 0.75
+
+/obj/item/gun/ballistic/rifle/boltaction/musket/prime
+	name = "gray maintenance musket"
+	desc = "Older, territorial assistants typically possess more valuable loot."
+	icon_state = "musket_prime"
+	inhand_icon_state = "musket_prime"
+	worn_icon_state = "musket_prime"
+	can_misfire = FALSE
+	misfire_probability = 0
+	projectile_damage_multiplier = 1
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted
 	name = "enchanted bolt action rifle"
