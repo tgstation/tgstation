@@ -590,11 +590,7 @@
 /turf/open/floor/plasteel/airless,
 /area/mine/abandoned)
 "bX" = (
-/turf/open/floor/plasteel{
-	icon_plating = "asteroid";
-	icon_state = "asteroid";
-	name = "Asteroid"
-	},
+/turf/open/floor/plating/asteroid,
 /area/mine/unexplored)
 "bY" = (
 /obj/item/rack_parts,
@@ -609,19 +605,11 @@
 "ca" = (
 /obj/item/clothing/under/syndicate/soviet,
 /obj/item/clothing/head/ushanka,
-/turf/open/floor/plasteel{
-	icon_plating = "asteroid";
-	icon_state = "asteroid";
-	name = "Asteroid"
-	},
+/turf/open/floor/plating/asteroid,
 /area/mine/unexplored)
 "cb" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plasteel{
-	icon_plating = "asteroid";
-	icon_state = "asteroid";
-	name = "Asteroid"
-	},
+/turf/open/floor/plating/asteroid,
 /area/mine/unexplored)
 "cc" = (
 /obj/structure/alien/resin/wall,
@@ -766,7 +754,8 @@
 	dir = 9
 	},
 /obj/item/shovel{
-	attack_verb = list("ineffectively hit");
+	attack_verb_continuous = list("ineffectively hits");
+	attack_verb_simple = list("ineffectively hit");
 	desc = "A large tool for digging and moving dirt. Was modified with extra safety, making it ineffective as a weapon.";
 	force = 1;
 	name = "safety shovel";
@@ -774,7 +763,8 @@
 	throwforce = 1
 	},
 /obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
+	attack_verb_continuous = list("ineffectively hits");
+	attack_verb_simple = list("ineffectively hit");
 	desc = "A pickaxe designed to be only effective at digging rock and ore, very ineffective as a weapon.";
 	force = 1;
 	name = "safety pickaxe";
@@ -795,7 +785,8 @@
 	dir = 9
 	},
 /obj/item/shovel{
-	attack_verb = list("ineffectively hit");
+	attack_verb_continuous = list("ineffectively hits");
+	attack_verb_simple = list("ineffectively hit");
 	desc = "A large tool for digging and moving dirt. Was modified with extra safety, making it ineffective as a weapon.";
 	force = 1;
 	name = "safety shovel";
@@ -803,7 +794,8 @@
 	throwforce = 1
 	},
 /obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
+	attack_verb_continuous = list("ineffectively hits");
+	attack_verb_simple = list("ineffectively hit");
 	desc = "A pickaxe designed to be only effective at digging rock and ore, very ineffective as a weapon.";
 	force = 1;
 	name = "safety pickaxe";
@@ -995,9 +987,7 @@
 /area/awaymission/snowdin/post/messhall)
 "cY" = (
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating"
-	},
+/turf/open/floor/plating,
 /area/mine/explored)
 "cZ" = (
 /obj/effect/decal/remains/human,
@@ -1071,9 +1061,7 @@
 "dj" = (
 /obj/structure/plasticflaps,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating"
-	},
+/turf/open/floor/plating,
 /area/mine/explored)
 "dk" = (
 /turf/closed/wall/r_wall,
@@ -1081,9 +1069,7 @@
 "dl" = (
 /obj/structure/girder/reinforced,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating"
-	},
+/turf/open/floor/plating,
 /area/mine/explored)
 "dm" = (
 /obj/structure/window/reinforced,
@@ -1867,9 +1853,7 @@
 "fr" = (
 /obj/structure/girder,
 /obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating"
-	},
+/turf/open/floor/plating,
 /area/awaymission/snowdin/post/secpost)
 "fs" = (
 /obj/structure/table,
@@ -3257,7 +3241,6 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1;
 	initialize_directions = 0;
-	level = 1
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
@@ -4305,9 +4288,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/kitchen)
 "mn" = (
-/obj/machinery/autolathe{
-	input_dir = 4
-	},
+/obj/machinery/autolathe,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/kitchen)
 "mo" = (
@@ -4938,7 +4919,6 @@
 	height = 24;
 	id = "syndicate_z5";
 	name = "south of asteroid";
-	turf_type = /turf/open/space;
 	width = 18
 	},
 /turf/open/space,
