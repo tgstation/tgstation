@@ -22,16 +22,17 @@
 	color = "#DB90C6"
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.bodytemperature > M.get_body_temp_normal(apply_change=FALSE))
-		M.adjust_bodytemperature(-40 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal(apply_change=FALSE))
-	else if(M.bodytemperature < (M.get_body_temp_normal(apply_change=FALSE) + 1))
-		M.adjust_bodytemperature(40 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal(apply_change=FALSE))
+	var/target_temp = M.get_body_temp_normal(apply_change=FALSE)
+	if(M.bodytemperature > target_temp)
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, target_temp)
+	else if(M.bodytemperature < (target_temp + 1))
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 0, target_temp)
 	if(ishuman(M))
 		var/mob/living/carbon/human/humi = M
-		if(humi.coretemperature > humi.get_body_temp_normal(apply_change=FALSE))
-			humi.adjust_coretemperature(-40 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, humi.get_body_temp_normal(apply_change=FALSE))
-		else if(humi.coretemperature < (humi.get_body_temp_normal(apply_change=FALSE) + 1))
-			humi.adjust_coretemperature(40 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, humi.get_body_temp_normal(apply_change=FALSE))
+		if(humi.coretemperature > target_temp)
+			humi.adjust_coretemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, target_temp)
+		else if(humi.coretemperature < (target_temp + 1))
+			humi.adjust_coretemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 0, target_temp)
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins

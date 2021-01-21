@@ -124,9 +124,9 @@
 
 	if(temp_delta < 0) // It is cold here
 		if(!on_fire) // Do not reduce body temp when on fire
-			adjust_bodytemperature(clamp(temp_delta / divisor, temp_delta, 0))
+			adjust_bodytemperature(clamp((temp_delta / divisor) * delta_time, temp_delta, 0))
 	else // This is a hot place
-		adjust_bodytemperature(clamp(temp_delta / divisor, 0, temp_delta))
+		adjust_bodytemperature(clamp((temp_delta / divisor) * delta_time, 0, temp_delta))
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature

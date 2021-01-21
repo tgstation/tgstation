@@ -261,7 +261,7 @@
 			heating = 20
 			if(isslime(M))
 				heating = rand(20, 25)
-	M.adjust_bodytemperature(heating * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/frostoil
@@ -295,7 +295,7 @@
 				M.emote("shiver")
 			if(isslime(M))
 				cooling = -rand(20, 25)
-	M.adjust_bodytemperature(cooling * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 50)
+	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
 	..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
@@ -498,7 +498,7 @@
 	taste_description = "your imprisonment"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(10 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 0, M.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -509,7 +509,7 @@
 	taste_description = "wet and cheap noodles on fire"
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, delta_time, times_fired)
-	target_mob.adjust_bodytemperature(10 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/flour
