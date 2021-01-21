@@ -344,7 +344,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					if(!(variable in vars))
 						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
 						continue
-					vars[variable] = configuration["dynamic"][variable]
+					vars[variable] = configuration["Dynamic"][variable]
 
 	var/valid_roundstart_ruleset = 0
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
