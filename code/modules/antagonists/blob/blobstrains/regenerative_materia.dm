@@ -8,7 +8,7 @@
 	message_living = ", and you feel <i>alive</i>"
 	reagent = /datum/reagent/blob/regenerative_materia
 	core_regen_bonus = 20
-	point_rate = 1
+	point_rate_bonus = 1
 
 /datum/reagent/blob/regenerative_materia
 	name = "Regenerative Materia"
