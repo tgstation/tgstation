@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -11,11 +10,7 @@ export const CivCargoHoldTerminal = (props, context) => {
     status_report,
     id_inserted,
     id_bounty_info,
-    id_bounty_value,
-    id_bounty_num,
     picking,
-    id_bounty_names,
-    id_bounty_values,
   } = data;
   const in_text = "Welcome valued employee.";
   const out_text = "To begin, insert your ID into the console.";
@@ -33,7 +28,7 @@ export const CivCargoHoldTerminal = (props, context) => {
             <Section
               title="Cargo Pad"
               buttons={(
-                <Fragment>
+                <>
                   <Button
                     icon={"sync"}
                     tooltip={"Check Contents"}
@@ -56,7 +51,7 @@ export const CivCargoHoldTerminal = (props, context) => {
                     content={"Eject ID"}
                     disabled={!id_inserted}
                     onClick={() => act('eject')} />
-                </Fragment>
+                </>
               )}>
               <LabeledList>
                 <LabeledList.Item
@@ -160,4 +155,3 @@ const BountyPickBox = (props, context) => {
     </Section>
   );
 };
-

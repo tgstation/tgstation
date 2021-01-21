@@ -341,6 +341,16 @@
 	return
 
 /**
+ * get_bleed_rate_of_change() is used in [/mob/living/carbon/proc/bleed_warn] to gauge whether this wound (if bleeding) is becoming worse, better, or staying the same over time
+ *
+ * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin)
+ */
+/datum/wound/proc/get_bleed_rate_of_change()
+	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		return BLOOD_FLOW_INCREASING
+	return BLOOD_FLOW_STEADY
+
+/**
  * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.
  *
  * Return the full string line you want to show, note that we're already dealing with the 'warning' span at this point, and that \n is already appended for you in the place this is called from
