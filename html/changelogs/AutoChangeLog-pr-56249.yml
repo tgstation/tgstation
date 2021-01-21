@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The HFR can now be reactivated after partial reconstruction without first needing to reconstruct the core, and will not get stuck in a state where attempting to use the interface says \"Activate the machine first by using a multitool on the interface.\", and using a multitool says \"You already activated the machine.\""

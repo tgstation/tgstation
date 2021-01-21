@@ -1156,6 +1156,7 @@
 #include "code\game\objects\items\implants\implant_abductor.dm"
 #include "code\game\objects\items\implants\implant_chem.dm"
 #include "code\game\objects\items\implants\implant_clown.dm"
+#include "code\game\objects\items\implants\implant_deathrattle.dm"
 #include "code\game\objects\items\implants\implant_exile.dm"
 #include "code\game\objects\items\implants\implant_explosive.dm"
 #include "code\game\objects\items\implants\implant_freedom.dm"

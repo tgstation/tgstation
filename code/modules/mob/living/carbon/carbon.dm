@@ -1323,5 +1323,13 @@
 
 	return ..()
 
+
+/mob/living/carbon/get_attack_type()
+	var/datum/species/species = dna?.species
+	if (species)
+		return species.attack_type
+	return ..()
+
+
 /mob/living/carbon/proc/attach_rot(mapload)
 	AddComponent(/datum/component/rot/corpse)
