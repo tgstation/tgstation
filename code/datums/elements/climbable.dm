@@ -10,6 +10,7 @@
 
 /datum/element/climbable/Attach(datum/target, climb_time, climb_stun)
 	. = ..()
+
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 	if(climb_time)
