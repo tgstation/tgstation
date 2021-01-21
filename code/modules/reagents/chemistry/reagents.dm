@@ -145,10 +145,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 
+/*
+Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
+Primarily used in reagents/reaction_agents
+*/
+/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target)
+	return FALSE
+
 ///Called after a reagent is transfered
 /datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
 	return
-
 
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L, amount)

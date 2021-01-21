@@ -69,6 +69,8 @@
 	var/list/datum/equilibrium/reaction_list
 	///cached list of reagents typepaths (not object references), this is a lazylist for optimisation
 	var/list/datum/reagent/previous_reagent_list
+	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled. 
+	var/list/failed_but_capable_reactions
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
 
@@ -395,6 +397,7 @@
 	if(amount < 0)
 		return
 
+	var/cached_amount = amount
 	var/atom/target_atom
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
@@ -431,6 +434,8 @@
 			var/transfer_amount = T.volume * part
 			if(preserve_data)
 				trans_data = copy_data(T)
+			if(T.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+				continue
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.ph, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -455,6 +460,8 @@
 			var/transfer_amount = amount
 			if(amount > T.volume)
 				transfer_amount = T.volume
+			if(T.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+				continue
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, T.purity, T.ph, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
@@ -489,10 +496,12 @@
 		return
 	if(amount < 0)
 		return
-
+	
+	var/cached_amount = amount
 	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
+
 	amount = min(round(amount, CHEMICAL_VOLUME_ROUNDING), R.maximum_volume-R.total_volume)
 	var/trans_data = null
 	for (var/CR in cached_reagents)
@@ -500,6 +509,8 @@
 		if(current_reagent.type == reagent)
 			if(preserve_data)
 				trans_data = current_reagent.data
+			if(current_reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
+				break
 			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.ph, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			break
@@ -737,6 +748,9 @@
 	if(QDELING(src))
 		CRASH("[my_atom] is trying to handle reactions while being flagged for deletion. It presently has [length(reagent_list)] number of reactants in it. If that is over 0 then something terrible happened.")
 
+	if(!reagent_list)//The liver is calling this method a lot, and is often empty of reagents so it's pointless busywork. It should be an easy fix, but I'm nervous about touching things beyond scope. Also since everything is so handle_reactions() trigger happy it might be a good idea having this check anyways.
+		return FALSE
+
 	if(flags & NO_REACT)
 		if(is_reacting)
 			force_stop_reacting() //Force anything that is trying to to stop
@@ -751,6 +765,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
+	LAZYNULL(failed_but_capable_reactions)
 
 	. = 0
 	var/list/possible_reactions = list()
@@ -761,6 +776,8 @@
 				continue
 
 			var/datum/chemical_reaction/reaction = _reaction
+			if(!reaction.required_reagents)//Don't bring in empty ones
+				continue
 			var/list/cached_required_reagents = reaction.required_reagents
 			var/total_required_reagents = cached_required_reagents.len
 			var/total_matching_reagents = 0
@@ -772,6 +789,7 @@
 			var/required_temp = reaction.required_temp
 			var/is_cold_recipe = reaction.is_cold_recipe
 			var/meets_temp_requirement = FALSE
+			var/meets_ph_requirement = FALSE
 			var/granularity = 1
 			if(!(reaction.reaction_flags & REACTION_INSTANT))
 				granularity = 0.01
@@ -808,9 +826,15 @@
 
 			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 				meets_temp_requirement = TRUE
+			
+			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+				meets_ph_requirement = TRUE
 
-			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
-				possible_reactions  += reaction
+			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
+				if(meets_temp_requirement && meets_ph_requirement)
+					possible_reactions  += reaction
+				else
+					LAZYADD(failed_but_capable_reactions, reaction)
 
 	update_previous_reagent_list()
 	//This is the point where we have all the possible reactions from a reagent/catalyst point of view, so we set up the reaction list
@@ -975,12 +999,25 @@
 
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 /datum/reagents/proc/has_changed_state()
+	//Check if reagents are different
 	var/total_matching_reagents = 0
 	for(var/reagent in previous_reagent_list)
 		if(has_reagent(reagent))
 			total_matching_reagents++
 	if(total_matching_reagents != reagent_list.len)
 		return TRUE
+	
+	//Check our last reactions
+	for(var/_reaction in failed_but_capable_reactions)
+		var/datum/chemical_reaction/reaction = _reaction
+		if(reaction.is_cold_recipe)
+			if(reaction.required_temp < chem_temp)
+				return TRUE
+		else
+			if(reaction.required_temp < chem_temp)
+				return TRUE
+		if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
+			return TRUE
 	return FALSE
 
 /datum/reagents/proc/update_previous_reagent_list()

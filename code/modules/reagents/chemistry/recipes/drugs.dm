@@ -14,10 +14,28 @@
 	mix_message = "The mixture dries into a pale blue powder."
 	required_temp = 380
 
+
 /datum/chemical_reaction/methamphetamine
 	results = list(/datum/reagent/drug/methamphetamine = 4)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
 	required_temp = 374
+	optimal_temp = 380//Wow this is tight
+	overheat_temp = 380 
+	optimal_ph_min = 6.5
+	optimal_ph_max = 7.5
+	determin_ph_range = 5
+	temp_exponent_factor = 1
+	ph_exponent_factor = 1.4
+	thermic_constant = 0.8 //exothermic nature is equal to impurty
+	H_ion_release = -0.25 
+	rate_up_lim = 4
+	purity_min = 0.3//I'll be surprised if you get here
+	
+
+//The less pure it is, the faster it heats up.
+/datum/chemical_reaction/methamphetamine/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_chem_factor, added_purity)
+	var/datum/reagent/meth = holder.get_reagent(type)
+	reaction.thermic_mod += (1-meth.purity)*2
 
 /datum/chemical_reaction/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)

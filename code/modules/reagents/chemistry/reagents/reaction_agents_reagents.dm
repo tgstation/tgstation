@@ -1,0 +1,113 @@
+/datum/reagent/reaction_agent
+    name = "reaction agent"
+    description = "Hello! I am a bugged reagent. Please report me for my crimes. Thank you!!"
+
+/datum/reagent/reaction_agent/intercept_reagents_transfer(datum/reagents/target, amount)
+    if(!target)
+        return FALSE
+    if(target.flags & NO_REACT)
+        return FALSE
+    if(target.has_reagent(/datum/reagent/stabilizing_agent))
+        return FALSE
+    if(LAZYLEN(target.reagent_list) == 0)
+        return FALSE
+    if(LAZYLEN(target.reagent_list) == 1)
+        if(target.has_reagent(type)) //Allow dispensing into self
+            return FALSE
+
+/datum/reagent/reaction_agent/acidic_buffer
+    name = "Strong acidic buffer"
+    description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
+    color = "#fbc314"
+    ph = 0
+    ///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will decrease by 0.4
+    var/strength = 20
+
+//Consumes self on addition and shifts ph
+/datum/reagent/reaction_agent/acidic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
+    . = ..()
+    if(. == FALSE) //Surely there's a better way to do this
+        return FALSE
+    if(target.ph <= ph)
+        target.my_atom.audible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</span>")
+        playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+        holder.remove_reagent(type, amount)//Remove from holder because it's not transfered
+        return TRUE
+    var/ph_change = -((volume/target.total_volume)*strength)
+    target.adjust_all_reagents_ph(ph_change, ph, 14)
+    target.my_atom.audible_message("<span class='warning'>The beaker fizzes as the ph changes!</span>")
+    playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+    holder.remove_reagent(type, volume)
+    return TRUE
+    
+/datum/reagent/reaction_agent/basic_buffer
+    name = "Strong basic buffer"
+    description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
+    color = "#3853a4"
+    ph = 14
+    ///The strength of the buffer where (volume/holder.total_volume)*strength. So for 1u added to 50u the ph will increase by 0.4
+    var/strength = 20
+
+/datum/reagent/reaction_agent/basic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
+    . = ..()
+    if(. == FALSE)
+        return FALSE
+    if(target.ph >= ph)
+        target.my_atom.audible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</span>")
+        playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+        holder.remove_reagent(type, amount)//Remove from holder because it's not transfered
+        return TRUE 
+    var/ph_change = (amount/target.total_volume)*strength
+    target.adjust_all_reagents_ph(ph_change, 0, ph)
+    target.my_atom.audible_message("<span class='warning'>The beaker froths as the ph changes!</span>")
+    playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+    holder.remove_reagent(type, amount)
+    return TRUE
+    
+/datum/reagent/reaction_agent/purity_tester
+    name = "Purity tester"
+    description = "This reagent will consume itself and violently react if there is a highly impure reagent in the beaker."
+    ph = 3
+    color = "#3853a4"
+
+/datum/reagent/reaction_agent/purity_tester/intercept_reagents_transfer(datum/reagents/target, amount)
+    . = ..()
+    if(. == FALSE) //Surely there's a better way to do this
+        return FALSE
+    var/is_inverse = FALSE
+    for(var/_reagent in target.reagent_list)
+        var/datum/reagent/reaction_agent/reagent = _reagent
+        if(reagent.purity <= reagent.inverse_chem_val)
+            is_inverse = TRUE
+    if(is_inverse)
+        target.my_atom.audible_message("<span class='warning'>The beaker bubbles violently as the reagent is added!</span>")
+        playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
+    else
+        target.my_atom.audible_message("<span class='warning'>The added reagent doesn't seem to do much.</span>")
+    holder.remove_reagent(type, amount)
+    return TRUE
+
+/datum/reagent/reaction_agent/speed_agent
+    name = "Reaction speed agent"
+    description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
+    ///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 0.5 will be done
+    var/strength = 10
+
+/datum/reagent/reaction_agent/speed_agent/intercept_reagents_transfer(datum/reagents/target, amount)
+    . = ..()
+    if(. == FALSE)
+        return FALSE
+    if(!length(holder.reaction_list))//Safetly check and div/0 avoid
+        return FALSE
+    amount /= holder.reaction_list.len
+    for(var/_reaction in target.reaction_list)
+        var/datum/equilibrium/reaction = _reaction
+        if(!reaction)
+            CRASH("[_reaction] is in the reaction list, but is not an equilibrium")
+        var/power = (amount/reaction.target_vol)*strength
+        power *= creation_purity
+        reaction.react_timestep(power, creation_purity)
+    holder.remove_reagent(type, amount)
+    return TRUE
+
+

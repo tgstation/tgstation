@@ -53,7 +53,7 @@
 	/// Optimal/max rate possible if all conditions are perfect
 	var/rate_up_lim	= 20 
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/purity_min = 0.25 
+	var/purity_min = 0.3 
 	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 	var/reaction_flags = NONE
 
@@ -86,7 +86,7 @@
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * created_volume - volume created when this is mixed. look at 'var/list/results'.
  */
-/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/proc/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
@@ -100,7 +100,7 @@
  * * created_volume - volume created per step
  * * added_purity - how pure the created volume is per step
  */
-/datum/chemical_reaction/proc/reaction_step(datum/reagents/holder, added_volume, added_purity)
+/datum/chemical_reaction/proc/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_chem_factor, added_purity)
 	return
 
 /**
@@ -120,35 +120,50 @@
 /datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, react_vol)
 	//failed_chem handler
 	for(var/id in results)
-		var/datum/reagent/R = holder.has_reagent(id)
-		if(!R)
+		var/datum/reagent/reagent = holder.has_reagent(id)
+		if(!reagent)
 			continue
-		if(R.purity < purity_min)
-			var/cached_volume = R.volume
-			holder.remove_reagent(R.type, cached_volume, FALSE)
-			holder.add_reagent(R.failed_chem, cached_volume, FALSE, added_purity = 1)
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[type] failed reactions")
-			continue
+		//Split like this so it's easier for people to edit this function in a child
+		convert_into_failed(reagent, holder)
+		reaction_clear_check(reagent, holder)
 
-		//REACTION_CLEAR handler
-		if(reaction_flags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
-			if(R.purity == 1) //Failures can delete R
-				continue
+/**
+ * Converts a reagent into the type specified by the failed_chem var of the input reagent
+ *
+ * Arguments:
+ * * reagent - the target reagent to convert
+ */
+/datum/chemical_reaction/proc/convert_into_failed(datum/reagent/reagent, datum/reagents/holder)
+	if(reagent.purity < purity_min)
+		var/cached_volume = reagent.volume
+		holder.remove_reagent(reagent.type, cached_volume, FALSE)
+		holder.add_reagent(reagent.failed_chem, cached_volume, FALSE, added_purity = 1)
+		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[type] failed reactions")
 
-			var/cached_volume = R.volume
-			if((reaction_flags & REACTION_CLEAR_INVERSE) && R.inverse_chem)
-				if(R.inverse_chem_val > R.purity)
-					holder.remove_reagent(R.type, cached_volume, FALSE)
-					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
+/**
+ * REACTION_CLEAR handler
+ * If the reaction has the REACTION_CLEAR flag, then it will split using purity methods in the beaker instead
+ *
+ * Arguments:
+ * * reagent - the target reagent to convert
+ */
+/datum/chemical_reaction/proc/reaction_clear_check(datum/reagent/reagent, datum/reagents/holder)
+	if(reaction_flags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
+		if(reagent.purity == 1) //Failures can delete R
+			return
 
-			if((reaction_flags & REACTION_CLEAR_IMPURE) && R.impure_chem)
-				var/impureVol = cached_volume * (1 - R.purity)
-				holder.remove_reagent(R.type, (impureVol), FALSE)
-				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
-				R.creation_purity = R.purity
-				R.purity = 1
+		var/cached_volume = reagent.volume
+		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
+			if(reagent.inverse_chem_val > reagent.purity)
+				holder.remove_reagent(reagent.type, cached_volume, FALSE)
+				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = 1)
 
-
+		if((reaction_flags & REACTION_CLEAR_IMPURE) && reagent.impure_chem)
+			var/impureVol = cached_volume * (1 - reagent.purity)
+			holder.remove_reagent(reagent.type, (impureVol), FALSE)
+			holder.add_reagent(reagent.impure_chem, impureVol, FALSE, added_purity = 1)
+			reagent.creation_purity = reagent.purity
+			reagent.purity = 1
 
 /**
  * Occurs when a reation is overheated (i.e. past it's overheatTemp)
@@ -163,26 +178,29 @@
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	for(var/id in results)
-		var/datum/reagent/R = holder.get_reagent(id)
-		if(!R)
+		var/datum/reagent/reagent = holder.get_reagent(id)
+		if(!reagent)
 			return
-		R.volume =  round((R.volume*0.98), 0.01) //Slowly lower yield per tick
+		reagent.volume =  round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
  * Will be called every tick in the reaction that it is too impure
  * If you want this to be a once only proc (i.e. the reaction is stopped after) set reaction.toDelete = TRUE
  * The above is useful if you're writing an explosion
- * By default the parent proc will reduce the purity of all reagents in the beaker slightly. If you don't want that don't add ..()
+ * By default the parent proc will reduce the purity of all reagents involved in the reaction in the beaker slightly. If you don't want that don't add ..()
  *
  * Arguments:
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
  */
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
-	for(var/r in holder.reagent_list)
-		var/datum/reagent/R
-		R.purity = clamp((R.purity-0.01), 0, 1) //slowly reduce purity of other reagents
+	var/affected_list = results + required_reagents
+	for(var/_reagent in affected_list)
+		var/datum/reagent/reagent = holder.get_reagent(_reagent)
+		if(!reagent)
+			continue
+		reagent.purity = clamp((reagent.purity-0.01), 0, 1) //slowly reduce purity of reagents
 
 /**
  * Magical mob spawning when chemicals react
@@ -259,5 +277,102 @@
 			else
 				if(step_towards(X, T) && moving_power > 1)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
+
+//////////////////Generic explosions/failures////////////////////
+
+//Spews out the inverse of the chems in the beaker of the products/reactants only
+/datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE)
+	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
+	var/datum/effect_system/smoke_spread/chem/smoke = new()
+	var/sum_volume = 0
+	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
+	for(var/datum/reagent/reagent in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+		if(!(reagent.type in required_reagents) || !(reagent.type in results))
+			continue
+		if(reagent.inverse_chem)
+			invert_reagents.add_reagent(reagent.inverse_chem, reagent.volume, no_react = TRUE)
+			holder.remove_reagent(reagent.type, reagent.volume)
+			continue
+		invert_reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
+		sum_volume += reagent.volume
+		holder.remove_reagent(reagent.type, reagent.volume)
+	if(invert_reagents.reagent_list)
+		smoke.set_up(invert_reagents, (sum_volume/10), holder.my_atom)
+		smoke.start()
+	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
+	if(clear_reactants)
+		clear_reactants(holder)
+	if(clear_products)	
+		clear_products(holder)
+
+//Spews out the contents of the beaker in a smokecloud
+/datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE)
+	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
+	var/datum/effect_system/smoke_spread/chem/smoke = new()
+	reagents.my_atom = holder.my_atom //fingerprint
+	var/sum_volume = 0
+	for (var/datum/reagent/reagent in holder.reagent_list) 
+		if((reagent.type in required_reagents) || (reagent.type in results))
+			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
+			holder.remove_reagent(reagent.type, reagent.volume)
+	if(reagents.reagent_list)
+		smoke.set_up(reagents, (sum_volume/10), holder.my_atom)
+		smoke.start()
+	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
+	if(clear_reactants)
+		clear_reactants(holder)
+	if(clear_products)	
+		clear_products(holder)
+
+//Pushes everything out, and damages mobs with 10 brute damage.
+/datum/chemical_reaction/proc/explode_shockwave(datum/reagents/holder, datum/equilibrium/equilibrium)
+	var/turf/T = get_turf(holder.my_atom)
+	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
+	playsound(T, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
+	//Modified goonvortex
+	for(var/atom/movable/X in orange(3, T))
+		if(isliving(X))
+			var/mob/living/live = X
+			live.adjustBruteLoss(10)//Since this can be called multiple times
+		if(X.anchored)
+			continue
+		if(iseffect(X) || iscameramob(X) || isdead(X))
+			continue
+		var/distance = get_dist(X, T)
+		var/moving_power = max(4 - distance, 1)//Make sure we're thrown out of range of the next one
+		var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
+		X.throw_at(throw_target, moving_power, 1)
+
+
+//Creates a ring of fire in a set range around the beaker location
+/datum/chemical_reaction/proc/explode_fire(datum/reagents/holder, datum/equilibrium/equilibrium, range)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(range,T))
+		new /obj/effect/hotspot(turf)
+
+//Clears the beaker of the reagents only
+/datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = null)
+	if(!holder)
+		return FALSE
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(!(reagent.type in required_reagents))
+			continue
+		if(!volume)
+			holder.remove_reagent(reagent.type, reagent.volume)
+		else
+			holder.remove_reagent(reagent.type, volume)
+
+//Clears the beaker of the product only
+/datum/chemical_reaction/proc/clear_products(datum/reagents/holder, volume = null)
+	if(!holder)
+		return FALSE
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(!(reagent.type in results))
+			continue
+		if(!volume)
+			holder.remove_reagent(reagent.type, reagent.volume)
+		else
+			holder.remove_reagent(reagent.type, volume)
+
 
 

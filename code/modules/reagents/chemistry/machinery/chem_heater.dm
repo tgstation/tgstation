@@ -1,3 +1,5 @@
+#define ENABLE_FLASHING 0.0001
+
 /obj/machinery/chem_heater
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
@@ -12,12 +14,13 @@
 	var/target_temperature = 300
 	var/heater_coefficient = 0.05
 	var/on = FALSE
+	var/dispense_volume = 1
 
 /obj/machinery/chem_heater/Initialize()
 	. = ..()
-	create_reagents(60, NO_REACT)//Lets save some calculations here
-	reagents.add_reagent(/datum/reagent/basic_buffer, 10)
-	reagents.add_reagent(/datum/reagent/acidic_buffer, 10)
+	create_reagents(100, NO_REACT)//Lets save some calculations here
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 10)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 10)
 	
 /obj/machinery/chem_heater/Destroy()
 	QDEL_NULL(beaker)
@@ -122,6 +125,8 @@
 	data["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : null
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	data["currentpH"] = beaker ? round(beaker.reagents.ph, 0.01)  : null
+	var/upgrade_level = heater_coefficient*10
+	data["upgradeLevel"] = upgrade_level
 
 	var/list/beaker_contents = list()
 	for(var/r in beaker?.reagents.reagent_list)
@@ -131,18 +136,33 @@
 	data["beakerContents"] = beaker_contents
 
 	var/list/active_reactions = list()
+	var/flashing = 14 //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
 	for(var/_reaction in beaker?.reagents.reaction_list)
 		var/datum/equilibrium/equilibrium = _reaction
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
 		active_reactions.len++
 		var/_reagent = equilibrium.reaction.results[1]
-		var/datum/reagent/reagent = equilibrium.holder.get_reagent(_reagent) //Reactions are named after their primary products
-		active_reactions[length(active_reactions)] = list("name" = reagent.name, "purity" = round(reagent.purity, 0.01), "overheat" = equilibrium.reaction.overheat_temp, "barColor" = get_purity_color(equilibrium), "reactedVol" = equilibrium.reacted_vol, "targetVol" = round(equilibrium.target_vol, 1))//Use the first result reagent to name the reaction detected
+		var/datum/reagent/reagent = beaker?.reagents.get_reagent(_reagent) //Reactions are named after their primary products
+		//if(!reagent)
+		//	continue
+		var/danger = FALSE
+		var/purity_alert = 2 //same as flashing
+		if(reagent.purity < equilibrium.reaction.purity_min)
+			purity_alert = ENABLE_FLASHING//Because 0 is seen as null
+			danger = TRUE
+		if((!flashing == ENABLE_FLASHING) && (upgrade_level > 1))//So that the pH meter flashes for ANY reactions out of optimal
+			if(equilibrium.reaction.optimal_ph_min > beaker?.reagents.ph || equilibrium.reaction.optimal_ph_max < beaker?.reagents.ph)
+				flashing = ENABLE_FLASHING			
+		if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)
+			danger = TRUE
+		active_reactions[length(active_reactions)] = list("name" = reagent.name, "danger" = danger, "purityAlert" = purity_alert, "quality" = equilibrium.reaction_quality, "overheat" = equilibrium.reaction.overheat_temp, "inverse" = reagent.inverse_chem_val, "minPure" = equilibrium.reaction.purity_min, "reactedVol" = equilibrium.reacted_vol, "targetVol" = round(equilibrium.target_vol, 1))//Use the first result reagent to name the reaction detected
 	data["activeReactions"] = active_reactions
+	data["isFlashing"] = flashing
 
-	data["acidicBufferVol"] = reagents.get_reagent_amount(/datum/reagent/acidic_buffer)
-	data["basicBufferVol"] = reagents.get_reagent_amount(/datum/reagent/basic_buffer)
+	data["acidicBufferVol"] = reagents.get_reagent_amount(/datum/reagent/reaction_agent/acidic_buffer)
+	data["basicBufferVol"] = reagents.get_reagent_amount(/datum/reagent/reaction_agent/basic_buffer)
+	data["dispenseVolume"] = dispense_volume
 
 	return data
 
@@ -179,6 +199,15 @@
 				. = TRUE
 			if(.)
 				move_buffer("basic", target)
+		if("disp_vol")
+			var/target = params["target"]
+			if(text2num(target) != null)
+				target = text2num(target) //Because the input is flipped
+				. = TRUE
+			if(.)
+				dispense_volume = target
+
+
 
 ///Moves a type of buffer from the heater to the beaker, or vice versa
 /obj/machinery/chem_heater/proc/move_buffer(buffer_type, volume)
@@ -187,29 +216,27 @@
 		return
 	if(buffer_type == "acid")
 		if(volume < 0)
-			var/datum/reagent/acid_reagent = beaker.reagents.get_reagent(/datum/reagent/acidic_buffer)
-			if((acid_reagent.volume + volume) > 30)
-				volume = 30 - acid_reagent.volume 
+			var/datum/reagent/acid_reagent = beaker.reagents.get_reagent(/datum/reagent/reaction_agent/acidic_buffer)
 			if(!acid_reagent)
 				say("Unable to find acidic buffer in beaker to draw from! Please insert a beaker containing acidic buffer.")
 				return
-			beaker.reagents.trans_id_to(src, acid_reagent.type, -volume)//negative because we're going backwards
+			volume = 50 - acid_reagent.volume 
+			beaker.reagents.trans_id_to(src, acid_reagent.type, volume)//negative because we're going backwards
 			return
 		//We must be positive here
-		reagents.trans_id_to(beaker, /datum/reagent/acidic_buffer, volume)
+		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/acidic_buffer, dispense_volume)
 		return
 
 	if(buffer_type == "basic")
 		if(volume < 0)
-			var/datum/reagent/basic_reagent = beaker.reagents.get_reagent(/datum/reagent/basic_buffer)
-			if((basic_reagent.volume + volume) > 30)
-				volume = 30 - basic_reagent.volume 
+			var/datum/reagent/basic_reagent = beaker.reagents.get_reagent(/datum/reagent/reaction_agent/basic_buffer)
 			if(!basic_reagent)
 				say("Unable to find basic buffer in beaker to draw from! Please insert a beaker containing basic buffer.")
 				return
-			beaker.reagents.trans_id_to(src, basic_reagent.type, -volume)//negative because we're going backwards
+			volume = 50 - basic_reagent.volume 
+			beaker.reagents.trans_id_to(src, basic_reagent.type, volume)//negative because we're going backwards
 			return
-		reagents.trans_id_to(beaker, /datum/reagent/basic_buffer, volume)
+		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/basic_buffer, dispense_volume)
 		return
 
 

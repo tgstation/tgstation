@@ -1,9 +1,9 @@
 
 /datum/chemical_reaction/medicine
-	optimal_temp = 400
-	rate_up_lim = 30
-	temp_exponent_factor = 3
-	ph_exponent_factor = 2
+	required_reagents = null
+	temp_exponent_factor = 1.5
+	ph_exponent_factor = 0.8
+	purity_min = 0.25
 
 /datum/chemical_reaction/medicine/leporazine
 	results = list(/datum/reagent/medicine/leporazine = 2)
@@ -165,7 +165,7 @@
 /datum/chemical_reaction/medicine/medsuture
 	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
 
-/datum/chemical_reaction/medicine/medsuture/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/medicine/medsuture/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
@@ -173,7 +173,7 @@
 /datum/chemical_reaction/medicine/medmesh
 	required_reagents = list(/datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
 
-/datum/chemical_reaction/medicine/medmesh/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/medicine/medmesh/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/advanced(location)
@@ -181,7 +181,7 @@
 /datum/chemical_reaction/medicine/poultice
 	required_reagents = list(/datum/reagent/toxin/bungotoxin = 20, /datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20)
 
-/datum/chemical_reaction/medicine/poultice/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/medicine/poultice/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/medical/poultice(location)

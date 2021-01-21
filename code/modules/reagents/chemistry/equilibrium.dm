@@ -25,9 +25,17 @@
 	var/step_target_vol = INFINITY
 	///How much of the reaction has been made so far. Mostly used for subprocs, but it keeps track across the whole reaction and is added to every step.
 	var/reacted_vol = 0 
+	///What our last delta_ph was
+	var/reaction_quality = 1
 	///If we're done with this reaction so that holder can clear it.
-	var/to_delete = FALSE 
-
+	var/to_delete = FALSE
+	///Modifiers from catalysts, do not use negative numbers.
+	///Speed mod
+	var/speed_mod = 1
+	///pH mod
+	var/h_ion_mod = 1
+	///Temp mod
+	var/thermic_mod = 1
 /* 
 * Creates and sets up a new equlibrium object
 * 
@@ -119,6 +127,9 @@
 			var/datum/reagent/catalyst = c
 			if(catalyst == reagent.type)
 				total_matching_catalysts++
+		if(istype(reagent, /datum/reagent/catalyst_agent))
+			var/datum/reagent/catalyst_agent/catalyst_agent = reagent
+			catalyst_agent.consider_catalyst(src)
 
 	if(!(total_matching_catalysts == reaction.required_catalysts.len))
 		return FALSE
@@ -159,12 +170,14 @@
 
 	product_ratio = 0
 	step_target_vol = 0
+	var/true_reacted_vol //Because volumes can be lost mid reactions
 	for(var/product in reaction.results)
 		step_target_vol += (reaction.results[product]*multiplier)
 		product_ratio += reaction.results[product]
+		true_reacted_vol += holder.get_reagent_amount(product)
 	if(step_target_vol == 0 || multiplier == INFINITY)
 		return FALSE
-	target_vol = step_target_vol + reacted_vol
+	target_vol = step_target_vol + true_reacted_vol
 	return TRUE
 /*
 * Main reaction processor - Increments the reaction by a timestep
@@ -174,16 +187,17 @@
 * Then adds/removes reagents
 * Then alters the holder pH and temperature, and calls reaction_step
 * Arguments:
-* * delta_time - the time displacement between the last call and the current
+* * delta_time - the time displacement between the last call and the current, 1 is a standard step
+* * purity_modifier - how much to modify the step's purity by (0 - 1)
 */
-/datum/equilibrium/proc/react_timestep(delta_time)
+/datum/equilibrium/proc/react_timestep(delta_time, purity_modifier = 1)
 	if(!calculate_yield())
 		to_delete = TRUE
 		return
 	if(!check_reagent_properties())
 		to_delete = TRUE
 		return
-	
+
 	var/delta_t = 0 //how far off optimal temp we care
 	var/delta_ph = 0 //How far off the pH we are
 	var/cached_ph = holder.ph
@@ -231,11 +245,16 @@
 			delta_t = 0
 			to_delete = TRUE
 			return
+	//Catalyst modifier
+	delta_t *= thermic_mod
 
 	purity = delta_ph//set purity equal to pH offset
 
 	//Then adjust purity of result with beaker reagent purity. 
 	purity *= reactant_purity(reaction)
+
+	//Then adjust it from the input modifier
+	purity *= purity_modifier
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
 	var/delta_chem_factor = (reaction.rate_up_lim*delta_t)*delta_time//add/remove factor
@@ -245,17 +264,22 @@
 		delta_chem_factor = step_target_vol
 	else if (delta_chem_factor < CHEMICAL_VOLUME_MINIMUM)
 		delta_chem_factor = CHEMICAL_VOLUME_MINIMUM
+	//Normalise to multiproducts
+	delta_chem_factor /= product_ratio
 	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
+
+	//Call any special reaction steps BEFORE addition
+	reaction.reaction_step(src, holder, delta_chem_factor, purity)
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
-		holder.remove_reagent(reagent, ((delta_chem_factor/product_ratio) * reaction.required_reagents[reagent]), safety = TRUE)
+		holder.remove_reagent(reagent, (delta_chem_factor * reaction.required_reagents[reagent]), safety = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_ph(reagent, ((delta_chem_factor/product_ratio) * reaction.required_reagents[reagent])*reaction.H_ion_release)
+		holder.adjust_specific_reagent_ph(reagent, (delta_chem_factor * reaction.required_reagents[reagent])*(reaction.H_ion_release*h_ion_mod))
 
 	for(var/product in reaction.results)
 		//create the products
-		var/step_add = (delta_chem_factor/product_ratio) * reaction.results[product]
+		var/step_add = delta_chem_factor * reaction.results[product]
 		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 		//Apply pH changes
 		holder.adjust_specific_reagent_ph(product, step_add*reaction.H_ion_release)
@@ -267,16 +291,15 @@
 	#endif
 		
 	//Apply thermal output of reaction to beaker
-	holder.chem_temp = round(cached_temp + (reaction.thermic_constant* total_step_added))
-	//Call any special reaction steps
-	reaction.reaction_step(src, total_step_added, purity)//proc that calls when step is done
+	holder.chem_temp = round(cached_temp + ((reaction.thermic_constant* total_step_added)*thermic_mod))
 
 	//Give a chance of sounds
-	if (prob(5))
+	if(prob(5))
 		holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [reaction.mix_message]</span>")
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 
+	reaction_quality = purity
 	//Make sure things are limited
 	holder.update_total()//do NOT recalculate reactions
 
