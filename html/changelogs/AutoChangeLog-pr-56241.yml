@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - code_imp: "Replaced some magic numbers with defines in robot code"
