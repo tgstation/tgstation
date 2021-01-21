@@ -110,7 +110,7 @@ const Cyborgs = (props, context) => {
                 : "Not Found"}
             </Box>
           </LabeledList.Item>
-          <LabeledList.Item label="Module">
+          <LabeledList.Item label="Model">
             {cyborg.module}
           </LabeledList.Item>
           <LabeledList.Item label="Master AI">
