@@ -291,7 +291,8 @@
 	#endif
 		
 	//Apply thermal output of reaction to beaker
-	holder.chem_temp = round(cached_temp + ((reaction.thermic_constant* total_step_added)*thermic_mod))
+	var/heat_energy = round(cached_temp + ((reaction.thermic_constant* total_step_added)*thermic_mod))
+	holder.adjust_thermal_energy(heat_energy, 0, 10000)
 
 	//Give a chance of sounds
 	if(prob(5))

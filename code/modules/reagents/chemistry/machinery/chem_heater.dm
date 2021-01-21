@@ -1,4 +1,4 @@
-#define ENABLE_FLASHING 0.0001
+#define ENABLE_FLASHING -1
 
 /obj/machinery/chem_heater
 	name = "reaction chamber" //Maybe this name is more accurate?
@@ -151,7 +151,7 @@
 		if(reagent.purity < equilibrium.reaction.purity_min)
 			purity_alert = ENABLE_FLASHING//Because 0 is seen as null
 			danger = TRUE
-		if((!flashing == ENABLE_FLASHING) && (upgrade_level > 1))//So that the pH meter flashes for ANY reactions out of optimal
+		if(!(flashing == ENABLE_FLASHING) && (upgrade_level > 1))//So that the pH meter flashes for ANY reactions out of optimal
 			if(equilibrium.reaction.optimal_ph_min > beaker?.reagents.ph || equilibrium.reaction.optimal_ph_max < beaker?.reagents.ph)
 				flashing = ENABLE_FLASHING			
 		if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)

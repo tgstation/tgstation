@@ -305,7 +305,7 @@
 	if(clear_products)	
 		clear_products(holder)
 
-//Spews out the contents of the beaker in a smokecloud
+//Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
 /datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
@@ -326,29 +326,27 @@
 
 //Pushes everything out, and damages mobs with 10 brute damage.
 /datum/chemical_reaction/proc/explode_shockwave(datum/reagents/holder, datum/equilibrium/equilibrium)
-	var/turf/T = get_turf(holder.my_atom)
+	var/turf/this_turf = get_turf(holder.my_atom)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, sending a shockwave rippling through the air!")
-	playsound(T, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
+	playsound(this_turf, 'sound/chemistry/shockwave_explosion.ogg', 80, TRUE)
 	//Modified goonvortex
-	for(var/atom/movable/X in orange(3, T))
-		if(isliving(X))
-			var/mob/living/live = X
+	for(var/atom/movable/movey in orange(3, this_turf))
+		if(isliving(movey))
+			var/mob/living/live = movey
 			live.adjustBruteLoss(10)//Since this can be called multiple times
-		if(X.anchored)
+		if(movey.anchored)
 			continue
-		if(iseffect(X) || iscameramob(X) || isdead(X))
+		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
 			continue
-		var/distance = get_dist(X, T)
+		var/distance = get_dist(movey, this_turf)
 		var/moving_power = max(4 - distance, 1)//Make sure we're thrown out of range of the next one
-		var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
-		X.throw_at(throw_target, moving_power, 1)
+		var/atom/throw_target = get_edge_target_turf(movey, get_dir(movey, get_step_away(movey, this_turf)))
+		movey.throw_at(throw_target, moving_power, 1)
 
 
 //Creates a ring of fire in a set range around the beaker location
 /datum/chemical_reaction/proc/explode_fire(datum/reagents/holder, datum/equilibrium/equilibrium, range)
-	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(range,T))
-		new /obj/effect/hotspot(turf)
+	explosion(holder.my_atom, 0, 0, 0, 0, flame_range = 3)
 
 //Clears the beaker of the reagents only
 /datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = null)
