@@ -17,6 +17,8 @@
 	return ..()
 
 /datum/unit_test/on_mob_end_metabolize/Run()
+	SSmobs.pause()
+
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
 	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
@@ -35,7 +37,13 @@
 	TEST_ASSERT(!user.reagents.has_reagent(meth), "User still has meth in their system when it should've finished metabolizing")
 	TEST_ASSERT(!user.has_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine), "User still has movespeed modifier despite not containing any more meth")
 
+/datum/unit_test/on_mob_end_metabolize/Destroy()
+	SSmobs.ignite()
+	return ..()
+
 /datum/unit_test/addictions/Run()
+	SSmobs.pause()
+
 	var/mob/living/carbon/human/pill_user = allocate(/mob/living/carbon/human)
 	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human)
 	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human)
@@ -94,3 +102,7 @@
 	pill_syringe_user.Life()
 
 	TEST_ASSERT(pill_syringe_user.reagents.addiction_list && is_type_in_list(meth, pill_syringe_user.reagents.addiction_list), "User is not addicted to meth after injecting and ingesting half the addiction threshold each")
+
+/datum/unit_test/addictions/Destroy()
+	SSmobs.ignite()
+	return ..()
