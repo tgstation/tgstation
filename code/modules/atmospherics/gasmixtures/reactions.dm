@@ -357,6 +357,8 @@ nobiliumsuppression = INFINITY
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_OXY_FACTOR
 
+		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
+
 	else
 		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES]
 
@@ -366,8 +368,9 @@ nobiliumsuppression = INFINITY
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_H2_FACTOR
 
-	if(burned_fuel)
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
+
+	if(burned_fuel)
 		cached_results["fire"] += burned_fuel
 
 	if(energy_released > 0)
