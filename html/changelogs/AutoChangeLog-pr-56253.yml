@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "The surgical toolset implant's circular saw and surgical drill now both have a force of 15 (as is normal for surgical tools of their respective types), instead of 10."

@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Nuke ops can now purchase a box of \"deathrattle implants\". When an
-implanted person dies, all the other users of the implant will get a
-message, saying who died and where they died."

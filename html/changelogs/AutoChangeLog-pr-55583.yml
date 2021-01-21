@@ -1,7 +1,0 @@
-author: "That REALLY Good Soda Flavor"
-delete-after: True
-changes: 
-  - rscadd: "Monkeys can use all four intents now."
-  - rscadd: "Monkeys can use martial arts now."
-  - rscadd: "Most living mobs can be the target of martial arts now."
-  - code_imp: "Moved martial arts to mob/living instead of humans."
