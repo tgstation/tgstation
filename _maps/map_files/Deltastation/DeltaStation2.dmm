@@ -687,12 +687,6 @@
 	name = "Primary AI Core Access";
 	req_access_txt = "16"
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/turret_protected/ai";
-	dir = 1;
-	name = "AI Chamber APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -704,6 +698,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "abz" = (
@@ -1475,15 +1470,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/fore)
 "adh" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/maintenance/solars/starboard/fore";
-	name = "Starboard Bow Solar APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "adi" = (
@@ -2095,13 +2086,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/construction/mining/aux_base";
-	dir = 8;
-	name = "Auxiliary Construction APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -2110,6 +2094,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "agn" = (
@@ -3225,12 +3210,6 @@
 	},
 /area/hallway/secondary/entry)
 "ajB" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/entry";
-	dir = 1;
-	name = "Arrivals Hallway APC";
-	pixel_y = 23
-	},
 /obj/machinery/camera{
 	c_tag = "Arrivals - Center Port";
 	name = "arrivals camera"
@@ -3245,6 +3224,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -4410,12 +4390,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "amj" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/customs";
-	dir = 8;
-	name = "Customs Desk APC";
-	pixel_x = -25
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -4426,6 +4400,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "amk" = (
@@ -4553,12 +4528,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint)
 "amx" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint";
-	dir = 4;
-	name = "Security Checkpoint APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -4567,6 +4536,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/security/checkpoint)
 "amy" = (
@@ -5016,15 +4986,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "anA" = (
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/starboard/fore";
-	dir = 1;
-	name = "Starboard Bow Maintenance APC";
-	pixel_y = 23
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/bar,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "anB" = (
@@ -6204,13 +6169,9 @@
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "aqg" = (
-/obj/machinery/power/apc{
-	areastring = "/area/vacant_room/office";
-	name = "Auxiliary Office APC";
-	pixel_y = -23
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "aqh" = (
@@ -6625,12 +6586,8 @@
 /area/crew_quarters/electronic_marketing_den)
 "aqT" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/electronic_marketing_den";
-	name = "Electronics Marketing APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/wood,
 /area/crew_quarters/electronic_marketing_den)
 "aqU" = (
@@ -8351,11 +8308,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "auO" = (
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/disposal";
-	name = "Disposal APC";
-	pixel_y = -23
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -8368,6 +8320,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "auQ" = (
@@ -8577,12 +8530,6 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "avB" = (
-/obj/machinery/power/apc{
-	areastring = "/area/janitor";
-	dir = 1;
-	name = "Custodial Closet APC";
-	pixel_y = 23
-	},
 /obj/vehicle/ridden/janicart,
 /obj/item/storage/bag/trash,
 /obj/item/key/janitor,
@@ -8598,6 +8545,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/janitor)
 "avC" = (
@@ -9782,12 +9730,8 @@
 /area/crew_quarters/toilet/auxiliary)
 "ayf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/toilet/auxiliary";
-	name = "Auxiliary Restrooms APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "ayg" = (
@@ -10157,16 +10101,12 @@
 /area/maintenance/port/fore)
 "ayU" = (
 /obj/machinery/light/small,
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/port/fore";
-	name = "Port Bow Maintenance APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "ayV" = (
@@ -11935,17 +11875,12 @@
 /area/quartermaster/warehouse)
 "aCX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/warehouse";
-	dir = 4;
-	name = "Cargo Warehouse APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aCY" = (
@@ -12579,12 +12514,6 @@
 /area/crew_quarters/bar)
 "aEP" = (
 /obj/structure/closet/secure_closet/bar,
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/bar";
-	dir = 1;
-	name = "Bar APC";
-	pixel_y = 23
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -12599,6 +12528,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aEQ" = (
@@ -12757,17 +12687,11 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aFb" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/fore";
-	dir = 8;
-	name = "Port Primary Hallway APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aFd" = (
@@ -12900,13 +12824,9 @@
 	},
 /obj/item/reagent_containers/syringe,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/hydroponics/garden/abandoned";
-	name = "Abandoned Garden APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/hydroponics/garden/abandoned)
 "aFM" = (
@@ -14409,17 +14329,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/disposal/incinerator";
-	dir = 1;
-	name = "Turbine Generator APC";
-	pixel_y = 23
-	},
 /obj/effect/decal/cleanable/oil,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aIy" = (
@@ -16122,12 +16037,6 @@
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/supply";
-	dir = 8;
-	name = "Security Post - Cargo APC";
-	pixel_x = -25
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -16136,6 +16045,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aLU" = (
@@ -16564,13 +16474,8 @@
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den/secondary)
 "aMU" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/abandoned_gambling_den/secondary";
-	dir = 1;
-	name = "Abandoned Gambling Den APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -16665,17 +16570,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/bar/atrium";
-	dir = 1;
-	name = "Atrium APC";
-	pixel_y = 23
-	},
 /obj/machinery/camera{
 	c_tag = "Theatre Stage";
 	name = "service camera"
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/bar/atrium)
 "aNd" = (
@@ -17367,12 +17267,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/theatre";
-	dir = 1;
-	name = "Theatre Backstage APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -17384,6 +17278,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/crew_quarters/theatre)
 "aOy" = (
@@ -17567,13 +17462,6 @@
 	},
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/sorting";
-	dir = 8;
-	name = "Delivery Office APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -17581,6 +17469,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
 "aON" = (
@@ -17895,15 +17784,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aPz" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/maintenance/solars/port/fore";
-	name = "Port Bow Solar APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "aPA" = (
@@ -19367,13 +19252,6 @@
 /turf/open/floor/glass,
 /area/maintenance/space_hut/observatory)
 "aSl" = (
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/storage";
-	dir = 8;
-	name = "Cargo Bay APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -19389,6 +19267,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aSm" = (
@@ -19516,12 +19395,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aSv" = (
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/qm";
-	dir = 1;
-	name = "Quartermaster's Office APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -19530,6 +19403,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aSw" = (
@@ -20403,12 +20277,6 @@
 "aTV" = (
 /obj/structure/table,
 /obj/item/paper_bin,
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/office";
-	dir = 1;
-	name = "Cargo Office APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -20416,6 +20284,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aTW" = (
@@ -21969,11 +21838,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "aWp" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/execution/education";
-	name = "Education Chamber APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -21985,6 +21849,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "aWq" = (
@@ -22300,13 +22165,6 @@
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "aWT" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/service";
-	dir = 8;
-	name = "Service Hall APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -22315,6 +22173,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "aWU" = (
@@ -24505,12 +24364,6 @@
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "bbk" = (
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/security/prison";
-	name = "Prison Wing APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -24521,6 +24374,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "bbl" = (
@@ -26516,13 +26370,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bfb" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/kitchen";
-	name = "Kitchen APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bfc" = (
@@ -27770,16 +27620,11 @@
 	},
 /area/engine/atmos)
 "bhj" = (
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/engine/atmos";
-	dir = 1;
-	name = "Atmospherics APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -30405,12 +30250,6 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/light,
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/miningoffice";
-	dir = 4;
-	name = "Mining Dock APC";
-	pixel_x = 24
-	},
 /obj/machinery/camera{
 	c_tag = "Cargo - Mining Office";
 	dir = 8;
@@ -30424,6 +30263,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "blT" = (
@@ -31264,12 +31104,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bnL" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/main";
-	dir = 8;
-	name = "Security Office APC";
-	pixel_x = -25
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
@@ -31278,6 +31112,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/main)
 "bnM" = (
@@ -31939,12 +31774,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "boV" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/central";
-	dir = 1;
-	name = "Central Primary Hallway APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -31955,6 +31784,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "boW" = (
@@ -34996,16 +34826,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bui" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/port";
-	dir = 4;
-	name = "Port Primary Hallway APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "buj" = (
@@ -35279,11 +35104,6 @@
 /area/security/main)
 "buT" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/hos";
-	name = "Head of Security's Office APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -35295,6 +35115,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
 "buU" = (
@@ -35857,16 +35678,12 @@
 /turf/open/floor/plasteel,
 /area/security/execution/transfer)
 "bwa" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/execution/transfer";
-	name = "Security Transferring APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/security/execution/transfer)
 "bwb" = (
@@ -37186,12 +37003,6 @@
 /turf/open/floor/circuit/green,
 /area/security/nuke_storage)
 "byz" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/nuke_storage";
-	dir = 4;
-	name = "Vault APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -37203,6 +37014,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/dark,
 /area/security/nuke_storage)
 "byD" = (
@@ -39780,12 +39592,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/engine/break_room";
-	dir = 1;
-	name = "Engineering Foyer APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -39793,6 +39599,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bCV" = (
@@ -41106,15 +40913,9 @@
 	pixel_y = 3
 	},
 /obj/item/stack/cable_coil,
-/obj/machinery/power/apc{
-	areastring = "/area/storage/primary";
-	dir = 8;
-	name = "Primary Tool Storage APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bEX" = (
@@ -42442,16 +42243,12 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bGY" = (
-/obj/machinery/power/apc{
-	areastring = "/area/bridge";
-	name = "Bridge APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bGZ" = (
@@ -43193,13 +42990,6 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
 /obj/item/electronics/airlock,
-/obj/machinery/power/apc{
-	areastring = "/area/storage/tech";
-	dir = 8;
-	name = "Technology Storage APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -43211,6 +43001,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bIq" = (
@@ -43727,12 +43518,6 @@
 /area/security/detectives_office)
 "bJj" = (
 /obj/structure/table/wood,
-/obj/machinery/power/apc{
-	areastring = "/area/security/detectives_office";
-	dir = 1;
-	name = "Detective's Office APC";
-	pixel_y = 23
-	},
 /obj/item/taperecorder,
 /obj/item/restraints/handcuffs,
 /obj/structure/cable,
@@ -43746,6 +43531,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "bJk" = (
@@ -44528,13 +44314,8 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room/council)
 "bKC" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge/meeting_room/council";
-	dir = 1;
-	name = "Council Chambers APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/wood,
 /area/bridge/meeting_room/council)
 "bKD" = (
@@ -45127,12 +44908,6 @@
 /turf/closed/wall,
 /area/engine/transit_tube)
 "bLI" = (
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/engine/transit_tube";
-	dir = 1;
-	name = "Transit Tube Access APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -45147,6 +44922,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/dark,
 /area/engine/transit_tube)
 "bLJ" = (
@@ -45690,14 +45466,9 @@
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bMz" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/tcommsat/computer";
-	dir = 1;
-	name = "Telecomms Monitoring APC";
-	pixel_y = 23
-	},
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bMA" = (
@@ -45853,16 +45624,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/storage/tools";
-	dir = 1;
-	name = "Auxiliary Tool Storage APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "bMT" = (
@@ -48087,12 +47853,8 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bQV" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/crew_quarters/heads/captain";
-	name = "Captain's Office APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bQW" = (
@@ -49273,12 +49035,6 @@
 /obj/machinery/computer/prisoner/management{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/security/warden";
-	dir = 4;
-	name = "Warden's Office APC";
-	pixel_x = 24
-	},
 /obj/machinery/camera{
 	c_tag = "Security - Warden's Office";
 	dir = 8
@@ -49291,6 +49047,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/security/warden)
 "bTi" = (
@@ -49940,12 +49697,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bUf" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/engineering";
-	dir = 1;
-	name = "Security Post - Engineering APC";
-	pixel_y = 23
-	},
 /obj/machinery/button/door{
 	desc = "A remote control switch.";
 	id = "engdoor";
@@ -49964,6 +49715,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bUg" = (
@@ -52371,11 +52123,6 @@
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "bYk" = (
-/obj/machinery/power/apc{
-	areastring = "/area/aisat";
-	name = "AI Satellite Exterior APC";
-	pixel_y = -23
-	},
 /obj/machinery/light/small,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -52388,6 +52135,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "bYl" = (
@@ -52548,11 +52296,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "bYu" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/chief";
-	name = "Chief Engineer's APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -52564,6 +52307,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "bYv" = (
@@ -53048,15 +52792,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/starboard";
-	name = "Starboard Primary Hallway APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bZA" = (
@@ -53380,15 +53120,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/turret_protected/aisat_interior";
-	name = "MiniSat APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "caa" = (
@@ -54249,11 +53985,6 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "cbK" = (
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/security/armory";
-	name = "Armoury APC";
-	pixel_y = -23
-	},
 /obj/machinery/camera{
 	c_tag = "Armory - Interior";
 	dir = 1
@@ -54265,6 +53996,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "cbL" = (
@@ -55417,27 +55149,16 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hop)
 "cer" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/hop";
-	dir = 4;
-	name = "HoP Office APC";
-	pixel_x = 24
-	},
 /obj/machinery/camera{
 	c_tag = "Bridge - Head of Personnel's Office";
 	dir = 8;
 	name = "command camera"
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hop)
 "cet" = (
-/obj/machinery/power/apc{
-	areastring = "/area/tcommsat/server";
-	dir = 8;
-	name = "Telecomms Server Room APC";
-	pixel_x = -25
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -55449,6 +55170,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
 "ceD" = (
@@ -55875,12 +55597,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "cfm" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/security/brig";
-	dir = 1;
-	name = "Brig APC";
-	pixel_y = 23
-	},
 /obj/machinery/camera{
 	c_tag = "Security - Gear Room"
 	},
@@ -55894,6 +55610,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "cfn" = (
@@ -56366,12 +56083,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/crew_quarters/heads/captain/private";
-	name = "Captain's Quarters APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain/private)
 "cgx" = (
@@ -57253,18 +56966,12 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/lawoffice";
-	dir = 8;
-	name = "Law Office APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/effect/landmark/start/lawyer,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/wood,
 /area/lawoffice)
 "civ" = (
@@ -58033,13 +57740,8 @@
 /area/maintenance/central/secondary)
 "cjP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/central/secondary";
-	dir = 1;
-	name = "Central Maintenance APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "cjQ" = (
@@ -58453,14 +58155,9 @@
 /area/engine/engineering)
 "ckI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/engine/engineering";
-	dir = 4;
-	name = "Engine Room APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ckJ" = (
@@ -59258,17 +58955,12 @@
 "cmJ" = (
 /obj/structure/table,
 /obj/item/hand_tele,
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/teleporter";
-	dir = 1;
-	name = "Teleporter APC";
-	pixel_y = 23
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmK" = (
@@ -59764,11 +59456,6 @@
 "cnu" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light,
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/turret_protected/ai_upload";
-	name = "AI Upload Access APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -59780,6 +59467,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "cnv" = (
@@ -60384,12 +60072,6 @@
 /area/maintenance/starboard)
 "coN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/security/range";
-	dir = 8;
-	name = "Shooting Range APC";
-	pixel_x = -25
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/northleft{
 	name = "Security Delivery";
@@ -60403,6 +60085,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/range)
 "coO" = (
@@ -60606,14 +60289,8 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cpr" = (
-/obj/machinery/power/apc{
-	areastring = "/area/library";
-	dir = 8;
-	name = "Library APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/wood,
 /area/library)
 "cps" = (
@@ -60887,17 +60564,12 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "cqb" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/courtroom";
-	dir = 4;
-	name = "Courtroom APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "cqc" = (
@@ -61890,12 +61562,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "csv" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/command";
-	dir = 1;
-	name = "Command Hall APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -61906,6 +61572,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "csw" = (
@@ -62988,12 +62655,8 @@
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/starboard";
-	name = "Starboard Maintenance APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cuH" = (
@@ -64026,16 +63689,11 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "cwF" = (
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/storage/eva";
-	dir = 1;
-	name = "E.V.A. Storage APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "cwG" = (
@@ -64131,15 +63789,10 @@
 /turf/open/floor/plasteel,
 /area/gateway)
 "cwT" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/gateway";
-	dir = 1;
-	name = "Gateway APC";
-	pixel_y = 23
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/gateway)
 "cwU" = (
@@ -65918,16 +65571,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cAv" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/locker";
-	dir = 4;
-	name = "Lockerroom APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "cAw" = (
@@ -66595,12 +66243,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
 "cBN" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/toilet/restrooms";
-	dir = 1;
-	name = "Primary Restroom APC";
-	pixel_y = 23
-	},
 /obj/machinery/camera{
 	c_tag = "Primary Restroom";
 	name = "restroom camera"
@@ -66609,6 +66251,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
 "cBO" = (
@@ -67208,13 +66851,8 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "cCU" = (
-/obj/machinery/power/apc{
-	areastring = "/area/bridge/showroom/corporate";
-	dir = 8;
-	name = "Corporate Lounge APC";
-	pixel_x = -25
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "cCV" = (
@@ -67904,14 +67542,9 @@
 	pixel_y = 3
 	},
 /obj/item/tank/jetpack/carbondioxide,
-/obj/machinery/power/apc{
-	areastring = "/area/engine/storage";
-	dir = 4;
-	name = "Engineering Storage APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cEj" = (
@@ -72033,11 +71666,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "cMy" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/dorms";
-	name = "Dormitories APC";
-	pixel_y = -23
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -72050,6 +71678,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -73426,12 +73055,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "cPD" = (
-/obj/machinery/power/apc{
-	areastring = "/area/medical/storage";
-	dir = 8;
-	name = "Medbay Storage APC";
-	pixel_x = -25
-	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Storage";
 	dir = 4;
@@ -73444,6 +73067,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/medical/storage)
 "cPE" = (
@@ -73865,13 +73489,8 @@
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/high,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/department/electrical";
-	dir = 4;
-	name = "Auxiliary Power APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "cQt" = (
@@ -75260,11 +74879,6 @@
 	},
 /obj/item/storage/box/beakers,
 /obj/structure/table/glass,
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 1;
-	name = "Medbay Treatment Center APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -75276,6 +74890,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cSR" = (
@@ -77343,18 +76958,13 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cWC" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/fitness/recreation";
-	dir = 8;
-	name = "Recreation Area APC";
-	pixel_x = -25
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cWE" = (
@@ -77700,13 +77310,6 @@
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/science/research";
-	dir = 8;
-	name = "Security Post - Science APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/machinery/button/door{
 	desc = "A remote control switch.";
 	id = "scidoor";
@@ -77726,6 +77329,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science/research)
 "cXp" = (
@@ -78787,12 +78391,6 @@
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/medical";
-	dir = 8;
-	name = "Security Post - Medical APC";
-	pixel_x = -25
-	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Medbay";
 	dir = 4
@@ -78811,6 +78409,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "cZD" = (
@@ -79719,16 +79318,11 @@
 /turf/open/floor/plasteel,
 /area/medical/pharmacy)
 "dbg" = (
-/obj/machinery/power/apc{
-	areastring = "/area/medical/pharmacy";
-	dir = 1;
-	name = "Pharmacy APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "dbh" = (
@@ -80175,12 +79769,6 @@
 	},
 /area/maintenance/port)
 "dbV" = (
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/port";
-	dir = 1;
-	name = "Port Maintenance APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -80188,6 +79776,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dbW" = (
@@ -80438,12 +80027,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/science/xenobiology";
-	dir = 4;
-	name = "Xenobiology Lab APC";
-	pixel_x = 24
-	},
 /obj/item/storage/box/monkeycubes,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -80453,6 +80036,7 @@
 /obj/item/reagent_containers/dropper{
 	pixel_y = 8
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "dcv" = (
@@ -81769,17 +81353,11 @@
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
-/obj/machinery/power/apc{
-	areastring = "/area/science/lab";
-	dir = 8;
-	name = "Research and Development Lab APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dfr" = (
@@ -82078,13 +81656,8 @@
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/storage/toolbox/electrical,
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/abandoned_gambling_den";
-	dir = 1;
-	name = "Abandoned Gambling Den APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dge" = (
@@ -84391,17 +83964,12 @@
 "dkJ" = (
 /obj/machinery/light,
 /obj/item/kirbyplants/random,
-/obj/machinery/power/apc{
-	areastring = "/area/medical/psychology";
-	name = "Psychology APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "dkK" = (
@@ -85270,16 +84838,11 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dne" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/science/robotics/mechbay";
-	dir = 1;
-	name = "Mech Bay APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dnf" = (
@@ -87181,15 +86744,10 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "drC" = (
-/obj/machinery/power/apc{
-	areastring = "/area/science/misc_lab/range";
-	name = "Testing Range APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "drD" = (
@@ -87396,16 +86954,11 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "drX" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/hor";
-	dir = 8;
-	name = "Research Director's Office APC";
-	pixel_x = -25
-	},
 /obj/structure/disposalpipe/segment,
 /obj/item/kirbyplants/dead,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hor)
 "drY" = (
@@ -88011,16 +87564,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "dtG" = (
-/obj/machinery/power/apc{
-	areastring = "/area/medical/medbay/central";
-	dir = 8;
-	name = "Medbay APC";
-	pixel_x = -25
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dtI" = (
@@ -89981,11 +89529,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyI" = (
-/obj/machinery/power/apc{
-	areastring = "/area/medical/surgery";
-	name = "Surgery APC";
-	pixel_y = -23
-	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Surgery A";
 	dir = 1;
@@ -90004,6 +89547,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyJ" = (
@@ -90043,15 +89587,10 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "dyM" = (
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/starboard/aft";
-	dir = 4;
-	name = "Starboard Quarter Maintenance APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dyN" = (
@@ -90070,13 +89609,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "dyP" = (
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/secondary/construction";
-	name = "Auxiliary Construction Zone APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "dyQ" = (
@@ -90567,12 +90102,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/cmo";
-	dir = 4;
-	name = "Chief Medical Officer's Office APC";
-	pixel_x = 24
-	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chief Medical Officer's Office";
 	dir = 8;
@@ -90586,6 +90115,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -90737,15 +90267,9 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "dAw" = (
-/obj/machinery/power/apc{
-	areastring = "/area/science/mixing";
-	dir = 8;
-	name = "Toxins Lab APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dAx" = (
@@ -91106,12 +90630,6 @@
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/surgical_drapes,
-/obj/machinery/power/apc{
-	areastring = "/area/medical/surgery/room_b";
-	dir = 1;
-	name = "Surgery B APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -91119,6 +90637,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "dBs" = (
@@ -91507,16 +91026,11 @@
 /area/science/robotics/lab)
 "dCx" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/power/apc{
-	areastring = "/area/hallway/primary/aft";
-	dir = 4;
-	name = "Aft Primary Hallway APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "dCy" = (
@@ -91779,15 +91293,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/aft)
 "dDc" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/maintenance/solars/starboard/aft";
-	name = "Starboard Quarter Solar APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "dDd" = (
@@ -92891,13 +92401,8 @@
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
 "dFm" = (
-/obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/theatre/abandoned";
-	dir = 1;
-	name = "Abandoned Theatre APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
 "dFn" = (
@@ -93209,12 +92714,6 @@
 /obj/machinery/computer/rdservercontrol{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/science/server";
-	dir = 8;
-	name = "Research Division Server Room APC";
-	pixel_x = -25
-	},
 /obj/machinery/light_switch{
 	pixel_x = -28;
 	pixel_y = -26
@@ -93230,6 +92729,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "dFS" = (
@@ -93333,17 +92833,12 @@
 /area/science/research)
 "dFY" = (
 /obj/machinery/disposal/bin,
-/obj/machinery/power/apc{
-	areastring = "/area/science/robotics/lab";
-	dir = 8;
-	name = "Robotics Lab APC";
-	pixel_x = -25
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dFZ" = (
@@ -94241,14 +93736,8 @@
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
 "dId" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/detectives_office/private_investigators_office";
-	dir = 8;
-	name = "Private Investigator's Office APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plating,
 /area/security/detectives_office/private_investigators_office)
 "dIe" = (
@@ -94575,13 +94064,8 @@
 /area/science/storage)
 "dIE" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	areastring = "/area/science/storage";
-	dir = 4;
-	name = "Toxins Storage APC";
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dIF" = (
@@ -94653,18 +94137,13 @@
 /turf/open/floor/plasteel,
 /area/science/research)
 "dIK" = (
-/obj/machinery/power/apc{
-	areastring = "/area/science/research";
-	dir = 4;
-	name = "Research Division APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dIL" = (
@@ -94836,14 +94315,10 @@
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dIZ" = (
-/obj/machinery/power/apc{
-	areastring = "/area/medical/morgue";
-	name = "Morgue APC";
-	pixel_y = -23
-	},
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "dJc" = (
@@ -96501,12 +95976,6 @@
 /area/maintenance/aft)
 "dMB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/aft";
-	name = "Aft Maintenance APC";
-	pixel_x = 1;
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
@@ -96514,6 +95983,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "dMC" = (
@@ -98105,12 +97575,6 @@
 "dPL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/port/aft";
-	dir = 1;
-	name = "Port Quarter Maintenance APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -98118,6 +97582,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "dPM" = (
@@ -98231,13 +97696,6 @@
 /obj/machinery/computer/card{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/customs/auxiliary";
-	dir = 8;
-	name = "Departures Customs APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/machinery/camera{
 	c_tag = "Departures Customs";
 	dir = 4;
@@ -98254,6 +97712,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs/auxiliary)
 "dPW" = (
@@ -99885,14 +99344,8 @@
 /area/solar/starboard/aft)
 "dTl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	areastring = "/area/library/abandoned";
-	dir = 8;
-	name = "Abandoned Library APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -100035,12 +99488,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "dTG" = (
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/hallway/secondary/exit/departure_lounge";
-	dir = 1;
-	name = "Departure Lounge APC";
-	pixel_y = 23
-	},
 /obj/machinery/camera{
 	c_tag = "Departures - Fore";
 	name = "departures camera"
@@ -100049,6 +99496,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "dTH" = (
@@ -100519,18 +99967,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/medical/virology";
-	dir = 4;
-	name = "Virology Satellite APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "dUR" = (
@@ -102628,14 +102071,8 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "dZQ" = (
-/obj/machinery/power/apc{
-	areastring = "/area/chapel/main";
-	dir = 8;
-	name = "Chapel APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "chapel"
@@ -103572,15 +103009,11 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "ecm" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/maintenance/solars/port/aft";
-	name = "Port Quarter Solar APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "ecn" = (
@@ -104680,12 +104113,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/chapel/office";
-	dir = 1;
-	name = "Chapel Quarters APC";
-	pixel_y = 23
-	},
 /obj/structure/table/wood,
 /obj/item/grown/log,
 /obj/item/grown/log,
@@ -104693,6 +104120,7 @@
 /obj/item/grown/log,
 /obj/item/grown/log,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "eey" = (
@@ -105170,13 +104598,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/escape";
-	dir = 8;
-	name = "Departures Checkpoint APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/item/crowbar,
 /obj/item/wrench,
 /obj/item/radio,
@@ -105187,6 +104608,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/escape)
 "efv" = (
@@ -105797,13 +105219,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "epN" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/prison/safe";
-	dir = 8;
-	name = "Prison Wing Cells APC";
-	pixel_x = -24
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "epU" = (
@@ -108144,12 +107561,6 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/science/mixing/chamber";
-	dir = 4;
-	name = "Toxins Chamber APC";
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -108165,6 +107576,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/binary/valve,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "jvq" = (
@@ -112602,15 +112014,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "sLr" = (
-/obj/machinery/power/apc{
-	name = "Chemistry APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "sNB" = (
@@ -113155,13 +112564,6 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "tQS" = (
-/obj/machinery/power/apc{
-	areastring = "/area/vacant_room/commissary";
-	dir = 8;
-	name = "Vacant Commissary APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -113169,6 +112571,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/west,
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "tWK" = (
@@ -114062,16 +113465,11 @@
 /turf/closed/wall,
 /area/medical/surgery/room_b)
 "vGz" = (
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/engine/gravity_generator";
-	dir = 1;
-	name = "Gravity Generator APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "vGX" = (
@@ -115212,13 +114610,8 @@
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "yjc" = (
-/obj/machinery/power/apc{
-	areastring = "/area/science/research/abandoned";
-	dir = 1;
-	name = "Abandoned Research Lab APC";
-	pixel_y = 23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
 "yjg" = (
