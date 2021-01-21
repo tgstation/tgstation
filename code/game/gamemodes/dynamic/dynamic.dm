@@ -471,7 +471,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			drafted_rules[ruleset] = null
 
 	for (var/ruleset in rulesets_picked)
-		spend_roundstart_budget(picking_roundstart_rule(ruleset, rulesets_picked[ruleset]))
+		spend_roundstart_budget(picking_roundstart_rule(ruleset, rulesets_picked[ruleset] - 1))
 
 /// Initializes the round start ruleset provided to it. Returns how much threat to spend.
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(datum/dynamic_ruleset/roundstart/ruleset, scaled_times = 0, forced = FALSE)
