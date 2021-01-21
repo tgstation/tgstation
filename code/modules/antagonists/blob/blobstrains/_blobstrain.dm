@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		stack_trace("blobstrain created without overmind")
 	overmind = new_overmind
 
-/datum/blobstrain/proc/on_gain(announce = TRUE)
+/datum/blobstrain/proc/on_gain()
 	overmind.color = complementary_color
 
 	if(overmind.blob_core)
