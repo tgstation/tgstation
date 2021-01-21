@@ -63,7 +63,7 @@
 	knife_x_offset = 27
 	knife_y_offset = 13
 	can_be_sawn_off = TRUE
-	var/Jamming_Chance = 0
+	var/Jamming_Chance = 20
 	var/Unjam_Chance = 10
 	var/Jammed = FALSE
 
@@ -91,6 +91,13 @@
 	if(prob(Jamming_Chance))
 		Jammed = TRUE
 	..()
+
+/obj/item/gun/ballistic/rifle/boltaction/try_clean_weapon(datum/source, obj/item/Item, mob/user,)
+    if(!istype(Item, /obj/item/gun_maintenance_supplies))
+        do_after(user, 10 SECONDS, target = source)
+        user.visible_message("<span class='notice'>[user] finishes maintenance of [source].</span>")
+        Jamming_Chance = 10
+        qdel(Item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
