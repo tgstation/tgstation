@@ -439,6 +439,7 @@
 		if(should_display || SSair.display_all_groups)
 			E.hide_turfs()
 			display_turfs()
+		breakdown_cooldown = min(breakdown_cooldown, E.breakdown_cooldown) //Take the smaller of the two options
 		dismantle_cooldown = 0
 	else
 		SSair.excited_groups -= src
@@ -446,11 +447,12 @@
 			var/turf/open/T = t
 			T.excited_group = E
 			E.turf_list += T
-		E.dismantle_cooldown = 0
 		E.should_display = E.should_display | should_display
 		if(E.should_display || SSair.display_all_groups)
 			hide_turfs()
 			E.display_turfs()
+		E.breakdown_cooldown = min(breakdown_cooldown, E.breakdown_cooldown)
+		E.dismantle_cooldown = 0
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0

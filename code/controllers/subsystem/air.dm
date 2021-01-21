@@ -9,14 +9,14 @@ SUBSYSTEM_DEF(air)
 	var/cached_cost = 0
 	var/cost_atoms = 0
 	var/cost_turfs = 0
+	var/cost_hotspots = 0
+	var/cost_ex_cleanup = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
-	var/cost_hotspots = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
-	var/cost_rebuilds = 0
 	var/cost_atmos_machinery = 0
-	var/cost_ex_cleanup = 0
+	var/cost_rebuilds = 0
 
 	var/list/excited_groups = list()
 	var/list/cleanup_ex_groups = list()
@@ -50,10 +50,10 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
+	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "CL:[round(cost_ex_cleanup, 1)]|"
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
-	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]|"
@@ -61,14 +61,15 @@ SUBSYSTEM_DEF(air)
 	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "} "
 	msg += "AT:[active_turfs.len]|"
+	msg += "HS:[hotspots.len]|"
 	msg += "CL:[cleanup_ex_groups.len]|"
 	msg += "EG:[excited_groups.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
-	msg += "HS:[hotspots.len]|"
 	msg += "SC:[active_super_conductivity.len]|"
 	msg += "PN:[networks.len]|"
 	msg += "AM:[atmos_machinery.len]|"
 	msg += "AO:[atom_process.len]|"
+	msg += "RB:[pipenets_needing_rebuilt.len]|"
 	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
 	return ..()
 
@@ -134,6 +135,18 @@ SUBSYSTEM_DEF(air)
 			return
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
+		currentpart = SSAIR_HOTSPOTS
+
+	if(currentpart == SSAIR_HOTSPOTS) //We do this before excited groups to allow breakdowns to be independent of adding turfs while still *mostly preventing mass fires
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_hotspots(delta_time, resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
 		currentpart = SSAIR_EXCITEDCLEANUP
 
 	if(currentpart == SSAIR_EXCITEDCLEANUP)
@@ -169,18 +182,6 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		currentpart = SSAIR_HOTSPOTS
-
-	if(currentpart == SSAIR_HOTSPOTS)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_hotspots(delta_time, resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(cached_cost))
 		resumed = FALSE
 		currentpart = SSAIR_SUPERCONDUCTIVITY
 
