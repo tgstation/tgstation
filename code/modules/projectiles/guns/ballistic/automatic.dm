@@ -94,6 +94,7 @@
 	name = "security auto rifle"
 	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
 	icon_state = "wt550"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
@@ -136,6 +137,7 @@
 	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "m90"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "m90"
 	selector_switch_icon = TRUE
 	mag_type = /obj/item/ammo_box/magazine/m556
@@ -212,7 +214,7 @@
 	icon_state = "tommygun"
 	inhand_icon_state = "shotgun"
 	selector_switch_icon = TRUE
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	can_suppress = FALSE
@@ -323,6 +325,7 @@
 	name = "sniper rifle"
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
 	icon_state = "sniper"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -376,6 +379,7 @@
 	name = "laser rifle"
 	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargeable ammunition has given Nanotrasen a decisive edge over many a foe."
 	icon_state = "oldrifle"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	mag_display_ammo = TRUE

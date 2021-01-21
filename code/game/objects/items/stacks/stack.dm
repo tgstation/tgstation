@@ -40,7 +40,7 @@
 	/// Amount of matter for RCD
 	var/matter_amount = 0
 
-/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
+/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -49,7 +49,9 @@
 	if(!merge_type)
 		merge_type = type
 
-	if(LAZYLEN(mats_per_unit))
+	if(LAZYLEN(mat_override))
+		set_mats_per_unit(mat_override, mat_amt)
+	else if(LAZYLEN(mats_per_unit))
 		set_mats_per_unit(mats_per_unit, 1)
 	else if(LAZYLEN(custom_materials))
 		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
@@ -62,7 +64,7 @@
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
-		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
+		var/datum/material/M = GET_MATERIAL_REF(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_BASE_RECIPES)
@@ -417,14 +419,15 @@
 		return FALSE
 	return TRUE
 
-/obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+///Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.
+/obj/item/stack/proc/merge(obj/item/stack/S, limit)
 	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
 	else
-		transfer = min(transfer, S.max_amount - S.amount)
+		transfer = min(transfer, (limit ? limit : S.max_amount) - S.amount)
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)
@@ -476,9 +479,8 @@
 /obj/item/stack/proc/split_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
-	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE)
+	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
 	. = F
-	F.set_mats_per_unit(mats_per_unit, 1) // Required for greyscale sheets and tiles.
 	F.copy_evidences(src)
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))

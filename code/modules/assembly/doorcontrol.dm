@@ -190,8 +190,13 @@
 		return
 	lift.visible_message("<span class='notice'>[src] clinks and whirrs into automated motion, locking controls.</span")
 	lift.lift_master_datum.set_controls(LOCKED)
-	var/difference = abs(z - lift.z)
-	var/direction = lift.z > z ? UP : DOWN
+	///The z level to which the elevator should travel
+	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
+	///The amount of z levels between the our and targetZ
+	var/difference = abs(targetZ - lift.z)
+	///Direction (up/down) needed to go to reach targetZ
+	var/direction = lift.z < targetZ ? UP : DOWN
+	///How long it will/should take us to reach the target Z level
 	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
 	for(var/i in 1 to difference)

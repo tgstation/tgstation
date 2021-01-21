@@ -49,10 +49,18 @@
 
 
 //EXCITED GROUPS
+/**
+ * Some further context on breakdown. Unlike dismantle, the breakdown ticker doesn't reset itself when a tile is added
+ * This is because we cannot expect maps to have small spaces, so we need to even ourselves out often
+ * We do this to avoid equalizing a large space in one tick, with some significant amount of say heat diff
+ * This way large areas don't suddenly all become cold at once, it acts more like a wave
+ *
+ * Because of this and the behavior of share(), the breakdown cycles value can be tweaked directly to effect how fast we want gas to move
+ */
 /// number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
-#define EXCITED_GROUP_BREAKDOWN_CYCLES				4
+#define EXCITED_GROUP_BREAKDOWN_CYCLES				5
 /// number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
-#define EXCITED_GROUP_DISMANTLE_CYCLES				9 //Reset after 2 breakdowns
+#define EXCITED_GROUP_DISMANTLE_CYCLES				(EXCITED_GROUP_BREAKDOWN_CYCLES * 2) + 1 //Reset after 2 breakdowns
 /// Ratio of air that must move to/from a tile to reset group processing
 #define MINIMUM_AIR_RATIO_TO_SUSPEND				0.1
 /// Minimum ratio of air that must move to/from a tile
@@ -162,6 +170,10 @@
 #define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 40)
 /// The body temperature limit the human body can take before it will take wound damage.
 #define BODYTEMP_HEAT_WOUND_LIMIT			(BODYTEMP_NORMAL + 90) // 400.5 k
+/// The modifier on cold damage limit hulks get ontop of their regular limit
+#define BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER 25
+/// The modifier on cold damage hulks get.
+#define HULK_COLD_DAMAGE_MOD 2
 
 /// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_HELM_MIN_TEMP_PROTECT			2.0
