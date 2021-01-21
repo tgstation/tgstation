@@ -40,7 +40,7 @@
 /datum/component/storage/concrete/tcg/proc/handle_empty_deck()
 	var/list/contents = contents()
 	//You can't have a deck of one card!
-	if(contents.len <= 1)
+	if(contents.len == 1)
 		var/obj/item/tcgcard_deck/deck = parent
 		var/obj/item/tcgcard/card = contents[1]
 		remove_from_storage(card, card.drop_location())
