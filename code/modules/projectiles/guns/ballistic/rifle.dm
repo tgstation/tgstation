@@ -63,6 +63,9 @@
 	knife_x_offset = 27
 	knife_y_offset = 13
 	can_be_sawn_off = TRUE
+	var/Jamming_Chance = 0
+	var/Unjam_Chance = 10
+	var/Jammed = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
@@ -70,6 +73,24 @@
 		spread = 36
 		can_bayonet = FALSE
 		update_icon()
+
+/obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
+	if(Jammed)
+		if(prob(Unjam_Chance))
+			Jammed = FALSE
+			Unjam_Chance = 10
+		else
+			Unjam_Chance += 10
+			to_chat(user, "<span class='warning'>[src] is jammed!</span>")
+			return FALSE
+	..()
+
+/obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
+	if(chambered.BB)
+		Jamming_Chance  += 5
+	if(prob(Jamming_Chance))
+		Jammed = TRUE
+	..()
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
