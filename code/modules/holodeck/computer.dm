@@ -235,11 +235,10 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 /obj/machinery/computer/holodeck/proc/finish_spawn()
 	//this is used for holodeck effects (like spawners). otherwise they dont do shit
 	//holo effects are taken out of the spawned list and added to the effects list
-	//turfs are taken out of the spawned list
+	//turfs and overlay objects are taken out of the spawned list
 	//objects get resistance flags added to them
 	for (var/_atom in spawned)
 		var/atom/atoms = _atom
-
 
 		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis)) //ssatoms
 			spawned -= atoms
