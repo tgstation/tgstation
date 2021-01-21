@@ -1,30 +1,30 @@
 {
-    "beginnings":[
-        "Comet",
-        "Ion"
-        "Laser",
-        "Oort",
-        "Plasma",
-        "Pulsar",
-        "Solar",
-        "Space",
-        "Star",
-        "Void",
-    ],
-    "endings":[
-        "beard",
-        "bilge",
-        "deck",
-        "fish",
-        "flag",
-        "helm"
-        "hook",
-        "hull",
-        "keel",
-        "knot",
-        "salt",
-    ],
-    "rogue_names":[
+	"beginnings":[
+		"Comet",
+		"Ion",
+		"Laser",
+		"Oort",
+		"Plasma",
+		"Pulsar",
+		"Solar",
+		"Space",
+		"Star",
+		"Void"
+	],
+	"endings":[
+		"beard",
+		"bilge",
+		"deck",
+		"fish",
+		"flag",
+		"helm",
+		"hook",
+		"hull",
+		"keel",
+		"knot",
+		"salt"
+	],
+	"rogue_names":[
 		"Abyssal Titan",
 		"Ashes to Ashes",
 		"Asteroid Blaster",
@@ -49,25 +49,25 @@
 		"Lost in Deep Space",
 		"Missile Rack",
 		"Moth Splatterer",
-		"New Sins for Old"
+		"New Sins for Old",
 		"One Last Job",
 		"Paint Asteroids Red",
 		"Pastafarianism",
 		"Raging Meteor",
 		"Reverse Far Leap",
-		"Scourge of the Milky Way"
+		"Scourge of the Milky Way",
 		"Silicon Policy",
 		"Space Grease",
 		"Space Justice",
-		"Space Pearl", 
+		"Space Pearl",
 		"Star Scraper",
 		"War as a Business",
 		"Xenophobia",
-        "Space Queen's Revenge",
-        "Syndicate Privateer",
-    ]
-    "silverscale_names":[
-		"Antelope’s Run",
+		"Space Queen's Revenge",
+		"Syndicate Privateer"
+	],
+	"silverscale_names":[
+		"Antelope's Run",
 		"Aristocrat's Principle",
 		"Aristocratic Tributary",
 		"Bane of Serfs",
@@ -95,7 +95,7 @@
 		"Status Quo",
 		"Swords and Sandals",
 		"Thesaurus Terror",
-        "Archduke's Silver Ring",
-        "Silver Steed",
-    ]
+		"Archduke's Silver Ring",
+		"Silver Steed"
+	]
 }

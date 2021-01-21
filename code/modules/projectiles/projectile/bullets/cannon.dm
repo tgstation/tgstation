@@ -24,4 +24,4 @@
 
 /obj/projectile/bullet/cannonball/explosive/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	explosion(target, -1, 0, 2)
+	explosion(target, 2, 3, 4)
