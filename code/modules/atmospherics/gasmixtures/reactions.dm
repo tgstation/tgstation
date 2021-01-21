@@ -167,6 +167,8 @@ nobiliumsuppression = INFINITY
 
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_OXY_FACTOR
+
+		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
 		
 	else
 		burned_fuel = cached_gases[/datum/gas/tritium][MOLES]
@@ -177,8 +179,9 @@ nobiliumsuppression = INFINITY
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_TRIT_FACTOR
 
-	if(burned_fuel)
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
+
+	if(burned_fuel)
 		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
 			radiation_pulse(location, energy_released / TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 		cached_results["fire"] += burned_fuel
