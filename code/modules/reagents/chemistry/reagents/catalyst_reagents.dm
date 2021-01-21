@@ -31,7 +31,7 @@
         reaction.h_ion_mod = ((creation_purity-0.5)*2)*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse
 
 /datum/reagent/catalyst_agent/temperature
-    name ="Temperature catalyst agent"
+    name = "Temperature catalyst agent"
 
 /datum/reagent/catalyst_agent/temperature/consider_catalyst(datum/equilibrium/reaction)
     . = ..()

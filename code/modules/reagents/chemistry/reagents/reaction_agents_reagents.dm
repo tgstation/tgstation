@@ -14,6 +14,7 @@
     if(LAZYLEN(target.reagent_list) == 1)
         if(target.has_reagent(type)) //Allow dispensing into self
             return FALSE
+   return TRUE
 
 /datum/reagent/reaction_agent/acidic_buffer
     name = "Strong acidic buffer"
@@ -26,19 +27,18 @@
 //Consumes self on addition and shifts ph
 /datum/reagent/reaction_agent/acidic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
     . = ..()
-    if(. == FALSE) //Surely there's a better way to do this
-        return FALSE
+    if(!.)
+        return
     if(target.ph <= ph)
         target.my_atom.audible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</span>")
         playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
         holder.remove_reagent(type, amount)//Remove from holder because it's not transfered
-        return TRUE
+        return
     var/ph_change = -((volume/target.total_volume)*strength)
     target.adjust_all_reagents_ph(ph_change, ph, 14)
     target.my_atom.audible_message("<span class='warning'>The beaker fizzes as the ph changes!</span>")
     playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
     holder.remove_reagent(type, volume)
-    return TRUE
     
 /datum/reagent/reaction_agent/basic_buffer
     name = "Strong basic buffer"
@@ -50,19 +50,18 @@
 
 /datum/reagent/reaction_agent/basic_buffer/intercept_reagents_transfer(datum/reagents/target, amount)
     . = ..()
-    if(. == FALSE)
-        return FALSE
+    if(!.)
+        return
     if(target.ph >= ph)
         target.my_atom.audible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</span>")
         playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
         holder.remove_reagent(type, amount)//Remove from holder because it's not transfered
-        return TRUE 
+        return
     var/ph_change = (amount/target.total_volume)*strength
     target.adjust_all_reagents_ph(ph_change, 0, ph)
     target.my_atom.audible_message("<span class='warning'>The beaker froths as the ph changes!</span>")
     playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
     holder.remove_reagent(type, amount)
-    return TRUE
     
 /datum/reagent/reaction_agent/purity_tester
     name = "Purity tester"
@@ -72,8 +71,8 @@
 
 /datum/reagent/reaction_agent/purity_tester/intercept_reagents_transfer(datum/reagents/target, amount)
     . = ..()
-    if(. == FALSE) //Surely there's a better way to do this
-        return FALSE
+    if(!.)
+        return
     var/is_inverse = FALSE
     for(var/_reagent in target.reagent_list)
         var/datum/reagent/reaction_agent/reagent = _reagent
@@ -85,7 +84,6 @@
     else
         target.my_atom.audible_message("<span class='warning'>The added reagent doesn't seem to do much.</span>")
     holder.remove_reagent(type, amount)
-    return TRUE
 
 /datum/reagent/reaction_agent/speed_agent
     name = "Reaction speed agent"
@@ -95,8 +93,8 @@
 
 /datum/reagent/reaction_agent/speed_agent/intercept_reagents_transfer(datum/reagents/target, amount)
     . = ..()
-    if(. == FALSE)
-        return FALSE
+    if(!.)
+        return
     if(!length(holder.reaction_list))//Safetly check and div/0 avoid
         return FALSE
     amount /= holder.reaction_list.len
@@ -108,6 +106,4 @@
         power *= creation_purity
         reaction.react_timestep(power, creation_purity)
     holder.remove_reagent(type, amount)
-    return TRUE
-
 

@@ -24,5 +24,3 @@
 
 /datum/chemical_reaction/medical_speed_catalyst/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
     explode_invert_smoke(holder, equilibrium)
-    
-    
