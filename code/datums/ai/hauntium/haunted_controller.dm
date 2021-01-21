@@ -53,7 +53,7 @@
 /datum/ai_controller/haunted/proc/on_equip(datum/source, mob/equipper, slot)
 	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
 	var/list/hauntee_list = blackboard[BB_TO_HAUNT_LIST]
-	hauntee_list[equipper] = hauntee_list[equipper] + 2 //You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~
+	hauntee_list[equipper] = hauntee_list[equipper] + HAUNTED_ITEM_AGGRO_ADDITION //You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~
 	RegisterSignal(pawn, COMSIG_ITEM_DROPPED, .proc/on_dropped)
 	SIGNAL_HANDLER
 

@@ -44,6 +44,8 @@
 #define HAUNTED_ITEM_ESCAPE_GRASP_CHANCE 20
 ///Chance for haunted item to warp somewhere new
 #define HAUNTED_ITEM_TELEPORT_CHANCE 4
+///Amount of aggro you get when picking up a haunted item
+#define HAUNTED_ITEM_AGGRO_ADDITION 2
 
 ///Blackboard keys for haunted items
 #define BB_TO_HAUNT_LIST "BB_to_haunt_list"
@@ -53,7 +55,6 @@
 #define BB_HAUNTED_THROW_ATTEMPT_COUNT "BB_haunted_throw_attempt_count"
 
 ///Vending machine AI controller blackboard keys
-
 #define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"
 #define BB_VENDING_TILT_COOLDOWN "BB_vending_tilt_cooldown"
 #define BB_VENDING_UNTILT_COOLDOWN "BB_vending_untilt_cooldown"
