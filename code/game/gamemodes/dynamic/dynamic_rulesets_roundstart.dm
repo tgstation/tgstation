@@ -37,7 +37,6 @@
 /datum/dynamic_ruleset/roundstart/traitor/rule_process()
 	if (COOLDOWN_FINISHED(src, autotraitor_cooldown_check))
 		COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
-		message_admins("Checking if we can turn someone into a traitor.")
 		log_game("DYNAMIC: Checking if we can turn someone into a traitor.")
 		mode.picking_specific_rule(/datum/dynamic_ruleset/midround/autotraitor)
 

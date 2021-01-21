@@ -180,11 +180,11 @@
 	// adding traitors if the antag population is getting low
 	var/too_little_antags = antag_count < max_traitors
 	if (!too_little_antags)
-		message_admins("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
+		log_game("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
 		return FALSE
 
 	if (!prob(mode.threat_level))
-		message_admins("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
+		log_game("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
 		return FALSE
 
 	return ..()
