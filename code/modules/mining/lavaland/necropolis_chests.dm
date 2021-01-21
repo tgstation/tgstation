@@ -11,8 +11,10 @@
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
-	integrity_failure = 0 ///prevents bust_open to fire
-	var/spawned_loot = FALSE /// var to check if it got opened by a key
+	///prevents bust_open to fire
+	integrity_failure = 0
+	/// var to check if it got opened by a key
+	var/spawned_loot = FALSE
 
 /obj/structure/closet/crate/necropolis/tendril/Initialize()
 	. = ..()
@@ -1346,7 +1348,7 @@
 
 /obj/item/skeleton_key
 	name = "skeleton key"
-	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds monopoly."
+	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds a monopoly on."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "skeleton_key"
 	w_class = WEIGHT_CLASS_SMALL
