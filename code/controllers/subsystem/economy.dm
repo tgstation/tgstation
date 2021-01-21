@@ -35,6 +35,8 @@ SUBSYSTEM_DEF(economy)
 	var/civ_bounty_tracker = 0
 	/// Contains the message to send to newscasters about price inflation and earnings, updated on price_update()
 	var/earning_report
+	///The modifier multiplied to the value of bounties paid out.
+	var/bounty_modifier = 1
 	var/market_crashing = FALSE
 
 /datum/controller/subsystem/economy/Initialize(timeofday)

@@ -22,6 +22,13 @@
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
 	H.apply_pref_name("clown", M.client)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
+		var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
+		toLaunch.setStyle(STYLE_SEETHROUGH)
+		toLaunch.delays[POD_OPENING] = 0
+		new /obj/item/stack/sheet/mineral/bananium/five(toLaunch)
+
+		new /obj/effect/pod_landingzone(H.drop_location(), toLaunch)
 
 /datum/outfit/job/clown
 	name = "Clown"
