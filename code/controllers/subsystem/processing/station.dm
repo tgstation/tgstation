@@ -18,7 +18,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
 	for(var/i in subtypesof(/datum/station_trait))
 		var/datum/station_trait/trait_typepath = i
-		traits_by_types[initial(trait_typepath.trait_type)] += list(trait_typepath = initial(trait_typepath.weight))
+		traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
 	var/positive_trait_count = pick(10;0, 5;1, 1;2)
 	var/neutral_trait_count = pick(5;0, 10;1, 3;2)
