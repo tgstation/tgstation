@@ -20,10 +20,10 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
 
-/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/I, mob/user, params) ///proc that handles key checking and generating loot
+/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/item, mob/user, params) ///proc that handles key checking and generating loot
 	SIGNAL_HANDLER
 
-	if(!istype(I, /obj/item/skeleton_key) || spawned_loot)
+	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return FALSE
 	var/loot = rand(1,21)
 	switch(loot)
@@ -80,7 +80,7 @@
 		if(21)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 	spawned_loot = TRUE
-	qdel(I)
+	qdel(item)
 	to_chat(user, "<span class='notice'>You disable the magic lock, revealing the loot.</span>")
 	return TRUE
 
