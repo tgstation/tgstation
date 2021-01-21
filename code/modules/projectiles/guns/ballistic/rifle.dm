@@ -71,6 +71,7 @@
 		spread = 36
 		can_bayonet = FALSE
 		update_icon()
+		w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
