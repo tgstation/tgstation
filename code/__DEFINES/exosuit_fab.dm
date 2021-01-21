@@ -1,13 +1,13 @@
-/// Module is compatible with Security Cyborg configurations
-#define BORG_CONFIGURATION_SECURITY 		(1<<0)
-/// Module is compatible with Miner Cyborg configurations
-#define BORG_CONFIGURATION_MINER			(1<<1)
-/// Module is compatible with Janitor Cyborg configurations
-#define BORG_CONFIGURATION_JANITOR			(1<<2)
-/// Module is compatible with Medical Cyborg configurations
-#define BORG_CONFIGURATION_MEDICAL			(1<<3)
-/// Module is compatible with Engineering Cyborg configurations
-#define BORG_CONFIGURATION_ENGINEERING		(1<<4)
+/// Module is compatible with Security Cyborg model
+#define BORG_MODEL_SECURITY 		(1<<0)
+/// Module is compatible with Miner Cyborg model
+#define BORG_MODEL_MINER			(1<<1)
+/// Module is compatible with Janitor Cyborg model
+#define BORG_MODEL_JANITOR			(1<<2)
+/// Module is compatible with Medical Cyborg model
+#define BORG_MODEL_MEDICAL			(1<<3)
+/// Module is compatible with Engineering Cyborg model
+#define BORG_MODEL_ENGINEERING		(1<<4)
 
 /// Module is compatible with Ripley Exosuit models
 #define EXOSUIT_MODULE_RIPLEY		(1<<0)

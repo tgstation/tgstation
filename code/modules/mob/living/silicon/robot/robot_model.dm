@@ -1,11 +1,11 @@
 /***************************************************************************************
- * # robot_configuration
+ * # robot_model
  *
- * Definition of /obj/item/robot_config, which defines behavior for each configuration.
- * Further expanded on in [robot_modules.dm][/obj/item/robot_config/Initialize()].
+ * Definition of /obj/item/robot_model, which defines behavior for each model.
+ * Further expanded on in [robot_modules.dm][/obj/item/robot_model/Initialize()].
  *
  ***************************************************************************************/
-/obj/item/robot_config
+/obj/item/robot_model
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
@@ -15,10 +15,10 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 
-	///Host of this configuration
+	///Host of this model
 	var/mob/living/silicon/robot/robot
 
-	var/configselect_icon = "nomod"
+	var/model_select_icon = "nomod"
 
 	///Produces the icon for the borg and, if no special_light_key is set, the lights
 	var/cyborg_base_icon = "robot"
@@ -37,8 +37,8 @@
 	var/list/storages = list()
 
 // ------------------------------------------ Traits
-	///List of traits that will be applied to the mob if this module is used.
-	var/list/module_traits = null
+	///List of traits that will be applied to the mob if this model is used.
+	var/list/model_traits = null
 
 	var/list/radio_channels = list()
 

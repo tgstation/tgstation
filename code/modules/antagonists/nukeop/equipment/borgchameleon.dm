@@ -87,7 +87,7 @@
 	src.user = user
 	savedName = user.name
 	user.name = friendlyName
-	user.configuration.cyborg_base_icon = disguise
+	user.model.cyborg_base_icon = disguise
 	user.bubble_icon = "robot"
 	active = TRUE
 	user.update_icons()
@@ -106,7 +106,7 @@
 		listeningTo = null
 	do_sparks(5, FALSE, user)
 	user.name = savedName
-	user.configuration.cyborg_base_icon = initial(user.configuration.cyborg_base_icon)
+	user.model.cyborg_base_icon = initial(user.model.cyborg_base_icon)
 	user.bubble_icon = "syndibot"
 	active = FALSE
 	user.update_icons()

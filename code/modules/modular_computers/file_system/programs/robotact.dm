@@ -39,7 +39,7 @@
 	var/mob/living/silicon/robot/borgo = tablet.borgo
 
 	data["name"] = borgo.name
-	data["designation"] = borgo.configuration //Borgo configuration type
+	data["designation"] = borgo.model //Borgo model type
 	data["masterAI"] = borgo.connected_ai //Master AI
 
 	var/charge = 0
@@ -63,7 +63,7 @@
 	//Ability to move. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
 	data["locomotion"] = "[borgo.wires.is_cut(WIRE_LOCKDOWN)?"FAULT":"[borgo.lockcharge?"DISABLED":"ENABLED"]"]"
 	//Configuration wire. FAULT if cut, NOMINAL otherwise
-	data["wireConfiguration"] = "[borgo.wires.is_cut(WIRE_RESET_CONFIGURATION)?"FAULT":"NOMINAL"]"
+	data["wireModule"] = "[borgo.wires.is_cut(WIRE_RESET_MODEL)?"FAULT":"NOMINAL"]"
 	//DEBUG -- Camera(net) wire. FAULT if cut (or no cameranet camera), DISABLED if pulse-disabled, NOMINAL otherwise
 	data["wireCamera"] = "[!borgo.builtInCamera || borgo.wires.is_cut(WIRE_CAMERA)?"FAULT":"[borgo.builtInCamera.can_use()?"NOMINAL":"DISABLED"]"]"
 	//AI wire. FAULT if wire is cut, CONNECTED if connected to AI, READY otherwise

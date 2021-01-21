@@ -26,8 +26,8 @@
 
 	create_modularInterface()
 
-	configuration = new /obj/item/robot_config(src)
-	configuration.rebuild_modules()
+	model = new /obj/item/robot_model(src)
+	model.rebuild_modules()
 
 	if(lawupdate)
 		make_laws()
@@ -69,7 +69,7 @@
 	diag_hud_set_borgcell()
 	logevent("System brought online.")
 
-/mob/living/silicon/robot/configuration/syndicate/Initialize()
+/mob/living/silicon/robot/model/syndicate/Initialize()
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
@@ -80,7 +80,7 @@
 	modularInterface.layer = ABOVE_HUD_PLANE
 	modularInterface.plane = ABOVE_HUD_PLANE
 
-/mob/living/silicon/robot/configuration/syndicate/create_modularInterface()
+/mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
 	return ..()
@@ -112,7 +112,7 @@
 			radio.keyslot.forceMove(T)
 			radio.keyslot = null
 	QDEL_NULL(wires)
-	QDEL_NULL(configuration)
+	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
@@ -129,29 +129,29 @@
 /mob/living/silicon/robot/get_cell()
 	return cell
 
-/mob/living/silicon/robot/proc/pick_configuration()
-	if(configuration.type != /obj/item/robot_config)
+/mob/living/silicon/robot/proc/pick_model()
+	if(model.type != /obj/item/robot_model)
 		return
 
-	if(wires.is_cut(WIRE_RESET_CONFIGURATION))
-		to_chat(src,"<span class='userdanger'>ERROR: Configuration installer reply timeout. Please check internal connections.</span>")
+	if(wires.is_cut(WIRE_RESET_MODEL))
+		to_chat(src,"<span class='userdanger'>ERROR: Model installer reply timeout. Please check internal connections.</span>")
 		return
 
-	var/list/configuration_list = list("Engineering" = /obj/item/robot_config/engineering, \
-	"Medical" = /obj/item/robot_config/medical, \
-	"Miner" = /obj/item/robot_config/miner, \
-	"Janitor" = /obj/item/robot_config/janitor, \
-	"Service" = /obj/item/robot_config/service)
+	var/list/model_list = list("Engineering" = /obj/item/robot_model/engineering, \
+	"Medical" = /obj/item/robot_model/medical, \
+	"Miner" = /obj/item/robot_model/miner, \
+	"Janitor" = /obj/item/robot_model/janitor, \
+	"Service" = /obj/item/robot_model/service)
 	if(!CONFIG_GET(flag/disable_peaceborg))
-		configuration_list["Peacekeeper"] = /obj/item/robot_config/peacekeeper
+		model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
-		configuration_list["Security"] = /obj/item/robot_config/security
+		model_list["Security"] = /obj/item/robot_model/security
 
-	var/input_module = input("Please, select a configuration!", "Robot", null, null) as null|anything in sortList(configuration_list)
-	if(!input_module || configuration.type != /obj/item/robot_config)
+	var/input_model = input("Please, select a model!", "Robot", null, null) as null|anything in sortList(model_list)
+	if(!input_model || model.type != /obj/item/robot_model)
 		return
 
-	configuration.transform_to(configuration_list[input_module])
+	model.transform_to(model_list[input_model])
 
 /mob/living/silicon/robot/proc/updatename(client/C)
 	if(shell)
@@ -232,8 +232,8 @@
 	else
 		. += text("No Cell Inserted!")
 
-	if(configuration)
-		for(var/datum/robot_energy_storage/st in configuration.storages)
+	if(model)
+		for(var/datum/robot_energy_storage/st in model.storages)
 			. += "[st.name]: [st.energy]/[st.max_energy]"
 	if(connected_ai)
 		. += "Master AI: [connected_ai.name]"
@@ -331,16 +331,16 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	icon_state = configuration.cyborg_base_icon
+	icon_state = model.cyborg_base_icon
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
-			eye_lights.icon_state = "[configuration.special_light_key ? "[configuration.special_light_key]":"[configuration.cyborg_base_icon]"]_l"
+			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_l"
 			eye_lights.color = lamp_doom? COLOR_RED : lamp_color
 			eye_lights.plane = 19 //glowy eyes
 		else
-			eye_lights.icon_state = "[configuration.special_light_key ? "[configuration.special_light_key]":"[configuration.cyborg_base_icon]"]_e"
+			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
 			eye_lights.plane = -1
 		eye_lights.icon = icon
@@ -419,7 +419,7 @@
 
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
-	configuration.rebuild_modules()
+	model.rebuild_modules()
 	update_icons()
 	if(emagged)
 		throw_alert("hacked", /atom/movable/screen/alert/hacked)
@@ -521,8 +521,8 @@
 	switch(notifytype)
 		if(NEW_BORG) //New Cyborg
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a></span><br>")
-		if(NEW_CONFIGURATION) //New Configuration
-			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg configuration change detected: [name] has loaded the [designation] configuration.</span><br>")
+		if(NEW_MODEL) //New Model
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.</span><br>")
 		if(RENAME) //New Name
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
 		if(AI_SHELL) //New Shell
@@ -538,7 +538,7 @@
 
 /mob/living/silicon/robot/updatehealth()
 	..()
-	if(!configuration.breakable_modules)
+	if(!model.breakable_modules)
 		return
 
 	/// the current percent health of the robot (-1 to 1)
@@ -644,7 +644,7 @@
 		builtInCamera.c_tag = real_name
 	custom_name = newname
 
-/mob/living/silicon/robot/proc/ResetConfiguration()
+/mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	uneq_all()
 	shown_robot_modules = FALSE
@@ -655,8 +655,8 @@
 		resize = 0.5
 		hasExpanded = FALSE
 		update_transform()
-	logevent("Chassis configuration has been reset.")
-	configuration.transform_to(/obj/item/robot_config)
+	logevent("Chassis model has been reset.")
+	model.transform_to(/obj/item/robot_model)
 
 	// Remove upgrades.
 	for(var/obj/item/borg/upgrade/I in upgrades)
@@ -667,33 +667,33 @@
 
 	return TRUE
 
-/mob/living/silicon/robot/configuration/syndicate/ResetConfiguration()
+/mob/living/silicon/robot/model/syndicate/ResetModel()
 	return
 
-/mob/living/silicon/robot/proc/has_configuration()
-	if(!configuration || configuration.type == /obj/item/robot_config)
+/mob/living/silicon/robot/proc/has_model()
+	if(!model || model.type == /obj/item/robot_model)
 		. = FALSE
 	else
 		. = TRUE
 
 /mob/living/silicon/robot/proc/update_module_innate()
-	designation = configuration.name
+	designation = model.name
 	if(hands)
-		hands.icon_state = configuration.configselect_icon
+		hands.icon_state = model.model_select_icon
 
-	REMOVE_TRAITS_IN(src, CONFIGURATION_TRAIT)
-	if(configuration.module_traits)
-		for(var/trait in configuration.module_traits)
-			ADD_TRAIT(src, trait, CONFIGURATION_TRAIT)
+	REMOVE_TRAITS_IN(src, MODEL_TRAIT)
+	if(model.model_traits)
+		for(var/trait in model.model_traits)
+			ADD_TRAIT(src, trait, MODEL_TRAIT)
 
-	if(configuration.clean_on_move)
+	if(model.clean_on_move)
 		AddElement(/datum/element/cleaning)
 	else
 		RemoveElement(/datum/element/cleaning)
 
-	hat_offset = configuration.hat_offset
+	hat_offset = model.hat_offset
 
-	magpulse = configuration.magpulsing
+	magpulse = model.magpulsing
 	INVOKE_ASYNC(src, .proc/updatename)
 
 
@@ -871,7 +871,7 @@
 
 	if(stat || incapacitated())
 		return
-	if(configuration && !configuration.allow_riding)
+	if(model && !model.allow_riding)
 		M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 		return
 
@@ -904,8 +904,8 @@
 			aicamera.stored[i] = TRUE
 
 /mob/living/silicon/robot/proc/charge(datum/source, amount, repairs)
-	if(configuration)
-		configuration.respawn_consumable(src, amount * 0.005)
+	if(model)
+		model.respawn_consumable(src, amount * 0.005)
 	if(cell)
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)

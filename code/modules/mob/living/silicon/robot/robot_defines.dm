@@ -13,12 +13,12 @@
 	maxHealth = 100
 	health = 100
 	bubble_icon = "robot"
-	designation = "Default" //used for displaying the prefix & getting the current configuration of cyborg
+	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
 	has_limbs = TRUE
 	hud_type = /datum/hud/robot
 
-	///Represents the cyborg's configuration (engineering, medical, etc.)
-	var/obj/item/robot_config/configuration = null
+	///Represents the cyborg's model (engineering, medical, etc.)
+	var/obj/item/robot_model/model = null
 
 	radio = /obj/item/radio/borg
 
@@ -152,56 +152,56 @@
 	shell = TRUE
 	cell = null
 
-/mob/living/silicon/robot/configuration
-	var/set_config = /obj/item/robot_config
+/mob/living/silicon/robot/model
+	var/set_model = /obj/item/robot_model
 
-/mob/living/silicon/robot/configuration/Initialize()
+/mob/living/silicon/robot/model/Initialize()
 	. = ..()
-	configuration.transform_to(set_config)
+	model.transform_to(set_model)
 
 // --------------------- Clown
-/mob/living/silicon/robot/configuration/clown
-	set_config = /obj/item/robot_config/clown
+/mob/living/silicon/robot/model/clown
+	set_model = /obj/item/robot_model/clown
 	icon_state = "clown"
 
 // --------------------- Engineering
-/mob/living/silicon/robot/configuration/engineering
-	set_config = /obj/item/robot_config/engineering
+/mob/living/silicon/robot/model/engineering
+	set_model = /obj/item/robot_model/engineering
 	icon_state = "engineer"
 
 // --------------------- Janitor
-/mob/living/silicon/robot/configuration/janitor
-	set_config = /obj/item/robot_config/janitor
+/mob/living/silicon/robot/model/janitor
+	set_model = /obj/item/robot_model/janitor
 	icon_state = "janitor"
 
 // --------------------- Medical
-/mob/living/silicon/robot/configuration/medical
-	set_config = /obj/item/robot_config/medical
+/mob/living/silicon/robot/model/medical
+	set_model = /obj/item/robot_model/medical
 	icon_state = "medical"
 
 // --------------------- Miner
-/mob/living/silicon/robot/configuration/miner
-	set_config = /obj/item/robot_config/miner
+/mob/living/silicon/robot/model/miner
+	set_model = /obj/item/robot_model/miner
 	icon_state = "miner"
 
 // --------------------- Peacekeeper
-/mob/living/silicon/robot/configuration/peacekeeper
-	set_config = /obj/item/robot_config/peacekeeper
+/mob/living/silicon/robot/model/peacekeeper
+	set_model = /obj/item/robot_model/peacekeeper
 	icon_state = "peace"
 
 // --------------------- Security
-/mob/living/silicon/robot/configuration/security
-	set_config = /obj/item/robot_config/security
+/mob/living/silicon/robot/model/security
+	set_model = /obj/item/robot_model/security
 	icon_state = "sec"
 
 // --------------------- Service (formerly Butler)
-/mob/living/silicon/robot/configuration/service
-	set_config = /obj/item/robot_config/service
+/mob/living/silicon/robot/model/service
+	set_model = /obj/item/robot_model/service
 	icon_state = "brobot"
 
 // ------------------------------------------ Syndie borgs
 // --------------------- Syndicate Assault
-/mob/living/silicon/robot/configuration/syndicate
+/mob/living/silicon/robot/model/syndicate
 	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
 	bubble_icon = "syndibot"
@@ -213,16 +213,16 @@
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
-	set_config = /obj/item/robot_config/syndicate
+	set_model = /obj/item/robot_model/syndicate
 	cell = /obj/item/stock_parts/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
-/mob/living/silicon/robot/configuration/syndicate/proc/show_playstyle()
+/mob/living/silicon/robot/model/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
 // --------------------- Syndicate Medical
-/mob/living/silicon/robot/configuration/syndicate/medical
+/mob/living/silicon/robot/model/syndicate/medical
 	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -230,10 +230,10 @@
 						Your defibrillator paddles can revive operatives through their hardsuits, or can be used on harm intent to shock enemies! \
 						Your energy saw functions as a circular saw, but can be activated to deal more damage, and your operative pinpointer will find and locate fellow nuclear operatives. \
 						<i>Help the operatives secure the disk at all costs!</i></b>"
-	set_config = /obj/item/robot_config/syndicate_medical
+	set_model = /obj/item/robot_model/syndicate_medical
 
 // --------------------- Syndicate Saboteur
-/mob/living/silicon/robot/configuration/syndicate/saboteur
+/mob/living/silicon/robot/model/syndicate/saboteur
 	icon_state = "synd_engi"
 	playstyle_string = "<span class='big bold'>You are a Syndicate saboteur cyborg!</span><br>\
 						<b>You are armed with robust engineering tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -242,9 +242,9 @@
 						Your cyborg chameleon projector allows you to assume the appearance and registered name of a Nanotrasen engineering borg, and undertake covert actions on the station \
 						Be aware that almost any physical contact or incidental damage will break your camouflage \
 						<i>Help the operatives secure the disk at all costs!</i></b>"
-	set_config = /obj/item/robot_config/saboteur
+	set_model = /obj/item/robot_model/saboteur
 
 // --------------------- Kiltborg (Highlander)
-/mob/living/silicon/robot/configuration/syndicate/kiltborg
-	set_config = /obj/item/robot_config/syndicate/kiltborg
+/mob/living/silicon/robot/model/syndicate/kiltborg
+	set_model = /obj/item/robot_model/syndicate/kiltborg
 	icon_state = "peace"

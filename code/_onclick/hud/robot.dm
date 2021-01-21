@@ -13,10 +13,10 @@
 	if(..())
 		return
 	var/mob/living/silicon/robot/R = usr
-	if(R.configuration.type != /obj/item/robot_config)
+	if(R.model.type != /obj/item/robot_model)
 		R.hud_used.toggle_show_robot_modules()
 		return 1
-	R.pick_configuration()
+	R.pick_model()
 
 /atom/movable/screen/robot/module1
 	name = "module1"
@@ -194,7 +194,7 @@
 
 	var/mob/screenmob = viewer || R
 
-	if(!R.configuration)
+	if(!R.model)
 		return
 
 	if(!R.client)
@@ -204,21 +204,21 @@
 		//Modules display is shown
 		screenmob.client.screen += module_store_icon	//"store" icon
 
-		if(!R.configuration.modules)
-			to_chat(usr, "<span class='warning'>Selected configuration has no modules to select!</span>")
+		if(!R.model.modules)
+			to_chat(usr, "<span class='warning'>Selected model has no modules to select!</span>")
 			return
 
 		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = max(CEILING(length(R.configuration.get_inactive_modules()) / 8, 1),1)
+		var/display_rows = max(CEILING(length(R.model.get_inactive_modules()) / 8, 1),1)
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 
 		var/x = -4	//Start at CENTER-4,SOUTH+1
 		var/y = 1
 
-		for(var/atom/movable/A in R.configuration.get_inactive_modules())
+		for(var/atom/movable/A in R.model.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen += A
 			if(x < 0)
@@ -237,7 +237,7 @@
 		//Modules display is hidden
 		screenmob.client.screen -= module_store_icon	//"store" icon
 
-		for(var/atom/A in R.configuration.get_inactive_modules())
+		for(var/atom/A in R.model.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen -= A
 		R.shown_robot_modules = 0

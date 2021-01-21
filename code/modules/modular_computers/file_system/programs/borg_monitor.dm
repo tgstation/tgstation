@@ -43,7 +43,7 @@
 			status = R.stat,
 			shell_discon = shell,
 			charge = R.cell ? round(R.cell.percent()) : null,
-			configuration = R.configuration ? "[R.configuration.name] Configuration" : "No Configuration Detected",
+			module = R.model ? "[R.model.name] Model" : "No Model Detected",
 			upgrades = upgrade,
 			ref = REF(R)
 		)

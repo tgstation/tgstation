@@ -6,7 +6,7 @@
  *
  ***************************************************************************************/
 
-/obj/item/robot_config/Initialize()
+/obj/item/robot_model/Initialize()
 	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)
@@ -17,7 +17,7 @@
 		emag_modules += I
 		emag_modules -= i
 
-/obj/item/robot_config/Destroy()
+/obj/item/robot_model/Destroy()
 	basic_modules.Cut()
 	emag_modules.Cut()
 	modules.Cut()
@@ -25,17 +25,17 @@
 	storages.Cut()
 	return ..()
 
-/obj/item/robot_config/proc/get_usable_modules()
+/obj/item/robot_model/proc/get_usable_modules()
 	. = modules.Copy()
 
-/obj/item/robot_config/proc/get_inactive_modules()
+/obj/item/robot_model/proc/get_inactive_modules()
 	. = list()
 	var/mob/living/silicon/robot/R = loc
 	for(var/m in get_usable_modules())
 		if(!(m in R.held_items))
 			. += m
 
-/obj/item/robot_config/proc/add_module(obj/item/I, nonstandard, requires_rebuild)
+/obj/item/robot_model/proc/add_module(obj/item/I, nonstandard, requires_rebuild)
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/sheet_module = I
 		if(ispath(sheet_module.source, /datum/robot_energy_storage))
@@ -61,7 +61,7 @@
 		rebuild_modules()
 	return I
 
-/obj/item/robot_config/proc/remove_module(obj/item/I, delete_after)
+/obj/item/robot_model/proc/remove_module(obj/item/I, delete_after)
 	basic_modules -= I
 	modules -= I
 	emag_modules -= I
@@ -70,7 +70,7 @@
 	if(delete_after)
 		qdel(I)
 
-/obj/item/robot_config/proc/rebuild_modules() //builds the usable module list from the modules we have
+/obj/item/robot_model/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/R = loc
 	var/list/held_modules = R.held_items.Copy()
 	var/active_module = R.module_active
@@ -91,7 +91,7 @@
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 
-/obj/item/robot_config/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	for(var/datum/robot_energy_storage/st in storages)
 		st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
 
@@ -112,10 +112,10 @@
 
 	R.toner = R.tonermax
 
-/obj/item/robot_config/proc/get_or_create_estorage(storage_type)
+/obj/item/robot_model/proc/get_or_create_estorage(storage_type)
 	return (locate(storage_type) in storages) || new storage_type(src)
 
-/obj/item/robot_config/emp_act(severity)
+/obj/item/robot_model/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
@@ -124,14 +124,14 @@
 	..()
 
 // --------------------- Transformations
-/obj/item/robot_config/proc/transform_to(new_config_type)
+/obj/item/robot_model/proc/transform_to(new_config_type)
 	var/mob/living/silicon/robot/R = loc
-	var/obj/item/robot_config/RM = new new_config_type(R)
+	var/obj/item/robot_model/RM = new new_config_type(R)
 	RM.robot = R
 	if(!RM.be_transformed_to(src))
 		qdel(RM)
 		return
-	R.configuration = RM
+	R.model = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
 	R.radio.recalculateChannels()
@@ -140,14 +140,14 @@
 	qdel(src)
 	return RM
 
-/obj/item/robot_config/proc/be_transformed_to(obj/item/robot_config/old_config)
-	for(var/i in old_config.added_modules)
+/obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model)
+	for(var/i in old_model.added_modules)
 		added_modules += i
-		old_config.added_modules -= i
-	did_feedback = old_config.did_feedback
+		old_model.added_modules -= i
+	did_feedback = old_model.did_feedback
 	return TRUE
 
-/obj/item/robot_config/proc/do_transform_animation()
+/obj/item/robot_model/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
 	if(R.hat)
 		R.hat.forceMove(get_turf(R))
@@ -156,7 +156,7 @@
 	R.setDir(SOUTH)
 	do_transform_delay()
 
-/obj/item/robot_config/proc/do_transform_delay()
+/obj/item/robot_model/proc/do_transform_delay()
 	var/mob/living/silicon/robot/R = loc
 	var/prev_lockcharge = R.lockcharge
 	sleep(1)
@@ -165,7 +165,7 @@
 	if(locked_transform)
 		R.SetLockdown(TRUE)
 		R.set_anchored(TRUE)
-	R.logevent("Chassis configuration has been set to [name].")
+	R.logevent("Chassis model has been set to [name].")
 	sleep(1)
 	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
@@ -176,31 +176,31 @@
 	R.notransform = FALSE
 	R.updatehealth()
 	R.update_icons()
-	R.notify_ai(NEW_CONFIGURATION)
+	R.notify_ai(NEW_MODEL)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
-	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.configuration)
+	SSblackbox.record_feedback("tally", "cyborg_modules", 1, R.model)
 
 /**
  * Checks if we are allowed to interact with a radial menu
  *
  * Arguments:
  * * user The cyborg mob interacting with the menu
- * * old_config The old cyborg's configuration
+ * * old_model The old cyborg's model
  */
-/obj/item/robot_config/proc/check_menu(mob/living/silicon/robot/user, obj/item/robot_config/old_config)
+/obj/item/robot_model/proc/check_menu(mob/living/silicon/robot/user, obj/item/robot_model/old_model)
 	if(!istype(user))
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
-	if(user.configuration != old_config)
+	if(user.model != old_model)
 		return FALSE
 	return TRUE
 
 
-// ------------------------------------------ Setting base configuration modules
+// ------------------------------------------ Setting base model modules
 // --------------------- Clown
-/obj/item/robot_config/clown
+/obj/item/robot_model/clown
 	name = "Clown"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -223,12 +223,12 @@
 	emag_modules = list(
 		/obj/item/reagent_containers/borghypo/clown/hacked,
 		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
-	configselect_icon = "service"
+	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
 
 // --------------------- Engineering
-/obj/item/robot_config/engineering
+/obj/item/robot_model/engineering
 	name = "Engineering"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -257,12 +257,12 @@
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
-	configselect_icon = "engineer"
+	model_select_icon = "engineer"
 	magpulsing = TRUE
 	hat_offset = -4
 
 // --------------------- Janitor
-/obj/item/robot_config/janitor
+/obj/item/robot_model/janitor
 	name = "Janitor"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -282,7 +282,7 @@
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
 	cyborg_base_icon = "janitor"
-	configselect_icon = "janitor"
+	model_select_icon = "janitor"
 	hat_offset = -5
 	clean_on_move = TRUE
 
@@ -295,7 +295,7 @@
 	name = "lube spray"
 	list_reagents = list(/datum/reagent/lube = 250)
 
-/obj/item/robot_config/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/robot_model/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/lightreplacer/LR = locate(/obj/item/lightreplacer) in basic_modules
 	if(LR)
@@ -311,7 +311,7 @@
 		CL.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 
 // --------------------- Medical
-/obj/item/robot_config/medical
+/obj/item/robot_model/medical
 	name = "Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -338,12 +338,12 @@
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	cyborg_base_icon = "medical"
-	configselect_icon = "medical"
-	module_traits = list(TRAIT_PUSHIMMUNE)
+	model_select_icon = "medical"
+	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 // --------------------- Mining
-/obj/item/robot_config/miner
+/obj/item/robot_model/miner
 	name = "Miner"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -361,18 +361,18 @@
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "miner"
-	configselect_icon = "miner"
+	model_select_icon = "miner"
 	hat_offset = 0
 	var/obj/item/t_scanner/adv_mining_scanner/cyborg/mining_scanner //built in memes.
 
-/obj/item/robot_config/miner/be_transformed_to(obj/item/robot_config/old_config)
+/obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model)
 	var/mob/living/silicon/robot/cyborg = loc
 	var/list/miner_icons = list(
 		"Asteroid Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "minerOLD"),
 		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin"),
 		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner")
 		)
-	var/miner_robot_icon = show_radial_menu(cyborg, cyborg, miner_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_config), radius = 38, require_near = TRUE)
+	var/miner_robot_icon = show_radial_menu(cyborg, cyborg, miner_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
 	switch(miner_robot_icon)
 		if("Asteroid Miner")
 			cyborg_base_icon = "minerOLD"
@@ -385,17 +385,17 @@
 			return FALSE
 	return ..()
 
-/obj/item/robot_config/miner/rebuild_modules()
+/obj/item/robot_model/miner/rebuild_modules()
 	. = ..()
 	if(!mining_scanner)
 		mining_scanner = new(src)
 
-/obj/item/robot_config/miner/Destroy()
+/obj/item/robot_model/miner/Destroy()
 	QDEL_NULL(mining_scanner)
 	return ..()
 
 // --------------------- Peacekeeper
-/obj/item/robot_config/peacekeeper
+/obj/item/robot_model/peacekeeper
 	name = "Peacekeeper"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -408,17 +408,17 @@
 		/obj/item/borg/projectile_dampen)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	cyborg_base_icon = "peace"
-	configselect_icon = "standard"
-	module_traits = list(TRAIT_PUSHIMMUNE)
+	model_select_icon = "standard"
+	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = -2
 
-/obj/item/robot_config/peacekeeper/do_transform_animation()
+/obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
 	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
 // --------------------- Security
-/obj/item/robot_config/security
+/obj/item/robot_model/security
 	name = "Security"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -430,16 +430,16 @@
 	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	cyborg_base_icon = "sec"
-	configselect_icon = "security"
-	module_traits = list(TRAIT_PUSHIMMUNE)
+	model_select_icon = "security"
+	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
-/obj/item/robot_config/security/do_transform_animation()
+/obj/item/robot_model/security/do_transform_animation()
 	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security configuration, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
-/obj/item/robot_config/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/robot_model/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
 	if(T)
@@ -451,7 +451,7 @@
 			T.charge_timer = 0
 
 // --------------------- Service
-/obj/item/robot_config/service
+/obj/item/robot_model/service
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -474,17 +474,17 @@
 		/obj/item/borg/apparatus/beaker/service)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
-	configselect_icon = "service"
+	model_select_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
 
-/obj/item/robot_config/service/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
 	if(O)
 		O.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
-/obj/item/robot_config/service/be_transformed_to(obj/item/robot_config/old_config)
+/obj/item/robot_model/service/be_transformed_to(obj/item/robot_model/old_model)
 	var/mob/living/silicon/robot/cyborg = loc
 	var/list/service_icons = list(
 		"Bro" = image(icon = 'icons/mob/robots.dmi', icon_state = "brobot"),
@@ -493,7 +493,7 @@
 		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat"),
 		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f")
 		)
-	var/service_robot_icon = show_radial_menu(cyborg, cyborg, service_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_config), radius = 38, require_near = TRUE)
+	var/service_robot_icon = show_radial_menu(cyborg, cyborg, service_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
 	switch(service_robot_icon)
 		if("Bro")
 			cyborg_base_icon = "brobot"
@@ -515,7 +515,7 @@
 
 // ------------------------------------------ Syndicate
 // --------------------- Syndicate Assault
-/obj/item/robot_config/syndicate
+/obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -528,22 +528,22 @@
 		/obj/item/pinpointer/syndicate_cyborg)
 
 	cyborg_base_icon = "synd_sec"
-	configselect_icon = "malf"
-	module_traits = list(TRAIT_PUSHIMMUNE)
+	model_select_icon = "malf"
+	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
-/obj/item/robot_config/syndicate/rebuild_modules()
+/obj/item/robot_model/syndicate/rebuild_modules()
 	..()
 	var/mob/living/silicon/robot/Syndi = loc
 	Syndi.faction  -= "silicon" //ai turrets
 
-/obj/item/robot_config/syndicate/remove_module(obj/item/I, delete_after)
+/obj/item/robot_model/syndicate/remove_module(obj/item/I, delete_after)
 	..()
 	var/mob/living/silicon/robot/Syndi = loc
 	Syndi.faction += "silicon" //ai is your bff now!
 
 // --------------------- Syndicate Medical
-/obj/item/robot_config/syndicate_medical
+/obj/item/robot_model/syndicate_medical
 	name = "Syndicate Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -567,12 +567,12 @@
 		/obj/item/organ_storage)
 
 	cyborg_base_icon = "synd_medical"
-	configselect_icon = "malf"
-	module_traits = list(TRAIT_PUSHIMMUNE)
+	model_select_icon = "malf"
+	model_traits = list(TRAIT_PUSHIMMUNE)
 	hat_offset = 3
 
 // --------------------- Syndicate Saboteur
-/obj/item/robot_config/saboteur
+/obj/item/robot_model/saboteur
 	name = "Syndicate Saboteur"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
@@ -599,25 +599,25 @@
 		)
 
 	cyborg_base_icon = "synd_engi"
-	configselect_icon = "malf"
-	module_traits = list(TRAIT_PUSHIMMUNE)
+	model_select_icon = "malf"
+	model_traits = list(TRAIT_PUSHIMMUNE)
 	magpulsing = TRUE
 	hat_offset = -4
 	canDispose = TRUE
 
 // --------------------- Kiltborg
-/obj/item/robot_config/syndicate/kiltborg
+/obj/item/robot_model/syndicate/kiltborg
 	name = "Highlander"
 	basic_modules = list(
 		/obj/item/claymore/highlander/robot,
 		/obj/item/pinpointer/nuke,)
-	configselect_icon = "kilt"
+	model_select_icon = "kilt"
 	cyborg_base_icon = "kilt"
 	hat_offset = -2
 	breakable_modules = FALSE
 	locked_transform = FALSE //GO GO QUICKLY AND SLAUGHTER THEM ALL
 
-/obj/item/robot_config/syndicate/kiltborg/be_transformed_to(obj/item/robot_config/old_config)
+/obj/item/robot_model/syndicate/kiltborg/be_transformed_to(obj/item/robot_model/old_model)
 	. = ..()
 	qdel(robot.radio)
 	robot.radio = new /obj/item/radio/borg/syndicate(robot)
@@ -627,7 +627,7 @@
 	var/obj/item/pinpointer/nuke/diskyfinder = locate(/obj/item/pinpointer/nuke) in basic_modules
 	diskyfinder.attack_self(robot)
 
-/obj/item/robot_config/syndicate/kiltborg/do_transform_delay() //AUTO-EQUIPPING THESE TOOLS ANY EARLIER CAUSES RUNTIMES OH YEAH
+/obj/item/robot_model/syndicate/kiltborg/do_transform_delay() //AUTO-EQUIPPING THESE TOOLS ANY EARLIER CAUSES RUNTIMES OH YEAH
 	. = ..()
 	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
 	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
@@ -642,7 +642,7 @@
 	var/recharge_rate = 1000
 	var/energy
 
-/datum/robot_energy_storage/New(obj/item/robot_config/R = null)
+/datum/robot_energy_storage/New(obj/item/robot_model/R = null)
 	energy = max_energy
 	if(R)
 		R.storages |= src

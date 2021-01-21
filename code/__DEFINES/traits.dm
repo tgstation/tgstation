@@ -480,8 +480,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NO_TONGUE_TRAIT "no_tongue_trait"
 
 /// Trait granted by [/mob/living/silicon/robot]
-/// Traits applied to a silicon mob by their configuration.
-#define CONFIGURATION_TRAIT "configuration_trait"
+/// Traits applied to a silicon mob by their model.
+#define MODEL_TRAIT "model_trait"
 
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
