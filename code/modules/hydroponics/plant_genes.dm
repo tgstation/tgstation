@@ -493,7 +493,7 @@
 		var/obj/machinery/hydroponics/HY = locate() in get_step(H, step_dir)
 		if(HY && prob(15))
 			if(HY.myseed) // check if there is something in the tray.
-				if(HY.myseed.type == H.myseed.type && HY.dead != 0)
+				if(HY.myseed.type == H.myseed.type)
 					continue //It should not destroy its owm kind.
 				qdel(HY.myseed)
 				HY.myseed = null
