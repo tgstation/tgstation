@@ -63,9 +63,13 @@ $shadow-offset: 0 0 !default;
 
 .Section--fill .Section__rest {
   flex-grow: 1;
+
+  .Section__content {
+    height: 100%;
+  }
 }
 
-.Section--fill .Section__content {
+.Section--fill.Section--scrollable .Section__content {
   position: absolute;
   top: 0;
   left: 0;
