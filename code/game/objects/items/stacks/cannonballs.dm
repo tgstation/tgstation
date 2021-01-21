@@ -4,6 +4,7 @@
 	icon_state = "cannonballs"
 	max_amount = 14
 	singular_name = "cannonball"
+	merge_type = /obj/item/stack/cannonball
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/alloy/plasteel=MINERAL_MATERIAL_AMOUNT)
@@ -28,6 +29,7 @@
 	desc = "An explosive anti-materiel and counter-battery projectile cannonball. Makes great work out of any wall, for easy entrances."
 	icon_state = "cannonballs"
 	color = "#FF0000"
+	merge_type = /obj/item/stack/cannonball/shellball
 	projectile_type = /obj/projectile/bullet/cannonball/explosive
 
 /obj/item/stack/cannonball/shellball/fourteen
