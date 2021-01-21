@@ -179,7 +179,7 @@
 	return
 
 /// Set mode result and news report here.
-/// Only called if ruleset is flagged as HIGHLANDER_RULESET
+/// Only called if ruleset is flagged as HIGH_IMPACT_RULESET
 /datum/dynamic_ruleset/proc/round_result()
 
 //////////////////////////////////////////////

@@ -81,7 +81,7 @@
 	delay = 1 MINUTES	// Prevents rule start while head is offstation.
 	cost = 20
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
-	flags = HIGHLANDER_RULESET
+	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE

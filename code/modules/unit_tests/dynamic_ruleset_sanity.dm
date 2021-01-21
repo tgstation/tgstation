@@ -6,7 +6,7 @@
 		var/datum/dynamic_ruleset/roundstart/ruleset = _ruleset
 
 		var/has_scaling_cost = initial(ruleset.scaling_cost)
-		var/is_lone = initial(ruleset.flags) & (LONE_RULESET | HIGHLANDER_RULESET)
+		var/is_lone = initial(ruleset.flags) & (LONE_RULESET | HIGH_IMPACT_RULESET)
 
 		if (has_scaling_cost && is_lone)
 			Fail("[ruleset] has a scaling_cost, but is also a lone/highlander ruleset.")

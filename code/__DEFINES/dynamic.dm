@@ -2,7 +2,7 @@
 #define ONLY_RULESET 1
 
 /// Only one ruleset with this flag will be picked.
-#define HIGHLANDER_RULESET 2
+#define HIGH_IMPACT_RULESET 2
 
 /// This ruleset can only be picked once. Anything that does not have a scaling_cost MUST have this.
 #define LONE_RULESET 4

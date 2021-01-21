@@ -4,11 +4,11 @@
 #define REPORT_NEG_DIVERGENCE -15
 #define REPORT_POS_DIVERGENCE 15
 
-// Are HIGHLANDER_RULESETs allowed to stack?
+// Are HIGH_IMPACT_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // If enabled does not accept or execute any rulesets.
 GLOBAL_VAR_INIT(dynamic_forced_extended, FALSE)
-// How high threat is required for HIGHLANDER_RULESETs stacking.
+// How high threat is required for HIGH_IMPACT_RULESETs stacking.
 // This is independent of dynamic_no_stacking.
 GLOBAL_VAR_INIT(dynamic_stacking_limit, 90)
 // List of forced roundstart rulesets.
@@ -70,8 +70,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
 	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
-	/// If a highlander executed.
-	var/highlander_executed = FALSE
+	/// If a high impact ruleset was executed. Only one will run at a time in most circumstances.
+	var/high_impact_ruleset_executed = FALSE
 	/// If a only ruleset has been executed.
 	var/only_ruleset_executed = FALSE
 	/// Dynamic configuration, loaded on pre_setup
@@ -218,11 +218,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	admin_panel() // Refreshes the window
 
-// Checks if there are HIGHLANDER_RULESETs and calls the rule's round_result() proc
+// Checks if there are HIGH_IMPACT_RULESETs and calls the rule's round_result() proc
 /datum/game_mode/dynamic/set_round_result()
-	// If it got to this part, just pick one highlander if it exists
+	// If it got to this part, just pick one high impact ruleset if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags & HIGHLANDER_RULESET)
+		if(rule.flags & HIGH_IMPACT_RULESET)
 			return rule.round_result()
 	return ..()
 
@@ -461,10 +461,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		rulesets_picked[ruleset] += 1
 
-		if (ruleset.flags & HIGHLANDER_RULESET)
+		if (ruleset.flags & HIGH_IMPACT_RULESET)
 			for (var/_other_ruleset in drafted_rules)
 				var/datum/dynamic_ruleset/other_ruleset = _other_ruleset
-				if (other_ruleset.flags & HIGHLANDER_RULESET)
+				if (other_ruleset.flags & HIGH_IMPACT_RULESET)
 					drafted_rules[other_ruleset] = null
 
 		if (ruleset.flags & LONE_RULESET)
@@ -484,8 +484,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [ruleset.scaled_times]/[scaled_times] times." : ""]"
 		if(ruleset.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
-		if(ruleset.flags & HIGHLANDER_RULESET)
-			highlander_executed = TRUE
+		if(ruleset.flags & HIGH_IMPACT_RULESET)
+			high_impact_ruleset_executed = TRUE
 		executed_rules += ruleset
 		return ruleset.cost + added_threat
 	else
@@ -521,10 +521,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if(drafted_rules.len <= 0)
 				return FALSE
 			rule = pickweight(drafted_rules)
-		// Check if the ruleset is highlander and if a highlander ruleset has been executed
-		else if(rule.flags & HIGHLANDER_RULESET)
+		// Check if the ruleset is high impact and if a high impact ruleset has been executed
+		else if(rule.flags & HIGH_IMPACT_RULESET)
 			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-				if(highlander_executed)
+				if(high_impact_ruleset_executed)
 					drafted_rules -= rule
 					if(drafted_rules.len <= 0)
 						return FALSE
@@ -559,10 +559,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		// Check if a blocking ruleset has been executed.
 		else if(check_blocking(new_rule.blocking_rules, executed_rules))
 			return FALSE
-		// Check if the ruleset is highlander and if a highlander ruleset has been executed
-		else if(new_rule.flags & HIGHLANDER_RULESET)
+		// Check if the ruleset is high impact and if a high impact ruleset has been executed
+		else if(new_rule.flags & HIGH_IMPACT_RULESET)
 			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-				if(highlander_executed)
+				if(high_impact_ruleset_executed)
 					return FALSE
 
 	var/population = current_players[CURRENT_LIVING_PLAYERS].len
@@ -573,8 +573,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
 			new_rule.pre_execute(population)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
-				if(new_rule.flags & HIGHLANDER_RULESET)
-					highlander_executed = TRUE
+				if(new_rule.flags & HIGH_IMPACT_RULESET)
+					high_impact_ruleset_executed = TRUE
 				else if(new_rule.flags & ONLY_RULESET)
 					only_ruleset_executed = TRUE
 				log_game("DYNAMIC: Making a call to a specific ruleset...[new_rule.name]!")
@@ -594,8 +594,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	rule.pre_execute(current_players[CURRENT_LIVING_PLAYERS].len)
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		if(rule.flags & HIGHLANDER_RULESET)
-			highlander_executed = TRUE
+		if(rule.flags & HIGH_IMPACT_RULESET)
+			high_impact_ruleset_executed = TRUE
 		else if(rule.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		if(rule.ruletype == "Latejoin")
@@ -719,7 +719,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && mid_round_budget >= rule.cost)
 				// No stacking : only one round-ender, unless threat level > stacking_limit.
 				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
-					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
+					if(rule.flags & HIGH_IMPACT_RULESET && high_impact_ruleset_executed)
 						continue
 
 				rule.candidates = list(newPlayer)

@@ -19,7 +19,7 @@ In `/datum/game_mode/dynamic/proc/roundstart()` (called when no admin chooses th
 
 - All roundstart rulesets (remember, `/datum/dynamic_ruleset/roundstart`) are put into an associative list with their weight as the values (`drafted_rules`).
 - Until there is either no roundstart budget left, or until there is no ruleset we can choose from with the available threat, a `pickweight` is done based on the drafted_rules. If the same threat is picked twice, it will "scale up". The meaning of this depends on the ruleset itself, using the `scaled_times` variable; traitors for instance will create more the higher they scale.
-	- If a ruleset is chosen with the `HIGHLANDER_RULESET` in its `flags`, then all other `HIGHLANDER_RULESET`s will be removed from `drafted_rules`. This is so that only one can ever be chosen.
+	- If a ruleset is chosen with the `HIGH_IMPACT_RULESET` in its `flags`, then all other `HIGH_IMPACT_RULESET`s will be removed from `drafted_rules`. This is so that only one can ever be chosen.
 	- If a ruleset has `LONE_RULESET` in its `flags`, then it will be removed from `drafted_rules`. This is to ensure it will only ever be picked once. An example of this in use is Wizard, to avoid creating multiple wizards.
 - After all roundstart threats are chosen, `/datum/dynamic_ruleset/proc/picking_roundstart_rule` is called for each, passing in the ruleset and the number of times it is scaled.
 	- In this stage, `pre_execute` is called, which is the function that will determine what players get what antagonists. If this function returns FALSE for whatever reason (in the case of an error), then its threat is refunded.
