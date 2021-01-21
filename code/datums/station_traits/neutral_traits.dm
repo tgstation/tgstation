@@ -19,5 +19,5 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 5
 	show_in_report = TRUE
-	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not mettle with this experiment."
+	report_message = "For experimental purposes, this station AI might show divergence from default lawset. Do not meddle with this experiment."
 	trait_to_give = STATION_TRAIT_UNIQUE_AI
