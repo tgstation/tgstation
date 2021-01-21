@@ -127,6 +127,9 @@
 		return
 	if(ismonkey(user))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
+		if(require_twohands)
+			to_chat(user, "<span class='notice'>[parent] is too cumbersome to carry in one hand!</span>")
+			user.dropItemToGround(parent, force=TRUE)
 		return
 	if(user.get_inactive_held_item())
 		if(require_twohands)
