@@ -20,7 +20,7 @@
 
 	COOLDOWN_START(src, party_cooldown, rand(PARTY_COOLDOWN_LENGTH_MIN, PARTY_COOLDOWN_LENGTH_MAX))
 
-	var/area/area_to_spawn_in = pick(bar_areas)
+	var/area/area_to_spawn_in = pick(GLOB.bar_areas)
 	var/turf/T = pick(area_to_spawn_in.contents)
 
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
@@ -28,7 +28,7 @@
 	new pizza_to_spawn(toLaunch)
 	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/food/drinks/beer(toLaunch)
-	new /obj/effect/pod_landingzone(drop_location(), toLaunch)
+	new /obj/effect/pod_landingzone(T, toLaunch)
 
 /datum/station_trait/galactic_grant
 	name = "Galactic grant"
