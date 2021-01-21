@@ -69,6 +69,7 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/onCrossed)
 	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
+	RegisterSignal(parent, COMSIG_OOZE_EAT, .proc/use_by_ooze)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -458,3 +459,20 @@ Behavior that's still missing from this component that original food items had t
 		for (var/t in E.tastes)
 			tastes[t] += E.tastes[t]
 	foodtypes |= E.foodtypes
+
+///Response to an ooze trying to eat the parent.Tries to transfer the parents reagents then delete it
+/datum/component/edible/proc/use_by_ooze(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	var/atom/eaten_atom = parent
+
+	if(!istype(user, /mob/living/simple_animal/hostile/ooze))
+		return
+	var/mob/living/simple_animal/hostile/ooze/hungry_ooze = user
+
+	if(foodtypes & hungry_ooze.ooze_diet)
+		hungry_ooze.taste(eaten_atom.reagents)
+		eaten_atom.reagents.trans_to(hungry_ooze, eaten_atom.reagents.total_volume, transfered_by = hungry_ooze)
+		hungry_ooze.visible_message("<span class='warning>[hungry_ooze] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
+		playsound(hungry_ooze.loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+		qdel(eaten_atom)

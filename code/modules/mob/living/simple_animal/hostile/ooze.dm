@@ -43,21 +43,34 @@
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
-	if(!check_edible(I))
+	if(!IS_EDIBLE(I))
 		return ..()
-	eat_atom(I)
+
+	SEND_SIGNAL(I, COMSIG_OOZE_EAT, src)
+
+	if(I)
+		return ..()
 
 /mob/living/simple_animal/hostile/ooze/AttackingTarget(atom/attacked_target)
-	if(!check_edible(attacked_target))
+	if(!IS_EDIBLE(attacked_target))
 		return ..()
-	eat_atom(attacked_target)
+
+	SEND_SIGNAL(attacked_target, COMSIG_OOZE_EAT, src)
+
+	if(attacked_target) //if the food was not eaten due to being unpalatable proceed as usual.
+		return ..()
 
 /mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	if(!check_edible(A))
+
+	if(!IS_EDIBLE(A))
 		return ..()
-	eat_atom(A)
+
+	SEND_SIGNAL(A, COMSIG_OOZE_EAT, src)
+
+	if(A)
+		return ..()
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
 /mob/living/simple_animal/hostile/ooze/Life()
@@ -81,28 +94,11 @@
 	if(ooze_nutrition <= 0)
 		adjustBruteLoss(0.5)
 
-///Returns whether or not the supplied movable atom is edible.
-/mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/potential_food)
-	if(ismob(potential_food))
-		return FALSE
-	if(!IS_EDIBLE(potential_food))
-		return FALSE
-	if(SIGNAL(ooze_diet))
-		return TRUE
-	else
-		return FALSE
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
 /mob/living/simple_animal/hostile/ooze/proc/adjust_ooze_nutrition(amount)
 	ooze_nutrition = clamp(ooze_nutrition + amount, 0, 500)
 	updateNutritionDisplay()
-
-///Tries to transfer the atoms reagents then delete it
-/mob/living/simple_animal/hostile/ooze/proc/eat_atom(atom/eaten_atom)
-	eaten_atom.reagents.trans_to(src, eaten_atom.reagents.total_volume, transfered_by = src)
-	src.visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", "<span class='notice'>You eat [eaten_atom].</span>")
-	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	qdel(eaten_atom)
 
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
@@ -312,15 +308,6 @@
 	. = ..()
 	QDEL_NULL(gel_cocoon)
 	QDEL_NULL(globules)
-
-/mob/living/simple_animal/hostile/ooze/grapes/check_edible(atom/movable/potential_food)
-	if(ismob(potential_food))
-		return FALSE
-	var/foodtype
-	if(istype(potential_food, /obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/meal = potential_food
-		foodtype = meal.foodtype
-	return foodtype & MEAT || foodtype & VEGETABLES //Dont forget to add edible component compat here later
 
 /mob/living/simple_animal/hostile/ooze/grapes/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

@@ -517,6 +517,11 @@
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
 	#define COMPONENT_HOSTILE_NO_ATTACK (1<<0)
 
+// /mob/living/simple_animal/hostile/ooze signals
+
+///Sent when an ooze attemps to eat a potentially edible atom.(user)
+#define COMSIG_OOZE_EAT "ooze_eat"
+
 // /obj signals
 
 ///from base of [/obj/proc/take_damage]: (damage_amount, damage_type, damage_flag, sound_effect, attack_dir, aurmor_penetration)
