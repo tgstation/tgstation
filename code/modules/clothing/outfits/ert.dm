@@ -344,7 +344,7 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-datum/outfit/centcom/centcom_intern/unarmed
+/datum/outfit/centcom/centcom_intern/unarmed
 	name = "CentCom Intern (Unarmed)"
 	belt = null
 	l_hand = null
