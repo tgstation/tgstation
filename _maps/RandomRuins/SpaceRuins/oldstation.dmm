@@ -6249,7 +6249,6 @@
 /area/template_noop)
 "oS" = (
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
@@ -6273,8 +6272,6 @@
 "oV" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -6304,8 +6301,6 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "oY" = (
 /obj/item/stack/rods,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
@@ -6806,7 +6801,6 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "Cj" = (
@@ -6829,10 +6823,6 @@
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betastorage)
-"CB" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
 "Dg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6932,11 +6922,6 @@
 /obj/item/geiger_counter,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
-"FG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation)
 "FH" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -7163,6 +7148,11 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/atmo)
+"Mu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation)
 "MG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -7670,6 +7660,10 @@
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 25
 	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/deltacorridor)
+"ZB" = (
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 
@@ -9302,7 +9296,7 @@ aT
 aT
 bb
 aA
-FG
+Mu
 aY
 aG
 bQ
@@ -11661,7 +11655,7 @@ he
 os
 jf
 AF
-CB
+ZB
 bE
 eZ
 hK
