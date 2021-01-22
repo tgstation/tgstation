@@ -96,15 +96,16 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_clean_weapon)
 
-/obj/item/gun/ballistic/rifle/boltaction/proc/try_clean_weapon(datum/source, obj/item/item, mob/user, params)
+/obj/item/gun/ballistic/rifle/boltaction/proc/check_attack_item(datum/source, obj/item/item, mob/user, params)
 	SIGNAL_HANDLER
-
 	if(istype(item, /obj/item/gun_maintenance_supplies))
-		if(do_after(user, 10 SECONDS, target = source))
-			user.visible_message("<span class='notice'>[user] finishes maintenance of [source].</span>")
-			Jamming_Chance = 10
-			qdel(item)
-			stoplag(1)
+		INVOKE_ASYNC(src, .proc/try_clean_weapon, item, user)
+
+/obj/item/gun/ballistic/rifle/boltaction/proc/try_clean_weapon(datum/source, obj/item/item, mob/user, params)
+	if(do_after(user, 10 SECONDS, target = source))
+		user.visible_message("<span class='notice'>[user] finishes maintenance of [source].</span>")
+		Jamming_Chance = 10
+		qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
