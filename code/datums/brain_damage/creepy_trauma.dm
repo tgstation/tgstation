@@ -115,15 +115,33 @@
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
-	var/chosen_victim
-	var/list/possible_targets = list()
-	var/list/viable_minds = list()
+	var/list/viable_minds = list() //The first list, which excludes hijinks
+	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
+	var/list/special_pool = list() //The special list, for quirk-based
+	var/chosen_victim  //The obsession target
+
 	for(var/mob/Player in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
 		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner && SSjob.GetJob(Player.mind.assigned_role))
 			viable_minds += Player.mind
 	for(var/datum/mind/possible_target in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
+			if(HAS_TRAIT(owner, TRAIT_FAN_MIME) && possible_target.assigned_role == "Mime")
+				special_pool += possible_target.current
+				continue
+			if(HAS_TRAIT(owner, TRAIT_FAN_CLOWN) && possible_target.assigned_role == "Clown")
+				special_pool += possible_target.current
+				continue
+			if(HAS_TRAIT(owner, TRAIT_SPIRITUAL) && possible_target.assigned_role == "Chaplain")
+				special_pool += possible_target.current
+				continue
 			possible_targets += possible_target.current
+
+	//Do we have any special target?
+	if(length(special_pool))
+		chosen_victim = pick(special_pool)
+		return chosen_victim
+
+	//If not, pick any other ordinary target
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
 	return chosen_victim
