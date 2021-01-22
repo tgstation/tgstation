@@ -63,9 +63,9 @@
 	knife_x_offset = 27
 	knife_y_offset = 13
 	can_be_sawn_off = TRUE
-	var/Jamming_Chance = 20
-	var/Unjam_Chance = 10
-	var/Jammed = FALSE
+	var/jamming_chance = 20
+	var/unjam_chance = 10
+	var/jammed = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
@@ -75,21 +75,21 @@
 		update_icon()
 
 /obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
-	if(Jammed)
-		if(prob(Unjam_Chance))
-			Jammed = FALSE
-			Unjam_Chance = 10
+	if(jammed)
+		if(prob(unjam_chance))
+			jammed = FALSE
+			unjam_chance = 10
 		else
-			Unjam_Chance += 10
+			unjam_chance += 10
 			to_chat(user, "<span class='warning'>[src] is jammed!</span>")
 			return FALSE
 	..()
 
 /obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
 	if(chambered.BB)
-		Jamming_Chance  += 5
-	if(prob(Jamming_Chance))
-		Jammed = TRUE
+		jamming_chance  += 5
+	if(prob(jamming_chance))
+		jammed = TRUE
 	..()
 
 /obj/item/gun/ballistic/rifle/boltaction/Initialize()
@@ -104,7 +104,7 @@
 /obj/item/gun/ballistic/rifle/boltaction/proc/try_clean_weapon(datum/source, obj/item/item, mob/user, params)
 	if(do_after(user, 10 SECONDS, target = source))
 		user.visible_message("<span class='notice'>[user] finishes maintenance of [source].</span>")
-		Jamming_Chance = 10
+		jamming_chance = 10
 		qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
