@@ -100,18 +100,19 @@
 /// Someone's interacting with us by hand, see if they're being nice or mean
 /datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(L.a_intent == INTENT_HELP)
-		if(prob(AI_DOG_PET_FRIEND_PROB))
-			befriend(user)
-		// if the dog has something in their mouth that they're not bringing to someone for whatever reason, have them drop it when pet by a friend
-		if(blackboard[BB_DOG_CARRY_ITEM] && !current_movement_target && (user in blackboard[BB_DOG_FRIENDS]))
-			var/obj/item/carried_item = blackboard[BB_DOG_CARRY_ITEM]
-			pawn.visible_message("<span='danger'>[pawn] drops [carried_item] at [user]'s feet!</span>")
-			// maybe have a dedicated proc for dropping things
-			carried_item.forceMove(get_turf(user))
-			blackboard[BB_DOG_CARRY_ITEM] = null
-	else if(user.a_intent != INTENT_GRAB)
-		unfriend(user)
+	switch(user.a_intent)
+		if(INTENT_HARM || INTENT_DISARM)
+			unfriend(user)
+		if(INTENT_HELP)
+			if(prob(AI_DOG_PET_FRIEND_PROB))
+				befriend(user)
+			// if the dog has something in their mouth that they're not bringing to someone for whatever reason, have them drop it when pet by a friend
+			if(blackboard[BB_DOG_CARRY_ITEM] && !current_movement_target && (user in blackboard[BB_DOG_FRIENDS]))
+				var/obj/item/carried_item = blackboard[BB_DOG_CARRY_ITEM]
+				pawn.visible_message("<span='danger'>[pawn] drops [carried_item] at [user]'s feet!</span>")
+				// maybe have a dedicated proc for dropping things
+				carried_item.forceMove(get_turf(user))
+				blackboard[BB_DOG_CARRY_ITEM] = null
 
 /// Someone is being nice to us, let's make them a friend!
 /datum/ai_controller/dog/proc/befriend(mob/living/new_friend)
