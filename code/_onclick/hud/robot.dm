@@ -257,11 +257,11 @@
 				var/obj/item/I = R.held_items[i]
 				if(I)
 					switch(i)
-						if(1)
+						if(BORG_CHOOSE_MODULE_ONE)
 							I.screen_loc = ui_inv1
-						if(2)
+						if(BORG_CHOOSE_MODULE_TWO)
 							I.screen_loc = ui_inv2
-						if(3)
+						if(BORG_CHOOSE_MODULE_THREE)
 							I.screen_loc = ui_inv3
 						else
 							return

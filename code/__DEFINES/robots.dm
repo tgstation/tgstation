@@ -61,3 +61,8 @@
 #define BORG_MODULE_ALL_DISABLED (1<<0)
 #define BORG_MODULE_TWO_DISABLED (1<<1)
 #define BORG_MODULE_THREE_DISABLED (1<<2)
+
+/// Defines for borg module selection
+#define BORG_CHOOSE_MODULE_ONE 	   1
+#define BORG_CHOOSE_MODULE_TWO 	   2
+#define BORG_CHOOSE_MODULE_THREE   3
