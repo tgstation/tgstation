@@ -508,7 +508,7 @@
 			spread_tray.harvest = FALSE
 			spread_tray.weedlevel = 0 // Reset
 			spread_tray.pestlevel = 0 // Reset
-			HY.update_appearance()
+			spread_tray.update_appearance()
 			spread_tray.visible_message("<span class='warning'>The [our_tray.myseed.plantname] spreads!</span>")
 			if(spread_tray.myseed)
 				spread_tray.name = "[initial(spread_tray.name)] ([spread_tray.myseed.plantname])"
