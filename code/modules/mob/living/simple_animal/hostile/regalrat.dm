@@ -174,7 +174,7 @@
 /datum/action/cooldown/domain
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
-	cooldown_time = 6 SECONDS
+	cooldown_time = 60
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
@@ -204,7 +204,7 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
-	cooldown_time = 8 SECONDS
+	cooldown_time = 80
 	///Checks to see if there are any nearby mice. Does not count Rats.
 
 /datum/action/cooldown/riot/Trigger()
