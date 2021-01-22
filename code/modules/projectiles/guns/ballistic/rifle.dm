@@ -37,7 +37,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
-	if (!bolt_locked)
+	if (!bolt_locked && !istype(A, /obj/item/stack/sheet/cloth))
 		to_chat(user, "<span class='notice'>The bolt is closed!</span>")
 		return
 	return ..()
@@ -87,31 +87,41 @@
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
 
-/obj/item/gun/ballistic/rifle/boltaction/musket
-	name = "maintenance musket"
+/obj/item/gun/ballistic/rifle/boltaction/pipegun
+	name = "pipegun"
 	desc = "An excellent weapon for flushing out tunnel rats and enemy assistants, but its rifling leaves much to be desired."
 	icon_state = "musket"
 	inhand_icon_state = "musket"
 	worn_icon_state = "musket"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/musket
-	initial_calibur = "shotgun"
-	alternative_calibur = "a762"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
+	initial_caliber = "shotgun"
+	alternative_caliber = "a762"
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
 	can_misfire = TRUE
-	misfire_probability = 10
+	misfire_probability = 0
+	misfire_percentage_increment = 5 //Slowly increases every shot
 	can_bayonet = FALSE
 	can_be_sawn_off = FALSE
 	projectile_damage_multiplier = 0.75
 
-/obj/item/gun/ballistic/rifle/boltaction/musket/prime
-	name = "gray maintenance musket"
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/process_chamber(empty_chamber, from_firing, chamber_next_round)
+	. = ..()
+	do_sparks(1, TRUE, src)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
+	name = "regal pipegun"
 	desc = "Older, territorial assistants typically possess more valuable loot."
 	icon_state = "musket_prime"
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "musket_prime"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	can_misfire = FALSE
 	misfire_probability = 0
 	projectile_damage_multiplier = 1
