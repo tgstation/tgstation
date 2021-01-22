@@ -1452,7 +1452,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		to_chat(target, "<span class='danger'>[user] fails to give you a noogie!</span>")
 		return
 
-	if(brutal_noogie)
+	if(!brutal_noogie)
 		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie", /datum/mood_event/noogie)
 	else
 		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie_harsh", /datum/mood_event/noogie_harsh)
