@@ -139,6 +139,21 @@
 		return
 	. = ..()
 
+/obj/item/changeling/id
+	/// Cached flat icon of the ID
+	var/icon/cached_flat_icon
+
+/**
+ * Returns cached flat icon of the ID, creates one if there is not one already cached
+ */
+/obj/item/changeling/id/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
+
+/obj/item/changeling/id/get_examine_string(mob/user, thats = FALSE)
+	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+
 //Change our DNA to that of somebody we've absorbed.
 /datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
