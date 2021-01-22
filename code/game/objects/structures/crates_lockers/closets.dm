@@ -38,6 +38,12 @@
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
 
+	/// Icon used when the closet is secure and locked
+	var/locked_icon = "lock_locked"
+	/// Icon used when the closet is secure and unlocked
+	var/unlocked_icon = "lock_unlocked"
+	/// Icon used when the closet is secure and broken
+	var/off_icon = "lock_off"
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
@@ -71,26 +77,28 @@
 	. = new_overlays
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	luminosity = 0
-	if(!opened)
-		if(icon_door)
-			. += "[icon_door]_door"
+	if(opened)
+		. += icon_door_override ? "[icon_door]_open" : "[icon_state]_open"
+		return
+
+	if(icon_door)
+		. += "[icon_door]_door"
+	else
+		. += "[icon_state]_door"
+
+	if(welded)
+		. += icon_welded
+	if(secure)
+		if(broken)
+			. += off_icon
 		else
-			. += "[icon_state]_door"
-		if(welded)
-			. += icon_welded
-		if(secure && !broken)
 			//Overlay is similar enough for both that we can use the same mask for both
 			luminosity = 1
-			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, locked, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 			if(locked)
-				. += "locked"
+				. += locked_icon
 			else
-				. += "unlocked"
-	else
-		if(icon_door_override)
-			. += "[icon_door]_open"
-		else
-			. += "[icon_state]_open"
+				. += unlocked_icon
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
