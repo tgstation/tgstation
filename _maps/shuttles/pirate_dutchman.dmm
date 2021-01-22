@@ -241,7 +241,10 @@
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
 	},
-/obj/item/katana/cutlass,
+/obj/item/grenade/smokebomb{
+	pixel_x = -5
+	},
+/obj/item/paper/crumpled/muddy/fluff/cannon_instructions,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "dZ" = (
@@ -347,9 +350,11 @@
 /area/shuttle/pirate/flying_dutchman)
 "hV" = (
 /obj/structure/table/wood,
-/obj/item/spear/bonespear,
 /obj/machinery/recharger{
 	pixel_y = 2
+	},
+/obj/item/stack/cannonball/emp{
+	pixel_x = -8
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
@@ -833,10 +838,11 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/grenade/smokebomb{
-	pixel_x = -5
+/obj/item/claymore/cutlass{
+	pixel_x = -4;
+	pixel_y = 4
 	},
-/obj/item/katana/cutlass,
+/obj/item/claymore/cutlass,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Qa" = (
@@ -877,13 +883,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/storage/backpack/duffelbag/syndie/x4{
-	pixel_y = 8
-	},
-/obj/item/stack/cannonball/shellball,
-/obj/item/stack/cannonball/shellball,
-/obj/item/stack/cannonball/shellball,
-/obj/item/stack/cannonball/shellball,
+/obj/item/stack/cannonball/shellball/seven,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "St" = (
@@ -914,9 +914,7 @@
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
 /obj/item/food/grown/sugarcane,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Vm" = (
@@ -969,7 +967,7 @@
 /obj/item/gun/energy/laser,
 /obj/item/megaphone,
 /obj/item/melee/chainofcommand/tailwhip/kitty,
-/obj/item/katana/cutlass,
+/obj/item/claymore/cutlass,
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Ys" = (

@@ -123,6 +123,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/pirate/armored
 	head = /obj/item/clothing/head/bandana/armored
+	ears = /obj/item/radio/headset/syndicate
 	glasses = /obj/item/clothing/glasses/eyepatch
 
 /datum/outfit/pirate/captain
@@ -136,11 +137,11 @@
 	head = /obj/item/clothing/head/helmet/space/pirate/bandana
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
-	ears = /obj/item/radio/headset/syndicate
 	id = /obj/item/card/id
 
 /datum/outfit/pirate/space/captain
 	name = "Space Pirate Captain (EVA)"
+
 	head = /obj/item/clothing/head/helmet/space/pirate
 
 /datum/outfit/pirate/silverscale
