@@ -24,11 +24,20 @@
 
 	component_type = /datum/component/storage/concrete/fish_case
 
+/obj/item/storage/fish_case/Initialize()
+	. = ..()
+	ADD_TRAIT(src,TRAIT_FISH_SAFE_STORAGE,TRAIT_GENERIC)
+
 /// Fish case with single random fish inside.
 /obj/item/storage/fish_case/random/PopulateContents()
 	. = ..()
-	generate_fish(src,random_fish_type())
+	generate_fish(src,select_fish_type())
 
+/obj/item/storage/fish_case/random/proc/select_fish_type()
+	return random_fish_type()
+
+/obj/item/storage/fish_case/random/freshwater/select_fish_type()
+	return random_fish_type(required_fluid=AQUARIUM_FLUID_FRESHWATER)
 
 /// Book detailing where to get the fish and their properties.
 /obj/item/book/fish_catalog

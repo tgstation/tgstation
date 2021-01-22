@@ -48,9 +48,13 @@
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
 
+	var/alive_fish = 0
+	var/dead_fish = 0
+
 /obj/structure/aquarium/Initialize()
 	. = ..()
 	update_icon()
+	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, .proc/feed_feedback)
 
 
 /obj/structure/aquarium/proc/request_layer(layer_type)
@@ -116,12 +120,8 @@
 		SEND_SIGNAL(I,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
 		if(SEND_SIGNAL(I,COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT)
 			if(user.transferItemToLoc(I,src))
-				SEND_SIGNAL(I,COMSIG_AQUARIUM_INSERTED,src)
 				update_icon()
 				return TRUE
-		else if(istype(I,/obj/item/fish_feed))
-			feed_fish(user,I)
-			return TRUE
 		else
 			return ..()
 	else
@@ -139,18 +139,11 @@
 			return TRUE
 	return ..()
 
-/obj/structure/aquarium/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	SEND_SIGNAL(src,COMSIG_AQUARIUM_STIRRED)
-
-
-/obj/structure/aquarium/Exited(atom/movable/AM, atom/newLoc)
-	. = ..()
-	SEND_SIGNAL(AM,COMSIG_AQUARIUM_REMOVED,src)
-
-/obj/structure/aquarium/proc/feed_fish(mob/user, obj/item/fish/feed)
-	to_chat(user,"<span class='notice'>You feed the fish.</span>")
-	SEND_SIGNAL(src,COMSIG_AQUARIUM_FEEDING,feed.reagents) //todo pass in reagents for specific diets
+/obj/structure/aquarium/proc/feed_feedback(datum/source, obj/item/thing, mob/user, params)
+	SIGNAL_HANDLER
+	if(istype(thing,/obj/item/fish_feed))
+		to_chat(user,"<span class='notice'>You feed the fish.</span>")
+	return NONE
 
 /obj/structure/aquarium/interact(mob/user)
 	if(!broken && user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -175,7 +168,6 @@
 			if(L && user.pulling == L && !L.buckled && !L.has_buckled_mobs() && (SEND_SIGNAL(L,COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT))
 				user.visible_message("<span class='danger'>[user] stuffs [L] into [src]!</span>")
 				L.forceMove(src)
-				SEND_SIGNAL(L,COMSIG_AQUARIUM_INSERTED,src)
 				update_icon()
 
 ///Apply mood bonus depending on aquarium status
@@ -185,20 +177,9 @@
 		//Check if there are live fish - good mood
 		//All fish dead - bad mood.
 		//No fish - nothing.
-		var/dead_count = 0
-		var/alive_count = 0
-		for(var/atom/movable/AM in contents)
-			var/datum/component/aquarium_content/AC = AM.GetComponent(/datum/component/aquarium_content)
-			if(AC)
-				if(istype(AC.properties,/datum/aquarium_behaviour/fish))
-					var/datum/aquarium_behaviour/fish/F = AC.properties
-					if(F.status == FISH_DEAD)
-						dead_count += 1
-					else
-						alive_count += 1
-		if(alive_count > 0)
+		if(alive_fish > 0)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "aquarium", /datum/mood_event/aquarium_positive)
-		else if(dead_count > 0)
+		else if(dead_fish > 0)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "aquarium", /datum/mood_event/aquarium_negative)
 		// Could maybe scale power of this mood with number/types of fish
 
@@ -220,6 +201,8 @@
 
 /obj/structure/aquarium/ui_act(action, params)
 	. = ..()
+	if(.)
+		return
 	var/mob/user = usr
 	switch(action)
 		if("temperature")

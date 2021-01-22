@@ -36,10 +36,13 @@
 		CRASH("Invalid property type provided for aquarium content component")
 	properties.parent = src
 
+	ADD_TRAIT(parent,TRAIT_FISH_CASE_COMPATIBILE,src)
 	RegisterSignal(parent, COMSIG_AQUARIUM_INSERT_READY, .proc/is_ready_to_insert)
-	RegisterSignal(parent, COMSIG_AQUARIUM_INSERTED, .proc/on_inserted)
-	RegisterSignal(parent, COMSIG_AQUARIUM_REMOVED, .proc/on_removed)
-	RegisterSignal(parent, COMSIG_AQUARIUM_FISH_CASE_STASIS, .proc/on_tank_stasis)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/enter_aquarium)
+
+/datum/component/aquarium_content/PreTransfer()
+	. = ..()
+	REMOVE_TRAIT(parent,TRAIT_FISH_CASE_COMPATIBILE,src)
 
 /datum/component/aquarium_content/Destroy(force, silent)
 	if(current_aquarium)
@@ -47,6 +50,14 @@
 	QDEL_NULL(vc_obj)
 	QDEL_NULL(properties)
 	return ..()
+
+/datum/component/aquarium_content/proc/enter_aquarium(datum/source, OldLoc, Dir, Forced)
+	SIGNAL_HANDLER
+	var/atom/movable/AM = parent
+	if(istype(AM.loc, /obj/structure/aquarium))
+		on_inserted(AM.loc)
+	if(HAS_TRAIT(AM.loc,TRAIT_FISH_SAFE_STORAGE))
+		on_tank_stasis()
 
 /datum/component/aquarium_content/proc/is_ready_to_insert(datum/source,atom/aquarium_object)
 	SIGNAL_HANDLER
@@ -57,20 +68,16 @@
 				continue
 			var/datum/component/aquarium_content/other_content = AM.GetComponent(/datum/component/aquarium_content)
 			if(other_content && other_content.properties.type == properties.type)
-				return 0
+				return NONE
 	return AQUARIUM_CONTENT_READY_TO_INSERT
 
-/datum/component/aquarium_content/proc/on_inserted(datum/source,atom/aquarium)
-	SIGNAL_HANDLER
-
+/datum/component/aquarium_content/proc/on_inserted(atom/aquarium)
 	current_aquarium = aquarium
-
-	RegisterSignal(current_aquarium,COMSIG_AQUARIUM_SURFACE_CHANGED, .proc/on_surface_changed)
-	RegisterSignal(current_aquarium,COMSIG_AQUARIUM_FEEDING, .proc/on_feeding)
-	RegisterSignal(current_aquarium,COMSIG_AQUARIUM_FLUID_CHANGED,.proc/on_fluid_changed)
-	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_STIRRED, .proc/on_stirred)
-	if(properties.processing)
-		START_PROCESSING(SSobj,properties)
+	RegisterSignal(current_aquarium, COMSIG_ATOM_EXITED, .proc/on_removed)
+	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_SURFACE_CHANGED, .proc/on_surface_changed)
+	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_FLUID_CHANGED,.proc/on_fluid_changed)
+	RegisterSignal(current_aquarium, COMSIG_PARENT_ATTACKBY, .proc/attack_reaction)
+	properties.on_inserted()
 
 	//If we don't have vc object yet build it
 	if(!vc_obj)
@@ -90,14 +97,15 @@
 	set_vc_base_position()
 	generate_animation() //our animation start point changed, gotta redo
 
-/// Aquarium surface changed in some way, we need to recalculate base position and aninmation
-/datum/component/aquarium_content/proc/on_stirred()
+/// Our aquarium is hit with stuff
+/datum/component/aquarium_content/proc/attack_reaction(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
-	generate_animation()
-
-/datum/component/aquarium_content/proc/on_feeding(datum/source, datum/reagents/feed_reagents)
-	SIGNAL_HANDLER
-	properties.on_feeding(feed_reagents)
+	if(istype(thing,/obj/item/fish_feed))
+		properties.on_feeding(thing.reagents)
+		return COMPONENT_NO_AFTERATTACK
+	else
+		//stirred effect
+		generate_animation()
 
 /datum/component/aquarium_content/proc/on_fluid_changed()
 	SIGNAL_HANDLER
@@ -199,24 +207,20 @@
 	base_layer = current_aquarium.request_layer(properties.layer_mode)
 	vc_obj.layer = base_layer
 
-/datum/component/aquarium_content/proc/on_removed(datum/source,aquarium)
+/datum/component/aquarium_content/proc/on_removed(datum/source, atom/movable/mover)
 	SIGNAL_HANDLER
+	if(mover != parent)
+		return
 	remove_from_aquarium()
 
 /datum/component/aquarium_content/proc/remove_from_aquarium()
-	UnregisterSignal(current_aquarium,list(COMSIG_AQUARIUM_SURFACE_CHANGED,COMSIG_AQUARIUM_FLUID_CHANGED,COMSIG_AQUARIUM_FEEDING,COMSIG_AQUARIUM_STIRRED))
+	properties.before_removal()
+	UnregisterSignal(current_aquarium,list(COMSIG_AQUARIUM_SURFACE_CHANGED,COMSIG_AQUARIUM_FLUID_CHANGED,COMSIG_PARENT_ATTACKBY,COMSIG_ATOM_EXITED))
 	remove_visual_from_aquarium()
 	current_aquarium = null
 	//We do not stop processing properties here. We want fish to die outside of aquariums after first insert. We only stop processing in properties.death or destroy
 
 /datum/component/aquarium_content/proc/on_tank_stasis()
-	SIGNAL_HANDLER
 	// Stop processing until inserted into aquarium again.
 	STOP_PROCESSING(SSobj, properties)
-
-/datum/component/aquarium_content/Destroy(force, silent)
-	if(current_aquarium)
-		remove_from_aquarium()
-	QDEL_NULL(properties)
-	. = ..()
 
