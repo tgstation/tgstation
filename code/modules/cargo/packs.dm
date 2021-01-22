@@ -36,6 +36,10 @@
 	fill(C)
 	return C
 
+/datum/supply_pack/proc/get_cost()
+	. = cost
+	. *= SSeconomy.pack_price_modifier
+
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	if (admin_spawned)
 		for(var/item in contains)
@@ -2509,9 +2513,9 @@
 		var/datum/uplink_item/I = uplink_items[category][item]
 		if(!I.surplus || prob(100 - I.surplus))
 			continue
-		if(crate_value < I.cost)
+		if(crate_value < I.get_cost())
 			continue
-		crate_value -= I.cost
+		crate_value -= I.get_cost()
 		new I.item(C)
 
 //////////////////////////////////////////////////////////////////////////////

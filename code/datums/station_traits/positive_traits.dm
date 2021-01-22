@@ -5,7 +5,7 @@
 /datum/station_trait/lucky_winner
 	name = "Lucky winner"
 	trait_type = STATION_TRAIT_POSITIVE
-	weight = 1
+	weight = 100
 	show_in_report = TRUE
 	report_message = "Your station has won the grand prize of the annual station charity event. Free snacks will be delivered to the bar every now and then."
 	COOLDOWN_DECLARE(party_cooldown)
@@ -58,3 +58,12 @@
 
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
+/datum/station_trait/strong_supply_lines
+	name = "Strong supply lines"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Prices are low in this system, BUY BUY BUY!"
+
+/datum/station_trait/strong_supply_lines/on_round_start()
+	SSeconomy.pack_price_modifier *= 0.8

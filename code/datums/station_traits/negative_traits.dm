@@ -5,3 +5,13 @@
 	show_in_report = TRUE
 	report_message = "Dangerous fauna is present in the area of this station"
 	trait_to_give = STATION_TRAIT_CARP_INFESTATION
+
+/datum/station_trait/distant_supply_lines
+	name = "Distant supply lines"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 3
+	show_in_report = TRUE
+	report_message = "Due to the distance to our normal supply lines, cargo orders are more expensive."
+
+/datum/station_trait/distant_supply_lines/on_round_start()
+	SSeconomy.pack_price_modifier *= 1.2

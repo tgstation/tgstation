@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(economy)
 	var/earning_report
 	///The modifier multiplied to the value of bounties paid out.
 	var/bounty_modifier = 1
+	///The modifier multiplied to the value of cargo pack prices.
+	var/pack_price_modifier = 1
 	var/market_crashing = FALSE
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
