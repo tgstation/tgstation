@@ -2513,9 +2513,9 @@
 		var/datum/uplink_item/I = uplink_items[category][item]
 		if(!I.surplus || prob(100 - I.surplus))
 			continue
-		if(crate_value < I.get_cost())
+		if(crate_value < I.cost)
 			continue
-		crate_value -= I.get_cost()
+		crate_value -= I.cost
 		new I.item(C)
 
 //////////////////////////////////////////////////////////////////////////////
