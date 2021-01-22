@@ -2,7 +2,7 @@
  * # robot_modules
  *
  * Deals with the creation and deletion of modules (tools).
- * Assigns modules and traits to a borg with a specific configuration selected.
+ * Assigns modules and traits to a borg with a specific model selected.
  *
  ***************************************************************************************/
 
