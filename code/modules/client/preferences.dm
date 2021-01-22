@@ -1103,6 +1103,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(SSquirks.quirk_points[q] > 0)
 			.++
 
+/datum/preferences/proc/validate_quirks()
+	if(GetQuirkBalance() < 0)
+		all_quirks = list()
+
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()
 	if(href_list["close"])

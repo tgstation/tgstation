@@ -19,6 +19,7 @@
 #define MAX_TRAY_TOXINS 100
 #define MAX_TRAY_PESTS 10
 #define MAX_TRAY_WEEDS 10
+#define GENE_SHEAR_MIN_HEALTH 15
 
 /// Plant analyzer scanning modes.
 #define PLANT_SCANMODE_STATS		0

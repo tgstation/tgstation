@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - bugfix: "Beach Biodome (and more) will now properly have non-black sand and water"

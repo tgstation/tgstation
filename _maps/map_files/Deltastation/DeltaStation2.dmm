@@ -580,7 +580,9 @@
 /area/hallway/secondary/entry)
 "abr" = (
 /obj/item/kirbyplants/random,
-/obj/item/toy/plush/snakeplushie,
+/obj/item/toy/plush/snakeplushie{
+	name = "Quetzie"
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5462,7 +5464,9 @@
 /area/maintenance/starboard/fore)
 "aow" = (
 /obj/structure/table/wood,
-/obj/item/toy/plush/carpplushie,
+/obj/item/toy/plush/carpplushie{
+	name = "Nemo"
+	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7172,11 +7176,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
-"asj" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ask" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -37589,11 +37588,7 @@
 	desc = "For the weary spacemen on their quest to rekindle the first plasma fire.";
 	name = "Carton of Estus"
 	},
-/obj/item/nullrod/claymore/glowing{
-	desc = "Don't tell anyone you put any points into dex, though.";
-	force = 10;
-	name = "moonlight greatsword"
-	},
+/obj/item/melee/moonlight_greatsword,
 /obj/effect/decal/remains/human,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -81555,7 +81550,9 @@
 	pixel_y = 32
 	},
 /obj/structure/chair/sofa/left,
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	name = "Moffee"
+	},
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "deQ" = (
@@ -106111,12 +106108,6 @@
 	},
 /turf/open/floor/glass,
 /area/maintenance/space_hut/observatory)
-"eVg" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "eVx" = (
 /obj/machinery/light{
 	dir = 8
@@ -171202,7 +171193,7 @@ ajr
 aaa
 hUm
 vpk
-asj
+vVc
 wIU
 aaa
 aaa
@@ -171717,8 +171708,8 @@ aaa
 kUH
 jwg
 yhJ
-eVg
-asj
+vVc
+vVc
 vVc
 vVc
 abj
@@ -171973,7 +171964,7 @@ aaa
 aaa
 pCQ
 xBA
-asj
+vVc
 ybr
 aaa
 aaa

@@ -48840,7 +48840,9 @@
 /area/science/genetics)
 "ddD" = (
 /obj/structure/table,
-/obj/item/toy/plush/slimeplushie,
+/obj/item/toy/plush/slimeplushie{
+	name = "Gish"
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -55209,7 +55211,9 @@
 /area/science/misc_lab)
 "tGa" = (
 /obj/structure/chair/sofa/right,
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	name = "Dr. Moff"
+	},
 /turf/open/floor/carpet/blue,
 /area/medical/psychology)
 "tGE" = (
@@ -57030,9 +57034,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"ydz" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors)
 "ydA" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -65716,11 +65717,11 @@ boP
 boP
 boP
 boP
-asE
+boP
 asE
 xzN
 asE
-asE
+boP
 boP
 boP
 boP
@@ -65973,12 +65974,12 @@ boP
 boP
 boP
 boP
-asU
+boP
 bgl
 auP
 bgl
-asU
-asU
+boP
+boP
 boP
 boP
 boP
@@ -66235,7 +66236,7 @@ arB
 sHE
 asE
 aAC
-asU
+boP
 boP
 boP
 boP
@@ -67264,7 +67265,7 @@ aQH
 azz
 aAF
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -67521,7 +67522,7 @@ ayl
 ayl
 aAE
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -67778,7 +67779,7 @@ ayl
 ayl
 bgi
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -68035,7 +68036,7 @@ ayn
 azA
 bgh
 awW
-ydz
+boP
 boP
 boP
 boP
@@ -69062,8 +69063,8 @@ awZ
 aQH
 azB
 awW
-asU
-ydz
+boP
+boP
 boP
 boP
 boP
@@ -69319,8 +69320,8 @@ bbb
 ayl
 beN
 arB
-asU
-ydz
+boP
+boP
 boP
 boP
 boP
@@ -69576,8 +69577,8 @@ aDD
 ayl
 beM
 aAC
-asU
-ydz
+boP
+boP
 boP
 boP
 boP
@@ -69833,8 +69834,8 @@ aIK
 ayl
 beM
 asE
-ydz
-ydz
+boP
+boP
 boP
 boP
 boP
