@@ -239,6 +239,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CANT_RIDE			"cant_ride"
 #define TRAIT_BLOODY_MESS		"bloody_mess" //from heparin, makes open bleeding wounds rapidly spill more blood
 #define TRAIT_COAGULATING		"coagulating" //from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
+/// The holder of this trait has antennae or whatever that hurt a ton when noogied
+#define TRAIT_ANTENNAE	"antennae"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
