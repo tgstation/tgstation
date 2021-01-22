@@ -516,3 +516,23 @@
 	assets = list(
 		"safe_dial.png" = 'html/safe_dial.png'
 	)
+
+/datum/asset/spritesheet/fish
+	name = "fish"
+
+/datum/asset/spritesheet/fish/register()
+
+	for (var/path in subtypesof(/datum/aquarium_behaviour/fish))
+		var/datum/aquarium_behaviour/fish/F = path
+		var/i = initial(F.icon)
+		var/is = initial(F.icon_state)
+		var/id = sanitize_css_class_name("[i][is]")
+		if(sprites[id]) //no dupes
+			continue
+		Insert(id, i, is)
+	..()
+
+/// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
+/proc/sanitize_css_class_name(name)
+	var/static/regex/R = new(@"[^a-zA-Z0-9]","g")
+	return replacetext(name,R,"")

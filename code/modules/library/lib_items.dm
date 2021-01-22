@@ -225,6 +225,9 @@
 /obj/item/book/attack_self(mob/user)
 	if(!user.can_read(src))
 		return
+	on_read(user)
+
+/obj/item/book/proc/on_read(mob/user)
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("<span class='notice'>[user] opens a book titled \"[title]\" and begins reading intently.</span>")
