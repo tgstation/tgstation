@@ -16,7 +16,7 @@
  *
  * After we check the harvest and the chemicals in the harvest, we go ahead and clean up the harvested products and remove the seed if it has perennial growth.
  *
- * This test checks both obj/item/food/grown items and obj/item/grown items since, despite both being used in hydroponics,
+ * This test checks both /obj/item/food/grown items and /obj/item/grown items since, despite both being used in hydroponics,
  * they aren't the same type so everything that works with one isn't guaranteed to work with the other.
  */
 /datum/unit_test/hydroponics_harvest/Run()
@@ -52,7 +52,6 @@
 	tray.harvest = TRUE
 
 /datum/unit_test/hydroponics_harvest/proc/test_seed(obj/machinery/hydroponics/tray, obj/item/seeds/seed, mob/living/carbon/user)
-
 	tray.reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 20)
 	plant_and_update_seed(tray, seed)
 	var/saved_name = tray.name // Name gets cleared when some plants are harvested.
