@@ -99,5 +99,6 @@ BE STEP THREE: LIGHT THE FUSE WITH SOMETHING, AND LET ER' RIP!<br>
 
 REGULAR CANNONBALL: A fine choice for killing landlubbers! Will take off any limb it hits, and most certainly down anyone hit in the chest! If they are not directly hit, they will be at least hurt by the shrapnel!<br>
 EXPLOSIVE SHELLBALL: The most elegant in breaching (er killin', if you're good at aimin') tools, ye be packing this shell with many scuppering chemicals! Just make sure to not fire it when ye be close to target!<br>
+MALFUNCTION SHOT: A very gentle "cannonball" dart at first glance, but make no mistake: This is their worst nightmare! Enjoy an easy boarding process while all their machines are broken and all their weapons unloaded from an EMP!<br>
 THE BIGGEST ONE: A shellball, but much bigger. Ye won't be seein' much of these as they were discontinued for sinkin' the firer's ship as often as it sunk the scallywag's ship. Very big boom! If ye have one, ye have been warned!
 	"}
