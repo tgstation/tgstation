@@ -1,4 +1,0 @@
-author: "KathrinBailey"
-delete-after: True
-changes: 
-  - code_imp: "Xenomorph embryos now take a static five minutes (1 minute per 5 stages) to hatch, instead of taking any time between fifteen seconds, till the end of time itself to hatch. Aka it had a 3% chance and rolled every two seconds, now it uses a consistent timer."

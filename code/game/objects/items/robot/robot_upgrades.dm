@@ -8,8 +8,8 @@
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
-	var/installed = 0
-	var/require_module = 0
+	var/installed = FALSE
+	var/require_module = FALSE
 	var/list/module_type = null
 	///	Bitflags listing module compatibility. Used in the exosuit fabricator for creating sub-categories.
 	var/list/module_flags = NONE
@@ -77,7 +77,7 @@
 	name = "cyborg rapid disabler cooling module"
 	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/security)
 	module_flags = BORG_MODULE_SECURITY
 
@@ -127,7 +127,7 @@
 	name = "mining cyborg diamond drill"
 	desc = "A diamond drill replacement for the mining module's standard drill."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/miner)
 	module_flags = BORG_MODULE_MINER
 
@@ -160,7 +160,7 @@
 	name = "mining cyborg satchel of holding"
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/miner)
 	module_flags = BORG_MODULE_MINER
 
@@ -188,7 +188,7 @@
 	name = "janitor cyborg trash bag of holding"
 	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/janitor)
 	module_flags = BORG_MODULE_JANITOR
 
@@ -216,7 +216,7 @@
 	name = "janitor cyborg advanced mop"
 	desc = "An advanced mop replacement for the janiborg's standard mop."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/janitor)
 	module_flags = BORG_MODULE_JANITOR
 
@@ -244,7 +244,7 @@
 	name = "janitor cyborg plating repair tool"
 	desc = "A tiny heating device to repair burnt and damaged hull platings with."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/janitor)
 	module_flags = BORG_MODULE_JANITOR
 
@@ -265,7 +265,7 @@
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -273,7 +273,7 @@
 		if(R.emagged)
 			return FALSE
 
-		R.SetEmagged(1)
+		R.SetEmagged(TRUE)
 		R.logevent("WARN: hardware installed with missing security certificate!") //A bit of fluff to hint it was an illegal tech item
 		R.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
 
@@ -289,7 +289,7 @@
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to a mining cyborg's chassis, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/miner)
 	module_flags = BORG_MODULE_MINER
 
@@ -307,7 +307,7 @@
 	name = "self-repair module"
 	desc = "This module will repair the cyborg over time."
 	icon_state = "cyborg_upgrade5"
-	require_module = 1
+	require_module = TRUE
 	var/repair_amount = -1
 	/// world.time of next repair
 	var/next_repair = 0
@@ -409,7 +409,7 @@
 	desc = "An upgrade to the Medical module cyborg's hypospray, allowing it \
 		to produce more advanced and complex medical reagents."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/medical)
 	module_flags = BORG_MODULE_MEDICAL
 	var/list/additional_reagents = list()
@@ -466,7 +466,7 @@
 	desc = "An upgrade to the Medical module, installing a built-in \
 		defibrillator, for on the scene revival."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/medical)
 	module_flags = BORG_MODULE_MEDICAL
 
@@ -520,7 +520,7 @@
 		capable of scanning surgery disks and carrying \
 		out procedures"
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = TRUE
 	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical)
 	module_flags = BORG_MODULE_MEDICAL
 
@@ -576,7 +576,7 @@
 
 		R.notransform = TRUE
 		var/prev_lockcharge = R.lockcharge
-		R.SetLockdown(1)
+		R.SetLockdown(TRUE)
 		R.set_anchored(TRUE)
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(1, R.loc)

@@ -142,5 +142,11 @@
 #define ACCESS_MECH_SCIENCE 303
 #define ACCESS_MECH_ENGINE 304
 
-/// A list of access levels that, when added to an ID card, will warn admins. This is currently a list of access levels that can change other access levels.
-#define ACCESS_ALERT_ADMINS list(ACCESS_CHANGE_IDS, ACCESS_HOP, ACCESS_HOS, ACCESS_RD, ACCESS_CMO, ACCESS_CE)
+/// A list of access levels that, when added to an ID card, will warn admins.
+#define ACCESS_ALERT_ADMINS list(ACCESS_CHANGE_IDS)
+
+/// Logging define for ID card access changes
+#define LOG_ID_ACCESS_CHANGE(user, id_card, change_description) \
+	log_game("[key_name(user)] [change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]"); \
+	user.investigate_log("([key_name(user)]) [change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", INVESTIGATE_ACCESSCHANGES); \
+	user.log_message("[change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", LOG_GAME); \
