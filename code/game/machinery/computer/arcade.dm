@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
-		/obj/item/toy/eldrich_book = 2,
+		/obj/item/toy/eldritch_book = 2,
 		/obj/item/storage/box/heretic_box = 1,
 		/obj/item/clothing/glasses/trickblindfold = 2))
 
