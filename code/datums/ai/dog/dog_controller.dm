@@ -8,11 +8,11 @@ have ways of interacting with a specific mob and control it.
 	blackboard = list(BB_DOG_FETCHING = FALSE,\
 	BB_DOG_CARRY_ITEM = null,\
 	BB_DOG_THROW_LISTENERS = list(),\
-	BB_DOG_THROWN_ITEMS = list(),\
 	BB_DOG_FETCH_TARGET_IGNORE = list(),\
 	BB_DOG_FETCH_TARGET = null,\
 	BB_DOG_FETCH_THROWER = null,\
-	BB_DOG_DELIVERING = FALSE)
+	BB_DOG_DELIVERING = FALSE,\
+	BB_DOG_FRIENDS = list())
 
 
 /datum/ai_controller/dog/TryPossessPawn(atom/new_pawn)
@@ -22,8 +22,6 @@ have ways of interacting with a specific mob and control it.
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_MOVABLE_CROSSED, COMSIG_LIVING_START_PULL,\
-	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED))
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/able_to_run()
@@ -90,7 +88,7 @@ have ways of interacting with a specific mob and control it.
 	if(thrown_thing in thrown_ignorelist)
 		testing("already in ignorelist")
 		return
-	//blackboard[BB_DOG_THROWN_ITEMS] += thrown_thing
+
 	testing("heard [thrown_thing] throw by [carbon_thrower]")
 	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, .proc/listen_throw_land)
 
@@ -110,3 +108,35 @@ have ways of interacting with a specific mob and control it.
 	testing("now fetching [thrown_thing] for [throwing_datum.thrower]")
 
 
+/datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/L)
+	SIGNAL_HANDLER
+	if(L.a_intent == INTENT_HELP)
+		if(prob(AI_DOG_PET_FRIEND_PROB)
+			befriend(L)
+	else if(L.a_intent != INTENT_GRAB)
+		unfriend(L)
+
+/datum/ai_controller/dog/proc/befriend(mob/living/new_friend)
+	if(new_friend in blackboard[BB_DOG_FRIENDS])
+		return
+	blackboard[BB_DOG_FRIENDS] += new_friend
+	RegisterSignal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
+
+/datum/ai_controller/dog/proc/unfriend(mob/living/ex_friend)
+	if(!(ex_friend in blackboard[BB_DOG_FRIENDS]))
+		return
+	blackboard[BB_DOG_FRIENDS] -= ex_friend
+	UnregisterSignal(ex_friend, COMSIG_MOB_POINTED)
+
+/datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/pointed_atom)
+	if(ismob(pointed_atom) || pointed_atom.anchored || blackboard[BB_DOG_FETCH_TARGET])
+		return
+
+	var/list/visible_things = view(pawn, AI_DOG_THROW_LISTEN_RANGE)
+	if(!(pointing_friend in visible_things) || !(pointed_atom in visible_things))
+		return
+
+	pawn.visible_message("<span class='notice'>[pawn] follows [pointing friend]'s gesture towards [pointed_atom] and barks excitedly!</span>")
+	blackboard[BB_DOG_FETCH_TARGET] = pointed_atom
+	blackboard[BB_DOG_FETCH_THROWER] = pointing_friend
+	current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/dog_fetch)

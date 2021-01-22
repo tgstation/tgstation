@@ -54,3 +54,5 @@
 #define BB_DOG_DELIVERING "BB_dog_delivering"
 
 #define AI_DOG_THROW_LISTEN_RANGE	7
+
+#define AI_DOG_PET_FRIEND_PROB		15

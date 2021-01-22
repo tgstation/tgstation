@@ -91,3 +91,31 @@
 	return TRUE
 
 
+
+/datum/ai_behavior/dog_sic
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+
+/datum/ai_behavior/dog_deliver/perform(delta_time, datum/ai_controller/controller)
+	var/mob/living/return_target = controller.blackboard[BB_DOG_FETCH_THROWER]
+	if(in_range(controller.pawn, return_target))
+		deliver_item(controller)
+		finish_action(controller, TRUE)
+
+/datum/ai_behavior/dog_deliver/finish_action(datum/ai_controller/controller, success)
+	. = ..()
+	controller.blackboard[BB_DOG_FETCH_THROWER] = null
+	controller.blackboard[BB_DOG_DELIVERING] = FALSE
+
+/datum/ai_behavior/dog_deliver/proc/deliver_item(datum/ai_controller/controller)
+	var/obj/item/carried_item = controller.blackboard[BB_DOG_CARRY_ITEM]
+	var/mob/living/return_target = controller.blackboard[BB_DOG_FETCH_THROWER]
+	if(!carried_item)
+		return
+
+	var/atom/pawn = controller.pawn
+	pawn.visible_message("<span class='notice'>[pawn] delivers [carried_item] at [return_target]'s feet.</span>")
+	carried_item.forceMove(get_turf(pawn))
+	controller.blackboard[BB_DOG_CARRY_ITEM] = null
+	return TRUE
+
+
