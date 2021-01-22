@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Singularities no longer disappear when hit by a projectile. Praise Lord singuloth."

@@ -9,7 +9,6 @@
 	power_channel = AREA_USAGE_EQUIP
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
-	anchorables = list(/obj/structure/table)
 	var/obj/item/stock_parts/cell/charging = null
 	var/charge_rate = 250
 

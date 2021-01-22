@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!opened)
 			to_chat(user, "<span class='warning'>You must access the cyborg's internals!</span>")
 			return
-		if(!istype(module, /obj/item/robot_module/medical))
+		if(!istype(model, /obj/item/robot_model/medical))
 			to_chat(user, "<span class='warning'>[src] does not have correct mounting points for a defibrillator!</span>")
 			return
 		if(stat == DEAD)
@@ -185,8 +185,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!opened)
 			to_chat(user, "<span class='warning'>You must access the cyborg's internals!</span>")
 			return
-		if(!src.module && U.require_module)
-			to_chat(user, "<span class='warning'>The cyborg must choose a module before it can be upgraded!</span>")
+		if(!src.model && U.require_model)
+			to_chat(user, "<span class='warning'>The cyborg must choose a model before it can be upgraded!</span>")
 			return
 		if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, "<span class='danger'>[src] is remotely controlled! Your emag attempt has triggered a system reset instead!</span>")
 		log_game("[key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
-		ResetModule()
+		ResetModel()
 		return
 
 	SetEmagged(1)

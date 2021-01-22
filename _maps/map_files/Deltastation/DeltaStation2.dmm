@@ -580,7 +580,9 @@
 /area/hallway/secondary/entry)
 "abr" = (
 /obj/item/kirbyplants/random,
-/obj/item/toy/plush/snakeplushie,
+/obj/item/toy/plush/snakeplushie{
+	name = "Quetzie"
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5462,7 +5464,9 @@
 /area/maintenance/starboard/fore)
 "aow" = (
 /obj/structure/table/wood,
-/obj/item/toy/plush/carpplushie,
+/obj/item/toy/plush/carpplushie{
+	name = "Nemo"
+	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -81546,7 +81550,9 @@
 	pixel_y = 32
 	},
 /obj/structure/chair/sofa/left,
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	name = "Moffee"
+	},
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "deQ" = (
