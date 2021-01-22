@@ -1423,10 +1423,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!(HAS_FLESH in target.dna?.species.species_traits) || !the_head.is_organic_limb())
-		to_chat(user, "<span class='warning'>You can't noogie [target], [target.p_they()] have no skin on [target.p_their()] head!</span>")
+		to_chat(user, "<span class='warning'>You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!</span>")
 		return
 
 	// [user] gives [target] a [prefix_desc] noogie[affix_desc]!
+	var/brutal_noogie = FALSE // was it an extra hard noogie?
 	var/prefix_desc = "rough"
 	var/affix_desc = ""
 	var/affix_desc_target = ""
@@ -1435,8 +1436,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		prefix_desc = "violent"
 		affix_desc = "on [target.p_their()] sensitive antennae"
 		affix_desc_target = "on your highly sensitive antennae"
+		brutal_noogie = TRUE
 	if(user.dna?.check_mutation(HULK))
 		prefix_desc = "sickeningly brutal"
+		brutal_noogie = TRUE
 
 	var/message_others = "[prefix_desc] noogie[affix_desc]"
 	var/message_target = "[prefix_desc] noogie[affix_desc_target]"
@@ -1449,7 +1452,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		to_chat(target, "<span class='danger'>[user] fails to give you a noogie!</span>")
 		return
 
-	if(prefix_desc == "rough")
+	if(brutal_noogie)
 		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie", /datum/mood_event/noogie)
 	else
 		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie_harsh", /datum/mood_event/noogie_harsh)
@@ -1488,7 +1491,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		to_chat(target, "<span class='danger'>[user] fails to give you a noogie!</span>")
 		return
 
-	noogie_loop(user, target, iteration++)
+	iteration++
+	noogie_loop(user, target, iteration)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
