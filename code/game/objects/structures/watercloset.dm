@@ -563,7 +563,7 @@
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/C = O
-		new /obj/item/reagent_containers/glass/rag(src.loc)
+		new /obj/item/reagent_containers/glass/rag(loc)
 		to_chat(user, "<span class='notice'>You tear off a strip of cloth and make a rag.</span>")
 		C.use(1)
 		return
