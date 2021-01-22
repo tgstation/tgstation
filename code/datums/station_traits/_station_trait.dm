@@ -14,6 +14,8 @@
 	var/report_message
 	///What code-trait does this station trait give? gives none if null
 	var/trait_to_give
+	///What traits are incompatible with this one?
+	var/blacklist
 
 
 /datum/station_trait/New()

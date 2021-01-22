@@ -8,6 +8,7 @@
 	weight = 100
 	show_in_report = TRUE
 	report_message = "Your station has won the grand prize of the annual station charity event. Free snacks will be delivered to the bar every now and then."
+	trait_processes = TRUE
 	COOLDOWN_DECLARE(party_cooldown)
 
 /datum/station_trait/lucky_winner/on_round_start()

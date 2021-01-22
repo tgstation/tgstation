@@ -15,6 +15,7 @@
 
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
+
 /datum/station_trait/late_arrivals
 	name = "Late Arrivals"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -22,4 +23,13 @@
 	show_in_report = TRUE
 	report_message = "Sorry for that, we didn't expect to fly into that vomiting goose while bringing you to your new station."
 	trait_to_give = STATION_TRAIT_LATE_ARRIVALS
+	blacklist = list(/datum/station_trait/random_spawns)
 
+/datum/station_trait/random_spawns
+	name = "Drive-by landing"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 5000
+	show_in_report = TRUE
+	report_message = "Sorry for that, we missed your station by a few miles, so we just launched you towards your station in pods. Hope you don't mind!"
+	trait_to_give = STATION_TRAIT_RANDOM_ARRIVALS
+	blacklist = list(/datum/station_trait/late_arrivals)
