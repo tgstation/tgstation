@@ -121,7 +121,7 @@
 		src.visible_message("<span class='warning'>[src] starts licking [target] passionately!</span>","<span class='notice'>You start licking [target]...</span>")
 		DOING_INTERACTION = TRUE
 		if (do_after(src, 2 SECONDS, target) && target)
-			target.reagents.add_reagent(/datum/reagent/rat_spit,1,no_react = TRUE)
+			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
 		DOING_INTERACTION = FALSE
 		return
@@ -361,12 +361,20 @@
 	color = "#C8C8C8"
 	metabolization_rate = 0.03 * REAGENTS_METABOLISM
 	taste_description = "something funny"
+	overdose_threshold = 20
 
 /datum/reagent/rat_spit/on_mob_metabolize(mob/living/L)
 	..()
 	if(HAS_TRAIT(L, TRAIT_AGEUSIA))
 		return
 	to_chat(L, "<span class='notice'>This food has a funny taste!</span>")
+	
+/datum/reagent/rat_spit/overdose_start(mob/living/L)
+	..()
+	to_chat(M, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
+	L.faction |= "rat"
+	L.vomit()
+	metabolization_rate = 10 * REAGENTS_METABOLISM 
 
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
