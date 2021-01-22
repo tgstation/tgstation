@@ -51138,6 +51138,10 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/newscaster{
+	pixel_x = -32;
+	pixel_y = -30
+	},
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
 "cRN" = (
@@ -51390,6 +51394,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
 "cSK" = (
@@ -52371,6 +52376,9 @@
 	dir = 1;
 	network = list("ss13","rd")
 	},
+/obj/machinery/status_display/ai{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "daL" = (
@@ -52403,7 +52411,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 9
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
@@ -52708,6 +52716,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
 "dcq" = (
@@ -52749,6 +52758,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/science/cytology)
 "dcB" = (
@@ -52804,6 +52816,12 @@
 	name = "Xenobiology Shutters";
 	pixel_y = -24;
 	req_access_txt = "55"
+	},
+/obj/machinery/requests_console{
+	department = "Xenobiology Lab";
+	name = "Xenobiology RC";
+	pixel_x = 32;
+	receive_ore_updates = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
@@ -61841,6 +61859,9 @@
 	c_tag = "Xenobiology Lab - Central South";
 	dir = 6;
 	network = list("ss13","rd")
+	},
+/obj/machinery/status_display/ai{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -73856,6 +73877,11 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
+"rxR" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/white,
+/area/science/cytology)
 "ryi" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -125495,7 +125521,7 @@ vqh
 gbw
 daO
 dco
-dcx
+rxR
 dcA
 vqh
 cRi
