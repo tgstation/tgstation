@@ -1,7 +1,7 @@
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'icons/obj/closet.dmi'
+	icon = 'goon/icons/obj/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
 	drag_slowdown = 1.5		// Same as a prone mob
@@ -71,14 +71,23 @@
 	. = new_overlays
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	luminosity = 0
-	if(!opened)
-		if(icon_door)
-			. += "[icon_door]_door"
+	if(opened)
+		if(icon_door_override)
+			. += "[icon_door]_open"
 		else
-			. += "[icon_state]_door"
-		if(welded)
-			. += icon_welded
-		if(secure && !broken)
+			. += "[icon_state]_open"
+		return
+
+	if(icon_door)
+		. += "[icon_door]_door"
+	else
+		. += "[icon_state]_door"
+	if(welded)
+		. += icon_welded
+	if(secure)
+		if(broken)
+			. += "off"
+		else
 			//Overlay is similar enough for both that we can use the same mask for both
 			luminosity = 1
 			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
@@ -86,11 +95,6 @@
 				. += "locked"
 			else
 				. += "unlocked"
-	else
-		if(icon_door_override)
-			. += "[icon_door]_open"
-		else
-			. += "[icon_state]_open"
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()

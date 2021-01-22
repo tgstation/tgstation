@@ -57,7 +57,7 @@
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
-	var/image/I = image('icons/obj/closet.dmi', src, "cardboard_special", layer+1)
+	var/image/I = image('goon/icons/obj/closet.dmi', src, "cardboard_special", layer+1)
 	flick_overlay_view(I, src, 8)
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
