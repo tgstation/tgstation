@@ -187,7 +187,7 @@
 	use_power = 0
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "ir" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -648,7 +648,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "CM" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -976,7 +976,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "Ov" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -1070,7 +1070,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "RV" = (
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
@@ -1171,7 +1171,7 @@
 /obj/item/binoculars,
 /obj/item/binoculars,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "TZ" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -1211,7 +1211,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "Vv" = (
 /obj/structure/rack,
 /obj/item/documents/syndicate/red,
@@ -1265,6 +1265,9 @@
 	},
 /turf/open/floor/plating/sandy_dirt,
 /area/shuttle/escape/simulation)
+"Xb" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "Xk" = (
 /obj/structure/closet/crate/critter,
 /mob/living/simple_animal/hostile/lizard/space{
@@ -1306,14 +1309,14 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "Ya" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs{
 	pixel_y = 3
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "Ye" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/handcuffs{
@@ -1322,7 +1325,7 @@
 	},
 /obj/item/storage/lockbox/loyalty,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "Yj" = (
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/simulation)
@@ -1331,7 +1334,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "Yp" = (
 /obj/machinery/teambuilder/red,
 /turf/open/indestructible/binary,
@@ -1779,12 +1782,12 @@ Rl
 Rl
 ls
 RK
-ls
-ls
-ls
-ls
-ls
-ls
+Xb
+Xb
+Xb
+Xb
+Xb
+Xb
 Ya
 Ob
 Xv
@@ -1808,13 +1811,13 @@ Rl
 Rl
 WN
 RB
-ls
-ls
+Xb
+Xb
 Yk
 Yk
 Yk
-ls
-ls
+Xb
+Xb
 Ye
 Xv
 EN
