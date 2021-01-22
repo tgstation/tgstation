@@ -10,7 +10,7 @@ export const Aquarium = (props, context) => {
     minTemperature,
     maxTemperature,
     fluidTypes,
-    contents
+    contents,
   } = data;
   return (
     <Window
@@ -40,8 +40,9 @@ export const Aquarium = (props, context) => {
             <LabeledControls.Item label="Fluid">
               {fluidTypes.map(f => (
                 <Button
+                  key={f}
                   content={f}
-                  selected={fluid_type == f}
+                  selected={fluid_type === f}
                   onClick={() => act('fluid', { fluid: f })} />
               ))}
             </LabeledControls.Item>
@@ -50,6 +51,7 @@ export const Aquarium = (props, context) => {
         <Section title="Contents">
           {contents.map(movable => (
             <Button
+              key={movable.ref}
               content={movable.name}
               onClick={() => act('remove', { ref: movable.ref })} />
           ))}

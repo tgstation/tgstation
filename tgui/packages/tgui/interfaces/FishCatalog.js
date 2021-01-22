@@ -10,7 +10,7 @@ export const FishCatalog = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     fish_info,
-    sponsored_by
+    sponsored_by,
   } = data;
   const fish_by_name = flow([
     sortBy(
@@ -18,7 +18,7 @@ export const FishCatalog = (props, context) => {
   ])(data.fish_info || []);
   const [
     currentFish,
-    setCurrentFish
+    setCurrentFish,
   ] = useLocalState(context, 'currentFish', null);
   return (
     <Window
@@ -28,10 +28,10 @@ export const FishCatalog = (props, context) => {
         <Stack fill>
           <Stack.Item width="120px">
             <Section fill scrollable>
-              {fish_by_name.map((f) => (
+              {fish_by_name.map(f => (
                 <Button key={f.name} fluid color="transparent"
-                  selected={f == currentFish}
-                  onClick={() => { setCurrentFish(f) }}>
+                  selected={f === currentFish}
+                  onClick={() => { setCurrentFish(f); }}>
                   {f.name}
                 </Button>
               ))}
@@ -61,7 +61,7 @@ export const FishCatalog = (props, context) => {
                       className={classes([
                         'fish32x32',
                         currentFish.icon,
-                      ])}/>
+                      ])} />
                   </LabeledList.Item>
                 </LabeledList>
               )}
