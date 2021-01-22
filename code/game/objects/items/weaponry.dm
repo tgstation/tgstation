@@ -217,7 +217,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize()
-	var/obj/item/robot_module/kiltkit = loc
+	var/obj/item/robot_model/kiltkit = loc
 	robot = kiltkit.loc
 	if(!istype(robot))
 		qdel(src)

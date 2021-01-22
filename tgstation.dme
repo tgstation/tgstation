@@ -2446,6 +2446,8 @@
 #include "code\modules\mob\living\silicon\robot\login.dm"
 #include "code\modules\mob\living\silicon\robot\robot.dm"
 #include "code\modules\mob\living\silicon\robot\robot_defense.dm"
+#include "code\modules\mob\living\silicon\robot\robot_defines.dm"
+#include "code\modules\mob\living\silicon\robot\robot_model.dm"
 #include "code\modules\mob\living\silicon\robot\robot_modules.dm"
 #include "code\modules\mob\living\silicon\robot\robot_movement.dm"
 #include "code\modules\mob\living\silicon\robot\robot_say.dm"
