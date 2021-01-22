@@ -251,6 +251,8 @@
 	.["mainsettings"]["mission"]["value"] = newtemplate.mission
 	.["mainsettings"]["polldesc"]["value"] = newtemplate.polldesc
 	.["mainsettings"]["open_armory"]["value"] = newtemplate.opendoors ? "Yes" : "No"
+	.["mainsettings"]["random_names"]["value"] = newtemplate.random_names ? "Yes" : "No"
+	.["mainsettings"]["spawn_admin"]["value"] = newtemplate.spawn_admin ? "Yes" : "No"
 
 
 /datum/admins/proc/equipAntagOnDummy(mob/living/carbon/human/dummy/mannequin, datum/antagonist/antag)
@@ -259,8 +261,6 @@
 	if (ispath(antag, /datum/antagonist/ert))
 		var/datum/antagonist/ert/ert = antag
 		mannequin.equipOutfit(initial(ert.outfit), TRUE)
-	else if (ispath(antag, /datum/antagonist/official))
-		mannequin.equipOutfit(/datum/outfit/centcom/centcom_official, TRUE)
 
 /datum/admins/proc/makeERTPreviewIcon(list/settings)
 	// Set up the dummy for its photoshoot
@@ -318,6 +318,8 @@
 		"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),
 		"enforce_human" = list("desc" = "Enforce human authority", "type" = "boolean", "value" = "[(CONFIG_GET(flag/enforce_human_authority) ? "Yes" : "No")]"),
 		"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
+		"random_names" = list("desc" = "Randomize names", "type" = "boolean", "value" = "[(ertemplate.random_names ? "Yes" : "No")]"),
+		"spawn_admin" = list("desc" = "Spawn yourself as briefing officer", "type" = "boolean", "value" = "[(ertemplate.spawn_admin ? "Yes" : "No")]"),
 		)
 	)
 
@@ -341,74 +343,89 @@
 		ertemplate.polldesc = prefs["polldesc"]["value"]
 		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" ? TRUE : FALSE
 		ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes" ? TRUE : FALSE
+		ertemplate.random_names = prefs["random_names"]["value"] == "Yes" ? TRUE : FALSE
+		ertemplate.spawn_admin = prefs["spawn_admin"]["value"] == "Yes" ? TRUE : FALSE
+
+		var/list/spawnpoints = GLOB.emergencyresponseteamspawn
+		var/index = 0
+
+		if(ertemplate.spawn_admin)
+			if(!isobserver(usr))
+				to_chat(usr, "<span class='warning'>Could not spawn you in as briefing officer as you are not a ghost!</spawn>")
+			else
+				var/mob/living/carbon/human/admin_officer = new (spawnpoints[1])
+				var/chosen_outfit = usr.client?.prefs.brief_outfit || null
+				usr.client.prefs.copy_to(admin_officer)
+				admin_officer.equipOutfit(chosen_outfit)
+				admin_officer.key = usr.key
+
 
 		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad", null)
 		var/teamSpawned = FALSE
 
-		if(candidates.len > 0)
-			//Pick the (un)lucky players
-			var/numagents = min(ertemplate.teamsize,candidates.len)
-
-			//Create team
-			var/datum/team/ert/ert_team = new ertemplate.team
-			if(ertemplate.rename_team)
-				ert_team.name = ertemplate.rename_team
-
-			//Asign team objective
-			var/datum/objective/missionobj = new
-			missionobj.team = ert_team
-			missionobj.explanation_text = ertemplate.mission
-			missionobj.completed = TRUE
-			ert_team.objectives += missionobj
-			ert_team.mission = missionobj
-
-			var/list/spawnpoints = GLOB.emergencyresponseteamspawn
-			var/index = 0
-			while(numagents && candidates.len)
-				var/spawnloc = spawnpoints[index+1]
-				//loop through spawnpoints one at a time
-				index = (index + 1) % spawnpoints.len
-				var/mob/dead/observer/chosen_candidate = pick(candidates)
-				candidates -= chosen_candidate
-				if(!chosen_candidate.key)
-					continue
-
-				//Spawn the body
-				var/mob/living/carbon/human/ERTOperative = new ertemplate.mobtype(spawnloc)
-				chosen_candidate.client.prefs.copy_to(ERTOperative)
-				ERTOperative.key = chosen_candidate.key
-
-				if(ertemplate.enforce_human || !ERTOperative.dna.species.changesource_flags & ERT_SPAWN) // Don't want any exploding plasmemes
-					ERTOperative.set_species(/datum/species/human)
-
-				//Give antag datum
-				var/datum/antagonist/ert/ert_antag
-
-				if(numagents == 1)
-					ert_antag = new ertemplate.leader_role
-				else
-					ert_antag = ertemplate.roles[WRAP(numagents,1,length(ertemplate.roles) + 1)]
-					ert_antag = new ert_antag
-
-				ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
-				ERTOperative.mind.assigned_role = ert_antag.name
-
-				//Logging and cleanup
-				log_game("[key_name(ERTOperative)] has been selected as an [ert_antag.name]")
-				numagents--
-				teamSpawned++
-
-			if (teamSpawned)
-				message_admins("[ertemplate.polldesc] has spawned with the mission: [ertemplate.mission]")
-
-			//Open the Armory doors
-			if(ertemplate.opendoors)
-				for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)
-					door.open()
-					CHECK_TICK
-			return TRUE
-		else
+		if(candidates.len == 0)
 			return FALSE
+
+		//Pick the (un)lucky players
+		var/numagents = min(ertemplate.teamsize,candidates.len)
+
+		//Create team
+		var/datum/team/ert/ert_team = new ertemplate.team
+		if(ertemplate.rename_team)
+			ert_team.name = ertemplate.rename_team
+
+		//Asign team objective
+		var/datum/objective/missionobj = new
+		missionobj.team = ert_team
+		missionobj.explanation_text = ertemplate.mission
+		missionobj.completed = TRUE
+		ert_team.objectives += missionobj
+		ert_team.mission = missionobj
+
+		while(numagents && candidates.len)
+			var/spawnloc = spawnpoints[index+1]
+			//loop through spawnpoints one at a time
+			index = (index + 1) % spawnpoints.len
+			var/mob/dead/observer/chosen_candidate = pick(candidates)
+			candidates -= chosen_candidate
+			if(!chosen_candidate.key)
+				continue
+
+			//Spawn the body
+			var/mob/living/carbon/human/ERTOperative = new ertemplate.mobtype(spawnloc)
+			chosen_candidate.client.prefs.copy_to(ERTOperative)
+			ERTOperative.key = chosen_candidate.key
+
+			if(ertemplate.enforce_human || !ERTOperative.dna.species.changesource_flags & ERT_SPAWN) // Don't want any exploding plasmemes
+				ERTOperative.set_species(/datum/species/human)
+
+			//Give antag datum
+			var/datum/antagonist/ert/ert_antag
+
+			if(numagents == 1)
+				ert_antag = new ertemplate.leader_role
+			else
+				ert_antag = ertemplate.roles[WRAP(numagents,1,length(ertemplate.roles) + 1)]
+				ert_antag = new ert_antag
+			ert_antag.random_names = ertemplate.random_names
+
+			ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
+			ERTOperative.mind.assigned_role = ert_antag.name
+
+			//Logging and cleanup
+			log_game("[key_name(ERTOperative)] has been selected as an [ert_antag.name]")
+			numagents--
+			teamSpawned++
+
+		if (teamSpawned)
+			message_admins("[ertemplate.polldesc] has spawned with the mission: [ertemplate.mission]")
+
+		//Open the Armory doors
+		if(ertemplate.opendoors)
+			for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)
+				door.open()
+				CHECK_TICK
+		return TRUE
 
 	return
 
