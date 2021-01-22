@@ -5,12 +5,12 @@
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
-	desc = "It's watching you closely. You need a skeleton key to open it."
+	desc = "It's watching you closely."
 	icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/structure/closet/crate/necropolis/tendril
-	desc = "It's watching you suspiciously."
+	desc = "It's watching you suspiciously. You need a skeleton key to open it."
 	///prevents bust_open to fire
 	integrity_failure = 0
 	/// var to check if it got opened by a key
