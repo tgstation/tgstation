@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - admin: "Transforming a human into an AI using the player panel now allows for keeping the AI at the old human's location."
