@@ -133,10 +133,10 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/noogie/N = new(user)
-	if(user.put_in_hands(N))
+	var/obj/item/noogie/noogie = new(user)
+	if(user.put_in_hands(noogie))
 		to_chat(user, "<span class='notice'>You ready your noogie'ing hand.</span>")
 	else
-		qdel(N)
+		qdel(noogie)
 		to_chat(user, "<span class='warning'>You're incapable of noogie'ing in your current state.</span>")
 
