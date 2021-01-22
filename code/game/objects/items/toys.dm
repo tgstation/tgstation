@@ -1498,10 +1498,10 @@
 
 
 /*
- * Eldrich Toys
+ * Eldritch Toys
  */
 
-/obj/item/toy/eldrich_book
+/obj/item/toy/eldritch_book
 	name = "Codex Cicatrix"
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
 	icon = 'icons/obj/eldritch.dmi'
@@ -1512,11 +1512,11 @@
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_state = FALSE
 
-/obj/item/toy/eldrich_book/attack_self(mob/user)
+/obj/item/toy/eldritch_book/attack_self(mob/user)
 	book_state = !book_state
 	update_icon()
 
-/obj/item/toy/eldrich_book/update_icon_state()
+/obj/item/toy/eldritch_book/update_icon_state()
 	icon_state = book_state ? "book_open" : "book"
 
 /*
