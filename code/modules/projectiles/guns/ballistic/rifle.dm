@@ -104,6 +104,7 @@
 			user.visible_message("<span class='notice'>[user] finishes maintenance of [source].</span>")
 			Jamming_Chance = 10
 			qdel(item)
+			stoplag(1)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
