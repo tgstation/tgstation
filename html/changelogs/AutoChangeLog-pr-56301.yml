@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the botany gene-shear click-stacking input exploit to get around health requirements."

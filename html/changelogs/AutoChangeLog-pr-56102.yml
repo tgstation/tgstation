@@ -1,4 +1,0 @@
-author: "Koshenko"
-delete-after: True
-changes: 
-  - refactor: "TCG item scaling refactored into an element"

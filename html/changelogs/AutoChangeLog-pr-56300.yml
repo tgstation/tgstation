@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes invasive spreading overtaking plants of the same type"
-  - bugfix: "Fixes invasive spreading going through windows"
