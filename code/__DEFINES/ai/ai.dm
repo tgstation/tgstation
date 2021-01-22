@@ -52,7 +52,4 @@
 #define BB_DOG_FETCH_THROWER "BB_dog_fetch_thrower"
 #define BB_DOG_THROW_LISTENERS "BB_dog_throw_listeners"
 #define BB_DOG_DELIVERING "BB_dog_delivering"
-
-#define AI_DOG_THROW_LISTEN_RANGE	7
-
-#define AI_DOG_PET_FRIEND_PROB		15
+#define BB_DOG_FRIENDS "BB_dog_friends"
