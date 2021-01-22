@@ -19,6 +19,8 @@
 	can_be_held = TRUE
 	pet_bonus = TRUE
 	pet_bonus_emote = "woofs happily!"
+	ai_controller = /datum/ai_controller/dog
+	stop_automated_movement = TRUE
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
@@ -424,8 +426,6 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
-	ai_controller = /datum/ai_controller/dog
-	stop_automated_movement = TRUE
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE
