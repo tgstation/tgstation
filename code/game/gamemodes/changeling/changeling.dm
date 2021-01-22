@@ -163,6 +163,12 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
 
+			if(slot == "wear_id" && chosen_prof.id_icon)
+				var/image/holder = user.hud_list[ID_HUD]
+				var/icon/I = icon(user.icon, user.icon_state, user.dir)
+				holder.pixel_y = I.Height() - world.icon_size
+				holder.icon_state = chosen_prof.id_icon
+
 	for(var/stored_scar_line in chosen_prof.stored_scars)
 		var/datum/scar/attempted_fake_scar = user.load_scar(stored_scar_line)
 		if(attempted_fake_scar)
