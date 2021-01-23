@@ -46,6 +46,7 @@
 /area/shuttle/escape/arena)
 "p" = (
 /obj/structure/healingfountain,
+/obj/item/skeleton_key,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "z" = (
@@ -59,6 +60,12 @@
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
+/area/shuttle/escape/arena)
+"V" = (
+/obj/structure/healingfountain,
+/obj/item/skeleton_key,
+/obj/item/skeleton_key,
+/turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 
 (1,1,1) = {"
@@ -154,7 +161,7 @@ j
 m
 j
 j
-p
+V
 g
 "}
 (5,1,1) = {"
@@ -250,7 +257,7 @@ j
 j
 j
 j
-p
+V
 g
 "}
 (9,1,1) = {"
