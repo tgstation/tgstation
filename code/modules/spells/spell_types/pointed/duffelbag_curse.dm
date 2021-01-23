@@ -3,7 +3,7 @@
 	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
 	school = "transmutation"
 	charge_type = "recharge"
-	charge_max	= 150
+	charge_max	= 200
 	charge_counter = 0
 	clothes_req = FALSE
 	stat_allowed = FALSE
@@ -24,8 +24,12 @@
 		return FALSE
 	if(!can_target(targets[1], user))
 		return FALSE
-
+	
 	var/mob/living/carbon/target = targets[1]
+	if(HAS_TRAIT(target, TRAIT_DUFFEL_CURSED))
+		to_chat(user, "<span class='warning'>That person is already cursed!</span>")
+		return FALSE
+
 	if(target.anti_magic_check())
 		to_chat(user, "<span class='warning'>The spell had no effect!</span>")
 		target.visible_message("<span class='danger'>[target] was unaffected by the curse!</span>", \
@@ -45,6 +49,7 @@
 			if(!target.put_in_hands(C))
 				target.dropItemToGround(target.get_active_held_item())
 				target.put_in_hands(C)
+
 /obj/effect/proc_holder/spell/pointed/duffelbagcurse/can_target(atom/target, mob/user, silent)
 	. = ..()
 	if(!.)
