@@ -119,7 +119,7 @@
 				return
 			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
 			if(do_after(user, 2 SECONDS, target = src))
-				G.use(2)
+				glass.use(2)
 				broken = FALSE
 				obj_integrity = max_integrity
 				update_icon()
@@ -237,7 +237,7 @@
 	if(fluid_type != AQUARIUM_FLUID_AIR)
 		var/datum/reagents/reagent_splash = new()
 		reagent_splash.add_reagent(/datum/reagent/water, 30)
-		chem_splash(droploc, 3, list(R))
+		chem_splash(droploc, 3, list(reagent_splash))
 	update_icon()
 
 #undef AQUARIUM_LAYER_STEP
