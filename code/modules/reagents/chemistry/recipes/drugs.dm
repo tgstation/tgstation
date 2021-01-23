@@ -29,7 +29,7 @@
 	thermic_constant = 0.1 //exothermic nature is equal to impurty
 	H_ion_release = -0.025 
 	rate_up_lim = 10
-	purity_min = 0.3
+	purity_min = 0.5 //100u will natrually just dip under this
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
 	
 
@@ -37,9 +37,9 @@
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
 	if(!meth)//First step
-		reaction.thermic_mod = (1-delta_ph)*3
+		reaction.thermic_mod = (1-delta_ph)*5
 		return
-	reaction.thermic_mod = (1-meth.purity)*3
+	reaction.thermic_mod = (1-meth.purity)*5
 
 /datum/chemical_reaction/methamphetamine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
@@ -51,10 +51,12 @@
 
 /datum/chemical_reaction/methamphetamine/reaction_finish(datum/reagents/holder, react_vol)
 	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
+	if(!meth)//Other procs before this can already blow us up
+		return ..()
 	if(meth.purity < purity_min)
 		temp_meth_explosion(holder, react_vol)
 	else
-		return..()
+		return ..()
 
 //Refactoring of explosions is coming later, this is till then so it still explodes
 /datum/chemical_reaction/methamphetamine/proc/temp_meth_explosion(datum/reagents/holder, explode_vol)
