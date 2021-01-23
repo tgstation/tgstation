@@ -18,14 +18,15 @@
 			return
 		priority_announce("Names and Identities have been restored.", "Identity Restoration", 'sound/ai/attention.ogg')
 		for(var/mob/living/player in GLOB.player_list)
-			if(player.mind && (ishuman(player) || issilicon(player)) && SSjob.GetJob(player.mind.assigned_role))
-				var/old_name = player.real_name //before restoration
-				if(issilicon(player))
-					var/is_AI = isAI(player)
-					player.apply_pref_name("[is_AI ? "ai" : "cyborg"]", player.client)
-				else
-					player.client.prefs.copy_to(player, antagonist = (LAZYLEN(player.mind.antag_datums) > 0), is_latejoiner = FALSE)
-					player.fully_replace_character_name(old_name, player.real_name) //this changes IDs and PDAs and whatnot
+			if(!player.mind || (!ishuman(player) && !issilicon(player)) || !SSjob.GetJob(player.mind.assigned_role))
+				continue
+			var/old_name = player.real_name //before restoration
+			if(issilicon(player))
+				var/is_AI = isAI(player)
+				player.apply_pref_name("[is_AI ? "ai" : "cyborg"]", player.client)
+			else
+				player.client.prefs.copy_to(player, antagonist = (LAZYLEN(player.mind.antag_datums) > 0), is_latejoiner = FALSE)
+				player.fully_replace_character_name(old_name, player.real_name) //this changes IDs and PDAs and whatnot
 		return
 	var/list/input_list = list("Cancel")
 	for(var/_theme in typesof(/datum/anonymous_theme))
@@ -54,12 +55,13 @@
 /proc/anonymous_all_players()
 	var/datum/anonymous_theme/theme = SSticker.anonymousnames
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.mind && (ishuman(player) || issilicon(player)) && SSjob.GetJob(player.mind.assigned_role))
-			if(issilicon(player))
-				player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
-			else
-				randomize_human(player) //do this first so the special name can be given
-				player.fully_replace_character_name(player.real_name, theme.anonymous_name(player))
+		if(!player.mind || (!ishuman(player) && !issilicon(player)) || !SSjob.GetJob(player.mind.assigned_role))
+			continue
+		if(issilicon(player))
+			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
+		else
+			randomize_human(player) //do this first so the special name can be given
+			player.fully_replace_character_name(player.real_name, theme.anonymous_name(player))
 
 /* Datum singleton initialized by the client proc to hold the naming generation */
 /datum/anonymous_theme
