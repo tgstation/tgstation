@@ -128,7 +128,7 @@ but only permamently removed with the curator's soapstone.
 
 	var/turf/original_turf
 
-	//Total vote count at or below which we delete ourselves.
+	//Total vote count at or below which we become ineligible for persistence.
 	var/delete_at = -5
 
 /obj/structure/chisel_message/Initialize(mapload)
