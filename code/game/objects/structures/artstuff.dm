@@ -272,9 +272,11 @@
 
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
+	if(persistence_id)
+		. += "<span class='notice'>Any painting placed here will be archived at the end of the shift.</span>"
 	if(current_canvas)
 		current_canvas.ui_interact(user)
-	. += "<span class='notice'>Any painting placed here will be archived at the end of the shift. Use wirecutters to remove the painting.</span>"
+		. += "<span class='notice'>Use wirecutters to remove the painting.</span>"
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -395,21 +397,21 @@
 
 //Presets for art gallery mapping, for paintings to be shared across stations
 /obj/structure/sign/painting/library
-	name = "Public Painting Exhibit"
+	name = "\improper Public Painting Exhibit mounting"
 	desc = "For art pieces hung by the public."
 	desc_with_canvas = "A piece of art (or \"art\"). Anyone could've hung it."
 	persistence_id = "library"
 
 /obj/structure/sign/painting/library_secure
-	name = "Secure Painting Exhibit"
+	name = "\improper Curated Painting Exhibit mounting"
 	desc = "For masterpieces hand-picked by the curator."
-	desc_with_canvas = "A masterpiece hand-picked by the curator. Supposedly."
+	desc_with_canvas = "A masterpiece hand-picked by the curator, supposedly."
 	persistence_id = "library_secure"
 
 /obj/structure/sign/painting/library_private // keep your smut away from prying eyes, or non-librarians at least
-	name = "Private Painting Exhibit"
-	desc = "For art pieces deemed too subversive or too illegal for prying eyes."
-	desc_with_canvas = "A painting hung away from prying eyes."
+	name = "\improper Private Painting Exhibit mounting"
+	desc = "For art pieces deemed too subversive or too illegal to be shared outside of curators."
+	desc_with_canvas = "A painting hung away from lesser minds."
 	persistence_id = "library_private"
 
 /obj/structure/sign/painting/vv_get_dropdown()
