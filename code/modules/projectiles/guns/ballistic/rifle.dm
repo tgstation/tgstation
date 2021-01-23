@@ -100,7 +100,7 @@
 /obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
 	. = ..()
 	if(can_jam)
-		if(!bolt_locked)
+		if(bolt_locked)
 			if(istype(item, /obj/item/gun_maintenance_supplies))
 				if(do_after(user, 10 SECONDS, target = src))
 					user.visible_message("<span class='notice'>[user] finishes maintenance of [src].</span>")
