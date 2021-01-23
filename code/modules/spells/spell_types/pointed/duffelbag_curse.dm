@@ -9,7 +9,7 @@
 	stat_allowed = FALSE
 	invocation = "BA'R A'RP!"
 	invocation_type = INVOCATION_SHOUT
-	range = 4
+	range = 7
 	cooldown_min = 80
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	action_icon_state = "duffelbag_curse"
@@ -45,9 +45,12 @@
 			if(!target.put_in_hands(C))
 				target.dropItemToGround(target.get_active_held_item())
 				target.put_in_hands(C)
+
 /obj/effect/proc_holder/spell/pointed/duffelbagcurse/can_target(atom/target, mob/user, silent)
 	. = ..()
 	if(!.)
+		return FALSE
+	if(!isInSight(target, user))
 		return FALSE
 	if(!is_type_in_typecache(target, compatible_mobs_typecache))
 		if(!silent)
