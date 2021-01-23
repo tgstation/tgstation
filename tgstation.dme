@@ -1989,6 +1989,7 @@
 #include "code\modules\events\wizard\fakeexplosion.dm"
 #include "code\modules\events\wizard\ghost.dm"
 #include "code\modules\events\wizard\greentext.dm"
+#include "code\modules\events\wizard\identity_spoof.dm"
 #include "code\modules\events\wizard\imposter.dm"
 #include "code\modules\events\wizard\invincible.dm"
 #include "code\modules\events\wizard\lava.dm"
