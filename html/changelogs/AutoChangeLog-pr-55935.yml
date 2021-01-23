@@ -1,0 +1,8 @@
+author: "Tralezab, Nabski and Coaix helping in name string additions"
+delete-after: True
+changes: 
+  - rscadd: "Added the Wizard Academy anonymous theme"
+  - rscadd: "Wizard event requested by actionninja to enable the wizard anonymous theme as a summon events... event."
+  - refactor: "Themes are no longer switch cases and strings, they are now datum singletons. I really should have done this before"
+  - rscadd: "Anon names can be ran post roundstart with options to announce or not"
+  - bugfix: "Anon names won't fuck with your preferences anymore, only loading from it instead of saving to it."
