@@ -794,7 +794,7 @@
 
 /obj/item/borg/apparatus/Initialize()
 	. = ..()
-	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safe_decon)
 
 /obj/item/borg/apparatus/Destroy()
 	if(stored)
@@ -802,7 +802,7 @@
 	. = ..()
 
 ///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
-/obj/item/borg/apparatus/proc/safedecon()
+/obj/item/borg/apparatus/proc/safe_decon()
 	if(stored)
 		stored.forceMove(get_turf(src))
 		stored = null
@@ -866,7 +866,7 @@
 	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/glass/beaker,
-				/obj/item/reagent_containers/glass/bottle)
+					/obj/item/reagent_containers/glass/bottle)
 
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
@@ -926,7 +926,7 @@
 	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/food/drinks/,
-				/obj/item/reagent_containers/food/condiment)
+					/obj/item/reagent_containers/food/condiment)
 
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
@@ -934,9 +934,61 @@
 	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
 	update_icon()
 
-////////////////////
-//engi part holder//
-////////////////////
+/////////////////////
+//organ storage bag//
+/////////////////////
+
+/obj/item/borg/apparatus/organ_storage //allows medical cyborgs to manipulate organs without hands
+	name = "organ storage bag"
+	desc = "A container for holding body parts."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "evidenceobj"
+	item_flags = SURGICAL_TOOL
+	storable = list(/obj/item/organ,
+					/obj/item/bodypart)
+
+/obj/item/borg/apparatus/organ_storage/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(contents.len)
+		to_chat(user, "<span class='warning'>[src] already has something inside it!</span>")
+		return
+	if(!isorgan(I) && !isbodypart(I))
+		to_chat(user, "<span class='warning'>[src] can only hold body parts!</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
+	icon_state = "evidence"
+	var/xx = I.pixel_x
+	var/yy = I.pixel_y
+	I.pixel_x = 0
+	I.pixel_y = 0
+	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)
+	img.plane = FLOAT_PLANE
+	I.pixel_x = xx
+	I.pixel_y = yy
+	add_overlay(img)
+	add_overlay("evidence")
+	desc = "An organ storage container holding [I]."
+	I.forceMove(src)
+	w_class = I.w_class
+
+/obj/item/borg/apparatus/organ_storage/attack_self(mob/user)
+	if(contents.len)
+		var/obj/item/I = contents[1]
+		user.visible_message("<span class='notice'>[user] dumps [I] from [src].</span>", "<span class='notice'>You dump [I] from [src].</span>")
+		cut_overlays()
+		I.forceMove(get_turf(src))
+		icon_state = "evidenceobj"
+		desc = "A container for holding body parts."
+	else
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+	return
+
+////////////////////////////
+//engi circuitboard holder//
+////////////////////////////
 
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"
