@@ -303,7 +303,7 @@
 		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
 		next_nag_time = world.time + nag_cooldown
 
-/obj/item/bounty_cube/proc/set_up(var/datum/bounty/my_bounty, var/obj/item/card/id/holder_id)
+/obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
 	bounty_value = my_bounty.reward
 	bounty_name = my_bounty.name
 	bounty_holder = holder_id.registered_name
