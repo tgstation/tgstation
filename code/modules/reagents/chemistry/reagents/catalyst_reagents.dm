@@ -9,8 +9,8 @@
 	var/modifier = 1
 
 /datum/reagent/catalyst_agent/proc/consider_catalyst(datum/equilibrium/equilibrium)
-	for(var/_reactant in equilibrium.reaction.results)
-		if(istype(_reactant, target_reagent_type))
+	for(var/_product in equilibrium.reaction.results)
+		if(istype(_product, target_reagent_type))
 			return TRUE
 	return FALSE
 

@@ -157,7 +157,11 @@ export const ChemHeater = (props, context) => {
             title="Reactions"
             buttons={(
               <Flex>
-                <Flex.Item color="label">pH:{currentpH}</Flex.Item>
+                <Flex.Item color="label">
+                  <AnimatedNumber
+                    value={currentpH}
+                    format={value => toFixed(value) + ' '} />
+                </Flex.Item>
                 <Flex.Item>
                   <RoundGauge
                     size={1.60}

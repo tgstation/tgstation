@@ -63,7 +63,7 @@
 	required_reagents = list(/datum/reagent/prefactor_a = 5)
 	mix_message = "The solution's viscosity decreases."
 	mix_sound = 'sound/chemistry/bluespace.ogg' //Maybe use this elsewhere instead
-	required_temp = 100
+	required_temp = 50
 	optimal_temp = 500
 	overheat_temp = 500 
 	optimal_ph_min = 5
@@ -71,9 +71,9 @@
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 2
-	thermic_constant = -900
+	thermic_constant = -800
 	H_ion_release = -0.02
-	rate_up_lim = 5
+	rate_up_lim = 6
 	purity_min = 0.35
 
 /datum/chemical_reaction/prefactor_b/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
@@ -96,7 +96,7 @@
 /datum/chemical_reaction/prefactor_a/competitive //So we have a back and forth reaction
 	results = list(/datum/reagent/prefactor_a = 5)
 	required_reagents = list(/datum/reagent/prefactor_b = 5)
-	rate_up_lim = 4
+	rate_up_lim = 3
 
 //The actual results
 /datum/chemical_reaction/prefactor_a/purity_tester

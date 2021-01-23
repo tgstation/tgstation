@@ -63,7 +63,7 @@
 	playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, amount)
 
-//purity testor prefactors
+//purity testor/reaction agent prefactors
 
 /datum/reagent/prefactor_a
 	name = "Interim product alpha"
@@ -104,23 +104,24 @@
 	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
 	ph = 10
 	color = "#e61f82"
-	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 0.5 will be done
-	var/strength = 10
+	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 1 will be done up to a max of 2.5x
+	var/strength = 20
 	
 
 /datum/reagent/reaction_agent/speed_agent/intercept_reagents_transfer(datum/reagents/target, amount)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!length(holder.reaction_list))//you can add this reagent to a beaker with no ongoing reactions, so this prevents it from being used up.
+	if(!length(target.reaction_list))//you can add this reagent to a beaker with no ongoing reactions, so this prevents it from being used up.
 		return FALSE
-	amount /= holder.reaction_list.len
+	amount /= target.reaction_list.len
 	for(var/_reaction in target.reaction_list)
 		var/datum/equilibrium/reaction = _reaction
 		if(!reaction)
 			CRASH("[_reaction] is in the reaction list, but is not an equilibrium")
 		var/power = (amount/reaction.target_vol)*strength
 		power *= creation_purity
+		power = clamp(0, 2.5)
 		reaction.react_timestep(power, creation_purity)
 	holder.remove_reagent(type, amount)
 

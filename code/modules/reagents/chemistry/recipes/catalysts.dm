@@ -2,7 +2,7 @@
 ///////////////////////////MEDICINES////////////////////////////
 
 /datum/chemical_reaction/medical_speed_catalyst
-	results = list(/datum/reagent/reaction_agent/speed_agent = 2)
+	results = list(/datum/reagent/catalyst_agent/speed/medicine = 2)
 	required_reagents = list(/datum/reagent/medicine/c2/libital = 3, /datum/reagent/medicine/c2/probital = 4, /datum/reagent/toxin/plasma = 2)
 	mix_message = "The reaction evaporates slightly as the mixture solidifies"
 	mix_sound = 'sound/chemistry/catalyst.ogg'

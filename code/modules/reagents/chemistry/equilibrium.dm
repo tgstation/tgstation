@@ -155,8 +155,6 @@
 * Generally an internal proc
 */
 /datum/equilibrium/proc/calculate_yield()
-	if(to_delete)
-		return FALSE
 	if(!reaction)
 		stack_trace("Tried to calculate an equlibrium for reaction [reaction.type], but there was no reaction set for the datum")
 		return FALSE
@@ -202,13 +200,16 @@
 * * purity_modifier - how much to modify the step's purity by (0 - 1)
 */
 /datum/equilibrium/proc/react_timestep(delta_time, purity_modifier = 1)
-	if(!calculate_yield())
+	if(to_delete)
+		//stack_trace("[src] was step processed with a delete flag reaction: [reaction] holder: [holder]")
+		//This occurs when it explodes
+		return FALSE
+	if(!check_reagent_properties()) //this is first because it'll call explosions first
 		to_delete = TRUE
 		return
-	if(!check_reagent_properties())
+	if(!calculate_yield())//So that this can detect if we're missing reagents
 		to_delete = TRUE
-		return
-	
+		return	
 
 	delta_t = 0 //how far off optimal temp we care
 	delta_ph = 0 //How far off the pH we are
@@ -302,9 +303,9 @@
 
 	#ifdef REAGENTS_TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
 	if(GLOB.Debug2) //I want my spans for my sanity
-		message_admins("<span class='greentext'>Reaction step active for:[reaction.type]</spans>")
-		message_admins("span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]<spans>")
-		message_admins("Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
+		message_admins("<span class='green'>Reaction step active for:[reaction.type]</spans>")
+		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]<spans>")
+		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
 	#endif
 		
 	//Apply thermal output of reaction to beaker
@@ -346,7 +347,8 @@
 			cached_purity += reagent.purity
 			i++
 	if(!i)//I've never seen it get here with 0, but in case - it gets here when it blows up from overheat
-		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
+		stack_trace("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
+		return 0 //we exploded and cleared reagents - but lets not kill the process
 	return cached_purity/i
 
 /datum/equilibrium/proc/force_clear_reactive_agents()
