@@ -296,6 +296,10 @@
 /area/mine/laborcamp)
 "aT" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/secure/engineering{
+	locked = 0;
+	req_access = list(10)
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aU" = (
@@ -331,9 +335,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "ba" = (
-/obj/structure/closet/crate/freezer,
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
+/obj/structure/closet/crate/secure/freezer{
+	req_access = list(28);
+	tamperproof = 1
+	},
+/obj/effect/spawner/lootdrop/pizzaparty,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bb" = (
