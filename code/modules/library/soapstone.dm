@@ -278,7 +278,4 @@ but only permamently removed with the curator's soapstone.
 				qdel(src)
 				return
 
-	if(like_keys.len - dislike_keys.len <= delete_at)
-		persists = FALSE
-	else
-		persists = TRUE
+	persists = like_keys.len - dislike_keys.len > delete_at
