@@ -54,6 +54,11 @@
 	name = "secure hydroponics crate"
 	icon_state = "hydrosecurecrate"
 
+/obj/structure/closet/crate/secure/freezer
+	desc = "An insulated crate with a lock on it, used to secure perishables."
+	name = "secure kitchen crate"
+	icon_state = "kitchen_secure_crate"
+
 /obj/structure/closet/crate/secure/engineering
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."
 	name = "secure engineering crate"
