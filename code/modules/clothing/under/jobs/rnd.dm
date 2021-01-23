@@ -13,6 +13,7 @@
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	desc = "A Research Director jumpsuit belonging to the late and great Doctor Hilbert. The suit sensors have long since fizzled out from the stress of the Hilbert's Hotel."
 	has_sensor = NO_SENSORS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/rnd/research_director/skirt
 	name = "research director's vest suitskirt"
