@@ -17,7 +17,8 @@
 	throwforce = 10
 
 	var/mode = RESONATOR_MODE_AUTO
-	var/quick_burst_mod = 0.8 //How efficient it is in manual mode. Yes, we lower the damage cuz it's gonna be used for mobhunt
+	//How efficient it is in manual mode. Yes, we lower the damage cuz it's gonna be used for mobhunt
+	var/quick_burst_mod = 0.8
 	var/fieldlimit = 4
 	var/list/fields = list()
 
@@ -51,7 +52,7 @@
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
-	duration = 600
+	duration = 60 SECONDS
 	var/resonance_damage = 20
 	var/damage_multiplier = 1
 	var/creator
@@ -60,7 +61,7 @@
 
 /obj/effect/temp_visual/resonance/Initialize(mapload, set_creator, set_resonator, mode)
 	if(mode == RESONATOR_MODE_AUTO)
-		duration = 20
+		duration = 2 SECONDS
 	if(mode == RESONATOR_MODE_MATRIX)
 		icon_state = "shield2"
 		name = "resonance matrix"
@@ -71,7 +72,7 @@
 	if(res)
 		res.fields += src
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
-	if(mode == 1)
+	if(mode == RESONATOR_MODE_AUTO)
 		transform = matrix()*0.75
 		animate(src, transform = matrix()*1.5, time = duration)
 	deltimer(timerid)
@@ -144,3 +145,7 @@
 	else
 		to_chat(user, "<span class='info'>You set the resonator's fields to automatically detonate after 2 seconds.</span>")
 		mode = RESONATOR_MODE_AUTO
+
+#undef RESONATOR_MODE_AUTO
+#undef RESONATOR_MODE_MANUAL
+#undef RESONATOR_MODE_MATRIX
