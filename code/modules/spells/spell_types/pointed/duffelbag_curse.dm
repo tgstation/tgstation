@@ -8,7 +8,7 @@
 	clothes_req = FALSE
 	stat_allowed = FALSE
 	invocation = "BA'R A'RP!"
-	invocation_type = INVOCATION_SHOUT
+	invocation_type = INVOCATION_WHISPER
 	range = 7
 	cooldown_min = 50
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
