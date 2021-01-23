@@ -128,7 +128,7 @@ but only permamently removed with the curator's soapstone.
 
 	var/turf/original_turf
 
-	//Total vote count at or below which we become ineligible for persistence.
+	//Total vote count at or below which we won't persist.
 	var/delete_at = -5
 
 /obj/structure/chisel_message/Initialize(mapload)
@@ -137,9 +137,12 @@ but only permamently removed with the curator's soapstone.
 	var/turf/T = get_turf(src)
 	original_turf = T
 
-	if(!good_chisel_message_location(T) || like_keys.len - dislike_keys.len <= delete_at)
+	if(!good_chisel_message_location(T))
 		persists = FALSE
 		return INITIALIZE_HINT_QDEL
+
+	if(like_keys.len - dislike_keys.len <= delete_at)
+		persists = FALSE
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
