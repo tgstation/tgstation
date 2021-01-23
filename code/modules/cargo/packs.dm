@@ -1772,8 +1772,13 @@
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
-	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
-	cost = CARGO_CRATE_VALUE * 10 // Best prices this side of the galaxy.
+	desc = "All deliveries are guaranteed to be 99% anomaly-free! Requires kitchen access to open."
+
+	//So cargo and friends can't just ignore and negate the existence of the kitchen
+	access = ACCESS_KITCHEN
+	crate_type = /obj/structure/closet/crate/secure/kitchen
+	cost = CARGO_CRATE_VALUE * 50
+
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
@@ -1786,12 +1791,12 @@
 	. = ..()
 	if(!anomalous_box_provided)
 		for(var/obj/item/pizzabox/P in C)
-			if(prob(1)) //1% chance for each box, so 4% total chance per order
+			if(prob(0.2)) //0.2% chance for each crate, so 1% total chance assuming there's five pizzas
 				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
 				fourfiveeight.boxtag = P.boxtag
 				qdel(P)
 				anomalous_box_provided = TRUE
-				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
+				log_game("An anomalous pizza box was provided in a pizza crate at cargo during delivery.")
 				if(prob(50))
 					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
 				else

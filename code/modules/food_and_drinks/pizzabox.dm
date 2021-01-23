@@ -278,9 +278,9 @@
 	wires = new /datum/wires/explosive/pizza(src)
 
 /obj/item/pizzabox/margherita/Initialize()
-	. = ..()
 	AddPizza()
 	boxtag = "Margherita Deluxe"
+	. = ..()
 
 /obj/item/pizzabox/margherita/proc/AddPizza()
 	pizza = new /obj/item/food/pizza/margherita(src)
@@ -289,24 +289,24 @@
 	pizza = new /obj/item/food/pizza/margherita/robo(src)
 
 /obj/item/pizzabox/vegetable/Initialize()
-	. = ..()
 	pizza = new /obj/item/food/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
+	. = ..()
 
 /obj/item/pizzabox/mushroom/Initialize()
-	. = ..()
 	pizza = new /obj/item/food/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
+	. = ..()
 
 /obj/item/pizzabox/meat/Initialize()
-	. = ..()
 	pizza = new /obj/item/food/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
+	. = ..()
 
 /obj/item/pizzabox/pineapple/Initialize()
-	. = ..()
 	pizza = new /obj/item/food/pizza/pineapple(src)
 	boxtag = "Honolulu Chew"
+	. = ..()
 
 //An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
 /obj/item/pizzabox/infinite
