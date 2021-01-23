@@ -104,7 +104,7 @@
 	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
 	ph = 10
 	color = "#e61f82"
-	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 1 will be done up to a max of 2.5x
+	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 1 will be done up to a max of 2x
 	var/strength = 20
 	
 
@@ -121,7 +121,7 @@
 			CRASH("[_reaction] is in the reaction list, but is not an equilibrium")
 		var/power = (amount/reaction.target_vol)*strength
 		power *= creation_purity
-		power = clamp(power, 0, 2.5)
+		power = clamp(power, 0, 2)
 		reaction.react_timestep(power, creation_purity)
 	holder.remove_reagent(type, amount)
 
