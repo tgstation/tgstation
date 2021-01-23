@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - code_imp: "changed references of robot module (engineering, medical, etc.) to model"
+  - code_imp: "moved robot declaration and model declaration to their own files"

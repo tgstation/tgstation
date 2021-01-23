@@ -219,7 +219,7 @@
 	},
 /obj/item/toy/plush/beeplushie{
 	desc = "Maybe hugging this will make you feel better about yourself.";
-	name = "therapy plush"
+	name = "Therabee"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -46104,7 +46104,9 @@
 "csa" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/white,
-/obj/item/toy/plush/pkplush,
+/obj/item/toy/plush/pkplush{
+	name = "C.H.E.R.U.B."
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "csb" = (
@@ -51844,7 +51846,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
 /obj/structure/table/greyscale,
-/obj/item/toy/plush/slimeplushie,
+/obj/item/toy/plush/slimeplushie{
+	name = "Nanners"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/science/xenobiology)
 "cTY" = (
@@ -63997,7 +64001,9 @@
 	pixel_y = 32
 	},
 /obj/structure/chair/sofa/right,
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	name = "Mender Moff"
+	},
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "jIy" = (
@@ -68731,7 +68737,9 @@
 "nGT" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/bed/roller,
-/obj/item/toy/plush/snakeplushie,
+/obj/item/toy/plush/snakeplushie{
+	name = "Boa Ben"
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
