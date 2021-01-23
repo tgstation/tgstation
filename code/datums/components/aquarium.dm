@@ -26,7 +26,6 @@
 	properties.parent = src
 
 	ADD_TRAIT(parent,TRAIT_FISH_CASE_COMPATIBILE,src)
-	RegisterSignal(parent, COMSIG_AQUARIUM_INSERT_READY, .proc/is_ready_to_insert)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/enter_aquarium)
 
 /datum/component/aquarium_content/PreTransfer()
@@ -48,17 +47,16 @@
 	if(HAS_TRAIT(movable_parent.loc, TRAIT_FISH_SAFE_STORAGE))
 		on_tank_stasis()
 
-/datum/component/aquarium_content/proc/is_ready_to_insert(datum/source,atom/aquarium_object)
-	SIGNAL_HANDLER
+/datum/component/aquarium_content/proc/is_ready_to_insert(obj/structure/aquarium/aquarium)
 	//This is kinda awful but we're unaware of other fish
 	if(properties.unique)
-		for(var/atom/movable/AM in aquarium_object)
-			if(AM == parent)
+		for(var/atom/movable/fish_or_prop in aquarium)
+			if(fish_or_prop == parent)
 				continue
-			var/datum/component/aquarium_content/other_content = AM.GetComponent(/datum/component/aquarium_content)
+			var/datum/component/aquarium_content/other_content = fish_or_prop.GetComponent(/datum/component/aquarium_content)
 			if(other_content && other_content.properties.type == properties.type)
-				return NONE
-	return AQUARIUM_CONTENT_READY_TO_INSERT
+				return FALSE
+	return TRUE
 
 /datum/component/aquarium_content/proc/on_inserted(atom/aquarium)
 	current_aquarium = aquarium

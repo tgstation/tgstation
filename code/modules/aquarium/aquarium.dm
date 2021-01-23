@@ -118,7 +118,8 @@
 		// This signal exists so we common items instead of adding component on init can just register creation of one in response.
 		// This way we can avoid the cost of 9999 aquarium components on rocks that will never see water in their life.
 		SEND_SIGNAL(I,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
-		if(SEND_SIGNAL(I,COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT)
+		var/datum/component/aquarium_content/content_component = I.GetComponent(/datum/component/aquarium_content)
+		if(content_component && content_component.is_ready_to_insert(src))
 			if(user.transferItemToLoc(I,src))
 				update_icon()
 				return TRUE
@@ -136,7 +137,8 @@
 	if(!broken && user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
 		SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
-		if(SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT)
+		var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
+		if(content_component && content_component.is_ready_to_insert(src))
 			try_to_put_mob_in(user)
 	else if(panel_open)
 		. = ..() //call base ui_interact
@@ -152,10 +154,14 @@
 			return
 		user.visible_message("<span class='danger'>[user] starts to put [living_pulled] into [src]!</span>")
 		if(do_after(user, 10 SECONDS, target = src))
-			if(!QDELETED(living_pulled) && user.pulling == living_pulled && !living_pulled.buckled && !living_pulled.has_buckled_mobs() && (SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_INSERT_READY, src) & AQUARIUM_CONTENT_READY_TO_INSERT))
-				user.visible_message("<span class='danger'>[user] stuffs [living_pulled] into [src]!</span>")
-				living_pulled.forceMove(src)
-				update_icon()
+			if(QDELETED(living_pulled) || user.pulling != living_pulled || living_pulled.buckled  || living_pulled.has_buckled_mobs())
+				return
+			var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
+			if(content_component || content_component.is_ready_to_insert(src))
+				return
+			user.visible_message("<span class='danger'>[user] stuffs [living_pulled] into [src]!</span>")
+			living_pulled.forceMove(src)
+			update_icon()
 
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/user)
