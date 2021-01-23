@@ -280,7 +280,7 @@
 /obj/item/pizzabox/margherita/Initialize()
 	AddPizza()
 	boxtag = "Margherita Deluxe"
-	. = ..()
+	return ..()
 
 /obj/item/pizzabox/margherita/proc/AddPizza()
 	pizza = new /obj/item/food/pizza/margherita(src)
@@ -291,22 +291,22 @@
 /obj/item/pizzabox/vegetable/Initialize()
 	pizza = new /obj/item/food/pizza/vegetable(src)
 	boxtag = "Gourmet Vegatable"
-	. = ..()
+	return ..()
 
 /obj/item/pizzabox/mushroom/Initialize()
 	pizza = new /obj/item/food/pizza/mushroom(src)
 	boxtag = "Mushroom Special"
-	. = ..()
+	return ..()
 
 /obj/item/pizzabox/meat/Initialize()
 	pizza = new /obj/item/food/pizza/meat(src)
 	boxtag = "Meatlover's Supreme"
-	. = ..()
+	return ..()
 
 /obj/item/pizzabox/pineapple/Initialize()
 	pizza = new /obj/item/food/pizza/pineapple(src)
 	boxtag = "Honolulu Chew"
-	. = ..()
+	return ..()
 
 //An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
 /obj/item/pizzabox/infinite
@@ -338,7 +338,7 @@
 	QDEL_NULL(pizza)
 	if(ishuman(user))
 		attune_pizza(user)
-	. = ..()
+	return ..()
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/noms) //tonight on "proc names I never thought I'd type"
 	if(!pizza_preferences[noms.ckey])
