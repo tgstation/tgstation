@@ -68,13 +68,11 @@
 /datum/reagent/prefactor_a
 	name = "Interim product alpha"
 	description = "This reagent is a prefactor to the purity tester reagent, and will react with stable plasma to create it"
-	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/prefactor_b
 	color = "#bafa69"
 
 /datum/reagent/prefactor_b
 	name = "Interim product beta"
 	description = "This reagent is a prefactor to the reaction speed agent reagent, and will react with stable plasma to create it"
-	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/prefactor_a
 	color = "#8a3aa9"
 
 /datum/reagent/reaction_agent/purity_tester

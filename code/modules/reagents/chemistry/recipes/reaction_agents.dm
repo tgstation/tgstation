@@ -75,6 +75,7 @@
 	H_ion_release = -0.02
 	rate_up_lim = 6
 	purity_min = 0.35
+	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_a/competitive
 
 /datum/chemical_reaction/prefactor_b/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
@@ -97,6 +98,7 @@
 	results = list(/datum/reagent/prefactor_a = 5)
 	required_reagents = list(/datum/reagent/prefactor_b = 5)
 	rate_up_lim = 3
+	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_b
 
 //The actual results
 /datum/chemical_reaction/prefactor_a/purity_tester

@@ -184,7 +184,7 @@
 		else
 			if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)
 				danger = TRUE
-		if(reagent.chemical_flags & REACTION_COMPETITIVE) //We have a compeitive reaction - concatenate the results for the different reactions 
+		if(equilibrium.reaction.reaction_flags & REACTION_COMPETITIVE) //We have a compeitive reaction - concatenate the results for the different reactions 
 			for(var/entry in active_reactions)
 				if(entry["name"] == reagent.name) //If we have multiple reaction methods for the same result - combine them
 					entry["reactedVol"] = equilibrium.reacted_vol
