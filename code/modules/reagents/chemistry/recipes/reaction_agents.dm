@@ -14,7 +14,7 @@
 	ph_exponent_factor = 0
 	thermic_constant = 0
 	H_ion_release = 0.01
-	rate_up_lim = 7.5
+	rate_up_lim = 15
 	purity_min = 0
 
 /datum/chemical_reaction/acidic_buffer
@@ -31,7 +31,7 @@
 	ph_exponent_factor = 0
 	thermic_constant = 0
 	H_ion_release = -0.01
-	rate_up_lim = 10
+	rate_up_lim = 20
 	purity_min = 0
 
 /datum/chemical_reaction/purity_tester
@@ -68,13 +68,13 @@
 	ph_exponent_factor = 2
 	thermic_constant = -1500
 	H_ion_release = -0.5
-	rate_up_lim = 1
+	rate_up_lim = 2
 	purity_min = 0.35
 
 /datum/chemical_reaction/speed_agent/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/bluespace))
-		holder.remove_reagent(/datum/reagent/bluespace, 10)
+		holder.remove_reagent(/datum/reagent/bluespace, 1)
 		reaction.delta_t *= 5
 
 /datum/chemical_reaction/speed_agent/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)

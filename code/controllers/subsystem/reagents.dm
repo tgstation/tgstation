@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(reagents)
 	name = "Reagents"
 	init_order = INIT_ORDER_REAGENTS
 	priority = FIRE_PRIORITY_REAGENTS
-	wait = 0.5 SECONDS
+	wait = 0.5 SECONDS //You might think that rate_up_lim has to be set to half, but since everything is normalised around delta_time, it automatically adjusts it to be per second. Magic!
 	flags = SS_NO_INIT | SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 

@@ -101,16 +101,6 @@
 * otherwise, generally, don't call this directed except internally
 */
 /datum/equilibrium/proc/check_reagent_properties()
-	//Have we exploded?
-	if(!holder.my_atom || holder.reagent_list.len == 0)
-		return FALSE
-	if(!holder)
-		stack_trace("an equilibrium is missing it's holder.")
-		return FALSE
-	if(!reaction)
-		stack_trace("an equilibrium is missing it's reaction.")
-		return FALSE
-
 	//Are we overheated?
 	if(reaction.is_cold_recipe)
 		if(holder.chem_temp < reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
@@ -120,6 +110,16 @@
 		if(holder.chem_temp > reaction.overheat_temp)
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
 			reaction.overheated(holder, src)
+	
+	//Have we exploded?
+	if(!holder.my_atom || holder.reagent_list.len == 0)
+		return FALSE
+	if(!holder)
+		stack_trace("an equilibrium is missing it's holder.")
+		return FALSE
+	if(!reaction)
+		stack_trace("an equilibrium is missing it's reaction.")
+		return FALSE
 
 	//set up catalyst checks
 	var/total_matching_catalysts = 0
@@ -207,6 +207,7 @@
 	if(!check_reagent_properties())
 		to_delete = TRUE
 		return
+	
 
 	delta_t = 0 //how far off optimal temp we care
 	delta_ph = 0 //How far off the pH we are
@@ -340,7 +341,7 @@
 		if (reagent in cached_reagents)
 			cached_purity += reagent.purity
 			i++
-	if(!i)//I've never seen it get here with 0, but in case
+	if(!i)//I've never seen it get here with 0, but in case - it gets here when it blows up from overheat
 		CRASH("No reactants found mid reaction for [C.type]. Beaker: [holder.my_atom]")
 	return cached_purity/i
 

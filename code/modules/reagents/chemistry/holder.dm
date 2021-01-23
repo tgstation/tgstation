@@ -861,7 +861,7 @@
 					qdel(equilibrium)
 				else
 					//Adding is done in new(), deletion is in qdel
-					equilibrium.reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
+					equilibrium.reaction.on_reaction(equilibrium, src, equilibrium.multiplier)
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
@@ -1093,7 +1093,7 @@
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
-	selected_reaction.on_reaction(src, null, multiplier)
+	selected_reaction.on_reaction(null, src, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused
