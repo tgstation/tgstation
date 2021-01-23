@@ -9,8 +9,8 @@
 	stat_allowed = FALSE
 	invocation = "BA'R A'RP!"
 	invocation_type = INVOCATION_SHOUT
-	range = 7
-	cooldown_min = 50
+	range = 4
+	cooldown_min = 80
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	action_icon_state = "duffelbag_curse"
 	active_msg = "You prepare to curse a target..."
