@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "AI status displays are now controlled either by emotes (like
+`*happy`), or by clicking on the status display as an AI."
