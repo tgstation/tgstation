@@ -94,11 +94,11 @@
 	
 	///Can we modify our ammo type in this gun's internal magazine?
 	var/can_modify_ammo = FALSE
-	///our initial ammo type. Should match initial calibur, but a bit of redundency doesn't hurt.
+	///our initial ammo type. Should match initial caliber, but a bit of redundency doesn't hurt.
 	var/initial_caliber
 	///our alternative ammo type.
 	var/alternative_caliber
-	///our initial fire sound. same reasons for initial calibur
+	///our initial fire sound. same reasons for initial caliber
 	var/initial_fire_sound
 	///our alternative fire sound, in case we want our gun to be louder or quieter or whatever
 	var/alternative_fire_sound

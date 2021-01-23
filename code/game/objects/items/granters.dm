@@ -441,12 +441,6 @@
 	oneuse = TRUE
 	remarks = list("He apparenty mastered some lost guncraftng technique.", "Why do I have to go through so many hoops to get this shitty gun?", "That much Grey Bull cannot be healthy...", "Did he drop this into a moisture trap? Yuck.", "Toolboxing techniques, huh? I kinda just want to know how to make the gun.", "What the hell does he mean by 'ancient warrior tradition'?")
 
-/obj/item/book/granter/crafting_recipe/pipegun_prime/turn_page(mob/user)
-	. = ..()
-	if(user.mind.assigned_role != "Assistant")
-		to_chat(user, "<span class='warning'>You know what, this looks like a complete waste of time.</span>")
-		return FALSE
-
 /obj/item/book/granter/crafting_recipe/pipegun_prime/recoil(mob/living/carbon/user)
 	to_chat(user, "<span class='warning'>The book turns to dust in your hands.</span>")
 	qdel(src)
