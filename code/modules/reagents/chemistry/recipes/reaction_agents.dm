@@ -14,7 +14,7 @@
 	ph_exponent_factor = 0
 	thermic_constant = 0
 	H_ion_release = 0.01
-	rate_up_lim = 15
+	rate_up_lim = 7.5
 	purity_min = 0
 
 /datum/chemical_reaction/acidic_buffer
@@ -31,7 +31,7 @@
 	ph_exponent_factor = 0
 	thermic_constant = 0
 	H_ion_release = -0.01
-	rate_up_lim = 20
+	rate_up_lim = 10
 	purity_min = 0
 
 /datum/chemical_reaction/purity_tester

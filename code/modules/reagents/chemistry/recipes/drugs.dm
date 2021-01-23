@@ -28,7 +28,7 @@
 	ph_exponent_factor = 1.4
 	thermic_constant = 0.1 //exothermic nature is equal to impurty
 	H_ion_release = -0.1 
-	rate_up_lim = 10
+	rate_up_lim = 5
 	purity_min = 0.3//I'll be surprised if you get here
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
 	

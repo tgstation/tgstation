@@ -144,11 +144,11 @@
 			continue
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
-		active_reactions.len++
 		var/_reagent = equilibrium.reaction.results[1]
 		var/datum/reagent/reagent = beaker?.reagents.get_reagent(_reagent) //Reactions are named after their primary products
 		if(!reagent)
 			continue
+		active_reactions.len++
 		var/danger = FALSE
 		var/purity_alert = 2 //same as flashing
 		if(reagent.purity < equilibrium.reaction.purity_min)

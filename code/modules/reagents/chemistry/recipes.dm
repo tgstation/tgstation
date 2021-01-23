@@ -51,7 +51,7 @@
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01 
 	/// Optimal/max rate possible if all conditions are perfect
-	var/rate_up_lim	= 20 
+	var/rate_up_lim = 10 
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/purity_min = 0.3 
 	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
