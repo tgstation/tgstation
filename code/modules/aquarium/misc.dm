@@ -118,7 +118,7 @@
 	name = "box full of fish"
 
 /obj/item/storage/box/fish_debug/PopulateContents()
-	for(var/T in subtypesof(/datum/aquarium_behaviour/fish))
-		generate_fish(src,T)
+	for(var/fish_type in subtypesof(/datum/aquarium_behaviour/fish))
+		generate_fish(src,fish_type)
 
 #undef AQUARIUM_COMPANY

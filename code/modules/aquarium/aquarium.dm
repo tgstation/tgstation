@@ -101,17 +101,7 @@
 		return TRUE
 
 /obj/structure/aquarium/attackby(obj/item/I, mob/living/user, params)
-	if(!broken)
-		// This signal exists so we common items instead of adding component on init can just register creation of one in response.
-		// This way we can avoid the cost of 9999 aquarium components on rocks that will never see water in their life.
-		SEND_SIGNAL(I,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
-		if(SEND_SIGNAL(I,COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT)
-			if(user.transferItemToLoc(I,src))
-				update_icon()
-				return TRUE
-		else
-			return ..()
-	else
+	if(broken)
 		var/obj/item/stack/sheet/glass/glass = I
 		if(istype(glass))
 			if(glass.get_amount() < 2)
@@ -124,6 +114,16 @@
 				obj_integrity = max_integrity
 				update_icon()
 			return TRUE
+	else
+		// This signal exists so we common items instead of adding component on init can just register creation of one in response.
+		// This way we can avoid the cost of 9999 aquarium components on rocks that will never see water in their life.
+		SEND_SIGNAL(I,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
+		if(SEND_SIGNAL(I,COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT)
+			if(user.transferItemToLoc(I,src))
+				update_icon()
+				return TRUE
+		else
+			return ..()
 	return ..()
 
 /obj/structure/aquarium/proc/feed_feedback(datum/source, obj/item/thing, mob/user, params)
