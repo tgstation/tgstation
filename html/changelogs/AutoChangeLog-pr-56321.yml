@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a layout for four misc icons next to the intent selection in non-widescreen HUDs."

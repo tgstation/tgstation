@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "HFR moderator reactions which increase or decrease heat output now actually increase or decrease the heat applied to the fusion mix, rather than just modifying the number shown in the interface."

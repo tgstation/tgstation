@@ -88,13 +88,13 @@
 			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
-			is_in_use = FALSE
 
 		for(var/to_appear in atoms_to_disappear)
 			var/atom/atom_to_appear = to_appear
 			//we need to reappear the item just in case the ritual didnt consume everything... or something.
 			atom_to_appear.invisibility = initial(atom_to_appear.invisibility)
 
+		is_in_use = FALSE
 		return
 	is_in_use = FALSE
 	to_chat(user,"<span class='warning'>Your ritual failed! You either used the wrong components or are missing something important!</span>")
