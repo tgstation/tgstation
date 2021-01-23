@@ -18,24 +18,37 @@
 /datum/chemical_reaction/methamphetamine
 	results = list(/datum/reagent/drug/methamphetamine = 4)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
-	required_temp = 374
-	optimal_temp = 380//Wow this is tight
+	required_temp = 370
+	optimal_temp = 374//Wow this is tight
 	overheat_temp = 380 
 	optimal_ph_min = 6.5
 	optimal_ph_max = 7.5
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 1.4
-	thermic_constant = 0.8 //exothermic nature is equal to impurty
-	H_ion_release = -0.25 
-	rate_up_lim = 4
+	thermic_constant = 0.1 //exothermic nature is equal to impurty
+	H_ion_release = -0.1 
+	rate_up_lim = 10
 	purity_min = 0.3//I'll be surprised if you get here
+	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
 	
 
-//The less pure it is, the faster it heats up.
-/datum/chemical_reaction/methamphetamine/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_chem_factor, added_purity)
-	var/datum/reagent/meth = holder.get_reagent(type)
-	reaction.thermic_mod += (1-meth.purity)*2
+//The less pure it is, the faster it heats up. tg please don't hate me for making your meth even more dangerous
+/datum/chemical_reaction/methamphetamine/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
+	if(!meth)//First step
+		reaction.thermic_mod = (1-delta_ph)*2
+		return
+	reaction.thermic_mod = (1-meth.purity)*2
+
+/datum/chemical_reaction/methamphetamine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+	holder.chem_temp = 400
+	return ..()
+
+/datum/chemical_reaction/methamphetamine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+	holder.chem_temp = 400
+	return ..()
+
 
 /datum/chemical_reaction/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)

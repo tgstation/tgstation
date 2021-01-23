@@ -14,7 +14,7 @@
 	if(LAZYLEN(target.reagent_list) == 1)
 		if(target.has_reagent(type)) //Allow dispensing into self
 			return FALSE
-   return TRUE
+	return TRUE
 
 /datum/reagent/reaction_agent/acidic_buffer
 	name = "Strong acidic buffer"
@@ -67,7 +67,8 @@
 	name = "Purity tester"
 	description = "This reagent will consume itself and violently react if there is a highly impure reagent in the beaker."
 	ph = 3
-	color = "#3853a4"
+	color = "#ffffff"
+	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/reaction_agent/speed_agent
 
 /datum/reagent/reaction_agent/purity_tester/intercept_reagents_transfer(datum/reagents/target, amount)
 	. = ..()
@@ -88,14 +89,18 @@
 /datum/reagent/reaction_agent/speed_agent
 	name = "Reaction speed agent"
 	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
+	ph = 10
+	color = "#e61f82"
+	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/reaction_agent/purity_tester
 	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 0.5 will be done
 	var/strength = 10
+	
 
 /datum/reagent/reaction_agent/speed_agent/intercept_reagents_transfer(datum/reagents/target, amount)
 	. = ..()
 	if(!.)
-		return
-	if(!length(holder.reaction_list))//Safetly check and div/0 avoid
+		return FALSE
+	if(!length(holder.reaction_list))//you can add this reagent to a beaker with no ongoing reactions, so this prevents it from being used up.
 		return FALSE
 	amount /= holder.reaction_list.len
 	for(var/_reaction in target.reaction_list)

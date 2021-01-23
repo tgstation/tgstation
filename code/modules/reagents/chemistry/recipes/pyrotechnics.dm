@@ -411,7 +411,7 @@
 	required_temp = 1000
 	optimal_temp = 20
 	overheat_temp = 1
-	thermic_constant = -0.1
+	thermic_constant = -250
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // cools the fuck down

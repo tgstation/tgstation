@@ -19,8 +19,8 @@
 /obj/machinery/chem_heater/Initialize()
 	. = ..()
 	create_reagents(100, NO_REACT)//Lets save some calculations here
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 10)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 10)
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
 	
 /obj/machinery/chem_heater/Destroy()
 	QDEL_NULL(beaker)
@@ -139,13 +139,16 @@
 	var/flashing = 14 //for use with alertAfter - since there is no alertBefore, I set the after to 0 if true, or to the max value if false
 	for(var/_reaction in beaker?.reagents.reaction_list)
 		var/datum/equilibrium/equilibrium = _reaction
+		if(!length(beaker.reagents.reaction_list))//I'm not sure why when it explodes it causes the gui to fail (it's missing danger (?) )
+			stack_trace("how is this happening??")
+			continue
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
 		active_reactions.len++
 		var/_reagent = equilibrium.reaction.results[1]
 		var/datum/reagent/reagent = beaker?.reagents.get_reagent(_reagent) //Reactions are named after their primary products
-		//if(!reagent)
-		//	continue
+		if(!reagent)
+			continue
 		var/danger = FALSE
 		var/purity_alert = 2 //same as flashing
 		if(reagent.purity < equilibrium.reaction.purity_min)
@@ -220,7 +223,8 @@
 			if(!acid_reagent)
 				say("Unable to find acidic buffer in beaker to draw from! Please insert a beaker containing acidic buffer.")
 				return
-			volume = 50 - acid_reagent.volume 
+			var/datum/reagent/acid_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/acidic_buffer)
+			volume = 50 - acid_reagent_heater.volume 
 			beaker.reagents.trans_id_to(src, acid_reagent.type, volume)//negative because we're going backwards
 			return
 		//We must be positive here
@@ -233,7 +237,8 @@
 			if(!basic_reagent)
 				say("Unable to find basic buffer in beaker to draw from! Please insert a beaker containing basic buffer.")
 				return
-			volume = 50 - basic_reagent.volume 
+			var/datum/reagent/basic_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/basic_buffer)
+			volume = 50 - basic_reagent_heater.volume 
 			beaker.reagents.trans_id_to(src, basic_reagent.type, volume)//negative because we're going backwards
 			return
 		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/basic_buffer, dispense_volume)
@@ -254,3 +259,15 @@
 			return "orange"
 		if(-INFINITY to equilibrium.reaction.purity_min)
 			return "red"
+
+//Has a lot of buffer and is upgraded
+/obj/machinery/chem_heater/debug
+	name = "Debug Reaction Chamber"
+	desc = "Now with even more buffers!"
+
+/obj/machinery/chem_heater/debug/Initialize()
+	. = ..()
+	reagents.maximum_volume = 2000
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 980)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 980)
+	heater_coefficient = 0.4 //hack way to upgrade

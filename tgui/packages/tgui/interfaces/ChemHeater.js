@@ -90,7 +90,7 @@ export const ChemHeater = (props, context) => {
                   icon={'syringe'}
                   disabled={!acidicBufferVol}
                   tooltip={'Inject'}
-                  tooltipPosition={"top"}
+                  tooltipPosition={"left"}
                   onClick={() => act('acidBuffer', {
                     target: 1,
                   })} />
@@ -105,7 +105,7 @@ export const ChemHeater = (props, context) => {
                   tooltipPosition={"top"}
                   disabled={acidicBufferVol === 50}
                   onClick={() => act('acidBuffer', {
-                    target: -30,
+                    target: -50,
                   })} />
               </TableCell>
             </TableRow>
@@ -130,7 +130,8 @@ export const ChemHeater = (props, context) => {
               <TableCell>
                 <Button
                   icon={'syringe'}
-                  tooltip={'Inject'}                  
+                  tooltip={'Inject'}
+                  tooltipPosition={"left"}                  
                   disabled={!basicBufferVol}
                   onClick={() => act('basicBuffer', {
                     target: 1,
@@ -145,7 +146,7 @@ export const ChemHeater = (props, context) => {
                   tooltip={'Draw all'}
                   disabled={basicBufferVol === 50}
                   onClick={() => act('basicBuffer', {
-                    target: -30,
+                    target: -50,
                   })} />
               </TableCell>
             </TableRow>
@@ -156,7 +157,7 @@ export const ChemHeater = (props, context) => {
             title="Reactions"
             buttons={(
               <Flex>
-                <Flex.Item color="label">pH:</Flex.Item>
+                <Flex.Item color="label">pH:{currentpH}</Flex.Item>
                 <Flex.Item>
                   <RoundGauge
                     size={1.60}
@@ -187,24 +188,24 @@ export const ChemHeater = (props, context) => {
               </Box>
             ) || (
               <Table collapsing={false} key={"reactions"}>
-                  <TableRow>
-                    <TableCell bold color="label">
-                      Reaction
-                    </TableCell>
-                    <TableCell bold color="label">
-                      {upgradeLevel < 3 ? "Status" : "Reaction quality"}
-                    </TableCell>
-                    <TableCell bold color="label">
-                      Target
-                    </TableCell>
-                  </TableRow>
-                  {activeReactions.map(reaction => (
-                  <TableRow>
+                <TableRow>
+                  <TableCell bold color="label">
+                    Reaction
+                  </TableCell>
+                  <TableCell bold color="label">
+                    {upgradeLevel < 4 ? "Status" : "Reaction quality"}
+                  </TableCell>
+                  <TableCell bold color="label">
+                    Target
+                  </TableCell>
+                </TableRow>
+                {activeReactions.map(reaction => (
+                  <TableRow key="reactions">
                     <TableCell width={'60px'} color={reaction.danger ? "red" : "white"}>
                       {reaction.name}
                     </TableCell>
                     <TableCell width={'100px'} pr={'10px'}>
-                      {upgradeLevel < 3 && (
+                      {upgradeLevel < 4 && (
                         <Icon 
                           name={reaction.danger ? "exclamation-triangle" : "spinner"} 
                           color={reaction.danger ? "red" : "white"}
@@ -229,7 +230,7 @@ export const ChemHeater = (props, context) => {
                       )}
                     </TableCell>
                     <TableCell width={'70px'}>
-                      {upgradeLevel === 4 && (
+                      {upgradeLevel > 2 && (
                         <ProgressBar
                           value={reaction.reactedVol}
                           minValue={0}
@@ -249,10 +250,10 @@ export const ChemHeater = (props, context) => {
                       )}
                     </TableCell>
                   </TableRow> 
-                  ))}
-                  <TableRow />
-                </Table>
-              )}
+                ))}
+                <TableRow />
+              </Table>
+            )}
           </Section>
         )}
         <Section

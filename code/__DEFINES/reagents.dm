@@ -75,4 +75,8 @@
 ///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
 #define REACTION_CLEAR_RETAIN		(1<<2)	
 ///Used to create instant reactions
-#define REACTION_INSTANT            (1<<3)  
+#define REACTION_INSTANT            (1<<3) 
+///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
+#define REACTION_HEAT_ARBITARY      (1<<4) 
+///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
+#define REACTION_COMPETITIVE        (1<<5)

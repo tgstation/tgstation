@@ -46,8 +46,8 @@
 	var/temp_exponent_factor = 2 
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
-	/// Temperature change per 1u produced 
-	var/thermic_constant = 1 
+	/// How much the temperature will change (with no intervention) (i.e. for 30u made the temperature will increase by 100, same with 300u. The final temp will always be start + this value, with the exception con beakers with different specific heats)
+	var/thermic_constant = 100
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01 
 	/// Optimal/max rate possible if all conditions are perfect
@@ -96,11 +96,12 @@
  * If reaction_flags & REACTION_INSTANT then this isn't called
  *
  * Arguments:
+ * * reaction - the equilibrium reaction holder that is reaction is processed within - use this to edit delta_t and delta
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * created_volume - volume created per step
  * * added_purity - how pure the created volume is per step
  */
-/datum/chemical_reaction/proc/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_chem_factor, added_purity)
+/datum/chemical_reaction/proc/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	return
 
 /**
@@ -119,6 +120,7 @@
  */
 /datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, react_vol)
 	//failed_chem handler
+	var/cached_temp = holder.chem_temp
 	for(var/id in results)
 		var/datum/reagent/reagent = holder.has_reagent(id)
 		if(!reagent)
@@ -126,6 +128,7 @@
 		//Split like this so it's easier for people to edit this function in a child
 		convert_into_failed(reagent, holder)
 		reaction_clear_check(reagent, holder)
+	holder.chem_temp = cached_temp
 
 /**
  * Converts a reagent into the type specified by the failed_chem var of the input reagent
@@ -148,8 +151,10 @@
  * * reagent - the target reagent to convert
  */
 /datum/chemical_reaction/proc/reaction_clear_check(datum/reagent/reagent, datum/reagents/holder)
+	if(!reagent)//Failures can delete R
+		return
 	if(reaction_flags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
-		if(reagent.purity == 1) //Failures can delete R
+		if(reagent.purity == 1) 
 			return
 
 		var/cached_volume = reagent.volume
@@ -297,7 +302,7 @@
 		sum_volume += reagent.volume
 		holder.remove_reagent(reagent.type, reagent.volume)
 	if(invert_reagents.reagent_list)
-		smoke.set_up(invert_reagents, (sum_volume/10), holder.my_atom)
+		smoke.set_up(invert_reagents, (sum_volume/5), holder.my_atom)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
@@ -316,7 +321,7 @@
 			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
 	if(reagents.reagent_list)
-		smoke.set_up(reagents, (sum_volume/10), holder.my_atom)
+		smoke.set_up(reagents, (sum_volume/5), holder.my_atom)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
@@ -347,6 +352,7 @@
 //Creates a ring of fire in a set range around the beaker location
 /datum/chemical_reaction/proc/explode_fire(datum/reagents/holder, datum/equilibrium/equilibrium, range)
 	explosion(holder.my_atom, 0, 0, 0, 0, flame_range = 3)
+	holder.my_atom.audible_message("The [holder.my_atom] suddenly errupts in flames!")
 
 //Clears the beaker of the reagents only
 /datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = null)

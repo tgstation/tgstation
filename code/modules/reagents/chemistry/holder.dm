@@ -277,7 +277,7 @@
 			var/datum/reagent/R = reagent
 			remove_reagent(R.type, R.volume * part)
 
-		finish_reacting() //A just in case - update total is in here
+		//finish_reacting() //A just in case - update total is in here - should be unneeded, make sure to test this
 		handle_reactions()
 		return amount
 
@@ -511,6 +511,7 @@
 				trans_data = current_reagent.data
 			if(current_reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				break
+			force_stop_reagent_reacting(current_reagent)
 			R.add_reagent(current_reagent.type, amount, trans_data, chem_temp, current_reagent.purity, current_reagent.ph, no_react = TRUE)
 			remove_reagent(current_reagent.type, amount, 1)
 			break
@@ -743,12 +744,12 @@
 
 /// Handle any reactions possible in this holder
 /// Also UPDATES the reaction list
-/// High potential for infinite loops if you're editing this.
+/// High potential for infinite loopsa if you're editing this.
 /datum/reagents/proc/handle_reactions()
 	if(QDELING(src))
 		CRASH("[my_atom] is trying to handle reactions while being flagged for deletion. It presently has [length(reagent_list)] number of reactants in it. If that is over 0 then something terrible happened.")
 
-	if(!reagent_list)//The liver is calling this method a lot, and is often empty of reagents so it's pointless busywork. It should be an easy fix, but I'm nervous about touching things beyond scope. Also since everything is so handle_reactions() trigger happy it might be a good idea having this check anyways.
+	if(!length(reagent_list))//The liver is calling this method a lot, and is often empty of reagents so it's pointless busywork. It should be an easy fix, but I'm nervous about touching things beyond scope. Also since everything is so handle_reactions() trigger happy it might be a good idea having this check anyways.
 		return FALSE
 
 	if(flags & NO_REACT)
@@ -758,7 +759,7 @@
 
 	if(is_reacting)//Prevent wasteful calculations
 		if(datum_flags != DF_ISPROCESSING)//If we're reacting - but not processing (i.e. we've transfered)
-			START_PROCESSING(SSprocessing, src)
+			START_PROCESSING(SSreagents, src)
 		if(!(has_changed_state()))
 			return FALSE
 
@@ -849,8 +850,8 @@
 			var/exists = FALSE
 			for(var/_equilibrium in reaction_list)
 				var/datum/equilibrium/E_exist = _equilibrium
-				if(E_exist.reaction.type == selected_reaction.type) //Don't add duplicates
-					exists = TRUE
+				if(ispath(E_exist.reaction.type, selected_reaction.type)) //Don't add duplicates
+					exists = TRUE 
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
@@ -859,13 +860,13 @@
 				if(equilibrium.to_delete)//failed startup checks
 					qdel(equilibrium)
 				else
-					//Adding is done in new()
-					equilibrium.reaction.on_reaction(src, equilibrium.multiplier)
+					//Adding is done in new(), deletion is in qdel
+					equilibrium.reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
 		is_reacting = TRUE //We've entered the reaction phase - this is set here so any reagent handling called in on_reaction() doesn't cause infinite loops
-		START_PROCESSING(SSprocessing, src) //see process() to see how reactions are handled
+		START_PROCESSING(SSreagents, src) //see process() to see how reactions are handled
 	else
 		is_reacting = FALSE
 
@@ -883,13 +884,16 @@
 */
 /datum/reagents/process(delta_time)
 	if(!is_reacting)
-		finish_reacting()
+		force_stop_reacting()
+		stack_trace("[src] | [my_atom] was forced to stop reacting. This might be unintentional.")
 	//sum of output messages.
 	var/list/mix_message = list()
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
 	for(var/_equilibrium in reaction_list)
 		var/datum/equilibrium/equilibrium = _equilibrium
+		//Continue reacting
+		equilibrium.react_timestep(delta_time)
 		//if it's been flagged to delete
 		if(equilibrium.to_delete)
 			var/temp_mix_message = end_reaction(equilibrium)
@@ -897,8 +901,6 @@
 				mix_message += temp_mix_message
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
-		//otherwise continue reacting
-		equilibrium.react_timestep(delta_time)
 	
 	if(length(mix_message)) //This is only at the end
 		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
@@ -940,7 +942,7 @@
 * Also resets reaction variables to be null/empty/FALSE so that it can restart correctly in the future
 */
 /datum/reagents/proc/finish_reacting()
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSreagents, src)
 	is_reacting = FALSE
 	//Cap off values
 	for(var/_reagent in reagent_list)
@@ -965,6 +967,28 @@
 	if(length(mix_message))
 		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 	finish_reacting()
+
+/*
+* Force stops a specific reagent's associated reaction if it exists
+*
+* Mostly used if a reagent is being taken out by trans_id_to
+* Might have some other applciations
+* Returns TRUE if it stopped something, FALSE if it didn't
+* Arguments:
+* * reagent - the reagent PRODUCT that we're seeking reactions for, any and all found will be shut down
+*/
+/datum/reagents/proc/force_stop_reagent_reacting(datum/reagent/reagent)
+	var/any_stopped = FALSE
+	var/list/mix_message = list()
+	for(var/_equilibrium in reaction_list)
+		var/datum/equilibrium/equilibrium = _equilibrium
+		for(var/result in equilibrium.reaction.results)
+			if(result == reagent.type)
+				mix_message += end_reaction(equilibrium)
+				any_stopped = TRUE
+	if(length(mix_message))
+		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
+	return any_stopped
 
 /*
 * Transfers the reaction_list to a new reagents datum
@@ -998,6 +1022,7 @@
 	
 
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
+///Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change
 /datum/reagents/proc/has_changed_state()
 	//Check if reagents are different
 	var/total_matching_reagents = 0
@@ -1068,7 +1093,7 @@
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
-	selected_reaction.on_reaction(src, multiplier)
+	selected_reaction.on_reaction(src, null, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused

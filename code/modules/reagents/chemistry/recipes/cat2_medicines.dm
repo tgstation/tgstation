@@ -31,7 +31,7 @@
 	is_cold_recipe = TRUE
 	optimal_temp = 10
 	overheat_temp = 5
-	thermic_constant = -0.02
+	thermic_constant = -50
 
 /*****OXY*****/
 

@@ -577,19 +577,21 @@
 
 
 //Checks to see if the target reagent is being created (reacting) and if so prevents transfer
-//Only prevents products from being moved so that people can still manlipulate input reagents
+//Only prevents reactant from being moved so that people can still manlipulate input reagents
 /obj/machinery/chem_master/proc/check_reactions(datum/reagent/reagent, datum/reagents/holder)
 	if(!reagent)
 		return FALSE
+	if(reagent.chemical_flags & REACTION_COMPETITIVE) //Otherwise reactions will never stop, and therefore you can't ever get them out
+		return TRUE
 	var/canMove = TRUE
 	for(var/e in holder.reaction_list)
 		var/datum/equilibrium/E = e
-		for(var/result in E.reaction.results)
+		for(var/result in E.reaction.required_reagents)
 			var/datum/reagent/R = result
 			if(R == reagent.type)
 				canMove = FALSE
 	if(!canMove)
-		say("Cannot move ongoing chemical reaction products!")
+		say("Cannot move arrested chemical reaction reagents!")
 	return canMove
 
 /**

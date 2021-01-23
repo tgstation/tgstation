@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			if(overheat_temp >= 200) //Otherwise it can disappear when you're mixing and I don't want this to happen here
 				overheat_temp = 200
 			if(exo_or_endothermic)
-				thermic_constant = (rand(-200, 200)/100)
+				thermic_constant = (rand(-200, 200))
 		else
 			required_temp = rand(min_temp, max_temp-50) 
 			optimal_temp = rand(required_temp+10, max_temp-25) 
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			if(overheat_temp <= 400)
 				overheat_temp = 400
 			if(exo_or_endothermic)
-				thermic_constant = (rand(-200, 200)/100)// 0 - 2
+				thermic_constant = (rand(-200, 200))
 	
 	if(randomize_req_ph)
 		optimal_ph_min = min_ph + rand(0, inoptimal_range_ph)

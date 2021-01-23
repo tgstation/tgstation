@@ -29,13 +29,20 @@
 	var/reaction_quality = 1
 	///If we're done with this reaction so that holder can clear it.
 	var/to_delete = FALSE
+	///Result vars, private - do not edit unless in reaction_step()
+	///How much we're adding
+	var/delta_t
+	///How pure our step is
+	var/delta_ph
 	///Modifiers from catalysts, do not use negative numbers.
+	///I should write a better handiler for modifying these
 	///Speed mod
 	var/speed_mod = 1
 	///pH mod
 	var/h_ion_mod = 1
 	///Temp mod
 	var/thermic_mod = 1
+
 /* 
 * Creates and sets up a new equlibrium object
 * 
@@ -62,6 +69,8 @@
 	
 
 /datum/equilibrium/Destroy()
+	if(reacted_vol < target_vol) //We did NOT finish from reagents - so we can restart this reaction given property changes in the beaker. (i.e. if it stops due to low temp, this will allow it to fast restart when heated up again)
+		LAZYADD(holder.failed_but_capable_reactions, reaction)
 	LAZYREMOVE(holder.reaction_list, src)
 	holder = null
 	reaction = null
@@ -129,7 +138,8 @@
 				total_matching_catalysts++
 		if(istype(reagent, /datum/reagent/catalyst_agent))
 			var/datum/reagent/catalyst_agent/catalyst_agent = reagent
-			catalyst_agent.consider_catalyst(src)
+			if(reagent.volume >= catalyst_agent.min_volume)
+				catalyst_agent.consider_catalyst(src)
 
 	if(!(total_matching_catalysts == reaction.required_catalysts.len))
 		return FALSE
@@ -198,8 +208,8 @@
 		to_delete = TRUE
 		return
 
-	var/delta_t = 0 //how far off optimal temp we care
-	var/delta_ph = 0 //How far off the pH we are
+	delta_t = 0 //how far off optimal temp we care
+	delta_ph = 0 //How far off the pH we are
 	var/cached_ph = holder.ph
 	var/cached_temp = holder.chem_temp
 	var/purity = 1 //purity of the current step
@@ -245,8 +255,12 @@
 			delta_t = 0
 			to_delete = TRUE
 			return
+
+	//Call any special reaction steps BEFORE addition
+	reaction.reaction_step(src, holder, delta_t, delta_ph, step_target_vol)
+
 	//Catalyst modifier
-	delta_t *= thermic_mod
+	delta_t *= speed_mod
 
 	purity = delta_ph//set purity equal to pH offset
 
@@ -268,18 +282,16 @@
 	delta_chem_factor /= product_ratio
 	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
 
-	//Call any special reaction steps BEFORE addition
-	reaction.reaction_step(src, holder, delta_chem_factor, purity)
-
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
 		holder.remove_reagent(reagent, (delta_chem_factor * reaction.required_reagents[reagent]), safety = TRUE)
 		//Apply pH changes
 		holder.adjust_specific_reagent_ph(reagent, (delta_chem_factor * reaction.required_reagents[reagent])*(reaction.H_ion_release*h_ion_mod))
 
+	var/step_add
 	for(var/product in reaction.results)
 		//create the products
-		var/step_add = delta_chem_factor * reaction.results[product]
+		step_add = delta_chem_factor * reaction.results[product]
 		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 		//Apply pH changes
 		holder.adjust_specific_reagent_ph(product, step_add*reaction.H_ion_release)
@@ -291,8 +303,12 @@
 	#endif
 		
 	//Apply thermal output of reaction to beaker
-	var/heat_energy = round(cached_temp + ((reaction.thermic_constant* total_step_added)*thermic_mod))
-	holder.adjust_thermal_energy(heat_energy, 0, 10000)
+	
+	if(reaction.reaction_flags & REACTION_HEAT_ARBITARY)
+		holder.chem_temp += (reaction.thermic_constant* total_step_added*thermic_mod) //old method - for every bit added, the whole temperature is adjusted
+	else //Standard mechanics
+		var/heat_energy = reaction.thermic_constant * total_step_added * thermic_mod * SPECIFIC_HEAT_DEFAULT 
+		holder.adjust_thermal_energy(heat_energy, 0, 10000) //heat is relative to the beaker conditions
 
 	//Give a chance of sounds
 	if(prob(5))
@@ -301,8 +317,14 @@
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 
 	reaction_quality = purity
+
+	//end reactions faster so plumbing is faster
+	if((step_add >= step_target_vol) && (length(holder.reaction_list == 1)))//length is so that plumbing is faster - but it doesn't disable competitive reactions. Basically, competitive reactions will likely reach their step target at the start, so this will disable that. We want to avoid that. But equally, we do want to full stop a holder from reacting asap so plumbing isn't waiting an tick to resolve.
+		to_delete = TRUE
+
 	//Make sure things are limited
 	holder.update_total()//do NOT recalculate reactions
+
 
 /*
 * Calculates the total sum normalised purity of ALL reagents in a holder
