@@ -48,9 +48,8 @@
 	name = "goldfish"
 	desc = "not actually made of gold"
 	icon_state = "goldfish"
-	color = "#f2da29"
-	aquarium_vc_color = "#f2da29"
-	dedicated_in_aquarium_icon_state = "fish_greyscale"
+	sprite_width = 8
+	sprite_height = 8
 
 /datum/aquarium_behaviour/fish/angelfish
 	name = "angelfish"
