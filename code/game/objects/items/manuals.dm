@@ -287,7 +287,7 @@
 	icon_state ="chemistrybook"
 	color = "#ff5588" //make it look different
 	author = "Nanotrasen"
-	title = "Journal of the Nanotransen Chemical Society"
+	title = "Journal of the Nanotrasen Chemical Society"
 	page_link = "User:Thalpy"
 
 /obj/item/book/manual/wiki/engineering_construction

@@ -121,7 +121,7 @@
 			CRASH("[_reaction] is in the reaction list, but is not an equilibrium")
 		var/power = (amount/reaction.target_vol)*strength
 		power *= creation_purity
-		power = clamp(0, 2.5)
+		power = clamp(power, 0, 2.5)
 		reaction.react_timestep(power, creation_purity)
 	holder.remove_reagent(type, amount)
 

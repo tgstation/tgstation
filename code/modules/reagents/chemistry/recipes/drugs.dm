@@ -18,8 +18,8 @@
 /datum/chemical_reaction/methamphetamine
 	results = list(/datum/reagent/drug/methamphetamine = 4)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
-	required_temp = 370
-	optimal_temp = 374//Wow this is tight
+	required_temp = 372
+	optimal_temp = 376//Wow this is tight
 	overheat_temp = 380 
 	optimal_ph_min = 6.5
 	optimal_ph_max = 7.5
@@ -27,9 +27,9 @@
 	temp_exponent_factor = 1
 	ph_exponent_factor = 1.4
 	thermic_constant = 0.1 //exothermic nature is equal to impurty
-	H_ion_release = -0.1 
+	H_ion_release = -0.025 
 	rate_up_lim = 10
-	purity_min = 0.3//I'll be surprised if you get here
+	purity_min = 0.3
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
 	
 
@@ -37,18 +37,47 @@
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
 	if(!meth)//First step
-		reaction.thermic_mod = (1-delta_ph)*2
+		reaction.thermic_mod = (1-delta_ph)*3
 		return
-	reaction.thermic_mod = (1-meth.purity)*2
+	reaction.thermic_mod = (1-meth.purity)*3
 
 /datum/chemical_reaction/methamphetamine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
-	holder.chem_temp = 400
-	return ..()
+	. = ..()
+	temp_meth_explosion(holder, equilibrium.reacted_vol)
 
 /datum/chemical_reaction/methamphetamine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
-	holder.chem_temp = 400
-	return ..()
+	. = ..()
+	temp_meth_explosion(holder, equilibrium.reacted_vol)
 
+/datum/chemical_reaction/methamphetamine/reaction_finish(datum/reagents/holder, react_vol)
+	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
+	if(meth.purity < purity_min)
+		temp_meth_explosion(holder, react_vol)
+	else
+		return..()
+
+//Refactoring of explosions is coming later, this is till then so it still explodes
+/datum/chemical_reaction/methamphetamine/proc/temp_meth_explosion(datum/reagents/holder, explode_vol)
+	var/power = 5 + round(explode_vol/12, 1) //meth strengthdiv is 12
+	if(power <= 0)
+		return
+	var/turf/T = get_turf(holder.my_atom)
+	var/inside_msg
+	if(ismob(holder.my_atom))
+		var/mob/M = holder.my_atom
+		inside_msg = " inside [ADMIN_LOOKUPFLW(M)]"
+	var/lastkey = holder.my_atom.fingerprintslast
+	var/touch_msg = "N/A"
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+	if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+	var/datum/effect_system/reagents_explosion/e = new()
+	e.set_up(power, T, 0, 0)
+	e.start()
+	holder.clear_reagents()
 
 /datum/chemical_reaction/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)
