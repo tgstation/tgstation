@@ -17,7 +17,7 @@
 	throwforce = 10
 
 	var/mode = RESONATOR_MODE_AUTO
-	//How efficient it is in manual mode. Yes, we lower the damage cuz it's gonna be used for mobhunt
+	/// How efficient it is in manual mode. Yes, we lower the damage cuz it's gonna be used for mobhunt
 	var/quick_burst_mod = 0.8
 	var/fieldlimit = 4
 	var/list/fields = list()
