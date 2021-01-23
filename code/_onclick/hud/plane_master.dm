@@ -62,7 +62,7 @@
 
 
 ///Contains wall frills,
-/obj/screen/plane_master/frill
+/atom/movable/screen/plane_master/frill
 	name = "frill plane master"
 	plane = FRILL_PLANE
 	appearance_flags = PLANE_MASTER
@@ -70,7 +70,7 @@
 	render_target = FRILL_PLANE_RENDER_TARGET
 
 
-/obj/screen/plane_master/frill/backdrop(mob/mymob)
+/atom/movable/screen/plane_master/frill/backdrop(mob/mymob)
 	if(!mymob)
 		CRASH("Plane master backdrop called without a mob attached.")
 	remove_filter(FRILL_FLOOR_CUT)

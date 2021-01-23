@@ -72,8 +72,8 @@
 	/// Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
 	var/set_dir_on_move = TRUE
 
-	/// Whether this atom should have its dir automatically changed when it moves. Setting this to FALSE allows for things such as directional windows to retain dir on moving without snowflake code all of the place.
-	var/set_dir_on_move = TRUE
+	/// bla bla frill icon I forget what was here I ate it in a merge
+	var/icon/frill_icon
 
 
 /atom/movable/Initialize(mapload)

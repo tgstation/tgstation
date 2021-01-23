@@ -59,6 +59,6 @@
 		return
 	user.prefs.frills_over_floors = !user.prefs.frills_over_floors
 	if(length(user?.screen))
-		var/obj/screen/plane_master/frill/frill = locate(/obj/screen/plane_master/frill) in user.screen
+		var/atom/movable/screen/plane_master/frill/frill = locate(/atom/movable/screen/plane_master/frill) in user.screen
 		frill.backdrop(user.mob)
 	return TRUE

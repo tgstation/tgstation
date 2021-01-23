@@ -1817,7 +1817,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("frills_over_floors")
 					frills_over_floors = !frills_over_floors
 					if(length(parent?.screen))
-						var/obj/screen/plane_master/frill/frill = locate(/obj/screen/plane_master/frill) in parent.screen
+						var/atom/movable/screen/plane_master/frill/frill = locate(/atom/movable/screen/plane_master/frill) in parent.screen
 						frill.backdrop(parent.mob)
 
 				if("ambientocclusion")
@@ -1825,7 +1825,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(length(parent?.screen))
 						var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/game_world) in parent.screen
 						PM.backdrop(parent.mob)
-						var/obj/screen/plane_master/frill/frill = locate(/obj/screen/plane_master/frill) in parent.screen
+						var/atom/movable/screen/plane_master/frill/frill = locate(/atom/movable/screen/plane_master/frill) in parent.screen
 						frill.backdrop(parent.mob)
 
 				if("auto_fit_viewport")
