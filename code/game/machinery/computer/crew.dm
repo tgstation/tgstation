@@ -135,18 +135,24 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// in which case the sensors are always set to full detail
 		var/using_nanites = (tracked_living_mob in GLOB.nanite_sensors_list)
 
-		// Check for a uniform if not using nanites
-		var/mob/living/carbon/human/tracked_human = tracked_living_mob
-		if(!istype(tracked_human))
-			continue
+		if(!using_nanites)
+			var/mob/living/carbon/human/tracked_human = tracked_living_mob
 
-		var/obj/item/clothing/under/uniform = tracked_human.w_uniform
-		if (!using_nanites && !uniform)
-			continue
+			// Check their humanity.
+			if(!ishuman(tracked_human))
+				stack_trace("Non-human mob is in suit_sensors_list: [tracked_living_mob] ([tracked_living_mob.type])")
+				continue
 
-		// Check that sensors are present and active
-		if (!using_nanites && (!uniform.has_sensor || !uniform.sensor_mode))
-			continue
+			// Check they have a uniform
+			var/obj/item/clothing/under/uniform = tracked_human.w_uniform
+			if (!uniform)
+				stack_trace("Human without a uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type])")
+				continue
+
+			// Check if their uniform is in a compatible mode.
+			if(!uniform.has_sensor || !uniform.sensor_mode)
+				stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type])")
+				continue
 
 		// The entry for this human
 		var/list/entry = list(
