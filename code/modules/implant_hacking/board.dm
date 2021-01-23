@@ -46,14 +46,14 @@
 	var/list/possible_moves = consider_possible_moves(1,1)
 	var/current_x = 1
 	var/current_y = 1
-	board[current_x][current_y]?.start = TRUE
-	board[current_x][current_y]?.visited = TRUE
+	board[current_x][current_y].start = TRUE
+	board[current_x][current_y].visited = TRUE
 	while(possible_moves.len)
-		board[current_x][current_y]?.visited = TRUE
+		board[current_x][current_y].visited = TRUE
 
 		var/move = pick(possible_moves)
 
-		board[current_x][current_y].pass_out |= move
+		board[current_x][current_y].pass_out = move
 
 
 		switch(move)
@@ -66,9 +66,8 @@
 			if(WEST)
 				current_x--
 
-		board[current_x][current_y].pass_in |= REVERSE_DIR(move)
+		board[current_x][current_y].pass_in = REVERSE_DIR(move)
 
-		board[current_x][current_y].rotate(rand(-3,3))
 		possible_moves = consider_possible_moves(current_x,current_y)
 		if(!possible_moves.len)
 			board[current_x][current_y].finish = TRUE
@@ -76,6 +75,7 @@
 	for(var/i in 1 to board_size)
 		for(var/k in 1 to board_size)
 			if(board[i][k].visited)
+				board[i][k].rotate(rand(-3,3))
 				continue
 			var/list/dir_list = GLOB.cardinals.Copy()
 			var/pick = pick(dir_list)
@@ -109,7 +109,6 @@
 			else
 				var/add = board[i][k].connected == TRUE ? "_f" : ""
 				secondary_board[i][k] = "[board[i][k].get_dir_val()][add]"
-
 	return secondary_board
 
 ///Algorithm that returns possible directions from a given coordinate
@@ -156,10 +155,7 @@
 
 	var/list/possible_directions = list()
 
-	while(TRUE)
-
-		if(queued_coord_list.len == counter)
-			break
+	while(queued_coord_list.len > counter)
 
 		if(counter > board_size*board_size)
 			stack_trace("Counter runoff stopped occured!")
@@ -188,60 +184,57 @@
 
 		board[xcord][ycord].connected = FALSE
 
-		for(var/dir in possible_directions)
+		if(NORTH in possible_directions)
 
-			switch(dir)
+			dirlist = board[xcord][ycord-1].get_dir_val_list()
 
-				if(NORTH)
+			if(board[xcord][ycord-1].finish)
+				board[xcord][ycord].connected = TRUE
+				return TRUE
 
-					dirlist = board[xcord][ycord-1].get_dir_val_list()
+			if(SOUTH in dirlist)
+				if(!board[xcord][ycord-1].visited)
+					queued_coord_list += list(list(xcord,ycord-1))
+				board[xcord][ycord].connected = TRUE
 
-					if(board[xcord][ycord-1].finish)
-						board[xcord][ycord].connected = TRUE
-						return TRUE
+		if(SOUTH in possible_directions)
 
-					if(SOUTH in dirlist)
-						if(!board[xcord][ycord-1].visited)
-							queued_coord_list += list(list(xcord,ycord-1))
-						board[xcord][ycord].connected = TRUE
+			dirlist = board[xcord][ycord+1].get_dir_val_list()
 
-				if(SOUTH)
+			if(board[xcord][ycord+1].finish)
+				board[xcord][ycord].connected = TRUE
+				return TRUE
 
-					dirlist = board[xcord][ycord+1].get_dir_val_list()
+			if(NORTH in dirlist)
+				if(!board[xcord][ycord+1].visited)
+					queued_coord_list += list(list(xcord,ycord+1))
+				board[xcord][ycord].connected = TRUE
 
-					if(board[xcord][ycord+1].finish)
-						board[xcord][ycord].connected = TRUE
-						return TRUE
+		if(WEST in possible_directions)
 
-					if(NORTH in dirlist)
-						if(!board[xcord][ycord+1].visited)
-							queued_coord_list += list(list(xcord,ycord+1))
-						board[xcord][ycord].connected = TRUE
+			dirlist = board[xcord-1][ycord].get_dir_val_list()
 
-				if(WEST)
+			if(board[xcord-1][ycord].finish)
+				board[xcord][ycord].connected = TRUE
+				return TRUE
 
-					dirlist = board[xcord-1][ycord].get_dir_val_list()
+			if(EAST in dirlist)
+				if(!board[xcord-1][ycord].visited)
+					queued_coord_list += list(list(xcord-1,ycord))
+				board[xcord][ycord].connected = TRUE
 
-					if(board[xcord-1][ycord].finish)
-						board[xcord][ycord].connected = TRUE
-						return TRUE
+		if(EAST in possible_directions)
 
-					if(EAST in dirlist)
-						if(!board[xcord-1][ycord].visited)
-							queued_coord_list += list(list(xcord-1,ycord))
-						board[xcord][ycord].connected = TRUE
+			dirlist = board[xcord+1][ycord].get_dir_val_list()
 
-				if(EAST)
+			if(board[xcord+1][ycord].finish)
+				board[xcord][ycord].connected = TRUE
+				return TRUE
 
-					dirlist = board[xcord+1][ycord].get_dir_val_list()
-
-					if(board[xcord+1][ycord].finish)
-						return TRUE
-
-					if(WEST in dirlist)
-						if(!board[xcord+1][ycord].visited)
-							queued_coord_list += list(list(xcord+1,ycord))
-						board[xcord][ycord].connected = TRUE
+			if(WEST in dirlist)
+				if(!board[xcord+1][ycord].visited)
+					queued_coord_list += list(list(xcord+1,ycord))
+				board[xcord][ycord].connected = TRUE
 
 		board[xcord][ycord].visited = TRUE
 
@@ -252,7 +245,6 @@
  * Holds relevant information about a single cell of the board.
  */
 /datum/hacking_minigame_piece
-	var/rotation = 0
 	var/pass_in = NONE
 	var/pass_out = NONE
 	var/visited = FALSE
@@ -266,23 +258,22 @@
 	. = ..()
 	game = _game
 
-///Returns value of pass_in + pass_out adjusted for rotation
+///Returns value of pass_in + pass_out
 /datum/hacking_minigame_piece/proc/get_dir_val()
 	if(pass_in != NONE && pass_out != NONE)
-		return angle2dir(dir2angle(pass_in)+rotation*90) + angle2dir(dir2angle(pass_out)+rotation*90)
+		return pass_in + pass_out
 	return 0
 
 ///Returns a list of possible directions this cell can connect to
 /datum/hacking_minigame_piece/proc/get_dir_val_list()
-	return finish == TRUE || start == TRUE ? GLOB.cardinals.Copy() : list(pass_in != NONE ? angle2dir(dir2angle(pass_in)+rotation*90) : 0 , pass_out != NONE ? angle2dir(dir2angle(pass_out)+rotation*90) : 0 )
+	//If this is a finish or start node than it is available from all directions, otherwise return the list containing both directions.
+	return finish == TRUE || start == TRUE ? GLOB.cardinals.Copy() : list(pass_in , pass_out)
 
 ///Rotates the cell num amount of times
 /datum/hacking_minigame_piece/proc/rotate(num = 1)
+	//if you want to do this bitshifting way, then be my guest. BYOND direction system makes my head ache and is illogical even by lowest of standards.
 	num = clamp(num,-3,3)
-	rotation += num
-	if(rotation > 3)
-		rotation -= 4
-	if(rotation < 0)
-		rotation += 4
+	pass_in = turn(pass_in,90*num)
+	pass_out = turn(pass_out,90*num)
 
 
