@@ -177,9 +177,13 @@
 			danger = TRUE
 		if(!(flashing == ENABLE_FLASHING) && (upgrade_level > 1))//So that the pH meter flashes for ANY reactions out of optimal
 			if(equilibrium.reaction.optimal_ph_min > beaker?.reagents.ph || equilibrium.reaction.optimal_ph_max < beaker?.reagents.ph)
-				flashing = ENABLE_FLASHING			
-		if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)
-			danger = TRUE
+				flashing = ENABLE_FLASHING
+		if(equilibrium.reaction.is_cold_recipe)
+			if(equilibrium.reaction.overheat_temp > beaker?.reagents.chem_temp)
+				danger = TRUE
+		else
+			if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)
+				danger = TRUE
 		if(reagent.chemical_flags & REACTION_COMPETITIVE) //We have a compeitive reaction - concatenate the results for the different reactions 
 			for(var/entry in active_reactions)
 				if(entry["name"] == reagent.name) //If we have multiple reaction methods for the same result - combine them

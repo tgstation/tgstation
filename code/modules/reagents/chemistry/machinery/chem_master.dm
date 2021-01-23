@@ -581,8 +581,6 @@
 /obj/machinery/chem_master/proc/check_reactions(datum/reagent/reagent, datum/reagents/holder)
 	if(!reagent)
 		return FALSE
-	if(reagent.chemical_flags & REACTION_COMPETITIVE) //Otherwise reactions will never stop, and therefore you can't ever get them out
-		return TRUE
 	var/canMove = TRUE
 	for(var/e in holder.reaction_list)
 		var/datum/equilibrium/E = e
