@@ -42,10 +42,10 @@
 
 /datum/component/aquarium_content/proc/enter_aquarium(datum/source, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
-	var/atom/movable/AM = parent
-	if(istype(AM.loc, /obj/structure/aquarium))
-		on_inserted(AM.loc)
-	if(HAS_TRAIT(AM.loc,TRAIT_FISH_SAFE_STORAGE))
+	var/atom/movable/movable_parent = parent
+	if(istype(movable_parent.loc, /obj/structure/aquarium))
+		on_inserted(movable_parent.loc)
+	if(HAS_TRAIT(movable_parent.loc, TRAIT_FISH_SAFE_STORAGE))
 		on_tank_stasis()
 
 /datum/component/aquarium_content/proc/is_ready_to_insert(datum/source,atom/aquarium_object)
@@ -212,4 +212,3 @@
 /datum/component/aquarium_content/proc/on_tank_stasis()
 	// Stop processing until inserted into aquarium again.
 	STOP_PROCESSING(SSobj, properties)
-

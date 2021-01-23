@@ -61,20 +61,20 @@
 	var/static/fish_info
 	if(!fish_info)
 		fish_info = list()
-		for(var/T in subtypesof(/datum/aquarium_behaviour/fish))
-			var/datum/aquarium_behaviour/fish/F = T
+		for(var/_fish_behaviour in subtypesof(/datum/aquarium_behaviour/fish))
+			var/datum/aquarium_behaviour/fish/fish_behaviour = _fish_behaviour
 			var/list/fish_data = list()
-			if(!initial(F.show_in_catalog))
+			if(!initial(fish_behaviour.show_in_catalog))
 				continue
-			fish_data["name"] = initial(F.name)
-			fish_data["desc"] = initial(F.desc)
-			fish_data["fluid"] = initial(F.required_fluid_type)
-			fish_data["temp_min"] = initial(F.required_temperature_min)
-			fish_data["temp_max"] = initial(F.required_temperature_max)
-			fish_data["icon"] = sanitize_css_class_name("[initial(F.icon)][initial(F.icon_state)]")
-			fish_data["color"] = initial(F.color)
-			fish_data["source"] = initial(F.availible_in_random_cases) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
-			var/datum/reagent/food_type = initial(F.food)
+			fish_data["name"] = initial(fish_behaviour.name)
+			fish_data["desc"] = initial(fish_behaviour.desc)
+			fish_data["fluid"] = initial(fish_behaviour.required_fluid_type)
+			fish_data["temp_min"] = initial(fish_behaviour.required_temperature_min)
+			fish_data["temp_max"] = initial(fish_behaviour.required_temperature_max)
+			fish_data["icon"] = sanitize_css_class_name("[initial(fish_behaviour.icon)][initial(fish_behaviour.icon_state)]")
+			fish_data["color"] = initial(fish_behaviour.color)
+			fish_data["source"] = initial(fish_behaviour.availible_in_random_cases) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
+			var/datum/reagent/food_type = initial(fish_behaviour.food)
 			if(food_type != /datum/reagent/consumable/nutriment)
 				fish_data["feed"] = initial(food_type.name)
 			else
@@ -111,8 +111,8 @@
 	desc = "All you need to make your aquarium look good"
 
 /obj/item/storage/box/aquarium_props/PopulateContents()
-	for(var/T in subtypesof(/datum/aquarium_behaviour/prop))
-		generate_fish(src,T,/obj/item/aquarium_prop)
+	for(var/prop_type in subtypesof(/datum/aquarium_behaviour/prop))
+		generate_fish(src, prop_type, /obj/item/aquarium_prop)
 
 /obj/item/storage/box/fish_debug
 	name = "box full of fish"

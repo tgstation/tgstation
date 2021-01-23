@@ -112,13 +112,13 @@
 		else
 			return ..()
 	else
-		var/obj/item/stack/sheet/glass/G = I
-		if(istype(G))
-			if(G.get_amount() < 2)
+		var/obj/item/stack/sheet/glass/glass = I
+		if(istype(glass))
+			if(glass.get_amount() < 2)
 				to_chat(user, "<span class='warning'>You need two glass sheets to fix the case!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 2 SECONDS, target = src))
 				G.use(2)
 				broken = FALSE
 				obj_integrity = max_integrity
@@ -134,9 +134,9 @@
 
 /obj/structure/aquarium/interact(mob/user)
 	if(!broken && user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
-		var/mob/living/L = user.pulling
-		SEND_SIGNAL(L,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
-		if(SEND_SIGNAL(L,COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT)
+		var/mob/living/living_pulled = user.pulling
+		SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
+		if(SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT)
 			try_to_put_mob_in(user)
 	else if(panel_open)
 		. = ..() //call base ui_interact
@@ -146,15 +146,15 @@
 /// Tries to put mob pulled by the user in the aquarium after a delay
 /obj/structure/aquarium/proc/try_to_put_mob_in(mob/user)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
-		var/mob/living/L = user.pulling
-		if(L.buckled || L.has_buckled_mobs())
-			to_chat(user, "<span class='warning'>[L] is attached to something!</span>")
+		var/mob/living/living_pulled = user.pulling
+		if(living_pulled.buckled || living_pulled.has_buckled_mobs())
+			to_chat(user, "<span class='warning'>[living_pulled] is attached to something!</span>")
 			return
-		user.visible_message("<span class='danger'>[user] starts to put [L] into [src]!</span>")
+		user.visible_message("<span class='danger'>[user] starts to put [living_pulled] into [src]!</span>")
 		if(do_after(user, 10 SECONDS, target = src))
-			if(L && user.pulling == L && !L.buckled && !L.has_buckled_mobs() && (SEND_SIGNAL(L,COMSIG_AQUARIUM_INSERT_READY,src) & AQUARIUM_CONTENT_READY_TO_INSERT))
-				user.visible_message("<span class='danger'>[user] stuffs [L] into [src]!</span>")
-				L.forceMove(src)
+			if(!QDELETED(living_pulled) && user.pulling == living_pulled && !living_pulled.buckled && !living_pulled.has_buckled_mobs() && (SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_INSERT_READY, src) & AQUARIUM_CONTENT_READY_TO_INSERT))
+				user.visible_message("<span class='danger'>[user] stuffs [living_pulled] into [src]!</span>")
+				living_pulled.forceMove(src)
 				update_icon()
 
 ///Apply mood bonus depending on aquarium status
@@ -175,8 +175,8 @@
 	.["fluid_type"] = fluid_type
 	.["temperature"] = fluid_temp
 	var/list/content_data = list()
-	for(var/atom/movable/AM in contents)
-		content_data += list(list("name"=AM.name,"ref"=ref(AM)))
+	for(var/atom/movable/fish in contents)
+		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
 	.["contents"] = content_data
 
 /obj/structure/aquarium/ui_static_data(mob/user)
@@ -203,13 +203,13 @@
 				SEND_SIGNAL(src,COMSIG_AQUARIUM_FLUID_CHANGED,fluid_type)
 				. = TRUE
 		if("remove")
-			var/atom/movable/AM = locate(params["ref"]) in contents
-			if(AM)
-				if(isitem(AM))
-					user.put_in_hands(AM)
+			var/atom/movable/inside = locate(params["ref"]) in contents
+			if(inside)
+				if(isitem(inside))
+					user.put_in_hands(inside)
 				else
-					AM.forceMove(get_turf(src))
-				to_chat(user,"<span class='notice'>You take out [AM] from [src]</span>")
+					inside.forceMove(get_turf(src))
+				to_chat(user,"<span class='notice'>You take out [inside] from [src].</span>")
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -232,11 +232,11 @@
 	else
 		possible_destinations_for_fish = list(droploc)
 	playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
-	for(var/atom/movable/AM in contents)
-		AM.forceMove(pick(possible_destinations_for_fish))
+	for(var/atom/movable/fish in contents)
+		fish.forceMove(pick(possible_destinations_for_fish))
 	if(fluid_type != AQUARIUM_FLUID_AIR)
-		var/datum/reagents/R = new()
-		R.add_reagent(/datum/reagent/water,30)
+		var/datum/reagents/reagent_splash = new()
+		reagent_splash.add_reagent(/datum/reagent/water, 30)
 		chem_splash(droploc, 3, list(R))
 	update_icon()
 

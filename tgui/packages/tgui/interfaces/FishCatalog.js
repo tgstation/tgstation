@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Section, LabeledList, Button, Stack, Box } from '../components';
+import { Box, Button, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 

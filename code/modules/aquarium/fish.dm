@@ -6,21 +6,21 @@
 
 /// Automatically generates object of given base path from the behaviour type in loc
 /proc/generate_fish(loc,behaviour_type,base_path=/obj/item/fish)
-	var/datum/aquarium_behaviour/B = behaviour_type
-	var/obj/item/F = new /obj/item/fish(loc)
-	F.name = initial(B.name)
-	F.icon = initial(B.icon)
-	F.icon_state = initial(B.icon_state)
-	F.desc = initial(B.desc)
-	if(initial(B.color))
-		F.add_atom_colour(initial(B.color),FIXED_COLOUR_PRIORITY)
+	var/datum/aquarium_behaviour/behaviour = behaviour_type
+	var/obj/item/fish = new /obj/item/fish(loc)
+	fish.name = initial(behaviour.name)
+	fish.icon = initial(behaviour.icon)
+	fish.icon_state = initial(behaviour.icon_state)
+	fish.desc = initial(behaviour.desc)
+	if(initial(behaviour.color))
+		fish.add_atom_colour(initial(behaviour.color), FIXED_COLOUR_PRIORITY)
 	if(ispath(behaviour_type,/datum/aquarium_behaviour/fish))
-		var/datum/aquarium_behaviour/fish/BF = behaviour_type
-		var/fillet_type = initial(BF.fillet_type)
+		var/datum/aquarium_behaviour/fish/fish_behaviour = behaviour_type
+		var/fillet_type = initial(fish_behaviour.fillet_type)
 		if(fillet_type)
-			F.AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, 1, 5)
-	F.AddElement(/datum/element/deferred_aquarium_content,behaviour_type)
-	return F
+			fish.AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, 1, 5)
+	fish.AddElement(/datum/element/deferred_aquarium_content, behaviour_type)
+	return fish
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(case_fish_only=TRUE,required_fluid)
@@ -30,12 +30,12 @@
 		if(!probability_table)
 			probability_table = list()
 		var/chance_table = list()
-		for(var/T in subtypesof(/datum/aquarium_behaviour/fish))
-			var/datum/aquarium_behaviour/fish/F = T
-			if(required_fluid && initial(F.required_fluid_type) != required_fluid)
+		for(var/_fish_behavior in subtypesof(/datum/aquarium_behaviour/fish))
+			var/datum/aquarium_behaviour/fish/fish_behavior = _fish_behavior
+			if(required_fluid && initial(fish_behavior.required_fluid_type) != required_fluid)
 				continue
-			if(initial(F.availible_in_random_cases) || !case_fish_only)
-				chance_table[T] = initial(F.random_case_rarity)
+			if(initial(fish_behavior.availible_in_random_cases) || !case_fish_only)
+				chance_table[fish_behavior] = initial(fish_behavior.random_case_rarity)
 		probability_table[argkey] = chance_table
 	return pickweight(probability_table[argkey])
 
@@ -141,4 +141,3 @@
 	source_height = 21
 	sprite_width = 8
 	sprite_height = 8
-

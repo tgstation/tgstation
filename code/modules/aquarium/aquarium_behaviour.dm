@@ -47,7 +47,6 @@
 
 /// Applies icon,color and base scaling to our visual holder
 /datum/aquarium_behaviour/proc/apply_appearance(obj/effect/holder)
-
 	holder.icon = icon
 	if(dedicated_in_aquarium_icon_state)
 		holder.icon_state = dedicated_in_aquarium_icon_state
@@ -59,12 +58,12 @@
 
 // Generates scaling matrix for our visual
 /datum/aquarium_behaviour/proc/base_transform()
-	var/matrix/M = matrix()
+	var/matrix/matrix = matrix()
 	if(!dedicated_in_aquarium_icon_state)
 		var/x_scale = sprite_width / source_width
 		var/y_scale = sprite_height / source_height
-		M.Scale(x_scale,y_scale)
-	return M
+		matrix.Scale(x_scale,y_scale)
+	return matrix
 
 /// Called when fed.
 /datum/aquarium_behaviour/proc/on_feeding(datum/reagents/feed_reagents)

@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Knob, LabeledControls, Section, Dropdown, Button } from '../components';
+import { Button, Dropdown, Knob, LabeledControls, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Aquarium = (props, context) => {
