@@ -194,9 +194,8 @@
 	switch(action)
 		if("temperature")
 			var/temperature = params["temperature"]
-			if(text2num(temperature) != null)
-				fluid_temp = clamp(temperature,min_fluid_temp,max_fluid_temp)
-				. = TRUE
+			fluid_temp = clamp(temperature,min_fluid_temp,max_fluid_temp)
+			. = TRUE
 		if("fluid")
 			if(params["fluid"] in fluid_types)
 				fluid_type = params["fluid"]
