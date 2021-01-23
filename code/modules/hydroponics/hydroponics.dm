@@ -510,8 +510,8 @@
  */
 /obj/machinery/hydroponics/proc/mutatepest(mob/user)
 	if(pestlevel > 5)
-		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings")
-		log_game("[key_name(user)] last altered a hydro tray, which spiderlings spawned from.")
+		message_admins("[ADMIN_LOOKUPFLW(lastuser)] last altered a hydro tray's contents which spawned spiderlings")
+		log_game("[key_name(lastuser)] last altered a hydro tray, which spiderlings spawned from.")
 		visible_message("<span class='warning'>The pests seem to behave oddly...</span>")
 		spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, src, 3, FALSE)
 	else if(myseed)
@@ -567,9 +567,9 @@
 				H.adjustWater(round(water_amt))
 				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt)
 			reagent_source.reagents.trans_to(H.reagents, transfer_amount, transfered_by = user)
+			lastuser = user
 			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
-				lastuser = user
 				H.update_icon()
 				return 1
 			H.update_icon()
