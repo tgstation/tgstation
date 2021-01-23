@@ -100,13 +100,10 @@
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
+
 		var/obj/item/bounty_cube/reward = new /obj/item/bounty_cube(drop_location())
-		reward.bounty_value = curr_bounty.reward
-		reward.bounty_name = curr_bounty.name
-		reward.bounty_holder = inserted_scan_id.registered_name
-		reward.name = "\improper [reward.bounty_value] cr [reward.name]"
-		reward.desc += " The tag indicates it was [reward.bounty_holder]'s reward for completing the <i>[reward.bounty_name]</i> bounty and that it was created at [station_time_timestamp(format = "hh:mm")]."
-		reward.AddComponent(/datum/component/pricetag, inserted_scan_id.registered_account, CIV_BOUNTY_SPLIT)
+		reward.set_up(curr_bounty, inserted_scan_id)
+
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
@@ -247,10 +244,75 @@
 	icon_state = "bounty_cube"
 	///Value of the bounty that this bounty cube sells for.
 	var/bounty_value = 0
+	///Percentage of the bounty payout received by the Supply budget if the cube is sent without having to nag.
+	var/speed_bonus = 20
+	///Percentage of the bounty payout received by the person who completed the bounty.
+	var/holder_cut = 30
+	///Percentage of the bounty payout received by the person who claims the handling tip.
+	var/handler_cut = 10
+	///Countdown timer that is used to indicate when cargo loses its speedy delivery bonus.
+	var/bonus_countdown
+	///Base time to nag Supply listeners to send this cube.
+	var/nag_cooldown = 5 MINUTES
+	///How much the time between nags extends each nag.
+	var/nag_cooldown_multiplier = 1.25
+	///Next world tick to nag Supply listeners.
+	var/next_nag_time = 0
 	///Who completed the bounty.
 	var/bounty_holder
+	///What job the bounty holder had.
+	var/bounty_holder_job
 	///What the bounty was for.
 	var/bounty_name
+	///Bank account of a person who scans the cube with an export scanner when it's in the supply shuttle area.
+	var/datum/bank_account/bounty_handler_account
+	///Our internal radio.
+	var/obj/item/radio/radio
+	///The key our internal radio uses.
+	var/radio_key = /obj/item/encryptionkey/headset_cargo
+
+/obj/item/bounty_cube/Initialize()
+	. = ..()
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.listening = FALSE
+	radio.recalculateChannels()
+	START_PROCESSING(SSobj, src)
+	next_nag_time = world.time + nag_cooldown //grace period before the nagging begins
+
+/obj/item/bounty_cube/Destroy()
+	. = ..()
+	QDEL_NULL(radio)
+
+/obj/item/bounty_cube/examine()
+	. = ..()
+	if(speed_bonus)
+		. += "<span class='notice'><b>[time2text(bonus_countdown,"mm:ss")]</b> remaining until <b>[bounty_value * (speed_bonus/100)] cr</b> speedy delivery bonus lost.</span>"
+	if(handler_cut && !bounty_handler_account)
+		. += "<span class='notice'>Scan this in the cargo shuttle with an export scanner to claim the <b>[bounty_value * (handler_cut/100)] cr</b> handling tip."
+
+/obj/item/bounty_cube/process(delta_time)
+	if(speed_bonus)
+		bonus_countdown = next_nag_time - world.time
+	if(next_nag_time <= world.time)
+		if(!is_centcom_level(z) && !is_reserved_level(z)) //don't send message if we're on Centcom or in transit
+			radio.talk_into(src, "Bounty cube unsent in <b>[get_area(src)]</b>.[speed_bonus ? " Speedy delivery bonus of <b>[bounty_value * (speed_bonus/100)] cr</b> lost." : ""]", RADIO_CHANNEL_SUPPLY)
+			speed_bonus = 0
+			if(bounty_handler_account)
+				bounty_handler_account.bank_card_talk("\The [src] is unsent in <b>[get_area(src)]</b>.")
+		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
+		next_nag_time = world.time + nag_cooldown
+
+/obj/item/bounty_cube/proc/set_up(var/datum/bounty/my_bounty, var/obj/item/card/id/holder_id)
+	bounty_value = my_bounty.reward
+	bounty_name = my_bounty.name
+	bounty_holder = holder_id.registered_name
+	bounty_holder_job = holder_id.assignment
+	name = "\improper [bounty_value] cr [name]"
+	desc += " The sales tag indicates it was <i>[bounty_holder]</i> ([bounty_holder_job])'s reward for completing the <i>[bounty_name]</i> bounty."
+	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut)
+	bonus_countdown = next_nag_time - world.time
+	radio.talk_into(src,"Bounty cube created in <b>[get_area(src)]</b> by <b>[bounty_holder]</b> (<b>[bounty_holder_job]</b>). Cargo speedy delivery bonus of <b>[bounty_value * (speed_bonus/100)] cr</b> lost in <b>[time2text(bonus_countdown,"mm:ss")]</b>.", RADIO_CHANNEL_SUPPLY)
 
 ///Beacon to launch a new bounty setup when activated.
 /obj/item/civ_bounty_beacon
