@@ -20,6 +20,7 @@
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)
 	update_icon()
+	AddElement(/datum/element/wall_mount)
 
 /obj/structure/extinguisher_cabinet/examine(mob/user)
 	. = ..()

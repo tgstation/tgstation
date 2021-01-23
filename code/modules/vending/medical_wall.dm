@@ -25,6 +25,10 @@
 	tiltable = FALSE
 	light_mask = "wallmed-light-mask"
 
+/obj/machinery/vending/wallmed/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/wall_mount)
+
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"
 	icon_state = "refill_medical"

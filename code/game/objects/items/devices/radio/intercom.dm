@@ -19,6 +19,7 @@
 	if(!current_area)
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, .proc/AreaPowerCheck)
+	AddElement(/datum/element/wall_mount)
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()

@@ -193,6 +193,7 @@
 		set_machine_stat(machine_stat | MAINT)
 		update_icon()
 		addtimer(CALLBACK(src, .proc/update), 5)
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src

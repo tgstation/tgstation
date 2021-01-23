@@ -51,6 +51,7 @@
 	update_icon()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
+	AddElement(/datum/element/wall_mount)
 
 /obj/machinery/firealarm/ComponentInitialize()
 	. = ..()

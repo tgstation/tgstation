@@ -16,6 +16,7 @@
 	. = ..()
 	fireaxe = new
 	update_icon()
+	AddElement(/datum/element/wall_mount)
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(fireaxe)
