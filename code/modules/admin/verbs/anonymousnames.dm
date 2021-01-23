@@ -36,7 +36,6 @@
 		return
 	result = input_list[result]
 	var/alert_players = "No"
-	var/change_current_players = "No"
 	if(SSticker.current_state > GAME_STATE_PREGAME) //before anonnames is done, for asking a sleep
 		alert_players = alert(usr, "Alert crew? These are IC Themed FROM centcom.", "2016 admins didn't miss roundstart", "Yes", "No")
 	SSticker.anonymousnames = new result()
@@ -95,7 +94,6 @@
 	announcement_alert = "As punishment for this station's poor productivity when compared to neighbor stations, names and identities will be restricted until further notice."
 
 /datum/anonymous_theme/employees/anonymous_name(mob/M)
-	var/list/heads = SSjob.get_all_heads()
 	var/is_head_of_staff = (M.mind.assigned_role in GLOB.command_positions)
 	var/name = "[is_head_of_staff ? "Manager" : "Employee"] "
 	for(var/i in 1 to 6)
