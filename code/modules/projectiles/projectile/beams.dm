@@ -60,6 +60,16 @@
 /obj/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
+/obj/projectile/beam/leach
+	name = "leach shot"
+	damage = 18
+	icon_state = "leach_beam"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
+	pass_flags = PASSTABLE | PASSGRILLE
+	damage_type = BRUTE
+	light_range = 0
+	light_power = 0
+
 /obj/projectile/beam/practice
 	name = "practice laser"
 	damage = 0

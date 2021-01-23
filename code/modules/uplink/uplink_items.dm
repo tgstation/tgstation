@@ -665,6 +665,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/belt/holster/chameleon
 	cost = 1
 
+/datum/uplink_item/stealthy_weapons/leach_gun
+	name = "Leach Rifle Implant"
+	desc = "An experimental and deadly arm implanted blaster. Recharges efficiently by sapping its wielder's energy leaving most users tired disoriented after the process. High Jump Boots not included. Comes with a syndicate autosurgeon for immediate self-application."
+	cost = 10
+	item = /obj/item/autosurgeon/organ/syndicate/leach_gun
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
@@ -1944,12 +1950,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Clown")
 	illegal_tech = FALSE
 
-/datum/uplink_item/role_restricted/laser_arm
-	name = "Laser Arm Implant"
-	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
-	cost = 10
-	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
-	restricted_roles = list("Roboticist", "Research Director")
+
 
 /datum/uplink_item/role_restricted/ocd_device
 	name = "Organic Resources Disturbance Inducer"

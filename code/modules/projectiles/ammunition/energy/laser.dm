@@ -48,6 +48,10 @@
 	select_name = "DESTROY"
 	fire_sound = 'sound/weapons/pulse.ogg'
 
+/obj/item/ammo_casing/energy/laser/leach
+	projectile_type = /obj/projectile/beam/leach
+	fire_sound = 'sound/magic/mm_hit.ogg'
+
 /obj/item/ammo_casing/energy/laser/bluetag
 	projectile_type = /obj/projectile/beam/lasertag/bluetag
 	select_name = "bluetag"

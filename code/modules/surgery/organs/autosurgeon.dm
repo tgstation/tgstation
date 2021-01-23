@@ -99,6 +99,11 @@
 	uses = 1
 	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
 
+/obj/item/autosurgeon/organ/syndicate/leach_gun
+	desc = "It contains an experimental arm mounted gun implant that saps it's wielders energy to recharge. A screwdriver can be used to remove it, but implants can't be placed back in."
+	uses = 1
+	starting_organ = /obj/item/organ/cyberimp/arm/gun/leach
+
 /obj/item/autosurgeon/organ/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals
 
