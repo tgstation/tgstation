@@ -48840,7 +48840,9 @@
 /area/science/genetics)
 "ddD" = (
 /obj/structure/table,
-/obj/item/toy/plush/slimeplushie,
+/obj/item/toy/plush/slimeplushie{
+	name = "Gish"
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -55209,7 +55211,9 @@
 /area/science/misc_lab)
 "tGa" = (
 /obj/structure/chair/sofa/right,
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	name = "Dr. Moff"
+	},
 /turf/open/floor/carpet/blue,
 /area/medical/psychology)
 "tGE" = (
