@@ -62,13 +62,26 @@
 	target.my_atom.audible_message("<span class='warning'>The beaker froths as the ph changes!</span>")
 	playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 	holder.remove_reagent(type, amount)
-	
+
+//purity testor prefactors
+
+/datum/reagent/prefactor_a
+	name = "Interim product alpha"
+	description = "This reagent is a prefactor to the purity tester reagent, and will react with stable plasma to create it"
+	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/prefactor_b
+	color = "#bafa69"
+
+/datum/reagent/prefactor_b
+	name = "Interim product beta"
+	description = "This reagent is a prefactor to the reaction speed agent reagent, and will react with stable plasma to create it"
+	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/prefactor_a
+	color = "#8a3aa9"
+
 /datum/reagent/reaction_agent/purity_tester
 	name = "Purity tester"
 	description = "This reagent will consume itself and violently react if there is a highly impure reagent in the beaker."
 	ph = 3
 	color = "#ffffff"
-	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/reaction_agent/speed_agent
 
 /datum/reagent/reaction_agent/purity_tester/intercept_reagents_transfer(datum/reagents/target, amount)
 	. = ..()
@@ -91,7 +104,6 @@
 	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
 	ph = 10
 	color = "#e61f82"
-	chemical_flags = REACTION_COMPETITIVE //Competes with: /datum/reagent/reaction_agent/purity_tester
 	///How much the reaction speed is sped up by - for 5u added to 100u, an additional step of 0.5 will be done
 	var/strength = 10
 	

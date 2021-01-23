@@ -34,12 +34,17 @@
 	rate_up_lim = 20
 	purity_min = 0
 
-/datum/chemical_reaction/purity_tester
-	results = list(/datum/reagent/reaction_agent/purity_tester = 5)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////		Example competitive reaction (REACTION_COMPETITIVE)		 //////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/datum/chemical_reaction/prefactor_a
+	results = list(/datum/reagent/prefactor_a = 5)
 	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/consumable/ethanol = 3, /datum/reagent/toxin/plasma = 1)
 	mix_message = "The solution's viscosity increases."
 	is_cold_recipe = TRUE
-	required_temp = 600
+	required_temp = 800
 	optimal_temp = 300
 	overheat_temp = -1 //no overheat 
 	optimal_ph_min = 2
@@ -47,15 +52,15 @@
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 0
-	thermic_constant = -500
-	H_ion_release = -0.05
-	rate_up_lim = 2
+	thermic_constant = -400
+	H_ion_release = 0
+	rate_up_lim = 4
 	purity_min = 0.25
 
 
-/datum/chemical_reaction/speed_agent
-	results = list(/datum/reagent/reaction_agent/speed_agent = 5)
-	required_reagents = list(/datum/reagent/reaction_agent/purity_tester = 5)
+/datum/chemical_reaction/prefactor_b
+	results = list(/datum/reagent/prefactor_b = 5)
+	required_reagents = list(/datum/reagent/prefactor_a = 5)
 	mix_message = "The solution's viscosity decreases."
 	mix_sound = 'sound/chemistry/bluespace.ogg' //Maybe use this elsewhere instead
 	required_temp = 100
@@ -66,25 +71,44 @@
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 2
-	thermic_constant = -1500
-	H_ion_release = -0.5
-	rate_up_lim = 4
+	thermic_constant = -900
+	H_ion_release = -0.02
+	rate_up_lim = 5
 	purity_min = 0.35
 
-/datum/chemical_reaction/speed_agent/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/prefactor_b/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/bluespace))
 		holder.remove_reagent(/datum/reagent/bluespace, 1)
 		reaction.delta_t *= 5
 
-/datum/chemical_reaction/speed_agent/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/prefactor_b/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
-	explode_shockwave(holder, equilibrium)
+	explode_shockwave(holder, equilibrium) 
+	var/vol = max(20, holder.total_volume/5) //Not letting you have more than 5
+	clear_reagents(holder, vol)//Lest we explode forever
 
-/datum/chemical_reaction/speed_agent/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/prefactor_b/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
 	explode_fire(holder, equilibrium)
-	clear_reactants(holder, 20)
+	var/vol = max(20, holder.total_volume/5) //Not letting you have more than 5
+	clear_reagents(holder, vol)
 
-/datum/chemical_reaction/purity_tester/competitive //So we have a back and forth reaction
+/datum/chemical_reaction/prefactor_a/competitive //So we have a back and forth reaction
+	results = list(/datum/reagent/prefactor_a = 5)
+	required_reagents = list(/datum/reagent/prefactor_b = 5)
+	rate_up_lim = 4
+
+//The actual results
+/datum/chemical_reaction/prefactor_a/purity_tester
 	results = list(/datum/reagent/reaction_agent/purity_tester = 5)
-	required_reagents = list(/datum/reagent/reaction_agent/speed_agent = 5)
+	required_reagents = list(/datum/reagent/prefactor_a = 5, /datum/reagent/stable_plasma = 5)
+	H_ion_release = 0.05
+	thermic_constant = 0
+
+/datum/chemical_reaction/prefactor_b/speed_agent
+	results = list(/datum/reagent/reaction_agent/speed_agent = 5)
+	required_reagents = list(/datum/reagent/prefactor_b = 5, /datum/reagent/stable_plasma = 5)
+	H_ion_release = -0.15
+	thermic_constant = 0
+
+////////////////////////////////End example/////////////////////////////////////////////////////////////////////////////

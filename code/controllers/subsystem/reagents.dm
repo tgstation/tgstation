@@ -23,13 +23,12 @@ SUBSYSTEM_DEF(reagents)
 	build_chemical_reactions_list()
 	return ..()
 
-//Comment to delete: I don't really understand SS that well.
+//Comment to delete: I don't really understand SS that well. Please review me
 /datum/controller/subsystem/reagents/stat_entry(msg)
 	msg = "reagents:[length(processing)]"
 	.=..()
 	msg = "number of ticks that took a long time (over 2s): [overly_laggy_ticks]"
 
-//This is a copy - I'll customise it as it's needed. I'm a little shaky on how all of this works.
 /datum/controller/subsystem/reagents/fire(resumed = FALSE)
 	if (!resumed)
 		currentrun = processing.Copy()
@@ -42,7 +41,6 @@ SUBSYSTEM_DEF(reagents)
 	if(delta_realtime > 2)
 		overly_laggy_ticks++
 		delta_realtime = 2 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
-		debug_world("change: [delta_realtime], current: [world.time]")
 
 	while(current_run.len)
 		var/datum/thing = current_run[current_run.len]

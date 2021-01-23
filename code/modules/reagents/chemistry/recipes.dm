@@ -284,6 +284,9 @@
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
 
 //////////////////Generic explosions/failures////////////////////
+// It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
+//If you have competitive reactions - it's a good idea to consume ALL reagents in a beaker (or product+reactant), otherwise it'll swing back with the deficit and blow up again
+
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, clear_products = TRUE, clear_reactants = TRUE)
@@ -338,7 +341,7 @@
 	for(var/atom/movable/movey in orange(3, this_turf))
 		if(isliving(movey))
 			var/mob/living/live = movey
-			live.adjustBruteLoss(10)//Since this can be called multiple times
+			live.adjustBruteLoss(5)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
 		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
@@ -378,5 +381,8 @@
 		else
 			holder.remove_reagent(reagent.type, volume)
 
-
-
+//Clears the beaker of ALL reagents inside
+/datum/chemical_reaction/proc/clear_reagents(datum/reagents/holder, volume = null)
+	if(!holder)
+		return FALSE
+	holder.remove_all(volume)
