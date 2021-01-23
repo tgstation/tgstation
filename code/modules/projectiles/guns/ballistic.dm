@@ -559,8 +559,9 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
 	
 	if(do_after(user, 100, target = src))
-		if(misfire_probability > 0)
-			misfire_probability = 0
+		var/original_misfire_value = initial(misfire_probability)
+		if(misfire_probability > original_misfire_value)
+			misfire_probability = original_misfire_value
 			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing misfire.</span>")
 			return TRUE
 
