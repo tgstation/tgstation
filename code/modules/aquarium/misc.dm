@@ -1,3 +1,4 @@
+#define AQUARIUM_COMPANY "Aquatech Ltd."
 
 // Fish feed can
 /obj/item/fish_feed
@@ -119,3 +120,5 @@
 /obj/item/storage/box/fish_debug/PopulateContents()
 	for(var/T in subtypesof(/datum/aquarium_behaviour/fish))
 		generate_fish(src,T)
+
+#undef AQUARIUM_COMPANY

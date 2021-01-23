@@ -1,20 +1,7 @@
-#define AQUARIUM_FLUID_FRESHWATER "Freshwater"
-#define AQUARIUM_FLUID_SALTWATER "Saltwater"
-#define AQUARIUM_FLUID_SULPHWATEVER "Sulphuric Water"
-#define AQUARIUM_FLUID_AIR "Air"
-
 #define AQUARIUM_LAYER_STEP 0.01
 /// Aquarium content layer offsets
 #define AQUARIUM_MIN_OFFSET 0.01
 #define AQUARIUM_MAX_OFFSET 1
-
-#define FISH_ALIVE "alive"
-#define FISH_DEAD "dead"
-
-#define MIN_AQUARIUM_TEMP T0C
-#define MAX_AQUARIUM_TEMP T0C + 100
-
-#define AQUARIUM_COMPANY "Aquatech Ltd."
 
 /obj/structure/aquarium
 	name = "aquarium"
@@ -252,3 +239,7 @@
 		R.add_reagent(/datum/reagent/water,30)
 		chem_splash(droploc, 3, list(R))
 	update_icon()
+
+#undef AQUARIUM_LAYER_STEP
+#undef AQUARIUM_MIN_OFFSET
+#undef AQUARIUM_MAX_OFFSET

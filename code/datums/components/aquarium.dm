@@ -1,15 +1,4 @@
-#define AQUARIUM_ANIMATION_FISH_SWIM "fish"
-#define AQUARIUM_ANIMATION_FISH_DEAD "dead"
-
-#define AQUARIUM_PROPERTIES_PX_MIN "px_min"
-#define AQUARIUM_PROPERTIES_PX_MAX "px_max"
-#define AQUARIUM_PROPERTIES_PY_MIN "py_min"
-#define AQUARIUM_PROPERTIES_PY_MAX "py_max"
-
-#define AQUARIUM_LAYER_MODE_BOTTOM "bottom"
-#define AQUARIUM_LAYER_MODE_TOP "top"
-#define AQUARIUM_LAYER_MODE_AUTO "auto"
-
+/// Allows movables to be inserted/displayed in aquariums.
 /datum/component/aquarium_content
 	/// This is a datum that describes our in-aquarium functionality
 	var/datum/aquarium_behaviour/properties

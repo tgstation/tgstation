@@ -1,8 +1,3 @@
-#define FISH_RARITY_BASIC 1000
-#define FISH_RARITY_RARE 400
-#define FISH_RARITY_VERY_RARE 200
-#define FISH_RARITY_GOOD_LUCK_FINDING_THIS 1
-
 // Configuration objects defining prop/fish behaviour in the aquarium
 // These are used as a base for autogenerating the actual instances
 /datum/aquarium_behaviour
