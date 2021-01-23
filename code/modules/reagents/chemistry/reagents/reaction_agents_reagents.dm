@@ -34,11 +34,11 @@
 		playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
 		holder.remove_reagent(type, amount)//Remove from holder because it's not transfered
 		return
-	var/ph_change = -((volume/target.total_volume)*strength)
+	var/ph_change = -((amount/target.total_volume)*strength)
 	target.adjust_all_reagents_ph(ph_change, ph, 14)
 	target.my_atom.audible_message("<span class='warning'>The beaker fizzes as the ph changes!</span>")
 	playsound(target.my_atom, 'sound/chemistry/bufferadd.ogg', 50, TRUE)
-	holder.remove_reagent(type, volume)
+	holder.remove_reagent(type, amount)
 	
 /datum/reagent/reaction_agent/basic_buffer
 	name = "Strong basic buffer"
