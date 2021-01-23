@@ -64,6 +64,9 @@
 /mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
 	return FALSE
 
+/// Special handling for gondolas, as they don't use icon_states and instead rely on overlays. The parent of this proc deletes all our overlays, so we're overriding it.
+/mob/living/simple_animal/pet/gondola/regenerate_icons()
+	return
 
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR

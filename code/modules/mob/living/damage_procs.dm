@@ -1,19 +1,19 @@
 
 /**
-  * Applies damage to this mob
-  *
-  * Sends [COMSIG_MOB_APPLY_DAMGE]
-  *
-  * Arguuments:
-  * * damage - amount of damage
-  * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
-  * * def_zone - zone that is being hit if any
-  * * blocked - armor value applied
-  * * forced - bypass hit percentage
-  * * spread_damage - used in overrides
-  *
-  * Returns TRUE if damage applied
-  */
+ * Applies damage to this mob
+ *
+ * Sends [COMSIG_MOB_APPLY_DAMGE]
+ *
+ * Arguuments:
+ * * damage - amount of damage
+ * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
+ * * def_zone - zone that is being hit if any
+ * * blocked - armor value applied
+ * * forced - bypass hit percentage
+ * * spread_damage - used in overrides
+ *
+ * Returns TRUE if damage applied
+ */
 /mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
@@ -252,10 +252,10 @@
 	return
 
 /**
-  * heal ONE external organ, organ gets randomly selected from damaged ones.
-  *
-  * needs to return amount healed in order to calculate things like tend wounds xp gain
-  */
+ * heal ONE external organ, organ gets randomly selected from damaged ones.
+ *
+ * needs to return amount healed in order to calculate things like tend wounds xp gain
+ */
 /mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE) + adjustStaminaLoss(-stamina, FALSE)) //zero as argument for no instant health update
 	if(updating_health)

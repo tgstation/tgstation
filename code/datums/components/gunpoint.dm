@@ -166,7 +166,7 @@
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
 /datum/component/gunpoint/proc/flinch(attacker, damage, damagetype, def_zone)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/mob/living/shooter = parent
 	if(attacker == shooter)
@@ -184,7 +184,7 @@
 	if(prob(flinch_chance))
 		shooter.visible_message("<span class='danger'>[shooter] flinches!</span>", \
 			"<span class='danger'>You flinch!</span>")
-		trigger_reaction()
+		INVOKE_ASYNC(src, .proc/trigger_reaction)
 
 #undef GUNPOINT_SHOOTER_STRAY_RANGE
 #undef GUNPOINT_DELAY_STAGE_2

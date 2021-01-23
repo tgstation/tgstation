@@ -6,7 +6,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
 
-/obj/item/grenade/flashbang/prime(mob/living/lanced_by)
+/obj/item/grenade/flashbang/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
@@ -50,14 +50,14 @@
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 	shrapnel_radius = 5
-	custom_premium_price = 700 // mostly gotten through cargo, but throw in one for the sec vendor ;)
+	custom_premium_price = PAYCHECK_HARD * 3.5 // mostly gotten through cargo, but throw in one for the sec vendor ;)
 
 /obj/item/grenade/stingbang/mega
 	name = "mega stingbang"
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball/mega
 	shrapnel_radius = 12
 
-/obj/item/grenade/stingbang/prime(mob/living/lanced_by)
+/obj/item/grenade/stingbang/detonate(mob/living/lanced_by)
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		var/obj/item/bodypart/B = C.get_holding_bodypart_of_item(src)
@@ -118,7 +118,7 @@
 		rots++
 		user.changeNext_move(CLICK_CD_RAPID)
 
-/obj/item/grenade/primer/prime(mob/living/lanced_by)
+/obj/item/grenade/primer/detonate(mob/living/lanced_by)
 	shrapnel_radius = round(rots / rots_per_mag)
 	. = ..()
 	qdel(src)

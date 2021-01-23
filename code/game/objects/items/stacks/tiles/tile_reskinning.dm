@@ -11,8 +11,8 @@
 GLOBAL_LIST_EMPTY(tile_reskin_lists)
 
 /**
-  * Caches associative lists with type path index keys and images of said type's initial icon state (typepath -> image).
-  */
+ * Caches associative lists with type path index keys and images of said type's initial icon state (typepath -> image).
+ */
 /obj/item/stack/tile/proc/tile_reskin_list(list/values)
 	var/string_id = values.Join("-")
 	. = GLOB.tile_reskin_lists[string_id]

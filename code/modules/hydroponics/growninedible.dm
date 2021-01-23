@@ -57,5 +57,6 @@
 	return
 
 /obj/item/grown/on_grind()
+	. = ..()
 	for(var/i in 1 to grind_results.len)
 		grind_results[grind_results[i]] = round(seed.potency)

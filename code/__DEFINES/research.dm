@@ -105,6 +105,7 @@
 #define CELL_LINE_TABLE_SNAKE "cell_line_snake_table"
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
 #define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
+#define CELL_LINE_TABLE_GLUTTON "cell_line_glutton_table"
 
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"

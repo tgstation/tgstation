@@ -13,6 +13,9 @@ Assistant
 	outfit = /datum/outfit/job/assistant
 	antag_rep = 7
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
+
+	liver_traits = list(TRAIT_GREYTIDE_METABOLISM)
+
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 

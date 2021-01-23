@@ -283,12 +283,28 @@
 /obj/item/clothing/head/helmet/space/hardsuit/mining/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+
+/obj/item/clothing/head/helmet/space/hardsuit/mining/proc/upgrade_icon(datum/source, amount, maxamount)
+	SIGNAL_HANDLER
+
+	if(amount)
+		name = "reinforced [initial(name)]"
+		hardsuit_type = "mining_goliath"
+		if(amount == maxamount)
+			hardsuit_type = "mining_goliath_full"
+	icon_state = "hardsuit[on]-[hardsuit_type]"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		if(wearer.head == src)
+			wearer.update_inv_head()
 
 /obj/item/clothing/suit/space/hardsuit/mining
 	name = "mining hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters."
 	icon_state = "hardsuit-mining"
 	inhand_icon_state = "mining_hardsuit"
+	hardsuit_type = "mining"
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 50, FIRE = 50, ACID = 75, WOUND = 15)
@@ -299,6 +315,21 @@
 /obj/item/clothing/suit/space/hardsuit/mining/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
+	RegisterSignal(src, COMSIG_ARMOR_PLATED, .proc/upgrade_icon)
+
+/obj/item/clothing/suit/space/hardsuit/mining/proc/upgrade_icon(datum/source, amount, maxamount)
+	SIGNAL_HANDLER
+
+	if(amount)
+		name = "reinforced [initial(name)]"
+		hardsuit_type = "mining_goliath"
+		if(amount == maxamount)
+			hardsuit_type = "mining_goliath_full"
+	icon_state = "hardsuit-[hardsuit_type]"
+	if(ishuman(loc))
+		var/mob/living/carbon/human/wearer = loc
+		if(wearer.wear_suit == src)
+			wearer.update_inv_wear_suit()
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
@@ -312,7 +343,7 @@
 	on = TRUE
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
-	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags = STOPSPRESSUREDAMAGE
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon_state()
@@ -362,7 +393,7 @@
 		if(on)
 			linkedsuit.name = initial(linkedsuit.name)
 			linkedsuit.desc = initial(linkedsuit.desc)
-			linkedsuit.slowdown = 1
+			linkedsuit.slowdown = initial(linkedsuit.slowdown)
 			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 		else
@@ -411,6 +442,10 @@
 	. = ..()
 	soundloop.volume = 0
 
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/admin
+	name = "jannie hardsuit helmet"
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
+
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"
 	desc = "An elite version of the syndicate hardsuit, with improved armour and fireproofing. It is in travel mode."
@@ -426,6 +461,16 @@
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
+
+/obj/item/clothing/suit/space/hardsuit/syndi/elite/admin //the hardsuit to end all other hardsuits
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/admin
+	name = "jannie hardsuit"
+	slowdown = 0
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100, WOUND = 100)
+	cell = /obj/item/stock_parts/cell/infinite
+	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	strip_delay = 1000
+	equip_delay_other = 1000
 
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
@@ -601,7 +646,7 @@
 	desc = "A tactical SWAT helmet MK.II."
 	armor = list(MELEE = 40, BULLET = 50, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 100, RAD = 50, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR //we want to see the mask //this makes the hardsuit not fireproof you genius
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT //we want to see the mask //this makes the hardsuit not fireproof you genius
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()

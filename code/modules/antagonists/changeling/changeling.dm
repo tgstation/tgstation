@@ -98,7 +98,7 @@
 	mimicing = ""
 
 /datum/antagonist/changeling/proc/remove_changeling_powers()
-	if(ishuman(owner.current) || ismonkey(owner.current))
+	if(ishuman(owner.current))
 		reset_properties()
 		for(var/datum/action/changeling/p in purchasedpowers)
 			purchasedpowers -= p
@@ -282,6 +282,13 @@
 		var/datum/scar/iter_scar = i
 		LAZYADD(prof.stored_scars, iter_scar.format())
 
+	var/datum/icon_snapshot/entry = new
+	entry.name = H.name
+	entry.icon = H.icon
+	entry.icon_state = H.icon_state
+	entry.overlays = H.get_overlays_copy(list(HANDS_LAYER, HANDCUFF_LAYER, LEGCUFF_LAYER))
+	prof.profile_snapshot = entry
+
 	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(slot in H.vars)
@@ -368,7 +375,7 @@
 	if (you_are_greet)
 		to_chat(owner.current, "<span class='boldannounce'>You are a changeling! You have absorbed and taken the form of a human.</span>")
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	owner.announce_objectives()
 
@@ -493,6 +500,8 @@
 	var/list/skillchips = list()
 	/// What scars the target had when we copied them, in string form (like persistent scars)
 	var/list/stored_scars
+	/// Icon snapshot of the profile
+	var/datum/icon_snapshot/profile_snapshot
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
@@ -518,6 +527,7 @@
 	newprofile.worn_icon_state_list = worn_icon_state_list.Copy()
 	newprofile.skillchips = skillchips.Copy()
 	newprofile.stored_scars = stored_scars.Copy()
+	newprofile.profile_snapshot = profile_snapshot
 
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"

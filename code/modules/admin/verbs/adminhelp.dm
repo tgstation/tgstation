@@ -590,15 +590,15 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		send2otherserver(source,final)
 
 /**
-  * Sends a message to a set of cross-communications-enabled servers using world topic calls
-  *
-  * Arguments:
-  * * source - Who sent this message
-  * * msg - The message body
-  * * type - The type of message, becomes the topic command under the hood
-  * * target_servers - A collection of servers to send the message to, defined in config
-  * * additional_data - An (optional) associated list of extra parameters and data to send with this world topic call
-  */
+ * Sends a message to a set of cross-communications-enabled servers using world topic calls
+ *
+ * Arguments:
+ * * source - Who sent this message
+ * * msg - The message body
+ * * type - The type of message, becomes the topic command under the hood
+ * * target_servers - A collection of servers to send the message to, defined in config
+ * * additional_data - An (optional) associated list of extra parameters and data to send with this world topic call
+ */
 /proc/send2otherserver(source, msg, type = "Ahelp", target_servers, list/additional_data = list())
 	if(!CONFIG_GET(string/comms_key))
 		debug_world_log("Server cross-comms message not sent for lack of configured key")

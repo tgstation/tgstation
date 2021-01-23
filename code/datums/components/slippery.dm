@@ -18,7 +18,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/victim = AM
-	if(istype(victim) && !victim.is_flying() && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
+	if(istype(victim) && !(victim.movement_type & FLYING) && victim.slip(knockdown_time, parent, lube_flags, paralyze_time, force_drop_items) && callback)
 		callback.Invoke(victim)
 
 

@@ -9,6 +9,7 @@
 /obj/item/stack/license_plates/empty
 	name = "empty license plate"
 	desc = "Instead of a license plate number, this could contain a quote like \"Live laugh love\"."
+	merge_type = /obj/item/stack/license_plates/empty
 
 /obj/item/stack/license_plates/empty/fifty
 	amount = 50
@@ -17,6 +18,7 @@
 	name = "license plate"
 	desc = "Prison labor paying off."
 	icon_state = "filled_plate_1_1"
+	merge_type = /obj/item/stack/license_plates/filled
 
 ///Override to allow for variations
 /obj/item/stack/license_plates/filled/update_icon_state()

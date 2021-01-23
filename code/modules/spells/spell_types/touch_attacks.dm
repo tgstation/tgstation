@@ -9,7 +9,9 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/Destroy()
 	remove_hand()
-	to_chat(usr, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
+	if(action?.owner)
+		var/mob/guy_who_needs_to_know = action.owner
+		to_chat(guy_who_needs_to_know, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
 	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)

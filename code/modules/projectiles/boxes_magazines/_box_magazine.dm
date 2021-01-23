@@ -35,25 +35,20 @@
 
 /obj/item/ammo_box/Initialize()
 	. = ..()
-	if (!bullet_cost)
-		for (var/material in custom_materials)
-			var/material_amount = custom_materials[material]
-			LAZYSET(base_cost, material, (material_amount * 0.10))
-
-			material_amount *= 0.90 // 10% for the container
-			material_amount /= max_ammo
-			LAZYSET(bullet_cost, material, material_amount)
+	if(!bullet_cost)
+		base_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
+		bullet_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.9 / max_ammo)
 	if(!start_empty)
 		top_off(starting=TRUE)
 	update_icon()
 
 /**
-  * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
-  *
-  * Arguments:
-  * * load_type - if you want to specify a specific ammo casing type to load, enter the path here, otherwise it'll use the basic [/obj/item/ammo_box/var/ammo_type]. Must be a compatible round
-  * * starting - Relevant for revolver cylinders, if FALSE then we mind the nulls that represent the empty cylinders (since those nulls don't exist yet if we haven't initialized when this is TRUE)
-  */
+ * top_off is used to refill the magazine to max, in case you want to increase the size of a magazine with VV then refill it at once
+ *
+ * Arguments:
+ * * load_type - if you want to specify a specific ammo casing type to load, enter the path here, otherwise it'll use the basic [/obj/item/ammo_box/var/ammo_type]. Must be a compatible round
+ * * starting - Relevant for revolver cylinders, if FALSE then we mind the nulls that represent the empty cylinders (since those nulls don't exist yet if we haven't initialized when this is TRUE)
+ */
 /obj/item/ammo_box/proc/top_off(load_type, starting=FALSE)
 	if(!load_type) //this check comes first so not defining an argument means we just go with default ammo
 		load_type = ammo_type

@@ -53,7 +53,7 @@
 
 /datum/antagonist/cult/greet()
 	to_chat(owner, "<span class='userdanger'>You are a member of the cult!</span>")
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/bloodcult.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/bloodcult.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	owner.announce_objectives()
 
 /datum/antagonist/cult/on_gain()
@@ -112,7 +112,7 @@
 	communion.Grant(current)
 	if(ishuman(current))
 		magic.Grant(current)
-	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)

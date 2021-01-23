@@ -25,13 +25,13 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has enabled anonymous names. THEME: [SSticker.anonymousnames].</span>")
 
 /**
-  * anonymous_name: generates a corporate random name. used in admin event tool anonymous names
-  *
-  * first letter is always a letter
-  * Example name = "Employee Q5460Z"
-  * Arguments:
-  * * M - mob for preferences and gender
-  */
+ * anonymous_name: generates a corporate random name. used in admin event tool anonymous names
+ *
+ * first letter is always a letter
+ * Example name = "Employee Q5460Z"
+ * Arguments:
+ * * M - mob for preferences and gender
+ */
 /proc/anonymous_name(mob/M)
 	switch(SSticker.anonymousnames)
 		if(ANON_RANDOMNAMES)
@@ -47,13 +47,13 @@
 			return name
 
 /**
-  * anonymous_ai_name: generates a corporate random name (but for sillycones). used in admin event tool anonymous names
-  *
-  * first letter is always a letter
-  * Example name = "Employee Assistant Assuming Delta"
-  * Arguments:
-  * * is_ai - boolean to decide whether the name has "Core" (AI) or "Assistant" (Cyborg)
-  */
+ * anonymous_ai_name: generates a corporate random name (but for sillycones). used in admin event tool anonymous names
+ *
+ * first letter is always a letter
+ * Example name = "Employee Assistant Assuming Delta"
+ * Arguments:
+ * * is_ai - boolean to decide whether the name has "Core" (AI) or "Assistant" (Cyborg)
+ */
 /proc/anonymous_ai_name(is_ai = FALSE)
 	switch(SSticker.anonymousnames)
 		if(ANON_RANDOMNAMES)

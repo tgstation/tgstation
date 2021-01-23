@@ -103,6 +103,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(24)	///obj/structure/window/shuttle
 
 #define SMOOTH_GROUP_LATTICE  S_OBJ(30)					///obj/structure/lattice
+#define SMOOTH_GROUP_CATWALK  S_OBJ(31)					///obj/structure/lattice/catwalk
 
 #define SMOOTH_GROUP_AIRLOCK S_OBJ(40)					///obj/machinery/door/airlock
 

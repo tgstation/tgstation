@@ -61,6 +61,7 @@
 	icon_state = "plunger"
 
 	slot_flags = ITEM_SLOT_MASK
+	flags_inv = HIDESNOUT
 
 	///time*plunge_mod = total time we take to plunge an object
 	var/plunge_mod = 1
@@ -121,9 +122,8 @@
 	name = "reinforced plunger"
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
-
 	reinforced = TRUE
 	plunge_mod = 0.8
 	layer_mode_sprite = "reinforced_plunger_layer"
 
-	custom_premium_price = 1200
+	custom_premium_price = PAYCHECK_MEDIUM * 8

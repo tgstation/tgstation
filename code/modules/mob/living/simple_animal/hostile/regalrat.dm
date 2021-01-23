@@ -79,29 +79,36 @@
 			. += "<span class='notice'>This is your king. Long live his majesty!</span>"
 		else
 			. += "<span class='warning'>This is a false king! Strike him down!</span>"
-	else if(istype(user,/mob/living/simple_animal/hostile/regalrat))
+	else if(user != src && istype(user,/mob/living/simple_animal/hostile/regalrat))
 		. += "<span class='warning'>Who is this foolish false king? This will not stand!</span>"
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
 	. = ..()
-	if(health >= maxHealth)
+	if(istype(target, /obj/item/food/cheesewedge))
+		cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
+
+	else if(istype(target, /obj/item/food/cheesewheel))
+		cheese_heal(target, MEDIUM_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
+
+	else if(istype(target, /obj/item/food/royalcheese))
+		cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
+
+/**
+ * Conditionally "eat" cheese object and heal, if injured.
+ *
+ * A private proc for sending a message to the mob's chat about them
+ * eating some sort of cheese, then healing them, then deleting the cheese.
+ * The "eating" is only conditional on the mob being injured in the first
+ * place.
+ */
+/mob/living/simple_animal/hostile/regalrat/proc/cheese_heal(obj/item/target, amount, message)
+	if(health < maxHealth)
+		to_chat(src, message)
+		heal_bodypart_damage(amount)
+		qdel(target)
+	else
 		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
-		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
-		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
-		heal_bodypart_damage(MINOR_HEAL)
-		qdel(target)
-		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/store/cheesewheel))
-		to_chat(src, "<span class='green'>You eat [src], restoring some health.</span>")
-		heal_bodypart_damage(MEDIUM_HEAL)
-		qdel(target)
-		return
-	if(istype(target, /obj/item/reagent_containers/food/snacks/royalcheese))
-		to_chat(src, "<span class='green'>You eat [src], revitalizing your royal resolve completely.</span>")
-		heal_bodypart_damage(MAJOR_HEAL)
-		qdel(target)
-		return
+
 
 /mob/living/simple_animal/hostile/regalrat/controlled
 	name = "regal rat"
@@ -112,8 +119,8 @@
 
 
 /**
-  *This action creates trash, money, dirt, and cheese.
-  */
+ *This action creates trash, money, dirt, and cheese.
+ */
 /datum/action/cooldown/coffer
 	name = "Fill Coffers"
 	desc = "Your newly granted regality and poise let you scavenge for lost junk, but more importantly, cheese."
@@ -131,7 +138,7 @@
 	switch(loot)
 		if(1 to 5)
 			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
-			new /obj/item/reagent_containers/food/snacks/cheesewedge(T)
+			new /obj/item/food/cheesewedge(T)
 		if(6 to 10)
 			var/pickedcoin = pick(GLOB.ratking_coins)
 			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
@@ -155,8 +162,8 @@
 	StartCooldown()
 
 /**
-  *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
-  */
+ *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
+ */
 
 /datum/action/cooldown/riot
 	name = "Raise Army"
@@ -230,7 +237,7 @@
 	if(!ckey)
 		..(TRUE)
 		if(!gibbed)
-			var/obj/item/reagent_containers/food/snacks/deadmouse/mouse = new(loc)
+			var/obj/item/food/deadmouse/mouse = new(loc)
 			mouse.icon_state = icon_dead
 			mouse.name = name
 	SSmobs.cheeserats -= src // remove rats on death
@@ -296,7 +303,7 @@
 
 /mob/living/simple_animal/hostile/rat/AttackingTarget()
 	. = ..()
-	if(istype(target, /obj/item/reagent_containers/food/snacks/cheesewedge))
+	if(istype(target, /obj/item/food/cheesewedge))
 		if (health >= maxHealth)
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return

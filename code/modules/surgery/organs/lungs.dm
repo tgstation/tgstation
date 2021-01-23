@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	healing_factor = STANDARD_ORGAN_HEALING
-	decay_factor = STANDARD_ORGAN_DECAY
+	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, lungs are one of the last organs to die (of the ones we have)
 
 	low_threshold_passed = "<span class='warning'>You feel short of breath.</span>"
 	high_threshold_passed = "<span class='warning'>You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.</span>"
@@ -85,7 +85,7 @@
 		return
 
 	if(!breath || (breath.total_moles() == 0))
-		if(H.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
+		if(H.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
 			return
 		if(H.health >= H.crit_threshold)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -94,13 +94,13 @@
 
 		H.failed_last_breath = TRUE
 		if(safe_oxygen_min)
-			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+			H.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		else if(safe_toxins_min)
-			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			H.throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
 		else if(safe_co2_min)
-			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			H.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
 		else if(safe_nitro_min)
-			H.throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
+			H.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 		return FALSE
 
 	var/gas_breathed = 0
@@ -139,7 +139,7 @@
 		if(O2_pp > safe_oxygen_max)
 			var/ratio = (breath_gases[/datum/gas/oxygen][MOLES]/safe_oxygen_max) * 10
 			H.apply_damage_type(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
-			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+			H.throw_alert("too_much_oxy", /atom/movable/screen/alert/too_much_oxy)
 		else
 			H.clear_alert("too_much_oxy")
 
@@ -147,7 +147,7 @@
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
 			gas_breathed = handle_too_little_breath(H, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
-			H.throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+			H.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -167,7 +167,7 @@
 		if(N2_pp > safe_nitro_max)
 			var/ratio = (breath_gases[/datum/gas/nitrogen][MOLES]/safe_nitro_max) * 10
 			H.apply_damage_type(clamp(ratio, nitro_breath_dam_min, nitro_breath_dam_max), nitro_damage_type)
-			H.throw_alert("too_much_nitro", /obj/screen/alert/too_much_nitro)
+			H.throw_alert("too_much_nitro", /atom/movable/screen/alert/too_much_nitro)
 		else
 			H.clear_alert("too_much_nitro")
 
@@ -175,7 +175,7 @@
 	if(safe_nitro_min)
 		if(N2_pp < safe_nitro_min)
 			gas_breathed = handle_too_little_breath(H, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
-			H.throw_alert("nitro", /obj/screen/alert/not_enough_nitro)
+			H.throw_alert("nitro", /atom/movable/screen/alert/not_enough_nitro)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -200,7 +200,7 @@
 				H.apply_damage_type(3, co2_damage_type) // Lets hurt em a little, let them know we mean business
 				if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					H.apply_damage_type(8, co2_damage_type)
-				H.throw_alert("too_much_co2", /obj/screen/alert/too_much_co2)
+				H.throw_alert("too_much_co2", /atom/movable/screen/alert/too_much_co2)
 			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 				H.emote("cough")
 
@@ -212,7 +212,7 @@
 	if(safe_co2_min)
 		if(CO2_pp < safe_co2_min)
 			gas_breathed = handle_too_little_breath(H, CO2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
-			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			H.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -233,7 +233,7 @@
 		if(Toxins_pp > safe_toxins_max)
 			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_toxins_max) * 10
 			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
-			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+			H.throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
 		else
 			H.clear_alert("too_much_tox")
 
@@ -242,7 +242,7 @@
 	if(safe_toxins_min)
 		if(Toxins_pp < safe_toxins_min)
 			gas_breathed = handle_too_little_breath(H, Toxins_pp, safe_toxins_min, breath_gases[/datum/gas/plasma][MOLES])
-			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			H.throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
@@ -276,9 +276,9 @@
 		if(safe_toxins_max && SA_pp > safe_toxins_max*3)
 			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_toxins_max)
 			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
-			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+			H.throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
 		else
-			H.clear_alert("too_much_tox")
+			H.clear_alert("too_much_n2o")
 
 
 	// BZ

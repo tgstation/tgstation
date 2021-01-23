@@ -83,7 +83,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 			for(var/turf/T in C.can_see())
 				seen[T]++
 		for(var/turf/T in seen)
-			T.maptext = "[seen[T]]"
+			T.maptext = MAPTEXT(seen[T])
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
 
@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set desc = "Displays a list of active turfs coordinates at roundstart"
 
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
-	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
+		<br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
 	for(var/t in GLOB.active_turfs_startlist)
 		var/turf/T = t

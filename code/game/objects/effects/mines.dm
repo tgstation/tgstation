@@ -180,7 +180,7 @@
 	QDEL_IN(colour, 11)
 	doomslayer = victim
 	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/end_blood_frenzy)
-	QDEL_IN(src, duration)
+	QDEL_IN(WEAKREF(src), duration)
 
 /obj/effect/mine/pickup/bloodbath/proc/end_blood_frenzy()
 	if(doomslayer)

@@ -23,7 +23,7 @@
 	agent = "advance microbes"
 	max_stages = 5
 	spread_text = "Unknown"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human)
 
 	// NEW VARS
 	var/list/properties = list()
@@ -421,7 +421,7 @@
 		var/datum/disease/advance/D2 = pick(diseases)
 		D2.Mix(D1)
 
-	 // Should be only 1 entry left, but if not let's only return a single entry
+	// Should be only 1 entry left, but if not let's only return a single entry
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(TRUE)
 	return to_return

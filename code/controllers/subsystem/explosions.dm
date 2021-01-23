@@ -135,13 +135,13 @@ SUBSYSTEM_DEF(explosions)
 
 		if(dist < dev)
 			T.color = "red"
-			T.maptext = "Dev"
+			T.maptext = MAPTEXT("Dev")
 		else if (dist < heavy)
 			T.color = "yellow"
-			T.maptext = "Heavy"
+			T.maptext = MAPTEXT("Heavy")
 		else if (dist < light)
 			T.color = "blue"
-			T.maptext = "Light"
+			T.maptext = MAPTEXT("Light")
 		else
 			continue
 

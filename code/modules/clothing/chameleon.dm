@@ -462,7 +462,7 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
@@ -839,11 +839,11 @@
 		STOP_PROCESSING(SSfastprocess, src)
 		return
 
-	button.maptext = "<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>"
+	button.maptext = MAPTEXT("<b>[COOLDOWN_TIMELEFT(src, usable_cooldown) * 0.1]</b>")
 
 /**
-  * Clears the currently mimic'd skillchip, if any exists.
-  */
+ * Clears the currently mimic'd skillchip, if any exists.
+ */
 /datum/action/item_action/chameleon/change/skillchip/proc/clear_mimic_chip()
 	if(skillchip_mimic)
 		skillchip_mimic.on_removal(FALSE)

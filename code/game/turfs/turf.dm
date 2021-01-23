@@ -1,4 +1,6 @@
 GLOBAL_LIST_EMPTY(station_turfs)
+
+/// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
 	flags_1 = CAN_BE_DIRTY_1
@@ -65,10 +67,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 
 /**
-  * Turf Initialize
-  *
-  * Doesn't call parent, see [/atom/proc/Initialize]
-  */
+ * Turf Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
@@ -103,8 +105,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		CALCULATE_ADJACENT_TURFS(src)
-		SSair.add_to_active(src)
+		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
 
 	if (light_power && light_range)
 		update_light()
@@ -128,7 +129,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
-	CALCULATE_ADJACENT_TURFS(src)
+	CALCULATE_ADJACENT_TURFS(src, NORMAL_TURF)
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -148,7 +149,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
@@ -167,13 +167,25 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
-///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
-/turf/proc/is_blocked_turf(exclude_mobs)
+/**
+ * Check whether the specified turf is blocked by something dense inside it.
+ *
+ * Returns TRUE if the turf is blocked, FALSE otherwise.
+ *
+ * Arguments:
+ * * exclude_mobs - If TRUE, ignores dense mobs on the turf.
+ * * source_atom - If you're checking if the turf an atom is on is blocked, this will let you exclude the atom from this check so it doesn't block itself with its own density.
+ */
+/turf/proc/is_blocked_turf(exclude_mobs, source_atom)
 	if(density)
 		return TRUE
 	for(var/i in contents)
-		var/atom/thing = i
-		if(thing.density && (!exclude_mobs || !ismob(thing)))
+		var/atom/movable/thing = i
+		if(thing == source_atom)
+			continue
+		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
+		// it cannot pass through the thing on the turf, we consider the turf blocked.
+		if(thing.density && (!exclude_mobs || !ismob(thing)) && (source_atom && !thing.CanPass(source_atom, src)))
 			return TRUE
 	return FALSE
 
@@ -268,7 +280,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
 	var/canPassSelf = CanPass(mover, src)
-	if(canPassSelf || (mover.movement_type & UNSTOPPABLE))
+	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/i in contents)
 			if(QDELETED(mover))
 				return FALSE		//We were deleted, do not attempt to proceed with movement.
@@ -278,7 +290,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(!thing.Cross(mover))
 				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
-				if((mover.movement_type & UNSTOPPABLE))
+				if((mover.movement_type & PHASING))
 					mover.Bump(thing)
 					continue
 				else
@@ -290,7 +302,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)
-		return (mover.movement_type & UNSTOPPABLE)
+		return (mover.movement_type & PHASING)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
@@ -304,7 +316,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover.Bump(thing)
-			if(!(mover.movement_type & UNSTOPPABLE))
+			if(!(mover.movement_type & PHASING))
 				return FALSE
 		if(QDELETED(mover))
 			return FALSE		//We were deleted.
@@ -326,7 +338,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf/current_target
 	if(fake_baseturf_type)
 		if(length(fake_baseturf_type)) // We were given a list, just apply it and move on
-			baseturfs = fake_baseturf_type
+			baseturfs = baseturfs_string_list(fake_baseturf_type, src)
 			return
 		current_target = fake_baseturf_type
 	else
@@ -342,9 +354,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(created_baseturf_lists[current_target])
 		var/list/premade_baseturfs = created_baseturf_lists[current_target]
 		if(length(premade_baseturfs))
-			baseturfs = premade_baseturfs.Copy()
+			baseturfs = baseturfs_string_list(premade_baseturfs.Copy(), src)
 		else
-			baseturfs = premade_baseturfs
+			baseturfs = baseturfs_string_list(premade_baseturfs, src)
 		return baseturfs
 
 	var/turf/next_target = initial(current_target.baseturfs)
@@ -365,7 +377,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		current_target = next_target
 		next_target = initial(current_target.baseturfs)
 
-	baseturfs = new_baseturfs
+	baseturfs = baseturfs_string_list(new_baseturfs, src)
 	created_baseturf_lists[new_baseturfs[new_baseturfs.len]] = new_baseturfs.Copy()
 	return new_baseturfs
 
@@ -541,7 +553,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge = FALSE)
+/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE, purge_ratio = 0.1)
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
 
@@ -550,36 +562,38 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		V = locate() in src
 	if(!V)
 		return
-	// Make toxins and blazaam vomit look different
+	// Apply the proper icon set based on vomit type
 	if(toxvomit == VOMIT_PURPLE)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
 	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	if (iscarbon(M))
-		clear_reagents_to_vomit_pool(M, V, purge)
+	else if (toxvomit == VOMIT_NANITE)
+		V.name = "metallic slurry"
+		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
+		V.icon_state = "vomitnanite_[pick(1,4)]"
+	if (purge_ratio && iscarbon(M))
+		clear_reagents_to_vomit_pool(M, V, purge_ratio)
 
-/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge = FALSE)
+/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V, purge_ratio = 0.1)
 	var/obj/item/organ/stomach/belly = M.getorganslot(ORGAN_SLOT_STOMACH)
 	if(!belly?.reagents.total_volume)
 		return
-	var/chemicals_lost = belly.reagents.total_volume * 0.1
-	if(purge)
-		chemicals_lost = belly.reagents.total_volume * 0.67 //For detoxification surgery, we're manually pumping the stomach out of chemcials, so it's far more efficient.
+	var/chemicals_lost = belly.reagents.total_volume * purge_ratio
 	belly.reagents.trans_to(V, chemicals_lost, transfered_by = M)
 	//clear the stomach of anything even not food
 	for(var/bile in belly.reagents.reagent_list)
 		var/datum/reagent/reagent = bile
-		belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		if(!belly.food_reagents[reagent.type])
+			belly.reagents.remove_reagent(reagent.type, min(reagent.volume, 10))
+		else
+			var/bit_vol = reagent.volume - belly.food_reagents[reagent.type]
+			if(bit_vol > 0)
+				belly.reagents.remove_reagent(reagent.type, min(bit_vol, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-
-/turf/bullet_act(obj/projectile/P)
-	. = ..()
-	if(. != BULLET_ACT_FORCE_PIERCE)
-		. =  BULLET_ACT_TURF
 
 /// Handles exposing a turf to reagents.
 /turf/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
@@ -587,13 +601,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_TURF, src, reagents, methods, volume_modifier, show_message)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_turf(src, reagents[R])
 
 /**
-  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
-  */
+ * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+ */
 /turf/wash(clean_types)
 	. = ..()
 

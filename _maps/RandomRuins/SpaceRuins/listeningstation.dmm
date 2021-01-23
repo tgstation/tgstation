@@ -362,7 +362,7 @@
 /obj/item/storage/box/donkpockets{
 	pixel_x = 2
 	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random{
@@ -710,8 +710,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/listeningstation)
 "aY" = (
-/obj/machinery/vending/snack/random{
-	extended_inventory = 1
+/obj/effect/spawner/randomsnackvend{
+	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -827,8 +827,8 @@
 /turf/open/floor/plasteel/white/side,
 /area/ruin/space/has_grav/listeningstation)
 "bh" = (
-/obj/machinery/vending/cola/random{
-	extended_inventory = 1
+/obj/effect/spawner/randomcolavend{
+	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,

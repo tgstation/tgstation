@@ -141,7 +141,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return destination
 
-/proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+/**
+ * Get a list of turfs in a line from `M` to `N`.
+ *
+ * Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
+ */
+/proc/getline(atom/M,atom/N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
@@ -243,10 +248,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
-		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
+		var/name = avoid_assoc_duplicate_keys(M.name, namecounts) + M.get_realname_string()
 
-		if(M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
 		if(M.stat == DEAD && specify_dead_role)
 			if(isobserver(M))
 				name += " \[ghost\]"
@@ -282,8 +285,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/mob/dead/observer/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/dead/new_player/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/monkey/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/slime/M in sortmob)
 		moblist.Add(M)
@@ -382,16 +383,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return locate(x,y,A.z)
 
 /**
-  * Get ranged target turf, but with direct targets as opposed to directions
-  *
-  * Starts at atom A and gets the exact angle between A and target
-  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
-  * Arguments:
-  * * A - Initial Firer / Position
-  * * target - Target to aim towards
-  * * range - Distance of returned target turf from A
-  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
-  */
+ * Get ranged target turf, but with direct targets as opposed to directions
+ *
+ * Starts at atom A and gets the exact angle between A and target
+ * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+ * Arguments:
+ * * A - Initial Firer / Position
+ * * target - Target to aim towards
+ * * range - Distance of returned target turf from A
+ * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+ */
 /proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
 	var/angle = ATAN2(target.x - A.x, target.y - A.y)
 	if(offset)
@@ -413,30 +414,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
 
-/*
-	Gets all contents of contents and returns them all in a list.
-*/
 
-/atom/proc/GetAllContents(T, ignore_flag_1)
+///Returns the src and all recursive contents as a list.
+/atom/proc/GetAllContents()
+	. = list(src)
+	var/i = 0
+	while(i < length(.))
+		var/atom/A = .[++i]
+		. += A.contents
+
+///identical to getallcontents but returns a list of atoms of the type passed in the argument.
+/atom/proc/get_all_contents_type(type)
 	var/list/processing_list = list(src)
-	if(T)
-		. = list()
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-			//This is also why we don't need to check against assembled as we go along
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-				if(istype(A,T))
-					. += A
-	else
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			if (!(A.flags_1 & ignore_flag_1))
-				processing_list += A.contents
-		return processing_list
+	. = list()
+	while(length(processing_list))
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		processing_list += A.contents
+		if(istype(A, type))
+			. += A
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
 	if(!length(ignore_typecache))
@@ -574,16 +570,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /*
 
- Gets the turf this atom's *ICON* appears to inhabit
- It takes into account:
- * Pixel_x/y
- * Matrix x/y
+Lets the turf this atom's *ICON* appears to inhabit
+it takes into account:
+* Pixel_x/y
+* Matrix x/y
 
- NOTE: if your atom has non-standard bounds then this proc
- will handle it, but:
- * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
- (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
- * if the bounds are odd, the true middle turf of the atom is returned
+NOTE: if your atom has non-standard bounds then this proc
+will handle it, but:
+* if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
+this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+* if the bounds are odd, the true middle turf of the atom is returned
 
 */
 
@@ -788,21 +784,21 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 /*
 rough example of the "cone" made by the 3 dirs checked
 
- B
-  \
-   \
-    >
-      <
-       \
-        \
-B --><-- A
-        /
-       /
-      <
-     >
-    /
-   /
- B
+
+* \
+*  \
+*   >
+*     <
+*      \
+*       \
+*B --><-- A
+*       /
+*      /
+*     <
+*    >
+*   /
+*  /
+
 
 */
 
@@ -1200,24 +1196,36 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 #define FOR_DVIEW_END GLOB.dview_mob.loc = null
 
-//can a window be here, or is there a window blocking it?
-/proc/valid_window_location(turf/T, dir_to_check)
-	if(!T)
+/**
+ * Checks whether the target turf is in a valid state to accept a directional window
+ * or other directional pseudo-dense object such as railings.
+ *
+ * Returns FALSE if the target turf cannot accept a directional window or railing.
+ * Returns TRUE otherwise.
+ *
+ * Arguments:
+ * * dest_turf - The destination turf to check for existing windows and railings
+ * * test_dir - The prospective dir of some atom you'd like to put on this turf.
+ * * is_fulltile - Whether the thing you're attempting to move to this turf takes up the entire tile or whether it supports multiple movable atoms on its tile.
+ */
+/proc/valid_window_location(turf/dest_turf, test_dir, is_fulltile = FALSE)
+	if(!dest_turf)
 		return FALSE
-	for(var/obj/O in T)
-		if(istype(O, /obj/machinery/door/window) && (O.dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR))
-			return FALSE
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			if(W.ini_dir == dir_to_check || dir_to_check == FULLTILE_WINDOW_DIR)
+	for(var/obj/turf_content in dest_turf)
+		if(istype(turf_content, /obj/machinery/door/window))
+			if((turf_content.dir == test_dir) || is_fulltile)
 				return FALSE
-		if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+		if(istype(turf_content, /obj/structure/windoor_assembly))
+			var/obj/structure/windoor_assembly/windoor_assembly = turf_content
+			if(windoor_assembly.dir == test_dir || is_fulltile)
 				return FALSE
-		if(istype(O, /obj/structure/railing))
-			var/obj/structure/railing/rail = O
-			if(rail.ini_dir == dir_to_check || rail.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+		if(istype(turf_content, /obj/structure/window))
+			var/obj/structure/window/window_structure = turf_content
+			if(window_structure.dir == test_dir || window_structure.fulltile || is_fulltile)
+				return FALSE
+		if(istype(turf_content, /obj/structure/railing))
+			var/obj/structure/railing/rail = turf_content
+			if(rail.dir == test_dir || is_fulltile)
 				return FALSE
 	return TRUE
 
@@ -1249,47 +1257,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
-
-//same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
-/proc/do_atom(atom/movable/user, atom/movable/target, time = 3 SECONDS, timed_action_flags = NONE, datum/callback/extra_checks)
-	if(!user || !target)
-		return TRUE
-	var/user_loc = user.loc
-
-	var/drifting = FALSE
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = TRUE
-
-	var/target_drifting = FALSE
-	if(!target.Process_Spacemove(0) && target.inertia_dir)
-		target_drifting = TRUE
-
-	var/target_loc = target.loc
-
-	var/endtime = world.time+time
-	. = TRUE
-	while (world.time < endtime)
-		stoplag(1)
-
-		if(QDELETED(user) || QDELETED(target))
-			. = FALSE
-			break
-
-		if(drifting && !user.inertia_dir)
-			drifting = FALSE
-			user_loc = user.loc
-
-		if(target_drifting && !target.inertia_dir)
-			target_drifting = FALSE
-			target_loc = target.loc
-
-		if(
-			(!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
-			|| (!(timed_action_flags& IGNORE_TARGET_LOC_CHANGE) && !target_drifting && target.loc != target_loc) \
-			|| (extra_checks && !extra_checks.Invoke()) \
-			)
-			. = FALSE
-			break
 
 //returns a GUID like identifier (using a mostly made up record format)
 //guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
@@ -1387,8 +1354,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/breadslice,
 		/obj/item/food/cake,
 		/obj/item/food/cakeslice,
-		/obj/item/reagent_containers/food/snacks/store,
-		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/food/pie,
+		/obj/item/food/pieslice,
 		/obj/item/food/kebab,
 		/obj/item/food/pizza,
 		/obj/item/food/pizzaslice,
@@ -1396,17 +1363,17 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/food/meat,
 		/obj/item/food/meat/slab,
 		/obj/item/food/soup,
-		/obj/item/reagent_containers/food/snacks/grown,
-		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/food/grown,
+		/obj/item/food/grown/mushroom,
 		/obj/item/food/deepfryholder,
-		/obj/item/reagent_containers/food/snacks/clothing,
-		/obj/item/reagent_containers/food/snacks/grown/shell, //base types
-		/obj/item/food/bread,
-		/obj/item/reagent_containers/food/snacks/grown/nettle
+		/obj/item/food/clothing,
+		/obj/item/food/meat/slab/human/mutant,
+		/obj/item/food/grown/ash_flora,
+		/obj/item/food/grown/nettle,
+		/obj/item/food/grown/shell
 		)
-	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
-	return pick(subtypesof(/obj/item/reagent_containers/food/snacks) - blocked)
+	return pick(subtypesof(/obj/item/food) - blocked)
 
 /proc/get_random_drink()
 	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,

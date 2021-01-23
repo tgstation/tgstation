@@ -32,4 +32,6 @@ cp -r strings/* $1/strings/
 #find $1/_maps -name "*.dm" -type f -delete
 
 #dlls on windows
-cp *.dll $1/ || true
+if [ "$(uname -o)" = "Msys" ]; then
+	cp ./*.dll $1/
+fi

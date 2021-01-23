@@ -110,6 +110,10 @@
 		if(!isfloorturf(random_location))
 			continue
 		var/turf/open/floor/F = random_location
+		var/area/destination_area = F.loc
+
+		if(cycle < 300 && destination_area.area_flags & NOTELEPORT)//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+			continue
 		if(!F.air)
 			continue
 

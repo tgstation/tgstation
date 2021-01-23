@@ -24,10 +24,6 @@
 			wanted_types[i_type] = TRUE
 	wanted_types = string_assoc_list(wanted_types)
 
-
-/datum/bounty/item/completion_string()
-	return {"[shipped_count]/[required_count]"}
-
 /datum/bounty/item/can_claim()
 	return ..() && shipped_count >= required_count
 
@@ -46,6 +42,3 @@
 		shipped_count += O_is_a_stack.amount
 	else
 		shipped_count += 1
-
-/datum/bounty/item/compatible_with(datum/other_bounty)
-	return type != other_bounty.type

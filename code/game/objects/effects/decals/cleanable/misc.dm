@@ -108,6 +108,7 @@
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -120,6 +121,7 @@
 	icon_state = "molten"
 	mergeable_decal = FALSE
 	beauty = -150
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/molten_object/large
 	name = "big gooey grey mass"
@@ -250,6 +252,7 @@
 	icon_state = "garbage"
 	layer = OBJ_LAYER //To display the decal over wires.
 	beauty = -150
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/garbage/Initialize()
 	. = ..()

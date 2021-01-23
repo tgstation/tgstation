@@ -35,7 +35,6 @@
 	icon_state = "rdwhimsy_skirt"
 	inhand_icon_state = "rdwhimsy"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -54,7 +53,6 @@
 	icon_state = "rdturtle_skirt"
 	inhand_icon_state = "p_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -72,7 +70,6 @@
 	icon_state = "toxinswhite_skirt"
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -89,7 +86,6 @@
 	icon_state = "robotics_skirt"
 	inhand_icon_state = "robotics"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -107,6 +103,5 @@
 	icon_state = "geneticswhite_skirt"
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP

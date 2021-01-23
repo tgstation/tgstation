@@ -69,7 +69,7 @@
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 300))
+	AddComponent(/datum/component/beauty, 300)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)

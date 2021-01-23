@@ -85,7 +85,7 @@
 	Field repairs can be done with a welder."}
 	if(stored_gun?.max_mod_capacity)
 		. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
-		for(var/A in stored_gun.get_modkits())
+		for(var/A in stored_gun.modkits)
 			var/obj/item/borg/upgrade/modkit/M = A
 			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
 
@@ -140,7 +140,7 @@
 	if(istype(O, /obj/projectile/kinetic))
 		var/obj/projectile/kinetic/K = O
 		if(K.kinetic_gun)
-			for(var/A in K.kinetic_gun.get_modkits())
+			for(var/A in K.kinetic_gun.modkits)
 				var/obj/item/borg/upgrade/modkit/M = A
 				if(istype(M, /obj/item/borg/upgrade/modkit/minebot_passthrough))
 					return TRUE

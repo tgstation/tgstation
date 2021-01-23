@@ -117,14 +117,22 @@ inline void forward_progress(FILE * inputFile) {
 	delete(lastLine);
 	lastLine = currentLine;
 	currentLine	= nextLine;
-	nextLine = readline(inputFile);
-	//strip out any timestamps.
-	if (nextLine->length() >= 10) {
-		if ((*nextLine)[0] == '[' && (*nextLine)[3] == ':' && (*nextLine)[6] == ':' && (*nextLine)[9] == ']')
-			nextLine->erase(0, 10);
-		else if (nextLine->length() >= 26 && ((*nextLine)[0] == '[' && (*nextLine)[5] == '-' && (*nextLine)[14] == ':' && (*nextLine)[20] == '.' && (*nextLine)[24] == ']'))
-			nextLine->erase(0, 26);
-	}
+	do { 
+		nextLine = readline(inputFile);
+		//strip out rustg continuing line markers
+		if (safe_substr(nextLine, 0, 3) == " - ") {
+			nextLine->erase(0, 3);
+		}
+		
+		//strip out any timestamps.
+		if (nextLine->length() >= 10) {
+			if ((*nextLine)[0] == '[' && (*nextLine)[3] == ':' && (*nextLine)[6] == ':' && (*nextLine)[9] == ']')
+				nextLine->erase(0, 10);
+			else if (nextLine->length() >= 26 && ((*nextLine)[0] == '[' && (*nextLine)[5] == '-' && (*nextLine)[14] == ':' && (*nextLine)[20] == '.' && (*nextLine)[24] == ']'))
+				nextLine->erase(0, 26);
+		}
+	} while (!endofbuffer && nextLine->length() < 1);
+		
 }
 //deallocates to, copys from to to.
 inline void string_send(string * &from, string * &to) {

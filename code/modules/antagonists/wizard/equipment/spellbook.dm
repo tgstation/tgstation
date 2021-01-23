@@ -468,6 +468,13 @@
 	category = "Mobility"
 	cost = 1
 
+/datum/spellbook_entry/duffel_bag
+	name = "Duffel Bag Curse"
+	desc = "A curse that firmly attaches a demonic duffel bag to the target's back. The duffel bag will make the person it's attached to take periodical damage if it is not fed regularly, and regardless of whether or not it's been fed, it will slow the person wearing it down significantly."
+	spell_type = /obj/effect/proc_holder/spell/pointed/duffelbagcurse
+	category = "Assistance"
+	cost = 1
+
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
@@ -691,16 +698,16 @@
 	dat += {"
 	<head>
 		<style type="text/css">
-      		body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
-      		ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
-      		ul#tabs li { display: inline; }
-      		ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
-      		ul#tabs li a:hover { background-color: #f1f0ee; }
-      		ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
-      		div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
-      		div.tabContent.hide { display: none; }
-    	</style>
-  	</head>
+			body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+			ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
+			ul#tabs li { display: inline; }
+			ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+			ul#tabs li a:hover { background-color: #f1f0ee; }
+			ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+			div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+			div.tabContent.hide { display: none; }
+		</style>
+	</head>
 	"}
 	dat += {"[content]</body></html>"}
 	return dat

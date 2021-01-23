@@ -34,7 +34,7 @@
 /obj/structure/closet/cardboard/proc/ResetMoveDelay()
 	move_delay = FALSE
 
-/obj/structure/closet/cardboard/open(mob/living/user, force = TRUE)
+/obj/structure/closet/cardboard/open(mob/living/user, force = FALSE)
 	if(opened || !can_open(user, force))
 		return FALSE
 	var/list/alerted = null

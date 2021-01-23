@@ -20,7 +20,13 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(!quirks.len)
 		SetupQuirks()
 
-	quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic","Hypersensitive"),list("Ageusia","Vegetarian","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"),list("Alcohol Tolerance","Light Drinker"),list("Clown Fan","Mime Fan"))
+	quirk_blacklist = list(list("Blind","Nearsighted"), \
+							list("Jolly","Depression","Apathetic","Hypersensitive"), \
+							list("Ageusia","Vegetarian","Deviant Tastes"), \
+							list("Ananas Affinity","Ananas Aversion"), \
+							list("Alcohol Tolerance","Light Drinker"), \
+							list("Clown Fan","Mime Fan"), \
+							list("Bad Touch", "Friendly"))
 	return ..()
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()

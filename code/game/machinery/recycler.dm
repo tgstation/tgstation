@@ -19,7 +19,19 @@
 
 /obj/machinery/recycler/Initialize()
 	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
-	AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/plasma, /datum/material/gold, /datum/material/diamond, /datum/material/plastic, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), INFINITY, FALSE, null, null, null, TRUE, _breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
+	var/list/allowed_materials = list(/datum/material/iron,
+									/datum/material/glass,
+									/datum/material/silver,
+									/datum/material/plasma,
+									/datum/material/gold,
+									/datum/material/diamond,
+									/datum/material/plastic,
+									/datum/material/uranium,
+									/datum/material/bananium,
+									/datum/material/titanium,
+									/datum/material/bluespace
+									)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
@@ -94,6 +106,8 @@
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
+		return
+	if(iseffect(AM0))
 		return
 	if(!isturf(AM0.loc))
 		return //I don't know how you called Crossed() but stop it.

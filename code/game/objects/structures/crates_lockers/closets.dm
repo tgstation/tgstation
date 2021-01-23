@@ -151,6 +151,9 @@
 	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == -1) // limit reached
 			break
+	for(var/i in reverseRange(L.GetAllContents()))
+		var/atom/movable/thing = i
+		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 
 /obj/structure/closet/proc/open(mob/living/user, force = FALSE)
 	if(!can_open(user, force))
@@ -303,7 +306,7 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
-	if(!istype(O) || O.anchored || istype(O, /obj/screen))
+	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
 		return
 	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
 		return
@@ -325,13 +328,13 @@
 	var/list/targets = list(O, src)
 	add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] [actuallyismob ? "tries to ":""]stuff [O] into [src].</span>", \
-				 	 	"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
-				 	 	"<span class='hear'>You hear clanging.</span>")
+		"<span class='warning'>You [actuallyismob ? "try to ":""]stuff [O] into [src].</span>", \
+		"<span class='hear'>You hear clanging.</span>")
 	if(actuallyismob)
 		if(do_after_mob(user, targets, 40))
 			user.visible_message("<span class='notice'>[user] stuffs [O] into [src].</span>", \
-							 	 "<span class='notice'>You stuff [O] into [src].</span>", \
-							 	 "<span class='hear'>You hear a loud metal bang.</span>")
+				"<span class='notice'>You stuff [O] into [src].</span>", \
+				"<span class='hear'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
@@ -479,7 +482,7 @@
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
-		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
+		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
 	. = ..()

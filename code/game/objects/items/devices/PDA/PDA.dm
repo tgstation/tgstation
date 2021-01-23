@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/pda/interact(mob/user)
-	if(!user.IsAdvancedToolUser())
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -810,7 +810,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
 			inbound_message = emoji_parse(inbound_message)
 
-		to_chat(L, "[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]")
+		to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
 
 	update_icon()
 	add_overlay(icon_alert)

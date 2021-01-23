@@ -50,6 +50,8 @@
 	eat_atom(attacked_target)
 
 /mob/living/simple_animal/hostile/ooze/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(!check_edible(A))
 		return ..()
 	eat_atom(A)
@@ -99,7 +101,7 @@
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
 	if(hud_used) //clientless oozes
-		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>"
+		hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>")
 
 
 ///* Gelatinious Ooze code below *\\\\
@@ -207,7 +209,7 @@
 ///Register for owner death
 /datum/action/consume/New(Target)
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_owner_death)
 	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 
 /datum/action/consume/proc/handle_mob_deletion()

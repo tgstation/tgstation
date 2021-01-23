@@ -15,7 +15,7 @@
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.4"
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
 	var/blood = 1
@@ -237,7 +237,7 @@
 		target = scan(/obj/item/trash)
 
 	if(!target && trash) //Search for dead mices.
-		target = scan(/obj/item/reagent_containers/food/snacks/deadmouse)
+		target = scan(/obj/item/food/deadmouse)
 
 	if(!target && auto_patrol) //Search for cleanables it can see.
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
@@ -307,11 +307,13 @@
 
 	if(trash)
 		target_types += /obj/item/trash
-		target_types += /obj/item/reagent_containers/food/snacks/deadmouse
+		target_types += /obj/item/food/deadmouse
 
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	if(ismopable(A))
 		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING

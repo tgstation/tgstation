@@ -1,12 +1,10 @@
 import { toFixed } from 'common/math';
-import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section } from '../components';
-import { getGasLabel } from '../constants';
+import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
+import { Scrubber, Vent } from './common/AtmosControls';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { Vent, Scrubber } from './common/AtmosControls';
 
 export const AirAlarm = (props, context) => {
   const { act, data } = useBackend(context);
@@ -50,7 +48,7 @@ const AirAlarmStatus = (props, context) => {
     <Section title="Air Status">
       <LabeledList>
         {entries.length > 0 && (
-          <Fragment>
+          <>
             {entries.map(entry => {
               const status = dangerMap[entry.danger_level] || dangerMap[0];
               return (
@@ -74,7 +72,7 @@ const AirAlarmStatus = (props, context) => {
                 || data.fire_alarm && 'Fire Alarm'
                 || 'Nominal'}
             </LabeledList.Item>
-          </Fragment>
+          </>
         ) || (
           <LabeledList.Item
             label="Warning"
@@ -147,7 +145,7 @@ const AirAlarmControlHome = (props, context) => {
     atmos_alarm,
   } = data;
   return (
-    <Fragment>
+    <>
       <Button
         icon={atmos_alarm
           ? 'exclamation-triangle'
@@ -185,7 +183,7 @@ const AirAlarmControlHome = (props, context) => {
         icon="chart-bar"
         content="Alarm Thresholds"
         onClick={() => setScreen('thresholds')} />
-    </Fragment>
+    </>
   );
 };
 

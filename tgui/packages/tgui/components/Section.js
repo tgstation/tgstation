@@ -74,7 +74,9 @@ export class Section extends Component {
             </div>
           </div>
         )}
-        {content}
+        <div className="Section__rest">
+          {content}
+        </div>
       </div>
     );
   }

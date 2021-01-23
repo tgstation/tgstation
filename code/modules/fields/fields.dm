@@ -154,7 +154,7 @@
 	var/atom/_host = host
 	var/atom/new_host_loc = _host.loc
 	if(last_host_loc != new_host_loc)
-		recalculate_field()
+		INVOKE_ASYNC(src, .proc/recalculate_field)
 
 /datum/proximity_monitor/advanced/proc/post_setup_field()
 
@@ -319,7 +319,7 @@
 		listeningTo = null
 
 /obj/item/multitool/field_debug/proc/on_mob_move()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	check_turf(get_turf(src))
 

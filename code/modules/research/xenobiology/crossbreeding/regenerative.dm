@@ -232,10 +232,13 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/black
 	colour = "black"
-	effect_desc = "Fully heals the target and creates a duplicate of them, that drops dead soon after."
+	effect_desc = "Fully heals the target and creates an imperfect duplicate of them made of slime, that fakes their death."
 
 /obj/item/slimecross/regenerative/black/core_effect_before(mob/living/target, mob/user)
 	var/dummytype = target.type
+	if(ismegafauna(target)) //Prevents megafauna duping in a lame way
+		dummytype = /mob/living/simple_animal/slime
+		to_chat(user, "<span class='warning'>The milky goo flows over [target], falling into a weak puddle.</span>")
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, "<span class='notice'>The milky goo flows from your skin, forming an imperfect copy of you.</span>")
 	if(iscarbon(target))
@@ -247,7 +250,7 @@ Regenerative extracts:
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())
 	dummy.adjustToxLoss(target.getToxLoss())
-	dummy.adjustOxyLoss(200)
+	dummy.death()
 
 /obj/item/slimecross/regenerative/lightpink
 	colour = "light pink"

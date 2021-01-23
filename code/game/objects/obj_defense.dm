@@ -94,6 +94,8 @@
 	return TRUE
 
 /obj/blob_act(obj/structure/blob/B)
+	if (!..())
+		return
 	if(isturf(loc))
 		var/turf/T = loc
 		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))

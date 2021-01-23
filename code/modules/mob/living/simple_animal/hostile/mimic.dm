@@ -14,6 +14,7 @@
 	health = 250
 	gender = NEUTER
 	mob_biotypes = NONE
+	pass_flags = PASSFLAPS
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -29,6 +30,10 @@
 	faction = list("mimic")
 	move_to_delay = 9
 	del_on_death = 1
+	///A cap for items in the mimic. Prevents the mimic from eating enough stuff to cause lag when opened.
+	var/storage_capacity = 50
+	///A cap for mobs. Mobs count towards the item cap. Same purpose as above.
+	var/mob_storage_capacity = 10
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
@@ -183,8 +188,10 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 				"<span class='userdanger'>\The [src] knocks you down!</span>")
 
 /mob/living/simple_animal/hostile/mimic/copy/machine
-	speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
-				 "My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!")
+	speak = list(
+		"HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
+		"My logic is undeniable.", "One of us.", "FLESH IS WEAK", "THIS ISN'T WAR, THIS IS EXTERMINATION!",
+		)
 	speak_chance = 7
 
 /mob/living/simple_animal/hostile/mimic/copy/machine/CanAttack(atom/the_target)
@@ -280,6 +287,8 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/opened = FALSE
 	var/open_sound = 'sound/machines/crate_open.ogg'
 	var/close_sound = 'sound/machines/crate_close.ogg'
+	///sound played when the mimic attempts to eat more items than it can
+	var/full_sound = 'sound/items/trayhit2.ogg'
 	var/max_mob_size = MOB_SIZE_HUMAN
 	var/locked = FALSE
 	var/datum/action/innate/mimic/lock/lock
@@ -312,7 +321,13 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	. = ..()
 	if(istype(mover, /obj/structure/closet))
 		return FALSE
-
+/**
+* Used to open and close the mimic
+*
+* Will insert tile contents into the mimic when closing
+* Will dump mimic contents into the time when opening
+* Does nothing if the mimic locked itself
+*/
 /mob/living/simple_animal/hostile/mimic/xenobio/proc/toggle_open()
 	if(locked)
 		return
@@ -329,8 +344,26 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		icon_state = "crate"
 		playsound(src, close_sound, 50, TRUE)
 		for(var/atom/movable/AM in get_turf(src))
-			if(insertion_allowed(AM))
-				AM.forceMove(src)
+			if(AM != src && insert(AM) == -1)
+				playsound(src, full_sound, 50, TRUE)
+				break
+/**
+* Called by toggle_open to put items inside the mimic when it's being closed
+*
+* Will return -1 if the insertion fails due to the storage capacity of the mimic having been reached
+* Will return FALSE if insertion fails
+* Will return TRUE if insertion succeeds
+* Arguments:
+* * AM - item to be inserted
+*/
+/mob/living/simple_animal/hostile/mimic/xenobio/proc/insert(atom/movable/AM)
+	if(contents.len >= storage_capacity)
+		return -1
+	if(insertion_allowed(AM))
+		AM.forceMove(src)
+		return TRUE
+	else
+		return FALSE
 
 /mob/living/simple_animal/hostile/mimic/xenobio/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
@@ -342,6 +375,10 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(L.density || L.mob_size > max_mob_size)
 				return FALSE
+			var/mobs_stored = 0
+			for(var/mob/living/M in contents)
+				if(++mobs_stored >= mob_storage_capacity)
+					return FALSE
 		L.stop_pulling()
 
 	else if(istype(AM, /obj/structure/closet))

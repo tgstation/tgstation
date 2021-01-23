@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Input, NoticeBox, Section, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
@@ -45,7 +44,7 @@ export const NtosCardContent = (props, context) => {
   }
   const departmentJobs = jobs[selectedDepartment] || [];
   return (
-    <Fragment>
+    <>
       <Section
         title={has_id && authenticated
           ? (
@@ -58,7 +57,7 @@ export const NtosCardContent = (props, context) => {
           )
           : (id_owner || 'No Card Inserted')}
         buttons={(
-          <Fragment>
+          <>
             <Button
               icon="print"
               content="Print"
@@ -71,7 +70,7 @@ export const NtosCardContent = (props, context) => {
               onClick={() => {
                 act(authenticated ? 'PRG_logout' : 'PRG_authenticate');
               }} />
-          </Fragment>
+          </>
         )}>
         <Button
           fluid
@@ -155,6 +154,6 @@ export const NtosCardContent = (props, context) => {
           )}
         </Box>
       )}
-    </Fragment>
+    </>
   );
 };

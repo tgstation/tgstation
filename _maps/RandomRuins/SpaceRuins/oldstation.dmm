@@ -7,7 +7,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered)
 "ad" = (
 /turf/closed/wall/r_wall,
@@ -5095,7 +5095,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "md" = (
 /obj/structure/girder,
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "me" = (
 /turf/open/floor/plating/airless,
@@ -5106,7 +5106,7 @@
 /area/ruin/space/has_grav/ancientstation/betastorage)
 "mg" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered)
 "mh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5593,7 +5593,7 @@
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "ni" = (
 /obj/structure/lattice,
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered)
 "nj" = (
 /obj/structure/lattice,
@@ -7015,7 +7015,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "FV" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "GG" = (
 /obj/structure/closet,
@@ -7597,7 +7597,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "WI" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "WT" = (
 /obj/structure/window/reinforced{

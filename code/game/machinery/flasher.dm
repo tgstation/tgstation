@@ -128,6 +128,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
+			L.log_message("was AOE flashed by an automated portable flasher",LOG_ATTACK)
 			L.Paralyze(strength)
 			flashed = TRUE
 

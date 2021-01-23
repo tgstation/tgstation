@@ -51,9 +51,9 @@
 	var/obj/structure/closet/supplypod/centcompod/temp_pod //The temporary pod that is modified by this datum, then cloned. The buildObject() clone of this pod is what is launched
 	// Stuff needed to render the map
 	var/map_name
-	var/obj/screen/map_view/cam_screen
+	var/atom/movable/screen/map_view/cam_screen
 	var/list/cam_plane_masters
-	var/obj/screen/background/cam_background
+	var/atom/movable/screen/background/cam_background
 	var/tabIndex = 1
 	var/renderLighting = FALSE
 
@@ -92,8 +92,8 @@
 	cam_screen.del_on_map_removal = TRUE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
 		if (!renderLighting && instance.plane == LIGHTING_PLANE)
 			instance.alpha = 100
 		instance.assigned_map = map_name
@@ -148,7 +148,7 @@
 	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
 	data["delays"] = temp_pod.delays
 	data["rev_delays"] = temp_pod.reverse_delays
-	data["custom_rev_delay"] = temp_pod.custom_rev_delay 
+	data["custom_rev_delay"] = temp_pod.custom_rev_delay
 	data["styleChoice"] = temp_pod.style //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the GLOB.podstyles list in cargo.dm defines to get the proper icon/name/desc for the pod.
 	data["effectShrapnel"] = temp_pod.effectShrapnel //If true, creates a cloud of shrapnel of a decided type and magnitude on landing
 	data["shrapnelType"] = "[temp_pod.shrapnel_type]" //Path2String
@@ -548,7 +548,7 @@
 	var/turf/drop = locate(coords_list[1], coords_list[2], coords_list[3])
 	setupView(RANGE_TURFS(3, drop))
 
-/datum/centcom_podlauncher/proc/setupView(var/list/visible_turfs)
+/datum/centcom_podlauncher/proc/setupView(list/visible_turfs)
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
@@ -557,7 +557,7 @@
 	cam_background.icon_state = "clear"
 	cam_background.fill_rect(1, 1, size_x, size_y)
 
-/datum/centcom_podlauncher/proc/updateCursor(var/forceClear = FALSE) //Update the mouse of the user
+/datum/centcom_podlauncher/proc/updateCursor(forceClear = FALSE) //Update the mouse of the user
 	if (!holder) //Can't update the mouse icon if the client doesnt exist!
 		return
 	if (!forceClear && (launcherActivated || picking_dropoff_turf)) //If the launching param is true, we give the user new mouse icons.
@@ -581,7 +581,7 @@
 	var/left_click = pa.Find("left")
 	if (launcherActivated)
 		//Clicking on UI elements shouldn't launch a pod
-		if(istype(target,/obj/screen))
+		if(istype(target,/atom/movable/screen))
 			return FALSE
 
 		. = TRUE
@@ -616,7 +616,7 @@
 					sleep(rand()*2) //looks cooler than them all appearing at once. Gives the impression of burst fire.
 	else if (picking_dropoff_turf)
 		//Clicking on UI elements shouldn't pick a dropoff turf
-		if(istype(target,/obj/screen))
+		if(istype(target,/atom/movable/screen))
 			return FALSE
 
 		. = TRUE
@@ -795,7 +795,7 @@
 		for (var/mob/living/M in whoDyin)
 			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")
 
-/datum/centcom_podlauncher/proc/loadData(var/list/dataToLoad)
+/datum/centcom_podlauncher/proc/loadData(list/dataToLoad)
 	bayNumber = dataToLoad["bayNumber"]
 	customDropoff = dataToLoad["customDropoff"]
 	renderLighting = dataToLoad["renderLighting"]

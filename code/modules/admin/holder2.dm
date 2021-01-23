@@ -28,6 +28,8 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
+	var/datum/filter_editor/filteriffic
+
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"

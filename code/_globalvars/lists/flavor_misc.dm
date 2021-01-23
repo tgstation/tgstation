@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(moth_wings_list)
 GLOBAL_LIST_EMPTY(moth_antennae_list)
 GLOBAL_LIST_EMPTY(moth_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
+GLOBAL_LIST_EMPTY(tails_list_monkey)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Red" = "ff4d4d",
@@ -119,6 +120,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	"Murica",
 	"Nanotrasen",
 	"Not Malf",
+	"Portrait",
 	"President",
 	"Random",
 	"Rainbow",
@@ -138,6 +140,10 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	else
 		if(input == "Random")
 			input = pick(GLOB.ai_core_display_screens - "Random")
+		if(input == "Portrait")
+			var/datum/portrait_picker/tgui  = new(usr)//create the datum
+			tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+			return "ai-portrait" //just take this until they decide
 		return "ai-[lowertext(input)]"
 
 GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
@@ -161,7 +167,8 @@ GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 #define UPLINK_PDA		"PDA"
 #define UPLINK_RADIO	"Radio"
 #define UPLINK_PEN		"Pen" //like a real spy!
-GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN))
+#define UPLINK_IMPLANT  "Implant"
+GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT))
 
 	//Female Uniforms
 GLOBAL_LIST_EMPTY(female_clothing_icons)

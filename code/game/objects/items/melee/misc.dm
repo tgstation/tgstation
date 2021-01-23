@@ -328,7 +328,7 @@
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "uk"
-	custom_price = 450
+	custom_price = PAYCHECK_HARD * 4.5
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -570,7 +570,7 @@
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
 	if (!ovens)
-		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
+		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
 
 /obj/item/melee/roastingstick/attack_self(mob/user)
 	on = !on
@@ -640,7 +640,7 @@
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, "<span class='notice'>You send [held_sausage] towards [target].</span>")
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
-			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
+			beam = user.Beam(target,icon_state="rped_upgrade", time = 10 SECONDS)
 		else if (user.Adjacent(target))
 			to_chat(user, "<span class='notice'>You extend [src] towards [target].</span>")
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
@@ -685,5 +685,5 @@
 /obj/item/melee/cleric_mace/Initialize()
 	. = ..()
 	overlay = mutable_appearance(icon, overlay_state)
-	overlay.appearance_flags = RESET_COLOR
+	overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | KEEP_APART
 	add_overlay(overlay)

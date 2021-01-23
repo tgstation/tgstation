@@ -1111,7 +1111,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/academy)
 "eA" = (
 /obj/machinery/door/airlock/public/glass,
@@ -1188,7 +1188,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/academy)
 "eK" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -1331,7 +1331,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/academy)
 "fc" = (
 /obj/structure/window/reinforced,
@@ -2660,12 +2660,6 @@
 /obj/machinery/light,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
-"kw" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows"
-	},
-/area/awaymission/academy/headmaster)
 "kx" = (
 /turf/open/floor/carpet/lone,
 /area/awaymission/academy/academygate)
@@ -2713,12 +2707,6 @@
 /mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"kF" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows2"
-	},
-/area/awaymission/academy/headmaster)
 "kG" = (
 /mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel/cafeteria,
@@ -3242,12 +3230,6 @@
 /obj/item/clothing/gloves/combat,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/academy/academycellar)
-"mW" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 4;
-	icon_state = "fakewindows"
-	},
-/area/awaymission/academy/headmaster)
 "mX" = (
 /obj/item/clothing/under/syndicate,
 /obj/effect/decal/cleanable/blood/old,
@@ -3256,18 +3238,6 @@
 "mY" = (
 /turf/closed/mineral/random,
 /area/space/nearstation)
-"mZ" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows"
-	},
-/area/awaymission/academy/headmaster)
-"na" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows2"
-	},
-/area/awaymission/academy/headmaster)
 "nb" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -3282,42 +3252,6 @@
 "nc" = (
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/academy/headmaster)
-"nd" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows"
-	},
-/area/awaymission/academy/academyengine)
-"ne" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 1;
-	icon_state = "fakewindows2"
-	},
-/area/awaymission/academy/academyengine)
-"nf" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 6;
-	icon_state = "fakewindows2"
-	},
-/area/awaymission/academy/headmaster)
-"ng" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows"
-	},
-/area/awaymission/academy/academyengine)
-"nh" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 8;
-	icon_state = "fakewindows2"
-	},
-/area/awaymission/academy/academyengine)
-"ni" = (
-/turf/closed/indestructible/fakeglass{
-	dir = 4;
-	icon_state = "fakewindows"
-	},
-/area/awaymission/academy/academyengine)
 "nj" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
@@ -11355,12 +11289,12 @@ aa
 aa
 aa
 ab
-mZ
-na
-na
-na
-na
-na
+nc
+nc
+nc
+nc
+nc
+nc
 nc
 ab
 aP
@@ -11496,10 +11430,10 @@ ab
 ab
 ab
 ab
-nf
+nc
 ab
 ab
-nf
+nc
 ab
 ab
 ab
@@ -11742,7 +11676,7 @@ aa
 aa
 aa
 aa
-kw
+nc
 ad
 ah
 ah
@@ -11872,7 +11806,7 @@ aa
 aa
 aa
 aa
-kF
+nc
 ae
 ai
 ah
@@ -12002,7 +11936,7 @@ aa
 aa
 aa
 aa
-kF
+nc
 af
 ah
 ah
@@ -12132,7 +12066,7 @@ aa
 aa
 aa
 aa
-kF
+nc
 ae
 ah
 al
@@ -12262,7 +12196,7 @@ aa
 aa
 aa
 aa
-kF
+nc
 ae
 ah
 am
@@ -12392,7 +12326,7 @@ aa
 aa
 aa
 aa
-kF
+nc
 ag
 ai
 al
@@ -12522,7 +12456,7 @@ aa
 aa
 aa
 aa
-kF
+nc
 ae
 ah
 al
@@ -12652,7 +12586,7 @@ aa
 aa
 aa
 aa
-mW
+nc
 ah
 ah
 al
@@ -12926,10 +12860,10 @@ ab
 ab
 ab
 ab
-nf
+nc
 ab
 ab
-nf
+nc
 ab
 ab
 ab
@@ -13045,12 +12979,12 @@ aa
 aa
 aa
 ab
-mZ
-na
-na
-na
-na
-na
+nc
+nc
+nc
+nc
+nc
+nc
 nc
 ab
 aP
@@ -17294,7 +17228,7 @@ mu
 mu
 mu
 mu
-ng
+lF
 aa
 aa
 aa
@@ -17424,7 +17358,7 @@ mu
 mu
 mA
 mu
-nh
+lF
 aa
 aa
 aa
@@ -17554,7 +17488,7 @@ mu
 my
 mz
 mM
-nh
+lF
 aa
 aa
 aa
@@ -17684,7 +17618,7 @@ mu
 mu
 mC
 mu
-nh
+lF
 aa
 aa
 aa
@@ -17814,7 +17748,7 @@ mu
 mu
 mB
 mu
-nh
+lF
 aa
 aa
 aa
@@ -17944,7 +17878,7 @@ mu
 mu
 mu
 mu
-ni
+lF
 aa
 aa
 aa
@@ -19032,8 +18966,8 @@ ll
 ll
 ll
 ll
-nd
-ne
+lF
+lF
 lF
 ll
 aG

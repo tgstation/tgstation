@@ -37,7 +37,7 @@
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = HARD_CRIT
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Distance the demon will teleport from the target
@@ -79,5 +79,5 @@
 	pull_force = PULL_FORCE_DEFAULT
 	new /obj/item/stack/ore/bluespace_crystal(loc, 3)
 	if(prob(5))
-		new /obj/item/assembly/signaler/anomaly/bluespace(loc)
+		new /obj/item/raw_anomaly_core/bluespace(loc)
 	return ..()

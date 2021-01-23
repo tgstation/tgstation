@@ -60,7 +60,7 @@
 	lose_text = ""
 	var/paralysis_type
 	var/list/paralysis_traits = list()
-	 //for descriptions
+	//for descriptions
 
 /datum/brain_trauma/severe/paralysis/New(specific_type)
 	if(specific_type)

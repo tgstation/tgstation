@@ -9,7 +9,7 @@
 
 	density = FALSE
 	anchored = FALSE
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	max_integrity = 20
 
 	resistance_flags = FIRE_PROOF

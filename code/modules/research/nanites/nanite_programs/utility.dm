@@ -212,24 +212,23 @@
 
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
 /datum/nanite_program/access/on_trigger(comm_message)
-	var/list/new_access = list()
-	var/obj/item/current_item
-	current_item = host_mob.get_active_held_item()
-	if(current_item)
-		new_access += current_item.GetAccess()
-	current_item = host_mob.get_inactive_held_item()
-	if(current_item)
-		new_access += current_item.GetAccess()
+	var/list/potential_items = list()
+
+	potential_items += host_mob.get_active_held_item()
+	potential_items += host_mob.get_inactive_held_item()
+	potential_items += host_mob.pulling
+
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		current_item = H.wear_id
-		if(current_item)
-			new_access += current_item.GetAccess()
+		potential_items += H.wear_id
 	else if(isanimal(host_mob))
 		var/mob/living/simple_animal/A = host_mob
-		current_item = A.access_card
-		if(current_item)
-			new_access += current_item.GetAccess()
+		potential_items += A.access_card
+
+	var/list/new_access = list()
+	for(var/obj/item/I in potential_items)
+		new_access += I.GetAccess()
+
 	access = new_access
 
 /datum/nanite_program/spreading
@@ -258,7 +257,8 @@
 		//this will potentially take over existing nanites!
 		infectee.AddComponent(/datum/component/nanites, 10)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
+		infectee.investigate_log("was infected by spreading nanites with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/nanite_sting
 	name = "Nanite Sting"
@@ -282,7 +282,8 @@
 		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
 		infectee.AddComponent(/datum/component/nanites, 5)
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-		infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SET_CLOUD, nanites.cloud_id)
+		infectee.investigate_log("was infected by a nanite cluster with cloud ID [nanites.cloud_id] by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
 
 /datum/nanite_program/mitosis
@@ -301,6 +302,7 @@
 		if(fault == src)
 			return
 		fault.software_error()
+		host_mob.investigate_log("[fault] nanite program received a software error due to Mitosis program.", INVESTIGATE_NANITES)
 
 /datum/nanite_program/dermal_button
 	name = "Dermal Button"

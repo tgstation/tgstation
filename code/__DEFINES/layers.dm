@@ -32,6 +32,7 @@
 
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
+#define CULT_OVERLAY_LAYER 2.01
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
 #define TURF_PLATING_DECAL_LAYER 2.031
@@ -61,6 +62,7 @@
 #define DOOR_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
+#define GATEWAY_UNDERLAY_LAYER 2.85
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define

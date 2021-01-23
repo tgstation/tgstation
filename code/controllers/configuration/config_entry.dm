@@ -130,6 +130,7 @@
 	str_val = trim(str_val)
 	if (str_val != "")
 		config_entry_value += str_val
+	return TRUE
 
 /datum/config_entry/number_list
 	abstract_type = /datum/config_entry/number_list

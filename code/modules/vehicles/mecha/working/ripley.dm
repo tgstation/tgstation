@@ -188,10 +188,10 @@
 			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")
 
 /**
-  * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.
-  *
-  * Checks for Lavaland pressure, if that works out the mech's speed is equal to fast_pressure_step_in and the cooldown for the mecha drill is halved. If not it uses slow_pressure_step_in and drill cooldown is normal.
-  */
+ * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.
+ *
+ * Checks for Lavaland pressure, if that works out the mech's speed is equal to fast_pressure_step_in and the cooldown for the mecha drill is halved. If not it uses slow_pressure_step_in and drill cooldown is normal.
+ */
 /obj/vehicle/sealed/mecha/working/ripley/proc/update_pressure()
 	var/turf/T = get_turf(loc)
 
