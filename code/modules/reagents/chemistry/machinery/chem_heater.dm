@@ -15,16 +15,22 @@
 	var/heater_coefficient = 0.05
 	var/on = FALSE
 	var/dispense_volume = 1
+	
+	//The list of active clients using this heater, so that we can update the UI on a reaction_step. I assume there are multiple clients possible.
+	var/list/ui_client_list
 
 /obj/machinery/chem_heater/Initialize()
 	. = ..()
 	create_reagents(100, NO_REACT)//Lets save some calculations here
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
+	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
 	
 /obj/machinery/chem_heater/Destroy()
+	UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 	QDEL_NULL(beaker)
 	return ..()
+
 
 /obj/machinery/chem_heater/handle_atom_del(atom/A)
 	. = ..()
@@ -49,9 +55,11 @@
 		return FALSE
 	if(beaker)
 		try_put_in_hand(beaker, user)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, .proc/on_reaction_step)
 	update_icon()
 	return TRUE
 
@@ -109,11 +117,25 @@
 	replace_beaker()
 	return ..()
 
+/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions)
+	for(var/ui_client in ui_client_list)
+		var/datum/tgui/ui = ui_client
+		ui.send_update()
+
+
 /obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemHeater", name)
 		ui.open()
+		LAZYADD(ui_client_list, ui)
+
+/obj/machinery/chem_heater/ui_close(mob/user)
+	for(var/ui_client in ui_client_list)
+		var/datum/tgui/ui = ui_client
+		if(ui.user == user)
+			LAZYREMOVE(ui_client_list, ui)
+	return ..()
 
 /obj/machinery/chem_heater/ui_data()
 	var/data = list()
@@ -148,7 +170,6 @@
 		var/datum/reagent/reagent = beaker?.reagents.get_reagent(_reagent) //Reactions are named after their primary products
 		if(!reagent)
 			continue
-		active_reactions.len++
 		var/danger = FALSE
 		var/purity_alert = 2 //same as flashing
 		if(reagent.purity < equilibrium.reaction.purity_min)
@@ -159,6 +180,14 @@
 				flashing = ENABLE_FLASHING			
 		if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)
 			danger = TRUE
+		if(reagent.chemical_flags & REACTION_COMPETITIVE) //We have a compeitive reaction - concatenate the results for the different reactions
+			for(var/entry in active_reactions)
+				if(entry["name"] == reagent.name) //If we have multiple reaction methods for the same result - combine them
+					entry["reactedVol"] = equilibrium.reacted_vol
+					entry["targetVol"] = round(equilibrium.target_vol, 1)//Use the first result reagent to name the reaction detected
+					entry["quality"] = (active_reactions[entry]["quality"] + equilibrium.reaction_quality) /2
+					continue
+		active_reactions.len++
 		active_reactions[length(active_reactions)] = list("name" = reagent.name, "danger" = danger, "purityAlert" = purity_alert, "quality" = equilibrium.reaction_quality, "overheat" = equilibrium.reaction.overheat_temp, "inverse" = reagent.inverse_chem_val, "minPure" = equilibrium.reaction.purity_min, "reactedVol" = equilibrium.reacted_vol, "targetVol" = round(equilibrium.target_vol, 1))//Use the first result reagent to name the reaction detected
 	data["activeReactions"] = active_reactions
 	data["isFlashing"] = flashing

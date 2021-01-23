@@ -70,7 +70,7 @@
 
 /datum/equilibrium/Destroy()
 	if(reacted_vol < target_vol) //We did NOT finish from reagents - so we can restart this reaction given property changes in the beaker. (i.e. if it stops due to low temp, this will allow it to fast restart when heated up again)
-		LAZYADD(holder.failed_but_capable_reactions, reaction)
+		LAZYADD(holder.failed_but_capable_reactions, reaction) //Consider replacing check with calculate_yield()
 	LAZYREMOVE(holder.reaction_list, src)
 	holder = null
 	reaction = null
@@ -299,8 +299,11 @@
 		reacted_vol += step_add
 		total_step_added += step_add
 
-	#ifdef TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
-	debug_world("Reaction vars: PreReacted:[reacted_vol] of [step_target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
+	#ifdef REAGENTS_TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
+	if(GLOB.Debug2)
+		message_world("<span class='greentext'>Reaction step active for:[reaction.type]</spans>")
+		message_world("span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]<spans>")
+		message_world("Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
 	#endif
 		
 	//Apply thermal output of reaction to beaker

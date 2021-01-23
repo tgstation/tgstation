@@ -68,7 +68,7 @@
 	ph_exponent_factor = 2
 	thermic_constant = -1500
 	H_ion_release = -0.5
-	rate_up_lim = 2
+	rate_up_lim = 4
 	purity_min = 0.35
 
 /datum/chemical_reaction/speed_agent/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)

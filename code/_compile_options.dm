@@ -1,4 +1,4 @@
-//#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
+#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
@@ -17,6 +17,14 @@
 * * Requires TESTING to be defined to work.
 */
 //#define REFERENCE_TRACKING
+
+/*
+* Enables debug messages for every single reaction step. This is 1 message per 0.5s for a SINGLE reaction. Useful for tracking down bugs/asking me for help in the main reaction handiler (equilibrium.dm).
+*
+* * Requires TESTING to be defined to work.
+*/
+//#define REAGENTS_TESTING
+
 
 ///Method of tracking references without using extools. Slower, kept to avoid over-reliance on extools.
 //#define LEGACY_REFERENCE_TRACKING

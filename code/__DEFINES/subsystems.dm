@@ -118,6 +118,7 @@
 #define INIT_ORDER_QUIRKS			60
 #define INIT_ORDER_TICKER			55
 #define INIT_ORDER_TCG				55
+#define INIT_ORDER_REAGENTS 		55 //HAS to be before mapping - mapping creates objects, which creates reagents, why relies on lists made in this subsystem
 #define INIT_ORDER_MAPPING			50
 #define INIT_ORDER_TIMETRACK		47
 #define INIT_ORDER_NETWORKS			45
@@ -134,7 +135,6 @@
 #define INIT_ORDER_ASSETS			-4
 #define INIT_ORDER_ICON_SMOOTHING	-5
 #define INIT_ORDER_OVERLAY			-6
-#define INIT_ORDER_REAGENTS			-7
 #define INIT_ORDER_XKEYSCORE		-10
 #define INIT_ORDER_STICKY_BAN		-10
 #define INIT_ORDER_LIGHTING			-20

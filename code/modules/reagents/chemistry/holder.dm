@@ -1,3 +1,4 @@
+/////////////These are used in the reagents subsystem init() and the reagent_id_typos.dm////////
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 
@@ -41,7 +42,7 @@
 			GLOB.chemical_reactions_list[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant
 
-///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////Main reagents code/////////////////////////////////////////////
 
 /// Holder for a bunch of [/datum/reagent]
 /datum/reagents
@@ -76,13 +77,6 @@
 
 /datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
-
-	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
-	if(!GLOB.chemical_reagents_list)
-		build_chemical_reagent_list()
-	if(!GLOB.chemical_reactions_list)
-		build_chemical_reactions_list()
-
 	flags = new_flags
 
 /datum/reagents/Destroy()
@@ -890,10 +884,12 @@
 	var/list/mix_message = list()
 	//Process over our reaction list
 	//See equilibrium.dm for mechanics
+	var/num_reactions = 0
 	for(var/_equilibrium in reaction_list)
 		var/datum/equilibrium/equilibrium = _equilibrium
 		//Continue reacting
 		equilibrium.react_timestep(delta_time)
+		num_reactions++
 		//if it's been flagged to delete
 		if(equilibrium.to_delete)
 			var/temp_mix_message = end_reaction(equilibrium)
@@ -902,6 +898,9 @@
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
 	
+	if(num_reactions)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions)
+
 	if(length(mix_message)) //This is only at the end
 		my_atom.audible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]</span>")
 
