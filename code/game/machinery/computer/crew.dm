@@ -132,10 +132,13 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			continue
 
 		// Determine if this person is using nanites for sensors,
-		// in which case the sensors are always set to full detail
-		var/using_nanites = (tracked_living_mob in GLOB.nanite_sensors_list)
+		// in which case the sensors are always set to full detail.
+		var/sensor_level
 
-		if(!using_nanites)
+		// Set sensor level based on whether we're in the nanites list or the suit sensor list.
+		if(tracked_living_mob in GLOB.nanite_sensors_list)
+			sensor_level = SENSOR_COORDS
+		else
 			var/mob/living/carbon/human/tracked_human = tracked_living_mob
 
 			// Check their humanity.
@@ -145,14 +148,16 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 			// Check they have a uniform
 			var/obj/item/clothing/under/uniform = tracked_human.w_uniform
-			if (!uniform)
-				stack_trace("Human without a uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type])")
+			if (!istype(uniform))
+				stack_trace("Human without a suit sensors compatible uniform is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform?.type])")
 				continue
 
 			// Check if their uniform is in a compatible mode.
-			if(!uniform.has_sensor || !uniform.sensor_mode)
-				stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type])")
+			if((uniform.has_sensor <= NO_SENSORS) || !uniform.sensor_mode)
+				stack_trace("Human without active suit sensors is in suit_sensors_list: [tracked_human] ([tracked_human.type]) ([uniform.type])")
 				continue
+
+			sensor_level = uniform.sensor_mode
 
 		// The entry for this human
 		var/list/entry = list(
@@ -169,11 +174,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			entry["ijob"] = jobs[id_card.assignment]
 
 		// Binary living/dead status
-		if (using_nanites || uniform.sensor_mode >= SENSOR_LIVING)
+		if (sensor_level >= SENSOR_LIVING)
 			entry["life_status"] = !tracked_living_mob.stat
 
 		// Damage
-		if (using_nanites || uniform.sensor_mode >= SENSOR_VITALS)
+		if (sensor_level >= SENSOR_VITALS)
 			entry += list(
 				"oxydam" = round(tracked_living_mob.getOxyLoss(), 1),
 				"toxdam" = round(tracked_living_mob.getToxLoss(), 1),
@@ -182,7 +187,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			)
 
 		// Location
-		if (pos && (using_nanites || uniform.sensor_mode >= SENSOR_COORDS))
+		if (sensor_level >= SENSOR_COORDS)
 			entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
 
 		// Trackability
