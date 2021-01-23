@@ -114,10 +114,20 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 	var/list/results = list()
 	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
+		if(!tracked_mob)
+			stack_trace("Null entry in suit sensors or nanite sensors list.")
+			continue
+
 		var/mob/living/carbon/human/H = tracked_mob
 
 		// Check if z-level is correct
 		var/turf/pos = get_turf(H)
+
+		// Is our target in nullspace for some reason?
+		if(!pos)
+			stack_trace("Tracked mob has no loc and is likely in nullspace: [tracked_mob] ([tracked_mob.type])")
+			continue
+
 		if (pos.z != z)
 			continue
 
