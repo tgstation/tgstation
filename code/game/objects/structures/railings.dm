@@ -5,6 +5,7 @@
 	icon_state = "railing"
 	density = TRUE
 	anchored = TRUE
+
 	var/climbable = TRUE
 	///Initial direction of the railing.
 	var/ini_dir
@@ -17,6 +18,7 @@
 /obj/structure/railing/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+
 
 /obj/structure/railing/Initialize()
 	. = ..()
@@ -96,7 +98,7 @@
 
 	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
-	if(!valid_window_location(loc, target_dir)) //Expanded to include rails, as well!
+	if(!valid_window_location(loc, target_dir, is_fulltile = FALSE)) //Expanded to include rails, as well!
 		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 	return TRUE
@@ -106,5 +108,4 @@
 		return TRUE
 
 /obj/structure/railing/proc/after_rotation(mob/user,rotation_type)
-	ini_dir = dir
 	add_fingerprint(user)
