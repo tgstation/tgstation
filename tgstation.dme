@@ -660,6 +660,7 @@
 #include "code\datums\martial\mushpunch.dm"
 #include "code\datums\martial\plasma_fist.dm"
 #include "code\datums\martial\psychotic_brawl.dm"
+#include "code\datums\martial\ratvar.dm"
 #include "code\datums\martial\sleeping_carp.dm"
 #include "code\datums\martial\wrestling.dm"
 #include "code\datums\materials\_material.dm"

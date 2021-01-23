@@ -583,3 +583,13 @@
 	for(var/i in implants)
 		group.register(i)
 	desc += " The implants are registered to the \"[group.name]\" group."
+
+/obj/item/storage/box/syndicate/ratvar_kit
+	name = "Justiciar's Follower Kit"
+	desc = "A box filled with reverse-engineered armor of some ancient cult. There are rumors that equpping it gives you magic powers."
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/syndie_kit/signaler/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain/clock/traitor(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/clock/traitor(src)

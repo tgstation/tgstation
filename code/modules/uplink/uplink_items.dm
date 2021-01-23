@@ -1853,6 +1853,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/ratvar
+	name = "Justiciar's Follower Kit"
+	desc = "A kit, containing reverse-engineered armour of some ancient cult, that will teach you a special martial art."
+	item = /obj/item/storage/box/syndicate/ratvar_kit
+	cost = 20
+	restricted_roles = list("Chaplain")
+
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. \

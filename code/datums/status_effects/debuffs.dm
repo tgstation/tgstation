@@ -964,3 +964,36 @@
 /datum/status_effect/cloudstruck/Destroy()
 	. = ..()
 	QDEL_NULL(mob_overlay)
+
+/datum/status_effect/ratvar_steam
+	id = "ratvar_steam"
+	duration = 10 SECONDS
+	tick_interval = 0.25 SECONDS
+
+	on_remove_on_mob_delete = TRUE
+	///This overlay is applied to the owner for the duration of the effect.
+	var/mutable_appearance/mob_overlay
+
+/datum/status_effect/ratvar_steam/tick()
+	. = ..()
+	if(prob(50))
+		owner.apply_damage(1, BURN) //Has a chance of dealing up to 40 burn per mark. 50 counting with basic damage.
+
+/datum/status_effect/ratvar_steam/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/ratvar_steam/on_apply()
+	mob_overlay = mutable_appearance('icons/effects/effects.dmi', "ratvar_steam", ABOVE_MOB_LAYER)
+	owner.overlays += mob_overlay
+	owner.update_icon()
+	return TRUE
+
+/datum/status_effect/ratvar_steam/on_remove()
+	. = ..()
+	if(QDELETED(owner))
+		return
+	if(owner)
+		owner.overlays -= mob_overlay
+		owner.update_icon()

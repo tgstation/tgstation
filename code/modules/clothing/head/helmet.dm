@@ -381,6 +381,18 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
+/obj/item/clothing/head/helmet/chaplain/clock/traitor
+	name = "cogwheel helmet"
+	desc = "A helmet with a single eyehole, made out of brass and cogwheels. It hisses and spits out smoke as gears rotate."
+	armor = list(MELEE = 50, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 50, BIO = 0, RAD = 50, FIRE = 80, ACID = 80, WOUND = 25)
+
+/obj/item/clothing/head/helmet/chaplain/clock/traitor/equipped(mob/user, slot)
+	..()
+	if(slot == ITEM_SLOT_HEAD)
+		to_chat(user, "<span class='warning'>[src] clicks and locks itself on your head. Praise Ratvar!</span>")
+		ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	return
+
 //monkey sentience caps
 
 /obj/item/clothing/head/helmet/monkey_sentience

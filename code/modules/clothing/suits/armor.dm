@@ -304,3 +304,18 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+/obj/item/clothing/suit/armor/riot/chaplain/clock/traitor
+	name = "cogwheel armour"
+	desc = "A strange set of armour, made out of brass and cogwheels. It hisses and spits out smoke as gears rotate."
+	armor = list(MELEE = 50, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 50, BIO = 0, RAD = 50, FIRE = 80, ACID = 80, WOUND = 25)
+
+/obj/item/clothing/suit/armor/riot/chaplain/clock/traitor/equipped(mob/user, slot)
+	..()
+	if(slot == ITEM_SLOT_OCLOTHING)
+		to_chat(user, "<span class='warning'>[src] clicks and locks itself on your torso. Praise Ratvar!</span>")
+		ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+		var/datum/martial_art/ratvar/MA = new
+		MA.teach(user)
+		user.log_message("learned the martial art [MA]", LOG_ATTACK, color="orange")
+	return
