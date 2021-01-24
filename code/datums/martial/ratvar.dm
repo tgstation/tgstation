@@ -176,7 +176,7 @@
 			add_fingerprint(user)
 			can_buckle = FALSE
 
-/obj/structure/brass_skewer/Crossed(var/mob/living/L)
+/obj/structure/brass_skewer/Crossed(mob/living/L)
 	if(extended)
 		return
 	if(istype(L.buckled, /obj/vehicle))
