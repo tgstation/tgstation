@@ -1,7 +1,6 @@
 import { toArray } from 'common/collections';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Section, Box , TimeDisplay} from '../components';
-import { formatMoney } from '../format';
+import { Section, Box, TimeDisplay } from '../components';
 import { resolveAsset } from '../assets';
 import { Window } from '../layouts';
 
