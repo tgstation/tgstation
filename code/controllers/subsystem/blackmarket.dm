@@ -124,8 +124,13 @@ SUBSYSTEM_DEF(blackmarket)
 	for(var/item in subtypesof(/datum/blackmarket_item))
 		var/datum/blackmarket_item/rotated_item = new item()
 
+		if(rotated_item.root == rotated_item.type)
+			qdel(rotated_item)
+			continue
+
 		if(!rotated_item.item)
 			stack_trace("Blackmarket repopulation failure! [rotated_item] didn't contain a path to an item!")
+			qdel(rotated_item)
 			continue
 
 		if(market in rotated_item.markets)

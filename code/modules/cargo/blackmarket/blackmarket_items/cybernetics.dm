@@ -5,6 +5,7 @@
 /datum/blackmarket_item/cyberlinks
 	category = "Cybernetics"
 	markets = list(/datum/blackmarket_market/cybernetics)
+	root = /datum/blackmarket_item/cyberlinks
 
 /datum/blackmarket_item/cyberlinks/nt_low
 	name = "Nanotrasen's Basic Cyberlink Package"
@@ -47,6 +48,7 @@
 /datum/blackmarket_item/cybernetics
 	category = "Cybernetics"
 	markets = list(/datum/blackmarket_market/cybernetics)
+	root = /datum/blackmarket_item/cybernetics
 	stock = 1 //Can never have more than 1 of the same implant on the auction at the same time.
 	var/randomizable = TRUE
 

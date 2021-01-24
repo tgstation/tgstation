@@ -1,5 +1,6 @@
 /datum/blackmarket_item/tool
 	category = "Tools"
+	root = /datum/blackmarket_item/tool
 
 /datum/blackmarket_item/tool/caravan_wrench
 	name = "Experimental Wrench"
