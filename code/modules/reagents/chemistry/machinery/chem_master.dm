@@ -456,6 +456,51 @@
 		AM.pixel_x = AM.base_pixel_x + ((.%3)*6)
 		AM.pixel_y = AM.base_pixel_y - 8 + (round( . / 3)*8)
 
+/////////////////////////////Mass spec stuff////////////////////////////////////////database
+
+/obj/machinery/chem_master/proc/calculate_largest_mass(datum/reagents/holder)
+	var/max_mass
+	for(var/_reagent in holder)
+		var/datum/reagent/reagent = _reagent
+		max_mass = max(max_mass, (reagent.mass + reagent.mass_range))
+	return max_mass
+
+/obj/machinery/chem_master/proc/calculate_smallest_mass(datum/reagents/holder)
+	var/min_mass
+	for(var/_reagent in holder)
+		var/datum/reagent/reagent = _reagent
+		main_mass = min(min_mass, (reagent.mass - reagent.mass_range))
+	return min_mass
+
+	
+
+/obj/machinery/chem_master/proc/calculate_mass_spec(datum/reagent/reagent, x_min, x_max, y_max)
+	//= \frac{e^{-x^{2}/2}} {\sqrt{2\pi}} \) - simplify
+	var/coords = list(list(x_min, 0))
+
+	var/x_count = 1
+	var/x_diff = x_max - x_min
+	
+	var/vol_normal = reagent.vol / y_max
+	var/upper_coords = list(list(x_diff/2, vol_normal))
+	while(x_count < 9)
+		var/x
+		var/y
+		x = x_min + ((x_diff / 20) * x_count)
+		y = (x_count**2) * vol_normal
+		coords += list(x, y)
+		//upper list
+		x = x_min + ((x_diff / 20) * (x_count+10))
+		y = ((20-x_count)**2) * vol_normal
+		upper_coords += list(x, y)
+		
+	upper_coords += list(x_max, 0)
+	coords += upper_coords
+	return coords
+
+
+
+
 /**
  * Translates styles data into UI compatible format
  *

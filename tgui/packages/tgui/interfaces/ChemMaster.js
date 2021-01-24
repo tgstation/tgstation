@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
+import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table, Chart, Slider } from '../components';
 import { Window } from '../layouts';
 
 export const ChemMaster = (props, context) => {
@@ -12,7 +12,7 @@ export const ChemMaster = (props, context) => {
       resizable>
       <Window.Content scrollable>
         {screen === 'analyze' && (
-          <AnalysisResults />
+          <MassSpec />
         ) || (
           <ChemMasterContent />
         )}
@@ -35,7 +35,7 @@ const ChemMasterContent = (props, context) => {
     pillBottleMaxAmount,
   } = data;
   if (screen === 'analyze') {
-    return <AnalysisResults />;
+    return <MassSpec />;
   }
   return (
     <>
@@ -398,5 +398,103 @@ const AnalysisResults = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
     </Section>
+  );
+};
+
+const MassSpec = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    lowerRange,
+    upperRange,
+    centerValue,
+    reagentPeaks = [],
+  } = data;
+  return (
+<Section
+  title="Mass Spectroscopy"
+  position="relative"
+  buttons={(
+    <Button
+      icon="arrow-left"
+      content="Back"
+      onClick={() => act('goScreen', {
+        screen: 'home',
+      })} /> 
+    )}>
+      {reagentPeaks.map(peak => (
+        <Section height="100px">
+        
+        <Chart.Line
+          height="120px"
+          fillPositionedParent
+          data={peak.line}
+          rangeX={[0, 100]}
+          rangeY={[0, 100]}
+          strokeColor={peak.color}
+          fillColor={peak.color} />
+        </Section>
+      ))}
+      <Chart.Line
+          height="120px"
+          fillPositionedParent
+          data={[[lowerRange,-5],[lowerRange,105],[upperRange,105],[upperRange,-5]]}
+          rangeX={[0, 100]}
+          rangeY={[0, 100]}
+          strokeColor="rgba(0, 181, 0, 1)"
+          fillColor="rgba(0, 181, 0, 0.25)" />  
+      <Slider
+        name={"Left slider"}
+        position="relative"
+        y={80}
+        step={0.1}
+        height={0.5}
+        stepPixelSize={1}
+        width={centerValue+"%"}
+        value={lowerRange}
+        minValue={0}
+        maxValue={centerValue}
+        color="#333333"
+        onDrag={(e, value) => act('leftSlider', {
+          target: value,
+        })} >
+          {" "}
+      </Slider>
+      <Slider
+        name={"Right slider"}
+        position="absolute"
+        x={centerValue}
+        y={100}
+        height={1}
+        step={0.1}
+        stepPixelSize={1}
+        width={(100 - centerValue) + "%"}
+        value={upperRange - 0.6}
+        minValue={centerValue}
+        maxValue={100}
+        color="#00bb00"
+        onDrag={(e, value) => act('rightSlider', {
+          target: value,
+        })} >
+          {" "}
+      </Slider>
+      <Section position="relative" height="100px">
+      <Slider
+        name={"Center slider"}
+        position="relative"
+        step={0.1}
+        stepPixelSize={1}
+        value={centerValue}
+        height={0.1}
+        minValue={0}
+        maxValue={100}
+        color="#eeeeee"
+        onDrag={(e, value) => act('centerSlider', {
+          target: value,
+        })} >
+        <text>Test2</text>
+      </Slider>
+      <text>Test2</text>
+      </Section>
+      </Section>
   );
 };

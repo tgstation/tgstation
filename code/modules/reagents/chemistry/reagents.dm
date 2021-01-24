@@ -48,6 +48,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/ph = 7
 	///Purity of the reagent - for use with internal reaction mechanics only. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
 	var/purity = 1
+	///Mass of the reagent - used for mass spec (m/z)
+	var/mass = 240
+	///Range of the mass peak
+	var/mass_range = 10
 	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
 	/// color it looks in containers etc
