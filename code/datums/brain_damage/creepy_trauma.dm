@@ -117,6 +117,7 @@
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
 	var/list/viable_minds = list() //The first list, which excludes hijinks
 	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
+	var/static/list/trait_obsessions = list(TRAIT_FAN_MIME = "Mime", TRAIT_FAN_CLOWN = "Clown", TRAIT_SPIRITUAL = "Chaplain") //Quirks and their corresponding jobs
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target
 
@@ -125,15 +126,10 @@
 			viable_minds += Player.mind
 	for(var/datum/mind/possible_target in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
-			if(HAS_TRAIT(owner, TRAIT_FAN_MIME) && possible_target.assigned_role == "Mime")
-				special_pool += possible_target.current
-				continue
-			if(HAS_TRAIT(owner, TRAIT_FAN_CLOWN) && possible_target.assigned_role == "Clown")
-				special_pool += possible_target.current
-				continue
-			if(HAS_TRAIT(owner, TRAIT_SPIRITUAL) && possible_target.assigned_role == "Chaplain")
-				special_pool += possible_target.current
-				continue
+			for(var/trait in trait_obsessions)
+				if(HAS_TRAIT(owner, trait) && possible_target.assigned_role == trait_obsessions[trait])
+					special_pool += possible_target.current
+					break
 			possible_targets += possible_target.current
 
 	//Do we have any special target?
