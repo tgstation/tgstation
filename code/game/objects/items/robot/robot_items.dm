@@ -958,15 +958,19 @@
 
 /obj/item/borg/apparatus/organ_storage/update_overlays()
 	. = ..()
-	var/mutable_appearance/bag = mutable_appearance(icon, icon_state = "evidence")
+	icon_state = null // hides the original icon (otherwise it's drawn underneath)
+	var/mutable_appearance/bag
 	if(stored)
 		COMPILE_OVERLAYS(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
-		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
-		stored_copy.layer = FLOAT_LAYER
-		stored_copy.plane = FLOAT_PLANE
-		. += stored_copy
+		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
+		stored_organ.layer = FLOAT_LAYER
+		stored_organ.plane = FLOAT_PLANE
+		stored_organ.pixel_x = 0
+		stored_organ.pixel_y = 0
+		. += stored_organ
+		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
+	else
+		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
 	. += bag
 
 /obj/item/borg/apparatus/organ_storage/attack_self(mob/user)
@@ -975,7 +979,6 @@
 		user.visible_message("<span class='notice'>[user] dumps [organ] from [src].</span>", "<span class='notice'>You dump [organ] from [src].</span>")
 		cut_overlays()
 		organ.forceMove(get_turf(src))
-		icon_state = "evidenceobj"
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 	return
