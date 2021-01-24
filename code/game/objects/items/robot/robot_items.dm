@@ -794,7 +794,7 @@
 
 /obj/item/borg/apparatus/Initialize()
 	. = ..()
-	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safe_decon)
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
 /obj/item/borg/apparatus/Destroy()
 	if(stored)
@@ -802,7 +802,7 @@
 	. = ..()
 
 ///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
-/obj/item/borg/apparatus/proc/safe_decon()
+/obj/item/borg/apparatus/proc/safedecon()
 	if(stored)
 		stored.forceMove(get_turf(src))
 		stored = null
