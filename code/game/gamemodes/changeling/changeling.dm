@@ -170,9 +170,8 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
-			if(QDELETED(C))
-				return
-			ADD_TRAIT(C, TRAIT_NODROP, CHANGELING_TRAIT)
+			if(!QDELETED(C))
+				ADD_TRAIT(C, TRAIT_NODROP, CHANGELING_TRAIT)
 
 	for(var/stored_scar_line in chosen_prof.stored_scars)
 		var/datum/scar/attempted_fake_scar = user.load_scar(stored_scar_line)
