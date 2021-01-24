@@ -3,7 +3,7 @@
 	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
 	school = "transmutation"
 	charge_type = "recharge"
-	charge_max	= 200
+	charge_max	= 300
 	charge_counter = 0
 	clothes_req = FALSE
 	stat_allowed = FALSE
