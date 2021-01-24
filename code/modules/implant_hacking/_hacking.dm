@@ -129,6 +129,7 @@
 /obj/item/cyberlink_connector/ui_data(mob/user)
 	var/list/data = list()
 	data["timeleft"] = current_timer_id ? timeleft(current_timer_id) : 0
+	
 	for(var/datum/hacking_minigame/game in game_list)
 		data["games"] += list(game.get_simplified_image())
 	return data
