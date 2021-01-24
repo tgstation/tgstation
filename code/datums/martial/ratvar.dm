@@ -147,6 +147,8 @@
 	overlay = image(icon, "[icon_state]_pokeybit", layer = ABOVE_MOB_LAYER)
 
 /obj/structure/brass_skewer/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
+	if(!extended)
+		return
 	if(has_buckled_mobs())
 		for(var/buck in buckled_mobs)
 			var/mob/living/M = buck
@@ -172,6 +174,7 @@
 			unbuckle_mob(M)
 			buckled_mob.overlays -= overlay
 			add_fingerprint(user)
+			can_buckle = FALSE
 
 /obj/structure/brass_skewer/Crossed(var/mob/living/L)
 	if(extended)
@@ -189,7 +192,7 @@
 	L.visible_message("<span class='danger'>[L] suddenly gets pierced by [src]!</span>",\
 					"<span class='userdanger'>[src] pierces you!</span>",\
 					"<span class='hear'>You hear sounds flesh of being pierced followed by a scream!</span>")
-	can_buckle = FALSE
+	icon_state = "[icon_state]_extended"
 
 /obj/structure/brass_skewer/proc/try_pierce()
 	var/mob/living/L = locate() in get_turf(src)

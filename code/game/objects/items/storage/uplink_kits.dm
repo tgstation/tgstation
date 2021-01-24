@@ -590,6 +590,6 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
-/obj/item/storage/box/syndie_kit/ratvar_kit/PopulateContents()
+/obj/item/storage/box/syndicate/ratvar_kit/PopulateContents()
 	new /obj/item/clothing/head/helmet/chaplain/clock/traitor(src)
 	new /obj/item/clothing/suit/armor/riot/chaplain/clock/traitor(src)
