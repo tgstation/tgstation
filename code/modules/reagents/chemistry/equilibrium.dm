@@ -201,14 +201,14 @@
 */
 /datum/equilibrium/proc/deal_with_time(delta_time)
 	if(delta_time > 1.5)
-		time_deficit += delta_realtime - 1.5
+		time_deficit += delta_time - 1.5
 		delta_time = 1.5 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
 	else if (time_deficit)
 		if(time_deficit < 0.5)
-			delta_realtime += time_deficit
+			delta_time += time_deficit
 			time_deficit = 0
 		else	
-			delta_realtime += 0.5
+			delta_time += 0.5
 			time_deficit = 0.5
 	return delta_time
 
