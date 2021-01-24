@@ -174,7 +174,7 @@
 	var/tagname = null
 
 /obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	if(ishuman(M))
+	if(ishuman(M) && !isfelinid(M))
 		return FALSE
 	return ..()
 
