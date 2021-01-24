@@ -5,7 +5,6 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 
-	var/list/independent_departments = list() ///departments that are already independent, these will be unallowed to be randomly picked
 	var/picked_department
 	var/announce = FALSE
 	var/dangerous_nation = TRUE
@@ -26,26 +25,29 @@
 
 	//this is down here to allow the random system to pick a department whilst considering other independent departments
 	if(!picked_department || picked_department == "Random")
+		picked_department = null
 		return
-
-/datum/round_event/wizard/deprevolt/setup()
-	var/datum/round_event_control/wizard/deprevolt/event_control = control
-	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
-		event_control.independent_departments |= separatist_datum.nation.nation_department
 
 /datum/round_event/wizard/deprevolt/start()
 
 	var/datum/round_event_control/wizard/deprevolt/event_control = control
 
-	var/announcement = FALSE
+	var/list/independent_departments = list() ///departments that are already independent, these will be disallowed to be randomly picked
+	var/list/cannot_pick = list() ///departments that are already independent, these will be disallowed to be randomly picked
+	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
+		if(!separatist_datum.nation)
+			continue
+		independent_departments |= separatist_datum.nation
+		cannot_pick |= separatist_datum.nation.nation_department
+
+	var/announcement = event_control.announce
+	var/dangerous = event_control.dangerous_nation
 	var/department
-	if(event_control.announce)
-		announcement = TRUE
 	if(event_control.picked_department)
 		department = event_control.picked_department
 		event_control.picked_department = null
 	else
-		department = pick(list("Uprising of Assistants", "Medical", "Engineering", "Science", "Supply", "Service", "Security") - event_control.independent_departments)
+		department = pick(list("Uprising of Assistants", "Medical", "Engineering", "Science", "Supply", "Service", "Security") - cannot_pick)
 		if(!department)
 			message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
 	var/list/jobs_to_revolt	= list()
@@ -64,7 +66,7 @@
 			nation_name = pick("Atomo", "Engino", "Power", "Teleco")
 		if("Science")
 			jobs_to_revolt = GLOB.science_positions
-			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno")
+			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 		if("Supply")
 			jobs_to_revolt = GLOB.supply_positions
 			nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
@@ -82,12 +84,12 @@
 
 	var/datum/team/nation/nation = new(null, jobs_to_revolt, department)
 	nation.name = nation_name
-	var/department_target //dodges unfortunate runtime
-	if(!event_control.independent_departments.len)
+	var/datum/team/department_target //dodges unfortunate runtime
+	if(!independent_departments.len)
 		department_target = null
 	else
-		department_target = pick(event_control.independent_departments)
-	nation.generate_nation_objectives(event_control.dangerous_nation, department_target)
+		department_target = pick(independent_departments)
+	nation.generate_nation_objectives(dangerous, department_target)
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
