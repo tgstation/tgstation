@@ -342,7 +342,7 @@
 	var/list/cached_reagents = holder.reagent_list
 	var/i = 0
 	var/cached_purity
-	for(var/datum/reagent/reagent in holder.reagent_list)
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		if (reagent in cached_reagents)
 			cached_purity += reagent.purity
 			i++

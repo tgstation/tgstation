@@ -294,7 +294,7 @@
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	var/sum_volume = 0
 	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
-	for(var/datum/reagent/reagent in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+	for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
 		if(!(reagent.type in required_reagents) || !(reagent.type in results))
 			continue
 		if(reagent.inverse_chem)
@@ -319,7 +319,7 @@
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
 	var/sum_volume = 0
-	for (var/datum/reagent/reagent in holder.reagent_list) 
+	for (var/datum/reagent/reagent as anything in holder.reagent_list) 
 		if((reagent.type in required_reagents) || (reagent.type in results))
 			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
@@ -361,7 +361,7 @@
 /datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = null)
 	if(!holder)
 		return FALSE
-	for(var/datum/reagent/reagent in holder.reagent_list)
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		if(!(reagent.type in required_reagents))
 			continue
 		if(!volume)
@@ -373,7 +373,7 @@
 /datum/chemical_reaction/proc/clear_products(datum/reagents/holder, volume = null)
 	if(!holder)
 		return FALSE
-	for(var/datum/reagent/reagent in holder.reagent_list)
+	for(var/datum/reagent/reagent as anything in holder.reagent_list)
 		if(!(reagent.type in results))
 			continue
 		if(!volume)
