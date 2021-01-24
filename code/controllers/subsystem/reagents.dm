@@ -25,7 +25,6 @@ SUBSYSTEM_DEF(reagents)
 /datum/controller/subsystem/reagents/stat_entry(msg)
 	msg = "reagents:[length(processing)]"
 	. = ..()
-	msg = "number of ticks that took a long time (over 2s): [overly_laggy_ticks]"
 
 /datum/controller/subsystem/reagents/fire(resumed = FALSE)
 	if (!resumed)
