@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - tweak: "Soapstone messages at or below -5 voting score won't persist. This is to reduce the amount and increase the overall quality. If this changelog wasn't here last round you may be able to save one"
