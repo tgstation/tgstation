@@ -120,6 +120,9 @@
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions)
 	for(var/ui_client in ui_client_list)
 		var/datum/tgui/ui = ui_client
+		if(!ui)
+			stack_trace("Warning: UI in UI client list is missing in [src] (chem_heater)")
+			continue
 		ui.send_update()
 
 
@@ -133,6 +136,9 @@
 /obj/machinery/chem_heater/ui_close(mob/user)
 	for(var/ui_client in ui_client_list)
 		var/datum/tgui/ui = ui_client
+		if(!ui)
+			stack_trace("Warning: UI in UI client list is missing in [src] (chem_heater)")
+			continue
 		if(ui.user == user)
 			LAZYREMOVE(ui_client_list, ui)
 	return ..()
