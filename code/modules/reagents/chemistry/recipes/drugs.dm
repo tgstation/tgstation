@@ -54,8 +54,8 @@
 		return ..()
 	if(meth.purity < purity_min)
 		temp_meth_explosion(holder, react_vol)
-	else
-		return ..()
+		return
+	return ..()
 
 //Refactoring of explosions is coming later, this is till then so it still explodes
 /datum/chemical_reaction/methamphetamine/proc/temp_meth_explosion(datum/reagents/holder, explode_vol)

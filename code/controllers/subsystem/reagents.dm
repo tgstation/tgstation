@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(reagents)
 //Comment to delete: I don't really understand SS that well. Please review me
 /datum/controller/subsystem/reagents/stat_entry(msg)
 	msg = "reagents:[length(processing)]"
-	.=..()
+	. = ..()
 	msg = "number of ticks that took a long time (over 2s): [overly_laggy_ticks]"
 
 /datum/controller/subsystem/reagents/fire(resumed = FALSE)
@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(reagents)
 		var/datum/thing = current_run[current_run.len]
 		current_run.len--
 		if(QDELETED(thing))
+			stack_trace("Found qdeleted thing in [type], in the current_run list.")
 			processing -= thing
 		else if(thing.process(delta_realtime) == PROCESS_KILL) //we are realtime
 			// fully stop so that a future START_PROCESSING will work
