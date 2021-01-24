@@ -335,7 +335,8 @@
 		/obj/item/kitchen/knife,
 		/obj/item/kitchen/rollingpin,
 		/obj/item/kitchen/fork,
-		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Tobacco Products, Lighters, and Kitchen Tools.
+		/obj/item/organ,
+		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	STR.insert_preposition = "on"
 	STR.max_items = 7
 
