@@ -122,12 +122,13 @@ SUBSYSTEM_DEF(blackmarket)
 	markets[market].categories.Cut()
 
 	for(var/item in subtypesof(/datum/blackmarket_item))
-		var/datum/blackmarket_item/I = new item()
+		var/datum/blackmarket_item/rotated_item = new item()
 
-		if(!I.item)
+		if(!rotated_item.item)
+			stack_trace("Blackmarket repopulation failure! [rotated_item] didn't contain a path to an item!")
 			continue
 
-		if(market in I.markets)
+		if(market in rotated_item.markets)
 			markets[market].add_item(item)
 
-		qdel(I)
+		qdel(rotated_item)
