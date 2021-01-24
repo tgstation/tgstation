@@ -140,8 +140,19 @@
 	. = ..()
 
 /obj/item/changeling/id
+	slot_flags = ITEM_SLOT_ID
 	/// Cached flat icon of the ID
 	var/icon/cached_flat_icon
+	/// HUD job icon of the ID
+	var/hud_icon
+
+/obj/item/changeling/id/equipped(mob/user, slot, initial)
+	. = ..()
+	if(hud_icon)
+		var/image/holder = user.hud_list[ID_HUD]
+		var/icon/I = icon(user.icon, user.icon_state, user.dir)
+		holder.pixel_y = I.Height() - world.icon_size
+		holder.icon_state = hud_icon
 
 /**
  * Returns cached flat icon of the ID, creates one if there is not one already cached
