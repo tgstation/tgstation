@@ -2,9 +2,9 @@
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 	///Time it takes to climb onto the object
-	var/climb_time = 20
+	var/climb_time = (2 SECONDS)
 	///Stun duration for when you get onto the object
-	var/climb_stun = 20
+	var/climb_stun = (2 SECONDS)
 	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
 
