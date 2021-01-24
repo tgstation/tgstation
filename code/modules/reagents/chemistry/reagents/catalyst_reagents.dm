@@ -10,7 +10,7 @@
 
 /datum/reagent/catalyst_agent/proc/consider_catalyst(datum/equilibrium/equilibrium)
 	for(var/_product in equilibrium.reaction.results)
-		if(istype(_product, target_reagent_type))
+		if(ispath(_product, target_reagent_type))
 			return TRUE
 	return FALSE
 
@@ -44,3 +44,4 @@
 	target_reagent_type = /datum/reagent/medicine
 	modifier = 2
 	ph = 2 //drift towards acidity
+	color = "#b1b1b1"

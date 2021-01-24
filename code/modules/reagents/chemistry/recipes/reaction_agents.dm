@@ -67,7 +67,7 @@
 	optimal_temp = 500
 	overheat_temp = 500 
 	optimal_ph_min = 5
-	optimal_ph_max = 9
+	optimal_ph_max = 8
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 2

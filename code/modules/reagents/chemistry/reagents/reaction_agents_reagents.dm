@@ -98,7 +98,7 @@
 	holder.remove_reagent(type, amount)
 
 /datum/reagent/reaction_agent/speed_agent
-	name = "Reaction speed agent"
+	name = "Tempomyocin"
 	description = "This reagent will consume itself and speed up an ongoing reaction, modifying the current reaction's purity by it's own."
 	ph = 10
 	color = "#e61f82"
@@ -122,4 +122,3 @@
 		power = clamp(power, 0, 2)
 		reaction.react_timestep(power, creation_purity)
 	holder.remove_reagent(type, amount)
-

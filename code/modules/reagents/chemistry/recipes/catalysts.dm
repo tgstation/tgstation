@@ -14,8 +14,8 @@
 	determin_ph_range = 5
 	temp_exponent_factor = 0.5
 	ph_exponent_factor = 4
-	thermic_constant = 1500
-	H_ion_release = -0.5
+	thermic_constant = 1000
+	H_ion_release = -0.25
 	rate_up_lim = 1
 	purity_min = 0
 

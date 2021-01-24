@@ -29,10 +29,9 @@
 	thermic_constant = 0.1 //exothermic nature is equal to impurty
 	H_ion_release = -0.025 
 	rate_up_lim = 10
-	purity_min = 0.5 //100u will natrually just dip under this
+	purity_min = 0.5 //100u will natrually just dip under this w/ no buffer
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
 	
-
 //The less pure it is, the faster it heats up. tg please don't hate me for making your meth even more dangerous
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)

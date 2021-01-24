@@ -2,6 +2,7 @@
 /datum/chemical_reaction/medicine
 	required_reagents = null //Don't add this to master list
 	optimal_temp = 700
+	optimal_ph_max = 10
 	temp_exponent_factor = 1.2
 	ph_exponent_factor = 0.8
 	purity_min = 0.25
