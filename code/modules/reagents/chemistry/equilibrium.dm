@@ -42,6 +42,8 @@
 	var/h_ion_mod = 1
 	///Temp mod
 	var/thermic_mod = 1
+	///Allow us to deal with lag by "changing" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
+	var/time_deficit 
 
 /* 
 * Creates and sets up a new equlibrium object
@@ -188,6 +190,28 @@
 	target_vol = step_target_vol + true_reacted_vol
 	reacted_vol = true_reacted_vol
 	return TRUE
+
+/*
+* Deals with lag - allows a reaction to speed up to 3x from delta_time
+* "Charged" time (time_deficit) discharges by incrementing reactions by doubling them
+* If delta_time is greater than 1.5, then we save the extra time for the next ticks
+*
+* Arguments:
+* * delta_time - the time between the last proc in world.time
+*/
+/datum/equilibrium/proc/deal_with_time(delta_time)
+	if(delta_time > 1.5)
+		time_deficit += delta_realtime - 1.5
+		delta_time = 1.5 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
+	else if (time_deficit)
+		if(time_deficit < 0.5)
+			delta_realtime += time_deficit
+			time_deficit = 0
+		else	
+			delta_realtime += 0.5
+			time_deficit = 0.5
+	return delta_time
+
 /*
 * Main reaction processor - Increments the reaction by a timestep
 *
@@ -201,9 +225,9 @@
 */
 /datum/equilibrium/proc/react_timestep(delta_time, purity_modifier = 1)
 	if(to_delete)
-		//stack_trace("[src] was step processed with a delete flag reaction: [reaction] holder: [holder]")
 		//This occurs when it explodes
 		return FALSE
+	delta_time = deal_with_time(delta_time)
 	if(!check_reagent_properties()) //this is first because it'll call explosions first
 		to_delete = TRUE
 		return

@@ -12,8 +12,6 @@ SUBSYSTEM_DEF(reagents)
 	var/list/currentrun = list()
 	///What time was it when we last ticked
 	var/previous_world_time = 0
-	///If we updated over 2s ago, then we increment this. This is mostly so I can understand lag on the live server to see if this is a viable solution
-	var/overly_laggy_ticks = 0
 
 /datum/controller/subsystem/reagents/Initialize()
 	//So our first step isn't insane
@@ -38,9 +36,6 @@ SUBSYSTEM_DEF(reagents)
 	//Attempt to realtime reactions in a way that doesn't make them overtly dangerous
 	var/delta_realtime = (world.time - previous_world_time)/10 //normalise to s from ds
 	previous_world_time = world.time
-	if(delta_realtime > 2)
-		overly_laggy_ticks++
-		delta_realtime = 2 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
 
 	while(current_run.len)
 		var/datum/thing = current_run[current_run.len]

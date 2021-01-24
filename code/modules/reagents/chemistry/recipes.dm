@@ -341,7 +341,7 @@
 	for(var/atom/movable/movey in orange(3, this_turf))
 		if(isliving(movey))
 			var/mob/living/live = movey
-			live.adjustBruteLoss(5)//Since this can be called multiple times
+			live.apply_damage(5)//Since this can be called multiple times
 		if(movey.anchored)
 			continue
 		if(iseffect(movey) || iscameramob(movey) || isdead(movey))
