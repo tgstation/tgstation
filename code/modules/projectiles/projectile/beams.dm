@@ -62,7 +62,7 @@
 
 /obj/projectile/beam/leach
 	name = "leach shot"
-	damage = 18
+	damage = 20
 	stamina = 10
 	icon_state = "leach_beam"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
