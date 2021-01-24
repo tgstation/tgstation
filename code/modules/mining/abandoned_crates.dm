@@ -13,6 +13,9 @@
 	var/spawned_loot = FALSE
 	tamperproof = 90
 
+	// Stop people from "diving into" the crate accidentally, and then detonating it.
+	divable = FALSE
+
 /obj/structure/closet/crate/secure/loot/Initialize()
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
@@ -98,17 +101,11 @@
 			return
 	return ..()
 
-/obj/structure/closet/secure/loot/dive_into(mob/living/user)
-	if(!locked)
-		return ..()
-	to_chat(user, "<span class='notice'>That seems like a stupid idea.</span>")
-	return FALSE
-
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		boom(user)
 
-/obj/structure/closet/crate/secure/loot/togglelock(mob/user)
+/obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(locked)
 		boom(user)
 	else
