@@ -1,0 +1,8 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "Icebox turf generation no longer breaches the labor camp and mining base"
+  - bugfix: "Fixes all roundstart active turfs and genturf errors on Icebox"
+  - bugfix: "All APCs on Icebox are now located within the areas they power, not in maint"
+  - bugfix: "Removes duplicated APCs on Icebox"
+  - bugfix: "Fixes Icebox's power grid, in general"

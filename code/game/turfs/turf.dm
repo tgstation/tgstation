@@ -166,17 +166,25 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
-///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi. if exclude_object is true, it will exclude the excluded_object you sent through
-/turf/proc/is_blocked_turf(exclude_mobs, list/excluded_objects = list())
+/**
+ * Check whether the specified turf is blocked by something dense inside it.
+ *
+ * Returns TRUE if the turf is blocked, FALSE otherwise.
+ *
+ * Arguments:
+ * * exclude_mobs - If TRUE, ignores dense mobs on the turf.
+ * * source_atom - If you're checking if the turf an atom is on is blocked, this will let you exclude the atom from this check so it doesn't block itself with its own density.
+ */
+/turf/proc/is_blocked_turf(exclude_mobs, source_atom)
 	if(density)
 		return TRUE
 	for(var/i in contents)
 		var/atom/movable/thing = i
-		var/excuded = FALSE
-		for(var/excluded in excluded_objects)
-			if(istype(thing, excluded))
-				excuded = TRUE
-		if(!excuded && thing.density && (!exclude_mobs || !ismob(thing)))
+		if(thing == source_atom)
+			continue
+		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
+		// it cannot pass through the thing on the turf, we consider the turf blocked.
+		if(thing.density && (!exclude_mobs || !ismob(thing)) && (source_atom && !thing.CanPass(source_atom, src)))
 			return TRUE
 	return FALSE
 
