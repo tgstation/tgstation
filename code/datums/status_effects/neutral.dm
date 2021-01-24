@@ -311,7 +311,7 @@
 
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
-	desc = "Looks like your in trouble now, bud. \ Click here to surrender (Warning: you will be paralyzed for 20 seconds)"
+	desc = "Looks like you're in trouble now, bud. Click here to surrender (Warning: You will be incapacitated)"
 	icon_state = "surrender"
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
