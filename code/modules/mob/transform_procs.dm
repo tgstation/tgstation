@@ -77,20 +77,24 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/proc/AIize(transfer_after = TRUE, client/preference_source)
+/mob/proc/AIize(transfer_after = TRUE, client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()
-	for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
-		if(locate(/mob/living/silicon/ai) in sloc.loc)
-			continue
-		if(sloc.primary_ai)
-			LAZYCLEARLIST(landmark_loc)
-			landmark_loc += sloc.loc
-			break
-		landmark_loc += sloc.loc
-	if(!landmark_loc.len)
-		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
+
+	if(!move)
+		landmark_loc += loc
+	else
 		for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
+			if(locate(/mob/living/silicon/ai) in sloc.loc)
+				continue
+			if(sloc.primary_ai)
+				LAZYCLEARLIST(landmark_loc)
+				landmark_loc += sloc.loc
+				break
 			landmark_loc += sloc.loc
+		if(!landmark_loc.len)
+			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
+			for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
+				landmark_loc += sloc.loc
 
 	if(!landmark_loc.len)
 		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")

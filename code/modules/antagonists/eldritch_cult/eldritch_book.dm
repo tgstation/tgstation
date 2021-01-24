@@ -131,7 +131,7 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					charge -= text2num(EK.cost)
+					charge -= initial(EK.cost)
 					return TRUE
 
 	update_icon() // Not applicable to all objects.
