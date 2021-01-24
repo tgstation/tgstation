@@ -356,22 +356,21 @@
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
 	slowdown = 2
+	item_flags = DROPDEL
 	max_integrity = 100
 	///counts time passed since it ate food
 	var/hunger = 0
 
-/obj/item/storage/backpack/duffelbag/cursed/Initialize()
+/obj/item/storage/backpack/duffelbag/cursed/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/storage/backpack/duffelbag/cursed/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
 	ADD_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
 
 /obj/item/storage/backpack/duffelbag/cursed/dropped(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
-	qdel(src)
+	
+	STOP_PROCESSING(SSobj,src)
 	return ..()
 
 /obj/item/storage/backpack/duffelbag/cursed/process()
@@ -410,11 +409,7 @@
 		hunger = initial(hunger)
 		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 		to_chat(user, "<span class='warning'>The [name] eats your back!</span>")
-		obj_integrity -= 20
-
-/obj/item/storage/backpack/duffelbag/cursed/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSobj,src)
+		obj_integrity -= 25
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
