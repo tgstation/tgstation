@@ -11,10 +11,6 @@
 	name = "flesh"
 	item_flags = DROPDEL
 
-/obj/item/clothing/glasses/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
@@ -26,10 +22,6 @@
 /obj/item/clothing/under/changeling
 	name = "flesh"
 	item_flags = DROPDEL
-
-/obj/item/clothing/under/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
@@ -44,10 +36,6 @@
 	allowed = list(/obj/item/changeling)
 	item_flags = DROPDEL
 
-/obj/item/clothing/suit/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
@@ -61,10 +49,6 @@
 	icon_state = null
 	item_flags = DROPDEL
 
-/obj/item/clothing/head/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
@@ -76,10 +60,6 @@
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
 	item_flags = DROPDEL
-
-/obj/item/clothing/shoes/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
@@ -93,10 +73,6 @@
 	name = "flesh"
 	item_flags = DROPDEL
 
-/obj/item/clothing/gloves/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
-
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
@@ -108,10 +84,6 @@
 /obj/item/clothing/mask/changeling
 	name = "flesh"
 	item_flags = DROPDEL
-
-/obj/item/clothing/mask/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
@@ -126,10 +98,6 @@
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
 	item_flags = DROPDEL
-
-/obj/item/changeling/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user)

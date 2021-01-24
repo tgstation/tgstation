@@ -1080,7 +1080,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return TRUE
 		if(ITEM_SLOT_SUITSTORE)
-			if(HAS_TRAIT_NOT_FROM(I, TRAIT_NODROP, CHANGELING_TRAIT))
+			if(HAS_TRAIT(I, TRAIT_NODROP))
 				return FALSE
 			if(!H.wear_suit)
 				if(!disable_warning)
