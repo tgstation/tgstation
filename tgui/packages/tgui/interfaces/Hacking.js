@@ -1,6 +1,6 @@
 import { toArray } from 'common/collections';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Section, Box } from '../components';
+import { AnimatedNumber, Section, Box , TimeDisplay} from '../components';
 import { formatMoney } from '../format';
 import { resolveAsset } from '../assets';
 import { Window } from '../layouts';
@@ -25,8 +25,7 @@ export const Hacking = (props, context) => {
               title={'HACKING IN PROGRESS [ ' + i + ' ]'}
               level={2}>
               [ TIME LEFT :
-              <AnimatedNumber
-                value={timeleft} /> ]
+              <TimeDisplay auto="down" value={timeleft} /> ]
               <Minigame
                 key={i}
                 array={array}

@@ -5,17 +5,14 @@
 	icon_state = "connector"
 	var/obj/item/organ/cyberimp/cyberlink/parent_cyberlink
 	var/list/datum/hacking_minigame/game_list = list()
-	var/time_left = 0
+	var/current_timer_id = FALSE
 	var/obj/item/organ/cyberimp/cybernetic
 	var/mob/living/current_user
-	var/processing = FALSE
 
 /obj/item/cyberlink_connector/Destroy()
 	. = ..()
 	parent_cyberlink = null
 	cleanup()
-	STOP_PROCESSING(SSprocessing,src)
-	processing = FALSE
 
 ///We dont open the tgui when we click on this.
 /obj/item/cyberlink_connector/interact(mob/user)
@@ -69,7 +66,8 @@
 	current_user = null
 	cybernetic = null
 	QDEL_LIST(game_list)
-	processing = FALSE
+	deltimer(current_timer_id)
+	current_timer_id = FALSE
 
 /obj/item/cyberlink_connector/proc/hack_success(success as num)
 	for(var/info in cybernetic.encode_info)
@@ -113,8 +111,7 @@
 	dyn_explosion(get_turf(cybernetic),2,1)
 	qdel(src)
 
-/obj/item/cyberlink_connector/process(delta_time)
-
+/obj/item/cyberlink_connector/proc/game_update(end_game = FALSE)
 	var/finished = TRUE
 	var/failed = 0
 
@@ -125,17 +122,13 @@
 
 	if(finished)
 		hack_success(game_list.len)
-		return PROCESS_KILL
 
-	time_left -= delta_time
-
-	if(time_left <= 0)
+	if(end_game)
 		hack_failure(failed)
-		return PROCESS_KILL
 
 /obj/item/cyberlink_connector/ui_data(mob/user)
 	var/list/data = list()
-	data["timeleft"] = time_left
+	data["timeleft"] = current_timer_id ? timeleft(current_timer_id) : 0
 	for(var/datum/hacking_minigame/game in game_list)
 		data["games"] += list(game.get_simplified_image())
 	return data
@@ -143,10 +136,10 @@
 /obj/item/cyberlink_connector/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		if(!processing)
-			time_left = game_list.len * 10  - 2 * (game_list.len-1) + user.mind.get_skill_modifier(/datum/skill/implant_hacking, SKILL_TIME_MODIFIER)
+		if(!current_timer_id)
+			var/time_left = (game_list.len * 10  - 2 * (game_list.len-1) + user.mind.get_skill_modifier(/datum/skill/implant_hacking, SKILL_TIME_MODIFIER)) SECONDS
+			current_timer_id = addtimer(CALLBACK(src,.proc/game_update, TRUE),time_left,TIMER_STOPPABLE)
 			START_PROCESSING(SSprocessing,src)
-			processing = TRUE
 		ui = new(user, src, "Hacking", name)
 		ui.open()
 
@@ -163,5 +156,6 @@
 		if(game_list[minigame_id] && !game_list[minigame_id].finished)
 			game_list[minigame_id].board[xcord][ycord].rotate()
 			game_list[minigame_id].game_check()
+			game_update()
 		return TRUE
 
