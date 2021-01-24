@@ -50873,7 +50873,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "cRa" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/dark/visible,
 /obj/structure/cable,
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/engine,
@@ -51134,13 +51133,13 @@
 /area/chapel/main)
 "cRM" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/dark/visible{
-	dir = 10
-	},
 /obj/structure/cable,
 /obj/machinery/newscaster{
 	pixel_x = -32;
 	pixel_y = -30
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
@@ -51249,6 +51248,7 @@
 	name = "Secure Pen";
 	req_access_txt = "55"
 	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/engine,
 /area/science/cytology)
 "cSf" = (
@@ -51270,10 +51270,10 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/engine,
 /area/science/cytology)
 "cSj" = (
-/obj/machinery/atmospherics/pipe/simple/dark/visible,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 6
 	},
@@ -51298,16 +51298,13 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cSr" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
-	dir = 8
-	},
 /obj/effect/turf_decal/box/red,
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/science/cytology)
 "cSs" = (
-/obj/machinery/atmospherics/pipe/simple/dark/visible{
-	dir = 5
-	},
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
@@ -52783,6 +52780,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/dark/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/science/cytology)
