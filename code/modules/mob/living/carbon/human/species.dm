@@ -2042,10 +2042,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	flying_species = TRUE
 	if(wings_icons.len > 1)
 		var/list/wings = list()
-		for(W in wings_icons)
-			var/datum/sprite_accessory/S = GLOB.wings_list[W]
-			wings.Add(W = image(icon = 'icons/mob/clothing/wings.dmi', icon_state = "m_wingsopen_[{S.icon_state}]_BEHIND"))
-		wings_icon = show_radial_menu(user, src, wings, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+		for(var/W in wings_icons)
+			var/datum/sprite_accessory/S = GLOB.wings_list[W]	//Gets the datum for every wing this species has, then prompts user with a radial menu
+			var/image/img = image(icon = 'icons/mob/clothing/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND")	//Process the HUD elements
+			img.transform *= 0.5
+			img.pixel_x = -32
+			wings += list(S.name = img)
+		wings_icon = show_radial_menu(H, H, wings, tooltips = TRUE)
 	else
 		wings_icon = wings_icons[1]
 	if(isnull(fly))
