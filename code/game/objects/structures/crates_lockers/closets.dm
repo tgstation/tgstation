@@ -168,10 +168,14 @@
 	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
-	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_appearance()
+	after_open(user, force)
 	return TRUE
+
+///Proc to override for effects after opening a door
+/obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
+	return
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
 	if(contents.len >= storage_capacity)
@@ -219,11 +223,16 @@
 		return FALSE
 	take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
-	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
 	update_appearance()
+	after_close(user)
 	return TRUE
+
+///Proc to override for effects after closing a door
+/obj/structure/closet/proc/after_close(mob/living/user)
+	return
+
 
 /obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
