@@ -118,6 +118,7 @@
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
 	icon_state = "hair_beehive"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/beehive2
 	name = "Beehive 2"
@@ -126,6 +127,7 @@
 /datum/sprite_accessory/hair/bob
 	name = "Bob Hair"
 	icon_state = "hair_bob"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/bob2
 	name = "Bob Hair 2"
@@ -134,6 +136,7 @@
 /datum/sprite_accessory/hair/bob3
 	name = "Bob Hair 3"
 	icon_state = "hair_bobcut"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/bob4
 	name = "Bob Hair 4"
@@ -142,6 +145,7 @@
 /datum/sprite_accessory/hair/bobcurl
 	name = "Bobcurl"
 	icon_state = "hair_bobcurl"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/boddicker
 	name = "Boddicker"
@@ -158,6 +162,7 @@
 /datum/sprite_accessory/hair/braid
 	name = "Braid (Floorlength)"
 	icon_state = "hair_braid"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/braided
 	name = "Braided"
@@ -170,6 +175,7 @@
 /datum/sprite_accessory/hair/not_floorlength_braid
 	name = "Braid (High)"
 	icon_state = "hair_braid2"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/lowbraid
 	name = "Braid (Low)"
@@ -178,6 +184,7 @@
 /datum/sprite_accessory/hair/shortbraid
 	name = "Braid (Short)"
 	icon_state = "hair_shortbraid"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/braidtail
 	name = "Braided Tail"
@@ -190,6 +197,7 @@
 /datum/sprite_accessory/hair/bun2
 	name = "Bun Head 2"
 	icon_state = "hair_bunhead2"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/bun3
 	name = "Bun Head 3"
@@ -286,6 +294,7 @@
 /datum/sprite_accessory/hair/doublebun
 	name = "Double Bun"
 	icon_state = "hair_doublebun"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
@@ -294,10 +303,12 @@
 /datum/sprite_accessory/hair/drillhair
 	name = "Drillruru"
 	icon_state = "hair_drillruru"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/drillhairextended
 	name = "Drill Hair (Extended)"
 	icon_state = "hair_drillhairextended"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/emo
 	name = "Emo"
@@ -378,10 +389,12 @@
 /datum/sprite_accessory/hair/himecut
 	name = "Hime Cut"
 	icon_state = "hair_himecut"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/himecut2
 	name = "Hime Cut 2"
 	icon_state = "hair_himecut2"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/shorthime
 	name = "Hime Cut (Short)"
@@ -390,6 +403,7 @@
 /datum/sprite_accessory/hair/himeup
 	name = "Hime Updo"
 	icon_state = "hair_himeup"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/hitop
 	name = "Hitop"
@@ -398,6 +412,7 @@
 /datum/sprite_accessory/hair/jade
 	name = "Jade"
 	icon_state = "hair_jade"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/jensen
 	name = "Jensen Hair"
@@ -414,22 +429,27 @@
 /datum/sprite_accessory/hair/kusangi
 	name = "Kusanagi Hair"
 	icon_state = "hair_kusanagi"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/long
 	name = "Long Hair 1"
 	icon_state = "hair_long"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/long2
 	name = "Long Hair 2"
 	icon_state = "hair_long2"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/long3
 	name = "Long Hair 3"
 	icon_state = "hair_long3"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/long_over_eye
 	name = "Long Over Eye"
 	icon_state = "hair_longovereye"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/longbangs
 	name = "Long Bangs"
@@ -438,14 +458,17 @@
 /datum/sprite_accessory/hair/longemo
 	name = "Long Emo"
 	icon_state = "hair_longemo"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/longfringe
 	name = "Long Fringe"
 	icon_state = "hair_longfringe"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/sidepartlongalt
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/megaeyebrows
 	name = "Mega Eyebrows"
@@ -458,6 +481,7 @@
 /datum/sprite_accessory/hair/modern
 	name = "Modern"
 	icon_state = "hair_modern"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/mohawk
 	name = "Mohawk"
@@ -466,6 +490,7 @@
 /datum/sprite_accessory/hair/nitori
 	name = "Nitori"
 	icon_state = "hair_nitori"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/reversemohawk
 	name = "Mohawk (Reverse)"
@@ -486,18 +511,22 @@
 /datum/sprite_accessory/hair/odango
 	name = "Odango"
 	icon_state = "hair_odango"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/ombre
 	name = "Ombre"
 	icon_state = "hair_ombre"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/oneshoulder
 	name = "One Shoulder"
 	icon_state = "hair_oneshoulder"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/over_eye
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
@@ -514,18 +543,22 @@
 /datum/sprite_accessory/hair/kagami
 	name = "Pigtails"
 	icon_state = "hair_kagami"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/pigtail
 	name = "Pigtails 2"
 	icon_state = "hair_pigtails"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/pigtail2
 	name = "Pigtails 3"
 	icon_state = "hair_pigtails2"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
 	icon_state = "hair_pixie"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/pompadour
 	name = "Pompadour"
@@ -542,6 +575,7 @@
 /datum/sprite_accessory/hair/ponytail2
 	name = "Ponytail 2"
 	icon_state = "hair_ponytail2"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/ponytail3
 	name = "Ponytail 3"
@@ -550,6 +584,7 @@
 /datum/sprite_accessory/hair/ponytail4
 	name = "Ponytail 4"
 	icon_state = "hair_ponytail4"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/ponytail5
 	name = "Ponytail 5"
@@ -558,30 +593,37 @@
 /datum/sprite_accessory/hair/ponytail6
 	name = "Ponytail 6"
 	icon_state = "hair_ponytail6"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/ponytail7
 	name = "Ponytail 7"
 	icon_state = "hair_ponytail7"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/highponytail
 	name = "Ponytail (High)"
 	icon_state = "hair_highponytail"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/stail
 	name = "Ponytail (Short)"
 	icon_state = "hair_stail"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/longponytail
 	name = "Ponytail (Long)"
 	icon_state = "hair_longstraightponytail"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/countryponytail
 	name = "Ponytail (Country)"
 	icon_state = "hair_country"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/fringetail
 	name = "Ponytail (Fringe)"
 	icon_state = "hair_fringetail"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/sidetail
 	name = "Ponytail (Side)"
@@ -594,14 +636,17 @@
 /datum/sprite_accessory/hair/sidetail3
 	name = "Ponytail (Side) 3"
 	icon_state = "hair_sidetail3"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/sidetail4
 	name = "Ponytail (Side) 4"
 	icon_state = "hair_sidetail4"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/spikyponytail
 	name = "Ponytail (Spiky)"
 	icon_state = "hair_spikyponytail"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/poofy
 	name = "Poofy"
@@ -654,6 +699,7 @@
 /datum/sprite_accessory/hair/shorthair7
 	name = "Short Hair 7"
 	icon_state = "hair_shorthairg"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/shorthaireighties
 	name = "Short Hair 80s"
@@ -718,6 +764,7 @@
 /datum/sprite_accessory/hair/tressshoulder
 	name = "Tress Shoulder"
 	icon_state = "hair_tressshoulder"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/trimmed
 	name = "Trimmed"
@@ -730,6 +777,7 @@
 /datum/sprite_accessory/hair/twintails
 	name = "Twintails"
 	icon_state = "hair_twintail"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/undercut
 	name = "Undercut"
@@ -746,6 +794,7 @@
 /datum/sprite_accessory/hair/unkept
 	name = "Unkept"
 	icon_state = "hair_unkept"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/updo
 	name = "Updo"
@@ -754,14 +803,17 @@
 /datum/sprite_accessory/hair/longer
 	name = "Very Long Hair"
 	icon_state = "hair_vlong"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/longest
 	name = "Very Long Hair 2"
 	icon_state = "hair_longest"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/longest2
 	name = "Very Long Over Eye"
 	icon_state = "hair_longest2"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/veryshortovereye
 	name = "Very Short Over Eye"
@@ -770,6 +822,7 @@
 /datum/sprite_accessory/hair/longestalt
 	name = "Very Long with Fringe"
 	icon_state = "hair_vlongfringe"
+	gender = FEMALE
 
 /datum/sprite_accessory/hair/volaju
 	name = "Volaju"
@@ -778,6 +831,7 @@
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp"
 	icon_state = "hair_wisp"
+	gender = FEMALE
 
 /////////////////////////////
 // Facial Hair Definitions //
