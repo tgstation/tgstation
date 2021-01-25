@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Changelings will now show correct ID job icon on security huds upon transformation, if ID was actually equipped as a part of the flesh disguise. Upon reabsorbing the flesh disguise ID, the icon will also immediately disappear, so keep that in mind."
+  - bugfix: "Changeling flesh disguise IDs will now properly show overlays upon examine."
+  - bugfix: "Changeling flesh disguise will now properly include suit storage slot item, if there is any."
