@@ -102,7 +102,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/higher_injection_chance = 15
 
 	/// If below this threat, decrease the chance of injection
-	var/lower_injection_chance_minimum_threat = 30
+	var/lower_injection_chance_minimum_threat = 10
 
 	/// The chance of injection decrease when above lower_injection_chance_minimum_threat
 	var/lower_injection_chance = 15
@@ -121,7 +121,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Equivalent to threat_curve_centre, but for the budget split.
 	/// A negative value will weigh towards midround rulesets, and a positive
 	/// value will weight towards roundstart ones.
-	var/roundstart_split_curve_centre = 0
+	var/roundstart_split_curve_centre = 1
 
 	/// A number between 0.5 and 4.
 	/// Equivalent to threat_curve_width, but for the budget split.

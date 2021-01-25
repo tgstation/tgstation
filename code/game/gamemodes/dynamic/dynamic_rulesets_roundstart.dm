@@ -16,7 +16,7 @@
 	required_candidates = 1
 	weight = 5
 	cost = 8	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
-	scaling_cost = 5
+	scaling_cost = 9
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	antag_cap = list("denominator" = 24)
 	var/autotraitor_cooldown = (15 MINUTES)
@@ -104,7 +104,7 @@
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
-	cost = 12
+	cost = 16
 	scaling_cost = 10
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	antag_cap = list("denominator" = 29)
@@ -142,7 +142,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 15
-	scaling_cost = 5
+	scaling_cost = 9
 	requirements = list(50,45,45,40,35,20,20,15,10,10)
 	antag_cap = list("denominator" = 24)
 
@@ -371,7 +371,7 @@
 	minimum_required_age = 14
 	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
-	weight = 2
+	weight = 3
 	delay = 7 MINUTES
 	cost = 20
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
