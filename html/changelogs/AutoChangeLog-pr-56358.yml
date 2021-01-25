@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "If you manage to start fusion in the HFR without starting the cooling process, you can now start cooling and interact with the process as usual, rather than being softlocked. You still aren't able to disable cooling once fusion has started."
