@@ -15,6 +15,9 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
+/turf/open/floor/plating/dirt/setup_broken_states()
+	return list("dirt")
+
 /turf/open/floor/plating/dirt/dark
 	icon_state = "greenerdirt"
 	base_icon_state = "greenerdirt"
@@ -39,6 +42,9 @@
 	slowdown = 1
 	var/floor_variance = 15
 
+/turf/open/floor/plating/dirt/jungle/wasteland/setup_broken_states()
+	return list("[initial(icon_state)]0")
+
 /turf/open/floor/plating/dirt/jungle/wasteland/Initialize()
 	.=..()
 	if(prob(floor_variance))
@@ -53,6 +59,9 @@
 	icon_state = "junglegrass"
 	base_icon_state = "junglegrass"
 	smooth_icon = 'icons/turf/floors/junglegrass.dmi'
+
+/turf/open/floor/plating/grass/jungle/setup_broken_states()
+	return list("junglegrass")
 
 /turf/closed/mineral/random/jungle
 	mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,

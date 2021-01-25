@@ -9943,7 +9943,9 @@
 	name = "Psychology APC";
 	pixel_y = 24
 	},
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	name = "Big Moffer"
+	},
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "aqQ" = (
@@ -88205,7 +88207,7 @@
 /obj/effect/turf_decal/tile/red,
 /obj/item/toy/plush/pkplush{
 	desc = "Give HUG-E a hug!";
-	name = "Therapy Plush"
+	name = "TH3R4PY-X09"
 	},
 /obj/machinery/flasher{
 	id = "IsolationFlash";

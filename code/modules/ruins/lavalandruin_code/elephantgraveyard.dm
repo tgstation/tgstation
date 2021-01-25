@@ -40,6 +40,9 @@
 	slowdown = 0.5
 	floor_variance = 30
 
+/turf/open/floor/plating/asteroid/basalt/wasteland/setup_broken_states()
+	return list("wasteland")
+
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()
 	if(prob(floor_variance))

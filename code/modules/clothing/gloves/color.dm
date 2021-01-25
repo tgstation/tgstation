@@ -23,7 +23,7 @@
 	if(iscarbon(target) && proximity)
 		var/mob/living/carbon/C = target
 		var/mob/living/carbon/U = user
-		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, TRUE, TRUE)
+		var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
 		if(success)
 			if(C == user)
 				C.visible_message("<span class='notice'>[U] sprays their hands with glittery rubber!</span>")
@@ -32,33 +32,33 @@
 		else
 			C.visible_message("<span class='warning'>The rubber fails to stick to [C]'s hands!</span>")
 
-		qdel(src)
-
 /obj/item/clothing/gloves/color/yellow/sprayon
 	desc = "How're you gonna get 'em off, nerd?"
 	name = "spray-on insulated gloves"
 	icon_state = "sprayon"
 	inhand_icon_state = "sprayon"
+	item_flags = DROPDEL
 	permeability_coefficient = 0
 	resistance_flags = ACID_PROOF
-	var/shocks_remaining = 10
+	var/charges_remaining = 10
 
 /obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
 	.=..()
-	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/Shocked)
+	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/use_charge)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/use_charge)
 
-/obj/item/clothing/gloves/color/yellow/sprayon/proc/Shocked()
-	shocks_remaining--
-	if(shocks_remaining < 0)
-		qdel(src) //if we run out of uses, the gloves crumble away into nothing, just like my dreams after working with .dm
+/obj/item/clothing/gloves/color/yellow/sprayon/proc/use_charge()
+	SIGNAL_HANDLER
 
-/obj/item/clothing/gloves/color/yellow/sprayon/dropped()
-	.=..()
-	qdel(src) //loose nodrop items bad
+	charges_remaining--
+	if(charges_remaining <= 0)
+		var/turf/location = get_turf(src)
+		location.visible_message("<span class='warning'>[src] crumble[p_s()] away into nothing.</span>") // just like my dreams after working with .dm
+		qdel(src)
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
@@ -187,26 +187,17 @@
 	inhand_icon_state = "latex"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
+	clothing_traits = list(TRAIT_QUICK_CARRY)
 	transfer_prints = TRUE
 	resistance_flags = NONE
-	var/carrytrait = TRAIT_QUICK_CARRY
-
-/obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
-	..()
-	if(slot == ITEM_SLOT_GLOVES)
-		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
-
-/obj/item/clothing/gloves/color/latex/dropped(mob/user)
-	..()
-	REMOVE_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
 	desc = "Pricy sterile gloves that are thicker than latex. Transfers intimate paramedic knowledge into the user via nanochips."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
+	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	transfer_prints = FALSE
-	carrytrait = TRAIT_QUICKER_CARRY
 
 /obj/item/clothing/gloves/color/latex/nitrile/infiltrator
 	name = "infiltrator gloves"
@@ -225,7 +216,7 @@
 	inhand_icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0.8
 	permeability_coefficient = 0.3
-	carrytrait = TRAIT_QUICK_BUILD
+	clothing_traits = list(TRAIT_QUICK_BUILD)
 	custom_materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
 
 /obj/item/clothing/gloves/color/white
