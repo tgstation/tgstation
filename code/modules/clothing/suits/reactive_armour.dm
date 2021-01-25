@@ -36,7 +36,7 @@
 	///Message sent when the armor is still on cooldown, but activates.
 	var/cooldown_message = "<span class='danger'>The reactive armor fails to do much, as it is recharging! From what? Only the reactive armor knows.</span>"
 	///Duration of the cooldown specific to reactive armor for when it can activate again.
-	var/reactivearmor_cooldown_duration = 10 SECONDS
+	var/reactivearmor_cooldown_duration = 0
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"
@@ -111,6 +111,7 @@
 	desc = "Someone separated our Research Director from his own head!"
 	emp_message = "<span class='warning'>The reactive armor's teleportation calculations begin spewing errors!</span>"
 	cooldown_message = "<span class='danger'>The reactive teleport system is still recharging! It fails to activate!</span>"
+	reactivearmor_cooldown_duration = 10 SECONDS
 	var/tele_range = 6
 	var/rad_amount= 15
 
