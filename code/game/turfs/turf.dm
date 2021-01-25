@@ -167,24 +167,31 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
 /**
- * Check whether the specified turf is blocked by something dense inside it.
+ * Check whether the specified turf is blocked by something dense inside it with respect to a specific atom.
  *
- * Returns TRUE if the turf is blocked, FALSE otherwise.
+ * Returns truthy value TURF_BLOCKED_TURF_DENSE if the turf is blocked because the turf itself is dense.
+ * Returns truthy value TURF_BLOCKED_CONTENT_DENSE if one of the turf's contents is dense and would block
+ * a source atom's movement.
+ * Returns falsey value TURF_NOT_BLOCKED if the turf is not blocked.
  *
  * Arguments:
  * * exclude_mobs - If TRUE, ignores dense mobs on the turf.
- * * source_atom - If you're checking if the turf an atom is on is blocked, this will let you exclude the atom from this check so it doesn't block itself with its own density.
+ * * source_atom - If this is not null, will check whether any contents on the turf can block this atom specifically. Also ignores itself on the turf.
+ * * ignore_atoms - Check will ignore any atoms in this list. Useful to prevent an atom from blocking itself on the turf.
  */
-/turf/proc/is_blocked_turf(exclude_mobs, source_atom)
+/turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms)
 	if(density)
 		return TRUE
-	for(var/i in contents)
-		var/atom/movable/thing = i
-		if(thing == source_atom)
+
+	for(var/content in contents)
+		// We don't want to block ourselves or consider any ignored atoms.
+		if((content == source_atom) || (content in ignore_atoms))
 			continue
+
+		var/atom/atom_content = content
 		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
 		// it cannot pass through the thing on the turf, we consider the turf blocked.
-		if(thing.density && (!exclude_mobs || !ismob(thing)) && (source_atom && !thing.CanPass(source_atom, src)))
+		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)) && (source_atom && !atom_content.CanPass(source_atom, src)))
 			return TRUE
 	return FALSE
 

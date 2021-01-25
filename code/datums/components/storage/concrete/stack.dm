@@ -35,7 +35,7 @@
 		var/obj/item/stack/_S = i
 		if(!istype(_S))
 			continue
-		if(_S.merge_type == S.merge_type)
+		if(S.can_merge(_S))
 			_S.add(can_insert)
 			S.use(can_insert, TRUE)
 			return TRUE

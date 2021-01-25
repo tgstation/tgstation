@@ -7,7 +7,6 @@
 	density = TRUE
 	layer = LOW_ITEM_LAYER
 	anchored = TRUE
-	climbable = TRUE
 	pass_flags_self = PASSGLASS
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs //list of directions this tube section can connect to.
@@ -20,6 +19,7 @@
 		setDir(newdirection)
 	init_tube_dirs()
 	generate_tube_overlays()
+	AddElement(/datum/element/climbable)
 
 /obj/structure/transit_tube/Destroy()
 	for(var/obj/structure/transit_tube_pod/P in loc)

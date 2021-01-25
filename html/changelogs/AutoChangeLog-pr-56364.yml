@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "The Crew Monitor should no longer stop functioning when Doctor Hilbert hangs out in nullspace, and should continue to work despite any similar errors in the future."
