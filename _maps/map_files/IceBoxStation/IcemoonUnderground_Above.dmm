@@ -296,10 +296,6 @@
 /area/mine/laborcamp)
 "aT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/secure/engineering{
-	locked = 0;
-	req_access = list(10)
-	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aU" = (
@@ -338,6 +334,7 @@
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
 /obj/structure/closet/crate/secure/freezer{
+	name = "secure pizza crate";
 	req_access = list(28);
 	tamperproof = 1
 	},
