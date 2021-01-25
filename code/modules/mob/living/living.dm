@@ -1903,7 +1903,7 @@
 /mob/living/proc/apply_martial_art(mob/living/target)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
 		return FALSE
-	if(ishuman(target)) //Human vs human are handled in species code
+	if(ishuman(target) && ishuman(src)) //Human vs human are handled in species code
 		return FALSE
 	var/datum/martial_art/style = mind?.martial_art
 	var/attack_result = FALSE
