@@ -324,11 +324,17 @@
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/storage/fancy,
+		/obj/item/storage/box/gum,
+		/obj/item/storage/box/matches,
 		/obj/item/food,
-		/obj/item/kitchen/knife,
-		/obj/item/kitchen/rollingpin,
-		/obj/item/kitchen/fork,
-		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, and Kitchen Tools.
+		/obj/item/trash,
+		/obj/item/lighter,
+		/obj/item/rollingpaper,
+		/obj/item/kitchen,
+		/obj/item/organ,
+		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	STR.insert_preposition = "on"
 	STR.max_items = 7
 
