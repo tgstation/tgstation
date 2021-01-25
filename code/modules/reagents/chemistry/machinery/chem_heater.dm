@@ -118,6 +118,7 @@
 	return ..()
 
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions)
+	SIGNAL_HANDLER
 	for(var/ui_client in ui_client_list)
 		var/datum/tgui/ui = ui_client
 		if(!ui)
