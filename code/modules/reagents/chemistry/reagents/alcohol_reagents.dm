@@ -476,12 +476,34 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 25
-	quality = DRINK_VERYGOOD
+	quality = DRINK_NICE  // teenager girls think it's DRINK_VERYGOOD
 	taste_description = "burning cinnamon"
 	glass_icon_state = "goldschlagerglass"
 	glass_name = "glass of goldschlager"
 	glass_desc = "100% proof that teen girls will drink anything with gold in it."
 	shot_glass_icon_state = "shotglassgold"
+
+/datum/reagent/consumable/ethanol/goldschlager/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	// Reset quality if someone's sharing the bottle
+	quality = initial(quality)
+
+	if(ishuman(exposed_mob))
+		var/mob/living/carbon/human/human = exposed_mob
+		// tgstation13 does not endorse underage drinking. laws may vary by your jurisdiction.
+		if(human.age >= 13 && human.age <= 19 && human.gender == FEMALE)
+			quality = DRINK_VERYGOOD
+
+	return ..()
+
+/datum/reagent/consumable/ethanol/goldschlager/on_transfer(atom/A, methods = TOUCH, trans_volume)
+	if(!(methods & INGEST))
+		return
+
+	// 1/11 is the amount of gold required to react in [/datum/chemical_reaction/goldschlager]
+	var/convert_amount = trans_volume * (1 / 11)
+	A.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
+	A.reagents.add_reagent(/datum/reagent/gold, convert_amount)
+	. = ..()
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
