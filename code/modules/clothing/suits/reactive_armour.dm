@@ -36,7 +36,7 @@
 	///Message sent when the armor is still on cooldown, but activates.
 	var/cooldown_message = "<span class='danger'>The reactive armor fails to do much, as it is recharging! From what? Only the reactive armor knows.</span>"
 	///Duration of the cooldown specific to reactive armor for when it can activate again.
-	var/reactivearmor_cooldown_duration = 0
+	var/reactivearmor_cooldown_duration = 10 SECONDS
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"
@@ -110,12 +110,12 @@
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
 	emp_message = "<span class='warning'>The reactive armor's teleportation calculations begin spewing errors!</span>"
+	cooldown_message = "<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [owner]!</span>"
 	var/tele_range = 6
 	var/rad_amount= 15
-	reactivearmor_cooldown_duration = 10 SECONDS
 
 /obj/item/clothing/suit/armor/reactive/teleport/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>The reactive teleport system flings [owner] clear of [attack_text], shutting itself off in the process!</span>")
+	owner.visible_message("<span class='danger'>The reactive teleport system flings [owner] clear of [attack_text]!</span>")
 	playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	owner.rad_act(rad_amount)
@@ -123,7 +123,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/teleport/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>The reactive teleport system ALMOST flings [owner] clear of [attack_text], shutting itself off and leaving something behind in the process!</span>")
+	owner.visible_message("<span class='danger'>The reactive teleport system ALMOST flings [owner] clear of [attack_text], leaving something behind in the process!</span>")
 	var/drop_organ = prob(50)
 	if(drop_organ)
 		owner.spew_organ(0)
@@ -158,7 +158,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/fire/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>[src] just makes [attack_text] worse, by spewing molten death on [owner]!</span>")
+	owner.visible_message("<span class='danger'>[src] just makes [attack_text] worse by spewing molten death on [owner]!</span>")
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 	owner.adjust_fire_stacks(12)
 	owner.IgniteMob()
@@ -172,22 +172,30 @@
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 	cooldown_message = "<span class='danger'>The reactive stealth system activates, but is not charged enough to fully cloak!</span>"
 	emp_message = "<span class='warning'>The reactive stealth armor's threat assessment system crashes...</span>"
+	var/in_stealth = FALSE
 
 /obj/item/clothing/suit/armor/reactive/stealth/cooldown_activation(mob/living/carbon/human/owner)
+	if(in_stealth)
+		return //we don't want the cooldown message either)
 	owner.alpha = max(0, owner.alpha - 50)
 	animate(owner, alpha = initial(owner.alpha), time = 3 SECONDS)
 	..()
 
 /obj/item/clothing/suit/armor/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
-	E.Copy_Parent(owner, 50)
-	E.GiveTarget(owner) //so it starts running right away
-	E.Goto(owner, E.move_to_delay, E.minimum_distance)
+	var/mob/living/simple_animal/hostile/illusion/escape/decoy = new(owner.loc)
+	decoy.Copy_Parent(owner, 50)
+	decoy.GiveTarget(owner) //so it starts running right away
+	decoy.Goto(owner, decoy.move_to_delay, decoy.minimum_distance)
 	owner.alpha = 0
+	in_stealth = TRUE
 	owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
-	addtimer(VARSET_CALLBACK(owner, alpha, initial(owner.alpha)), 4 SECONDS)
+	addtimer(CALLBACK(src, .proc/end_stealth), 4 SECONDS)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/stealth/proc/end_stealth()
+	in_stealth = FALSE
+	animate(owner, alpha = initial(owner.alpha), time = 2 SECONDS)
 
 /obj/item/clothing/suit/armor/reactive/stealth/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!isliving(hitby))
@@ -253,14 +261,14 @@
 /obj/item/clothing/suit/armor/reactive/repulse/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
 	owner.visible_message("<span class='danger'>[src] blocks [attack_text], converting the attack into a wave of force!</span>")
-	var/turf/T = get_turf(owner)
+	var/turf/owner_turf = get_turf(owner)
 	var/list/thrown_items = list()
-	for(var/atom/movable/A in range(T, 7))
-		if(A == owner || A.anchored || thrown_items[A])
+	for(var/atom/movable/repulsed in range(owner_turf, 7))
+		if(repulsed == owner || repulsed.anchored || thrown_items[repulsed])
 			continue
-		var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(A, T)))
-		A.safe_throw_at(throwtarget, 10, 1, force = repulse_force)
-		thrown_items[A] = A
+		var/throwtarget = get_edge_target_turf(owner_turf, get_dir(T, get_step_away(repulsed, T)))
+		repulsed.safe_throw_at(throwtarget, 10, 1, force = repulse_force)
+		thrown_items[repulsed] = repulsed
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
@@ -268,14 +276,13 @@
 /obj/item/clothing/suit/armor/reactive/repulse/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
 	owner.visible_message("<span class='danger'>[src] does not block [attack_text], instead generating an attracting force!</span>")
-	var/turf/T = get_turf(owner)
+	var/turf/owner_turf = get_turf(owner)
 	var/list/thrown_items = list()
-	for(var/atom/movable/A in range(T, 7))
-		if(A == owner || A.anchored || thrown_items[A])
+	for(var/atom/movable/repulsed in range(owner_turf, 7))
+		if(repulsed == owner || repulsed.anchored || thrown_items[repulsed])
 			continue
-		var/throwtarget = owner
-		A.safe_throw_at(throwtarget, 10, 1, force = repulse_force)
-		thrown_items[A] = A
+		repulsed.safe_throw_at(owner, 10, 1, force = repulse_force)
+		thrown_items[repulsed] = repulsed
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return FALSE
@@ -303,9 +310,8 @@
 /obj/item/clothing/suit/armor/reactive/table/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message("<span class='danger'>The reactive teleport system flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated glass table!</span>")
 	owner.visible_message("<font color='red' size='3'>[owner] GOES ON THE GLASS TABLE!!!</font>")
-	var/turf/T = get_turf(owner)
-	do_teleport(owner, T, tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
-	var/obj/structure/table/glass/shattering_table = new /obj/structure/table/glass(T)
+	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
+	var/obj/structure/table/glass/shattering_table = new /obj/structure/table/glass(get_turf(owner))
 	shattering_table.table_shatter(owner)
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
