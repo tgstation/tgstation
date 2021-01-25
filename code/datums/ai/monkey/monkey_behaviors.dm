@@ -25,6 +25,10 @@
 		finish_action(controller, FALSE)
 		return
 
+	if(HAS_TRAIT(target, TRAIT_NEEDS_TWO_HANDS)) //Can't carry items that need two hands as a monkey
+		finish_action(controller, FALSE)
+		return
+
 	if(target.anchored) //Can't pick it up, so stop trying.
 		finish_action(controller, FALSE)
 		return
