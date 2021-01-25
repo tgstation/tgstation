@@ -389,7 +389,7 @@
 
 	var/mob/living/silicon/robot/R = loc
 	if(istype(R))
-		for(var/ch_name in R.module.radio_channels)
+		for(var/ch_name in R.model.radio_channels)
 			channels[ch_name] = 1
 
 /obj/item/radio/borg/syndicate
