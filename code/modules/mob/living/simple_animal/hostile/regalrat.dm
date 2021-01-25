@@ -1,7 +1,3 @@
-#define MINOR_HEAL 10
-#define MEDIUM_HEAL 35
-#define MAJOR_HEAL 70
-
 /mob/living/simple_animal/hostile/regalrat
 	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
@@ -91,51 +87,17 @@
 		heal_bodypart_damage(1)
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (DOING_INTERACTION(user, "regalrat"))
+	if (DOING_INTERACTION(src, "regalrat"))
 		return
 	. = ..()
-	if(istype(target, /obj/machinery/disposal))
-		src.visible_message("<span class='warning'>[src] starts rummaging through the [target].</span>","<span class='notice'>You rummage through the [target]...</span>")
-		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
-			var/loot = rand(1,100)
-			switch(loot)
-				if(1 to 5)
-					to_chat(src, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
-					var/pickedcoin = pick(GLOB.ratking_coins)
-					for(var/i = 1 to rand(1,3))
-						new pickedcoin(get_turf(src))
-				if(6 to 33)
-					say(pick("Treasure!","Our precious!","Cheese!"))
-					to_chat(src, "<span class='notice'>Score! You find some cheese!</span>")
-					new /obj/item/food/cheesewedge(get_turf(src))
-				else
-					var/pickedtrash = pick(GLOB.ratking_trash)
-					to_chat(src, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
-					new pickedtrash(get_turf(src))
-		return
-	else if (target.reagents && isobj(target) && target.is_injectable(src, TRUE))
+	if (target.reagents && target.is_injectable(src, TRUE))
 		src.visible_message("<span class='warning'>[src] starts licking [target] passionately!</span>","<span class='notice'>You start licking [target]...</span>")
 		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
 		return
 	else 
-		switch (target.type)
-			if (/obj/structure/cable)
-				var/obj/structure/cable/coil = target
-				if(coil.avail())
-					apply_damage(10)
-					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
-				coil.deconstruct()
-
-			if(/obj/item/food/cheesewedge)
-				cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
-				
-			if(/obj/item/food/cheesewheel)
-				cheese_heal(target, MEDIUM_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
-
-			if(/obj/item/food/royalcheese)
-				cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
+		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
@@ -330,18 +292,13 @@
 
 /mob/living/simple_animal/hostile/rat/AttackingTarget()
 	. = ..()
-	if(istype(target, /obj/item/food/cheesewedge))
+	if(istype(target, /obj/item/food/cheese))
 		if (health >= maxHealth)
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(MINOR_HEAL)
+		heal_bodypart_damage(maxHealth)
 		qdel(target)
-
-#undef MINOR_HEAL
-#undef MEDIUM_HEAL
-#undef MAJOR_HEAL
-
 
 
 /**

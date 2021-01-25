@@ -46,6 +46,17 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
+
+/obj/structure/cable/proc/on_rat_eat(mob/living/L)
+	SIGNAL_HANDLER
+	
+	var/mob/living/simple_animal/hostile/regalrat/king = L
+	if (istype(king))
+		if(avail())
+			king.apply_damage(10)
+			playsound(king, 'sound/effects/sparks2.ogg', 100, TRUE)
+		deconstruct()
 
 
 ///Set the linked indicator bitflags

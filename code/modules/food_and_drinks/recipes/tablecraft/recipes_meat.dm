@@ -243,7 +243,7 @@
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/tomato = 1,
-		/obj/item/food/cheesewedge = 2,
+		/obj/item/food/cheese = 2,
 		/obj/item/food/spaghetti = 1
 	)
 	result = /obj/item/food/lasagna
