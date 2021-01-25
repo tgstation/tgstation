@@ -110,7 +110,7 @@
 	name = "reactive teleport armor"
 	desc = "Someone separated our Research Director from his own head!"
 	emp_message = "<span class='warning'>The reactive armor's teleportation calculations begin spewing errors!</span>"
-	cooldown_message = "<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [owner]!</span>"
+	cooldown_message = "<span class='danger'>The reactive teleport system is still recharging! It fails to activate!</span>"
 	var/tele_range = 6
 	var/rad_amount= 15
 
@@ -189,11 +189,11 @@
 	owner.alpha = 0
 	in_stealth = TRUE
 	owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
-	addtimer(CALLBACK(src, .proc/end_stealth), 4 SECONDS)
+	addtimer(CALLBACK(src, .proc/end_stealth, owner), 4 SECONDS)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armor/reactive/stealth/proc/end_stealth()
+/obj/item/clothing/suit/armor/reactive/stealth/proc/end_stealth(mob/living/carbon/human/owner)
 	in_stealth = FALSE
 	animate(owner, alpha = initial(owner.alpha), time = 2 SECONDS)
 
@@ -266,7 +266,7 @@
 	for(var/atom/movable/repulsed in range(owner_turf, 7))
 		if(repulsed == owner || repulsed.anchored || thrown_items[repulsed])
 			continue
-		var/throwtarget = get_edge_target_turf(owner_turf, get_dir(T, get_step_away(repulsed, T)))
+		var/throwtarget = get_edge_target_turf(owner_turf, get_dir(owner_turf, get_step_away(repulsed, owner_turf)))
 		repulsed.safe_throw_at(throwtarget, 10, 1, force = repulse_force)
 		thrown_items[repulsed] = repulsed
 
