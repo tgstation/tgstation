@@ -286,7 +286,8 @@
 
 /obj/item/pizzabox/bomb/Initialize()
 	var/randompizza = pick(subtypesof(/obj/item/food/pizza))
-	pizza = new randompizza(src)
+	if(!pizza)
+		pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)
 	return ..()
@@ -295,6 +296,10 @@
 	. = ..()
 	bomb_timer = 5
 	bomb_defused = FALSE
+	pizza = new /obj/item/food/pizza/meat
+	boxtag = "Meat Explosion"
+	boxtag_set = TRUE
+	update_icon()
 
 /obj/item/pizzabox/margherita
 	pizza = new /obj/item/food/pizza/margherita
