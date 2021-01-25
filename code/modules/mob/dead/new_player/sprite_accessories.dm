@@ -575,7 +575,7 @@
 /datum/sprite_accessory/hair/ponytail2
 	name = "Ponytail 2"
 	icon_state = "hair_ponytail2"
-	gender = FEMALE
+	gender = NEUTER
 
 /datum/sprite_accessory/hair/ponytail3
 	name = "Ponytail 3"
@@ -584,7 +584,7 @@
 /datum/sprite_accessory/hair/ponytail4
 	name = "Ponytail 4"
 	icon_state = "hair_ponytail4"
-	gender = FEMALE
+	gender = NEUTER
 
 /datum/sprite_accessory/hair/ponytail5
 	name = "Ponytail 5"
@@ -593,7 +593,7 @@
 /datum/sprite_accessory/hair/ponytail6
 	name = "Ponytail 6"
 	icon_state = "hair_ponytail6"
-	gender = FEMALE
+	gender = NEUTER
 
 /datum/sprite_accessory/hair/ponytail7
 	name = "Ponytail 7"
