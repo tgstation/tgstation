@@ -2,7 +2,7 @@
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
 
-/obj/item/food/cheese/cheese/wheel
+/obj/item/food/cheese/wheel
 	name = "cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
@@ -43,12 +43,10 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
-/obj/item/food/cheese/proc/on_rat_eat(mob/living/L)
+/obj/item/food/cheese/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
-	var/mob/living/simple_animal/hostile/regalrat/king = L
-	if (istype(king))
-		king.cheese_heal(src, rat_heal, "<span class='green'>You eat [src], restoring some health.</span>")
+	king.cheese_heal(src, rat_heal, "<span class='green'>You eat [src], restoring some health.</span>")
 
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
