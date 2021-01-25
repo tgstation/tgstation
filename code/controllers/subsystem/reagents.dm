@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(reagents)
 
 //Comment to delete: I don't really understand SS that well. Please review me
 /datum/controller/subsystem/reagents/stat_entry(msg)
-	msg = "reagents:[length(processing)]"
+	msg = "P:[length(processing)]"
 	. = ..()
 
 /datum/controller/subsystem/reagents/fire(resumed = FALSE)
