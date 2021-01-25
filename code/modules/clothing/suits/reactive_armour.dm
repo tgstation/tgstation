@@ -39,6 +39,8 @@
 	var/reactivearmor_cooldown_duration = 0
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
+	///And what the icon is set to when the reactive armor is on
+	var/reactive_icon = "reactive"
 	icon_state = "reactiveoff"
 	inhand_icon_state = "reactiveoff"
 	blood_overlay_type = "armor"
@@ -49,16 +51,20 @@
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !(active)
-	if(active)
-		to_chat(user, "<span class='notice'>[src] is now active.</span>")
-		icon_state = "reactive"
-		inhand_icon_state = "reactive"
-	else
-		to_chat(user, "<span class='notice'>[src] is now inactive.</span>")
-		icon_state = "reactiveoff"
-		inhand_icon_state = "reactiveoff"
 	add_fingerprint(user)
-	return
+	if(active)
+		if(!activate_effect(user))
+			return
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
+		icon_state = reactive_icon
+		inhand_icon_state = reactive_icon
+	else
+		if(!deactivate_effect(user))
+			return
+		to_chat(user, "<span class='notice'>[src] is now inactive.</span>")
+		icon_state = initial(icon_state)
+		inhand_icon_state = initial(icon_state)
+	user.update_inv_wear_suit() //so if they set it while wearing it, it updates the icon
 
 /obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 	if(!active || !prob(hit_reaction_chance))
@@ -70,6 +76,20 @@
 		. = emp_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 	else
 		. = reactive_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+
+/**
+ * Small proc for effects that happen when you activate the armor.
+ * Returning FALSE cancels the activation.
+ */
+/obj/item/clothing/suit/armor/reactive/proc/activate_effect(mob/living/carbon/human/owner)
+	return TRUE
+
+/**
+ * Small proc for effects that happen when you deactivate the armor.
+ * Returning FALSE cancels the deactivation, but try to avoid this obviously for gameplay reasons
+ */
+/obj/item/clothing/suit/armor/reactive/proc/deactivate_effect(mob/living/carbon/human/owner)
+	return TRUE
 
 /**
  * A proc for doing cooldown effects (like the sparks on the tesla armor, or the semi-stealth on stealth armor)
@@ -143,28 +163,113 @@
 
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
-	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
+	desc = "An experimental suit of armor with a reactive sensor array rigged to flame jet gloves. Pyromania with style AND percision, just in case you don't want to burn down your entire department like the first model did."
+	reactive_icon = "reactive_flame"
+	icon_state = "reactiveoff_flame"
+	inhand_icon_state = "reactiveoff_flame"
 	cooldown_message = "<span class='danger'>The reactive incendiary armor activates, but fails to send out flames as it is still recharging its flame jets!</span>"
-	emp_message = "<span class='warning'>The reactive incendiary armor's targetting system begins rebooting...</span>"
+	emp_message = "<span class='warning'>The reactive incendiary armor's flame jets lock shut...</span>"
+	var/obj/item/clothing/gloves/flame_jets/gloves
+	var/broken = FALSE
+
+/obj/item/clothing/suit/armor/reactive/fire/Initialize()
+	. = ..()
+	gloves = new(src)
+	RegisterSignal(gloves, COMSIG_PARENT_PREQDELETED, .proc/armor_broken)
+
+/obj/item/clothing/suit/armor/reactive/fire/Destroy()
+	. = ..()
+	if(gloves)
+		QDEL_NULL(gloves)
+
+/obj/item/clothing/suit/armor/reactive/fire/proc/armor_broken(datum/source, force)
+	SIGNAL_HANDLER
+
+	if(isliving(loc))
+		var/mob/living/user = loc
+		to_chat(user, "<span class='danger'>[src]'s gloves are destroyed, breaking the reactive armor!</span>")
+		attack_self(user)
+
+/obj/item/clothing/suit/armor/reactive/fire/activate_effect(mob/living/carbon/human/owner)
+	if(broken)
+		to_chat(owner, "<span class='warning'>The flame jets are broken, preventing you from using this armor!</span>")
+		return FALSE
+	if(!ishuman(owner))
+		to_chat(owner, "<span class='warning'>The machine cannot fit the reactive incendiary gloves on you!</span>")
+		return FALSE
+	if(!owner.equip_to_slot_if_possible(gloves, ITEM_SLOT_GLOVES, bypass_equip_delay_self = TRUE))
+		to_chat(owner, "<span class='warning'>Something is blocking the machine from equipping the reactive incendiary gloves on you!</span>")
+		return FALSE
+	owner.visible_message("<span class='notice'>[src] extends some metal gauntlets and they lock around [owner]'s hands!</span>")
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/fire/deactivate_effect(mob/living/carbon/human/owner)
+	if(gloves)
+		owner.visible_message("<span class='notice'>[src] disengages [gloves] from you.</span>")
+		user.transferItemToLoc(O, src, force = TRUE) //force allows it to move despite being nodrop
+	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out jets of flame!</span>")
-	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
-	for(var/mob/living/carbon/C in range(6, owner))
-		if(C != owner)
-			C.adjust_fire_stacks(8)
-			C.IgniteMob()
-	owner.set_fire_stacks(-20)
-	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	owner.drop_all_held_items()
+	var/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/flame_jets/jets = new
+	if(!owner.put_in_hands(jets))
+		owner.visible_message("<span class='danger'>[src] attempts to react, but the flame jets are blocked by what [owner] is holding!</span>")
+		return FALSE
+	owner.visible_message("<span class='danger'>[src] blocks [attack_text], opening the flame jets!</span>")
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/fire/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>[src] just makes [attack_text] worse by spewing molten death on [owner]!</span>")
+	owner.visible_message("<span class='danger'>[src] just makes [attack_text] worse by jamming and rupturing, releasing molten death on [owner]!</span>")
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 	owner.adjust_fire_stacks(12)
 	owner.IgniteMob()
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return FALSE
+
+/obj/item/clothing/gloves/flame_jets
+	name = "reactive incendiary gauntlets"
+	desc = "A pair of metal gauntlets that are hooked up to the reactive incendiary armor. When threatened, you will be able to spew flame from them... In theory!"
+	icon_state = "flamejet"
+	inhand_icon_state = "blackgloves"
+	permeability_coefficient = 0.9
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
+
+/obj/item/clothing/gloves/flame_jets/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, "flame jets")
+
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/flame_jets
+	name = "active flame jets"
+	desc = "Taking \"reactive armor\" into your own hands."
+	fire_sound = 'sound/magic/fireball.ogg'
+	icon_state = "flamejet"
+	guns_left = 6
+	inhand_icon_state = "flamejet"
+
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/flame_jet
+
+/obj/item/ammo_box/magazine/internal/boltaction/enchanted/flame_jet
+	ammo_type = /obj/item/ammo_casing/magic/flame_jet
+
+/obj/item/ammo_casing/magic/flame_jet
+	projectile_type = /obj/projectile/magic/flame_jet
+
+/obj/projectile/flame_jet
+	name = "flame jet"
+	icon_state = "pulse0"
+	damage = 5
+	damage_type = BURN
+	armour_penetration = 0
+	hitsound = 'sound/weapons/barragespellhit.ogg'
+
+/obj/projectile/flame_jet/on_hit(target)
+	if(isliving(target))
+		var/mob/living/burning_living = target
+		burning_living.adjust_fire_stacks(2)
+		burning_living.IgniteMob()
 
 //Stealth
 
