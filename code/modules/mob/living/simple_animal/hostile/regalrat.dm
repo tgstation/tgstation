@@ -30,8 +30,6 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	unique_name = TRUE
 	faction = list("rat")
-	//check if the rat is busy/rummaging through stuff, as to prevent multitasking
-	var/busy = FALSE
 	///The spell that the rat uses to generate miasma
 	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
@@ -93,13 +91,12 @@
 		heal_bodypart_damage(1)
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (busy)
+	if (DOING_INTERACTION(user, "regalrat"))
 		return
 	. = ..()
 	if(istype(target, /obj/machinery/disposal))
 		src.visible_message("<span class='warning'>[src] starts rummaging through the [target].</span>","<span class='notice'>You rummage through the [target]...</span>")
-		busy = TRUE
-		if (DOING_INTERACTION_WITH_TARGET(src, target))
+		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
 			var/loot = rand(1,100)
 			switch(loot)
 				if(1 to 5)
@@ -115,15 +112,12 @@
 					var/pickedtrash = pick(GLOB.ratking_trash)
 					to_chat(src, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 					new pickedtrash(get_turf(src))
-		busy = FALSE
 		return
 	else if (target.reagents && isobj(target) && target.is_injectable(src, TRUE))
 		src.visible_message("<span class='warning'>[src] starts licking [target] passionately!</span>","<span class='notice'>You start licking [target]...</span>")
-		busy = TRUE
-		if (DOING_INTERACTION_WITH_TARGET(src, target) && target)
+		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
-		busy = FALSE
 		return
 	else 
 		switch (target.type)
@@ -369,11 +363,13 @@
 		return
 	to_chat(L, "<span class='notice'>This food has a funny taste!</span>")
 	
-/datum/reagent/rat_spit/overdose_start(mob/living/carbon/C)
+/datum/reagent/rat_spit/overdose_start(mob/living/M)
 	..()
-	to_chat(C, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
-	C.faction |= "rat"
-	C.vomit()
+	var/mob/living/carbon/C = M
+	if (istype(C))
+		to_chat(C, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
+		C.faction |= "rat"
+		C.vomit()
 	metabolization_rate = 10 * REAGENTS_METABOLISM 
 
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/C)
