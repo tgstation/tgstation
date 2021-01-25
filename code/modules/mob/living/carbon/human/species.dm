@@ -2049,6 +2049,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			img.pixel_x = -32
 			wings += list(S.name = img)
 		wings_icon = show_radial_menu(H, H, wings, tooltips = TRUE)
+		if(!wings_icon)
+			wings_icon = wings_icons[rand(1, wings.len)]
 	else
 		wings_icon = wings_icons[1]
 	if(isnull(fly))
