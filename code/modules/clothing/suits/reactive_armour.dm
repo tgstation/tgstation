@@ -145,7 +145,7 @@
 	name = "reactive incendiary armor"
 	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
 	cooldown_message = "<span class='danger'>The reactive incendiary armor activates, but fails to send out flames as it is still recharging its flame jets!</span>"
-	emp_message = "<span class='warning'>The reactive incendiary armor's targetting system begins rebooting...</span>"
+	emp_message = "<span class='warning'>The reactive incendiary armor's targeting system begins rebooting...</span>"
 
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out jets of flame!</span>")
@@ -276,7 +276,7 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
-	owner.visible_message("<span class='danger'>[src] does not block [attack_text], instead generating an attracting force!</span>")
+	owner.visible_message("<span class='danger'>[src] does not block [attack_text], and instead generates an attracting force!</span>")
 	var/turf/owner_turf = get_turf(owner)
 	var/list/thrown_items = list()
 	for(var/atom/movable/repulsed in range(owner_turf, 7))
@@ -317,5 +317,4 @@
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
-
 
