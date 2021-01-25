@@ -138,7 +138,9 @@
 /datum/chemical_reaction/reagent_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 150)
 		strengthdiv = 8
+		///turf where to play sound
 		var/turf/T = get_turf(holder.my_atom)
+		///special size for anti cult effect
 		var/effective_size = round(created_volume/48)
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, FALSE, effective_size)
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,T))
