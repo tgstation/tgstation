@@ -21,12 +21,6 @@
 	if (!polldesc)
 		polldesc = "a Code [code] Nanotrasen Emergency Response Team"
 
-/datum/ert/official
-	opendoors = FALSE
-	leader_role = /datum/antagonist/ert/official
-	roles = list(/datum/antagonist/ert/official)
-	teamsize = 1
-
 /datum/ert/blue
 	opendoors = FALSE
 	code = "Blue"
@@ -56,6 +50,7 @@
 	rename_team = "CentCom Officials"
 	polldesc = "a CentCom Official"
 	random_names = FALSE
+	leader_experience = FALSE
 
 /datum/ert/centcom_official/New()
 	mission = "Conduct a routine performance review of [station_name()] and its Captain."
