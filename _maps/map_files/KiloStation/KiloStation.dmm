@@ -15499,6 +15499,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "azI" = (
@@ -31809,12 +31810,12 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/storage)
 "aZg" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "aZh" = (
