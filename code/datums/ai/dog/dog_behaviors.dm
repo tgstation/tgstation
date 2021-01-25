@@ -28,9 +28,6 @@
 		item_ignorelist[target] = TRUE
 		controller.blackboard[BB_FETCH_TARGET] = null
 		controller.blackboard[BB_FETCH_THROWER] = null
-	else
-		// we've successfully made our way to the thing, now to get ready to bring it to someone
-		controller.current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/simple_equip)
 
 	controller.blackboard[BB_FETCHING] = FALSE
 
@@ -105,3 +102,30 @@
 	carried_item.forceMove(get_turf(return_target))
 	controller.blackboard[BB_SIMPLE_CARRY_ITEM] = null
 	return TRUE
+
+
+// This behavior involves dropping off a carried item to a specified person (or place)
+/datum/ai_behavior/eat_snack
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+
+/datum/ai_behavior/eat_snack/perform(delta_time, datum/ai_controller/controller)
+	var/obj/item/snack = controller.current_movement_target
+	if(!istype(snack) || !IS_EDIBLE(snack) || !(isturf(snack.loc) || ishuman(snack.loc)))
+		finish_action(controller, FALSE)
+
+	var/mob/living/living_pawn = controller.pawn
+	if(!in_range(living_pawn, snack))
+		return
+
+	if(isturf(snack.loc))
+		snack.attack_animal(living_pawn)
+	else if(iscarbon(snack.loc) && DT_PROB(10, delta_time))
+		living_pawn.manual_emote("stares at [snack.loc]'s [snack.name] with a sad puppy-face.")
+
+	if(QDELETED(snack)) // we ate it!
+		finish_action(controller, TRUE)
+
+/datum/ai_behavior/eat_snack/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	controller.blackboard[BB_FETCH_TARGET] = null
+	controller.blackboard[BB_FETCH_THROWER] = null

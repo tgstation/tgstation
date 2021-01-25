@@ -3,7 +3,7 @@
 /datum/ai_controller/dog
 	blackboard = list(BB_FETCHING = FALSE,\
 	BB_SIMPLE_CARRY_ITEM = null,\
-	BB_DOG_THROW_LISTENERS = list(),\
+	BB_FETCH_THROW_LISTENERS = list(),\
 	BB_FETCH_IGNORE_LIST = list(),\
 	BB_FETCH_TARGET = null,\
 	BB_FETCH_THROWER = null,\
@@ -34,6 +34,18 @@
 	current_behaviors = list()
 	var/mob/living/living_pawn = pawn
 
+	// if we're not already carrying something and we have a fetch target (and we're not already doing something with it), see if we can eat/equip it
+	if(!blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_TARGET])
+		var/atom/movable/interact_target = blackboard[BB_FETCH_TARGET]
+		if(in_range(living_pawn, interact_target) && (isturf(interact_target.loc)))
+			current_movement_target = interact_target
+			if(IS_EDIBLE(interact_target))
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
+			else
+				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/simple_equip)
+			return
+
+	// if we're carrying something and we have a destination to deliver it, do that
 	if(blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_THROWER])
 		var/atom/return_target = blackboard[BB_FETCH_THROWER]
 		if(!(return_target in view(pawn, AI_DOG_THROW_LISTEN_RANGE)))
@@ -45,7 +57,7 @@
 		blackboard[BB_DELIVERING] = TRUE
 		return
 
-	var/list/old_throw_listeners = blackboard[BB_DOG_THROW_LISTENERS]
+	var/list/old_throw_listeners = blackboard[BB_FETCH_THROW_LISTENERS]
 	var/list/new_throw_listeners = list()
 
 	// check around us for people who we can hear throw things for fetching
@@ -62,18 +74,32 @@
 	for(var/i in old_throw_listeners)
 		var/mob/living/carbon/lost_listener = i
 		UnregisterSignal(lost_listener, COMSIG_MOB_THROW)
-	blackboard[BB_DOG_THROW_LISTENERS] = new_throw_listeners
+	blackboard[BB_FETCH_THROW_LISTENERS] = new_throw_listeners
+
+	// see if there's any loose snacks in sight nearby
+	for(var/obj/item/potential_snack in oview(living_pawn,3))
+		if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
+			current_movement_target = potential_snack
+			current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack)
+			return
 
 /datum/ai_controller/dog/PerformIdleBehavior(delta_time)
 	// todo: port dogs eating snacks
 	var/mob/living/living_pawn = pawn
+	if(!isturf(living_pawn.loc) || living_pawn.pulledby)
+		return
 
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
+	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE))
 		var/move_dir = pick(GLOB.alldirs)
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
+	else if(DT_PROB(10, delta_time))
+		living_pawn.manual_emote(pick("dances around.","chases its tail!"))
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, living_pawn)
 
 /// Someone we were listening to throws for has thrown something, start listening to the thrown item so we can see if we want to fetch it when it lands
 /datum/ai_controller/dog/proc/listened_throw(mob/living/carbon/carbon_thrower)
+	SIGNAL_HANDLER
+
 	if(blackboard[BB_FETCH_TARGET]) // we're already busy
 		return
 	var/obj/item/thrown_thing = carbon_thrower.get_active_held_item()
@@ -87,9 +113,10 @@
 
 /// A throw we were listening to has finished, see if it's in range for us to try grabbing it
 /datum/ai_controller/dog/proc/listen_throw_land(obj/thrown_thing, datum/thrownthing/throwing_datum)
-	UnregisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(thrown_thing, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_THROW_LANDED))
 	if(!isitem(thrown_thing) || !isturf(thrown_thing.loc) || !(thrown_thing in view(pawn, AI_DOG_THROW_LISTEN_RANGE)))
-		UnregisterSignal(thrown_thing, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_THROW_LANDED))
 		return
 
 	current_movement_target = thrown_thing
@@ -100,6 +127,7 @@
 /// Someone's interacting with us by hand, see if they're being nice or mean
 /datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
+
 	switch(user.a_intent)
 		if(INTENT_HARM || INTENT_DISARM)
 			unfriend(user)
@@ -132,6 +160,8 @@
 
 /// Someone we like is pointing at something, see if it's something we might want to interact with (like if they might want us to fetch something for them)
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_atom)
+	SIGNAL_HANDLER
+
 	if(blackboard[BB_FETCH_TARGET] || !ismovable(pointed_atom) || ismob(pointed_atom) || (pointed_atom.anchored))
 		return
 
@@ -148,11 +178,12 @@
 /// Someone is looking at us, if we're currently carrying something then show what it is
 /datum/ai_controller/dog/proc/on_examined(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
+
 	if(!blackboard[BB_SIMPLE_CARRY_ITEM])
 		return
 
 	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
-	examine_text += "<span class='notice'>[pawn.p_they()] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
+	examine_text += "<span class='notice'>[pawn.p_they(TRUE)] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
 
 /// If we died, drop anything we were carrying
 /datum/ai_controller/dog/proc/on_death(mob/living/ol_yeller)
