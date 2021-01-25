@@ -4,7 +4,7 @@
 /obj/machinery/smartfridge
 	name = "smartfridge"
 	desc = "Keeps cold things cold and hot things cold."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machine_tall.dmi'
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -12,7 +12,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
-
+	integrity_failure = 0.25
 	var/base_build_path = /obj/machinery/smartfridge ///What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/max_n_of_items = 1500
 	var/allow_ai_retrieve = FALSE
@@ -44,22 +44,22 @@
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!machine_stat)
 		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", 0, EMISSIVE_PLANE, dir, alpha)
-		if (visible_contents)
-			switch(contents.len)
-				if(0)
-					icon_state = "[initial(icon_state)]"
-				if(1 to 25)
-					icon_state = "[initial(icon_state)]1"
-				if(26 to 75)
-					icon_state = "[initial(icon_state)]2"
-				if(76 to INFINITY)
-					icon_state = "[initial(icon_state)]3"
-		else
-			icon_state = "[initial(icon_state)]"
+		icon_state = "[initial(icon_state)]"
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-
+/obj/machinery/smartfridge/update_overlays()
+	. = ..()
+	if(visible_contents)
+		switch(contents.len)
+			if(1 to 25)
+				. += "[initial(icon_state)]-fill1"
+			if(26 to 75)
+				. += "[initial(icon_state)]-fill2"
+			if(76 to INFINITY)
+				. += "[initial(icon_state)]-fill3"
+		if(machine_stat & BROKEN)
+			. += "[initial(icon_state)]-cracks"
 
 /*******************
 *   Item Adding
@@ -124,6 +124,9 @@
 			else
 				to_chat(user, "<span class='warning'>There is nothing in [O] to put in [src]!</span>")
 				return FALSE
+
+	if(O.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+		return ..()
 
 	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='warning'>\The [src] smartly refuses [O].</span>")
@@ -238,7 +241,23 @@
 			return TRUE
 	return FALSE
 
-
+/obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(machine_stat & BROKEN)
+		if(!I.tool_start_check(user, amount=0))
+			return
+		user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
+						"<span class='notice'>You begin repairing [src]...</span>", \
+						"<span class='hear'>You hear welding.</span>")
+		if(I.use_tool(src, user, 40, volume=50))
+			if(!(machine_stat & BROKEN))
+				return
+			to_chat(user, "<span class='notice'>You repair [src].</span>")
+			obj_integrity = max_integrity
+			set_machine_stat(machine_stat & ~BROKEN)
+			update_icon()
+	else
+		to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
 // ----------------------------
 //  Drying Rack 'smartfridge'
 // ----------------------------
@@ -521,6 +540,7 @@
 /obj/machinery/smartfridge/disks
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "disktoaster"
 	pass_flags = PASSTABLE
 	visible_contents = FALSE

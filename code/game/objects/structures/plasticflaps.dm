@@ -2,7 +2,7 @@
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps. Definitely can't get past those. No way."
 	gender = PLURAL
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/structures_tall.dmi'
 	icon_state = "plasticflaps"
 	armor = list(MELEE = 100, BULLET = 80, LASER = 80, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 50, ACID = 50)
 	density = FALSE
