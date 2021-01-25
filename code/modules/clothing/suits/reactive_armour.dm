@@ -99,7 +99,7 @@
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
 	. = ..()
-	if(. & EMP_PROTECT_SELF || bad_effect) //didn't get hit or already emp'd
+	if(. & EMP_PROTECT_SELF || bad_effect || !active) //didn't get hit or already emp'd, or off
 		return
 	visible_message(emp_message)
 	bad_effect = TRUE
