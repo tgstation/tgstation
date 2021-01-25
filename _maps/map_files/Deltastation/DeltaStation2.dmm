@@ -35878,7 +35878,6 @@
 /turf/open/floor/plasteel,
 /area/security/execution/transfer)
 "bwe" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -35886,6 +35885,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/syndicatebomb/training,
+/obj/structure/table,
+/obj/item/wirecutters,
+/obj/item/screwdriver,
 /turf/open/floor/plasteel,
 /area/security/main)
 "bwf" = (
