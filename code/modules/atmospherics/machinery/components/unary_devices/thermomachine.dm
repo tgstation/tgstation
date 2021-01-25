@@ -130,8 +130,7 @@
 		update_parents()
 	else
 		active_power_usage = idle_power_usage
-		return TRUE //kills atmos process
-	return
+	return TRUE //kills atmos process
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(!on)
