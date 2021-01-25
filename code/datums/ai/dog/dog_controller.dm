@@ -1,13 +1,13 @@
 
 
 /datum/ai_controller/dog
-	blackboard = list(BB_DOG_FETCHING = FALSE,\
-	BB_DOG_CARRY_ITEM = null,\
+	blackboard = list(BB_FETCHING = FALSE,\
+	BB_SIMPLE_CARRY_ITEM = null,\
 	BB_DOG_THROW_LISTENERS = list(),\
-	BB_DOG_FETCH_TARGET_IGNORE = list(),\
-	BB_DOG_FETCH_TARGET = null,\
-	BB_DOG_FETCH_THROWER = null,\
-	BB_DOG_DELIVERING = FALSE,\
+	BB_FETCH_IGNORE_LIST = list(),\
+	BB_FETCH_TARGET = null,\
+	BB_FETCH_THROWER = null,\
+	BB_DELIVERING = FALSE,\
 	BB_DOG_FRIENDS = list())
 
 
@@ -34,15 +34,15 @@
 	current_behaviors = list()
 	var/mob/living/living_pawn = pawn
 
-	if(blackboard[BB_DOG_CARRY_ITEM] && blackboard[BB_DOG_FETCH_THROWER])
-		var/atom/return_target = blackboard[BB_DOG_FETCH_THROWER]
+	if(blackboard[BB_SIMPLE_CARRY_ITEM] && blackboard[BB_FETCH_THROWER])
+		var/atom/return_target = blackboard[BB_FETCH_THROWER]
 		if(!(return_target in view(pawn, AI_DOG_THROW_LISTEN_RANGE)))
 			// if the return target isn't in sight, we'll just forget about it and carry the thing around
-			blackboard[BB_DOG_FETCH_THROWER] = null
+			blackboard[BB_FETCH_THROWER] = null
 			return
 		current_movement_target = return_target
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/dog_deliver)
-		blackboard[BB_DOG_DELIVERING] = TRUE
+		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/deliver_item)
+		blackboard[BB_DELIVERING] = TRUE
 		return
 
 	var/list/old_throw_listeners = blackboard[BB_DOG_THROW_LISTENERS]
@@ -74,12 +74,12 @@
 
 /// Someone we were listening to throws for has thrown something, start listening to the thrown item so we can see if we want to fetch it when it lands
 /datum/ai_controller/dog/proc/listened_throw(mob/living/carbon/carbon_thrower)
-	if(blackboard[BB_DOG_FETCH_TARGET]) // we're already busy
+	if(blackboard[BB_FETCH_TARGET]) // we're already busy
 		return
 	var/obj/item/thrown_thing = carbon_thrower.get_active_held_item()
 	if(!isitem(thrown_thing) || get_dist(carbon_thrower, pawn) > AI_DOG_THROW_LISTEN_RANGE)
 		return
-	var/list/thrown_ignorelist = blackboard[BB_DOG_FETCH_TARGET_IGNORE]
+	var/list/thrown_ignorelist = blackboard[BB_FETCH_IGNORE_LIST]
 	if(thrown_thing in thrown_ignorelist)
 		return
 
@@ -93,9 +93,9 @@
 		return
 
 	current_movement_target = thrown_thing
-	blackboard[BB_DOG_FETCH_TARGET] = thrown_thing
-	blackboard[BB_DOG_FETCH_THROWER] = throwing_datum.thrower
-	current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/dog_fetch)
+	blackboard[BB_FETCH_TARGET] = thrown_thing
+	blackboard[BB_FETCH_THROWER] = throwing_datum.thrower
+	current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/fetch)
 
 /// Someone's interacting with us by hand, see if they're being nice or mean
 /datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/user)
@@ -107,12 +107,12 @@
 			if(prob(AI_DOG_PET_FRIEND_PROB))
 				befriend(user)
 			// if the dog has something in their mouth that they're not bringing to someone for whatever reason, have them drop it when pet by a friend
-			if(blackboard[BB_DOG_CARRY_ITEM] && !current_movement_target && (user in blackboard[BB_DOG_FRIENDS]))
-				var/obj/item/carried_item = blackboard[BB_DOG_CARRY_ITEM]
+			if(blackboard[BB_SIMPLE_CARRY_ITEM] && !current_movement_target && (user in blackboard[BB_DOG_FRIENDS]))
+				var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 				pawn.visible_message("<span='danger'>[pawn] drops [carried_item] at [user]'s feet!</span>")
 				// maybe have a dedicated proc for dropping things
 				carried_item.forceMove(get_turf(user))
-				blackboard[BB_DOG_CARRY_ITEM] = null
+				blackboard[BB_SIMPLE_CARRY_ITEM] = null
 
 /// Someone is being nice to us, let's make them a friend!
 /datum/ai_controller/dog/proc/befriend(mob/living/new_friend)
@@ -132,7 +132,7 @@
 
 /// Someone we like is pointing at something, see if it's something we might want to interact with (like if they might want us to fetch something for them)
 /datum/ai_controller/dog/proc/check_point(mob/pointing_friend, atom/movable/pointed_atom)
-	if(blackboard[BB_DOG_FETCH_TARGET] || !ismovable(pointed_atom) || ismob(pointed_atom) || (pointed_atom.anchored))
+	if(blackboard[BB_FETCH_TARGET] || !ismovable(pointed_atom) || ismob(pointed_atom) || (pointed_atom.anchored))
 		return
 
 	var/list/visible_things = view(pawn, AI_DOG_THROW_LISTEN_RANGE)
@@ -141,27 +141,27 @@
 
 	pawn.visible_message("<span class='notice'>[pawn] follows [pointing_friend]'s gesture towards [pointed_atom] and barks excitedly!</span>")
 	current_movement_target = pointed_atom
-	blackboard[BB_DOG_FETCH_TARGET] = pointed_atom
-	blackboard[BB_DOG_FETCH_THROWER] = pointing_friend
-	current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/dog_fetch)
+	blackboard[BB_FETCH_TARGET] = pointed_atom
+	blackboard[BB_FETCH_THROWER] = pointing_friend
+	current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/fetch)
 
 /// Someone is looking at us, if we're currently carrying something then show what it is
 /datum/ai_controller/dog/proc/on_examined(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	if(!blackboard[BB_DOG_CARRY_ITEM])
+	if(!blackboard[BB_SIMPLE_CARRY_ITEM])
 		return
 
-	var/obj/item/carried_item = blackboard[BB_DOG_CARRY_ITEM]
+	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 	examine_text += "<span class='notice'>[pawn.p_they()] [pawn.p_are()] carrying [carried_item.get_examine_string(user)] in [pawn.p_their()] mouth.</span>"
 
 /// If we died, drop anything we were carrying
 /datum/ai_controller/dog/proc/on_death(mob/living/ol_yeller)
 	SIGNAL_HANDLER
 
-	var/obj/item/carried_item = blackboard[BB_DOG_CARRY_ITEM]
+	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 	if(!carried_item)
 		return
 
 	ol_yeller.visible_message("<span='danger'>[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()].</span>")
 	carried_item.forceMove(get_turf(ol_yeller))
-	blackboard[BB_DOG_CARRY_ITEM] = null
+	blackboard[BB_SIMPLE_CARRY_ITEM] = null
