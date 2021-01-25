@@ -595,6 +595,7 @@
 #include "code\datums\elements\bsa_blocker.dm"
 #include "code\datums\elements\caltrop.dm"
 #include "code\datums\elements\cleaning.dm"
+#include "code\datums\elements\climbable.dm"
 #include "code\datums\elements\decal.dm"
 #include "code\datums\elements\digitalcamo.dm"
 #include "code\datums\elements\dryable.dm"
