@@ -2671,7 +2671,7 @@
 "iA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock{
-	name = "Theatre";
+	name = "Theater";
 	req_access_txt = "200"
 	},
 /turf/open/floor/plasteel/grimy,
