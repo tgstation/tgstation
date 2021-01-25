@@ -1,0 +1,5 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "Missing disposals pipe in Kilostation's robotics lab is replaced"
+  - bugfix: "Missing sci-drobe added to R&D"

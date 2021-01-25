@@ -1,0 +1,4 @@
+author: "AdamElTablawy"
+delete-after: True
+changes: 
+  - tweak: "Spiders are now stuck on harm rather than help intent, meaning you can't trade places with them like other simplemobs."
