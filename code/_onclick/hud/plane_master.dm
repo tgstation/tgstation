@@ -70,37 +70,83 @@
 
 /atom/movable/screen/plane_master/lighting/Initialize()
 	. = ..()
-	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
-	add_filter("unblockable_emissives", 2, alpha_mask_filter(render_source = EMISSIVE_UNBLOCKABLE_RENDER_TARGET, flags = MASK_INVERSE))
-	add_filter("object_lighting", 3, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
+	var/i = 1
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master/emissive))
+		var/atom/movable/screen/plane_master/emissive/emissive_plane = plane
+		add_filter("emissives-[i] ([initial(emissive_plane.name)])", i++, alpha_mask_filter(render_source = initial(emissive_plane.emissive_target), flags = MASK_INVERSE))
 
 /**
  * Things placed on this mask the lighting plane. Doesn't render directly.
  *
- * Gets masked by blocking plane. Use for things that you want blocked by
+ * Gets masked by blocking planes. Use for things that you want blocked by
  * mobs, items, etc.
  */
 /atom/movable/screen/plane_master/emissive
 	name = "emissive plane master"
 	plane = EMISSIVE_PLANE
+	layer = EMISSIVE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
+	/// Basically a second copy of the `render_target` because `initial(plane_master_typepath.render_target)` always returns `null` because _BYOND_
+	var/emissive_target = EMISSIVE_RENDER_TARGET
 
 /atom/movable/screen/plane_master/emissive/Initialize()
 	. = ..()
-	add_filter("emissive_block", 1, alpha_mask_filter(render_source = EMISSIVE_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
+	var/i = 1
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master/emissive_blocker))
+		var/atom/movable/screen/plane_master/emissive_blocker/blocker_plane = plane
+		if(initial(blocker_plane.layer) <= layer)
+			continue
+		add_filter("emissive_block-[i] (initial(blocker_plane.name))", i++, alpha_mask_filter(render_source = initial(blocker_plane.blocker_target), flags = MASK_INVERSE))
 
-/**
- * Things placed on this always mask the lighting plane. Doesn't render directly.
- *
- * Always masks the light plane, isn't blocked by anything. Use for on mob glows,
- * magic stuff, etc.
- */
-/atom/movable/screen/plane_master/emissive_unblockable
+/// The plane master used for emissive turfs and turf overlays
+/atom/movable/screen/plane_master/emissive/emissive_turf
+	name = "emissive turf plane master"
+	plane = EMISSIVE_TURF_PLANE
+	layer = EMISSIVE_TURF_LAYER
+	render_target = EMISSIVE_TURF_RENDER_TARGET
+	emissive_target = EMISSIVE_TURF_RENDER_TARGET
+
+/// The plane master used for emissive structures and structure overlays
+/atom/movable/screen/plane_master/emissive/emissive_structure
+	name = "emissive structure plane master"
+	plane = EMISSIVE_STRUCTURE_PLANE
+	layer = EMISSIVE_STRUCTURE_LAYER
+	render_target = EMISSIVE_STRUCTURE_RENDER_TARGET
+	emissive_target = EMISSIVE_STRUCTURE_RENDER_TARGET
+
+/// The plane master used for emissive items and item overlays
+/atom/movable/screen/plane_master/emissive/emissive_item
+	name = "emissive item plane master"
+	plane = EMISSIVE_ITEM_PLANE
+	layer = EMISSIVE_ITEM_LAYER
+	render_target = EMISSIVE_ITEM_RENDER_TARGET
+	emissive_target = EMISSIVE_ITEM_RENDER_TARGET
+
+/// The plane master used for emissive mobs and mob overlays
+/atom/movable/screen/plane_master/emissive/emissive_mob
+	name = "emissive mob plane master"
+	plane = EMISSIVE_MOB_PLANE
+	layer = EMISSIVE_MOB_LAYER
+	render_target = EMISSIVE_MOB_RENDER_TARGET
+	emissive_target = EMISSIVE_MOB_RENDER_TARGET
+
+/// The plane master used for unblockable emissive effects
+/atom/movable/screen/plane_master/emissive/unblockable
 	name = "unblockable emissive plane master"
 	plane = EMISSIVE_UNBLOCKABLE_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = EMISSIVE_UNBLOCKABLE_LAYER
 	render_target = EMISSIVE_UNBLOCKABLE_RENDER_TARGET
+	emissive_target = EMISSIVE_UNBLOCKABLE_RENDER_TARGET
+
+/// The plane master used for overlay lighting masking
+/atom/movable/screen/plane_master/emissive/o_light_visual
+	name = "overlight light visual plane master"
+	layer = O_LIGHTING_VISUAL_LAYER
+	plane = O_LIGHTING_VISUAL_PLANE
+	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
+	emissive_target = O_LIGHTING_VISUAL_RENDER_TARGET
+	blend_mode = BLEND_MULTIPLY
 
 /**
  * Things placed on this layer mask the emissive layer. Doesn't render directly
@@ -110,8 +156,43 @@
 /atom/movable/screen/plane_master/emissive_blocker
 	name = "emissive blocker plane master"
 	plane = EMISSIVE_BLOCKER_PLANE
+	layer = EMISSIVE_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_BLOCKER_RENDER_TARGET
+	/// Basically a second copy of the `render_target` because `initial(plane_master_typepath.render_target)` always returns `null` because _BYOND_
+	var/blocker_target = EMISSIVE_BLOCKER_RENDER_TARGET
+
+/// The emissive blocker plane master used by structures to block... something. Presumably whatever's under turfs. (NOTE: Not actually implemented because adding this to every turf would be expensive and there's no reason to use this yet)
+/atom/movable/screen/plane_master/emissive_blocker/turf_emissive
+	name = "turf emissive blocker plane master"
+	plane = TURF_EMISSIVE_BLOCKER_PLANE
+	layer = EMISSIVE_TURF_LAYER
+	render_target = TURF_EMISSIVE_BLOCKER_RENDER_TARGET
+	blocker_target = TURF_EMISSIVE_BLOCKER_RENDER_TARGET
+
+/// The emissive blocker plane master used by structures to block emissive turfs and turf overlays
+/atom/movable/screen/plane_master/emissive_blocker/structure_emissive
+	name = "structure emissive blocker plane master"
+	plane = STRUCTURE_EMISSIVE_BLOCKER_PLANE
+	layer = EMISSIVE_STRUCTURE_LAYER
+	render_target = STRUCTURE_EMISSIVE_BLOCKER_RENDER_TARGET
+	blocker_target = STRUCTURE_EMISSIVE_BLOCKER_RENDER_TARGET
+
+/// The emissive blocker plane master used by items to block emissive turfs, structures and overlays thereof
+/atom/movable/screen/plane_master/emissive_blocker/item_emissive
+	name = "item emissive blocker plane master"
+	plane = ITEM_EMISSIVE_BLOCKER_PLANE
+	layer = EMISSIVE_ITEM_LAYER
+	render_target = ITEM_EMISSIVE_BLOCKER_RENDER_TARGET
+	blocker_target = ITEM_EMISSIVE_BLOCKER_RENDER_TARGET
+
+/// The emissive blocker plane master used by items to block emissive turfs, structures, items and overlays thereof
+/atom/movable/screen/plane_master/emissive_blocker/mob_emissive
+	name = "mob emissive blocker plane master"
+	plane = MOB_EMISSIVE_BLOCKER_PLANE
+	layer = EMISSIVE_MOB_LAYER
+	render_target = MOB_EMISSIVE_BLOCKER_RENDER_TARGET
+	blocker_target = MOB_EMISSIVE_BLOCKER_RENDER_TARGET
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
@@ -136,14 +217,6 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	alpha = 0
-
-/atom/movable/screen/plane_master/o_light_visual
-	name = "overlight light visual plane master"
-	layer = O_LIGHTING_VISUAL_LAYER
-	plane = O_LIGHTING_VISUAL_PLANE
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_MULTIPLY
 
 /atom/movable/screen/plane_master/runechat
 	name = "runechat plane master"

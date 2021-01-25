@@ -223,32 +223,47 @@
 	log_combat(M, src, "attacked")
 	return TRUE
 
+/mob/living/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if (user.apply_martial_art(src))
+		return TRUE
 
 /mob/living/attack_paw(mob/living/carbon/human/M)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return FALSE
 
-	if (M.a_intent == INTENT_HARM)
-		if(HAS_TRAIT(M, TRAIT_PACIFISM))
-			to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
-			return FALSE
+	if (M.apply_martial_art(src))
+		return TRUE
 
-		if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
-			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
+	switch (M.a_intent)
+		if (INTENT_HARM)
+			if(HAS_TRAIT(M, TRAIT_PACIFISM))
+				to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
+				return FALSE
+
+			if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
+				to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
+				return FALSE
+			M.do_attack_animation(src, ATTACK_EFFECT_BITE)
+			if (prob(75))
+				log_combat(M, src, "attacked")
+				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+								"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
+				to_chat(M, "<span class='danger'>You bite [src]!</span>")
+				return TRUE
+			else
+				visible_message("<span class='danger'>[M.name]'s bite misses [src]!</span>", \
+								"<span class='danger'>You avoid [M.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, M)
+				to_chat(M, "<span class='warning'>Your bite misses [src]!</span>")
+		if (INTENT_GRAB)
+			grabbedby(M)
 			return FALSE
-		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-			visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-							"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='danger'>You bite [src]!</span>")
-			return TRUE
-		else
-			visible_message("<span class='danger'>[M.name]'s bite misses [src]!</span>", \
-							"<span class='danger'>You avoid [M.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, M)
-			to_chat(M, "<span class='warning'>Your bite misses [src]!</span>")
+		if (INTENT_DISARM)
+			if (M != src)
+				M.disarm(src)
+				return TRUE
 	return FALSE
 
 /mob/living/attack_larva(mob/living/carbon/alien/larva/L)
