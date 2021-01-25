@@ -25,6 +25,7 @@
 	var/cooling = TRUE
 	var/base_heating = 140
 	var/base_cooling = 170
+	var/was_on = FALSE      //checks if the machine was on before it lost power
 
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize()
 	. = ..()
@@ -109,31 +110,27 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	..()
-	if(is_operational)
-		if(!on || !nodes[1])
-			return
-		var/datum/gas_mixture/air_contents = airs[1]
-
-		var/air_heat_capacity = air_contents.heat_capacity()
-		var/combined_heat_capacity = heat_capacity + air_heat_capacity
-		var/old_temperature = air_contents.temperature
-
-		if(combined_heat_capacity > 0)
-			var/combined_energy = heat_capacity * target_temperature + air_heat_capacity * air_contents.temperature
-			air_contents.temperature = combined_energy/combined_heat_capacity
-
-		var/temperature_delta= abs(old_temperature - air_contents.temperature)
-		if(temperature_delta > 1)
-			active_power_usage = (heat_capacity * temperature_delta) / 10 + idle_power_usage
-			update_parents()
-		else
-			active_power_usage = idle_power_usage
-		return 1
-	else if(!is_operational)
-		on = FALSE
-		active_power_usage = 0
-		idle_power_usage = 0
+	if(!is_operational || !on || !nodes[1])  //if it has no power or its switched off, dont process atmos
 		return
+	else if(is_operational && was_on == TRUE)  //if it was switched on before it turned off due to no power, turn the machine back on
+		on = TRUE
+	var/datum/gas_mixture/air_contents = airs[1]
+
+	var/air_heat_capacity = air_contents.heat_capacity()
+	var/combined_heat_capacity = heat_capacity + air_heat_capacity
+	var/old_temperature = air_contents.temperature
+
+	if(combined_heat_capacity > 0)
+		var/combined_energy = heat_capacity * target_temperature + air_heat_capacity * air_contents.temperature
+		air_contents.temperature = combined_energy/combined_heat_capacity
+
+	var/temperature_delta= abs(old_temperature - air_contents.temperature)
+	if(temperature_delta > 1)
+		active_power_usage = (heat_capacity * temperature_delta) / 10 + idle_power_usage
+		update_parents()
+	else
+		active_power_usage = idle_power_usage
+		return TRUE //kills atmos process
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
@@ -203,6 +200,10 @@
 			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
+			if(on == TRUE)
+				was_on = TRUE   //if the machine was manually turned on, ensure it remembers it
+			else
+				was_on = FALSE  //else dont remember it was on, because it wasnt.
 		if("cooling")
 			swap_function()
 			investigate_log("was changed to [cooling ? "cooling" : "heating"] by [key_name(usr)]", INVESTIGATE_ATMOS)
