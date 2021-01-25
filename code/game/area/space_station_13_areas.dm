@@ -1111,6 +1111,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
 
+/area/security/detectives_office/private_investigators_office
+	name = "Private Investigator's Office"
+	icon_state = "investigate_office"
+	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
+
 /area/security/range
 	name = "Firing Range"
 	icon_state = "firingrange"
