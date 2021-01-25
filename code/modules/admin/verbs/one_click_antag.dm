@@ -251,6 +251,7 @@
 	.["mainsettings"]["mission"]["value"] = newtemplate.mission
 	.["mainsettings"]["polldesc"]["value"] = newtemplate.polldesc
 	.["mainsettings"]["open_armory"]["value"] = newtemplate.opendoors ? "Yes" : "No"
+	.["mainsettings"]["leader_experience"]["value"] = newtemplate.leader_experience ? "Yes" : "No"
 	.["mainsettings"]["random_names"]["value"] = newtemplate.random_names ? "Yes" : "No"
 	.["mainsettings"]["spawn_admin"]["value"] = newtemplate.spawn_admin ? "Yes" : "No"
 
@@ -318,8 +319,9 @@
 		"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),
 		"enforce_human" = list("desc" = "Enforce human authority", "type" = "boolean", "value" = "[(CONFIG_GET(flag/enforce_human_authority) ? "Yes" : "No")]"),
 		"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
+		"leader_experience" = list("desc" = "Pick an experienced leader", "type" = "boolean", "value" = "[(ertemplate.leader_experience ? "Yes" : "No")]"),
 		"random_names" = list("desc" = "Randomize names", "type" = "boolean", "value" = "[(ertemplate.random_names ? "Yes" : "No")]"),
-		"spawn_admin" = list("desc" = "Spawn yourself as briefing officer", "type" = "boolean", "value" = "[(ertemplate.spawn_admin ? "Yes" : "No")]"),
+		"spawn_admin" = list("desc" = "Spawn yourself as briefing officer", "type" = "boolean", "value" = "[(ertemplate.spawn_admin ? "Yes" : "No")]")
 		)
 	)
 
@@ -343,6 +345,7 @@
 		ertemplate.polldesc = prefs["polldesc"]["value"]
 		ertemplate.enforce_human = prefs["enforce_human"]["value"] == "Yes" ? TRUE : FALSE
 		ertemplate.opendoors = prefs["open_armory"]["value"] == "Yes" ? TRUE : FALSE
+		ertemplate.leader_experience = prefs["leader_experience"]["value"] == "Yes" ? TRUE : FALSE
 		ertemplate.random_names = prefs["random_names"]["value"] == "Yes" ? TRUE : FALSE
 		ertemplate.spawn_admin = prefs["spawn_admin"]["value"] == "Yes" ? TRUE : FALSE
 
@@ -358,7 +361,6 @@
 				usr.client.prefs.copy_to(admin_officer)
 				admin_officer.equipOutfit(chosen_outfit)
 				admin_officer.key = usr.key
-
 
 		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad", null)
 		var/teamSpawned = FALSE
@@ -382,13 +384,29 @@
 		ert_team.objectives += missionobj
 		ert_team.mission = missionobj
 
+		var/mob/dead/observer/earmarked_leader
+		var/leader_spawned = FALSE // just in case the earmarked leader disconnects or becomes unavailable, we can try giving leader to the last guy to get chosen
+
+		if(ertemplate.leader_experience)
+			var/list/candidate_living_exps = list()
+			for(var/i in candidates)
+				var/mob/dead/observer/potential_leader = i
+				candidate_living_exps[potential_leader] = potential_leader.client?.get_exp_living(TRUE)
+
+			candidate_living_exps = sortList(candidate_living_exps, cmp=/proc/cmp_numeric_dsc)
+			if(candidate_living_exps.len >= 4)
+				candidate_living_exps = candidate_living_exps.Cut(4) // pick from the top 3 contendors in playtime
+			earmarked_leader = pick(candidate_living_exps)
+		else
+			earmarked_leader = pick(candidates)
+
 		while(numagents && candidates.len)
 			var/spawnloc = spawnpoints[index+1]
 			//loop through spawnpoints one at a time
 			index = (index + 1) % spawnpoints.len
-			var/mob/dead/observer/chosen_candidate = pick(candidates)
+			var/mob/dead/observer/chosen_candidate = earmarked_leader || pick(candidates) // this way we make sure that our leader gets chosen
 			candidates -= chosen_candidate
-			if(!chosen_candidate.key)
+			if(!chosen_candidate?.key)
 				continue
 
 			//Spawn the body
@@ -402,8 +420,10 @@
 			//Give antag datum
 			var/datum/antagonist/ert/ert_antag
 
-			if(numagents == 1)
+			if((chosen_candidate == earmarked_leader) || (numagents == 1 && !leader_spawned))
 				ert_antag = new ertemplate.leader_role
+				earmarked_leader = null
+				leader_spawned = TRUE
 			else
 				ert_antag = ertemplate.roles[WRAP(numagents,1,length(ertemplate.roles) + 1)]
 				ert_antag = new ert_antag

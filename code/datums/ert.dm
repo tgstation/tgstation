@@ -14,6 +14,8 @@
 	var/random_names = TRUE
 	/// If TRUE, the admin who created the response team will be spawned in the briefing room in their preferred briefing outfit (assuming they're a ghost)
 	var/spawn_admin = FALSE
+	/// If TRUE, we try and pick one of the most experienced players who volunteered to fill the leader slot
+	var/leader_experience = TRUE
 
 /datum/ert/New()
 	if (!polldesc)

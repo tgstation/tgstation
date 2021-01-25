@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ooccolor = "#c43b23"
 	var/asaycolor = "#ff4500"			//This won't change the color for current admins, only incoming ones.
 	/// If we spawn an ERT as an admin and choose to spawn as the briefing officer, we'll be given this outfit
-	var/brief_outfit = null
+	var/brief_outfit = /datum/outfit/centcom/commander
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
 
