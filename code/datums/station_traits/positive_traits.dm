@@ -59,12 +59,15 @@
 
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
+
 /datum/station_trait/strong_supply_lines
 	name = "Strong supply lines"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
 	report_message = "Prices are low in this system, BUY BUY BUY!"
+	blacklist = list(/datum/station_trait/distant_supply_lines)
+
 
 /datum/station_trait/strong_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 0.8

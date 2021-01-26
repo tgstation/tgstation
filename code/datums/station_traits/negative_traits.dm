@@ -12,6 +12,7 @@
 	weight = 3
 	show_in_report = TRUE
 	report_message = "Due to the distance to our normal supply lines, cargo orders are more expensive."
+	blacklist = list(/datum/station_trait/strong_supply_lines)
 
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
@@ -33,3 +34,17 @@
 	report_message = "Sorry for that, we missed your station by a few miles, so we just launched you towards your station in pods. Hope you don't mind!"
 	trait_to_give = STATION_TRAIT_RANDOM_ARRIVALS
 	blacklist = list(/datum/station_trait/late_arrivals)
+
+/datum/station_trait/blackout
+	name = "Blackout"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Station lights seem to be damaged, be safe when starting your shift today."
+
+/datum/station_trait/blackout/on_round_start()
+	. = ..()
+	for(var/a in GLOB.apcs_list)
+		var/obj/machinery/power/apc/current_apc = a
+		if(prob(30))
+			current_apc.overload_lighting()
