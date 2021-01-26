@@ -149,7 +149,7 @@
 */
 /obj/machinery/chem_heater/proc/add_ui_client_list(new_ui)
 	LAZYADD(ui_client_list, new_ui)
-	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .on_ui_deletion)
+	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .proc/on_ui_deletion)
 
 ///This removes an open ui instance from the ui list and deregsiters the signal
 /obj/machinery/chem_heater/proc/remove_ui_client_list(old_ui)
