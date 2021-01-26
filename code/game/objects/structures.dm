@@ -8,13 +8,9 @@
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.6
 	pass_flags_self = PASSSTRUCTURE
-
-	var/climb_time = 20
-	var/climb_stun = 20
-	var/climbable = FALSE
-	var/mob/living/structureclimber
-	var/broken = 0 //similar to machinery's stat BROKEN
-
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	emissive_blocker_plane = STRUCTURE_EMISSIVE_BLOCKER_PLANE
+	var/broken = FALSE
 
 /obj/structure/Initialize()
 	if (!armor)
@@ -33,77 +29,9 @@
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
-/obj/structure/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(structureclimber && structureclimber != user)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		structureclimber.Paralyze(40)
-		structureclimber.visible_message("<span class='warning'>[structureclimber] is knocked off [src].</span>", "<span class='warning'>You're knocked off [src]!</span>", "<span class='warning'>You see [structureclimber] get knocked off [src].</span>")
-
 /obj/structure/ui_act(action, params)
 	add_fingerprint(usr)
 	return ..()
-
-/obj/structure/MouseDrop_T(atom/movable/O, mob/user)
-	. = ..()
-	if(!climbable)
-		return
-	if(user == O && isliving(O))
-		var/mob/living/L = O
-		if(isanimal(L))
-			var/mob/living/simple_animal/A = L
-			if (!A.dextrous)
-				return
-		if(L.mobility_flags & MOBILITY_MOVE)
-			climb_structure(user)
-			return
-	if(!istype(O, /obj/item) || user.get_active_held_item() != O)
-		return
-	if(iscyborg(user))
-		return
-	if(!user.dropItemToGround(O))
-		return
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-
-/obj/structure/proc/do_climb(atom/movable/A)
-	if(climbable)
-		if(A.loc == src.loc)
-			var/turf/where_to_climb = get_step(A,dir)
-			if(!where_to_climb.is_blocked_turf())
-				A.forceMove(where_to_climb)
-				return TRUE
-		density = FALSE
-		. = step(A,get_dir(A,src.loc))
-		density = TRUE
-
-/obj/structure/proc/climb_structure(mob/living/user)
-	src.add_fingerprint(user)
-	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
-								"<span class='notice'>You start climbing onto [src]...</span>")
-	var/adjusted_climb_time = climb_time
-	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)) //climbing takes twice as long without help from the hands.
-		adjusted_climb_time *= 2
-	if(isalien(user))
-		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
-	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
-		adjusted_climb_time *= 0.8
-	structureclimber = user
-	if(do_mob(user, user, adjusted_climb_time))
-		if(src.loc) //Checking if structure has been destroyed
-			if(do_climb(user))
-				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
-									"<span class='notice'>You climb onto [src].</span>")
-				log_combat(user, src, "climbed onto")
-				if(climb_stun)
-					user.Stun(climb_stun)
-				. = 1
-			else
-				to_chat(user, "<span class='warning'>You fail to climb onto [src].</span>")
-	structureclimber = null
 
 /obj/structure/examine(mob/user)
 	. = ..()

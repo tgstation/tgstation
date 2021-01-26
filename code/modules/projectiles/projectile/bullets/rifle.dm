@@ -18,7 +18,8 @@
 /obj/projectile/bullet/a762
 	name = "7.62 bullet"
 	damage = 60
-	wound_bonus = -35
+	armour_penetration = 10
+	wound_bonus = -45
 	wound_falloff_tile = 0
 
 /obj/projectile/bullet/a762_enchanted
