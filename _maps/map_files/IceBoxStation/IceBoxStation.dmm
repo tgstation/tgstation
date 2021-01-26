@@ -45148,6 +45148,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
+"did" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "dlp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -45606,17 +45614,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"efL" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "efT" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/event_spawn,
@@ -45732,6 +45729,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/teleporter)
+"esG" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "esW" = (
 /obj/machinery/light{
 	dir = 1
@@ -46785,6 +46793,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"gtq" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "gwd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -49603,14 +49622,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
-"lIU" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "lJm" = (
 /obj/machinery/modular_computer/console/preset/engineering,
 /obj/effect/turf_decal/tile/brown{
@@ -51779,17 +51790,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
-"puG" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "pva" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -52682,6 +52682,9 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"qSO" = (
+/turf/closed/wall/r_wall,
+/area/hallway/primary/central)
 "qSS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -54807,6 +54810,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hor)
+"uUp" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uVP" = (
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/yellow{
@@ -56366,17 +56380,6 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"xIV" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "xLr" = (
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
@@ -82079,10 +82082,10 @@ aOE
 aJn
 aJn
 aJn
-aJn
-puG
+qSO
+uUp
 aLY
-xIV
+gtq
 aZM
 aZM
 bbW
@@ -82336,7 +82339,7 @@ aOE
 aJn
 boP
 boP
-hbp
+aPR
 aVd
 ncJ
 aVd
@@ -88764,7 +88767,7 @@ boP
 aPR
 cXy
 cLC
-lIU
+did
 aZV
 lwp
 bbw
@@ -89275,10 +89278,10 @@ aOE
 aJn
 aJn
 aJn
-aJn
+qSO
 dta
 onM
-efL
+esG
 aZV
 aZV
 aZV
