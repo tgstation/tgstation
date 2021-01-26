@@ -161,24 +161,6 @@
 	SIGNAL_HANDLER
 	remove_ui_client_list(source)
 
-
-/obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "ChemHeater", name)
-		ui.open()
-		LAZYADD(ui_client_list, ui)
-
-/obj/machinery/chem_heater/ui_close(mob/user)
-	for(var/ui_client in ui_client_list)
-		var/datum/tgui/ui = ui_client
-		if(!ui)
-			stack_trace("Warning: UI in UI client list is missing in [src] (chem_heater)")
-			continue
-		if(ui.user == user)
-			LAZYREMOVE(ui_client_list, ui)
-	return ..()
-
 /obj/machinery/chem_heater/ui_data()
 	var/data = list()
 	data["targetTemp"] = target_temperature
