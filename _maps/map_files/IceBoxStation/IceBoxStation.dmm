@@ -44735,6 +44735,16 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"cRV" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "cSk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/plasteel/showroomfloor,
@@ -45504,13 +45514,6 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/plasteel,
 /area/medical/virology)
-"dRc" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "dSx" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L4"
@@ -45934,12 +45937,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/bridge)
-"eTW" = (
-/obj/machinery/power/apc/auto_name/south,
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/bridge)
 "eUf" = (
 /obj/effect/turf_decal/tile/brown{
@@ -47142,10 +47139,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/mining)
-"hbp" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/bridge)
 "hcB" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -48493,16 +48486,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"jLI" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "jMY" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -48787,17 +48770,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
-"khd" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "khB" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -49071,6 +49043,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
+"kAE" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/south,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "kAS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/east,
@@ -52339,15 +52324,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"qfM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "qfR" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -54003,6 +53979,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"tmG" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/bridge)
 "tmI" = (
 /obj/machinery/piratepad/civilian,
 /obj/effect/turf_decal/tile/brown,
@@ -54226,14 +54207,6 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
-"tNB" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "tQk" = (
 /obj/machinery/camera{
 	c_tag = "Auxiliary Tool Storage"
@@ -55371,6 +55344,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
+"wcZ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "wdA" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -82598,7 +82579,7 @@ boP
 boP
 aPR
 mrA
-dRc
+wcZ
 jxq
 aZM
 aZq
@@ -82855,7 +82836,7 @@ boP
 boP
 aPR
 rpA
-qfM
+cRV
 qoi
 aZM
 aZz
@@ -88508,9 +88489,9 @@ aJn
 boP
 boP
 aPR
-jLI
+rpA
 krk
-tNB
+xBu
 aZV
 bbv
 bcm
@@ -89022,9 +89003,9 @@ aJn
 boP
 boP
 aPR
-hbp
+aVd
 kLU
-eTW
+tmG
 aZV
 bbw
 bcn
@@ -89281,7 +89262,7 @@ aJn
 jwQ
 dta
 onM
-khd
+kAE
 aZV
 aZV
 aZV
