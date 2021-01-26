@@ -1,19 +1,16 @@
 //Used for active reactions in reagents/equilibrium datums
 
-SUBSYSTEM_DEF(reagents)
+PROCESSING_SUBSYSTEM_DEF(reagents)
 	name = "Reagents"
 	init_order = INIT_ORDER_REAGENTS
 	priority = FIRE_PRIORITY_REAGENTS
 	wait = 0.5 SECONDS //You might think that rate_up_lim has to be set to half, but since everything is normalised around delta_time, it automatically adjusts it to be per second. Magic!
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-
-	var/list/processing = list()
-	var/list/currentrun = list()
 	///What time was it when we last ticked
 	var/previous_world_time = 0
 
-/datum/controller/subsystem/reagents/Initialize()
+/datum/controller/subsystem/processing/reagents/Initialize()
 	//So our first step isn't insane
 	previous_world_time = world.time
 	//Build GLOB lists - see holder.dm
@@ -21,12 +18,7 @@ SUBSYSTEM_DEF(reagents)
 	build_chemical_reactions_list()
 	return ..()
 
-//Comment to delete: I don't really understand SS that well. Please review me
-/datum/controller/subsystem/reagents/stat_entry(msg)
-	msg = "P:[length(processing)]"
-	. = ..()
-
-/datum/controller/subsystem/reagents/fire(resumed = FALSE)
+/datum/controller/subsystem/processing/reagents/fire(resumed = FALSE)
 	if (!resumed)
 		currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)

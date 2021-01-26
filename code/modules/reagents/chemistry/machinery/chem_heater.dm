@@ -117,14 +117,49 @@
 	replace_beaker()
 	return ..()
 
+///Forces a UI update every time a reaction step happens inside of the beaker it contains. This is so the UI is in sync with the reaction since it's important that the output matches the current conditions for pH adjustment and temperature.
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions)
 	SIGNAL_HANDLER
 	for(var/ui_client in ui_client_list)
 		var/datum/tgui/ui = ui_client
 		if(!ui)
 			stack_trace("Warning: UI in UI client list is missing in [src] (chem_heater)")
+			remove_ui_client_list(ui)
 			continue
 		ui.send_update()
+
+/obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ChemHeater", name)
+		ui.open()
+		add_ui_client_list(ui)
+
+/obj/machinery/chem_heater/ui_close(mob/user)
+	for(var/ui_client in ui_client_list)
+		var/datum/tgui/ui = ui_client
+		if(ui.user == user)
+			remove_ui_client_list(ui)
+	return ..()
+
+/*
+*This adds an open ui client to the list - so that it can be force updated from reaction mechanisms.
+* After adding it to the list, it enables a signal incase the ui is deleted - which will call a method to remove it from the list
+* This is mostly to ensure we don't have defunct ui instances stored from any condition.
+*/
+/obj/machinery/chem_heater/proc/add_ui_client_list(new_ui)
+  LAZYADD(ui_client_list, new_ui)
+  RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .on_ui_deletion)
+
+///This removes an open ui instance from the ui list and deregsiters the signal
+/obj/machinery/chem_heater/proc/remove_ui_client_list(old_ui)
+  UnregisterSignal(old_ui, COMSIG_PARENT_QDELETING)
+  LAZYREMOVE(ui_client_list, old_ui)
+
+///This catches a signal and uses it to delete the ui instance from the list
+/obj/machinery/chem_heater/proc/on_ui_deletion(datum/tgui/source, force)
+  SIGNAL_HANDLER
+  remove_ui_client_list(source)
 
 
 /obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
