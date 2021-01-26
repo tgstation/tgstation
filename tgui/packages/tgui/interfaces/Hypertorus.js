@@ -69,7 +69,7 @@ export const Hypertorus = (props, context) => {
               <Button
                 disabled={start_fuel === 1
                     || start_power === 0
-                    || data.power_level > 0}
+                    || (start_cooling && data.power_level > 0)}
                 icon={data.start_cooling ? 'power-off' : 'times'}
                 content={data.start_cooling ? 'On' : 'Off'}
                 selected={data.start_cooling}

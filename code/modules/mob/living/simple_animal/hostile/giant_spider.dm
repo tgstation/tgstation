@@ -58,6 +58,7 @@
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25
+	a_intent = INTENT_HARM
 	faction = list("spiders")
 	pass_flags = PASSTABLE
 	move_to_delay = 6

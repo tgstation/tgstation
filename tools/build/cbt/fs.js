@@ -7,87 +7,80 @@
 const fs = require('fs');
 const glob = require('./glob');
 
-const Flags = {
-  SOURCE: 1,
-  TARGET: 1 << 1,
-  FILE: 1 << 2,
-  GLOB: 1 << 3,
-};
-
 class File {
   constructor(path) {
     this.path = path;
-    this.stat = null;
   }
 
-  performStat() {
-    this.stat = fs.statSync(this.path);
+  get stat() {
+    if (this._stat === undefined) {
+      this._stat = stat(this.path);
+    }
+    return this._stat;
+  }
+
+  exists() {
+    return this.stat !== null;
   }
 
   get mtime() {
-    if (!this.stat) {
-      this.performStat();
+    return this.stat && this.stat.mtime;
+  }
+
+  touch() {
+    const time = new Date();
+    try {
+      fs.utimesSync(this.path, time, time);
     }
-    return this.stat.mtime;
+    catch (err) {
+      fs.closeSync(fs.openSync(this.path, 'w'));
+    }
+  }
+}
+
+class Glob {
+  constructor(path) {
+    this.path = path;
+  }
+
+  toFiles() {
+    const paths = glob.sync(this.path, {
+      strict: false,
+      silent: true,
+    });
+    return paths
+      .map(path => new File(path))
+      .filter(file => file.exists());
   }
 }
 
 /**
  * If true, source is newer than target.
+ * @param {File[]} sources
+ * @param {File[]} targets
  */
-const compareFiles = nodes => {
-  let toVisit = [...nodes];
+const compareFiles = (sources, targets) => {
   let bestSource = null;
   let bestTarget = null;
-  while (toVisit.length > 0) {
-    const node = toVisit.shift();
-    if (node.flags & Flags.FILE) {
-      const file = node.file || new File(node.path);
-      if (node.flags & Flags.SOURCE) {
-        if (!bestSource || file.mtime > bestSource.mtime) {
-          bestSource = file;
-        }
-        continue;
-      }
-      else if (node.flags & Flags.TARGET) {
-        try {
-          if (!bestTarget || file.mtime < bestTarget.mtime) {
-            bestTarget = file;
-          }
-        } catch {
-          // Always needs a rebuild if any target doesn't exist.
-          return `target '${node.path}' is missing`;
-        }
-        continue;
-      }
+  for (const file of sources) {
+    if (!bestSource || file.mtime > bestSource.mtime) {
+      bestSource = file;
     }
-    if (node.flags & Flags.GLOB) {
-      // Replace GLOB flag with FILE for the following nodes to visit.
-      const fileFlags = node.flags & ~Flags.GLOB | Flags.FILE;
-      // Expand the glob and only add paths that are safe to perform
-      // the stat operation on.
-      const unsafePaths = glob.sync(node.path, {
-        strict: false,
-        silent: true,
-      });
-      for (let path of unsafePaths) {
-        try {
-          const file = new File(path);
-          file.performStat();
-          toVisit.push({ flags: fileFlags, file });
-        }
-        catch {}
-      }
-      continue;
+  }
+  for (const file of targets) {
+    if (!file.exists()) {
+      return `target '${file.path}' is missing`;
+    }
+    if (!bestTarget || file.mtime < bestTarget.mtime) {
+      bestTarget = file;
     }
   }
   // Doesn't need rebuild if there is no source, but target exists.
   if (!bestSource) {
     if (bestTarget) {
       return false;
-    } else {
-      return 'no known sources or targets';
     }
+    return 'no known sources or targets';
   }
   // Always needs a rebuild if no targets were specified (e.g. due to GLOB).
   if (!bestTarget) {
@@ -125,7 +118,7 @@ const resolveGlob = globPath => {
   const safePaths = [];
   for (let path of unsafePaths) {
     try {
-      stat(path);
+      fs.statSync(path);
       safePaths.push(path);
     }
     catch {}
@@ -134,7 +127,9 @@ const resolveGlob = globPath => {
 };
 
 module.exports = {
-  Flags,
+  File,
+  Glob,
+  compareFiles,
   stat,
   resolveGlob,
   compareFiles,
