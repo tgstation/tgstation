@@ -12,7 +12,6 @@
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
-	anchorables = list(/obj/structure/table)
 	var/operating = FALSE
 	var/obj/item/reagent_containers/beaker = null
 	var/limit = 10
@@ -86,6 +85,8 @@
 /obj/machinery/reagentgrinder/AltClick(mob/user)
 	. = ..()
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(operating)//Prevent alt click early removals
 		return
 	replace_beaker(user)
 

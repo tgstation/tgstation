@@ -103,7 +103,9 @@
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
+
+	var/datum/antagonist/heretic/cultie = user.mind?.has_antag_datum(/datum/antagonist/heretic)
+
 	if(!cultie)
 		return
 	var/list/knowledge = cultie.get_all_knowledge()

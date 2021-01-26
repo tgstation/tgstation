@@ -251,7 +251,7 @@
 /obj/vehicle/sealed/mecha/proc/restore_equipment()
 	equipment_disabled = FALSE
 	for(var/occupant in occupants)
-		var/mob/mob_occupant
+		var/mob/mob_occupant = occupant
 		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
 		to_chat(mob_occupant, "<span=notice>Equipment control unit has been rebooted successfully.</span>")
 		mob_occupant.update_mouse_pointer()
