@@ -78,6 +78,10 @@
 	name = "magic crystal shard"
 	desc = "A small enchanted shard which allows magical weapons to fire."
 
+//themed for flame jets on reactive armor
+/obj/item/firing_pin/fuelline
+	name = "fuel line"
+	desc = "A small line pumping flamer fuel as needed into the flame jets."
 
 // Test pin, works only near firing range.
 /obj/item/firing_pin/test_range

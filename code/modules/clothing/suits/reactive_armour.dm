@@ -65,6 +65,9 @@
 		to_chat(user, "<span class='notice'>[src] is now inactive.</span>")
 		icon_state = initial(icon_state)
 		inhand_icon_state = initial(icon_state)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 	user.update_inv_wear_suit() //so if they set it while wearing it, it updates the icon
 
 /obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
@@ -176,20 +179,31 @@
 /obj/item/clothing/suit/armor/reactive/fire/Initialize()
 	. = ..()
 	gloves = new(src)
+	gloves.connected_armor = src
 	RegisterSignal(gloves, COMSIG_PARENT_PREQDELETED, .proc/armor_broken)
 
+/obj/item/clothing/suit/armor/reactive/fire/dropped(mob/user)
+	..()
+	if(!isliving(user) || !active)
+		return
+	var/mob/living/owner = user
+	attack_self(owner)
+
 /obj/item/clothing/suit/armor/reactive/fire/Destroy()
-	. = ..()
 	if(gloves)
 		QDEL_NULL(gloves)
+	. = ..()
 
 /obj/item/clothing/suit/armor/reactive/fire/proc/armor_broken(datum/source, force)
 	SIGNAL_HANDLER
 
 	if(isliving(loc))
 		var/mob/living/user = loc
-		to_chat(user, "<span class='danger'>[src]'s gloves are destroyed, breaking the reactive armor!</span>")
+		to_chat(user, "<span class='danger'>[src]'s gauntlets are destroyed, breaking the reactive armor!</span>")
+		gloves = null
 		attack_self(user)
+	else
+		qdel(src)//eh it's broken anyways
 
 /obj/item/clothing/suit/armor/reactive/fire/activate_effect(mob/living/carbon/human/owner)
 	if(broken)
@@ -207,7 +221,7 @@
 /obj/item/clothing/suit/armor/reactive/fire/deactivate_effect(mob/living/carbon/human/owner)
 	if(gloves)
 		owner.visible_message("<span class='notice'>[src] disengages [gloves] from you.</span>")
-		user.transferItemToLoc(O, src, force = TRUE) //force allows it to move despite being nodrop
+		owner.transferItemToLoc(gloves, src, force = TRUE) //force allows it to move despite being nodrop
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -231,32 +245,48 @@
 	name = "reactive incendiary gauntlets"
 	desc = "A pair of metal gauntlets that are hooked up to the reactive incendiary armor. When threatened, you will be able to spew flame from them... In theory!"
 	icon_state = "flamejet"
-	inhand_icon_state = "blackgloves"
 	permeability_coefficient = 0.9
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 30)
+	clothing_traits = list(TRAIT_CHUNKYFINGERS)// gaunts are much too big to be able to mess with stuff like that
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	var/obj/item/clothing/suit/armor/reactive/fire/connected_armor
 
 /obj/item/clothing/gloves/flame_jets/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, "flame jets")
+
+/obj/item/clothing/gloves/flame_jets/dropped(mob/user)
+	. = ..()
+	if(ismob(loc))
+		return
+	//something like dismemberment happened
+	if(!connected_armor)
+		qdel(src)
+		return
+	connected_armor.attack_self(user) //disengage the gloves.
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/flame_jets
 	name = "active flame jets"
 	desc = "Taking \"reactive armor\" into your own hands."
 	fire_sound = 'sound/magic/fireball.ogg'
 	icon_state = "flamejet"
-	guns_left = 6
+	pin = /obj/item/firing_pin/fuelline
+	guns_left = 5 //6 shots in total
 	inhand_icon_state = "flamejet"
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/flame_jet
+
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/flame_jets/Initialize()
+	. = ..()
+	QDEL_IN(src, 6 SECONDS)
 
 /obj/item/ammo_box/magazine/internal/boltaction/enchanted/flame_jet
 	ammo_type = /obj/item/ammo_casing/magic/flame_jet
 
 /obj/item/ammo_casing/magic/flame_jet
-	projectile_type = /obj/projectile/magic/flame_jet
+	projectile_type = /obj/projectile/flame_jet
 
 /obj/projectile/flame_jet
 	name = "flame jet"
