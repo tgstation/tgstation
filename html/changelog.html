@@ -51,427 +51,71 @@
 		
 		-->
 		<div class="commit sansserif">
-			<h2 class="date">21 January 2021</h2>
-			<h3 class="author">ATHATH updated:</h3>
-			<h2 class="date">25 January 2021</h2>
-			<h3 class="author">Maurukas updated:</h3>
+			<h2 class="date">26 January 2021</h2>
+			<h3 class="author">AdamElTablawy updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="bugfix">Icebox turf generation no longer breaches the labor camp and mining base</li>
-				<li class="bugfix">Fixes all roundstart active turfs and genturf errors on Icebox</li>
-				<li class="bugfix">All APCs on Icebox are now located within the areas they power, not in maint</li>
-				<li class="bugfix">Removes duplicated APCs on Icebox</li>
-				<li class="bugfix">Fixes Icebox's power grid, in general</li>
+				<li class="tweak">Spiders are now stuck on harm rather than help intent, meaning you can't trade places with them like other simplemobs.</li>
 			</ul>
-			<h3 class="author">Nari Harimoto updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed an access issue with a table in meta toxins</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">climbing is now done through an element</li>
-			</ul>
-			<h3 class="author">RaveRadbury updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">If you're a Clown/Mime fan and you become obsessed, you'll have them as your target. Also works for Spiritual with the Chaplain.</li>
-			</ul>
-			<h3 class="author">cacogen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Soapstone messages at or below -5 voting score won't persist. This is to reduce the amount and increase the overall quality. If this changelog wasn't here last round you may be able to save one</li>
-			</ul>
-			<h3 class="author">dragomagol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The Medieval Shuttle's brig now has a brig area instead of its usual area for escape checking</li>
-			</ul>
-			<h3 class="author">esainane updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">If you manage to start fusion in the HFR without starting the cooling process, you can now start cooling and interact with the process as usual, rather than being softlocked. You still aren't able to disable cooling once fusion has started.</li>
-			</ul>
-
-			<h2 class="date">24 January 2021</h2>
 			<h3 class="author">ArcaneMusic updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="bugfix">Pre-mapped cups of lean will hold the correct amount now for sure.</li>
+				<li class="bugfix">The genetics camera now has the correct name.</li>
 			</ul>
-			<h3 class="author">LemonInTheDark updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes an edgecase where groups of gas could settle while on fire</li>
-			</ul>
-			<h3 class="author">Tralezab, Nabski and Coaix helping in name string additions updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added the Wizard Academy anonymous theme</li>
-				<li class="rscadd">Wizard event requested by actionninja to enable the wizard anonymous theme as a summon events... event.</li>
-				<li class="refactor">Themes are no longer switch cases and strings, they are now datum singletons. I really should have done this before</li>
-				<li class="rscadd">Anon names can be ran post roundstart with options to announce or not</li>
-				<li class="bugfix">Anon names won't fuck with your preferences anymore, only loading from it instead of saving to it.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">AI status displays are now controlled either by emotes (like `*happy`), or by clicking on the status display as an AI.</li>
-				<li class="tweak">The Skittish quirk will now cause you to automatically dive into a locker/crate if you bump into it (although closets must be closed). Walk to avoid this behaviour.</li>
-			</ul>
-
-			<h2 class="date">23 January 2021</h2>
 			<h3 class="author">Arkatos updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed a layout for four misc icons next to the intent selection in non-widescreen HUDs.</li>
+				<li class="bugfix">Changelings will now show correct ID job icon on security huds upon transformation, if ID was actually equipped as a part of the flesh disguise. Upon reabsorbing the flesh disguise ID, the icon will also immediately disappear, so keep that in mind.</li>
+				<li class="bugfix">Changeling flesh disguise IDs will now properly show overlays upon examine.</li>
+				<li class="bugfix">Changeling flesh disguise will now properly include suit storage slot item, if there is any.</li>
 			</ul>
-			<h3 class="author">Ryll/Shaps updated:</h3>
+			<h3 class="author">Jared-Fogle updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="rscadd">You can now noogie people! Simply get them in a neckgrab, switch to disarm intent while targeting their head, then go to town! Those without flesh like skeletons and people with augmented heads are immune to this form of bullying. Moths and flypeople, on the other hand, are extra vulnerable to it due to their sensitive antennae. Lastly, hulks are extra rough with noogies, making them deal more damage.</li>
-				<li class="rscadd">Added gunboots for admins</li>
+				<li class="balance">Friendly quirk has been lowered from 4 to 2 points.</li>
 			</ul>
-			<h3 class="author">Timberpoes updated:</h3>
+			<h3 class="author">Maurukas updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes an exploit where machine frames could be stacked. Now when a machine frame is created on a turf it shouldn't, it deconstructs itself down into its component parts.</li>
-			</ul>
-			<h3 class="author">dragomagol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">changed references of robot module (engineering, medical, etc.) to model</li>
-				<li class="code_imp">moved robot declaration and model declaration to their own files</li>
-			</ul>
-			<h3 class="author">spessbro updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">updated ntos copyright</li>
-			</ul>
-
-			<h2 class="date">22 January 2021</h2>
-			<h3 class="author">ArcaneMusic updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Crab meat is now visible yet again.</li>
-			</ul>
-			<h3 class="author">Fikou, Kryson, aceedex from /vg/ updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">reinforcing the mining hardsuit with goliath hide now makes the sprite cooler</li>
-			</ul>
-			<h3 class="author">Koshenko updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">TCG item scaling refactored into an element</li>
-			</ul>
-			<h3 class="author">Krysonism updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">The evil crab has a new look.</li>
-			</ul>
-			<h3 class="author">Melbert updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes the botany gene-shear click-stacking input exploit to get around health requirements.</li>
-				<li class="bugfix">Fixes invasive spreading overtaking plants of the same type</li>
-				<li class="bugfix">Fixes invasive spreading going through windows</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">All quirk point values have been re-done</li>
+				<li class="bugfix">Missing disposals pipe in Kilostation's robotics lab is replaced</li>
+				<li class="bugfix">Missing sci-drobe added to R&D</li>
 			</ul>
 			<h3 class="author">RaveRadbury updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="bugfix">Expressive Aphasia allows for "Mr." and "Mrs." as intended.</li>
+				<li class="tweak">Allows tobacco products, food trash, fancy boxes, organs, and a few other things onto trays.</li>
 			</ul>
 			<h3 class="author">Son-of-Space updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="bugfix">Gives plushes on MetaStation names</li>
-				<li class="bugfix">Gave plushies names on Delta</li>
-				<li class="bugfix">Gave plushes on IceBox names</li>
-				<li class="bugfix">Gave plushes on KiloStation names</li>
+				<li class="bugfix">Standardizes KiloStation APCs</li>
+				<li class="bugfix">Delta APCs have been replaced with their superior autoname versions</li>
+			</ul>
+			<h3 class="author">SparkezelPL updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Mosins now have 10 armor penetration and lowered wound chance</li>
+				<li class="balance">Russian surplus now costs 50% more</li>
+				<li class="balance">Due to their old age and poor maintenance Mosin Nagants can jam now, use a gun maintenance supplies on them after combat to make them keep their reliability.</li>
+				<li class="rscadd">Added gun maintenance kit, it contains gun maintenance supplies you can use to make sure your mosin doesnt jam. You can find them in russian surplus crates</li>
+			</ul>
+			<h3 class="author">TemporalOroboros updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Neon carpets exists. Bug your local chemist or quartermaster for a supply.</li>
+				<li class="code_imp">Decals support user-defined planes and some forms of smoothing.</li>
+				<li class="code_imp">Emissive layers now support emissive turfs, items, and mobs as well as emissive blocking structures.</li>
+				<li class="bugfix">You can recombine stacks of carpet you split apart again. Did anyone notice that this was broken?</li>
 			</ul>
 			<h3 class="author">Timberpoes updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="bugfix">Codex Cicatrix no longer has infinite charge.</li>
-				<li class="bugfix">You can once again get addicted to chems through metabolism.</li>
+				<li class="admin">Noogies are now combat logged.</li>
+				<li class="bugfix">The Crew Monitor should no longer stop functioning when Doctor Hilbert hangs out in nullspace, and should continue to work despite any similar errors in the future.</li>
+				<li class="bugfix">Dense machines once again deconstuct into frames instead of all their raw component parts.</li>
 			</ul>
-			<h3 class="author">zxaber updated:</h3>
+			<h3 class="author">cacogen updated:</h3>
 			<ul class="changes bgimages16">
-				<li class="admin">Transforming a human into an AI using the player panel now allows for keeping the AI at the old human's location.</li>
+				<li class="tweak">Painting exhibit names and descriptions are different</li>
+				<li class="rscdel">Paintings no longer tell you they're fair to middling</li>
+			</ul>
+			<h3 class="author">eeSPee updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Codex Cicatrix and Fake Pierced Reality toys.</li>
 			</ul>
 
 			<h2 class="date">21 January 2021</h2>
 			<h3 class="author">ATHATH updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">The surgical toolset implant's circular saw and surgical drill now both have a force of 15 (as is normal for surgical tools of their respective types), instead of 10.</li>
-			</ul>
-			<h3 class="author">Borisvanmemes updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">tips related to devil</li>
-			</ul>
-			<h3 class="author">Jared-Fogle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Singularities no longer disappear when hit by a projectile. Praise Lord singuloth.</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">dynamic threat reports are no longer perfectly accurate, they diverge and are sometimes downright wrong.</li>
-			</ul>
-			<h3 class="author">That REALLY Good Soda Flavor updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Monkeys can use all four intents now.</li>
-				<li class="rscadd">Monkeys can use martial arts now.</li>
-				<li class="rscadd">Most living mobs can be the target of martial arts now.</li>
-				<li class="code_imp">Moved martial arts to mob/living instead of humans.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nuke ops can now purchase a box of "deathrattle implants". When an implanted person dies, all the other users of the implant will get a message, saying who died and where they died.</li>
-			</ul>
-			<h3 class="author">dragomagol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Replaced some magic numbers with defines in robot code</li>
-			</ul>
-			<h3 class="author">eeSPee updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Small fixes to heretic book and rune</li>
-			</ul>
-			<h3 class="author">stylemistake updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed map display in Centcom Pod Launcher UI to not collapse into a tiny square.</li>
-			</ul>
-
-			<h2 class="date">20 January 2021</h2>
-			<h3 class="author">Ryll/Shaps updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You can no longer roll a Die of Fate multiple times before the first roll takes effect</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Spray-on insulated gloves, a BEPIS tech, now produce a visible message when disintegrating. That disintegration can be caused by absorbing a shock, or now by washing them too much.</li>
-			</ul>
-			<h3 class="author">esainane updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">HFR moderator reactions which increase or decrease heat output now actually increase or decrease the heat applied to the fusion mix, rather than just modifying the number shown in the interface.</li>
-				<li class="bugfix">The HFR can now be reactivated after partial reconstruction without first needing to reconstruct the core, and will not get stuck in a state where attempting to use the interface says "Activate the machine first by using a multitool on the interface.", and using a multitool says "You already activated the machine."</li>
-			</ul>
-			<h3 class="author">remove32 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">add error handling to server build tool</li>
-			</ul>
-
-			<h2 class="date">19 January 2021</h2>
-			<h3 class="author">Arkatos updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Moonlight Greatsword is now a proper sharp weapon and no longer a modified nullrod. That means no free antimagic anymore, my friends.</li>
-			</ul>
-			<h3 class="author">CRITAWAKETS updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The new "Comet" hairstyle has been added, looking a bit like its namesake.</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">you cant tie bronze boots anymore spriteadd: makes the clockwork helmet not as big on the ground</li>
-			</ul>
-			<h3 class="author">KathyRyals updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes a runtime with the sickly blade.</li>
-			</ul>
-			<h3 class="author">Nari Harimoto updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed glass plating turning invisible when damaged</li>
-				<li class="refactor">changed some floor tile broken_state code to use a proc in initialization rather than hardcoded in</li>
-				<li class="refactor">removed initialization override for plating.dm</li>
-				<li class="bugfix">all non-iron based tiles will no longer magically turn into iron plating when broken, instead asteroid turf will become dug and stuff like grass, dirt, water etc. will not change icon when broken</li>
-				<li class="tweak">Added mutadone bottle to genetics and removed a random wire in xenobio maint, and raw anomaly cores in toxins launch room</li>
-				<li class="tweak">Added a robotics desk facing science hall and replaced a wall next to rnd door with a window, as well as space cleaner in robotics medical area (to clean those dastardly oil spots the previous crew left behind 😉 ), robotics now has their missing medbot items, and 10mj cell replaced with 15mj, like old metarobo</li>
-				<li class="tweak">robotics work area has been expanded, robo operating area is moved to the right wall and is opened up a bit, robo work floor is a tad darker</li>
-				<li class="tweak">Added shutter access between Toxins and Toxins storage</li>
-				<li class="tweak">Added a Pump to cytology gas pipe and a firelock to the cytology door</li>
-				<li class="bugfix">robotics morgue tray, and robotics tech fab now face the correct way</li>
-			</ul>
-			<h3 class="author">Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Regular and material floor tile recipes no longer have the same name. You can seal your breaches with less chance of producing the wrong stack.</li>
-			</ul>
-			<h3 class="author">Thalpy updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes reacted wine instantly turning into grappa by setting the grappa reaction's enzyme volume requirement to 10u instead of 5u</li>
-				<li class="bugfix">Fixes grinders giving out beakers before they're done grinding</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">If you are luckily enough to revive while still inside the stomach of a laughter demon, you will be immediately ejected. Whether you will be able to get away before the demon then kills and eats you again, is up to you.</li>
-			</ul>
-
-			<h2 class="date">18 January 2021</h2>
-			<h3 class="author">ArcaneMusic updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Civilian Bounties now show the fulfillment value, instead of the value of the cube total. The UI is not lying anymore!</li>
-			</ul>
-			<h3 class="author">Nari Harimoto updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed a random space tile in science</li>
-			</ul>
-			<h3 class="author">Thunder12345 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">In-spect scanner now takes a few seconds to produce a report.</li>
-			</ul>
-			<h3 class="author">Timberpoes updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">Exosuit console EMP logging now properly outputs the mech's occupants to chat and logs.</li>
-				<li class="bugfix">Mechs no longer runtime when exosuit consoles EMP them and will now properly play sounds and give notifications to their occupants when this happens.</li>
-			</ul>
-			<h3 class="author">c420-o updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">fixed a single typo</li>
-			</ul>
-			<h3 class="author">nightred updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Able to secure grinders/cell chargers to tables.</li>
-			</ul>
-			<h3 class="author">park66665, Ghilker, Rohesie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed atmos component Destroy() a little bit.</li>
-			</ul>
-			<h3 class="author">stylemistake updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed broken UI in ExosuitFabricator interface.</li>
-			</ul>
-
-			<h2 class="date">17 January 2021</h2>
-			<h3 class="author">Cartographer-D updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">all large guns except traitor objectives and those specifically made to be concealed are now bulky.</li>
-			</ul>
-			<h3 class="author">Gamer025 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Update_Parallax no longer runtimes when observing a player without client</li>
-			</ul>
-			<h3 class="author">LemonInTheDark updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Fire alarms that have been triggered by atmos issues will now auto resolve when those issues go away.</li>
-				<li class="rscadd">Fire alarms that are being triggered by atmos issues have a blinking overlay around their frame, keep an eye out for the problem children.</li>
-			</ul>
-			<h3 class="author">TemporalOroboros updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed showers overexposing things they washed</li>
-				<li class="rscadd">Added the ability to toggle showers' water regeneration with a multitool.</li>
-				<li class="rscadd">Bespoke materials exist</li>
-				<li class="rscadd">You can tell who's meat was used to make that chair</li>
-			</ul>
-			<h3 class="author">Time-Green updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Some assistants have started tracking everyones maintenance pill consumption. Will you hold the record?</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Long-To-Short-Range-Bluespace-Transceiver timers changed from T1: 90s -> 40s  T2: 70s -> 30s  T3: 60s -> 20s  T4: 60s -> 10s</li>
-			</ul>
-			<h3 class="author">cacogen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">After some setbacks in the employee navigation sector, Nanotrasen in its infinite wisdom have given the wayfinding pinpointer dispenser a personality lift in the hope of selling more pinpointers</li>
-				<li class="tweak">Based on overwhelming demand, wayfinding pinpointers are now free. You can still refund them at the dispenser though</li>
-				<li class="code_imp">Moves some of the pointing code from the mob pointed() verb to an atom pointat() proc so everything can be made to point fingers at everything else and the animation is consistent. Now the wayfinding dispenser points like you do!</li>
-			</ul>
-			<h3 class="author">interestingusernam3 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The holiday observed on every 4th of July is now called "US Independence Day" instead of just "Independence Day".</li>
-			</ul>
-			<h3 class="author">tralezab updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Food Cart has been completely remade to work as a mobile kitchen</li>
-			</ul>
-
-			<h2 class="date">16 January 2021</h2>
-			<h3 class="author">CoffeeDragon16 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Explosive lances will properly show the grenade on them at construction.</li>
-			</ul>
-			<h3 class="author">Dr. Harimoto + Zytlog updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Petri Dish Smart Fridge - Nari Harimoto</li>
-				<li class="rscadd">Cytology Area - Nari Harimoto</li>
-				<li class="rscadd">Cytology Lab (Metastation) - Nari Harimoto</li>
-				<li class="tweak">Completly redone Science Department on Metastation - Zytlog + 10% Nari Harimoto</li>
-				<li class="rscadd">Cytology Wikibook - Nari Harimoto</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">separates malf ai from traitor dynamic ruleset</li>
-			</ul>
-			<h3 class="author">Jared-Fogle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Dynamic can now be configured when made the forced secret mode.</li>
-			</ul>
-			<h3 class="author">LemonInTheDark updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Atmos code has changed, again! Groups of air will equalize faster, something something go read my documentation</li>
-			</ul>
-			<h3 class="author">Manybones updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed wood table and poker table construction/deconstruction</li>
-			</ul>
-			<h3 class="author">Ryll/Shaps updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You'll now get messages when you're bleeding telling you roughly how much blood you're losing and whether the bloodloss is getting better, worse, or holding steady.</li>
-				<li class="tweak">Burn wounds will slowly heal their flesh as long as the limb has < 10 burn damage, the burn has no infection, and the patient is fed.</li>
-				<li class="balance">Hearts now decay slower, failing after roughly 6 minutes instead of 4. Livers and stomachs fail a bit faster than before now, while lungs fail a bit slower, meaning they won't all fail at the same time</li>
-				<li class="balance">Epipen coagulant will no longer clot all bleeding wounds at the same time. Coagulant now slows bleeding by 30%, and will only clot the wound currently losing the most blood. Determination from suffering wounds will slow bleeding by an additional 15%.</li>
-				<li class="balance">Renamed "Rapid Coagulating" nanite program to "Vein Repressurization". It now reduces bleeding by 50% rather than 90%, and costs twice as much.</li>
-			</ul>
-			<h3 class="author">Seris02 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">makes the manifest always have a certain department order</li>
-			</ul>
-			<h3 class="author">Timberpoes updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You can once again pay off the pirate event from the communications console without it silently failing for no obvious reason.</li>
-				<li class="admin">Tweaked how logging ID access changes works, added Investigate verb menu entry for id_card_changes and they are now also logged to id_card_changes.html, accessible from Current and Server Logs.</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">proxy sensor grenades work</li>
-			</ul>
-			<h3 class="author">dragomagol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Icebox xenobio maint no longer has a roundstart hole in it, no more mysterious green locker</li>
-			</ul>
-			<h3 class="author">necromanceranne updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Guns are no longer directly printable from the protolathe.</li>
-				<li class="rscadd">Gun kits to craft the various prototype firearms once printable from the security protolathe.</li>
-				<li class="balance">Large energy crossbows now are bulky, like most other printed weapons.</li>
-				<li class="balance">Crafted weapons now come with a firing pin.</li>
-			</ul>
-
-			<h2 class="date">15 January 2021</h2>
-			<h3 class="author">Avunia Takiya updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Brioche cakes don't look like errors anymore, visually</li>
-				<li class="rscadd">Brioche cakes and its slices have a specific taste now</li>
-			</ul>
-			<h3 class="author">EgorDinamit updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Ghost roles can no longer spawn as a male with female body_type and vice-versa.</li>
-				<li class="bugfix">Not every single vendor is round-start hacked anymore.</li>
-			</ul>
-			<h3 class="author">Gamer025 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Elevators / Lifts can now move down via an elevator button and also no longer try to move when already at the target floor</li>
-			</ul>
-			<h3 class="author">Timberpoes updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You should no longer attempt to buckle people to yourself when all you really want to do is inspect their inventories.</li>
-			</ul>
-
-			<h2 class="date">14 January 2021</h2>
-			<h3 class="author">CoffeeDragon16 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Paintings are now unable to have no name.</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Hulks now get more damage from freeze damage, take it in brute, and get the damage at higher temps than normal</li>
-			</ul>
-			<h3 class="author">Son of Space updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Completely redid MetaSec's Offices</li>
-				<li class="bugfix">pruned windows in maint by the upload on Meta</li>
-			</ul>
-			<h3 class="author">interestingusernam3 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Prevents forcing a lot of different kinds of mobs that shouldn't be able to rest to rest.</li>
-			</ul>
-			<h3 class="author">zxaber updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Communication Consoles now show up on GPS.</li>
-			</ul>
-
-			<h2 class="date">13 January 2021</h2>
-			<h3 class="author">EgorDinamit updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="balance">The surgical toolset implant's circular saw and surgical drill now both have a force of 15 (as is normal for surgical tools of their respective types), instead of 10.</li>
 			</ul>
@@ -1961,50 +1605,6 @@
 			<ul class="changes bgimages16">
 				<li class="bugfix">You can no longer store tool implant tools in boxes or other container items.</li>
 				<li class="bugfix">Admins placing an APC in space will no longer create a runtime factory that breaks everything</li>
-			</ul>
-
-			<h2 class="date">24 November 2020</h2>
-			<h3 class="author">ArcaneMusic updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Lockers/Closets/Bodybags close all open inventories of items and internal items enclosed inside of itself. For real this time.</li>
-				<li class="bugfix">Hygiene Robots are now craftable and deconstructable in the same way as other simple robots.</li>
-				<li class="bugfix">Hygiene Robots must be opened in order to be emagged just like the rest.</li>
-				<li class="bugfix">Living crates now properly behave like crates when faced against plastic flaps.</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">shuttle catastrophe now cant trigger if it already happened</li>
-				<li class="bugfix">fixes active turfs on away missions</li>
-			</ul>
-			<h3 class="author">Ghommie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">squeaking objects should no longer squeak when crossed by abstract or floating objects such as directional lights.</li>
-				<li class="bugfix">All forms of phasings shouldn't be able to pass through certain restricted turfs now, not just wiz jaunts.</li>
-			</ul>
-			<h3 class="author">Jared-Fogle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The verb panel is now more consistently correct.</li>
-			</ul>
-			<h3 class="author">Maurukas updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed infinite gas consumption by cryogenics pods</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Picture frames no longer always appear empty</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Moves grown food to newfood</li>
-				<li class="code_imp">Gives trash element support for callbacks for item creation override</li>
-			</ul>
-			<h3 class="author">Ryll/Shaps updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Foam darts and other unembeddable bullet subtypes will no longer leave ghost shrapnel when hitting people</li>
-			</ul>
-			<h3 class="author">zxaber updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Cell chargers will no longer powersink the room they're in, as they now draw all the power for the cell from the powernet directly through the APC. They still require a trickle of power on the equipment breaker, though.</li>
 			</ul>
 		</div>
 
