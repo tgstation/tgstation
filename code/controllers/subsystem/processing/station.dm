@@ -13,9 +13,9 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/Initialize(timeofday)
 
 	//If doing unit tests we don't do none of that trait shit ya know?
-	#ifdef UNIT_TESTS
+#ifdef UNIT_TESTS
     return ..()
-    #endif
+#endif
 
 	SetupTraits()
 	return ..()
@@ -46,4 +46,3 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	for(var/i in picked_trait.blacklist)
 		var/datum/station_trait/trait_to_remove = i
 		selectable_traits_by_types[initial(trait_to_remove.trait_type)] -= trait_to_remove
-
