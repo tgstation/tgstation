@@ -61,11 +61,11 @@
 	update_all_member_objectives("<span class='danger'>The nation of [attacking_nation] has declared the intent to conquer [src]! You have new objectives.</span>")
 
 /datum/team/nation/proc/update_all_member_objectives(message)
-	for(var/datum/mind/M in members)
-		var/datum/antagonist/separatist/needs_objectives = M.has_antag_datum(/datum/antagonist/separatist)
+	for(var/datum/mind/member in members)
+		var/datum/antagonist/separatist/needs_objectives = member.has_antag_datum(/datum/antagonist/separatist)
 		needs_objectives.objectives |= objectives
 		if(message)
-			to_chat(M.current, message)
+			to_chat(member.current, message)
 		needs_objectives.owner.announce_objectives()
 
 /datum/antagonist/separatist
