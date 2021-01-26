@@ -36,7 +36,6 @@
 	icon_state = "[base_icon_state][area.lightswitch ? 1 : 0]"
 
 /obj/machinery/light_switch/update_overlays()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	. = ..()
 	if(!(machine_stat & NOPOWER))
 		SSvis_overlays.add_vis_overlay(src, icon, "[base_icon_state]-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)

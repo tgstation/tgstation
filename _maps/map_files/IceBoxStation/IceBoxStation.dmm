@@ -50593,7 +50593,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Experimentor Lab";
+	c_tag = "Genetics Lab";
 	network = list("ss13","rd")
 	},
 /obj/structure/cable,

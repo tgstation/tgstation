@@ -197,6 +197,7 @@
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
+	UnregisterSignal(src, COMSIG_ATOM_UPDATE_ICON)
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
@@ -228,6 +229,7 @@
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_UPDATE_ICON, .proc/check_updates)
 	if(!mapload)
 		return
 	has_electronics = APC_ELECTRONICS_SECURED
@@ -289,8 +291,8 @@
 	if(issilicon(user))
 		. += "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>"
 
-
-//
+// update the APC icon to show the three base states
+// also add overlays for indicator lights
 /obj/machinery/power/apc/update_appearance(updates=check_updates())
 	icon_update_needed = FALSE
 	if(!updates)
@@ -338,9 +340,32 @@
 	else if(update_state & UPSTATE_MAINT)
 		icon_state = "apc0"
 
+/obj/machinery/power/apc/update_icon_state()
+	if(update_state & UPSTATE_ALLGOOD)
+		icon_state = "apc0"
+		return
+	if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
+		var/basestate = "apc[cell ? 2 : 1]"
+		if(update_state & UPSTATE_OPENED1)
+			icon_state = (update_state & (UPSTATE_MAINT|UPSTATE_BROKE)) ? "apcmaint" : basestate
+		else if(update_state & UPSTATE_OPENED2)
+			icon_state = "[basestate][((update_state & UPSTATE_BROKE) || malfhack) ? "-b" : null]-nocover"
+		return
+	if(update_state & UPSTATE_BROKE)
+		icon_state = "apc-b"
+		return
+	if(update_state & UPSTATE_BLUESCREEN)
+		icon_state = "apcemag"
+		return
+	if(update_state & UPSTATE_WIREEXP)
+		icon_state = "apcewires"
+		return
+	if(update_state & UPSTATE_MAINT)
+		icon_state = "apc0"
+		return
+
 /obj/machinery/power/apc/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if((machine_stat & (BROKEN|MAINT)) || !(update_state & UPSTATE_ALLGOOD))
 		return
 
@@ -360,6 +385,7 @@
 
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()
+	SIGNAL_HANDLER
 	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
 	update_state = NONE
@@ -422,10 +448,10 @@
 		return NONE
 
 	. = NONE
-	if(last_update_state != update_state)
-		. |= UPDATE_ICON_STATE
-	if(last_update_overlay != update_overlay)
-		. |= UPDATE_OVERLAYS
+	if(last_update_state == update_state)
+		. |= COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	if((last_update_overlay == update_overlay) && (update_state & UPSTATE_ALLGOOD))
+		. |= COMSIG_ATOM_NO_UPDATE_OVERLAYS
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
