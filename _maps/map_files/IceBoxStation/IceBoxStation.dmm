@@ -45122,6 +45122,14 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/engine,
 /area/science/genetics)
+"dew" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "dfx" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -45148,14 +45156,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
-"did" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "dlp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -45729,17 +45729,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/teleporter)
-"esG" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "esW" = (
 /obj/machinery/light{
 	dir = 1
@@ -45990,13 +45979,6 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
-"eYM" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "Engineering Station"
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -46329,6 +46311,17 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/icemoon,
 /area/science/server)
+"fIl" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "fIU" = (
 /obj/machinery/monkey_recycler,
 /obj/structure/cable,
@@ -46373,6 +46366,17 @@
 /obj/structure/sign/painting/library,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"fQj" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/structure/chair/office{
+	dir = 1;
+	name = "Security Station"
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "fQA" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -46793,17 +46797,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"gtq" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "gwd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -47168,24 +47161,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
-"hcR" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "Command Station"
-	},
-/obj/machinery/button/door{
-	id = "bridge blast";
-	name = "Bridge Blast Door Control";
-	pixel_x = 28;
-	pixel_y = -2;
-	req_access_txt = "19"
-	},
-/obj/machinery/keycard_auth{
-	pixel_x = 29;
-	pixel_y = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "hdh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
@@ -47550,6 +47525,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/tools)
+"hSD" = (
+/obj/structure/chair/office{
+	dir = 1;
+	name = "Crew Station"
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "hTU" = (
 /turf/closed/wall/r_wall,
 /area/medical/chemistry)
@@ -47784,13 +47766,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
-"iuX" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "Crew Station"
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "ivU" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -48325,6 +48300,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"jwQ" = (
+/turf/closed/wall/r_wall,
+/area/hallway/primary/central)
 "jwX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -48809,6 +48787,17 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
+"khd" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "khB" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -49417,6 +49406,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"lkq" = (
+/obj/structure/cable,
+/obj/structure/chair/office{
+	dir = 1;
+	name = "Logistics Station"
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "lov" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/effect/turf_decal/tile/red{
@@ -51213,6 +51210,13 @@
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
+"ohL" = (
+/obj/structure/chair/office{
+	dir = 1;
+	name = "Engineering Station"
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "olh" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -51271,17 +51275,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ooX" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "Security Station"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
-	dir = 6
-	},
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "opE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -51480,6 +51473,24 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/storage/tech)
+"oTf" = (
+/obj/machinery/button/door{
+	id = "bridge blast";
+	name = "Bridge Blast Door Control";
+	pixel_x = 28;
+	pixel_y = -2;
+	req_access_txt = "19"
+	},
+/obj/machinery/keycard_auth{
+	pixel_x = 29;
+	pixel_y = 8
+	},
+/obj/structure/chair/office{
+	dir = 1;
+	name = "Command Station"
+	},
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "oUq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
@@ -52682,9 +52693,6 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"qSO" = (
-/turf/closed/wall/r_wall,
-/area/hallway/primary/central)
 "qSS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -54001,14 +54009,6 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"tpb" = (
-/obj/structure/chair{
-	dir = 1;
-	name = "Logistics Station"
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/dark,
-/area/bridge)
 "tqd" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -54533,6 +54533,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"uvb" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uvi" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -54810,17 +54821,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hor)
-"uUp" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "uVP" = (
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/yellow{
@@ -82082,10 +82082,10 @@ aOE
 aJn
 aJn
 aJn
-qSO
-uUp
+jwQ
+uvb
 aLY
-gtq
+fIl
 aZM
 aZM
 bbW
@@ -83882,7 +83882,7 @@ aJn
 boP
 aPR
 rFJ
-ooX
+fQj
 pVy
 jgH
 aZQ
@@ -84908,7 +84908,7 @@ qEJ
 aOE
 aPU
 vZL
-eYM
+ohL
 oYc
 jeW
 eiw
@@ -85679,7 +85679,7 @@ sGk
 aOE
 aPS
 rUj
-hcR
+oTf
 oYc
 eRR
 dbX
@@ -86450,7 +86450,7 @@ vEF
 aOE
 aPU
 vxA
-iuX
+hSD
 rpx
 pQW
 nCg
@@ -87480,7 +87480,7 @@ aJn
 boP
 aPR
 xeT
-tpb
+lkq
 iTX
 fZC
 aZX
@@ -88767,7 +88767,7 @@ boP
 aPR
 cXy
 cLC
-did
+dew
 aZV
 lwp
 bbw
@@ -89278,10 +89278,10 @@ aOE
 aJn
 aJn
 aJn
-qSO
+jwQ
 dta
 onM
-esG
+khd
 aZV
 aZV
 aZV
