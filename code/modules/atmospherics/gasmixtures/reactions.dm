@@ -359,7 +359,7 @@ nobiliumsuppression = INFINITY
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_OXY_FACTOR
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
-		cached_results["fire"] += burned_fuel * 10
+		cached_results["fire"] += burned_fuel
 
 	else
 		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES]
@@ -371,7 +371,7 @@ nobiliumsuppression = INFINITY
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_H2_FACTOR
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
-		cached_results["fire"] += burned_fuel
+		cached_results["fire"] += burned_fuel * 10
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
