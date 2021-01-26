@@ -1521,6 +1521,7 @@
 
 /obj/item/toy/eldritch_book/update_icon_state()
 	icon_state = book_open ? "book_open" : "book"
+	return ..()
 
 /*
  * Fake tear

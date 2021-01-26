@@ -316,31 +316,6 @@
 		set_light(0)
 
 /obj/machinery/power/apc/update_icon_state()
-	. = ..() // Updating the icon state
-	if(update_state & UPSTATE_ALLGOOD)
-		icon_state = "apc0"
-	else if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
-		var/basestate = "apc[ cell ? "2" : "1" ]"
-		if(update_state & UPSTATE_OPENED1)
-			if(update_state & (UPSTATE_MAINT|UPSTATE_BROKE))
-				icon_state = "apcmaint" //disabled APC cannot hold cell
-			else
-				icon_state = basestate
-		else if(update_state & UPSTATE_OPENED2)
-			if (update_state & UPSTATE_BROKE || malfhack)
-				icon_state = "[basestate]-b-nocover"
-			else
-				icon_state = "[basestate]-nocover"
-	else if(update_state & UPSTATE_BROKE)
-		icon_state = "apc-b"
-	else if(update_state & UPSTATE_BLUESCREEN)
-		icon_state = "apcemag"
-	else if(update_state & UPSTATE_WIREEXP)
-		icon_state = "apcewires"
-	else if(update_state & UPSTATE_MAINT)
-		icon_state = "apc0"
-
-/obj/machinery/power/apc/update_icon_state()
 	if(update_state & UPSTATE_ALLGOOD)
 		icon_state = "apc0"
 		return
@@ -363,6 +338,7 @@
 	if(update_state & UPSTATE_MAINT)
 		icon_state = "apc0"
 		return
+	return ..()
 
 /obj/machinery/power/apc/update_overlays()
 	. = ..()
@@ -398,10 +374,11 @@
 	if(machine_stat & MAINT)
 		update_state |= UPSTATE_MAINT
 	if(opened)
-		if(opened==APC_COVER_OPENED)
-			update_state |= UPSTATE_OPENED1
-		if(opened==APC_COVER_REMOVED)
-			update_state |= UPSTATE_OPENED2
+		switch(opened)
+			if(APC_COVER_OPENED)
+				update_state |= UPSTATE_OPENED1
+			if(APC_COVER_REMOVED)
+				update_state |= UPSTATE_OPENED2
 	else if((obj_flags & EMAGGED) || malfai)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(panel_open)
@@ -416,33 +393,37 @@
 		if(locked)
 			update_overlay |= APC_UPOVERLAY_LOCKED
 
-		if(!charging)
-			update_overlay |= APC_UPOVERLAY_CHARGEING0
-		else if(charging == APC_CHARGING)
-			update_overlay |= APC_UPOVERLAY_CHARGEING1
-		else if(charging == APC_FULLY_CHARGED)
-			update_overlay |= APC_UPOVERLAY_CHARGEING2
+		switch(charging)
+			if(APC_NOT_CHARGING)
+				update_overlay |= APC_UPOVERLAY_CHARGEING0
+			if(APC_CHARGING)
+				update_overlay |= APC_UPOVERLAY_CHARGEING1
+			if(APC_FULLY_CHARGED)
+				update_overlay |= APC_UPOVERLAY_CHARGEING2
 
-		if (!equipment)
-			update_overlay |= APC_UPOVERLAY_EQUIPMENT0
-		else if(equipment == 1)
-			update_overlay |= APC_UPOVERLAY_EQUIPMENT1
-		else if(equipment == 2)
-			update_overlay |= APC_UPOVERLAY_EQUIPMENT2
+		switch(equipment)
+			if(0)
+				update_overlay |= APC_UPOVERLAY_EQUIPMENT0
+			if(1)
+				update_overlay |= APC_UPOVERLAY_EQUIPMENT1
+			if(2)
+				update_overlay |= APC_UPOVERLAY_EQUIPMENT2
 
-		if(!lighting)
-			update_overlay |= APC_UPOVERLAY_LIGHTING0
-		else if(lighting == 1)
-			update_overlay |= APC_UPOVERLAY_LIGHTING1
-		else if(lighting == 2)
-			update_overlay |= APC_UPOVERLAY_LIGHTING2
+		switch(lighting)
+			if(0)
+				update_overlay |= APC_UPOVERLAY_LIGHTING0
+			if(1)
+				update_overlay |= APC_UPOVERLAY_LIGHTING1
+			if(2)
+				update_overlay |= APC_UPOVERLAY_LIGHTING2
 
-		if(!environ)
-			update_overlay |= APC_UPOVERLAY_ENVIRON0
-		else if(environ==1)
-			update_overlay |= APC_UPOVERLAY_ENVIRON1
-		else if(environ==2)
-			update_overlay |= APC_UPOVERLAY_ENVIRON2
+		switch(environ)
+			if(0)
+				update_overlay |= APC_UPOVERLAY_ENVIRON0
+			if(1)
+				update_overlay |= APC_UPOVERLAY_ENVIRON1
+			if(2)
+				update_overlay |= APC_UPOVERLAY_ENVIRON2
 
 	if(last_update_state == update_state && last_update_overlay == update_overlay)
 		return NONE

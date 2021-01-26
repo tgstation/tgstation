@@ -286,7 +286,6 @@
 		current_canvas = null
 		to_chat(user, "<span class='notice'>You remove the painting from the frame.</span>")
 		update_appearance()
-		update_name_and_desc()
 		return TRUE
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user,obj/item/canvas/new_canvas)
@@ -296,36 +295,36 @@
 			current_canvas.finalize(user)
 		to_chat(user,"<span class='notice'>You frame [current_canvas].</span>")
 	update_appearance()
-	update_name_and_desc()
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
 	if(current_canvas.painting_name == initial(current_canvas.painting_name))
 		current_canvas.try_rename(user)
 
-/obj/structure/sign/painting/proc/update_name_and_desc()
-	if(current_canvas)
-		name = "painting - [current_canvas.painting_name]"
-		desc = desc_with_canvas
-	else
-		name = initial(name)
-		desc = initial(desc)
+/obj/structure/sign/painting/update_name(updates)
+	name = current_canvas ? "painting - [current_canvas.painting_name]" : initial(name)
+	return ..()
+
+/obj/structure/sign/painting/update_desc(updates)
+	desc = current_canvas ? desc_with_canvas : initial(desc)
+	return ..()
 
 /obj/structure/sign/painting/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]-[C?.generated_icon ? "overlay" : "empty"]"
-
+	icon_state = "[base_icon_state]-[current_canvas?.generated_icon ? "overlay" : "empty"]"
+	return ..()
 
 /obj/structure/sign/painting/update_overlays()
 	. = ..()
-	if(current_canvas?.generated_icon)
-		var/mutable_appearance/MA = mutable_appearance(current_canvas.generated_icon)
-		MA.pixel_x = current_canvas.framed_offset_x
-		MA.pixel_y = current_canvas.framed_offset_y
-		. += MA
-		var/mutable_appearance/frame = mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame")
-		frame.pixel_x = current_canvas.framed_offset_x - 1
-		frame.pixel_y = current_canvas.framed_offset_y - 1
-		. += frame
+	if(!current_canvas?.generated_icon)
+		return
+
+	var/mutable_appearance/MA = mutable_appearance(current_canvas.generated_icon)
+	MA.pixel_x = current_canvas.framed_offset_x
+	MA.pixel_y = current_canvas.framed_offset_y
+	. += MA
+	var/mutable_appearance/frame = mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame")
+	frame.pixel_x = current_canvas.framed_offset_x - 1
+	frame.pixel_y = current_canvas.framed_offset_y - 1
+	. += frame
 
 /obj/structure/sign/painting/proc/load_persistent()
 	if(!persistence_id)
@@ -361,7 +360,6 @@
 	new_canvas.name = "painting - [title]"
 	current_canvas = new_canvas
 	update_appearance()
-	update_name_and_desc()
 
 /obj/structure/sign/painting/proc/save_persistent()
 	if(!persistence_id || !current_canvas)
@@ -437,7 +435,6 @@
 		for(var/obj/structure/sign/painting/P in SSpersistence.painting_frames)
 			if(P.current_canvas && md5(P.current_canvas.get_data_string()) == md5)
 				QDEL_NULL(P.current_canvas)
-				P.update_icon()
-				P.update_name_and_desc()
+				P.update_appearance()
 		log_admin("[key_name(user)] has deleted a persistent painting made by [author].")
 		message_admins("<span class='notice'>[key_name_admin(user)] has deleted persistent painting made by [author].</span>")
