@@ -287,7 +287,7 @@
 				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				if(!targeted)
 					break
-				targets[targeted.current.real_name] = targeted.current
+				targets["[targeted.current.real_name] the [targeted.assigned_role]"] = targeted.current
 			LH.target = targets[input(user,"Choose your next target","Target") in targets]
 			qdel(A)
 			if(LH.target)
