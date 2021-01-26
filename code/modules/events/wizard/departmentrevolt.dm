@@ -85,23 +85,23 @@
 	var/datum/team/nation/nation = new(null, jobs_to_revolt, department)
 	nation.name = nation_name
 	var/datum/team/department_target //dodges unfortunate runtime
-	if(!independent_departments.len)
-		department_target = null
-	else
+	if(independent_departments.len)
 		department_target = pick(independent_departments)
 	nation.generate_nation_objectives(dangerous, department_target)
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
-		if(H.mind)
-			var/datum/mind/M = H.mind
-			if(M.assigned_role)
-				for(var/job in jobs_to_revolt)
-					if(M.assigned_role == job)
-						citizens += H
-						M.add_antag_datum(/datum/antagonist/separatist, nation, department)
-						nation.add_member(M)
-						H.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
+		if(!H.mind)
+			continue
+		var/datum/mind/M = H.mind
+		if(!M.assigned_role)
+			continue
+		for(var/job in jobs_to_revolt)
+			if(M.assigned_role == job)
+				citizens += H
+				M.add_antag_datum(/datum/antagonist/separatist, nation, department)
+				nation.add_member(M)
+				H.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
 
 	if(citizens.len)
 		var/jobs_english_list = english_list(jobs_to_revolt)

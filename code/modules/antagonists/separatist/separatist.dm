@@ -124,7 +124,7 @@
 		return TRUE
 
 	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
-		if(!(separatist_datum.nation.nation_department != target_team.nation_department)) //a separatist, but not one part of the department we need to destroy
+		if(separatist_datum.nation.nation_department != target_team.nation_department) //a separatist, but not one part of the department we need to destroy
 			continue
 		var/datum/mind/target = separatist_datum.owner
 		if(target && considered_alive(target) && (target.current.onCentCom() || target.current.onSyndieBase()))
