@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - tweak: "Painting exhibit names and descriptions are different"
-  - rscdel: "Paintings no longer tell you they're fair to middling"

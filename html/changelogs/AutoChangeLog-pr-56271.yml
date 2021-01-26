@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "several invalid game states on Kilo have been fixed."

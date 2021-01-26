@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Dense machines once again deconstuct into frames instead of all their raw component parts."
