@@ -326,7 +326,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/melee/classic_baton
-	l_hand = /obj/item/gun/ballistic/rifle/boltaction
+	l_hand = /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	back = /obj/item/storage/backpack/satchel
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
@@ -348,7 +348,7 @@
 	name = "CentCom Head Intern"
 	belt = /obj/item/melee/baton/loaded
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/ballistic/rifle/boltaction
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	l_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
 

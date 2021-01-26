@@ -30,8 +30,6 @@
 
 /obj/machinery/computer/update_overlays()
 	. = ..()
-
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(machine_stat & NOPOWER)
 		. += "[icon_keyboard]_off"
 		return
@@ -42,7 +40,7 @@
 	if(machine_stat & BROKEN)
 		overlay_state = "[icon_state]_broken"
 	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, EMISSIVE_PLANE, dir)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, EMISSIVE_STRUCTURE_PLANE, dir)
 
 /obj/machinery/computer/power_change()
 	. = ..()
