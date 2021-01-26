@@ -352,7 +352,7 @@
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"
-	desc = "A cursed clown duffel bag that hungers for food of any kind. Putting some food for it to eat inside of it should distract it from eating you for a while. A warning label on one of the duffel bag's sides cautions against feeding your \"new pet\" any particularly badly made food..."
+	desc = "A cursed clown duffel bag that hungers for food of any kind."
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
 	slowdown = 2
@@ -360,6 +360,14 @@
 	max_integrity = 100
 	///counts time passed since it ate food
 	var/hunger = 0
+
+/obj/item/storage/backpack/duffelbag/cursed/examine(mob/user)
+	. = ..()
+	. += "<span class='danger'>A warning label suggests that it eats food inside.</span>"
+	. += "<span class='danger'>If that food happens to be a horribly ruined, burned mess the chef scrapped out of the microwave, then it might have negative effects on the bag...</span>"
+	
+	if(hunger > 25)
+		. += "<span class='danger'>The bag is growling for food...</span>"
 
 /obj/item/storage/backpack/duffelbag/cursed/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
