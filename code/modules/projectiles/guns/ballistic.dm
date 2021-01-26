@@ -450,7 +450,6 @@
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	. += "It has [get_ammo(count_chambered)] round\s remaining."
-	. += "The [src] fires [magazine.caliber]."
 
 	if (!chambered)
 		. += "It does not seem to have a round chambered."
@@ -599,7 +598,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		to_chat(user, "<span class='notice'>You modify [src]. Now it will fire [alternative_caliber] rounds.</span>")
 	else
 		magazine.caliber = initial_caliber
-		if(alternative_ammo_misfires && magazine != initial_caliber)
+		if(alternative_ammo_misfires)
 			can_misfire = FALSE
 		fire_sound = initial_fire_sound
 		to_chat(user, "<span class='notice'>You reset [src]. Now it will fire [initial_caliber] rounds.</span>")

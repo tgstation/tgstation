@@ -170,15 +170,16 @@
 	misfire_percentage_increment = 0
 	projectile_damage_multiplier = 1
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted
+/// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///
+
+/obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	var/guns_left = 30
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
+	mag_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
-	can_jam = FALSE
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage
 	name = "arcane barrage"
 	desc = "Pew Pew Pew."
 	fire_sound = 'sound/weapons/emitter.ogg'
@@ -189,32 +190,31 @@
 	can_bayonet = FALSE
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
-	can_jam = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
+	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/dropped()
+/obj/item/gun/ballistic/rifle/enchanted/dropped()
 	. = ..()
 	guns_left = 0
 	magazine = null
 	chambered = null
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/living/user)
+/obj/item/gun/ballistic/rifle/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/discard_gun(mob/living/user)
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/discard_gun(mob/living/user)
 	qdel(src)
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/attack_self()
+/obj/item/gun/ballistic/rifle/enchanted/attack_self()
 	return
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/ballistic/rifle/enchanted/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	. = ..()
 	if(!.)
 		return
 	if(guns_left)
-		var/obj/item/gun/ballistic/rifle/boltaction/enchanted/gun = new type
+		var/obj/item/gun/ballistic/rifle/enchanted/gun = new type
 		gun.guns_left = guns_left - 1
 		discard_gun(user)
 		user.swap_hand()
