@@ -124,20 +124,14 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/teleport/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>The reactive teleport system ALMOST flings [owner] clear of [attack_text], leaving something behind in the process!</span>")
-	var/drop_organ = prob(50)
-	if(drop_organ)
-		owner.spew_organ(0)
-	else
-		var/obj/item/bodypart/body_part = owner.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-		if(body_part)
-			body_part.drop_limb(FALSE, TRUE)
+	owner.visible_message("<span class='danger'>The reactive teleport system flings itself clear of [attack_text], leaving someone behind in the process!</span>")
+	owner.dropItemToGround(src, TRUE, TRUE)
 	playsound(get_turf(owner),'sound/machines/buzz-sigh.ogg', 50, TRUE)
 	playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
-	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
+	do_teleport(src, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	owner.rad_act(rad_amount)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-	return TRUE
+	return FALSE //you didn't actually evade the attack now did you
 
 //Fire
 
