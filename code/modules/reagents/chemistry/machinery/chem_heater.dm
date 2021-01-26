@@ -148,18 +148,18 @@
 * This is mostly to ensure we don't have defunct ui instances stored from any condition.
 */
 /obj/machinery/chem_heater/proc/add_ui_client_list(new_ui)
-  LAZYADD(ui_client_list, new_ui)
-  RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .on_ui_deletion)
+	LAZYADD(ui_client_list, new_ui)
+	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .on_ui_deletion)
 
 ///This removes an open ui instance from the ui list and deregsiters the signal
 /obj/machinery/chem_heater/proc/remove_ui_client_list(old_ui)
-  UnregisterSignal(old_ui, COMSIG_PARENT_QDELETING)
-  LAZYREMOVE(ui_client_list, old_ui)
+	UnregisterSignal(old_ui, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(ui_client_list, old_ui)
 
 ///This catches a signal and uses it to delete the ui instance from the list
 /obj/machinery/chem_heater/proc/on_ui_deletion(datum/tgui/source, force)
-  SIGNAL_HANDLER
-  remove_ui_client_list(source)
+	SIGNAL_HANDLER
+	remove_ui_client_list(source)
 
 
 /obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
