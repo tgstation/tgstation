@@ -610,7 +610,7 @@
  * This requires nutriment to fuel. 1u nutriment = 25 K.
  */
 /datum/plant_gene/trait/chem_heating
-	name = "Endothermic Activity"
+	name = "Exothermic Activity"
 	trait_id = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
 
@@ -619,7 +619,7 @@
  * This requires nutriment to fuel. 1u nutriment = -5 K.
  */
 /datum/plant_gene/trait/chem_cooling
-	name = "Exothermic Activity"
+	name = "Endothermic Activity"
 	trait_id = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
 
