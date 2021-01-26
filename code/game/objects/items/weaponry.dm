@@ -217,7 +217,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize()
-	var/obj/item/robot_module/kiltkit = loc
+	var/obj/item/robot_model/kiltkit = loc
 	robot = kiltkit.loc
 	if(!istype(robot))
 		qdel(src)
@@ -847,6 +847,98 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	"<span class='notice'>You slap [M]!</span>",\
 	"<span class='hear'>You hear a slap.</span>")
 	return
+
+/obj/item/noogie
+	name = "noogie"
+	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
+	icon_state = "latexballon"
+	inhand_icon_state = "nothing"
+	force = 0
+	throwforce = 0
+	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
+
+/obj/item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
+	if(!istype(target))
+		to_chat(user, "<span class='warning'>You don't think you can give this a noogie!</span>")
+		return
+
+	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || user.getStaminaLoss() > 80)
+		return FALSE
+
+	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
+	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !the_head.is_organic_limb())
+		to_chat(user, "<span class='warning'>You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!</span>")
+		return
+
+	// [user] gives [target] a [prefix_desc] noogie[affix_desc]!
+	var/brutal_noogie = FALSE // was it an extra hard noogie?
+	var/prefix_desc = "rough"
+	var/affix_desc = ""
+	var/affix_desc_target = ""
+
+	if(HAS_TRAIT(target, TRAIT_ANTENNAE))
+		prefix_desc = "violent"
+		affix_desc = "on [target.p_their()] sensitive antennae"
+		affix_desc_target = "on your highly sensitive antennae"
+		brutal_noogie = TRUE
+	if(user.dna?.check_mutation(HULK))
+		prefix_desc = "sickeningly brutal"
+		brutal_noogie = TRUE
+
+	var/message_others = "[prefix_desc] noogie[affix_desc]"
+	var/message_target = "[prefix_desc] noogie[affix_desc_target]"
+
+	user.visible_message("<span class='danger'>[user] begins giving [target] a [message_others]!</span>", "<span class='warning'>You start giving [target] a [message_others]!</span>", vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
+	to_chat(target, "<span class='userdanger'>[user] starts giving you a [message_target]!</span>")
+
+	if(!do_after(user, 1.5 SECONDS, target))
+		to_chat(user, "<span class='warning'>You fail to give [target] a noogie!</span>")
+		to_chat(target, "<span class='danger'>[user] fails to give you a noogie!</span>")
+		return
+
+	if(brutal_noogie)
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie_harsh", /datum/mood_event/noogie_harsh)
+	else
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "noogie", /datum/mood_event/noogie)
+
+	noogie_loop(user, target, 0)
+
+/// The actual meat and bones of the noogie'ing
+/obj/item/noogie/proc/noogie_loop(mob/living/carbon/human/user, mob/living/carbon/target, iteration)
+	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target)
+		return FALSE
+
+	if(user.getStaminaLoss() > 80)
+		to_chat(user, "<span class='warning'>You're too tired to continue giving [target] a noogie!</span>")
+		to_chat(target, "<span class='danger'>[user] is too tired to continue giving you a noogie!</span>")
+		return
+
+	var/damage = rand(1, 5)
+	if(HAS_TRAIT(target, TRAIT_ANTENNAE))
+		damage += rand(3,7)
+	if(user.dna?.check_mutation(HULK))
+		damage += rand(3,7)
+
+	if(damage >= 5)
+		target.emote("scream")
+
+	log_combat(user, target, "given a noogie to", addition = "([damage] brute before armor)")
+	target.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
+	user.adjustStaminaLoss(iteration + 5)
+	playsound(get_turf(user), pick('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg'), 50)
+
+	if(prob(33))
+		user.visible_message("<span class='danger'>[user] continues noogie'ing [target]!</span>", "<span class='warning'>You continue giving [target] a noogie!</span>", vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
+		to_chat(target, "<span class='userdanger'>[user] continues giving you a noogie!</span>")
+
+	if(!do_after(user, 1 SECONDS + (iteration * 2), target))
+		to_chat(user, "<span class='warning'>You fail to give [target] a noogie!</span>")
+		to_chat(target, "<span class='danger'>[user] fails to give you a noogie!</span>")
+		return
+
+	iteration++
+	noogie_loop(user, target, iteration)
+
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
 		return FALSE
@@ -948,3 +1040,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
 				return TRUE
 	return FALSE
+
+/obj/item/melee/moonlight_greatsword
+	name = "moonlight greatsword"
+	desc = "Don't tell anyone you put any points into dex, though."
+	icon_state = "swordon"
+	inhand_icon_state = "swordon"
+	worn_icon_state = "swordon"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	block_chance = 20
+	sharpness = SHARP_EDGED
+	force = 14
+	throwforce = 12
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")

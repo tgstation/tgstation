@@ -28,22 +28,31 @@
 
 
 /turf/open/floor/Initialize(mapload)
-	if (!broken_states)
-		broken_states = string_list(list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+	. = ..()
+	if (broken_states)
+		stack_trace("broken_states defined at the object level for [type], move it to setup_broken_states()")
 	else
-		broken_states = string_list(broken_states)
-	if(burnt_states)
-		burnt_states = string_list(burnt_states)
+		broken_states = string_list(setup_broken_states())
+	if (burnt_states)
+		stack_trace("burnt_states defined at the object level for [type], move it to setup_burnt_states()")
+	else
+		var/list/new_burnt_states = setup_burnt_states()
+		if(new_burnt_states)
+			burnt_states = string_list(new_burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
 		burnt = TRUE
-	. = ..()
 	if(mapload && prob(33))
 		MakeDirty()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
+/turf/open/floor/proc/setup_broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/proc/setup_burnt_states()
+	return
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
