@@ -8,10 +8,11 @@
 
 /datum/round_event_control/carp_migration/New()
 	. = ..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CARP_INFESTATION))
-		weight *= 3
-		max_occurrences *= 2
-		earliest_start /= 2
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_CARP_INFESTATION))
+		return
+	weight *= 3
+	max_occurrences *= 2
+	earliest_start /= 2
 
 
 /datum/round_event/carp_migration

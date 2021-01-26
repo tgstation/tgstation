@@ -22,13 +22,6 @@
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
 	H.apply_pref_name("clown", M.client)
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
-		var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
-		toLaunch.setStyle(STYLE_SEETHROUGH)
-		toLaunch.delays[POD_OPENING] = 0
-		new /obj/item/stack/sheet/mineral/bananium/five(toLaunch)
-
-		new /obj/effect/pod_landingzone(H.drop_location(), toLaunch)
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -56,6 +49,12 @@
 	box = /obj/item/storage/box/hug/survival
 
 	chameleon_extras = /obj/item/stamp/clown
+
+/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
+		backpack_contents[/obj/item/stack/sheet/mineral/bananium/five] = 1
+
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
