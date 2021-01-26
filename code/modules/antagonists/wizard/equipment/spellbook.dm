@@ -299,7 +299,7 @@
 
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	var/atom/bought_item = new item_path(get_turf(user))
+	new item_path(get_turf(user))
 	log_spellbook("[key_name(user)] bought [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	return TRUE
