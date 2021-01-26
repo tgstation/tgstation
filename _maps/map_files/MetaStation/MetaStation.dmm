@@ -80209,12 +80209,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/space/nearstation)
-"wDk" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
 "wDJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -123611,7 +123605,7 @@ aaa
 aaa
 aaa
 nYJ
-wDk
+aag
 lMJ
 aaa
 aaa
