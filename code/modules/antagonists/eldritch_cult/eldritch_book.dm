@@ -42,7 +42,9 @@
 	var/obj/effect/reality_smash/RS = target
 	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
 	if(do_after(user, 10 SECONDS, RS))
-		qdel(RS)
+		GLOB.reality_smash_track.smashes -= src
+		var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location())
+		illusion.name = pick("Researched","Siphoned","Analyzed","Emptied","Drained") + " " + name
 		charge += 1
 
 ///Draws a rune on a selected turf

@@ -51,7 +51,7 @@
 	if(!silent)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
-	GLOB.reality_smash_track.targets--
+	GLOB.reality_smash_track.targets -= src
 	STOP_PROCESSING(SSprocessing,src)
 
 	on_death()

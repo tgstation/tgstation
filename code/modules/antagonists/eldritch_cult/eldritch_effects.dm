@@ -115,9 +115,9 @@
  */
 /datum/reality_smash_tracker
 	///list of tracked reality smashes
-	var/smashes = 0
+	var/list/smashes = list()
 	///List of mobs with ability to see the smashes
-	var/targets = 0
+	var/list/targets = list()
 
 /datum/reality_smash_tracker/Destroy(force, ...)
 	if(GLOB.reality_smash_track == src)
@@ -129,20 +129,23 @@
  *
  * Automatically creates more reality smashes
  */
-/datum/reality_smash_tracker/proc/Generate()
-	targets++
-	var/number = max(targets * (4-(targets-1)) - smashes,1)
+/datum/reality_smash_tracker/proc/Generate(mob/caller)
+	if(!istype(caller))
+		stack_trace("Caller is of not the right type!")
+	targets += caller
+	var/number = max(targets.len * (4-(targets.len-1)) - smashes.len,1)
+
+	for(var/obj/effect/reality_smash/smash in smashes)
+		smash.alt_appearance.add_to_hud(caller)
 
 	for(var/i in 0 to number)
-
 		var/turf/chosen_location = get_safe_random_station_turf()
 		//we also dont want them close to each other, at least 1 tile of seperation
 		var/obj/effect/reality_smash/what_if_i_have_one = locate() in range(1, chosen_location)
 		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		new /obj/effect/reality_smash(chosen_location)
-		smashes++
+		smashes += new /obj/effect/reality_smash(chosen_location)
 
 /obj/effect/broken_illusion
 	name = "pierced reality"
@@ -222,6 +225,7 @@
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
+	var/datum/atom_hud/alternate_appearance/basic/heretics/alt_appearance
 
 /obj/effect/reality_smash/Initialize()
 	. = ..()
@@ -230,15 +234,8 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretics,"influence",img)
 
 /obj/effect/reality_smash/Destroy()
-	on_destroy()
+	QDEL_NULL(src)
 	return ..()
-
-///Custom effect that happens on destruction
-/obj/effect/reality_smash/proc/on_destroy()
-	GLOB.reality_smash_track.smashes--
-	var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location())
-	illusion.name = pick("Researched","Siphoned","Analyzed","Emptied","Drained") + " " + name
-
 
 ///Generates random name
 /obj/effect/reality_smash/proc/generate_name()
