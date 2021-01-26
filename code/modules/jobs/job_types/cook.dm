@@ -33,7 +33,8 @@
 	backpack_contents = list(
 		/obj/item/sharpener = 1,
 		/obj/item/choice_beacon/ingredient = 1
-		)
+	)
+	skillchips = list(/obj/item/skillchip/job/chef)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -44,12 +45,3 @@
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)
 			J.cooks++
-
-/datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-
-	var/datum/martial_art/cqc/under_siege/justacook = new
-	justacook.teach(H)
-
