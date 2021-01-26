@@ -109,3 +109,54 @@
 	M.Stun(40)
 	M.petrify()
 	return ..()
+
+
+/obj/item/melee/touch_attack/duffelbag
+	name = "\improper burdening touch"
+	desc = "Where is the bar from here?"
+	catchphrase = "BA'R A'RP!!"
+	on_use_sound = 'sound/magic/disintegrate.ogg'
+	icon_state = "disintegrate"
+	inhand_icon_state = "disintegrate"
+
+/obj/item/melee/touch_attack/duffelbag/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //Roleplay involving touching is equally as bad
+		return
+	if(!(user.mobility_flags & MOBILITY_USE))
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
+		return
+	var/mob/living/carbon/M = target
+	var/elaborate_backstory = pick("spacewar origin story", "military background", "corporate connections", "life in the colonies", "anti-government activities", "upbringing on the space farm", "fond memories with your buddy Keith")
+	if(M.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='warning'>You really don't feel like talking about your [elaborate_backstory] with complete strangers today.</span>")
+		..()
+		return
+
+	M.flash_act()
+	M.Immobilize(5 SECONDS)
+	M.apply_damage(80, STAMINA)
+	M.Knockdown(5 SECONDS)
+
+	if(HAS_TRAIT(target, TRAIT_DUFFEL_CURSED))
+		to_chat(user, "<span class='warning'>The burden of [M]'s duffel bag becomes too much, shoving them to the floor!</span>")
+		to_chat(M, "<span class='warning'>The weight of this bag becomes overburdening!</span>")
+		return ..()
+	
+	var/obj/item/storage/backpack/duffelbag/cursed/C = new get_turf(target)
+
+	M.visible_message("<span class='danger'>A growling duffel bag appears on [M]!</span>", \
+						   "<span class='danger'>You feel something attaching itself to you!</span>")
+
+	if(M.dropItemToGround(M.back))
+		M.equip_to_slot_if_possible(C, ITEM_SLOT_BACK, 1, 1)
+	else
+		if(!M.put_in_hands(C))
+			M.dropItemToGround(M.get_inactive_held_item())
+			if(!M.put_in_hands(C))
+				M.dropItemToGround(M.get_active_held_item())
+				M.put_in_hands(C)
+	return ..()

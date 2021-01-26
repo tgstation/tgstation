@@ -352,7 +352,7 @@
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"
-	desc = "A cursed clown duffel bag that hungers for food of any kind. Putting some food for it to eat inside of it should distract it from eating you for a while. A warning label on one of the duffel bag's sides cautions against feeding your \"new pet\" anything poisonous..."
+	desc = "A cursed clown duffel bag that hungers for food of any kind. Putting some food for it to eat inside of it should distract it from eating you for a while. A warning label on one of the duffel bag's sides cautions against feeding your \"new pet\" any particularly badly made food..."
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
 	slowdown = 2
@@ -365,12 +365,22 @@
 	. = ..()
 	START_PROCESSING(SSobj,src)
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
 	ADD_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
 
 /obj/item/storage/backpack/duffelbag/cursed/dropped(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
-	
+	REMOVE_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
 	STOP_PROCESSING(SSobj,src)
+	
+	var/datum/component/storage/ST = GetComponent(/datum/component/storage)
+	ST.do_quick_empty()
+	var/turf/T = get_turf(user)
+	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
+	new /obj/effect/decal/cleanable/vomit(T)
+
 	return ..()
 
 /obj/item/storage/backpack/duffelbag/cursed/process()
@@ -379,13 +389,8 @@
 		return
 	var/mob/living/carbon/user = src.loc
 	///check hp
-	if(obj_integrity < 0)
+	if(obj_integrity == 0)
 		user.dropItemToGround(src, TRUE)
-		var/datum/component/storage/ST = GetComponent(/datum/component/storage)
-		ST.do_quick_empty()
-		var/turf/T = get_turf(user)
-		playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
-		new /obj/effect/decal/cleanable/vomit(T)
 	hunger++
 	///check hunger
 	if((hunger > 50) && prob(20))
@@ -395,7 +400,7 @@
 				F.forceMove(user.loc)
 				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 				///poisoned food damages it
-				if(F.reagents.has_reagent(/datum/reagent/toxin))
+				if(istype(F, /obj/item/food/badrecipe))
 					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
 					obj_integrity -= 50
 				else
