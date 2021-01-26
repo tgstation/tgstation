@@ -199,10 +199,7 @@
 			use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
-			if(on == TRUE)
-				was_on = TRUE   //if the machine was manually turned on, ensure it remembers it
-			else
-				was_on = FALSE  //else dont remember it was on, because it wasnt.
+			was_on = !was_on  //if the machine was manually turned on, ensure it remembers it
 		if("cooling")
 			swap_function()
 			investigate_log("was changed to [cooling ? "cooling" : "heating"] by [key_name(usr)]", INVESTIGATE_ATMOS)
