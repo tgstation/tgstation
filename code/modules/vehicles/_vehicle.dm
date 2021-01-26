@@ -7,6 +7,8 @@
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
 	density = TRUE
 	anchored = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	emissive_blocker_plane = STRUCTURE_EMISSIVE_BLOCKER_PLANE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants				//mob = bitflags of their control level.
 	///Maximum amount of passengers plus drivers

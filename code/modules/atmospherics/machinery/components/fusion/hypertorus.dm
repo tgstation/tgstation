@@ -466,7 +466,7 @@
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
 			corner.update_icon()
-		corners = null
+		corners = list()
 	QDEL_NULL(soundloop)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_fuel()
@@ -919,12 +919,6 @@
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, - heat_limiter_modifier * 0.01, heat_limiter_modifier)
 
-	//Modifies the internal_fusion temperature with the amount of heat output
-	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
-		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,FUSION_MAXIMUM_TEMPERATURE)
-	else
-		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * delta_time
-
 	var/datum/gas_mixture/internal_output = new
 	//gas consumption and production
 	if(check_fuel())
@@ -1064,6 +1058,12 @@
 							critical_threshold_proximity = max(critical_threshold_proximity - (m_healium / 100 * delta_time ), 0)
 							moderator_internal.gases[/datum/gas/healium][MOLES] -= min(moderator_internal.gases[/datum/gas/healium][MOLES], scaled_production * 20)
 					internal_fusion.gases[/datum/gas/antinoblium][MOLES] += 0.01 * (scaled_helium / (fuel_injection_rate * 0.0095)) * delta_time
+
+	//Modifies the internal_fusion temperature with the amount of heat output
+	if(internal_fusion.temperature <= FUSION_MAXIMUM_TEMPERATURE)
+		internal_fusion.temperature = clamp(internal_fusion.temperature + heat_output,TCMB,FUSION_MAXIMUM_TEMPERATURE)
+	else
+		internal_fusion.temperature -= heat_limiter_modifier * 0.01 * delta_time
 
 	//heat up and output what's in the internal_output into the linked_output port
 	if(internal_output.total_moles() > 0)

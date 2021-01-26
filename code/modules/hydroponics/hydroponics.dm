@@ -657,7 +657,7 @@
 		if(!myseed)
 			to_chat(user, "<span class='notice'>The tray is empty.</span>")
 			return
-		if(plant_health <= 15)
+		if(plant_health <= GENE_SHEAR_MIN_HEALTH)
 			to_chat(user, "<span class='notice'>This plant looks too unhealty to be sheared right now.</span>")
 			return
 
@@ -672,6 +672,10 @@
 		if(removed_trait == null)
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		if(!myseed)
+			return
+		if(plant_health <= GENE_SHEAR_MIN_HEALTH) //Check health again to make sure they're not keeping inputs open to get free shears.
 			return
 		for(var/datum/plant_gene/gene in myseed.genes)
 			if(gene.name == removed_trait)
