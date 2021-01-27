@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "Fixed map display in Centcom Pod Launcher UI to not collapse into a tiny square."

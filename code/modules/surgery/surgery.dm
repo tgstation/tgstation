@@ -65,7 +65,7 @@
 
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
-		var/obj/item/surgical_processor/SP = locate() in R.module.modules
+		var/obj/item/surgical_processor/SP = locate() in R.model.modules
 		if(SP) //no early return for !SP since we want to check optable should this not exist.
 			if(replaced_by in SP.advanced_surgeries)
 				return FALSE
