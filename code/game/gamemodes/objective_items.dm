@@ -114,6 +114,12 @@
 /datum/objective_item/steal/supermatter/TargetExists()
 	return GLOB.main_supermatter_engine != null
 
+/datum/objective_item/steal/corgimeat
+	name = "a piece of corgi meat"
+	targetitem = /obj/item/food/meat/slab/corgi
+	difficulty = 5
+	excludefromjob = list("Head of Personnel", "Quartermaster", "Cargo Technician") //>hurting your little buddy ever
+
 //Items with special checks!
 /datum/objective_item/steal/plasma
 	name = "28 moles of plasma (full tank)."
@@ -213,11 +219,6 @@
 /datum/objective_item/special/laserpointer
 	name = "a laser pointer."
 	targetitem = /obj/item/laser_pointer
-	difficulty = 5
-
-/datum/objective_item/special/corgimeat
-	name = "a piece of corgi meat."
-	targetitem = /obj/item/food/meat/slab/corgi
 	difficulty = 5
 
 /datum/objective_item/stack/New()
