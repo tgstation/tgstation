@@ -91,6 +91,6 @@
 	action_icon_state = "duffelbag_curse"
 	
 	school = "conjuration"
-	charge_max = 200
+	charge_max = 60
 	clothes_req = FALSE
-	cooldown_min = 50
+	cooldown_min = 20
