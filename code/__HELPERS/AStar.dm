@@ -61,6 +61,29 @@ Actual Adjacent procs :
 /datum/pathnode/proc/calc_f()
 	f = g + h
 
+//JPS nodes variables
+/datum/jpsnode
+	var/turf/source //turf associated with the PathNode
+	var/datum/jpsnode/prevNode //link to the parent PathNode
+	var/f		//A* Node weight (f = g + h)
+	var/h		//A* heuristic variable
+	var/nt		//count the number of Nodes traversed
+	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
+
+/datum/jpsnode/New(s,p,ph,pnt,_bf)
+	source = s
+	prevNode = p
+	h = ph
+	f = g + h*(1+ PF_TIEBREAKER)
+	nt = pnt
+	bf = _bf
+
+/datum/jpsnode/proc/setp(p,ph,pnt)
+	prevNode = p
+	h = ph
+	f = g + h*(1+ PF_TIEBREAKER)
+	nt = pnt
+
 //////////////////////
 //A* procs
 //////////////////////
@@ -137,28 +160,30 @@ Actual Adjacent procs :
 				path.Add(cur.source)
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
+		//if(maxnodedepth && (cur.nt > maxenodedepth)) //if too many steps, don't process that path
 		if((!maxnodedepth)||(cur.nt <= maxnodedepth))//if too many steps, don't process that path
 			for(var/i = 0 to 3)
 				var/f= 1<<i //get cardinal directions.1,2,4,8
 				if(cur.bf & f)
 					var/T = get_step(cur.source,f)
-					if(T != exclude)
-						var/datum/pathnode/CN = openc[T]  //current checking turf
-						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
-						var/newg = cur.g + call(cur.source,dist)(T)
-						if(CN)
-						//is already in open list, check if it's a better way from the current turf
-							CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-							if((newg < CN.g) )
-								if(call(cur.source,adjacent)(caller, T, id, simulated_only))
-									CN.setp(cur,newg,CN.h,cur.nt+1)
-									open.ReSort(CN)//reorder the changed element in the list
-						else
-						//is not already in open list, so add it
+					if(T == exclude) // RYLL: should this be a typecheck?
+						continue
+					var/datum/pathnode/CN = openc[T]  //see if this turf is in the open list
+					var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
+					var/newg = cur.g + call(cur.source,dist)(T)
+					if(CN)
+					//is already in open list, check if it's a better way from the current turf
+						CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
+						if((newg < CN.g) )
 							if(call(cur.source,adjacent)(caller, T, id, simulated_only))
-								CN = new(T,cur,newg,call(T,dist)(end),cur.nt+1,15^r)
-								open.Insert(CN)
-								openc[T] = CN
+								CN.setp(cur,newg,CN.h,cur.nt+1)
+								open.ReSort(CN)//reorder the changed element in the list
+					else
+					//is not already in open list, so add it
+						if(call(cur.source,adjacent)(caller, T, id, simulated_only))
+							CN = new(T,cur,newg,call(T,dist)(end),cur.nt+1,15^r)
+							open.Insert(CN)
+							openc[T] = CN
 		cur.bf = 0
 		CHECK_TICK
 	//reverse the path to get it from start to finish
