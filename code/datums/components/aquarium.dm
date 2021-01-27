@@ -127,8 +127,8 @@
 
 /// Create looping random path animation, pixel offsets parameters include offsets already
 /datum/component/aquarium_content/proc/swim_animation()
-	var/avg_width = round(properties.sprite_width/2)
-	var/avg_height = round(properties.sprite_height/2)
+	var/avg_width = round(properties.sprite_width / 2)
+	var/avg_height = round(properties.sprite_height / 2)
 
 	var/list/aq_properties = current_aquarium.get_surface_properties()
 	var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
