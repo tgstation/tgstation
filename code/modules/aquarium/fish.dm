@@ -45,14 +45,14 @@
 
 /datum/aquarium_behaviour/fish/goldfish
 	name = "goldfish"
-	desc = "Not actually made of gold."
+	desc = "Despite common belief, goldfish do not have three-second memories. They can actually remember things that happened up to three months ago."
 	icon_state = "goldfish"
 	sprite_width = 8
 	sprite_height = 8
 
 /datum/aquarium_behaviour/fish/angelfish
 	name = "angelfish"
-	desc = "Omnivore fish originating from Amazon River."
+	desc = "Young Angelfish often live in groups, while adults prefer solitary life. They become territorial and aggressive toward other fish when they reach adulthood."
 	icon_state = "angelfish"
 	dedicated_in_aquarium_icon_state = "bigfish"
 	sprite_height = 7
@@ -60,7 +60,7 @@
 
 /datum/aquarium_behaviour/fish/guppy
 	name = "guppy"
-	desc = "One of the most popular aquarium fish."
+	desc = "Guppy is also known as rainbow fish because of the brightly colored body and fins."
 	icon_state = "guppy"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#91AE64"
@@ -69,14 +69,14 @@
 
 /datum/aquarium_behaviour/fish/plasmatetra
 	name = "plasma tetra"
-	desc = "Tetra fish with coloring similar to plasma."
+	desc = "Due to their small size, tetras are prey to many predators in their watery world, including eels, crustaceans, and invertebrates."
 	icon_state = "plastetra"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#D30EB0"
 
 /datum/aquarium_behaviour/fish/catfish
 	name = "cory catfish"
-	desc = "Unrelated to actual cats."
+	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
 	icon_state = "catfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#907420"
@@ -93,7 +93,7 @@
 
 /datum/aquarium_behaviour/fish/clownfish
 	name = "clownfish"
-	desc = "Honk!"
+	desc = "Clownfish catch prey by swimming onto the reef, attracting larger fish, and luring them back to the anemone. The anemone will sting and eat the larger fish, leaving the remains for the clownfish."
 	icon_state = "clownfish"
 	dedicated_in_aquarium_icon_state = "clownfish_small"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
@@ -102,14 +102,14 @@
 
 /datum/aquarium_behaviour/fish/cardinal
 	name = "cardinalfish"
-	desc = "Small saltwater fish active at night."
+	desc = "Cardinalfish are often found near sea urchins, where the fish hide when threatened."
 	icon_state = "cardinalfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 
 /datum/aquarium_behaviour/fish/greenchromis
 	name = "green chromis"
-	desc = "Small fish with distinctive green sheen."
+	desc = "The Chromis can vary in color from blue to green depending on the lighting and distance from the lights."
 	icon_state = "greenchromis"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#00ff00"
@@ -117,7 +117,7 @@
 
 /datum/aquarium_behaviour/fish/firefish
 	name = "firefish goby"
-	desc = "Long thing two-colored fish."
+	desc = "To communicate in the wild, the firefish uses its dorsal fin to alert others of potential danger."
 	icon_state = "firefish"
 	sprite_width = 6
 	sprite_height = 5
@@ -125,7 +125,7 @@
 
 /datum/aquarium_behaviour/fish/pufferfish
 	name = "pufferfish"
-	desc = "I'll let reviewers write these dang descriptions."
+	desc = "One Pufferfish contains enough toxins in its liver to kill 30 people."
 	icon_state = "pufferfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_width = 8
@@ -133,7 +133,7 @@
 
 /datum/aquarium_behaviour/fish/lanternfish
 	name = "lanternfish"
-	desc = "Terror of the deep."
+	desc = "Typically found in areas below 6600 feet below the surface of the ocean, they live in complete darkness."
 	icon_state = "lanternfish"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	random_case_rarity = FISH_RARITY_VERY_RARE
