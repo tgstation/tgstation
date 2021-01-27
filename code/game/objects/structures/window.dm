@@ -14,7 +14,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
-	var/ini_dir = null
+	set_dir_on_move = FALSE
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
@@ -31,7 +31,6 @@
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
-
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -57,7 +56,6 @@
 	if(reinf && anchored)
 		state = RWINDOW_SECURE
 
-	ini_dir = dir
 	air_update_turf(TRUE, TRUE)
 
 	if(fulltile)
@@ -99,33 +97,25 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/window/setDir(direct)
-	if(!fulltile)
-		..()
-	else
-		..(FULLTILE_WINDOW_DIR)
-
 /obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(.)
 		return
-	if(dir == FULLTILE_WINDOW_DIR)
-		return FALSE	//full tile window, you can't move into it!
-	var/attempted_dir = get_dir(loc, target)
-	if(attempted_dir == dir)
-		return
-	if(istype(mover, /obj/structure/window))
-		var/obj/structure/window/W = mover
-		if(!valid_window_location(loc, W.ini_dir))
-			return FALSE
-	else if(istype(mover, /obj/structure/windoor_assembly))
-		var/obj/structure/windoor_assembly/W = mover
-		if(!valid_window_location(loc, W.ini_dir))
-			return FALSE
-	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+
+	if(fulltile)
 		return FALSE
-	else if(attempted_dir != dir)
-		return TRUE
+
+	if(get_dir(loc, target) == dir)
+		return FALSE
+
+	if(istype(mover, /obj/structure/window))
+		var/obj/structure/window/moved_window = mover
+		return valid_window_location(loc, moved_window.dir, is_fulltile = moved_window.fulltile)
+
+	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
+		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
+
+	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
@@ -285,14 +275,13 @@
 
 	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
-	if(!valid_window_location(loc, target_dir))
+	if(!valid_window_location(loc, target_dir, is_fulltile = fulltile))
 		to_chat(user, "<span class='warning'>[src] cannot be rotated in that direction!</span>")
 		return FALSE
 	return TRUE
 
 /obj/structure/window/proc/after_rotation(mob/user,rotation_type)
 	air_update_turf(TRUE, FALSE)
-	ini_dir = dir
 	add_fingerprint(user)
 
 /obj/structure/window/proc/on_painted(is_dark_color)
@@ -313,14 +302,13 @@
 /obj/structure/window/Move()
 	var/turf/T = loc
 	. = ..()
-	setDir(ini_dir)
 	if(anchored)
 		move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
 	if(!anchored || !density)
 		return TRUE
-	return !(FULLTILE_WINDOW_DIR == dir || dir == get_dir(loc, T))
+	return !(fulltile || dir == get_dir(loc, T))
 
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
@@ -359,7 +347,7 @@
 /obj/structure/window/CanAStarPass(ID, to_dir)
 	if(!density)
 		return TRUE
-	if((dir == FULLTILE_WINDOW_DIR) || (dir == to_dir))
+	if(fulltile || (dir == to_dir))
 		return FALSE
 
 	return TRUE
@@ -612,7 +600,6 @@
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window-0"
 	base_icon_state = "window"
-	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -628,7 +615,6 @@
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasma_window-0"
 	base_icon_state = "plasma_window"
-	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -644,7 +630,6 @@
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasma_window-0"
 	base_icon_state = "rplasma_window"
-	dir = FULLTILE_WINDOW_DIR
 	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
@@ -662,7 +647,6 @@
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "reinforced_window-0"
 	base_icon_state = "reinforced_window"
-	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 150
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -680,7 +664,6 @@
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window-0"
 	base_icon_state = "tinted_window"
-	dir = FULLTILE_WINDOW_DIR
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smoothing_flags = SMOOTH_BITMASK
@@ -701,7 +684,6 @@
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window-0"
 	base_icon_state = "shuttle_window"
-	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 150
 	wtype = "shuttle"
 	fulltile = TRUE
@@ -732,7 +714,6 @@
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window-0"
 	base_icon_state = "plastitanium_window"
-	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
@@ -758,7 +739,6 @@
 	icon = 'icons/obj/smooth_structures/paperframes.dmi'
 	icon_state = "paperframes-0"
 	base_icon_state = "paperframes"
-	dir = FULLTILE_WINDOW_DIR
 	opacity = TRUE
 	max_integrity = 15
 	fulltile = TRUE
@@ -852,7 +832,6 @@
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE)
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	glass_amount = 2
 
