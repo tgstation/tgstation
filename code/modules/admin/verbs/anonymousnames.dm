@@ -59,8 +59,9 @@
 		if(issilicon(player))
 			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
 		else
+			var/original_name = player.real_name //id will not be changed if you do not do this
 			randomize_human(player) //do this first so the special name can be given
-			player.fully_replace_character_name(player.real_name, theme.anonymous_name(player))
+			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
 
 /* Datum singleton initialized by the client proc to hold the naming generation */
 /datum/anonymous_theme

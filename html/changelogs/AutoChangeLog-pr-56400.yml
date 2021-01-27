@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Anon names post-roundstart now correctly changes IDs as well"
