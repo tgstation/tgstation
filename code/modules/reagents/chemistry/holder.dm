@@ -239,10 +239,6 @@
 	var/current_list_element = 1
 	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
 
-	if(!initial_list_length) //This proc can runtime on the line var/remove_amt = etc... Commented so it's not a silent sanity check
-		stack_trace("Attempted to remove any reagents from a list of no reagents holder: [my_atom]")
-		return null
-
 	current_list_element = rand(1, cached_reagents.len)
 
 	while(total_removed != amount)
