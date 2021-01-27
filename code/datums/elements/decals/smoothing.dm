@@ -22,14 +22,6 @@
 	UnregisterSignal(source, COMSIG_ATOM_SMOOTH_BITMASK)
 	return ..()
 
-
-/datum/element/decal/smoothing/rotate_react(datum/source, old_dir, new_dir)
-	// SIGNAL_HANDLER <-- Already defined on parent. We can't define it again and we can't call parent. So we're stuck.
-	if(old_dir == new_dir)
-		return
-	Detach(source)
-	source.AddElement(/datum/element/decal/smoothing, pic.icon, base_icon_state, new_dir, cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha, smoothing_junction)
-
 /// Reacts to the source atom smoothing
 /datum/element/decal/smoothing/proc/smooth_react(datum/source, old_junction, new_junction)
 	SIGNAL_HANDLER

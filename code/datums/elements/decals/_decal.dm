@@ -3,7 +3,50 @@
 	id_arg_index = 2
 	var/cleanable
 	var/description
+	/// If true this was initialized with no set direction - will follow the parent dir.
+	var/directional
 	var/mutable_appearance/pic
+
+/// Remove old decals and apply new decals after rotation as necessary
+/datum/controller/subsystem/processing/dcs/proc/rotate_decals(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
+	if(old_dir == new_dir)
+		return
+	var/list/resulting_decals_params = list() // param lists
+	var/list/old_decals = list() //instances
+
+	if(!source.comp_lookup || !source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
+		//should probably also unregister itself
+		return
+
+	switch(length(source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]))
+		if(0)
+			var/datum/element/decal/D = source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS]
+			if(!istype(D))
+				return
+			old_decals += D
+			resulting_decals_params += list(D.get_rotated_parameters(old_dir,new_dir))
+		else
+			for(var/datum/element/decal/D in source.comp_lookup[COMSIG_ATOM_UPDATE_OVERLAYS])
+				old_decals += D
+				resulting_decals_params += list(D.get_rotated_parameters(old_dir,new_dir))
+
+	//Instead we could generate ids and only remove duplicates to save on churn on four-corners symmetry ?
+	for(var/datum/element/decal/D in old_decals)
+		D.Detach(source)
+
+	for(var/result in resulting_decals_params)
+		source._AddElement(result)
+
+
+/datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
+	var/rotation = 0
+	if(directional) //Even when the dirs are the same rotation is coming out as not 0 for some reason
+		rotation = SIMPLIFY_DEGREES(dir2angle(new_dir)-dir2angle(old_dir))
+		new_dir = turn(pic.dir,-rotation)
+	return list(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha)
+
 
 /datum/element/decal/Attach(atom/target, _icon, _icon_state, _dir, _cleanable=FALSE, _color, _layer=TURF_LAYER, _plane=FLOOR_PLANE, _description, _alpha=255, mutable_appearance/_pic)
 	. = ..()
@@ -13,6 +56,7 @@
 		pic = _pic
 	description = _description
 	cleanable = _cleanable
+	directional = _dir
 
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlay, TRUE)
 	if(target.flags_1 & INITIALIZED_1)
@@ -22,14 +66,13 @@
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
-		RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react,TRUE)
-		RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/decal_transfer_rotateable,TRUE)
-	else
-		RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/decal_transfer,TRUE)
+		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, /datum/controller/subsystem/processing/dcs/proc/rotate_decals, TRUE)
 	if(_cleanable)
 		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react,TRUE)
 	if(_description)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
+
+	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _plane, _color, _alpha, source)
 	if(!_icon || !_icon_state)
@@ -61,24 +104,6 @@
 
 	overlay_list += pic
 
-
-/datum/element/decal/proc/rotate_react(datum/source, old_dir, new_dir)
-	SIGNAL_HANDLER
-
-	if(old_dir == new_dir)
-		return
-
-	var/rotation = 0
-	if(pic.dir != old_dir)
-		rotation = dir2angle(new_dir)-dir2angle(old_dir)
-		if ((rotation % 45) != 0)
-			rotation += (rotation % 45)
-		rotation = SIMPLIFY_DEGREES(rotation)
-		new_dir = angle2dir(rotation+dir2angle(pic.dir))
-
-	Detach(source)
-	source.AddElement(/datum/element/decal, pic.icon, pic.icon_state, new_dir, cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha)
-
 /datum/element/decal/proc/clean_react(datum/source, clean_types)
 	SIGNAL_HANDLER
 
@@ -92,20 +117,10 @@
 
 	examine_list += description
 
-///Transfer rotateable decal to new place
-/datum/element/decal/proc/decal_transfer_rotateable(datum/source, datum/target)
+/datum/element/decal/proc/shuttle_move_react(datum/source, turf/newT)
 	SIGNAL_HANDLER
 
-	if(target == source)
+	if(newT == source)
 		return
 	Detach(source)
-	target.AddElement(/datum/element/decal, _dir = pic.dir, _cleanable = cleanable, _description = description, _pic = pic)
-
-///Transfer fixed decal to new place
-/datum/element/decal/proc/decal_transfer(datum/source, datum/target)
-	SIGNAL_HANDLER
-
-	if(target == source)
-		return
-	Detach(source)
-	target.AddElement(/datum/element/decal, _cleanable = cleanable, _description = description, _pic = pic)
+	newT.AddElement(/datum/element/decal, pic.icon, pic.icon_state, directional , cleanable, pic.color, pic.layer, pic.plane, description, pic.alpha)
