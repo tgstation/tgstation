@@ -399,9 +399,9 @@
 
 /obj/effect/temp_visual/annoyed/Initialize(mapload)
 	. = ..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
-	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = duration)
+	pixel_x = rand(-4,0)
+	pixel_y = rand(8,12)
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/love_heart
 	name = "love heart"
