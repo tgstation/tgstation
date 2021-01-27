@@ -51,7 +51,11 @@
 	if(!silent)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
+	for(var/smashes in GLOB.reality_smash_track.smashes)
+		smashes.alt_appearance = null
 	GLOB.reality_smash_track.targets -= src
+	for(var/smashes in GLOB.reality_smash_track.smashes)
+		smashes.alt_appearance = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretics,"influence",img)
 	STOP_PROCESSING(SSprocessing,src)
 
 	on_death()

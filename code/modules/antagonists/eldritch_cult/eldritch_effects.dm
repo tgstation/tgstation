@@ -231,7 +231,7 @@
 	. = ..()
 	var/img = image(icon, src, "reality_smash", OBJ_LAYER)
 	generate_name()
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretics,"influence",img)
+	alt_appearance = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/heretics,"influence",img)
 
 /obj/effect/reality_smash/Destroy()
 	QDEL_NULL(src)
