@@ -70,20 +70,23 @@ Actual Adjacent procs :
 	var/h		//A* heuristic variable
 	var/nt		//count the number of Nodes traversed
 	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
+	var/jumps // how many steps it took from the last node
 
-/datum/jpsnode/New(s,p,ph,pnt,_bf)
+/datum/jpsnode/New(s,p,ph,pnt,_bf, _jmp)
 	source = s
 	prevNode = p
 	h = ph
 	f = g + h*(1+ PF_TIEBREAKER)
 	nt = pnt
 	bf = _bf
+	jumps = _jmp
 
-/datum/jpsnode/proc/setp(p,ph,pnt)
+/datum/jpsnode/proc/setp(p,ph,pnt, _jmp)
 	prevNode = p
 	h = ph
 	f = g + h*(1+ PF_TIEBREAKER)
 	nt = pnt
+	jumps = _jmp
 
 //////////////////////
 //A* procs
@@ -155,15 +158,41 @@ Actual Adjacent procs :
 
 
 		//found the target turf (or close enough), let's create the path to it
-		if(cur.source == end || closeenough)
+		if(cur.source == end || closeenough) // RYLL NOTE: the code for recreating the path will need to reflect the jumps
+			testing("wheeee!! total dist [cur.nt]")
 			path = new()
-			path.Add(cur.source)
+
+			var/turf/first_turf = cur.source
+			var/turf/first_def_turf = cur.prevNode.source
+
+
+			path.Add(first_turf)
+
 			while(cur.prevNode)
+				testing("new node")
+
+				var/turf/iter_turf = cur.source
+				var/turf/next_goal_turf = cur.prevNode ? cur.prevNode.source : start
+				var/dir_heading = get_dir(first_turf, next_goal_turf)
+				for(var/i in 1 to cur.jumps)
+					iter_turf.color = COLOR_YELLOW
+					path.Add(iter_turf)
+					var/turf/add_turf = iter_turf
+					iter_turf = get_step(iter_turf, dir_heading)
+					testing("2 ([iter_turf.x], [iter_turf.y]) to ([add_turf.x], [add_turf.y])")
 				cur = cur.prevNode
-				path.Add(cur.source)
+
+			var/turf/final = cur.source
+			var/dir_heading = get_dir(final, start)
+			for(var/i in 1 to cur.jumps)
+				final.color = COLOR_YELLOW
+				path.Add(final)
+				var/turf/add_turf = final
+				final = get_step(final, dir_heading)
+				testing("3 ([final.x], [final.y]) to ([add_turf.x], [add_turf.y])")
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
-		if(maxnodedepth && (cur.nt > maxenodedepth)) //if too many steps, don't process that path
+		if(maxnodedepth && (cur.nt > maxnodedepth)) //if too many steps, don't process that path
 			cur.bf = 0
 			CHECK_TICK // explicitly copied in
 			continue
@@ -172,29 +201,92 @@ Actual Adjacent procs :
 			var/f= 1<<i //get cardinal directions.1,2,4,8
 			if(!(cur.bf & f))
 				continue
-			var/T = get_step(cur.source,f)
-			if(T == exclude) // RYLL: should this be a typecheck?
-				continue
-			if(!call(cur.source,adjacent)(caller, T, id, simulated_only)) // RYLL EDIT: this may be less performant than having two checks later
-				continue
 
-			var/datum/jpsnode/CN = openc[T]  //see if this turf is in the open list
-			var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
-			var/newt = cur.nt + call(cur.source,dist)(T)
+			var/next_is_invalid = FALSE
+			var/interesting = FALSE
+			var/steps_taken = 0
+			var/turf/sturf = cur.source
+			var/breakout = FALSE
+
+			while(TRUE) // keep checking in the given direction until we get an interesting hit or some other stop condition
+				var/next_turf = get_step(sturf,f)
+				var/turf/next_tu = next_turf
+				steps_taken++
+				if(steps_taken > maxnodedepth)
+					testing("Cut out at [steps_taken] steps")
+					break
+				//testing("From ([next_tu.x], [next_tu.y]) step [steps_taken] in dir [f]")
+
+				/*
+				if(next_turf == exclude) // RYLL: should this be a typecheck?
+					next_is_invalid = TRUE
+					break
+				if(!call(cur.source,adjacent)(caller, next_turf, id, simulated_only)) // RYLL EDIT: this may be less performant than having two checks later
+					next_is_invalid = TRUE
+					break
+				*/
+
+				if(next_turf == end || call(next_turf,dist)(end) <= mintargetdist)
+					var/turf/nex_tu = next_turf
+					nex_tu.color = COLOR_GREEN
+					testing("got to end in [steps_taken] steps")
+					var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1)
+					var/datum/jpsnode/CN = openc[next_turf]
+					CN = new(next_turf,cur,call(next_turf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
+					open.Insert(CN)
+					openc[next_turf] = CN
+					breakout = TRUE
+					break
+
+				if(!next_turf || next_turf == exclude || !call(sturf,adjacent)(caller, next_turf, id, simulated_only)) // RYLL: should this be a typecheck?
+					interesting = TRUE
+				else if(call(next_turf,dist)(end) > call(sturf,dist)(end))
+					testing("increasing dist, interesting")
+					interesting = TRUE
+				else
+					for(var/i2 = 0 to 3)
+						var/f2= 1<<i2 //get cardinal directions.1,2,4,8
+						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1)
+						if((f == f2) || (f2 == r)) // ignore the continuing direction and the direction we came from when looking for adjacent obstacles
+							continue
+						var/adjacent_next_turf = get_step(next_turf, f2)
+						if(!adjacent_next_turf || adjacent_next_turf == exclude || !call(next_turf,adjacent)(caller, adjacent_next_turf, id, simulated_only))
+							interesting = TRUE
+							break
+
+				//CHECK_TICK
+				if(!interesting)
+					var/turf/nex_tu = next_turf
+					nex_tu.color = COLOR_MAROON
+					sturf = next_turf
+					continue
+				else
+					var/turf/nex_tu = next_turf
+					nex_tu.color = COLOR_LIGHT_GRAYISH_RED
 
 
+				var/datum/jpsnode/CN = openc[next_turf]  //see if this turf is in the open list
+				var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
+				//var/newt = cur.nt + (call(cur.source,dist)(next_turf) * steps_taken)
+				var/newt = cur.nt + steps_taken
 
-			if(CN)
-			//is already in open list, check if it's a better way from the current turf
-				CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-				if((newt < CN.nt) )
-					CN.setp(cur,CN.h,cur.nt+1)
-					open.ReSort(CN)//reorder the changed element in the list
-			else
-			//is not already in open list, so add it
-				CN = new(T,cur,call(T,dist)(end),cur.nt+1,15^r)
-				open.Insert(CN)
-				openc[T] = CN
+				var/turf/nex_tu = next_turf
+				nex_tu.color = COLOR_RED
+				if(CN)
+				//is already in open list, check if it's a better way from the current turf
+					CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
+					if((newt < CN.nt) )
+						CN.setp(cur,CN.h,cur.nt+steps_taken, _jmp = steps_taken)
+						open.ReSort(CN)//reorder the changed element in the list
+				else
+				//is not already in open list, so add it
+					CN = new(next_turf,cur,call(next_turf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
+					open.Insert(CN)
+					openc[next_turf] = CN
+				break
+
+			if(breakout)
+				break
 		cur.bf = 0
 		CHECK_TICK
 	//reverse the path to get it from start to finish
@@ -203,6 +295,7 @@ Actual Adjacent procs :
 			path.Swap(i,path.len-i+1)
 	openc = null
 	//cleaning after us
+	testing("done")
 	return path
 
 //Returns adjacent turfs in cardinal directions that are reachable
