@@ -161,7 +161,7 @@
 
 /datum/component/aquarium_content/proc/dead_animation()
 	//Set base_py to lowest possible value
-	var/avg_height = round(properties.sprite_height/2)
+	var/avg_height = round(properties.sprite_height / 2)
 	var/list/aq_properties = current_aquarium.get_surface_properties()
 	var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16
 	base_py = py_min
