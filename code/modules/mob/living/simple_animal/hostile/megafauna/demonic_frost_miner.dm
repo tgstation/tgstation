@@ -256,7 +256,7 @@ Difficulty: Extremely Hard
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	setMovetype(movement_type | FLYING)
+	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
 	enraging = FALSE
 	adjustHealth(-maxHealth)
 
@@ -286,7 +286,7 @@ Difficulty: Extremely Hard
 		return
 	forceMove(user)
 	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
-	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
+	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/resurrect)
 
 /// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
@@ -317,7 +317,17 @@ Difficulty: Extremely Hard
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
+	. = ..()
+	// Could have been blown off in an explosion from the previous owner
+	REMOVE_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on
@@ -327,8 +337,9 @@ Difficulty: Extremely Hard
 	. = ..()
 	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
 
-/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/step_action()
-	. = ..()
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/proc/on_step()
+	SIGNAL_HANDLER
+
 	var/turf/T = get_turf(loc)
 	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
 		return
@@ -367,11 +378,11 @@ Difficulty: Extremely Hard
 	id = "ice_block_talisman"
 	duration = 40
 	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
+	alert_type = /atom/movable/screen/alert/status_effect/ice_block_talisman
 	/// Stored icon overlay for the hit mob, removed when effect is removed
 	var/icon/cube
 
-/obj/screen/alert/status_effect/ice_block_talisman
+/atom/movable/screen/alert/status_effect/ice_block_talisman
 	name = "Frozen Solid"
 	desc = "You're frozen inside an ice cube, and cannot move!"
 	icon_state = "frozen"

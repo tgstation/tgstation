@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { useDispatch } from 'common/redux';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
-import { Component, Fragment } from 'inferno';
+import { Component } from 'inferno';
 import { backendSuspendStart, useBackend } from '../backend';
 import { Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
@@ -44,6 +44,7 @@ export class Window extends Component {
   render() {
     const {
       resizable,
+      noClose,
       theme,
       title,
       children,
@@ -74,7 +75,8 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             dispatch(backendSuspendStart());
-          }} />
+          }}
+          noClose={noClose} />
         <div
           className={classes([
             'Window__rest',
@@ -86,14 +88,14 @@ export class Window extends Component {
           )}
         </div>
         {fancy && resizable && (
-          <Fragment>
+          <>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />
             <div className="Window__resizeHandle__s"
               onMousedown={resizeStartHandler(0, 1)} />
             <div className="Window__resizeHandle__se"
               onMousedown={resizeStartHandler(1, 1)} />
-          </Fragment>
+          </>
         )}
       </Layout>
     );
@@ -142,6 +144,7 @@ const TitleBar = (props, context) => {
     className,
     title,
     status,
+    noClose,
     fancy,
     onDragStart,
     onClose,
@@ -180,7 +183,7 @@ const TitleBar = (props, context) => {
           <Icon name="bug" />
         </div>
       )}
-      {!!fancy && (
+      {!!fancy && !noClose && (
         <div
           className="TitleBar__close TitleBar__clickable"
           // IE8: Synthetic onClick event doesn't work on IE8.

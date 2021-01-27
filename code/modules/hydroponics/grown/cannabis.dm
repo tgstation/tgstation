@@ -5,7 +5,7 @@
 	icon_state = "seed-cannabis"
 	species = "cannabis"
 	plantname = "Cannabis Plant"
-	product = /obj/item/reagent_containers/food/snacks/grown/cannabis
+	product = /obj/item/food/grown/cannabis
 	maturation = 8
 	potency = 20
 	growthstages = 1
@@ -27,7 +27,7 @@
 	icon_state = "seed-megacannabis"
 	species = "megacannabis"
 	plantname = "Rainbow Weed"
-	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow
+	product = /obj/item/food/grown/cannabis/rainbow
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/colorful_reagent = 0.05, /datum/reagent/medicine/psicodine = 0.03, /datum/reagent/drug/happiness = 0.1, /datum/reagent/toxin/mindbreaker = 0.1, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
@@ -38,7 +38,7 @@
 	icon_state = "seed-blackcannabis"
 	species = "blackcannabis"
 	plantname = "Deathweed"
-	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/death
+	product = /obj/item/food/grown/cannabis/death
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/toxin/cyanide = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
@@ -50,7 +50,7 @@
 	species = "whitecannabis"
 	plantname = "Lifeweed"
 	instability = 30
-	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/white
+	product = /obj/item/food/grown/cannabis/white
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/medicine/omnizine = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
@@ -62,7 +62,7 @@
 	icon_state = "seed-ocannabis"
 	species = "ocannabis"
 	plantname = "Omega Weed"
-	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate
+	product = /obj/item/food/grown/cannabis/ultimate
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/drug/space_drugs = 0.3,
@@ -82,43 +82,42 @@
 
 // ---------------------------------------------------------------
 
-/obj/item/reagent_containers/food/snacks/grown/cannabis
+/obj/item/food/grown/cannabis
 	seed = /obj/item/seeds/cannabis
 	icon = 'goon/icons/obj/hydroponics.dmi'
 	name = "cannabis leaf"
 	desc = "Recently legalized in most galaxies."
 	icon_state = "cannabis"
-	filling_color = "#00FF00"
-	bitesize_mod = 2
-	foodtype = VEGETABLES //i dont really know what else weed could be to be honest
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES //i dont really know what else weed could be to be honest
 	tastes = list("cannabis" = 1)
 	wine_power = 20
 
-/obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow
+/obj/item/food/grown/cannabis/rainbow
 	seed = /obj/item/seeds/cannabis/rainbow
 	name = "rainbow cannabis leaf"
 	desc = "Is it supposed to be glowing like that...?"
 	icon_state = "megacannabis"
 	wine_power = 60
 
-/obj/item/reagent_containers/food/snacks/grown/cannabis/death
+/obj/item/food/grown/cannabis/death
 	seed = /obj/item/seeds/cannabis/death
 	name = "death cannabis leaf"
 	desc = "Looks a bit dark. Oh well."
 	icon_state = "blackcannabis"
 	wine_power = 40
 
-/obj/item/reagent_containers/food/snacks/grown/cannabis/white
+/obj/item/food/grown/cannabis/white
 	seed = /obj/item/seeds/cannabis/white
 	name = "white cannabis leaf"
 	desc = "It feels smooth and nice to the touch."
 	icon_state = "whitecannabis"
 	wine_power = 10
 
-/obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate
+/obj/item/food/grown/cannabis/ultimate
 	seed = /obj/item/seeds/cannabis/ultimate
 	name = "omega cannabis leaf"
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
-	volume = 420
+	max_volume = 420
 	wine_power = 90

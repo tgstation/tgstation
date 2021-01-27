@@ -13,11 +13,9 @@ package-lock.json
 
 ## Build artifacts
 /public/.tmp/**/*
-/public/**/*.hot-update.*
-/public/**/*.map
+/public/**/*
+!/public/*.html
 
 ## Previously ignored locations that are kept to avoid confusing git
 ## while transitioning to a new project structure.
-/packages/tgui/public/.tmp/**/*
-/packages/tgui/public/**/*.hot-update.*
-/packages/tgui/public/**/*.map
+/packages/tgui/public/**

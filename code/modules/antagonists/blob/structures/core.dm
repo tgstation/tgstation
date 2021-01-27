@@ -13,7 +13,7 @@
 /obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, placed = 0)
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
 		return INITIALIZE_HINT_QDEL
@@ -39,7 +39,6 @@
 		overmind.blob_core = null
 	overmind = null
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list -= src
 	return ..()
 
 /obj/structure/blob/core/ex_act(severity, target)

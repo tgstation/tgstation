@@ -10,14 +10,14 @@
 	items = list(
 		/obj/item/food/egg,
 	)
-	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull
+	result = /obj/item/food/cookie/sugar/spookyskull
 
 /datum/recipe/sugarcookie/spookycoffin
 	reagents_list = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/coffee = 5)
 	items = list(
 		/obj/item/food/egg,
 	)
-	result = /obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin
+	result = /obj/item/food/cookie/sugar/spookycoffin
 
 //////////////////////////////
 //Spookoween trapped closets//

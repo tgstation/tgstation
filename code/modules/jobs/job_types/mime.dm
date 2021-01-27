@@ -79,11 +79,11 @@
 	qdel(src)
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The human mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The human mob interacting with the menu
+ */
 /obj/item/book/mimery/proc/check_menu(mob/living/carbon/human/user)
 	if(!istype(user))
 		return FALSE

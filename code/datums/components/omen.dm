@@ -1,11 +1,11 @@
 /**
-  * omen.dm: For when you want someone to have a really bad day
-  *
-  * When you attach an omen component to someone, they start running the risk of all sorts of bad environmental injuries, like nearby vending machines randomly falling on you,
-  * or hitting your head really hard when you slip and fall, or... well, for now those two are all I have. More will come.
-  *
-  * Omens are removed once the victim is either maimed by one of the possible injuries, or if they receive a blessing (read: bashing with a bible) from the chaplain.
-  */
+ * omen.dm: For when you want someone to have a really bad day
+ *
+ * When you attach an omen component to someone, they start running the risk of all sorts of bad environmental injuries, like nearby vending machines randomly falling on you,
+ * or hitting your head really hard when you slip and fall, or... well, for now those two are all I have. More will come.
+ *
+ * Omens are removed once the victim is either maimed by one of the possible injuries, or if they receive a blessing (read: bashing with a bible) from the chaplain.
+ */
 /datum/component/omen
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -45,11 +45,11 @@
 	UnregisterSignal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_ADD_MOOD_EVENT))
 
 /**
-  * check_accident() is called each step we take
-  *
-  * While we're walking around, roll to see if there's any environmental hazards (currently only vending machines) on one of the adjacent tiles we can trigger.
-  * We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time
-  */
+ * check_accident() is called each step we take
+ *
+ * While we're walking around, roll to see if there's any environmental hazards (currently only vending machines) on one of the adjacent tiles we can trigger.
+ * We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time
+ */
 /datum/component/omen/proc/check_accident(atom/movable/our_guy)
 	SIGNAL_HANDLER_DOES_SLEEP
 

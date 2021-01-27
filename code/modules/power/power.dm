@@ -101,6 +101,57 @@
 		chan = power_channel
 	A.use_power(amount, chan)
 
+/**
+ * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
+ * - Amount: How much power the APC's cell is to be costed.
+ */
+/obj/machinery/proc/directly_use_power(amount)
+	var/area/A = get_area(src)
+	var/obj/machinery/power/apc/local_apc
+	if(!A)
+		return FALSE
+	local_apc = A.get_apc()
+	if(!local_apc)
+		return FALSE
+	if(!local_apc.cell)
+		return FALSE
+	local_apc.cell.use(amount)
+	return TRUE
+
+/**
+ * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger
+ *
+ * Checks the surplus power on the APC's powernet, and compares to the requested amount. If the requested amount is available, this proc
+ * will add the amount to the APC's usage and return that amount. Otherwise, this proc will return FALSE.
+ * If the take_any var arg is set to true, this proc will use and return any surplus that is under the requested amount, assuming that
+ * the surplus is above zero.
+ * Args:
+ * - amount, the amount of power requested from the Powernet. In standard loosely-defined SS13 power units.
+ * - take_any, a bool of whether any amount of power is acceptable, instead of all or nothing. Defaults to FALSE
+ */
+/obj/machinery/proc/use_power_from_net(amount, take_any = FALSE)
+	if(amount <= 0) //just in case
+		return FALSE
+	var/area/home = get_area(src)
+
+	if(!home)
+		return FALSE //apparently space isn't an area
+	if(!home.requires_power)
+		return amount //Shuttles get free power, don't ask why
+
+	var/obj/machinery/power/apc/local_apc = home?.get_apc()
+	if(!local_apc)
+		return FALSE
+	var/surplus = local_apc.surplus()
+	if(surplus <= 0) //I don't know if powernet surplus can ever end up negative, but I'm just gonna failsafe it
+		return FALSE
+	if(surplus < amount)
+		if(!take_any)
+			return FALSE
+		amount = surplus
+	local_apc.add_load(amount)
+	return amount
+
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
 	if(!A)
@@ -111,12 +162,12 @@
 	addStaticPower(-value, powerchannel)
 
 /**
-  * Called whenever the power settings of the containing area change
-  *
-  * by default, check equipment channel & set flag, can override if needed
-  *
-  * Returns TRUE if the NOPOWER flag was toggled
-  */
+ * Called whenever the power settings of the containing area change
+ *
+ * by default, check equipment channel & set flag, can override if needed
+ *
+ * Returns TRUE if the NOPOWER flag was toggled
+ */
 /obj/machinery/proc/power_change()
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)

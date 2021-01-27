@@ -1,7 +1,7 @@
 /*
- 	Miauw's big Say() rewrite.
-	This file has the basic atom/movable level speech procs.
-	And the base of the send_speech() proc, which is the core of saycode.
+Miauw's big Say() rewrite.
+This file has the basic atom/movable level speech procs.
+And the base of the send_speech() proc, which is the core of saycode.
 */
 GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_SCIENCE]" = "sciradio",
@@ -168,12 +168,12 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/obj/item/radio/radio
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
-/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)
+/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, _radio)
 	. = ..()
-	radio = radio
+	radio = _radio
 	source = M
-	if (istype(M))
-		name = M.GetVoice()
+	if(istype(M))
+		name = radio.anonymize ? "Unknown" : M.GetVoice()
 		verb_say = M.verb_say
 		verb_ask = M.verb_ask
 		verb_exclaim = M.verb_exclaim

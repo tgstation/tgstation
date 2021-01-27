@@ -53,35 +53,34 @@
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
 
-/obj/item/melee/touch_attack/disintegrate/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || !(user.mobility_flags & MOBILITY_USE)) //exploding after touching yourself would be bad
+/obj/item/melee/touch_attack/disintegrate/afterattack(mob/living/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !istype(target) || !iscarbon(user) || !(user.mobility_flags & MOBILITY_USE)) //exploding after touching yourself would be bad
 		return
 	if(!user.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
 		return
-	var/mob/M = target
-	do_sparks(4, FALSE, M.loc)
+	do_sparks(4, FALSE, target.loc)
 	for(var/mob/living/L in view(src, 7))
 		if(L != user)
 			L.flash_act(affect_silicon = FALSE)
-	var/atom/A = M.anti_magic_check()
+	var/atom/A = target.anti_magic_check()
 	if(A)
 		if(isitem(A))
 			target.visible_message("<span class='warning'>[target]'s [A] glows brightly as it wards off the spell!</span>")
-		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<span class='userdanger'>The spell bounces from [M]'s skin back into your arm!</span>")
+		user.visible_message("<span class='warning'>The feedback blows [user]'s arm off!</span>","<span class='userdanger'>The spell bounces from [target]'s skin back into your arm!</span>")
 		user.flash_act()
 		var/obj/item/bodypart/part = user.get_holding_bodypart_of_item(src)
 		if(part)
 			part.dismember()
 		return ..()
-	var/obj/item/clothing/suit/hooded/bloated_human/suit = M.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	var/obj/item/clothing/suit/hooded/bloated_human/suit = target.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
-		M.visible_message("<span class='danger'>[M]'s [suit] explodes off of them into a puddle of gore!</span>")
-		M.dropItemToGround(suit)
+		target.visible_message("<span class='danger'>[target]'s [suit] explodes off of them into a puddle of gore!</span>")
+		target.dropItemToGround(suit)
 		qdel(suit)
-		new /obj/effect/gibspawner(M.loc)
+		new /obj/effect/gibspawner(target.loc)
 		return ..()
-	M.gib()
+	target.gib()
 	return ..()
 
 /obj/item/melee/touch_attack/fleshtostone

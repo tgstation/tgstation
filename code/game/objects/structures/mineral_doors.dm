@@ -28,13 +28,18 @@
 
 /obj/structure/mineral_door/Initialize()
 	. = ..()
+	air_update_turf(TRUE, TRUE)
 
-	air_update_turf(TRUE)
+/obj/structure/mineral_door/Destroy()
+	if(!door_opened)
+		air_update_turf(TRUE, FALSE)
+	. = ..()
 
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc
 	. = ..()
-	move_update_air(T)
+	if(!door_opened)
+		move_update_air(T)
 
 /obj/structure/mineral_door/Bumped(atom/movable/AM)
 	..()
@@ -94,7 +99,7 @@
 	density = FALSE
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
-	air_update_turf(1)
+	air_update_turf(TRUE, FALSE)
 	update_icon()
 	isSwitchingStates = FALSE
 
@@ -115,7 +120,7 @@
 	set_opacity(TRUE)
 	door_opened = FALSE
 	layer = initial(layer)
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
 	update_icon()
 	isSwitchingStates = FALSE
 
@@ -133,7 +138,7 @@
 /obj/structure/mineral_door/set_anchored(anchorvalue) //called in default_unfasten_wrench() chain
 	. = ..()
 	set_opacity(anchored ? !door_opened : FALSE)
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, anchorvalue)
 
 /obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -244,7 +249,8 @@
 	sheetType = /obj/item/stack/sheet/mineral/plasma
 
 /obj/structure/mineral_door/transparent/plasma/ComponentInitialize()
-	return
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/structure/mineral_door/transparent/plasma/welder_act(mob/living/user, obj/item/I)
 	return
@@ -258,9 +264,11 @@
 	else
 		return ..()
 
-/obj/structure/mineral_door/transparent/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		TemperatureAct()
+/obj/structure/mineral_door/transparent/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/mineral_door/transparent/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	TemperatureAct()
 
 /obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct()
 	atmos_spawn_air("plasma=500;TEMP=1000")
@@ -335,7 +343,7 @@
 
 	if((user.a_intent != INTENT_HARM) && istype(I, /obj/item/paper) && (obj_integrity < max_integrity))
 		user.visible_message("<span class='notice'>[user] starts to patch the holes in [src].</span>", "<span class='notice'>You start patching some of the holes in [src]!</span>")
-		if(do_after(user, 20, TRUE, src))
+		if(do_after(user, 2 SECONDS, src))
 			obj_integrity = min(obj_integrity+4,max_integrity)
 			qdel(I)
 			user.visible_message("<span class='notice'>[user] patches some of the holes in [src].</span>", "<span class='notice'>You patch some of the holes in [src]!</span>")

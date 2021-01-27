@@ -1159,6 +1159,9 @@
 "dm" = (
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/refuel)
+"dn" = (
+/turf/open/floor/holofloor/carpet,
+/area/holodeck/rec_center/spacechess)
 "do" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -1405,7 +1408,7 @@
 /area/holodeck/rec_center/school)
 "dZ" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/food/grown/apple,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
 "ea" = (
@@ -14550,22 +14553,22 @@
 /area/tdome/tdomeobserve)
 "GG" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/potato,
-/obj/item/reagent_containers/food/snacks/grown/whitebeet,
-/obj/item/reagent_containers/food/snacks/grown/whitebeet,
-/obj/item/reagent_containers/food/snacks/grown/tomato,
-/obj/item/reagent_containers/food/snacks/grown/tomato,
-/obj/item/reagent_containers/food/snacks/grown/rice,
-/obj/item/reagent_containers/food/snacks/grown/rice,
-/obj/item/reagent_containers/food/snacks/grown/icepepper,
-/obj/item/reagent_containers/food/snacks/grown/icepepper,
-/obj/item/reagent_containers/food/snacks/grown/citrus/lemon,
-/obj/item/reagent_containers/food/snacks/grown/citrus/lime,
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
-/obj/item/reagent_containers/food/snacks/grown/cherries,
-/obj/item/reagent_containers/food/snacks/grown/apple,
-/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/whitebeet,
+/obj/item/food/grown/whitebeet,
+/obj/item/food/grown/tomato,
+/obj/item/food/grown/tomato,
+/obj/item/food/grown/rice,
+/obj/item/food/grown/rice,
+/obj/item/food/grown/icepepper,
+/obj/item/food/grown/icepepper,
+/obj/item/food/grown/citrus/lemon,
+/obj/item/food/grown/citrus/lime,
+/obj/item/food/grown/citrus/orange,
+/obj/item/food/grown/cherries,
+/obj/item/food/grown/apple,
+/obj/item/food/grown/ambrosia/deus,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -14585,25 +14588,25 @@
 /area/tdome/tdomeobserve)
 "GI" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/vanillapod,
-/obj/item/reagent_containers/food/snacks/grown/vanillapod,
-/obj/item/reagent_containers/food/snacks/grown/sugarcane,
-/obj/item/reagent_containers/food/snacks/grown/sugarcane,
-/obj/item/reagent_containers/food/snacks/grown/oat,
-/obj/item/reagent_containers/food/snacks/grown/oat,
-/obj/item/reagent_containers/food/snacks/grown/grapes,
-/obj/item/reagent_containers/food/snacks/grown/grapes,
-/obj/item/reagent_containers/food/snacks/grown/corn,
-/obj/item/reagent_containers/food/snacks/grown/corn,
-/obj/item/reagent_containers/food/snacks/grown/chili,
-/obj/item/reagent_containers/food/snacks/grown/chili,
-/obj/item/reagent_containers/food/snacks/grown/carrot,
-/obj/item/reagent_containers/food/snacks/grown/apple,
-/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/wheat,
+/obj/item/food/grown/vanillapod,
+/obj/item/food/grown/vanillapod,
+/obj/item/food/grown/sugarcane,
+/obj/item/food/grown/sugarcane,
+/obj/item/food/grown/oat,
+/obj/item/food/grown/oat,
+/obj/item/food/grown/grapes,
+/obj/item/food/grown/grapes,
+/obj/item/food/grown/corn,
+/obj/item/food/grown/corn,
+/obj/item/food/grown/chili,
+/obj/item/food/grown/chili,
+/obj/item/food/grown/carrot,
+/obj/item/food/grown/apple,
+/obj/item/food/grown/ambrosia/vulgaris,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -15061,7 +15064,7 @@
 /area/tdome/tdomeobserve)
 "HB" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/mint,
+/obj/item/food/mint,
 /obj/item/reagent_containers/food/condiment/enzyme{
 	pixel_y = 5
 	},
@@ -17634,19 +17637,19 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/poppy{
+/obj/item/food/grown/poppy{
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
+/obj/item/food/grown/poppy{
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
+/obj/item/food/grown/poppy{
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
+/obj/item/food/grown/poppy{
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/snacks/grown/poppy{
+/obj/item/food/grown/poppy{
 	pixel_y = 2
 	},
 /turf/open/floor/holofloor/dark,
@@ -19316,7 +19319,7 @@
 /area/ctf)
 "Yf" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chawanmushi,
+/obj/item/food/chawanmushi,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Yh" = (
@@ -19550,11 +19553,11 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
-/obj/item/reagent_containers/food/snacks/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
+/obj/item/food/grown/harebell,
 /turf/open/floor/holofloor/dark,
 /area/holodeck/rec_center/chapelcourt)
 "Zh" = (
@@ -19662,9 +19665,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"ZK" = (
-/turf/open/floor/holofloor/carpet,
-/area/holodeck/rec_center/spacechess)
 "ZN" = (
 /obj/structure/table/wood,
 /obj/item/toy/crayon/spraycan{
@@ -82696,16 +82696,16 @@ aa
 "}
 (246,1,1) = {"
 fx
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
-ZK
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
 bj
 dm
 dm
@@ -82953,7 +82953,7 @@ aa
 "}
 (247,1,1) = {"
 fx
-ZK
+dn
 Hk
 ee
 ew
@@ -82962,7 +82962,7 @@ ew
 ev
 eX
 Ul
-ZK
+dn
 bj
 dm
 dm
@@ -83210,7 +83210,7 @@ aa
 "}
 (248,1,1) = {"
 fx
-ZK
+dn
 Ou
 ed
 ev
@@ -83219,7 +83219,7 @@ ev
 ew
 eW
 Yi
-ZK
+dn
 bj
 dm
 dm
@@ -83467,7 +83467,7 @@ aa
 "}
 (249,1,1) = {"
 fx
-ZK
+dn
 Dk
 ee
 ew
@@ -83476,7 +83476,7 @@ ew
 ev
 eX
 RR
-ZK
+dn
 bj
 dm
 dG
@@ -83724,7 +83724,7 @@ aa
 "}
 (250,1,1) = {"
 fx
-ZK
+dn
 VK
 ed
 ev
@@ -83733,7 +83733,7 @@ ev
 ew
 eW
 TP
-ZK
+dn
 bj
 dm
 dG
@@ -83981,7 +83981,7 @@ aa
 "}
 (251,1,1) = {"
 fx
-ZK
+dn
 TM
 ee
 ew
@@ -83990,7 +83990,7 @@ ew
 ev
 eX
 Wu
-ZK
+dn
 bj
 dm
 dG
@@ -84238,7 +84238,7 @@ aa
 "}
 (252,1,1) = {"
 fx
-ZK
+dn
 Oo
 ed
 ev
@@ -84247,7 +84247,7 @@ ev
 ew
 eW
 vp
-ZK
+dn
 bj
 dm
 dm
@@ -84495,7 +84495,7 @@ aa
 "}
 (253,1,1) = {"
 fx
-ZK
+dn
 dK
 ee
 ew
@@ -84504,7 +84504,7 @@ ew
 ev
 eX
 fm
-ZK
+dn
 bj
 dm
 dm
@@ -84752,7 +84752,7 @@ aa
 "}
 (254,1,1) = {"
 fx
-ZK
+dn
 dH
 ed
 ev
@@ -84761,7 +84761,7 @@ ev
 ew
 eW
 fj
-ZK
+dn
 bj
 dm
 dm

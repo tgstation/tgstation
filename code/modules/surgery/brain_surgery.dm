@@ -8,7 +8,7 @@
 	/datum/surgery_step/fix_brain,
 	/datum/surgery_step/close)
 
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 

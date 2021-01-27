@@ -330,7 +330,7 @@
 	if(staffcooldown + staffwait > world.time)
 		return
 	user.visible_message("<span class='notice'>[user] chants deeply and waves [user.p_their()] staff!</span>")
-	if(do_after(user, 20,1,src))
+	if(do_after(user, 2 SECONDS, src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
 

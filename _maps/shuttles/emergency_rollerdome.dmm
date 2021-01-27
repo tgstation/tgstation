@@ -182,7 +182,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Dh" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DR" = (
@@ -200,7 +200,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HA" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HS" = (

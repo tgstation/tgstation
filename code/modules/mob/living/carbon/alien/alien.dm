@@ -12,7 +12,6 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/food/meat/slab/xeno
 
-	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
@@ -32,6 +31,8 @@
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
+
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, ROUNDSTART_TRAIT)
 
 	. = ..()
 
@@ -54,7 +55,7 @@
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
-		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
+		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
@@ -70,9 +71,6 @@
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
-
-/mob/living/carbon/alien/IsAdvancedToolUser()
-	return has_fine_manipulation
 
 /mob/living/carbon/alien/get_status_tab_items()
 	. = ..()
@@ -116,9 +114,6 @@ Des: Removes all infected images from the alien.
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/alien/get_standard_pixel_y_offset(lying = 0)
-	return initial(pixel_y)
-
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
@@ -137,8 +132,8 @@ Des: Removes all infected images from the alien.
 		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
-/mob/living/carbon/alien/can_hold_items()
-	return has_fine_manipulation
+/mob/living/carbon/alien/can_hold_items(obj/item/I)
+	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 /mob/living/carbon/alien/on_lying_down(new_lying_angle)
 	. = ..()

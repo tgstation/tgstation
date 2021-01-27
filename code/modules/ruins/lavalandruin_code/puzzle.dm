@@ -7,7 +7,7 @@
 	var/list/elements
 	var/floor_type = /turf/open/floor/vault
 	var/finished = FALSE
-	var/reward_type = /obj/item/reagent_containers/food/snacks/cookie
+	var/reward_type = /obj/item/food/cookie
 	var/element_type = /obj/structure/puzzle_element
 	var/auto_setup = TRUE
 	var/empty_tile_id

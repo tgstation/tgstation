@@ -1,8 +1,8 @@
 /**
-  *
-  * Allows parent (obj) to initiate surgeries.
-  *
-  */
+ *
+ * Allows parent (obj) to initiate surgeries.
+ *
+ */
 /datum/component/surgery_initiator
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///allows for post-selection manipulation of parent
@@ -31,16 +31,17 @@
 	  *
 	  */
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
-
+	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
+	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, source, target, user)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/surgery_initiator/proc/do_initiate_surgery_moment(datum/source, atom/target, mob/user)
 	var/mob/living/livingtarget = target
 	var/mob/living/carbon/carbontarget
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
-	. = COMPONENT_ITEM_NO_ATTACK
-
 	if(iscarbon(livingtarget))
 		carbontarget = livingtarget
 		affecting = carbontarget.get_bodypart(check_zone(selected_zone))

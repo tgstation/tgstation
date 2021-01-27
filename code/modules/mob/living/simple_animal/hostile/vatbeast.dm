@@ -22,7 +22,7 @@
 	attack_sound = 'sound/weapons/punch3.ogg'
 	attack_verb_continuous = "slaps"
 	attack_verb_simple = "slap"
-	food_type = list(/obj/item/reagent_containers/food/snacks/fries, /obj/item/reagent_containers/food/snacks/cheesyfries, /obj/item/reagent_containers/food/snacks/cornchips, /obj/item/reagent_containers/food/snacks/carrotfries)
+	food_type = list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries)
 	tame_chance = 30
 
 	var/obj/effect/proc_holder/tentacle_slap/tentacle_slap
@@ -41,15 +41,7 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/datum/component/riding/riding = LoadComponent(/datum/component/riding)
-	riding.can_use_abilities = TRUE
-	riding.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 15), TEXT_SOUTH = list(0, 15), TEXT_EAST = list(-10, 15), TEXT_WEST = list(10, 15)))
-	riding.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	riding.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	riding.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	riding.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-	riding.drive_verb = "ride"
-	riding.override_allow_spacemove = TRUE
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/vatbeast)
 	faction = list("neutral")
 
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()

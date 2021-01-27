@@ -54,6 +54,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
+		/obj/item/toy/eldritch_book = 2,
+		/obj/item/storage/box/heretic_box = 1,
 		/obj/item/clothing/glasses/trickblindfold = 2))
 
 /obj/machinery/computer/arcade
@@ -536,7 +538,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			gameover = TRUE
 			blocked = FALSE
 			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
-			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
@@ -557,10 +559,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			timer_id = null
 		gameover = TRUE
 		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
-		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE)
 		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
-			user.gib()
+			var/mob/living/living_user = user
+			if (istype(living_user))
+				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 	if(gameover)
@@ -775,8 +779,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 					R.fields["m_stat"] = "*Unstable*"
 					return
 
-/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user)
+/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/_user)
 	. = ..()
+	if (!isliving(_user))
+		return
+	var/mob/living/user = _user
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
 		gameStatus = ORION_STATUS_GAMEOVER
 		event = null
@@ -1025,11 +1032,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 			killed_crew++
 
+			var/mob/living/user = usr
+
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 				if(obj_flags & EMAGGED)
-					usr.death(0)
-					obj_flags &= EMAGGED
+					user.death()
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
 
@@ -1039,7 +1047,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)
 					say("The crew of the ship chose to kill [usr.name]!")
-					usr.death(0)
+					user.death()
 
 			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
 				event = null
@@ -1548,7 +1556,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
-		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 		prizevend(user, rand(3,5))
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")

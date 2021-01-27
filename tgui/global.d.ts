@@ -97,11 +97,21 @@ interface ByondType {
   winset(id: string, propName: string, propValue: any): void;
 
   /**
-   * Parses BYOND JSON
+   * Parses BYOND JSON.
    *
    * Uses a special encoding to preverse Infinity and NaN.
    */
   parseJson(text: string): any;
+
+  /**
+   * Loads a stylesheet into the document.
+   */
+  loadCss(url: string): void;
+
+  /**
+   * Loads a script into the document.
+   */
+  loadJs(url: string): void;
 }
 
 declare const Byond: ByondType;

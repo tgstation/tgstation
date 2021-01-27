@@ -28,7 +28,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	var/active = FALSE
-	var/reactivearmor_cooldown_duration = 0 //cooldown specific to reactive armor
+	var/reactivearmor_cooldown_duration = 10 SECONDS //cooldown specific to reactive armor
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"
 	inhand_icon_state = "reactiveoff"
@@ -66,34 +66,18 @@
 	desc = "Someone separated our Research Director from his own head!"
 	var/tele_range = 6
 	var/rad_amount= 15
-	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
 		return FALSE
 	if(prob(hit_reaction_chance))
-		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
+			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [owner]!</span>")
 			return FALSE
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [owner] clear of [attack_text], shutting itself off in the process!</span>")
 		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
-		var/list/turfs = new/list()
-		for(var/turf/T in orange(tele_range, H))
-			if(T.density)
-				continue
-			if(T.x>world.maxx-tele_range || T.x<tele_range)
-				continue
-			if(T.y>world.maxy-tele_range || T.y<tele_range)
-				continue
-			turfs += T
-		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
-		var/turf/picked = pick(turfs)
-		if(!isturf(picked))
-			return
-		H.forceMove(picked)
-		H.rad_act(rad_amount)
+		do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
+		owner.rad_act(rad_amount)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
 	return FALSE
@@ -224,21 +208,7 @@
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams [H.p_them()] into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
 		owner.Paralyze(40)
-		var/list/turfs = new/list()
-		for(var/turf/T in orange(tele_range, H))
-			if(T.density)
-				continue
-			if(T.x>world.maxx-tele_range || T.x<tele_range)
-				continue
-			if(T.y>world.maxy-tele_range || T.y<tele_range)
-				continue
-			turfs += T
-		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
-		var/turf/picked = pick(turfs)
-		if(!isturf(picked))
-			return
-		H.forceMove(picked)
+		do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/structure/table(get_turf(owner))
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE

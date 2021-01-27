@@ -1,6 +1,6 @@
 /**
-  * Returns the HTML for the status UI for this song datum.
-  */
+ * Returns the HTML for the status UI for this song datum.
+ */
 /datum/song/proc/instrument_status_ui()
 	. = list()
 	. += "<div class='statusDisplay'>"
@@ -88,8 +88,8 @@
 	popup.open()
 
 /**
-  * Parses a song the user has input into lines and stores them.
-  */
+ * Parses a song the user has input into lines and stores them.
+ */
 /datum/song/proc/ParseSong(text)
 	set waitfor = FALSE
 	//split into lines

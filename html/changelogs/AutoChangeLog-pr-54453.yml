@@ -1,4 +1,0 @@
-author: "farie82"
-delete-after: True
-changes: 
-  - bugfix: "The animal progress bar in the DNA vault UI now actually shows the progress"

@@ -28,13 +28,13 @@
 		if(!heart_winner.client)
 			return
 		heart_winner.client.prefs.save_preferences()
-		tgalert(heart_winner, "Someone anonymously thanked you for being kind during the last round!", "<3!", "Okay")
+		tgui_alert(heart_winner, "Someone anonymously thanked you for being kind during the last round!", "<3!", list("Okay"))
 
 /// Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up
 /mob/proc/query_heart(attempt=1)
 	if(!mind || !client || attempt > 3)
 		return
-	if(attempt == 1 && tgalert(src, "Was there another character you noticed being kind this round that you would like to anonymously thank?", "<3?", "Yes", "No", StealFocus=FALSE, Timeout = 30 SECONDS) != "Yes")
+	if(attempt == 1 && tgui_alert(src, "Was there another character you noticed being kind this round that you would like to anonymously thank?", "<3?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
 		return
 
 	var/heart_nominee
@@ -61,7 +61,7 @@
 		if(heart_contender == src)
 			continue
 
-		switch(tgalert(src, "Is this the person: [heart_contender.real_name]?", "<3?", "Yes!", "Nope", "Cancel", Timeout = 15 SECONDS))
+		switch(tgui_alert(src, "Is this the person: [heart_contender.real_name]?", "<3?", list("Yes!", "Nope", "Cancel"), timeout = 15 SECONDS))
 			if("Yes!")
 				nominate_heart(heart_contender)
 				return

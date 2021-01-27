@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
 		/obj/item/small_delivery, /obj/projectile,
-		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
+		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_model)
 
 /datum/h_sandbox/proc/update()
 	var/static/list/hrefs = list(

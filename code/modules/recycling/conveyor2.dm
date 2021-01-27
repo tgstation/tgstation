@@ -175,7 +175,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
 		if(I.use_tool(src, user, 40, volume=40))
 			if(!(machine_stat & BROKEN))
-				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, id)
+				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 			qdel(src)
@@ -421,10 +421,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	max_amount = 30
 	singular_name = "conveyor belt"
 	w_class = WEIGHT_CLASS_BULKY
+	merge_type = /obj/item/stack/conveyor
 	///id for linking
 	var/id = ""
 
-/obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, _id)
+/obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1, _id)
 	. = ..()
 	id = _id
 

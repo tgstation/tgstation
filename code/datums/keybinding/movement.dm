@@ -1,6 +1,6 @@
 /datum/keybinding/movement
-    category = CATEGORY_MOVEMENT
-    weight = WEIGHT_HIGHEST
+	category = CATEGORY_MOVEMENT
+	weight = WEIGHT_HIGHEST
 
 /datum/keybinding/movement/north
 	hotkey_keys = list("W", "North")

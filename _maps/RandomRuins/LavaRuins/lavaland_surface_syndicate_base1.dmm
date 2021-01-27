@@ -652,7 +652,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/carbon/monkey{
+/mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/dark,
@@ -991,7 +991,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/carbon/monkey{
+/mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/dark,
@@ -2240,7 +2240,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hp" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey{
+/mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
@@ -2257,7 +2257,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hr" = (
-/mob/living/carbon/monkey{
+/mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
@@ -2395,7 +2395,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "hE" = (
-/mob/living/carbon/monkey{
+/mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
@@ -2412,7 +2412,7 @@
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hG" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/monkey{
+/mob/living/carbon/human/species/monkey{
 	faction = list("neutral","Syndicate")
 	},
 /turf/open/floor/plasteel/white/side{
@@ -3300,8 +3300,8 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jr" = (
-/obj/machinery/vending/snack/random{
-	extended_inventory = 1
+/obj/effect/spawner/randomsnackvend{
+	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3397,8 +3397,8 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jD" = (
-/obj/machinery/vending/cola/random{
-	extended_inventory = 1
+/obj/effect/spawner/randomcolavend{
+	hacked = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -4765,7 +4765,7 @@
 "my" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/food/condiment/enzyme,
-/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)

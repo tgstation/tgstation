@@ -708,7 +708,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/syndicate/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
@@ -814,7 +814,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/centcom_shuttle/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/centcom_shuttle/assess_perp(mob/living/carbon/human/perp)
 	return 0
@@ -849,9 +849,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/lethal = FALSE
 	/// Variable dictating if the panel is locked, preventing changes to turret settings
 	var/locked = TRUE
-	 /// An area in which linked turrets are located, it can be an area name, path or nothing
+	/// An area in which linked turrets are located, it can be an area name, path or nothing
 	var/control_area = null
-	 /// AI is unable to use this machine if set to TRUE
+	/// AI is unable to use this machine if set to TRUE
 	var/ailock = FALSE
 	/// Variable dictating if linked turrets will shoot cyborgs
 	var/shoot_cyborgs = FALSE

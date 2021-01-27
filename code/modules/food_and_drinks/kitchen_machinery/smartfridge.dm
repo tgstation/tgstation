@@ -41,9 +41,7 @@
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
 
 /obj/machinery/smartfridge/update_icon_state()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!machine_stat)
-		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		if (visible_contents)
 			switch(contents.len)
 				if(0)
@@ -59,7 +57,10 @@
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-
+/obj/machinery/smartfridge/update_overlays()
+	. = ..()
+	if(!machine_stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_STRUCTURE_LAYER, EMISSIVE_STRUCTURE_PLANE, dir, alpha)
 
 /*******************
 *   Item Adding
@@ -112,10 +113,10 @@
 			if(loaded)
 				if(contents.len >= max_n_of_items)
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+						"<span class='notice'>You fill \the [src] with \the [O].</span>")
 				else
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+						"<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
 				if (visible_contents)
@@ -135,7 +136,7 @@
 
 
 /obj/machinery/smartfridge/proc/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/grown/) || istype(O, /obj/item/graft/))
+	if(istype(O, /obj/item/food/grown/) || istype(O, /obj/item/seeds/) || istype(O, /obj/item/grown/) || istype(O, /obj/item/graft/))
 		return TRUE
 	return FALSE
 
@@ -259,7 +260,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = null
 	circuit = null
@@ -307,8 +308,8 @@
 	if(!powered())
 		toggle_drying(TRUE)
 
-/obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
-	..()
+/obj/machinery/smartfridge/drying_rack/load(/obj/item/dried_object) //For updating the filled overlay
+	. = ..()
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/update_overlays()
@@ -321,16 +322,16 @@
 /obj/machinery/smartfridge/drying_rack/process()
 	..()
 	if(drying)
-		if(rack_dry())//no need to update unless something got dried
-			SStgui.update_uis(src)
-			update_icon()
+		for(var/obj/item/item_iterator in src)
+			if(!accept_check(item_iterator))
+				continue
+			rack_dry(item_iterator)
+
+		SStgui.update_uis(src)
+		update_icon()
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/))
-		var/obj/item/reagent_containers/food/snacks/S = O
-		if(S.dried_type)
-			return TRUE
-	if(istype(O, /obj/item/stack/sheet/wethide))
+	if(HAS_TRAIT(O, TRAIT_DRYABLE)) //set on dryable element
 		return TRUE
 	return FALSE
 
@@ -343,22 +344,8 @@
 		use_power = ACTIVE_POWER_USE
 	update_icon()
 
-/obj/machinery/smartfridge/drying_rack/proc/rack_dry()
-	for(var/obj/item/reagent_containers/food/snacks/S in src)
-		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
-			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
-			S.dry = TRUE
-			S.forceMove(drop_location())
-		else
-			var/dried = S.dried_type
-			new dried(drop_location())
-			qdel(S)
-		return TRUE
-	for(var/obj/item/stack/sheet/wethide/WL in src)
-		new /obj/item/stack/sheet/leather(drop_location(), WL.amount)
-		qdel(WL)
-		return TRUE
-	return FALSE
+/obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)
+	SEND_SIGNAL(target, COMSIG_ITEM_DRIED)
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
 	. = ..()
@@ -389,7 +376,7 @@
 	base_build_path = /obj/machinery/smartfridge/food
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/))
+	if(IS_EDIBLE(O))
 		return TRUE
 	return FALSE
 
@@ -410,6 +397,22 @@
 
 /obj/machinery/smartfridge/extract/preloaded
 	initial_contents = list(/obj/item/slime_scanner = 2)
+
+// -------------------------------------
+// Cytology Petri Dish Smartfridge
+// -------------------------------------
+/obj/machinery/smartfridge/petri
+	name = "smart petri dish storage"
+	desc = "A refrigerated storage unit for petri dishes."
+	base_build_path = /obj/machinery/smartfridge/petri
+
+/obj/machinery/smartfridge/petri/accept_check(obj/item/O)
+	if(istype(O, /obj/item/petri_dish))
+		return TRUE
+	return FALSE
+
+/obj/machinery/smartfridge/petri/preloaded
+	initial_contents = list(/obj/item/petri_dish = 5)
 
 // -------------------------
 // Organ Surgery Smartfridge

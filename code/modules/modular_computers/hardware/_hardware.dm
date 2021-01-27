@@ -24,8 +24,8 @@
 
 /obj/item/computer_hardware/New(obj/L)
 	..()
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
+	pixel_x = base_pixel_x + rand(-8, 8)
+	pixel_y = base_pixel_y + rand(-8, 8)
 
 /obj/item/computer_hardware/Destroy()
 	if(holder)
@@ -94,12 +94,20 @@
 
 // Called when component is removed from PC.
 /obj/item/computer_hardware/proc/on_remove(obj/item/modular_computer/M, mob/living/user = null)
-	try_eject(forced = 1)
+	try_eject(forced = TRUE)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.
 /obj/item/computer_hardware/proc/try_insert(obj/item/I, mob/living/user = null)
 	return FALSE
 
-// Called when someone tries to eject something from it - card from card reader, etc.
-/obj/item/computer_hardware/proc/try_eject(slot=0, mob/living/user = null, forced = 0)
+/**
+ * Implement this when your hardware contains an object that the user can eject.
+ *
+ * Examples include ejecting cells from battery modules, ejecting an ID card from a card reader
+ * or ejecting an Intellicard from an AI card slot.
+ * Arguments:
+ * * user - The mob requesting the eject.
+ * * forced - Whether this action should be forced in some way.
+ */
+/obj/item/computer_hardware/proc/try_eject(mob/living/user = null, forced = FALSE)
 	return FALSE
