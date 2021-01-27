@@ -112,9 +112,16 @@ have ways of interacting with a specific mob and control it.
 	if(!locate(/obj/item) in living_pawn.held_items)
 		blackboard[BB_MONKEY_BEST_FORCE_FOUND] = 0
 
-	var/obj/item/W = locate(/obj/item) in oview(2, living_pawn)
+	var/obj/item/W
+	for(var/obj/item/i in oview(2, living_pawn))
+		if(!istype(i))
+			continue
+		if(HAS_TRAIT(i, TRAIT_NEEDS_TWO_HANDS) || blackboard[BB_MONKEY_BLACKLISTITEMS][i] || i.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND])
+			continue
+		W = i
+		break
 
-	if(W && !blackboard[BB_MONKEY_BLACKLISTITEMS][W] && W.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND])
+	if(W)
 		blackboard[BB_MONKEY_PICKUPTARGET] = W
 		current_movement_target = W
 		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/ground)
@@ -123,7 +130,7 @@ have ways of interacting with a specific mob and control it.
 		var/mob/living/carbon/human/H = locate(/mob/living/carbon/human/) in oview(2,living_pawn)
 		if(H)
 			W = pick(H.held_items)
-			if(W && !blackboard[BB_MONKEY_BLACKLISTITEMS][W] && W.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND])
+			if(W && !blackboard[BB_MONKEY_BLACKLISTITEMS][W] && W.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND] && !HAS_TRAIT(W, TRAIT_NEEDS_TWO_HANDS))
 				blackboard[BB_MONKEY_PICKUPTARGET] = W
 				current_movement_target = W
 				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket)
