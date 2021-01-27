@@ -289,7 +289,7 @@
 			contained = "\[[contained]\]"
 
 		var/where = "[AREACOORD(location)]"
-		if(carry.my_atom.fingerprintslast)
+		if(carry.my_atom?.fingerprintslast) //Some reagents don't have a my_atom in some cases
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
 			if(M)

@@ -239,6 +239,10 @@
 	var/current_list_element = 1
 	var/initial_list_length = cached_reagents.len //stored here because removing can cause some reagents to be deleted, ergo length change.
 
+	if(!initial_list_length) //This proc can runtime on the line var/remove_amt = etc... Commented so it's not a silent sanity check
+		stack_trace("Attempted to remove any reagents from a list of no reagents holder: [my_atom]")
+		return null
+
 	current_list_element = rand(1, cached_reagents.len)
 
 	while(total_removed != amount)
@@ -1120,7 +1124,7 @@
 /datum/reagents/proc/process_mob_reagent_purity(_reagent, added_volume, added_purity)
 	var/datum/reagent/R = has_reagent(_reagent)
 	if(!R)
-		stack_trace("Tried to process reagent purity for [_reagent], but 0 volume was found right after it was added!")
+		stack_trace("Tried to process reagent purity for [_reagent], but 0 volume was found right after it was added!") //This can happen from smoking, where the volume is 0 after adding?
 		return
 	if (R.purity == 1)
 		return

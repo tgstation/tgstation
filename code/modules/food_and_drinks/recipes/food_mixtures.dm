@@ -114,7 +114,7 @@
 	mix_message = "The mixture becomes similar to carp meat."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/imitationcarpmeat/on_reaction(datum/reagents/holder)
+/datum/chemical_reaction/food/imitationcarpmeat/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/food/carpmeat/imitation(location)
 	if(holder?.my_atom)
@@ -153,7 +153,7 @@
 	mix_message = "The rice absorbs the water."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/ricebowl/on_reaction(datum/reagents/holder)
+/datum/chemical_reaction/food/ricebowl/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/food/salad/ricebowl(location)
 	if(holder?.my_atom)
