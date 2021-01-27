@@ -67,7 +67,6 @@
 	if(slot == ITEM_SLOT_GLOVES)
 		var/mob/living/student = user
 		style.teach(student, 1)
-	return
 
 /obj/item/clothing/gloves/boxing/dropped(mob/user)
 	..()
@@ -75,4 +74,3 @@
 		return
 	var/mob/living/owner = user
 	style.remove(owner)
-	return

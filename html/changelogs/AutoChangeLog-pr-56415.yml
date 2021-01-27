@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "Reactive armors that didn't have a cooldown now have one"

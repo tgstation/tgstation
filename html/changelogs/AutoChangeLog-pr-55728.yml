@@ -1,0 +1,5 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new material called Hauntium which you can get from photos with ghosts on them taken by the Camera Obscura, If you make items from this material, the resulting items will be haunted, attempting to pick them up may even make them hostile!"
+  - code_imp: "Cleans up AI controller code a bit based on things I missed in the first PR."

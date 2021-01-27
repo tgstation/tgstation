@@ -10,7 +10,9 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/ai_traits
 	///Current actions being performed by the AI.
 	var/list/current_behaviors = list()
-	///Current status of AI (OFF/ON	)
+	///Current actions and their respective last time ran as an assoc list.
+	var/list/behavior_cooldowns = list()
+	///Current status of AI (OFF/ON)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
 	var/atom/current_movement_target
@@ -91,6 +93,10 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	var/want_to_move = FALSE
 	for(var/i in current_behaviors)
 		var/datum/ai_behavior/current_behavior = i
+
+		if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
+			continue
+
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT && current_movement_target && current_behavior.required_distance < get_dist(pawn, current_movement_target)) //Move closer
 			want_to_move = TRUE
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //Move and perform the action
