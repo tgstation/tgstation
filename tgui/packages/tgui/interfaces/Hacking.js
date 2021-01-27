@@ -23,8 +23,9 @@ export const Hacking = (props, context) => {
               key={i}
               title={'HACKING IN PROGRESS [ ' + i + ' ]'}
               level={2}>
-              [ TIME LEFT :
-              <TimeDisplay auto="down" value={timeleft} /> ]
+              {'[TIME LEFT: '}
+              <TimeDisplay auto="down" value={timeleft} />
+              {']'}
               <Minigame
                 key={i}
                 array={array}
@@ -48,13 +49,11 @@ const Minigame = (props, context) => {
       <Box key={i}>
         {toArray(arr).map((element, j) => (
           <Box
-            style={{
-              'width': '50px',
-              'height': '50px',
-            }}
             key={i + '_' + j}
             as="img"
             className="pathway"
+            width="50px"
+            height="50px"
             src={resolveAsset(element + '.png')}
             onClick={() => act('click', {
               xcord: i,
