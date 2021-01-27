@@ -129,7 +129,7 @@
 
 /obj/structure/aquarium/proc/feed_feedback(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
-	if(istype(thing,/obj/item/fish_feed))
+	if(istype(thing, /obj/item/fish_feed))
 		to_chat(user,"<span class='notice'>You feed the fish.</span>")
 	return NONE
 
