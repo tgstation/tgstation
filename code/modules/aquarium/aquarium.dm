@@ -206,7 +206,7 @@
 		if("fluid")
 			if(params["fluid"] in fluid_types)
 				fluid_type = params["fluid"]
-				SEND_SIGNAL(src,COMSIG_AQUARIUM_FLUID_CHANGED,fluid_type)
+				SEND_SIGNAL(src, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
 				. = TRUE
 		if("remove")
 			var/atom/movable/inside = locate(params["ref"]) in contents
