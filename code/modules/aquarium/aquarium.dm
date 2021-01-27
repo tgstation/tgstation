@@ -166,7 +166,7 @@
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/user)
 	to_chat(user,"<span class='notice'>You take a moment to watch [src].</span>")
-	if(do_after(user,5 SECONDS,target = src))
+	if(do_after(user, 5 SECONDS, target = src))
 		//Check if there are live fish - good mood
 		//All fish dead - bad mood.
 		//No fish - nothing.
