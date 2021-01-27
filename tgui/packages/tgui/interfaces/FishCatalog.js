@@ -13,8 +13,7 @@ export const FishCatalog = (props, context) => {
     sponsored_by,
   } = data;
   const fish_by_name = flow([
-    sortBy(
-      fish => fish.name),
+    sortBy(fish => fish.name),
   ])(data.fish_info || []);
   const [
     currentFish,
@@ -23,13 +22,17 @@ export const FishCatalog = (props, context) => {
   return (
     <Window
       width={500}
-      height={300} resizable>
+      height={300}
+      resizable>
       <Window.Content>
         <Stack fill>
           <Stack.Item width="120px">
             <Section fill scrollable>
               {fish_by_name.map(f => (
-                <Button key={f.name} fluid color="transparent"
+                <Button
+                  key={f.name}
+                  fluid
+                  color="transparent"
                   selected={f === currentFish}
                   onClick={() => { setCurrentFish(f); }}>
                   {f.name}
@@ -38,7 +41,12 @@ export const FishCatalog = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow basis={0}>
-            <Section fill scrollable title={currentFish ? capitalize(currentFish.name) : sponsored_by +" Fish Index"}>
+            <Section
+              fill
+              scrollable
+              title={currentFish
+                ? capitalize(currentFish.name)
+                : sponsored_by + " Fish Index"}>
               {currentFish && (
                 <LabeledList>
                   <LabeledList.Item label="Description">
