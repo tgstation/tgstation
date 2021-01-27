@@ -42,8 +42,7 @@
 	var/obj/effect/reality_smash/RS = target
 	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
 	if(do_after(user, 10 SECONDS, RS))
-		GLOB.reality_smash_track.smashes -= target
-		qdel(target)
+		qdel(RS)
 		charge += 1
 
 ///Draws a rune on a selected turf

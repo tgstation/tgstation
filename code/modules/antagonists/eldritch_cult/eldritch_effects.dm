@@ -274,6 +274,7 @@
 	generate_name()
 
 /obj/effect/reality_smash/Destroy()
+	GLOB.reality_smash_track.smashes -= target
 	on_destroy()
 	return ..()
 
@@ -293,8 +294,6 @@
 	minds |= cultie
 	if(cultie.current.client)
 		cultie.current.client.images |= img
-
-
 
 ///Makes the mind not able to see this effect
 /obj/effect/reality_smash/proc/RemoveMind(datum/mind/cultie)
