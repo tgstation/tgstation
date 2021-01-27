@@ -48,3 +48,12 @@
 		var/obj/machinery/power/apc/current_apc = a
 		if(prob(30))
 			current_apc.overload_lighting()
+
+/datum/station_trait/empty_maint
+	name = "Cleaned out maintenance"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Our workers cleaned out most of the junk in the maintenace areas."
+	blacklist = list(/datum/station_trait/filled_maint)
+	trait_to_give = STATION_TRAIT_EMPTY_MAINT

@@ -71,3 +71,12 @@
 
 /datum/station_trait/strong_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 0.8
+
+/datum/station_trait/filled_maint
+	name = "Filled up maintenance"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Our workers accidentaly forgot more of their personal belongings in the maintenace areas."
+	blacklist = list(/datum/station_trait/empty_maint)
+	trait_to_give = STATION_TRAIT_FILLED_MAINT
