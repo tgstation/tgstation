@@ -93,7 +93,7 @@
 			effect.start()
 
 // Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, no_dense_atoms = FALSE)
 	if(!zlevels)
 		if (zlevel)
 			zlevels = list(zlevel)
@@ -148,6 +148,16 @@
 				var/turf/open/lava/L = F
 				if(!L.is_safe())
 					continue
+
+		// Check that we're not warping onto a table or window
+		if(no_dense_atoms)
+			var/density_found = FALSE
+			for(var/atom/movable/AM in F)
+				if(AM.density)
+					density_found = TRUE
+					break
+			if(density_found)
+				continue
 
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F
