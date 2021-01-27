@@ -141,7 +141,7 @@
 	var/prev_x = origin_x
 	var/prev_y = origin_y
 	animate(vc_obj, pixel_x = origin_x, time = 0, loop = -1) //Just to start the animation
-	var/move_number = rand(3,5) //maybe unhardcode this
+	var/move_number = rand(3, 5) //maybe unhardcode this
 	for(var/i in 1 to move_number)
 		//If it's last movement, move back to start otherwise move to some random point
 		var/target_x = i == move_number ? origin_x : rand(px_min,px_max) //could do with enforcing minimal delta for prettier zigzags
