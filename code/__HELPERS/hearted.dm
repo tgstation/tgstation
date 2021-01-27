@@ -1,9 +1,9 @@
 /// Called when the shuttle starts launching back to centcom, polls a few random players who joined the round for commendations
 /datum/controller/subsystem/ticker/proc/poll_hearts()
-	if(!CONFIG_GET(number/commendation_pct))
+	if(!CONFIG_GET(number/commendation_percent_poll))
 		return
 
-	var/number_to_ask = round(LAZYLEN(GLOB.joined_player_list) * CONFIG_GET(number/commendation_pct)) + rand(0,1)
+	var/number_to_ask = round(LAZYLEN(GLOB.joined_player_list) * CONFIG_GET(number/commendation_percent_poll)) + rand(0,1)
 	message_admins("Polling [number_to_ask] players for commendations.")
 
 	for(var/i in GLOB.joined_player_list)

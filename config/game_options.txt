@@ -21,7 +21,7 @@ EMOJIS
 
 ## HEART COMMENDATIONS ###
 ## Uncomment this if you'd like to enable commendation pollings for this percentage of players near the end of the round (5% suggested)
-## COMMENDATION_PCT 0.05
+COMMENDATION_PERCENT_POLL 0.05
 
 ## MOB MOVEMENT ###
 
