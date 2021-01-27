@@ -27,7 +27,7 @@
 
 /obj/item/storage/fish_case/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_INNATE)
+	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
 
 /// Fish case with single random fish inside.
 /obj/item/storage/fish_case/random/PopulateContents()
