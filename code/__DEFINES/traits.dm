@@ -317,6 +317,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_T_RAY_VISIBLE		"t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_FOOD_GRILLED 		"food_grilled"
+#define TRAIT_NEEDS_TWO_HANDS	"needstwohands" //The items needs two hands to be carried
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
