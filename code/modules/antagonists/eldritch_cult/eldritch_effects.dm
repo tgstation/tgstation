@@ -135,7 +135,8 @@
 	targets += caller
 	var/number = max(targets.len * (4-(targets.len-1)) - smashes.len,1)
 
-	for(var/obj/effect/reality_smash/smash in smashes)
+	for(var/iter_smash in smashes)
+	    var/obj/effect/reality_smash/smash = iter_smash
 		smash.alt_appearance.add_to_hud(caller)
 
 	for(var/i in 0 to number)
@@ -243,4 +244,3 @@
 	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil","Thought","Imperfection","Blemish","Blush")
 
 	name = "\improper" + pick(prefix) + " " + pick(postfix)
-
