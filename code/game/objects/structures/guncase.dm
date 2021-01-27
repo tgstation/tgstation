@@ -66,11 +66,11 @@
 		update_icon()
 
 /**
-  * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
-  *
-  * Arguments:
-  * * user The mob to which we are showing the radial menu
-  */
+ * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
+ *
+ * Arguments:
+ * * user The mob to which we are showing the radial menu
+ */
 /obj/structure/guncase/proc/show_menu(mob/user)
 	if(!LAZYLEN(contents))
 		return
@@ -98,11 +98,11 @@
 	update_icon()
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/structure/guncase/proc/check_menu(mob/living/carbon/human/user)
 	if(!open)
 		return FALSE

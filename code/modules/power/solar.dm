@@ -222,8 +222,8 @@
 		randomise_offset(random_offset)
 
 /obj/item/solar_assembly/proc/randomise_offset(amount)
-	pixel_x = rand(-amount,amount)
-	pixel_y = rand(-amount,amount)
+	pixel_x = base_pixel_x + rand(-amount, amount)
+	pixel_y = base_pixel_y + rand(-amount, amount)
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)

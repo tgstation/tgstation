@@ -36,7 +36,7 @@
 	return ..()
 
 /datum/proximity_monitor/proc/HandleMove()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/atom/_host = host
 	var/atom/new_host_loc = _host.loc

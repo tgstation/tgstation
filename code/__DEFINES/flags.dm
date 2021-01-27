@@ -16,9 +16,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_ISPROCESSING (1<<2)
 
 //FLAGS BITMASK
+// scroll down before changing the numbers on these
 
 /// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define HEAR_1						(1<<3)
+/// Is this object currently processing in the atmos object list?
+#define ATMOS_IS_PROCESSING_1 		(1<<4)
 /// conducts electricity (metal etc.)
 #define CONDUCT_1					(1<<5)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
@@ -48,6 +51,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNPAINTABLE_1 (1 << 20)
 /// Is the thing currently spinning?
 #define IS_SPINNING_1 (1 << 21)
+#define IS_ONTOP_1 (1 << 22)
+#define SUPERMATTER_IGNORES_1 (1 << 23)
+
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)
@@ -65,6 +71,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_LAVA_GEN_1				(1<<6)
 /// Blocks ruins spawning on the turf
 #define NO_RUINS_1					(1<<10)
+/// Should this tile be cleaned up and reinserted into an excited group?
+#define EXCITED_CLEANUP_1 (1 << 13)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
@@ -72,7 +80,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// If blobs can spawn there and if it counts towards their score.
 #define BLOBS_ALLOWED				(1<<1)
 /// If mining tunnel generation is allowed in this area
-#define TUNNELS_ALLOWED				(1<<2)
+#define CAVES_ALLOWED				(1<<2)
 /// If flora are allowed to spawn in this area randomly through tunnel generation
 #define FLORA_ALLOWED				(1<<3)
 /// If mobs can be spawned by natural random generation
@@ -105,17 +113,19 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSBLOB		(1<<3)
 #define PASSMOB			(1<<4)
 #define PASSCLOSEDTURF	(1<<5)
+/// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
 #define LETPASSTHROW	(1<<6)
 #define	PASSMACHINE		(1<<7)
 #define PASSSTRUCTURE	(1<<8)
+#define PASSFLAPS		(1<<9)
 
 //Movement Types
 #define GROUND			(1<<0)
 #define FLYING			(1<<1)
 #define VENTCRAWLING	(1<<2)
 #define FLOATING		(1<<3)
-/// When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
-#define UNSTOPPABLE		(1<<4)
+/// When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.
+#define PHASING			(1<<4)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)
@@ -164,8 +174,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MOBILITY_STORAGE		(1<<5)
 /// can pull things
 #define MOBILITY_PULL			(1<<6)
+/// can rest
+#define MOBILITY_REST           (1<<7)
 
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
+#define MOBILITY_FLAGS_CARBON_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_REST)
+#define MOBILITY_FLAGS_REST_CAPABLE_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_REST)
 
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
@@ -184,7 +198,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 	if(HAS_TRAIT_FROM_ONLY(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL))\
 		REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL);\
 	else if(!HAS_TRAIT(x, TRAIT_KEEP_TOGETHER))\
-	 	x.appearance_flags &= ~KEEP_TOGETHER
+		x.appearance_flags &= ~KEEP_TOGETHER
 
 //religious_tool flags
 #define RELIGION_TOOL_INVOKE (1<<0)
@@ -214,3 +228,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EWDIRFLIP(d)     (d^(EAST|WEST))
 ///Turns the dir by 180 degrees
 #define DIRFLIP(d)       turn(d, 180)
+
+/// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
+#define MAX_BITFLAG_DIGITS 8

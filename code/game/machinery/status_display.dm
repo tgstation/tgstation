@@ -12,9 +12,6 @@
 #define SD_MESSAGE 2  // 2 = Arbitrary message(s)
 #define SD_PICTURE 3  // 3 = alert picture
 
-#define SD_AI_EMOTE 1  // 1 = AI emoticon
-#define SD_AI_BSOD 2  // 2 = Blue screen of death
-
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
 	name = "status display"
@@ -303,8 +300,27 @@
 	name = "\improper AI display"
 	desc = "A small screen which the AI can use to present itself."
 
-	var/mode = SD_BLANK
-	var/emotion = "Neutral"
+	var/emotion = AI_EMOTION_BLANK
+
+	/// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile.
+	var/static/list/emotion_map = list(
+		AI_EMOTION_BLANK = "ai_off",
+		AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
+		AI_EMOTION_HAPPY = "ai_happy",
+		AI_EMOTION_NEUTRAL = "ai_neutral",
+		AI_EMOTION_UNSURE = "ai_unsure",
+		AI_EMOTION_CONFUSED = "ai_confused",
+		AI_EMOTION_SAD = "ai_sad",
+		AI_EMOTION_BSOD = "ai_bsod",
+		AI_EMOTION_PROBLEMS = "ai_trollface",
+		AI_EMOTION_AWESOME = "ai_awesome",
+		AI_EMOTION_DORFY = "ai_urist",
+		AI_EMOTION_THINKING = "ai_thinking",
+		AI_EMOTION_FACEPALM = "ai_facepalm",
+		AI_EMOTION_FRIEND_COMPUTER = "ai_friend",
+		AI_EMOTION_BLUE_GLOW = "ai_sal",
+		AI_EMOTION_RED_GLOW = "ai_hal",
+	)
 
 /obj/machinery/status_display/ai/Initialize()
 	. = ..()
@@ -315,54 +331,27 @@
 	. = ..()
 
 /obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
-	if(isAI(user))
-		user.ai_statuschange()
+	if(!isAI(user))
+		return
+	var/list/choices = list()
+	for(var/emotion_const in emotion_map)
+		var/icon_state = emotion_map[emotion_const]
+		choices[emotion_const] = image(icon = 'icons/obj/status_display.dmi', icon_state = icon_state)
+
+	var/emotion_result = show_radial_menu(user, src, choices, tooltips = TRUE)
+	for(var/_emote in typesof(/datum/emote/ai/emotion_display))
+		var/datum/emote/ai/emotion_display/emote = _emote
+		if(initial(emote.emotion) == emotion_result)
+			user.emote(initial(emote.key))
+			break
 
 /obj/machinery/status_display/ai/process()
-	if(mode == SD_BLANK || (machine_stat & NOPOWER))
+	if(machine_stat & NOPOWER)
 		remove_display()
 		return PROCESS_KILL
 
-	if(mode == SD_AI_EMOTE)
-		switch(emotion)
-			if("Very Happy")
-				set_picture("ai_veryhappy")
-			if("Happy")
-				set_picture("ai_happy")
-			if("Neutral")
-				set_picture("ai_neutral")
-			if("Unsure")
-				set_picture("ai_unsure")
-			if("Confused")
-				set_picture("ai_confused")
-			if("Sad")
-				set_picture("ai_sad")
-			if("BSOD")
-				set_picture("ai_bsod")
-			if("Blank")
-				set_picture("ai_off")
-			if("Problems?")
-				set_picture("ai_trollface")
-			if("Awesome")
-				set_picture("ai_awesome")
-			if("Dorfy")
-				set_picture("ai_urist")
-			if("Thinking")
-				set_picture("ai_thinking")
-			if("Facepalm")
-				set_picture("ai_facepalm")
-			if("Friend Computer")
-				set_picture("ai_friend")
-			if("Blue Glow")
-				set_picture("ai_sal")
-			if("Red Glow")
-				set_picture("ai_hal")
-		return PROCESS_KILL
-
-	if(mode == SD_AI_BSOD)
-		set_picture("ai_bsod")
-		return PROCESS_KILL
-
+	set_picture(emotion_map[emotion])
+	return PROCESS_KILL
 
 #undef CHARS_PER_LINE
 #undef FONT_SIZE

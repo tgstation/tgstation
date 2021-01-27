@@ -27,24 +27,10 @@
 	return
 
 /obj/effect/ex_act(severity, target)
-	if(target == src)
-		qdel(src)
-	else
-		switch(severity)
-			if(1)
-				qdel(src)
-			if(2)
-				if(prob(60))
-					qdel(src)
-			if(3)
-				if(prob(25))
-					qdel(src)
+	return
 
 /obj/effect/singularity_act()
 	qdel(src)
-
-/obj/effect/abstract/ex_act(severity, target)
-	return
 
 /obj/effect/abstract/singularity_pull()
 	return

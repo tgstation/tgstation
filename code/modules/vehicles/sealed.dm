@@ -1,4 +1,5 @@
 /obj/vehicle/sealed
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 
@@ -24,6 +25,13 @@
 	if(ismob(AM))
 		remove_occupant(AM)
 
+// so that we can check the access of the vehicle's occupants. Ridden vehicles do this in the riding component, but these don't have that
+/obj/vehicle/sealed/Bump(atom/A)
+	. = ..()
+	if(istype(A, /obj/machinery/door))
+		var/obj/machinery/door/conditionalwall = A
+		for(var/m in occupants)
+			conditionalwall.bumpopen(m)
 
 /obj/vehicle/sealed/after_add_occupant(mob/M)
 	. = ..()
@@ -105,11 +113,6 @@
 		inserted_key.equip_to_best_slot(user, check_hand = FALSE)
 	inserted_key = null
 
-
-/obj/vehicle/sealed/obj_destruction(damage_flag)
-	explosion(loc, 0, 1, 2, 3, 0)
-	return ..()
-
 /obj/vehicle/sealed/Destroy()
 	dump_mobs()
 	return ..()
@@ -123,12 +126,22 @@
 
 /obj/vehicle/sealed/proc/dump_specific_mobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
-		if((occupants[i] & flag))
-			mob_exit(i, null, randomstep)
-			if(iscarbon(i))
-				var/mob/living/carbon/C = i
-				C.Paralyze(40)
+		if(!(occupants[i] & flag))
+			continue
+		mob_exit(i, null, randomstep)
+		if(iscarbon(i))
+			var/mob/living/carbon/C = i
+			C.Paralyze(40)
 
 
 /obj/vehicle/sealed/AllowDrop()
+	return FALSE
+
+/obj/vehicle/sealed/relaymove(mob/living/user, direction)
+	if(canmove)
+		vehicle_move(direction)
+	return TRUE
+
+/// Sinced sealed vehicles (cars and mechs) don't have riding components, the actual movement is handled here from [/obj/vehicle/sealed/proc/relaymove]
+/obj/vehicle/sealed/proc/vehicle_move(direction)
 	return FALSE

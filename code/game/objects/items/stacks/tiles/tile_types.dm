@@ -20,7 +20,7 @@
 	var/list/tile_reskin_types
 
 
-/obj/item/stack/tile/Initialize(mapload, amount)
+/obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
@@ -70,8 +70,8 @@
 			if (mineralType == "metal")
 				var/obj/item/stack/sheet/metal/new_item = new(user.loc)
 				user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with the welding tool.</span>", \
-							 "<span class='notice'>You shaped [src] into metal with the welding tool.</span>", \
-							 "<span class='hear'>You hear welding.</span>")
+					"<span class='notice'>You shaped [src] into metal with the welding tool.</span>", \
+					"<span class='hear'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
 				var/replace = (user.get_inactive_held_item()==R)
@@ -83,8 +83,8 @@
 				var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 				var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
 				user.visible_message("<span class='notice'>[user.name] shaped [src] into a sheet with the welding tool.</span>", \
-							 "<span class='notice'>You shaped [src] into a sheet with the welding tool.</span>", \
-							 "<span class='hear'>You hear welding.</span>")
+					"<span class='notice'>You shaped [src] into a sheet with the welding tool.</span>", \
+					"<span class='hear'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
 				var/replace = (user.get_inactive_held_item()==R)
@@ -93,6 +93,11 @@
 					user.put_in_hands(new_item)
 	else
 		return ..()
+
+/obj/item/stack/tile/proc/place_tile(turf/open/T)
+	if(!turf_type || !use(1))
+		return
+	. = T.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
 
 //Grass
 /obj/item/stack/tile/grass
@@ -103,6 +108,7 @@
 	inhand_icon_state = "tile-grass"
 	turf_type = /turf/open/floor/grass
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/grass
 
 //Fairygrass
 /obj/item/stack/tile/fairygrass
@@ -113,6 +119,7 @@
 	inhand_icon_state = "tile-fairygrass"
 	turf_type = /turf/open/floor/grass/fairy
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fairygrass
 
 //Wood
 /obj/item/stack/tile/wood
@@ -123,6 +130,7 @@
 	inhand_icon_state = "tile-wood"
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/wood
 
 //Basalt
 /obj/item/stack/tile/basalt
@@ -132,6 +140,7 @@
 	icon_state = "tile_basalt"
 	inhand_icon_state = "tile-basalt"
 	turf_type = /turf/open/floor/grass/fakebasalt
+	merge_type = /obj/item/stack/tile/basalt
 
 //Carpets
 /obj/item/stack/tile/carpet
@@ -143,6 +152,7 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 	tableVariant = /obj/structure/table/wood/fancy
+	merge_type = /obj/item/stack/tile/carpet
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
@@ -150,6 +160,7 @@
 	inhand_icon_state = "tile-carpet-black"
 	turf_type = /turf/open/floor/carpet/black
 	tableVariant = /obj/structure/table/wood/fancy/black
+	merge_type = /obj/item/stack/tile/carpet/black
 
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
@@ -157,6 +168,7 @@
 	inhand_icon_state = "tile-carpet-blue"
 	turf_type = /turf/open/floor/carpet/blue
 	tableVariant = /obj/structure/table/wood/fancy/blue
+	merge_type = /obj/item/stack/tile/carpet/blue
 
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
@@ -164,6 +176,7 @@
 	inhand_icon_state = "tile-carpet-cyan"
 	turf_type = /turf/open/floor/carpet/cyan
 	tableVariant = /obj/structure/table/wood/fancy/cyan
+	merge_type = /obj/item/stack/tile/carpet/cyan
 
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
@@ -171,6 +184,7 @@
 	inhand_icon_state = "tile-carpet-green"
 	turf_type = /turf/open/floor/carpet/green
 	tableVariant = /obj/structure/table/wood/fancy/green
+	merge_type = /obj/item/stack/tile/carpet/green
 
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
@@ -178,6 +192,7 @@
 	inhand_icon_state = "tile-carpet-orange"
 	turf_type = /turf/open/floor/carpet/orange
 	tableVariant = /obj/structure/table/wood/fancy/orange
+	merge_type = /obj/item/stack/tile/carpet/orange
 
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
@@ -185,6 +200,7 @@
 	inhand_icon_state = "tile-carpet-purple"
 	turf_type = /turf/open/floor/carpet/purple
 	tableVariant = /obj/structure/table/wood/fancy/purple
+	merge_type = /obj/item/stack/tile/carpet/purple
 
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
@@ -192,6 +208,7 @@
 	inhand_icon_state = "tile-carpet-red"
 	turf_type = /turf/open/floor/carpet/red
 	tableVariant = /obj/structure/table/wood/fancy/red
+	merge_type = /obj/item/stack/tile/carpet/red
 
 /obj/item/stack/tile/carpet/royalblack
 	name = "royal black carpet"
@@ -199,6 +216,7 @@
 	inhand_icon_state = "tile-carpet-royalblack"
 	turf_type = /turf/open/floor/carpet/royalblack
 	tableVariant = /obj/structure/table/wood/fancy/royalblack
+	merge_type = /obj/item/stack/tile/carpet/royalblack
 
 /obj/item/stack/tile/carpet/royalblue
 	name = "royal blue carpet"
@@ -206,7 +224,131 @@
 	inhand_icon_state = "tile-carpet-royalblue"
 	turf_type = /turf/open/floor/carpet/royalblue
 	tableVariant = /obj/structure/table/wood/fancy/royalblue
+	merge_type = /obj/item/stack/tile/carpet/royalblue
 
+/obj/item/stack/tile/carpet/executive
+	name = "executive carpet"
+	icon_state = "tile_carpet_executive"
+	inhand_icon_state = "tile-carpet-royalblue"
+	turf_type = /turf/open/floor/carpet/executive
+	merge_type = /obj/item/stack/tile/carpet/executive
+
+/obj/item/stack/tile/carpet/stellar
+	name = "stellar carpet"
+	icon_state = "tile_carpet_stellar"
+	inhand_icon_state = "tile-carpet-royalblue"
+	turf_type = /turf/open/floor/carpet/stellar
+	merge_type = /obj/item/stack/tile/carpet/stellar
+
+/obj/item/stack/tile/carpet/donk
+	name = "donk co promotional carpet"
+	icon_state = "tile_carpet_donk"
+	inhand_icon_state = "tile-carpet-orange"
+	turf_type = /turf/open/floor/carpet/donk
+	merge_type = /obj/item/stack/tile/carpet/donk
+
+/obj/item/stack/tile/carpet/emissive
+	name = "emissive carpet"
+	icon_state = "tile_carpet_black"
+	inhand_icon_state = "tile-carpet-black"
+	turf_type = /turf/open/floor/carpet/emissive
+	merge_type = /obj/item/stack/tile/carpet/emissive
+	/// The icon state used for the emissive decal.
+	var/emissive_icon_state
+
+/obj/item/stack/tile/carpet/emissive/Initialize(mapload, new_amount, merge)
+	. = ..()
+	if(!emissive_icon_state)
+		emissive_icon_state = icon_state
+	var/turf/open/floor/carpet/emissive/turf_path = turf_type
+	AddElement(/datum/element/decal, icon, emissive_icon_state, dir, FALSE, initial(turf_path.emissive_color), EMISSIVE_ITEM_LAYER, EMISSIVE_ITEM_PLANE, null, initial(turf_path.emissive_alpha))
+
+/obj/item/stack/tile/carpet/emissive/neon
+	name = "emissive carpet"
+	icon_state = "tile_carpet_neon_simple"
+	turf_type = /turf/open/floor/carpet/emissive/neon
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon
+	/// The icon state used for the neon decal
+	var/neon_icon_state
+
+/obj/item/stack/tile/carpet/emissive/neon/Initialize(mapload, amount)
+	. = ..()
+	if(!neon_icon_state)
+		neon_icon_state = emissive_icon_state
+	var/turf/open/floor/carpet/emissive/neon/turf_path = turf_type
+	AddElement(/datum/element/decal, icon, neon_icon_state, dir, FALSE, initial(turf_path.neon_color), FLOAT_LAYER, FLOAT_PLANE)
+
+/obj/item/stack/tile/carpet/emissive/neon/simple
+	name = "simple neon carpet"
+	icon_state = "tile_carpet_neon_simple"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple
+	emissive_icon_state = "tile_carpet_neon_simple_glow"
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/white
+	name = "simple white neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/white
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/white
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/red
+	name = "simple red neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/red
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/red
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/orange
+	name = "emissive orange neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/orange
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/orange
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/yellow
+	name = "emissive yellow neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/yellow
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/yellow
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime
+	name = "emissive lime neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/lime
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/lime
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/green
+	name = "emissive green neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/green
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/green
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/cyan
+	name = "emissive cyan neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/cyan
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/cyan
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/teal
+	name = "emissive teal neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/teal
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/teal
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/blue
+	name = "emissive blue neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/blue
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/blue
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/purple
+	name = "emissive purple neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/purple
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/purple
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/violet
+	name = "emissive violet neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/violet
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/violet
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/pink
+	name = "emissive pink neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/pink
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/pink
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/black
+	name = "emissive black neon carpet"
+	turf_type = /turf/open/floor/carpet/emissive/neon/simple/black
+	merge_type = /obj/item/stack/tile/carpet/emissive/neon/simple/black
 
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
@@ -238,6 +380,206 @@
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/executive/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/stellar/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/donk/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/white/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/white/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/white/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/white/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/red/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/red/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/red/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/red/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/orange/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/orange/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/orange/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/orange/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/green/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/green/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/green/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/green/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/teal/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/teal/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/teal/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/teal/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/blue/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/blue/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/blue/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/blue/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/purple/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/purple/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/purple/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/purple/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/violet/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/violet/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/violet/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/violet/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/pink/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/pink/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/pink/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/pink/sixty
+	amount = 60
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/black/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/black/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/black/thirty
+	amount = 30
+
+/obj/item/stack/tile/carpet/emissive/neon/simple/black/sixty
+	amount = 60
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
@@ -286,6 +628,7 @@
 	icon_state = "tile_bcircuit"
 	inhand_icon_state = "tile-bcircuit"
 	turf_type = /turf/open/floor/circuit
+	merge_type = /obj/item/stack/tile/circuit
 
 /obj/item/stack/tile/circuit/green
 	name = "green circuit tile"
@@ -294,9 +637,11 @@
 	icon_state = "tile_gcircuit"
 	inhand_icon_state = "tile-gcircuit"
 	turf_type = /turf/open/floor/circuit/green
+	merge_type = /obj/item/stack/tile/circuit/green
 
 /obj/item/stack/tile/circuit/green/anim
 	turf_type = /turf/open/floor/circuit/green/anim
+	merge_type = /obj/item/stack/tile/circuit/green/anim
 
 /obj/item/stack/tile/circuit/red
 	name = "red circuit tile"
@@ -305,9 +650,11 @@
 	icon_state = "tile_rcircuit"
 	inhand_icon_state = "tile-rcircuit"
 	turf_type = /turf/open/floor/circuit/red
+	merge_type = /obj/item/stack/tile/circuit/red
 
 /obj/item/stack/tile/circuit/red/anim
 	turf_type = /turf/open/floor/circuit/red/anim
+	merge_type = /obj/item/stack/tile/circuit/red/anim
 
 //Pod floor
 /obj/item/stack/tile/pod
@@ -317,6 +664,7 @@
 	icon_state = "tile_pod"
 	inhand_icon_state = "tile-pod"
 	turf_type = /turf/open/floor/pod
+	merge_type = /obj/item/stack/tile/pod
 
 /obj/item/stack/tile/pod/light
 	name = "light pod floor tile"
@@ -324,6 +672,7 @@
 	desc = "A lightly colored grooved floor tile."
 	icon_state = "tile_podlight"
 	turf_type = /turf/open/floor/pod/light
+	merge_type = /obj/item/stack/tile/pod/light
 
 /obj/item/stack/tile/pod/dark
 	name = "dark pod floor tile"
@@ -331,6 +680,7 @@
 	desc = "A darkly colored grooved floor tile."
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
+	merge_type = /obj/item/stack/tile/pod/dark
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
@@ -340,7 +690,7 @@
 	icon_state = "tile"
 	inhand_icon_state = "tile"
 	force = 6
-	custom_materials = list(/datum/material/iron=500)
+	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	turf_type = /turf/open/floor/plasteel
@@ -348,19 +698,18 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	matter_amount = 1
-
-/obj/item/stack/tile/plasteel/cyborg
-	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
-	is_cyborg = 1
 	cost = 125
+	source = /datum/robot_energy_storage/metal
+	merge_type = /obj/item/stack/tile/plasteel
 
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
-	custom_materials = list(/datum/material/plastic=500)
+	mats_per_unit = list(/datum/material/plastic=500)
 	turf_type = /turf/open/floor/plastic
+	merge_type = /obj/item/stack/tile/plastic
 
 /obj/item/stack/tile/material
 	name = "floor tile"
@@ -370,6 +719,12 @@
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	merge_type = /obj/item/stack/tile/material
+
+/obj/item/stack/tile/material/place_tile(turf/open/T)
+	. = ..()
+	var/turf/open/floor/material/F = .
+	F?.set_custom_materials(mats_per_unit)
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"
@@ -377,6 +732,7 @@
 	desc = "A stack of floor tiles that remind you of an age of funk."
 	icon_state = "tile_eighties"
 	turf_type = /turf/open/floor/eighties
+	merge_type = /obj/item/stack/tile/eighties
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15

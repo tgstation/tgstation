@@ -19,7 +19,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
-	custom_price = 120
+	custom_price = PAYCHECK_EASY * 2
 	var/flash_enabled = TRUE
 	var/state_on = "camera"
 	var/state_off = "camera_off"
@@ -139,12 +139,7 @@
 		return
 
 	on = FALSE
-
-	var/realcooldown = cooldown
-	var/mob/living/carbon/human/H = user
-	if (HAS_TRAIT(H, TRAIT_PHOTOGRAPHER))
-		realcooldown *= 0.5
-	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
+	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
 
 	icon_state = state_off
 
@@ -188,7 +183,7 @@
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 	for(var/turf/placeholder in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
 		var/turf/T = placeholder
-		while(istype(T, /turf/open/transparent/openspace)) //Multi-z photography
+		while(istype(T, /turf/open/openspace)) //Multi-z photography
 			T = SSmapping.get_turf_below(T)
 			if(!T)
 				break

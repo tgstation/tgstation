@@ -74,22 +74,22 @@
 		H.physiology.armor.energy -= 20
 
 /datum/nanite_program/coagulating
-	name = "Rapid Coagulation"
-	desc = "The nanites induce rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
-	use_rate = 0.10
+	name = "Vein Repressurization"
+	desc = "The nanites re-route circulating blood away from open wounds, dramatically reducing bleeding rate."
+	use_rate = 0.20
 	rogue_types = list(/datum/nanite_program/suffocating)
 
 /datum/nanite_program/coagulating/enable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.bleed_mod *= 0.1
+		H.physiology.bleed_mod *= 0.5
 
 /datum/nanite_program/coagulating/disable_passive_effect()
 	. = ..()
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
-		H.physiology.bleed_mod *= 10
+		H.physiology.bleed_mod *= 2
 
 /datum/nanite_program/conductive
 	name = "Electric Conduction"

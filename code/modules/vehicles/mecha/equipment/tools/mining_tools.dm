@@ -40,11 +40,13 @@
 		if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
 			return
 
-	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-					 "<span class='hear'>You hear drilling.</span>")
+	// You can't drill harder by clicking more.
+	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 
-	if(do_after_cooldown(target, source))
+		target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
+					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
+					"<span class='hear'>You hear drilling.</span>")
+
 		log_message("Started drilling [target]", LOG_MECHA)
 		// Drilling a turf is a one-and-done procedure.
 		if(isturf(target))
@@ -124,7 +126,7 @@
 	target.visible_message("<span class='danger'>[chassis] is drilling [target] with [src]!</span>", \
 						"<span class='userdanger'>[chassis] is drilling you with [src]!</span>")
 	log_combat(user, target, "drilled", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-	if(target.stat == DEAD && target.getBruteLoss() >= 200)
+	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
@@ -183,7 +185,7 @@
 		qdel(src)
 	if(istype(loc, /obj/vehicle/sealed/mecha/working) && scanning_time <= world.time)
 		var/obj/vehicle/sealed/mecha/working/mecha = loc
-		if(!mecha.occupants)
+		if(!LAZYLEN(mecha.occupants))
 			return
 		scanning_time = world.time + equip_cooldown
 		mineral_scan_pulse(get_turf(src))

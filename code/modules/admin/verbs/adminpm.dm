@@ -274,7 +274,6 @@
 				if(!already_logged) //Reply to an existing ticket
 					SSblackbox.LogAhelp(recipient.current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 
-
 				//always play non-admin recipients the adminhelp sound
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
@@ -283,11 +282,17 @@
 					INVOKE_ASYNC(src, .proc/popup_admin_pm, recipient, msg)
 
 			else		//neither are admins
-				to_chat(src,
-					type = MESSAGE_TYPE_ADMINPM,
-					html = "<span class='danger'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>",
-					confidential = TRUE)
-				return
+				if(!current_ticket)
+					to_chat(src,
+						type = MESSAGE_TYPE_ADMINPM,
+						html = "<span class='danger'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>",
+						confidential = TRUE)
+					to_chat(src,
+						type = MESSAGE_TYPE_ADMINPM,
+						html = "<span class='danger'><b>Message not sent:</b></span><br>[msg]",
+						confidential = TRUE)
+					return
+				current_ticket.MessageNoRecipient(msg)
 
 	if(external)
 		log_admin_private("PM: [key_name(src)]->External: [rawmsg]")

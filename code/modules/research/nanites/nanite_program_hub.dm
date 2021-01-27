@@ -26,6 +26,13 @@
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 
+/obj/machinery/nanite_program_hub/update_overlays()
+	. = ..()
+	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+		return
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_program_hub_on", layer, plane)
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_program_hub_on", EMISSIVE_STRUCTURE_LAYER, EMISSIVE_STRUCTURE_PLANE)
+
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I

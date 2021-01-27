@@ -54,7 +54,7 @@
 	mood_change = -8
 
 /datum/mood_event/disgust/bad_smell
-	description = "<span class='warning'>You smell something horribly decayed inside this room.</span>\n"
+	description = "<span class='warning'>I can smell something horribly decayed inside this room.</span>\n"
 	mood_change = -6
 
 /datum/mood_event/disgust/nauseating_stench

@@ -39,7 +39,10 @@
 	if(allowed(user))
 		can_reclaim = TRUE
 
-	var/obj/item/card/id/I = user.get_idcard(TRUE)
+	var/obj/item/card/id/I
+	if(isliving(user))
+		var/mob/living/L = user
+		I = L.get_idcard(TRUE)
 	if(istype(I, /obj/item/card/id/prisoner))
 		var/obj/item/card/id/prisoner/P = I
 		if(P.points >= P.goal)

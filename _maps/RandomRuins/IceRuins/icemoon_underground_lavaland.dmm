@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random/volcanic/more_caves,
+/turf/closed/mineral/random/volcanic,
 /area/icemoon/underground/unexplored)
 "b" = (
-/turf/closed/mineral/random/snow/no_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
 "d" = (
 /obj/item/grown/bananapeel,

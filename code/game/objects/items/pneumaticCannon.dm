@@ -288,7 +288,7 @@
 	throw_amount = 1
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
-	var/static/list/pie_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
+	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
 /obj/item/pneumatic_cannon/pie/Initialize()
 	. = ..()
@@ -297,54 +297,12 @@
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
 	selfcharge = TRUE
-	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
+	charge_type = /obj/item/food/pie/cream
 	maxWeightClass = 60	//20 pies.
 
 /obj/item/pneumatic_cannon/pie/selfcharge/cyborg
 	name = "low velocity pie cannon"
 	automatic = FALSE
-	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/nostun
+	charge_type = /obj/item/food/pie/cream/nostun
 	maxWeightClass = 6		//2 pies
 	charge_ticks = 2		//4 second/pie
-
-/obj/item/pneumatic_cannon/speargun
-	name = "kinetic speargun"
-	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
-	icon = 'icons/obj/guns/projectile.dmi'
-	icon_state = "speargun"
-	inhand_icon_state = "speargun"
-	w_class = WEIGHT_CLASS_BULKY
-	force = 10
-	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	gasPerThrow = 0
-	checktank = FALSE
-	range_multiplier = 3
-	throw_amount = 1
-	pressureSetting = 2
-	maxWeightClass = 2 //a single magspear
-	spin_item = FALSE
-	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)
-
-/obj/item/pneumatic_cannon/speargun/Initialize()
-	. = ..()
-	allowed_typecache = magspear_typecache
-
-/obj/item/storage/backpack/magspear_quiver
-	name = "quiver"
-	desc = "A quiver for holding magspears."
-	icon_state = "quiver"
-	inhand_icon_state = "quiver"
-
-/obj/item/storage/backpack/magspear_quiver/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 20
-	STR.max_combined_w_class = 40
-	STR.display_numerical_stacking = TRUE
-	STR.set_holdable(list(
-		/obj/item/throwing_star/magspear
-		))
-
-/obj/item/storage/backpack/magspear_quiver/PopulateContents()
-	for(var/i in 1 to 20)
-		new /obj/item/throwing_star/magspear(src)

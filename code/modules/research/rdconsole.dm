@@ -142,7 +142,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console":""].</span>")
-		playsound(src, "sparks", 75, TRUE)
+		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
 	return ..()

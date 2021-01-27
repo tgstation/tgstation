@@ -15,12 +15,11 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
 
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.04
 	heat_capacity = 10000
 	intact = TRUE
 	tiled_dirt = TRUE
 
-	var/icon_plating = "plating"
 	var/broken = FALSE
 	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops
@@ -29,22 +28,31 @@
 
 
 /turf/open/floor/Initialize(mapload)
-	if (!broken_states)
-		broken_states = string_list(list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+	. = ..()
+	if (broken_states)
+		stack_trace("broken_states defined at the object level for [type], move it to setup_broken_states()")
 	else
-		broken_states = string_list(broken_states)
-	if(burnt_states)
-		burnt_states = string_list(burnt_states)
+		broken_states = string_list(setup_broken_states())
+	if (burnt_states)
+		stack_trace("burnt_states defined at the object level for [type], move it to setup_burnt_states()")
+	else
+		var/list/new_burnt_states = setup_burnt_states()
+		if(new_burnt_states)
+			burnt_states = string_list(new_burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
 		burnt = TRUE
-	. = ..()
 	if(mapload && prob(33))
 		MakeDirty()
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
+/turf/open/floor/proc/setup_broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
+/turf/open/floor/proc/setup_burnt_states()
+	return
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
@@ -194,8 +202,8 @@
 
 /turf/open/floor/proc/spawn_tile()
 	if(!has_tile())
-		return
-	new floor_tile(src)
+		return null
+	return new floor_tile(src)
 
 /turf/open/floor/singularity_pull(S, current_size)
 	..()
@@ -324,11 +332,13 @@
 	name = "floor"
 	icon_state = "materialfloor"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	floor_tile = /obj/item/stack/tile/material
 
 /turf/open/floor/material/has_tile()
-	return custom_materials.len
+	return LAZYLEN(custom_materials)
 
 /turf/open/floor/material/spawn_tile()
-	for(var/i in custom_materials)
-		var/datum/material/M = i
-		new M.sheet_type(src, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+	. = ..()
+	if(.)
+		var/obj/item/stack/tile = .
+		tile.set_mats_per_unit(custom_materials, 1)

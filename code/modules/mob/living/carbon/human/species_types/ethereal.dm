@@ -18,7 +18,7 @@
 	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR, HAIR, HAS_FLESH, HAS_BONE) // i mean i guess they have blood so they can have wounds too
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/ethereal
-	inherent_traits = list(TRAIT_NOHUNGER)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOHUNGER)
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
@@ -141,21 +141,21 @@
 	brutemod = 1.25
 	switch(get_charge(H))
 		if(ETHEREAL_CHARGE_NONE)
-			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 3)
+			H.throw_alert("ethereal_charge", /atom/movable/screen/alert/etherealcharge, 3)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
-			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 2)
+			H.throw_alert("ethereal_charge", /atom/movable/screen/alert/etherealcharge, 2)
 			if(H.health > 10.5)
 				apply_damage(0.65, TOX, null, null, H)
 			brutemod = 1.75
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
-			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 1)
+			H.throw_alert("ethereal_charge", /atom/movable/screen/alert/etherealcharge, 1)
 			brutemod = 1.5
 		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
-			H.throw_alert("ethereal_overcharge", /obj/screen/alert/ethereal_overcharge, 1)
+			H.throw_alert("ethereal_overcharge", /atom/movable/screen/alert/ethereal_overcharge, 1)
 			apply_damage(0.2, TOX, null, null, H)
 			brutemod = 1.5
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
-			H.throw_alert("ethereal_overcharge", /obj/screen/alert/ethereal_overcharge, 2)
+			H.throw_alert("ethereal_overcharge", /atom/movable/screen/alert/ethereal_overcharge, 2)
 			apply_damage(0.65, TOX, null, null, H)
 			brutemod = 1.75
 			if(prob(10)) //10% each tick for ethereals to explosively release excess energy if it reaches dangerous levels

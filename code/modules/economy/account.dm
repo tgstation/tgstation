@@ -10,6 +10,7 @@
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
 	var/datum/bounty/civilian_bounty
+	var/list/datum/bounty/bounties
 	var/bounty_timer = 0
 
 /datum/bank_account/New(newname, job, modifier = 1)
@@ -79,7 +80,7 @@
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	if(!account_job)
 		return
-	var/money_to_transfer = account_job.paycheck * payday_modifier * amt_of_paychecks
+	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amt_of_paychecks)
 	if(free)
 		adjust_money(money_to_transfer)
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
@@ -134,8 +135,8 @@
 					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
 
 /**
-  * Returns a string with the civilian bounty's description on it.
-  */
+ * Returns a string with the civilian bounty's description on it.
+ */
 /datum/bank_account/proc/bounty_text()
 	if(!civilian_bounty)
 		return FALSE
@@ -143,8 +144,8 @@
 
 
 /**
-  * Returns the required item count, or required chemical units required to submit a bounty.
-  */
+ * Returns the required item count, or required chemical units required to submit a bounty.
+ */
 /datum/bank_account/proc/bounty_num()
 	if(!civilian_bounty)
 		return FALSE
@@ -158,16 +159,16 @@
 		return "At least 1u"
 
 /**
-  * Produces the value of the account's civilian bounty reward, if able.
-  */
+ * Produces the value of the account's civilian bounty reward, if able.
+ */
 /datum/bank_account/proc/bounty_value()
 	if(!civilian_bounty)
 		return FALSE
 	return civilian_bounty.reward
 
 /**
-  * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
-  */
+ * Performs house-cleaning on variables when a civilian bounty is replaced, or, when a bounty is claimed.
+ */
 /datum/bank_account/proc/reset_bounty()
 	civilian_bounty = null
 	bounty_timer = 0

@@ -2,6 +2,7 @@
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon_state = "moistnugget"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = "moistnugget"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
@@ -53,7 +54,6 @@
 	name = "\improper Mosin Nagant"
 	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	sawn_desc = "An extremely sawn-off Mosin Nagant, popularly known as an \"obrez\". There was probably a reason it wasn't manufactured this short to begin with."
-	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
@@ -63,6 +63,11 @@
 	knife_x_offset = 27
 	knife_y_offset = 13
 	can_be_sawn_off = TRUE
+	var/jamming_chance = 20
+	var/unjam_chance = 10
+	var/jamming_increment = 5
+	var/jammed = FALSE
+	var/can_jam = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
@@ -71,11 +76,59 @@
 		can_bayonet = FALSE
 		update_icon()
 
+/obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
+	if(can_jam)
+		if(jammed)
+			if(prob(unjam_chance))
+				jammed = FALSE
+				unjam_chance = 10
+			else
+				unjam_chance += 10
+				to_chat(user, "<span class='warning'>[src] is jammed!</span>")
+				playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
+				return FALSE
+	..()
+
+/obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
+	if(can_jam)
+		if(chambered.BB)
+			if(prob(jamming_chance))
+				jammed = TRUE
+			jamming_chance  += jamming_increment
+			jamming_chance = clamp (jamming_chance, 0, 100)
+	..()
+
+/obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
+	. = ..()
+	if(can_jam)
+		if(bolt_locked)
+			if(istype(item, /obj/item/gun_maintenance_supplies))
+				if(do_after(user, 10 SECONDS, target = src))
+					user.visible_message("<span class='notice'>[user] finishes maintenance of [src].</span>")
+					jamming_chance = 10
+					qdel(item)
+
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = 0
 	if(chambered?.BB)
 		process_fire(user, user, FALSE)
 		. = 1
+
+/obj/item/gun/ballistic/rifle/boltaction/harpoon
+	name = "ballistic harpoon gun"
+	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
+	icon_state = "speargun"
+	inhand_icon_state = "speargun"
+	worn_icon_state = "speargun"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	can_be_sawn_off = FALSE
+
+/obj/item/gun/ballistic/rifle/boltaction/brand_new
+	name = "Mosin Nagant"
+	desc = "Brand new Mosin Nagant issued by Nanotrasen for their interns. You would rather not to damage it."
+	can_be_sawn_off = FALSE
+	can_jam = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -83,6 +136,7 @@
 	var/guns_left = 30
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
 	can_be_sawn_off = FALSE
+	can_jam = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage
 	name = "arcane barrage"
@@ -95,6 +149,7 @@
 	can_bayonet = FALSE
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
+	can_jam = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
@@ -102,6 +157,8 @@
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/dropped()
 	. = ..()
 	guns_left = 0
+	magazine = null
+	chambered = null
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))

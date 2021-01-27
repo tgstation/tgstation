@@ -28,13 +28,6 @@
 /// Used for direct injection of reagents.
 #define INJECT			(1<<4)
 
-
-//defines passed through to the on_reagent_change proc
-#define DEL_REAGENT		1	// reagent deleted (fully cleared)
-#define ADD_REAGENT		2	// reagent added
-#define REM_REAGENT		3	// reagent removed (may still exist)
-#define CLEAR_REAGENTS	4	// all reagents were cleared
-
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50

@@ -162,11 +162,11 @@
 	update_icon()
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/structure/janitorialcart/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE

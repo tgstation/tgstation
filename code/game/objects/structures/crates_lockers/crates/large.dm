@@ -12,6 +12,9 @@
 	open_sound_volume = 25
 	close_sound_volume = 50
 
+	// Stops people from "diving into" a crate you can't open normally
+	divable = FALSE
+
 /obj/structure/closet/crate/large/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(manifest)
@@ -25,8 +28,8 @@
 			tear_manifest(user)
 
 		user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>", \
-							 "<span class='notice'>You pry open \the [src].</span>", \
-							 "<span class='hear'>You hear splitting wood.</span>")
+			"<span class='notice'>You pry open \the [src].</span>", \
+			"<span class='hear'>You hear splitting wood.</span>")
 		playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, TRUE)
 
 		var/turf/T = get_turf(src)

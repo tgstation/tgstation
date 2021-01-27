@@ -123,6 +123,7 @@
 	announcing_vox = world.time + VOX_DELAY
 
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
+	log_talk(message, LOG_SAY, tag="VOX Announcement")
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
@@ -138,7 +139,7 @@
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
- 		// If there is no single listener, broadcast to everyone in the same z level
+	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)

@@ -22,8 +22,10 @@
 
 ///Called on COMSIG_ITEM_ATTACK_SELF. Allows you to change the warcry.
 /datum/component/wearertargeting/punchcooldown/proc/changewarcry(datum/source, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/do_changewarcry, user)
 
+/datum/component/wearertargeting/punchcooldown/proc/do_changewarcry(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
 	if(!QDELETED(src) && !QDELETED(user) && !user.Adjacent(parent))
 		return

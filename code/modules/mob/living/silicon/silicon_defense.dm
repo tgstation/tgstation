@@ -7,7 +7,7 @@
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent
-		var/damage = 20
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if (prob(90))
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
@@ -62,7 +62,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	. = FALSE
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, M) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 	switch(M.a_intent)
 		if ("help")
@@ -109,7 +109,7 @@
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
 
-/mob/living/silicon/bullet_act(obj/projectile/Proj, def_zone)
+/mob/living/silicon/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, Proj, def_zone)
 	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
@@ -122,9 +122,9 @@
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
 			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
-	Proj.on_hit(src)
+	Proj.on_hit(src, 0, piercing_hit)
 	return BULLET_ACT_HIT
 
-/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
+/mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash/static)
 	if(affect_silicon)
 		return ..()

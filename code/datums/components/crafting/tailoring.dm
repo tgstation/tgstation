@@ -143,3 +143,24 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1, /obj/item/stack/sheet/leather = 1)
 	time = 60
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonsuit
+	name = "Prisoner Uniform (Suit)"
+	result = /obj/item/clothing/under/rank/prisoner
+	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates = 1)
+	time = 20
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonskirt
+	name = "Prisoner Uniform (Skirt)"
+	result = /obj/item/clothing/under/rank/prisoner/skirt
+	reqs = list(/obj/item/stack/sheet/cloth = 3, /obj/item/stack/license_plates = 1)
+	time = 20
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/prisonshoes
+	name = "Orange Prison Shoes"
+	result = /obj/item/clothing/shoes/sneakers/orange
+	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/license_plates = 1)
+	time = 10
+	category = CAT_CLOTHING

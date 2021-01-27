@@ -62,7 +62,7 @@
 
 /datum/config_entry/flag/disable_human_mood
 
-/datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
+/datum/config_entry/flag/disable_secborg	// disallow secborg model to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
 
@@ -269,8 +269,6 @@
 	movedelay_type = /mob/living/carbon/human
 /datum/config_entry/number/outdated_movedelay/robot_delay
 	movedelay_type = /mob/living/silicon/robot
-/datum/config_entry/number/outdated_movedelay/monkey_delay
-	movedelay_type = /mob/living/carbon/monkey
 /datum/config_entry/number/outdated_movedelay/alien_delay
 	movedelay_type = /mob/living/carbon/alien
 /datum/config_entry/number/outdated_movedelay/slime_delay

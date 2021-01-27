@@ -76,9 +76,6 @@
 					else if(ispath(mobtype, /mob/living/simple_animal/slime))
 						race = "Slime"
 
-					else if(ispath(mobtype, /mob/living/carbon/monkey))
-						race = "Monkey"
-
 					// sometimes M gets deleted prematurely for AIs... just check the job
 					else if(ispath(mobtype, /mob/living/silicon) || C.parameters["job"] == "AI")
 						race = "Artificial Life"

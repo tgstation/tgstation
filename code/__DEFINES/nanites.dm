@@ -12,6 +12,11 @@
 #define NANITE_CLOUD_DISABLE 2
 #define NANITE_CLOUD_ENABLE	3
 
+//Nanite excess thresholds
+#define NANITE_EXCESS_MINOR 25
+#define NANITE_EXCESS_VOMIT 100
+#define NANITE_EXCESS_BURST 350
+
 ///Nanite Protocol types
 #define NANITE_PROTOCOL_REPLICATION "nanite_replication"
 #define NANITE_PROTOCOL_STORAGE "nanite_storage"

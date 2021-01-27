@@ -100,6 +100,7 @@
 	icon_dead = "watcher_dead"
 	health_doll_icon = "watcher"
 	pixel_x = -10
+	base_pixel_x = -10
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -109,7 +110,7 @@
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = HARD_CRIT
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	gold_core_spawnable = NO_SPAWN

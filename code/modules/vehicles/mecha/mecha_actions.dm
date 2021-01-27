@@ -128,6 +128,10 @@
 		toggle_strafe()
 
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
+	if(!(mecha_flags & CANSTRAFE))
+		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>This mecha does not support strafing.</span>")
+		return
+
 	strafe = !strafe
 
 	to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")

@@ -8,7 +8,7 @@
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/ice = 5,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
+		/obj/item/food = 1
 	)
 	result = /obj/item/food/icecreamsandwich
 	subcategory = CAT_ICE
@@ -18,7 +18,7 @@
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/ice = 5,
-		/obj/item/reagent_containers/food/snacks/grown/berries = 2,
+		/obj/item/food/grown/berries = 2,
 	)
 	result = /obj/item/food/strawberryicecreamsandwich
 	subcategory = CAT_ICE
@@ -28,7 +28,7 @@
 	reqs = list(
 		/datum/reagent/consumable/bluecherryjelly = 5,
 		/datum/reagent/consumable/spacemountainwind = 15,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
+		/obj/item/food = 1
 	)
 	result = /obj/item/food/spacefreezy
 	subcategory = CAT_ICE
@@ -37,9 +37,9 @@
 	name ="Sundae"
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
+		/obj/item/food/grown/cherries = 1,
+		/obj/item/food/grown/banana = 1,
+		/obj/item/food = 1
 	)
 	result = /obj/item/food/sundae
 	subcategory = CAT_ICE
@@ -49,9 +49,9 @@
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/clothing/mask/gas/clown_hat = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 2,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
+		/obj/item/food/grown/cherries = 1,
+		/obj/item/food/grown/banana = 2,
+		/obj/item/food = 1
 	)
 	result = /obj/item/food/honkdae
 	subcategory = CAT_ICE
@@ -59,8 +59,8 @@
 /datum/crafting_recipe/food/cornuto
 	name = "Cornuto"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/cream = 4,
 		/datum/reagent/consumable/ice = 2,
 		/datum/reagent/consumable/sugar = 4
@@ -287,7 +287,7 @@
 	name = "Jumbo icecream"
 	reqs = list(
 		/obj/item/popsicle_stick = 1,
-		/obj/item/reagent_containers/food/snacks/chocolatebar = 1,
+		/obj/item/food/chocolatebar = 1,
 		/datum/reagent/consumable/ice = 2,
 		/datum/reagent/consumable/cream = 2,
 		/datum/reagent/consumable/vanilla = 3,

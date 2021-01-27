@@ -1,9 +1,9 @@
 /** Component representing acid applied to an object.
-  *
-  * Must be attached to an atom.
-  * Processes, repeatedly damaging whatever it is attached to.
-  * If the parent atom is a turf it applies acid to the contents of the turf.
-  */
+ *
+ * Must be attached to an atom.
+ * Processes, repeatedly damaging whatever it is attached to.
+ * If the parent atom is a turf it applies acid to the contents of the turf.
+ */
 /datum/component/acid
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// The strength of the acid on the parent [/atom].
@@ -198,7 +198,8 @@
 	to_chat(user, "<span class='warning'>The acid on \the [parent_atom] burns your hand!</span>")
 	playsound(parent_atom, 'sound/weapons/sear.ogg', 50, TRUE)
 	user.update_damage_overlays()
-	return COMPONENT_NO_ATTACK_HAND
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 
 /// Handles searing the feet of whoever walks over this without protection. Only active if the parent is a turf.
 /datum/component/acid/proc/on_crossed(atom/parent_atom, mob/living/crosser)

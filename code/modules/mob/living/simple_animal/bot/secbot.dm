@@ -8,7 +8,7 @@
 	health = 25
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB | PASSFLAPS
 
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
@@ -67,7 +67,6 @@
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
 	S.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
-	S.on_reagent_change(ADD_REAGENT)
 	..()
 
 /mob/living/simple_animal/bot/secbot/pingsky
@@ -203,6 +202,15 @@ Auto Patrol: []"},
 		if(special_retaliate_after_attack(H))
 			return
 
+		// Turns an oversight into a feature. Beepsky will now announce when pacifists taunt him over sec comms.
+		if(HAS_TRAIT(H, TRAIT_PACIFISM))
+			H.visible_message("<span class='notice'>[H] taunts [src], daring [p_them()] to give chase!</span>", \
+				"<span class='notice'>You taunt [src], daring [p_them()] to chase you!</span>", "<span class='hear'>You hear someone shout a daring taunt!</span>", DEFAULT_MESSAGE_RANGE, H)
+			speak("Taunted by pacifist scumbag <b>[H]</b> in [get_area(src)].", radio_channel)
+
+			// Interrupt the attack chain. We've already handled this scenario for pacifists.
+			return
+
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/user, params)
@@ -233,6 +241,8 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A)
 	if(!on)
+		return
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A

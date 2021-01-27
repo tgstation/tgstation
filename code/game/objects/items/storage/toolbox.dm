@@ -71,6 +71,8 @@
 	icon_state = "blue"
 	inhand_icon_state = "toolbox_blue"
 	material_flags = NONE
+	/// If FALSE, someone with a ensouled soulstone can sacrifice a spirit to change the sprite of this toolbox.
+	var/has_soul = FALSE
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -84,7 +86,7 @@
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
-	material_flags = NONE
+	has_soul = TRUE
 
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "toolbox" //this will be named "X family toolbox"
@@ -95,7 +97,7 @@
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
 
-/obj/item/storage/toolbox/mechanical/old/clean
+/obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
 	name = "toolbox"
 	desc = "An old, blue toolbox, it looks robust."
 	icon_state = "oldtoolboxclean"
@@ -227,6 +229,19 @@
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
+
+/obj/item/storage/toolbox/maint_kit
+	name = "gun maintenance kit"
+	desc = "It contains some gun maintenance supplies"
+	icon_state = "maint_kit"
+	inhand_icon_state = "ammobox"
+	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
+	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
+
+/obj/item/storage/toolbox/maint_kit/PopulateContents()
+	new /obj/item/gun_maintenance_supplies(src)
+	new /obj/item/gun_maintenance_supplies(src)
+	new /obj/item/gun_maintenance_supplies(src)
 
 /obj/item/storage/toolbox/infiltrator
 	name = "insidious case"

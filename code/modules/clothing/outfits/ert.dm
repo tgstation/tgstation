@@ -81,10 +81,11 @@
 	name = "ERT Security - High Alert"
 
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	belt = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/gun/energy/pulse/carbine/loyalpin=1)
+		/obj/item/storage/belt/security/full=1)
 
 
 /datum/outfit/centcom/ert/medic
@@ -298,7 +299,7 @@
 	belt = /obj/item/storage/belt/champion
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
 	r_pocket = /obj/item/bikehorn/golden
-	l_pocket = /obj/item/reagent_containers/food/snacks/grown/banana
+	l_pocket = /obj/item/food/grown/banana
 	backpack_contents = list(/obj/item/storage/box/hug/survival=1,\
 		/obj/item/melee/transforming/energy/sword/bananium=1,\
 		/obj/item/shield/energy/bananium=1,\
@@ -325,7 +326,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/melee/classic_baton
-	l_hand = /obj/item/gun/ballistic/rifle/boltaction
+	l_hand = /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	back = /obj/item/storage/backpack/satchel
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
@@ -347,7 +348,7 @@
 	name = "CentCom Head Intern"
 	belt = /obj/item/melee/baton/loaded
 	suit = /obj/item/clothing/suit/armor/vest
-	suit_store = /obj/item/gun/ballistic/rifle/boltaction
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	l_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
 

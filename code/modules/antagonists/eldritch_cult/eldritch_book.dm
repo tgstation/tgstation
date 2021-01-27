@@ -1,6 +1,6 @@
 /obj/item/forbidden_book
 	name = "Codex Cicatrix"
-	desc = "Book describing the secrets of the veil."
+	desc = "This book describes the secrets of the veil between worlds."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
 	worn_icon_state = "book"
@@ -131,7 +131,7 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					charge -= text2num(params["cost"])
+					charge -= initial(EK.cost)
 					return TRUE
 
 	update_icon() // Not applicable to all objects.

@@ -169,7 +169,7 @@
 
 /obj/structure/frame/computer/AltClick(mob/user)
 	..()
-	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 
 	if(anchored)

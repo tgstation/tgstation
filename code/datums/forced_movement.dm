@@ -84,10 +84,3 @@
 					. = TryMove(TRUE)
 
 	. = . && (vic.loc != tar.loc)
-
-/mob/Bump(atom/A)
-	. = ..()
-	if(force_moving?.allow_climbing && isstructure(A))
-		var/obj/structure/S = A
-		if(S.climbable)
-			S.do_climb(src)

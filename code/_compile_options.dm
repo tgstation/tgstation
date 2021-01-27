@@ -59,11 +59,11 @@
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
 
-#ifdef TRAVISBUILDING
+#ifdef CIBUILDING
 #define UNIT_TESTS
 #endif
 
-#ifdef TRAVISTESTING
+#ifdef CITESTING
 #define TESTING
 #endif
 

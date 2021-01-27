@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Flex, Fragment, Section, NoticeBox } from '../components';
+import { Button, Flex, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const GhostPoolProtection = (props, context) => {
@@ -21,7 +21,7 @@ export const GhostPoolProtection = (props, context) => {
           <Section
             title="Options"
             buttons={
-              <Fragment>
+              <>
                 <Button
                   color="good"
                   icon="plus-circle"
@@ -32,7 +32,7 @@ export const GhostPoolProtection = (props, context) => {
                   icon="minus-circle"
                   content="Disable Everything"
                   onClick={() => act("no_roles")} />
-              </Fragment>
+              </>
             }>
             <NoticeBox danger>
               For people creating a sneaky event: If you
