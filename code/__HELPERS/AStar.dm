@@ -235,7 +235,8 @@ Actual Adjacent procs :
 					break
 
 				if(!next_turf || next_turf == exclude || !call(sturf,adjacent)(caller, next_turf, id, simulated_only)) // RYLL: should this be a typecheck?
-					interesting = TRUE
+					//breakout = TRUE
+					break
 				else if(call(next_turf,dist)(end) > call(sturf,dist)(end))
 					testing("increasing dist, interesting")
 					interesting = TRUE
@@ -243,9 +244,10 @@ Actual Adjacent procs :
 					for(var/i2 = 0 to 3)
 						var/f2= 1<<i2 //get cardinal directions.1,2,4,8
 						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1)
-						if((f == f2) || (f2 == r)) // ignore the continuing direction and the direction we came from when looking for adjacent obstacles
+						if((f2 == r) || f == f2) // ignore the continuing direction and the direction we came from when looking for adjacent obstacles
 							continue
 						var/adjacent_next_turf = get_step(next_turf, f2)
+						//if(!adjacent_next_turf || adjacent_next_turf == exclude || !call(next_turf,adjacent)(caller, adjacent_next_turf, id, simulated_only))
 						if(!adjacent_next_turf || adjacent_next_turf == exclude || !call(next_turf,adjacent)(caller, adjacent_next_turf, id, simulated_only))
 							interesting = TRUE
 							break
@@ -257,16 +259,16 @@ Actual Adjacent procs :
 					sturf = next_turf
 					continue
 				else
-					var/turf/nex_tu = next_turf
+					var/turf/nex_tu = sturf
 					nex_tu.color = COLOR_LIGHT_GRAYISH_RED
 
 
-				var/datum/jpsnode/CN = openc[next_turf]  //see if this turf is in the open list
+				var/datum/jpsnode/CN = openc[sturf]  //see if this turf is in the open list
 				var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
 				//var/newt = cur.nt + (call(cur.source,dist)(next_turf) * steps_taken)
 				var/newt = cur.nt + steps_taken
 
-				var/turf/nex_tu = next_turf
+				var/turf/nex_tu = sturf
 				nex_tu.color = COLOR_RED
 				if(CN)
 				//is already in open list, check if it's a better way from the current turf
@@ -276,9 +278,9 @@ Actual Adjacent procs :
 						open.ReSort(CN)//reorder the changed element in the list
 				else
 				//is not already in open list, so add it
-					CN = new(next_turf,cur,call(next_turf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
+					CN = new(sturf,cur,call(sturf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
 					open.Insert(CN)
-					openc[next_turf] = CN
+					openc[sturf] = CN
 				break
 
 			if(breakout)
