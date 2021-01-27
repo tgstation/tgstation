@@ -315,3 +315,11 @@
 	else
 		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
 		return
+
+
+/obj/item/storage/toolbox/haunted
+	name = "old toolbox"
+	custom_materials = list(/datum/material/hauntium = 500)
+
+
+

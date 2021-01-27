@@ -45,6 +45,9 @@
 	src.force_unwielded = force_unwielded
 	src.icon_wielded = icon_wielded
 
+	if(require_twohands)
+		ADD_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS, ABSTRACT_ITEM_TRAIT)
+
 // Inherit the new values passed to the component
 /datum/component/two_handed/InheritComponent(datum/component/two_handed/new_comp, original, require_twohands, wieldsound, unwieldsound, \
 											force_multiplier, force_wielded, force_unwielded, icon_wielded)
@@ -126,7 +129,11 @@
 	if(wielded)
 		return
 	if(ismonkey(user))
-		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
+		if(require_twohands)
+			to_chat(user, "<span class='notice'>[parent] is too heavy and cumbersome for you to carry!</span>")
+			user.dropItemToGround(parent, force=TRUE)
+		else
+			to_chat(user, "<span class='notice'>It's too heavy for you to wield fully.</span>")
 		return
 	if(user.get_inactive_held_item())
 		if(require_twohands)
