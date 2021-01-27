@@ -163,10 +163,10 @@
 	ReworkNetwork()
 
 /**
-  * Adds a mind to the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to add someone to the list
-  */
+ * Adds a mind to the list of people that can see the reality smashes
+ *
+ * Use this whenever you want to add someone to the list
+ */
 /datum/reality_smash_tracker/proc/AddMind(datum/mind/M)
 	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
 	targets |= M
@@ -177,10 +177,10 @@
 
 
 /**
-  * Removes a mind from the list of people that can see the reality smashes
-  *
-  * Use this whenever you want to remove someone from the list
-  */
+ * Removes a mind from the list of people that can see the reality smashes
+ *
+ * Use this whenever you want to remove someone from the list
+ */
 /datum/reality_smash_tracker/proc/RemoveMind(datum/mind/M)
 	UnregisterSignal(M.current,COMSIG_MOB_LOGIN)
 	targets -= M
