@@ -162,18 +162,15 @@ Actual Adjacent procs :
 			testing("wheeee!! total dist [cur.nt]")
 			path = new()
 
-			var/turf/first_turf = cur.source
-			var/turf/first_def_turf = cur.prevNode.source
-
-
-			path.Add(first_turf)
+			var/turf/iter_turf = cur.source
+			var/turf/next_goal_turf = cur.prevNode ? cur.prevNode.source : start
+			path.Add(iter_turf)
+			var/dir_heading
 
 			while(cur.prevNode)
-				testing("new node")
-
-				var/turf/iter_turf = cur.source
-				var/turf/next_goal_turf = cur.prevNode ? cur.prevNode.source : start
-				var/dir_heading = get_dir(first_turf, next_goal_turf)
+				iter_turf = cur.source
+				next_goal_turf = cur.prevNode ? cur.prevNode.source : start
+				dir_heading = get_dir(iter_turf, next_goal_turf)
 				for(var/i in 1 to cur.jumps)
 					iter_turf.color = COLOR_YELLOW
 					path.Add(iter_turf)
@@ -183,9 +180,9 @@ Actual Adjacent procs :
 				cur = cur.prevNode
 
 			var/turf/final = cur.source
-			var/dir_heading = get_dir(final, start)
+			dir_heading = get_dir(final, start)
 			for(var/i in 1 to cur.jumps)
-				final.color = COLOR_YELLOW
+				final.color = COLOR_VIVID_YELLOW
 				path.Add(final)
 				var/turf/add_turf = final
 				final = get_step(final, dir_heading)
@@ -202,7 +199,6 @@ Actual Adjacent procs :
 			if(!(cur.bf & f))
 				continue
 
-			var/next_is_invalid = FALSE
 			var/interesting = FALSE
 			var/steps_taken = 0
 			var/turf/sturf = cur.source
