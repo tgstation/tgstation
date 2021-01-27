@@ -45,7 +45,7 @@
 
 /datum/aquarium_behaviour/fish/goldfish
 	name = "goldfish"
-	desc = "not actually made of gold"
+	desc = "Not actually made of gold."
 	icon_state = "goldfish"
 	sprite_width = 8
 	sprite_height = 8
