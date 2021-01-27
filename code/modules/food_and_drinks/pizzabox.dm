@@ -255,9 +255,9 @@
 	. = ..()
 	if(isobserver(user))
 		if(bomb)
-			. += "<span class='deadsay'>This pizza box contains [bomb_defused ? "a bomb" : "an armed bomb"].</span>"
+			. += "<span class='deadsay'>This pizza box contains [bomb_defused ? "an unarmed bomb" : "an armed bomb"].</span>"
 		if(pizza && istype(pizza, /obj/item/food/pizza/margherita/robo))
-			. += "<span class='deadsay'>The pizza in this pizza box contains nanomachines, son.</span>"
+			. += "<span class='deadsay'>The pizza in this pizza box contains nanomachines.</span>"
 
 /obj/item/pizzabox/proc/disperse_pizzas()
 	visible_message("<span class='warning'>The pizzas fall everywhere!</span>")
@@ -335,6 +335,7 @@
 		/obj/item/food/pizza/dank = 0.1,
 	) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
+	boxtag = "Your Favourite"
 
 /obj/item/pizzabox/infinite/Initialize()
 	. = ..()
@@ -365,6 +366,6 @@
 			else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
 				pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
 
-		var/obj/item/pizza_type = pizza_preferences[nommer.ckey]
-		pizza = new pizza_type (src)
+		var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
+		pizza = new favourite_pizza_type
 		pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!

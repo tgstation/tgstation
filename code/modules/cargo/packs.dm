@@ -1807,7 +1807,8 @@
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
-	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
+	desc = "Why visit the kitchen when you can have five random pizzas in a fraction of the time? \
+			Best prices this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
 	cost = CARGO_CRATE_VALUE * 10 // Best prices this side of the galaxy.
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
@@ -1819,11 +1820,26 @@
 
 /datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/C)
 	. = ..()
-	if(!anomalous_box_provided)
-		for(var/obj/item/pizzabox/P in C)
+	var/list/pizza_types = list(
+		/obj/item/food/pizza/margherita = 1,
+		/obj/item/food/pizza/margherita/robo = 0.1,
+		/obj/item/food/pizza/meat = 1,
+		/obj/item/food/pizza/mushroom = 1,
+		/obj/item/food/pizza/vegetable = 1,
+		/obj/item/food/pizza/donkpocket = 1,
+		/obj/item/food/pizza/dank = 0.5,
+		/obj/item/food/pizza/sassysage = 1,
+		/obj/item/food/pizza/pineapple = 1,
+		/obj/item/food/pizza/arnold = 0.3
+	) //pizzas here are weighted by chance to be disruptive
+
+	for(var/obj/item/pizzabox/P in C)
+		if(!anomalous_box_provided)
 			if(prob(1)) //1% chance for each box, so 4% total chance per order
 				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
 				fourfiveeight.boxtag = P.boxtag
+				P.boxtag_set = TRUE
+				P.update_icon()
 				qdel(P)
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
@@ -1831,7 +1847,19 @@
 					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
 				else
 					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
-				break
+				continue
+
+		//here we replace our pizzas for a chance at the full range
+		var/obj/item/food/pizza/replacement_type = pickweight(pizza_types)
+		pizza_types -= replacement_type
+		if(!istype(P.pizza, replacement_type))
+			QDEL_NULL(P.pizza)
+			P.pizza = new replacement_type
+			P.boxtag = P.pizza.boxtag
+			P.boxtag_set = TRUE
+			P.update_icon()
+			if(istype(replacement_type, /obj/item/food/pizza/margherita/robo))
+				message_admins("A margherita pizza with nanomachines was created in a pizza crate delivery.")
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
