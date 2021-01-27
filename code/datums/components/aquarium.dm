@@ -155,7 +155,7 @@
 		//Face the direction we're going
 		var/matrix/dir_mx = properties.base_transform()
 		if(dx <= 0) //assuming default sprite is facing left here
-			dir_mx.Scale(-1,1)
+			dir_mx.Scale(-1, 1)
 		animate(transform=dir_mx,time=0,loop = -1)
 		animate(pixel_x=target_x,pixel_y = target_y, time = eyeballed_time, loop = -1)
 
