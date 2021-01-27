@@ -46,7 +46,6 @@ export const BlackMarketUplink = (props, context) => {
                 market: market.id,
               })}>
               {market.name}
-
             </Tabs.Tab>
           ))}
         </Tabs>
