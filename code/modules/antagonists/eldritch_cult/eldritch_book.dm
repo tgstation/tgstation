@@ -43,7 +43,8 @@
 	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
 	if(do_after(user, 10 SECONDS, RS))
 		GLOB.reality_smash_track.smashes -= target
-		var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location())
+		var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location(target))
+		qdel(target)
 		illusion.name = pick("Researched","Siphoned","Analyzed","Emptied","Drained") + " " + name
 		charge += 1
 
