@@ -10093,12 +10093,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "ard" = (
@@ -18712,9 +18706,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/cryo)
 "aFs" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -28394,9 +28385,6 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "aUn" = (
@@ -29111,10 +29099,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "aVp" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -30842,9 +30826,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 1
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 4
 	},
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
@@ -34557,9 +34538,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bdA" = (
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
 /obj/item/radio/intercom{
 	pixel_x = -28
 	},
@@ -34628,10 +34606,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
 	},
@@ -34737,7 +34711,6 @@
 	pixel_x = 30;
 	receive_ore_updates = 1
 	},
-/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "bdN" = (
@@ -34790,7 +34763,6 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/effect/turf_decal/box/corners,
 /obj/structure/water_source/puddle,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -35492,7 +35464,6 @@
 /area/medical/storage)
 "beR" = (
 /obj/machinery/vending/wardrobe/chem_wardrobe,
-/obj/structure/window/reinforced,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -43173,9 +43144,6 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
 	name = "Atmospherics Blast Door"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
@@ -56339,9 +56307,6 @@
 	input_dir = 4;
 	output_dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bLH" = (
@@ -60904,7 +60869,6 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/blue,
 /obj/item/pen,
-/obj/structure/window/reinforced,
 /obj/machinery/door/window/westright{
 	name = "Control Desk";
 	req_one_access_txt = "19"
@@ -63840,9 +63804,6 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder/yellow,
 /obj/item/pen,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Cargo Desk";
@@ -87824,9 +87785,6 @@
 /area/maintenance/port)
 "don" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
