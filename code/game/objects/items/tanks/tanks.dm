@@ -1,3 +1,12 @@
+/// How much time is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
+#define ASSUME_AIR_DT_FACTOR	1
+
+/**
+ * # Gas Tank
+ *
+ * Handheld gas canisters
+ * Can rupture explosively if overpressurized
+ */
 /obj/item/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
@@ -16,6 +25,7 @@
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
+	integrity_failure = 0.5
 	/// The gases this tank contains.
 	var/datum/gas_mixture/air_contents = null
 	/// The volume of this tank.
@@ -205,7 +215,7 @@
 
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
 	air_contents.merge(giver)
-	handle_tolerances(1)
+	handle_tolerances(ASSUME_AIR_DT_FACTOR)
 	return TRUE
 
 /obj/item/tank/proc/remove_air_volume(volume_to_return)
@@ -225,14 +235,15 @@
 
 	//Allow for reactions
 	air_contents.react(src)
-	if(leaking)
-		var/turf/location = get_turf(src)
-		if(location)
-			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
-			location.assume_air(leaked_gas)
-			location.air_update_turf(FALSE, FALSE)
-
 	handle_tolerances(delta_time)
+	if(QDELETED(src) || !leaking || !air_contents)
+		return
+	var/turf/location = get_turf(src)
+	if(!location)
+		return
+	var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
+	location.assume_air(leaked_gas)
+	location.air_update_turf(FALSE, FALSE)
 
 /**
  * Handles the minimum and maximum pressure tolerances of the tank.
@@ -259,8 +270,7 @@
 
 /// Handles the tank springing a leak.
 /obj/item/tank/obj_break(damage_flag)
-	if(!leaking)
-		leaking = TRUE
+	leaking = TRUE
 	return ..()
 
 /// Handles rupturing and fragmenting
@@ -308,3 +318,5 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
+
+#undef ASSUME_AIR_DT_FACTOR
