@@ -14,7 +14,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 	//If doing unit tests we don't do none of that trait shit ya know?
 	#ifdef UNIT_TESTS
-    return ..()
+	return ..()
 	#endif
 
 	SetupTraits()

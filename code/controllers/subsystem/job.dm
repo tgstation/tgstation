@@ -422,14 +422,14 @@ SUBSYSTEM_DEF(job)
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
-		var/dont_go_to_latejoin = FALSE
+		var/go_to_latejoin = TRUE
 		var/obj/S = null
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
 			SendToLateJoin(living_mob)
-			dont_go_to_latejoin = TRUE
+			go_to_latejoin = FALSE
 		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
 			DropLandAtRandomPoint(living_mob)
-			dont_go_to_latejoin = TRUE
+			go_to_latejoin = FALSE
 		else if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
 		else
@@ -444,7 +444,7 @@ SUBSYSTEM_DEF(job)
 				break
 		if(S)
 			S.JoinPlayerHere(living_mob, FALSE)
-		if(!S && !dont_go_to_latejoin) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+		if(!S && go_to_latejoin) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
 			if(!SendToLateJoin(living_mob))
 				living_mob.move_to_error_room()
