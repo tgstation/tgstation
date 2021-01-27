@@ -6,7 +6,7 @@
 	temp_exponent_factor = 1.2
 	ph_exponent_factor = 0.8
 	purity_min = 0.25
-	rate_up_lim = 25
+	rate_up_lim = 35
 
 /datum/chemical_reaction/medicine/leporazine
 	results = list(/datum/reagent/medicine/leporazine = 2)

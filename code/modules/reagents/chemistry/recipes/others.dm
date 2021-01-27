@@ -337,7 +337,7 @@
 /datum/chemical_reaction/space_cleaner
 	results = list(/datum/reagent/space_cleaner = 2)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/water = 1)
-	rate_up_lim = 35
+	rate_up_lim = 40
 
 /datum/chemical_reaction/plantbgone
 	results = list(/datum/reagent/toxin/plantbgone = 5)

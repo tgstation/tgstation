@@ -28,7 +28,7 @@
 	ph_exponent_factor = 1.4
 	thermic_constant = 0.1 //exothermic nature is equal to impurty
 	H_ion_release = -0.025 
-	rate_up_lim = 10
+	rate_up_lim = 12.5
 	purity_min = 0.5 //100u will natrually just dip under this w/ no buffer
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
 	

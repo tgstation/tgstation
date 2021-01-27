@@ -240,9 +240,9 @@ export const ChemHeater = (props, context) => {
                           minValue={0}
                           maxValue={reaction.targetVol}
                           textAlign={'center'}
-                          icon={currentTemp > reaction.overheat ? "thermometer-full" : ""}
+                          icon={reaction.overheat ? "thermometer-full" : ""}
                           width={7}
-                          color={currentTemp > reaction.overheat ? "red" : "label"}>
+                          color={reaction.overheat ? "red" : "label"}>
                           {reaction.targetVol}u
                         </ProgressBar>
                       ) || (

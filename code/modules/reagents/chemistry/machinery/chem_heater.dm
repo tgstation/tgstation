@@ -79,6 +79,8 @@
 		return
 	if(on)
 		if(beaker?.reagents.total_volume)
+			if(beaker.reagents.is_reacting)//on_reaction_step() handles this
+				return
 			//keep constant with the chemical acclimator please
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
@@ -118,8 +120,10 @@
 	return ..()
 
 ///Forces a UI update every time a reaction step happens inside of the beaker it contains. This is so the UI is in sync with the reaction since it's important that the output matches the current conditions for pH adjustment and temperature.
-/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions)
+/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, delta_time)
 	SIGNAL_HANDLER
+	if(on)
+		holder.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume * (rand(9,11) * 0.1))
 	for(var/ui_client in ui_client_list)
 		var/datum/tgui/ui = ui_client
 		if(!ui)
@@ -194,6 +198,7 @@
 		var/datum/reagent/reagent = beaker?.reagents.get_reagent(_reagent) //Reactions are named after their primary products
 		if(!reagent)
 			continue
+		var/overheat = FALSE
 		var/danger = FALSE
 		var/purity_alert = 2 //same as flashing
 		if(reagent.purity < equilibrium.reaction.purity_min)
@@ -205,9 +210,11 @@
 		if(equilibrium.reaction.is_cold_recipe)
 			if(equilibrium.reaction.overheat_temp > beaker?.reagents.chem_temp)
 				danger = TRUE
+				overheat = TRUE
 		else
 			if(equilibrium.reaction.overheat_temp < beaker?.reagents.chem_temp)
 				danger = TRUE
+				overheat = TRUE
 		if(equilibrium.reaction.reaction_flags & REACTION_COMPETITIVE) //We have a compeitive reaction - concatenate the results for the different reactions 
 			for(var/entry in active_reactions)
 				if(entry["name"] == reagent.name) //If we have multiple reaction methods for the same result - combine them
@@ -216,7 +223,7 @@
 					entry["quality"] = (entry["quality"] + equilibrium.reaction_quality) /2
 					continue
 		active_reactions.len++
-		active_reactions[length(active_reactions)] = list("name" = reagent.name, "danger" = danger, "purityAlert" = purity_alert, "quality" = equilibrium.reaction_quality, "overheat" = equilibrium.reaction.overheat_temp, "inverse" = reagent.inverse_chem_val, "minPure" = equilibrium.reaction.purity_min, "reactedVol" = equilibrium.reacted_vol, "targetVol" = round(equilibrium.target_vol, 1))//Use the first result reagent to name the reaction detected
+		active_reactions[length(active_reactions)] = list("name" = reagent.name, "danger" = danger, "purityAlert" = purity_alert, "quality" = equilibrium.reaction_quality, "overheat" = overheat, "inverse" = reagent.inverse_chem_val, "minPure" = equilibrium.reaction.purity_min, "reactedVol" = equilibrium.reacted_vol, "targetVol" = round(equilibrium.target_vol, 1))//Use the first result reagent to name the reaction detected
 	data["activeReactions"] = active_reactions
 	data["isFlashing"] = flashing
 
