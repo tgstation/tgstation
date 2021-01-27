@@ -8,9 +8,13 @@
 	var/keep_cached_map = FALSE
 	var/station_id = null // used to override the root id when generating
 
+	///if true, turfs loaded from this template are placed on top of the turfs already there, defaults to TRUE
 	var/should_place_on_top = TRUE
 
+	///if true, creates a list of all atoms created by this template loading, defaults to FALSE
 	var/returns_created_atoms = FALSE
+
+	///the list of atoms created by this template being loaded, only populated if returns_created_atoms is TRUE
 	var/list/created_atoms = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
@@ -33,7 +37,7 @@
 
 /datum/map_template/proc/initTemplateBounds(list/bounds)
 	if (!bounds) //something went wrong
-		message_admins("[name] template failed to initialize!")
+		stack_trace("[name] template failed to initialize correctly!")
 		return
 
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
@@ -140,10 +144,10 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
+
 	var/list/turf_blacklist = list()
 	update_blacklist(T, turf_blacklist)
 
-	//parsed.returns_created_atoms = returns_created_atoms
 	parsed.turf_blacklist = turf_blacklist
 	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
 		return

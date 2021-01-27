@@ -1,7 +1,7 @@
 /*
 Map Template Holodeck
 
-Holodeck finds the location of mappedstartarea and loads offline_program in it on LateInitialize. It then loads the programs that have the
+Holodeck finds the location of mapped_start_area and loads offline_program in it on LateInitialize. It then loads the programs that have the
 same holodeck_access flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this
 flag). These program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
 ui calls load_program() with the id of the selected program.
@@ -20,8 +20,8 @@ of the holodeck you want them to be able to load, for the onstation holodeck the
 all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /turf/open/floor/engine, or they will block future programs!
 */
 
-#define HOLODECK_CD 20
-#define HOLODECK_DMG_CD 50
+#define HOLODECK_CD 2 SECONDS
+#define HOLODECK_DMG_CD 5 SECONDS
 
 
 /obj/machinery/computer/holodeck
@@ -36,7 +36,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	var/holodeck_access = STATION_HOLODECK
 
 	///what area type this holodeck loads into. linked turns into the nearest instance of this area
-	var/area/mappedstartarea = /area/holodeck/rec_center
+	var/area/mapped_start_area = /area/holodeck/rec_center
 
 	///the currently used map template
 	var/datum/map_template/holodeck/template
@@ -70,19 +70,18 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 
 	///TRUE if the holodeck is using extra power because of a program, FALSE otherwise
 	var/active = FALSE
-	///increases current_cd if TRUE, causing the holodeck to take longer to allow loading new programs
+	///increases the holodeck cooldown if TRUE, causing the holodeck to take longer to allow loading new programs
 	var/damaged = FALSE
 
-	///the time stored here is the next world.time that another holodeck program can be selected
-	var/current_cd = 0
-
+	//creates the timer that determines if another program can be manually loaded
+	COOLDOWN_DECLARE(holodeck_cooldown)
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
-	linked = GLOB.areas_by_type[mappedstartarea]
+	linked = GLOB.areas_by_type[mapped_start_area]
 	bottom_left = locate(linked.x, linked.y, src.z)
 
 	var/area/computer_area = get_area(src)
@@ -97,7 +96,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 		qdel(src)
 		return
 	else if (!offline_program)
-		log_world("Holodeck console created without an offline program")
+		stack_trace("Holodeck console created without an offline program")
 		qdel(src)
 		return
 
@@ -107,8 +106,9 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 		if(my_area)
 			linked.power_usage = my_area.power_usage
 		else
-			linked.power_usage = new /list(AREA_USAGE_LEN)
+			linked.power_usage = list(AREA_USAGE_LEN)
 
+	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
 	load_program(offline_program,TRUE)
 
@@ -174,10 +174,11 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
 	for (var/_turf in get_affected_turfs(placement))
 		var/turf/possible_blacklist = _turf
-		if (!istype(possible_blacklist, /turf/open/floor/holofloor))
-			if (istype(possible_blacklist, /turf/open/floor/engine))
-				continue
-			input_blacklist += possible_blacklist
+		if (istype(possible_blacklist, /turf/open/floor/holofloor))
+			continue
+		if (istype(possible_blacklist, /turf/open/floor/engine))
+			continue
+		input_blacklist += possible_blacklist
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
@@ -188,15 +189,15 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 		map_id = offline_program
 		force = TRUE
 
-	if (current_cd > world.time && !force)
+	if (!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force)
 		say("ERROR. Recalibrating projection apparatus.")
 		return
 
 	if (add_delay)
-		current_cd = world.time + HOLODECK_CD
-		if(damaged)
-			current_cd += HOLODECK_DMG_CD
+		COOLDOWN_START(src, holodeck_cooldown, (damaged ? HOLODECK_CD + HOLODECK_DMG_CD : HOLODECK_CD))
+		if (damaged && floorcheck())
 			damaged = FALSE
+
 	active = (map_id != offline_program)
 	use_power = active + IDLE_POWER_USE
 	program = map_id
@@ -307,9 +308,7 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	if(!floorcheck()) //if any turfs in the floor of the holodeck are broken
 		emergency_shutdown()
 		damaged = TRUE
-		for(var/mob/can_see_fuckup in urange(10,src))
-			can_see_fuckup.show_message("The holodeck overloads!")
-
+		visible_message("The holodeck overloads!")
 		for(var/turf/holo_turf in linked)
 			if(prob(30))
 				do_sparks(2, 1, holo_turf)
@@ -401,13 +400,12 @@ all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /t
 	emergency_shutdown()
 	return ..()
 
-
 /obj/machinery/computer/holodeck/offstation //second holodeck if you want to add one to a ruin :flushed:
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	offline_program = "holodeck_offline"
 	holodeck_access = HOLODECK_DEBUG | STATION_HOLODECK
-	mappedstartarea = /area/holodeck/rec_center/offstation_one
+	mapped_start_area = /area/holodeck/rec_center/offstation_one
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD

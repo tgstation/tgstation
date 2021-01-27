@@ -14,10 +14,9 @@ SUBSYSTEM_DEF(atoms)
 
 	var/list/BadInitializeCalls = list()
 
-
-	//var/creating_atoms_list = FALSE //if this is true then ssAtoms is currently recording every atom initialized from a map template
-	///initAtom() adds the atom its creating to this list if creating_atoms_list is true
+	///initAtom() adds the atom its creating to this list iff InitializeAtoms() has been given a list to populate as an argument
 	var/list/created_atoms
+	// ^ if this is not null after InitializeAtoms() is done, this list will fill up with every atom in the world initialized afterwards!
 
 	initialized = INITIALIZATION_INSSATOMS
 
@@ -38,7 +37,7 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 
 	if (atoms_to_return)
-		created_atoms = list()
+		LAZYINITLIST(created_atoms)
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
@@ -72,9 +71,7 @@ SUBSYSTEM_DEF(atoms)
 
 	if (created_atoms)
 		atoms_to_return += created_atoms
-		created_atoms.Cut()
 		created_atoms = null
-
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)

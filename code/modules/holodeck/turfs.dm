@@ -2,7 +2,7 @@
 	icon_state = "floor"
 	thermal_conductivity = 0
 	flags_1 = NONE
-	var/direction = 2
+	var/direction = SOUTH
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
