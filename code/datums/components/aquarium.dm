@@ -87,7 +87,7 @@
 /// Our aquarium is hit with stuff
 /datum/component/aquarium_content/proc/attack_reaction(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
-	if(istype(thing,/obj/item/fish_feed))
+	if(istype(thing, /obj/item/fish_feed))
 		properties.on_feeding(thing.reagents)
 		return COMPONENT_NO_AFTERATTACK
 	else
