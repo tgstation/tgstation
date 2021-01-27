@@ -79,18 +79,10 @@
 		G = new G
 		myseed.genes += G
 	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
-	setDir(CalcDir())
+	setDir(turn(CalcDir(), 180))
 	base_icon_state = initial(icon_state)
 	if(!floor)
-		switch(dir) //offset to make it be on the wall rather than on the floor
-			if(NORTH)
-				pixel_y = 32
-			if(SOUTH)
-				pixel_y = -32
-			if(EAST)
-				pixel_x = 32
-			if(WEST)
-				pixel_x = -32
+		AddElement(/datum/element/wall_mount)
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
