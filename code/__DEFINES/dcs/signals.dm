@@ -237,7 +237,7 @@
 #define COMSIG_TURF_HAS_GRAVITY "turf_has_gravity"
 ///from base of turf/New(): (turf/source, direction)
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
-///from base of turf/proc/onShuttleMove(): (turf/newT)
+///from base of turf/proc/onShuttleMove(): (turf/newT) //E
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 
 // /atom/movable signals
