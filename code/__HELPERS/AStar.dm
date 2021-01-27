@@ -89,11 +89,11 @@ Actual Adjacent procs :
 //////////////////////
 
 //the weighting function, used in the A* algorithm
-/proc/PathWeightCompare(datum/pathnode/a, datum/pathnode/b)
+/proc/PathWeightCompare(datum/jpsnode/a, datum/jpsnode/b)
 	return a.f - b.f
 
 //reversed so that the Heap is a MinHeap rather than a MaxHeap
-/proc/HeapPathWeightCompare(datum/pathnode/a, datum/pathnode/b)
+/proc/HeapPathWeightCompare(datum/jpsnode/a, datum/jpsnode/b)
 	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
@@ -138,7 +138,8 @@ Actual Adjacent procs :
 	var/list/openc = new() //open list for node check
 	var/list/path = null //the returned path, if any
 	//initialization
-	var/datum/pathnode/cur = new /datum/pathnode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
+	// RYLL NOTE: vvv HAD G=0, THAT WAS PROBABLY IMPORTANT
+	var/datum/jpsnode/cur = new /datum/jpsnode(start,null,call(start,dist)(end),0,15,1)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
 	//then run the main loop
@@ -168,7 +169,7 @@ Actual Adjacent procs :
 					var/T = get_step(cur.source,f)
 					if(T == exclude) // RYLL: should this be a typecheck?
 						continue
-					var/datum/pathnode/CN = openc[T]  //see if this turf is in the open list
+					var/datum/jpsnode/CN = openc[T]  //see if this turf is in the open list
 					var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
 					var/newg = cur.g + call(cur.source,dist)(T)
 					if(CN)
