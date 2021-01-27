@@ -18,12 +18,9 @@ export const Aquarium = (props, context) => {
       height={400}
       resizable>
       <Window.Content>
-        <Section
-          title="Aquarium Controls"
-        >
+        <Section title="Aquarium Controls">
           <LabeledControls>
-            <LabeledControls.Item
-              label="Temperature">
+            <LabeledControls.Item label="Temperature">
               <Knob
                 size={1.25}
                 mb={1}
