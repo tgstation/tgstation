@@ -136,7 +136,7 @@
 	var/number = max(targets.len * (4-(targets.len-1)) - smashes.len,1)
 
 	for(var/iter_smash in smashes)
-	    var/obj/effect/reality_smash/smash = iter_smash
+		var/obj/effect/reality_smash/smash = iter_smash
 		smash.alt_appearance.add_to_hud(caller)
 
 	for(var/i in 0 to number)
