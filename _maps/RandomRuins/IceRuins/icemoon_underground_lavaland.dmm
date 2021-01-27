@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random/volcanic,
-/area/icemoon/underground/unexplored)
+/turf/open/genturf,
+/area/lavaland/surface/outdoors/unexplored/danger)
 "b" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored)
@@ -36,8 +36,9 @@
 	},
 /area/icemoon/underground)
 "H" = (
-/obj/machinery/door/airlock/cult/friendly,
-/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/cult/friendly{
+	use_power = 0
+	},
 /turf/open/floor/plasteel/cult,
 /area/icemoon/underground)
 "J" = (

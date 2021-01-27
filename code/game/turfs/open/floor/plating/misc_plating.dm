@@ -254,6 +254,9 @@
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
+/turf/open/floor/plating/ice/icemoon/no_planet_atmos
+	planetary_atmos = FALSE
+
 /turf/open/floor/plating/snowed
 	name = "snowed-over plating"
 	desc = "A section of heated plating, helps keep the snow from stacking up too high."
