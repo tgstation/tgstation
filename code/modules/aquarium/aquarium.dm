@@ -201,7 +201,7 @@
 		if("temperature")
 			var/temperature = params["temperature"]
 			if(isnum(temperature))
-				fluid_temp = clamp(temperature,min_fluid_temp,max_fluid_temp)
+				fluid_temp = clamp(temperature, min_fluid_temp, max_fluid_temp)
 				. = TRUE
 		if("fluid")
 			if(params["fluid"] in fluid_types)
