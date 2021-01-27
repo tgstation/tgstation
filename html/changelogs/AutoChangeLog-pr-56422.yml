@@ -1,0 +1,4 @@
+author: "NotRanged"
+delete-after: True
+changes: 
+  - bugfix: "Fixes hallucinations occasionally lasting forever due to negative values."
