@@ -25,7 +25,7 @@
 		CRASH("Invalid property type provided for aquarium content component")
 	properties.parent = src
 
-	ADD_TRAIT(parent,TRAIT_FISH_CASE_COMPATIBILE,src)
+	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/enter_aquarium)
 
 /datum/component/aquarium_content/PreTransfer()
@@ -156,8 +156,8 @@
 		var/matrix/dir_mx = properties.base_transform()
 		if(dx <= 0) //assuming default sprite is facing left here
 			dir_mx.Scale(-1, 1)
-		animate(transform=dir_mx,time=0,loop = -1)
-		animate(pixel_x=target_x,pixel_y = target_y, time = eyeballed_time, loop = -1)
+		animate(transform = dir_mx, time = 0, loop = -1)
+		animate(pixel_x = target_x, pixel_y = target_y, time = eyeballed_time, loop = -1)
 
 /datum/component/aquarium_content/proc/dead_animation()
 	//Set base_py to lowest possible value
@@ -176,8 +176,8 @@
 /datum/component/aquarium_content/proc/set_vc_base_position()
 	var/list/aq_properties = current_aquarium.get_surface_properties()
 	if(properties.randomize_position)
-		var/avg_width = round(properties.sprite_width/2)
-		var/avg_height = round(properties.sprite_height/2)
+		var/avg_width = round(properties.sprite_width / 2)
+		var/avg_height = round(properties.sprite_height / 2)
 		var/px_min = aq_properties[AQUARIUM_PROPERTIES_PX_MIN] + avg_width - 16
 		var/px_max = aq_properties[AQUARIUM_PROPERTIES_PX_MAX] - avg_width - 16
 		var/py_min = aq_properties[AQUARIUM_PROPERTIES_PY_MIN] + avg_height - 16

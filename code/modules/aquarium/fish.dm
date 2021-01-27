@@ -23,7 +23,7 @@
 	return fish
 
 /// Returns random fish, using random_case_rarity probabilities.
-/proc/random_fish_type(case_fish_only=TRUE,required_fluid)
+/proc/random_fish_type(case_fish_only=TRUE, required_fluid)
 	var/static/probability_table
 	var/argkey = "fish_[required_fluid]_[case_fish_only]" //If this expands more extract bespoke element arg generation to some common helper.
 	if(!probability_table || !probability_table[argkey])

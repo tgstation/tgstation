@@ -28,7 +28,7 @@
 	var/aquarium_zone_min_py = 10
 	var/aquarium_zone_max_py = 24
 
-	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER,AQUARIUM_FLUID_FRESHWATER,AQUARIUM_FLUID_SULPHWATEVER,AQUARIUM_FLUID_AIR)
+	var/list/fluid_types = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER, AQUARIUM_FLUID_AIR)
 
 	var/panel_open = TRUE
 

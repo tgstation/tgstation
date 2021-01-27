@@ -5,7 +5,6 @@
 
 /datum/component/storage/concrete/fish_case/can_be_inserted(obj/item/I, stop_messages, mob/M)
 	/// Activate deferred components if any.
-	SEND_SIGNAL(I,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK)
+	SEND_SIGNAL(I, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK)
 	. = ..()
-
 

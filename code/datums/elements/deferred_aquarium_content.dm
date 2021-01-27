@@ -23,5 +23,5 @@
 /datum/element/deferred_aquarium_content/proc/create_aquarium_component(datum/source)
 	SIGNAL_HANDLER
 
-	source.AddComponent(/datum/component/aquarium_content,aquarium_content_type)
+	source.AddComponent(/datum/component/aquarium_content, aquarium_content_type)
 	Detach(source)

@@ -11,7 +11,7 @@
 /obj/item/fish_feed/Initialize()
 	. = ..()
 	create_reagents(5, OPENCONTAINER)
-	reagents.add_reagent(/datum/reagent/consumable/nutriment,1) //Default fish diet
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, 1) //Default fish diet
 
 // Stasis fish case container for moving fish between aquariums safely.
 /obj/item/storage/fish_case
@@ -27,12 +27,12 @@
 
 /obj/item/storage/fish_case/Initialize()
 	. = ..()
-	ADD_TRAIT(src,TRAIT_FISH_SAFE_STORAGE,TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_INNATE)
 
 /// Fish case with single random fish inside.
 /obj/item/storage/fish_case/random/PopulateContents()
 	. = ..()
-	generate_fish(src,select_fish_type())
+	generate_fish(src, select_fish_type())
 
 /obj/item/storage/fish_case/random/proc/select_fish_type()
 	return random_fish_type()

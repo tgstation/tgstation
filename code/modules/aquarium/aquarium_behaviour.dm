@@ -62,7 +62,7 @@
 	if(!dedicated_in_aquarium_icon_state)
 		var/x_scale = sprite_width / source_width
 		var/y_scale = sprite_height / source_height
-		matrix.Scale(x_scale,y_scale)
+		matrix.Scale(x_scale, y_scale)
 	return matrix
 
 /// Called when fed.
@@ -80,14 +80,14 @@
 /// Called when inserted into new aquarium
 /datum/aquarium_behaviour/proc/on_inserted()
 	if(processing)
-		START_PROCESSING(SSobj,src)
+		START_PROCESSING(SSobj, src)
 
 /// Called just before the object gets removed from the aquarium
 /datum/aquarium_behaviour/proc/before_removal()
 	return
 
 /datum/aquarium_behaviour/Destroy(force, ...)
-	STOP_PROCESSING(SSobj,src)
+	STOP_PROCESSING(SSobj, src)
 	parent = null
 	return ..()
 
@@ -226,12 +226,12 @@
 		health_change_per_second -= 0.5 //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
-	health = clamp(health + health_change_per_second*delta_time,0,initial(health))
+	health = clamp(health + health_change_per_second * delta_time, 0, initial(health))
 	if(health <= 0)
 		death()
 
 /datum/aquarium_behaviour/fish/proc/death()
-	STOP_PROCESSING(SSobj,src)
+	STOP_PROCESSING(SSobj, src)
 	status = FISH_DEAD
 	var/message = "<span class='notice'>\The [name] dies.</span>"
 	if(parent.current_aquarium)
