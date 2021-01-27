@@ -13,9 +13,9 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/Initialize(timeofday)
 
 	//If doing unit tests we don't do none of that trait shit ya know?
-#ifdef UNIT_TESTS
+	#ifdef UNIT_TESTS
     return ..()
-#endif
+	#endif
 
 	SetupTraits()
 	return ..()
