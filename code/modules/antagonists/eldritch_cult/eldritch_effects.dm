@@ -274,6 +274,10 @@
 	generate_name()
 
 /obj/effect/reality_smash/Destroy()
+	on_destroy()
+	return ..()
+
+/obj/effect/reality_smash/proc/on_destroy()
 	for(var/cm in minds)
 		var/datum/mind/cultie = cm
 		if(cultie.current?.client)
@@ -281,6 +285,8 @@
 		//clear the list
 		minds -= cultie
 	img = null
+	var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location())
+	illusion.name = pick("Researched","Siphoned","Analyzed","Emptied","Drained") + " " + name
 
 ///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(datum/mind/cultie)
