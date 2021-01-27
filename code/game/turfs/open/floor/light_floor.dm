@@ -9,7 +9,6 @@
 	light_range = 5
 	icon_state = "light_on-1"
 	floor_tile = /obj/item/stack/tile/light
-	broken_states = list("light_broken")
 	///var to see if its on or off
 	var/on = TRUE
 	///defines on top
@@ -23,6 +22,9 @@
 	tiled_dirt = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
+
+/turf/open/floor/light/setup_broken_states()
+	return list("light_broken")
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()

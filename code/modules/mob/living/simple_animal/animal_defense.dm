@@ -1,7 +1,9 @@
 
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
-	..()
+	// so that martial arts don't double dip
+	if (..())
+		return TRUE
 	switch(M.a_intent)
 		if("help")
 			if (stat == DEAD)
