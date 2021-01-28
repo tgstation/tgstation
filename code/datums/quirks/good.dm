@@ -59,15 +59,6 @@
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
 
-/datum/quirk/extrovert
-	name = "Extrovert"
-	desc = "You are energized by talking to others, and enjoy spending your free time in the bar."
-	value = 1
-	mob_trait = TRAIT_EXTROVERT
-	gain_text = "<span class='notice'>You feel like hanging out with other people.</span>"
-	lose_text = "<span class='danger'>You feel like you're over the bar scene.</span>"
-	medical_record_text = "Patient will not shut the hell up."
-
 /datum/quirk/fan_clown
 	name = "Clown Fan"
 	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
@@ -126,15 +117,6 @@
 	lose_text = "<span class='danger'>You no longer feel compelled to hug others.</span>"
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates low-inhibitions for physical contact and well-developed arms. Requesting another doctor take over this case."
-
-/datum/quirk/introvert
-	name = "Introvert"
-	desc = "You are energized by having time to yourself, and enjoy spending your free time in the library."
-	value = 1
-	mob_trait = TRAIT_INTROVERT
-	gain_text = "<span class='notice'>You feel like reading a good book quietly.</span>"
-	lose_text = "<span class='danger'>You feel like libraries are boring.</span>"
-	medical_record_text = "Patient doesn't seem to say much."
 
 /datum/quirk/jolly
 	name = "Jolly"
