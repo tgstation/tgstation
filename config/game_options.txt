@@ -278,7 +278,7 @@ DISABLE_SECBORG
 
 ## Standard Borg ###
 ## Uncomment to prevent the standard cyborg model from being chosen
-DISABLE_STANDARDBORG
+#DISABLE_STANDARDBORG
 
 ## AWAY MISSIONS ###
 
