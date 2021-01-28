@@ -199,6 +199,11 @@
 	set_model = /obj/item/robot_model/service
 	icon_state = "brobot"
 
+// --------------------- Standard
+/mob/living/silicon/robot/model/standard
+	set_model = /obj/item/robot_model/standard
+	icon_state = "robot" //redundant, but here anyway for clarity
+
 // ------------------------------------------ Syndie borgs
 // --------------------- Syndicate Assault
 /mob/living/silicon/robot/model/syndicate

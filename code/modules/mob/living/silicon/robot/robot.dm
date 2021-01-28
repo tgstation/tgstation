@@ -146,6 +146,8 @@
 		model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
 		model_list["Security"] = /obj/item/robot_model/security
+	if(!CONFIG_GET(flag/disable_standardborg))
+		model_list["Standard"] = /obj/item/robot_model/standard
 
 	var/input_model = input("Please, select a model!", "Robot", null, null) as null|anything in sortList(model_list)
 	if(!input_model || model.type != /obj/item/robot_model)

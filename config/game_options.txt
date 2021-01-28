@@ -270,11 +270,15 @@ ALLOW_AI_MULTICAM
 
 ## Secborg ###
 ## Uncomment to prevent the security cyborg model from being chosen
-#DISABLE_SECBORG
+DISABLE_SECBORG
 
 ## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg model from being chosen
 #DISABLE_PEACEBORG
+
+## Standard Borg ###
+## Uncomment to prevent the standard cyborg model from being chosen
+DISABLE_STANDARDBORG
 
 ## AWAY MISSIONS ###
 

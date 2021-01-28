@@ -513,6 +513,29 @@
 			return FALSE
 	return ..()
 
+// --------------------- Standard
+/obj/item/robot_model/standard
+	name = "Standard"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/reagent_containers/borghypo/epi,
+		/obj/item/healthanalyzer,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/extinguisher,
+		/obj/item/pickaxe/cyborg,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/soap/nanotrasen,
+		/obj/item/borg/cyborghug)
+	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
+	moduleselect_icon = "standard"
+	hat_offset = -3
+
 // ------------------------------------------ Syndicate
 // --------------------- Syndicate Assault
 /obj/item/robot_model/syndicate

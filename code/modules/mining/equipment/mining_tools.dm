@@ -63,6 +63,16 @@
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
+/obj/item/pickaxe/cyborg
+	name = "cyborg pickaxe"
+	desc = "An integrated pickaxe."
+
+/obj/item/pickaxe/cyborg/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	if(CONFIG_GET(flag/disable_standardborg)) //rip
+		desc = "I used to rule the world..."
+
 /obj/item/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
