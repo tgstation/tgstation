@@ -15866,9 +15866,12 @@
 /area/quartermaster/warehouse)
 "aPl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm{
+/obj/effect/turf_decal/delivery,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
 	dir = 8;
-	pixel_x = 28
+	freq = 1400;
+	location = "QM #2"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
@@ -16319,33 +16322,9 @@
 /area/quartermaster/warehouse)
 "aQr" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
-	location = "QM #4"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/warehouse)
-"aQs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/item/airlock_painter/decal,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/warehouse)
-"aQt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aQu" = (
@@ -16962,28 +16941,16 @@
 /area/quartermaster/storage)
 "aRK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/internals,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plasteel,
+/obj/vehicle/sealed/mecha/working/ripley/cargo,
+/turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "aRL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/airlock_painter/decal,
 /obj/machinery/power/apc/auto_name/east,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
-	location = "QM #3"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/mob/living/simple_animal/bot/mulebot{
-	home_destination = "QM #3";
-	suffix = "#3"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aRQ" = (
@@ -27405,23 +27372,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
 "bqk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
-	location = "QM #1"
+/obj/machinery/mech_bay_recharge_port,
+/obj/structure/sign/poster/official/safety_report{
+	pixel_y = -32
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/mob/living/simple_animal/bot/mulebot{
-	beacon_freq = 1400;
-	home_destination = "QM #1";
-	suffix = "#1"
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "bql" = (
 /obj/structure/disposalpipe/segment{
@@ -58489,16 +58444,11 @@
 /area/crew_quarters/bar)
 "fok" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	dir = 8;
-	freq = 1400;
-	location = "QM #2"
+/obj/structure/rack,
+/obj/item/clothing/shoes/wheelys/rollerskates{
+	pixel_y = 5
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
+/obj/item/clothing/shoes/wheelys/rollerskates,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "fos" = (
@@ -65265,6 +65215,17 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/qm)
+"kEf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	dir = 8;
+	freq = 1400;
+	location = "QM #1"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "kEz" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
@@ -69727,6 +69688,14 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
+"ojT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "okr" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood{
@@ -82513,6 +82482,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"ydr" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate/internals,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/quartermaster/warehouse)
 "ydI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -103169,7 +103144,7 @@ aRS
 asY
 aNQ
 lxQ
-aQs
+aXA
 aSZ
 aSZ
 aUl
@@ -103426,7 +103401,7 @@ bOq
 aNY
 aNR
 ivz
-aQt
+aYJ
 aSZ
 dhy
 aUm
@@ -103683,7 +103658,7 @@ wKC
 aPq
 aQy
 aQq
-aXA
+ydr
 dCx
 dhy
 rVn
@@ -103938,9 +103913,9 @@ aIw
 aSZ
 aLe
 aQq
-aQq
+ojT
 aPl
-aYJ
+kEf
 aSZ
 ewb
 rVn
