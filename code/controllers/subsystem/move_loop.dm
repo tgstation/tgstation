@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(movement_loop)
 	processing -= loop
 	currentrun -= loop
 	lookup -= moving
-	loop.kill()
+	qdel(loop)
 
 /datum/controller/subsystem/movement_loop/fire(resumed)
 	if(!resumed)
@@ -221,11 +221,12 @@ SUBSYSTEM_DEF(movement_loop)
 	RegisterSignal(moving, COMSIG_PARENT_QDELETING, .proc/handle_delete)
 	return TRUE
 
-/datum/move_loop/proc/kill()
+/datum/move_loop/Destroy()
 	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
 	if(!QDELETED(moving))
-		UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
 		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
+	return ..()
 
 /datum/move_loop/proc/handle_delete()
 	SIGNAL_HANDLER
@@ -281,7 +282,7 @@ SUBSYSTEM_DEF(movement_loop)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because of reasons
 
 
-/datum/move_loop/has_target/kill()
+/datum/move_loop/has_target/Destroy()
 	if(!isturf(target))
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	return ..()
@@ -366,7 +367,7 @@ SUBSYSTEM_DEF(movement_loop)
 		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 
 
-/datum/move_loop/has_target/move_towards/kill()
+/datum/move_loop/has_target/move_towards/Destroy()
 	if(home)
 		if(ismovable(target))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
