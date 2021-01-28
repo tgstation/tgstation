@@ -254,7 +254,7 @@
 			return
 		switch(choice)
 			if("Title")
-				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:", ascii_only = FALSE))
+				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if (length_char(newtitle) > 30)
