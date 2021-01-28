@@ -68920,9 +68920,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
 "cGK" = (
 /obj/machinery/door/airlock{
@@ -112119,9 +112117,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
 "sPv" = (
 /obj/structure/bed,
