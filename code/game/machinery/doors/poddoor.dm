@@ -15,8 +15,8 @@
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	poddoor = TRUE
-	var/ertblast = FALSE
-	var/deconstruction = INTACT
+	var/ertblast = FALSE //If this is true the blast door cannot be deconstructed
+	var/deconstruction = INTACT //For the deconstruction steps
 
 /obj/machinery/door/poddoor/multitool_act(mob/living/user)
 	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
