@@ -66,8 +66,6 @@
 
 /datum/config_entry/flag/disable_peaceborg		// removes the peacekeeper model from the list of models that cyborgs can turn into.
 
-/datum/config_entry/flag/disable_standardborg	// removes the standard model from the list of models that cyborgs can turn into.
-
 /datum/config_entry/flag/disable_warops
 
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors

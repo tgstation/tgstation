@@ -276,10 +276,6 @@ DISABLE_SECBORG
 ## Uncomment to prevent the peacekeeper cyborg model from being chosen
 #DISABLE_PEACEBORG
 
-## Standard Borg ###
-## Uncomment to prevent the standard cyborg model from being chosen
-DISABLE_STANDARDBORG
-
 ## AWAY MISSIONS ###
 
 ## Uncomment to load the virtual reality hub map

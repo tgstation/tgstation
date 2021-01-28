@@ -65,13 +65,11 @@
 
 /obj/item/pickaxe/cyborg
 	name = "cyborg pickaxe"
-	desc = "An integrated pickaxe."
+	desc = "I used to rule the world..."
 
 /obj/item/pickaxe/cyborg/Initialize()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-	if(CONFIG_GET(flag/disable_standardborg)) //rip
-		desc = "I used to rule the world..."
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)	
 
 /obj/item/pickaxe/drill
 	name = "mining drill"
