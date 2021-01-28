@@ -139,8 +139,8 @@
 	scanner.attach(src)
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo
-	desc = "An ailing, old, repurposed cargo hauler"
-	name = "\improper APLU \"Cargo\""
+	desc = "An ailing, old, repurposed cargo hauler."
+	name = "\improper APLU \"Big Bess\""
 	max_equip = 2
 	obj_integrity = 50 //Low starting health
 
