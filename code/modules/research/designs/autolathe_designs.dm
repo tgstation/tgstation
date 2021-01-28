@@ -1203,3 +1203,11 @@
 	materials = list(/datum/material/iron = 75)
 	build_path = /obj/item/chisel
 	category = list("initial","Tools")
+
+/datum/design/control
+	name = "Blast Door Controller"
+	id = "blast"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
+	build_path = /obj/item/assembly/control
+	category = list("initial","Misc")
