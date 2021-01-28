@@ -224,7 +224,7 @@
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "pH" = temp.ph, "pHCol" = ConvertpHToCol(temp.ph))))
+			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "pH" = temp.ph, "pHCol" = convert_ph_to_readable_color(temp.ph))))
 	data["chemicals"] = chemicals
 	data["recipes"] = saved_recipes
 
@@ -337,6 +337,8 @@
 				return
 			recording_recipe = null
 			. = TRUE
+		if("reaction_lookup")
+			beaker.reagents.ui_interact(user)
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
@@ -407,32 +409,6 @@
 		beaker = new_beaker
 	update_icon()
 	return TRUE
-
-//Converts the pH into a tgui readable color
-/obj/machinery/chem_dispenser/proc/ConvertpHToCol(pH)
-	switch(pH)
-		if(-INFINITY to 1)
-			return "red"
-		if(1 to 2)
-			return "orange"
-		if(2 to 3)
-			return "average"
-		if(3 to 4)
-			return "yellow" 
-		if(4 to 5)
-			return "olive"
-		if(5 to 6)
-			return "good"
-		if(6 to 8)
-			return "green"
-		if(8 to 9.5)
-			return "teal"
-		if(9.5 to 11)
-			return "blue"
-		if(11 to 12.5)
-			return "violet"
-		if(12.5 to INFINITY)
-			return "purple"
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null

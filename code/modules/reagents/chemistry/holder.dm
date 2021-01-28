@@ -1,3 +1,7 @@
+#define REAGENTS_UI_MODE_LOOKUP 0
+#define REAGENTS_UI_MODE_REAGENT 1
+#define REAGENTS_UI_MODE_RECIPE 2
+
 /////////////These are used in the reagents subsystem init() and the reagent_id_typos.dm////////
 /proc/build_chemical_reagent_list()
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -74,6 +78,11 @@
 	var/list/failed_but_capable_reactions
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
+	///UI lookup stuff
+	///Keeps a bitflag to keep track of what to display if the ui is down. Trying to keep this as minimal as possible
+	var/ui_state = null
+	///var (typepath) that keeps the reaction OR reagent to be analysed
+	var/ui_id
 
 /datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
@@ -1452,6 +1461,135 @@
 			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
+
+/////////////////////////////////////////////////////////////////////////////////
+///////////////////////////UI / REAGENTS LOOKUP CODE/////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+
+/datum/reagents/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Reagents", "Reaction search")
+		ui.open()
+	
+/datum/reagents/proc/generate_possible_reactions()
+	var/list/cached_reagents = reagent_list
+	var/list/cached_reactions = GLOB.chemical_reactions_list
+	var/list/possible_reactions = list()
+	for(var/_reagent in cached_reagents)
+		var/datum/reagent/reagent = _reagent
+		for(var/_reaction in cached_reactions[reagent.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
+			var/datum/chemical_reaction/reaction = _reaction
+			if(!_reaction)
+				continue
+			if(!reaction.required_reagents)//Don't bring in empty ones
+				continue
+			var/list/cached_required_reagents = reaction.required_reagents
+			var/total_matching_reagents = 0
+			for(var/req_reagent in cached_required_reagents)
+				if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent]*0.01)))
+					continue
+				total_matching_reagents++
+			if(total_matching_reagents >= reagent_list.len)
+				possible_reactions += reaction
+	return possible_reactions
+
+/datum/reagents/ui_data(mob/user)
+	var/data = list()
+	if(ui_state == null) //First time running
+		ui_state = REAGENTS_UI_MODE_LOOKUP
+	
+
+	//reagent lookup data
+	if (ui_state == REAGENTS_UI_MODE_REAGENT)
+		var/datum/reagent/reagent = find_reagent(ui_id)
+		if(!reagent)
+			say("Could not find reagent!")
+			ui_state = REAGENTS_UI_MODE_LOOKUP
+			break
+		data["reagent_mode_reagent"] = list("name" = reagent.name, "desc" = reagent.description, "reagentCol" = reagent.col, "pH" = reagent.ph, "pHCol" = convert_ph_to_readable_color(temp.ph))
+		var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
+		if(impure_reagent)
+			data["reagent_mode_reagent"] += list("impureReagent" = impure_reagent.name, "impureId" = impure_reagent.type)
+		var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
+		if(inverse_reagent)
+			data["reagent_mode_reagent"] += list("impureReagent" = inverse_reagent.name, "impureId" = inverse_reagent.type)
+		var/datum/reagent/failed_reagent = GLOB.chemical_reagents_list[reagent.failed_chem]
+		if(failed_reagent)
+			data["reagent_mode_reagent"] += list("impureReagent" = failed_reagent.name, "impureId" = failed_reagent.type)
+		if(chemical_flags & REAGENT_DEAD_PROCESS)
+			data["reagent_mode_reagent"] += list("deadProcess" = TRUE)
+
+	//reaction lookup data
+	else if (ui_state == REAGENTS_UI_MODE_RECIPE)
+		var/datum/chemical_reaction/reaction = get_chemical_reaction(ui_id)
+		if(!reaction)
+			say("Could not find reaction!")
+			ui_state = REAGENTS_UI_MODE_LOOKUP
+			break
+		
+
+	//reaction determin vars
+	//This is last - and not an else if. If either of the above fail to find a reagent, it defaults to this.
+	if(ui_state == REAGENTS_UI_MODE_LOOKUP)
+		var/list/possible_reactions = generate_possible_reactions()
+		if(!possible_reactions) //We can't make anything!
+			return null
+		var/list/reaction_data = list()
+		for(var/_reaction in possible_reactions)
+			var/datum/chemical_reaction/reaction = _reaction
+			reaction_data.len++
+			//reaction specific vars
+			reaction_data[length(reaction_data)] = list("name" = reagent.name, "overheat" = overheat, "inverse" = reagent.inverse_chem_val, "minPure" = equilibrium.reaction.purity_min)//Use the first result reagent to name the reaction detected
+			//reagent vars
+			for(var/_reagent in reaction.required_reagents)
+				var/datum/reagent/reagent
+				reaction_data[length(reaction_data)]["required_reagents"] += list(list("name" = reagent.name, "ph" = reagent.ph, "color" = reagent.color))
+
+	else
+		stack_trace("ui_data for reagents was set to an invalid number")
+
+/datum/reagents/ui_act(action, params)
+		. = ..()
+	if(.)
+		return
+	switch(action)
+		if("reagent_click")
+			ui_state = REAGENTS_UI_MODE_REAGENT
+			ui_id = params["id"]
+			return TRUE
+		if("recipe_click")
+			ui_state = REAGENTS_UI_MODE_RECIPE
+			ui_id = params["id"]
+			return TRUE
+		if("back")
+			ui_id = null
+			ui_state = REAGENTS_UI_MODE_LOOKUP
+			return TRUE
+		if("search_reagents")
+			var/input_reagent = (input("Enter the name of any reagent", "Input") as text|null)
+			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
+			var/datum/reagent/reagent = find_reagent(input_reagent)
+			if(!reagent)
+				say("Could not find reagent!")
+				return
+			ui_state = REAGENTS_UI_MODE_REAGENT
+			ui_id = reagent.type
+		if("search_recipe")
+			var/input_reagent = (input("Enter the name of any reagent", "Input") as text|null)
+			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
+			var/datum/reagent/reagent = find_reagent(input_reagent)
+			if(!reagent)
+				say("Could not find product reagent!")
+				return
+			var/datum/chemical_reaction/reaction = get_recipe_from_reagent_product(reagent.type)
+			if(!reaction)
+				say("Could not find associated reaction!")
+				return
+			ui_state = REAGENTS_UI_MODE_RECIPE
+			ui_id = reaction.type
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1467,19 +1605,3 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
-
-/proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents
-	var/static/list/random_reagents = list()
-	if(!random_reagents.len)
-		for(var/thing in subtypesof(/datum/reagent))
-			var/datum/reagent/R = thing
-			if(initial(R.can_synth))
-				random_reagents += R
-	var/picked_reagent = pick(random_reagents)
-	return picked_reagent
-
-/proc/get_chem_id(chem_name)
-	for(var/X in GLOB.chemical_reagents_list)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		if(ckey(chem_name) == ckey(lowertext(R.name)))
-			return X

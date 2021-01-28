@@ -89,3 +89,87 @@
 		return
 	for(var/mob/M in viewers(5, location))
 		to_chat(M, notification)
+
+///Converts the pH into a tgui readable color - i.e. white and black text is readable over it. This is NOT the colourwheel for pHes however.
+/proc/convert_ph_to_readable_color(pH)
+	switch(pH)
+		if(-INFINITY to 1)
+			return "red"
+		if(1 to 2)
+			return "orange"
+		if(2 to 3)
+			return "average"
+		if(3 to 4)
+			return "yellow" 
+		if(4 to 5)
+			return "olive"
+		if(5 to 6)
+			return "good"
+		if(6 to 8)
+			return "green"
+		if(8 to 9.5)
+			return "teal"
+		if(9.5 to 11)
+			return "blue"
+		if(11 to 12.5)
+			return "violet"
+		if(12.5 to INFINITY)
+			return "purple"
+
+///Returns a list of chemical_reaction datums that have the input STRING as a product
+/proc/get_reagent_type_from_product_string(string)
+	var/input_reagent = replacetext(lowertext(string), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name
+	if (isnull(input_reagent))
+		return
+
+	var/list/shortcuts = list("meth" = /datum/reagent/drug/methamphetamine)
+	if(shortcuts[input_reagent])
+		input_reagent = shortcuts[input_reagent]
+	else
+		input_reagent = find_reagent(input_reagent)
+	return input_reagent
+
+///Returns reagent datum from typepath
+/proc/find_reagent(input)
+	. = FALSE
+	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
+		return input
+	else
+		return get_chem_id(input)
+
+///Returns a random reagent ID minus blacklisted reagents
+/proc/get_random_reagent_id()	
+	var/static/list/random_reagents = list()
+	if(!random_reagents.len)
+		for(var/thing in subtypesof(/datum/reagent))
+			var/datum/reagent/R = thing
+			if(initial(R.can_synth))
+				random_reagents += R
+	var/picked_reagent = pick(random_reagents)
+	return picked_reagent
+
+///Returns reagent datum from reagent name
+/proc/get_chem_id(chem_name)
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+		if(ckey(chem_name) == ckey(lowertext(R.name)))
+			return X
+
+///Takes a type in and returns a list of associated recipes
+///Expensive - try to avoid using this at all costs
+/proc/get_recipe_from_reagent_product(input_type)
+	if(!input_type)
+		return
+	var/matching_reactions = list()
+	var/cached_reactions = list()
+	for(var/V in GLOB.chemical_reactions_list)
+		if(is_type_in_list(GLOB.chemical_reactions_list[V], cached_reactions))
+			continue
+		cached_reactions += GLOB.chemical_reactions_list[V]
+	for(var/datum/chemical_reaction/reaction in cached_reactions)
+		for(var/_reagent in reaction.results)
+			var/datum/reagent/reagent = _reagent
+			if(ispath(reagent.type, input_type))
+				matching_reactions += reaction
+				break
+	return matching_reactions
