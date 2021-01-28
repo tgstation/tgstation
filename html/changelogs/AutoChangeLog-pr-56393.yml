@@ -1,0 +1,4 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - rscadd: "Adds a surrender button that pops up when you are at gunpoint that can be pressed to do the *surrender emote"

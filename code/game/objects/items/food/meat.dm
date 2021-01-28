@@ -34,6 +34,11 @@
 	name = "imitation carp fillet"
 	desc = "Almost just like the real thing, kinda."
 
+/obj/item/food/carpmeat/icantbeliveitsnotcarp
+	name = "fish fillet"
+	desc = "A fillet of unspecified fish meat."
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2) //No carpotoxin
+
 /obj/item/food/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."
@@ -856,6 +861,7 @@
 /obj/item/food/meat/rawcrab
 	name = "raw crab meat"
 	desc = "A pile of raw crab meat."
+	icon_state = "crabmeatraw"
 	microwaved_type = /obj/item/food/meat/crab
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cooking_oil = 3)

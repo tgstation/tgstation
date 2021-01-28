@@ -79,21 +79,23 @@
 
 /obj/machinery/stasis/update_overlays()
 	. = ..()
-	var/_running = stasis_running()
-	var/list/overlays_to_remove = managed_vis_overlays
+	if(!mattress_state)
+		return
 
-	if(mattress_state)
-		if(!mattress_on || !managed_vis_overlays)
-			mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, BELOW_OBJ_LAYER, plane, dir, alpha = 0, unique = TRUE)
+	if(!mattress_on)
+		mattress_on = SSvis_overlays.add_vis_overlay(src, icon, mattress_state, BELOW_OBJ_LAYER, plane, dir, alpha = 0, unique = TRUE)
+	else
+		vis_contents += mattress_on
+		if(managed_vis_overlays)
+			managed_vis_overlays += mattress_on
+		else
+			managed_vis_overlays = list(mattress_on)
 
-		if(mattress_on.alpha ? !_running : _running) //check the inverse of _running compared to truthy alpha, to see if they differ
-			var/new_alpha = _running ? 255 : 0
-			var/easing_direction = _running ? EASE_OUT : EASE_IN
-			animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
-
-		overlays_to_remove = managed_vis_overlays - mattress_on
-
-	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
+	var/is_running = stasis_running()
+	if(mattress_on.alpha ? !is_running : is_running) //check the inverse of is_running compared to truthy alpha, to see if they differ
+		var/new_alpha = is_running ? 255 : 0
+		var/easing_direction = is_running ? EASE_OUT : EASE_IN
+		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 
 /obj/machinery/stasis/obj_break(damage_flag)
 	. = ..()
