@@ -314,6 +314,22 @@
 	new choice(get_turf(M))
 	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from S.E.L.F. Message as follows: <b>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</b> Message ends.\"</span>")
 
+/obj/item/ultrabrick
+	name = "Ultra brick"
+	desc = "A brick made by Ultra."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "expensive_brick"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 10
+	throwforce = 5
+	throw_speed = 2
+	throw_range = 7
+	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
+	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+	custom_price = PAYCHECK_COMMAND * 10
+	custom_premium_price = PAYCHECK_COMMAND * 10
+
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"
