@@ -16,7 +16,7 @@
 	name = "toploader magazine (5.56mm)"
 	icon_state = "5.56m"
 	ammo_type = /obj/item/ammo_casing/a556
-	caliber = CALIBER_A556
+	caliber = CALIBER_BALLISTIC_MEDIUM
 	max_ammo = 30
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 

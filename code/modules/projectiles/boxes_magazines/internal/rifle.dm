@@ -2,7 +2,7 @@
 	name = "bolt action rifle internal magazine"
 	desc = "Oh god, this shouldn't be here"
 	ammo_type = /obj/item/ammo_casing/a762
-	caliber = CALIBER_A762
+	caliber = CALIBER_BALLISTIC_MEDIUM
 	max_ammo = 5
 	multiload = TRUE
 

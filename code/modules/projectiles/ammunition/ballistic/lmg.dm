@@ -4,7 +4,7 @@
 	name = "7.12x82mm bullet casing"
 	desc = "A 7.12x82mm bullet casing."
 	icon_state = "762-casing"
-	caliber = CALIBER_712X82MM
+	caliber = CALIBER_BALLISTIC_LIGHT
 	projectile_type = /obj/projectile/bullet/mm712x82
 
 /obj/item/ammo_casing/mm712x82/ap

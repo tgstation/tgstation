@@ -3,7 +3,7 @@
 /obj/item/ammo_casing/c46x30mm
 	name = "4.6x30mm bullet casing"
 	desc = "A 4.6x30mm bullet casing."
-	caliber = CALIBER_46X30MM
+	caliber = CALIBER_BALLISTIC_LIGHT
 	projectile_type = /obj/projectile/bullet/c46x30mm
 
 /obj/item/ammo_casing/c46x30mm/ap
@@ -21,7 +21,7 @@
 /obj/item/ammo_casing/c45
 	name = ".45 bullet casing"
 	desc = "A .45 bullet casing."
-	caliber = CALIBER_45
+	caliber = CALIBER_BALLISTIC_MEDIUM
 	projectile_type = /obj/projectile/bullet/c45
 
 /obj/item/ammo_casing/c45/ap
@@ -39,5 +39,5 @@
 /obj/item/ammo_casing/c9x19mm
 	name = "9x19mm bullet casing"
 	desc = "A 9.19mm bullet casing."
-	caliber = CALIBER_9X19MM
+	caliber = CALIBER_BALLISTIC_LIGHT
 	projectile_type = /obj/projectile/bullet/c9x19mm

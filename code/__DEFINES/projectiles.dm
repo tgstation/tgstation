@@ -8,52 +8,30 @@
 // Delete self without hitting
 #define PROJECTILE_DELETE_WITHOUT_HITTING		3
 
-// Caliber defines: (current count stands at 24)
-/// The caliber used by the [L6 SAW][/obj/item/gun/ballistic/automatic/l6_saw].
-#define CALIBER_712X82MM	"mm71282"
-/// The caliber used by the [security auto-rifle][/obj/item/gun/ballistic/automatic/wt550].
-#define CALIBER_46X30MM		"4.6x30mm"
-/// The caliber used by the [plastikov SMG][/obj/item/gun/ballistic/automatic/plastikov].
-#define CALIBER_9X19MM		"9x19mm"
-/// The caliber used by the Nanotrasen Saber SMG, and Type U3 Uzi. Also used as the default caliber for pistols but only the stechkin APS machine pistol doesn't override it.
-#define CALIBER_9MM			"9mm"
-/// The caliber used as the default for ballistic guns. Only not overridden for the [surplus rifle][/obj/item/gun/ballistic/automatic/surplus].
-#define CALIBER_10MM		"10mm"
-/// The caliber used by most revolver variants.
-#define CALIBER_357			".357"
-/// The caliber used by the detective's revolver.
-#define CALIBER_38			".38"
-/// The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.
-#define CALIBER_45			".45"
-/// The caliber used by sniper rifles and the desert eagle.
-#define CALIBER_50			".50"
-/// The caliber used by the gyrojet pistol.
-#define CALIBER_75			".75"
-/// The caliber used by [one revolver variant][/obj/item/gun/ballistic/revolver/nagant].
-#define CALIBER_N762		"n762"
-/// The caliber used by the the M-90gl Carbine, and NT-ARG 'Boarder'.
-#define CALIBER_A556		"a556"
-/// The caliber used by bolt action rifles.
-#define CALIBER_A762		"a762"
-/// The caliber used by shotguns.
-#define CALIBER_SHOTGUN		"shotgun"
-/// The caliber used by grenade launchers.
-#define CALIBER_40MM		"40mm"
-/// The caliber used by rocket launchers.
-#define CALIBER_84MM		"84mm"
-/// The caliber used by laser guns.
-#define CALIBER_LASER		"laser"
-/// The caliber used by most energy guns.
-#define CALIBER_ENERGY		"energy"
-/// The caliber used by the laser minigun.
-#define CALIBER_GATLING		"gatling"
-/// The acliber used by foam force and donksoft toy guns.
+// Caliber defines: (Current count stands at 13)
+/// Small bullets used by most automatic pistols and SMGs.
+#define CALIBER_BALLISTIC_LIGHT		"ballistic-light"
+/// Mid size bullets used by automatic rifles and revolvers.
+#define CALIBER_BALLISTIC_MEDIUM	"ballistic-medium"
+/// Large bullets used by the deagle and sniper rifles.
+#define CALIBER_BALLISTIC_HEAVY		"ballistic-heavy"
+/// Shotgun shells used by shotguns.
+#define CALIBER_SHOTGUN				"shotgun"
+/// Grenades and gyrojet rounds used by grenade launchers and the gyrojet pistol.
+#define CALIBER_GRENADE				"grenade"
+/// Rockets used by the rocket launcher.
+#define CALIBER_ROCKET				"rocket"
+/// Foam darts used by donksoft and foam force guns.
 #define CALIBER_FOAM		"foam_force"
-/// The caliber used by the bow and arrow.
+/// Disposable laser cartriges used by laser guns.
+#define CALIBER_LASER		"laser"
+/// Some form of lens or emitter used by energy guns.
+#define CALIBER_ENERGY		"energy"
+/// Arrows used by the bow.
 #define CALIBER_ARROW		"arrow"
-/// The caliber used by the harpoon gun.
+/// Harpoons used by the harpoon gun.
 #define CALIBER_HARPOON		"harpoon"
-/// The caliber used by the meat hook.
+/// The meat hook used... by the meat hook.
 #define CALIBER_HOOK		"hook"
-/// The caliber used by the changeling tentacle mutation.
+/// The tentacle used by the tentacle mutation.
 #define CALIBER_TENTACLE	"tentacle"

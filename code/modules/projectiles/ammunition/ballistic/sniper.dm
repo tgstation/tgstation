@@ -3,7 +3,7 @@
 /obj/item/ammo_casing/p50
 	name = ".50 bullet casing"
 	desc = "A .50 bullet casing."
-	caliber = CALIBER_50
+	caliber = CALIBER_BALLISTIC_HEAVY
 	projectile_type = /obj/projectile/bullet/p50
 	icon_state = ".50"
 

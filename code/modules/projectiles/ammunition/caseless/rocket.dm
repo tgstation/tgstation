@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/caseless/rocket
 	name = "\improper PM-9HE"
 	desc = "An 84mm High Explosive rocket. Fire at people and pray."
-	caliber = CALIBER_84MM
+	caliber = CALIBER_ROCKET
 	icon_state = "srm-8"
 	projectile_type = /obj/projectile/bullet/a84mm_he
 
@@ -18,6 +18,6 @@
 
 /obj/item/ammo_casing/caseless/a75
 	desc = "A .75 bullet casing."
-	caliber = CALIBER_75
+	caliber = CALIBER_GRENADE
 	icon_state = "s-casing-live"
 	projectile_type = /obj/projectile/bullet/gyro

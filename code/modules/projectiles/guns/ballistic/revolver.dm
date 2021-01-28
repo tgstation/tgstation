@@ -126,13 +126,13 @@
 		return TRUE
 
 	switch(magazine.caliber)
-		if(CALIBER_38)
-			magazine.caliber = CALIBER_357
+		if(CALIBER_BALLISTIC_LIGHT)
+			magazine.caliber = CALIBER_BALLISTIC_MEDIUM
 			fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 			desc = "A classic, if not outdated, law enforcement firearm. \nIt has been modified to fire .357 rounds."
 			to_chat(user, "<span class='notice'>You loosen the barrel of [src]. Now it will fire .357 rounds.</span>")
 		else
-			magazine.caliber = CALIBER_38
+			magazine.caliber = CALIBER_BALLISTIC_LIGHT
 			fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 			desc = initial(desc)
 			to_chat(user, "<span class='notice'>You tighten the barrel of [src]. Now it will fire .38 rounds.</span>")

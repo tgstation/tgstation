@@ -31,7 +31,6 @@
 /obj/item/ammo_box/magazine/toy/smgm45
 	name = "donksoft SMG magazine"
 	icon_state = "c20r45-toy"
-	caliber = CALIBER_FOAM
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 20
 

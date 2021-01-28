@@ -8,13 +8,13 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
+// Laser gatling gun
 /obj/item/ammo_casing/caseless/laser/gatling
 	projectile_type = /obj/projectile/beam/weak/penetrator
 	variance = 0.8
 	click_cooldown_override = 1
 
-	// Harpoons (Ballistic Harpoon Gun)
-
+// Harpoons (Ballistic Harpoon Gun)
 /obj/item/ammo_casing/caseless/harpoon
 	name = "harpoon"
 	caliber = CALIBER_HARPOON

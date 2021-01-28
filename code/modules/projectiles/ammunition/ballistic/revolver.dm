@@ -3,7 +3,7 @@
 /obj/item/ammo_casing/a357
 	name = ".357 bullet casing"
 	desc = "A .357 bullet casing."
-	caliber = CALIBER_357
+	caliber = CALIBER_BALLISTIC_MEDIUM
 	projectile_type = /obj/projectile/bullet/a357
 
 /obj/item/ammo_casing/a357/match
@@ -16,7 +16,7 @@
 /obj/item/ammo_casing/n762
 	name = "7.62x38mmR bullet casing"
 	desc = "A 7.62x38mmR bullet casing."
-	caliber = CALIBER_N762
+	caliber = CALIBER_BALLISTIC_LIGHT
 	projectile_type = /obj/projectile/bullet/n762
 
 // .38 (Detective's Gun)
@@ -24,7 +24,7 @@
 /obj/item/ammo_casing/c38
 	name = ".38 bullet casing"
 	desc = "A .38 bullet casing."
-	caliber = CALIBER_38
+	caliber = CALIBER_BALLISTIC_LIGHT
 	projectile_type = /obj/projectile/bullet/c38
 
 /obj/item/ammo_casing/c38/trac

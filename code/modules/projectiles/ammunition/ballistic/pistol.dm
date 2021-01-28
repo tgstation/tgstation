@@ -3,7 +3,7 @@
 /obj/item/ammo_casing/c10mm
 	name = "10mm bullet casing"
 	desc = "A 10mm bullet casing."
-	caliber = CALIBER_10MM
+	caliber = CALIBER_BALLISTIC_LIGHT
 	projectile_type = /obj/projectile/bullet/c10mm
 
 /obj/item/ammo_casing/c10mm/ap
@@ -26,7 +26,7 @@
 /obj/item/ammo_casing/c9mm
 	name = "9mm bullet casing"
 	desc = "A 9mm bullet casing."
-	caliber = CALIBER_9MM
+	caliber = CALIBER_BALLISTIC_LIGHT
 	projectile_type = /obj/projectile/bullet/c9mm
 
 /obj/item/ammo_casing/c9mm/ap
@@ -50,5 +50,5 @@
 /obj/item/ammo_casing/a50ae
 	name = ".50AE bullet casing"
 	desc = "A .50AE bullet casing."
-	caliber = CALIBER_50
+	caliber = CALIBER_BALLISTIC_HEAVY
 	projectile_type = /obj/projectile/bullet/a50ae
