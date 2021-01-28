@@ -29,7 +29,7 @@
 	var/shuttle_spawned = FALSE
 
 /datum/round_event/pirates/setup()
-	pirate_type = pick(PIRATES_DUTCHMAN) //PIRATES_ROGUES, PIRATES_SILVERSCALES
+	pirate_type = pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
 	switch(pirate_type)
 		if(PIRATES_ROGUES)
 			ship_name = pick(strings(PIRATE_NAMES_FILE, "rogue_names"))

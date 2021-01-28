@@ -41,7 +41,7 @@
 	name = "malfunction shot"
 	icon_state = "emp_cannonball"
 	projectile_piercing = NONE
-	damage = 10 //set to 30 before first mob impact, but they're gonna be gibbed by the explosion
+	damage = 15 //very low
 
 /obj/projectile/bullet/cannonball/emp/on_hit(atom/target, blocked = FALSE)
 	empulse(src, 4, 10)
