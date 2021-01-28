@@ -366,7 +366,7 @@
 	SIGNAL_HANDLER
 
 	update_beauty(A)
-	if(A.mood_bonus)
+	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
 		clear_event(null, "area")

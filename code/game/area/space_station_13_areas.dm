@@ -534,6 +534,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/chapel
 	icon_state = "chapel"
+	mood_bonus = 5
+	mood_message = "<span class='nicegreen'>Being in the chapel brings me peace.</span>\n"
+	mood_trait = TRAIT_SPIRITUAL
 	ambience_index = AMBIENCE_HOLY
 	flags_1 = NONE
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
