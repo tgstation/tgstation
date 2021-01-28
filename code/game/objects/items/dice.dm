@@ -88,7 +88,8 @@
 
 /obj/item/dice/d4/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, 1, 4) //1d4 damage
+	// 1d4 damage
+	AddElement(/datum/element/caltrop, min_damage = 1, max_damage = 4)
 
 /obj/item/dice/d6
 	name = "d6"
@@ -209,8 +210,8 @@
 		result = special_faces[result]
 	if(user != null) //Dice was rolled in someone's hand
 		user.visible_message("<span class='notice'>[user] throws [src]. It lands on [result]. [comment]</span>", \
-							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
-							 "<span class='hear'>You hear [src] rolling, it sounds like a [fake_result].</span>")
+			"<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
+			"<span class='hear'>You hear [src] rolling, it sounds like a [fake_result].</span>")
 	else if(!src.throwing) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 

@@ -78,11 +78,11 @@
 		Retract()
 
 /**
-  * Called when the mob uses the "drop item" hotkey
-  *
-  * Items inside toolset implants have TRAIT_NODROP, but we can still use the drop item hotkey as a
-  * quick way to store implant items. In this case, we check to make sure the user has the correct arm
-  * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
+ * Called when the mob uses the "drop item" hotkey
+ *
+ * Items inside toolset implants have TRAIT_NODROP, but we can still use the drop item hotkey as a
+ * quick way to store implant items. In this case, we check to make sure the user has the correct arm
+ * selected, and that the item is actually owned by us, and then we'll hand off the rest to Retract()
 **/
 /obj/item/organ/cyberimp/arm/proc/dropkey(mob/living/carbon/host)
 	if(!host)

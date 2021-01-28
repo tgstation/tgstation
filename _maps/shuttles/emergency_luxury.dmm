@@ -42,7 +42,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "ag" = (
 /turf/closed/indestructible/riveted/plastinum,
 /area/shuttle/escape/luxury)
@@ -78,8 +78,7 @@
 /area/shuttle/escape/luxury)
 "ap" = (
 /obj/structure/chair/comfy/teal{
-	dir = 4;
-	icon_state = "comfychair"
+	dir = 4
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape)
@@ -108,7 +107,7 @@
 /area/shuttle/escape/luxury)
 "at" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "au" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -146,8 +145,7 @@
 	id = "ohnopoors";
 	name = "window shutters";
 	pixel_x = -5;
-	pixel_y = 26;
-	req_access_txt = "0"
+	pixel_y = 26
 	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
@@ -226,8 +224,7 @@
 /area/shuttle/escape/luxury)
 "aM" = (
 /obj/structure/chair/comfy/teal{
-	dir = 4;
-	icon_state = "comfychair"
+	dir = 4
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
@@ -369,7 +366,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "bk" = (
 /obj/machinery/light{
 	dir = 1
@@ -454,8 +451,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bx" = (
@@ -507,7 +503,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "bE" = (
 /obj/machinery/light{
 	dir = 1
@@ -522,8 +518,7 @@
 "bG" = (
 /obj/machinery/door/window/eastleft,
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bH" = (
@@ -562,8 +557,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/eastright,
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bN" = (
@@ -807,15 +801,15 @@
 /area/shuttle/escape/luxury)
 "cv" = (
 /obj/structure/table,
-/obj/item/reagent_containers/pill/floorpill{
+/obj/item/reagent_containers/pill/maintenance{
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/pill/floorpill{
+/obj/item/reagent_containers/pill/maintenance{
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/pill/floorpill,
+/obj/item/reagent_containers/pill/maintenance,
 /obj/item/healthanalyzer{
 	pixel_y = 9
 	},
@@ -972,7 +966,7 @@
 	},
 /obj/machinery/scanner_gate/luxury_shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 
 (1,1,1) = {"
 aa

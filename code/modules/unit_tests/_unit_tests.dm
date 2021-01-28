@@ -1,7 +1,7 @@
 //include unit test files in this module in this ifdef
 //Keep this sorted alphabetically
 
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 
 /// Asserts that a condition is true
 /// If the condition is not true, fails the test
@@ -32,6 +32,11 @@
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
 #define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
 
+/// Constants indicating unit test completion status
+#define UNIT_TEST_PASSED 0
+#define UNIT_TEST_FAILED 1
+#define UNIT_TEST_SKIPPED 2
+
 #include "anchored_mobs.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
@@ -40,16 +45,22 @@
 #include "combat.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
+#include "designs.dm"
 #include "emoting.dm"
 #include "heretic_knowledge.dm"
+#include "holidays.dm"
+#include "initialize_sanity.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
+#include "merge_type.dm"
 #include "metabolizing.dm"
+#include "ntnetwork_tests.dm"
 #include "outfit_sanity.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
-#include "quick_swap_sanity.dm"
+#include "projectiles.dm"
+#include "rcd.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"
 #include "reagent_mod_procs.dm"
@@ -59,6 +70,7 @@
 #include "serving_tray.dm"
 #include "siunit.dm"
 #include "spawn_humans.dm"
+#include "spawn_mobs.dm"
 #include "species_whitelists.dm"
 #include "stomach.dm"
 #include "subsystem_init.dm"

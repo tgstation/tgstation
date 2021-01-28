@@ -68,8 +68,8 @@
 			var/obj/vehicle/sealed/mecha/M = MT.chassis
 			if(M)
 				MT.shock()
-				log_game("[key_name(usr)] has activated remote EMP on exosuit [M], located at [loc_name(M)], which [M.occupants ? "has the occupants [M.occupants]." : "without a pilot."] ")
-				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [M][ADMIN_JMP(M)], which is currently [M.occupants ? "occupied by [M.occupants][ADMIN_FLW(M)]." : "without a pilot."] ")
+				log_game("[key_name(usr)] has activated remote EMP on exosuit [M], located at [loc_name(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(",")][ADMIN_FLW(M)]." : "without a pilot."]")
+				message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [M][ADMIN_JMP(M)], which is currently [LAZYLEN(M.occupants) ? "occupied by [M.occupants.Join(",")][ADMIN_FLW(M)]." : "without a pilot."]")
 				. = TRUE
 
 /obj/item/mecha_parts/mecha_tracking
@@ -86,8 +86,8 @@
 	var/obj/vehicle/sealed/mecha/chassis
 
 /**
-  * Returns a html formatted string describing attached mech status
-  */
+ * Returns a html formatted string describing attached mech status
+ */
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!chassis)
 		return FALSE
@@ -126,8 +126,8 @@
 	chassis = M
 
 /**
-  * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
-  */
+ * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
+ */
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	if(recharging)
 		return
@@ -137,8 +137,8 @@
 		recharging = TRUE
 
 /**
-  * Resets recharge variable, allowing tracker to be EMP pulsed again
-  */
+ * Resets recharge variable, allowing tracker to be EMP pulsed again
+ */
 /obj/item/mecha_parts/mecha_tracking/proc/recharge()
 	recharging = FALSE
 

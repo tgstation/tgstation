@@ -64,6 +64,9 @@
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
 		return
+	if(modifiers["middle"])
+		MiddleClickOn(A, params)
+		return
 
 	if(world.time <= next_move)
 		return

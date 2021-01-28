@@ -210,7 +210,7 @@
 	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon_state()
-	if(reagents.total_volume > 30)
+	if(reagents.total_volume >= volume)
 		icon_state = initial(icon_state)
 	else if (reagents.total_volume > 0)
 		icon_state = "[initial(icon_state)]1"
@@ -231,12 +231,12 @@
 		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 		return ..()
 
-	if(M in user.do_afters)
+	if(DOING_INTERACTION(user, DOAFTER_SOURCE_SURVIVALPEN))
 		to_chat(user,"<span class='notice'>You are too busy to use \the [src]!</span>")
 		return
 
 	to_chat(user,"<span class='notice'>You start manually releasing the low-pressure gauge...</span>")
-	if(!do_mob(user, M, 10 SECONDS))
+	if(!do_mob(user, M, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
 		return
 
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5

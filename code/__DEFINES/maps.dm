@@ -57,12 +57,12 @@ require only minor tweaks.
 
 // enum - how space transitions should affect this level
 #define ZTRAIT_LINKAGE "Linkage"
-    // UNAFFECTED if absent - no space transitions
-    #define UNAFFECTED null
-    // SELFLOOPING - space transitions always self-loop
-    #define SELFLOOPING "Self"
-    // CROSSLINKED - mixed in with the cross-linked space pool
-    #define CROSSLINKED "Cross"
+	// UNAFFECTED if absent - no space transitions
+	#define UNAFFECTED null
+	// SELFLOOPING - space transitions always self-loop
+	#define SELFLOOPING "Self"
+	// CROSSLINKED - mixed in with the cross-linked space pool
+	#define CROSSLINKED "Cross"
 
 // string - type path of the z-level's baseturf (defaults to space)
 #define ZTRAIT_BASETURF "Baseturf"
@@ -72,11 +72,11 @@ require only minor tweaks.
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 #define ZTRAITS_LAVALAND list(\
-    ZTRAIT_MINING = TRUE, \
-    ZTRAIT_ASHSTORM = TRUE, \
-    ZTRAIT_LAVA_RUINS = TRUE, \
-    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-    ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+	ZTRAIT_MINING = TRUE, \
+	ZTRAIT_ASHSTORM = TRUE, \
+	ZTRAIT_LAVA_RUINS = TRUE, \
+	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+	ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
@@ -84,7 +84,7 @@ require only minor tweaks.
 
 // must correspond to _basemap.dm for things to work correctly
 #define DEFAULT_MAP_TRAITS list(\
-    DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
+	DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
 )
 
 // Camera lock flags

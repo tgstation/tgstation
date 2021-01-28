@@ -78,7 +78,7 @@
 	if(!GLOB.moth_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_antennae" = pick(GLOB.moth_antennae_list), "moth_markings" = pick(GLOB.moth_markings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_antennae" = pick(GLOB.moth_antennae_list), "moth_markings" = pick(GLOB.moth_markings_list), "tail_monkey" = "None"))
 
 /proc/random_hairstyle(gender)
 	switch(gender)
@@ -180,8 +180,8 @@ GLOBAL_LIST_EMPTY(species_list)
 			return "unknown"
 
 
-///Timed action involving two mobs, the user and the target.
-/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+///Timed action involving two mobs, the user and the target. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_mob(mob/user, mob/target, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user || !target)
 		return FALSE
 	var/user_loc = user.loc
@@ -192,8 +192,14 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/target_loc = target.loc
 
-	LAZYADD(user.do_afters, target)
-	LAZYADD(target.targeted_by, user)
+	if(!interaction_key && target)
+		interaction_key = target //Use the direct ref to the target
+	if(interaction_key) //Do we have a interaction_key now?
+		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
+		if(current_interaction_count >= max_interact_count) //We are at our peak
+			return
+		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
+
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if (progress)
@@ -217,7 +223,6 @@ GLOBAL_LIST_EMPTY(species_list)
 
 		if(
 			QDELETED(user) || QDELETED(target) \
-			|| (!(timed_action_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters)) \
 			|| (!(timed_action_flags & IGNORE_USER_LOC_CHANGE) && !drifting && user.loc != user_loc) \
 			|| (!(timed_action_flags & IGNORE_TARGET_LOC_CHANGE) && target.loc != target_loc) \
 			|| (!(timed_action_flags & IGNORE_HELD_ITEM) && user.get_active_held_item() != holding) \
@@ -230,9 +235,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	if(!QDELETED(target))
-		LAZYREMOVE(user.do_afters, target)
-		LAZYREMOVE(target.targeted_by, user)
+	if(interaction_key)
+		LAZYREMOVE(user.do_afters, interaction_key)
 
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
@@ -250,17 +254,27 @@ GLOBAL_LIST_EMPTY(species_list)
 	return ..()
 
 
-///Timed action involving one mob user. Target is optional.
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+/**
+ * Timed action involving one mob user. Target is optional.
+ *
+ * Checks that `user` does not move, change hands, get stunned, etc. for the
+ * given `delay`. Returns `TRUE` on success or `FALSE` on failure.
+ * Interaction_key is the assoc key under which the do_after is capped, with max_interact_count being the cap. Interaction key will default to target if not set.
+ */
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
 		return FALSE
 	var/atom/target_loc = null
 	if(target && !isturf(target))
 		target_loc = target.loc
 
-	if(target)
-		LAZYADD(user.do_afters, target)
-		LAZYADD(target.targeted_by, user)
+	if(!interaction_key && target)
+		interaction_key = target //Use the direct ref to the target
+	if(interaction_key) //Do we have a interaction_key now?
+		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
+		if(current_interaction_count >= max_interact_count) //We are at our peak
+			return
+		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
 
 	var/atom/user_loc = user.loc
 
@@ -309,20 +323,15 @@ GLOBAL_LIST_EMPTY(species_list)
 			. = FALSE
 			break
 
-		if(target && !(timed_action_flags & IGNORE_TARGET_IN_DOAFTERS) && !(target in user.do_afters))
-			. = FALSE
-			break
-
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	if(!QDELETED(target))
-		LAZYREMOVE(user.do_afters, target)
-		LAZYREMOVE(target.targeted_by, user)
+	if(interaction_key)
+		LAZYREMOVE(user.do_afters, interaction_key)
 
 
-///Timed action involving at least one mob user and a list of targets.
-/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks)
+///Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)
 	if(!user)
 		return FALSE
 	if(!islist(targets))
@@ -338,10 +347,17 @@ GLOBAL_LIST_EMPTY(species_list)
 		drifting = TRUE
 
 	var/list/originalloc = list()
+
 	for(var/atom/target in targets)
 		originalloc[target] = target.loc
-		LAZYADD(user.do_afters, target)
-		LAZYADD(target.targeted_by, user)
+
+	if(interaction_key)
+		var/current_interaction_count = LAZYACCESS(user.do_afters, interaction_key) || 0
+		if(current_interaction_count >= max_interact_count) //We are at our peak
+			to_chat(user, "<span class='warning'>You can't do this at the moment!</span>")
+			return
+		LAZYSET(user.do_afters, interaction_key, current_interaction_count + 1)
+
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
@@ -388,12 +404,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!QDELETED(progbar))
 		progbar.end_progress()
 
-	for(var/thing in targets)
-		var/atom/target = thing
-		if(!QDELETED(target))
-			LAZYREMOVE(user.do_afters, target)
-			LAZYREMOVE(target.targeted_by, user)
-
+	if(interaction_key)
+		LAZYREMOVE(user.do_afters, interaction_key)
 
 /proc/is_species(A, species_datum)
 	. = FALSE
@@ -450,10 +462,11 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	return spawned_mobs
 
-// Displays a message in deadchat, sent by source. Source is not linkified, message is, to avoid stuff like character names to be linkified.
+// Displays a message in deadchat, sent by source. source is not linkified, message is, to avoid stuff like character names to be linkified.
 // Automatically gives the class deadsay to the whole message (message + source)
-/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
 	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
+
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
@@ -463,8 +476,11 @@ GLOBAL_LIST_EMPTY(species_list)
 			chat_toggles = prefs.chat_toggles
 			toggles = prefs.toggles
 			ignoring = prefs.ignoring
-
-
+		if(admin_only)
+			if (!M.client.holder)
+				return
+			else
+				message += "<span class='deadsay'> (This is viewable to admins only).</span>"
 		var/override = FALSE
 		if(M.client.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
@@ -488,6 +504,9 @@ GLOBAL_LIST_EMPTY(species_list)
 					continue
 			if(DEADCHAT_LAWCHANGE)
 				if(!(chat_toggles & CHAT_GHOSTLAWS))
+					continue
+			if(DEADCHAT_LOGIN_LOGOUT)
+				if(!(chat_toggles & CHAT_LOGIN_LOGOUT))
 					continue
 
 		if(isobserver(M))

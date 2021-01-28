@@ -30,20 +30,6 @@
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
 
-/obj/machinery/vending/cola/random
-	name = "\improper Random Drinkies"
-	icon_state = "random_cola"
-	desc = "Uh oh!"
-	circuit = null
-
-/obj/machinery/vending/cola/random/Initialize()
-	// No need to call parent, we're not doing anything with this machine. Just picking a new type of machine to use, spawning it and deleting ourselves.
-	SHOULD_CALL_PARENT(FALSE)
-
-	var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
-	new T(loc)
-	return INITIALIZE_HINT_QDEL
-
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
 	light_mask = "cola-light-mask"

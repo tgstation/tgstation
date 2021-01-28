@@ -158,7 +158,7 @@
 
 /obj/structure/urinal/Initialize()
 	. = ..()
-	hiddenitem = new /obj/item/reagent_containers/food/snacks/urinalcake
+	hiddenitem = new /obj/item/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
 	. = ..()
@@ -218,16 +218,16 @@
 	return TRUE
 
 
-/obj/item/reagent_containers/food/snacks/urinalcake
+/obj/item/food/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
-	list_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
-	foodtype = TOXIC | GROSS
+	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
+	foodtypes = TOXIC | GROSS
 
-/obj/item/reagent_containers/food/snacks/urinalcake/attack_self(mob/living/user)
+/obj/item/food/urinalcake/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
@@ -695,7 +695,7 @@
 	alpha = 255
 	opaque_closed = TRUE
 
-/obj/structure/curtain/cloth/
+/obj/structure/curtain/cloth
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
@@ -708,3 +708,35 @@
 /obj/structure/curtain/cloth/fancy
 	icon_type = "cur_fancy"
 	icon_state = "cur_fancy-open"
+
+/obj/structure/curtain/cloth/fancy/mechanical
+	var/id = null
+
+/obj/structure/curtain/cloth/fancy/mechanical/Destroy()
+	GLOB.curtains -= src
+	return ..()
+
+/obj/structure/curtain/cloth/fancy/mechanical/Initialize()
+	. = ..()
+	GLOB.curtains += src
+
+/obj/structure/curtain/cloth/fancy/mechanical/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.id]_[id]"
+
+/obj/structure/curtain/cloth/fancy/mechanical/proc/open()
+	icon_state = "[icon_type]-open"
+	layer = SIGN_LAYER
+	density = FALSE
+	open = TRUE
+	set_opacity(FALSE)
+
+/obj/structure/curtain/cloth/fancy/mechanical/proc/close()
+	icon_state = "[icon_type]-closed"
+	layer = WALL_OBJ_LAYER
+	density = TRUE
+	open = FALSE
+	if(opaque_closed)
+		set_opacity(TRUE)
+
+/obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user)
+		return

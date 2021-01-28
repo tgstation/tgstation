@@ -89,15 +89,15 @@
 	return TRUE
 
 /**
-  *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
-  *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
-  *NT Software Hub is checking available software), a list can be given to be used instead.
-  *Arguments:
-  *user is a ref of the mob using the device.
-  *loud is a bool deciding if this proc should use to_chats
-  *access_to_check is an access level that will be checked against the ID
-  *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
-  *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
+ *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
+ *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
+ *NT Software Hub is checking available software), a list can be given to be used instead.
+ *Arguments:
+ *user is a ref of the mob using the device.
+ *loud is a bool deciding if this proc should use to_chats
+ *access_to_check is an access level that will be checked against the ID
+ *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
+ *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
 */
 /datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access)
 	// Defaults to required_access
@@ -159,15 +159,15 @@
 	return FALSE
 
 /**
-  *
-  *Called by the device when it is emagged.
-  *
-  *Emagging the device allows certain programs to unlock new functions. However, the program will
-  *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
-  *The device will allow an emag to be run multiple times, so the user can re-emag to run the
-  *override again, should they download something new. The run_emag() proc should return TRUE if
-  *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
-  *emag functions).
+ *
+ *Called by the device when it is emagged.
+ *
+ *Emagging the device allows certain programs to unlock new functions. However, the program will
+ *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
+ *The device will allow an emag to be run multiple times, so the user can re-emag to run the
+ *override again, should they download something new. The run_emag() proc should return TRUE if
+ *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
+ *emag functions).
 **/
 /datum/computer_file/program/proc/run_emag()
 	return FALSE

@@ -160,10 +160,10 @@
 	return TRUE
 
 /**
-  * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
-  *
-  * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
-  */
+ * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
+ *
+ * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
+ */
 
 /datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
 	for(var/datum/plant_gene/reagent/reagent in seed.genes)
@@ -394,11 +394,11 @@
 		qdel(G)
 
 /**
-  * A plant trait that causes the plant's capacity to double.
-  *
-  * When harvested, the plant's individual capacity is set to double it's default.
-  * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
-  */
+ * A plant trait that causes the plant's capacity to double.
+ *
+ * When harvested, the plant's individual capacity is set to double it's default.
+ * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
+ */
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
@@ -406,7 +406,7 @@
 
 /datum/plant_gene/trait/maxchem/on_new(obj/item/food/grown/G, newloc)
 	..()
-	G.reagents.maximum_volume *= rate
+	G.max_volume *= rate
 
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
@@ -488,44 +488,47 @@
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
 
-/datum/plant_gene/trait/invasive/on_grow(obj/machinery/hydroponics/H)
+/datum/plant_gene/trait/invasive/on_grow(obj/machinery/hydroponics/our_tray)
 	for(var/step_dir in GLOB.alldirs)
-		var/obj/machinery/hydroponics/HY = locate() in get_step(H, step_dir)
-		if(HY && prob(15))
-			if(HY.myseed) // check if there is something in the tray.
-				if(HY.myseed.type == H.myseed.type && HY.dead != 0)
-					continue //It should not destroy its owm kind.
-				qdel(HY.myseed)
-				HY.myseed = null
-			HY.myseed = H.myseed.Copy()
-			HY.age = 0
-			HY.dead = 0
-			HY.plant_health = HY.myseed.endurance
-			HY.lastcycle = world.time
-			HY.harvest = 0
-			HY.weedlevel = 0 // Reset
-			HY.pestlevel = 0 // Reset
-			HY.update_icon()
-			HY.visible_message("<span class='warning'>The [H.myseed.plantname] spreads!</span>")
-			if(HY.myseed)
-				HY.name = "[initial(HY.name)] ([HY.myseed.plantname])"
+		var/obj/machinery/hydroponics/spread_tray = locate() in get_step(our_tray, step_dir)
+		if(spread_tray && prob(15))
+			if(!our_tray.Adjacent(spread_tray))
+				continue //Don't spread through things we can't go through.
+
+			if(spread_tray.myseed) // Check if there's another seed in the next tray.
+				if(spread_tray.myseed.type == our_tray.myseed.type && !spread_tray.dead)
+					continue // It should not destroy its own kind.
+				spread_tray.visible_message("<span class='warning'>The [spread_tray.myseed.plantname] is overtaken by [our_tray.myseed.plantname]!</span>")
+				QDEL_NULL(spread_tray.myseed)
+			spread_tray.myseed = our_tray.myseed.Copy()
+			spread_tray.age = 0
+			spread_tray.dead = FALSE
+			spread_tray.plant_health = spread_tray.myseed.endurance
+			spread_tray.lastcycle = world.time
+			spread_tray.harvest = FALSE
+			spread_tray.weedlevel = 0 // Reset
+			spread_tray.pestlevel = 0 // Reset
+			spread_tray.update_icon()
+			spread_tray.visible_message("<span class='warning'>The [our_tray.myseed.plantname] spreads!</span>")
+			if(spread_tray.myseed)
+				spread_tray.name = "[initial(spread_tray.name)] ([spread_tray.myseed.plantname])"
 			else
-				HY.name = initial(HY.name)
+				spread_tray.name = initial(spread_tray.name)
 
 /**
-  * A plant trait that causes the plant's food reagents to ferment instead.
-  *
-  * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
-  * This exception is executed in seeds.dm under 'prepare_result'.
-  */
+ * A plant trait that causes the plant's food reagents to ferment instead.
+ *
+ * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+ * This exception is executed in seeds.dm under 'prepare_result'.
+ */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
 
 /**
-  * A plant trait that causes the plant to gain aesthetic googly eyes.
-  *
-  * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
-  */
+ * A plant trait that causes the plant to gain aesthetic googly eyes.
+ *
+ * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
+ */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
 	var/mutable_appearance/googly

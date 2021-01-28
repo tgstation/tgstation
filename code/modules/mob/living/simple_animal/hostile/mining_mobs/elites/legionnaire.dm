@@ -4,17 +4,17 @@
 #define SPEW_SMOKE 4
 
 /**
-  * # Legionnaire
-  *
-  * A towering skeleton, embodying the power of Legion.
-  * As it's health gets lower, the head does more damage.
-  * It's attacks are as follows:
-  * - Charges at the target after a telegraph, throwing them across the arena should it connect.
-  * - Legionnaire's head detaches, attacking as it's own entity.  Has abilities of it's own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
-  * - Leaves a pile of bones at your location.  Upon using this skill again, you'll swap locations with the bone pile.
-  * - Spews a cloud of smoke from it's maw, wherever said maw is.
-  * A unique fight incorporating the head mechanic of legion into a whole new beast.  Combatants will need to make sure the tag-team of head and body don't lure them into a deadly trap.
-  */
+ * # Legionnaire
+ *
+ * A towering skeleton, embodying the power of Legion.
+ * As it's health gets lower, the head does more damage.
+ * It's attacks are as follows:
+ * - Charges at the target after a telegraph, throwing them across the arena should it connect.
+ * - Legionnaire's head detaches, attacking as it's own entity.  Has abilities of it's own later into the fight.  Once dead, regenerates after a brief period.  If the skill is used while the head is off, it will be killed.
+ * - Leaves a pile of bones at your location.  Upon using this skill again, you'll swap locations with the bone pile.
+ * - Spews a cloud of smoke from it's maw, wherever said maw is.
+ * A unique fight incorporating the head mechanic of legion into a whole new beast.  Combatants will need to make sure the tag-team of head and body don't lure them into a deadly trap.
+ */
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire
 	name = "legionnaire"
@@ -27,8 +27,8 @@
 	health_doll_icon = "legionnaire"
 	maxHealth = 1000
 	health = 1000
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 35
+	melee_damage_upper = 35
 	attack_verb_continuous = "slashes its arms at"
 	attack_verb_simple = "slash your arms at"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -113,7 +113,7 @@
 		myhead.Goto(T, myhead.move_to_delay)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
-	ranged_cooldown = world.time + 3.5 SECONDS
+	ranged_cooldown = world.time + 4.0 SECONDS
 	charging = TRUE
 	var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 	var/turf/T = get_step(get_turf(src), dir_to_target)
@@ -154,11 +154,11 @@
 		to_chat(L, "<span class='userdanger'>[src] tramples you and kicks you away!</span>")
 		L.safe_throw_at(throwtarget, 10, 1, src)
 		L.Paralyze(20)
-		L.adjustBruteLoss(50)
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 1.5)
+		L.adjustBruteLoss(melee_damage_upper)
+	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 0.7)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
-	ranged_cooldown = world.time + 10
+	ranged_cooldown = world.time + 1 SECONDS
 	if(myhead != null)
 		myhead.adjustBruteLoss(600)
 		return
@@ -217,12 +217,12 @@
 		mypile.forceMove(legionturf)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/spew_smoke()
-	ranged_cooldown = world.time + 60
-	var/turf/T = null
+	ranged_cooldown = world.time + 4 SECONDS
+	var/turf/smoke_location = null
 	if(myhead != null)
-		T = get_turf(myhead)
+		smoke_location = get_turf(myhead)
 	else
-		T = get_turf(src)
+		smoke_location = get_turf(src)
 	if(myhead != null)
 		myhead.visible_message("<span class='boldwarning'>[myhead] spews smoke from its maw!</span>")
 	else if(!has_head)
@@ -230,7 +230,7 @@
 	else
 		visible_message("<span class='boldwarning'>[src] spews smoke from its maw!</span>")
 	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(2, T)
+	smoke.set_up(2, smoke_location)
 	smoke.start()
 
 //The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.
@@ -278,12 +278,15 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/myowner = null
 
 
-/obj/structure/legionnaire_bonfire/Entered(atom/movable/mover, atom/target)
-	if(isliving(mover))
-		var/mob/living/L = mover
-		L.adjust_fire_stacks(3)
-		L.IgniteMob()
+/obj/structure/legionnaire_bonfire/Crossed(atom/movable/mover)
 	. = ..()
+	if(isobj(mover))
+		var/obj/object = mover
+		object.fire_act(1000, 500)
+	if(isliving(mover))
+		var/mob/living/fire_walker = mover
+		fire_walker.adjust_fire_stacks(5)
+		fire_walker.IgniteMob()
 
 /obj/structure/legionnaire_bonfire/Destroy()
 	if(myowner != null)

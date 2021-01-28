@@ -46,7 +46,6 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 	var/armored = FALSE
-	var/rideable = FALSE
 
 /mob/living/simple_animal/hostile/bear/Initialize()
 	. = ..()
@@ -56,25 +55,19 @@
 /mob/living/simple_animal/hostile/bear/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/bear/Life()
+/mob/living/simple_animal/hostile/bear/Login()
 	. = ..()
-	if(!rideable && mind)
-		can_buckle = TRUE
-		buckle_lying = 0
-		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
-		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-		D.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
-		D.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
-		rideable = TRUE
+	if(!. || !client)
+		return FALSE
+
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
+	can_buckle = TRUE
+	buckle_lying = 0
 
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()
 	if(armored)
 		add_overlay("armor_bear")
-
-
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/hudson

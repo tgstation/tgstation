@@ -1,8 +1,8 @@
 /**
-  *
-  * Allows parent (obj) to initiate surgeries.
-  *
-  */
+ *
+ * Allows parent (obj) to initiate surgeries.
+ *
+ */
 /datum/component/surgery_initiator
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///allows for post-selection manipulation of parent

@@ -319,9 +319,9 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.custom_materials && length(O.custom_materials))
-			if(O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
-				metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
+		if(LAZYLEN(O.custom_materials))
+			if(O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
+				metal += O.custom_materials[GET_MATERIAL_REF(/datum/material/iron)]
 
 	if(metal)
 		spark()
@@ -352,11 +352,6 @@
 	dirty = 100
 	dirty_anim_playing = FALSE
 	operating = FALSE
-
-	for(var/obj/item/reagent_containers/food/snacks/S in src)
-		if(prob(50))
-			new /obj/item/food/badrecipe(src)
-			qdel(S)
 
 	after_finish_loop()
 

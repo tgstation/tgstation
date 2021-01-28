@@ -309,10 +309,10 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 
 /**
-  * Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.
-  *
-  * Returns the previous smoothing_junction state so the previous state can be compared with the new one after the proc ends, and see the changes, if any.
-  *
+ * Basic smoothing proc. The atom checks for adjacent directions to smooth with and changes the icon_state based on that.
+ *
+ * Returns the previous smoothing_junction state so the previous state can be compared with the new one after the proc ends, and see the changes, if any.
+ *
 */
 /atom/proc/bitmask_smooth()
 	var/new_junction = NONE
@@ -346,6 +346,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	. = smoothing_junction
 	smoothing_junction = new_junction
 	icon_state = "[base_icon_state]-[smoothing_junction]"
+	SEND_SIGNAL(src, COMSIG_ATOM_SMOOTH_BITMASK, ., new_junction)
 
 
 /turf/closed/set_smoothed_icon_state(new_junction)

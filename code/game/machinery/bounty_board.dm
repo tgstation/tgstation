@@ -1,9 +1,9 @@
 GLOBAL_LIST_EMPTY(allbountyboards)
 GLOBAL_LIST_EMPTY(request_list)
 /**
-  * A machine that acts basically like a quest board.
-  * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
-  */
+ * A machine that acts basically like a quest board.
+ * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
+ */
 /obj/machinery/bounty_board
 	name = "bounty board"
 	desc = "Allows you to place requests for goods and services across the station, as well as pay those who actually did it."
@@ -166,9 +166,9 @@ GLOBAL_LIST_EMPTY(request_list)
 	result_path = /obj/machinery/bounty_board
 
 /**
-  * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
-  * All of this is passed to the Request Console UI in order to present in organized way.
-  */
+ * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
+ * All of this is passed to the Request Console UI in order to present in organized way.
+ */
 /datum/station_request
 	///Name of the Request Owner.
 	var/owner

@@ -25,13 +25,13 @@
 	created_name = t
 
 /**
-  * Checks if the user can finish constructing a bot with a given item.
-  *
-  * Arguments:
-  * * I - Item to be used
-  * * user - Mob doing the construction
-  * * drop_item - Whether or no the item should be dropped; defaults to 1. Should be set to 0 if the item is a tool, stack, or otherwise doesn't need to be dropped. If not set to 0, item must be deleted afterwards.
-  */
+ * Checks if the user can finish constructing a bot with a given item.
+ *
+ * Arguments:
+ * * I - Item to be used
+ * * user - Mob doing the construction
+ * * drop_item - Whether or no the item should be dropped; defaults to 1. Should be set to 0 if the item is a tool, stack, or otherwise doesn't need to be dropped. If not set to 0, item must be deleted afterwards.
+ */
 /obj/item/bot_assembly/proc/can_finish_build(obj/item/I, mob/user, drop_item = 1)
 	if(istype(loc, /obj/item/storage/backpack))
 		to_chat(user, "<span class='warning'>You must take [src] out of [loc] first!</span>")

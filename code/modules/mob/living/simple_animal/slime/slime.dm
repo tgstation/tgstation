@@ -28,7 +28,8 @@
 	maxHealth = 150
 	health = 150
 	healable = 0
-
+	melee_damage_lower = 5
+	melee_damage_upper = 25
 	see_in_dark = 8
 
 	verb_say = "blorbles"
@@ -85,6 +86,7 @@
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
+	ADD_TRAIT(src, TRAIT_CANT_RIDE, INNATE_TRAIT)
 
 	is_adult = new_is_adult
 
@@ -111,6 +113,17 @@
 	Leader = null
 	Friends = null
 	return ..()
+
+/mob/living/simple_animal/slime/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/// Handles removing signal hooks incase someone is crazy enough to reset the reagents datum.
+/mob/living/simple_animal/slime/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
@@ -141,8 +154,13 @@
 		icon_state = icon_dead
 	..()
 
-/mob/living/simple_animal/slime/on_reagent_change()
-	. = ..()
+/**
+ * Snowflake handling of reagent movespeed modifiers
+ *
+ * Should be moved to the reagents at some point in the future. As it is I'm in a hurry.
+ */
+/mob/living/simple_animal/slime/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
 	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
@@ -151,6 +169,7 @@
 		amount = 5
 	if(amount)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
+	return NONE
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
@@ -222,11 +241,11 @@
 		amount = -abs(amount)
 	return ..() //Heals them
 
-/mob/living/simple_animal/slime/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/slime/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	attacked += 10
 	if((Proj.damage_type == BURN))
 		adjustBruteLoss(-abs(Proj.damage)) //fire projectiles heals slimes.
-		Proj.on_hit(src)
+		Proj.on_hit(src, 0, piercing_hit)
 	else
 		. = ..(Proj)
 	. = . || BULLET_ACT_BLOCK
@@ -276,7 +295,7 @@
 		attacked += 10
 
 
-/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/monkey/M)
+/mob/living/simple_animal/slime/attack_paw(mob/living/carbon/human/M)
 	if(..()) //successful monkey bite.
 		attacked += 10
 
@@ -481,9 +500,6 @@
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
-
-/mob/living/simple_animal/slime/can_be_implanted()
-	return TRUE
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))

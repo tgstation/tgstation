@@ -5,43 +5,43 @@
 
 //! ## DB defines
 /**
-  * DB major schema version
-  *
-  * Update this whenever the db schema changes
-  *
-  * make sure you add an update to the schema_version stable in the db changelog
-  */
+ * DB major schema version
+ *
+ * Update this whenever the db schema changes
+ *
+ * make sure you add an update to the schema_version stable in the db changelog
+ */
 #define DB_MAJOR_VERSION 5
 
 /**
-  * DB minor schema version
-  *
-  * Update this whenever the db schema changes
-  *
-  * make sure you add an update to the schema_version stable in the db changelog
-  */
-#define DB_MINOR_VERSION 11
+ * DB minor schema version
+ *
+ * Update this whenever the db schema changes
+ *
+ * make sure you add an update to the schema_version stable in the db changelog
+ */
+#define DB_MINOR_VERSION 12
 
 
 //! ## Timing subsystem
 /**
-  * Don't run if there is an identical unique timer active
-  *
-  * if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer,
-  * and returns the id of the existing timer
-  */
+ * Don't run if there is an identical unique timer active
+ *
+ * if the arguments to addtimer are the same as an existing timer, it doesn't create a new timer,
+ * and returns the id of the existing timer
+ */
 #define TIMER_UNIQUE			(1<<0)
 
 ///For unique timers: Replace the old timer rather then not start this one
 #define TIMER_OVERRIDE			(1<<1)
 
 /**
-  * Timing should be based on how timing progresses on clients, not the server.
-  *
-  * Tracking this is more expensive,
-  * should only be used in conjuction with things that have to progress client side, such as
-  * animate() or sound()
-  */
+ * Timing should be based on how timing progresses on clients, not the server.
+ *
+ * Tracking this is more expensive,
+ * should only be used in conjuction with things that have to progress client side, such as
+ * animate() or sound()
+ */
 #define TIMER_CLIENT_TIME		(1<<2)
 
 ///Timer can be stopped using deltimer()
@@ -56,6 +56,9 @@
 ///
 ///In most cases you want a subsystem instead, so don't use this unless you have a good reason
 #define TIMER_LOOP				(1<<5)
+
+///Delete the timer on parent datum Destroy() and when deltimer'd
+#define TIMER_DELETE_ME			(1<<6)
 
 ///Empty ID define
 #define TIMER_ID_NULL -1
@@ -74,12 +77,12 @@
 ///Nothing happens
 #define INITIALIZE_HINT_NORMAL 0
 /**
-  * call LateInitialize at the end of all atom Initalization
-  *
-  * The item will be added to the late_loaders list, this is iterated over after
-  * initalization of subsystems is complete and calls LateInitalize on the atom
-  * see [this file for the LateIntialize proc](atom.html#proc/LateInitialize)
-  */
+ * call LateInitialize at the end of all atom Initalization
+ *
+ * The item will be added to the late_loaders list, this is iterated over after
+ * initalization of subsystems is complete and calls LateInitalize on the atom
+ * see [this file for the LateIntialize proc](atom.html#proc/LateInitialize)
+ */
 #define INITIALIZE_HINT_LATELOAD 1
 
 ///Call qdel on the atom after intialization
@@ -87,11 +90,11 @@
 
 ///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
-    ..();\
-    if(!(flags_1 & INITIALIZED_1)) {\
-        args[1] = TRUE;\
-        SSatoms.InitAtom(src, args);\
-    }\
+	..();\
+	if(!(flags_1 & INITIALIZED_1)) {\
+		args[1] = TRUE;\
+		SSatoms.InitAtom(src, args);\
+	}\
 }
 
 // Subsystem init_order, from highest priority to lowest priority
@@ -196,7 +199,7 @@
 ///Compile all the overlays for an atom from the cache lists
 // |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
+	do {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
 		if(LAZYLEN(rm)){\
@@ -214,7 +217,7 @@
 			}\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
-	}
+	} while (FALSE)
 
 /**
 	Create a new timer and add it to the queue.
@@ -229,10 +232,12 @@
 #define SSAIR_PIPENETS 1
 #define SSAIR_ATMOSMACHINERY 2
 #define SSAIR_ACTIVETURFS 3
-#define SSAIR_EXCITEDGROUPS 4
-#define SSAIR_HIGHPRESSURE 5
-#define SSAIR_HOTSPOTS 6
-#define SSAIR_SUPERCONDUCTIVITY 7
+#define SSAIR_HOTSPOTS 4
+#define SSAIR_EXCITEDCLEANUP 5
+#define SSAIR_EXCITEDGROUPS 6
+#define SSAIR_HIGHPRESSURE 7
+#define SSAIR_SUPERCONDUCTIVITY 8
+#define SSAIR_PROCESS_ATOMS 9
 
 // Explosion Subsystem subtasks
 #define SSEXPLOSIONS_MOVABLES 1

@@ -93,8 +93,8 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return A.totalResistance() - B.totalResistance()
 
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
-	var/a_sign = num2sign(initial(A.value) * -1)
-	var/b_sign = num2sign(initial(B.value) * -1)
+	var/a_sign = SIGN(initial(A.value) * -1)
+	var/b_sign = SIGN(initial(B.value) * -1)
 
 	// Neutral traits go last.
 	if(a_sign == 0)
@@ -132,12 +132,12 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	return sorttext(A.real_name,B.real_name)
 
 /**
-  * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
-  *
-  * Prioritises [/datum/reagent] to ensure reagent requirements are always processed first when crafting.
-  * This prevents any reagent_containers from being consumed before the reagents they contain, which can
-  * lead to runtimes and item duplication when it happens.
-  */
+ * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
+ *
+ * Prioritises [/datum/reagent] to ensure reagent requirements are always processed first when crafting.
+ * This prevents any reagent_containers from being consumed before the reagents they contain, which can
+ * lead to runtimes and item duplication when it happens.
+ */
 /proc/cmp_crafting_req_priority(A, B)
 	var/lhs
 	var/rhs

@@ -73,8 +73,8 @@
 	set_resting(resting)
 
 /**
-  * Sets a new holochassis skin based on a pAI's choice
-  */
+ * Sets a new holochassis skin based on a pAI's choice
+ */
 /mob/living/silicon/pai/proc/choose_chassis()
 	var/list/skins = list()
 	for(var/holochassis_option in possible_chassis)
@@ -93,11 +93,11 @@
 	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis].</span>")
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * * Arguments:
-  * * anchor The atom that is anchoring the menu
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * * Arguments:
+ * * anchor The atom that is anchoring the menu
+ */
 /mob/living/silicon/pai/proc/check_menu(atom/anchor)
 	if(incapacitated())
 		return FALSE

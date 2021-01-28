@@ -159,7 +159,7 @@
 		///Take the air composition inside the cryotube
 		var/datum/gas_mixture/air1 = airs[1]
 		env.merge(air1)
-		T.air_update_turf()
+		T.air_update_turf(FALSE, FALSE)
 
 	return ..()
 
@@ -307,6 +307,12 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 			air1.temperature = clamp(air1.temperature - heat * delta_time / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat * delta_time / heat_capacity, TCMB)
+
+			//lets have the core temp match the body temp in humans
+			if(ishuman(mob_occupant))
+				var/mob/living/carbon/human/humi = mob_occupant
+				humi.adjust_coretemperature(humi.bodytemperature - humi.coretemperature)
+
 		if(consume_gas) // Transferring reagent costs us extra gas
 			air1.gases[/datum/gas/oxygen][MOLES] -= max(0, delta_time / efficiency + 1 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 			consume_gas = FALSE
@@ -316,6 +322,8 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
+		
+		update_parents()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)

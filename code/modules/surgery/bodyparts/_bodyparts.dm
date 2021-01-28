@@ -361,18 +361,21 @@
 	check_wounding(wounding_type, phantom_wounding_dmg, wound_bonus, bare_wound_bonus)
 
 /**
-  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
-  *
-  * We generate a "score" for how woundable the attack was based on the damage and other factors discussed in [/obj/item/bodypart/proc/check_woundings_mods], then go down the list from most severe to least severe wounds in that category.
-  * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
-  *
-  * Arguments:
-  * * woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.
-  * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
-  * * wound_bonus- The wound_bonus of an attack
-  * * bare_wound_bonus- The bare_wound_bonus of an attack
-  */
+ * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
+ *
+ * We generate a "score" for how woundable the attack was based on the damage and other factors discussed in [/obj/item/bodypart/proc/check_woundings_mods], then go down the list from most severe to least severe wounds in that category.
+ * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
+ *
+ * Arguments:
+ * * woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.
+ * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
+ * * wound_bonus- The wound_bonus of an attack
+ * * bare_wound_bonus- The bare_wound_bonus of an attack
+ */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
+	if(HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED))
+		return
+
 	// note that these are fed into an exponent, so these are magnified
 	if(HAS_TRAIT(owner, TRAIT_EASILY_WOUNDED))
 		damage *= 1.5
@@ -422,11 +425,10 @@
 			var/datum/wound/new_wound
 			if(replaced_wound)
 				new_wound = replaced_wound.replace_wound(possible_wound)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			else
 				new_wound = new possible_wound
 				new_wound.apply_wound(src)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
+			log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
@@ -443,15 +445,15 @@
 	new_wound.apply_wound(src, smited = smited)
 
 /**
-  * check_wounding_mods() is where we handle the various modifiers of a wound roll
-  *
-  * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
-  * We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
-  * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
-  *
-  * Arguments:
-  * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
-  */
+ * check_wounding_mods() is where we handle the various modifiers of a wound roll
+ *
+ * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
+ * We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
+ * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
+ *
+ * Arguments:
+ * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
+ */
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
 	var/injury_mod = 0
@@ -876,13 +878,13 @@
 			return i
 
 /**
-  * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status
-  *
-  * Covers tabulating the damage multipliers we have from wounds (burn specifically), as well as deleting our gauze wrapping if we don't have any wounds that can use bandaging
-  *
-  * Arguments:
-  * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
-  */
+ * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status
+ *
+ * Covers tabulating the damage multipliers we have from wounds (burn specifically), as well as deleting our gauze wrapping if we don't have any wounds that can use bandaging
+ *
+ * Arguments:
+ * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
+ */
 /obj/item/bodypart/proc/update_wounds(replaced = FALSE)
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
@@ -899,6 +901,8 @@
 
 
 /obj/item/bodypart/proc/get_bleed_rate()
+	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
+		return
 	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
 		return
 
@@ -928,16 +932,16 @@
 	return bleed_rate
 
 /**
-  * apply_gauze() is used to- well, apply gauze to a bodypart
-  *
-  * As of the Wounds 2 PR, all bleeding is now bodypart based rather than the old bleedstacks system, and 90% of standard bleeding comes from flesh wounds (the exception is embedded weapons).
-  * The same way bleeding is totaled up by bodyparts, gauze now applies to all wounds on the same part. Thus, having a slash wound, a pierce wound, and a broken bone wound would have the gauze
-  * applying blood staunching to the first two wounds, while also acting as a sling for the third one. Once enough blood has been absorbed or all wounds with the ACCEPTS_GAUZE flag have been cleared,
-  * the gauze falls off.
-  *
-  * Arguments:
-  * * gauze- Just the gauze stack we're taking a sheet from to apply here
-  */
+ * apply_gauze() is used to- well, apply gauze to a bodypart
+ *
+ * As of the Wounds 2 PR, all bleeding is now bodypart based rather than the old bleedstacks system, and 90% of standard bleeding comes from flesh wounds (the exception is embedded weapons).
+ * The same way bleeding is totaled up by bodyparts, gauze now applies to all wounds on the same part. Thus, having a slash wound, a pierce wound, and a broken bone wound would have the gauze
+ * applying blood staunching to the first two wounds, while also acting as a sling for the third one. Once enough blood has been absorbed or all wounds with the ACCEPTS_GAUZE flag have been cleared,
+ * the gauze falls off.
+ *
+ * Arguments:
+ * * gauze- Just the gauze stack we're taking a sheet from to apply here
+ */
 /obj/item/bodypart/proc/apply_gauze(obj/item/stack/gauze)
 	if(!istype(gauze) || !gauze.absorption_capacity)
 		return
@@ -951,13 +955,13 @@
 		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZED, gauze)
 
 /**
-  * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
-  *
-  * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages fall off and we're left with nothing.
-  *
-  * Arguments:
-  * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
-  */
+ * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
+ *
+ * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages fall off and we're left with nothing.
+ *
+ * Arguments:
+ * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
+ */
 /obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
 	if(!current_gauze)
 		return
@@ -966,3 +970,12 @@
 		owner.visible_message("<span class='danger'>\The [current_gauze] on [owner]'s [name] fall away in rags.</span>", "<span class='warning'>\The [current_gauze] on your [name] fall away in rags.</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 		QDEL_NULL(current_gauze)
 		SEND_SIGNAL(src, COMSIG_BODYPART_GAUZE_DESTROYED)
+
+
+///Proc to turn bodypart into another.
+/obj/item/bodypart/proc/change_bodypart(obj/item/bodypart/new_type)
+	var/mob/living/carbon/our_owner = owner //dropping nulls the limb
+	drop_limb(TRUE)
+	var/obj/item/bodypart/new_part = new new_type()
+	new_part.attach_limb(our_owner, TRUE)
+	qdel(src)

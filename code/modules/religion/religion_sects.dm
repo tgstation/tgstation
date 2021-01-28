@@ -1,12 +1,12 @@
 /**
-  * # Religious Sects
-  *
-  * Religious Sects are a way to convert the fun of having an active 'god' (admin) to code-mechanics so you aren't having to press adminwho.
-  *
-  * Sects are not meant to overwrite the fun of choosing a custom god/religion, but meant to enhance it.
-  * The idea is that Space Jesus (or whoever you worship) can be an evil bloodgod who takes the lifeforce out of people, a nature lover, or all things righteous and good. You decide!
-  *
-  */
+ * # Religious Sects
+ *
+ * Religious Sects are a way to convert the fun of having an active 'god' (admin) to code-mechanics so you aren't having to press adminwho.
+ *
+ * Sects are not meant to overwrite the fun of choosing a custom god/religion, but meant to enhance it.
+ * The idea is that Space Jesus (or whoever you worship) can be an evil bloodgod who takes the lifeforce out of people, a nature lover, or all things righteous and good. You decide!
+ *
+ */
 /datum/religion_sect
 /// Name of the religious sect
 	var/name = "Religious Sect Base Type"

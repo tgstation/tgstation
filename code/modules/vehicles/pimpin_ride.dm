@@ -4,15 +4,13 @@
 	desc = "A brave janitor cyborg gave its life to produce such an amazing combination of speed and utility."
 	icon_state = "pussywagon"
 	key_type = /obj/item/key/janitor
-	rider_check_flags = REQUIRES_LEGS | REQUIRES_ARMS | UNBUCKLE_DISABLED_RIDER
 	var/obj/item/storage/bag/trash/mybag = null
 	var/floorbuffer = FALSE
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
 	update_icon()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 7), TEXT_EAST = list(-12, 7), TEXT_WEST = list( 12, 7)))
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 
 	if(floorbuffer)
 		AddElement(/datum/element/cleaning)

@@ -27,6 +27,7 @@ LINEN BINS
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator, null)
+	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
 
 /obj/item/bedsheet/attack_self(mob/user)
 	if(!user.CanReach(src))		//No telekenetic grabbing.

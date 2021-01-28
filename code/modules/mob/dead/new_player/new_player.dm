@@ -41,8 +41,8 @@
 	return
 
 /**
-  * This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.
-  */
+ * This proc generates the panel that opens to all newly joining players, allowing them to join, observe, view polls, view the current crew manifest, and open the character customization menu.
+ */
 /mob/dead/new_player/proc/new_player_panel()
 	if (client?.interviewee)
 		return
@@ -358,6 +358,8 @@
 		if(GLOB.curse_of_madness_triggered)
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
 
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, humanc, rank)
+
 	GLOB.joined_player_list += character.ckey
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
@@ -443,15 +445,15 @@
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 
-	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
-		client.prefs.random_character()
-		client.prefs.real_name = anonymous_name(src)
-
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)
 		is_antag = TRUE
 
 	client.prefs.copy_to(H, antagonist = is_antag, is_latejoiner = transfer_after)
+
+	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
+		randomize_human(H)
+		H.fully_replace_character_name(null, SSticker.anonymousnames.anonymous_name(H))
 
 	H.dna.update_dna_identity()
 	if(mind)
@@ -529,11 +531,11 @@
 	return TRUE
 
 /**
-  * Prepares a client for the interview system, and provides them with a new interview
-  *
-  * This proc will both prepare the user by removing all verbs from them, as well as
-  * giving them the interview form and forcing it to appear.
-  */
+ * Prepares a client for the interview system, and provides them with a new interview
+ *
+ * This proc will both prepare the user by removing all verbs from them, as well as
+ * giving them the interview form and forcing it to appear.
+ */
 /mob/dead/new_player/proc/register_for_interview()
 	// First we detain them by removing all the verbs they have on client
 	for (var/v in client.verbs)

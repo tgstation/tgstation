@@ -24,7 +24,7 @@
 	melee_damage_upper = 30
 	ranged = TRUE
 	ranged_cooldown_time = 10
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	robust_searching = TRUE
 	stat_attack = HARD_CRIT
 	attack_sound = 'sound/weapons/rapierhit.ogg'

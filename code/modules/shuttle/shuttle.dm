@@ -798,8 +798,8 @@
 		return "00:00"
 
 /**
-  * Gets shuttle location status in a form of string for tgui interfaces
-  */
+ * Gets shuttle location status in a form of string for tgui interfaces
+ */
 /obj/docking_port/mobile/proc/get_status_text_tgui()
 	var/obj/docking_port/stationary/dockedAt = get_docked()
 	var/docked_at = dockedAt?.name || "Unknown"

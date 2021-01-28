@@ -5,12 +5,12 @@
 	icon_icon = 'icons/obj/items_and_weapons.dmi'
 
 /**
-  * Proc called to recall the ninja's sword.
-  *
-  * Called to summon the ninja's katana back to them
-  * If the katana can see the ninja, it will throw itself towards them.
-  * If not, the katana will teleport itself to the ninja.
-  */
+ * Proc called to recall the ninja's sword.
+ *
+ * Called to summon the ninja's katana back to them
+ * If the katana can see the ninja, it will throw itself towards them.
+ * If not, the katana will teleport itself to the ninja.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninja_sword_recall()
 	var/mob/living/carbon/human/ninja = affecting
 	var/cost = 0

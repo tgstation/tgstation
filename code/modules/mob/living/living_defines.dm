@@ -28,6 +28,12 @@
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
+	//Damage dealing vars! These are meaningless outside of specific instances where it's checked and defined.
+	// Lower bound of damage done by unarmed melee attacks. Mob code is a mess, only works where this is checked for.
+	var/melee_damage_lower = 0
+	// Upper bound of damage done by unarmed melee attacks. Please ensure you check the xyz_defenses.dm for the mobs in question to see if it uses this or hardcoded values.
+	var/melee_damage_upper = 0
+
 	/// Generic bitflags for boolean conditions at the [/mob/living] level. Keep this for inherent traits of living types, instead of runtime-changeable ones.
 	var/living_flags = NONE
 
@@ -100,7 +106,7 @@
 	var/health_doll_icon ///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 
 	var/last_bumped = 0
-	var/unique_name = 0 ///if a mob's name should be appended with an id when created e.g. Mob (666)
+	var/unique_name = FALSE ///if a mob's name should be appended with an id when created e.g. Mob (666)
 	var/numba = 0 ///the id a mob gets when it's created
 
 	var/list/butcher_results = null ///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
@@ -126,8 +132,6 @@
 	var/derpspeech = 0
 
 	var/list/implants = null
-
-	var/datum/riding/riding_datum
 
 	var/last_words	///used for database logging
 

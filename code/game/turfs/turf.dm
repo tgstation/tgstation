@@ -1,4 +1,6 @@
 GLOBAL_LIST_EMPTY(station_turfs)
+
+/// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
 	flags_1 = CAN_BE_DIRTY_1
@@ -64,10 +66,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 
 /**
-  * Turf Initialize
-  *
-  * Doesn't call parent, see [/atom/proc/Initialize]
-  */
+ * Turf Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
@@ -102,8 +104,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		CALCULATE_ADJACENT_TURFS(src)
-		SSair.add_to_active(src)
+		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
 
 	if (light_power && light_range)
 		update_light()
@@ -127,7 +128,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
-	CALCULATE_ADJACENT_TURFS(src)
+	CALCULATE_ADJACENT_TURFS(src, NORMAL_TURF)
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -147,7 +148,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1
@@ -166,13 +166,32 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
 
-///returns if the turf has something dense inside it. if exclude_mobs is true, skips dense mobs like fat yoshi.
-/turf/proc/is_blocked_turf(exclude_mobs)
+/**
+ * Check whether the specified turf is blocked by something dense inside it with respect to a specific atom.
+ *
+ * Returns truthy value TURF_BLOCKED_TURF_DENSE if the turf is blocked because the turf itself is dense.
+ * Returns truthy value TURF_BLOCKED_CONTENT_DENSE if one of the turf's contents is dense and would block
+ * a source atom's movement.
+ * Returns falsey value TURF_NOT_BLOCKED if the turf is not blocked.
+ *
+ * Arguments:
+ * * exclude_mobs - If TRUE, ignores dense mobs on the turf.
+ * * source_atom - If this is not null, will check whether any contents on the turf can block this atom specifically. Also ignores itself on the turf.
+ * * ignore_atoms - Check will ignore any atoms in this list. Useful to prevent an atom from blocking itself on the turf.
+ */
+/turf/proc/is_blocked_turf(exclude_mobs = FALSE, source_atom = null, list/ignore_atoms)
 	if(density)
 		return TRUE
-	for(var/i in contents)
-		var/atom/thing = i
-		if(thing.density && (!exclude_mobs || !ismob(thing)))
+
+	for(var/content in contents)
+		// We don't want to block ourselves or consider any ignored atoms.
+		if((content == source_atom) || (content in ignore_atoms))
+			continue
+
+		var/atom/atom_content = content
+		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
+		// it cannot pass through the thing on the turf, we consider the turf blocked.
+		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)) && (source_atom && !atom_content.CanPass(source_atom, src)))
 			return TRUE
 	return FALSE
 
@@ -267,7 +286,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
 	var/canPassSelf = CanPass(mover, src)
-	if(canPassSelf || (mover.movement_type & UNSTOPPABLE))
+	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/i in contents)
 			if(QDELETED(mover))
 				return FALSE		//We were deleted, do not attempt to proceed with movement.
@@ -277,7 +296,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(!thing.Cross(mover))
 				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
-				if((mover.movement_type & UNSTOPPABLE))
+				if((mover.movement_type & PHASING))
 					mover.Bump(thing)
 					continue
 				else
@@ -289,7 +308,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)
-		return (mover.movement_type & UNSTOPPABLE)
+		return (mover.movement_type & PHASING)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
@@ -303,7 +322,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover.Bump(thing)
-			if(!(mover.movement_type & UNSTOPPABLE))
+			if(!(mover.movement_type & PHASING))
 				return FALSE
 		if(QDELETED(mover))
 			return FALSE		//We were deleted.
@@ -582,24 +601,20 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/turf/bullet_act(obj/projectile/P)
-	. = ..()
-	if(. != BULLET_ACT_FORCE_PIERCE)
-		. =  BULLET_ACT_TURF
-
 /// Handles exposing a turf to reagents.
 /turf/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
+	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_TURF, src, reagents, methods, volume_modifier, show_message)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
 		. |= R.expose_turf(src, reagents[R])
 
 /**
-  * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
-  */
+ * Called when this turf is being washed. Washing a turf will also wash any mopable floor decals
+ */
 /turf/wash(clean_types)
 	. = ..()
 

@@ -1,11 +1,11 @@
 
 /**
-  * #Eldritch Knwoledge
-  *
-  * Datum that makes eldritch cultist interesting.
-  *
-  * Eldritch knowledge aren't instantiated anywhere roundstart, and are initalized and destroyed as the round goes on.
-  */
+ * #Eldritch Knwoledge
+ *
+ * Datum that makes eldritch cultist interesting.
+ *
+ * Eldritch knowledge aren't instantiated anywhere roundstart, and are initalized and destroyed as the round goes on.
+ */
 /datum/eldritch_knowledge
 	///Name of the knowledge
 	var/name = "Basic knowledge"
@@ -35,49 +35,49 @@
 	required_atoms = temp_list
 
 /**
-  * What happens when this is assigned to an antag datum
-  *
-  * This proc is called whenever a new eldritch knowledge is added to an antag datum
-  */
+ * What happens when this is assigned to an antag datum
+ *
+ * This proc is called whenever a new eldritch knowledge is added to an antag datum
+ */
 /datum/eldritch_knowledge/proc/on_gain(mob/user)
 	to_chat(user, "<span class='warning'>[gain_text]</span>")
 	return
 /**
-  * What happens when you loose this
-  *
-  * This proc is called whenever antagonist looses his antag datum, put cleanup code in here
-  */
+ * What happens when you loose this
+ *
+ * This proc is called whenever antagonist looses his antag datum, put cleanup code in here
+ */
 /datum/eldritch_knowledge/proc/on_lose(mob/user)
 	return
 /**
-  * What happens every tick
-  *
-  * This proc is called on SSprocess in eldritch cultist antag datum. SSprocess happens roughly every second
-  */
+ * What happens every tick
+ *
+ * This proc is called on SSprocess in eldritch cultist antag datum. SSprocess happens roughly every second
+ */
 /datum/eldritch_knowledge/proc/on_life(mob/user)
 	return
 
 /**
-  * Special check for recipes
-  *
-  * If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.
-  */
+ * Special check for recipes
+ *
+ * If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.
+ */
 /datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms,loc)
 	return TRUE
 
 /**
-  * A proc that handles the code when the mob dies
-  *
-  * This proc is primarily used to end any soundloops when the heretic dies
-  */
+ * A proc that handles the code when the mob dies
+ *
+ * This proc is primarily used to end any soundloops when the heretic dies
+ */
 /datum/eldritch_knowledge/proc/on_death(mob/user)
 	return
 
 /**
-  * What happens once the recipe is succesfully finished
-  *
-  * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
-  */
+ * What happens once the recipe is succesfully finished
+ *
+ * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
+ */
 /datum/eldritch_knowledge/proc/on_finished_recipe(mob/living/user,list/atoms,loc)
 	if(result_atoms.len == 0)
 		return FALSE
@@ -88,10 +88,10 @@
 	return TRUE
 
 /**
-  * Used atom cleanup
-  *
-  * Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.
-  */
+ * Used atom cleanup
+ *
+ * Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.
+ */
 /datum/eldritch_knowledge/proc/cleanup_atoms(list/atoms)
 	for(var/X in atoms)
 		var/atom/A = X
@@ -101,27 +101,27 @@
 	return
 
 /**
-  * Mansus grasp act
-  *
-  * Gives addtional effects to mansus grasp spell
-  */
+ * Mansus grasp act
+ *
+ * Gives addtional effects to mansus grasp spell
+ */
 /datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	return FALSE
 
 
 /**
-  * Sickly blade act
-  *
-  * Gives addtional effects to sickly blade weapon
-  */
+ * Sickly blade act
+ *
+ * Gives addtional effects to sickly blade weapon
+ */
 /datum/eldritch_knowledge/proc/on_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
 	return
 
 /**
-  * Sickly blade distant act
-  *
-  * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
-  */
+ * Sickly blade distant act
+ *
+ * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
+ */
 /datum/eldritch_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
 	return
 

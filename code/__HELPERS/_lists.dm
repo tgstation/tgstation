@@ -229,7 +229,7 @@
 
 	return null
 
-//Pick a random element from the list and remove it from the list.
+/// Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
 	RETURN_TYPE(L[_].type)
 	if(L.len)

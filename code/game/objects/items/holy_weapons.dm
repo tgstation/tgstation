@@ -1,12 +1,32 @@
 // CHAPLAIN CUSTOM ARMORS //
 
+/obj/item/clothing/head/helmet/chaplain/clock
+	name = "forgotten helmet"
+	desc = "It has the unyielding gaze of a god eternally forgotten."
+	icon_state = "clockwork_helmet"
+	inhand_icon_state = "clockwork_helmet_inhand"
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	strip_delay = 8 SECONDS
+	dog_fashion = null
+
+/obj/item/clothing/suit/armor/riot/chaplain/clock
+	name = "forgotten armour"
+	desc = "It sounds like hissing steam, ticking cogs, gone silent, It looks like a dead machine, trying to tick with life."
+	icon_state = "clockwork_cuirass"
+	inhand_icon_state = "clockwork_cuirass_inhand"
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	slowdown = 0
+	clothing_flags = NONE
+
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
 	desc = "Deus Vult."
 	icon_state = "knight_templar"
 	inhand_icon_state = "knight_templar"
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
@@ -52,6 +72,13 @@
 		return
 
 
+/obj/item/storage/box/holy/clock
+	name = "Forgotten kit"
+
+/obj/item/storage/box/holy/clock/PopulateContents()
+	new /obj/item/clothing/head/helmet/chaplain/clock(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/clock(src)
+
 /obj/item/storage/box/holy
 	name = "Templar Kit"
 
@@ -76,7 +103,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	flags_inv = HIDEHAIR //bald
+	flags_inv = NONE
 	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	inhand_icon_state = "cage"
@@ -219,11 +246,11 @@
 		reskin_holy_weapon(user)
 
 /**
-  * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
-  *
-  * Arguments:
-  * * M The mob choosing a nullrod reskin
-  */
+ * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
+ *
+ * Arguments:
+ * * M The mob choosing a nullrod reskin
+ */
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
 	if(GLOB.holy_weapon_type)
 		return
@@ -252,11 +279,11 @@
 		M.put_in_hands(holy_weapon)
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/item/nullrod/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE

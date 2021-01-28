@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -61,7 +60,7 @@ const HolopadContent = (props, context) => {
     holo_calls = [],
   } = data;
   return (
-    <Fragment>
+    <>
       <Section
         title="Holopad"
         buttons={(
@@ -154,6 +153,6 @@ const HolopadContent = (props, context) => {
           </LabeledList>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };

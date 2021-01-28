@@ -161,7 +161,7 @@ RLD
 			return FALSE
 
 		var/list/materials = list()
-		materials[SSmaterials.GetMaterialRef(/datum/material/iron)] = 500
+		materials[GET_MATERIAL_REF(/datum/material/iron)] = 500
 		silo_mats.mat_container.use_materials(materials, amount)
 		silo_mats.silo_log(src, "consume", -amount, "build", materials)
 		return TRUE
@@ -230,9 +230,30 @@ RLD
 	/// Integrated airlock electronics for setting access to a newly built airlocks
 	var/obj/item/electronics/airlock/airlock_electronics
 
-/obj/item/construction/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
-	return (BRUTELOSS)
+/obj/item/construction/rcd/suicide_act(mob/living/user)
+	var/turf/T = get_turf(user)
+
+	if(!isopenturf(T)) // Oh fuck
+		user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		return BRUTELOSS
+
+	mode = RCD_FLOORWALL
+	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(checkResource(16, user)) // It takes 16 resources to construct a wall
+		var/success = T.rcd_act(user, src, RCD_FLOORWALL)
+		T = get_turf(user)
+		// If the RCD placed a floor instead of a wall, having a wall without plating under it is cursed
+		// There isn't an easy programmatical way to check if rcd_act will place a floor or a wall, so just repeat using it for free
+		if(success && isopenturf(T))
+			T.rcd_act(user, src, RCD_FLOORWALL)
+		useResource(16, user)
+		activate()
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user.gib()
+		return MANUAL_SUICIDE
+
+	user.visible_message("<span class='suicide'>[user] pulls the trigger... But there is not enough ammo!</span>")
+	return SHAME
 
 /obj/item/construction/rcd/verb/toggle_window_glass_verb()
 	set name = "RCD : Toggle Window Glass"
@@ -502,16 +523,29 @@ RLD
 		return FALSE
 	var/delay = rcd_results["delay"] * delay_mod
 	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
-	if(checkResource(rcd_results["cost"], user))
-		if(do_after(user, delay, target = A))
-			if(checkResource(rcd_results["cost"], user))
-				if(A.rcd_act(user, src, rcd_results["mode"]))
-					rcd_effect.end_animation()
-					useResource(rcd_results["cost"], user)
-					activate()
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					return TRUE
-	qdel(rcd_effect)
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
+		var/turf/target_turf = get_turf(A)
+		if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			qdel(rcd_effect)
+			return FALSE
+	if(!do_after(user, delay, target = A))
+		qdel(rcd_effect)
+		return FALSE
+	if(!checkResource(rcd_results["cost"], user))
+		qdel(rcd_effect)
+		return FALSE
+	if(!A.rcd_act(user, src, rcd_results["mode"]))
+		qdel(rcd_effect)
+		return FALSE
+	rcd_effect.end_animation()
+	useResource(rcd_results["cost"], user)
+	activate()
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	return TRUE
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
@@ -729,7 +763,7 @@ RLD
 	if(!range_check(A,user))
 		return
 	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade",time=30)
+		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
 	rcd_create(A,user)
 
 
@@ -806,7 +840,7 @@ RLD
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
@@ -820,7 +854,7 @@ RLD
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 					if(do_after(user, floordelay, target = A))
@@ -866,7 +900,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					user.Beam(A,icon_state="light_beam",time=15)
+					user.Beam(A,icon_state="light_beam", time = 15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))

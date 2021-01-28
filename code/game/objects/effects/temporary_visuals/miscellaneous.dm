@@ -469,6 +469,14 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/temp_visual/cart_space
+	icon_state = "launchpad_launch"
+	duration = 2 SECONDS
+
+/obj/effect/temp_visual/cart_space/bad
+	icon_state = "launchpad_pull"
+	duration = 2 SECONDS
+
 /obj/effect/constructing_effect
 	icon = 'icons/effects/effects_rcd.dmi'
 	icon_state = ""

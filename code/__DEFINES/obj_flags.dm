@@ -24,8 +24,8 @@
 #define FORCE_STRING_OVERRIDE	(1<<2) // used for tooltips
 #define NEEDS_PERMIT			(1<<3) //Used by security bots to determine if this item is safe for public use.
 #define SLOWS_WHILE_IN_HAND		(1<<4)
-#define NO_MAT_REDEMPTION			(1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
-#define DROPDEL						(1<<6) // When dropped, it calls qdel on itself
+#define NO_MAT_REDEMPTION		(1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
+#define DROPDEL					(1<<6) // When dropped, it calls qdel on itself
 #define NOBLUDGEON				(1<<7)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define ABSTRACT				(1<<9) 	// for all things that are technically items but used for various different stuff <= wow thanks for the fucking insight sherlock
 #define IMMUTABLE_SLOW			(1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
@@ -34,6 +34,7 @@
 #define EYE_STAB				(1<<13) /// Item can be used to eyestab
 #define HAND_ITEM				(1<<14) /// If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define EXAMINE_SKIP			(1<<15) /// Makes the Examine proc not read out this item.
+#define XENOMORPH_HOLDABLE		(1<<16) /// A Xenomorph can hold this item.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

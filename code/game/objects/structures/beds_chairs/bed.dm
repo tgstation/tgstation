@@ -171,7 +171,7 @@
 	anchored = FALSE
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
-	var/mob/living/owner = null
+	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
 	desc = "Ian's bed! Looks comfy."
@@ -202,10 +202,14 @@
 	name = "Runtime's bed"
 	anchored = TRUE
 
+///Used to set the owner of a dogbed, returns FALSE if called on an owned bed or an invalid one, TRUE if the possesion succeeds
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
-	owner = M
+	if(owned || type != /obj/structure/bed/dogbed) //Only marked beds work, this is hacky but I'm a hacky man
+		return FALSE //Failed
+	owned = TRUE
 	name = "[M]'s bed"
 	desc = "[M]'s bed! Looks comfy."
+	return TRUE //Let any callers know that this bed is ours now
 
 /obj/structure/bed/dogbed/buckle_mob(mob/living/M, force, check_loc)
 	. = ..()

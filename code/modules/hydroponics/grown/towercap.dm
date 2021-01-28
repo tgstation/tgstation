@@ -143,7 +143,11 @@
 
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, 20, 30, 100, CALTROP_BYPASS_SHOES)
+	AddElement(/datum/element/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
+
+/obj/structure/punji_sticks/spikes
+	name = "wooden spikes"
+	icon_state = "woodspike"
 
 /////////BONFIRES//////////
 
@@ -156,6 +160,7 @@
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
+	pass_flags_self = PASSTABLE | LETPASSTHROW
 	var/burning = 0
 	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"
 	var/grill = FALSE
@@ -167,13 +172,6 @@
 /obj/structure/bonfire/prelit/Initialize()
 	. = ..()
 	StartBurning()
-
-/obj/structure/bonfire/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return TRUE
-	if(mover.throwing)
-		return TRUE
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -277,9 +275,9 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength * 0.5 * delta_time)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && DT_PROB(10, delta_time))
-			var/obj/item/O = A
-			O.microwave_act()
+		else if(istype(A, /obj/item))
+			var/obj/item/grilled_item = A
+			SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILLED, src, delta_time) //Not a big fan, maybe make this use fire_act() in the future.
 
 /obj/structure/bonfire/process(delta_time)
 	if(!CheckOxygen())

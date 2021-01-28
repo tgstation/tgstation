@@ -5,6 +5,10 @@
 
 #define RULESET_STOP_PROCESSING 1
 
+#define FAKE_REPORT_CHANCE 8
+#define REPORT_NEG_DIVERGENCE -15
+#define REPORT_POS_DIVERGENCE 15
+
 // -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
@@ -190,10 +194,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 // Checks if there are HIGHLANDER_RULESETs and calls the rule's round_result() proc
 /datum/game_mode/dynamic/set_round_result()
-	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags & HIGHLANDER_RULESET)
-			if(rule.check_finished()) // Only the rule that actually finished the round sets round result.
-				return rule.round_result()
 	// If it got to this part, just pick one highlander if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGHLANDER_RULESET)
@@ -202,7 +202,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
-	switch(round(threat_level))
+	var/shown_threat
+	if(prob(FAKE_REPORT_CHANCE))
+		shown_threat = rand(1, 100)
+	else
+		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
+	switch(round(shown_threat))
 		if(0 to 19)
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
 				. += "<b>Peaceful Waypoint</b></center><BR>"
@@ -250,9 +255,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	if(force_ending)
 		return TRUE
-	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags & HIGHLANDER_RULESET)
-			return rule.check_finished()
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
@@ -314,20 +316,22 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						continue
 					vars[variable] = configuration["dynamic"][variable]
 
+	var/valid_roundstart_ruleset = 0
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
 		var/datum/dynamic_ruleset/ruleset = new rule()
 		// Simple check if the ruleset should be added to the lists.
 		if(ruleset.name == "")
 			continue
+		configure_ruleset(ruleset)
 		switch(ruleset.ruletype)
 			if("Roundstart")
 				roundstart_rules += ruleset
+				if(ruleset.weight)
+					valid_roundstart_ruleset++
 			if ("Latejoin")
 				latejoin_rules += ruleset
 			if ("Midround")
-				if (ruleset.weight)
-					midround_rules += ruleset
-		configure_ruleset(ruleset)
+				midround_rules += ruleset
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -337,12 +341,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (candidates.len <= 0)
 		log_game("DYNAMIC: [candidates.len] candidates.")
 		return TRUE
-	if (roundstart_rules.len <= 0)
-		log_game("DYNAMIC: [roundstart_rules.len] rules.")
-		return TRUE
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
+	else if(valid_roundstart_ruleset < 1)
+		log_game("DYNAMIC: [valid_roundstart_ruleset] enabled roundstart rulesets.")
+		return TRUE
 	else
 		roundstart()
 
@@ -380,6 +384,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
+		if (!rule.weight)
+			continue
 		if (rule.acceptable(roundstart_pop_ready, threat_level) && threat >= rule.cost)	// If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
@@ -620,6 +626,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (get_injection_chance())
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
+				if (!rule.weight)
+					continue
 				if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
@@ -698,6 +706,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
+			if (!rule.weight)
+				continue
 			if (rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && threat >= rule.cost)
 				// Classic secret : only autotraitor/minor roles
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
@@ -766,3 +776,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return RULE_OF_THREE(40, 20, x) + 50
 		if (20 to INFINITY)
 			return rand(90, 100)
+
+#undef FAKE_REPORT_CHANCE
+#undef REPORT_NEG_DIVERGENCE
+#undef REPORT_POS_DIVERGENCE

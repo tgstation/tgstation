@@ -7,11 +7,11 @@
 #define MAX_ATTACK_DELAY 15
 
 /**
-  * Machine that runs around wildly so people can practice clickin on things
-  *
-  * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
-  * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
-  */
+ * Machine that runs around wildly so people can practice clickin on things
+ *
+ * Can have a mob buckled on or a obj/item/target attached. Movement controlled by SSFastProcess,
+ * movespeed controlled by cooldown macros. Can attach obj/item/target, obj/item/training_toolbox, and can buckle mobs to this.
+ */
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
 	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
@@ -335,10 +335,10 @@
 	. += "<span class='notice'><b>Click to open control interface.</b></span>"
 
 /**
-  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
-  *
-  * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
-  */
+ * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
+ *
+ * Also has a 'Lap' function for keeping track of hits made at a certain point. Also, looks kinda like his grace for laughs and pranks.
+ */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
 	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"

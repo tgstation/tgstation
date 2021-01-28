@@ -142,7 +142,7 @@
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, swap = FALSE)
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
@@ -276,10 +276,10 @@
 //The following functions are the same save for one small difference
 
 /**
-  * Used to drop an item (if it exists) to the ground.
-  * * Will pass as TRUE is successfully dropped, or if there is no item to drop.
-  * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
-  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
+ * Used to drop an item (if it exists) to the ground.
+ * * Will pass as TRUE is successfully dropped, or if there is no item to drop.
+ * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
+ * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
 	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
@@ -394,12 +394,12 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M, swap = FALSE, check_hand = TRUE)
+/obj/item/proc/equip_to_best_slot(mob/M, check_hand = TRUE)
 	if(check_hand && src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
-	if(M.equip_to_appropriate_slot(src, swap))
+	if(M.equip_to_appropriate_slot(src))
 		M.update_inv_hands()
 		return TRUE
 	else
@@ -428,18 +428,6 @@
 	var/obj/item/I = get_active_held_item()
 	if (I)
 		I.equip_to_best_slot(src)
-
-/mob/verb/equipment_swap()
-	set name = "equipment-swap"
-	set hidden = TRUE
-
-	var/obj/item/I = get_active_held_item()
-	if (I)
-		if(!do_after(src, 1 SECONDS, target = I))
-			to_chat(src, "<span class='warning'>You fumble with your equipment, accidentally dropping it on the floor!</span>")
-			dropItemToGround(I)
-			return
-		I.equip_to_best_slot(src, TRUE)
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()

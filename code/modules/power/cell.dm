@@ -38,6 +38,17 @@
 		desc += " This one has a rating of [DisplayEnergy(maxcharge)], and you should not swallow it."
 	update_icon()
 
+/obj/item/stock_parts/cell/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/// Handles properly detaching signal hooks.
+/obj/item/stock_parts/cell/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
+
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
 	if(grown_battery)
@@ -86,9 +97,10 @@
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/stock_parts/cell/on_reagent_change(changetype)
-	rigged = (corrupted || reagents.has_reagent(/datum/reagent/toxin/plasma, 5)) //has_reagent returns the reagent datum
-	return ..()
+/obj/item/stock_parts/cell/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	rigged = (corrupted || holder.has_reagent(/datum/reagent/toxin/plasma, 5)) ? TRUE : FALSE //has_reagent returns the reagent datum
+	return NONE
 
 
 /obj/item/stock_parts/cell/proc/explode()
@@ -103,6 +115,10 @@
 		rigged = FALSE
 		corrupt()
 		return
+
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
+	log_game("[key_name(usr)] has triggered a rigged/corrupted power cell explosion at [AREACOORD(T)].")
+
 	//explosion(T, 0, 1, 2, 2)
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	qdel(src)
@@ -371,6 +387,10 @@
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
 		charge = 0 //For naturally depowered areas, we start with no power
+
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000
+	charge = 5000
 
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN

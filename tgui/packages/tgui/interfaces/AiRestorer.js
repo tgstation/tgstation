@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -29,7 +28,7 @@ export const AiRestorerContent = (props, context) => {
     ejectable,
   } = data;
   return (
-    <Fragment>
+    <>
       {error && (
         <NoticeBox textAlign="center">
           {error}
@@ -93,6 +92,6 @@ export const AiRestorerContent = (props, context) => {
           </Section>
         </Section>
       )}
-    </Fragment>
+    </>
   );
 };

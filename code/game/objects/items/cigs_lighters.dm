@@ -336,10 +336,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Carp Classic brand cigarette. A small label on its side indicates that it does NOT contain carpotoxin."
 
 /obj/item/clothing/mask/cigarette/carp/Initialize()
-    . = ..()
-    if(!prob(5))
-        return
-    reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
+	. = ..()
+	if(!prob(5))
+		return
+	reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."

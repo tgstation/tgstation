@@ -88,13 +88,13 @@
 			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
 		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
-			is_in_use = FALSE
 
 		for(var/to_appear in atoms_to_disappear)
 			var/atom/atom_to_appear = to_appear
 			//we need to reappear the item just in case the ritual didnt consume everything... or something.
 			atom_to_appear.invisibility = initial(atom_to_appear.invisibility)
 
+		is_in_use = FALSE
 		return
 	is_in_use = FALSE
 	to_chat(user,"<span class='warning'>Your ritual failed! You either used the wrong components or are missing something important!</span>")
@@ -107,12 +107,12 @@
 	pixel_y = -32
 
 /**
-  * #Reality smash tracker
-  *
-  * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
-  *
-  * Tracks relevant data, generates relevant data, useful tool
-  */
+ * #Reality smash tracker
+ *
+ * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
+ *
+ * Tracks relevant data, generates relevant data, useful tool
+ */
 /datum/reality_smash_tracker
 	///list of tracked reality smashes
 	var/smashes = 0
@@ -125,10 +125,10 @@
 	return ..()
 
 /**
-  * Generates a set amount of reality smashes based on the N value
-  *
-  * Automatically creates more reality smashes
-  */
+ * Generates a set amount of reality smashes based on the N value
+ *
+ * Automatically creates more reality smashes
+ */
 /datum/reality_smash_tracker/proc/Generate()
 	targets++
 	var/number = max(targets * (4-(targets-1)) - smashes,1)

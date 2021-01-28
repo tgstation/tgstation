@@ -48,6 +48,16 @@ if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
+echo "Checking for space indentation"
+if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
+    echo "space indentation detected"
+    st=1
+fi;
+echo "Checking for mixed indentation"
+if grep -P '^\t+ [^ *]' code/**/*.dm; then
+    echo "mixed <tab><space> indentation detected"
+    st=1
+fi;
 nl='
 '
 nl=$'\n'
@@ -80,6 +90,10 @@ if grep -ni 'nanotransen' _maps/**/*.dmm; then
 fi;
 if ls _maps/*.json | grep -P "[A-Z]"; then
     echo "Uppercase in a map json detected, these must be all lowercase."
+    st=1
+fi;
+if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
+    echo "Custom icon helper found. Please include dmis as standard assets instead for built-in maps."
     st=1
 fi;
 for json in _maps/*.json

@@ -186,6 +186,7 @@
 	desc = "A refrigerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
 	inhand_icon_state = "waterbackpackatmos"
 	icon_state = "waterbackpackatmos"
+	worn_icon_state = "waterbackpackatmos"
 	volume = 200
 	slowdown = 0
 

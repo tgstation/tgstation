@@ -4,10 +4,11 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags_1 = NONE
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
+	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = FALSE // if true, program goes on emag list
-
+	network_root_id = "HOLODECK"
 /*
 	Power tracking: Use the holodeck computer's power grid
 	Asserts are to avoid the inevitable infinite loops

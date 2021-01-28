@@ -251,7 +251,7 @@
 		usr.put_in_hands(C)
 		qdel(src)
 
-/obj/structure/chair/user_buckle_mob(mob/living/M, force, check_loc = FALSE)
+/obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return ..()
 
 /obj/structure/chair/stool/bar
@@ -320,7 +320,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+	else if(custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 

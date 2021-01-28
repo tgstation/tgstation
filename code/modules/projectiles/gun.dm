@@ -322,6 +322,8 @@
 	if(user)
 		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
 
+	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
+
 	add_fingerprint(user)
 
 	if(semicd)
@@ -515,12 +517,12 @@
 
 
 /**
-  * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
-  *
-  * Returns the former gun_light that has now been replaced by this proc.
-  * Arguments:
-  * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
-  */
+ * Swaps the gun's seclight, dropping the old seclight if it has not been qdel'd.
+ *
+ * Returns the former gun_light that has now been replaced by this proc.
+ * Arguments:
+ * * new_light - The new light to attach to the weapon. Can be null, which will mean the old light is removed with no replacement.
+ */
 /obj/item/gun/proc/set_gun_light(obj/item/flashlight/seclite/new_light)
 	// Doesn't look like this should ever happen? We're replacing our old light with our old light?
 	if(gun_light == new_light)

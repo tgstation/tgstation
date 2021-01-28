@@ -17,7 +17,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "ah" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space/has_grav/abandonedzoo)
 "ai" = (
 /turf/open/floor/plating/asteroid,

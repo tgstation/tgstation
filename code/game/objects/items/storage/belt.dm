@@ -308,7 +308,8 @@
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/stack/marker_beacon,
-		/obj/item/key/lasso
+		/obj/item/key/lasso,
+		/obj/item/skeleton_key
 		))
 
 
@@ -405,7 +406,7 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.set_holdable(list(
-		/obj/item/reagent_containers/food/snacks,
+		/obj/item/food,
 		/obj/item/reagent_containers/food/drinks
 		))
 

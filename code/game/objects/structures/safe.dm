@@ -205,14 +205,14 @@ FLOOR SAFES
 			return TRUE
 
 /**
-  * Checks if safe is considered in a broken state for force-opening the safe
-  */
+ * Checks if safe is considered in a broken state for force-opening the safe
+ */
 /obj/structure/safe/proc/check_broken()
-  return broken || explosion_count >= BROKEN_THRESHOLD
+	return broken || explosion_count >= BROKEN_THRESHOLD
 
 /**
-  * Called every dial turn to determine whether the safe should unlock or not.
-  */
+ * Called every dial turn to determine whether the safe should unlock or not.
+ */
 /obj/structure/safe/proc/check_unlocked()
 	if(check_broken())
 		return TRUE
@@ -224,8 +224,8 @@ FLOOR SAFES
 	return FALSE
 
 /**
-  * Called every dial turn to provide feedback if possible.
-  */
+ * Called every dial turn to provide feedback if possible.
+ */
 /obj/structure/safe/proc/notify_user(user, canhear, sounds, total_ticks, current_tick)
 	if(!canhear)
 		return

@@ -41,9 +41,7 @@
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
 
 /obj/machinery/smartfridge/update_icon_state()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!machine_stat)
-		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		if (visible_contents)
 			switch(contents.len)
 				if(0)
@@ -59,7 +57,10 @@
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-
+/obj/machinery/smartfridge/update_overlays()
+	. = ..()
+	if(!machine_stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_STRUCTURE_LAYER, EMISSIVE_STRUCTURE_PLANE, dir, alpha)
 
 /*******************
 *   Item Adding
@@ -112,10 +113,10 @@
 			if(loaded)
 				if(contents.len >= max_n_of_items)
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+						"<span class='notice'>You fill \the [src] with \the [O].</span>")
 				else
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+						"<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
 				if (visible_contents)
@@ -259,7 +260,7 @@
 
 	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
 	// This stops handle_atom_del being called on every part when not necessary.
-	var/list/old_parts = component_parts
+	var/list/old_parts = component_parts.Copy()
 
 	component_parts = null
 	circuit = null
@@ -375,7 +376,7 @@
 	base_build_path = /obj/machinery/smartfridge/food
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
-	if(istype(O, /obj/item/reagent_containers/food/snacks/))
+	if(IS_EDIBLE(O))
 		return TRUE
 	return FALSE
 
@@ -396,6 +397,22 @@
 
 /obj/machinery/smartfridge/extract/preloaded
 	initial_contents = list(/obj/item/slime_scanner = 2)
+
+// -------------------------------------
+// Cytology Petri Dish Smartfridge
+// -------------------------------------
+/obj/machinery/smartfridge/petri
+	name = "smart petri dish storage"
+	desc = "A refrigerated storage unit for petri dishes."
+	base_build_path = /obj/machinery/smartfridge/petri
+
+/obj/machinery/smartfridge/petri/accept_check(obj/item/O)
+	if(istype(O, /obj/item/petri_dish))
+		return TRUE
+	return FALSE
+
+/obj/machinery/smartfridge/petri/preloaded
+	initial_contents = list(/obj/item/petri_dish = 5)
 
 // -------------------------
 // Organ Surgery Smartfridge

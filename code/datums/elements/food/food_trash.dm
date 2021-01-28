@@ -22,6 +22,9 @@
 		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/open_trash)
 	if(flags & FOOD_TRASH_POPABLE)
 		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
+	RegisterSignal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
+	RegisterSignal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
+	RegisterSignal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)
 
 /datum/element/food_trash/Detach(datum/target)
 	. = ..()
@@ -65,7 +68,7 @@
 /datum/element/food_trash/proc/open_trash(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	to_chat(user, "<span class='notice'>You open the [src]\'s shell, revealing \a [initial(trash.name)].</span>")
+	to_chat(user, "<span class='notice'>You open the [source], revealing \a [initial(trash.name)].</span>")
 
 	INVOKE_ASYNC(src, .proc/async_generate_trash, source)
 	qdel(source)

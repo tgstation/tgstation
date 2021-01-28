@@ -1,4 +1,4 @@
-/**
+/*!
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
  */
@@ -90,10 +90,11 @@
 	html = replacetextEx(html, "<!-- tgui:html -->\n", inline_html)
 	// Open the window
 	client << browse(html, "window=[id];[options]")
-	// Instruct the client to signal UI when the window is closed.
-	winset(client, id, "on-close=\"uiclose [id]\"")
 	// Detect whether the control is a browser
 	is_browser = winexists(client, id) == "BROWSER"
+	// Instruct the client to signal UI when the window is closed.
+	if(!is_browser)
+		winset(client, id, "on-close=\"uiclose [id]\"")
 
 /**
  * public

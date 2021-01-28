@@ -1,6 +1,6 @@
 /obj/item/ammo_casing/caseless/foam_dart
 	name = "foam dart"
-	desc = "It's nerf or nothing! Ages 8 and up."
+	desc = "It's Donk or Don't! Ages 8 and up."
 	projectile_type = /obj/projectile/bullet/reusable/foam_dart
 	caliber = "foam_force"
 	icon = 'icons/obj/guns/toy.dmi'
@@ -13,12 +13,12 @@
 	..()
 	if (modified)
 		icon_state = "foamdart_empty"
-		desc = "It's nerf or nothing! ... Although, this one doesn't look too safe."
+		desc = "It's Donk or Don't! ... Although, this one doesn't look too safe."
 		if(BB)
 			BB.icon_state = "foamdart_empty"
 	else
 		icon_state = initial(icon_state)
-		desc = "It's nerf or nothing! Ages 8 and up."
+		desc = "It's Donk or Don't! Ages 8 and up."
 		if(BB)
 			BB.icon_state = initial(BB.icon_state)
 

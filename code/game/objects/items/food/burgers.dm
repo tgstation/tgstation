@@ -6,6 +6,7 @@
 	tastes = list("bun" = 2, "beef patty" = 4)
 	foodtypes = GRAIN | MEAT //lettuce doesn't make burger a vegetable.
 	eat_time = 15 //Quick snack
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/burger/plain
 	name = "burger"
@@ -394,3 +395,11 @@
 		var/datum/effect_system/smoke_spread/bad/green/smoke = new
 		smoke.set_up(0, src)
 		smoke.start()
+
+// empty burger you can customize
+/obj/item/food/burger/empty
+	name = "burger"
+	icon_state = "custburg"
+	tastes = list("bun")
+	foodtypes = GRAIN
+	desc = "A crazy, custom burger made by a mad cook."

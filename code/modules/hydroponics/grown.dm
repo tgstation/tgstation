@@ -48,7 +48,7 @@
 	for(var/datum/plant_gene/trait/T in seed.genes)
 		T.on_new(src, loc)
 
-	..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
+	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
 
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
@@ -167,6 +167,7 @@
 	return TRUE
 
 /obj/item/food/grown/on_grind()
+	. = ..()
 	var/nutriment = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
 	if(grind_results?.len)
 		for(var/i in 1 to grind_results.len)

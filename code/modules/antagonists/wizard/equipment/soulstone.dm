@@ -103,7 +103,7 @@
 		return
 	release_shades(user)
 
-/obj/item/soulstone/proc/release_shades(mob/user)
+/obj/item/soulstone/proc/release_shades(mob/user, silent = FALSE)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
@@ -114,11 +114,41 @@
 		else
 			icon_state = "soulstone"
 		name = initial(name)
-		if(iswizard(user) || usability)
-			to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
-		else if(iscultist(user))
-			to_chat(A, "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>")
+		if(!silent)
+			if(iswizard(user) || usability)
+				to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.</b>")
+			else if(iscultist(user))
+				to_chat(A, "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>")
 		was_used()
+
+/obj/item/soulstone/pre_attack(atom/A, mob/living/user, params)
+	var/mob/living/simple_animal/shade/occupant = (locate() in src)
+	var/obj/item/storage/toolbox/mechanical/target_toolbox = A
+	if(!occupant || !istype(target_toolbox) || target_toolbox.has_soul)
+		return ..()
+
+	if(purified && iscultist(user))
+		hot_potato(user)
+		return
+	if(!iscultist(user) && !iswizard(user) && !usability)
+		user.Unconscious(10 SECONDS)
+		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] holds [src] above [user.p_their()] head and forces it into [target_toolbox] with a flash of light!", \
+		"<span class='notice'>You hold [src] above your head briefly, then force it into [target_toolbox], transferring the [occupant]'s soul!</span>", ignored_mobs = occupant)
+	to_chat(occupant, "<span class='userdanger'>[user] holds you up briefly, then forces you into [target_toolbox]!</span>")
+	to_chat(occupant, "<span class='deadsay'><b>Your eternal soul has been sacrificed to restore the soul of a toolbox. Them's the breaks!</b></span>")
+
+	occupant.client?.give_award(/datum/award/achievement/misc/toolbox_soul, occupant)
+	occupant.deathmessage = "shrieks out in unholy pain as [occupant.p_their()] soul is absorbed into [target_toolbox]!"
+	release_shades(user, TRUE)
+	occupant.death()
+
+	target_toolbox.name = "soulful toolbox"
+	target_toolbox.icon_state = "toolbox_blue_old"
+	target_toolbox.has_soul = TRUE
+	target_toolbox.has_latches = FALSE
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
