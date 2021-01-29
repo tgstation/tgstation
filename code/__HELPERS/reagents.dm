@@ -60,7 +60,7 @@
 	for(var/reagent in GLOB.chemical_reactions_list)
 		for(var/R in GLOB.chemical_reactions_list[reagent])
 			var/datum/reac = R
-			if(reac.type == id)
+			if(ispath(reac.type, id))
 				return R
 
 /proc/remove_chemical_reaction(datum/chemical_reaction/R)
