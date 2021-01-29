@@ -18,12 +18,6 @@
 	var/ertblast = FALSE //If this is true the blast door cannot be deconstructed
 	var/deconstruction = INTACT //For the deconstruction steps
 
-/obj/machinery/door/poddoor/multitool_act(mob/living/user)
-	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
-	if(change_id)
-		id = clamp(round(change_id, 1), 1, 100)
-		to_chat(user, "<span class='notice'>You change the ID to [id].</span>")
-
 /obj/machinery/door/poddoor/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(ertblast && W.tool_behaviour == TOOL_SCREWDRIVER) // This makes it so ERT members cannot cheese by opening their blast doors.
