@@ -57,3 +57,23 @@
 	report_message = "Our workers cleaned out most of the junk in the maintenace areas."
 	blacklist = list(/datum/station_trait/filled_maint)
 	trait_to_give = STATION_TRAIT_EMPTY_MAINT
+
+
+/datum/station_trait/overflow_job_bureacracy
+	name = "Overflow bureacracy mistake"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 50000
+	show_in_report = TRUE
+	var/list/jobs_to_use = list("Clown", "Bartender", "Cook", "Botanist", "Cargo Technician", "Mime", "Janitor", "Prisoner")
+	var/chosen_job
+
+/datum/station_trait/overflow_job_bureacracy/New()
+	. = ..()
+	chosen_job = pick(jobs_to_use)
+
+/datum/station_trait/overflow_job_bureacracy/get_report()
+	return "[name] - It seems for some reason we put out the wrong job-listing for the overflow role this shift...I hope you like [chosen_job]s"
+
+/datum/station_trait/overflow_job_bureacracy/on_round_start()
+	. = ..()
+	SSjob.set_overflow_role(chosen_job)

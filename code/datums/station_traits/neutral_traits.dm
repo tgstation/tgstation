@@ -43,3 +43,23 @@
 		do_smoke(location=current_turf)
 		dog.forceMove(adventure_turf)
 		do_smoke(location=adventure_turf)
+
+
+/datum/station_trait/glitched_pdas
+	name = "PDA glitch"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 8
+	show_in_report = TRUE
+	report_message = "Something seems to be wrong with the PDAs issues to you all this shift. Nothing too bad though."
+	trait_to_give = STATION_TRAIT_PDA_GLITCHED
+
+/datum/station_trait/announcement_intern
+	name = "Announcement Intern"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Please be nice to him."
+
+/datum/station_trait/announcement_intern/New()
+	. = ..()
+	SSstation.announcer = /datum/centcom_announcer/intern
