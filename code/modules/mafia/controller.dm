@@ -551,7 +551,7 @@
 		if(player_client)
 			player_client.prefs.copy_to(H)
 			if(H.dna.species.outfit_important_for_life) //plasmamen
-				H.set_species(/datum/species/human)
+				H.set_species(/datum/species/plasmaman/stable)//Admin only plasmamen that don't breath or burn
 		role.body = H
 		player_role_lookup[H] = role
 		H.key = role.player_key
