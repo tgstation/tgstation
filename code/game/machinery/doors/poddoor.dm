@@ -39,6 +39,12 @@
 			return TRUE
 
 	if(panel_open)
+		if(W.tool_behaviour == TOOL_MULTITOOL)
+			var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
+			if(change_id)
+				id = clamp(round(change_id, 1), 1, 100)
+				to_chat(user, "<span class='notice'>You change the ID to [id].</span>")	
+
 		if(W.tool_behaviour == TOOL_CROWBAR && deconstruction == INTACT)
 			to_chat(user, "<span class='notice'>You start to remove the airlock electronics.</span>")
 			if(do_after(user, 10 SECONDS, target = src))
