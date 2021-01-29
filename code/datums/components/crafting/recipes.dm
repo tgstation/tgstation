@@ -1079,7 +1079,7 @@
 	
 /datum/crafting_recipe/shutters
 	name = "Shutters"
-	reqs = list(/obj/item/stack/sheet/plasteel = 15,
+	reqs = list(/obj/item/stack/sheet/plasteel = 10,
 				/obj/item/stack/cable_coil = 10,
 				/obj/item/electronics/airlock = 1
 				)
@@ -1090,7 +1090,7 @@
 
 /datum/crafting_recipe/blast_doors
 	name = "Blast Door"
-	reqs = list(/obj/item/stack/sheet/plasteel = 30,
+	reqs = list(/obj/item/stack/sheet/plasteel = 15,
 				/obj/item/stack/cable_coil = 15,
 				/obj/item/electronics/airlock = 1
 				)
