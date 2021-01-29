@@ -36,7 +36,7 @@
 		if(!D.required_reagents || !D.required_reagents.len) //Skip impossible reactions
 			continue
 
-		for(var/reaction in D.results)
+		for(var/reaction in D.required_reagents)
 			reaction_ids += reaction
 
 		// Create filters based on each reagent id in the required reagents list
@@ -1674,7 +1674,7 @@
 	//This is last - and not an else if. If either of the above fail to find a reagent, it defaults to this.
 	var/list/possible_reactions = generate_possible_reactions()
 	for(var/_reaction in possible_reactions)
-		var/datum/chemical_reaction/reaction = find_reagent_object_from_type(_reaction)
+		var/datum/chemical_reaction/reaction = get_chemical_reaction(_reaction)
 		if(!reaction)
 			to_chat(user, "Could not find reaction!")
 		else	
