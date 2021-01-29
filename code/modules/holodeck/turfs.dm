@@ -39,7 +39,7 @@
 /turf/open/floor/holofloor/chapel/Initialize(mapload)
 	. = ..()
 	if (direction != SOUTH)
-		src.setDir(direction)
+		setDir(direction)
 
 /turf/open/floor/holofloor/white
 	name = "white floor"
