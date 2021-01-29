@@ -28,6 +28,11 @@
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/enter_aquarium)
 
+	//If component is added to something already in aquarium at the time initialize it properly.
+	var/atom/movable/movable_parent = parent
+	if(istype(movable_parent.loc, /obj/structure/aquarium))
+		on_inserted(movable_parent.loc)
+
 /datum/component/aquarium_content/PreTransfer()
 	. = ..()
 	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)

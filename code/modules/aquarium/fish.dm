@@ -4,6 +4,10 @@
 	desc = "very bland"
 	w_class = WEIGHT_CLASS_TINY
 
+
+/obj/item/fish/proc/flop_animation()
+
+
 /// Automatically generates object of given base path from the behaviour type in loc
 /proc/generate_fish(loc,behaviour_type,base_path=/obj/item/fish)
 	var/datum/aquarium_behaviour/behaviour = behaviour_type
@@ -66,6 +70,8 @@
 	aquarium_vc_color = "#91AE64"
 	sprite_width = 8
 	sprite_height = 5
+
+	stable_population = 10
 
 /datum/aquarium_behaviour/fish/plasmatetra
 	name = "plasma tetra"
