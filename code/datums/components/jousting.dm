@@ -3,7 +3,7 @@
 	var/max_tile_charge = 5
 	var/min_tile_charge = 2				//tiles before this code gets into effect.
 	var/current_tile_charge = 0
-	var/movement_reset_tolerance = 2			//deciseconds
+	var/movement_reset_tolerance = 3			//deciseconds
 	var/unmounted_damage_boost_per_tile = 0
 	var/unmounted_knockdown_chance_per_tile = 0
 	var/unmounted_knockdown_time = 0
@@ -12,6 +12,7 @@
 	var/mounted_knockdown_time = 20
 	var/requires_mob_riding = TRUE			//whether this only works if the attacker is riding a mob, rather than anything they can buckle to.
 	var/requires_mount = TRUE				//kinda defeats the point of jousting if you're not mounted but whatever.
+	var/active = TRUE
 	var/mob/current_holder
 	var/current_timerid
 
@@ -21,6 +22,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
+	RegisterSignal(parent, COMSIG_MELEE_TRANSFORM, .proc/on_transform)
 
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
