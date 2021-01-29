@@ -34,7 +34,7 @@
 	owner.special_role = "highlander"
 	var/mob/living/carbon/human/humanlander = owner.current
 	if(ishuman(humanlander) && humanlander.dna.species.outfit_important_for_life) //things that cannot live with the scottish kilt will be owned
-		humanlander.set_species(/datum/species/human)
+		humanlander.set_species(/datum/species/plasmaman/stable)//Admin only plasmamen that don't breath or burn
 	give_equipment()
 	. = ..()
 
