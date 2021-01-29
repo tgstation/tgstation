@@ -50,6 +50,7 @@
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
+	duffelbag = /obj/item/storage/backpack/duffelbag/tox
 
 	skillchips = list(/obj/item/skillchip/job/research_director)
 

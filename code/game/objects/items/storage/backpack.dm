@@ -424,6 +424,44 @@
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
 
+/obj/item/storage/backpack/duffelbag/explorer
+	name = "explorator's duffel bag"
+	desc = "A large duffel bag for holding extra exotic treasures."
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+
+/obj/item/storage/backpack/duffelbag/hyd
+	name = "hydroponic's duffel bag"
+	desc = "A large duffel bag for holding extra gardening tools."
+	icon_state = "duffel-hyd"
+	inhand_icon_state = "duffel-hyd"
+
+/obj/item/storage/backpack/duffelbag/chem
+	name = "chemistry duffel bag"
+	desc = "A large duffel bag for holding extra chemical substances."
+	icon_state = "duffel-chem"
+	inhand_icon_state = "duffel-chem"
+
+/obj/item/storage/backpack/duffelbag/gen
+	name = "geneticist's duffel bag"
+	desc = "A large duffel bag for holding extra genetic mutations."
+	icon_state = "duffel-gen"
+	inhand_icon_state = "duffel-gen"
+
+/obj/item/storage/backpack/duffelbag/tox
+	name = "scientist's duffel bag"
+	desc = "A large duffel bag for holding extra scientific components."
+	icon_state = "duffel-tox"
+	inhand_icon_state = "duffel-tox"
+
+/obj/item/storage/backpack/duffelbag/vir
+	name = "virologist's duffel bag"
+	desc = "A large duffel bag for holding extra viral bottles."
+	icon_state = "duffel-vir"
+	inhand_icon_state = "duffel-vir"
+
+
+
 /obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
 	new /obj/item/scalpel(src)
 	new /obj/item/hemostat(src)
