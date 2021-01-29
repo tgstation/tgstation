@@ -12,7 +12,7 @@
 		return
 	weight *= 3
 	max_occurrences *= 2
-	earliest_start /= 2
+	earliest_start *= 0.5
 
 
 /datum/round_event/carp_migration
