@@ -22,7 +22,6 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
-	RegisterSignal(parent, COMSIG_MELEE_TRANSFORM, .proc/on_transform)
 
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
