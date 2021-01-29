@@ -38,7 +38,7 @@
 	var/area/myarea = null
 	//Has this firealarm been triggered by its enviroment?
 	var/triggered = FALSE
-	//Has this fire_alarm been trigged in a cold enviroment.
+	///Has this fire_alarm been trigged in a cold enviroment?
 	var/cold_alarm = FALSE
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
@@ -136,6 +136,8 @@
 		myarea.triggered_firealarms += 1
 		if(exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			cold_alarm = TRUE
+		else
+			cold_alarm = FALSE
 		update_icon()
 	alarm()
 
