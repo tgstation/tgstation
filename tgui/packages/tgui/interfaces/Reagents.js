@@ -87,7 +87,7 @@ export const Wires = (props, context) => {
                       </TableRow>
                       <TableRow>
                         {reagent_mode_recipe.reactants.map(reactant => (
-                          <Box>
+                          <Box key={reactant.id}>
                             {reactant.tooltipBool && (                    
                               <Button
                                 key={reactant.name}
@@ -254,91 +254,92 @@ export const Wires = (props, context) => {
           <Button
             content={"Brute"}
             color={brute ? "green" : "red"}
-            onClick={() => act('toggle_tag_brute'), setBrute(!brute)}>
+            onClick={() => { 
+              act('toggle_tag_brute'); setBrute(!brute); }}>
             <Icon name="gavel" mr={1} />
             Brute
           </Button>
           <Button
             content={"Burn"}
             color={burn ? "green" : "red"}
-            onClick={() => act('toggle_tag_burn'), setBurn(!burn)}>
+            onClick={() => { act('toggle_tag_burn'); setBurn(!burn); }}>
             <Icon name="burn" mr={1} />
             Burn
           </Button>
           <Button
             content={"Toxin"}
             color={toxin ? "green" : "red"}
-            onClick={() => act('toggle_tag_toxin'), setToxin(!toxin)}>
+            onClick={() => { act('toggle_tag_toxin'); setToxin(!toxin); }}>
             <Icon name="biohazard" mr={1} />
             Toxin
           </Button>
           <Button
             content={"Oxy"}
             color={oxy ? "green" : "red"}
-            onClick={() => act('toggle_tag_oxy'), setOxy(!oxy)}>
+            onClick={() => { act('toggle_tag_oxy'); setOxy(!oxy); }}>
             <Icon name="lungs" mr={1} />
             Suffocation
           </Button>
           <Button
             content={"Clone"}
             color={clone ? "green" : "red"}
-            onClick={() => act('toggle_tag_clone'), setClone(!clone)}>
+            onClick={() => { act('toggle_tag_clone'); setClone(!clone); }}>
             <Icon name="male" mr={1} />
             Clone
           </Button>
           <Button
             content={"organ"}
             color={organ ? "green" : "red"}
-            onClick={() => act('toggle_tag_organ'), setOrgan(!organ)}>
+            onClick={() => { act('toggle_tag_organ'); setOrgan(!organ); }}>
             <Icon name="hand-holding-heart" mr={1} />
             Organ
           </Button>
           <Button
             content={"Healing"}
             color={healing ? "green" : "red"}
-            onClick={() => act('toggle_tag_healing'), setHealing(!healing)}>
+            onClick={() => { act('toggle_tag_healing'); setHealing(!healing); }}>
             <Icon name="medkit" mr={1} />
             Healing
           </Button>
           <Button
             content={"damaging"}
             color={damaging ? "green" : "red"}
-            onClick={() => act('toggle_tag_damaging'), setDamaging(!damaging)}>
+            onClick={() => { act('toggle_tag_damaging'); setDamaging(!damaging); }}>
             <Icon name="skull-crossbones" mr={1} />
             Damaging
           </Button>
           <Button
             content={"explosiive"}
             color={explosive ? "green" : "red"}
-            onClick={() => act('toggle_tag_explosive'), setExplosive(!explosive)}>
+            onClick={() => { act('toggle_tag_explosive'); setExplosive(!explosive); }}>
             <Icon name="bomb" mr={1} />
             Explosive
           </Button>
           <Button
             content={"other"}
             color={other ? "green" : "red"}
-            onClick={() => act('toggle_tag_other'), setOther(!other)}>
+            onClick={() => { act('toggle_tag_other'); setOther(!other); }}>
             <Icon name="question-mark" mr={1} />
             Other
           </Button>
           <Button
             content={"easy"}
             color={easy ? "green" : "red"}
-            onClick={() => act('toggle_tag_easy'), setEasy(!easy)}>
+            onClick={() => { act('toggle_tag_easy'); setEasy(!easy); }}>
             <Icon name="chess-pawn" mr={1} />
             Easy
           </Button>
           <Button
             content={"moderate"}
             color={moderate ? "green" : "red"}
-            onClick={() => act('toggle_tag_moderate'), setModerate(!moderate)}>
+            onClick={() => { act('toggle_tag_moderate'); setModerate(!moderate); }}>
             <Icon name="chess-knight" mr={1} />
             Moderate
           </Button>
           <Button
             content={"hard"}
             color={hard ? "green" : "red"}
-            onClick={() => act('toggle_tag_hard'), setHard(!hard)}>
+            onClick={() => { act('toggle_tag_hard'); setHard(!hard); }}>
             <Icon name="chess-queen" mr={1} />
             Hard
           </Button>
@@ -346,7 +347,7 @@ export const Wires = (props, context) => {
         <Section scrollable title="Possible recipies">
           <Table>
             {master_reaction_list.map(reaction => (
-              <TableCell>
+              <TableCell key={reaction.name}>
                 <TableRow bold color="label">
                   <Button
                     key={reaction.name}

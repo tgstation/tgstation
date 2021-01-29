@@ -137,6 +137,12 @@
 	else
 		return get_chem_id(input)
 
+/proc/find_reagent_object_from_type(input)
+	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
+		return GLOB.chemical_reagents_list[input]
+	else
+		return null
+
 ///Returns a random reagent ID minus blacklisted reagents
 /proc/get_random_reagent_id()	
 	var/static/list/random_reagents = list()

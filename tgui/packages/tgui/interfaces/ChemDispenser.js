@@ -50,6 +50,12 @@ export const ChemDispenser = (props, context) => {
                 tooltipPosition="bottom-left"
                 selected={hasCol}
                 onClick={() => setHasCol(!hasCol)} />
+              <Button      
+                key="Recipe lookup"
+                icon="book"
+                tooltip="Look up recipes and reagents!"
+                tooltipPosition="bottom-left"
+                onClick={() => act('reaction_lookup')} />
             </Fragment>
           )}>
           <LabeledList>

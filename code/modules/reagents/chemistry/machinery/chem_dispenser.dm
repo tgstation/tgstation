@@ -338,7 +338,8 @@
 			recording_recipe = null
 			. = TRUE
 		if("reaction_lookup")
-			beaker.reagents.ui_interact(user)
+			if(beaker)
+				beaker.reagents.ui_interact(usr)
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
