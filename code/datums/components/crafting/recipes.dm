@@ -1076,7 +1076,7 @@
 				/obj/item/grenade/gas_crystal/zauker_crystal = 1
 				)
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/shutters
 	name = "Shutters"
 	reqs = list(/obj/item/stack/sheet/plasteel = 10,
