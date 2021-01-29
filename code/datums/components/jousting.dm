@@ -12,7 +12,6 @@
 	var/mounted_knockdown_time = 20
 	var/requires_mob_riding = TRUE			//whether this only works if the attacker is riding a mob, rather than anything they can buckle to.
 	var/requires_mount = TRUE				//kinda defeats the point of jousting if you're not mounted but whatever.
-	var/active = TRUE
 	var/mob/current_holder
 	var/current_timerid
 
