@@ -32,7 +32,7 @@
 #define BLOB_CORE_EXPAND_RANGE                      3           // Radius of automatic expansion
 #define BLOB_CORE_STRONG_REINFORCE_RANGE            1           // The radius of tiles surrounding the core that get upgraded
 #define BLOB_CORE_REFLECTOR_REINFORCE_RANGE         0
-#define BLOB_CORE_MAX_SPORES                        1           // Spores that the core can produce for free
+#define BLOB_CORE_MAX_SPORES                        0           // Spores that the core can produce for free
 
 #define BLOB_NODE_MAX_HP                            200
 #define BLOB_NODE_HP_REGEN                          3
@@ -81,7 +81,7 @@
 
 // Blob power properties
 
-#define BLOB_POWER_RELOCATE_COST                    30          // Resource cost to move your core to a different node
+#define BLOB_POWER_RELOCATE_COST                    80          // Resource cost to move your core to a different node
 #define BLOB_POWER_REROLL_COST                      40          // Strain reroll
 #define BLOB_POWER_REROLL_FREE_TIME                 4 MINUTES   // Gain a free strain reroll every x minutes
 #define BLOB_POWER_REROLL_CHOICES                   6           // Possibilities to choose from; keep in mind increasing this might fuck with the radial menu
