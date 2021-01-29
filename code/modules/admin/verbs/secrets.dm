@@ -504,7 +504,7 @@
 			message_admins("[key_name_admin(holder)] made everything kawaii.")
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
-				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_IONSTORM]))
+				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
