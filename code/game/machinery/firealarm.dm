@@ -38,6 +38,8 @@
 	var/area/myarea = null
 	//Has this firealarm been triggered by its enviroment?
 	var/triggered = FALSE
+	//Has this fire_alarm been trigged in a cold enviroment.
+	var/cold_alarm = FALSE
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
@@ -46,8 +48,6 @@
 	if(building)
 		buildstage = 0
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_icon()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
@@ -82,36 +82,29 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	. += "fire_overlay"
-
-	if(is_station_level(z))
-		. += "fire_[GLOB.security_level]"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", layer, EMISSIVE_PLANE, dir)
-	else
-		. += "fire_[SEC_LEVEL_GREEN]"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", layer, EMISSIVE_PLANE, dir)
 
 	var/area/A = get_area(src)
 
-	if(!detecting || !A.fire)
-		. += "fire_off"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", layer, EMISSIVE_PLANE, dir)
+	if(!triggered)
+		. += "fire_allgood"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_allgood", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_allgood", layer, EMISSIVE_PLANE, dir)
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", layer, plane, dir)
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", layer, EMISSIVE_PLANE, dir)
+	else if(A.fire)
+		. += "fire_smoke"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_smoke", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_smoke", layer, EMISSIVE_PLANE, dir)
+	else if(cold_alarm)
+		 += "fire_cold"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_cold", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_cold", layer, EMISSIVE_PLANE, dir)
 	else
-		. += "fire_on"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", layer, EMISSIVE_PLANE, dir)
-
-	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
-		. += "fire_detected"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_detected", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_detected", layer, EMISSIVE_PLANE, dir) //Pain
+		 += "fire_active"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_active", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_active", layer, EMISSIVE_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -141,6 +134,8 @@
 	if(!triggered)
 		triggered = TRUE
 		myarea.triggered_firealarms += 1
+		if(exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			cold_alarm = TRUE
 		update_icon()
 	alarm()
 
