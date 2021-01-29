@@ -1277,11 +1277,11 @@
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
 
-/mob/living/carbon/human/species/ethereal
-	race = /datum/species/ethereal
-
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
+
+/mob/living/carbon/human/species/ethereal
+	race = /datum/species/ethereal
 
 /mob/living/carbon/human/species/moth
 	race = /datum/species/moth
@@ -1291,6 +1291,9 @@
 
 /mob/living/carbon/human/species/plasma
 	race = /datum/species/plasmaman
+
+/mob/living/carbon/human/species/plasma/stable
+	race = /datum/species/plasmaman/stable
 
 /mob/living/carbon/human/species/pod
 	race = /datum/species/pod
