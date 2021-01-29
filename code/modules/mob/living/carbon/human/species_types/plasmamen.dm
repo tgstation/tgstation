@@ -213,3 +213,13 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
+
+//Plasmamen that don't breath or burn for Admin use like Highlander or mini games like Mafia. Better than be turned into a Human
+/datum/species/plasmaman/stable
+	name = "Stable Plasmaman"
+	id = "stable plasmaman"
+	limbs_id = "plasmaman"
+	// no fire and no breath traits added
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_GENELESS, TRAIT_NOHUNGER, TRAIT_HARDLY_WOUNDED, TRAIT_NOFIRE, TRAIT_NOBREATH)
+	// making it badmin only since it is an Admin use species basically
+	changesource_flags = MIRROR_BADMIN
