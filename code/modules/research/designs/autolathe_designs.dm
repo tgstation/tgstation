@@ -164,7 +164,7 @@
 	name = "Toolbox"
 	id = "tool_box"
 	build_type = AUTOLATHE
-	materials = list(MAT_CATEGORY_RIGID = 500)
+	materials = list(MAT_CATEGORY_ITEM_MATERIAL = 500)
 	build_path = /obj/item/storage/toolbox
 	category = list("initial","Tools")
 
