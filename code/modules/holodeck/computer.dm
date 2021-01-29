@@ -18,6 +18,10 @@ Easiest way to add new holodeck programs:
 of the holodeck you want them to be able to load, for the onstation holodeck the flag is STATION_HOLODECK.
 2. Create the new map templates in _maps/templates (remember theyre 9x10, and make sure they have area/noop or else it will fuck with linked)
 all turfs in holodeck programs MUST be of type /turf/open/floor/holofloor, OR /turf/open/floor/engine, or they will block future programs!
+
+Note: if youre looking at holodeck code because you want to see how returns_created is handled so that templates return a list of atoms
+created from them: make sure you handle that list correctly! Either copy them by value and delete them or reference it and handle qdel'ing
+and clear when youre done! if you dont i will use :newspaper2: on you
 */
 
 #define HOLODECK_CD 2 SECONDS
