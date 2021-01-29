@@ -79,13 +79,13 @@
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		return
 
+	if(buildstage != 2)
+		return
 
-	var/area/A = get_area(src)
-
-	if(!A.fire)
+	if(!triggered)
 		. += "fire_allgood"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_allgood", layer, plane, dir)
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_allgood", layer, EMISSIVE_PLANE, dir)
@@ -135,7 +135,6 @@
 			cold_alarm = TRUE
 		else
 			cold_alarm = FALSE
-		update_icon()
 	alarm()
 
 /obj/machinery/firealarm/atmos_end(datum/gas_mixture/air, exposed_temperature)
@@ -155,6 +154,8 @@
 	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
+	triggered = TRUE
+	update_icon()
 
 /obj/machinery/firealarm/proc/reset(mob/user)
 	if(!is_operational)
@@ -163,6 +164,7 @@
 	A.firereset(src)
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
+	update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user)
 	if(buildstage != 2)
