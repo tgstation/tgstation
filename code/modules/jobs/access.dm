@@ -295,7 +295,7 @@
 		if(ACCESS_SURGERY)
 			return "Surgery"
 		if(ACCESS_THEATRE)
-			return "Theater"
+			return "Theatre"
 		if(ACCESS_RESEARCH)
 			return "Science"
 		if(ACCESS_MINING)
