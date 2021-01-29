@@ -1098,7 +1098,7 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 30 SECONDS
 	category = CAT_MISC
-  
+
 /datum/crafting_recipe/aquarium
 	name = "Aquarium"
 	result = /obj/structure/aquarium
