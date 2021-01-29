@@ -35,7 +35,7 @@
 		var/list/reaction_ids = list()
 		var/list/reagents = list()
 		var/list/product_names = list()
-		var/bitflags = D.reaction_tags
+		var/bitflags = D.reaction_tagss
 
 		if(!D.required_reagents || !D.required_reagents.len) //Skip impossible reactions
 			continue
@@ -1642,6 +1642,8 @@
 	var/data = list()
 	data["hasReagent"] = ui_reagent_id ? TRUE : FALSE
 	data["hasReaction"] = ui_reaction_id ? TRUE : FALSE	
+	data["selectedBitflags"] = ui_tags_selected
+	data["currentReagents"] = previous_reagent_list //This keeps the string of reagents that's updated when handle_reactions() is called
 
 	//reagent lookup data
 	if(ui_reagent_id)
@@ -1745,6 +1747,8 @@
 	switch(action)
 		if("find_reagent_reaction")
 			var/list/sub_reactions = get_recipe_from_reagent_product(text2path(params["id"]))
+			if(!length(sub_reactions))
+				to_chat(usr, "There is no recipe associated with this reagent.")
 			ui_reaction_id = sub_reactions[1]
 			return TRUE
 		if("reagent_click")

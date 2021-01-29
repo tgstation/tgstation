@@ -16,6 +16,7 @@
 	H_ion_release = 0.01
 	rate_up_lim = 15
 	purity_min = 0
+	reaction_tags = REACTION_TAG_OTHER | REACTION_TAG_EASY 
 
 /datum/chemical_reaction/acidic_buffer
 	results = list(/datum/reagent/reaction_agent/acidic_buffer = 10)
@@ -33,6 +34,7 @@
 	H_ion_release = -0.01
 	rate_up_lim = 20
 	purity_min = 0
+	reaction_tags = REACTION_TAG_OTHER | REACTION_TAG_EASY 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////		Example competitive reaction (REACTION_COMPETITIVE)		 //////////////////////////////////
@@ -56,6 +58,7 @@
 	H_ion_release = 0
 	rate_up_lim = 4
 	purity_min = 0.25
+	reaction_tags = REACTION_TAG_OTHER | REACTION_TAG_EASY 
 
 
 /datum/chemical_reaction/prefactor_b
@@ -76,6 +79,7 @@
 	rate_up_lim = 6
 	purity_min = 0.35
 	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_a/competitive
+	reaction_tags = REACTION_TAG_OTHER | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/prefactor_b/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
@@ -99,6 +103,7 @@
 	required_reagents = list(/datum/reagent/prefactor_b = 5)
 	rate_up_lim = 3
 	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_b
+	reaction_tags = REACTION_TAG_OTHER | REACTION_TAG_EASY 
 
 //The actual results
 /datum/chemical_reaction/prefactor_a/purity_tester
@@ -106,11 +111,14 @@
 	required_reagents = list(/datum/reagent/prefactor_a = 5, /datum/reagent/stable_plasma = 5)
 	H_ion_release = 0.05
 	thermic_constant = 0
+	reaction_tags = REACTION_TAG_OTHER | REACTION_TAG_EASY
+
 
 /datum/chemical_reaction/prefactor_b/speed_agent
 	results = list(/datum/reagent/reaction_agent/speed_agent = 5)
 	required_reagents = list(/datum/reagent/prefactor_b = 5, /datum/reagent/stable_plasma = 5)
 	H_ion_release = -0.15
 	thermic_constant = 0
+	reaction_tags = REACTION_TAG_OTHER | REACTION_TAG_HARD | REACTION_TAG_DANGEROUS
 
 ////////////////////////////////End example/////////////////////////////////////////////////////////////////////////////

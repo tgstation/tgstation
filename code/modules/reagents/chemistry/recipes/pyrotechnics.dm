@@ -2,6 +2,7 @@
 	var/strengthdiv = 10
 	var/modifier = 0
 	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	explode(holder, created_volume)
