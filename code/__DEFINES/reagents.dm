@@ -80,3 +80,39 @@
 #define REACTION_HEAT_ARBITARY      (1<<4) 
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
 #define REACTION_COMPETITIVE        (1<<5)
+
+//Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
+#define NO_OVERHEAT 99999
+
+///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
+/// This reagent does brute effects (BOTH damaging and healing)
+#define REAGENT_TAG_BRUTE (1<<0) 
+/// This reagent does burn effects (BOTH damaging and healing)
+#define REAGENT_TAG_BURN (1<<1) 
+/// This reagent does toxin effects (BOTH damaging and healing)
+#define REAGENT_TAG_TOXIN (1<<2) 
+/// This reagent does oxy effects (BOTH damaging and healing)
+#define REAGENT_TAG_OXY (1<<3)
+/// This reagent does clone effects (BOTH damaging and healing)
+#define REAGENT_TAG_CLONE (1<<4)
+/// This reagent primarily heals, or it's supposed to be used for healing (in the case of c2 - they are healing)
+#define REAGENT_TAG_HEALING (1<<5)   
+/// This reagent primarily damages
+#define REAGENT_TAG_DAMAGING (1<<6)
+/// This reagent explodes as a part of it's intended effect (i.e. not overheated/impure)
+#define REAGENT_TAG_EXPLOSIVE (1<<7)
+/// This reagent does things that are unique and special
+#define REAGENT_TAG_OTHER (1<<8)
+/// This reagent's reaction is dangerous to create (i.e. explodes if you fail it)
+#define REAGENT_TAG_DANGEROUS (1<<9)   
+/// This reagent's reaction is easy
+#define REAGENT_TAG_EASY (1<<10)  
+/// This reagent's reaction is difficult/involved
+#define REAGENT_TAG_MODERATE (1<<11)
+/// This reagent's reaction is hard
+#define REAGENT_TAG_HARD (1<<12)   
+/// This reagent affects organs
+#define REAGENT_TAG_ORGAN (1<<13)
+///below are tags that can't be searched for - but are used to edit display outputs
+/// This reagent is only created from impure reaction mechanics
+#define REAGENT_TAG_IMPURE (1<<14)

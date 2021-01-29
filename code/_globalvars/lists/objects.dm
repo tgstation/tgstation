@@ -17,7 +17,8 @@ GLOBAL_LIST_EMPTY(alarmdisplay)				        //list of all machines or programs th
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity) //list of all singularities on the station
 GLOBAL_LIST_EMPTY(mechpad_list)						//list of all /obj/machinery/mechpad
 
-GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions
+GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
+GLOBAL_LIST(chemical_reactions_list_product_index)	//list of all /datum/chemical_reaction datums. Used for the reaction lookup UI. Indexed by PRODUCT type
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
 GLOBAL_LIST_EMPTY(tech_list)					//list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list)				//list of all surgeries by name, associated with their path.

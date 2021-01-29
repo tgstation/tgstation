@@ -156,20 +156,8 @@
 			return X
 
 ///Takes a type in and returns a list of associated recipes
-///Expensive - try to avoid using this at all costs
 /proc/get_recipe_from_reagent_product(input_type)
 	if(!input_type)
 		return
-	var/matching_reactions = list()
-	var/cached_reactions = list()
-	for(var/V in GLOB.chemical_reactions_list)
-		if(is_type_in_list(GLOB.chemical_reactions_list[V], cached_reactions))
-			continue
-		cached_reactions += GLOB.chemical_reactions_list[V]
-	for(var/datum/chemical_reaction/reaction in cached_reactions)
-		for(var/_reagent in reaction.results)
-			var/datum/reagent/reagent = _reagent
-			if(ispath(reagent.type, input_type))
-				matching_reactions += reaction
-				break
+	var/list/matching_reactions = GLOB.chemical_reactions_list_product_index[input_type]
 	return matching_reactions

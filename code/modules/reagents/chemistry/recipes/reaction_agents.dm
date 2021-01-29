@@ -6,7 +6,7 @@
 	//FermiChem vars:
 	required_temp = 250
 	optimal_temp = 500
-	overheat_temp = 9999 
+	overheat_temp = NO_OVERHEAT 
 	optimal_ph_min = 0
 	optimal_ph_max = 14
 	determin_ph_range = 0
@@ -23,7 +23,7 @@
 	mix_message = "The solution froths in the beaker."
 	required_temp = 250
 	optimal_temp = 500
-	overheat_temp = 9999 
+	overheat_temp = NO_OVERHEAT 
 	optimal_ph_min = 0
 	optimal_ph_max = 14
 	determin_ph_range = 0
