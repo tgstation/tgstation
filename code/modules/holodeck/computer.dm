@@ -178,9 +178,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
 	for (var/_turf in get_affected_turfs(placement))
 		var/turf/possible_blacklist = _turf
-		if (istype(possible_blacklist, /turf/open/floor/holofloor))
-			continue
-		if (istype(possible_blacklist, /turf/open/floor/engine))
+		if (possible_blacklist.holodeck_compatible)
 			continue
 		input_blacklist += possible_blacklist
 

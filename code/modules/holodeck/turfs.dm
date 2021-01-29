@@ -3,6 +3,7 @@
 	thermal_conductivity = 0
 	flags_1 = NONE
 	var/direction = SOUTH
+	holodeck_compatible = TRUE
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
