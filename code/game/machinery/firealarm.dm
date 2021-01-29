@@ -85,7 +85,7 @@
 
 	var/area/A = get_area(src)
 
-	if(!triggered)
+	if(!A.fire)
 		. += "fire_allgood"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_allgood", layer, plane, dir)
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_allgood", layer, EMISSIVE_PLANE, dir)
@@ -93,18 +93,15 @@
 		. += "fire_emagged"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", layer, plane, dir)
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", layer, EMISSIVE_PLANE, dir)
-	else if(A.fire)
-		. += "fire_smoke"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_smoke", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_smoke", layer, EMISSIVE_PLANE, dir)
 	else if(cold_alarm)
-		 += "fire_cold"
+		. += "fire_cold"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_cold", layer, plane, dir)
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_cold", layer, EMISSIVE_PLANE, dir)
 	else
-		 += "fire_active"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_active", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_active", layer, EMISSIVE_PLANE, dir)
+		. += "fire_hot"
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_hot", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_hot", layer, EMISSIVE_PLANE, dir)
+
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
