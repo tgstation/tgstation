@@ -62,7 +62,7 @@
 /datum/station_trait/overflow_job_bureacracy
 	name = "Overflow bureacracy mistake"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 50000
+	weight = 5
 	show_in_report = TRUE
 	var/list/jobs_to_use = list("Clown", "Bartender", "Cook", "Botanist", "Cargo Technician", "Mime", "Janitor", "Prisoner")
 	var/chosen_job
