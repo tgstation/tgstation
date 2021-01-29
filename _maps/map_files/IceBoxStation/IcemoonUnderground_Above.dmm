@@ -334,6 +334,7 @@
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
 /obj/structure/closet/crate/secure/freezer{
+	desc = "An insulated crate with a lock on it, used to secure pizza.";
 	name = "secure pizza crate";
 	req_access = list(28);
 	tamperproof = 1

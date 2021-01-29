@@ -323,7 +323,6 @@
 /obj/item/pizzabox/infinite
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
 	can_open_on_fall = FALSE
-	boxtag_set = TRUE
 	var/list/pizza_types = list(
 		/obj/item/food/pizza/meat = 1,
 		/obj/item/food/pizza/mushroom = 1,
@@ -336,6 +335,7 @@
 	) //pizzas here are weighted by chance to be someone's favorite
 	var/static/list/pizza_preferences
 	boxtag = "Your Favourite"
+	var/mob/living/carbon/human/attuned_to
 
 /obj/item/pizzabox/infinite/Initialize()
 	. = ..()
@@ -343,12 +343,13 @@
 		pizza_preferences = list()
 
 /obj/item/pizzabox/infinite/examine(mob/user)
+	if(!open && ishuman(user))
+		attune_pizza(user) //this is so our boxtag is always correct
 	. = ..()
 	if(isobserver(user))
 		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
-	QDEL_NULL(pizza)
 	if(ishuman(user))
 		attune_pizza(user)
 	return ..()
@@ -366,6 +367,13 @@
 			else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
 				pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
 
-		var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
-		pizza = new favourite_pizza_type
-		pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+		if(pizza && attuned_to && attuned_to != nommer)
+			QDEL_NULL(pizza)
+
+		if(!pizza && pizza_preferences[nommer.ckey])
+			var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
+			pizza = new favourite_pizza_type
+			boxtag_set = FALSE
+			update_icon() //update our boxtag to match our new pizza
+			pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+			attuned_to = nommer
