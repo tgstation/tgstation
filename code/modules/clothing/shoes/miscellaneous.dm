@@ -513,3 +513,20 @@
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
 	inhand_icon_state = "JackFrostShoes_worn"
+
+/obj/item/clothing/shoes/gunboots //admin boots that fire gunshots randomly while walking
+	name = "gunboots"
+	desc = "This is what all those research points added up to, the ultimate workplace hazard."
+	icon_state = "jackboots"
+	inhand_icon_state = "jackboots"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	/// What projectile do we shoot?
+	var/projectile_type = /obj/projectile/bullet/c10mm
+	/// Each step, this is the chance we fire a shot
+	var/shot_prob = 50
+
+/obj/item/clothing/shoes/gunboots/Initialize()
+	. = ..()
+	AddComponent(/datum/component/projectile_shooter, projectile_type = projectile_type, shot_prob = shot_prob, signal_or_sig_list = list(COMSIG_SHOES_STEP_ACTION, COMSIG_HUMAN_MELEE_UNARMED_ATTACK))

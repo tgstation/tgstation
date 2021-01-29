@@ -10,6 +10,11 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 35)
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
+	desc = "A Research Director jumpsuit belonging to the late and great Doctor Hilbert. The suit sensors have long since fizzled out from the stress of the Hilbert's Hotel."
+	has_sensor = NO_SENSORS
+	random_sensor = FALSE
+
 /obj/item/clothing/under/rank/rnd/research_director/skirt
 	name = "research director's vest suitskirt"
 	desc = "It's a suitskirt worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
