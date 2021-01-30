@@ -9,6 +9,8 @@
 	var/help_verb
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 	var/smashes_tables = FALSE //If the martial art smashes tables when performing table slams and head smashes
+	var/mob/living/holder //owner of the martial art
+	var/display_combos = FALSE //shows combo meter if true
 
 /datum/martial_art/proc/help_act(mob/living/A, mob/living/D)
 	return FALSE
@@ -31,10 +33,13 @@
 	streak = streak+element
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak, 1 + length(streak[1]))
+	if (display_combos)
+		holder.hud_used.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/reset_streak(mob/living/new_target)
 	current_target = new_target
 	streak = ""
+	holder.hud_used.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/teach(mob/living/owner, make_temporary=FALSE)
 	if(!istype(owner) || !owner.mind)
@@ -51,6 +56,7 @@
 	if(help_verb)
 		add_verb(owner, help_verb)
 	owner.mind.martial_art = src
+	holder = owner
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/old, mob/living/owner)
