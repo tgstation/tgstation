@@ -111,11 +111,13 @@
 						dat += "<tr><td>Fingerprint:</td><td><A href='?src=[REF(src)];field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Physical Status:</td><td><A href='?src=[REF(src)];field=p_stat'>&nbsp;[active1.fields["p_stat"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>Mental Status:</td><td><A href='?src=[REF(src)];field=m_stat'>&nbsp;[active1.fields["m_stat"]]&nbsp;</A></td></tr>"
+						dat += "<tr><td>General Records:</td><td><A href='?src=[REF(src)];choice=View Past General'>View&nbsp;</A></td></tr>"
 					else
 						dat += "<tr><td>General Record Lost!</td></tr>"
 
 					dat += "<tr><td><br><b><font size='4'>Medical Data</font></b></td></tr>"
 					if(active2 in GLOB.data_core.medical)
+						dat += "<tr><td>Medical Records:</td><td><A href='?src=[REF(src)];choice=View Past Medical'>View&nbsp;</A></td></tr>"
 						dat += "<tr><td>Blood Type:</td><td><A href='?src=[REF(src)];field=blood_type'>&nbsp;[active2.fields["blood_type"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td>DNA:</td><td><A href='?src=[REF(src)];field=b_dna'>&nbsp;[active2.fields["b_dna"]]&nbsp;</A></td></tr>"
 						dat += "<tr><td><br>Minor Disabilities:</td><td><br><A href='?src=[REF(src)];field=mi_dis'>&nbsp;[active2.fields["mi_dis"]]&nbsp;</A></td></tr>"
@@ -194,6 +196,19 @@
 			active2 = null
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, FALSE)
 		else if(href_list["choice"])
+			if(href_list["choice"] == "View Past Medical")
+				if(istype(active2, /datum/data/record))
+					temp = "<h5>Medical Records:</h5>"
+					temp += "<ul>"
+					temp += "<li>[active2.fields["past_records"]]</li>"
+					temp += "</ul>"
+
+			if(href_list["choice"] == "View Past General")
+				if(istype(active1, /datum/data/record))
+					temp = "<h5>General Records:</h5>"
+					temp += "<ul>"
+					temp += "<li>[active1.fields["past_records"]]</li>"
+					temp += "</ul>"
 			// SORTING!
 			if(href_list["choice"] == "Sorting")
 				// Reverse the order if clicked twice
@@ -511,10 +526,33 @@
 						P.info += text("Name: [] ID: []<BR>\nGender: []<BR>\nAge: []<BR>", active1.fields["name"], active1.fields["id"], active1.fields["gender"], active1.fields["age"])
 						P.info += "\nSpecies: [active1.fields["species"]]<BR>"
 						P.info += text("\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
+						if(!(active1.fields["past_records"] == ""))
+							P.info += "\nGeneral Records:\n[active1.fields["past_records"]]\n"
 					else
 						P.info += "<B>General Record Lost!</B><BR>"
 					if(active2 in GLOB.data_core.medical)
-						P.info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["blood_type"], active2.fields["b_dna"], active2.fields["mi_dis"], active2.fields["mi_dis_d"], active2.fields["ma_dis"], active2.fields["ma_dis_d"], active2.fields["alg"], active2.fields["alg_d"], active2.fields["cdi"], active2.fields["cdi_d"], active2.fields["notes"])
+						P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER>"
+						if(!(active2.fields["past_records"] == ""))
+							P.info += "\nMedical Records:\n[active2.fields["past_records"]]<BR>\n"
+						P.info += "<BR>\nBlood Type: [active2.fields["blood_type"]]"
+						P.info += "<BR>\nDNA: [active2.fields["b_dna"]]"
+						P.info += "<BR>\n"
+						P.info += "<BR>\nMinor Disabilities: [active2.fields["mi_dis"]]"
+						P.info += "<BR>\nDetails: [active2.fields["mi_dis_d"]]"
+						P.info += "<BR>\n"
+						P.info += "<BR>\nMajor Disabilities: [active2.fields["ma_dis"]]"
+						P.info += "<BR>\nDetails: [active2.fields["ma_dis_d"]]"
+						P.info += "<BR>\n"
+						P.info += "<BR>\nAllergies: [active2.fields["alg"]]"
+						P.info += "<BR>\nDetails: [active2.fields["alg_d"]]"
+						P.info += "<BR>\n"
+						P.info += "<BR>\nCurrent Diseases: [active2.fields["cdi"]] (per disease info placed in log/comment section)"
+						P.info += "<BR>\nDetails: [active2.fields["cdi_d"]]"
+						P.info += "<BR>\n"
+						P.info += "<BR>\nImportant Notes:"
+						P.info += "<BR>\n\t[active2.fields["notes"]]"
+						P.info += "<BR>\n"
+//						P.info += text("<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: []<BR>\nDNA: []<BR>\n<BR>\nMinor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nMajor Disabilities: []<BR>\nDetails: []<BR>\n<BR>\nAllergies: []<BR>\nDetails: []<BR>\n<BR>\nCurrent Diseases: [] (per disease info placed in log/comment section)<BR>\nDetails: []<BR>\n<BR>\nImportant Notes:<BR>\n\t[]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>", active2.fields["blood_type"], active2.fields["b_dna"], active2.fields["mi_dis"], active2.fields["mi_dis_d"], active2.fields["ma_dis"], active2.fields["ma_dis_d"], active2.fields["alg"], active2.fields["alg_d"], active2.fields["cdi"], active2.fields["cdi_d"], active2.fields["notes"])
 						var/counter = 1
 						while(active2.fields[text("com_[]", counter)])
 							P.info += text("[]<BR>", active2.fields[text("com_[]", counter)])

@@ -80,3 +80,5 @@
 #define PATH_ASH "Ash"
 #define PATH_RUST "Rust"
 #define PATH_FLESH "Flesh"
+
+#define CAN_SEE_EXPOITABLE_INFO (1<<0)
