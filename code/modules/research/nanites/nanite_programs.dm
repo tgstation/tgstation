@@ -223,7 +223,7 @@
 		return
 	if(world.time < next_trigger)
 		return
-	if(check_conditions())
+	if(!check_conditions())
 		return
 	if(!consume_nanites(trigger_cost))
 		return
