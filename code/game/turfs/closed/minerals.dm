@@ -469,6 +469,15 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+//yoo RED ROCK RED ROCK
+
+/turf/closed/mineral/asteroid
+	name = "iron rock"
+	icon = 'icons/turf/mining.dmi'
+	icon_state = "redrock"
+	smooth_icon = 'icons/turf/walls/red_wall.dmi'
+	base_icon_state = "red_wall"
+
 //GIBTONITE
 
 /turf/closed/mineral/gibtonite

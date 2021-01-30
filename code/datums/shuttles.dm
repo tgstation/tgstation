@@ -675,3 +675,7 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/tramstation/tram
+	suffix = "tram"
+	name = "Tramstation Transit Shuttle"

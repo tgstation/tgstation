@@ -89,6 +89,14 @@
 	shuttleId = "mining_common"
 	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
 
+/obj/machinery/computer/shuttle/tramstation
+	name = "transit tram shuttle console"
+	desc = "Used to call and send the transit shuttle."
+	circuit = /obj/item/circuitboard/computer/mining_shuttle
+	shuttleId = "tram"
+	possible_destinations = "tram_left;tram_center;tram_right"
+	no_destination_swap = TRUE
+	var/static/list/dumb_rev_heads = list()
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
