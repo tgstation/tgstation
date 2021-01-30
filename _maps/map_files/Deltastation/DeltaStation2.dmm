@@ -108660,10 +108660,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"lGw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/space)
 "lGy" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
@@ -136361,7 +136357,7 @@ bLF
 bLK
 bNN
 bPP
-lGw
+bRV
 bTO
 bWe
 bYq
