@@ -2,7 +2,7 @@
 	"version": 1,
 	"map_name": "Tramstation",
 	"map_path": "map_files/Tramstation",
-	"map_file": "tramstationfull.dmm",
+	"map_file": "Tramstation.dmm",
 	"traits": [
 		{
 			"Up": 1,
