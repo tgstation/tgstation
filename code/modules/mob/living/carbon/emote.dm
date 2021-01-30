@@ -41,7 +41,7 @@
 	sound = 'sound/misc/knuckles.ogg'
 	cooldown = 6 SECONDS
 
-/datum/emote/living/carbon/crack/can_run_emote(var/mob/living/carbon/user, status_check = TRUE , intentional)
+/datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
 	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
