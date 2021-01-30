@@ -101,12 +101,17 @@ Actual Adjacent procs :
 	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
+/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE, old=FALSE)
 	var/l = SSpathfinder.mobs.getfree(caller)
 	while(!l)
 		stoplag(3)
 		l = SSpathfinder.mobs.getfree(caller)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+
+	var/list/path
+	if(old)
+		path = oldAStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+	else
+		path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 
 	SSpathfinder.mobs.found(l)
 	if(!path)
@@ -148,11 +153,14 @@ Actual Adjacent procs :
 	open.Insert(cur)
 	openc[start] = cur
 	//then run the main loop
+
+	var/total_tiles = 0
 	while(!open.IsEmpty() && !path)
 		cur = open.Pop() //get the lower f turf in the open list
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
 		cur.source.color = COLOR_BLUE
+		total_tiles++
 
 		var/closeenough
 		if(mintargetdist)
@@ -161,7 +169,7 @@ Actual Adjacent procs :
 
 		//found the target turf (or close enough), let's create the path to it
 		if(cur.source == end || closeenough) // RYLL NOTE: the code for recreating the path will need to reflect the jumps
-			testing("wheeee!! total dist [cur.nt]")
+			//testing("wheeee!! total dist [cur.nt]")
 			path = new()
 
 			var/turf/iter_turf = cur.source
@@ -194,7 +202,7 @@ Actual Adjacent procs :
 				path.Add(final)
 				var/turf/add_turf = final
 				final = get_step(final, dir_heading)
-				testing("2 ([final.x], [final.y]) to ([add_turf.x], [add_turf.y])")
+				//testing("2 ([final.x], [final.y]) to ([add_turf.x], [add_turf.y])")
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		if(maxnodedepth && (cur.nt > maxnodedepth)) //if too many steps, don't process that path
@@ -217,14 +225,14 @@ Actual Adjacent procs :
 				var/turf/next_tu = next_turf
 				steps_taken++
 				if(steps_taken > maxnodedepth)
-					testing("Cut out at [steps_taken] steps")
+					//testing("Cut out at [steps_taken] steps")
 					break
 				//testing("From ([next_tu.x], [next_tu.y]) step [steps_taken] in dir [f]")
 
 				if(next_turf == end || call(next_turf,dist)(end) <= mintargetdist) // this is a specific and somewhat redundant check to see if we hit our goal, this should be optimized out
 					var/turf/nex_tu = next_turf
 					nex_tu.color = COLOR_GREEN
-					testing("got to end in [steps_taken] steps")
+					//testing("got to end in [steps_taken] steps")
 					var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1)
 					var/datum/jpsnode/CN = openc[next_turf]
 					CN = new(next_turf,cur,call(next_turf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
@@ -233,11 +241,12 @@ Actual Adjacent procs :
 					breakout = TRUE
 					break
 
+				var/lowest_possible
 				if(!next_turf || next_turf == exclude || !call(sturf,adjacent)(caller, next_turf, id, simulated_only)) // RYLL: should this be a typecheck?
 					//breakout = TRUE
 					break
 				else if(call(next_turf,dist)(end) > call(sturf,dist)(end))
-					testing("increasing dist, interesting")
+					//testing("increasing dist, interesting")
 					interesting = TRUE
 				else
 					for(var/i2 = 0 to 3) // we're checking some tile some number of steps down the line from the tile we popped off the open stack, see if there are any forced neighbor tiles we might find interesting adjacent to it
@@ -251,6 +260,7 @@ Actual Adjacent procs :
 						if(!adjacent_next_turf || adjacent_next_turf == exclude || !call(next_turf,adjacent)(caller, adjacent_next_turf, id, simulated_only))
 							interesting = TRUE
 							break
+
 
 				if(!interesting) // empty space with nothing next to it, keep moving
 					var/turf/nex_tu = next_turf
@@ -292,7 +302,87 @@ Actual Adjacent procs :
 			path.Swap(i,path.len-i+1)
 	openc = null
 	//cleaning after us
-	testing("done")
+	testing("New path done with [total_tiles] tiles popped")
+	return path
+
+
+/proc/oldAStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
+	//sanitation
+	var/turf/end = get_turf(_end)
+	var/turf/start = get_turf(caller)
+	if(!start || !end)
+		stack_trace("Invalid A* start or destination")
+		return FALSE
+	if( start.z != end.z || start == end ) //no pathfinding between z levels
+		return FALSE
+	if(maxnodes)
+		//if start turf is farther than maxnodes from end turf, no need to do anything
+		if(call(start, dist)(end) > maxnodes)
+			return FALSE
+		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
+	var/datum/heap/open = new /datum/heap(/proc/HeapPathWeightCompare) //the open list
+	var/list/openc = new() //open list for node check
+	var/list/path = null //the returned path, if any
+	//initialization
+	var/datum/pathnode/cur = new /datum/pathnode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
+	open.Insert(cur)
+	openc[start] = cur
+	//then run the main loop
+	var/total_tiles
+
+	while(!open.IsEmpty() && !path)
+		cur = open.Pop() //get the lower f turf in the open list
+		//get the lower f node on the open list
+		//if we only want to get near the target, check if we're close enough
+		total_tiles++
+		var/closeenough
+		if(mintargetdist)
+			closeenough = call(cur.source,dist)(end) <= mintargetdist
+		cur.source.color = COLOR_BLUE
+
+		//found the target turf (or close enough), let's create the path to it
+		if(cur.source == end || closeenough)
+			path = new()
+			path.Add(cur.source)
+			while(cur.prevNode)
+				cur = cur.prevNode
+				path.Add(cur.source)
+				cur.source.color = COLOR_YELLOW
+			break
+		//get adjacents turfs using the adjacent proc, checking for access with id
+		if((!maxnodedepth)||(cur.nt <= maxnodedepth))//if too many steps, don't process that path
+			for(var/i = 0 to 3)
+				var/f= 1<<i //get cardinal directions.1,2,4,8
+				if(cur.bf & f)
+					var/T = get_step(cur.source,f)
+					if(T != exclude)
+						var/datum/pathnode/CN = openc[T]  //current checking turf
+						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
+						var/newg = cur.g + call(cur.source,dist)(T)
+						var/turf/next_tu = T
+						next_tu.color = COLOR_RED
+						if(CN)
+						//is already in open list, check if it's a better way from the current turf
+							CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
+							if((newg < CN.g) )
+								if(call(cur.source,adjacent)(caller, T, id, simulated_only))
+									CN.setp(cur,newg,CN.h,cur.nt+1)
+									open.ReSort(CN)//reorder the changed element in the list
+						else
+						//is not already in open list, so add it
+							if(call(cur.source,adjacent)(caller, T, id, simulated_only))
+								CN = new(T,cur,newg,call(T,dist)(end),cur.nt+1,15^r)
+								open.Insert(CN)
+								openc[T] = CN
+		cur.bf = 0
+		CHECK_TICK
+	//reverse the path to get it from start to finish
+	if(path)
+		for(var/i = 1 to round(0.5*path.len))
+			path.Swap(i,path.len-i+1)
+	openc = null
+	//cleaning after us
+	testing("Old path done with [total_tiles] tiles popped")
 	return path
 
 //Returns adjacent turfs in cardinal directions that are reachable
