@@ -274,9 +274,3 @@
 	icon_state = "DutchUniform"
 	inhand_icon_state = "DutchUniform"
 	can_adjust = FALSE
-/obj/item/clothing/under/costume/swagoutfit
-	name = "Swag outfit"
-	desc = "Why don't you go secure some bitches?"
-	icon_state = "SwagOutfit"
-	inhand_icon_state = "SwagOutfit"
-	can_adjust = FALSE

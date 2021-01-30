@@ -1848,7 +1848,7 @@
 
 +*/
 /atom/proc/InitializeAIController()
-	if(ispath(ai_controller))
+	if(ai_controller)
 		ai_controller = new ai_controller(src)
 
 /**

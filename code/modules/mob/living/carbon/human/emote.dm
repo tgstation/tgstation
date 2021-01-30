@@ -37,6 +37,7 @@
 	message = "hugs themself."
 	message_param = "hugs %t."
 	hands_use_check = TRUE
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
@@ -48,7 +49,6 @@
 	key = "scream"
 	key_third_person = "screams"
 	message = "screams!"
-	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	vary = TRUE
@@ -217,7 +217,6 @@
 	key = "roar"
 	key_third_person = "roars"
 	message = "roars."
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/human/monkey/tail
 	key = "tail"

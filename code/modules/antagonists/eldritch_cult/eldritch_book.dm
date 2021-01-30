@@ -131,7 +131,6 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					log_codex_ciatrix("[key_name(last_user)] gained knowledge of [EK]")
 					charge -= initial(EK.cost)
 					return TRUE
 

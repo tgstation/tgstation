@@ -88,7 +88,6 @@
 	var/amt = TC.amount
 	telecrystals += amt
 	TC.use(amt)
-	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
 /datum/component/uplink/proc/set_gamemode(_gamemode)
 	gamemode = _gamemode
@@ -108,7 +107,6 @@
 			var/cost = UI.refund_amount || UI.cost
 			if(I.type == path && UI.refundable && I.check_uplink_validity())
 				telecrystals += cost
-				log_uplink("[key_name(user)] refunded [UI] for [cost] telecrystals using [parent]'s uplink")
 				if(purchase_log)
 					purchase_log.total_spent -= cost
 				to_chat(user, "<span class='notice'>[I] refunded.</span>")
