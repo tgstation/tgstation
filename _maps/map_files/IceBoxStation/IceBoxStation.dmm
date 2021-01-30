@@ -19926,9 +19926,7 @@
 "aXJ" = (
 /obj/machinery/portable_atmospherics/canister/tier_1,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = 25
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "aXL" = (
@@ -20187,8 +20185,11 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aYx" = (
 /obj/effect/turf_decal/bot,
-/obj/item/radio/intercom{
-	pixel_x = 30
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/tier_1,
+/obj/structure/extinguisher_cabinet{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
 /area/science/storage)
@@ -20208,6 +20209,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/light_switch{
+	pixel_x = 26;
+	pixel_y = -26
 	},
 /turf/open/floor/plasteel,
 /area/science/storage)
@@ -20421,6 +20426,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "aYZ" = (
@@ -29887,6 +29893,10 @@
 	pixel_y = -26
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bxS" = (
@@ -29989,7 +29999,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "byu" = (
@@ -31229,6 +31241,7 @@
 	pixel_x = -27
 	},
 /obj/machinery/vending/wardrobe/science_wardrobe,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bCm" = (
@@ -32032,7 +32045,9 @@
 /area/science/mixing)
 "bEt" = (
 /obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/white/side{
+	dir = 6
+	},
 /area/science/research)
 "bEu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -32076,8 +32091,9 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "bEA" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bEB" = (
@@ -32131,6 +32147,9 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bEJ" = (
@@ -32443,6 +32462,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/break_room)
+"bFF" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/plasteel/white/side{
+	dir = 6
+	},
+/area/science/research)
 "bFL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
@@ -32529,6 +32554,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bFU" = (
@@ -32623,7 +32649,7 @@
 "bGk" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/start/scientist,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "bGl" = (
 /obj/item/clothing/head/hardhat,
@@ -32792,6 +32818,11 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/food/candy_trash,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bGM" = (
@@ -33001,6 +33032,10 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light_switch{
+	pixel_x = -26;
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bHw" = (
@@ -33396,11 +33431,15 @@
 "bIA" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "bIB" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "bIC" = (
@@ -33780,7 +33819,9 @@
 /area/maintenance/disposal/incinerator)
 "bJT" = (
 /obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/white/side{
+	dir = 6
+	},
 /area/science/research)
 "bJV" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
@@ -33830,6 +33871,9 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Launch Room Access";
 	dir = 1
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -34428,7 +34472,7 @@
 /obj/structure/sign/poster/official/safety_report{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "bMu" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
@@ -34464,7 +34508,7 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "bMx" = (
 /obj/structure/table/reinforced,
@@ -34475,7 +34519,14 @@
 /obj/item/analyzer,
 /obj/item/pipe_dispenser,
 /obj/machinery/light,
-/turf/open/floor/plasteel/white,
+/obj/machinery/requests_console{
+	department = "Science";
+	departmentType = 2;
+	name = "Science Requests Console";
+	pixel_y = -30;
+	receive_ore_updates = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "bMy" = (
 /obj/machinery/door/firedoor/heavy,
@@ -34762,6 +34813,7 @@
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "bNt" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bNv" = (
@@ -34770,6 +34822,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bNx" = (
@@ -34780,7 +34836,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bNz" = (
@@ -35689,6 +35747,9 @@
 /area/hallway/primary/aft)
 "bQT" = (
 /obj/structure/closet/bombcloset,
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bQU" = (
@@ -36869,7 +36930,7 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/toxins,
 /obj/item/storage/firstaid/toxin,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "bVy" = (
 /obj/structure/disposalpipe/segment{
@@ -37462,6 +37523,7 @@
 /obj/machinery/camera/autoname{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "bXt" = (
@@ -43862,6 +43924,7 @@
 "cBE" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "cBF" = (
@@ -45742,6 +45805,8 @@
 	c_tag = "Science Toxins Launch";
 	network = list("ss13","rd")
 	},
+/obj/structure/table,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dlp" = (
@@ -46191,6 +46256,10 @@
 	icon_state = "wood-broken3"
 	},
 /area/maintenance/space_hut/cabin)
+"emY" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "enJ" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -46317,6 +46386,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "eCu" = (
@@ -46411,6 +46481,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/bridge)
+"eMR" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "eNr" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -46434,6 +46508,9 @@
 /obj/structure/sign/poster/official/science{
 	pixel_y = 32
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "eRL" = (
@@ -46445,10 +46522,12 @@
 /obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "eTX" = (
 /obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "eUy" = (
@@ -46685,10 +46764,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/maintenance/fore)
-"fvi" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/science/storage)
 "fxH" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/pinpointer_dispenser,
@@ -47083,7 +47158,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "giQ" = (
 /obj/structure/disposalpipe/segment{
@@ -47267,6 +47342,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "gyr" = (
@@ -47458,6 +47534,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "gQz" = (
@@ -47668,6 +47745,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "hgK" = (
@@ -47975,6 +48055,9 @@
 /obj/structure/closet/bombcloset,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -48412,6 +48495,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"iTp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "iTt" = (
 /obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
@@ -48676,7 +48764,11 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -25
 	},
-/turf/open/floor/plasteel/white,
+/obj/structure/noticeboard{
+	dir = 1;
+	pixel_y = -27
+	},
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "jqx" = (
 /obj/structure/railing/corner{
@@ -48832,6 +48924,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "jAK" = (
@@ -48979,7 +49072,9 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "jON" = (
@@ -49046,8 +49141,20 @@
 /area/medical/virology)
 "jRD" = (
 /obj/item/kirbyplants/random,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/white/side{
+	dir = 10
+	},
 /area/science/research)
+"jRE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "jTW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -49388,6 +49495,9 @@
 "kwA" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /obj/effect/turf_decal/delivery,
+/obj/item/radio/intercom{
+	pixel_x = 30
+	},
 /turf/open/floor/plasteel,
 /area/science/storage)
 "kwD" = (
@@ -49510,7 +49620,9 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/white/side{
+	dir = 10
+	},
 /area/science/research)
 "kCR" = (
 /obj/structure/cable,
@@ -49666,7 +49778,10 @@
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/turf/open/floor/plasteel/white,
+/obj/structure/sign/poster/official/random{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "kPd" = (
 /obj/machinery/light/small,
@@ -49897,6 +50012,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
+"lvC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "lvJ" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -50248,6 +50369,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "lZG" = (
@@ -50460,6 +50582,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/gateway)
+"mxa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/science/storage)
 "mxy" = (
 /obj/structure/table,
 /obj/item/pen,
@@ -50666,6 +50795,12 @@
 /obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/locker)
+"mOz" = (
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/science/storage)
 "mPh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
@@ -51217,10 +51352,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/extinguisher_cabinet{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/science/storage)
@@ -51815,6 +51946,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "oUq" = (
@@ -51870,6 +52002,7 @@
 "oYo" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "oYv" = (
@@ -52064,6 +52197,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"ppX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "ppZ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/west,
@@ -52109,7 +52249,7 @@
 /area/science/genetics)
 "ptw" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/science/mixing)
 "ptB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -53162,6 +53302,13 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
+"rkq" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/white,
+/area/science/mixing)
 "rky" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -53585,6 +53732,7 @@
 "sdz" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "seq" = (
@@ -53614,6 +53762,7 @@
 	pixel_x = -5;
 	pixel_y = 8
 	},
+/obj/item/book/random,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "sgh" = (
@@ -53657,11 +53806,12 @@
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "siK" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "sjr" = (
@@ -53866,6 +54016,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "sGc" = (
@@ -54062,6 +54213,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"sTw" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/science/storage)
 "sUX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -54520,6 +54677,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel,
 /area/science/storage)
 "tJO" = (
@@ -54938,6 +55099,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "uGw" = (
@@ -54996,6 +55158,8 @@
 "uNu" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "uNS" = (
@@ -55004,9 +55168,10 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Toxins Lab East";
+	c_tag = "Toxins Lab Burn Chamber";
 	network = list("ss13","rd")
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "uOW" = (
@@ -55071,6 +55236,7 @@
 /area/security/checkpoint/auxiliary)
 "uSD" = (
 /obj/machinery/igniter/incinerator_toxmix,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "uTi" = (
@@ -55332,6 +55498,7 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "vEn" = (
@@ -55435,17 +55602,12 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "vHQ" = (
-/obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
-	pixel_x = -30;
-	pixel_y = -30;
-	receive_ore_updates = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "vIU" = (
@@ -55655,6 +55817,15 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
+"wkA" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "wkN" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -56083,6 +56254,8 @@
 	pixel_x = 10;
 	pixel_y = 7
 	},
+/obj/structure/table/wood,
+/obj/item/trash/raisins,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "wQK" = (
@@ -56253,7 +56426,9 @@
 /area/science/genetics)
 "xfd" = (
 /obj/effect/spawner/randomcolavend,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel/white/side{
+	dir = 10
+	},
 /area/science/research)
 "xfl" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -103674,7 +103849,7 @@ wkN
 wkN
 dYq
 bhA
-jRD
+bFF
 vpt
 bOu
 nLS
@@ -103939,7 +104114,7 @@ bEC
 bEC
 bEC
 cas
-bIA
+sTw
 lYW
 pec
 nbN
@@ -104189,18 +104364,18 @@ oMN
 ubw
 bEC
 bCk
-bMz
+rkq
 byo
 bxP
 oTv
 git
 jpn
 bNq
+sTw
 bIA
-bIA
-bQU
+mxa
 mJd
-fvi
+fNJ
 sdz
 bXr
 cas
@@ -104446,10 +104621,10 @@ icS
 uCO
 bEC
 bQT
-bFU
+bMz
 bzJ
 bMz
-bMz
+iTp
 bGk
 bMt
 bNq
@@ -104707,10 +104882,10 @@ gQq
 jcK
 sYr
 jzb
-bMz
+eMR
 bMw
 bNq
-bIB
+mOz
 bIB
 bQU
 eCl
@@ -104963,7 +105138,7 @@ hsN
 vlI
 bzL
 bMz
-bMz
+iTp
 ptw
 kOH
 bNq
@@ -105220,7 +105395,7 @@ cKR
 byu
 bzJ
 byb
-bFU
+emY
 bVt
 bMx
 bNq
@@ -105477,7 +105652,7 @@ eVm
 jLw
 tBZ
 mWZ
-heS
+jRE
 heS
 vHQ
 bNv
@@ -105731,12 +105906,12 @@ sOU
 flN
 bEC
 eRJ
-bFW
+wkA
 wJG
 bFU
 siK
-bMz
-bMz
+lvC
+ppX
 bNy
 bOH
 dvO
@@ -105992,7 +106167,7 @@ bEA
 wJG
 bGA
 bEs
-bNx
+bMy
 bMy
 bNx
 bOG
@@ -108038,7 +108213,7 @@ bky
 bky
 btp
 btp
-btp
+bDh
 bEF
 btp
 cNR
@@ -110607,7 +110782,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -111374,7 +111549,7 @@ boP
 boP
 boP
 boP
-sNY
+boP
 boP
 boP
 boP
@@ -114215,6 +114390,520 @@ boP
 boP
 boP
 boP
+boP
+boP
+boP
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+"}
+(224,1,1) = {"
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+"}
+(225,1,1) = {"
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
+boP
 bte
 boP
 bte
@@ -114321,7 +115010,7 @@ gQb
 gQb
 gQb
 "}
-(224,1,1) = {"
+(226,1,1) = {"
 gQb
 gQb
 gQb
@@ -114578,7 +115267,7 @@ gQb
 gQb
 gQb
 "}
-(225,1,1) = {"
+(227,1,1) = {"
 gQb
 gQb
 gQb
@@ -114835,7 +115524,7 @@ gQb
 gQb
 gQb
 "}
-(226,1,1) = {"
+(228,1,1) = {"
 gQb
 gQb
 gQb
@@ -115092,7 +115781,7 @@ gQb
 gQb
 gQb
 "}
-(227,1,1) = {"
+(229,1,1) = {"
 gQb
 gQb
 gQb
@@ -115197,47 +115886,47 @@ gQb
 gQb
 gQb
 gQb
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
 boP
 boP
 bGe
@@ -115349,7 +116038,7 @@ gQb
 gQb
 gQb
 "}
-(228,1,1) = {"
+(230,1,1) = {"
 gQb
 gQb
 gQb
@@ -115454,47 +116143,47 @@ gQb
 gQb
 gQb
 gQb
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
-boP
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
+gQb
 boP
 boP
 bgx
@@ -115606,7 +116295,7 @@ gQb
 gQb
 gQb
 "}
-(229,1,1) = {"
+(231,1,1) = {"
 gQb
 gQb
 gQb
@@ -115863,7 +116552,7 @@ gQb
 gQb
 gQb
 "}
-(230,1,1) = {"
+(232,1,1) = {"
 gQb
 gQb
 gQb
@@ -116120,7 +116809,7 @@ gQb
 gQb
 gQb
 "}
-(231,1,1) = {"
+(233,1,1) = {"
 gQb
 gQb
 gQb
@@ -116377,7 +117066,7 @@ gQb
 gQb
 gQb
 "}
-(232,1,1) = {"
+(234,1,1) = {"
 gQb
 gQb
 gQb
@@ -116634,520 +117323,6 @@ gQb
 gQb
 gQb
 "}
-(233,1,1) = {"
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-boP
-boP
-boP
-boP
-boP
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-"}
-(234,1,1) = {"
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-boP
-boP
-boP
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-gQb
-"}
 (235,1,1) = {"
 gQb
 gQb
@@ -117298,11 +117473,11 @@ gQb
 gQb
 gQb
 gQb
-gQb
-gQb
 boP
-gQb
-gQb
+boP
+boP
+boP
+boP
 gQb
 gQb
 gQb
@@ -117556,9 +117731,9 @@ gQb
 gQb
 gQb
 gQb
-gQb
 boP
-gQb
+boP
+boP
 gQb
 gQb
 gQb
@@ -117814,7 +117989,7 @@ gQb
 gQb
 gQb
 gQb
-gQb
+boP
 gQb
 gQb
 gQb
@@ -118071,7 +118246,7 @@ gQb
 gQb
 gQb
 gQb
-gQb
+boP
 gQb
 gQb
 gQb
