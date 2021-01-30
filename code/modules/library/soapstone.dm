@@ -90,7 +90,7 @@
 as instructions and/or memes for the next generation of spessmen.
 
 Limited in location to station_z only. Can be smashed out or exploded,
-but only permamently removed with the curator's soapstone.
+but only permanently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite

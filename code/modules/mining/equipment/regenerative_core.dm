@@ -26,6 +26,7 @@
 	icon_state = "roro core 2"
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_REGENERATIVE_CORE
+	organ_flags = NONE
 	force = 0
 	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/inert = 0
