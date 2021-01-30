@@ -165,6 +165,9 @@
 		if(W.try_handling(user))
 			return TRUE
 
+	if (user.apply_martial_art(src))
+		return TRUE
+
 	return FALSE
 
 
@@ -447,6 +450,9 @@
 					null, "<span class='hear'>You hear a soft patter.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, "<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
 		to_chat(src, "<span class='notice'>[M] gives you a pat on the head to make you feel better! </span>")
+		
+		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
+			to_chat(M, "<span class='warning'>[src] looks visibly upset as you pat [p_them()] on the head.</span>")
 
 	else
 		SEND_SIGNAL(src, COMSIG_CARBON_HUGGED, M)
@@ -486,6 +492,9 @@
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
 			else if (hugger_mood.sanity >= SANITY_DISTURBED)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+		
+		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
+			to_chat(M, "<span class='warning'>[src] looks visibly upset as you hug [p_them()].</span>")
 
 	AdjustStun(-60)
 	AdjustKnockdown(-60)

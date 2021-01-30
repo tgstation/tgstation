@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Removed some bits of initial gas mixes that are explicitly the one thing you are not allowed to put into initial gas mixes."
+  - bugfix: "Added temperatures to some initial gas mixes that were missing them. This also breaks stuff, but at least it doesn't explicitly say that."

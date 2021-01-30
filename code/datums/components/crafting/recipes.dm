@@ -823,6 +823,14 @@
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/skeleton_key
+	name = "Skeleton Key"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 5)
+	result = /obj/item/skeleton_key
+	always_available = FALSE
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/rake //Category resorting incoming
 	name = "Rake"
 	time = 30
@@ -1066,5 +1074,15 @@
 				/obj/item/grenade/gas_crystal/healium_crystal = 1,
 				/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1,
 				/obj/item/grenade/gas_crystal/zauker_crystal = 1
+				)
+	category = CAT_MISC
+
+/datum/crafting_recipe/aquarium
+	name = "Aquarium"
+	result = /obj/structure/aquarium
+	time = 10 SECONDS
+	reqs = list(/obj/item/stack/sheet/metal = 15,
+				/obj/item/stack/sheet/glass = 10,
+				/obj/item/aquarium_kit = 1
 				)
 	category = CAT_MISC
