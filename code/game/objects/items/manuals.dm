@@ -281,15 +281,6 @@
 	title = "Chemistry Textbook"
 	page_link = "Guide_to_chemistry"
 
-///TEMPORARY ONLY - REMOVE BEFORE FINAL COMMIT - just a way to get players aware of the changes since I can't edit the wiki directly
-/obj/item/book/manual/wiki/chemistry/fermichem_update
-	name = "Journal of the Nanotrasen Chemical Society: Vol 2"
-	icon_state ="chemistrybook"
-	color = "#ff5588" //make it look different
-	author = "Nanotrasen"
-	title = "Journal of the Nanotrasen Chemical Society"
-	page_link = "User:Thalpy"
-
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
 	icon_state ="bookEngineering"
