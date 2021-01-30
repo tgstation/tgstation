@@ -23653,7 +23653,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
+	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7";
 	luminosity = 2;
 	temperature = 2.7
 	},
@@ -25262,7 +25262,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
+	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7";
 	luminosity = 2;
 	temperature = 2.7
 	},
