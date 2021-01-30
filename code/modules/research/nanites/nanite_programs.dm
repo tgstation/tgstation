@@ -223,6 +223,8 @@
 		return
 	if(world.time < next_trigger)
 		return
+	if(check_conditions())
+		return
 	if(!consume_nanites(trigger_cost))
 		return
 	next_trigger = world.time + trigger_cooldown
