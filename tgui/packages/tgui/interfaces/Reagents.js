@@ -68,45 +68,45 @@ export const Reagents = (props, context) => {
   const DRINK = 1 << 14;
   const FOOD = 1 << 15;
   const flagsObject = {
-    "gavel" : BRUTE ,
-    "burn" : BURN ,
-    "biohazard" : TOXIN,
-    "wind" : OXY,
-    "male" : CLONE,
-    "medkit" : HEALING,
-    "skull-crossbones" : DAMAGING,
-    "bomb" : EXPLOSIVE,
-    "question" : OTHER,
-    "exclamation-triangle" : DANGEROUS,
-    "chess-pawn" : EASY,
-    "chess-knight" : MODERATE,
-    "chess-queen" : HARD,
-    "hand-holding-heart" : ORGAN,
-    "cocktail" : DRINK,
-    "drumstick-bite" : FOOD
+    "gavel": BRUTE,
+    "burn": BURN,
+    "biohazard": TOXIN,
+    "wind": OXY,
+    "male": CLONE,
+    "medkit": HEALING,
+    "skull-crossbones": DAMAGING,
+    "bomb": EXPLOSIVE,
+    "question": OTHER,
+    "exclamation-triangle": DANGEROUS,
+    "chess-pawn": EASY,
+    "chess-knight": MODERATE,
+    "chess-queen": HARD,
+    "hand-holding-heart": ORGAN,
+    "cocktail": DRINK,
+    "drumstick-bite": FOOD,
   };
   
   /* es-lint please no */
   function matchBitflag(flag1, flag2) {
-    if(flag1 === 0){
+    if (flag1 === 0) {
       return true;
     }
-    let merge = flag1 | flag2
+    let merge = flag1 | flag2;
     if (flag1 & flag2)
-    { if((merge ^ flag2)) 
-      {
-        return false; 
-      }
-      return true;
+    { if ((merge ^ flag2)) 
+    {
+      return false; 
+    }
+    return true;
     }
     return false;
   }
   
   function matchReagents(reaction) {
-    if(!reagentFilter){
+    if (!reagentFilter) {
       return true;
     }
-    if(currentReagents === null){
+    if (currentReagents === null) {
       return true;
     }
     let matches = 0;
@@ -554,9 +554,9 @@ export const Reagents = (props, context) => {
                             {map((flag, icon) => 
                               (reaction.bitflags & Number(flag)) && (
                                 <Icon name={icon} mr={1} color={"white"} />
-                            ) || (
-                              null
-                            ))(flagsObject)}
+                              ) || (
+                                null
+                              ))(flagsObject)}
                           </TableCell>                         
                         </>
                       )}  
