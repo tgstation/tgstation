@@ -197,11 +197,11 @@
 					if(usr)
 						var/mob/user = usr
 						if(user.put_in_hands(found_seed))
-							to_chat(user, "<span class='notice'>[found_seed] drops into your hand.</span>")
+							to_chat(user, "<span class='notice'>You take \the [found_seed] out of the slot.</span>")
 						else
-							to_chat(user, "<span class='notice'>[found_seed] drops onto the seed extractor.</span>")
+							to_chat(user, "<span class='notice'>\The [found_seed] falls onto the floor.</span>")
 					else
 						found_seed.forceMove(drop_location())
-						visible_message("<span class='notice'>[found_seed] drops onto the floor.</span>", null, "<span class='hear'>You hear a soft clatter.</span>", COMBAT_MESSAGE_RANGE)
+						visible_message("<span class='notice'>[found_seed] falls onto the floor.</span>", null, "<span class='hear'>You hear a soft clatter.</span>", COMBAT_MESSAGE_RANGE)
 					. = TRUE
 
