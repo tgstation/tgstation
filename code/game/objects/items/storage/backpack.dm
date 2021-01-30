@@ -430,35 +430,35 @@
 	icon_state = "duffel-explorer"
 	inhand_icon_state = "duffel-explorer"
 
-/obj/item/storage/backpack/duffelbag/hyd
+/obj/item/storage/backpack/duffelbag/hydroponics
 	name = "hydroponic's duffel bag"
 	desc = "A large duffel bag for holding extra gardening tools."
-	icon_state = "duffel-hyd"
-	inhand_icon_state = "duffel-hyd"
+	icon_state = "duffel-hydroponics"
+	inhand_icon_state = "duffel-hydroponics"
 
-/obj/item/storage/backpack/duffelbag/chem
+/obj/item/storage/backpack/duffelbag/chemistry
 	name = "chemistry duffel bag"
 	desc = "A large duffel bag for holding extra chemical substances."
-	icon_state = "duffel-chem"
-	inhand_icon_state = "duffel-chem"
+	icon_state = "duffel-chemistry"
+	inhand_icon_state = "duffel-chemistry"
 
-/obj/item/storage/backpack/duffelbag/gen
+/obj/item/storage/backpack/duffelbag/genetics
 	name = "geneticist's duffel bag"
 	desc = "A large duffel bag for holding extra genetic mutations."
-	icon_state = "duffel-gen"
-	inhand_icon_state = "duffel-gen"
+	icon_state = "duffel-genetics"
+	inhand_icon_state = "duffel-genetics"
 
-/obj/item/storage/backpack/duffelbag/tox
+/obj/item/storage/backpack/duffelbag/toxins
 	name = "scientist's duffel bag"
 	desc = "A large duffel bag for holding extra scientific components."
-	icon_state = "duffel-tox"
-	inhand_icon_state = "duffel-tox"
+	icon_state = "duffel-toxins"
+	inhand_icon_state = "duffel-toxins"
 
-/obj/item/storage/backpack/duffelbag/vir
+/obj/item/storage/backpack/duffelbag/virology
 	name = "virologist's duffel bag"
 	desc = "A large duffel bag for holding extra viral bottles."
-	icon_state = "duffel-vir"
-	inhand_icon_state = "duffel-vir"
+	icon_state = "duffel-virology"
+	inhand_icon_state = "duffel-virology"
 
 
 
