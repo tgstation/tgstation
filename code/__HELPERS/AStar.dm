@@ -152,6 +152,8 @@ Actual Adjacent procs :
 		cur = open.Pop() //get the lower f turf in the open list
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
+		cur.source.color = COLOR_BLUE
+
 		var/closeenough
 		if(mintargetdist)
 			closeenough = call(cur.source,dist)(end) <= mintargetdist
@@ -172,6 +174,9 @@ Actual Adjacent procs :
 				next_goal_turf = cur.prevNode ? cur.prevNode.source : start
 				dir_heading = get_dir(iter_turf, next_goal_turf)
 				for(var/i in 1 to cur.jumps) // RYLL NOTE: this is my WIP attempt to handle the multiple jumps between pathnodes
+					if(iter_turf == next_goal_turf)
+						testing("We're already at our next dest turf!!!! [i]/[cur.jumps] jumps")
+						break
 					iter_turf.color = COLOR_YELLOW
 					path.Add(iter_turf)
 					var/turf/add_turf = iter_turf
@@ -182,6 +187,9 @@ Actual Adjacent procs :
 			var/turf/final = cur.source
 			dir_heading = get_dir(final, start)
 			for(var/i in 1 to cur.jumps)
+				if(final == start)
+					testing("We're already at our original dest turf!!!! [i]/[cur.jumps] jumps")
+					break
 				final.color = COLOR_VIVID_YELLOW
 				path.Add(final)
 				var/turf/add_turf = final
@@ -235,7 +243,7 @@ Actual Adjacent procs :
 					for(var/i2 = 0 to 3) // we're checking some tile some number of steps down the line from the tile we popped off the open stack, see if there are any forced neighbor tiles we might find interesting adjacent to it
 						var/f2= 1<<i2 //get cardinal directions.1,2,4,8
 						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1)
-						if((f2 == r) || f == f2) // ignore the continuing direction and the direction we came from when looking for adjacent obstacles
+						if((f2 == r)) // ignore the direction we came from when looking for adjacent obstacles
 							continue
 						var/adjacent_next_turf = get_step(next_turf, f2) // this is the tile adjacent to the tile (next_turf) adjacent to the tile we're checking neighbors for (sturf). This lets us see if there's a diagonal forced neighbor, since 2 cards = diagonal
 
@@ -254,12 +262,12 @@ Actual Adjacent procs :
 					nex_tu.color = COLOR_LIGHT_GRAYISH_RED
 
 				// we have decided that sturf is an interesting tile, so let's handle adding it to the open list/modifying it if it's already in the open list
-				var/datum/jpsnode/CN = openc[sturf]  //see if this turf is in the open list
+				var/datum/jpsnode/CN = openc[next_turf]  //see if this turf is in the open list
 				var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
 				//var/newt = cur.nt + (call(cur.source,dist)(next_turf) * steps_taken)
 				var/newt = cur.nt + steps_taken
 
-				var/turf/nex_tu = sturf
+				var/turf/nex_tu = next_turf
 				nex_tu.color = COLOR_RED
 				if(CN)
 				//is already in open list, check if it's a better way from the current turf
@@ -269,9 +277,9 @@ Actual Adjacent procs :
 						open.ReSort(CN)//reorder the changed element in the list
 				else
 				//is not already in open list, so add it
-					CN = new(sturf,cur,call(sturf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
+					CN = new(next_turf,cur,call(next_turf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
 					open.Insert(CN)
-					openc[sturf] = CN
+					openc[next_turf] = CN
 				break
 
 			if(breakout)
