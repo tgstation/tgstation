@@ -45,6 +45,9 @@
 /datum/antagonist/brainwashed/farewell()
 	to_chat(owner, "<span class='warning'>Your mind suddenly clears...</span>")
 	to_chat(owner, "<big><span class='warning'><b>You feel the weight of the Directives disappear! You no longer have to obey them.</b></span></big>")
+	if(owner.current)
+		var/mob/living/owner_mob = owner.current
+		owner_mob.log_message("is no longer brainwashed with the objectives: [english_list(objectives)].", LOG_ATTACK)
 	owner.announce_objectives()
 
 /datum/antagonist/brainwashed/admin_add(datum/mind/new_owner,mob/admin)
