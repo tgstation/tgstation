@@ -128,6 +128,8 @@
 		           /obj/item/clothing/under/pants/mustangjeans = 1,
 		           /obj/item/clothing/neck/necklace/dope = 3,
 		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
+				   /obj/item/clothing/under/costume/swagoutfit = 1,
+				   /obj/item/clothing/shoes/swagshoes = 1,
 		           /obj/item/instrument/piano_synth/headphones/spacepods = 1)
 	refill_canister = /obj/item/vending_refill/clothing
 	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of

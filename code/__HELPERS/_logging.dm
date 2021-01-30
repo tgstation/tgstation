@@ -165,6 +165,18 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		WRITE_LOG(GLOB.world_pda_log, "COMMENT: [text]")
 
+/proc/log_uplink(text)
+	if (CONFIG_GET(flag/log_uplink))
+		WRITE_LOG(GLOB.world_uplink_log, "UPLINK: [text]")
+
+/proc/log_spellbook(text)
+	if (CONFIG_GET(flag/log_uplink))
+		WRITE_LOG(GLOB.world_uplink_log, "SPELLBOOK: [text]")
+
+/proc/log_codex_ciatrix(text)
+	if (CONFIG_GET(flag/log_uplink))
+		WRITE_LOG(GLOB.world_uplink_log, "CODEX: [text]")
+
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
 		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
