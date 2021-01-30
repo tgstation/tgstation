@@ -28,7 +28,7 @@
 		if(!commendation_winner.client)
 			return
 
-		commendation_winner.client.prefs.commendation = TRUE // so they get it right away
+		commendation_winner.client.prefs.commendation = pick("pbee", "pop", "pslime", "plizard", "psnake") // so they get it right away
 		if(!commendation_winner.client)
 			return
 		commendation_winner.client.prefs.save_preferences()

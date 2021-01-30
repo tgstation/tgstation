@@ -1867,9 +1867,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						current_tab = text2num(href_list["tab"])
 
 				if("clear_commendation")
-					commendation = FALSE
+					commendation = null
 					commendation_until = null
-					to_chat(user, "<span class='notice'>OOC Commendations disabled</span>")
+					to_chat(user, "<span class='notice'>OOC Commendations disabled.</span>")
 					save_preferences()
 
 	ShowChoices(user)

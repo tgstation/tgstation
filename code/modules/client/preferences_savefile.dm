@@ -204,7 +204,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// commendation
 	READ_FILE(S["hearted_until"], commendation_until)
 	if(commendation_until > world.realtime)
-		commendation = TRUE
+		commendation = pick("pbee", "pop", "pslime", "plizard", "psnake")
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
