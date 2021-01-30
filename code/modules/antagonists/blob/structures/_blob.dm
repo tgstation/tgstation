@@ -54,6 +54,7 @@
 	if(overmind)
 		overmind.all_blobs -= src
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+		overmind = null
 	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
 	return ..()

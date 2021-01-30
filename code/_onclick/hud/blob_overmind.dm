@@ -57,7 +57,7 @@
 	desc = "Produces a strong, smart blobbernaut from a factory blob for (ERROR) resources.<br>The factory blob used will become fragile and unable to produce spores."
 
 /atom/movable/screen/blob/blobbernaut/Initialize()
-	..()
+	. = ..()
 	name = "Produce Blobbernaut ([BLOBMOB_BLOBBERNAUT_RESOURCE_COST])"
 	desc = "Produces a strong, smart blobbernaut from a factory blob for [BLOBMOB_BLOBBERNAUT_RESOURCE_COST] resources.<br>The factory blob used will become fragile and unable to produce spores."
 
@@ -72,7 +72,7 @@
 	desc = "Produces a resource blob for ERROR resources.<br>Resource blobs will give you resources every few seconds."
 
 /atom/movable/screen/blob/resource_blob/Initialize()
-	..()
+	. = ..()
 	name = "Produce Resource Blob ([BLOB_STRUCTURE_RESOURCE_COST])"
 	desc = "Produces a resource blob for [BLOB_STRUCTURE_RESOURCE_COST] resources.<br>Resource blobs will give you resources every few seconds."
 
@@ -87,7 +87,7 @@
 	desc = "Produces a node blob for ERROR resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
 /atom/movable/screen/blob/node_blob/Initialize()
-	..()
+	. = ..()
 	name = "Produce Node Blob ([BLOB_STRUCTURE_NODE_COST])"
 	desc = "Produces a node blob for [BLOB_STRUCTURE_NODE_COST] resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
@@ -102,7 +102,7 @@
 	desc = "Produces a factory blob for ERROR resources.<br>Factory blobs will produce spores every few seconds."
 
 /atom/movable/screen/blob/factory_blob/Initialize()
-	..()
+	. = ..()
 	name = "Produce Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
 	desc = "Produces a factory blob for [BLOB_STRUCTURE_FACTORY_COST] resources.<br>Factory blobs will produce spores every few seconds."
 
@@ -138,7 +138,7 @@
 	desc = "Swaps a node and your core for ERROR resources."
 
 /atom/movable/screen/blob/relocate_core/Initialize()
-	..()
+	. = ..()
 	name = "Relocate Core ([BLOB_POWER_RELOCATE_COST])"
 	desc = "Swaps a node and your core for [BLOB_POWER_RELOCATE_COST] resources."
 

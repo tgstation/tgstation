@@ -3,9 +3,9 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 /datum/blobstrain
 	var/name
 	var/description
-	var/color = "#000000"
+	var/color = COLOR_BLACK
 	/// The color that stuff like healing effects and the overmind camera gets
-	var/complementary_color = "#000000"
+	var/complementary_color = COLOR_BLACK
 	/// A short description of the power and its effects
 	var/shortdesc = null 
 	/// Any long, blob-tile specific effects
