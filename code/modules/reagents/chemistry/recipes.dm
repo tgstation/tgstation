@@ -94,15 +94,19 @@
  * Stuff that occurs in the middle of a reaction
  * Only procs DURING a reaction
  * If reaction_flags & REACTION_INSTANT then this isn't called
+ * returning END_REACTION will END the reaction
  *
  * Arguments:
  * * reaction - the equilibrium reaction holder that is reaction is processed within - use this to edit delta_t and delta
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * created_volume - volume created per step
  * * added_purity - how pure the created volume is per step
+ * 
+ * Outputs:
+ * * returning END_REACTION will end the associated reaction - flagging it for deletion and preventing any reaction in that timestep from happening. Make sure to set the vars in the holder to one that can't start it from starting up again.
  */
 /datum/chemical_reaction/proc/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
-	return
+	return 
 
 /**
  * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).

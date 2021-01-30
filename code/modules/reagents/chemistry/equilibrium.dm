@@ -42,7 +42,7 @@
 	var/h_ion_mod = 1
 	///Temp mod
 	var/thermic_mod = 1
-	///Allow us to deal with lag by "changing" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
+	///Allow us to deal with lag by "charging" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
 	var/time_deficit 
 
 /* 
@@ -103,17 +103,7 @@
 * otherwise, generally, don't call this directed except internally
 */
 /datum/equilibrium/proc/check_reagent_properties()
-	//Are we overheated?
-	if(reaction.is_cold_recipe)
-		if(holder.chem_temp < reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src)
-	else
-		if(holder.chem_temp > reaction.overheat_temp)
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
-			reaction.overheated(holder, src)
-	
-	//Have we exploded?
+	//Have we exploded from on_reaction?
 	if(!holder.my_atom || holder.reagent_list.len == 0)
 		return FALSE
 	if(!holder)
@@ -130,9 +120,6 @@
 	//If the product/reactants are too impure
 	for(var/r in holder.reagent_list)
 		var/datum/reagent/reagent = r
-		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
-			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
-			reaction.overly_impure(holder, src)
 		//this is done this way to reduce processing compared to holder.has_reagent(P)
 		for(var/c in reaction.required_catalysts)
 			var/datum/reagent/catalyst = c
@@ -200,17 +187,48 @@
 * * delta_time - the time between the last proc in world.time
 */
 /datum/equilibrium/proc/deal_with_time(delta_time)
-	if(delta_time > 1.5)
-		time_deficit += delta_time - 1.5
-		delta_time = 1.5 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
+	if(delta_time > 1)
+		time_deficit += delta_time - 1
+		delta_time = 1 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
 	else if (time_deficit)
-		if(time_deficit < 0.5)
+		if(time_deficit < 0.25)
 			delta_time += time_deficit
 			time_deficit = 0
 		else	
-			delta_time += 0.5
-			time_deficit = 0.5
+			delta_time += 0.25
+			time_deficit = 0.25
 	return delta_time
+
+/*
+* Main method of checking for explosive - or failed states
+* Checks overheated() and overly_impure() of a reaction
+* This was moved from the start, to the end - after a reaction, so post reaction temperature changes aren't ignored.
+* overheated() is first - so double explosions can't happen (i.e. explosions that blow up the holder)
+*/
+/datum/equilibrium/proc/check_fail_states()
+	//Are we overheated?
+	if(reaction.is_cold_recipe)
+		if(holder.chem_temp < reaction.overheat_temp) //This is before the process - this is here so that overly_impure and overheated() share the same code location (and therefore vars) for calls.
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			reaction.overheated(holder, src)
+	else
+		if(holder.chem_temp > reaction.overheat_temp)
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overheated reaction steps")
+			reaction.overheated(holder, src)
+
+	//is our product too impure?
+	for(var/product in reaction.results)
+		var/datum/reagent/reagent = holder.has_reagent(product)
+		if(!reagent) //might be missing from overheat exploding
+			continue
+		if (reagent.purity < reaction.purity_min)//If purity is below the min, call the proc
+			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
+			reaction.overly_impure(holder, src)
+	
+	//did we explode?
+	if(!holder.my_atom || holder.reagent_list.len == 0)
+		return FALSE
+	return TRUE
 
 /*
 * Main reaction processor - Increments the reaction by a timestep
@@ -227,13 +245,13 @@
 	if(to_delete)
 		//This occurs when it explodes
 		return FALSE
-	delta_time = deal_with_time(delta_time)
 	if(!check_reagent_properties()) //this is first because it'll call explosions first
 		to_delete = TRUE
 		return
 	if(!calculate_yield())//So that this can detect if we're missing reagents
 		to_delete = TRUE
 		return	
+	delta_time = deal_with_time(delta_time)
 
 	delta_t = 0 //how far off optimal temp we care
 	delta_ph = 0 //How far off the pH we are
@@ -284,7 +302,9 @@
 			return
 
 	//Call any special reaction steps BEFORE addition
-	reaction.reaction_step(src, holder, delta_t, delta_ph, step_target_vol)
+	if(reaction.reaction_step(src, holder, delta_t, delta_ph, step_target_vol) == END_REACTION)
+		to_delete = TRUE
+		return
 
 	//Catalyst modifier
 	delta_t *= speed_mod
@@ -333,7 +353,6 @@
 	#endif
 		
 	//Apply thermal output of reaction to beaker
-	
 	if(reaction.reaction_flags & REACTION_HEAT_ARBITARY)
 		holder.chem_temp += (reaction.thermic_constant* total_step_added*thermic_mod) //old method - for every bit added, the whole temperature is adjusted
 	else //Standard mechanics
@@ -346,13 +365,17 @@
 		if(reaction.mix_sound)
 			playsound(get_turf(holder.my_atom), reaction.mix_sound, 80, TRUE)
 
+	//Used for UI output
 	reaction_quality = purity
+
+	//post reaction checks
+	if(!(check_fail_states()))
+		to_delete = TRUE
 
 	//end reactions faster so plumbing is faster
 	if((step_add >= step_target_vol) && (length(holder.reaction_list == 1)))//length is so that plumbing is faster - but it doesn't disable competitive reactions. Basically, competitive reactions will likely reach their step target at the start, so this will disable that. We want to avoid that. But equally, we do want to full stop a holder from reacting asap so plumbing isn't waiting an tick to resolve.
 		to_delete = TRUE
 
-	//Make sure things are limited
 	holder.update_total()//do NOT recalculate reactions
 
 
@@ -375,6 +398,7 @@
 		return 0 //we exploded and cleared reagents - but lets not kill the process
 	return cached_purity/i
 
+///Panic stop a reaction - cleanup should be handled by the next timestep
 /datum/equilibrium/proc/force_clear_reactive_agents()
 	for(var/reagent in reaction.required_reagents)
 		holder.remove_reagent(reagent, (multiplier * reaction.required_reagents[reagent]), safety = 1)

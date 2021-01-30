@@ -80,3 +80,6 @@
 #define REACTION_HEAT_ARBITARY      (1<<4) 
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
 #define REACTION_COMPETITIVE        (1<<5)
+
+///Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
+#define END_REACTION                "end_reaction"
