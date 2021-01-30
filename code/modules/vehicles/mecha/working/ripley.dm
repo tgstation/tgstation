@@ -141,6 +141,7 @@
 /obj/vehicle/sealed/mecha/working/ripley/cargo
 	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	name = "\improper APLU \"Big Bess\""
+	icon_state = "hauler"
 	max_equip = 2
 	obj_integrity = 50 //Low starting health
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
