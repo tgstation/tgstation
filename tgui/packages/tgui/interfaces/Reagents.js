@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section, NoticeBox, Table, Icon, Chart, Flex, Stack } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
+import { map } from 'common/collections';
 import { logger } from '../logging.js';
 
 export const Reagents = (props, context) => {
@@ -32,6 +33,8 @@ export const Reagents = (props, context) => {
     context, 'healing', false);
   const [drink, setDrink] = useLocalState(
     context, 'drink', false);
+  const [food, setFood] = useLocalState(
+    context, 'food', false);
   const [damaging, setDamaging] = useLocalState(
     context, 'damaging', false);
   const [explosive, setExplosive] = useLocalState(
@@ -63,23 +66,57 @@ export const Reagents = (props, context) => {
   const HARD = 1 << 12;
   const ORGAN = 1 << 13;
   const DRINK = 1 << 14;
+  const FOOD = 1 << 15;
+  const flagsObject = {
+    "gavel" : BRUTE ,
+    "burn" : BURN ,
+    "biohazard" : TOXIN,
+    "wind" : OXY,
+    "male" : CLONE,
+    "medkit" : HEALING,
+    "skull-crossbones" : DAMAGING,
+    "bomb" : EXPLOSIVE,
+    "question" : OTHER,
+    "exclamation-triangle" : DANGEROUS,
+    "chess-pawn" : EASY,
+    "chess-knight" : MODERATE,
+    "chess-queen" : HARD,
+    "hand-holding-heart" : ORGAN,
+    "cocktail" : DRINK,
+    "drumstick-bite" : FOOD
+  };
   
   /* es-lint please no */
   function matchBitflag(flag1, flag2) {
+    if(flag1 === 0){
+      return true;
+    }
+    let merge = flag1 | flag2
     if (flag1 & flag2)
-    { return true; }
+    { if((merge ^ flag2)) 
+      {
+        return false; 
+      }
+      return true;
+    }
     return false;
   }
   
-  function matchReagents(reaction, list) {
+  function matchReagents(reaction) {
+    if(!reagentFilter){
+      return true;
+    }
+    if(currentReagents === null){
+      return true;
+    }
     let matches = 0;
-    for (var index = 0; index < list.length; ++index) {
+    for (var index = 0; index < currentReagents.length; ++index) {
       reaction.reactants.map(reactant => {
-        if (reactant.name === list[index]) {
+        if (reactant.id === currentReagents[index]) {
           ++matches;
         } });
     }
-    if (matches === list.length) {
+    if (matches === currentReagents.length) {
       return true;
     }
     return false;
@@ -87,7 +124,7 @@ export const Reagents = (props, context) => {
 
   return (
     <Window
-      width={650}
+      width={700}
       height={800}>
       <Window.Content>
         <Stack fill vertical>
@@ -96,8 +133,8 @@ export const Reagents = (props, context) => {
               <Stack.Item grow basis={0}>
                 <Section 
                   title="Recipe lookup"
-                  minWidth="300px"
-                  maxWidth="300px" 
+                  minWidth="340px"
+                  maxWidth="340px" 
                   buttons={(
                     <Button
                       content="Search recipes"
@@ -124,6 +161,7 @@ export const Reagents = (props, context) => {
                             <Button
                               key={product.name}
                               icon="vial"
+                              disabled={product.hasProduct ? true : false}
                               content={product.ratio + "u " + product.name}
                               onClick={() => act('reagent_click', {
                                 id: product.id,
@@ -201,9 +239,9 @@ export const Reagents = (props, context) => {
                               top={0}
                               bottom={0}
                               right={0}
-                              width="30px"
+                              width="10px"
                               data={reagent_mode_recipe.explosive}
-                              strokeColor={"#fc0303"}
+                              strokeColor={"#ff9b9b"}
                               strokeWidth={3}
                               fillColor={"#ff9b9b"} />
                           </Box>
@@ -211,7 +249,7 @@ export const Reagents = (props, context) => {
                             <Box width="190px" position="relative" top="5px" left="-12px">
                               {reagent_mode_recipe.tempMin+"K"}
                             </Box>
-                            <Box width="190px" position="relative" top="-10px" left="160px">
+                            <Box width="190px" position="relative" top="-10px" left="205px">
                               {reagent_mode_recipe.explodeTemp+"K"}
                             </Box>
                           </TableRow>
@@ -403,6 +441,12 @@ export const Reagents = (props, context) => {
                     Drink
                   </Button>
                   <Button
+                    color={food ? "green" : "red"}
+                    icon="drumstick-bite"
+                    onClick={() => { act('toggle_tag_drink'); setFood(!food); }}>
+                    Food
+                  </Button>
+                  <Button
                     color={healing ? "green" : "red"}
                     icon="medkit"
                     onClick={() => { act('toggle_tag_healing'); setHealing(!healing); }}>
@@ -479,35 +523,45 @@ export const Reagents = (props, context) => {
                 </TableRow>
                 {master_reaction_list.map(reaction => (
                   matchBitflag(selectedBitflags, reaction.bitflags) && (
-                    matchReagents(reaction, currentReagents) && (
-                      <TableRow key={reaction.name}>
-                        <TableCell bold color="label">
-                          <Button
-                            mt={1.2}
-                            key={reaction.name}
-                            icon="flask"
-                            color="purple"
-                            content={reaction.name}
-                            onClick={() => act('recipe_click', {
-                              id: reaction.id,
-                            })} />  
-                        </TableCell>
-                        <TableCell>
-                          {reaction.reactants.map(reactant => (
+                    <TableRow key={reaction.name}>
+                      {matchReagents(reaction, currentReagents) && (
+                        <>
+                          <TableCell bold color="label">
                             <Button
-                              mt={0.1}
-                              key={reactant.name}
-                              icon="vial"
-                              color={reactant.color}
-                              content={reactant.name}
-                              onClick={() => act('reagent_click', {
-                                id: reactant.id,
-                              })} />                    
-                          ))}
-                        </TableCell>
-                      </TableRow>  
-                    ))
-                ))}
+                              mt={1.2}
+                              key={reaction.name}
+                              icon="flask"
+                              color="purple"
+                              content={reaction.name}
+                              onClick={() => act('recipe_click', {
+                                id: reaction.id,
+                              })} />  
+                          </TableCell>
+                          <TableCell>
+                            {reaction.reactants.map(reactant => (
+                              <Button
+                                mt={0.1}
+                                key={reactant.name}
+                                icon="vial"
+                                color={reactant.color}
+                                content={reactant.name}
+                                onClick={() => act('reagent_click', {
+                                  id: reactant.id,
+                                })} />                    
+                            ))}
+                          </TableCell>
+                          <TableCell width="40px">
+                            {map((flag, icon) => 
+                              (reaction.bitflags & Number(flag)) && (
+                                <Icon name={icon} mr={1} color={"white"} />
+                            ) || (
+                              null
+                            ))(flagsObject)}
+                          </TableCell>                         
+                        </>
+                      )}  
+                    </TableRow>           
+                  )))}
               </Table>
             </Section>
           </Stack.Item>
@@ -516,4 +570,3 @@ export const Reagents = (props, context) => {
     </Window>
   );
 };
-

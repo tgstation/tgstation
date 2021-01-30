@@ -8,6 +8,7 @@
 	thermic_constant = 0
 	H_ion_release = 0
 	rate_up_lim = 50
+	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY
 
 ////////////////////////////////////////// COCKTAILS //////////////////////////////////////
 

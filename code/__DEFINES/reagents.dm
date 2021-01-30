@@ -117,4 +117,6 @@
 #define REACTION_TAG_ORGAN (1<<13)
 /// This reaction creates a drink reagent
 #define REACTION_TAG_DRINK (1<<14)
+/// This reaction has something to do with food
+#define REACTION_TAG_FOOD (1<<15)
 

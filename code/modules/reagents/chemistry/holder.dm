@@ -35,7 +35,7 @@
 		var/list/reaction_ids = list()
 		var/list/reagents = list()
 		var/list/product_names = list()
-		var/bitflags = D.reaction_tagss
+		var/bitflags = D.reaction_tags
 
 		if(!D.required_reagents || !D.required_reagents.len) //Skip impossible reactions
 			continue
@@ -1675,33 +1675,40 @@
 		if(!reaction)
 			to_chat(user, "Could not find reaction!")
 			ui_reaction_id = null
+			return data
+		var/has_product = TRUE
+		if(!length(reaction.results))
+			has_product = FALSE
+			var/list/names = splittext("[reaction.type]", "/")
+			var/product_name = names[names.len]
+			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp)
 		else
 			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])
-			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp)
-			//Results sweep
-			var/has_reagent = "red"
-			for(var/_reagent in reaction.results)
-				var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-				if(has_reagent(_reagent))
-					has_reagent = "green"
-				data["reagent_mode_recipe"]["products"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.results[reagent.type], "hasReagentCol" = has_reagent))
-			//Reactant sweep
-			for(var/_reagent in reaction.required_reagents)
-				var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-				var/color_r = "teal"
-				if(has_reagent(reagent.type))
-					color_r = "green"
-				var/tooltip
-				var/tooltip_bool = FALSE
-				var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
-				if(length(sub_reactions))
-					var/datum/chemical_reaction/sub_reaction = sub_reactions[1]
-					//Subreactions sweep (if any)
-					for(var/_sub_reagent in sub_reaction.required_reagents)
-						var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)
-						tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
-						tooltip_bool = TRUE
-				data["reagent_mode_recipe"]["reactants"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp)
+		//Results sweep
+		var/has_reagent = "red"
+		for(var/_reagent in reaction.results)
+			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+			if(has_reagent(_reagent))
+				has_reagent = "green"
+			data["reagent_mode_recipe"]["products"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.results[reagent.type], "hasReagentCol" = has_reagent))
+		//Reactant sweep
+		for(var/_reagent in reaction.required_reagents)
+			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+			var/color_r = "average"
+			if(has_reagent(reagent.type))
+				color_r = "good"
+			var/tooltip
+			var/tooltip_bool = FALSE
+			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
+			if(length(sub_reactions))
+				var/datum/chemical_reaction/sub_reaction = sub_reactions[1]
+				//Subreactions sweep (if any)
+				for(var/_sub_reagent in sub_reaction.required_reagents)
+					var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)
+					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
+					tooltip_bool = TRUE
+			data["reagent_mode_recipe"]["reactants"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
 	
 	//TODO:
 	/*var/list/possible_reactions = generate_possible_reactions()
@@ -1749,6 +1756,7 @@
 			var/list/sub_reactions = get_recipe_from_reagent_product(text2path(params["id"]))
 			if(!length(sub_reactions))
 				to_chat(usr, "There is no recipe associated with this reagent.")
+				return FALSE
 			ui_reaction_id = sub_reactions[1]
 			return TRUE
 		if("reagent_click")
@@ -1821,6 +1829,9 @@
 			return TRUE
 		if("toggle_tag_drink")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DRINK
+			return TRUE
+		if("toggle_tag_dangerous")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DANGEROUS
 			return TRUE
 		
 

@@ -58,7 +58,7 @@
 	var/reaction_flags = NONE
 	///Tagging vars
 	///A bitflag var for tagging reagents for the reagent loopup functon
-	var/reaction_tagss = NONE
+	var/reaction_tags = NONE
 
 /datum/chemical_reaction/New()
 	. = ..()
