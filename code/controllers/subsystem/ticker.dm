@@ -59,8 +59,8 @@ SUBSYSTEM_DEF(ticker)
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
 
-	/// People who have been commended and will receive a heart
-	var/list/hearts
+	/// People who have been commended and will receive a commendation
+	var/list/commendations_this_round
 
 	/// Why an emergency shuttle was called
 	var/emergency_reason
@@ -683,9 +683,9 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Topic(href, list/href_list)
 	. = ..()
-	if(href_list["cancel_heart"] && usr.client.holder)
-		var/mob/heart_sender = locate(href_list["heart_source"])
-		var/mob/intended_recepient = locate(href_list["heart_target"])
-		log_admin("[usr.ckey] blocked commendation from [heart_sender] ([heart_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
-		message_admins("[usr.ckey] blocked commendation from [heart_sender] ([heart_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
-		hearts[intended_recepient] = null
+	if(href_list["cancel_commendation"] && usr.client.holder)
+		var/mob/commendation_sender = locate(href_list["commendation_source"])
+		var/mob/intended_recepient = locate(href_list["commendation_target"])
+		log_admin("[usr.ckey] blocked commendation from [commendation_sender] ([commendation_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
+		message_admins("[usr.ckey] blocked commendation from [commendation_sender] ([commendation_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
+		commendations_this_round[intended_recepient] = null

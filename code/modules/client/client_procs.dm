@@ -1018,13 +1018,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/get_award_status(achievement_type, mob/user, value = 1)
 	return	player_details.achievements.get_achievement_status(achievement_type)
 
-///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
-/client/proc/award_heart(heart_reason)
-	to_chat(src, "<span class='nicegreen'>Someone awarded you a plushie for OOC![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
+/**
+ * Proc that gives a client a commendation from another player (or admin?)
+ * reason is optional, and as an argument will be why they wanted to commend this client.
+ */
+/client/proc/award_commendation(reason)
+	to_chat(src, "<span class='nicegreen'>Someone awarded you a plushie for OOC![reason ? " They said: [reason]!" : ""]</span>")
 	if(!src)
 		return
-	prefs.hearted_until = world.realtime + (24 HOURS)
-	prefs.hearted = pick("pbee", "pop", "pslime", "plizard", "psnake")
+	prefs.commendation_until = world.realtime + (24 HOURS)
+	prefs.commendation = pick("pbee", "pop", "pslime", "plizard", "psnake")
 	if(!src)
 		return
 	prefs.save_preferences()

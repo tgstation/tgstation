@@ -201,10 +201,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// Custom hotkeys
 	READ_FILE(S["key_bindings"], key_bindings)
 	check_keybindings()
-	// hearted
-	READ_FILE(S["hearted_until"], hearted_until)
-	if(hearted_until > world.realtime)
-		hearted = TRUE
+	// commendation
+	READ_FILE(S["hearted_until"], commendation_until)
+	if(commendation_until > world.realtime)
+		commendation = TRUE
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -321,7 +321,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["key_bindings"], key_bindings)
-	WRITE_FILE(S["hearted_until"], (hearted_until > world.realtime ? hearted_until : null))
+	WRITE_FILE(S["hearted_until"], (commendation_until > world.realtime ? commendation_until : null))
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
