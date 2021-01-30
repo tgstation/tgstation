@@ -4,14 +4,10 @@
 	desc = "very bland"
 	w_class = WEIGHT_CLASS_TINY
 
-
-/obj/item/fish/proc/flop_animation()
-
-
 /// Automatically generates object of given base path from the behaviour type in loc
 /proc/generate_fish(loc,behaviour_type,base_path=/obj/item/fish)
 	var/datum/aquarium_behaviour/behaviour = behaviour_type
-	var/obj/item/fish = new /obj/item/fish(loc)
+	var/obj/item/fish = new base_path(loc)
 	fish.name = initial(behaviour.name)
 	fish.icon = initial(behaviour.icon)
 	fish.icon_state = initial(behaviour.icon_state)

@@ -187,6 +187,7 @@
 		parent.current_aquarium.dead_fish += 1
 	else
 		parent.current_aquarium.alive_fish += 1
+	parent.stop_flopping()
 
 /datum/aquarium_behaviour/fish/before_removal()
 	. = ..()
@@ -194,6 +195,9 @@
 		parent.current_aquarium.dead_fish -= 1
 	else
 		parent.current_aquarium.alive_fish -= 1
+	//We do not stop processing properties here. We want fish to die outside of aquariums after first insert. We only stop processing in properties.death or destroy
+	if(!QDELETED(parent) && status != FISH_DEAD)
+		parent.start_flopping()
 
 /datum/aquarium_behaviour/fish/on_fluid_changed()
 	//In case we'll flop to bottom from this or go back to swimming.
@@ -252,6 +256,7 @@
 	else
 		var/atom/movable/AM = parent.parent
 		AM.visible_message(message)
+	parent.stop_flopping()
 	update_animation()
 
 /datum/aquarium_behaviour/fish/proc/ready_to_reproduce()
