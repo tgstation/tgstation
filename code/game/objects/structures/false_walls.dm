@@ -164,28 +164,11 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
-	var/active = null
-	var/last_event = 0
 
-/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
-	radiate()
-	return ..()
-
-/obj/structure/falsewall/uranium/attack_hand(mob/user)
-	radiate()
+/obj/structure/falsewall/uranium/Initialize()
 	. = ..()
+	AddComponent(/datum/component/radiation_ripple, list(COMSIG_PARENT_ATTACKBY, COMSIG_MOB_ATTACK_HAND), strength = 150)
 
-/obj/structure/falsewall/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			radiation_pulse(src, 150)
-			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
-				T.radiate()
-			last_event = world.time
-			active = null
-			return
-	return
 /*
  * Other misc falsewall types
  */

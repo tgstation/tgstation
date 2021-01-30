@@ -251,37 +251,10 @@
 	var/last_event = 0
 	var/active = null
 
-/turf/open/floor/mineral/uranium/Entered(atom/movable/AM)
-	.=..()
-	if(!.)
-		if(ismob(AM))
-			radiate()
+/turf/open/floor/mineral/uranium/Initialize()
+	. = ..()
+	AddComponent(/datum/component/radiation_ripple, list(COMSIG_ATOM_ENTERED, COMSIG_PARENT_ATTACKBY, COMSIG_MOB_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), strength = 10)
 
-/turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, params)
-	.=..()
-	if(!.)
-		radiate()
-
-/turf/open/floor/mineral/uranium/attack_hand(mob/user)
-	.=..()
-	if(!.)
-		radiate()
-
-/turf/open/floor/mineral/uranium/attack_paw(mob/user)
-	.=..()
-	if(!.)
-		radiate()
-
-/turf/open/floor/mineral/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = TRUE
-			radiation_pulse(src, 10)
-			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
-				T.radiate()
-			last_event = world.time
-			active = FALSE
-			return
 
 // ALIEN ALLOY
 /turf/open/floor/mineral/abductor

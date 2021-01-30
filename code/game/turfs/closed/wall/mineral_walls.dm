@@ -80,29 +80,9 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
 
-/turf/closed/wall/mineral/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			radiation_pulse(src, 40)
-			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
-				T.radiate()
-			last_event = world.time
-			active = null
-			return
-	return
-
-/turf/closed/wall/mineral/uranium/attack_hand(mob/user)
-	radiate()
+/turf/closed/wall/mineral/uranium/Initialize()
 	. = ..()
-
-/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
-	radiate()
-	..()
-
-/turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
-	radiate()
-	..()
+	AddComponent(/datum/component/radiation_ripple, list(COMSIG_MOB_ATTACK_HAND, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED), strength = 40)
 
 /turf/closed/wall/mineral/uranium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
