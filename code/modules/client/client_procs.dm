@@ -1020,11 +1020,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 ///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
 /client/proc/award_heart(heart_reason)
-	to_chat(src, "<span class='nicegreen'>Someone awarded you a heart![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
+	to_chat(src, "<span class='nicegreen'>Someone awarded you a plushie for OOC![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
 	if(!src)
 		return
 	prefs.hearted_until = world.realtime + (24 HOURS)
-	prefs.hearted = TRUE
+	prefs.hearted = pick("pbee", "pop", "pslime", "plizard", "psnake")
 	if(!src)
 		return
 	prefs.save_preferences()
