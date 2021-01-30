@@ -409,11 +409,14 @@
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
+	var/turf/our_turf = get_turf(src)
 	if(safety)
 		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
 	timing = !timing
 	if(timing)
+		message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [ADMIN_LOOKUPFLW(usr)].")
+		log_game("\The [src] was armed at [loc_name(our_turf)] by [key_name(usr)].")
 		previous_level = get_security_level()
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
@@ -421,6 +424,8 @@
 		countdown.start()
 		set_security_level("delta")
 	else
+		message_admins("\The [src] at [ADMIN_VERBOSEJMP(our_turf)] was disarmed by [ADMIN_LOOKUPFLW(usr)].")
+		log_game("\The [src] at [loc_name(our_turf)] was disarmed by [key_name(usr)].")
 		detonation_timer = null
 		set_security_level(previous_level)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)

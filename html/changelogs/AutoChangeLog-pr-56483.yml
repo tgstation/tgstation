@@ -1,0 +1,4 @@
+author: "Valtosin"
+delete-after: True
+changes: 
+  - bugfix: "fixes stacks like wet leather not being dryable in a drying rack"
