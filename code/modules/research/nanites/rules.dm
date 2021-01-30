@@ -131,6 +131,10 @@
 			damage_amt = program.host_mob.getOxyLoss()
 		if(CLONE)
 			damage_amt = program.host_mob.getCloneLoss()
+		if(STAMINA)
+			damage_amt = program.host_mob.getStaminaLoss()
+		if(BRAIN)
+			damage_amt = program.host_mob.getOrganLoss(ORGAN_SLOT_BRAIN)
 
 	if(above)
 		if(damage_amt >= threshold)
