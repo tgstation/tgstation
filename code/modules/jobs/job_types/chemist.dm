@@ -36,7 +36,6 @@
 	backpack = /obj/item/storage/backpack/chemistry
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
-	backpack_contents = list(/obj/item/book/manual/wiki/chemistry/fermichem_update)
 	box = /obj/item/storage/box/survival/medical
 
 	chameleon_extras = /obj/item/gun/syringe
