@@ -1,0 +1,5 @@
+author: "dermondarble"
+delete-after: True
+changes: 
+  - spellcheck: "fixes misspellings of 'permanently'"
+  - spellcheck: "fixes grammar with bandaging wounds on yourself"

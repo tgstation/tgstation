@@ -12,23 +12,28 @@
 	key_third_person = "buzzes"
 	message = "buzzes."
 	message_param = "buzzes at %t."
+	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/buzz-sigh.ogg'
+
 
 /datum/emote/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
+	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/buzz-two.ogg'
 
 /datum/emote/silicon/chime
 	key = "chime"
 	key_third_person = "chimes"
 	message = "chimes."
+	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/chime.ogg'
 
 /datum/emote/silicon/honk
 	key = "honk"
 	key_third_person = "honks"
 	message = "honks."
+	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 	sound = 'sound/items/bikehorn.ogg'
 
@@ -37,14 +42,17 @@
 	key_third_person = "pings"
 	message = "pings."
 	message_param = "pings at %t."
+	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/ping.ogg'
 
 /datum/emote/silicon/sad
 	key = "sad"
 	message = "plays a sad trombone..."
+	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/misc/sadtrombone.ogg'
 
 /datum/emote/silicon/warn
 	key = "warn"
 	message = "blares an alarm!"
+	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/warning-buzzer.ogg'
