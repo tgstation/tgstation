@@ -169,7 +169,6 @@
 	key_third_person = "glares"
 	message = "glares."
 	message_param = "glares at %t."
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/grin
 	key = "grin"
@@ -181,6 +180,7 @@
 	key_third_person = "groans"
 	message = "groans!"
 	message_mime = "appears to groan!"
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/grimace
 	key = "grimace"
@@ -198,7 +198,6 @@
 	key_third_person = "kisses"
 	message = "blows a kiss."
 	message_param = "blows a kiss to %t."
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/laugh
 	key = "laugh"
@@ -259,7 +258,6 @@
 	key = "pout"
 	key_third_person = "pouts"
 	message = "pouts."
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/scream
 	key = "scream"
@@ -278,19 +276,16 @@
 	key = "scowl"
 	key_third_person = "scowls"
 	message = "scowls."
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/shake
 	key = "shake"
 	key_third_person = "shakes"
 	message = "shakes their head."
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/shiver
 	key = "shiver"
 	key_third_person = "shiver"
 	message = "shivers."
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/sigh
 	key = "sigh"
@@ -360,6 +355,7 @@
 	if(. && isliving(user))
 		var/mob/living/L = user
 		L.Paralyze(200)
+		L.remove_status_effect(STATUS_EFFECT_SURRENDER)
 
 /datum/emote/living/sway
 	key = "sway"
@@ -390,6 +386,7 @@
 	key_third_person = "whimpers"
 	message = "whimpers."
 	message_mime = "appears hurt."
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/wsmile
 	key = "wsmile"
@@ -493,13 +490,16 @@
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/inhale
 	key = "inhale"
 	key_third_person = "inhales"
 	message = "breathes in."
+	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/exhale
 	key = "exhale"
 	key_third_person = "exhales"
 	message = "breathes out."
+	emote_type = EMOTE_AUDIBLE

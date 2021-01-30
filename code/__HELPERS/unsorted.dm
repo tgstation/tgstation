@@ -1436,15 +1436,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
 
-
-/proc/num2sign(numeric)
-	if(numeric > 0)
-		return 1
-	else if(numeric < 0)
-		return -1
-	else
-		return 0
-
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE
 	return call(source, proctype)(arglist(arguments))
