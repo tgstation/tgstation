@@ -49,6 +49,11 @@
 	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
 
+/obj/item/clothing/neck/cloak/nt
+	name = "nanotrasen cloak"
+	desc = "Worn by select Central Command personnel. This cloak has a lush gold trim and is enough to make you green with envy."
+	icon_state = "ntcloak"
+
 /obj/item/clothing/suit/hooded/cloak/goliath
 	name = "goliath cloak"
 	icon_state = "goliath_cloak"

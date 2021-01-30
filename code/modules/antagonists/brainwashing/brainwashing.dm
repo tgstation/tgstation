@@ -71,6 +71,7 @@
 	brainwash(C, objectives)
 	var/obj_list = english_list(objectives)
 	message_admins("[key_name_admin(admin)] has brainwashed [key_name_admin(C)] with the following objectives: [obj_list].")
+	C.log_message("[key_name(C)] has been force-brainwashed with the objective '[objective]' by admin [key_name(admin)]", LOG_ATTACK)
 	log_admin("[key_name(admin)] has brainwashed [key_name(C)] with the following objectives: [obj_list].")
 
 /datum/objective/brainwashing
