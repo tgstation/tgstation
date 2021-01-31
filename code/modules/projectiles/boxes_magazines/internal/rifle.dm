@@ -29,4 +29,3 @@
 	max_ammo = 1
 	caliber = CALIBER_HARPOON
 	ammo_type = /obj/item/ammo_casing/caseless/harpoon
-	max_ammo = 1
