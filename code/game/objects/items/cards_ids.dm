@@ -387,6 +387,10 @@
 	var/assigned_icon_state = "assigned"
 	var/icon/cached_flat_icon
 
+/obj/item/card/id/advanced/Initialize(mapload)
+	. = ..()
+	update_label()
+
 /obj/item/card/id/advanced/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
 		cached_flat_icon = getFlatIcon(src)
@@ -399,11 +403,10 @@
 	. = ..()
 
 	cached_flat_icon = null
-	var/job = assignment ? ckey(GetJobName()) : null
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, "assigned")
-	if(job)
-		. += mutable_appearance(icon, "id[job]")
+
+	. += mutable_appearance(icon, SSid_access.title_to_trim_icon(assignment))
 
 /*
 Usage:
@@ -419,8 +422,6 @@ update_label()
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "card_silver"
 	inhand_icon_state = "silver_id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
 /obj/item/card/id/advanced/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
@@ -433,10 +434,8 @@ update_label()
 	desc = "A golden card which shows power and might."
 	icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
-/obj/item/card/id/advanced/syndicate
+/obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
 	sticky_access = list(ACCESS_SYNDICATE)
@@ -447,19 +446,19 @@ update_label()
 	/// The name var of the ID we've forged.
 	var/forged_card_name
 
-/obj/item/card/id/advanced/syndicate/Initialize()
+/obj/item/card/id/advanced/chameleon/Initialize()
 	. = ..()
 	var/datum/action/item_action/chameleon/change/id/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/card/id/advanced
 	chameleon_action.chameleon_name = "ID Card"
 	chameleon_action.initialize_disguises()
 
-/obj/item/card/id/advanced/syndicate/update_label()
+/obj/item/card/id/advanced/chameleon/update_label()
 	var/blank = !registered_name
 	name = "[blank ? forged_card_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 	update_icon()
 
-/obj/item/card/id/advanced/syndicate/afterattack(obj/item/O, mob/user, proximity)
+/obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
 	if(!proximity)
 		return
 	if(istype(O, /obj/item/card/id))
@@ -469,7 +468,7 @@ update_label()
 			if(user.mind.special_role || anyone)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
-/obj/item/card/id/advanced/syndicate/attack_self(mob/user)
+/obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
 		var/first_use = registered_name ? FALSE : TRUE
 		if(!(user.mind.special_role || anyone)) //Unless anyone is allowed, only syndies can use the card, to stop metagaming.
@@ -532,47 +531,17 @@ update_label()
 			return
 	return ..()
 
-/obj/item/card/id/advanced/syndicate/anyone
+/obj/item/card/id/advanced/chameleon/anyone
 	anyone = TRUE
 
-/obj/item/card/id/advanced/syndicate/nuke_leader
+/obj/item/card/id/advanced/chameleon/nuke_leader
 	name = "lead agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 	sticky_access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 
-/obj/item/card/id/advanced/syndicate_command
-	name = "syndicate ID card"
-	desc = "An ID straight from the Syndicate."
-	registered_name = "Syndicate"
-	assignment = "Syndicate Overlord"
-	icon_state = "card_black"
-	access = list(ACCESS_SYNDICATE)
-	sticky_access = list(ACCESS_SYNDICATE)
-	registered_age = null
-
-/obj/item/card/id/advanced/syndicate_command/crew_id
-	name = "syndicate ID card"
-	desc = "An ID straight from the Syndicate."
-	registered_name = "Syndicate"
-	assignment = "Syndicate Operative"
-	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	sticky_access = list(ACCESS_SYNDICATE)
-
-/obj/item/card/id/advanced/syndicate_command/captain_id
-	name = "syndicate captain ID card"
-	desc = "An ID straight from the Syndicate."
-	registered_name = "Syndicate"
-	assignment = "Syndicate Ship Captain"
-	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	sticky_access = list(ACCESS_SYNDICATE)
-
-/obj/item/card/id/advanced/captains_spare
+/obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
-	icon_state = "card_gold"
-	inhand_icon_state = "gold_id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Captain"
 	assignment = "Captain"
 	registered_age = null
@@ -581,7 +550,6 @@ update_label()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
 	. = ..()
-	update_label()
 
 /obj/item/card/id/advanced/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
@@ -594,6 +562,7 @@ update_label()
 	name = "\improper CentCom ID"
 	desc = "An ID straight from Central Command."
 	icon_state = "card_centcom"
+	assigned_icon_state = "assigned_centcom"
 	registered_name = "Central Command"
 	assignment = "Central Command"
 	registered_age = null
@@ -602,72 +571,100 @@ update_label()
 	access = get_all_centcom_access()
 	. = ..()
 
-/obj/item/card/id/advanced/ert
+/obj/item/card/id/advanced/centcom/ert
 	name = "\improper CentCom ID"
 	desc = "An ERT ID card."
-	icon_state = "card_centcom"
 	registered_age = null
 
-/obj/item/card/id/advanced/ert/Initialize()
+/obj/item/card/id/advanced/centcom/ert/Initialize()
 	. = ..()
 	access = get_all_accesses() - ACCESS_CHANGE_IDS
 
-/obj/item/card/id/advanced/ert/commander
+/obj/item/card/id/advanced/centcom/ert/commander
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
-/obj/item/card/id/advanced/ert/commander/Initialize()
+/obj/item/card/id/advanced/centcom/ert/commander/Initialize()
 	. = ..()
-	access |= get_ert_access("commander")
+	access += get_ert_access("commander")
 
-/obj/item/card/id/advanced/ert/security
+/obj/item/card/id/advanced/centcom/ert/security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 
-/obj/item/card/id/advanced/ert/security/Initialize()
+/obj/item/card/id/advanced/centcom/ert/security/Initialize()
 	. = ..()
-	access |= get_ert_access("sec")
+	access += get_ert_access("sec")
 
-/obj/item/card/id/advanced/ert/engineer
+/obj/item/card/id/advanced/centcom/ert/engineer
 	registered_name = "Engineering Response Officer"
 	assignment = "Engineering Response Officer"
 
-/obj/item/card/id/advanced/ert/engineer/Initialize()
+/obj/item/card/id/advanced/centcom/ert/engineer/Initialize()
 	. = ..()
-	access |= get_ert_access("eng")
+	access += get_ert_access("eng")
 
-/obj/item/card/id/advanced/ert/medical
+/obj/item/card/id/advanced/centcom/ert/medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 
-/obj/item/card/id/advanced/ert/medical/Initialize()
+/obj/item/card/id/advanced/centcom/ert/medical/Initialize()
 	. = ..()
 	access |= get_ert_access("med")
 
-/obj/item/card/id/advanced/ert/chaplain
+/obj/item/card/id/advanced/centcom/ert/chaplain
 	registered_name = "Religious Response Officer"
 	assignment = "Religious Response Officer"
 
-/obj/item/card/id/advanced/ert/chaplain/Initialize()
+/obj/item/card/id/advanced/centcom/ert/chaplain/Initialize()
 	. = ..()
 	access |= get_ert_access("sec")
 
-/obj/item/card/id/advanced/ert/janitor
+/obj/item/card/id/advanced/centcom/ert/janitor
 	registered_name = "Janitorial Response Officer"
 	assignment = "Janitorial Response Officer"
 
-/obj/item/card/id/advanced/ert/clown
+/obj/item/card/id/advanced/centcom/ert/clown
 	registered_name = "Entertainment Response Officer"
 	assignment = "Entertainment Response Officer"
 
-/obj/item/card/id/advanced/deathsquad
+/obj/item/card/id/advanced/black
+	icon_state = "card_black"
+	assigned_icon_state = "assigned_syndicate"
+
+/obj/item/card/id/advanced/black/deathsquad
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
-	icon_state = "card_black"
 	registered_name = "Death Commando"
 	assignment = "Death Commando"
 
-/obj/item/card/id/advanced/deathsquad/Initialize(mapload)
+/obj/item/card/id/advanced/black/syndicate_command
+	name = "syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Overlord"
+	icon_state = "card_black"
+	access = list(ACCESS_SYNDICATE)
+	sticky_access = list(ACCESS_SYNDICATE)
+	registered_age = null
+
+/obj/item/card/id/advanced/black/syndicate_command/crew_id
+	name = "syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Operative"
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	sticky_access = list(ACCESS_SYNDICATE)
+
+/obj/item/card/id/advanced/black/syndicate_command/captain_id
+	name = "syndicate captain ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Ship Captain"
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	sticky_access = list(ACCESS_SYNDICATE)
+
+/obj/item/card/id/advanced/black/deathsquad/Initialize(mapload)
 	. = ..()
 	access = get_all_accesses() + get_all_centcom_access()
 
@@ -675,6 +672,7 @@ update_label()
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
+	assignment = "assigned_centcom"
 	assignment = "Jannie"
 
 /obj/item/card/id/advanced/debug/Initialize()
