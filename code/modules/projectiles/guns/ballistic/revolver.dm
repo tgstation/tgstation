@@ -80,8 +80,8 @@
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
-	initial_caliber = "38"
-	alternative_caliber = "357"
+	initial_caliber = CALIBER_38
+	alternative_caliber = CALIBER_357
 	initial_fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
 	can_modify_ammo = TRUE

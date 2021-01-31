@@ -112,6 +112,11 @@
 /mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
 	if(!isliving(A))
 		return ..()
+
+	if(!Adjacent(A))
+		to_chat(src, "<span class='warning'>You are too far away to use your slam attack on [A]!</span>")
+		return
+
 	if(slam_cooldown + slam_cooldown_time > world.time)
 		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
 		return

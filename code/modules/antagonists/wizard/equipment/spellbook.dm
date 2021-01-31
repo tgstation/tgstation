@@ -32,34 +32,37 @@
 		S = new spell_type()
 	//Check if we got the spell already
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
-		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
-			if(aspell.spell_level >= aspell.level_max)
-				to_chat(user,  "<span class='warning'>This spell cannot be improved further!</span>")
-				return FALSE
-			else
-				aspell.name = initial(aspell.name)
-				aspell.spell_level++
-				aspell.charge_max = round(initial(aspell.charge_max) - aspell.spell_level * (initial(aspell.charge_max) - aspell.cooldown_min)/ aspell.level_max)
-				if(aspell.charge_max < aspell.charge_counter)
-					aspell.charge_counter = aspell.charge_max
-				switch(aspell.spell_level)
-					if(1)
-						to_chat(user, "<span class='notice'>You have improved [aspell.name] into Efficient [aspell.name].</span>")
-						aspell.name = "Efficient [aspell.name]"
-					if(2)
-						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Quickened [aspell.name].</span>")
-						aspell.name = "Quickened [aspell.name]"
-					if(3)
-						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Free [aspell.name].</span>")
-						aspell.name = "Free [aspell.name]"
-					if(4)
-						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
-						aspell.name = "Instant [aspell.name]"
-				if(aspell.spell_level >= aspell.level_max)
-					to_chat(user, "<span class='warning'>This spell cannot be strengthened any further!</span>")
-				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
-				return TRUE
+		if(initial(S.name) != initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
+			continue
+		if(aspell.spell_level >= aspell.level_max)
+			to_chat(user,  "<span class='warning'>This spell cannot be improved further!</span>")
+			return FALSE
+
+		aspell.name = initial(aspell.name)
+		aspell.spell_level++
+		aspell.charge_max = round(LERP(initial(aspell.charge_max), aspell.cooldown_min, aspell.spell_level / aspell.level_max))
+		if(aspell.charge_max < aspell.charge_counter)
+			aspell.charge_counter = aspell.charge_max
+		switch(aspell.spell_level)
+			if(1)
+				to_chat(user, "<span class='notice'>You have improved [aspell.name] into Efficient [aspell.name].</span>")
+				aspell.name = "Efficient [aspell.name]"
+			if(2)
+				to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Quickened [aspell.name].</span>")
+				aspell.name = "Quickened [aspell.name]"
+			if(3)
+				to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Free [aspell.name].</span>")
+				aspell.name = "Free [aspell.name]"
+			if(4)
+				to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
+				aspell.name = "Instant [aspell.name]"
+		if(aspell.spell_level >= aspell.level_max)
+			to_chat(user, "<span class='warning'>This spell cannot be strengthened any further!</span>")
+		log_spellbook("[key_name(user)] improved their knowledge of [src] to level [aspell.spell_level] for [cost] points")
+		SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
+		return TRUE
 	//No same spell found - just learn it
+	log_spellbook("[key_name(user)] learned [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
@@ -87,6 +90,7 @@
 		if(initial(S.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
 			user.mind.spell_list.Remove(aspell)
+			log_spellbook("[key_name(user)] refunded [src] for [cost * (spell_levels+1)] points")
 			qdel(S)
 			return cost * (spell_levels+1)
 	return -1
@@ -296,6 +300,7 @@
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	new item_path(get_turf(user))
+	log_spellbook("[key_name(user)] bought [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	return TRUE
 
@@ -421,7 +426,7 @@
 	name = "Bottle of Tickles"
 	desc = "A bottle of magically infused fun, the smell of which will \
 		attract adorable extradimensional beings when broken. These beings \
-		are similar to slaughter demons, but they do not permamently kill \
+		are similar to slaughter demons, but they do not permanently kill \
 		their victims, instead putting them in an extradimensional hugspace, \
 		to be released on the demon's death. Chaotic, but not ultimately \
 		damaging. The crew's reaction to the other hand could be very \
@@ -509,6 +514,7 @@
 		return TRUE
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
+	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
@@ -528,6 +534,7 @@
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(SUMMON_GUNS, user, 10)
 	active = TRUE
@@ -547,6 +554,7 @@
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	rightandwrong(SUMMON_MAGIC, user, 10)
 	active = TRUE
@@ -569,6 +577,7 @@
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
 	times++
@@ -588,6 +597,7 @@
 	cost = 4
 
 /datum/spellbook_entry/summon/curse_of_madness/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
+	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	active = TRUE
 	var/message = stripped_input(user, "Whisper a secret truth to drive your victims to madness.", "Whispers of Madness")
