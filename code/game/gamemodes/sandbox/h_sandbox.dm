@@ -205,7 +205,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			// All access ID
 			//
 			if("hsbaaid")
-				var/obj/item/card/id/gold/ID = new(usr.loc)
+				var/obj/item/card/id/advanced/gold/ID = new(usr.loc)
 				ID.registered_name = usr.real_name
 				ID.assignment = "Sandbox"
 				ID.access = get_all_accesses()

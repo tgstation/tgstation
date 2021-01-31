@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(id_access)
 	var/list/all_hud_jobs = get_all_job_icons() + get_all_prisoner_jobs()
 
 	for(var/title in all_hud_jobs)
-		trims_by_title[title] = "trim_[ckey(job)]"
+		trims_by_title[title] = "trim_[ckey(title)]"
 
 	var/list/all_centcom_jobs = get_all_centcom_jobs()
 

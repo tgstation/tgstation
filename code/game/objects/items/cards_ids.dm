@@ -295,6 +295,90 @@
 			powergaming.update_label()
 			powergaming.update_icon()
 
+/obj/item/card/id/proc/update_label()
+	var/blank = !registered_name
+	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+
+/obj/item/card/id/away
+	name = "\proper a perfectly generic identification card"
+	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	access = list(ACCESS_AWAY_GENERAL)
+	icon_state = "retro"
+	registered_age = null
+
+/obj/item/card/id/away/hotel
+	name = "Staff ID"
+	desc = "A staff ID used to access the hotel's doors."
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
+
+/obj/item/card/id/away/hotel/securty
+	name = "Officer ID"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
+
+/obj/item/card/id/away/old
+	name = "\proper a perfectly generic identification card"
+	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+
+/obj/item/card/id/away/old/sec
+	name = "Charlie Station Security Officer's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
+	assignment = "Charlie Station Security Officer"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
+
+/obj/item/card/id/away/old/sci
+	name = "Charlie Station Scientist's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
+	assignment = "Charlie Station Scientist"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/obj/item/card/id/away/old/eng
+	name = "Charlie Station Engineer's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
+	assignment = "Charlie Station Engineer"
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
+
+/obj/item/card/id/away/old/apc
+	name = "APC Access ID"
+	desc = "A special ID card that allows access to APC terminals."
+	access = list(ACCESS_ENGINE_EQUIP)
+
+/obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
+	name = "bunker access ID"
+
+/obj/item/card/id/departmental_budget
+	name = "departmental card (FUCK)"
+	desc = "Provides access to the departmental budget."
+	icon_state = "budgetcard"
+	var/department_ID = ACCOUNT_CIV
+	var/department_name = ACCOUNT_CIV_NAME
+	registered_age = null
+
+/obj/item/card/id/departmental_budget/Initialize()
+	. = ..()
+	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
+	if(B)
+		registered_account = B
+		if(!B.bank_cards.Find(src))
+			B.bank_cards += src
+		name = "departmental card ([department_name])"
+		desc = "Provides access to the [department_name]."
+	SSeconomy.dep_cards += src
+
+/obj/item/card/id/departmental_budget/Destroy()
+	SSeconomy.dep_cards -= src
+	return ..()
+
+/obj/item/card/id/departmental_budget/update_label()
+	return
+
+/obj/item/card/id/departmental_budget/car
+	department_ID = ACCOUNT_CAR
+	department_name = ACCOUNT_CAR_NAME
+	icon_state = "car_budget" //saving up for a new tesla
+
+/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
+	registered_account.bank_card_talk("<span class='warning'>Withdrawing is not compatible with this card design.</span>", TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
+
 /obj/item/card/id/advanced
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."
@@ -326,9 +410,8 @@ Usage:
 update_label()
 	Sets the id name to whatever registered_name and assignment is
 */
-/obj/item/card/id/advanced/proc/update_label()
-	var/blank = !registered_name
-	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+/obj/item/card/id/advanced/update_label()
+	. = ..()
 	update_icon()
 
 /obj/item/card/id/advanced/silver
@@ -448,88 +531,6 @@ update_label()
 			set_new_account(user)
 			return
 	return ..()
-
-/obj/item/card/id/away
-	name = "\proper a perfectly generic identification card"
-	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(ACCESS_AWAY_GENERAL)
-	icon_state = "retro"
-	registered_age = null
-
-/obj/item/card/id/away/hotel
-	name = "Staff ID"
-	desc = "A staff ID used to access the hotel's doors."
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
-
-/obj/item/card/id/away/hotel/securty
-	name = "Officer ID"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
-
-/obj/item/card/id/away/old
-	name = "\proper a perfectly generic identification card"
-	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-
-/obj/item/card/id/away/old/sec
-	name = "Charlie Station Security Officer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	assignment = "Charlie Station Security Officer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
-
-/obj/item/card/id/away/old/sci
-	name = "Charlie Station Scientist's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	assignment = "Charlie Station Scientist"
-	access = list(ACCESS_AWAY_GENERAL)
-
-/obj/item/card/id/away/old/eng
-	name = "Charlie Station Engineer's ID card"
-	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	assignment = "Charlie Station Engineer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
-
-/obj/item/card/id/away/old/apc
-	name = "APC Access ID"
-	desc = "A special ID card that allows access to APC terminals."
-	access = list(ACCESS_ENGINE_EQUIP)
-
-/obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
-	name = "bunker access ID"
-
-/obj/item/card/id/departmental_budget
-	name = "departmental card (FUCK)"
-	desc = "Provides access to the departmental budget."
-	icon_state = "budgetcard"
-	var/department_ID = ACCOUNT_CIV
-	var/department_name = ACCOUNT_CIV_NAME
-	registered_age = null
-
-/obj/item/card/id/departmental_budget/Initialize()
-	. = ..()
-	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
-	if(B)
-		registered_account = B
-		if(!B.bank_cards.Find(src))
-			B.bank_cards += src
-		name = "departmental card ([department_name])"
-		desc = "Provides access to the [department_name]."
-	SSeconomy.dep_cards += src
-
-/obj/item/card/id/departmental_budget/Destroy()
-	SSeconomy.dep_cards -= src
-	return ..()
-
-/obj/item/card/id/departmental_budget/update_label()
-	return
-
-/obj/item/card/id/departmental_budget/car
-	department_ID = ACCOUNT_CAR
-	department_name = ACCOUNT_CAR_NAME
-	icon_state = "car_budget" //saving up for a new tesla
-
-/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
-	registered_account.bank_card_talk("<span class='warning'>Withdrawing is not compatible with this card design.</span>", TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
-
-/obj/item/card/id/advanced
 
 /obj/item/card/id/advanced/syndicate/anyone
 	anyone = TRUE

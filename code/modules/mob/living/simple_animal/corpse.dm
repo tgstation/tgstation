@@ -25,7 +25,7 @@
 	mask = /obj/item/clothing/mask/gas
 	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/syndicate
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
@@ -44,7 +44,7 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/syndicate
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
@@ -63,7 +63,7 @@
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen/harness
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/syndicate
 
 
 /obj/effect/mob_spawn/human/clown/corpse
@@ -182,7 +182,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier
 	name = "Nanotrasen Private Security Officer"
@@ -202,7 +202,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /obj/effect/mob_spawn/human/corpse/cat_butcher
 	name = "The Cat Surgeon"
@@ -221,7 +221,7 @@
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
 	ears = /obj/item/radio/headset
 	back = /obj/item/storage/backpack/satchel/med
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 	glasses = /obj/item/clothing/glasses/hud/health
 
 /obj/effect/mob_spawn/human/corpse/bee_terrorist
@@ -236,6 +236,6 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 	ears = /obj/item/radio/headset
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/paper/fluff/bee_objectives
 	mask = /obj/item/clothing/mask/animal/rat/bee

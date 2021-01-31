@@ -38,7 +38,7 @@
 	name = "Research Director"
 	jobtype = /datum/job/rd
 
-	id = /obj/item/card/id/silver
+	id = /obj/item/card/id/advanced/silver
 	belt = /obj/item/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
 	uniform = /obj/item/clothing/under/rank/rnd/research_director

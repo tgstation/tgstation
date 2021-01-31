@@ -32,7 +32,7 @@
 	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
 	belt = /obj/item/storage/belt/medical/paramedic
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/pda/medical
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(/obj/item/roller=1)

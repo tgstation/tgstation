@@ -19,7 +19,7 @@
 	belt = /obj/item/gun/energy/pulse/pistol/m1911
 	r_pocket = /obj/item/lighter
 	back = /obj/item/storage/backpack/satchel/leather
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
 
 /datum/outfit/centcom/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -131,7 +131,7 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
 	ears = /obj/item/radio/headset/syndicate
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/pirate/space/captain
 	head = /obj/item/clothing/head/helmet/space/pirate
@@ -161,7 +161,7 @@
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	l_pocket = /obj/item/food/grown/banana
 	r_pocket = /obj/item/bikehorn
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 	l_hand = /obj/item/fireaxe
 
 /datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -206,7 +206,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/syndicate
 	belt = /obj/item/pda/heads
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -232,7 +232,7 @@
 	pda.ownjob = "Reaper"
 	pda.update_label()
 
-	var/obj/item/card/id/syndicate/W = H.wear_id
+	var/obj/item/card/id/advanced/syndicate/W = H.wear_id
 	W.access = get_all_accesses()
 	W.assignment = "Reaper"
 	W.registered_name = H.real_name
@@ -253,7 +253,7 @@
 	r_pocket = /obj/item/lighter
 	l_pocket = /obj/item/ammo_box/a357
 	back = /obj/item/storage/backpack/satchel/leather
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
 
 /datum/outfit/centcom/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -329,7 +329,7 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/ballistic/revolver/mateba
 
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
 
 /datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -353,7 +353,7 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/gun/ballistic/automatic/tommygun
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -389,7 +389,7 @@
 	suit_store = /obj/item/tank/internals/emergency_oxygen/double
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	l_hand = /obj/item/gun/energy/pulse/loyalpin
-	id = /obj/item/card/id/ert/deathsquad
+	id = /obj/item/card/id/advanced/deathsquad
 	ears = /obj/item/radio/headset/headset_cent/alt
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
@@ -439,7 +439,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	belt = /obj/item/storage/belt/utility/chief/full
 	shoes = /obj/item/clothing/shoes/magboots/advance
-	id = /obj/item/card/id/debug
+	id = /obj/item/card/id/advanced/debug
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/storage/backpack/holding
 	box = /obj/item/storage/box/debugtools
@@ -468,7 +468,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	belt = /obj/item/storage/belt/utility/chief/full
 	shoes = /obj/item/clothing/shoes/magboots/advance
-	id = /obj/item/card/id/debug
+	id = /obj/item/card/id/advanced/debug
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/storage/backpack/holding
 	box = /obj/item/storage/box/debugtools

@@ -24,7 +24,7 @@
 /datum/outfit/centcom/ert/commander
 	name = "ERT Commander"
 
-	id = /obj/item/card/id/ert
+	id = /obj/item/card/id/advanced/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -56,7 +56,7 @@
 /datum/outfit/centcom/ert/security
 	name = "ERT Security"
 
-	id = /obj/item/card/id/ert/security
+	id = /obj/item/card/id/advanced/ert/security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -91,7 +91,7 @@
 /datum/outfit/centcom/ert/medic
 	name = "ERT Medic"
 
-	id = /obj/item/card/id/ert/medical
+	id = /obj/item/card/id/advanced/ert/medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses = /obj/item/clothing/glasses/hud/health
@@ -126,7 +126,7 @@
 /datum/outfit/centcom/ert/engineer
 	name = "ERT Engineer"
 
-	id = /obj/item/card/id/ert/engineer
+	id = /obj/item/card/id/advanced/ert/engineer
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses =  /obj/item/clothing/glasses/meson/engine
@@ -172,7 +172,7 @@
 	back = /obj/item/storage/backpack/satchel
 	r_pocket = /obj/item/pda/heads
 	l_hand = /obj/item/clipboard
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
 	backpack_contents = list(/obj/item/stamp/centcom=1)
 
 /datum/outfit/centcom/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -225,7 +225,7 @@
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor // Chap role always gets this suit
 	suit_store = /obj/item/gun/energy/e_gun
-	id = /obj/item/card/id/ert/chaplain
+	id = /obj/item/card/id/advanced/ert/chaplain
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/storage/backpack/cultpack
 	belt = /obj/item/storage/belt/soulstone
@@ -253,7 +253,7 @@
 /datum/outfit/centcom/ert/janitor
 	name = "ERT Janitor"
 
-	id = /obj/item/card/id/ert/janitor
+	id = /obj/item/card/id/advanced/ert/janitor
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
 	glasses = /obj/item/clothing/glasses/night
 	back = /obj/item/storage/backpack/ert/janitor
@@ -293,7 +293,7 @@
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/clown
 	mask = /obj/item/clothing/mask/gas/clown_hat
-	id = /obj/item/card/id/ert/clown
+	id = /obj/item/card/id/advanced/ert/clown
 	glasses = /obj/item/clothing/glasses/godeye
 	back = /obj/item/storage/backpack/ert/clown
 	belt = /obj/item/storage/belt/champion
@@ -330,7 +330,7 @@
 	back = /obj/item/storage/backpack/satchel
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
-	id = /obj/item/card/id/centcom
+	id = /obj/item/card/id/advanced/centcom
 	backpack_contents = list(/obj/item/storage/box/survival = 1)
 
 /datum/outfit/centcom/centcom_intern/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
