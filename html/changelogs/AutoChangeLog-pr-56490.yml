@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - rscadd: "Extrovert and Introvert quirks, they add mood bonuses to the bar and library, respectively."
