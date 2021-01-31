@@ -78,7 +78,7 @@
 /area/shuttle/escape)
 "o" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/snacks/store/cake/birthday,
+/obj/item/food/cake/birthday,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "p" = (
@@ -143,7 +143,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/cakeslice/birthday,
+/obj/item/food/cakeslice/birthday,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "x" = (

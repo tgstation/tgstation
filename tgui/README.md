@@ -37,68 +37,67 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.13+](https://nodejs.org/en/download/)
-- [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
-- [MSys2](https://www.msys2.org/) (optional)
+- [Node v12.18.3+](https://nodejs.org/en/download/)
+- [Yarn v1.22.4+](https://yarnpkg.com/getting-started/install) (optional)
+- [Git Bash](https://git-scm.com/downloads)
+  or [MSys2](https://www.msys2.org/) (optional)
 
-> MSys2 closely replicates a unix-like environment which is necessary for
-> the `bin/tgui` script to run. It comes with a robust "mintty" terminal
-> emulator which is better than any standard Windows shell, it supports
-> "git" out of the box (almost like Git for Windows, but better), has
-> a "pacman" package manager, and you can install a text editor like "vim"
-> for a full boomer experience.
+**DO NOT install Chocolatey if Node installer asks you to!**
 
 ## Usage
 
-**For MSys2, Git Bash, WSL, Linux or macOS users:**
+**For Git Bash, MSys2, WSL, Linux or macOS users:**
 
-First and foremost, change your directory to `tgui`.
+Change your directory to `tgui`.
 
-Run `bin/tgui --install-git-hooks` (optional) to install merge drivers
-which will assist you in conflict resolution when rebasing your branches.
+Run `bin/tgui --install-git-hooks` to install merge drivers which will
+assist you in conflict resolution when rebasing your branches. Only has
+to be done once.
 
-Run one of the following:
+Run `bin/tgui` with any of the options listed below.
 
-- `bin/tgui` - build the project in production mode.
-- `bin/tgui --dev` - launch a development server.
+**For Windows CMD or PowerShell users:**
+
+If you haven't opened the console already, you can do that by holding
+Shift and right clicking on the `tgui` folder, then pressing
+either `Open command window here` or `Open PowerShell window here`.
+
+Run `.\bin\tgui.bat` with any of the options listed below.
+
+> If using PowerShell, you will receive errors if trying to run
+> `.\bin\tgui.ps1`, because default Windows policy does not allow direct
+> execution of PS1 scripts. Run `.\bin\tgui.bat` instead.
+
+**Available commands:**
+
+- `bin/tgui` - Build the project in production mode.
+- `bin/tgui --dev` - Launch a development server.
   - tgui development server provides you with incremental compilation,
   hot module replacement and logging facilities in all running instances
   of tgui. In short, this means that you will instantly see changes in the
   game as you code it. Very useful, highly recommended.
   - In order to use it, you should start the game server first, connect to it
   and wait until the world has been properly loaded and you are no longer
-  in the lobby. Start tgui dev server. You'll know that it's hooked correctly
-  if data gets dumped to the log when tgui windows are opened.
-- `bin/tgui --dev --reload` - reload byond cache once.
-- `bin/tgui --dev --debug` - run server with debug logging enabled.
-- `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
+  in the lobby. Start tgui dev server, and once it has finished building,
+  press F5 on any tgui window. You'll know that it's hooked correctly if
+  you see a green bug icon in titlebar and data gets dumped to the console.
+- `bin/tgui --dev --reload` - Reload byond cache once.
+- `bin/tgui --dev --debug` - Run server with debug logging enabled.
+- `bin/tgui --dev --no-hot` - Disable hot module replacement (helps when
 doing development on IE8).
-- `bin/tgui --lint` - show problems with the code.
-- `bin/tgui --lint --fix` - auto-fix problems with the code.
-- `bin/tgui --analyze` - run a bundle analyzer.
-- `bin/tgui --clean` - clean up project repo.
-- `bin/tgui [webpack options]` - build the project with custom webpack
+- `bin/tgui --lint` - Show problems with the code.
+- `bin/tgui --fix` - Auto-fix problems with the code.
+- `bin/tgui --analyze` - Run a bundle analyzer.
+- `bin/tgui --clean` - Clean up project repo.
+- `bin/tgui [webpack options]` - Build the project with custom webpack
 options.
 
-**For everyone else:**
+**For virgins:**
 
-If you haven't opened the console already, you can do that by holding
-Shift and right clicking on the `tgui` folder, then pressing
-either `Open command window here` or `Open PowerShell window here`.
+You can double-click these batch files to achieve the same thing:
 
-Run `yarn install` to install npm dependencies, then one of the following:
-
-- `yarn run build` - build the project in production mode.
-- `yarn run watch` - launch a development server.
-- `yarn run lint` - show problems with the code.
-- `yarn run lint --fix` - auto-fix problems with the code.
-- `yarn run analyze` - run a bundle analyzer.
-
-We also got some batch files in store, for those who don't like fiddling
-with the console:
-
-- `bin/tgui-build.bat` - build the project in production mode.
-- `bin/tgui-dev-server.bat` - launch a development server.
+- `bin\tgui.bat` - Build the project in production mode.
+- `bin\tgui-dev-server.bat` - Launch a development server.
 
 > Remember to always run a full build before submitting a PR. It creates
 > a compressed javascript bundle which is then referenced from DM code.
@@ -107,21 +106,36 @@ with the console:
 
 ## Troubleshooting
 
+**Development server is crashing**
+
+Make sure path to your working directory does not contain spaces or special
+unicode characters. If so, move codebase to a location which does not contain
+spaces or unicode characters.
+
+This is a known issue with Yarn Berry, and fix is going to happen someday.
+
 **Development server doesn't find my BYOND cache!**
 
 This happens if your Documents folder in Windows has a custom location, for
-example in `E:\Libraries\Documents`. Development server has no knowledge
-of these non-standard locations, therefore you have to run the dev server
-with an additional environmental variable, with a full path to BYOND cache.
+example in `E:\Libraries\Documents`. Development server tries its best to find
+this non-standard location (searches for a Windows Registry key), but it can
+fail. You have to run the dev server with an additional environmental
+variable, with a full path to BYOND cache.
 
 ```
-export BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
-bin/tgui --dev
+BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
 ```
 
-Note that in Windows, you have to go through Advanced System Settings,
-System Properties and then open Environment Variables window to do the
-same thing. You may need to reboot after this.
+**Webpack errors out with some cryptic messages!**
+
+> Example: `No template for dependency: PureExpressionDependency`
+
+Webpack stores its cache on disk since tgui 4.3, and it is very sensitive
+to build configuration. So if you update webpack, or share the same cache
+directory between development and production build, it will start
+hallucinating.
+
+To fix this kind of problem, run `bin/tgui --clean` and try again.
 
 ## Developer Tools
 
@@ -134,11 +148,11 @@ logs and time spent on rendering. Use this information to optimize your
 code, and try to keep re-renders below 16ms.
 
 **Kitchen Sink.**
-Press `Ctrl+Alt+=` to open the KitchenSink interface. This interface is a
+Press `F12` to open the KitchenSink interface. This interface is a
 playground to test various tgui components.
 
 **Layout Debugger.**
-Press `Ctrl+Alt+-` to toggle the *layout debugger*. It will show outlines of
+Press `F11` to toggle the *layout debugger*. It will show outlines of
 all tgui elements, which makes it easy to understand how everything comes
 together, and can reveal certain layout bugs which are not normally visible.
 

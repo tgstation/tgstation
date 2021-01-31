@@ -1,8 +1,9 @@
 /obj/item/forbidden_book
 	name = "Codex Cicatrix"
-	desc = "Book describing the secrets of the veil."
+	desc = "This book describes the secrets of the veil between worlds."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
+	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
 	///Last person that touched this
 	var/mob/living/last_user
@@ -39,8 +40,8 @@
 ///Gives you a charge and destroys a corresponding influence
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
-	to_chat(target, "<span class='danger'>You start drawing power from influence...</span>")
-	if(do_after(user,10 SECONDS,FALSE,RS))
+	to_chat(user, "<span class='danger'>You start drawing power from influence...</span>")
+	if(do_after(user, 10 SECONDS, RS))
 		qdel(RS)
 		charge += 1
 
@@ -49,7 +50,7 @@
 
 	for(var/turf/T in range(1,target))
 		if(is_type_in_typecache(T, blacklisted_turfs))
-			to_chat(target, "<span class='warning'>The terrain doesn't support runes!</span>")
+			to_chat(user, "<span class='warning'>The terrain doesn't support runes!</span>")
 			return
 	var/A = get_turf(target)
 	to_chat(user, "<span class='danger'>You start drawing a rune...</span>")
@@ -65,16 +66,15 @@
 	if(do_after(user,2 SECONDS,user))
 		qdel(target)
 
-
-/obj/item/forbidden_book/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/item/forbidden_book/ui_interact(mob/user, datum/tgui/ui = null)
 	if(!IS_HERETIC(user))
 		return FALSE
 	last_user = user
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		icon_state = "book_open"
-		flick("book_opening",src)
-		ui = new(user, src, ui_key, "ForbiddenLore", name, 500, 900, master_ui, state)
+		flick("book_opening", src)
+		ui = new(user, src, "ForbiddenLore", name)
 		ui.open()
 
 /obj/item/forbidden_book/ui_data(mob/user)
@@ -131,7 +131,8 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					charge -= text2num(params["cost"])
+					log_codex_ciatrix("[key_name(last_user)] gained knowledge of [EK]")
+					charge -= initial(EK.cost)
 					return TRUE
 
 	update_icon() // Not applicable to all objects.

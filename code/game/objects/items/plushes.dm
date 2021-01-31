@@ -3,7 +3,8 @@
 	desc = "This is the special coder plush, do not steal."
 	icon = 'icons/obj/plushes.dmi'
 	icon_state = "debug"
-	attack_verb = list("thumped", "whomped", "bumped")
+	attack_verb_continuous = list("thumps", "whomps", "bumps")
+	attack_verb_simple = list("thump", "whomp", "bump")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
@@ -36,6 +37,7 @@
 /obj/item/toy/plush/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -110,7 +112,7 @@
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
-			grenade.preprime(user, msg = FALSE, volume = 10)
+			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
@@ -132,7 +134,7 @@
 						C.drunkenness = min(C.drunkenness + 20, 50)
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
-				if(current_location && current_area && current_area.noteleport)
+				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
 					to_chat(user, "<span class='notice'>There is no escape. No recall or intervention can work in this place.</span>")
 				else
 					to_chat(user, "<span class='notice'>There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile.</span>")
@@ -382,17 +384,19 @@
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon_state = "carpplush"
 	inhand_icon_state = "carp_plushie"
-	attack_verb = list("bitten", "eaten", "fin slapped")
+	attack_verb_continuous = list("bites", "eats", "fin slaps")
+	attack_verb_simple = list("bite", "eat", "fin slap")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
-	attack_verb = list("rent")
+	attack_verb_continuous = list("rents")
+	attack_verb_simple = list("rent")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
-/obj/item/toy/plush/plushvar
+/obj/item/toy/plush/ratplush
 	name = "\improper Ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
@@ -400,7 +404,7 @@
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE	//he's a boy, right?
 
-/obj/item/toy/plush/plushvar/Moved()
+/obj/item/toy/plush/ratplush/Moved()
 	. = ..()
 	if(clash_target)
 		return
@@ -408,7 +412,7 @@
 	if(P && istype(P.loc, /turf/open) && !P.clashing)
 		clash_of_the_plushies(P)
 
-/obj/item/toy/plush/plushvar/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
+/obj/item/toy/plush/ratplush/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
 	clash_target = P
 	P.clashing = TRUE
 	say("YOU.")
@@ -489,7 +493,7 @@
 
 /obj/item/toy/plush/narplush/Moved()
 	. = ..()
-	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
+	var/obj/item/toy/plush/ratplush/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
 
@@ -498,15 +502,23 @@
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "plushie_lizard"
 	inhand_icon_state = "plushie_lizard"
-	attack_verb = list("clawed", "hissed", "tail slapped")
+	attack_verb_continuous = list("claws", "hisses", "tail slaps")
+	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
+
+/obj/item/toy/plush/lizardplushie/space
+	name = "space lizard plushie"
+	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
+	icon_state = "plushie_spacelizard"
+	inhand_icon_state = "plushie_spacelizard"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
 	icon_state = "plushie_snake"
 	inhand_icon_state = "plushie_snake"
-	attack_verb = list("bitten", "hissed", "tail slapped")
+	attack_verb_continuous = list("bites", "hisses", "tail slaps")
+	attack_verb_simple = list("bite", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
 
 /obj/item/toy/plush/nukeplushie
@@ -514,15 +526,26 @@
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
 	icon_state = "plushie_nuke"
 	inhand_icon_state = "plushie_nuke"
-	attack_verb = list("shot", "nuked", "detonated")
+	attack_verb_continuous = list("shoots", "nukes", "detonates")
+	attack_verb_simple = list("shoot", "nuke", "detonate")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
+
+/obj/item/toy/plush/plasmamanplushie
+	name = "plasmaman plushie"
+	desc = "A stuffed toy that resembles your purple coworkers. Mmm, yeah, in true plasmaman fashion, it's not cute at all despite the designer's best efforts."
+	icon_state = "plushie_pman"
+	inhand_icon_state = "plushie_pman"
+	attack_verb_continuous = list("burns", "space beasts", "fwooshes")
+	attack_verb_simple = list("burn", "space beast", "fwoosh")
+	squeak_override = list('sound/effects/extinguish.ogg' = 1)
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
 	inhand_icon_state = "plushie_slime"
-	attack_verb = list("blorbled", "slimed", "absorbed")
+	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
+	attack_verb_simple = list("blorble", "slime", "absorb")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
@@ -541,7 +564,8 @@
 	desc = "A cute toy that resembles an even cuter bee."
 	icon_state = "plushie_h"
 	inhand_icon_state = "plushie_h"
-	attack_verb = list("stung")
+	attack_verb_continuous = list("stings")
+	attack_verb_simple = list("sting")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
 
@@ -556,7 +580,8 @@
 	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
 	icon_state = "moffplush"
 	inhand_icon_state = "moffplush"
-	attack_verb = list("fluttered", "flapped")
+	attack_verb_continuous = list("flutters", "flaps")
+	attack_verb_simple = list("flutter", "flap")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
 ///Used to track how many people killed themselves with item/toy/plush/moth
 	var/suicide_count = 0
@@ -583,5 +608,6 @@
 	desc = "A plushie depicting a peacekeeper cyborg. Only you can prevent human harm!"
 	icon_state = "pkplush"
 	inhand_icon_state = "pkplush"
-	attack_verb = list("hugged", "squeezed")
+	attack_verb_continuous = list("hugs", "squeezes")
+	attack_verb_simple = list("hug", "squeeze")
 	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)

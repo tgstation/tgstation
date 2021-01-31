@@ -14,11 +14,11 @@ RSF
 	var/spent_icon_state = "rsf_empty"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
 	item_flags = NOBLUDGEON
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	///The current matter count
 	var/matter = 0
 	///The max amount of matter in the device
@@ -149,7 +149,7 @@ RSF
 	icon_state = "rcd"
 	spent_icon_state = "rcd"
 	max_matter = 10
-	cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie = 100)
+	cost_by_item = list(/obj/item/food/cookie = 100)
 	dispense_cost = 100
 	discriptor = "cookie-units"
 	action_type = "Fabricates"
@@ -182,17 +182,17 @@ RSF
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
-	if(((obj_flags & EMAGGED) || (P && P.emagged)) && !toxin)
+	if(((obj_flags & EMAGGED) || (P?.emagged)) && !toxin)
 		toxin = TRUE
-		to_dispense = /obj/item/reagent_containers/food/snacks/cookie/sleepy
+		to_dispense = /obj/item/food/cookie/sleepy
 		to_chat(user, "<span class='alert'>Cookie Synthesizer hacked.</span>")
 	else
 		toxin = FALSE
-		to_dispense = /obj/item/reagent_containers/food/snacks/cookie
+		to_dispense = /obj/item/food/cookie
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
-/obj/item/rsf/cookiesynth/process()
-	matter = min(matter + 1, max_matter) //We add 1 up to a point
+/obj/item/rsf/cookiesynth/process(delta_time)
+	matter = min(matter += delta_time, max_matter) //We add 1 up to a point
 	if(matter >= max_matter)
 		STOP_PROCESSING(SSprocessing, src)
 

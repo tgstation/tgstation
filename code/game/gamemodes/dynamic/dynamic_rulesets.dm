@@ -37,7 +37,7 @@
 	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
 	var/required_candidates = 0
-	/// 1 -> 9, probability for this rule to be picked against other rules
+	/// 0 -> 9, probability for this rule to be picked against other rules. If zero this will effectively disable the rule.
 	var/weight = 5
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
 	var/cost = 0
@@ -50,7 +50,7 @@
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
-	var/flags = 0
+	var/flags = NONE
 	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
 	var/pop_per_requirement = 0
 	/// Requirements are the threat level requirements per pop range.
@@ -82,7 +82,7 @@
 	..()
 	if (istype(SSticker.mode, /datum/game_mode/dynamic))
 		mode = SSticker.mode
-	else if (GLOB.master_mode != "dynamic") // This is here to make roundstart forced ruleset function.
+	else if (!SSticker.is_mode("dynamic")) // This is here to make roundstart forced ruleset function.
 		qdel(src)
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
@@ -181,11 +181,6 @@
 /// Set mode result and news report here.
 /// Only called if ruleset is flagged as HIGHLANDER_RULESET
 /datum/dynamic_ruleset/proc/round_result()
-
-/// Checks if round is finished, return true to end the round.
-/// Only called if ruleset is flagged as HIGHLANDER_RULESET
-/datum/dynamic_ruleset/proc/check_finished()
-	return FALSE
 
 //////////////////////////////////////////////
 //                                          //

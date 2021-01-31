@@ -758,7 +758,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bu" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Cockpit";
@@ -776,19 +776,19 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bw" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bx" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "by" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bz" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -837,7 +837,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bF" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -897,18 +897,18 @@
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bN" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bO" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/lockbox/loyalty,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -948,7 +948,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bV" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/zipties,
@@ -957,7 +957,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "bW" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -1367,7 +1367,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape)
+/area/shuttle/escape/brig)
 "cH" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small,

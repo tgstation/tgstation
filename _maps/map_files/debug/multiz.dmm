@@ -40,7 +40,6 @@
 /area/engine/gravity_generator)
 "al" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -62,7 +61,6 @@
 /area/space/nearstation)
 "ap" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -83,7 +81,6 @@
 	charge = 5e+006
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -103,7 +100,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space)
 "av" = (
 /obj/structure/stairs/north,
@@ -172,12 +169,8 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/obj/effect/turf_decal/bot{
-	dir = 2
-	},
-/turf/open/floor/plasteel{
-	dir = 2
-	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/engine/atmos)
 "aO" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -211,6 +204,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"aW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "aY" = (
 /obj/machinery/light{
 	dir = 4
@@ -232,12 +232,8 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/effect/turf_decal/bot{
-	dir = 2
-	},
-/turf/open/floor/plasteel{
-	dir = 2
-	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/engine/atmos)
 "bc" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -312,8 +308,8 @@
 /area/engine/atmos)
 "bm" = (
 /obj/machinery/atmospherics/components/binary/valve/on{
-	icon_state = "mvalve_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "mvalve_map-2"
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -390,7 +386,6 @@
 	pixel_x = -25
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -420,7 +415,6 @@
 /area/hallway/primary/central)
 "bG" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -479,12 +473,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bT" = (
-/obj/machinery/computer/arcade,
+/obj/effect/spawner/randomarcade,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bU" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -745,7 +738,6 @@
 /area/construction)
 "da" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
 	},
@@ -940,11 +932,6 @@
 "dW" = (
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"dX" = (
-/turf/open/floor/plasteel{
-	dir = 2
-	},
-/area/hallway/secondary/service)
 "dY" = (
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
@@ -1023,7 +1010,7 @@
 	},
 /area/hallway/secondary/service)
 "eC" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1091,7 +1078,6 @@
 /area/hallway/secondary/service)
 "eQ" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1102,7 +1088,6 @@
 /area/engine/storage)
 "eX" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1130,10 +1115,14 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel,
 /area/engine/storage)
+"fp" = (
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
+/area/engine/storage)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map-2";
-	dir = 8
+	dir = 8;
+	icon_state = "connector_map-2"
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
@@ -1151,8 +1140,8 @@
 /area/hallway/primary/central)
 "hi" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	icon_state = "inje_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "inje_map-2"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -1187,12 +1176,11 @@
 /turf/open/floor/plating,
 /area/construction)
 "iu" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/hallway/secondary/service)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1203,12 +1191,11 @@
 	},
 /area/hallway/secondary/service)
 "jb" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "jA" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -1220,13 +1207,18 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"jL" = (
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
 "jT" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/construction)
 "jV" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -1253,17 +1245,31 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"lT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "mb" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/storage)
+"mG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "mZ" = (
 /turf/open/floor/plasteel{
 	dir = 4
 	},
 /area/hallway/secondary/service)
 "nx" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space/nearstation)
 "nz" = (
 /obj/machinery/light{
@@ -1275,6 +1281,11 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"nS" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "od" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/structure/window/reinforced,
@@ -1306,8 +1317,14 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
+"pi" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/openspace,
+/area/hallway/secondary/service)
 "qo" = (
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/engine/storage)
 "qx" = (
 /obj/structure/railing/corner{
@@ -1317,11 +1334,9 @@
 /area/construction)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 9
 	},
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1330,7 +1345,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/engine/storage)
 "rN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1350,25 +1365,21 @@
 /area/construction)
 "su" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "sE" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 4
 	},
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
 "td" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1425,7 +1436,6 @@
 /area/construction)
 "xB" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1434,6 +1444,17 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"xK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"xO" = (
+/obj/structure/lattice,
+/turf/open/openspace,
+/area/engine/storage)
 "yl" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -1443,13 +1464,22 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction)
+"yR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
+"yX" = (
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "zd" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 4
 	},
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1461,7 +1491,6 @@
 /area/construction)
 "zZ" = (
 /obj/structure/disposalpipe/trunk{
-	icon_state = "pipe-t";
 	dir = 1
 	},
 /obj/machinery/disposal/bin,
@@ -1473,7 +1502,6 @@
 /area/engine/storage)
 "Ai" = (
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1498,7 +1526,7 @@
 /area/construction)
 "Bk" = (
 /obj/structure/grille,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space/nearstation)
 "Bm" = (
 /obj/machinery/light{
@@ -1507,7 +1535,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
 /area/storage/primary)
 "BM" = (
 /obj/machinery/power/apc/auto_name/north,
@@ -1552,7 +1581,6 @@
 "Eb" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1563,11 +1591,9 @@
 /area/construction)
 "EH" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1583,8 +1609,8 @@
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "pipe11-2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -1596,7 +1622,9 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "Hk" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/construction)
 "Hp" = (
@@ -1616,7 +1644,6 @@
 "IL" = (
 /obj/structure/railing/corner,
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1664,7 +1691,6 @@
 /area/maintenance/department/bridge)
 "Lu" = (
 /obj/structure/railing{
-	icon_state = "railing";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1687,7 +1713,7 @@
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/transparent/openspace,
+/turf/open/openspace,
 /area/space/nearstation)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
@@ -1713,7 +1739,6 @@
 /area/engine/storage)
 "Qo" = (
 /obj/structure/disposalpipe/trunk/multiz/down{
-	icon_state = "pipe-down";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1737,6 +1762,12 @@
 /obj/item/construction/plumbing,
 /turf/open/floor/plasteel,
 /area/construction)
+"SN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/service)
 "Tf" = (
 /obj/structure/railing{
 	dir = 1
@@ -1761,7 +1792,7 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "UH" = (
-/obj/machinery/atmospherics/pipe/simple/multiz,
+/obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
 /area/engine/storage)
 "Vm" = (
@@ -1801,6 +1832,13 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"Zk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/industrial_lift,
+/turf/open/floor/plating,
+/area/storage/primary)
 "Zv" = (
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
@@ -1811,7 +1849,6 @@
 /area/construction)
 "ZQ" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
 	dir = 5
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -3736,9 +3773,9 @@ cH
 cI
 cJ
 by
-dJ
-dJ
-dB
+dk
+dk
+dC
 dl
 dE
 dH
@@ -3790,9 +3827,9 @@ eo
 eo
 cK
 by
-dJ
-dJ
-dB
+Zk
+mG
+xK
 dl
 dF
 dk
@@ -3844,9 +3881,9 @@ eo
 eo
 cL
 by
-dJ
-dJ
-dB
+aW
+yX
+nS
 dl
 dl
 dl
@@ -3898,9 +3935,9 @@ eo
 eo
 cM
 by
-dk
+yR
 Bm
-dC
+lT
 dl
 dl
 dl
@@ -5453,8 +5490,8 @@ af
 TY
 Gb
 Gb
-dX
-dX
+dY
+dY
 dY
 dY
 dY
@@ -5741,7 +5778,7 @@ Gb
 jb
 LE
 IC
-jb
+jL
 Gb
 XN
 iu
@@ -6545,9 +6582,9 @@ iK
 iK
 en
 TY
-dY
-dY
-dY
+SN
+SN
+SN
 eF
 iu
 iu
@@ -6599,9 +6636,9 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
 iu
 iu
@@ -6653,9 +6690,9 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
 iu
 iu
@@ -6707,9 +6744,9 @@ dY
 dY
 dY
 TY
-dY
-eN
-dY
+iu
+pi
+iu
 eF
 iu
 iu
@@ -8765,7 +8802,7 @@ dS
 IN
 qo
 qo
-qo
+xO
 qo
 qo
 qo
@@ -8819,7 +8856,7 @@ dS
 IN
 qo
 qo
-qo
+xO
 qo
 qo
 qo
@@ -8871,17 +8908,17 @@ ej
 Qw
 Qw
 Vn
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
 AG
 au
 au
@@ -8919,15 +8956,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -8973,15 +9010,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9027,15 +9064,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9081,15 +9118,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9135,15 +9172,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9189,15 +9226,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9243,15 +9280,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9297,15 +9334,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
+fp
+fp
+fp
 qo
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9351,15 +9388,15 @@ qo
 qo
 qo
 qo
+xO
 qo
+fp
+fp
+fp
+fp
+fp
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9405,15 +9442,15 @@ qo
 qo
 qo
 qo
+xO
+qo
+fp
 qo
 qo
 qo
+fp
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9446,36 +9483,36 @@ au
 au
 au
 AG
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+fp
 qo
 qo
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+fp
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
+xO
 AG
 au
 au
@@ -9513,15 +9550,15 @@ qo
 qo
 qo
 qo
+xO
+qo
+fp
 qo
 qo
 qo
+fp
 qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9567,15 +9604,15 @@ qo
 qo
 qo
 qo
+xO
 qo
+fp
+fp
+fp
+fp
+fp
 qo
-qo
-qo
-qo
-qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo
@@ -9621,15 +9658,15 @@ qo
 qo
 qo
 qo
+xO
 qo
 qo
 qo
+xO
 qo
 qo
 qo
-qo
-qo
-qo
+xO
 qo
 qo
 qo

@@ -211,14 +211,17 @@
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
 	target.become_blind(ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
+	if(ishuman(targets[1]))
+		var/mob/living/carbon/human/humi = targets[1]
+		humi.adjust_coretemperature(-200)
 	target.adjust_bodytemperature(-200)
 
 /**
-  * cure_blidness: Cures Abyssal Gaze blindness from the target
-  *
-  * Arguments:
-  * * target The mob that is being cured of the blindness.
-  */
+ * cure_blidness: Cures Abyssal Gaze blindness from the target
+ *
+ * Arguments:
+ * * target The mob that is being cured of the blindness.
+ */
 /obj/effect/proc_holder/spell/pointed/abyssal_gaze/proc/cure_blindness(mob/target)
 	if(isliving(target))
 		var/mob/living/L = target
@@ -328,5 +331,5 @@
 	new /obj/effect/temp_visual/cult/sac(T)
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
-			O.take_damage(90, BRUTE, "melee", 0)
+			O.take_damage(90, BRUTE, MELEE, 0)
 			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))

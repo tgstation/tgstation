@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
+	vis_flags = VIS_HIDE
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -33,7 +34,7 @@
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 
-/atom/movable/lighting_object/Destroy(var/force)
+/atom/movable/lighting_object/Destroy(force)
 	if (force)
 		SSlighting.objects_queue -= src
 		if (loc != myturf)
@@ -130,7 +131,7 @@
 // Variety of overrides so the overlays don't get affected by weird things.
 
 /atom/movable/lighting_object/ex_act(severity)
-	return 0
+	return
 
 /atom/movable/lighting_object/singularity_act()
 	return
@@ -144,7 +145,8 @@
 /atom/movable/lighting_object/onTransitZ()
 	return
 
-/atom/movable/lighting_object/washed(var/washer)
+/atom/movable/lighting_object/wash(clean_types)
+	SHOULD_CALL_PARENT(FALSE) // lighting objects are dirty, confirmed
 	return
 
 // Override here to prevent things accidentally moving around overlays.

@@ -3,6 +3,7 @@
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
 	icon_state = "plastic-explosive0"
 	inhand_icon_state = "plastic-explosive"
+	worn_icon_state = "c4"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -25,7 +26,7 @@
 
 /obj/item/grenade/c4/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/c4/Destroy()
 	qdel(wires)
@@ -41,7 +42,7 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime(mob/living/lanced_by)
+/obj/item/grenade/c4/detonate(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
 
@@ -56,7 +57,7 @@
 	else
 		location = get_turf(src)
 	if(location)
-		if(directional && target && target.density)
+		if(directional && target?.density)
 			var/turf/T = get_step(location, aim_dir)
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
@@ -65,7 +66,7 @@
 
 //assembly stuff
 /obj/item/grenade/c4/receive_signal()
-	prime()
+	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
@@ -110,7 +111,7 @@
 
 		target.add_overlay(plastic_overlay)
 		to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
-		addtimer(CALLBACK(src, .proc/prime), det_time*10)
+		addtimer(CALLBACK(src, .proc/detonate), det_time*10)
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/M)
 	if(!M)
@@ -142,12 +143,12 @@
 			message_say = "FOR THE FEDERATION!"
 	M.say(message_say, forced="C4 suicide")
 
-/obj/item/grenade/c4/suicide_act(mob/user)
+/obj/item/grenade/c4/suicide_act(mob/living/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
 	shout_syndicate_crap(user)
-	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
+	explosion(user,0,2,0) //Cheap explosion imitation because putting detonate() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
 
@@ -160,5 +161,6 @@
 	desc = "A shaped high-explosive breaching charge. Designed to ensure user safety and wall nonsafety."
 	icon_state = "plasticx40"
 	inhand_icon_state = "plasticx4"
+	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)

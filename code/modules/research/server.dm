@@ -3,7 +3,6 @@
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "RD-server-on"
-	var/datum/techweb/stored_research
 	var/heat_health = 100
 	//Code for point mining here.
 	var/working = TRUE			//temperature should break it.
@@ -23,10 +22,6 @@
 	. = ..()
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 	SSresearch.servers |= src
-	stored_research = SSresearch.science_tech
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
-	B.apply_default_parts(src)
-	current_temp = get_env_temp()
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
@@ -62,12 +57,12 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	machine_stat |= EMPED
+	set_machine_stat(machine_stat | EMPED)
 	addtimer(CALLBACK(src, .proc/unemp), 600)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()
-	machine_stat &= ~EMPED
+	set_machine_stat(machine_stat & ~EMPED)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/toggle_disable()
@@ -81,10 +76,10 @@
 	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
-	var/turf/L = loc
+	var/turf/open/L = loc
 	if(isturf(L))
 		return L.temperature
-	return 0
+	return 0 //what
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(machine_stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -105,7 +100,7 @@
 					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
 
 				env.merge(removed)
-				air_update_turf()
+				air_update_turf(FALSE, FALSE)
 
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
@@ -186,7 +181,6 @@
 
 	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
@@ -196,6 +190,6 @@
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	playsound(src, "sparks", 75, TRUE)
+	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You disable the security protocols.</span>")

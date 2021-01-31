@@ -4,12 +4,13 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"
 	inhand_icon_state = "flashbang"
+	worn_icon_state = "minibomb"
 	ex_dev = 1
 	ex_heavy = 2
 	ex_light = 4
 	ex_flame = 2
 
-/obj/item/grenade/syndieminibomb/prime(mob/living/lanced_by)
+/obj/item/grenade/syndieminibomb/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)
@@ -38,7 +39,7 @@
 	shrapnel_type = /obj/projectile/bullet/shrapnel/mega
 	shrapnel_radius = 12
 
-/obj/item/grenade/frag/prime(mob/living/lanced_by)
+/obj/item/grenade/frag/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)
@@ -53,7 +54,7 @@
 	var/rad_damage = 350
 	var/stamina_damage = 30
 
-/obj/item/grenade/gluon/prime(mob/living/lanced_by)
+/obj/item/grenade/gluon/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)

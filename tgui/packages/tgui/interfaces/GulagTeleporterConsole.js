@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -19,12 +18,14 @@ export const GulagTeleporterConsole = (props, context) => {
     prisoner = {},
   } = data;
   return (
-    <Window>
+    <Window
+      width={350}
+      height={295}>
       <Window.Content>
         <Section
           title="Teleporter Console"
           buttons={(
-            <Fragment>
+            <>
               <Button
                 content={teleporter_state_open ? 'Open' : 'Closed'}
                 disabled={teleporter_lock}
@@ -36,7 +37,7 @@ export const GulagTeleporterConsole = (props, context) => {
                 selected={teleporter_lock}
                 disabled={teleporter_state_open}
                 onClick={() => act('teleporter_lock')} />
-            </Fragment>
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item

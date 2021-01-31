@@ -36,8 +36,8 @@
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
-	stat_attack = UNCONSCIOUS
-	movement_type = FLYING
+	stat_attack = HARD_CRIT
+	is_flying_animal = TRUE
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// Distance the demon will teleport from the target
@@ -50,6 +50,9 @@
 	temperature = -75
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
+	// Sentient ice demons teleporting has been linked to server crashes
+	if(client)
+		return ..()
 	if(teleport_distance <= 0)
 		return ..()
 	var/list/possible_ends = list()
@@ -57,6 +60,8 @@
 		if(isclosedturf(T))
 			continue
 		possible_ends |= T
+	if(!possible_ends.len)
+		return ..()
 	var/turf/end = pick(possible_ends)
 	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SLEEP_CHECK_DEATH(8)
@@ -74,5 +79,5 @@
 	pull_force = PULL_FORCE_DEFAULT
 	new /obj/item/stack/ore/bluespace_crystal(loc, 3)
 	if(prob(5))
-		new /obj/item/assembly/signaler/anomaly/bluespace(loc)
+		new /obj/item/raw_anomaly_core/bluespace(loc)
 	return ..()

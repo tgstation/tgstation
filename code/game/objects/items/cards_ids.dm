@@ -69,14 +69,20 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/id_type_name = "identification card"
 	var/mining_points = 0 //For redeeming at mining equipment vendors
+	///The stuff that makes you open doors and shit
 	var/list/access = list()
-	var/registered_name = null // The name registered_name on the card
+	///Access that cannot be removed by the ID console. Do not add access levels that are actually visible in the console here if a HoP knowing what kind of ID he's modifying is a concern.
+	var/list/sticky_access
+	/// The name registered on the card (for example: Dr Bryan See)
+	var/registered_name = null
+	///The job name registered on the card (for example: Assistant)
 	var/assignment = null
-	var/access_txt // mapping aid
+	/// mapping aid
+	var/access_txt
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
 	var/uses_overlays = TRUE
@@ -108,7 +114,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name","registered_age")
+			if(NAMEOF(src, assignment),NAMEOF(src, registered_name),NAMEOF(src, registered_age))
 				update_label()
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
@@ -200,17 +206,16 @@
 		to_chat(user, "<span class='warning'>The account ID was already assigned to this card.</span>")
 		return
 
-	for(var/A in SSeconomy.bank_accounts)
-		var/datum/bank_account/B = A
-		if(B.account_id == new_bank_id)
-			if (old_account)
-				old_account.bank_cards -= src
+	var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
+	if(B)
+		if (old_account)
+			old_account.bank_cards -= src
 
-			B.bank_cards += src
-			registered_account = B
-			to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
+		B.bank_cards += src
+		registered_account = B
+		to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
 
-			return TRUE
+		return TRUE
 
 	to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 	return
@@ -265,6 +270,11 @@
 				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
 		msg += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
 		msg += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
+		if(registered_account.civilian_bounty)
+			msg += "<span class='info'><b>There is an active civilian bounty.</b>"
+			msg += "<span class='info'><i>[registered_account.bounty_text()]</i></span>"
+			msg += "<span class='info'>Quantity: [registered_account.bounty_num()]</span>"
+			msg += "<span class='info'>Reward: [registered_account.bounty_value()]</span>"
 		if(registered_account.account_holder == user.real_name)
 			msg += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
 	else
@@ -293,6 +303,8 @@
 		. += mutable_appearance(icon, "id[job]")
 
 /obj/item/card/id/proc/update_in_wallet()
+	SIGNAL_HANDLER
+
 	if(istype(loc, /obj/item/storage/wallet))
 		var/obj/item/storage/wallet/powergaming = loc
 		if(powergaming.front_id == src)
@@ -348,8 +360,11 @@ update_label()
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	var/anyone = FALSE //Can anyone forge the ID or just syndicate?
-	var/forged = FALSE //have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
+	sticky_access = list(ACCESS_SYNDICATE)
+	///Can anyone forge the ID or just syndicate?
+	var/anyone = FALSE
+	///have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
+	var/forged = FALSE
 
 /obj/item/card/id/syndicate/Initialize()
 	. = ..()
@@ -382,7 +397,7 @@ update_label()
 			return
 		if(popup_input == "Forge/Reset" && !forged)
 			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-			input_name = reject_bad_name(input_name)
+			input_name = sanitize_name(input_name)
 			if(!input_name)
 				// Invalid/blank names give a randomly generated one.
 				if(user.gender == MALE)
@@ -412,12 +427,11 @@ update_label()
 				if(ishuman(user))
 					var/mob/living/carbon/human/accountowner = user
 
-					for(var/bank_account in SSeconomy.bank_accounts)
-						var/datum/bank_account/account = bank_account
-						if(account.account_id == accountowner.account_id)
-							account.bank_cards += src
-							registered_account = account
-							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
+					var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
+					if(account)
+						account.bank_cards += src
+						registered_account = account
+						to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
 			return
 		else if (popup_input == "Forge/Reset" && forged)
 			registered_name = initial(registered_name)
@@ -438,6 +452,7 @@ update_label()
 /obj/item/card/id/syndicate/nuke_leader
 	name = "lead agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
+	sticky_access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 
 /obj/item/card/id/syndicate_command
 	name = "syndicate ID card"
@@ -447,6 +462,7 @@ update_label()
 	assignment = "Syndicate Overlord"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE)
+	sticky_access = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
 	registered_age = null
 
@@ -458,6 +474,7 @@ update_label()
 	assignment = "Syndicate Operative"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	sticky_access = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
 
 /obj/item/card/id/syndicate_command/captain_id
@@ -468,6 +485,7 @@ update_label()
 	assignment = "Syndicate Ship Captain"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	sticky_access = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare

@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -12,7 +11,9 @@ export const BluespaceArtillery = (props, context) => {
     target,
   } = data;
   return (
-    <Window>
+    <Window
+      width={400}
+      height={220}>
       <Window.Content>
         {!!notice && (
           <NoticeBox>
@@ -20,7 +21,7 @@ export const BluespaceArtillery = (props, context) => {
           </NoticeBox>
         )}
         {connected ? (
-          <Fragment>
+          <>
             <Section
               title="Target"
               buttons={(
@@ -49,7 +50,7 @@ export const BluespaceArtillery = (props, context) => {
                     onClick={() => act('fire')} />
                 </Box>
               ) : (
-                <Fragment>
+                <>
                   <Box
                     color="bad"
                     fontSize="18px">
@@ -59,10 +60,10 @@ export const BluespaceArtillery = (props, context) => {
                     Awaiting authorization via keycard reader from at minimum
                     two station heads.
                   </Box>
-                </Fragment>
+                </>
               )}
             </Section>
-          </Fragment>
+          </>
         ) : (
           <Section>
             <LabeledList>

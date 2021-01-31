@@ -42,7 +42,6 @@ WALK_DELAY 4
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
-##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/monkey 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/alien 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal/slime 0
 MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
@@ -50,7 +49,7 @@ MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 0
 
 ## NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
-#HUMANS_NEED_SURNAMES
+HUMANS_NEED_SURNAMES
 
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
@@ -102,8 +101,6 @@ PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
-PROBABILITY DEVIL 0
-PROBABILITY DEVIL_AGENTS 0
 PROBABILITY CLOWNOPS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
@@ -186,12 +183,6 @@ MIDROUND_ANTAG WIZARD
 
 #MIN_POP METEOR 0
 #MAX_POP METEOR -1
-
-#MIN_POP DEVIL 0
-#MAX_POP DEVIL -1
-
-#MIN_POP DEVIL_AGENTS 25
-#MAX_POP DEVIL_AGENTS -1
 
 ## Setting at least one mode to be playable at 0/1 players is required.
 #MIN_POP EXTENDED 0
@@ -278,11 +269,11 @@ ALLOW_AI
 ALLOW_AI_MULTICAM
 
 ## Secborg ###
-## Uncomment to prevent the security cyborg module from being chosen
+## Uncomment to prevent the security cyborg model from being chosen
 #DISABLE_SECBORG
 
 ## Peacekeeper Borg ###
-## Uncomment to prevent the peacekeeper cyborg module from being chosen
+## Uncomment to prevent the peacekeeper cyborg model from being chosen
 #DISABLE_PEACEBORG
 
 ## AWAY MISSIONS ###

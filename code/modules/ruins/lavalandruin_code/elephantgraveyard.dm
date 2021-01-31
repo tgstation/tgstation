@@ -3,27 +3,28 @@
 /obj/structure/statue/bone
 	anchored = TRUE
 	max_integrity = 120
-	material_drop_type = /obj/item/stack/sheet/bone
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
+	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/rib
 	name = "collosal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
-	oreAmount = 4
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
 	name = "collosal skull"
 	desc = "The gaping maw of a dead, titanic monster."
-	oreAmount = 12
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull"
 
 /obj/structure/statue/bone/skull/half
 	desc = "The gaping maw of a dead, titanic monster. This one is cracked in half."
-	oreAmount = 6
+	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull-half"
 
@@ -32,17 +33,20 @@
 	name = "cracked earth"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "wasteland"
-	environment_type = "wasteland"
+	base_icon_state = "wasteland"
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	digResult = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0.5
 	floor_variance = 30
 
+/turf/open/floor/plating/asteroid/basalt/wasteland/setup_broken_states()
+	return list("wasteland")
+
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()
 	if(prob(floor_variance))
-		icon_state = "[environment_type][rand(0,6)]"
+		icon_state = "[base_icon_state][rand(0,6)]"
 
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
@@ -51,6 +55,8 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
@@ -63,7 +69,7 @@
 //***Oil well puddles.
 /obj/structure/sink/oil_well	//You're not going to enjoy bathing in this...
 	name = "oil well"
-	desc = "A bubbling pool of oil.This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
+	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
@@ -116,6 +122,8 @@
 	anchored = TRUE
 	locked = TRUE
 	breakout_time = 900
+	open_sound = 'sound/effects/shovel_dig.ogg'
+	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
@@ -211,7 +219,7 @@
 
 /obj/item/book/granter/crafting_recipe/boneyard_notes
 	name = "The Complete Works of Lavaland Bone Architecture"
-	desc = "Pried from the lead  Archaeologist's cold, dead hands, this seems to explain how ancient bone architecture was erected long ago."
+	desc = "Pried from the lead Archaeologist's cold, dead hands, this seems to explain how ancient bone architecture was erected long ago."
 	crafting_recipe_types = list(/datum/crafting_recipe/rib, /datum/crafting_recipe/boneshovel, /datum/crafting_recipe/halfskull, /datum/crafting_recipe/skull)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "boneworking_learing"
@@ -242,6 +250,6 @@
 	info = "<b>Day 9: Tenative Conclusions</b><BR><BR>While the area appears to be of significant cultural importance to the lizard race, outside of some sparce contact with native wildlife, we're yet to find any exact reasoning for the nature of this phenomenon. It seems that organic life is communally drawn to this planet as though it functions as a final resting place for intelligent life. As per company guidelines, this site shall be given the following classification: 'LZ-0271 - Elephant Graveyard' <BR><BR><u>Compiled list of Artifact findings (Currently Sent Offsite)</u><BR>Cultist Blade Fragments: x8<BR>Brass Multiplicative Ore Sample: x105<BR>Syndicate Revolutionary Leader Implant (Broken) x1<BR>Extinct Cortical Borer Tissue Sample x1<BR>Space Carp Fossil x3"
 
 /obj/item/paper/fluff/ruins/elephant_graveyard/final_message
-	name = "important looking Note"
+	name = "important-looking note"
 	desc = "This note is well written, and seems to have been put here so you'd find it."
 	info = "If you find this... you don't need to know who I am.<BR><BR>You need to leave this place. I dunno what shit they did to me out here, but I don't think I'm going to be making it out of here.<BR><BR>This place... it wears down your psyche. The other researchers out here laughed it off but... They were the first to go.<BR><BR>One by one they started turning on each other. The more they found out, the more they started fighting and arguing...<BR>As I speak now, I had to... I wound up having to put most of my men down. I know what I had to do, and I know there's no way left for me to live with myself.<BR> If anyone ever finds this, just don't touch the graves.<BR><BR>DO NOT. TOUCH. THE GRAVES. Don't be a dumbass, like we all were."

@@ -1,11 +1,13 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Section } from '../components';
 import { Window } from '../layouts';
 
 export const StationAlertConsole = () => {
   return (
-    <Window resizable>
+    <Window
+      width={325}
+      height={500}
+      resizable>
       <Window.Content scrollable>
         <StationAlertConsoleContent />
       </Window.Content>
@@ -20,7 +22,7 @@ export const StationAlertConsoleContent = (props, context) => {
   const atmos = categories['Atmosphere'] || [];
   const power = categories['Power'] || [];
   return (
-    <Fragment>
+    <>
       <Section title="Fire Alarms">
         <ul>
           {fire.length === 0 && (
@@ -63,6 +65,6 @@ export const StationAlertConsoleContent = (props, context) => {
           ))}
         </ul>
       </Section>
-    </Fragment>
+    </>
   );
 };

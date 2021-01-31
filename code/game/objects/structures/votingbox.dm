@@ -17,6 +17,7 @@
 	var/vote_description = ""
 
 	var/list/voted //List of ID's that already voted.
+	COOLDOWN_DECLARE(vote_print_cooldown)
 
 /obj/structure/votebox/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I,/obj/item/card/id))
@@ -35,7 +36,7 @@
 	..()
 	ui_interact(user)
 
-/obj/structure/votebox/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+/obj/structure/votebox/ui_interact(mob/user)
 	. = ..()
 
 	var/list/dat = list()
@@ -60,6 +61,8 @@
 		return
 
 	var/mob/user = usr
+	if(!can_interact(user))
+		return
 	if(!is_operator(user))
 		to_chat(user,"<span class='warning'>Voting box operator authorization required!</span>")
 		return
@@ -95,8 +98,8 @@
 	if(new_description)
 		vote_description = new_description
 
-/obj/structure/votebox/proc/is_operator(mob/user)
-	return user?.get_idcard() == owner
+/obj/structure/votebox/proc/is_operator(mob/living/user)
+	return (istype(user) && user?.get_idcard() == owner)
 
 /obj/structure/votebox/proc/apply_vote(obj/item/paper/I,mob/living/user)
 	var/obj/item/card/id/voter_card = user.get_idcard()
@@ -171,7 +174,9 @@
 		else
 			results[text] += 1
 	sortTim(results, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
-
+	if(!COOLDOWN_FINISHED(src, vote_print_cooldown))
+		return
+	COOLDOWN_START(src, vote_print_cooldown, 60 SECONDS)
 	var/obj/item/paper/P = new(drop_location())
 	var/list/tally = list()
 	tally += {"

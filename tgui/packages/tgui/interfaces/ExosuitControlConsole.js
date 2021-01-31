@@ -1,5 +1,4 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -10,7 +9,10 @@ export const ExosuitControlConsole = (props, context) => {
     mechs = [],
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={500}
+      height={500}
+      resizable>
       <Window.Content scrollable>
         {mechs.length === 0 && (
           <NoticeBox>
@@ -22,10 +24,10 @@ export const ExosuitControlConsole = (props, context) => {
             key={mech.tracker_ref}
             title={mech.name}
             buttons={(
-              <Fragment>
+              <>
                 <Button
                   icon="envelope"
-                  content="Send Message"
+                  content="Message"
                   disabled={!mech.pilot}
                   onClick={() => act('send_message', {
                     tracker_ref: mech.tracker_ref,
@@ -40,7 +42,7 @@ export const ExosuitControlConsole = (props, context) => {
                   onClick={() => act('shock', {
                     tracker_ref: mech.tracker_ref,
                   })} />
-              </Fragment>
+              </>
             )}>
             <LabeledList>
               <LabeledList.Item label="Integrity">
@@ -73,7 +75,14 @@ export const ExosuitControlConsole = (props, context) => {
                 ) || 'Not Equipped'}
               </LabeledList.Item>
               <LabeledList.Item label="Pilot">
-                {mech.pilot || 'None'}
+                {mech.pilot.length > 0 && (
+                  mech.pilot.map(pilot => (
+                    <Box
+                      key={pilot}
+                      inline>
+                      {pilot}{mech.pilot.length > 1 ? '|' : ''}
+                    </Box>
+                  ))) || 'None'}
               </LabeledList.Item>
               <LabeledList.Item label="Location">
                 {mech.location || 'Unknown'}

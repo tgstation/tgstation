@@ -48,7 +48,7 @@
 /obj/structure/flora/tree/pine/Initialize()
 	. = ..()
 
-	if(islist(icon_states && icon_states.len))
+	if(islist(icon_states?.len))
 		icon_state = pick(icon_states)
 
 /obj/structure/flora/tree/pine/xmas
@@ -312,46 +312,66 @@
 	throw_speed = 2
 	throw_range = 4
 
+	/// Can this plant be trimmed by someone with TRAIT_BONSAI
+	var/trimmable = TRUE
+	var/list/static/random_plant_states
+
 /obj/item/kirbyplants/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/tactical)
-	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 500)), 0)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
+	AddComponent(/datum/component/beauty, 500)
+
+/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
+		to_chat(user,"<span class='notice'>You start trimming [src].</span>")
+		if(do_after(user,3 SECONDS,target=src))
+			to_chat(user,"<span class='notice'>You finish trimming [src].</span>")
+			change_visual()
+
+/// Cycle basic plant visuals
+/obj/item/kirbyplants/proc/change_visual()
+	if(!random_plant_states)
+		generate_states()
+	var/current = random_plant_states.Find(icon_state)
+	var/next = WRAP(current+1,1,length(random_plant_states))
+	icon_state = random_plant_states[next]
 
 /obj/item/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
 	icon_state = "random_plant"
-	var/list/static/states
 
 /obj/item/kirbyplants/random/Initialize()
 	. = ..()
 	icon = 'icons/obj/flora/plants.dmi'
-	if(!states)
+	if(!random_plant_states)
 		generate_states()
-	icon_state = pick(states)
+	icon_state = pick(random_plant_states)
 
-/obj/item/kirbyplants/random/proc/generate_states()
-	states = list()
+/obj/item/kirbyplants/proc/generate_states()
+	random_plant_states = list()
 	for(var/i in 1 to 25)
 		var/number
 		if(i < 10)
 			number = "0[i]"
 		else
 			number = "[i]"
-		states += "plant-[number]"
-	states += "applebush"
+		random_plant_states += "plant-[number]"
+	random_plant_states += "applebush"
 
 
 /obj/item/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
+	trimmable = FALSE
 
 /obj/item/kirbyplants/photosynthetic
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
 	icon_state = "plant-09"
-	light_color = "#2cb2e8"
+	light_color = COLOR_BRIGHT_BLUE
 	light_range = 3
 
 /obj/item/kirbyplants/fullysynthetic
@@ -359,6 +379,7 @@
 	desc = "A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch."
 	icon_state = "plant-26"
 	custom_materials = (list(/datum/material/plastic = 8000))
+	trimmable = FALSE
 
 /obj/item/kirbyplants/fullysynthetic/Initialize()
 	. = ..()
@@ -368,6 +389,7 @@
 	name = "Potty the Potted Plant"
 	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
 	icon_state = "potty"
+	trimmable = FALSE
 
 //a rock is flora according to where the icon file is
 //and now these defines
@@ -387,11 +409,6 @@
 	. = ..()
 	icon_state = "[icon_state][rand(1,3)]"
 
-/obj/structure/flora/rock/Destroy()
-	if(mineResult && mineAmount)
-		new mineResult(loc, mineAmount)
-	. = ..()
-
 /obj/structure/flora/rock/attackby(obj/item/W, mob/user, params)
 	if(!mineResult || W.tool_behaviour != TOOL_MINING)
 		return ..()
@@ -400,6 +417,8 @@
 	to_chat(user, "<span class='notice'>You start mining...</span>")
 	if(W.use_tool(src, user, 40, volume=50))
 		to_chat(user, "<span class='notice'>You finish mining the rock.</span>")
+		if(mineResult && mineAmount)
+			new mineResult(loc, mineAmount)
 		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 		qdel(src)
 

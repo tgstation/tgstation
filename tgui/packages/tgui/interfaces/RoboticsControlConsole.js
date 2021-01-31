@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -12,7 +11,10 @@ export const RoboticsControlConsole = (props, context) => {
     drones = [],
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={500}
+      height={460}
+      resizable>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -57,7 +59,7 @@ const Cyborgs = (props, context) => {
         key={cyborg.ref}
         title={cyborg.name}
         buttons={(
-          <Fragment>
+          <>
             {!!can_hack && !cyborg.emagged && (
               <Button
                 icon="terminal"
@@ -81,7 +83,7 @@ const Cyborgs = (props, context) => {
               onClick={() => act('killbot', {
                 ref: cyborg.ref,
               })} />
-          </Fragment>
+          </>
         )}>
         <LabeledList>
           <LabeledList.Item label="Status">
@@ -108,7 +110,7 @@ const Cyborgs = (props, context) => {
                 : "Not Found"}
             </Box>
           </LabeledList.Item>
-          <LabeledList.Item label="Module">
+          <LabeledList.Item label="Model">
             {cyborg.module}
           </LabeledList.Item>
           <LabeledList.Item label="Master AI">

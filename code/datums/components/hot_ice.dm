@@ -28,9 +28,13 @@
 		qdel(parent)
 
 /datum/component/hot_ice/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
+	SIGNAL_HANDLER
+
 	if(exposed_temperature > T0C + 100)
 		hot_ice_melt()
 
 /datum/component/hot_ice/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
+	SIGNAL_HANDLER
+
 	if(thing.get_temperature())
 		hot_ice_melt(user)

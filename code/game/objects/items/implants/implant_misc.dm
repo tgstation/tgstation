@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns."
 	icon_state = "auth"
-	activated = 0
+	activated = FALSE
 
 /obj/item/implant/weapons_auth/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -67,7 +67,7 @@
 
 /obj/item/implant/health
 	name = "health implant"
-	activated = 0
+	activated = FALSE
 	var/healthstring = ""
 
 /obj/item/implant/health/proc/sensehealth()
@@ -93,7 +93,7 @@
 /obj/item/implant/radio/activate()
 	. = ..()
 	// needs to be GLOB.deep_inventory_state otherwise it won't open
-	radio.ui_interact(usr, "main", null, FALSE, null, GLOB.deep_inventory_state)
+	radio.ui_interact(usr, state = GLOB.deep_inventory_state)
 
 /obj/item/implant/radio/Initialize(mapload)
 	. = ..()

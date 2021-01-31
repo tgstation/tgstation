@@ -2,9 +2,9 @@
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
-	inhand_icon_state = "syringe_kit"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	inhand_icon_state = "lockbox"
+	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	req_access = list(ACCESS_ARMORY)
 	var/broken = FALSE
@@ -157,6 +157,16 @@
 			medalicon.pixel_x += ((i-6)*3)
 		. += medalicon
 
+/obj/item/storage/lockbox/medal/hop
+	name = "Head of Personnel medal box"
+	desc = "A locked box used to store medals to be given to those exhibiting excellence in management."
+	req_access = list(ACCESS_HOP)
+
+/obj/item/storage/lockbox/medal/hop/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/accessory/medal/silver/bureaucracy(src)
+	new /obj/item/clothing/accessory/medal/gold/ordom(src)
+
 /obj/item/storage/lockbox/medal/sec
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
@@ -203,7 +213,7 @@
 	var/datum/bank_account/buyer_account
 	var/privacy_lock = TRUE
 
-/obj/item/storage/lockbox/order/Initialize(datum/bank_account/_buyer_account)
+/obj/item/storage/lockbox/order/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
 	buyer_account = _buyer_account
 

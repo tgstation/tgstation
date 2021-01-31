@@ -2,10 +2,10 @@ import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { pureComponentHooks } from 'common/react';
-import { Component, Fragment } from 'inferno';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table } from '../components';
 import { Window } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
+
 const PEAK_DRAW = 500000;
 
 export const powerRank = str => {
@@ -15,7 +15,10 @@ export const powerRank = str => {
 
 export const PowerMonitor = () => {
   return (
-    <Window resizable>
+    <Window
+      width={550}
+      height={700}
+      resizable>
       <Window.Content scrollable>
         <PowerMonitorContent />
       </Window.Content>
@@ -26,7 +29,6 @@ export const PowerMonitor = () => {
 export const PowerMonitorContent = (props, context) => {
   const { data } = useBackend(context);
   const { history } = data;
-
   const [
     sortByField,
     setSortByField,
@@ -53,9 +55,9 @@ export const PowerMonitorContent = (props, context) => {
       area => -parseFloat(area.load)),
   ])(data.areas);
   return (
-    <Fragment>
-      <Flex spacing={1}>
-        <Flex.Item width="200px">
+    <>
+      <Flex mx={-0.5} mb={1}>
+        <Flex.Item mx={0.5} width="200px">
           <Section>
             <LabeledList>
               <LabeledList.Item label="Supply">
@@ -79,7 +81,7 @@ export const PowerMonitorContent = (props, context) => {
             </LabeledList>
           </Section>
         </Flex.Item>
-        <Flex.Item grow={1}>
+        <Flex.Item mx={0.5} grow={1}>
           <Section position="relative" height="100%">
             <Chart.Line
               fillPositionedParent
@@ -106,7 +108,9 @@ export const PowerMonitorContent = (props, context) => {
           <Button.Checkbox
             checked={sortByField === 'name'}
             content="Name"
-            onClick={() => setSortByField(sortByField !== 'name' && 'name')} />
+            onClick={() => setSortByField(
+              sortByField !== 'name' && 'name'
+            )} />
           <Button.Checkbox
             checked={sortByField === 'charge'}
             content="Charge"
@@ -116,7 +120,9 @@ export const PowerMonitorContent = (props, context) => {
           <Button.Checkbox
             checked={sortByField === 'draw'}
             content="Draw"
-            onClick={() => setSortByField(sortByField !== 'draw' && 'draw')} />
+            onClick={() => setSortByField(
+              sortByField !== 'draw' && 'draw'
+            )} />
         </Box>
         <Table>
           <Table.Row header>
@@ -167,14 +173,14 @@ export const PowerMonitorContent = (props, context) => {
           ))}
         </Table>
       </Section>
-    </Fragment>
+    </>
   );
 };
 
 export const AreaCharge = props => {
   const { charging, charge } = props;
   return (
-    <Fragment>
+    <>
       <Icon
         width="18px"
         textAlign="center"
@@ -202,7 +208,7 @@ export const AreaCharge = props => {
         textAlign="right">
         {toFixed(charge) + '%'}
       </Box>
-    </Fragment>
+    </>
   );
 };
 

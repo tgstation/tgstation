@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -10,7 +9,6 @@ export const NaniteDiskBox = (props, context) => {
     has_program,
     disk,
   } = data;
-
   if (!has_disk) {
     return (
       <NoticeBox>
@@ -18,7 +16,6 @@ export const NaniteDiskBox = (props, context) => {
       </NoticeBox>
     );
   }
-
   if (!has_program) {
     return (
       <NoticeBox>
@@ -26,7 +23,6 @@ export const NaniteDiskBox = (props, context) => {
       </NoticeBox>
     );
   }
-
   return (
     <NaniteInfoBox program={disk} />
   );
@@ -34,7 +30,6 @@ export const NaniteDiskBox = (props, context) => {
 
 export const NaniteInfoBox = (props, context) => {
   const { program } = props;
-
   const {
     name,
     desc,
@@ -52,9 +47,7 @@ export const NaniteInfoBox = (props, context) => {
     timer_trigger,
     timer_trigger_delay,
   } = program;
-
   const extra_settings = program.extra_settings || [];
-
   return (
     <Section
       title={name}
@@ -77,14 +70,14 @@ export const NaniteInfoBox = (props, context) => {
               {use_rate}
             </LabeledList.Item>
             {!!can_trigger && (
-              <Fragment>
+              <>
                 <LabeledList.Item label="Trigger Cost">
                   {trigger_cost}
                 </LabeledList.Item>
                 <LabeledList.Item label="Trigger Cooldown">
                   {trigger_cooldown}
                 </LabeledList.Item>
-              </Fragment>
+              </>
             )}
           </LabeledList>
         </Grid.Column>
@@ -126,14 +119,14 @@ export const NaniteInfoBox = (props, context) => {
                 {timer_shutdown} s
               </LabeledList.Item>
               {!!can_trigger && (
-                <Fragment>
+                <>
                   <LabeledList.Item label="Trigger">
                     {timer_trigger} s
                   </LabeledList.Item>
                   <LabeledList.Item label="Trigger Delay">
                     {timer_trigger_delay} s
                   </LabeledList.Item>
-                </Fragment>
+                </>
               )}
             </LabeledList>
           </Section>
@@ -145,10 +138,12 @@ export const NaniteInfoBox = (props, context) => {
         <LabeledList>
           {extra_settings.map(setting => {
             const naniteTypesDisplayMap = {
-              number: <Fragment>{setting.value}{setting.unit}</Fragment>,
+              number: <>{setting.value}{setting.unit}</>,
               text: setting.value,
               type: setting.value,
-              boolean: (setting.value ? setting.true_text : setting.false_text),
+              boolean: (setting.value
+                ? setting.true_text
+                : setting.false_text),
             };
             return (
               <LabeledList.Item key={setting.name} label={setting.name}>
@@ -165,18 +160,16 @@ export const NaniteInfoBox = (props, context) => {
 export const NaniteCloudBackupList = (props, context) => {
   const { act, data } = useBackend(context);
   const cloud_backups = data.cloud_backups || [];
-  return (
-    cloud_backups.map(backup => (
-      <Button
-        fluid
-        key={backup.cloud_id}
-        content={"Backup #" + backup.cloud_id}
-        textAlign="center"
-        onClick={() => act('set_view', {
-          view: backup.cloud_id,
-        })} />
-    ))
-  );
+  return cloud_backups.map(backup => (
+    <Button
+      fluid
+      key={backup.cloud_id}
+      content={"Backup #" + backup.cloud_id}
+      textAlign="center"
+      onClick={() => act('set_view', {
+        view: backup.cloud_id,
+      })} />
+  ));
 };
 
 export const NaniteCloudBackupDetails = (props, context) => {
@@ -187,9 +180,7 @@ export const NaniteCloudBackupDetails = (props, context) => {
     has_program,
     cloud_backup,
   } = data;
-
   const can_rule = (disk && disk.can_rule) || false;
-
   if (!cloud_backup) {
     return (
       <NoticeBox>
@@ -197,9 +188,7 @@ export const NaniteCloudBackupDetails = (props, context) => {
       </NoticeBox>
     );
   }
-
   const cloud_programs = data.cloud_programs || [];
-
   return (
     <Section
       title={"Backup #" + current_view}
@@ -278,9 +267,11 @@ export const NaniteCloudControl = (props, context) => {
     current_view,
     new_backup_id,
   } = data;
-
   return (
-    <Window resizable>
+    <Window
+      width={375}
+      height={700}
+      resizable>
       <Window.Content scrollable>
         <Section
           title="Program Disk"
@@ -304,7 +295,7 @@ export const NaniteCloudControl = (props, context) => {
                   view: 0,
                 })} />
             ) : (
-              <Fragment>
+              <>
                 {"New Backup: "}
                 <NumberInput
                   value={new_backup_id}
@@ -318,7 +309,7 @@ export const NaniteCloudControl = (props, context) => {
                 <Button
                   icon="plus"
                   onClick={() => act('create_backup')} />
-              </Fragment>
+              </>
             )
           )}>
           {!data.current_view ? (

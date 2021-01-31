@@ -9,15 +9,13 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	climbable = TRUE
-	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
-	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
 	open_sound = 'sound/machines/crate_open.ogg'
 	close_sound = 'sound/machines/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
+	var/climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/Initialize()
@@ -25,6 +23,7 @@
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
 	update_icon()
+	AddElement(/datum/element/climbable, climb_time = opened ? climb_time : climb_time * 0.5, climb_stun = 0)
 
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
@@ -50,6 +49,17 @@
 		return
 	if(manifest)
 		tear_manifest(user)
+
+/obj/structure/closet/crate/after_open(mob/living/user, force)
+	. = ..()
+	RemoveElement(/datum/element/climbable)
+	AddElement(/datum/element/climbable, climb_time = climb_time * 0.5, climb_stun = 0)
+
+/obj/structure/closet/crate/after_close(mob/living/user)
+	. = ..()
+	RemoveElement(/datum/element/climbable)
+	AddElement(/datum/element/climbable, climb_time = climb_time, climb_stun = 0)
+
 
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
@@ -82,6 +92,27 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
+
+/obj/structure/closet/crate/maint
+
+/obj/structure/closet/crate/maint/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/lootdrop/maintenance(src)
+
+/obj/structure/closet/crate/trashcart/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
+
+/obj/structure/closet/crate/trashcart/filled
+
+/obj/structure/closet/crate/trashcart/filled/PopulateContents()
+	. = ..()
+	for(var/i in 1 to rand(7,15))
+		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		if(prob(12))
+			new	/obj/item/storage/bag/trash/filled(src)
+	new /obj/effect/spawner/scatter/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -228,3 +259,11 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/coin/silver(src)
+
+/obj/structure/closet/crate/decorations
+	icon_state = "engi_crate"
+
+/obj/structure/closet/crate/decorations/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /obj/effect/spawner/lootdrop/decorations_spawner(src)

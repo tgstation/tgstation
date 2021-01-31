@@ -1,18 +1,18 @@
 /**
-  * Finds and extracts seeds from an object
-  *
-  * Checks if the object is such that creates a seed when extracted.  Used by seed
-  * extractors or posably anything that would create seeds in some way.  The seeds
-  * are dropped either at the extractor, if it exists, or where the original object
-  * was and it qdel's the object
-  *
-  * Arguments:
-  * * O - Object containing the seed, can be the loc of the dumping of seeds
-  * * t_max - Amount of seed copies to dump, -1 is ranomized
-  * * extractor - Seed Extractor, used as the dumping loc for the seeds and seed multiplier
-  * * user - checks if we can remove the object from the inventory
-  * *
-  */
+ * Finds and extracts seeds from an object
+ *
+ * Checks if the object is such that creates a seed when extracted.  Used by seed
+ * extractors or posably anything that would create seeds in some way.  The seeds
+ * are dropped either at the extractor, if it exists, or where the original object
+ * was and it qdel's the object
+ *
+ * Arguments:
+ * * O - Object containing the seed, can be the loc of the dumping of seeds
+ * * t_max - Amount of seed copies to dump, -1 is ranomized
+ * * extractor - Seed Extractor, used as the dumping loc for the seeds and seed multiplier
+ * * user - checks if we can remove the object from the inventory
+ * *
+ */
 /proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	var/t_amount = 0
 	var/list/seeds = list()
@@ -26,8 +26,8 @@
 	if(extractor)
 		seedloc = extractor.loc
 
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
-		var/obj/item/reagent_containers/food/snacks/grown/F = O
+	if(istype(O, /obj/item/food/grown/))
+		var/obj/item/food/grown/F = O
 		if(F.seed)
 			if(user && !user.temporarilyRemoveItemFromInventory(O)) //couldn't drop the item
 				return
@@ -66,8 +66,6 @@
 	var/list/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
-	ui_x = 1000
-	ui_y = 400
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -122,24 +120,24 @@
 		return ..()
 
 /**
-  * Generate seed string
-  *
-  * Creates a string based of the traits of a seed.  We use this string as a bucket for all
-  * seeds that match as well as the key the ui uses to get the seed.  We also use the key
-  * for the data shown in the ui.  Javascript parses this string to display
-  *
-  * Arguments:
-  * * O - seed to generate the string from
-  */
+ * Generate seed string
+ *
+ * Creates a string based of the traits of a seed.  We use this string as a bucket for all
+ * seeds that match as well as the key the ui uses to get the seed.  We also use the key
+ * for the data shown in the ui.  Javascript parses this string to display
+ *
+ * Arguments:
+ * * O - seed to generate the string from
+ */
 /obj/machinery/seed_extractor/proc/generate_seed_string(obj/item/seeds/O)
 	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency];instability=[O.instability]"
 
 
 /** Add Seeds Proc.
-  *
-  * Adds the seeds to the contents and to an associated list that pregenerates the data
-  * needed to go to the ui handler
-  *
+ *
+ * Adds the seeds to the contents and to an associated list that pregenerates the data
+ * needed to go to the ui handler
+ *
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
@@ -163,11 +161,13 @@
 
 	. = TRUE
 
-/obj/machinery/seed_extractor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/seed_extractor/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+/obj/machinery/seed_extractor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SeedExtractor", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "SeedExtractor", name)
 		ui.open()
 
 /obj/machinery/seed_extractor/ui_data()
@@ -182,7 +182,8 @@
 	.["seeds"] = V
 
 /obj/machinery/seed_extractor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

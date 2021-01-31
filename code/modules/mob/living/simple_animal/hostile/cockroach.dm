@@ -33,6 +33,17 @@
 	faction = list("neutral")
 	var/squish_chance = 50
 
+/mob/living/simple_animal/hostile/cockroach/Initialize()
+	. = ..()
+	add_cell_sample()
+	make_squashable()
+
+/mob/living/simple_animal/hostile/cockroach/proc/make_squashable()
+	AddElement(/datum/element/squashable, squash_chance = 50, squash_damage = 1)
+
+/mob/living/simple_animal/hostile/cockroach/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
 	damage_type = BRUTE
@@ -61,27 +72,37 @@
 		return
 	..()
 
-/mob/living/simple_animal/hostile/cockroach/Crossed(var/atom/movable/AM)
-	. = ..()
-	if(ismob(AM))
-		if(isliving(AM))
-			var/mob/living/A = AM
-			if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
-				if(HAS_TRAIT(A, TRAIT_PACIFISM))
-					A.visible_message("<span class='notice'>[A] carefully steps over [src].</span>", "<span class='notice'>You carefully step over [src] to avoid hurting it.</span>")
-					return
-				if(prob(squish_chance))
-					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
-					adjustBruteLoss(1) //kills a normal cockroach
-				else
-					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
-	else
-		if(isstructure(AM))
-			if(prob(squish_chance))
-				AM.visible_message("<span class='notice'>[src] is crushed under [AM].</span>")
-				adjustBruteLoss(1)
-			else
-				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
-
 /mob/living/simple_animal/hostile/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return
+
+/mob/living/simple_animal/hostile/cockroach/hauberoach
+	name = "hauberoach"
+	desc = "Is that cockroach wearing a tiny yet immaculate replica 19th century Prussian spiked helmet? ...Is that a bad thing?"
+	icon_state = "hauberoach"
+	attack_verb_continuous = "rams its spike into"
+	attack_verb_simple = "ram your spike into"
+	melee_damage_lower = 5
+	melee_damage_upper = 20
+	obj_damage = 20
+	gold_core_spawnable = HOSTILE_SPAWN
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	faction = list("hostile")
+	sharpness = SHARP_POINTY
+	squish_chance = 0 // manual squish if relevant
+
+/mob/living/simple_animal/hostile/cockroach/hauberoach/Initialize()
+	. = ..()
+	AddElement(/datum/element/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
+
+/mob/living/simple_animal/hostile/cockroach/hauberoach/make_squashable()
+	AddElement(/datum/element/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/simple_animal/hostile/cockroach/hauberoach/.proc/on_squish)
+
+///Proc used to override the squashing behavior of the normal cockroach.
+/mob/living/simple_animal/hostile/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
+	if(!istype(living_target))
+		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
+	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
+		living_target.visible_message("<span class='danger'>[living_target] steps onto [cockroach]'s spike!</span>", "<span class='userdanger'>You step onto [cockroach]'s spike!</span>")
+		return TRUE
+	living_target.visible_message("<span class='notice'>[living_target] squashes [cockroach], not even noticing its spike.</span>", "<span class='notice'>You squashed [cockroach], not even noticing its spike.</span>")
+	return FALSE

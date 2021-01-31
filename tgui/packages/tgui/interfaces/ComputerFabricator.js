@@ -1,5 +1,4 @@
 import { multiline } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Grid, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
@@ -7,7 +6,11 @@ import { Window } from '../layouts';
 export const ComputerFabricator = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      title="Personal Computer Vendor"
+      width={500}
+      height={400}
+      resizable>
       <Window.Content>
         <Section italic fontSize="20px">
           Your perfect device, only three steps away...
@@ -61,7 +64,7 @@ const CfStep1 = (props, context) => {
               content="Laptop"
               textAlign="center"
               fontSize="30px"
-              lineHeight="50px"
+              lineHeight={2}
               onClick={() => act('pick_device', {
                 pick: '1',
               })} />
@@ -73,7 +76,7 @@ const CfStep1 = (props, context) => {
               content="Tablet"
               textAlign="center"
               fontSize="30px"
-              lineHeight="50px"
+              lineHeight={2}
               onClick={() => act('pick_device', {
                 pick: '2',
               })} />
@@ -108,7 +111,7 @@ const CfStep2 = (props, context) => {
               `}
               position="right" />
           </Table.Cell>
-          <Table.Cell >
+          <Table.Cell>
             <Button
               content="Standard"
               selected={data.hw_battery === 1}
@@ -238,13 +241,14 @@ const CfStep2 = (props, context) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell bold position="relative">
-            Card Reader:
+            Secondary Card Reader:
             <Tooltip
               content={multiline`
-                Adds a slot that allows you to manipulate RFID cards.
-                Please note that this is not necessary to allow the device
-                to read your identification, it is just necessary to
-                manipulate other cards.
+                Adds a secondary RFID card reader, for manipulating or
+                reading from a second standard RFID card.
+                Please note that a primary card reader is necessary to
+                allow the device to read your identification, but one
+                is included in the base price.
               `}
               position="right" />
           </Table.Cell>
@@ -266,7 +270,7 @@ const CfStep2 = (props, context) => {
           </Table.Cell>
         </Table.Row>
         {data.devtype !== 2 && (
-          <Fragment>
+          <>
             <Table.Row>
               <Table.Cell bold position="relative">
                 Processor Unit:
@@ -325,7 +329,7 @@ const CfStep2 = (props, context) => {
                   })} />
               </Table.Cell>
             </Table.Row>
-          </Fragment>
+          </>
         )}
       </Table>
       <Button
@@ -335,7 +339,7 @@ const CfStep2 = (props, context) => {
         color="good"
         textAlign="center"
         fontSize="18px"
-        lineHeight="26px"
+        lineHeight={2}
         onClick={() => act('confirm_order')} />
     </Section>
   );
@@ -389,7 +393,7 @@ const CfStep3 = (props, context) => {
         color="good"
         textAlign="center"
         fontSize="20px"
-        lineHeight="28px"
+        lineHeight={2}
         onClick={() => act('purchase')} />
     </Section>
   );

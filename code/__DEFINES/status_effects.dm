@@ -85,6 +85,14 @@
 
 #define STATUS_EFFECT_LIMP /datum/status_effect/limp //For when you have a busted leg (or two!) and want additional slowdown when walking on that leg
 
+#define STATUS_EFFECT_AMOK /datum/status_effect/amok //Makes the target automatically strike out at adjecent non-heretics.
+
+#define STATUS_EFFECT_CLOUDSTRUCK /datum/status_effect/cloudstruck //blinds and applies an overlay.
+
+/// Makes the mob move randomly.
+/// Read the documentation for /datum/status_effect/confusion for more information.
+#define STATUS_EFFECT_CONFUSION /datum/status_effect/confusion
+
 /////////////
 // NEUTRAL //
 /////////////
@@ -100,6 +108,10 @@
 #define STATUS_EFFECT_HELDUP /datum/status_effect/heldup // someone is currently pointing a gun at you
 
 #define STATUS_EFFECT_HOLDUP /datum/status_effect/holdup // you are currently pointing a gun at someone
+
+#define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_fiving // you are angling for a high five
+
+#define STATUS_EFFECT_SURRENDER /datum/status_effect/surrender // gives an alert to quickly surrender
 /////////////
 //  SLIME  //
 /////////////
@@ -110,6 +122,8 @@
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
+
+#define STASIS_ASCENSION_EFFECT "heretic_ascension"
 
 // Stasis helpers
 

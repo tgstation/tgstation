@@ -2,28 +2,13 @@
 
 /area/ruin/space
 	has_gravity = FALSE
-	blob_allowed = FALSE //Nope, no winning in space as a blob. Gotta eat the station.
+	area_flags = UNIQUE_AREA
 
 /area/ruin/space/has_grav
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/has_grav/powered
 	requires_power = FALSE
-
-
-/area/ruin/fakespace
-	icon_state = "space"
-	requires_power = TRUE
-	always_unpowered = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	has_gravity = FALSE
-	power_light = FALSE
-	power_equip = FALSE
-	power_environ = FALSE
-	valid_territory = FALSE
-	outdoors = TRUE
-	ambientsounds = SPACE
-	blob_allowed = FALSE
 
 /////////////
 
@@ -243,7 +228,7 @@
 /area/ruin/space/has_grav/ancientstation/atmo
 	name = "Beta Station Atmospherics"
 	icon_state = "red"
-	ambientsounds = ENGINEERING
+	ambience_index = AMBIENCE_ENGI
 	has_gravity = TRUE
 
 /area/ruin/space/has_grav/ancientstation/betacorridor
@@ -253,7 +238,7 @@
 /area/ruin/space/has_grav/ancientstation/engi
 	name = "Charlie Station Engineering"
 	icon_state = "engine"
-	ambientsounds = ENGINEERING
+	ambience_index = AMBIENCE_ENGI
 
 /area/ruin/space/has_grav/ancientstation/comm
 	name = "Charlie Station Command"
@@ -428,4 +413,4 @@
 /area/ruin/space/has_grav/hellfactoryoffice
 	name = "Hell Factory Office"
 	icon_state = "red"
-	noteleport = TRUE
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT

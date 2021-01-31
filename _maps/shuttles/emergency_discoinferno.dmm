@@ -88,12 +88,12 @@
 "q" = (
 /obj/structure/statue/plasma/scientist{
 	anchored = 1;
-	oreAmount = 50
+	custom_materials = list(/datum/material/plasma = 100000)
 	},
 /turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
 "r" = (
-/turf/open/floor/mineral/plasma,
+/turf/open/floor/mineral/plasma/disco,
 /area/shuttle/escape)
 "s" = (
 /turf/open/floor/mineral/silver,
@@ -110,7 +110,7 @@
 	heat_proof = 1;
 	resistance_flags = 2
 	},
-/turf/open/floor/mineral/plasma,
+/turf/open/floor/mineral/plasma/disco,
 /area/shuttle/escape)
 "v" = (
 /obj/machinery/jukebox/disco/indestructible,

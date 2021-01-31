@@ -58,7 +58,7 @@
 	icon_state = icon_state_powered
 
 	if(!cpu || !cpu.enabled)
-		if (!(machine_stat & NOPOWER) && (cpu && cpu.use_power()))
+		if (!(machine_stat & NOPOWER) && (cpu?.use_power()))
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
@@ -74,30 +74,6 @@
 		add_overlay("bsod")
 		add_overlay("broken")
 
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_id()
-	set name = "Eject ID"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_id()
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_disk()
-	set name = "Eject Data Disk"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_disk()
-
-/obj/machinery/modular_computer/proc/eject_card()
-	set name = "Eject Intellicard"
-	set category = "Object"
-	set src in view(1)
-
-	if(cpu)
-		cpu.eject_card()
-
 /obj/machinery/modular_computer/AltClick(mob/user)
 	if(cpu)
 		cpu.AltClick(user)
@@ -111,32 +87,36 @@
 		return ..()
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/machinery/modular_computer/process()
+/obj/machinery/modular_computer/process(delta_time)
 	if(cpu)
 		// Keep names in sync.
 		cpu.name = name
-		cpu.process()
+		cpu.process(delta_time)
 
 // Used in following function to reduce copypaste
 /obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
 	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
-	if(cpu && cpu.enabled) // Shut down the computer
+	if(cpu?.enabled) // Shut down the computer
 		visible_message("<span class='danger'>\The [src]'s screen flickers [battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
 			cpu.shutdown_computer(0)
-	machine_stat |= NOPOWER
+	set_machine_stat(machine_stat | NOPOWER)
 	update_icon()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
-	if(cpu && cpu.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
-		machine_stat &= ~NOPOWER
+	if(cpu?.use_power()) // If MC_CPU still has a power source, PC wouldn't go offline.
+		set_machine_stat(machine_stat & ~NOPOWER)
 		update_icon()
 		return
 	. = ..()
 
-/obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
-	if(cpu && !(flags_1 & NODECONSTRUCT_1))
+/obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+	if(cpu)
+		return cpu.screwdriver_act(user, tool)
+
+/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/user)
+	if (user.a_intent == INTENT_HELP && cpu && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
 	return ..()
 
@@ -147,11 +127,11 @@
 	if(cpu)
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highobj += cpu
+				SSexplosions.high_mov_atom += cpu
 			if(EXPLODE_HEAVY)
-				SSexplosions.medobj += cpu
+				SSexplosions.med_mov_atom += cpu
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowobj += cpu
+				SSexplosions.low_mov_atom += cpu
 	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components

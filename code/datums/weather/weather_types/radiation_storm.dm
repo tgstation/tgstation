@@ -21,7 +21,7 @@
 	/area/ai_monitored/turret_protected/ai, /area/storage/emergency/starboard, /area/storage/emergency/port, /area/shuttle, /area/security/prison/safe, /area/security/prison/toilet)
 	target_trait = ZTRAIT_STATION
 
-	immunity_type = "rad"
+	immunity_type = RAD
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -29,7 +29,7 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-	var/resist = L.getarmor(null, "rad")
+	var/resist = L.getarmor(null, RAD)
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L

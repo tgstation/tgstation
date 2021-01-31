@@ -1,5 +1,4 @@
 import { map } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -7,7 +6,11 @@ import { Window } from '../layouts';
 export const ShuttleManipulator = (props, context) => {
   const [tab, setTab] = useLocalState(context, 'tab', 1);
   return (
-    <Window resizable>
+    <Window
+      title="Shuttle Manipulator"
+      width={800}
+      height={600}
+      resizable>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -78,7 +81,7 @@ export const ShuttleManipulatorStatus = (props, context) => {
             <Table.Cell>
               {shuttle.mode}
               {!!shuttle.timer && (
-                <Fragment>
+                <>
                   ({shuttle.timeleft})
                   <Button
                     content="Fast Travel"
@@ -87,7 +90,7 @@ export const ShuttleManipulatorStatus = (props, context) => {
                     onClick={() => act('fast_travel', {
                       id: shuttle.id,
                     })} />
-                </Fragment>
+                </>
               )}
             </Table.Cell>
           </Table.Row>
@@ -105,7 +108,7 @@ export const ShuttleManipulatorTemplates = (props, context) => {
     selectedTemplateId,
     setSelectedTemplateId,
   ] = useLocalState(context, 'templateId', Object.keys(templateObject)[0]);
-  const actualTemplates = templateObject[selectedTemplateId]?.templates;
+  const actualTemplates = templateObject[selectedTemplateId]?.templates || [];
   return (
     <Section>
       <Flex>
@@ -172,7 +175,7 @@ export const ShuttleManipulatorModification = (props, context) => {
   return (
     <Section>
       {selected ? (
-        <Fragment>
+        <>
           <Section
             level={2}
             title={selected.name}>
@@ -208,9 +211,9 @@ export const ShuttleManipulatorModification = (props, context) => {
                   )}>
                   {existingShuttle.status}
                   {!!existingShuttle.timer && (
-                    <Fragment>
+                    <>
                       ({existingShuttle.timeleft})
-                    </Fragment>
+                    </>
                   )}
                 </LabeledList.Item>
               </LabeledList>
@@ -224,18 +227,24 @@ export const ShuttleManipulatorModification = (props, context) => {
             level={2}
             title="Status">
             <Button
+              content="Load"
+              color="good"
+              onClick={() => act('load', {
+                shuttle_id: selected.shuttle_id,
+              })} />
+            <Button
               content="Preview"
               onClick={() => act('preview', {
                 shuttle_id: selected.shuttle_id,
               })} />
             <Button
-              content="Load"
+              content="Replace"
               color="bad"
-              onClick={() => act('load', {
+              onClick={() => act('replace', {
                 shuttle_id: selected.shuttle_id,
               })} />
           </Section>
-        </Fragment>
+        </>
       ) : 'No shuttle selected'}
     </Section>
   );

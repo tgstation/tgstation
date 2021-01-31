@@ -29,35 +29,23 @@
 
 /obj/machinery/medical_kiosk/Initialize() //loaded subtype for mapping use
 	. = ..()
+	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	scanner_wand = new/obj/item/scanner_wand(src)
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
-	if (pandemonium == TRUE)
-		active_price += (rand(10,30)) //The wheel of capitalism says health care ain't cheap.
-	if(!istype(C))
-		say("No ID card detected.") // No unidentified crew.
-		return
-	if(C.registered_account)
+	if(C?.registered_account)
 		account = C.registered_account
-	else
-		say("No account detected.")  //No homeless crew.
-		return
 	if(account?.account_job?.paycheck_department == payment_department)
 		use_power(20)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
 		return
-	if(!account.has_money(active_price))
-		say("You do not possess the funds to purchase this.")  //No jobless crew, either.
+	var/bonus_fee = pandemonium ? rand(10,30) : 0
+	if(attempt_charge(src, H, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	else
-		account.adjust_money(-active_price)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_MED)
-		if(D)
-			D.adjust_money(active_price)
-		use_power(20)
-		paying_customer = TRUE
+	use_power(20)
+	paying_customer = TRUE
 	icon_state = "kiosk_active"
 	say("Thank you for your patronage!")
 	RefreshParts()
@@ -71,7 +59,7 @@
 	return
 
 /obj/machinery/medical_kiosk/update_icon_state()
-	if(is_operational())
+	if(is_operational)
 		icon_state = "kiosk_off"
 	else
 		icon_state = "kiosk"
@@ -103,7 +91,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] snaps [O] onto [src]!</span>", \
 		"<span class='notice'>You press [O] into the side of [src], clicking into place.</span>")
-		 //This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
+		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 		if(W.selected_target)
 			if(!(altPatient == W.return_patient()))
 				clearScans()
@@ -153,7 +141,7 @@
 	else
 		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
 
-/obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
@@ -169,10 +157,9 @@
 		say("Patient out of range. Resetting biometrics.")
 		clearScans()
 		return
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "MedicalKiosk", name, 575, 420, master_ui, state)
+		ui = new(user, src, "MedicalKiosk", name)
 		ui.open()
 		icon_state = "kiosk_off"
 		RefreshParts()
@@ -224,18 +211,19 @@
 	var/clone_loss = altPatient.getCloneLoss()
 	var/brain_loss = altPatient.getOrganLoss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
-	if(LAZYLEN(user.get_traumas()))
+	if(LAZYLEN(altPatient.get_traumas()))
 		var/list/trauma_text = list()
-		for(var/datum/brain_trauma/B in altPatient.get_traumas())
+		for(var/t in altPatient.get_traumas())
+			var/datum/brain_trauma/trauma = t
 			var/trauma_desc = ""
-			switch(B.resilience)
+			switch(trauma.resilience)
 				if(TRAUMA_RESILIENCE_SURGERY)
 					trauma_desc += "severe "
 				if(TRAUMA_RESILIENCE_LOBOTOMY)
 					trauma_desc += "deep-rooted "
 				if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
 					trauma_desc += "permanent "
-			trauma_desc += B.scan_desc
+			trauma_desc += trauma.scan_desc
 			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
 
@@ -245,14 +233,24 @@
 	var/hallucination_status = "Patient is not hallucinating."
 
 	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
-		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
-			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
-			if(R.overdosed == 1)
-				overdose_list += list(list("name" = R.name))
-
-	if(altPatient.reagents.addiction_list.len)
-		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
-			addict_list += list(list("name" = R.name))
+		for(var/r in altPatient.reagents.reagent_list)
+			var/datum/reagent/reagent = r
+			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
+			if(reagent.overdosed)
+				overdose_list += list(list("name" = reagent.name))
+	var/obj/item/organ/stomach/belly = altPatient.getorganslot(ORGAN_SLOT_STOMACH)
+	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
+		for(var/bile in belly.reagents.reagent_list)
+			var/datum/reagent/bit = bile
+			if(!belly.food_reagents[bit.type])
+				chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
+			else
+				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
+				if(bit_vol > 0)
+					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
+	for(var/a in altPatient.reagents.addiction_list)
+		var/datum/reagent/addiction = a
+		addict_list += list(list("name" = addiction.name))
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
@@ -329,26 +327,32 @@
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("beginScan_1")
-			inuse()
+			if(!scan_active_1)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_1 = TRUE
 				paying_customer = FALSE
 		if("beginScan_2")
-			inuse()
+			if(!scan_active_2)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_2 = TRUE
 				paying_customer = FALSE
 		if("beginScan_3")
-			inuse()
+			if(!scan_active_3)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_3 = TRUE
 				paying_customer = FALSE
 		if("beginScan_4")
-			inuse()
+			if(!scan_active_4)
+				inuse()
 			if(paying_customer == TRUE)
 				scan_active_4 = TRUE
 				paying_customer = FALSE

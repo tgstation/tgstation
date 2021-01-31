@@ -12,7 +12,7 @@
 /obj/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
 	if(isobj(target) && (blocked != 100) && breakthings)
 		var/obj/O = target
-		O.take_damage(80, BRUTE, "bullet", FALSE)
+		O.take_damage(80, BRUTE, BULLET, FALSE)
 	return ..()
 
 /obj/projectile/bullet/p50/soporific
@@ -33,7 +33,8 @@
 	name = "penetrator round"
 	icon_state = "gauss"
 	damage = 60
-	movement_type = FLYING | UNSTOPPABLE
+	projectile_piercing = PASSMOB
+	projectile_phasing = (ALL & (~PASSMOB))
 	dismemberment = 0 //It goes through you cleanly.
 	paralyze = 0
 	breakthings = FALSE

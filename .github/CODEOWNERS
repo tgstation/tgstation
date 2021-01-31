@@ -14,6 +14,7 @@
 
 # Cyberboss
 
+/code/__HELPERS/jatum.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss
@@ -24,12 +25,23 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
+/tools/LinuxOneShot/ @Cyberboss
+/tools/tgs4_scripts/ @Cyberboss
+
+# Jared-Fogle
+
+/code/modules/unit_tests/ @Jared-Fogle
 
 # Jordie0608
 
 /SQL/ @Jordie0608
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
+
+# LemonInTheDark
+
+/code/__DEFINES/atmospherics.dm @LemonInTheDark
+/code/modules/atmospherics/ @LemonInTheDark
 
 # MrStonedOne
 
@@ -40,6 +52,8 @@
 /code/controllers/failsafe.dm @MrStonedOne
 /code/controllers/subsystem.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
+/code/controllers/configuration/entries @MrStonedOne
+/config/ @MrStonedOne
 
 # ninjanomnom
 
@@ -52,17 +66,24 @@
 
 # ShizCalev
 
-/_maps/ @ShizCalev
-/icons/ @ShizCalev
 /sound/ @ShizCalev
 
 # stylemistake
 
+/code/__DEFINES/chat.dm @stylemistake
+/code/__DEFINES/tgui.dm @stylemistake
+/code/controllers/subsystem/chat.dm @stylemistake
+/code/controllers/subsystem/tgui.dm @stylemistake
+/code/modules/tgchat @stylemistake
+/code/modules/tgui @stylemistake
+/code/modules/tgui_panel @stylemistake
 /tgui @stylemistake
 
 # Multiple Owners
 
-/code/controllers/subsystem/air.dm @MrStonedOne
+/icons/ @Twaticus @ShizCalev
+/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+/_maps/ @EOBGames @ShizCalev
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

@@ -64,6 +64,8 @@ export class FakeTerminal extends Component {
 export const SyndContractor = (props, context) => {
   return (
     <NtosWindow
+      width={500}
+      height={600}
       theme="syndicate"
       resizable>
       <NtosWindow.Content scrollable>
@@ -190,7 +192,7 @@ export const SyndContractorContent = (props, context) => {
 
   if (data.info_screen) {
     return (
-      <Fragment>
+      <>
         <Box
           backgroundColor="rgba(0, 0, 0, 0.8)"
           minHeight="500px">
@@ -204,15 +206,15 @@ export const SyndContractorContent = (props, context) => {
           color="transparent"
           textAlign="center"
           onClick={() => act('PRG_toggle_info')} />
-      </Fragment>
+      </>
     );
   }
 
   return (
-    <Fragment>
+    <>
       {errorPane}
       <SyndPane />
-    </Fragment>
+    </>
   );
 };
 
@@ -222,7 +224,7 @@ export const StatusPane = (props, context) => {
   return (
     <Section
       title={(
-        <Fragment>
+        <>
           Contractor Status
           <Button
             content="View Information Again"
@@ -230,7 +232,7 @@ export const StatusPane = (props, context) => {
             mb={0}
             ml={1}
             onClick={() => act('PRG_toggle_info')} />
-        </Fragment>
+        </>
       )}
       buttons={(
         <Box bold mr={1}>
@@ -241,7 +243,7 @@ export const StatusPane = (props, context) => {
         <Grid.Column size={0.85}>
           <LabeledList>
             <LabeledList.Item
-              label="TC Availible"
+              label="TC Available"
               buttons={(
                 <Button
                   content="Claim"
@@ -273,7 +275,7 @@ export const StatusPane = (props, context) => {
 export const SyndPane = (props, context) => {
   const [tab, setTab] = useLocalState(context, 'tab', 1);
   return (
-    <Fragment>
+    <>
       <StatusPane state={props.state} />
       <Tabs>
         <Tabs.Tab
@@ -293,7 +295,7 @@ export const SyndPane = (props, context) => {
       {tab === 2 && (
         <HubTab />
       )}
-    </Fragment>
+    </>
   );
 };
 
@@ -301,9 +303,9 @@ const ContractsTab = (props, context) => {
   const { act, data } = useBackend(context);
   const contracts = data.contracts || [];
   return (
-    <Fragment>
+    <>
       <Section
-        title="Availible Contracts"
+        title="Available Contracts"
         buttons={(
           <Button
             content="Call Extraction"
@@ -327,7 +329,7 @@ const ContractsTab = (props, context) => {
                 : "Invalid Target"}
               level={active ? 1 : 2}
               buttons={(
-                <Fragment>
+                <>
                   <Box
                     inline
                     bold
@@ -343,7 +345,7 @@ const ContractsTab = (props, context) => {
                       {
                         contract_id: contract.id,
                       })} />
-                </Fragment>
+                </>
               )}>
               <Grid>
                 <Grid.Column>
@@ -372,7 +374,7 @@ const ContractsTab = (props, context) => {
           {data.dropoff_direction}
         </Box>
       </Section>
-    </Fragment>
+    </>
   );
 };
 
@@ -390,12 +392,9 @@ const HubTab = (props, context) => {
             title={item.name + ' - ' + repInfo}
             level={2}
             buttons={(
-              <Fragment>
+              <>
                 {limited && (
-                  <Box
-                    inline
-                    bold
-                    mr={1}>
+                  <Box inline bold mr={1}>
                     {item.limited} remaining
                   </Box>
                 )}
@@ -407,7 +406,7 @@ const HubTab = (props, context) => {
                     item: item.name,
                     cost: item.cost,
                   })} />
-              </Fragment>
+              </>
             )}>
             <Table>
               <Table.Row>

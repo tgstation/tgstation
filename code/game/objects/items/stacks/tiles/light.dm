@@ -4,8 +4,10 @@
 	desc = "A floor tile, made out of glass. It produces light."
 	icon_state = "tile_e"
 	flags_1 = CONDUCT_1
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
+	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "smashes")
+	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	turf_type = /turf/open/floor/light
+	merge_type = /obj/item/stack/tile/light
 	var/state = 0
 
 /obj/item/stack/tile/light/attackby(obj/item/O, mob/user, params)
@@ -17,3 +19,8 @@
 			qdel(src)
 	else
 		return ..()
+
+/obj/item/stack/tile/light/place_tile(turf/open/T)
+	. = ..()
+	var/turf/open/floor/light/F = .
+	F?.state = state

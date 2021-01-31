@@ -72,7 +72,10 @@ export const RapidPipeDispenser = (props, context) => {
     .find(category => category.cat_name === categoryName)
     || categories[0];
   return (
-    <Window resizable>
+    <Window
+      width={425}
+      height={515}
+      resizable>
       <Window.Content scrollable>
         <Section>
           <LabeledList>
@@ -125,7 +128,7 @@ export const RapidPipeDispenser = (props, context) => {
             <Section>
               {rootCategoryIndex === 0 && (
                 <Box mb={1}>
-                  {[1, 2, 3].map(layer => (
+                  {[1, 2, 3, 4, 5].map(layer => (
                     <Button.Checkbox
                       key={layer}
                       fluid

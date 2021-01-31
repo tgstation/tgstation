@@ -17,8 +17,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
 	density = TRUE
-	ui_x = 600
-	ui_y = 532
 	var/obj/item/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
@@ -37,8 +35,8 @@
 	possible_gear = get_abductor_gear()
 
 /**
-  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
-  */
+ * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
+ */
 /obj/machinery/abductor/console/proc/get_abductor_gear()
 	var/list/filtered_modules = list()
 	for(var/path in GLOB.abductor_gear)
@@ -62,11 +60,13 @@
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/abductor/console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/abductor/console/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/abductor/console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AbductorConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AbductorConsole", name)
 		ui.open()
 
 /obj/machinery/abductor/console/ui_static_data(mob/user)
@@ -143,7 +143,7 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(pad && gizmo && gizmo.marked)
+	if(pad && gizmo?.marked)
 		pad.Retrieve(gizmo.marked)
 
 /obj/machinery/abductor/console/proc/TeleporterSend()

@@ -60,20 +60,19 @@
 	name = "Pyromancy Evaluation"
 	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutelage."
 
-
+/// The immobile, close pulling singularity seen in the academy away mission
 /obj/singularity/academy
-	dissipate = 0
-	move_self = 0
-	grav_pull = 1
+	move_self = FALSE
 
-/obj/singularity/academy/admin_investigate_setup()
-	return
+/obj/singularity/academy/Initialize()
+	. = ..()
 
-/obj/singularity/academy/process()
-	eat()
-	if(prob(1))
+	var/datum/component/singularity/singularity = singularity_component.resolve()
+	singularity?.grav_pull = 1
+
+/obj/singularity/academy/process(delta_time)
+	if(DT_PROB(0.5, delta_time))
 		mezzer()
-
 
 /obj/item/clothing/glasses/meson/truesight
 	name = "The Lens of Truesight"
@@ -170,6 +169,8 @@
 	microwave_riggable = FALSE
 	var/reusable = TRUE
 	var/used = FALSE
+	/// So you can't roll the die 20 times in a second and stack a bunch of effects that might conflict
+	COOLDOWN_DECLARE(roll_cd)
 
 /obj/item/dice/d20/fate/one_use
 	reusable = FALSE
@@ -200,19 +201,26 @@
 	reusable = FALSE
 
 /obj/item/dice/d20/fate/diceroll(mob/user)
+	if(!COOLDOWN_FINISHED(src, roll_cd))
+		to_chat(user, "<span class='warning'>Hold on, [src] isn't caught up with your last roll!</span>")
+		return
+
 	. = ..()
-	if(!used)
-		if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
-			to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>")
-			return
+	if(used)
+		return
 
-		if(!reusable)
-			used = TRUE
+	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
+		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>")
+		return
 
-		var/turf/T = get_turf(src)
-		T.visible_message("<span class='userdanger'>[src] flares briefly.</span>")
+	if(!reusable)
+		used = TRUE
 
-		addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
+	var/turf/T = get_turf(src)
+	T.visible_message("<span class='userdanger'>[src] flares briefly.</span>")
+
+	addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
+	COOLDOWN_START(src, roll_cd, 2.5 SECONDS)
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	. = ..()
@@ -221,13 +229,12 @@
 		user.dropItemToGround(src)
 
 
-/obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
+/obj/item/dice/d20/fate/proc/effect(mob/living/carbon/human/user,roll)
 	var/turf/T = get_turf(src)
 	switch(roll)
 		if(1)
 			//Dust
 			T.visible_message("<span class='userdanger'>[user] turns to dust!</span>")
-			user.hellbound = TRUE
 			user.dust()
 		if(2)
 			//Death
@@ -276,7 +283,7 @@
 		if(11)
 			//Cookie
 			T.visible_message("<span class='userdanger'>A cookie appears out of thin air!</span>")
-			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location())
+			var/obj/item/food/cookie/C = new(drop_location())
 			do_smoke(0, drop_location())
 			C.name = "Cookie of Fate"
 		if(12)

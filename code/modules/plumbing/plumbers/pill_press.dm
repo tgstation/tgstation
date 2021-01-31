@@ -3,6 +3,7 @@
 	name = "chemical press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
+
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch
@@ -27,9 +28,6 @@
 	var/list/stored_products = list()
 	///max amount of pills allowed on our tile before we start storing them instead
 	var/max_floor_products = 10
-
-	ui_x = 300
-	ui_y = 227
 
 /obj/machinery/plumbing/pill_press/examine(mob/user)
 	. = ..()
@@ -75,7 +73,9 @@
 			stored_products += P
 	if(stored_products.len)
 		var/pill_amount = 0
-		for(var/obj/item/reagent_containers/pill/P in loc)
+		for(var/thing in loc)
+			if(!istype(thing, /obj/item/reagent_containers/glass/bottle) && !istype(thing, /obj/item/reagent_containers/pill))
+				continue
 			pill_amount++
 			if(pill_amount >= max_floor_products) //too much so just stop
 				break
@@ -85,16 +85,15 @@
 			AM.forceMove(drop_location())
 
 
-/obj/machinery/plumbing/pill_press/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/machinery/plumbing/pill_press/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/simple/pills),
+	)
 
-/obj/machinery/plumbing/pill_press/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-		assets.send(user)
-		ui = new(user, src, ui_key, "ChemPress", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemPress", name)
 		ui.open()
 
 /obj/machinery/plumbing/pill_press/ui_data(mob/user)
@@ -109,7 +108,8 @@
 	return data
 
 /obj/machinery/plumbing/pill_press/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

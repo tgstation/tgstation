@@ -3,11 +3,9 @@
 	name = "reaction chamber"
 	desc = "Keeps chemicals seperated until given conditions are met."
 	icon_state = "reaction_chamber"
-
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
-	ui_x = 250
-	ui_y = 225
+
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
@@ -19,10 +17,25 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
 
-/obj/machinery/plumbing/reaction_chamber/on_reagent_change()
-	if(reagents.total_volume == 0 && emptying) //we were emptying, but now we aren't
+/obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED), .proc/on_reagent_change)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+
+/// Handles properly detaching signal hooks.
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_PARENT_QDELETING))
+	return NONE
+
+
+/// Handles stopping the emptying process when the chamber empties.
+/obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	if(holder.total_volume == 0 && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
-		reagents.flags |= NO_REACT
+		holder.flags |= NO_REACT
+	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	. = ..()
@@ -31,10 +44,10 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ChemReactionChamber", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemReactionChamber", name)
 		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
@@ -49,7 +62,8 @@
 	return data
 
 /obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

@@ -29,19 +29,18 @@
 	dir = 4
 	},
 /obj/docking_port/mobile{
-	name = "Salvage Ship";
-	icon_state = "pinonclose";
-	dir = 8;
-	id = "whiteship";
-	width = 33;
-	height = 17;
-	dwidth = 11;
 	callTime = 250;
-	preferred_direction = 4;
-	port_direction = 8;
+	can_move_docking_ports = 1;
+	dir = 8;
+	dwidth = 11;
+	height = 17;
+	id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	can_move_docking_ports = 1
+	name = "Salvage Ship";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 33
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -74,8 +73,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/plating,
@@ -228,7 +226,6 @@
 	name = "NTMS-037 Bay Blast door"
 	},
 /obj/machinery/conveyor{
-	dir = 2;
 	id = "NTMSLoad2";
 	name = "on ramp"
 	},
@@ -454,9 +451,7 @@
 "aN" = (
 /obj/machinery/light/small/built,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 2
-	},
+/obj/machinery/atmospherics/components/unary/tank/air,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -475,7 +470,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable,
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
@@ -487,7 +481,6 @@
 /area/shuttle/abandoned/engine)
 "aP" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -500,7 +493,6 @@
 /area/shuttle/abandoned/engine)
 "aQ" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	icon_state = "propulsion_l";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -582,7 +574,7 @@
 "aY" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/shuttle{
-	name = "Captain's Quarters"
+	name = "NTMS-037 Cargo Bay"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -617,7 +609,6 @@
 "bb" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -658,7 +649,7 @@
 "bf" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/shuttle{
-	name = "Captain's Quarters"
+	name = "NTMS-037 Engine Room"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -944,7 +935,6 @@
 /area/shuttle/abandoned/engine)
 "bC" = (
 /obj/structure/shuttle/engine/large{
-	icon_state = "large_engine";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -958,7 +948,7 @@
 "bE" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/command{
-	name = "Ship Control"
+	name = "NTMS-037 Ship Control"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
@@ -1051,11 +1041,6 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/gps{
-	gpstag = "NTMS-037";
-	pixel_x = -9;
-	pixel_y = 4
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
 "bR" = (
@@ -1101,7 +1086,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/door/airlock/shuttle{
-	name = "Ship Saloon"
+	name = "NTMS-037 Saloon"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)
@@ -1166,7 +1151,6 @@
 /area/shuttle/abandoned/crew)
 "cc" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -1187,7 +1171,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "cf" = (
-/obj/machinery/computer/shuttle/white_ship{
+/obj/machinery/computer/shuttle/white_ship/bridge{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -1244,8 +1228,7 @@
 "ck" = (
 /obj/structure/chair/sofa/corner{
 	color = "#c45c57";
-	dir = 1;
-	icon_state = "sofacorner"
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
@@ -1355,7 +1338,6 @@
 /area/shuttle/abandoned/crew)
 "ct" = (
 /obj/structure/shuttle/engine/large{
-	icon_state = "large_engine";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -1370,7 +1352,6 @@
 "cv" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 4;
-	icon_state = "computer";
 	view_range = 14
 	},
 /obj/effect/turf_decal/bot,
@@ -1450,7 +1431,7 @@
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/tray,
-/obj/item/reagent_containers/food/snacks/burger/bearger,
+/obj/item/food/burger/bearger,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -1491,7 +1472,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/door/airlock/shuttle{
-	name = "Ship Lockers"
+	name = "NTMS-037 Lockers"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/crew)
@@ -1537,7 +1518,7 @@
 "cI" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/shuttle{
-	name = "Captain's Quarters"
+	name = "NTMS-037 Captain's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1558,7 +1539,6 @@
 /area/shuttle/abandoned/crew)
 "cL" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	icon_state = "propulsion_l";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1616,7 +1596,7 @@
 "cQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/command{
-	name = "Ship Control"
+	name = "NTMS-037 Ship Control"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1689,7 +1669,6 @@
 "cV" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -1707,7 +1686,6 @@
 "cW" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/machinery/airalarm/all_access{
@@ -1723,7 +1701,6 @@
 "cX" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -1736,9 +1713,8 @@
 /area/shuttle/abandoned/crew)
 "cY" = (
 /obj/structure/frame/computer{
-	icon_state = "0";
-	dir = 1;
-	anchored = 1
+	anchored = 1;
+	dir = 1
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -1747,9 +1723,8 @@
 /area/shuttle/abandoned/bridge)
 "cZ" = (
 /obj/structure/frame/computer{
-	icon_state = "0";
-	dir = 1;
-	anchored = 1
+	anchored = 1;
+	dir = 1
 	},
 /obj/machinery/light,
 /obj/machinery/computer/security/telescreen{
@@ -1774,7 +1749,6 @@
 "db" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -1794,7 +1768,6 @@
 "dc" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1822,15 +1795,14 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/snacks/sausage,
+/obj/item/food/sausage,
 /obj/item/reagent_containers/food/drinks/beer{
 	pixel_x = -3;
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/snacks/sandwich,
+/obj/item/food/sandwich,
 /obj/effect/turf_decal/trimline/white/filled/line{
-	icon_state = "trimline_fill";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,

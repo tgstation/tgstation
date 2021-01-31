@@ -6,7 +6,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -38,7 +38,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "o" = (
 /obj/structure/shuttle/engine/heater{
@@ -60,7 +60,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "t" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -160,7 +160,7 @@
 /area/ruin/powered/shuttle/medium_3)
 "F" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
 "G" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,

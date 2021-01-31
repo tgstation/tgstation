@@ -1,14 +1,13 @@
 GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	/mob/living/carbon/human,
-	/mob/living/carbon/monkey,
 	/mob/living/simple_animal/pet/dog/corgi,
 	/mob/living/silicon/ai)))
 
 /**
-  * Creamed component
-  *
-  * For when you have pie on your face
-  */
+ * Creamed component
+ *
+ * For when you have pie on your face
+ */
 /datum/component/creamed
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
@@ -18,17 +17,19 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	if(!is_type_in_typecache(parent, GLOB.creamable))
 		return COMPONENT_INCOMPATIBLE
 
+	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED)
+
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
 	if(ishuman(parent))
 		var/mob/living/carbon/human/H = parent
 		if(H.dna.species.limbs_id == "lizard")
 			creamface.icon_state = "creampie_lizard"
+		else if(H.dna.species.limbs_id == "monkey")
+			creamface.icon_state = "creampie_monkey"
 		else
 			creamface.icon_state = "creampie_human"
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
-	else if(ismonkey(parent))
-		creamface.icon_state = "creampie_monkey"
 	else if(iscorgi(parent))
 		creamface.icon_state = "creampie_corgi"
 	else if(isAI(parent))
@@ -57,6 +58,10 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		COMSIG_COMPONENT_CLEAN_FACE_ACT))
 
 ///Callback to remove pieface
-/datum/component/creamed/proc/clean_up(datum/source, strength)
-	if(strength >= CLEAN_WEAK)
+/datum/component/creamed/proc/clean_up(datum/source, clean_types)
+	SIGNAL_HANDLER
+
+	. = NONE
+	if(!(clean_types & CLEAN_TYPE_BLOOD))
 		qdel(src)
+		return COMPONENT_CLEANED

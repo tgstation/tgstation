@@ -1,12 +1,9 @@
 import { useBackend } from '../backend';
-import { Fragment } from 'inferno';
-import { Button, LabeledList, Section, Flex, Box } from '../components';
+import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Vendatray = (props, context) => {
   const { act, data } = useBackend(context);
-  const locked = data.locked && !data.siliconUser;
   const {
     product_name,
     product_cost,
@@ -15,7 +12,9 @@ export const Vendatray = (props, context) => {
     owner_name,
   } = data;
   return (
-    <Window>
+    <Window
+      width={300}
+      height={270}>
       <Window.Content>
         <Flex
           mb={1}>
@@ -38,7 +37,7 @@ export const Vendatray = (props, context) => {
                   onClick={() => act('Adjust')} />
               </Box>
             </Section>
-            <Fragment>
+            <>
               <Button
                 fluid
                 icon="window-restore"
@@ -51,7 +50,7 @@ export const Vendatray = (props, context) => {
                 content="Purchase Item"
                 disabled={!product_name}
                 onClick={() => act('Buy')} />
-            </Fragment>
+            </>
           </Flex.Item>
         </Flex>
         {registered?(
@@ -59,7 +58,7 @@ export const Vendatray = (props, context) => {
             Pays to the account of {owner_name}.
           </Section>
         ):(
-          <Fragment>
+          <>
             <Section>
               Tray is unregistered.
             </Section>
@@ -69,7 +68,7 @@ export const Vendatray = (props, context) => {
               content="Register Tray"
               disabled={registered}
               onClick={() => act('Register')} />
-          </Fragment>
+          </>
         )}
       </Window.Content>
     </Window>

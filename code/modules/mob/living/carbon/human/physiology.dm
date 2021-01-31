@@ -23,7 +23,5 @@
 
 	var/hunger_mod = 1		//% of hunger rate taken per tick.
 
-	var/do_after_speed = 1 //Speed mod for do_after. Lower is better. If temporarily adjusting, please only modify using *= and /=, so you don't interrupt other calculations.
-
 /datum/physiology/New()
 	armor = new

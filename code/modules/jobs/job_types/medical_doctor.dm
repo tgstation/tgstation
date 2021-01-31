@@ -1,8 +1,6 @@
 /datum/job/doctor
 	title = "Medical Doctor"
-	flag = DOCTOR
 	department_head = list("Chief Medical Officer")
-	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 3
@@ -16,7 +14,10 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
+	bounty_types = CIV_JOB_MED
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -34,5 +35,7 @@
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 	box = /obj/item/storage/box/survival/medical
+
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 	chameleon_extras = /obj/item/gun/syringe

@@ -247,7 +247,9 @@
 /area/hilbertshotel)
 "aT" = (
 /obj/structure/table/reinforced,
-/obj/structure/sink/kitchen,
+/obj/structure/sink/kitchen{
+	dir = 1
+	},
 /obj/machinery/light/small,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)

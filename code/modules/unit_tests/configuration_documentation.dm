@@ -14,11 +14,11 @@
 	if(extraneous_entries.len)
 		Fail("The following configuration entries do not have a match in code: [english_list(extraneous_entries, assoc = TRUE)]")
 
-/**
-  * Test a graph of config files inclusions
-  * filename - The file to test
-  * stack - Used for recursive calls to prevent repeat parsing
-  */
+/****
+	* Test a graph of config files inclusions
+	* filename - The file to test
+	* stack - Used for recursive calls to prevent repeat parsing
+	*/
 /datum/unit_test/configuration_documentation/proc/TestGraph(filename, list/stack = list())
 	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
@@ -40,11 +40,11 @@
 		else
 			TryRemoveEntry(entry, filename_to_test)
 
-/**
-  * Attempt to update undocumented_entries and extraneous_entries
-  * entry - The detected entry
-  * filename - The containing filename
-  */
+/****
+	* Attempt to update undocumented_entries and extraneous_entries
+	* entry - The detected entry
+	* filename - The containing filename
+	*/
 /datum/unit_test/configuration_documentation/proc/TryRemoveEntry(entry, filename)
 	entry = lowertext(entry)
 	var/start_len = undocumented_entries.len

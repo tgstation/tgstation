@@ -3,43 +3,19 @@
  * @copyright 2020 WarlockD (https://github.com/warlockd)
  * @author Original WarlockD (https://github.com/warlockd)
  * @author Changes stylemistake
+ * @author Changes ThePotato97
  * @license MIT
  */
+
+import { classes } from 'common/react';
 import { Component } from 'inferno';
-import { Tabs, Box, Flex, TextArea } from '../components';
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import marked from 'marked';
-import DOMPurify from 'dompurify';
-import { classes, isFalsy } from "common/react";
-// There is a sanatize option in marked but they say its deprecated.
-// Might as well use a proper one then
-
-import { createLogger } from '../logging';
-import { Fragment } from 'inferno';
-import { vecCreate, vecAdd, vecSubtract } from 'common/vector';
-const logger = createLogger('PaperSheet');
+import { useBackend } from '../backend';
+import { Box, Flex, Tabs, TextArea } from '../components';
+import { Window } from '../layouts';
+import { clamp } from 'common/math';
+import { sanitizeText } from '../sanitize';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
-
-
-
-const sanatize_text = value => {
-  // This is VERY important to think first if you NEED
-  // the tag you put in here.  We are pushing all this
-  // though dangerouslySetInnerHTML and even though
-  // the default DOMPurify kills javascript, it dosn't
-  // kill href links or such
-  return DOMPurify.sanitize(value, {
-    FORBID_ATTR: ['class', 'style'],
-    ALLOWED_TAGS: [
-      'br', 'code', 'li', 'p', 'pre',
-      'span', 'table', 'td', 'tr',
-      'th', 'ul', 'ol', 'menu', 'font', 'b',
-      'center', 'table', 'tr', 'th',
-    ],
-  });
-};
-
 
 // Hacky, yes, works?...yes
 const textWidth = (text, font, fontsize) => {
@@ -52,7 +28,6 @@ const textWidth = (text, font, fontsize) => {
   return width;
 };
 
-
 const setFontinText = (text, font, color, bold=false) => {
   return "<span style=\""
     + "color:'" + color + "';"
@@ -63,20 +38,15 @@ const setFontinText = (text, font, color, bold=false) => {
     + "\">" + text + "</span>";
 };
 
-const paperfield_id_headder = "paperfield_";
 const createIDHeader = index => {
   return "paperfield_" + index;
 };
 // To make a field you do a [_______] or however long the field is
-// we will then output a TEXT input for it that hopefuly covers
+// we will then output a TEXT input for it that hopefully covers
 // the exact amount of spaces
 const field_regex = /\[(_+)\]/g;
-const field_tag_regex = /\[<input\s+(.*?)id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
-const sign_regex = /%s(?:ign)?(?=\\s|$)/igm;
-
-
-const field_id_regex = /id\s*=\s*'(paperfield_\d+)'/g;
-const field_maxlength_regex = /maxlength\s*=\s*(\d+)/g;
+const field_tag_regex = /\[<input\s+(?!disabled)(.*?)\s+id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
+const sign_regex = /%s(?:ign)?(?=\\s|$)?/igm;
 
 const createInputField = (length, width, font,
   fontsize, color, id) => {
@@ -100,7 +70,10 @@ const createFields = (txt, font, fontsize, color, counter) => {
     return createInputField(p1.length,
       width, font, fontsize, color, createIDHeader(counter++));
   });
-  return { counter: counter, text: ret_text };
+  return {
+    counter,
+    text: ret_text,
+  };
 };
 
 const signDocument = (txt, color, user) => {
@@ -108,8 +81,8 @@ const signDocument = (txt, color, user) => {
     return setFontinText(user, "Times New Roman", color, true);
   });
 };
-const run_marked_default = value => {
 
+const run_marked_default = value => {
   // Override function, any links and images should
   // kill any other marked tokens we don't want here
   const walkTokens = token => {
@@ -126,23 +99,14 @@ const run_marked_default = value => {
         break;
     }
   };
-  return marked(value,
-    { breaks: true,
-      smartypants: true,
-      smartLists: true,
-      walkTokens: walkTokens,
-      // Once assets are fixed might need to change this for them
-      baseUrl: "thisshouldbreakhttp",
-    });
-};
-const fillAllfields = fields => {
-  for (const id in fields) {
-    const dom = document.getElementById(id);
-    if (dom) {
-
-    }
-    const dom_text = dom && dom.value ? dom.value : "";
-  }
+  return marked(value, {
+    breaks: true,
+    smartypants: true,
+    smartLists: true,
+    walkTokens,
+    // Once assets are fixed might need to change this for them
+    baseUrl: 'thisshouldbreakhttp',
+  });
 };
 
 /*
@@ -172,19 +136,22 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
       // make sure we got data, and kill any html that might
       // be in it
       const dom_text = dom && dom.value ? dom.value : "";
-      if (dom_text.length === 0) { continue; }
-      const sanitized_text
-        = DOMPurify.sanitize(
-          dom.value.trim(), { ALLOWED_TAGS: [] });
-      if (sanitized_text.length === 0) { continue; }
-      // this is easyer than doing a bunch of text manipulations
+      if (dom_text.length === 0) {
+        continue;
+      }
+      const sanitized_text = sanitizeText(dom.value.trim(), []);
+      if (sanitized_text.length === 0) {
+        continue;
+      }
+      // this is easier than doing a bunch of text manipulations
       const target = dom.cloneNode(true);
       // in case they sign in a field
       if (sanitized_text.match(sign_regex)) {
         target.style.fontFamily = "Times New Roman";
-        bold=true;
+        bold = true;
         target.defaultValue = user_name;
-      } else {
+      }
+      else {
         target.style.fontFamily = font;
         target.defaultValue = sanitized_text;
       }
@@ -192,14 +159,10 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
         target.style.fontWeight = "bold";
       }
       target.style.color = color;
-
       target.disabled = true;
-
       const wrap = document.createElement('div');
       wrap.appendChild(target);
-
       values[id] = sanitized_text; // save the data
-
       replace.push({ value: "[" + wrap.innerHTML + "]", raw_text: full_match });
     }
   }
@@ -212,7 +175,6 @@ const checkAllFields = (txt, font, color, user_name, bold=false) => {
   return { text: txt, fields: values };
 };
 
-
 const pauseEvent = e => {
   if (e.stopPropagation) { e.stopPropagation(); }
   if (e.preventDefault) { e.preventDefault(); }
@@ -221,63 +183,64 @@ const pauseEvent = e => {
   return false;
 };
 
-
 const Stamp = (props, context) => {
   const {
     image,
     opacity,
-    ...rest
   } = props;
-
-  const matrix_trasform = 'rotate(' + image.rotate
-    + 'deg) translate(' + image.x + 'px,' + image.y + 'px)';
-  const stamp_trasform = {
-    'transform': matrix_trasform,
-    '-ms-transform': matrix_trasform,
-    '-webkit-transform': matrix_trasform,
+  const stamp_transform = {
+    'left': image.x + 'px',
+    'top': image.y + 'px',
+    'transform': 'rotate(' + image.rotate + 'deg)',
     'opacity': opacity || 1.0,
-    'position': 'absolute',
   };
   return (
     <div
+      id="stamp"
       className={classes([
-        'paper121x54',
+        'Paper__Stamp',
         image.sprite,
       ])}
-      style={stamp_trasform}
-    />
+      style={stamp_transform} />
   );
 };
-// If the prop dosn't exist OR its not true
-const isFalsyProperty = (obj, prop) => {
-  return Object.prototype.hasOwnProperty.call(obj, prop) && !isFalsy(obj.prop);
-};
+
 
 const setInputReadonly = (text, readonly) => {
   return readonly
-    ? text.replace(/<input\s[^d]/g, "<input disabled ")
-    : text.replace(/<input\sdisabled\s/g, "<input ");
+    ? text.replace(/<input\s[^d]/g, '<input disabled ')
+    : text.replace(/<input\sdisabled\s/g, '<input ');
 };
 
 // got to make this a full component if we
 // want to control updates
 const PaperSheetView = (props, context) => {
   const {
-    value,
-    stamps,
+    value = "",
+    stamps = [],
     backgroundColor,
     readOnly,
-    ...rest
   } = props;
-  const readonly = !isFalsy(readOnly);
-  const stamp_list = stamps || [];
-  const text_html = { __html: "<span class='paper-text'>"
-    + setInputReadonly(value, readonly) + "</span>" };
+  const stamp_list = stamps;
+  const text_html = {
+    __html: '<span class="paper-text">'
+      + setInputReadonly(value, readOnly)
+      + '</span>',
+  };
   return (
-    <Box position="relative"
-      backgroundColor={backgroundColor} width="100%" height="100%" >
-      <Box fillPositionedParent={1} width="100%" height="100%"
-        dangerouslySetInnerHTML={text_html} p="10px" />
+    <Box
+      position="relative"
+      backgroundColor={backgroundColor}
+      width="100%"
+      height="100%" >
+      <Box
+        className="Paper__Page"
+        color="black"
+        fillPositionedParent
+        width="100%"
+        height="100%"
+        dangerouslySetInnerHTML={text_html}
+        p="10px" />
       {stamp_list.map((o, i) => (
         <Stamp key={o[0] + i}
           image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }} />
@@ -295,62 +258,76 @@ class PaperSheetStamper extends Component {
       y: 0,
       rotate: 0,
     };
+    this.style = null;
+    this.handleMouseMove = e => {
+      const pos = this.findStampPosition(e);
+      if (!pos) { return; }
+      // center offset of stamp & rotate
+      pauseEvent(e);
+      this.setState({ x: pos[0], y: pos[1], rotate: pos[2] });
+    };
+    this.handleMouseClick = e => {
+      if (e.pageY <= 30) { return; }
+      const { act, data } = useBackend(this.context);
+      const stamp_obj = {
+        x: this.state.x, y: this.state.y, r: this.state.rotate,
+        stamp_class: this.props.stamp_class,
+        stamp_icon_state: data.stamp_icon_state,
+      };
+      act("stamp", stamp_obj);
+    };
   }
+
   findStampPosition(e) {
-    const position = {
-      x: event.pageX,
-      y: event.pageY,
-    };
-
-    const offset = {
-      left: e.target.offsetLeft,
-      top: e.target.offsetTop,
-    };
-
-    let reference = e.target.offsetParent;
-
-    while (reference) {
-      offset.left += reference.offsetLeft;
-      offset.top += reference.offsetTop;
-      reference = reference.offsetParent;
+    let rotating;
+    const windowRef = document.querySelector('.Layout__content');
+    if (e.shiftKey) {
+      rotating = true;
     }
 
-    const pos_x = position.x - offset.left;
-    const pos_y = position.y - offset.top;
-    const pos = vecCreate(pos_x, pos_y);
+    if (document.getElementById("stamp"))
+    {
+      const stamp = document.getElementById("stamp");
+      const stampHeight = stamp.clientHeight;
+      const stampWidth = stamp.clientWidth;
 
-    const center_offset = vecCreate((121/2), (51/2));
-    const center = vecSubtract(pos, center_offset);
-    return center;
+      const currentHeight = rotating ? this.state.y : e.pageY
+      - windowRef.scrollTop - stampHeight;
+      const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
+
+      const widthMin = 0;
+      const heightMin = 0;
+
+      const widthMax = (windowRef.clientWidth) - (
+        stampWidth);
+      const heightMax = (windowRef.clientHeight - windowRef.scrollTop) - (
+        stampHeight);
+
+      const radians = Math.atan2(
+        e.pageX - currentWidth,
+        e.pageY - currentHeight
+      );
+
+      const rotate = rotating ? (radians * (180 / Math.PI) * -1)
+        : this.state.rotate;
+
+      const pos = [
+        clamp(currentWidth, widthMin, widthMax),
+        clamp(currentHeight, heightMin, heightMax),
+        rotate,
+      ];
+      return pos;
+    }
   }
+
   componentDidMount() {
-    document.onwheel = this.handleWheel.bind(this);
-  }
-  handleMouseMove(e) {
-    const pos = this.findStampPosition(e);
-    // center offset of stamp
-    pauseEvent(e);
-    this.setState({ x: pos[0], y: pos[1] });
+    document.addEventListener("mousemove", this.handleMouseMove);
+    document.addEventListener("click", this.handleMouseClick);
   }
 
-  handleMouseClick(e) {
-    const pos = this.findStampPosition(e);
-    const { act, data } = useBackend(this.context);
-    act("stamp", { x: pos[0], y: pos[1], r: this.state.rotate });
-    this.setState({ x: pos[0], y: pos[1] });
-  }
-
-  handleWheel(e) {
-    const rotate_amount = e.deltaY > 0 ? 15 : -15;
-    if (e.deltaY < 0 && this.state.rotate === 0) {
-      this.setState({ rotate: (360+rotate_amount) });
-    } else if (e.deltaY > 0 && this.state.rotate === 360) {
-      this.setState({ rotate: rotate_amount });
-    } else {
-      const rotate = { rotate: rotate_amount + this.state.rotate };
-      this.setState(() => rotate);
-    }
-    pauseEvent(e);
+  componentWillUnmount() {
+    document.removeEventListener("mousemove", this.handleMouseMove);
+    document.removeEventListener("click", this.handleMouseClick);
   }
 
   render() {
@@ -358,7 +335,6 @@ class PaperSheetStamper extends Component {
       value,
       stamp_class,
       stamps,
-      ...rest
     } = this.props;
     const stamp_list = stamps || [];
     const current_pos = {
@@ -368,23 +344,22 @@ class PaperSheetStamper extends Component {
       rotate: this.state.rotate,
     };
     return (
-      <Box onClick={this.handleMouseClick.bind(this)}
-        onMouseMove={this.handleMouseMove.bind(this)}
-        onwheel={this.handleWheel.bind(this)} {...rest}>
+      <>
         <PaperSheetView
-          readOnly={1}
+          readOnly
           value={value}
           stamps={stamp_list} />
         <Stamp
+          active_stamp
           opacity={0.5} image={current_pos} />
-      </Box>
+      </>
     );
   }
 }
 
 // ugh.  So have to turn this into a full
 // component too if I want to keep updates
-// low and keep the wierd flashing down
+// low and keep the weird flashing down
 class PaperSheetEdit extends Component {
   constructor(props, context) {
     super(props, context);
@@ -395,9 +370,10 @@ class PaperSheetEdit extends Component {
       combined_text: props.value || "",
     };
   }
+
   // This is the main rendering part, this creates the html from marked text
   // as well as the form fields
-  createPreview(value, do_fields=false) {
+  createPreview(value, do_fields = false) {
     const { data } = useBackend(this.context);
     const {
       text,
@@ -409,56 +385,61 @@ class PaperSheetEdit extends Component {
     } = data;
     const out = { text: text };
     // check if we are adding to paper, if not
-    // we still have to check if somone entered something
+    // we still have to check if someone entered something
     // into the fields
     value = value.trim();
     if (value.length > 0) {
       // First lets make sure it ends in a new line
       value += value[value.length] === "\n" ? " \n" : "\n \n";
-      // Second, we sanatize the text of html
-      const sanatized_text = sanatize_text(value);
-      const signed_text = signDocument(sanatized_text, pen_color, edit_usr);
+      // Second, we sanitize the text of html
+      const sanitized_text = sanitizeText(value);
+      const signed_text = signDocument(sanitized_text, pen_color, edit_usr);
       // Third we replace the [__] with fields as markedjs fucks them up
-      const fielded_text = createFields(signed_text
-        , pen_font, 12, pen_color, field_counter);
+      const fielded_text = createFields(
+        signed_text, pen_font, 12, pen_color, field_counter);
       // Fourth, parse the text using markup
-      const formated_text = run_marked_default(fielded_text.text);
+      const formatted_text = run_marked_default(fielded_text.text);
       // Fifth, we wrap the created text in the pin color, and font.
-      // crayon is bold (<b> tags), mabye make fountain pin italic?
-      const fonted_text = setFontinText(formated_text
-        , pen_font, pen_color, is_crayon);
+      // crayon is bold (<b> tags), maybe make fountain pin italic?
+      const fonted_text = setFontinText(
+        formatted_text, pen_font, pen_color, is_crayon);
       out.text += fonted_text;
       out.field_counter = fielded_text.counter;
     }
     if (do_fields) {
-      // finaly we check all the form fields to see
+      // finally we check all the form fields to see
       // if any data was entered by the user and
-      // if it was return the data and modify
-      // the text
-      const final_processing = checkAllFields(out.text
-        , pen_font, pen_color, edit_usr, is_crayon);
+      // if it was return the data and modify the text
+      const final_processing = checkAllFields(
+        out.text, pen_font, pen_color, edit_usr, is_crayon);
       out.text = final_processing.text;
       out.form_fields = final_processing.fields;
     }
     return out;
   }
+
   onInputHandler(e, value) {
     if (value !== this.state.textarea_text) {
       const combined_length = this.state.old_text.length
         + this.state.textarea_text.length;
       if (combined_length > MAX_PAPER_LENGTH) {
         if ((combined_length - MAX_PAPER_LENGTH) >= value.length) {
-          value = ''; // basicly we cannot add any more text to the paper
+          // Basically we cannot add any more text to the paper
+          value = '';
         } else {
           value = value.substr(0, value.length
             - (combined_length - MAX_PAPER_LENGTH));
         }
         // we check again to save an update
-        if (value === this.state.textarea_text) { return; }// do nooothing
+        if (value === this.state.textarea_text) {
+          // Do nothing
+          return;
+        }
       }
-      this.setState(() => {
-        return { textarea_text: value,
-          combined_text: this.createPreview(value) }; });
+      this.setState(() => ({
+        textarea_text: value,
+        combined_text: this.createPreview(value),
+      }));
     }
   }
   // the final update send to byond, final upkeep
@@ -476,16 +457,15 @@ class PaperSheetEdit extends Component {
 
   render() {
     const {
-      value="",
       textColor,
       fontFamily,
       stamps,
       backgroundColor,
-      ...rest
     } = this.props;
-
     return (
-      <Flex direction="column" fillPositionedParent={1}>
+      <Flex
+        direction="column"
+        fillPositionedParent>
         <Flex.Item>
           <Tabs>
             <Tabs.Tab
@@ -529,7 +509,8 @@ class PaperSheetEdit extends Component {
               onClick={() => {
                 if (this.state.previewSelected === "confirm") {
                   this.finalUpdate(this.state.textarea_text);
-                } else if (this.state.previewSelected === "Edit") {
+                }
+                else if (this.state.previewSelected === "Edit") {
                   this.setState(() => {
                     const new_state = {
                       previewSelected: "confirm",
@@ -539,14 +520,14 @@ class PaperSheetEdit extends Component {
                     };
                     return new_state;
                   });
-                } else {
+                }
+                else {
                   this.setState({ previewSelected: "confirm" });
                 }
               }}>
-              { this.state.previewSelected === "confirm" ? "confirm" : "save" }
+              {this.state.previewSelected === "confirm" ? "Confirm" : "Save"}
             </Tabs.Tab>
           </Tabs>
-
         </Flex.Item>
         <Flex.Item
           grow={1}
@@ -559,7 +540,6 @@ class PaperSheetEdit extends Component {
               height={(window.innerHeight - 80) + "px"}
               backgroundColor={backgroundColor}
               onInput={this.onInputHandler.bind(this)} />
-
           ) || (
             <PaperSheetView
               value={this.state.combined_text}
@@ -573,61 +553,66 @@ class PaperSheetEdit extends Component {
   }
 }
 
-
 export const PaperSheet = (props, context) => {
   const { data } = useBackend(context);
   const {
     edit_mode,
     text,
-    paper_color,
+    paper_color = "white",
     pen_color = "black",
     pen_font = "Verdana",
     stamps,
     stamp_class,
-    stamped,
+    sizeX,
+    sizeY,
+    name,
   } = data;
-  // You might ask why?  Because Window/window content do wierd
-  // css stuff with white for some reason
-  const backgroundColor = paper_color && paper_color !== "white"
-    ? paper_color
-    : "#FFFFFF";
-  const background_style = {
-    'background-color': backgroundColor,
-  };
-  const stamp_list = !stamps || stamps === null
+  const stamp_list = !stamps
     ? []
     : stamps;
-
   const decide_mode = mode => {
     switch (mode) {
-      case 0: // min-height="100vh" min-width="100vw"
-        return (<PaperSheetView
-          value={text}
-          stamps={stamp_list}
-          readOnly={1} />);
+      case 0:
+        return (
+          <PaperSheetView
+            value={text}
+            stamps={stamp_list}
+            readOnly />
+        );
       case 1:
-        return (<PaperSheetEdit value={text}
-          textColor={pen_color}
-          fontFamily={pen_font}
-          stamps={stamp_list}
-          backgroundColor={backgroundColor}
-        />);
+        return (
+          <PaperSheetEdit
+            value={text}
+            textColor={pen_color}
+            fontFamily={pen_font}
+            stamps={stamp_list}
+            backgroundColor={paper_color} />
+        );
       case 2:
-        return (<PaperSheetStamper value={text}
-          stamps={stamp_list}
-          stamp_class={stamp_class}
-        />);
+        return (
+          <PaperSheetStamper
+            value={text}
+            stamps={stamp_list}
+            stamp_class={stamp_class} />
+        );
       default:
         return "ERROR ERROR WE CANNOT BE HERE!!";
     }
   };
-
   return (
-    <Window resizable theme="paper" style={background_style}>
-      <Window.Content min-height="100vh" min-width="100vw"
-        style={background_style}>
-        <Box fillPositionedParent={1} min-height="100vh"
-          min-width="100vw" backgroundColor={backgroundColor}>
+    <Window
+      title={name}
+      theme="paper"
+      width={sizeX || 400}
+      height={sizeY || 500}
+      resizable>
+      <Window.Content
+        backgroundColor={paper_color}
+        scrollable>
+        <Box
+          id="page"
+          fitted
+          fillPositionedParent>
           {decide_mode(edit_mode)}
         </Box>
       </Window.Content>

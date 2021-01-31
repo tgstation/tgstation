@@ -7,26 +7,31 @@
 	anchored = TRUE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/nanite_program_hub
-	ui_x = 500
-	ui_y = 700
 
 	var/obj/item/disk/nanite_program/disk
 	var/datum/techweb/linked_techweb
 	var/current_category = "Main"
 	var/detail_view = TRUE
 	var/categories = list(
-						list(name = "Utility Nanites"),
-						list(name = "Medical Nanites"),
-						list(name = "Sensor Nanites"),
-						list(name = "Augmentation Nanites"),
-						list(name = "Suppression Nanites"),
-						list(name = "Weaponized Nanites"),
-						list(name = "Protocols")
-						)
+		list(name = "Utility Nanites"),
+		list(name = "Medical Nanites"),
+		list(name = "Sensor Nanites"),
+		list(name = "Augmentation Nanites"),
+		list(name = "Suppression Nanites"),
+		list(name = "Weaponized Nanites"),
+		list(name = "Protocols"),
+	)
 
 /obj/machinery/nanite_program_hub/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
+
+/obj/machinery/nanite_program_hub/update_overlays()
+	. = ..()
+	if((machine_stat & (NOPOWER|MAINT|BROKEN)) || panel_open)
+		return
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_program_hub_on", layer, plane)
+	SSvis_overlays.add_vis_overlay(src, icon, "nanite_program_hub_on", EMISSIVE_STRUCTURE_LAYER, EMISSIVE_STRUCTURE_PLANE)
 
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
@@ -65,10 +70,10 @@
 		eject(user)
 	return
 
-/obj/machinery/nanite_program_hub/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/nanite_program_hub/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "NaniteProgramHub", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "NaniteProgramHub", name)
 		ui.open()
 
 /obj/machinery/nanite_program_hub/ui_data()
@@ -111,7 +116,8 @@
 	return data
 
 /obj/machinery/nanite_program_hub/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("eject")
@@ -136,7 +142,7 @@
 			detail_view = !detail_view
 			. = TRUE
 		if("clear")
-			if(disk && disk.program)
+			if(disk?.program)
 				qdel(disk.program)
 				disk.program = null
 				disk.name = initial(disk.name)

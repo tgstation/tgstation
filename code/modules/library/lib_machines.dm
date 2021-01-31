@@ -56,8 +56,8 @@
 				var/datum/db_query/query_library_count_books = SSdbcore.NewQuery({"
 					SELECT COUNT(id) FROM [format_table_name("library")]
 					WHERE isnull(deleted)
-						AND author LIKE '%' + :author + '%'
-						AND title LIKE '%' + :title + '%'
+						AND author LIKE CONCAT('%',:author,'%')
+						AND title LIKE CONCAT('%',:title,'%')
 						AND (:category = 'Any' OR category = :category)
 				"}, list("author" = author, "title" = title, "category" = category))
 				if(!query_library_count_books.warn_execute())
@@ -80,8 +80,8 @@
 					SELECT author, title, category, id
 					FROM [format_table_name("library")]
 					WHERE isnull(deleted)
-						AND author LIKE '%' + :author + '%'
-						AND title LIKE '%' + :title + '%'
+						AND author LIKE CONCAT('%',:author,'%')
+						AND title LIKE CONCAT('%',:title,'%')
 						AND (:category = 'Any' OR category = :category)
 					LIMIT :skip, :take
 				"}, list("author" = author, "title" = title, "category" = category, "skip" = booksperpage * search_page, "take" = booksperpage))
@@ -101,7 +101,6 @@
 			dat += "<A href='?src=[REF(src)];back=1'>\[Go Back\]</A><BR>"
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
 	popup.set_content(jointext(dat, ""))
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
@@ -325,7 +324,6 @@
 
 	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/bookmanagement/proc/findscanner(viewrange)
@@ -392,7 +390,7 @@
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = stripped_input(usr, "Enter the book's title:")
+		buffer_book = stripped_input(usr, "Enter the book's title:", max_length = 45)
 	if(href_list["editmob"])
 		buffer_mob = stripped_input(usr, "Enter the recipient's name:", max_length = MAX_NAME_LEN)
 	if(href_list["checkout"])
@@ -411,7 +409,7 @@
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = stripped_input(usr, "Enter the author's name: ")
+		var/newauthor = stripped_input(usr, "Enter the author's name: ", max_length = 45)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -467,7 +465,6 @@
 		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			printer_cooldown = world.time + PRINTER_COOLDOWN
 			var/datum/db_query/query_library_print = SSdbcore.NewQuery(
 				"SELECT * FROM [format_table_name("library")] WHERE id=:id AND isnull(deleted)",
 				list("id" = id)
@@ -476,6 +473,7 @@
 				qdel(query_library_print)
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 			while(query_library_print.NextRow())
 				var/author = query_library_print.item[2]
 				var/title = query_library_print.item[3]
@@ -545,7 +543,6 @@
 		dat += "<BR>"
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/libraryscanner/Topic(href, href_list)

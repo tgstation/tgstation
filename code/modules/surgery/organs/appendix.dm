@@ -3,7 +3,8 @@
 	icon_state = "appendix"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_APPENDIX
-
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/bad_food = 5)
+	grind_results = list(/datum/reagent/toxin/bad_food = 5)
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
@@ -29,7 +30,7 @@
 		M.adjustToxLoss(4, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
 
 /obj/item/organ/appendix/get_availability(datum/species/S)
-	return !(TRAIT_NOHUNGER in S.species_traits)
+	return !(TRAIT_NOHUNGER in S.inherent_traits)
 
 /obj/item/organ/appendix/Remove(mob/living/carbon/M, special = 0)
 	for(var/datum/disease/appendicitis/A in M.diseases)

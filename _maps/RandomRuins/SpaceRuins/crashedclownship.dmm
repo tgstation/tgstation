@@ -47,6 +47,7 @@
 	req_access_txt = "46"
 	},
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/gps/spaceruin,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"

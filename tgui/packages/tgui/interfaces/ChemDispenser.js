@@ -1,6 +1,5 @@
 import { toFixed } from 'common/math';
 import { toTitleCase } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -26,7 +25,10 @@ export const ChemDispenser = (props, context) => {
     || data.beakerContents
     || [];
   return (
-    <Window resizable>
+    <Window
+      width={565}
+      height={620}
+      resizable>
       <Window.Content scrollable>
         <Section
           title="Status"
@@ -48,7 +50,7 @@ export const ChemDispenser = (props, context) => {
         <Section
           title="Recipes"
           buttons={(
-            <Fragment>
+            <>
               {!recording && (
                 <Box inline mx={1}>
                   <Button
@@ -78,7 +80,7 @@ export const ChemDispenser = (props, context) => {
                   content="Save"
                   onClick={() => act('save_recording')} />
               )}
-            </Fragment>
+            </>
           )}>
           <Box mr={-1}>
             {recipes.map(recipe => (
@@ -86,7 +88,7 @@ export const ChemDispenser = (props, context) => {
                 key={recipe.name}
                 icon="tint"
                 width="129.5px"
-                lineHeight="21px"
+                lineHeight={1.75}
                 content={recipe.name}
                 onClick={() => act('dispense_recipe', {
                   recipe: recipe.name,
@@ -119,7 +121,7 @@ export const ChemDispenser = (props, context) => {
                 key={chemical.id}
                 icon="tint"
                 width="129.5px"
-                lineHeight="21px"
+                lineHeight={1.75}
                 content={chemical.title}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
@@ -153,12 +155,12 @@ export const ChemDispenser = (props, context) => {
                 && 'Virtual beaker'
                 || data.isBeakerLoaded
                   && (
-                    <Fragment>
+                    <>
                       <AnimatedNumber
                         initial={0}
                         value={data.beakerCurrentVolume} />
                       /{data.beakerMaxVolume} units
-                    </Fragment>
+                    </>
                   )
                 || 'No beaker'}
             </LabeledList.Item>

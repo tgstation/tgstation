@@ -4,22 +4,27 @@
  * @license MIT
  */
 
-import { classes, isFalsy, pureComponentHooks } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
-
-const UNIT_PX = 12;
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
  */
 export const unit = value => {
   if (typeof value === 'string') {
+    // Transparently convert pixels into rem units
+    if (value.endsWith('px') && !Byond.IS_LTE_IE8) {
+      return parseFloat(value) / 12 + 'rem';
+    }
     return value;
   }
   if (typeof value === 'number') {
-    return (value * UNIT_PX) + 'px';
+    if (Byond.IS_LTE_IE8) {
+      return value * 12 + 'px';
+    }
+    return value + 'rem';
   }
 };
 
@@ -28,10 +33,10 @@ export const unit = value => {
  */
 export const halfUnit = value => {
   if (typeof value === 'string') {
-    return value;
+    return unit(value);
   }
   if (typeof value === 'number') {
-    return (value * UNIT_PX * 0.5) + 'px';
+    return unit(value * 0.5);
   }
 };
 
@@ -41,25 +46,25 @@ const isColorClass = str => typeof str === 'string'
   && CSS_COLORS.includes(str);
 
 const mapRawPropTo = attrName => (style, value) => {
-  if (!isFalsy(value)) {
+  if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = value;
   }
 };
 
 const mapUnitPropTo = (attrName, unit) => (style, value) => {
-  if (!isFalsy(value)) {
+  if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = unit(value);
   }
 };
 
 const mapBooleanPropTo = (attrName, attrValue) => (style, value) => {
-  if (!isFalsy(value)) {
+  if (value) {
     style[attrName] = attrValue;
   }
 };
 
 const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
-  if (!isFalsy(value)) {
+  if (typeof value === 'number' || typeof value === 'string') {
     for (let i = 0; i < dirs.length; i++) {
       style[attrName + '-' + dirs[i]] = unit(value);
     }
@@ -90,7 +95,14 @@ const styleMapperByPropName = {
   maxHeight: mapUnitPropTo('max-height', unit),
   fontSize: mapUnitPropTo('font-size', unit),
   fontFamily: mapRawPropTo('font-family'),
-  lineHeight: mapRawPropTo('line-height'),
+  lineHeight: (style, value) => {
+    if (typeof value === 'number') {
+      style['line-height'] = value;
+    }
+    else if (typeof value === 'string') {
+      style['line-height'] = unit(value);
+    }
+  },
   opacity: mapRawPropTo('opacity'),
   textAlign: mapRawPropTo('text-align'),
   verticalAlign: mapRawPropTo('vertical-align'),
@@ -149,6 +161,11 @@ export const computeBoxProps = props => {
   // Compute props
   for (let propName of Object.keys(props)) {
     if (propName === 'style') {
+      continue;
+    }
+    // IE8: onclick workaround
+    if (Byond.IS_LTE_IE8 && propName === 'onClick') {
+      computedProps.onclick = props[propName];
       continue;
     }
     const propValue = props[propName];

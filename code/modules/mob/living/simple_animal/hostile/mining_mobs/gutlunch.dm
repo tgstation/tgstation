@@ -29,7 +29,7 @@
 	a_intent = INTENT_HELP
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = FRIENDLY_SPAWN
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	gender = NEUTER
 	stop_automated_movement = FALSE
 	stop_automated_movement_when_pulled = TRUE
@@ -154,7 +154,7 @@
 	L.setDir(dir)
 	L.Stun(20, ignore_canstun = TRUE)
 	visible_message("<span class='notice'>[src] grows up into [L].</span>")
-	Destroy()
+	qdel(src)
 
 //Gutlunch udder
 /obj/item/udder/gutlunch

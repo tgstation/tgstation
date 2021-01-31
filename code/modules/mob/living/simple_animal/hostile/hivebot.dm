@@ -60,10 +60,10 @@
 	QDEL_NULL(alert_light)
 	if(a_intent != INTENT_HELP)
 		icon_state = "[initial(icon_state)]_attack"
-		alert_light = mob_light(COLOR_RED_LIGHT, 6, 0.4)
+		alert_light = mob_light(6, 0.4, COLOR_RED_LIGHT)
 	else
 		icon_state = initial(icon_state)
-		
+
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
 	do_sparks(3, TRUE, src)
 	..(TRUE)
@@ -96,7 +96,7 @@
 	health = 80
 	maxHealth = 80
 	ranged = TRUE
-	
+
 /mob/living/simple_animal/hostile/hivebot/mechanic
 	name = "hivebot mechanic"
 	icon_state = "strong"
@@ -109,12 +109,12 @@
 	rapid = 3
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/datum/action/innate/hivebot/foamwall/foam
-	
+
 /mob/living/simple_animal/hostile/hivebot/mechanic/Initialize()
 	. = ..()
 	foam = new
 	foam.Grant(src)
-	
+
 /mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
 	if(istype(target, /obj/machinery))
 		var/obj/machinery/fixable = target
@@ -139,14 +139,14 @@
 			to_chat(src, "<span class='warning'>Repairs complete.</span>")
 		return
 	return ..()
-	
+
 /datum/action/innate/hivebot
 	background_icon_state = "bg_default"
-	
+
 /datum/action/innate/hivebot/foamwall
 	name = "Foam Wall"
 	desc = "Creates a foam wall that resists against the vacuum of space."
-	
+
 /datum/action/innate/hivebot/foamwall/Activate()
 	var/mob/living/simple_animal/hostile/hivebot/H = owner
 	var/turf/T = get_turf(H)

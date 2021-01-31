@@ -327,11 +327,6 @@
 /area/shuttle/abandoned)
 "aP" = (
 /obj/structure/table,
-/obj/item/gps{
-	gpstag = "NTCONST1";
-	pixel_x = -1;
-	pixel_y = 2
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light{
 	dir = 1
@@ -374,10 +369,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/comfy/black,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aX" = (
@@ -386,28 +381,32 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"ba" = (
+/obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
 /obj/item/phone{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/abandoned)
-"ba" = (
-/obj/machinery/computer/shuttle/white_ship{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "bb" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -1;
-	pixel_y = 6
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
+"We" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/comfy/black,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 
@@ -515,7 +514,7 @@ aK
 aN
 aQ
 aR
-aQ
+aW
 aZ
 ar
 "}
@@ -533,7 +532,7 @@ aG
 ar
 aR
 aQ
-aW
+aQ
 ba
 ar
 "}
@@ -551,7 +550,7 @@ aG
 aN
 aS
 aS
-aR
+We
 bb
 ar
 "}

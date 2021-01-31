@@ -11,12 +11,13 @@
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(I.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
-			setAnchored(!anchored)
+			set_anchored(!anchored)
 	else
 		return ..()
 
 /obj/structure/dresser/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	qdel(src)
 
 /obj/structure/dresser/attack_hand(mob/user)

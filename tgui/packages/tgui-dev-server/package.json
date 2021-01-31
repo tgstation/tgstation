@@ -1,12 +1,14 @@
 {
   "private": true,
   "name": "tgui-dev-server",
-  "version": "3.0.0",
-  "type": "module",
+  "version": "4.3.0",
   "dependencies": {
-    "glob": "^7.1.4",
+    "axios": "^0.21.1",
+    "common": "workspace:*",
+    "esm": "^3.2.25",
+    "glob": "^7.1.6",
     "source-map": "^0.7.3",
-    "stacktrace-parser": "^0.1.7",
-    "ws": "^7.1.2"
+    "stacktrace-parser": "^0.1.10",
+    "ws": "^7.4.2"
   }
 }

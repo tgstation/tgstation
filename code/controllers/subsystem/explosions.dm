@@ -16,10 +16,9 @@ SUBSYSTEM_DEF(explosions)
 
 	var/cost_throwturf = 0
 
-	var/cost_lowobj = 0
-	var/cost_medobj = 0
-	var/cost_highobj = 0
-
+	var/cost_low_mov_atom = 0
+	var/cost_med_mov_atom = 0
+	var/cost_high_mov_atom = 0
 
 	var/list/lowturf = list()
 	var/list/medturf = list()
@@ -28,9 +27,9 @@ SUBSYSTEM_DEF(explosions)
 
 	var/list/throwturf = list()
 
-	var/list/lowobj = list()
-	var/list/medobj = list()
-	var/list/highobj = list()
+	var/list/low_mov_atom = list()
+	var/list/med_mov_atom = list()
+	var/list/high_mov_atom = list()
 
 	var/list/explosions = list()
 
@@ -44,9 +43,9 @@ SUBSYSTEM_DEF(explosions)
 	msg += "HT:[round(cost_highturf,1)]|"
 	msg += "FT:[round(cost_flameturf,1)]||"
 
-	msg += "LO:[round(cost_lowobj,1)]|"
-	msg += "MO:[round(cost_medobj,1)]|"
-	msg += "HO:[round(cost_highobj,1)]|"
+	msg += "LO:[round(cost_low_mov_atom,1)]|"
+	msg += "MO:[round(cost_med_mov_atom,1)]|"
+	msg += "HO:[round(cost_high_mov_atom,1)]|"
 
 	msg += "TO:[round(cost_throwturf,1)]"
 
@@ -58,21 +57,21 @@ SUBSYSTEM_DEF(explosions)
 	msg += "HT:[highturf.len]|"
 	msg += "FT:[flameturf.len]||"
 
-	msg += "LO:[lowobj.len]|"
-	msg += "MO:[medobj.len]|"
-	msg += "HO:[highobj.len]|"
+	msg += "LO:[low_mov_atom.len]|"
+	msg += "MO:[med_mov_atom.len]|"
+	msg += "HO:[high_mov_atom.len]|"
 
 	msg += "TO:[throwturf.len]"
 
 	msg += "} "
-	..(msg)
+	return ..()
 
 
 #define SSEX_TURF "turf"
 #define SSEX_OBJ "obj"
 
 /datum/controller/subsystem/explosions/proc/is_exploding()
-	return (lowturf.len || medturf.len || highturf.len || flameturf.len || throwturf.len || lowobj.len || medobj.len || highobj.len)
+	return (lowturf.len || medturf.len || highturf.len || flameturf.len || throwturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
 
 /datum/controller/subsystem/explosions/proc/wipe_turf(turf/T)
 	lowturf -= T
@@ -136,13 +135,13 @@ SUBSYSTEM_DEF(explosions)
 
 		if(dist < dev)
 			T.color = "red"
-			T.maptext = "Dev"
+			T.maptext = MAPTEXT("Dev")
 		else if (dist < heavy)
 			T.color = "yellow"
-			T.maptext = "Heavy"
+			T.maptext = MAPTEXT("Heavy")
 		else if (dist < light)
 			T.color = "blue"
-			T.maptext = "Light"
+			T.maptext = MAPTEXT("Light")
 		else
 			continue
 
@@ -172,6 +171,16 @@ SUBSYSTEM_DEF(explosions)
 
 /proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
 	. = SSexplosions.explode(arglist(args))
+
+#define CREAK_DELAY 5 SECONDS //Time taken for the creak to play after explosion, if applicable.
+#define DEVASTATION_PROB 30 //The probability modifier for devistation, maths!
+#define HEAVY_IMPACT_PROB 5 //ditto
+#define FAR_UPPER 60 //Upper limit for the far_volume, distance, clamped.
+#define FAR_LOWER 40 //lower limit for the far_volume, distance, clamped.
+#define PROB_SOUND 75 //The probability modifier for a sound to be an echo, or a far sound. (0-100)
+#define SHAKE_CLAMP 2.5 //The limit for how much the camera can shake for out of view booms.
+#define FREQ_UPPER 40 //The upper limit for the randomly selected frequency.
+#define FREQ_LOWER 25 //The lower of the above.
 
 /datum/controller/subsystem/explosions/proc/explode(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 	epicenter = get_turf(epicenter)
@@ -221,13 +230,21 @@ SUBSYSTEM_DEF(explosions)
 	// 3/7/14 will calculate to 80 + 35
 
 	var/far_dist = 0
-	far_dist += heavy_impact_range * 5
+	far_dist += heavy_impact_range * 15
 	far_dist += devastation_range * 20
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
 		var/sound/explosion_sound = sound(get_sfx("explosion"))
 		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
+		var/sound/creaking_explosion_sound = sound(get_sfx("explosion_creaking"))
+		var/sound/hull_creaking_sound = sound(get_sfx("hull_creaking"))
+		var/sound/explosion_echo_sound = sound('sound/effects/explosion_distant.ogg')
+		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
+		var/creaking_explosion = FALSE
+
+		if(prob(devastation_range*DEVASTATION_PROB+heavy_impact_range*HEAVY_IMPACT_PROB) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
+			creaking_explosion = TRUE // prob over 100 always returns true
 
 		for(var/MN in GLOB.player_list)
 			var/mob/M = MN
@@ -240,16 +257,33 @@ SUBSYSTEM_DEF(explosions)
 					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
-					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
+					M.playsound_local(epicenter, null, 100, 1, frequency, S = explosion_sound)
 					if(baseshakeamount > 0)
 						shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
-					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+					var/far_volume = clamp(far_dist/2, FAR_LOWER, FAR_UPPER) // Volume is based on explosion size and dist
+					if(creaking_explosion)
+						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = creaking_explosion_sound, distance_multiplier = 0)
+					else if(prob(PROB_SOUND)) // Sound variety during meteor storm/tesloose/other bad event
+						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = far_explosion_sound, distance_multiplier = 0) // Far sound
+					else
+						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0) // Echo sound
+
+					if(baseshakeamount > 0 || devastation_range)
+						if(!baseshakeamount) // Devastating explosions rock the station and ground
+							baseshakeamount = devastation_range*3
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
+				else if(!isspaceturf(get_turf(M)) && heavy_impact_range) // Big enough explosions echo throughout the hull
+					var/echo_volume = 40
+					if(devastation_range)
+						baseshakeamount = devastation_range
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
+						echo_volume = 60
+					M.playsound_local(epicenter, null, echo_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0)
+
+				if(creaking_explosion) // 5 seconds after the bang, the station begins to creak
+					addtimer(CALLBACK(M, /mob/proc/playsound_local, epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), 1, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
 
 	if(heavy_impact_range > 1)
 		var/datum/effect_system/explosion/E
@@ -304,16 +338,17 @@ SUBSYSTEM_DEF(explosions)
 				var/atom/A = I
 				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.GetAllContents()
-			for(var/O in items)
-				var/atom/A = O
-				if(!QDELETED(A))
-					switch(dist)
-						if(EXPLODE_DEVASTATE)
-							SSexplosions.highobj += A
-						if(EXPLODE_HEAVY)
-							SSexplosions.medobj += A
-						if(EXPLODE_LIGHT)
-							SSexplosions.lowobj += A
+			for(var/thing in items)
+				var/atom/movable/movable_thing = thing
+				if(QDELETED(movable_thing))
+					continue
+				switch(dist)
+					if(EXPLODE_DEVASTATE)
+						SSexplosions.high_mov_atom += movable_thing
+					if(EXPLODE_HEAVY)
+						SSexplosions.med_mov_atom += movable_thing
+					if(EXPLODE_LIGHT)
+						SSexplosions.low_mov_atom += movable_thing
 		switch(dist)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.highturf += T
@@ -348,6 +383,15 @@ SUBSYSTEM_DEF(explosions)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 
+#undef CREAK_DELAY
+#undef DEVASTATION_PROB
+#undef HEAVY_IMPACT_PROB
+#undef FAR_UPPER
+#undef FAR_LOWER
+#undef PROB_SOUND
+#undef SHAKE_CLAMP
+#undef FREQ_UPPER
+#undef FREQ_LOWER
 
 /datum/controller/subsystem/explosions/proc/GatherSpiralTurfs(range, turf/epicenter)
 	var/list/outlist = list()
@@ -425,30 +469,27 @@ SUBSYSTEM_DEF(explosions)
 		var/list/low_turf = lowturf
 		lowturf = list()
 		for(var/thing in low_turf)
-			if(thing)
-				var/turf/T = thing
-				T.explosion_level = max(T.explosion_level, EXPLODE_LIGHT)
-				T.ex_act(EXPLODE_LIGHT)
+			var/turf/turf_thing = thing
+			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_LIGHT)
+			turf_thing.ex_act(EXPLODE_LIGHT)
 		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
 		var/list/med_turf = medturf
 		medturf = list()
 		for(var/thing in med_turf)
-			if(thing)
-				var/turf/T = thing
-				T.explosion_level = max(T.explosion_level, EXPLODE_HEAVY)
-				T.ex_act(EXPLODE_HEAVY)
+			var/turf/turf_thing = thing
+			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_HEAVY)
+			turf_thing.ex_act(EXPLODE_HEAVY)
 		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
 		var/list/high_turf = highturf
 		highturf = list()
 		for(var/thing in high_turf)
-			if(thing)
-				var/turf/T = thing
-				T.explosion_level = max(T.explosion_level, EXPLODE_DEVASTATE)
-				T.ex_act(EXPLODE_DEVASTATE)
+			var/turf/turf_thing = thing
+			turf_thing.explosion_level = max(turf_thing.explosion_level, EXPLODE_DEVASTATE)
+			turf_thing.ex_act(EXPLODE_DEVASTATE)
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
@@ -467,31 +508,34 @@ SUBSYSTEM_DEF(explosions)
 		currentpart = SSEXPLOSIONS_THROWS
 
 		timer = TICK_USAGE_REAL
-		var/list/high_obj = highobj
-		highobj = list()
-		for(var/thing in high_obj)
-			if(thing)
-				var/obj/O = thing
-				O.ex_act(EXPLODE_DEVASTATE)
-		cost_highobj = MC_AVERAGE(cost_highobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		var/list/local_high_mov_atom = high_mov_atom
+		high_mov_atom = list()
+		for(var/thing in local_high_mov_atom)
+			var/atom/movable/movable_thing = thing
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_DEVASTATE)
+		cost_high_mov_atom = MC_AVERAGE(cost_high_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
-		var/list/med_obj = medobj
-		medobj = list()
-		for(var/thing in med_obj)
-			if(thing)
-				var/obj/O = thing
-				O.ex_act(EXPLODE_HEAVY)
-		cost_medobj = MC_AVERAGE(cost_medobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		var/list/local_med_mov_atom = med_mov_atom
+		med_mov_atom = list()
+		for(var/thing in local_med_mov_atom)
+			var/atom/movable/movable_thing = thing
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_HEAVY)
+		cost_med_mov_atom = MC_AVERAGE(cost_med_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		timer = TICK_USAGE_REAL
-		var/list/low_obj = lowobj
-		lowobj = list()
-		for(var/thing in low_obj)
-			if(thing)
-				var/obj/O = thing
-				O.ex_act(EXPLODE_LIGHT)
-		cost_lowobj = MC_AVERAGE(cost_lowobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		var/list/local_low_mov_atom = low_mov_atom
+		low_mov_atom = list()
+		for(var/thing in local_low_mov_atom)
+			var/atom/movable/movable_thing = thing
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_LIGHT)
+		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 
 	if (currentpart == SSEXPLOSIONS_THROWS)

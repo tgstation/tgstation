@@ -1,8 +1,7 @@
 /datum/component/infective
-	dupe_mode = COMPONENT_DUPE_ALLOWED
 	var/list/datum/disease/diseases //make sure these are the static, non-processing versions!
 	var/expire_time
-	var/min_clean_strength = CLEAN_WEAK
+	var/required_clean_types = CLEAN_TYPE_DISEASE
 
 /datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
 	if(islist(_diseases))
@@ -12,7 +11,7 @@
 	if(expire_in)
 		expire_time = world.time + expire_in
 		QDEL_IN(src, expire_in)
-	
+
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
@@ -24,25 +23,47 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_infect_attack)
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/try_infect_equipped)
-		if(istype(parent, /obj/item/reagent_containers/food/snacks))
-			RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
+		RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
+		if(istype(parent, /obj/item/reagent_containers/food/drinks))
+			RegisterSignal(parent, COMSIG_DRINK_DRANK, .proc/try_infect_drink)
+		else if(istype(parent, /obj/item/reagent_containers/glass))
+			RegisterSignal(parent, COMSIG_GLASS_DRANK, .proc/try_infect_drink)
 	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
 		RegisterSignal(parent, COMSIG_GIBS_STREAK, .proc/try_infect_streak)
 
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
+	SIGNAL_HANDLER
+
 	for(var/V in diseases)
 		eater.ForceContractDisease(V)
 	try_infect(feeder, BODY_ZONE_L_ARM)
 
-/datum/component/infective/proc/clean(datum/source, clean_strength)
-	if(clean_strength >= min_clean_strength)
+/datum/component/infective/proc/try_infect_drink(datum/source, mob/living/drinker, mob/living/feeder)
+	SIGNAL_HANDLER
+
+	for(var/disease in diseases)
+		drinker.ForceContractDisease(disease)
+	var/appendage_zone = feeder.held_items.Find(source)
+	appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
+	try_infect(feeder, appendage_zone)
+
+/datum/component/infective/proc/clean(datum/source, clean_types)
+	SIGNAL_HANDLER
+
+	. = NONE
+	if(clean_types & required_clean_types)
 		qdel(src)
+		return COMPONENT_CLEANED
 
 /datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
+	SIGNAL_HANDLER
+
 	if(isliving(M))
 		try_infect(M)
 
 /datum/component/infective/proc/try_infect_collide(datum/source, atom/A)
+	SIGNAL_HANDLER
+
 	var/atom/movable/P = parent
 	if(P.throwing)
 		//this will be handled by try_infect_impact_zone()
@@ -51,9 +72,13 @@
 		try_infect(A)
 
 /datum/component/infective/proc/try_infect_impact_zone(datum/source, mob/living/target, hit_zone)
+	SIGNAL_HANDLER
+
 	try_infect(target, hit_zone)
 
 /datum/component/infective/proc/try_infect_attack_zone(datum/source, mob/living/carbon/target, mob/living/user, hit_zone)
+	SIGNAL_HANDLER
+
 	try_infect(user, BODY_ZONE_L_ARM)
 	try_infect(target, hit_zone)
 
@@ -63,6 +88,8 @@
 	try_infect(user, BODY_ZONE_L_ARM)
 
 /datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/L, slot)
+	SIGNAL_HANDLER
+
 	var/old_permeability
 	if(isitem(parent))
 		//if you are putting an infective item on, it obviously will not protect you, so set its permeability high enough that it will never block ContactContractDisease()
@@ -77,10 +104,14 @@
 		I.permeability_coefficient = old_permeability
 
 /datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/M)
+	SIGNAL_HANDLER
+
 	if(isliving(M))
 		try_infect(M, BODY_ZONE_PRECISE_L_FOOT)
 
 /datum/component/infective/proc/try_infect_streak(datum/source, list/directions, list/output_diseases)
+	SIGNAL_HANDLER
+
 	output_diseases |= diseases
 
 /datum/component/infective/proc/try_infect(mob/living/L, target_zone)

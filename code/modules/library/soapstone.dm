@@ -87,10 +87,10 @@
 		name = "dull [initial(name)]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
-   as instructions and/or memes for the next generation of spessmen.
+as instructions and/or memes for the next generation of spessmen.
 
-   Limited in location to station_z only. Can be smashed out or exploded,
-   but only permamently removed with the curator's soapstone.
+Limited in location to station_z only. Can be smashed out or exploded,
+but only permanently removed with the curator's soapstone.
 */
 
 /obj/item/soapstone/infinite
@@ -128,6 +128,9 @@
 
 	var/turf/original_turf
 
+	/// Total vote count at or below which we won't persist.
+	var/delete_at = -5
+
 /obj/structure/chisel_message/Initialize(mapload)
 	. = ..()
 	SSpersistence.chisel_messages += src
@@ -137,6 +140,9 @@
 	if(!good_chisel_message_location(T))
 		persists = FALSE
 		return INITIALIZE_HINT_QDEL
+
+	if(like_keys.len - dislike_keys.len <= delete_at)
+		persists = FALSE
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
@@ -151,7 +157,7 @@
 	var/hash = md5(hidden_message)
 	var/newcolor = copytext_char(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
-	light_color = "#[newcolor]"
+	set_light_color("#[newcolor]")
 	set_light(1)
 
 /obj/structure/chisel_message/proc/pack()
@@ -204,10 +210,13 @@
 /obj/structure/chisel_message/interact()
 	return
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/structure/chisel_message/ui_state(mob/user)
+	return GLOB.always_state
+
+/obj/structure/chisel_message/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "EngravedMessage", name, 600, 300, master_ui, state)
+		ui = new(user, src, "EngravedMessage", name)
 		ui.open()
 
 /obj/structure/chisel_message/ui_data(mob/user)
@@ -229,6 +238,10 @@
 	return data
 
 /obj/structure/chisel_message/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
 	var/mob/user = usr
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
 	var/is_creator = user.ckey == creator_key
@@ -263,3 +276,6 @@
 			if(confirm == "Yes")
 				persists = FALSE
 				qdel(src)
+				return
+
+	persists = like_keys.len - dislike_keys.len > delete_at

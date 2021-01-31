@@ -30,35 +30,35 @@
 /obj/structure/closet/secure_closet/freezer/meat/open{
 	name = "\"meat\" fridge"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
-/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
-/obj/item/reagent_containers/food/snacks/meat/slab/pug,
-/obj/item/reagent_containers/food/snacks/meat/slab/spider,
-/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/reagent_containers/food/snacks/meat/slab/human{
+/obj/item/food/meat/slab/bear,
+/obj/item/food/meat/slab/corgi,
+/obj/item/food/meat/slab/goliath,
+/obj/item/food/meat/slab/killertomato,
+/obj/item/food/meat/slab/pug,
+/obj/item/food/meat/slab/spider,
+/obj/item/food/meat/slab/xeno,
+/obj/item/food/meat/slab/human{
 	name = "human meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly{
+/obj/item/food/meat/slab/human/mutant/fly{
 	name = "flyman meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine{
+/obj/item/food/meat/slab/human/mutant/golem/adamantine{
 	name = "golem meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard{
+/obj/item/food/meat/slab/human/mutant/lizard{
 	name = "lizard meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant{
+/obj/item/food/meat/slab/human/mutant/plant{
 	name = "podperson meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow{
+/obj/item/food/meat/slab/human/mutant/shadow{
 	name = "shadowling meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime{
+/obj/item/food/meat/slab/human/mutant/slime{
 	name = "slimeperson meat"
 	},
-/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie{
+/obj/item/food/meat/slab/human/mutant/zombie{
 	name = "rotten meat"
 	},
 /turf/open/floor/plasteel/freezer,

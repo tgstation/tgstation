@@ -1,0 +1,87 @@
+{
+	"generic": ["general disfigurement"],
+
+	"bluntmoderate": [
+		"light discoloring",
+		"a slight blue tint",
+		"a slightly deadened tint"
+	],
+
+	"bluntsevere": [
+		"a faded, fist-sized bruise",
+		"a vaguely triangular peel scar"
+	],
+
+	"bluntcritical": [
+		"a section of janky skin lines and badly healed scars",
+		"a large patch of uneven skin tone",
+		"a cluster of calluses"
+	],
+
+
+
+	"slashmoderate": [
+		"light, faded lines",
+		"minor cut marks",
+		"a small faded slit",
+		"a series of small scars"
+	],
+
+	"slashsevere": [
+		"a twisted line of faded gashes",
+		"a gnarled sickle-shaped slice scar"
+	],
+
+	"slashcritical": [
+		"a winding path of very badly healed scar tissue",
+		"a series of peaks and valleys along a gruesome line of cut scar tissue",
+		"a grotesque snake of indentations and stitching scars"
+	],
+
+
+
+	"piercemoderate": [
+		"a small, faded bruise",
+		"a small twist of reformed skin",
+		"a thumb-sized puncture scar"
+	],
+
+	"piercesevere": [
+		"an ink-splat shaped pocket of scar tissue",
+		"a long-faded puncture wound",
+		"a tumbling puncture hole with evidence of faded stitching"
+	],
+
+	"piercecritical": [
+		"a rippling shockwave of scar tissue",
+		"a wide, scattered cloud of shrapnel marks",
+		"a gruesome multi-pronged puncture scar"
+	],
+
+
+
+	"burnmoderate": [
+		"small amoeba-shaped skinmarks",
+		"a faded streak of depressed skin"
+	],
+
+	"burnsevere": [
+		"a large, jagged patch of faded skin",
+		"random spots of shiny, smooth skin",
+		"spots of taut, leathery skin"
+	],
+
+	"burncritical": [
+		"massive, disfiguring keloid scars",
+		"several long streaks of badly discolored and malformed skin",
+		"unmistakeable splotches of dead tissue from serious burns"
+	],
+
+
+	"dismember": [
+		"is several skintone shades paler than the rest of the body",
+		"is a gruesome patchwork of artificial flesh",
+		"has a large series of attachment scars at the articulation points"
+	]
+
+}

@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
@@ -12,7 +11,10 @@ export const CargoHoldTerminal = (props, context) => {
     status_report,
   } = data;
   return (
-    <Window resizable>
+    <Window
+      width={600}
+      height={230}
+      resizable>
       <Window.Content scrollable>
         <Section>
           <LabeledList>
@@ -26,7 +28,7 @@ export const CargoHoldTerminal = (props, context) => {
         <Section
           title="Cargo Pad"
           buttons={(
-            <Fragment>
+            <>
               <Button
                 icon={"sync"}
                 content={"Recalculate Value"}
@@ -38,7 +40,7 @@ export const CargoHoldTerminal = (props, context) => {
                 selected={sending}
                 disabled={!pad}
                 onClick={() => act(sending ? 'stop' : 'send')} />
-            </Fragment>
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item

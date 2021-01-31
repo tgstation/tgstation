@@ -8,8 +8,6 @@
 	name = "portable air pump"
 	icon_state = "psiphon:0"
 	density = TRUE
-	ui_x = 300
-	ui_y = 315
 
 	max_integrity = 250
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
@@ -26,7 +24,7 @@
 /obj/machinery/portable_atmospherics/pump/Destroy()
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
@@ -39,14 +37,14 @@
 	if(connected_port)
 		. += "siphon-connector"
 
-/obj/machinery/portable_atmospherics/pump/process_atmos()
+/obj/machinery/portable_atmospherics/pump/process_atmos(delta_time)
 	..()
 
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit) * delta_time * 0.5, 5, 50), BURN, 0)
 		return
 
 	if(!on)
@@ -64,13 +62,13 @@
 
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
-		air_update_turf() // Update the environment if needed.
+		air_update_turf(FALSE, FALSE) // Update the environment if needed.
 
 /obj/machinery/portable_atmospherics/pump/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(is_operational())
+	if(is_operational)
 		if(prob(50 / severity))
 			on = !on
 		if(prob(100 / severity))
@@ -88,12 +86,10 @@
 		else if(on && holding && direction == PUMP_OUT)
 			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
-
-/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "PortablePump", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "PortablePump", name)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/pump/ui_data()
@@ -116,7 +112,8 @@
 	return data
 
 /obj/machinery/portable_atmospherics/pump/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")

@@ -4,22 +4,22 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /**
-  * Corresponds to single entry in gateway control.
-  *
-  * Will NOT be added automatically to GLOB.gateway_destinations list.
-  */
+ * Corresponds to single entry in gateway control.
+ *
+ * Will NOT be added automatically to GLOB.gateway_destinations list.
+ */
 /datum/gateway_destination
 	var/name = "Unknown Destination"
 	var/wait = 0 /// How long after roundstart this destination becomes active
-	var/enabled = TRUE /// If disabled, the destination won't be availible
+	var/enabled = TRUE /// If disabled, the destination won't be available
 	var/hidden = FALSE /// Will not show on gateway controls at all.
 
 /* Can a gateway link to this destination right now. */
-/datum/gateway_destination/proc/is_availible()
+/datum/gateway_destination/proc/is_available()
 	return enabled && (world.time - SSticker.round_start_time >= wait)
 
 /* Returns user-friendly description why you can't connect to this destination, displayed in UI */
-/datum/gateway_destination/proc/get_availible_reason()
+/datum/gateway_destination/proc/get_available_reason()
 	. = "Unreachable"
 	if(world.time - SSticker.round_start_time < wait)
 		. = "Connection desynchronized. Recalibration in progress."
@@ -52,8 +52,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = list()
 	.["ref"] = REF(src)
 	.["name"] = name
-	.["availible"] = is_availible()
-	.["reason"] = get_availible_reason()
+	.["available"] = is_available()
+	.["reason"] = get_available_reason()
 	if(wait)
 		.["timeout"] = max(1 - (wait - (world.time - SSticker.round_start_time)) / wait, 0)
 
@@ -72,10 +72,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(target_gateway.target == deactivated.destination)
 		target_gateway.deactivate()
 
-/datum/gateway_destination/gateway/is_availible()
+/datum/gateway_destination/gateway/is_available()
 	return ..() && target_gateway.calibrated && !target_gateway.target && target_gateway.powered()
 
-/datum/gateway_destination/gateway/get_availible_reason()
+/datum/gateway_destination/gateway/get_available_reason()
 	. = ..()
 	if(!target_gateway.calibrated)
 		. = "Exit gateway malfunction. Manual recalibration required."
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
-	icon_state = "off"
+	icon_state = "portal_frame"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	// 3x2 offset by one row
@@ -171,10 +171,14 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	var/datum/gateway_destination/target
 	/// bumper object, the thing that starts actual teleport
 	var/obj/effect/gateway_portal_bumper/portal
+	/// Visual object for handling the viscontents
+	var/obj/effect/gateway_portal_effect/portal_visuals
 
 /obj/machinery/gateway/Initialize()
 	generate_destination()
 	update_icon()
+	portal_visuals = new
+	vis_contents += portal_visuals
 	return ..()
 
 /obj/machinery/gateway/proc/generate_destination()
@@ -190,19 +194,13 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	QDEL_NULL(portal)
 	use_power = IDLE_POWER_USE
 	update_icon()
+	portal_visuals.reset_visuals()
 
 /obj/machinery/gateway/process()
 	if((machine_stat & (NOPOWER)) && use_power)
 		if(target)
 			deactivate()
 		return
-
-/obj/machinery/gateway/update_icon_state()
-	if(target)
-		icon_state = "on"
-	else
-		icon_state = "off"
-
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
 
@@ -215,6 +213,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		return
 	target = D
 	target.activate(destination)
+	portal_visuals.setup_visuals(target)
 	generate_bumper()
 	use_power = ACTIVE_POWER_USE
 	update_icon()
@@ -259,8 +258,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(!GLOB.the_gateway)
 			to_chat(user,"<span class='warning'>Home gateway is not responding!</span>")
 		if(GLOB.the_gateway.target)
-			to_chat(user,"<span class='warning'>Home gateway already in use!</span>")
-			return
+			GLOB.the_gateway.deactivate() //this will turn the home gateway off so that it's free for us to connect to
 		activate(GLOB.the_gateway.destination)
 	else
 		deactivate()
@@ -275,11 +273,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = ..()
 	try_to_linkup()
 
-/obj/machinery/computer/gateway_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
-	. = ..()
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/gateway_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Gateway", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Gateway", name)
 		ui.open()
 
 /obj/machinery/computer/gateway_control/ui_data(mob/user)
@@ -308,7 +305,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 			try_to_connect(D)
 			return TRUE
 		if("deactivate")
-			if(G && G.target)
+			if(G?.target)
 				G.deactivate()
 			return TRUE
 
@@ -318,10 +315,46 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/machinery/computer/gateway_control/proc/try_to_connect(datum/gateway_destination/D)
 	if(!D || !G)
 		return
-	if(!D.is_availible() || G.target)
+	if(!D.is_available() || G.target)
 		return
 	G.activate(D)
 
 /obj/item/paper/fluff/gateway
 	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
 	name = "Confidential Correspondence, Pg 1"
+
+/obj/effect/gateway_portal_effect
+	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = VIS_INHERIT_ID
+	layer = GATEWAY_UNDERLAY_LAYER //Slightly lower than gateway itself
+	var/alpha_icon = 'icons/obj/machines/gateway.dmi'
+	var/alpha_icon_state = "portal_mask"
+	var/datum/gateway_destination/our_destination
+
+
+/obj/effect/gateway_portal_effect/proc/setup_visuals(datum/gateway_destination/D)
+	our_destination = D
+	update_portal_filters()
+
+/obj/effect/gateway_portal_effect/proc/reset_visuals()
+	our_destination = null
+	update_portal_filters()
+
+/obj/effect/gateway_portal_effect/proc/update_portal_filters()
+	clear_filters()
+	vis_contents = null
+
+	if(!our_destination)
+		return
+
+
+	add_filter("portal_alpha", 1, list("type" = "alpha", "icon" = icon(alpha_icon, alpha_icon_state), "x" = 32, "y" = 32))
+	add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
+	add_filter("portal_ripple", 1, list("type" = "ripple", "size" = 2, "radius" = 1, "falloff" = 1, "y" = 7))
+
+	animate(get_filter("portal_ripple"), time = 1.3 SECONDS, loop = -1, easing = LINEAR_EASING, radius = 32)
+
+	var/turf/center_turf = our_destination.get_target_turf()
+
+	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))

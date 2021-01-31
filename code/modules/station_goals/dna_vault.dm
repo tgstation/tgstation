@@ -33,14 +33,14 @@
 
 /datum/station_goal/dna_vault/get_report()
 	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
-	 We need you to construct a DNA Vault aboard your station.
+		We need you to construct a DNA Vault aboard your station.
 
-	 The DNA Vault needs to contain samples of:
-	 [animal_count] unique animal data
-	 [plant_count] unique non-standard plant data
-	 [human_count] unique sapient humanoid DNA data
+		The DNA Vault needs to contain samples of:
+		[animal_count] unique animal data
+		[plant_count] unique non-standard plant data
+		[human_count] unique sapient humanoid DNA data
 
-	 Base vault parts are available for shipping via cargo."}
+		Base vault parts are available for shipping via cargo."}
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -96,8 +96,8 @@
 		to_chat(user, "<span class='notice'>Plant data added to local storage.</span>")
 
 	//animals
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey, /mob/living/carbon/alien))
-	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
+	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
+	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals) || ismonkey(target))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
@@ -131,9 +131,6 @@
 	light_range = 3
 	light_power = 1.5
 	light_color = LIGHT_COLOR_CYAN
-	ui_x = 350
-	ui_y = 400
-
 
 	//High defaults so it's not completed automatically if there's no station goal
 	var/animals_max = 100
@@ -176,14 +173,12 @@
 		qdel(filler)
 	. = ..()
 
-
-/obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		roll_powers(user)
-		ui = new(user, src, ui_key, "DnaVault", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "DnaVault", name)
 		ui.open()
-
 
 /obj/machinery/dna_vault/proc/roll_powers(mob/user)
 	if(user in power_lottery)
@@ -208,15 +203,17 @@
 	data["choiceB"] = ""
 	if(user && completed)
 		var/list/L = power_lottery[user]
-		if(L && L.len)
+		if(L?.len)
 			data["used"] = FALSE
 			data["choiceA"] = L[1]
 			data["choiceB"] = L[2]
 	return data
 
 /obj/machinery/dna_vault/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("gene")
 			upgrade(usr,params["choice"])

@@ -1,26 +1,22 @@
 import { map } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Grid, Input, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const PandemicBeakerDisplay = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     has_beaker,
     beaker_empty,
     has_blood,
     blood,
   } = data;
-
   const cant_empty = !has_beaker || beaker_empty;
-
   return (
     <Section
       title="Beaker"
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="times"
             content="Empty and Eject"
@@ -37,8 +33,8 @@ export const PandemicBeakerDisplay = (props, context) => {
             content="Eject"
             disabled={!has_beaker}
             onClick={() => act('eject_beaker')} />
-        </Fragment>
-      )} >
+        </>
+      )}>
       {has_beaker ? (
         !beaker_empty ? (
           has_blood ? (
@@ -71,13 +67,10 @@ export const PandemicBeakerDisplay = (props, context) => {
 
 export const PandemicDiseaseDisplay = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     is_ready,
   } = data;
-
   const viruses = data.viruses || [];
-
   return (
     viruses.map(virus => {
       const symptoms = virus.symptoms || [];
@@ -102,7 +95,7 @@ export const PandemicDiseaseDisplay = (props, context) => {
               onClick={() => act('create_culture_bottle', {
                 index: virus.index,
               })} />
-          )} >
+          )}>
           <Grid>
             <Grid.Column>
               {virus.description}
@@ -122,10 +115,10 @@ export const PandemicDiseaseDisplay = (props, context) => {
             </Grid.Column>
           </Grid>
           {!!virus.is_adv && (
-            <Fragment>
+            <>
               <Section
                 title="Statistics"
-                level={2} >
+                level={2}>
                 <Grid>
                   <Grid.Column>
                     <LabeledList>
@@ -151,18 +144,18 @@ export const PandemicDiseaseDisplay = (props, context) => {
               </Section>
               <Section
                 title="Symptoms"
-                level={2} >
+                level={2}>
                 {symptoms.map(symptom => (
                   <Collapsible
                     key={symptom.name}
-                    title={symptom.name} >
+                    title={symptom.name}>
                     <Section>
                       <PandemicSymptomDisplay symptom={symptom} />
                     </Section>
                   </Collapsible>
                 ))}
               </Section>
-            </Fragment>
+            </>
           )}
         </Section>
       );
@@ -182,10 +175,8 @@ export const PandemicSymptomDisplay = (props, context) => {
     level,
     neutered,
   } = symptom;
-
   const thresholds = map((desc, label) => ({ desc, label }))(
     symptom.threshold_desc || {});
-
   return (
     <Section
       title={name}
@@ -193,10 +184,10 @@ export const PandemicSymptomDisplay = (props, context) => {
       buttons={!!neutered && (
         <Box
           bold
-          color="bad" >
+          color="bad">
           Neutered
         </Box>
-      )} >
+      )}>
       <Grid>
         <Grid.Column size={2}>
           {desc}
@@ -224,13 +215,13 @@ export const PandemicSymptomDisplay = (props, context) => {
       {thresholds.length > 0 && (
         <Section
           title="Thresholds"
-          level={3} >
+          level={3}>
           <LabeledList>
             {thresholds.map(threshold => {
               return (
                 <LabeledList.Item
                   key={threshold.label}
-                  label={threshold.label} >
+                  label={threshold.label}>
                   {threshold.desc}
                 </LabeledList.Item>
               );
@@ -240,14 +231,11 @@ export const PandemicSymptomDisplay = (props, context) => {
       )}
     </Section>
   );
-
 };
 
 export const PandemicAntibodyDisplay = (props, context) => {
   const { act, data } = useBackend(context);
-
   const resistances = data.resistances || [];
-
   return (
     <Section title="Antibodies">
       {resistances.length > 0 ? (
@@ -255,7 +243,7 @@ export const PandemicAntibodyDisplay = (props, context) => {
           {resistances.map(resistance => (
             <LabeledList.Item
               key={resistance.name}
-              label={resistance.name} >
+              label={resistance.name}>
               <Button
                 icon="eye-dropper"
                 content="Create vaccine bottle"
@@ -270,7 +258,7 @@ export const PandemicAntibodyDisplay = (props, context) => {
         <Box
           bold
           color="bad"
-          mt={1} >
+          mt={1}>
           No antibodies detected.
         </Box>
       )}
@@ -280,16 +268,18 @@ export const PandemicAntibodyDisplay = (props, context) => {
 
 export const Pandemic = (props, context) => {
   const { data } = useBackend(context);
-
   return (
-    <Window resizable>
+    <Window
+      width={520}
+      height={550}
+      resizable>
       <Window.Content scrollable>
         <PandemicBeakerDisplay />
         {!!data.has_blood && (
-          <Fragment>
+          <>
             <PandemicDiseaseDisplay />
             <PandemicAntibodyDisplay />
-          </Fragment>
+          </>
         )}
       </Window.Content>
     </Window>

@@ -100,6 +100,8 @@
 		// Some types to remove them and their subtypes
 		possible_mobtypes -= typecacheof(list(
 			/mob/living/carbon/human/species,
+			/mob/living/simple_animal/hostile/syndicate/mecha_pilot,
+			/mob/living/simple_animal/hostile/asteroid/elite,
 			/mob/living/simple_animal/hostile/megafauna,
 			))
 
@@ -165,5 +167,5 @@
 /datum/fantasy_affix/fool/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
 	return "[newName] of the fool"

@@ -15,13 +15,19 @@
 	bypasses_immunity = TRUE //2spook
 	var/mob/living/simple_animal/parrot/poly/ghost/parrot
 
+
 /datum/disease/parrot_possession/stage_act()
-	..()
-	if(!parrot || parrot.loc != affected_mob)
+	. = ..()
+	if(!.)
+		return
+
+	if(QDELETED(parrot) || parrot.loc != affected_mob)
 		cure()
-	else if(prob(parrot.speak_chance))
-		if(parrot.speech_buffer.len)
-			affected_mob.say(pick(parrot.speech_buffer), forced = "parrot possession")
+		return FALSE
+
+	if(length(parrot.speech_buffer) && prob(parrot.speak_chance))
+		affected_mob.say(pick(parrot.speech_buffer), forced = "parrot possession")
+
 
 /datum/disease/parrot_possession/cure()
 	if(parrot && parrot.loc == affected_mob)

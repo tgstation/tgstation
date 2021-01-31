@@ -1,8 +1,6 @@
 /datum/job/virologist
 	title = "Virologist"
-	flag = VIROLOGIST
 	department_head = list("Chief Medical Officer")
-	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -18,7 +16,10 @@
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
+	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_VIROLOGIST
+	bounty_types = CIV_JOB_VIRO
 
 /datum/outfit/job/virologist
 	name = "Virologist"
@@ -34,5 +35,5 @@
 
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/virology
 	box = /obj/item/storage/box/survival/medical

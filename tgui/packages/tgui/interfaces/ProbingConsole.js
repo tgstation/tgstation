@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Section, LabeledList, NoticeBox } from '../components';
+import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const ProbingConsole = (props, context) => {
@@ -12,7 +12,10 @@ export const ProbingConsole = (props, context) => {
     occupant_status,
   } = data;
   return (
-    <Window theme="abductor">
+    <Window
+      width={330}
+      height={207}
+      theme="abductor">
       <Window.Content>
         <Section>
           <LabeledList>
@@ -44,8 +47,8 @@ export const ProbingConsole = (props, context) => {
                 {occupant_status === 3
                   ? 'Deceased'
                   : occupant_status === 2
-                    ? 'Unconcious'
-                    : 'Concious'}
+                    ? 'Unconscious'
+                    : 'Conscious'}
               </LabeledList.Item>
               <LabeledList.Item label="Experiments">
                 <Button

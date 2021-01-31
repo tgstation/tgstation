@@ -1,5 +1,4 @@
 import { toTitleCase } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
@@ -20,7 +19,10 @@ export const PortableChemMixer = (props, context) => {
     || [];
   const chemicals = sortBy(chem => chem.title)(data.chemicals);
   return (
-    <Window resizable>
+    <Window
+      width={645}
+      height={550}
+      resizable>
       <Window.Content scrollable>
         <Section
           title="Dispense"
@@ -76,12 +78,12 @@ export const PortableChemMixer = (props, context) => {
                 && 'Virtual beaker'
                 || data.isBeakerLoaded
                   && (
-                    <Fragment>
+                    <>
                       <AnimatedNumber
                         initial={0}
                         value={data.beakerCurrentVolume} />
                       /{data.beakerMaxVolume} units
-                    </Fragment>
+                    </>
                   )
                 || 'No beaker'}
             </LabeledList.Item>

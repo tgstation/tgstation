@@ -1,15 +1,18 @@
+#define BLOB_REROLL_CHOICES 6
+#define BLOB_REROLL_RADIUS 60
+
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this, you need at least [cost] resources!</span>")
-		return 0
+		return FALSE
 	add_points(-cost)
-	return 1
+	return TRUE
 
 // Power verbs
 
 /mob/camera/blob/proc/place_blob_core(placement_override, pop_override = FALSE)
 	if(placed && placement_override != -1)
-		return 1
+		return TRUE
 	if(!placement_override)
 		if(!pop_override)
 			for(var/mob/living/M in range(7, src))
@@ -17,34 +20,34 @@
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
-					return 0
+					return FALSE
 			for(var/mob/living/M in view(13, src))
 				if(ROLE_BLOB in M.faction)
 					continue
 				if(M.client)
 					to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
-					return 0
+					return FALSE
 		var/turf/T = get_turf(src)
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-			return 0
+			return FALSE
 		var/area/A = get_area(T)
-		if(isspaceturf(T) || A && !A.blob_allowed)
+		if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
 			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
-			return 0
+			return FALSE
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
 					qdel(O)
 				else
 					to_chat(src, "<span class='warning'>There is already a blob here!</span>")
-					return 0
+					return FALSE
 			else if(O.density)
 				to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
-				return 0
+				return FALSE
 		if(!pop_override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
-			return 0
+			return FALSE
 	else if(placement_override == 1)
 		var/turf/T = pick(GLOB.blobstart)
 		forceMove(T) //got overrided? you're somewhere random, motherfucker
@@ -58,7 +61,8 @@
 		core.update_icon()
 	update_health_hud()
 	placed = 1
-	return 1
+	announcement_time = world.time + 6000
+	return TRUE
 
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
@@ -93,7 +97,7 @@
 		return
 	if(needsNode)
 		var/area/A = get_area(src)
-		if(!A.blob_allowed) //factory and resource blobs must be legit
+		if(!(A.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
 			to_chat(src, "<span class='warning'>This type of blob must be placed on the station!</span>")
 			return
 		if(nodes_required && !(locate(/obj/structure/blob/node) in orange(3, T)) && !(locate(/obj/structure/blob/core) in orange(4, T)))
@@ -219,7 +223,7 @@
 		to_chat(src, "<span class='userdanger'>You have no core and are about to die! May you rest in peace.</span>")
 		return
 	var/area/A = get_area(T)
-	if(isspaceturf(T) || A && !A.blob_allowed)
+	if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
 		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
 		return
 	if(!can_buy(80))
@@ -348,25 +352,55 @@
 	set category = "Blob"
 	set name = "Reactive Strain Adaptation (40)"
 	set desc = "Replaces your strain with a random, different one."
-	if(!rerolling && (free_strain_rerolls || can_buy(40)))
-		rerolling = TRUE
-		reroll_strain()
-		rerolling = FALSE
-		if(free_strain_rerolls)
-			free_strain_rerolls--
-		last_reroll_time = world.time
 
-/mob/camera/blob/proc/reroll_strain()
-	var/list/choices = list()
-	while (length(choices) < 4)
-		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
-		choices[initial(bs.name)] = bs
+	if (!free_strain_rerolls && blob_points < BLOB_REROLL_COST)
+		to_chat(src, "<span class='warning'>You need at least [BLOB_REROLL_COST] resources to reroll your strain again!</span>")
+		return
 
-	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices, /proc/cmp_typepaths_asc)
-	if (choice && choices[choice] && !QDELETED(src))
-		var/datum/blobstrain/bs = choices[choice]
-		set_strain(bs)
+	open_reroll_menu()
 
+/// Open the menu to reroll strains
+/mob/camera/blob/proc/open_reroll_menu()
+	if (!strain_choices)
+		strain_choices = list()
+
+		var/list/new_strains = GLOB.valid_blobstrains.Copy() - blobstrain.type
+		for (var/_ in 1 to BLOB_REROLL_CHOICES)
+			var/datum/blobstrain/strain = pick_n_take(new_strains)
+
+			var/image/strain_icon = image('icons/mob/blob.dmi', "blob_core")
+			strain_icon.color = initial(strain.color)
+
+			var/info_text = "<span class='boldnotice'>[initial(strain.name)]</span>"
+			info_text += "<br><span class='notice'>[initial(strain.analyzerdescdamage)]</span>"
+			if (!isnull(initial(strain.analyzerdesceffect)))
+				info_text += "<br><span class='notice'>[initial(strain.analyzerdesceffect)]</span>"
+
+			var/datum/radial_menu_choice/choice = new
+			choice.image = strain_icon
+			choice.info = info_text
+
+			strain_choices[initial(strain.name)] = choice
+
+	var/strain_result = show_radial_menu(src, src, strain_choices, radius = BLOB_REROLL_RADIUS, tooltips = TRUE)
+	if (isnull(strain_result))
+		return
+
+	if (!free_strain_rerolls && !can_buy(BLOB_REROLL_COST))
+		return
+
+	for (var/_other_strain in GLOB.valid_blobstrains)
+		var/datum/blobstrain/other_strain = _other_strain
+		if (initial(other_strain.name) == strain_result)
+			set_strain(other_strain)
+
+			if (free_strain_rerolls)
+				free_strain_rerolls -= 1
+
+			last_reroll_time = world.time
+			strain_choices = null
+
+			return
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"
@@ -391,3 +425,6 @@
 	if(!placed && autoplace_max_time <= world.time)
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(autoplace_max_time - world.time)].</font></span>")
 		to_chat(src, "<span class='big'><font color=\"#EE4000\">You [manualplace_min_time ? "will be able to":"can"] manually place your blob core by pressing the Place Blob Core button in the bottom right corner of the screen.</font></span>")
+
+#undef BLOB_REROLL_CHOICES
+#undef BLOB_REROLL_RADIUS

@@ -29,6 +29,7 @@
 	var/degrees = 0
 	var/font = PEN_FONT
 	embedding = list()
+	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -101,7 +102,7 @@
 	throw_speed = 4
 	colour = "crimson"
 	custom_materials = list(/datum/material/gold = 750)
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
 						"Gold" = "pen-fountain-g",
@@ -145,29 +146,50 @@
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
 	. = ..()
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		var/penchoice = input(user, "What would you like to edit?", "Rename, change description or reset both?") as null|anything in list("Rename","Change description","Reset")
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 			return
 		if(penchoice == "Rename")
-			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+			var/input = stripped_input(user,"What do you want to name [O]?", ,"[O.name]", MAX_NAME_LEN)
 			var/oldname = O.name
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			if(oldname == input)
-				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
+			if(oldname == input || input == "")
+				to_chat(user, "<span class='notice'>You changed [O] to... well... [O].</span>")
 			else
 				O.name = input
-				to_chat(user, "<span class='notice'>\The [oldname] has been successfully been renamed to \the [input].</span>")
+				var/datum/component/label/label = O.GetComponent(/datum/component/label)
+				if(label)
+					label.remove_label()
+					label.apply_label()
+				to_chat(user, "<span class='notice'>You have successfully renamed \the [oldname] to [O].</span>")
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Change description")
-			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			var/input = stripped_input(user,"Describe [O] here:", ,"[O.desc]", 140)
+			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-			O.desc = input
-			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
+			if(olddesc == input || input == "")
+				to_chat(user, "<span class='notice'>You decide against changing [O]'s description.</span>")
+			else
+				O.desc = input
+				to_chat(user, "<span class='notice'>You have successfully changed [O]'s description.</span>")
+				O.renamedByPlayer = TRUE
+
+		if(penchoice == "Reset")
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = initial(O.desc)
+			O.name = initial(O.name)
+			var/datum/component/label/label = O.GetComponent(/datum/component/label)
+			if(label)
+				label.remove_label()
+				label.apply_label()
+			to_chat(user, "<span class='notice'>You have successfully reset [O]'s name and description.</span>")
+			O.renamedByPlayer = FALSE
 
 /*
  * Sleepypens
@@ -180,8 +202,8 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.expose(M, INJECT, reagents.total_volume)
-				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
+
+				reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize()
@@ -195,8 +217,9 @@
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	attack_verb = list("slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "cut") //these won't show up if the pen is off
-	sharpness = IS_SHARP
+	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
+	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	sharpness = SHARP_EDGED
 	var/on = FALSE
 
 /obj/item/pen/edagger/ComponentInitialize()

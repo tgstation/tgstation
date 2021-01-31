@@ -27,6 +27,10 @@
 	if(phaser)
 		teleport = new
 		teleport.Grant(src)
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/netherworld/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 
 /datum/action/innate/creature
 	background_icon_state = "bg_default"
@@ -35,31 +39,9 @@
 	name = "Teleport"
 	desc = "Teleport to wherever you want, as long as you aren't seen."
 
-/obj/effect/dummy/phased_mob/creature
-	name = "water"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "nothing"
-	density = FALSE
-	anchored = TRUE
-	invisibility = 60
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/canmove = TRUE
-
-/obj/effect/dummy/phased_mob/creature/relaymove(mob/user, direction)
-	forceMove(get_step(src,direction))
-
-/obj/effect/dummy/phased_mob/creature/ex_act()
-	return
-
-/obj/effect/dummy/phased_mob/creature/bullet_act()
-	return BULLET_ACT_FORCE_PIERCE
-
-/obj/effect/dummy/phased_mob/creature/singularity_act()
-	return
-
 /datum/action/innate/creature/teleport/Activate()
 	var/mob/living/simple_animal/hostile/netherworld/N = owner
-	var/obj/effect/dummy/phased_mob/creature/holder = null
+	var/obj/effect/dummy/phased_mob/holder = null
 	if(N.stat == DEAD)
 		return
 	var/turf/T = get_turf(N)
@@ -77,13 +59,13 @@
 		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
 	else
 		playsound(get_turf(N), 'sound/effects/podwoosh.ogg', 50, TRUE, -1)
-		holder = new /obj/effect/dummy/phased_mob/creature(T)
+		holder = new /obj/effect/dummy/phased_mob(T)
 		N.forceMove(holder)
 		N.is_phased = TRUE
 
 /mob/living/simple_animal/hostile/netherworld/proc/can_be_seen(turf/location)
 	// Check for darkness
-	if(location && location.lighting_object)
+	if(location?.lighting_object)
 		if(location.get_lumcount()<0.1) // No one can see us in the darkness, right?
 			return null
 
@@ -98,10 +80,11 @@
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
 				if(!M.is_blind())
 					return M
-		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			if(M.occupant && M.occupant.client)
-				if(!M.occupant.is_blind())
-					return M.occupant
+		for(var/obj/vehicle/sealed/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			for(var/O in M.occupants)
+				var/mob/mechamob = O
+				if(mechamob.client && !mechamob.is_blind())
+					return mechamob
 	return null
 
 /mob/living/simple_animal/hostile/netherworld/migo
@@ -188,11 +171,11 @@
 							"<span class='userdanger'>Touching the portal, you are quickly pulled through into a world of unimaginable horror!</span>")
 		contents.Add(user)
 
-/obj/structure/spawner/nether/process()
+/obj/structure/spawner/nether/process(delta_time)
 	for(var/mob/living/M in contents)
 		if(M)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
-			M.adjustBruteLoss(60)
+			M.adjustBruteLoss(60 * delta_time)
 			new /obj/effect/gibspawner/generic(get_turf(M), M)
 			if(M.stat == DEAD)
 				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank

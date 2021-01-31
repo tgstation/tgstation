@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -187,6 +187,11 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
+"R" = (
+/obj/structure/closet/crate/coffin,
+/obj/item/gps/spaceruin,
+/turf/open/floor/plasteel/airless/dark,
+/area/ruin/unpowered/no_grav)
 "S" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/asteroid/airless,
@@ -302,7 +307,7 @@ a
 b
 e
 i
-l
+R
 e
 x
 m

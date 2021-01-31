@@ -1,6 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(radiation)
 	name = "Radiation"
 	flags = SS_NO_INIT | SS_BACKGROUND
+	wait = 1 SECONDS
 
 	var/list/warned_atoms = list()
 

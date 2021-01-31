@@ -14,6 +14,7 @@
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	examine_cursor_icon = null
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -31,7 +32,6 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 	var/hackedcheck[1]
-	var/devillawcheck[5]
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
@@ -58,20 +58,23 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 	add_sensors()
-
-/mob/living/silicon/med_hud_set_health()
-	return //we use a different hud
-
-/mob/living/silicon/med_hud_set_status()
-	return //we use a different hud
+	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
 	QDEL_NULL(aiPDA)
+	QDEL_NULL(laws)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+/mob/living/silicon/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/silicon/med_hud_set_status()
+	return //we use a different hud
 
 /mob/living/silicon/contents_explosion(severity, target)
 	return
@@ -163,9 +166,6 @@
 		to_chat(user, "<span class='alert'>[p_their(TRUE)] outer shell is too tough.</span>")
 	return FALSE
 
-/mob/living/silicon/IsAdvancedToolUser()
-	return TRUE
-
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
 		return FALSE
@@ -201,26 +201,30 @@
 				hackedcheck[L] = "Yes"
 		checklaws()
 
-	if (href_list["lawdevil"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawdevil"])
-		switch(devillawcheck[L])
-			if ("Yes")
-				devillawcheck[L] = "No"
-			if ("No")
-				devillawcheck[L] = "Yes"
-		checklaws()
-
 
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
 
 	if (href_list["printlawtext"]) // this is kinda backwards
+		if (href_list["dead"] && (!isdead(usr) && !usr.client.holder)) // do not print deadchat law notice if the user is now alive
+			to_chat(usr, "<span class='warning'>You cannot view law changes that were made while you were dead.</span>")
+			return
 		to_chat(usr, href_list["printlawtext"])
 
 	return
 
-
 /mob/living/silicon/proc/statelaws(force = 0)
+	// Create a cache of our laws and lawcheck flags before we do anything else.
+	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
+	var/lawcache_zeroth = laws.zeroth
+	var/list/lawcache_hacked = laws.hacked.Copy()
+	var/list/lawcache_ion = laws.ion.Copy()
+	var/list/lawcache_inherent = laws.inherent.Copy()
+	var/list/lawcache_supplied = laws.supplied.Copy()
+
+	var/list/lawcache_lawcheck = lawcheck.Copy()
+	var/list/lawcache_ioncheck = ioncheck.Copy()
+	var/list/lawcache_hackedcheck = hackedcheck.Copy()
 
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:")
@@ -229,49 +233,42 @@
 	var/number = 1
 	sleep(10)
 
-	if (laws.devillaws && laws.devillaws.len)
-		for(var/index = 1, index <= laws.devillaws.len, index++)
-			if (force || devillawcheck[index] == "Yes")
-				say("[radiomod] 666. [laws.devillaws[index]]")
-				sleep(10)
-
-
-	if (laws.zeroth)
-		if (force || lawcheck[1] == "Yes")
-			say("[radiomod] 0. [laws.zeroth]")
+	if (lawcache_zeroth)
+		if (force || lawcache_lawcheck[1] == "Yes")
+			say("[radiomod] 0. [lawcache_zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= laws.hacked.len, index++)
-		var/law = laws.hacked[index]
+	for (var/index in 1 to length(lawcache_hacked))
+		var/law = lawcache_hacked[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || hackedcheck[index] == "Yes")
+			if (force || lawcache_hackedcheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= laws.ion.len, index++)
-		var/law = laws.ion[index]
+	for (var/index in 1 to length(lawcache_ion))
+		var/law = lawcache_ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (force || ioncheck[index] == "Yes")
+			if (force || lawcache_ioncheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= laws.inherent.len, index++)
-		var/law = laws.inherent[index]
+	for (var/index in 1 to length(lawcache_inherent))
+		var/law = lawcache_inherent[index]
 
 		if (length(law) > 0)
-			if (force || lawcheck[index+1] == "Yes")
+			if (force || lawcache_lawcheck[index+1] == "Yes")
 				say("[radiomod] [number]. [law]")
 				number++
 				sleep(10)
 
-	for (var/index = 1, index <= laws.supplied.len, index++)
-		var/law = laws.supplied[index]
+	for (var/index in 1 to length(lawcache_supplied))
+		var/law = lawcache_supplied[index]
 
 		if (length(law) > 0)
-			if(lawcheck.len >= number+1)
-				if (force || lawcheck[number+1] == "Yes")
+			if(lawcache_lawcheck.len >= number+1)
+				if (force || lawcache_lawcheck[number+1] == "Yes")
 					say("[radiomod] [number]. [law]")
 					number++
 					sleep(10)
@@ -280,12 +277,6 @@
 /mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
-
-	if (laws.devillaws && laws.devillaws.len)
-		for(var/index = 1, index <= laws.devillaws.len, index++)
-			if (!devillawcheck[index])
-				devillawcheck[index] = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawdevil=[index]'>[devillawcheck[index]] 666:</A> <font color='#cc5500'>[laws.devillaws[index]]</font><BR>"}
 
 	if (laws.zeroth)
 		if (!lawcheck[1])
@@ -368,12 +359,12 @@
 	to_chat(src, "<span class='notice'>Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]</span>")
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
-	return 0
+	return FALSE
 
 // The src mob is trying to place an item on someone
 // But the src mob is a silicon!!  Disable.
 /mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
-	return 0
+	return FALSE
 
 
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
@@ -433,3 +424,15 @@
 
 /mob/living/silicon/rust_heretic_act()
 	adjustBruteLoss(500)
+
+/mob/living/silicon/on_floored_start()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_floored_end()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_lying_down()
+	return // Silicons are always standing by default.
+
+/mob/living/silicon/on_standing_up()
+	return // Silicons are always standing by default.

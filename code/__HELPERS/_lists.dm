@@ -15,7 +15,7 @@
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
-#define LAZYFIND(L, V) L ? L.Find(V) : 0
+#define LAZYFIND(L, V) (L ? L.Find(V) : 0)
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
@@ -24,6 +24,7 @@
 #define reverseList(L) reverseRange(L.Copy())
 #define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += list(V);
 #define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
+#define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
 
 /// Passed into BINARY_INSERT to compare keys
 #define COMPARE_KEY __BIN_LIST[__BIN_MID]
@@ -37,6 +38,7 @@
 	* TYPECONT: The typepath of the contents of the list
 	* COMPARE: The object to compare against, usualy the same as INPUT
 	* COMPARISON: The variable on the objects to compare
+	* COMPTYPE: How should the values be compared? Either COMPARE_KEY or COMPARE_VALUE.
 	*/
 #define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
 	do {\
@@ -48,7 +50,7 @@
 			var/__BIN_LEFT = 1;\
 			var/__BIN_RIGHT = __BIN_CTTL;\
 			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			var/##TYPECONT/__BIN_ITEM;\
+			var ##TYPECONT/__BIN_ITEM;\
 			while(__BIN_LEFT < __BIN_RIGHT) {\
 				__BIN_ITEM = COMPTYPE;\
 				if(__BIN_ITEM.##COMPARISON <= COMPARE.##COMPARISON) {\
@@ -64,15 +66,15 @@
 		};\
 	} while(FALSE)
 
-/**
-  * Returns a list in plain english as a string
-  * input - Indexed list of items
-  * nothing_text - Displayed when input is null or empty
-  * and_text - Text displayed before last entry if more than one entry
-  * comma_text - Text displayed to separate entries if more than two entries
-  * final_comma_text - Replaces comma_text between second last and last entries
-  * assoc - If the list should be considered associated and the values displayed
-  */
+/****
+	* Returns a list in plain english as a string
+	* input - Indexed list of items
+	* nothing_text - Displayed when input is null or empty
+	* and_text - Text displayed before last entry if more than one entry
+	* comma_text - Text displayed to separate entries if more than two entries
+	* final_comma_text - Replaces comma_text between second last and last entries
+	* assoc - If the list should be considered associated and the values displayed
+	*/
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "", assoc = FALSE)
 	var/total = length(input)
 	switch(total)
@@ -240,7 +242,7 @@
 
 	return null
 
-//Pick a random element from the list and remove it from the list.
+/// Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
 	RETURN_TYPE(L[_].type)
 	if(L.len)
@@ -370,7 +372,7 @@
 	for(var/datum/data/record/R in L)
 		if(R.fields[field] == value)
 			return R
-	return FALSE
+	return null
 
 
 //Move a single element from position fromIndex within a list, to position toIndex
@@ -502,11 +504,6 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-#if DM_VERSION > 513
-#error Remie said that lummox was adding a way to get a lists
-#error contents via list.values, if that is true remove this
-#error otherwise, update the version and bug lummox
-#endif
 //Flattens a keyed list into a list of it's contents
 /proc/flatten_list(list/key_list)
 	if(!islist(key_list))

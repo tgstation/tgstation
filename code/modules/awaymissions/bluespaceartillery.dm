@@ -1,8 +1,8 @@
 
 
 /obj/machinery/artillerycontrol
-	var/reload = 60
-	var/reload_cooldown = 60
+	var/reload = 120
+	var/reload_cooldown = 120
 	var/explosiondev = 3
 	var/explosionmed = 6
 	var/explosionlight = 12
@@ -11,9 +11,9 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	density = TRUE
 
-/obj/machinery/artillerycontrol/process()
+/obj/machinery/artillerycontrol/process(delta_time)
 	if(reload < reload_cooldown)
-		reload++
+		reload += delta_time
 
 /obj/structure/artilleryplaceholder
 	name = "artillery"
@@ -40,7 +40,7 @@
 	var/A
 	A = input("Area to bombard", "Open Fire", A) in GLOB.teleportlocs
 	var/area/thearea = GLOB.teleportlocs[A]
-	if(usr.stat || usr.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(reload < reload_cooldown)
 		return

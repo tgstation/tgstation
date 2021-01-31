@@ -9,7 +9,9 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/Destroy()
 	remove_hand()
-	to_chat(usr, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
+	if(action?.owner)
+		var/mob/guy_who_needs_to_know = action.owner
+		to_chat(guy_who_needs_to_know, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
 	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
@@ -48,7 +50,7 @@
 	attached_hand.attached_spell = src
 	if(!user.put_in_hands(attached_hand))
 		remove_hand(TRUE)
-		if (user.get_num_arms() <= 0)
+		if (user.usable_hands == 0)
 			to_chat(user, "<span class='warning'>You dont have any usable hands!</span>")
 		else
 			to_chat(user, "<span class='warning'>Your hands are full!</span>")

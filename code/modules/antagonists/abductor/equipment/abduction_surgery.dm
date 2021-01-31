@@ -6,13 +6,13 @@
 
 /datum/surgery/organ_extraction/can_start(mob/user, mob/living/carbon/target)
 	if(!ishuman(user))
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = user
 	if(H.dna.species.id == "abductor")
-		return 1
+		return TRUE
 	for(var/obj/item/implant/abductor/A in H.implants)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /datum/surgery_step/extract_organ

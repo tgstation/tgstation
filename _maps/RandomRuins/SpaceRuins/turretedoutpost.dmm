@@ -5,7 +5,7 @@
 "ab" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/template_noop)
 "ac" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -89,6 +89,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
@@ -170,6 +171,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
 	},
+/obj/item/gps/spaceruin,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)
 "aD" = (
@@ -184,16 +186,6 @@
 "aE" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/turretedoutpost)
-"aF" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aG" = (
 /obj/structure/rack,
@@ -238,13 +230,13 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aL" = (
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/swat,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aM" = (
@@ -343,26 +335,26 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aY" = (
 /obj/structure/rack,
-/obj/item/storage/belt/military,
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aZ" = (
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/riot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/lootdrop/space/syndiecosmetic,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "ba" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/breadslice/meat,
+/obj/item/food/breadslice/meat,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -479,9 +471,9 @@ al
 ad
 ad
 ay
-aF
 aL
-aF
+aL
+aL
 ad
 ad
 al
