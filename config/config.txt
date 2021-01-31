@@ -108,6 +108,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log uplink purchases
+LOG_UPLINK
+
 ## log telecomms messages
 LOG_TELECOMMS
 
