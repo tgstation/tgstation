@@ -1,5 +1,7 @@
 /datum/component/pricetag
+	///Payee gets 100% of the value if no ratio has been set.
 	var/default_profit_ratio = 1
+	///List of bank accounts this pricetag pays out to. Format is payees[bank_account] = profit_ratio.
 	var/list/payees = list()
 
 /datum/component/pricetag/Initialize(_owner,_profit_ratio)
@@ -27,7 +29,7 @@
 	if(price)
 		for(var/datum/bank_account/payee in payees)
 			var/profit_ratio = payees[payee]
-			var/adjusted_value = price*(profit_ratio/100)
+			var/adjusted_value = price*profit_ratio
 			var/datum/bank_account/bank_account = payee
 			bank_account.adjust_money(adjusted_value)
 			bank_account.bank_card_talk("Sale recorded. [adjusted_value] credits added to account.")
