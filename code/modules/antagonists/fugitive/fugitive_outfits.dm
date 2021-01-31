@@ -80,7 +80,7 @@
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Police Officer"
+	W.trim = "Police Officer"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -112,7 +112,7 @@
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
+	W.trim = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -137,7 +137,7 @@
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
+	W.trim = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -166,6 +166,6 @@
 	synthetic_appearance.assume_disguise(synthetic_appearance, H)
 	H.update_hair()
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
+	W.trim = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()

@@ -254,7 +254,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		var/scan_name = inserted_scan_id ? html_encode(inserted_scan_id.name) : "--------"
 		var/target_name = inserted_modify_id ? html_encode(inserted_modify_id.name) : "--------"
 		var/target_owner = (inserted_modify_id?.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
-		var/target_rank = (inserted_modify_id?.assignment) ? html_encode(inserted_modify_id.assignment) : "Unassigned"
+		var/target_rank = (inserted_modify_id?.trim) ? html_encode(inserted_modify_id.trim) : "Unassigned"
 		var/target_age = (inserted_modify_id?.registered_age) ? html_encode(inserted_modify_id.registered_age) : "--------"
 
 		if(!authenticated)
@@ -455,7 +455,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", inserted_modify_id ? inserted_modify_id.assignment : "Unassigned"), MAX_NAME_LEN)
+					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", inserted_modify_id ? inserted_modify_id.trim : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
 						t1 = newJob
 
@@ -489,11 +489,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "assigned the job [jobdatum.title]")
 
 				if (inserted_modify_id)
-					inserted_modify_id.assignment = t1
+					inserted_modify_id.trim = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 		if ("demote")
-			if(inserted_modify_id.assignment in head_subordinates || inserted_modify_id.assignment == "Assistant")
-				inserted_modify_id.assignment = "Unassigned"
+			if(inserted_modify_id.trim in head_subordinates || inserted_modify_id.trim == "Assistant")
+				inserted_modify_id.trim = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			else
 				to_chat(usr, "<span class='alert'>You are not authorized to demote this position.</span>")

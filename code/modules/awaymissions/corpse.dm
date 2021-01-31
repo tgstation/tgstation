@@ -243,7 +243,7 @@
 				W.access = list()
 			W.access |= id_access_list
 		if(id_job)
-			W.assignment = id_job
+			W.trim = id_job
 		W.registered_name = H.real_name
 		W.update_label()
 

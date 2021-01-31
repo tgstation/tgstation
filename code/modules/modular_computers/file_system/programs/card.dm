@@ -135,7 +135,7 @@
 						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
 						<hr>
-						<u>Assignment:</u> [target_id_card.assignment]<br>
+						<u>Assignment:</u> [target_id_card.trim]<br>
 						<u>Access:</u><br>
 						"}
 
@@ -155,7 +155,7 @@
 			if(!computer || !card_slot2)
 				return
 			if(target_id_card)
-				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment)
+				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.trim)
 				return card_slot2.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
@@ -166,11 +166,11 @@
 			if(!computer || !authenticated)
 				return
 			if(minor)
-				if(!(target_id_card.assignment in head_subordinates) && target_id_card.assignment != "Assistant")
+				if(!(target_id_card.trim in head_subordinates) && target_id_card.trim != "Assistant")
 					return
 
 			target_id_card.access -= get_all_centcom_access() + get_all_accesses()
-			target_id_card.assignment = "Unassigned"
+			target_id_card.trim = "Unassigned"
 			target_id_card.update_label()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
@@ -194,7 +194,7 @@
 			if(target == "Custom")
 				var/custom_name = params["custom_name"]
 				if(custom_name)
-					target_id_card.assignment = custom_name
+					target_id_card.trim = custom_name
 					target_id_card.update_label()
 			else
 				if(minor && !(target in head_subordinates))
@@ -220,7 +220,7 @@
 					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")
 				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
 				target_id_card.access |= new_access
-				target_id_card.assignment = target
+				target_id_card.trim = target
 				target_id_card.update_label()
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
@@ -366,7 +366,7 @@
 	data["has_id"] = !!id_card
 	data["id_name"] = id_card ? id_card.name : "-----"
 	if(id_card)
-		data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
+		data["id_rank"] = id_card.trim ? id_card.trim : "Unassigned"
 		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
 		data["access_on_card"] = id_card.access
 

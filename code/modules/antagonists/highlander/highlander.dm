@@ -64,7 +64,7 @@
 	var/obj/item/card/id/advanced/centcom/W = new(H)
 	W.access = get_all_accesses()
 	W.access += get_all_centcom_access()
-	W.assignment = "Highlander"
+	W.trim = "Highlander"
 	W.registered_name = H.real_name
 	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label()

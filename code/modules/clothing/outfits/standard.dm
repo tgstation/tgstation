@@ -28,7 +28,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Special Ops Officer")
-	W.assignment = "Special Ops Officer"
+	W.trim = "Special Ops Officer"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -170,7 +170,7 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_all_accesses()
-	W.assignment = "Tunnel Clown!"
+	W.trim = "Tunnel Clown!"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -234,7 +234,7 @@
 
 	var/obj/item/card/id/advanced/chameleon/W = H.wear_id
 	W.access = get_all_accesses()
-	W.assignment = "Reaper"
+	W.trim = "Reaper"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -262,7 +262,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("CentCom Commander")
-	W.assignment = "CentCom Commander"
+	W.trim = "CentCom Commander"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
@@ -338,7 +338,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Admiral")
-	W.assignment = "Admiral"
+	W.trim = "Admiral"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
@@ -360,7 +360,7 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Assistant"
+	W.trim = "Assistant"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -411,7 +411,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_all_accesses()//They get full station access.
 	W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
-	W.assignment = "Death Commando"
+	W.trim = "Death Commando"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
