@@ -101,7 +101,7 @@
 // #define TGS_EVENT_WORLD_END_PROCESS 19
 // #define TGS_EVENT_WORLD_REBOOT 20
 /// Watchdog event when TgsInitializationComplete() is called. No parameters.
- #define TGS_EVENT_WORLD_PRIME 21
+#define TGS_EVENT_WORLD_PRIME 21
 
 // OTHER ENUMS
 
