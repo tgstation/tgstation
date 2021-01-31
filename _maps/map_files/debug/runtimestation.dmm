@@ -483,12 +483,12 @@
 /area/bridge)
 "bJ" = (
 /obj/structure/table,
-/obj/item/card/id/advanced/ert{
+/obj/item/card/id/advanced/centcom/ert{
 	pixel_x = 6;
 	pixel_y = -6
 	},
-/obj/item/card/id/advanced/syndicate/nuke_leader,
-/obj/item/card/id/advanced/captains_spare{
+/obj/item/card/id/advanced/chameleon/nuke_leader,
+/obj/item/card/id/advanced/gold/captains_spare{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -2048,7 +2048,7 @@
 /area/construction)
 "gz" = (
 /obj/structure/table,
-/obj/item/card/id/advanced/captains_spare,
+/obj/item/card/id/advanced/gold/captains_spare,
 /obj/machinery/keycard_auth{
 	pixel_y = 28
 	},
