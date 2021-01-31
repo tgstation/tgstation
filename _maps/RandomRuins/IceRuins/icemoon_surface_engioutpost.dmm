@@ -319,7 +319,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "be" = (
-/obj/item/card/id{
+/obj/item/card/id/advanced{
 	access = list(200,204,11,12,10);
 	assignment = "Senior Station Engineer";
 	desc = "A card used to provide ID and determine access across the station. There's blood dripping from the corner. Ew.";
