@@ -18,7 +18,7 @@
 /area/shuttle/transport/tramstation)
 "h" = (
 /obj/machinery/door/airlock/shuttle/glass,
-/obj/docking_port/mobile/elevator/tram,
+/obj/docking_port/mobile/tram,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/transport/tramstation)
 "i" = (

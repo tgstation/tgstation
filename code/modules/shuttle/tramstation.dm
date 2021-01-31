@@ -6,9 +6,12 @@
 	shuttleId = "tramstation_tram"
 	possible_destinations = "tramstation_left;tramstation_center;tramstation_right"
 
-/obj/docking_port/mobile/elevator/tram
+/obj/docking_port/mobile/tram
 	name = "tramstation tram dock"
 	id = "tramstation_tram"
+	callTime = 0
+	ignitionTime = 30
+	rechargeTime = 50
 	dwidth = 4
 	dheight = 0
 	width = 11

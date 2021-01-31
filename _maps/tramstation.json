@@ -1,8 +1,8 @@
 {
 	"version": 1,
 	"map_name": "Tramstation",
-	"map_path": "map_files/Tramstation",
-	"map_file": "Tramstation.dmm",
+	"map_path": "map_files/tramstation",
+	"map_file": "tramstation.dmm",
 	"traits": [
 		{
 			"Up": 1,
