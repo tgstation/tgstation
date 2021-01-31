@@ -86,7 +86,7 @@
 	quality = POSITIVE
 	difficulty = 16
 	instability = 5
-	conflicts = list(GIGANTISM)
+	conflicts = list(GIGANTISM, TINY)
 	locked = TRUE    // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
@@ -353,7 +353,7 @@
 	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
-	conflicts = list(DWARFISM)
+	conflicts = list(DWARFISM, TINY)
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -514,3 +514,39 @@
 
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH
+
+/datum/mutation/human/tiny
+	name = "Tiny"
+	desc = "The cells in the host conregate together, causing the host to appear smaller."
+	quality = NEGATIVE
+	difficulty = 16
+	instability = 5
+	conflicts = list(GIGANTISM, DWARFISM)
+	locked = TRUE
+
+/datum/mutation/human/tiny/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_TINY, GENETIC_MUTATION)
+	owner.resize = 0.5
+	owner.update_transform()
+	owner.can_be_held = TRUE
+	owner.mob_size = MOB_SIZE_TINY
+	owner.ventcrawler = TRUE
+	owner.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	owner.physiology.damage_resistance -= 100
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
+
+/datum/mutation/human/tiny/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_TINY, GENETIC_MUTATION)
+	owner.resize = 2
+	owner.update_transform()
+	owner.can_be_held = FALSE
+	owner.mob_size = MOB_SIZE_HUMAN
+	owner.ventcrawler = FALSE
+	owner.physiology.damage_resistance += 100
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")

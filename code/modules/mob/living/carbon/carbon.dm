@@ -174,6 +174,8 @@
 			power_throw++
 		if(HAS_TRAIT(src, TRAIT_DWARF))
 			power_throw--
+		if(HAS_TRAIT(src, TRAIT_TINY))
+			power_throw--
 		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 			power_throw++
 		if(pulling && grab_state >= GRAB_NECK)

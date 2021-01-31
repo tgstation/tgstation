@@ -227,6 +227,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPACEWALK			"spacewalk"
 #define TRAIT_GAMERGOD			"gamer-god" //double arcade prizes
 #define TRAIT_GIANT				"giant"
+#define TRAIT_TINY				"tiny"
 #define TRAIT_DWARF				"dwarf"
 #define TRAIT_SILENT_FOOTSTEPS	"silent_footsteps" //makes your footsteps completely silent
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good....

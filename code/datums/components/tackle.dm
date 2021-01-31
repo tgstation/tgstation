@@ -257,6 +257,8 @@
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_DWARF))
 		defense_mod -= 2
+	if(HAS_TRAIT(target, TRAIT_TINY))
+		defense_mod -= 4
 	if(HAS_TRAIT(target, TRAIT_GIANT))
 		defense_mod += 2
 	if(target.get_organic_health() < 50)
@@ -299,6 +301,8 @@
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_DWARF))
 		attack_mod -= 2
+	if(HAS_TRAIT(target, TRAIT_TINY))
+		defense_mod -= 3
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
 
