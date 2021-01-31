@@ -22,7 +22,7 @@
 	if(!H.mind)
 		return
 	if(H.mind.has_martialart(MARTIALART_KRAVMAGA))
-		style.remove()
+		style.remove(H)
 	else
 		style.teach(H,1)
 

@@ -730,7 +730,7 @@
 		return
 	if(martial_art)
 		if(martial_art.base) //Is the martial art temporary?
-			martial_art.remove()
+			martial_art.remove(new_character)
 		else
 			martial_art.teach(new_character)
 

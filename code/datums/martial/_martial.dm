@@ -43,33 +43,32 @@
 	var/mob/living/holder_living = holder.resolve()
 	holder_living.hud_used.combo_display.update_icon_state(streak)
 
-/datum/martial_art/proc/teach(mob/living/owner, make_temporary=FALSE)
-	if(!istype(owner) || !owner.mind)
+/datum/martial_art/proc/teach(mob/living/holder_living, make_temporary=FALSE)
+	if(!istype(holder_living) || !holder_living.mind)
 		return FALSE
-	if(owner.mind.martial_art)
+	if(holder_living.mind.martial_art)
 		if(make_temporary)
-			if(!owner.mind.martial_art.allow_temp_override)
+			if(!holder_living.mind.martial_art.allow_temp_override)
 				return FALSE
-			store(owner.mind.martial_art, owner)
+			store(holder_living.mind.martial_art, holder_living)
 		else
-			owner.mind.martial_art.on_remove(owner)
+			holder_living.mind.martial_art.on_remove(holder_living)
 	else if(make_temporary)
-		base = owner.mind.default_martial_art
+		base = holder_living.mind.default_martial_art
 	if(help_verb)
-		add_verb(owner, help_verb)
-	owner.mind.martial_art = src
-	holder = WEAKREF(owner)
+		add_verb(holder_living, help_verb)
+	holder_living.mind.martial_art = src
+	holder = WEAKREF(holder_living)
 	return TRUE
 
-/datum/martial_art/proc/store(datum/martial_art/old, mob/living/owner)
-	old.on_remove(owner)
+/datum/martial_art/proc/store(datum/martial_art/old, mob/living/holder_living)
+	old.on_remove(holder_living)
 	if (old.base) //Checks if old is temporary, if so it will not be stored.
 		base = old.base
 	else //Otherwise, old is stored.
 		base = old
 
-/datum/martial_art/proc/remove()
-	var/mob/living/holder_living = holder.resolve()
+/datum/martial_art/proc/remove(mob/living/holder_living)
 	if(!istype(holder_living) || !holder_living.mind || holder_living.mind.martial_art != src)
 		return
 	on_remove(holder_living)
@@ -80,9 +79,9 @@
 		default.teach(holder_living)
 	holder = null
 
-/datum/martial_art/proc/on_remove(mob/living/owner)
+/datum/martial_art/proc/on_remove(mob/living/holder_living)
 	if(help_verb)
-		remove_verb(owner, help_verb)
+		remove_verb(holder_living, help_verb)
 	return
 
 ///Gets called when a projectile hits the owner. Returning anything other than BULLET_ACT_HIT will stop the projectile from hitting the mob.
