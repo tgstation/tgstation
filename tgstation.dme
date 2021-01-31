@@ -58,6 +58,7 @@
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\forensics.dm"
+#include "code\__DEFINES\holodeck.dm"
 #include "code\__DEFINES\hud.dm"
 #include "code\__DEFINES\icon_smoothing.dm"
 #include "code\__DEFINES\instruments.dm"
