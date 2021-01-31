@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 11
+#define DB_MINOR_VERSION 12
 
 
 //! ## Timing subsystem
@@ -56,6 +56,9 @@
 ///
 ///In most cases you want a subsystem instead, so don't use this unless you have a good reason
 #define TIMER_LOOP				(1<<5)
+
+///Delete the timer on parent datum Destroy() and when deltimer'd
+#define TIMER_DELETE_ME			(1<<6)
 
 ///Empty ID define
 #define TIMER_ID_NULL -1
@@ -196,7 +199,7 @@
 ///Compile all the overlays for an atom from the cache lists
 // |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
+	do {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
 		if(LAZYLEN(rm)){\
@@ -214,7 +217,7 @@
 			}\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
-	}
+	} while (FALSE)
 
 /**
 	Create a new timer and add it to the queue.
@@ -229,10 +232,12 @@
 #define SSAIR_PIPENETS 1
 #define SSAIR_ATMOSMACHINERY 2
 #define SSAIR_ACTIVETURFS 3
-#define SSAIR_EXCITEDGROUPS 4
-#define SSAIR_HIGHPRESSURE 5
-#define SSAIR_HOTSPOTS 6
-#define SSAIR_SUPERCONDUCTIVITY 7
+#define SSAIR_HOTSPOTS 4
+#define SSAIR_EXCITEDCLEANUP 5
+#define SSAIR_EXCITEDGROUPS 6
+#define SSAIR_HIGHPRESSURE 7
+#define SSAIR_SUPERCONDUCTIVITY 8
+#define SSAIR_PROCESS_ATOMS 9
 
 // Explosion Subsystem subtasks
 #define SSEXPLOSIONS_MOVABLES 1

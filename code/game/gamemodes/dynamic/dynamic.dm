@@ -5,6 +5,10 @@
 
 #define RULESET_STOP_PROCESSING 1
 
+#define FAKE_REPORT_CHANCE 8
+#define REPORT_NEG_DIVERGENCE -15
+#define REPORT_POS_DIVERGENCE 15
+
 // -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
@@ -190,10 +194,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 // Checks if there are HIGHLANDER_RULESETs and calls the rule's round_result() proc
 /datum/game_mode/dynamic/set_round_result()
-	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags & HIGHLANDER_RULESET)
-			if(rule.check_finished()) // Only the rule that actually finished the round sets round result.
-				return rule.round_result()
 	// If it got to this part, just pick one highlander if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGHLANDER_RULESET)
@@ -202,7 +202,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
-	switch(round(threat_level))
+	var/shown_threat
+	if(prob(FAKE_REPORT_CHANCE))
+		shown_threat = rand(1, 100)
+	else
+		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
+	switch(round(shown_threat))
 		if(0 to 19)
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
 				. += "<b>Peaceful Waypoint</b></center><BR>"
@@ -250,9 +255,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return TRUE
 	if(force_ending)
 		return TRUE
-	for(var/datum/dynamic_ruleset/rule in executed_rules)
-		if(rule.flags & HIGHLANDER_RULESET)
-			return rule.check_finished()
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
@@ -774,3 +776,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return RULE_OF_THREE(40, 20, x) + 50
 		if (20 to INFINITY)
 			return rand(90, 100)
+
+#undef FAKE_REPORT_CHANCE
+#undef REPORT_NEG_DIVERGENCE
+#undef REPORT_POS_DIVERGENCE

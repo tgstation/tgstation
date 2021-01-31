@@ -23,8 +23,8 @@
 	if(QDELETED(item_module))
 		CRASH("activate_module called with improper item_module")
 
-	if(!(item_module in module.modules))
-		CRASH("activate_module called with item_module not in module.modules")
+	if(!(item_module in model.modules))
+		CRASH("activate_module called with item_module not in model.modules")
 
 	if(activated(item_module))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
@@ -56,11 +56,11 @@
 		hud_used.toggle_show_robot_modules()
 		storage_was_closed = TRUE
 	switch(module_num)
-		if(1)
+		if(BORG_CHOOSE_MODULE_ONE)
 			item_module.screen_loc = inv1.screen_loc
-		if(2)
+		if(BORG_CHOOSE_MODULE_TWO)
 			item_module.screen_loc = inv2.screen_loc
-		if(3)
+		if(BORG_CHOOSE_MODULE_THREE)
 			item_module.screen_loc = inv3.screen_loc
 
 	held_items[module_num] = item_module
@@ -92,8 +92,8 @@
 	if(QDELETED(item_module))
 		CRASH("unequip_module_from_slot called with improper item_module")
 
-	if(!(item_module in module.modules))
-		CRASH("unequip_module_from_slot called with item_module not in module.modules")
+	if(!(item_module in model.modules))
+		CRASH("unequip_module_from_slot called with item_module not in model.modules")
 
 	item_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
 
@@ -111,13 +111,13 @@
 		module_active = null
 
 	switch(module_num)
-		if(1)
+		if(BORG_CHOOSE_MODULE_ONE)
 			if(!(disabled_modules & BORG_MODULE_ALL_DISABLED))
 				inv1.icon_state = initial(inv1.icon_state)
-		if(2)
+		if(BORG_CHOOSE_MODULE_TWO)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				inv2.icon_state = initial(inv2.icon_state)
-		if(3)
+		if(BORG_CHOOSE_MODULE_THREE)
 			if(!(disabled_modules & BORG_MODULE_THREE_DISABLED))
 				inv3.icon_state = initial(inv3.icon_state)
 
@@ -126,7 +126,7 @@
 
 	held_items[module_num] = null
 	item_module.cyborg_unequip(src)
-	item_module.forceMove(module) //Return item to module so it appears in its contents, so it can be taken out again.
+	item_module.forceMove(model) //Return item to configuration so it appears in its contents, so it can be taken out again.
 
 	observer_screen_update(item_module, FALSE)
 	hud_used.update_robot_modules_display()
@@ -147,7 +147,7 @@
 			return FALSE
 
 	switch(module_num)
-		if(1)
+		if(BORG_CHOOSE_MODULE_ONE)
 			if(disabled_modules & BORG_MODULE_ALL_DISABLED)
 				return FALSE
 
@@ -163,7 +163,7 @@
 
 			to_chat(src, "<span class='userdanger'>CRITICAL ERROR: ALL modules OFFLINE.</span>")
 
-		if(2)
+		if(BORG_CHOOSE_MODULE_TWO)
 			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
 				return FALSE
 
@@ -174,7 +174,7 @@
 			audible_message("<span class='warning'>[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\"</span>")
 			to_chat(src, "<span class='userdanger'>SYSTEM ERROR: Module [module_num] OFFLINE.</span>")
 
-		if(3)
+		if(BORG_CHOOSE_MODULE_THREE)
 			if(disabled_modules & BORG_MODULE_THREE_DISABLED)
 				return FALSE
 
@@ -205,7 +205,7 @@
 		return FALSE
 
 	switch(module_num)
-		if(1)
+		if(BORG_CHOOSE_MODULE_ONE)
 			if(!(disabled_modules & BORG_MODULE_ALL_DISABLED))
 				return FALSE
 
@@ -214,13 +214,13 @@
 			if(builtInCamera)
 				builtInCamera.status = TRUE
 				to_chat(src, "<span class='notice'>You hear your built in security camera focus adjust as it comes back online!</span>")
-		if(2)
+		if(BORG_CHOOSE_MODULE_TWO)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
 				return FALSE
 
 			inv2.icon_state = initial(inv2.icon_state)
 			disabled_modules &= ~BORG_MODULE_TWO_DISABLED
-		if(3)
+		if(BORG_CHOOSE_MODULE_THREE)
 			if(!(disabled_modules & BORG_MODULE_THREE_DISABLED))
 				return FALSE
 
@@ -331,13 +331,13 @@
 		return FALSE
 
 	switch(module_num)
-		if(1)
+		if(BORG_CHOOSE_MODULE_ONE)
 			if(module_active != held_items[module_num])
 				inv1.icon_state = "[initial(inv1.icon_state)] +a"
-		if(2)
+		if(BORG_CHOOSE_MODULE_TWO)
 			if(module_active != held_items[module_num])
 				inv2.icon_state = "[initial(inv2.icon_state)] +a"
-		if(3)
+		if(BORG_CHOOSE_MODULE_THREE)
 			if(module_active != held_items[module_num])
 				inv3.icon_state = "[initial(inv3.icon_state)] +a"
 	module_active = held_items[module_num]
@@ -350,13 +350,13 @@
  */
 /mob/living/silicon/robot/proc/deselect_module(module_num)
 	switch(module_num)
-		if(1)
+		if(BORG_CHOOSE_MODULE_ONE)
 			if(module_active == held_items[module_num])
 				inv1.icon_state = initial(inv1.icon_state)
-		if(2)
+		if(BORG_CHOOSE_MODULE_TWO)
 			if(module_active == held_items[module_num])
 				inv2.icon_state = initial(inv2.icon_state)
-		if(3)
+		if(BORG_CHOOSE_MODULE_THREE)
 			if(module_active == held_items[module_num])
 				inv3.icon_state = initial(inv3.icon_state)
 	module_active = null
@@ -404,5 +404,4 @@
 	cycle_modules()
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
-	return (I && (I in module.modules)) //Only if it's part of our module.
-
+	return (I && (I in model.modules)) //Only if it's part of our model.

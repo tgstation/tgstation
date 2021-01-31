@@ -5,7 +5,7 @@
 /// The carp rift is now fully charged.
 #define CHARGE_COMPLETED		2
 /// The darkness threshold for space dragon when choosing a color
-#define DARKNESS_THRESHOLD		0.5
+#define DARKNESS_THRESHOLD		50
 
 /**
  * # Space Dragon
@@ -68,7 +68,7 @@
 	var/tiredness = 0
 	/// A multiplier to how much each use of wing gust should add to the tiredness variable.  Set to 5 if the current rift is destroyed.
 	var/tiredness_mult = 1
-	/// Determines whether or not Space Dragon is in the middle of using wing guat.  If set to true, prevents him from moving and doing certain actions.
+	/// Determines whether or not Space Dragon is in the middle of using wing gust.  If set to true, prevents him from moving and doing certain actions.
 	var/using_special = FALSE
 	/// A list of all of the rifts created by Space Dragon.  Used for setting them all to infinite carp spawn when Space Dragon wins, and removing them when Space Dragon dies.
 	var/list/obj/structure/carp_rift/rift_list = list()
@@ -76,8 +76,6 @@
 	var/rifts_charged = 0
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
-	/// The togglable small sprite action
-	var/small_sprite_type = /datum/action/small_sprite/megafauna/spacedragon
 	/// The innate ability to use wing gust
 	var/datum/action/innate/space_dragon/gust_attack/gust
 	/// The innate ability to summon rifts
@@ -88,9 +86,6 @@
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	if(small_sprite_type)
-		var/datum/action/small_sprite/small_action = new small_sprite_type()
-		small_action.Grant(src)
 	gust = new
 	gust.Grant(src)
 	rift = new
@@ -172,8 +167,12 @@
 	empty_contents()
 	if(!objective_complete)
 		destroy_rifts()
-	add_overlay()
 	..()
+	add_dragon_overlay()
+
+/mob/living/simple_animal/hostile/space_dragon/revive(full_heal, admin_revive)
+	. = ..()
+	add_dragon_overlay()
 
 /mob/living/simple_animal/hostile/space_dragon/wabbajack_act(mob/living/new_mob)
 	empty_contents()
@@ -207,9 +206,7 @@
 		color_selection()
 		return
 	var/temp_hsv = RGBtoHSV(chosen_color)
-	if(chosen_color == COLOR_BLACK)
-		chosen_color = COLOR_WHITE
-	else if(ReadHSV(temp_hsv)[3] < DARKNESS_THRESHOLD)
+	if(ReadHSV(temp_hsv)[3] < DARKNESS_THRESHOLD)
 		to_chat(src, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 		color_selection()
 		return

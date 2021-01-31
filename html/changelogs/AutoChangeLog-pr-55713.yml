@@ -1,4 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - tweak: "Rotting gibs no longer make miasma on planetary turfs, to save on processing as it quickly dissipiates into planetary atmos anyway. They'll also stop rotting after some time"

@@ -98,17 +98,18 @@
 	return json_encode(response)
 
 /datum/tgs_api/v5/OnTopic(T)
-	if(!initialized)
-		return FALSE	//continue world/Topic
-
 	var/list/params = params2list(T)
 	var/json = params[DMAPI5_TOPIC_DATA]
 	if(!json)
-		return FALSE
+		return FALSE // continue to /world/Topic
 
 	var/list/topic_parameters = json_decode(json)
 	if(!topic_parameters)
 		return TopicResponse("Invalid topic parameters json!");
+
+	if(!initialized)
+		TGS_WARNING_LOG("Missed topic due to not being initialized: [T]")
+		return TRUE	// too early to handle, but it's still our responsibility
 
 	var/their_sCK = topic_parameters[DMAPI5_PARAMETER_ACCESS_IDENTIFIER]
 	if(their_sCK != access_identifier)

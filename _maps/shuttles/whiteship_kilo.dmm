@@ -574,7 +574,7 @@
 "aY" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/shuttle{
-	name = "Captain's Quarters"
+	name = "NTMS-037 Cargo Bay"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -649,7 +649,7 @@
 "bf" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/shuttle{
-	name = "Captain's Quarters"
+	name = "NTMS-037 Engine Room"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -948,7 +948,7 @@
 "bE" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/command{
-	name = "Ship Control"
+	name = "NTMS-037 Ship Control"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bridge)
@@ -1086,7 +1086,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/door/airlock/shuttle{
-	name = "Ship Saloon"
+	name = "NTMS-037 Saloon"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)
@@ -1472,7 +1472,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/door/airlock/shuttle{
-	name = "Ship Lockers"
+	name = "NTMS-037 Lockers"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/crew)
@@ -1518,7 +1518,7 @@
 "cI" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/shuttle{
-	name = "Captain's Quarters"
+	name = "NTMS-037 Captain's Quarters"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1596,7 +1596,7 @@
 "cQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/command{
-	name = "Ship Control"
+	name = "NTMS-037 Ship Control"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{

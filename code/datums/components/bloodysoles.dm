@@ -237,19 +237,17 @@
 
 /datum/component/bloodysoles/feet/update_icon()
 	if(ishuman(wielder))
-		// Monkeys get no bloody feet :(
+		var/mob/living/carbon/human/human = wielder
+		if(NOBLOODOVERLAY in human.dna.species.species_traits)
+			return
 		if(bloody_shoes[BLOOD_STATE_HUMAN] > 0 && !is_obscured())
-			wielder.remove_overlay(SHOES_LAYER)
-			wielder.overlays_standing[SHOES_LAYER] = bloody_feet
-			wielder.apply_overlay(SHOES_LAYER)
+			human.remove_overlay(SHOES_LAYER)
+			human.overlays_standing[SHOES_LAYER] = bloody_feet
+			human.apply_overlay(SHOES_LAYER)
 		else
-			wielder.update_inv_shoes()
+			human.update_inv_shoes()
 
 /datum/component/bloodysoles/feet/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/FP)
-	if(ismonkey(wielder))
-		FP.species_types |= "monkey"
-		return
-
 	if(!ishuman(wielder))
 		FP.species_types |= "unknown"
 		return

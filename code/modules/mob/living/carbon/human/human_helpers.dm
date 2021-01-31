@@ -220,3 +220,18 @@
 
 /mob/living/carbon/human/get_biological_state()
 	return dna.species.get_biological_state()
+
+///Returns death message for mob examine text
+/mob/living/carbon/human/proc/generate_death_examine_text()
+	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
+	var/t_He = p_they(TRUE)
+	var/t_his = p_their()
+	var/t_is = p_are()
+	if(key || !getorgan(/obj/item/organ/brain))
+		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>" //Default death message
+	//The death mob has a brain and no client/player that is assigned to the mob
+	if(!ghost?.can_reenter_corpse)  //And there is no ghost that could reenter the body
+		//There is no way this mob can in any normal way get a player, so they lost the will to live
+		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has lost the will to live...</span>"
+	//This mob has a ghost linked that could still reenter the body, so the soul only departed
+	return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed, but the link is not yet fully broken...</span>"

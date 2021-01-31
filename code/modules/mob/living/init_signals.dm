@@ -38,6 +38,11 @@
 		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
 	), .proc/update_succumb_action)
 
+	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_ENABLED, .proc/on_movement_type_flag_enabled)
+	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_DISABLED, .proc/on_movement_type_flag_disabled)
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_gain)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_loss)
 
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
@@ -180,3 +185,24 @@
 		throw_alert("succumb", /atom/movable/screen/alert/succumb)
 	else
 		clear_alert("succumb")
+
+///From [element/movetype_handler/on_movement_type_trait_gain()]
+/mob/living/proc/on_movement_type_flag_enabled(datum/source, trait)
+	SIGNAL_HANDLER
+	update_movespeed(FALSE)
+
+///From [element/movetype_handler/on_movement_type_trait_loss()]
+/mob/living/proc/on_movement_type_flag_disabled(datum/source, trait)
+	SIGNAL_HANDLER
+	update_movespeed(FALSE)
+
+
+/// Called when [TRAIT_SKITTISH] is added to the mob.
+/mob/living/proc/on_skittish_trait_gain(datum/source)
+	SIGNAL_HANDLER
+	AddElement(/datum/element/skittish)
+
+/// Called when [TRAIT_SKITTISH] is removed from the mob.
+/mob/living/proc/on_skittish_trait_loss(datum/source)
+	SIGNAL_HANDLER
+	RemoveElement(/datum/element/skittish)

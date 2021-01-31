@@ -99,7 +99,7 @@
 
 	Don't crash the server, OK?
 
-	"UPDATE /mob/living/carbon/monkey SET #null = forceMove(usr.loc)"
+	"UPDATE /mob/living/carbon/human/species/monkey SET #null = forceMove(usr.loc)"
 
 	Writing "#null" in front of the "=" will call the proc and discard the return value.
 
@@ -803,8 +803,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	for(var/arg in arguments)
 		new_args[++new_args.len] = SDQL_expression(source, arg)
 	if(object == GLOB) // Global proc.
-		procname = "/proc/[procname]"
-		return superuser? (call(procname)(new_args)) : (WrapAdminProcCall(GLOBAL_PROC, procname, new_args))
+		return superuser? (call("/proc/[procname]")(new_args)) : (WrapAdminProcCall(GLOBAL_PROC, procname, new_args))
 	return superuser? (call(object, procname)(new_args)) : (WrapAdminProcCall(object, procname, new_args))
 
 /datum/sdql2_query/proc/SDQL_function_async(datum/object, procname, list/arguments, source)

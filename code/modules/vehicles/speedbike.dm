@@ -1,12 +1,4 @@
-
-/obj/vehicle/ridden/space
-	name = "Generic Space Vehicle!"
-
-/obj/vehicle/ridden/space/Initialize()
-	. = ..()
-	// ryll fix this//
-
-/obj/vehicle/ridden/space/speedbike
+/obj/vehicle/ridden/speedbike
 	name = "Speedbike"
 	icon = 'icons/obj/bike.dmi'
 	icon_state = "speedbike_blue"
@@ -14,24 +6,24 @@
 	var/overlay_state = "cover_blue"
 	var/mutable_appearance/overlay
 
-/obj/vehicle/ridden/space/speedbike/Initialize()
+/obj/vehicle/ridden/speedbike/Initialize()
 	. = ..()
 	overlay = mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/speedbike)
 
-/obj/vehicle/ridden/space/speedbike/Move(newloc,move_dir)
+/obj/vehicle/ridden/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
 		new /obj/effect/temp_visual/dir_setting/speedbike_trail(loc,move_dir)
 	return ..()
 
-/obj/vehicle/ridden/space/speedbike/red
+/obj/vehicle/ridden/speedbike/red
 	icon_state = "speedbike_red"
 	overlay_state = "cover_red"
 
 //BM SPEEDWAGON
 
-/obj/vehicle/ridden/space/speedwagon
+/obj/vehicle/ridden/speedwagon
 	name = "BM Speedwagon"
 	desc = "Push it to the limit, walk along the razor's edge."
 	icon = 'icons/obj/car.dmi'
@@ -43,12 +35,12 @@
 	pixel_y = -48
 	pixel_x = -48
 
-/obj/vehicle/ridden/space/speedwagon/Initialize()
+/obj/vehicle/ridden/speedwagon/Initialize()
 	. = ..()
 	add_overlay(overlay)
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/car/speedwagon)
+	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/speedwagon)
 
-/obj/vehicle/ridden/space/speedwagon/Bump(atom/A)
+/obj/vehicle/ridden/speedwagon/Bump(atom/A)
 	. = ..()
 	if(!A.density || !has_buckled_mobs())
 		return
@@ -70,7 +62,7 @@
 			visible_message("<span class='danger'>[src] crashes into [H]!</span>")
 			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
-/obj/vehicle/ridden/space/speedwagon/Moved()
+/obj/vehicle/ridden/speedwagon/Moved()
 	. = ..()
 	if(!has_buckled_mobs())
 		return

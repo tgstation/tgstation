@@ -210,7 +210,7 @@
 	list_reagents = list(/datum/reagent/vaccine/fungal_tb = 20)
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure/update_icon_state()
-	if(reagents.total_volume > 30)
+	if(reagents.total_volume >= volume)
 		icon_state = initial(icon_state)
 	else if (reagents.total_volume > 0)
 		icon_state = "[initial(icon_state)]1"

@@ -39,6 +39,9 @@
 /datum/element/ridable/proc/check_mounting(atom/movable/target_movable, mob/living/potential_rider, force = FALSE, ride_check_flags = NONE)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT(potential_rider, TRAIT_CANT_RIDE))
+		return
+
 	var/arms_needed = 0
 	if(ride_check_flags & RIDER_NEEDS_ARMS)
 		arms_needed = 2

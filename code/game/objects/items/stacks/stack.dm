@@ -40,7 +40,7 @@
 	/// Amount of matter for RCD
 	var/matter_amount = 0
 
-/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
+/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -49,7 +49,9 @@
 	if(!merge_type)
 		merge_type = type
 
-	if(LAZYLEN(mats_per_unit))
+	if(LAZYLEN(mat_override))
+		set_mats_per_unit(mat_override, mat_amt)
+	else if(LAZYLEN(mats_per_unit))
 		set_mats_per_unit(mats_per_unit, 1)
 	else if(LAZYLEN(custom_materials))
 		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
@@ -62,7 +64,7 @@
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
-		var/datum/material/M = SSmaterials.GetMaterialRef(material_type) //First/main material
+		var/datum/material/M = GET_MATERIAL_REF(material_type) //First/main material
 		for(var/i in M.categories)
 			switch(i)
 				if(MAT_CATEGORY_BASE_RECIPES)
@@ -81,13 +83,20 @@
  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
  */
 /obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
+	mats_per_unit = LAZYLEN(mats) ? SSmaterials.FindOrCreateMaterialCombo(mats, multiplier) : mats
 	update_custom_materials()
 
 /** Updates the custom materials list of this stack.
  */
 /obj/item/stack/proc/update_custom_materials()
-	set_custom_materials(mats_per_unit, amount)
+	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
+
+/**
+ * Override to make things like metalgen accurately set custom materials
+ */
+/obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
+	return is_update ? ..() : set_mats_per_unit(materials, multiplier/(amount || 1))
+
 
 /obj/item/stack/on_grind()
 	. = ..()
@@ -124,7 +133,7 @@
 
 /obj/item/stack/examine(mob/user)
 	. = ..()
-	if (is_cyborg)
+	if(is_cyborg)
 		if(singular_name)
 			. += "There is enough energy for [get_amount()] [singular_name]\s."
 		else
@@ -224,53 +233,46 @@
 			if(get_amount() < 1 && !is_cyborg)
 				qdel(src)
 				return
-			var/datum/stack_recipe/R = locate(params["ref"])
-			if(!is_valid_recipe(R, recipes)) //href exploit protection
+			var/datum/stack_recipe/recipe = locate(params["ref"])
+			if(!is_valid_recipe(recipe, recipes)) //href exploit protection
 				return
 			var/multiplier = text2num(params["multiplier"])
 			if(!multiplier || (multiplier <= 0)) //href exploit protection
 				return
-			if(!building_checks(R, multiplier))
+			if(!building_checks(recipe, multiplier))
 				return
-			if(R.time)
+			if(recipe.time)
 				var/adjusted_time = 0
-				usr.visible_message("<span class='notice'>[usr] starts building \a [R.title].</span>", "<span class='notice'>You start building \a [R.title]...</span>")
-				if(HAS_TRAIT(usr, R.trait_booster))
-					adjusted_time = (R.time * R.trait_modifier)
+				usr.visible_message("<span class='notice'>[usr] starts building \a [recipe.title].</span>", "<span class='notice'>You start building \a [recipe.title]...</span>")
+				if(HAS_TRAIT(usr, recipe.trait_booster))
+					adjusted_time = (recipe.time * recipe.trait_modifier)
 				else
-					adjusted_time = R.time
+					adjusted_time = recipe.time
 				if(!do_after(usr, adjusted_time, target = usr))
 					return
-				if(!building_checks(R, multiplier))
+				if(!building_checks(recipe, multiplier))
 					return
 
 			var/obj/O
-			if(R.max_res_amount > 1) //Is it a stack?
-				O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
-			else if(ispath(R.result_type, /turf))
+			if(recipe.max_res_amount > 1) //Is it a stack?
+				O = new recipe.result_type(usr.drop_location(), recipe.res_amount * multiplier)
+			else if(ispath(recipe.result_type, /turf))
 				var/turf/T = usr.drop_location()
 				if(!isturf(T))
 					return
-				T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
+				T.PlaceOnTop(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 			else
-				O = new R.result_type(usr.drop_location())
+				O = new recipe.result_type(usr.drop_location())
 			if(O)
 				O.setDir(usr.dir)
-			use(R.req_amount * multiplier)
+			use(recipe.req_amount * multiplier)
 
-			if(R.applies_mats && LAZYLEN(mats_per_unit))
+			if(recipe.applies_mats && LAZYLEN(mats_per_unit))
 				if(isstack(O))
 					var/obj/item/stack/crafted_stack = O
-					crafted_stack.set_mats_per_unit(mats_per_unit, R.req_amount / R.res_amount)
+					crafted_stack.set_mats_per_unit(mats_per_unit, recipe.req_amount / recipe.res_amount)
 				else
-					O.set_custom_materials(mats_per_unit, R.req_amount / R.res_amount)
-
-			if(istype(O, /obj/structure/windoor_assembly))
-				var/obj/structure/windoor_assembly/W = O
-				W.ini_dir = W.dir
-			else if(istype(O, /obj/structure/window))
-				var/obj/structure/window/W = O
-				W.ini_dir = W.dir
+					O.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 			if(QDELETED(O))
 				return //It's a stack and has already been merged
@@ -296,57 +298,62 @@
 		return TRUE
 	return ..()
 
-/obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
-	if (get_amount() < R.req_amount*multiplier)
-		if (R.req_amount*multiplier>1)
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
+/obj/item/stack/proc/building_checks(datum/stack_recipe/recipe, multiplier)
+	if (get_amount() < recipe.req_amount*multiplier)
+		if (recipe.req_amount*multiplier>1)
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.req_amount*multiplier] [recipe.title]\s!</span>")
 		else
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.title]!</span>")
 		return FALSE
-	var/turf/T = get_turf(usr)
+	var/turf/dest_turf = get_turf(usr)
 
-	var/obj/D = R.result_type
-	if(R.window_checks && !valid_window_location(T, initial(D.dir) == FULLTILE_WINDOW_DIR ? FULLTILE_WINDOW_DIR : usr.dir))
-		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
-		return FALSE
-	if(R.one_per_turf && (locate(R.result_type) in T))
-		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
-		return FALSE
-	if(R.on_floor)
-		if(!isfloorturf(T))
-			to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
+	// If we're making a window, we have some special snowflake window checks to do.
+	if(ispath(recipe.result_type, /obj/structure/window))
+		var/obj/structure/window/result_path = recipe.result_type
+		if(!valid_window_location(dest_turf, usr.dir, is_fulltile = initial(result_path.fulltile)))
+			to_chat(usr, "<span class='warning'>The [recipe.title] won't fit here!</span>")
 			return FALSE
-		for(var/obj/AM in T)
-			if(istype(AM,/obj/structure/grille))
+
+	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
+		to_chat(usr, "<span class='warning'>There is another [recipe.title] here!</span>")
+		return FALSE
+
+	if(recipe.on_floor)
+		if(!isfloorturf(dest_turf))
+			to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed on the floor!</span>")
+			return FALSE
+
+		for(var/obj/object in dest_turf)
+			if(istype(object, /obj/structure/grille))
 				continue
-			if(istype(AM,/obj/structure/table))
+			if(istype(object, /obj/structure/table))
 				continue
-			if(istype(AM,/obj/structure/window))
-				var/obj/structure/window/W = AM
-				if(!W.fulltile)
+			if(istype(object, /obj/structure/window))
+				var/obj/structure/window/window_structure = object
+				if(!window_structure.fulltile)
 					continue
-			if(AM.density)
-				to_chat(usr, "<span class='warning'>Theres a [AM.name] here. You cant make a [R.title] here!</span>")
+			if(object.density)
+				to_chat(usr, "<span class='warning'>There is \a [object.name] here. You cant make \a [recipe.title] here!</span>")
 				return FALSE
-	if(R.placement_checks)
-		switch(R.placement_checks)
+	if(recipe.placement_checks)
+		switch(recipe.placement_checks)
 			if(STACK_CHECK_CARDINALS)
 				var/turf/step
 				for(var/direction in GLOB.cardinals)
-					step = get_step(T, direction)
-					if(locate(R.result_type) in step)
-						to_chat(usr, "<span class='warning'>\The [R.title] must not be built directly adjacent to another!</span>")
+					step = get_step(dest_turf, direction)
+					if(locate(recipe.result_type) in step)
+						to_chat(usr, "<span class='warning'>\The [recipe.title] must not be built directly adjacent to another!</span>")
 						return FALSE
 			if(STACK_CHECK_ADJACENT)
-				if(locate(R.result_type) in range(1, T))
-					to_chat(usr, "<span class='warning'>\The [R.title] must be constructed at least one tile away from others of its type!</span>")
+				if(locate(recipe.result_type) in range(1, dest_turf))
+					to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed at least one tile away from others of its type!</span>")
 					return FALSE
 	return TRUE
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
 	if(check && zero_amount())
 		return FALSE
-	if (is_cyborg)
+	if(is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return FALSE
@@ -387,7 +394,7 @@
  * - _amount: The number of units to add to this stack.
  */
 /obj/item/stack/proc/add(_amount)
-	if (is_cyborg)
+	if(is_cyborg)
 		source.add_charge(_amount * cost)
 	else
 		amount += _amount
@@ -404,18 +411,21 @@
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
-	if(!check.is_cyborg && (mats_per_unit != check.mats_per_unit)) // Cyborg stacks don't have materials. This lets them recycle sheets and floor tiles.
+	if(mats_per_unit != check.mats_per_unit)
+		return FALSE
+	if(is_cyborg)	// No merging cyborg stacks into other stacks
 		return FALSE
 	return TRUE
 
-/obj/item/stack/proc/merge(obj/item/stack/S) //Merge src into S, as much as possible
+///Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.
+/obj/item/stack/proc/merge(obj/item/stack/S, limit)
 	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
 	var/transfer = get_amount()
 	if(S.is_cyborg)
 		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
 	else
-		transfer = min(transfer, S.max_amount - S.amount)
+		transfer = min(transfer, (limit ? limit : S.max_amount) - S.amount)
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)
@@ -467,9 +477,8 @@
 /obj/item/stack/proc/split_stack(mob/user, amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
-	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE)
+	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
 	. = F
-	F.set_mats_per_unit(mats_per_unit, 1) // Required for greyscale sheets and tiles.
 	F.copy_evidences(src)
 	if(user)
 		if(!user.put_in_hands(F, merge_stacks = FALSE))
@@ -509,15 +518,12 @@
 	var/time = 0
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
-	var/window_checks = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
 	var/trait_booster = null
 	var/trait_modifier = 1
 
 /datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
-
-
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -526,7 +532,6 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
-	src.window_checks = window_checks
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster

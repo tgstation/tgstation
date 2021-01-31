@@ -11,7 +11,7 @@
 	attack_verb_continuous = list("plants", "vegitizes", "crops", "reaps", "farms")
 	attack_verb_simple = list("plant", "vegitize", "crop", "reap", "farm")
 	///The stored trait taken from the parent plant. Defaults to perenial growth.
-	var/datum/plant_gene/trait/stored_trait
+	var/datum/plant_gene/stored_trait
 	///Determines the appearance of the graft. Rudimentary right now so it just picks randomly.
 	var/graft_appearance
 	///Seed that the graft was taken from, used for applying parent stats. Can be unexpectedly nulled by the parent plant getting deleted.

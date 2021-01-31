@@ -19,3 +19,8 @@
 			qdel(src)
 	else
 		return ..()
+
+/obj/item/stack/tile/light/place_tile(turf/open/T)
+	. = ..()
+	var/turf/open/floor/light/F = .
+	F?.state = state

@@ -42,13 +42,6 @@
 	begin_month = OCTOBER
 	begin_weekday = MONDAY
 
-/datum/holiday/nth_week/indigenous
-	// not Columbus day anymore get rekt, Columbus
-	name = "Indigenous Peoples' Day"
-	begin_week = 2
-	begin_month = OCTOBER
-	begin_weekday = MONDAY
-
 /datum/holiday/nth_week/mother
 	name = "Mother's Day"
 	begin_week = 2

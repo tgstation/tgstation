@@ -123,7 +123,7 @@
 
 	if(breath)
 		loc.assume_air(breath)
-		air_update_turf()
+		air_update_turf(FALSE, FALSE)
 
 /mob/living/carbon/proc/has_smoke_protection()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))

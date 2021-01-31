@@ -77,6 +77,7 @@ fi
 # Use pip to install our requirements
 if [ ! -f "$PythonDir/requirements.txt" ] || [ "$(b2sum < "$Sdk/requirements.txt")" != "$(b2sum < "$PythonDir/requirements.txt")" ]; then
 	echo "Updating dependencies..."
+	"$PythonExe" -m pip install -U wheel
 	"$PythonExe" -m pip install -U pip -r "$Sdk/requirements.txt"
 	cp "$Sdk/requirements.txt" "$PythonDir/requirements.txt"
 	echo "---"

@@ -45,7 +45,7 @@
 	status_flags = 0
 	wander = FALSE
 	density = FALSE
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB

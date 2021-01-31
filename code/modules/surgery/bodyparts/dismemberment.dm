@@ -288,7 +288,7 @@
 		//Drop all worn head items
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
-			owner.dropItemToGround(I, TRUE)
+			owner.dropItemToGround(I, force = TRUE)
 
 	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay
 

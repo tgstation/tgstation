@@ -1677,15 +1677,17 @@
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M)
 	. = ..()
-	if(!M.mind?.assigned_role)
-		return
-	switch(M.mind.assigned_role)
-		if("Chief Medical Officer", "Captain", "Chief Engineer", "Research Director", "Head of Personnel")
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		// Heads of staff and the captain have a "royal metabolism"
+		if(HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM))
 			if(prob(10))
 				to_chat(M, "You feel like royalty.")
 			if(prob(5))
 				M.say(pick("Peasants..","This carpet is worth more than your contracts!","I could fire you at any time..."), forced = "royal carpet")
-		if("Quartermaster")
+
+		// The quartermaster, as a semi-head, has a "pretender royal" metabolism
+		else if(HAS_TRAIT(liver, TRAIT_PRETENDER_ROYAL_METABOLISM))
 			if(prob(15))
 				to_chat(M, "You feel like an impostor...")
 
@@ -1702,6 +1704,104 @@
 	color = "#5A64C8"
 	taste_description = "blueyalty" //also intentional
 	carpet_type = /turf/open/floor/carpet/royalblue
+
+/datum/reagent/carpet/neon
+	name = "Neon Carpet"
+	description = "For those who like the 1980s, vegas, and debugging."
+	color = COLOR_ALMOST_BLACK
+	taste_description = "neon"
+	carpet_type = /turf/open/floor/carpet/emissive/neon
+
+/datum/reagent/carpet/neon/simple_white
+	name = "Simple White Neon Carpet"
+	description = "For those who like fluorescent lighting."
+	color = LIGHT_COLOR_HALOGEN
+	taste_description = "sodium vapor"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/white
+
+/datum/reagent/carpet/neon/simple_red
+	name = "Simple Red Neon Carpet"
+	description = "For those who like a bit of uncertainty."
+	color = COLOR_RED
+	taste_description = "neon hallucinations"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/red
+
+/datum/reagent/carpet/neon/simple_orange
+	name = "Simple Orange Neon Carpet"
+	description = "For those who like some sharp edges."
+	color = COLOR_ORANGE
+	taste_description = "neon spines"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/orange
+
+/datum/reagent/carpet/neon/simple_yellow
+	name = "Simple Yellow Neon Carpet"
+	description = "For those who need a little stability in their lives."
+	color = COLOR_YELLOW
+	taste_description = "stabilized neon"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/yellow
+
+/datum/reagent/carpet/neon/simple_lime
+	name = "Simple Lime Neon Carpet"
+	description = "For those who need a little bitterness."
+	color = COLOR_LIME
+	taste_description = "neon citrus"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/lime
+
+/datum/reagent/carpet/neon/simple_green
+	name = "Simple Green Neon Carpet"
+	description = "For those who need a little bit of change in their lives."
+	color = COLOR_GREEN
+	taste_description = "radium"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/green
+
+/datum/reagent/carpet/neon/simple_cyan
+	name = "Simple Cyan Neon Carpet"
+	description = "For those who need to take a breath."
+	color = COLOR_DARK_CYAN
+	taste_description = "neon air"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/cyan
+
+/datum/reagent/carpet/neon/simple_teal
+	name = "Simple Teal Neon Carpet"
+	description = "For those who need a smoke."
+	color = COLOR_TEAL
+	taste_description = "neon tobacco"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/teal
+
+/datum/reagent/carpet/neon/simple_blue
+	name = "Simple Blue Neon Carpet"
+	description = "For those who need to feel joy again."
+	color = COLOR_NAVY
+	taste_description = "neon blue"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/blue
+
+/datum/reagent/carpet/neon/simple_purple
+	name = "Simple Purple Neon Carpet"
+	description = "For those that need a little bit of exploration."
+	color = COLOR_PURPLE
+	taste_description = "neon hell"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/purple
+
+/datum/reagent/carpet/neon/simple_violet
+	name = "Simple Violet Neon Carpet"
+	description = "For those who want to temp fate."
+	color = COLOR_VIOLET
+	taste_description = "neon hell"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/violet
+
+/datum/reagent/carpet/neon/simple_pink
+	name = "Simple Pink Neon Carpet"
+	description = "For those just want to stop thinking so much."
+	color = COLOR_PINK
+	taste_description = "neon pink"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/pink
+
+/datum/reagent/carpet/neon/simple_black
+	name = "Simple Black Neon Carpet"
+	description = "For those who need to catch their breath."
+	color = COLOR_BLACK
+	taste_description = "neon ash"
+	carpet_type = /turf/open/floor/carpet/emissive/neon/simple/black
 
 /datum/reagent/bromine
 	name = "Bromine"
@@ -2012,7 +2112,7 @@
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
-	if((ismonkey(M) || ishuman(M)) && current_cycle >= 10)
+	if((ishuman(M)) && current_cycle >= 10)
 		M.gorillize()
 
 /datum/reagent/growthserum
@@ -2125,9 +2225,6 @@
 	name = "synthpax"
 	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
-/datum/reagent/peaceborg
-	can_synth = FALSE
 
 /datum/reagent/peaceborg/confuse
 	name = "Dizzying Solution"
@@ -2324,13 +2421,7 @@
 	color = "#E6E6DA"
 	taste_mult = 0
 
-/datum/reagent/consumable/gravy
-	name = "Gravy"
-	description = "A mixture of flour, water, and the juices of cooked meat."
-	taste_description = "gravy"
-	color = "#623301"
-	taste_mult = 1.2
-
+// "Second wind" reagent generated when someone suffers a wound. Epinephrine, adrenaline, and stimulants are all already taken so here we are
 /datum/reagent/determination
 	name = "Determination"
 	description = "For when you need to push on a little more. Do NOT allow near plants."

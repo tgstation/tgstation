@@ -21,6 +21,9 @@
 /obj/machinery/mass_driver/trash
 	id = MASSDRIVER_DISPOSALS
 
+/obj/machinery/mass_driver/shack
+	id = MASSDRIVER_SHACK
+
 /obj/machinery/mass_driver/Destroy()
 	for(var/obj/machinery/computer/pod/control in GLOB.machines)
 		if(control.id == id)

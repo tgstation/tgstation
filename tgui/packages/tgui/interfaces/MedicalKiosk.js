@@ -1,6 +1,6 @@
 import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, Icon, LabeledList, ProgressBar, Section } from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, LabeledList, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const MedicalKiosk = (props, context) => {
@@ -85,13 +85,13 @@ const MedicalKioskScanButton = (props, context) => {
   const [scanIndex, setScanIndex] = useSharedState(context, 'scanIndex');
   const paid = data[`active_status_${index}`];
   return (
-    <Flex spacing={1} align="baseline">
-      <Flex.Item width="16px" textAlign="center">
+    <Stack align="baseline">
+      <Stack.Item width="16px" textAlign="center">
         <Icon
           name={paid ? 'check' : 'dollar-sign'}
           color={paid ? 'green' : 'grey'} />
-      </Flex.Item>
-      <Flex.Item grow={1}>
+      </Stack.Item>
+      <Stack.Item grow>
         <Button
           fluid
           icon={icon}
@@ -105,8 +105,8 @@ const MedicalKioskScanButton = (props, context) => {
             }
             setScanIndex(index);
           }} />
-      </Flex.Item>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
 };
 

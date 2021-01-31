@@ -388,7 +388,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
-	light_range = 6 //luminosity when on
+	light_range = 7 //luminosity when on
+	light_system = MOVABLE_LIGHT
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4

@@ -120,10 +120,9 @@
 	brain.brainmob = brainmob //Set the brain to use the brainmob
 	log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
 	brainmob = null //Set mmi brainmob var to null
-	if(user)
-		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
-	else
-		brain.forceMove(get_turf(src))
+	brain.forceMove(drop_location())
+	if(Adjacent(user))
+		user.put_in_hands(brain)
 	brain.organ_flags &= ~ORGAN_FROZEN
 	brain = null //No more brain in here
 

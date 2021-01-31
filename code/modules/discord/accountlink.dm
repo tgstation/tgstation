@@ -14,7 +14,7 @@
 	if(!prefix)
 		to_chat(src, "<span class='warning'>This feature is disabled.</span>")
 
-	if(!SSdiscord && !SSdiscord.reverify_cache)
+	if(!SSdiscord || !SSdiscord.reverify_cache)
 		to_chat(src, "<span class='warning'>Wait for the Discord subsystem to finish initialising</span>")
 		return
 	var/message = ""

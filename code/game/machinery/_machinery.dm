@@ -92,6 +92,8 @@
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.3
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	emissive_blocker_plane = STRUCTURE_EMISSIVE_BLOCKER_PLANE
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -495,15 +497,34 @@
 			LAZYCLEARLIST(component_parts)
 	return ..()
 
+/**
+ * Spawns a frame where this machine is. If the machine was not disassmbled, the
+ * frame is spawned damaged. If the frame couldn't exist on this turf, it's smashed
+ * down to metal sheets.
+ *
+ * Arguments:
+ * * disassembled - If FALSE, the machine was destroyed instead of disassembled and the frame spawns at reduced integrity.
+ */
 /obj/machinery/proc/spawn_frame(disassembled)
-	var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
-	. = M
-	M.set_anchored(anchored)
+	var/obj/structure/frame/machine/new_frame = new /obj/structure/frame/machine(loc)
+
+	new_frame.state = 2
+
+	// If the new frame shouldn't be able to fit here due to the turf being blocked, spawn the frame deconstructed.
+	if(isturf(loc))
+		var/turf/machine_turf = loc
+		// We're spawning a frame before this machine is qdeleted, so we want to ignore it. We've also just spawned a new frame, so ignore that too.
+		if(machine_turf.is_blocked_turf(TRUE, source_atom = new_frame, ignore_atoms = list(src)))
+			new_frame.deconstruct(disassembled)
+			return
+
+	new_frame.icon_state = "box_1"
+	. = new_frame
+	new_frame.set_anchored(anchored)
 	if(!disassembled)
-		M.obj_integrity = M.max_integrity * 0.5 //the frame is already half broken
-	transfer_fingerprints_to(M)
-	M.state = 2
-	M.icon_state = "box_1"
+		new_frame.obj_integrity = new_frame.max_integrity * 0.5 //the frame is already half broken
+	transfer_fingerprints_to(new_frame)
+
 
 /obj/machinery/obj_break(damage_flag)
 	SHOULD_CALL_PARENT(TRUE)
@@ -564,7 +585,7 @@
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
 		var/turf/ground = get_turf(src)
-		if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_object = src))
+		if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 			to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
 			return CANT_UNFASTEN
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
@@ -576,7 +597,7 @@
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
 		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
-			if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, excluded_object = src))//i know what you tryin to sneak in
+			if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 				to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
 				return CANT_UNFASTEN
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
@@ -603,16 +624,25 @@
 	if(component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
-			var/P
+			var/required_type
 			if(W.works_from_distance)
 				to_chat(user, display_parts(user))
+			if(!CB)
+				return FALSE
 			for(var/obj/item/A in component_parts)
-				for(var/D in CB.req_components)
-					if(ispath(A.type, D))
-						P = D
+				for(var/design_type in CB.req_components)
+					if(ispath(A.type, design_type))
+						required_type = design_type
 						break
 				for(var/obj/item/B in W.contents)
-					if(istype(B, P) && istype(A, P))
+					if(istype(B, required_type) && istype(A, required_type))
+						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
+						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
+							var/obj/item/stock_parts/cell/checked_cell = B
+							// If it's rigged or corrupted, max the charge. Then explode it.
+							if(checked_cell.rigged || checked_cell.corrupted)
+								checked_cell.charge = checked_cell.maxcharge
+								checked_cell.explode()
 						if(B.get_part_rating() > A.get_part_rating())
 							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
 								var/obj/item/stack/SA = A
@@ -710,28 +740,6 @@
 		datum_flags |= DF_VAR_EDITED
 		return TRUE
 	return ..()
-
-/**
- * Generate a name devices
- *
- * Creates a randomly generated tag or name for devices5
- * The length of the generated name can be set by passing in an int
- * args:
- * * len (int)(Optional) Default=5 The length of the name
- * Returns (string) The generated name
- */
-/obj/machinery/proc/assign_random_name(len=5)
-	var/list/new_name = list()
-	// machine id's should be fun random chars hinting at a larger world
-	for(var/i = 1 to len)
-		switch(rand(1,3))
-			if(1)
-				new_name += ascii2text(rand(65, 90)) // A - Z
-			if(2)
-				new_name += ascii2text(rand(97,122)) // a - z
-			if(3)
-				new_name += ascii2text(rand(48, 57)) // 0 - 9
-	return new_name.Join()
 
 /**
  * Alerts the AI that a hack is in progress.

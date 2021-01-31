@@ -364,7 +364,7 @@
 	if (!strain_choices)
 		strain_choices = list()
 
-		var/list/new_strains = GLOB.valid_blobstrains.Copy()
+		var/list/new_strains = GLOB.valid_blobstrains.Copy() - blobstrain.type
 		for (var/_ in 1 to BLOB_REROLL_CHOICES)
 			var/datum/blobstrain/strain = pick_n_take(new_strains)
 
@@ -398,6 +398,7 @@
 				free_strain_rerolls -= 1
 
 			last_reroll_time = world.time
+			strain_choices = null
 
 			return
 

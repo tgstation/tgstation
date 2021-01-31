@@ -371,6 +371,10 @@
 				break_light_tube(1)
 	addtimer(CALLBACK(src, .proc/update, 0), 1)
 
+/obj/machinery/light/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
 	if(A)
@@ -396,7 +400,6 @@
 
 /obj/machinery/light/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(on && status == LIGHT_OK)
 		var/area/A = get_area(src)
 		if(emergency_mode || (A?.fire))
@@ -819,9 +822,12 @@
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
 
-// called when on fire
+// called when heated
 
-/obj/machinery/light/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/machinery/light/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 673
+
+/obj/machinery/light/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C
 		break_light_tube()
 
@@ -909,18 +915,15 @@
 /obj/item/light/Initialize()
 	. = ..()
 	create_reagents(LIGHT_REAGENT_CAPACITY, INJECTABLE | DRAINABLE)
+	AddElement(/datum/element/caltrop, min_damage = force)
 	update()
-
-/obj/item/light/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/caltrop, force)
 
 /obj/item/light/Crossed(atom/movable/AM)
 	. = ..()
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
-	if(istype(L) && !(L.is_flying() || L.is_floating() || L.buckled))
+	if(!(L.movement_type & (FLYING|FLOATING)) || L.buckled)
 		playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()

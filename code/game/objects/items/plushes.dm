@@ -37,6 +37,7 @@
 /obj/item/toy/plush/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -505,6 +506,12 @@
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
+/obj/item/toy/plush/lizardplushie/space
+	name = "space lizard plushie"
+	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
+	icon_state = "plushie_spacelizard"
+	inhand_icon_state = "plushie_spacelizard"
+
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
@@ -522,6 +529,15 @@
 	attack_verb_continuous = list("shoots", "nukes", "detonates")
 	attack_verb_simple = list("shoot", "nuke", "detonate")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
+
+/obj/item/toy/plush/plasmamanplushie
+	name = "plasmaman plushie"
+	desc = "A stuffed toy that resembles your purple coworkers. Mmm, yeah, in true plasmaman fashion, it's not cute at all despite the designer's best efforts."
+	icon_state = "plushie_pman"
+	inhand_icon_state = "plushie_pman"
+	attack_verb_continuous = list("burns", "space beasts", "fwooshes")
+	attack_verb_simple = list("burn", "space beast", "fwoosh")
+	squeak_override = list('sound/effects/extinguish.ogg' = 1)
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"

@@ -43,6 +43,8 @@
 /// the max amount of determination you can have
 #define WOUND_DETERMINATION_MAX			10
 
+/// While someone has determination in their system, their bleed rate is slightly reduced
+#define WOUND_DETERMINATION_BLEED_MOD	0.85
 
 // ~wound global lists
 // list in order of highest severity to lowest
@@ -143,3 +145,14 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define SCAR_CURRENT_VERSION		3
 /// how many scar slots, per character slot, we have to cycle through for persistent scarring, if enabled in character prefs
 #define PERSISTENT_SCAR_SLOTS		3
+
+// ~blood_flow rates of change, these are used by [/datum/wound/proc/get_bleed_rate_of_change] from [/mob/living/carbon/proc/bleed_warn] to let the player know if their bleeding is getting better/worse/the same
+/// Our wound is clotting and will eventually stop bleeding if this continues
+#define BLOOD_FLOW_DECREASING	-1
+/// Our wound is bleeding but is holding steady at the same rate.
+#define BLOOD_FLOW_STEADY		0
+/// Our wound is bleeding and actively getting worse, like if we're a critical slash or if we're afflicted with heparin
+#define BLOOD_FLOW_INCREASING	1
+
+/// How often can we annoy the player about their bleeding? This duration is extended if it's not serious bleeding
+#define BLEEDING_MESSAGE_BASE_CD	10 SECONDS

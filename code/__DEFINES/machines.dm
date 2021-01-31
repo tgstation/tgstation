@@ -140,3 +140,4 @@
 #define MASSDRIVER_TOXINS "toxinsdriver"
 #define MASSDRIVER_CHAPEL "chapelgun"
 #define MASSDRIVER_DISPOSALS "trash"
+#define MASSDRIVER_SHACK "shack"

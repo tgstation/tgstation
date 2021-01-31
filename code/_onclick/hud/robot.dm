@@ -13,10 +13,10 @@
 	if(..())
 		return
 	var/mob/living/silicon/robot/R = usr
-	if(R.module.type != /obj/item/robot_module)
+	if(R.model.type != /obj/item/robot_model)
 		R.hud_used.toggle_show_robot_modules()
 		return 1
-	R.pick_module()
+	R.pick_model()
 
 /atom/movable/screen/robot/module1
 	name = "module1"
@@ -110,7 +110,6 @@
 	static_inventory += robit.inv3
 
 //End of module select
-
 	using = new /atom/movable/screen/robot/lamp()
 	using.screen_loc = ui_borg_lamp
 	using.hud = src
@@ -195,7 +194,7 @@
 
 	var/mob/screenmob = viewer || R
 
-	if(!R.module)
+	if(!R.model)
 		return
 
 	if(!R.client)
@@ -205,21 +204,21 @@
 		//Modules display is shown
 		screenmob.client.screen += module_store_icon	//"store" icon
 
-		if(!R.module.modules)
-			to_chat(usr, "<span class='warning'>Selected module has no modules to select!</span>")
+		if(!R.model.modules)
+			to_chat(usr, "<span class='warning'>Selected model has no modules to select!</span>")
 			return
 
 		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = max(CEILING(length(R.module.get_inactive_modules()) / 8, 1),1)
+		var/display_rows = max(CEILING(length(R.model.get_inactive_modules()) / 8, 1),1)
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 
 		var/x = -4	//Start at CENTER-4,SOUTH+1
 		var/y = 1
 
-		for(var/atom/movable/A in R.module.get_inactive_modules())
+		for(var/atom/movable/A in R.model.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen += A
 			if(x < 0)
@@ -238,7 +237,7 @@
 		//Modules display is hidden
 		screenmob.client.screen -= module_store_icon	//"store" icon
 
-		for(var/atom/A in R.module.get_inactive_modules())
+		for(var/atom/A in R.model.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen -= A
 		R.shown_robot_modules = 0
@@ -257,11 +256,11 @@
 				var/obj/item/I = R.held_items[i]
 				if(I)
 					switch(i)
-						if(1)
+						if(BORG_CHOOSE_MODULE_ONE)
 							I.screen_loc = ui_inv1
-						if(2)
+						if(BORG_CHOOSE_MODULE_TWO)
 							I.screen_loc = ui_inv2
-						if(3)
+						if(BORG_CHOOSE_MODULE_THREE)
 							I.screen_loc = ui_inv3
 						else
 							return

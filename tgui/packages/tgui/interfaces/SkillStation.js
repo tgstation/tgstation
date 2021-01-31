@@ -1,7 +1,6 @@
 import { toFixed } from 'common/math';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Table } from '../components';
+import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 
 export const InsertedSkillchip = (props, context) => {
@@ -36,7 +35,7 @@ export const InsertedSkillchip = (props, context) => {
     <Section
       title="Inserted Skillchip"
       buttons={
-        <Fragment>
+        <>
           <Button
             icon="syringe"
             disabled={!implantable || !!working}
@@ -49,21 +48,13 @@ export const InsertedSkillchip = (props, context) => {
             disabled={!!working}
             onClick={() => act("eject")}
             content="Eject" />
-        </Fragment>
+        </>
       }>
-      <Flex
-        spacing={2}
-        height="100%"
-        width="100%">
-        <Flex.Item
-          height="100%"
-          align="center">
-          <Icon
-            size={3}
-            name={skill_icon} />
-        </Flex.Item>
-        <Flex.Item
-          width="100%">
+      <Stack fill align="center">
+        <Stack.Item>
+          <Icon m={1} size={3} name={skill_icon} />
+        </Stack.Item>
+        <Stack.Item grow basis={0}>
           <LabeledList>
             <LabeledList.Item
               label="Skillchip">
@@ -105,8 +96,8 @@ export const InsertedSkillchip = (props, context) => {
               </LabeledList.Item>
             )}
           </LabeledList>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

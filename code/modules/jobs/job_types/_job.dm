@@ -61,9 +61,15 @@
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 
+	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, among others)
+	var/list/liver_traits = null
+
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	var/bounty_types = CIV_JOB_BASIC
+
+	/// Should this job be allowed to be picked for the bureaucratic error event?
+	var/allow_bureaucratic_error = TRUE
 
 /datum/job/New()
 	. = ..()
@@ -86,6 +92,12 @@
 	if(mind_traits)
 		for(var/t in mind_traits)
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+
+	var/obj/item/organ/liver/liver = H.getorganslot(ORGAN_SLOT_LIVER)
+
+	if(liver)
+		for(var/t in liver_traits)
+			ADD_TRAIT(liver, t, JOB_TRAIT)
 
 	var/list/roundstart_experience
 
@@ -230,8 +242,6 @@
 
 	var/pda_slot = ITEM_SLOT_BELT
 
-	var/skillchip_path = null
-
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backpack)
 		if(GBACKPACK)
@@ -291,18 +301,6 @@
 	if(H.client?.prefs.playtime_reward_cloak)
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
-	// Insert the skillchip associated with this job into the target.
-	if(skillchip_path && istype(H))
-		var/obj/item/skillchip/skillchip_instance = new skillchip_path()
-		var/implant_msg = H.implant_skillchip(skillchip_instance)
-		if(implant_msg)
-			stack_trace("Failed to implant [H] with [skillchip_instance], on job [src]. Failure message: [implant_msg]")
-			qdel(skillchip_instance)
-			return
-
-		var/activate_msg = skillchip_instance.try_activate_skillchip(TRUE, TRUE)
-		if(activate_msg)
-			CRASH("Failed to activate [H]'s [skillchip_instance], on job [src]. Failure message: [activate_msg]")
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
@@ -310,8 +308,6 @@
 	types += backpack
 	types += satchel
 	types += duffelbag
-	if(skillchip_path)
-		types += skillchip_path
 	return types
 
 //Warden and regular officers add this result to their get_access()

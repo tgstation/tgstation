@@ -188,13 +188,13 @@
 		update_icon()
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
-	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
 		return FALSE
-	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
+	if (materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency > points)
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
+			points -= materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		return TRUE
 
@@ -297,7 +297,7 @@
 			cat["items"] += list(list(
 				"id" = D.id,
 				"name" = D.name,
-				"cost" = D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency,
+				"cost" = D.materials[GET_MATERIAL_REF(/datum/material/biomass)]/efficiency,
 			))
 		data["categories"] += list(cat)
 
