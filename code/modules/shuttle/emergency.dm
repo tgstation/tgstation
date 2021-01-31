@@ -62,7 +62,7 @@
 	for(var/i in authorized)
 		var/obj/item/card/id/ID = i
 		var/name = ID.registered_name
-		var/job = ID.assignment
+		var/job = ID.trim
 
 		if(obj_flags & EMAGGED)
 			name = Gibberish(name)
@@ -270,7 +270,7 @@
 		var/obj/item/card/id/ID = new(src)
 		var/datum/job/J = pick(SSjob.occupations)
 		ID.registered_name = S.random_name(pick(MALE, FEMALE))
-		ID.assignment = J.title
+		ID.trim = J.title
 
 		authorized += ID
 

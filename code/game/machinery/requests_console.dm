@@ -427,7 +427,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/obj/item/card/id/ID = O.GetID()
 	if(ID)
 		if(screen == REQ_SCREEN_AUTHENTICATE)
-			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
+			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.trim])</b></font>"
 			updateUsrDialog()
 		if(screen == REQ_SCREEN_ANNOUNCE)
 			if (ACCESS_RC_ANNOUNCE in ID.access)

@@ -169,8 +169,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		var/obj/item/card/id/id_card = tracked_living_mob.get_idcard(hand_first = FALSE)
 		if (id_card)
 			entry["name"] = id_card.registered_name
-			entry["assignment"] = id_card.assignment
-			entry["ijob"] = jobs[id_card.assignment]
+			entry["assignment"] = id_card.trim
+			entry["ijob"] = jobs[id_card.trim]
 
 		// Binary living/dead status
 		if (sensor_mode >= SENSOR_LIVING)

@@ -189,7 +189,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_centcom_access("CentCom Official")
 	W.access += ACCESS_WEAPONS
-	W.assignment = "CentCom Official"
+	W.trim = "CentCom Official"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
@@ -342,7 +342,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	W.access = get_centcom_access(name)
 	W.access += ACCESS_WEAPONS
-	W.assignment = name
+	W.trim = name
 	W.registered_name = H.real_name
 	W.update_label()
 

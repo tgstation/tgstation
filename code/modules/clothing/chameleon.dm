@@ -264,7 +264,7 @@
 		agent_card.forged_card_name = initial(copied_card.name)
 		if(!agent_card.forged)
 			agent_card.registered_name = initial(copied_card.registered_name)
-			agent_card.assignment = initial(copied_card.assignment)
+			agent_card.trim = initial(copied_card.trim)
 		agent_card.update_label()
 		if(!agent_card.forged)
 			agent_card.name = initial(copied_card.name) //e.g. captain's spare ID, not Captain's ID Card (Captain)
@@ -274,7 +274,7 @@
 	var/obj/item/card/id/advanced/chameleon/agent_card = target
 	if(istype(agent_card) && istype(job_datum))
 		agent_card.forged = TRUE
-		agent_card.assignment = job_datum.title
+		agent_card.trim = job_datum.title
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/picked_item)
 	..()

@@ -78,16 +78,15 @@
 	var/list/sticky_access
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
-	///The job name registered on the card (for example: Assistant)
-	var/assignment = null
-	/// mapping aid
-	var/access_txt
+	/// The job name registered on the card (for example: Assistant). In /card/id/advanced types, this trim can modify the appearance of the card.
+	var/trim = null
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
 	var/registered_age = 13 // default age for ss13 players
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
+	update_label()
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
 /obj/item/card/id/Destroy()
@@ -109,7 +108,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
+			if(NAMEOF(src, trim), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
@@ -297,7 +296,7 @@
 
 /obj/item/card/id/proc/update_label()
 	var/blank = !registered_name
-	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!trim) ? "" : " ([trim])"]"
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
@@ -322,19 +321,19 @@
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	assignment = "Charlie Station Security Officer"
+	trim = "Charlie Station Security Officer"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	assignment = "Charlie Station Scientist"
+	trim = "Charlie Station Scientist"
 	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	assignment = "Charlie Station Engineer"
+	trim = "Charlie Station Engineer"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
 
 /obj/item/card/id/away/old/apc
@@ -384,13 +383,12 @@
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."
 	icon_state = "card_grey"
 
+	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"
+	/// Cached icon that has been built for this card.
 	var/icon/cached_flat_icon
 
-/obj/item/card/id/advanced/Initialize(mapload)
-	. = ..()
-	update_label()
-
+/// If no cached_flat_icon exists, this proc creates it. This proc then returns the cached_flat_icon.
 /obj/item/card/id/advanced/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
 		cached_flat_icon = getFlatIcon(src)
@@ -406,13 +404,8 @@
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, assigned_icon_state)
 
-	. += mutable_appearance(icon, SSid_access.title_to_trim_icon(assignment))
+	. += mutable_appearance(icon, SSid_access.title_to_trim_icon(trim))
 
-/*
-Usage:
-update_label()
-	Sets the id name to whatever registered_name and assignment is
-*/
 /obj/item/card/id/advanced/update_label()
 	. = ..()
 	update_icon()
@@ -426,7 +419,7 @@ update_label()
 /obj/item/card/id/advanced/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
 	access = list(ACCESS_MAINT_TUNNELS)
-	assignment = "Reaper"
+	trim = "Reaper"
 	registered_name = "Thirteen"
 
 /obj/item/card/id/advanced/gold
@@ -455,7 +448,7 @@ update_label()
 
 /obj/item/card/id/advanced/chameleon/update_label()
 	var/blank = !registered_name
-	name = "[blank ? forged_card_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	name = "[blank ? forged_card_name : "[registered_name]'s ID Card"][(!trim) ? "" : " ([trim])"]"
 	update_icon()
 
 /obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
@@ -492,7 +485,7 @@ update_label()
 				else
 					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
-			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
+			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", trim ? trim : "Assistant", MAX_MESSAGE_LEN)
 			if(!target_occupation)
 				return
 
@@ -501,11 +494,11 @@ update_label()
 				registered_age = max(round(text2num(newAge)), 0)
 
 			registered_name = input_name
-			assignment = target_occupation
+			trim = target_occupation
 			update_label()
 			forged = TRUE
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
+			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[trim]\".")
 
 			// First time use automatically sets the account id to the user.
 			if (first_use && !registered_account)
@@ -520,7 +513,7 @@ update_label()
 			return
 		else if (popup_input == "Forge/Reset" && forged)
 			registered_name = initial(registered_name)
-			assignment = initial(assignment)
+			trim = initial(trim)
 			log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
 			update_label()
 			forged = FALSE
@@ -543,7 +536,7 @@ update_label()
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	registered_name = "Captain"
-	assignment = "Captain"
+	trim = "Captain"
 	registered_age = null
 
 /obj/item/card/id/advanced/captains_spare/Initialize()
@@ -553,7 +546,7 @@ update_label()
 
 /obj/item/card/id/advanced/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
-		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
+		name = "[initial(name)][(!trim || trim == "Captain") ? "" : " ([trim])"]"
 		update_icon()
 	else
 		..()
@@ -564,7 +557,7 @@ update_label()
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	registered_name = "Central Command"
-	assignment = "Central Command"
+	trim = "Central Command"
 	registered_age = null
 
 /obj/item/card/id/advanced/centcom/Initialize()
@@ -582,7 +575,7 @@ update_label()
 
 /obj/item/card/id/advanced/centcom/ert/commander
 	registered_name = "Emergency Response Team Commander"
-	assignment = "Emergency Response Team Commander"
+	trim = "Emergency Response Team Commander"
 
 /obj/item/card/id/advanced/centcom/ert/commander/Initialize()
 	. = ..()
@@ -590,7 +583,7 @@ update_label()
 
 /obj/item/card/id/advanced/centcom/ert/security
 	registered_name = "Security Response Officer"
-	assignment = "Security Response Officer"
+	trim = "Security Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/security/Initialize()
 	. = ..()
@@ -598,7 +591,7 @@ update_label()
 
 /obj/item/card/id/advanced/centcom/ert/engineer
 	registered_name = "Engineering Response Officer"
-	assignment = "Engineering Response Officer"
+	trim = "Engineering Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/engineer/Initialize()
 	. = ..()
@@ -606,7 +599,7 @@ update_label()
 
 /obj/item/card/id/advanced/centcom/ert/medical
 	registered_name = "Medical Response Officer"
-	assignment = "Medical Response Officer"
+	trim = "Medical Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/medical/Initialize()
 	. = ..()
@@ -614,7 +607,7 @@ update_label()
 
 /obj/item/card/id/advanced/centcom/ert/chaplain
 	registered_name = "Religious Response Officer"
-	assignment = "Religious Response Officer"
+	trim = "Religious Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/chaplain/Initialize()
 	. = ..()
@@ -622,11 +615,11 @@ update_label()
 
 /obj/item/card/id/advanced/centcom/ert/janitor
 	registered_name = "Janitorial Response Officer"
-	assignment = "Janitorial Response Officer"
+	trim = "Janitorial Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/clown
 	registered_name = "Entertainment Response Officer"
-	assignment = "Entertainment Response Officer"
+	trim = "Entertainment Response Officer"
 
 /obj/item/card/id/advanced/black
 	icon_state = "card_black"
@@ -636,13 +629,13 @@ update_label()
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
 	registered_name = "Death Commando"
-	assignment = "Death Commando"
+	trim = "Death Commando"
 
 /obj/item/card/id/advanced/black/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	assignment = "Syndicate Overlord"
+	trim = "Syndicate Overlord"
 	icon_state = "card_black"
 	access = list(ACCESS_SYNDICATE)
 	sticky_access = list(ACCESS_SYNDICATE)
@@ -652,7 +645,7 @@ update_label()
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	assignment = "Syndicate Operative"
+	trim = "Syndicate Operative"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	sticky_access = list(ACCESS_SYNDICATE)
 
@@ -660,7 +653,7 @@ update_label()
 	name = "syndicate captain ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	assignment = "Syndicate Ship Captain"
+	trim = "Syndicate Ship Captain"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	sticky_access = list(ACCESS_SYNDICATE)
 
@@ -672,8 +665,8 @@ update_label()
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
-	assignment = "assigned_centcom"
-	assignment = "Jannie"
+	trim = "assigned_centcom"
+	trim = "Jannie"
 
 /obj/item/card/id/advanced/debug/Initialize()
 	. = ..()
@@ -687,7 +680,7 @@ update_label()
 	inhand_icon_state = "orange-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	assignment = "Prisoner"
+	trim = "Prisoner"
 	registered_name = "Scum"
 	var/goal = 0 //How far from freedom?
 	var/points = 0
@@ -699,37 +692,37 @@ update_label()
 /obj/item/card/id/advanced/prisoner/one
 	name = "Prisoner #13-001"
 	registered_name = "Prisoner #13-001"
-	assignment = "Prisoner #13-001"
+	trim = "Prisoner #13-001"
 
 /obj/item/card/id/advanced/prisoner/two
 	name = "Prisoner #13-002"
 	registered_name = "Prisoner #13-002"
-	assignment = "Prisoner #13-002"
+	trim = "Prisoner #13-002"
 
 /obj/item/card/id/advanced/prisoner/three
 	name = "Prisoner #13-003"
 	registered_name = "Prisoner #13-003"
-	assignment = "Prisoner #13-003"
+	trim = "Prisoner #13-003"
 
 /obj/item/card/id/advanced/prisoner/four
 	name = "Prisoner #13-004"
 	registered_name = "Prisoner #13-004"
-	assignment = "Prisoner #13-004"
+	trim = "Prisoner #13-004"
 
 /obj/item/card/id/advanced/prisoner/five
 	name = "Prisoner #13-005"
 	registered_name = "Prisoner #13-005"
-	assignment = "Prisoner #13-005"
+	trim = "Prisoner #13-005"
 
 /obj/item/card/id/advanced/prisoner/six
 	name = "Prisoner #13-006"
 	registered_name = "Prisoner #13-006"
-	assignment = "Prisoner #13-006"
+	trim = "Prisoner #13-006"
 
 /obj/item/card/id/advanced/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
-	assignment = "Prisoner #13-007"
+	trim = "Prisoner #13-007"
 
 /obj/item/card/id/advanced/mining
 	name = "mining ID"

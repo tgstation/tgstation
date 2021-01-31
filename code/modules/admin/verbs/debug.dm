@@ -204,7 +204,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			id = new /obj/item/card/id/advanced/gold(H.loc)
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 			id.registered_name = H.real_name
-			id.assignment = "Captain"
+			id.trim = "Captain"
 			id.update_label()
 
 			if(worn)
