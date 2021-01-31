@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.blob_core.strong_reinforce_range += core_strong_reinforcement_range_bonus
 		overmind.blob_core.reflector_reinforce_range += core_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/node/N in overmind.node_blobs)
+	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
 		N.max_spores += node_spore_bonus
 		N.claim_range += node_range_bonus
 		N.pulse_range += node_range_bonus
@@ -79,15 +79,15 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		N.strong_reinforce_range += node_strong_reinforcement_range_bonus
 		N.reflector_reinforce_range += node_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/factory/F in overmind.factory_blobs)
+	for(var/obj/structure/blob/special/factory/F as anything in overmind.factory_blobs)
 		F.max_spores += factory_spore_bonus
 
-	for(var/obj/structure/blob/B in overmind.all_blobs)
+	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
 		B.max_integrity *= max_structure_health_multiplier
 		B.obj_integrity *= max_structure_health_multiplier
 		B.update_icon()
 
-	for(var/mob/living/simple_animal/hostile/blob/BM in overmind.blob_mobs)
+	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
 		BM.maxHealth *= max_mob_health_multiplier
 		BM.health *= max_mob_health_multiplier
 		BM.update_icons() //If it's getting a new strain, tell it what it does!
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.blob_core.strong_reinforce_range -= core_strong_reinforcement_range_bonus
 		overmind.blob_core.reflector_reinforce_range -= core_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/node/N in overmind.node_blobs)
+	for(var/obj/structure/blob/special/node/N as anything in overmind.node_blobs)
 		N.max_spores -= node_spore_bonus
 		N.claim_range -= node_range_bonus
 		N.pulse_range -= node_range_bonus
@@ -111,14 +111,14 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		N.strong_reinforce_range -= node_strong_reinforcement_range_bonus
 		N.reflector_reinforce_range -= node_reflector_reinforcement_range_bonus
 
-	for(var/obj/structure/blob/special/factory/F in overmind.factory_blobs)
+	for(var/obj/structure/blob/special/factory/F as anything in overmind.factory_blobs)
 		F.max_spores -= factory_spore_bonus
 
-	for(var/obj/structure/blob/B in overmind.all_blobs)
+	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
 		B.max_integrity /= max_structure_health_multiplier
 		B.obj_integrity /= max_structure_health_multiplier
 
-	for(var/mob/living/simple_animal/hostile/blob/BM in overmind.blob_mobs)
+	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
 		BM.maxHealth /= max_mob_health_multiplier
 		BM.health /= max_mob_health_multiplier
 		

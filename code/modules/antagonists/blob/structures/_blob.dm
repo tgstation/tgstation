@@ -27,6 +27,8 @@
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE 
 	var/mob/camera/blob/overmind
+	COOLDOWN_DECLARE(pulse_timestamp)
+	COOLDOWN_DECLARE(heal_timestamp)
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -89,13 +91,13 @@
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
 /obj/structure/blob/proc/Be_Pulsed()
-	if(pulse_timestamp <= world.time)
+	if(COOLDOWN_FINISHED(src, pulse_timestamp))
 		ConsumeTile()
-		if(heal_timestamp <= world.time)
+		if(COOLDOWN_FINISHED(src, heal_timestamp))
 			obj_integrity = min(max_integrity, obj_integrity+health_regen)
-			heal_timestamp = world.time + 20
+			COOLDOWN_START(src, heal_timestamp, 20)
 		update_icon()
-		pulse_timestamp = world.time + 10
+		COOLDOWN_START(src, pulse_timestamp, 10)
 		return TRUE//we did it, we were pulsed!
 	return FALSE //oh no we failed
 
@@ -343,7 +345,7 @@
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/max_spores = 0 
 	var/list/spores	= list()
-	var/spore_delay = 0
+	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
 
 	// Area reinforcement vars: used by cores and nodes, for strains to modify
@@ -384,14 +386,13 @@
 			expand_probablity = 20
 		if(distance <= expand_range)
 			var/can_expand = TRUE
-			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
+			if(blobs_to_affect.len >= 120 && !(COOLDOWN_FINISHED(B, heal_timestamp)))
 				can_expand = FALSE
-			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity*BLOB_EXPAND_CHANCE_MULTIPLIER))
-				var/obj/structure/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
-				if(newB)
-					if(expanded)
-						qdel(newB)
-					expanded = TRUE
+			if(can_expand && COOLDOWN_FINISHED(B, pulse_timestamp) && prob(expand_probablity*BLOB_EXPAND_CHANCE_MULTIPLIER))
+				if(!expanded)
+					var/obj/structure/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
+					if(newB)
+						expanded = TRUE
 		if(distance <= pulse_range)
 			B.Be_Pulsed()
 
@@ -400,10 +401,10 @@
 		return
 	if(spores.len >= max_spores)
 		return
-	if(spore_delay > world.time)
+	if(!(COLDOWN_FINISHED(src, spore_delay))
 		return
-	spore_delay = world.time + spore_cooldown
-	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new/mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
+	COOLDOWN_START(src, spore_delay, spore_cooldown)
+	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new (loc, src)
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
 		BS.overmind = overmind
 		BS.update_icons()
