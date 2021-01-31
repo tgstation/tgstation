@@ -1,0 +1,184 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/transport/tramstation)
+"b" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport/tramstation)
+"c" = (
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/transport/tramstation)
+"d" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport/tramstation)
+"e" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/transport/tramstation)
+"f" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/transport/tramstation)
+"g" = (
+/turf/open/floor/glass/reinforced,
+/area/shuttle/transport/tramstation)
+"h" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/transport/tramstation)
+"i" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport/tramstation)
+"j" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport/tramstation)
+"k" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/computer/shuttle/tramstation{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/transport/tramstation)
+"m" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/transport/tramstation)
+"n" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/transport/tramstation)
+"o" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/transport/tramstation)
+"p" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/computer/shuttle/tramstation{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/transport/tramstation)
+"q" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport/tramstation)
+"r" = (
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport/tramstation)
+"s" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/transport/tramstation)
+"t" = (
+/obj/machinery/door/airlock/shuttle/glass,
+/obj/docking_port/mobile/elevator/tram,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/transport/tramstation)
+
+(1,1,1) = {"
+a
+d
+j
+r
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+e
+k
+e
+b
+"}
+(4,1,1) = {"
+b
+f
+g
+f
+b
+"}
+(5,1,1) = {"
+c
+g
+m
+g
+t
+"}
+(6,1,1) = {"
+b
+g
+n
+g
+b
+"}
+(7,1,1) = {"
+c
+g
+o
+g
+c
+"}
+(8,1,1) = {"
+b
+f
+g
+f
+b
+"}
+(9,1,1) = {"
+b
+h
+p
+h
+b
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+i
+q
+s
+a
+"}

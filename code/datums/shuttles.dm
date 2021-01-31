@@ -677,5 +677,6 @@
 	name = "Snowdin Excavation Elevator"
 
 /datum/map_template/shuttle/tramstation/tram
+	port_id = "tramstation"
 	suffix = "tram"
 	name = "Tramstation Transit Shuttle"

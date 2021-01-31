@@ -276,6 +276,28 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Starboard Tram Underpass"
 	icon_state = "mainttramR"
 
+//Radation storm shelter
+/area/maintenance/radshelter
+	name = "Radstorm Shelter"
+	icon_state = "green"
+
+/area/maintenance/radshelter/medical
+	name = "Medical Radstorm Shelter"
+
+/area/maintenance/radshelter/sec
+	name = "Security Radstorm Shelter"
+
+/area/maintenance/radshelter/service
+	name = "Service Radstorm Shelter"
+
+/area/maintenance/radshelter/civil
+	name = "Civilian Radstorm Shelter"
+
+/area/maintenance/radshelter/sci
+	name = "Science Radstorm Shelter"
+
+/area/maintenance/radshelter/cargo
+	name = "Cargo Radstorm Shelter"
 
 //Hallway
 /area/hallway
