@@ -53,6 +53,7 @@
 	//Rules
 	//Rules that automatically manage if the program's active without requiring separate sensor programs
 	var/list/datum/nanite_rule/rules = list()
+	var/all_rules_required = TRUE			//Whether all rules are required for positive condition or any of specified
 
 /datum/nanite_program/New()
 	. = ..()
@@ -92,6 +93,7 @@
 	for(var/R in rules)
 		var/datum/nanite_rule/rule = R
 		rule.copy_to(target)
+	target.all_rules_required = all_rules_required
 
 	if(istype(target,src))
 		copy_extra_settings_to(target)
@@ -194,11 +196,18 @@
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
-	for(var/R in rules)
-		var/datum/nanite_rule/rule = R
-		if(!rule.check_rule())
-			return FALSE
-	return TRUE
+	if (rules.len > 1 && !all_rules_required)
+		for(var/R in rules)
+			var/datum/nanite_rule/rule = R
+			if(rule.check_rule())
+				return TRUE
+		return FALSE
+	else
+		for(var/R in rules)
+			var/datum/nanite_rule/rule = R
+			if(!rule.check_rule())
+				return FALSE
+		return TRUE
 
 //Constantly procs as long as the program is active
 /datum/nanite_program/proc/active_effect()
