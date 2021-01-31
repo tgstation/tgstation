@@ -2,7 +2,7 @@
 	name = "wt550 magazine (4.6x30mm)"
 	icon_state = "46x30mmt-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mm
-	caliber = "4.6x30mm"
+	caliber = CALIBER_46X30MM
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon()
@@ -29,9 +29,9 @@
 
 /obj/item/ammo_box/magazine/plastikov9mm
 	name = "PP-95 magazine (9x19mm)"
-	icon_state = "9x19-50"
+	icon_state = CALIBER_9X19MM
 	ammo_type = /obj/item/ammo_casing/c9x19mm
-	caliber = "9x19mm"
+	caliber = CALIBER_9X19MM
 	max_ammo = 50
 
 /obj/item/ammo_box/magazine/plastikov9mm/update_icon()
@@ -45,7 +45,7 @@
 	name = "uzi magazine (9mm)"
 	icon_state = "uzi9mm-32"
 	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
+	caliber = CALIBER_9MM
 	max_ammo = 32
 
 /obj/item/ammo_box/magazine/uzim9mm/update_icon()
@@ -56,7 +56,7 @@
 	name = "SMG magazine (9mm)"
 	icon_state = "smg9mm-42"
 	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
+	caliber = CALIBER_9MM
 	max_ammo = 21
 
 /obj/item/ammo_box/magazine/smgm9mm/update_icon()
@@ -75,7 +75,7 @@
 	name = "SMG magazine (.45)"
 	icon_state = "c20r45-24"
 	ammo_type = /obj/item/ammo_casing/c45
-	caliber = ".45"
+	caliber = CALIBER_45
 	max_ammo = 24
 
 /obj/item/ammo_box/magazine/smgm45/update_icon()
@@ -94,5 +94,5 @@
 	name = "drum magazine (.45)"
 	icon_state = "drum45"
 	ammo_type = /obj/item/ammo_casing/c45
-	caliber = ".45"
+	caliber = CALIBER_45
 	max_ammo = 50
