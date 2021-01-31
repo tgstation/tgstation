@@ -50,7 +50,7 @@
 				to_chat(owner, "<span class='danger'>Your stomach hurts.</span>")
 				if(prob(20))
 					owner.adjustToxLoss(1)
-		if(5)
+		if(6)
 			to_chat(owner, "<span class='danger'>You feel something tearing its way out of your stomach...</span>")
 			owner.adjustToxLoss(10)
 
