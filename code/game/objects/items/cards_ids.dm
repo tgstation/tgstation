@@ -539,12 +539,12 @@
 	trim = "Captain"
 	registered_age = null
 
-/obj/item/card/id/advanced/captains_spare/Initialize()
+/obj/item/card/id/advanced/gold/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
 	. = ..()
 
-/obj/item/card/id/advanced/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
+/obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
 		name = "[initial(name)][(!trim || trim == "Captain") ? "" : " ([trim])"]"
 		update_icon()
@@ -622,6 +622,8 @@
 	trim = "Entertainment Response Officer"
 
 /obj/item/card/id/advanced/black
+	name = "black identification card"
+	desc = "This card is telling you one thing and one thing alone. The person holding this card is an utter badass."
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 
