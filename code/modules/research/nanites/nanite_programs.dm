@@ -196,18 +196,15 @@
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
-	if (rules.len > 1 && !all_rules_required)
-		for(var/R in rules)
-			var/datum/nanite_rule/rule = R
-			if(rule.check_rule())
-				return TRUE
-		return FALSE
-	else
-		for(var/R in rules)
-			var/datum/nanite_rule/rule = R
-			if(!rule.check_rule())
-				return FALSE
+	if (rules.len == 0)
 		return TRUE
+	for(var/R in rules)
+		var/datum/nanite_rule/rule = R
+		if(!all_rules_required && rule.check_rule())
+			return TRUE
+		if(all_rules_required && !rule.check_rule())
+			return FALSE
+	return all_rules_required ? TRUE : FALSE
 
 //Constantly procs as long as the program is active
 /datum/nanite_program/proc/active_effect()
