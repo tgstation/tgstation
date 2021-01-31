@@ -9,7 +9,7 @@
 	var/help_verb
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 	var/smashes_tables = FALSE //If the martial art smashes tables when performing table slams and head smashes
-	var/mob/living/holder //owner of the martial art
+	var/datum/weakref/holder //owner of the martial art
 	var/display_combos = FALSE //shows combo meter if true
 
 /datum/martial_art/proc/help_act(mob/living/A, mob/living/D)
@@ -34,12 +34,14 @@
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak, 1 + length(streak[1]))
 	if (display_combos)
-		holder.hud_used.combo_display.update_icon_state(streak)
+		var/mob/living/holder_living = holder
+		holder_living.hud_used.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/reset_streak(mob/living/new_target)
 	current_target = new_target
 	streak = ""
-	holder.hud_used.combo_display.update_icon_state(streak)
+	var/mob/living/holder_living = holder
+	holder_living.hud_used.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/teach(mob/living/owner, make_temporary=FALSE)
 	if(!istype(owner) || !owner.mind)
@@ -56,7 +58,7 @@
 	if(help_verb)
 		add_verb(owner, help_verb)
 	owner.mind.martial_art = src
-	holder = owner
+	holder = WEAKREF(owner)
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/old, mob/living/owner)
@@ -66,15 +68,17 @@
 	else //Otherwise, old is stored.
 		base = old
 
-/datum/martial_art/proc/remove(mob/living/owner)
-	if(!istype(owner) || !owner.mind || owner.mind.martial_art != src)
+/datum/martial_art/proc/remove()
+	var/mob/living/holder_living = holder
+	if(!istype(holder_living) || !holder_living.mind || holder_living.mind.martial_art != src)
 		return
-	on_remove(owner)
+	on_remove(holder_living)
 	if(base)
-		base.teach(owner)
+		base.teach(holder_living)
 	else
 		var/datum/martial_art/default = owner.mind.default_martial_art
-		default.teach(owner)
+		default.teach(holder_living)
+	holder = null
 
 /datum/martial_art/proc/on_remove(mob/living/owner)
 	if(help_verb)
