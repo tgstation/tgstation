@@ -80,3 +80,15 @@
 	report_message = "Our workers accidentaly forgot more of their personal belongings in the maintenace areas."
 	blacklist = list(/datum/station_trait/empty_maint)
 	trait_to_give = STATION_TRAIT_FILLED_MAINT
+
+/datum/station_trait/quick_shuttle
+	name = "Quick Shuttle"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 5
+	show_in_report = TRUE
+	report_message = "Due to proximity to our supply station, the cargo shuttle will have a quicker flight time to your cargo department/"
+	blacklist = list(/datum/station_trait/slow_shuttle)
+
+/datum/station_trait/quick_shuttle/on_round_start()
+	. = ..()
+	SSshuttle.supply.callTime *= 0.5
