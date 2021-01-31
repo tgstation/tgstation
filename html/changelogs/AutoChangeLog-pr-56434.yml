@@ -1,0 +1,5 @@
+author: "Low3"
+delete-after: True
+changes: 
+  - bugfix: "Books now properly render unicode characters."
+  - tweak: "Book title length bumped from 20 to 30."
