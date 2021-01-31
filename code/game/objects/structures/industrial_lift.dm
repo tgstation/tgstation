@@ -90,7 +90,7 @@
 	set_controls(LOCKED)
 	for(var/p in lift_platforms)
 		var/obj/structure/industrial_lift/lift_platform = p
-		lift_platform.travel(going, new_turf = TRUE) //changing z, will always be a new turf
+		lift_platform.travel(going)
 	if(tram_mixture)
 		update_lift_atmos()
 	set_controls(UNLOCKED)
