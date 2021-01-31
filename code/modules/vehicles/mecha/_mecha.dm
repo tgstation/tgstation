@@ -239,7 +239,7 @@
 	else if(LAZYLEN(occupants))
 		icon_state = base_icon_state
 	else
-		icon_state = base_icon_state + "-open"
+		icon_state = "[base_icon_state]-open"
 
 
 /obj/vehicle/sealed/mecha/get_cell()
