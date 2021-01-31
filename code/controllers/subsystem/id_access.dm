@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(id_access)
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
 	setup_trims()
+	return ..()
 
 /// Populates the trims_by_title dictionary.
 /datum/controller/subsystem/id_access/proc/setup_trims()
