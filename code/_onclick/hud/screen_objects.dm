@@ -746,11 +746,12 @@
 	clear_streak()
 	if (timerid)
 		deltimer(timerid)
+	if (!streak)
+		return
 	timerid = addtimer(CALLBACK(src, .proc/clear_streak), 20, TIMER_UNIQUE | TIMER_STOPPABLE)
-	if (streak)
-		icon_state = "combo"
-		for (var/i = 1; i <= length(streak); ++i)
-			var/intent_text = copytext(streak, i, i + 1)
-			var/image/intent_icon = image(icon,src,"combo_[intent_text]")
-			intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
-			add_overlay(intent_icon)
+	icon_state = "combo"
+	for (var/i = 1; i <= length(streak); ++i)
+		var/intent_text = copytext(streak, i, i + 1)
+		var/image/intent_icon = image(icon,src,"combo_[intent_text]")
+		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
+		add_overlay(intent_icon)
