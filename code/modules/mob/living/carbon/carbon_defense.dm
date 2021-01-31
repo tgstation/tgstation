@@ -476,14 +476,14 @@
 
 		// Let people know if they hugged someone really warm or really cold
 		if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(src, "<span class='warning'>It feels like [M] is over heating as they hug you.</span>")
+			to_chat(src, "<span class='warning'>It feels like [M] is over heating as [M.p_they()] hug[M.p_s()] you.</span>")
 		else if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			to_chat(src, "<span class='warning'>It feels like [M] is freezing as they hug you.</span>")
+			to_chat(src, "<span class='warning'>It feels like [M] is freezing as [M.p_they()] hug[M.p_s()] you.</span>")
 
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(M, "<span class='warning'>It feels like [src] is over heating as you hug them.</span>")
+			to_chat(M, "<span class='warning'>It feels like [src] is over heating as you hug [p_them()].</span>")
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			to_chat(M, "<span class='warning'>It feels like [src] is freezing as you hug them.</span>")
+			to_chat(M, "<span class='warning'>It feels like [src] is freezing as you hug [p_them()].</span>")
 
 		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
 			var/datum/component/mood/hugger_mood = M.GetComponent(/datum/component/mood)

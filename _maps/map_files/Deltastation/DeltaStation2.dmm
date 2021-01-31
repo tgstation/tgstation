@@ -10292,7 +10292,8 @@
 /area/janitor)
 "azg" = (
 /obj/machinery/door/airlock{
-	name = "Toilet Unit"
+	id_tag = "AuxToilet1";
+	name = "Toilet Unit 1"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -10658,6 +10659,13 @@
 	},
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/vomit,
+/obj/machinery/button/door{
+	id = "AuxToilet1";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "aAn" = (
@@ -10670,6 +10678,13 @@
 	},
 /obj/machinery/light/small,
 /obj/effect/turf_decal/bot,
+/obj/machinery/button/door{
+	id = "AuxToilet2";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
 "aAo" = (
@@ -10683,6 +10698,13 @@
 /obj/machinery/light/small,
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/bot,
+/obj/machinery/button/door{
+	id = "AuxToilet3";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
 "aAp" = (
@@ -35695,7 +35717,6 @@
 /turf/open/floor/plasteel,
 /area/security/execution/transfer)
 "bwe" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -35703,6 +35724,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/syndicatebomb/training,
+/obj/structure/table,
+/obj/item/wirecutters,
+/obj/item/screwdriver,
 /turf/open/floor/plasteel,
 /area/security/main)
 "bwf" = (
@@ -68889,7 +68914,8 @@
 "cGJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Toilet Unit"
+	id_tag = "Toilet1";
+	name = "Toilet Unit 1"
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -68897,12 +68923,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
+/turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
 "cGK" = (
 /obj/machinery/door/airlock{
+	id_tag = "Toilet3";
 	name = "Toilet Unit"
 	},
 /turf/open/floor/plating,
@@ -69542,6 +69567,13 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/small,
+/obj/machinery/button/door{
+	id = "Toilet1";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "cIb" = (
@@ -69554,6 +69586,13 @@
 	},
 /obj/machinery/light/small,
 /obj/effect/turf_decal/bot,
+/obj/machinery/button/door{
+	id = "Toilet2";
+	name = "Lock control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
 "cIc" = (
@@ -69567,6 +69606,13 @@
 /obj/machinery/light/small,
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/bot,
+/obj/machinery/button/door{
+	id = "Toilet3";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/restrooms)
 "cId" = (
@@ -107924,6 +107970,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
+"kob" = (
+/obj/machinery/door/airlock{
+	id_tag = "AuxToilet3";
+	name = "Toilet Unit 3"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/toilet/auxiliary)
 "kpy" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Sanitarium";
@@ -108649,6 +108706,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"lEu" = (
+/obj/machinery/door/airlock{
+	id_tag = "AuxToilet2";
+	name = "Toilet Unit 2"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/toilet/auxiliary)
 "lFl" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -112040,6 +112108,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
+"sOQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock{
+	id_tag = "Toilet2";
+	name = "Toilet Unit 2"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/toilet/restrooms)
 "sPv" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
@@ -151732,7 +151814,7 @@ auj
 avI
 awK
 ayc
-azg
+lEu
 aAn
 auj
 aIK
@@ -152246,7 +152328,7 @@ auj
 auj
 awM
 aye
-azg
+kob
 aAo
 auj
 aCJ
@@ -161310,7 +161392,7 @@ cAm
 cBP
 cDw
 cFk
-cGJ
+sOQ
 cIb
 cAm
 cZX
