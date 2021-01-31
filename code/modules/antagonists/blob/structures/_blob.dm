@@ -17,9 +17,9 @@
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
 	/// We got pulsed when?
-	var/pulse_timestamp = 0 
+	COOLDOWN_DECLARE(pulse_timestamp)
 	/// we got healed when?
-	var/heal_timestamp = 0 
+	COOLDOWN_DECLARE(heal_timestamp)
 	/// Multiplies brute damage by this
 	var/brute_resist = BLOB_BRUTE_RESIST
 	/// Multiplies burn damage by this 
@@ -27,8 +27,7 @@
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE 
 	var/mob/camera/blob/overmind
-	COOLDOWN_DECLARE(pulse_timestamp)
-	COOLDOWN_DECLARE(heal_timestamp)
+
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -401,7 +400,7 @@
 		return
 	if(spores.len >= max_spores)
 		return
-	if(!(COLDOWN_FINISHED(src, spore_delay))
+	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
 	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new (loc, src)
