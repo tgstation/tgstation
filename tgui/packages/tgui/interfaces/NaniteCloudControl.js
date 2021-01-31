@@ -223,8 +223,8 @@ export const NaniteCloudBackupDetails = (props, context) => {
                   mt={-2}
                   title="Rules"
                   level={2}
-                  buttons={(!!can_rule &&
-                    <>
+                  buttons={(!!can_rule
+                    && <>
                       <Button
                         icon={program.all_rules_required ? 'check-double' : 'check'}
                         content={program.all_rules_required ? 'Meet all' : 'Meet any'}
