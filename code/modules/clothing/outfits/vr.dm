@@ -3,7 +3,7 @@
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	ears = /obj/item/radio/headset
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/vr/pre_equip(mob/living/carbon/human/H)
 	H.dna.species.before_equip_job(null, H)
@@ -19,7 +19,7 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	back = /obj/item/storage/backpack
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/paper/fluff/vr/fluke_ops
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\

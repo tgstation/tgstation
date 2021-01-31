@@ -260,7 +260,7 @@
 	..()
 	var/obj/item/card/id/advanced/syndicate/agent_card = target
 	if(istype(agent_card))
-		var/obj/item/card/id/copied_card = picked_item
+		var/obj/item/card/id/advanced/copied_card = picked_item
 		agent_card.forged_card_name = initial(copied_card.name)
 		if(!agent_card.forged)
 			agent_card.registered_name = initial(copied_card.registered_name)
@@ -271,7 +271,7 @@
 
 /datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)
 	..()
-	var/obj/item/card/id/syndicate/agent_card = target
+	var/obj/item/card/id/advanced/syndicate/agent_card = target
 	if(istype(agent_card) && istype(job_datum))
 		agent_card.forged = TRUE
 		agent_card.assignment = job_datum.title

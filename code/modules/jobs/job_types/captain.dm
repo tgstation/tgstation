@@ -35,7 +35,7 @@
 	name = "Captain"
 	jobtype = /datum/job/captain
 
-	id = /obj/item/card/id/gold
+	id = /obj/item/card/id/advanced/gold
 	belt = /obj/item/pda/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/heads/captain/alt

@@ -617,7 +617,7 @@
 		threatcount -= 1
 
 	//Agent cards lower threatlevel.
-	if(istype(idcard, /obj/item/card/id/syndicate))
+	if(istype(idcard, /obj/item/card/id/advanced/syndicate))
 		threatcount -= 5
 
 	return threatcount

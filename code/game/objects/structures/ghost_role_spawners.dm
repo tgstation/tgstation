@@ -433,7 +433,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/syndicate
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -656,7 +656,7 @@
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
-	id = /obj/item/card/id/syndicate_command/crew_id
+	id = /obj/item/card/id/advanced/syndicate_command/crew_id
 	implants = list(/obj/item/implant/weapons_auth)
 
 /datum/outfit/syndicatespace/syndicaptain
@@ -670,7 +670,7 @@
 	back = /obj/item/storage/backpack
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
-	id = /obj/item/card/id/syndicate_command/captain_id
+	id = /obj/item/card/id/advanced/syndicate_command/captain_id
 	implants = list(/obj/item/implant/weapons_auth)
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password, /obj/item/gun/ballistic/automatic/pistol/aps)
 
@@ -700,7 +700,7 @@
 	r_pocket = /obj/item/storage/wallet/random
 	l_pocket = /obj/item/food/pizzaslice/dank
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
@@ -727,7 +727,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

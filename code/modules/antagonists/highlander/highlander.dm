@@ -62,7 +62,7 @@
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), ITEM_SLOT_LPOCKET)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
-	var/obj/item/card/id/centcom/W = new(H)
+	var/obj/item/card/id/advanced/centcom/W = new(H)
 	W.access = get_all_accesses()
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"

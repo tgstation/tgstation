@@ -397,7 +397,7 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	glasses = /obj/item/clothing/glasses/sunglasses
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -416,7 +416,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
@@ -433,7 +433,7 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced
 
 /////////////////Spooky Undead//////////////////////
 //there are living variants of many of these, they're now in ghost_role_spawners.dm

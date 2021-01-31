@@ -487,7 +487,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
-				if(istype(id, /obj/item/card/id/syndicate))
+				if(istype(id, /obj/item/card/id/advanced/syndicate))
 					owner = id.registered_name
 				update_label()
 				if(!silent)
