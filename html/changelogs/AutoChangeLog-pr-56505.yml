@@ -1,0 +1,6 @@
+author: "Tristrian"
+delete-after: True
+changes: 
+  - rscadd: "Added duffelbags for Science, Botany, Virology, Genetics, Mining and Chemistry."
+  - tweak: "Vendors have been updated to sell the duffelbags."
+  - tweak: "The new duffelbags can be selected in the character preferences for the affected jobs."

@@ -1,4 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - bugfix: "Emotes have been audited for whether they should be seen or heard. No more hearing glares or seeing groans."
