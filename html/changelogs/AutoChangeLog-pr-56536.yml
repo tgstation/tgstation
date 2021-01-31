@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - rscdel: "holodeck access flags"

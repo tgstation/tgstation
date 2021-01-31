@@ -523,7 +523,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Bar"
 	icon_state = "bar"
 	mood_bonus = 5
-	mood_message = "<span class='nicegreen'>I love being in the bar!\n</span>"
+	mood_message = "<span class='nicegreen'>I love being in the bar!</span>\n"
 	mood_trait = TRAIT_EXTROVERT
 	airlock_wires = /datum/wires/airlock/service
 	sound_environment = SOUND_AREA_WOODFLOOR
@@ -918,7 +918,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Psychology Office"
 	icon_state = "psychology"
 	mood_bonus = 3
-	mood_message = "<span class='nicegreen'>I feel at ease here.\n</span>"
+	mood_message = "<span class='nicegreen'>I feel at ease here.</span>\n"
 	ambientsounds = list('sound/ambience/aurora_caelus_short.ogg')
 
 //Security
