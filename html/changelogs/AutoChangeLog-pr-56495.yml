@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Slaughter demons now require physical adjacency to body slam and can't body slam while phased."

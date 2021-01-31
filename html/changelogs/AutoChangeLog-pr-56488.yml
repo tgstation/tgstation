@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "Fixes sheetifier not being able to take hauntium"
