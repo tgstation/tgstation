@@ -18,4 +18,4 @@
 
 /obj/item/skillchip/job/chef/on_deactivate(mob/living/carbon/user, silent = FALSE)
 	style.remove(user)
-	. = ..()
+	return ..()
