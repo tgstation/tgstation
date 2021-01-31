@@ -142,8 +142,8 @@
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
-	initial_caliber = "shotgun"
-	alternative_caliber = "a762"
+	initial_caliber = CALIBER_SHOTGUN
+	alternative_caliber = CALIBER_A762
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE

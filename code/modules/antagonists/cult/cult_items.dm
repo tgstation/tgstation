@@ -774,7 +774,7 @@
 		return FALSE
 
 /obj/item/ammo_box/magazine/internal/blood
-	caliber = "blood bullets"
+	caliber = CALIBER_A762
 	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
 
 /obj/item/ammo_casing/magic/arcane_barrage/blood
