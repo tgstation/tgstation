@@ -6,33 +6,20 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport/tramstation)
-"c" = (
-/obj/machinery/door/airlock/shuttle/glass,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/transport/tramstation)
 "d" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/transport/tramstation)
-"e" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/transport/tramstation)
 "f" = (
-/turf/open/floor/mineral/titanium,
-/area/shuttle/transport/tramstation)
-"g" = (
-/turf/open/floor/glass/reinforced,
+/obj/machinery/door/airlock/shuttle/glass,
+/turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/transport/tramstation)
 "h" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
+/obj/machinery/door/airlock/shuttle/glass,
+/obj/docking_port/mobile/elevator/tram,
+/turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/transport/tramstation)
 "i" = (
 /obj/structure/shuttle/engine/propulsion/right{
@@ -47,39 +34,10 @@
 /turf/open/floor/plating,
 /area/shuttle/transport/tramstation)
 "k" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/computer/shuttle/tramstation{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/transport/tramstation)
-"m" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/glass/reinforced,
-/area/shuttle/transport/tramstation)
-"n" = (
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/glass/reinforced,
-/area/shuttle/transport/tramstation)
-"o" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/glass/reinforced,
-/area/shuttle/transport/tramstation)
-"p" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/computer/shuttle/tramstation{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/transport/tramstation)
 "q" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -99,10 +57,37 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/transport/tramstation)
-"t" = (
-/obj/machinery/door/airlock/shuttle/glass,
-/obj/docking_port/mobile/elevator/tram,
-/turf/open/floor/mineral/titanium,
+"v" = (
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/transport/tramstation)
+"w" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/transport/tramstation)
+"z" = (
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/shuttle/transport/tramstation)
+"M" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/computer/shuttle/tramstation{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/shuttle/transport/tramstation)
+"R" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/computer/shuttle/tramstation{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/transport/tramstation)
 
 (1,1,1) = {"
@@ -121,51 +106,51 @@ a
 "}
 (3,1,1) = {"
 b
-e
-k
-e
+w
+R
+w
 b
 "}
 (4,1,1) = {"
 b
-f
-g
-f
+z
+z
+z
 b
 "}
 (5,1,1) = {"
-c
-g
-m
-g
-t
+f
+z
+k
+z
+h
 "}
 (6,1,1) = {"
 b
-g
-n
-g
+z
+v
+z
 b
 "}
 (7,1,1) = {"
-c
-g
-o
-g
-c
+f
+z
+w
+z
+f
 "}
 (8,1,1) = {"
 b
-f
-g
-f
+z
+z
+z
 b
 "}
 (9,1,1) = {"
 b
-h
-p
-h
+k
+M
+k
 b
 "}
 (10,1,1) = {"
