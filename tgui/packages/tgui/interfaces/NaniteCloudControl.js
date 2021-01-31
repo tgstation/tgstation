@@ -224,7 +224,8 @@ export const NaniteCloudBackupDetails = (props, context) => {
                   title="Rules"
                   level={2}
                   buttons={(!!can_rule
-                    && <>
+                    && (
+                    <>
                       <Button
                         icon={program.all_rules_required ? 'check-double' : 'check'}
                         content={program.all_rules_required ? 'Meet all' : 'Meet any'}
@@ -239,7 +240,7 @@ export const NaniteCloudBackupDetails = (props, context) => {
                           program_id: program.id,
                         })} />
                     </>
-                  )}>
+                  ))}>
                   {program.has_rules ? (
                     rules.map(rule => (
                       <Box key={rule.display}>
