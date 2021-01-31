@@ -82260,7 +82260,6 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "ybn" = (
-/obj/structure/chair/comfy/brown,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine/cult,
 /area/library)
