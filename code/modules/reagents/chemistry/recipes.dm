@@ -53,7 +53,7 @@
 	/// Optimal/max rate possible if all conditions are perfect
 	var/rate_up_lim = 30 
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/purity_min = 0.3 
+	var/purity_min = 0.15 
 	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 	var/reaction_flags = NONE
 
