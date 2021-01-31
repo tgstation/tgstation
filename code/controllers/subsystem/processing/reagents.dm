@@ -11,12 +11,13 @@ PROCESSING_SUBSYSTEM_DEF(reagents)
 	var/previous_world_time = 0
 
 /datum/controller/subsystem/processing/reagents/Initialize()
+	. = ..()
 	//So our first step isn't insane
 	previous_world_time = world.time
 	//Build GLOB lists - see holder.dm
 	build_chemical_reagent_list()
 	build_chemical_reactions_list()
-	return ..()
+	return 
 
 /datum/controller/subsystem/processing/reagents/fire(resumed = FALSE)
 	if (!resumed)
