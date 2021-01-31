@@ -380,6 +380,14 @@
 /proc/get_all_centcom_jobs()
 	return list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer","Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
 
+/// Returns a list of all "recognised" syndicate jobs which should be represented on ID cards with syndicate trim icons.
+/proc/get_all_syndicate_jobs()
+	return list("Syndicate Overlord", "Syndicate Operative", "Syndicate Ship Captain")
+
+/// Returns a list of all "recognised" prisoner jobs which have unique numbered trim icon states.
+/proc/get_all_prisoner_jobs()
+	return list("Prisoner #13-001", "Prisoner #13-002", "Prisoner #13-003", "Prisoner #13-004", "Prisoner #13-005", "Prisoner #13-006", "Prisoner #13-007")
+
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/card/id/I = GetID()
 	if(!I)
