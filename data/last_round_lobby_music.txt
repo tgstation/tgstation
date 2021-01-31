@@ -111,3 +111,5 @@ config/title_music/sounds/Coastline.ogg
 config/title_music/sounds/Pamp radion.ogg
 config/title_music/sounds/Hopeless Romantic.ogg
 config/title_music/sounds/Bakamitai.ogg
+config/title_music/sounds/Neon Starlight.ogg
+config/title_music/sounds/It Was At That Point I Realised.ogg
