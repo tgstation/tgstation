@@ -43,7 +43,7 @@
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.remove(C)
+	mush.remove()
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)

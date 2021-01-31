@@ -34,13 +34,13 @@
 	if(length(streak) > max_streak_length)
 		streak = copytext(streak, 1 + length(streak[1]))
 	if (display_combos)
-		var/mob/living/holder_living = holder
+		var/mob/living/holder_living = holder.resolve()
 		holder_living.hud_used.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/reset_streak(mob/living/new_target)
 	current_target = new_target
 	streak = ""
-	var/mob/living/holder_living = holder
+	var/mob/living/holder_living = holder.resolve()
 	holder_living.hud_used.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/teach(mob/living/owner, make_temporary=FALSE)
@@ -69,14 +69,14 @@
 		base = old
 
 /datum/martial_art/proc/remove()
-	var/mob/living/holder_living = holder
+	var/mob/living/holder_living = holder.resolve()
 	if(!istype(holder_living) || !holder_living.mind || holder_living.mind.martial_art != src)
 		return
 	on_remove(holder_living)
 	if(base)
 		base.teach(holder_living)
 	else
-		var/datum/martial_art/default = owner.mind.default_martial_art
+		var/datum/martial_art/default = holder_living.mind.default_martial_art
 		default.teach(holder_living)
 	holder = null
 
