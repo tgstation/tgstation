@@ -404,7 +404,7 @@
 
 	cached_flat_icon = null
 	if(registered_name && registered_name != "Captain")
-		. += mutable_appearance(icon, "assigned")
+		. += mutable_appearance(icon, assigned_icon_state)
 
 	. += mutable_appearance(icon, SSid_access.title_to_trim_icon(assignment))
 
