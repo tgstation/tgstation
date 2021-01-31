@@ -392,7 +392,7 @@
 
 /datum/quirk/poor_aim
 	name = "Poor Aim"
-	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out."
+	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out. You also close your eyes when you shoot."
 	value = -4
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
@@ -750,6 +750,7 @@
 /datum/quirk/bad_touch/proc/uncomfortable_touch()
 	SIGNAL_HANDLER
 
+	new /obj/effect/temp_visual/annoyed(quirk_holder.loc)
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	if(mood.sanity <= SANITY_NEUTRAL)
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)

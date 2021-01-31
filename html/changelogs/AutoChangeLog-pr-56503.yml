@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Vend A Trays can now be moved onto and off of tables."

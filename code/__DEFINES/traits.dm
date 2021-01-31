@@ -347,6 +347,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SNOB				"snob"
 #define TRAIT_BALD				"bald"
 #define TRAIT_BADTOUCH			"bad_touch"
+#define TRAIT_EXTROVERT			"extrovert"
+#define TRAIT_INTROVERT			"introvert"
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
