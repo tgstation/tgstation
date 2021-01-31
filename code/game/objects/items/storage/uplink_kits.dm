@@ -542,7 +542,7 @@
 		new /obj/item/grenade/spawnergrenade/buzzkill(src)
 
 /obj/item/storage/box/syndie_kit/sleepytime/PopulateContents()
-	new /obj/item/clothing/under/syndicate/bloodred/sleepytime(src)
+	new /obj/item/clothing/under/syndicate/sleepytime(src)
 	new /obj/item/reagent_containers/food/drinks/mug/coco(src)
 	new /obj/item/toy/plush/carpplushie(src)
 	new /obj/item/bedsheet/syndie(src)

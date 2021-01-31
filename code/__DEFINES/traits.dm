@@ -235,6 +235,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune" // nobody can use martial arts on this mob
+#define TRAIT_RESOLUTE_TECHNIQUE "resolute_technique" // punching cannot crit, but will always hit and deal consistent damage, different to perfect_attacker
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE			"cant_ride"
 #define TRAIT_BLOODY_MESS		"bloody_mess" //from heparin, makes open bleeding wounds rapidly spill more blood
@@ -386,6 +387,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HELMET_TRAIT "helmet"
 #define MASK_TRAIT "mask" //inherited from the mask
 #define SHOES_TRAIT "shoes" //inherited from your sweet kicks
+#define GLOVE_TRAIT "gloves" //inherited from your gloves
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"

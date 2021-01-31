@@ -20,16 +20,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 
-/obj/item/clothing/under/syndicate/bloodred
-	name = "blood-red sneaksuit"
-	desc = "It still counts as stealth if there are no witnesses."
-	icon_state = "bloodred_pajamas"
-	inhand_icon_state = "bl_suit"
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10,ENERGY = 10, BOMB = 0, BIO = 0, RAD = 10, FIRE = 50, ACID = 40)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	can_adjust = FALSE
-
-/obj/item/clothing/under/syndicate/bloodred/sleepytime
+/obj/item/clothing/under/syndicate/sleepytime
 	name = "blood-red pajamas"
 	desc = "Do operatives dream of nuclear sheep?"
 	icon_state = "bloodred_pajamas"

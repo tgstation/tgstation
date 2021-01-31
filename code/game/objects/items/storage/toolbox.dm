@@ -258,23 +258,25 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 60
 	STR.set_holdable(list(
 		/obj/item/clothing/head/helmet/infiltrator,
 		/obj/item/clothing/suit/armor/vest/infiltrator,
-		/obj/item/clothing/under/syndicate/bloodred,
-		/obj/item/clothing/gloves/color/latex/nitrile/infiltrator,
+		/obj/item/clothing/under/syndicate,
+		/obj/item/clothing/gloves/color/captain/infiltrator,
 		/obj/item/clothing/mask/infiltrator,
 		/obj/item/clothing/shoes/combat/sneakboots,
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/energy/kinetic_accelerator/crossbow,
 		/obj/item/ammo_box
 		))
 
 /obj/item/storage/toolbox/infiltrator/PopulateContents()
 	new /obj/item/clothing/head/helmet/infiltrator(src)
 	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
-	new /obj/item/clothing/under/syndicate/bloodred(src)
-	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
+	new /obj/item/clothing/under/syndicate(src)
+	new /obj/item/clothing/gloves/color/captain/infiltrator(src)
 	new /obj/item/clothing/mask/infiltrator(src)
 	new /obj/item/clothing/shoes/combat/sneakboots(src)
 

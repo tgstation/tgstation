@@ -658,8 +658,7 @@
 	loot = list(
 		/obj/item/clothing/under/syndicate = 10,
 		/obj/item/clothing/under/syndicate/skirt = 10,
-		/obj/item/clothing/under/syndicate/bloodred = 10,
-		/obj/item/clothing/under/syndicate/bloodred/sleepytime = 5,
+		/obj/item/clothing/under/syndicate/sleepytime = 5,
 		/obj/item/clothing/under/syndicate/tacticool = 10,
 		/obj/item/clothing/under/syndicate/tacticool/skirt = 10,
 		/obj/item/clothing/under/syndicate/sniper = 10,

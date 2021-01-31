@@ -22,6 +22,7 @@
 	icon_state = "sneakboots"
 	inhand_icon_state = "sneakboots"
 	w_class = WEIGHT_CLASS_SMALL
+	pocket_storage_component_path = null
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 	clothing_traits = list(TRAIT_SILENT_FOOTSTEPS)
 

@@ -180,6 +180,48 @@
 	strip_delay = 60
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 70, ACID = 50)
 
+/obj/item/clothing/gloves/color/captain/infiltrator
+	name = "infiltrator gloves"
+	desc = "Specialized combat gloves with internal knuckle pads for delivering precise, concussive shocks against your targets without actually harming them!"
+	icon_state = "infiltrator"
+	inhand_icon_state = "infiltrator"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.3
+	strip_delay = 80
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	///Have we worn these gloves?
+	var/wornonce = FALSE
+
+/obj/item/clothing/gloves/color/captain/infiltrator/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		use_buffs(user, TRUE)
+		wornonce = TRUE
+
+/obj/item/clothing/gloves/color/captain/infiltrator/dropped(mob/living/carbon/human/user)
+	if(wornonce)
+		use_buffs(user, FALSE)
+		wornonce = FALSE
+	return ..()
+
+/obj/item/clothing/gloves/color/captain/infiltrator/proc/use_buffs(mob/living/carbon/human/user, buff)
+	if(buff)
+		ADD_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE, GLOVE_TRAIT)
+		if(HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE))
+			to_chat(user, "<span class='notice'>Trait added.</span>")
+		user.dna.species.attack_type = STAMINA
+		to_chat(user, "<span class='notice'>Your attack type is now [user.dna.species.attack_type].</span>")
+		to_chat(user, "<span class='notice'>You equip the [src], activating them.</span>")
+		to_chat(user, "<span class='warning'>You feel like you could land any blow, but are committed to consistency over potential.</span>")
+	else
+		REMOVE_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE, GLOVE_TRAIT)
+		if(!HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE))
+			to_chat(user, "<span class='notice'>Trait removed.</span>")
+		user.dna.species.attack_type = initial(user.dna.species.attack_type)
+		to_chat(user, "<span class='notice'>Your attack type is now [user.dna.species.attack_type].</span>")
+		to_chat(user, "<span class='notice'>You remove the [src], deactivating them.</span>")
+		to_chat(user, "<span class='warning'>Recklessness overtakes reason, yet you feel your ambition return to you, allowing you to land incredible blows.</span>")
+
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
 	desc = "Cheap sterile gloves made from latex. Transfers minor paramedic knowledge to the user via budget nanochips."
@@ -198,15 +240,6 @@
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	transfer_prints = FALSE
-
-/obj/item/clothing/gloves/color/latex/nitrile/infiltrator
-	name = "infiltrator gloves"
-	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping knowledge into the user via nanochips."
-	icon_state = "infiltrator"
-	inhand_icon_state = "infiltrator"
-	siemens_coefficient = 0
-	permeability_coefficient = 0.3
-	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"

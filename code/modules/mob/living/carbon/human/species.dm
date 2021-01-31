@@ -1322,6 +1322,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='userdanger'>You block [user]'s attack!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your attack at [target] was blocked!</span>")
 		return FALSE
+	
+	var/damage = calculate_unarmed_damage(user, target)
+
 	if(attacker_style?.harm_act(user,target))
 		return TRUE
 	else
@@ -1345,14 +1348,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
-		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
-
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
-			if(atk_verb == ATTACK_EFFECT_KICK || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
-				miss_chance = 0
+			if(target.body_position == LYING_DOWN || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //attacks on prone targets never miss (provided your species deals more than 0 damage).
+				miss_chance = 0 //Resolute Technique users don't miss either. Perfect Attacker is debug.
 			else
 				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 
@@ -1379,21 +1380,37 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 
-		if(atk_verb == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block)
-			log_combat(user, target, "kicked")
-		else//other attacks deal full raw damage + 1.5x in stamina damage
+		///once we sorted all of our calculations, apply damage
+		if(user.dna.species.attack_type == STAMINA) //pure stamina attackers will only roll once
+			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
+		else 
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
-			log_combat(user, target, "punched")
+		log_combat(user, target, "struck with an unarmed strike")
 
-		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
+		if(target.body_position == STANDING_UP && damage >= user.dna.species.punchstunthreshold && !HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //If our target is standing, we do not have resolute technique and our damage exceeds our stun threshold, we crit
 			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
 							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
 			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			log_combat(user, target, "got a stun punch with their previous punch")
+
+/datum/species/proc/calculate_unarmed_damage(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/damage ///We start here before returning this value after calculations
+
+	if(HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //Resolute technique sets our damage to our highest potential punch value
+		damage = user.dna.species.punchdamagehigh
+	else //otherwise we roll
+		damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+	
+	if(target.body_position == LYING_DOWN) //If our target is prone, we get a flat bonus
+		damage += 5
+
+	if(user.dna.species.attack_type == STAMINA) //Purely stamina based punches get ANOTHER flat bonus
+		damage += 5
+	
+	return damage
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
