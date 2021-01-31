@@ -428,7 +428,7 @@ SUBSYSTEM_DEF(job)
 			SendToLateJoin(living_mob)
 			go_to_latejoin = FALSE
 		else if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
-			DropLandAtRandomPoint(living_mob)
+			DropLandAtRandomHallwayPoint(living_mob)
 			go_to_latejoin = FALSE
 		else if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
@@ -672,9 +672,9 @@ SUBSYSTEM_DEF(job)
 		message_admins(msg)
 		CRASH(msg)
 
-///Lands specified mob at a random spot on the station bar some blacklisted places
-/datum/controller/subsystem/job/proc/DropLandAtRandomPoint(mob/living/living_mob)
-	var/turf/spawn_turf = get_safe_random_station_turf()
+///Lands specified mob at a random spot in the hallways
+/datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
+	var/turf/spawn_turf = get_safe_random_station_turf(list(typesof(area/hallway)))
 
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = new()
 	living_mob.forceMove(toLaunch)
