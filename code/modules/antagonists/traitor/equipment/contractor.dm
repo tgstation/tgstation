@@ -188,7 +188,7 @@
 	mask = /obj/item/clothing/mask/cigarette/syndicate
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
 	ears = /obj/item/radio/headset/chameleon
-	id = /obj/item/card/id/advanced/syndicate
+	id = /obj/item/card/id/advanced/chameleon
 	r_hand = /obj/item/storage/toolbox/syndicate
 
 	backpack_contents = list(/obj/item/storage/box/survival, /obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon,

@@ -24,7 +24,7 @@
 /datum/outfit/centcom/ert/commander
 	name = "ERT Commander"
 
-	id = /obj/item/card/id/advanced/ert
+	id = /obj/item/card/id/advanced/centcom/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -56,7 +56,7 @@
 /datum/outfit/centcom/ert/security
 	name = "ERT Security"
 
-	id = /obj/item/card/id/advanced/ert/security
+	id = /obj/item/card/id/advanced/centcom/ert/security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	suit_store = /obj/item/gun/energy/e_gun/stun
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -91,7 +91,7 @@
 /datum/outfit/centcom/ert/medic
 	name = "ERT Medic"
 
-	id = /obj/item/card/id/advanced/ert/medical
+	id = /obj/item/card/id/advanced/centcom/ert/medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses = /obj/item/clothing/glasses/hud/health
@@ -126,7 +126,7 @@
 /datum/outfit/centcom/ert/engineer
 	name = "ERT Engineer"
 
-	id = /obj/item/card/id/advanced/ert/engineer
+	id = /obj/item/card/id/advanced/centcom/ert/engineer
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses =  /obj/item/clothing/glasses/meson/engine
@@ -225,7 +225,7 @@
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor // Chap role always gets this suit
 	suit_store = /obj/item/gun/energy/e_gun
-	id = /obj/item/card/id/advanced/ert/chaplain
+	id = /obj/item/card/id/advanced/centcom/ert/chaplain
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/storage/backpack/cultpack
 	belt = /obj/item/storage/belt/soulstone
@@ -253,7 +253,7 @@
 /datum/outfit/centcom/ert/janitor
 	name = "ERT Janitor"
 
-	id = /obj/item/card/id/advanced/ert/janitor
+	id = /obj/item/card/id/advanced/centcom/ert/janitor
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
 	glasses = /obj/item/clothing/glasses/night
 	back = /obj/item/storage/backpack/ert/janitor
@@ -293,7 +293,7 @@
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/clown
 	mask = /obj/item/clothing/mask/gas/clown_hat
-	id = /obj/item/card/id/advanced/ert/clown
+	id = /obj/item/card/id/advanced/centcom/ert/clown
 	glasses = /obj/item/clothing/glasses/godeye
 	back = /obj/item/storage/backpack/ert/clown
 	belt = /obj/item/storage/belt/champion

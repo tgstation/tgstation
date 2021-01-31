@@ -206,7 +206,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
-	id = /obj/item/card/id/advanced/syndicate
+	id = /obj/item/card/id/advanced/chameleon
 	belt = /obj/item/pda/heads
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -232,7 +232,7 @@
 	pda.ownjob = "Reaper"
 	pda.update_label()
 
-	var/obj/item/card/id/advanced/syndicate/W = H.wear_id
+	var/obj/item/card/id/advanced/chameleon/W = H.wear_id
 	W.access = get_all_accesses()
 	W.assignment = "Reaper"
 	W.registered_name = H.real_name
@@ -389,7 +389,7 @@
 	suit_store = /obj/item/tank/internals/emergency_oxygen/double
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	l_hand = /obj/item/gun/energy/pulse/loyalpin
-	id = /obj/item/card/id/advanced/deathsquad
+	id = /obj/item/card/id/advanced/black/deathsquad
 	ears = /obj/item/radio/headset/headset_cent/alt
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
