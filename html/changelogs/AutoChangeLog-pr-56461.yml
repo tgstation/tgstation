@@ -1,0 +1,4 @@
+author: "Sparkezel"
+delete-after: True
+changes: 
+  - bugfix: "Old heretic influences are now visible to new heretics."
