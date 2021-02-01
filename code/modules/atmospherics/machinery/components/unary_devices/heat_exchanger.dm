@@ -57,7 +57,7 @@
 
 	var/air_heat_capacity = air_contents.heat_capacity()
 	if(istype(partner,/turf/open/space))
-		var/other_air_heat_capacity = 7000 //neccesarry to keep engi and atmos in one piece but it can be changed too ;)
+		other_air_heat_capacity = 7000 ///neccesarry to keep engi and atmos in one piece but it can be changed too ;)
 	var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
 
 	var/old_temperature = air_contents.temperature
