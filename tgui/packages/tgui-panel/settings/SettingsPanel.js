@@ -71,7 +71,7 @@ export const SettingsGeneral = (props, context) => {
             }))} />
         </LabeledList.Item>
         <LabeledList.Item label="Font style">
-          <Stack>
+          <Stack inline align="baseline">
             <Stack.Item>
               {!freeFont && (
                 <Dropdown
