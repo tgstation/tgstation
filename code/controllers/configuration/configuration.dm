@@ -121,11 +121,16 @@
 			continue
 
 		var/firstchar = L[1]
+		var/disabled = FALSE
 		if(firstchar == "#")
-			if(!(length(L) > 1 && L[2] == "#"))
-				// Assume disabled entry, not comment
-				LAZYADD(results[null], trim(copytext(L, 1)))
-			continue
+			if(length(L) > 1 && L[2] == "#")
+				// comment
+				continue
+
+			// disabled entry
+			disabled = TRUE
+			L = trim(copytext(L, 2, length(L) + 1))
+			firstchar = L[1]
 
 		var/lockthis = firstchar == "@"
 		if(lockthis)
@@ -144,7 +149,9 @@
 		if(!entry)
 			continue
 
-		if(entry == CONFIGURATION_INCLUDE_TOKEN)
+		if(disabled)
+			LAZYADD(results[null], entry)
+		else if(entry == CONFIGURATION_INCLUDE_TOKEN)
 			LAZYADD(results[entry], value)
 		else
 			results[entry] = value

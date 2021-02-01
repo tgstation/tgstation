@@ -3,16 +3,24 @@
 	var/list/undocumented_entries
 	/// List of set config entries with no code equivalent
 	var/list/extraneous_entries
+	/// List of entries seen already
+	var/list/seen_entries
 
 /datum/unit_test/configuration_documentation/Run()
-	undocumented_entries = global.config.entries.Copy()
+	undocumented_entries = list()
+	for(var/I in global.config.entries)
+		var/datum/config_entry/CE = global.config.entries[I]
+		if(!CE.deprecated_by)
+			undocumented_entries += I
+
 	extraneous_entries = list()
+	seen_entries = list()
 	var/test_config_file = world.params["original_config"] ? world.params["original_config"] : DEFAULT_CONFIGURATION_FILE
 	TestGraph(test_config_file)
 	if(undocumented_entries.len)
 		Fail("The following configuration entries are missing default values in the .txt (commented out or otherwise): [english_list(undocumented_entries)]")
 	if(extraneous_entries.len)
-		Fail("The following configuration entries do not have a match in code: [english_list(extraneous_entries, assoc = TRUE)]")
+		Fail("The following configuration entries do not have a match in code: [english_list(extraneous_entries)]")
 
 /****
 	* Test a graph of config files inclusions
@@ -28,12 +36,11 @@
 	stack = stack + filename_to_test
 
 	var/list/parsed_entries = global.config.ParseConfigFile(filename_to_test)
-	log_world(json_encode(parsed_entries))
 	for(var/entry in parsed_entries)
 		if(!entry)
 			// Commented out entries
 			for(var/disabled_entry in parsed_entries[entry])
-				TryRemoveEntry(entry, filename_to_test)
+				TryRemoveEntry(disabled_entry, filename_to_test)
 		else if(entry == CONFIGURATION_INCLUDE_TOKEN)
 			for(var/sub_config in parsed_entries[entry])
 				TestGraph(sub_config, stack)
@@ -49,5 +56,8 @@
 	entry = lowertext(entry)
 	var/start_len = undocumented_entries.len
 	undocumented_entries -= entry
-	if(undocumented_entries.len == start_len)
-		extraneous_entries[entry] = filename
+
+	if(!seen_entries[entry])
+		seen_entries[entry] = TRUE
+		if(undocumented_entries.len == start_len)
+			extraneous_entries[entry] = filename
