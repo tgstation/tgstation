@@ -99,7 +99,7 @@
 	else 
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
-/mob/living/simple_animal/hostile/regalrat/proc/Rummage_Trash(obj/machinery/disposal/target)
+/mob/living/simple_animal/hostile/regalrat/proc/RummageTrash(obj/machinery/disposal/target)
 	. = ..()
 	src.visible_message("<span class='warning'>[src] starts rummaging through the [target].</span>","<span class='notice'>You rummage through the [target]...</span>")
 	if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))

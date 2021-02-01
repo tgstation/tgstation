@@ -502,7 +502,6 @@
 
 /obj/machinery/disposal/proc/on_rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
-	
-	INVOKE_ASYNC(king, .proc/Rummage_Trash, src)
-	
-	
+
+	INVOKE_ASYNC(king, /mob/living/simple_animal/hostile/regalrat/.proc/RummageTrash, src)
+
