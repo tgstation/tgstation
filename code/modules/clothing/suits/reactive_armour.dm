@@ -28,7 +28,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	var/active = FALSE
-	var/reactivearmor_cooldown_duration = 0 //cooldown specific to reactive armor
+	var/reactivearmor_cooldown_duration = 10 SECONDS //cooldown specific to reactive armor
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"
 	inhand_icon_state = "reactiveoff"
@@ -66,7 +66,6 @@
 	desc = "Someone separated our Research Director from his own head!"
 	var/tele_range = 6
 	var/rad_amount= 15
-	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
