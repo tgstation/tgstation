@@ -298,7 +298,7 @@
 	else if(sacker.drunkenness > 30) // if you're only a bit drunk though, you're just sloppy
 		attack_mod -= 1
 	if(HAS_TRAIT(sacker, TRAIT_CLUMSY))
-		attack_mod -= 2
+		attack_mod -= 4
 	if(HAS_TRAIT(sacker, TRAIT_DWARF))
 		attack_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_TINY))

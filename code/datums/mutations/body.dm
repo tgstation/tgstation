@@ -528,11 +528,12 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_TINY, GENETIC_MUTATION)
-	owner.resize = 0.5
-	owner.update_transform()
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(0.5, 0.5)
+	owner.transform = new_transform.Multiply(owner.transform)
 	owner.can_be_held = TRUE
 	owner.mob_size = MOB_SIZE_TINY
-	owner.ventcrawler = TRUE
+	owner.ventcrawler = VENTCRAWLER_ALWAYS
 	owner.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	owner.physiology.damage_resistance -= 100
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
@@ -543,12 +544,14 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_TINY, GENETIC_MUTATION)
-	owner.resize = 2
-	owner.update_transform()
+	var/matrix/new_transform = matrix()
+	new_transform.Scale(2, 2)
+	owner.transform = new_transform.Multiply(owner.transform)
 	owner.can_be_held = FALSE
 	owner.mob_size = MOB_SIZE_HUMAN
-	owner.ventcrawler = FALSE
+	owner.ventcrawler = VENTCRAWLER_NONE
 	owner.pass_flags = NONE
 	owner.physiology.damage_resistance += 100
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+	owner.RemoveElement(/datum/element/squashable, squash_chance = 50 * 0.5, squash_damage = 1 * 25)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
