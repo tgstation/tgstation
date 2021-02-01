@@ -193,7 +193,7 @@
 		if(passive_enabled)
 			disable_passive_effect()
 
-//If false, disables active and passive effects, but doesn't consume nanites
+//If false, disables active, passive effects, and triggers without consuming nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
 	if (!LAZYLEN(rules))
@@ -228,6 +228,8 @@
 		timer_trigger_delay_next = world.time + timer_trigger_delay
 		return
 	if(world.time < next_trigger)
+		return
+	if(!check_conditions())
 		return
 	if(!consume_nanites(trigger_cost))
 		return
