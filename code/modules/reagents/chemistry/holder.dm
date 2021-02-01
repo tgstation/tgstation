@@ -907,6 +907,7 @@
 		finish_reacting()
 	else
 		update_total()
+		handle_reactions()
 
 /*
 * This ends a single instance of an ongoing reaction

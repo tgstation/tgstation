@@ -27,8 +27,9 @@
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
 	
 /obj/machinery/chem_heater/Destroy()
-	UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
-	QDEL_NULL(beaker)
+	if(beaker)
+		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		QDEL_NULL(beaker)
 	return ..()
 
 
