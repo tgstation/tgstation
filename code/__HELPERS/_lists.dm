@@ -66,16 +66,8 @@
 		};\
 	} while(FALSE)
 
-/****
-	* Returns a list in plain english as a string
-	* input - Indexed list of items
-	* nothing_text - Displayed when input is null or empty
-	* and_text - Text displayed before last entry if more than one entry
-	* comma_text - Text displayed to separate entries if more than two entries
-	* final_comma_text - Replaces comma_text between second last and last entries
-	* assoc - If the list should be considered associated and the values displayed
-	*/
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "", assoc = FALSE)
+//Returns a list in plain english as a string
+/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = length(input)
 	switch(total)
 		if (0)
@@ -85,21 +77,16 @@
 		if (2)
 			return "[input[1]][and_text][input[2]]"
 		else
-			var/list/output = list()
+			var/output = ""
 			var/index = 1
-			while (index <= total)
-				if (index >= total - 1)
+			while (index < total)
+				if (index == total - 1)
 					comma_text = final_comma_text
-				if(index == total)
-					comma_text += and_text
-				var/entry = input[index]
-				output += "[entry]"
-				if(assoc && !isnum(entry))
-					output += ": [input[entry]]"
-				output += comma_text
+
+				output += "[input[index]][comma_text]"
 				index++
 
-			return jointext(output, "")
+			return "[output][and_text][input[index]]"
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
