@@ -90,8 +90,8 @@
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 /// a hack for now
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1
-/// a hack to help make vacuums "cold", sacrificing realism for gameplay
-#define HEAT_CAPACITY_VACUUM				2000
+/// space is much more realistic now, still cold as fuck but that can be "radiation"
+#define HEAT_CAPACITY_VACUUM				700
 /// old vacuum magic number, sacrificing realism for gameplay, use it whenever something related to old vacuum breaks
 #define OLD_HEAT_CAPACITY_VACUUM            7000
 
