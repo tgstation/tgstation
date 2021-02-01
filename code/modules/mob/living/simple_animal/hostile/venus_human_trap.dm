@@ -104,6 +104,16 @@
 	. = ..()
 	pull_vines()
 
+/mob/living/simple_animal/hostile/venus_human_trap/handle_temperature_damage()
+	if(bodytemperature < minbodytemp)
+		adjustBruteLoss(5)
+		throw_alert("temp", /obj/screen/alert/cold, 1)
+	else if(bodytemperature > maxbodytemp)
+		adjustBruteLoss(10)
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
+
 /mob/living/simple_animal/hostile/venus_human_trap/AttackingTarget()
 	. = ..()
 	if(isliving(target))
