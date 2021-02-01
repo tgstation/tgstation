@@ -15,6 +15,7 @@
 	pulse_range = BLOB_CORE_PULSE_RANGE
 	expand_range = BLOB_CORE_EXPAND_RANGE
 	max_spores = BLOB_CORE_MAX_SPORES
+	ignore_syncmesh_share = TRUE
 
 /obj/structure/blob/special/core/Initialize(mapload, client/new_overmind = null, placed = 0)
 	GLOB.blob_cores += src

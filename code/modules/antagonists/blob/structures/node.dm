@@ -12,6 +12,7 @@
 	expand_range = BLOB_NODE_EXPAND_RANGE
 	resistance_flags = LAVA_PROOF
 	max_spores = BLOB_NODE_MAX_SPORES
+	ignore_syncmesh_share = TRUE
 
 
 /obj/structure/blob/special/node/Initialize()

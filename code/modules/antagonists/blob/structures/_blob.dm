@@ -24,6 +24,8 @@
 	var/brute_resist = BLOB_BRUTE_RESIST
 	/// Multiplies burn damage by this 
 	var/fire_resist = BLOB_FIRE_RESIST 
+	/// Literally only used by the synchronous mesh strain
+	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE 
 	var/mob/camera/blob/overmind
@@ -376,7 +378,7 @@
 	shuffle_inplace(blobs_to_affect)
 	for(var/L in blobs_to_affect)
 		var/obj/structure/blob/B = L
-		if(!B.overmind && !istype(B, /obj/structure/blob/special/core) && prob(30))
+		if(!B.overmind && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 			B.update_icon()
 		var/distance = get_dist(get_turf(src), get_turf(B))
