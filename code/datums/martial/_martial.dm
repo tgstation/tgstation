@@ -35,13 +35,13 @@
 		streak = copytext(streak, 1 + length(streak[1]))
 	if (display_combos)
 		var/mob/living/holder_living = holder.resolve()
-		holder_living.hud_used.combo_display.update_icon_state(streak)
+		holder_living?.hud_used?.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/reset_streak(mob/living/new_target)
 	current_target = new_target
 	streak = ""
 	var/mob/living/holder_living = holder.resolve()
-	holder_living.hud_used.combo_display.update_icon_state(streak)
+	holder_living?.hud_used?.combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/teach(mob/living/holder_living, make_temporary=FALSE)
 	if(!istype(holder_living) || !holder_living.mind)
