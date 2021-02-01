@@ -542,8 +542,8 @@
 /datum/mafia_controller/proc/create_bodies()
 	for(var/datum/mafia_role/role in all_roles)
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
-		ADD_TRAIT(H, TRAIT_NOFIRE, "mafia")
-		ADD_TRAIT(H, TRAIT_NOBREATH	, "mafia")
+		ADD_TRAIT(H, TRAIT_NOFIRE, "MAFIA_TRAIT")
+		ADD_TRAIT(H, TRAIT_NOBREATH	, "MAFIA_TRAIT")
 		H.equipOutfit(player_outfit)
 		H.status_flags |= GODMODE
 		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
