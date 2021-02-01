@@ -404,6 +404,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LYING_DOWN_TRAIT "lying-down"
 /// Trait associated to lacking electrical power.
 #define POWER_LACK_TRAIT "power-lack"
+/// Trait associated with mafia
+#define MAFIA_TRAIT "mafia"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
