@@ -1292,9 +1292,6 @@
 /mob/living/carbon/human/species/plasma
 	race = /datum/species/plasmaman
 
-/mob/living/carbon/human/species/plasma/stable
-	race = /datum/species/plasmaman/stable
-
 /mob/living/carbon/human/species/pod
 	race = /datum/species/pod
 
