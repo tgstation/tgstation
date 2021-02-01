@@ -59,7 +59,6 @@
 
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
-	. = ..()
 	if(griddled_objects.len >= max_items)
 		to_chat(user, "<span class='notice'>[src] can't fit more items!</span>")
 		return
@@ -74,6 +73,8 @@
 		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
 		AddToGrill(I, user)
 		update_icon()
+	else
+		return ..()
 
 /obj/machinery/griddle/attack_hand(mob/user)
 	. = ..()
