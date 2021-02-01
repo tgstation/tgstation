@@ -702,7 +702,6 @@
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
 		last_angle_set_hitscan_store = loc
-		//var/datum/point/pcache = trajectory.copy_to()
 		var/datum/point/pcache = new (src)
 		var/list/L = list() 
 		L = trajectory.return_coordinates()
