@@ -131,7 +131,8 @@
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))
-					charge -= text2num(params["cost"])
+					log_codex_ciatrix("[key_name(last_user)] gained knowledge of [EK]")
+					charge -= initial(EK.cost)
 					return TRUE
 
 	update_icon() // Not applicable to all objects.

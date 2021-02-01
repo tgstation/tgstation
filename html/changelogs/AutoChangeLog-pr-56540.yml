@@ -1,0 +1,5 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - bugfix: "Wendigo will no longer runtimes when screaming"
+  - bugfix: "Wendigo will no longer runtime when it tries to teleport but has no location to teleport to"

@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - tweak: "dynamic threat reports are no longer perfectly accurate, they diverge and are sometimes downright wrong."

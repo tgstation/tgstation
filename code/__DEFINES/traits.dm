@@ -234,10 +234,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERMANENTLY_ONFIRE	"permanently_onfire" //overrides the update_fire proc to always add fire (for lava)
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
+#define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune" // nobody can use martial arts on this mob
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE			"cant_ride"
 #define TRAIT_BLOODY_MESS		"bloody_mess" //from heparin, makes open bleeding wounds rapidly spill more blood
 #define TRAIT_COAGULATING		"coagulating" //from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
+/// The holder of this trait has antennae or whatever that hurt a ton when noogied
+#define TRAIT_ANTENNAE	"antennae"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
@@ -314,6 +317,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_T_RAY_VISIBLE		"t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_FOOD_GRILLED 		"food_grilled"
+#define TRAIT_NEEDS_TWO_HANDS	"needstwohands" //The items needs two hands to be carried
+#define TRAIT_FISH_SAFE_STORAGE "fish_case" //Fish in this won't die
+#define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile" //Stuff that can go inside fish cases
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
@@ -341,6 +347,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SNOB				"snob"
 #define TRAIT_BALD				"bald"
 #define TRAIT_BADTOUCH			"bad_touch"
+#define TRAIT_EXTROVERT			"extrovert"
+#define TRAIT_INTROVERT			"introvert"
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
@@ -480,8 +488,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NO_TONGUE_TRAIT "no_tongue_trait"
 
 /// Trait granted by [/mob/living/silicon/robot]
-/// Traits applied to a silicon mob by their module.
-#define MODULE_TRAIT "module_trait"
+/// Traits applied to a silicon mob by their model.
+#define MODEL_TRAIT "model_trait"
 
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"

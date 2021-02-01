@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "Space Heaters can now heat or cool to their full stated ranges, rather than being clamped to a minimum of 2.7°C."
