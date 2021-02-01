@@ -55,8 +55,10 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/partner_air_contents = partner.airs[1]
 
-	var/air_heat_capacity = air_contents.heat_capacity()
-	var/other_air_heat_capacity = partner_air_contents.heat_capacity()
+	var/air_heat_capacity = air_contents.heat_capacity()	if(istype(partner,/turf/open/space))
+		var/other_air_heat_capacity = 7000() //neccesarry to keep engi and atmos in one piece but it can be changed too ;)
+	else
+		var/other_air_heat_capacity = partner_air_contents.heat_capacity()
 	var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
 
 	var/old_temperature = air_contents.temperature
