@@ -11,7 +11,6 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-	forced_plating = TRUE
 
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
