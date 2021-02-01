@@ -8,8 +8,6 @@
 	icon_state = "cheesewheel"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5) //Hard cheeses contain about 25% protein
 	w_class = WEIGHT_CLASS_NORMAL
-	tastes = list("cheese" = 1)
-	foodtypes = DAIRY
 	rat_heal = 35
 
 /obj/item/food/cheese/wheel/Initialize()
@@ -25,8 +23,7 @@
 	icon_state = "royalcheese"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
 	w_class = WEIGHT_CLASS_BULKY
-	tastes = list("cheese" = 4, "royalty" = 1)
-	foodtypes = DAIRY
+	tastes = list("cheese" = 4, "royalty" = 1)	
 	rat_heal = 70
 
 /obj/item/food/cheese
