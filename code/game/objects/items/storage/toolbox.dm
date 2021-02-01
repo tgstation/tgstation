@@ -258,12 +258,12 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 60
+	STR.max_combined_w_class = 30
 	STR.set_holdable(list(
 		/obj/item/clothing/head/helmet/infiltrator,
 		/obj/item/clothing/suit/armor/vest/infiltrator,
 		/obj/item/clothing/under/syndicate,
-		/obj/item/clothing/gloves/color/captain/infiltrator,
+		/obj/item/clothing/gloves/color/infiltrator,
 		/obj/item/clothing/mask/infiltrator,
 		/obj/item/clothing/shoes/combat/sneakboots,
 		/obj/item/gun/ballistic/automatic/pistol,
@@ -276,7 +276,7 @@
 	new /obj/item/clothing/head/helmet/infiltrator(src)
 	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
 	new /obj/item/clothing/under/syndicate(src)
-	new /obj/item/clothing/gloves/color/captain/infiltrator(src)
+	new /obj/item/clothing/gloves/color/infiltrator(src)
 	new /obj/item/clothing/mask/infiltrator(src)
 	new /obj/item/clothing/shoes/combat/sneakboots(src)
 

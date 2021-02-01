@@ -23,24 +23,35 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	var/voice_unknown = FALSE ///This makes it so that your name shows up as unknown when wearing the mask.
+	var/wornonce = FALSE ///keeps tabs on whether we've worn the mask or not
 
 /obj/item/clothing/mask/infiltrator/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
-		return
-	to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
-	ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-	H.add_hud_to(user)
-	voice_unknown = TRUE
+	if(slot == ITEM_SLOT_MASK)
+		applymaskbuffs(user, TRUE)
+		wornonce = TRUE
 
 /obj/item/clothing/mask/infiltrator/dropped(mob/living/carbon/human/user)
-	to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
-	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-	H.remove_hud_from(user)
-	voice_unknown = FALSE
+	if(wornonce)
+		applymaskbuffs(user, FALSE)
+		wornonce = FALSE
 	return ..()
+
+/obj/item/clothing/mask/infiltrator/proc/applymaskbuffs(mob/living/carbon/human/user, buff)
+	if(buff)
+		to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
+		ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
+		var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+		H.add_hud_to(user)
+		voice_unknown = TRUE
+	else
+		to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
+		REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
+		var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+		H.remove_hud_from(user)
+		voice_unknown = FALSE
+
+
 
 /obj/item/clothing/mask/luchador
 	name = "Luchador Mask"

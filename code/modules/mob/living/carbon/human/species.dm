@@ -1385,7 +1385,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 		else 
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
-			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
+			target.apply_damage(damage + 5, STAMINA, affecting, armor_block)
 		log_combat(user, target, "struck with an unarmed strike")
 
 		if(target.body_position == STANDING_UP && damage >= user.dna.species.punchstunthreshold && !HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //If our target is standing, we do not have resolute technique and our damage exceeds our stun threshold, we crit
