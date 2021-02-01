@@ -149,8 +149,8 @@
 	add_fingerprint(user)
 	if(istype(W, /obj/item/assembly_holder))
 		bomb_assemble(W, user)
-	else
-		. = ..()
+		return TRUE
+	return ..()
 
 /obj/item/tank/ui_state(mob/user)
 	return GLOB.hands_state
@@ -218,6 +218,12 @@
 	handle_tolerances(ASSUME_AIR_DT_FACTOR)
 	return TRUE
 
+/**
+ * Removes some volume of the tanks gases as the tanks distribution pressure.
+ *
+ * Arguments:
+ * - volume_to_return: The amount of volume to remove from the tank.
+ */
 /obj/item/tank/proc/remove_air_volume(volume_to_return)
 	if(!air_contents)
 		return null
