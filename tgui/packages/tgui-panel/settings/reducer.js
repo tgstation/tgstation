@@ -5,11 +5,12 @@
  */
 
 import { changeSettingsTab, loadSettings, openChatSettings, toggleSettings, updateSettings } from './actions';
-import { SETTINGS_TABS } from './constants';
+import { SETTINGS_TABS, FONTS } from './constants';
 
 const initialState = {
   version: 1,
   fontSize: 13,
+  fontFamily: FONTS[0],
   lineHeight: 1.2,
   theme: 'light',
   adminMusicVolume: 0.5,
