@@ -26,7 +26,7 @@
 	. = ..()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
-	if(prob(1))
+	if(prob(0.2))
 		name = "tactical [name]"
 
 /obj/structure/chair/ComponentInitialize()
