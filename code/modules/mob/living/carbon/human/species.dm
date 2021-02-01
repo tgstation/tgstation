@@ -1385,8 +1385,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user.dna.species.attack_type == STAMINA) //pure stamina attackers will only roll once
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 		else if(HAS_TRAIT(user, TRAIT_TERRIBLE_PUNCHER))
-			target.apply_damage(damage, STAMINA, affecting, armor_block)
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
+			target.apply_damage(damage, STAMINA, affecting, armor_block)
 		else 
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage + 5, STAMINA, affecting, armor_block)
@@ -1408,11 +1408,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else //otherwise we roll
 		damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 	
-	if(target.body_position == LYING_DOWN && HAS_TRAIT(user, TRAIT_TERRIBLE_PUNCHER)) //If our target is prone, we get a flat bonus
-		damage += 5
+	if(!HAS_TRAIT(user, TRAIT_TERRIBLE_PUNCHER))
+		if(target.body_position == LYING_DOWN) //If our target is prone, we get a flat bonus
+			damage += 5
 
-	if(user.dna.species.attack_type == STAMINA && HAS_TRAIT(user, TRAIT_TERRIBLE_PUNCHER)) //Purely stamina based punches get ANOTHER flat bonus
-		damage += 5
+		if(user.dna.species.attack_type == STAMINA) //Purely stamina based punches get ANOTHER flat bonus
+			damage += 5
 	
 	return damage
 
