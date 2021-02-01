@@ -536,6 +536,7 @@
 	owner.pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	owner.physiology.damage_resistance -= 100
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+	owner.AddElement(/datum/element/squashable, squash_chance = 50 * 0.5, squash_damage = 1 * 25)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/tiny/on_losing(mob/living/carbon/human/owner)
@@ -547,6 +548,7 @@
 	owner.can_be_held = FALSE
 	owner.mob_size = MOB_SIZE_HUMAN
 	owner.ventcrawler = FALSE
+	owner.pass_flags = NONE
 	owner.physiology.damage_resistance += 100
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
