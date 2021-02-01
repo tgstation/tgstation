@@ -196,7 +196,7 @@
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
-	if (rules.len == 0)
+	if (!LAZYLEN(rules))
 		return TRUE
 	for(var/R in rules)
 		var/datum/nanite_rule/rule = R
