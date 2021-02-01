@@ -50,7 +50,8 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!isInSight(target, user))
+	var/turf/T = get_turf(user)
+	if(!LAZYFIND(dview(8, T),target))
 		return FALSE
 	if(!is_type_in_typecache(target, compatible_mobs_typecache))
 		if(!silent)
