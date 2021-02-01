@@ -263,4 +263,5 @@
 
 /datum/component/aquarium_content/proc/on_tank_stasis()
 	// Stop processing until inserted into aquarium again.
+	stop_flopping()
 	STOP_PROCESSING(SSobj, properties)

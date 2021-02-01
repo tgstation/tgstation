@@ -177,7 +177,7 @@
 	/// Last time new fish was created
 	var/last_breeding
 	/// How long it takes to produce new fish
-	var/breeding_timeout = 1 MINUTES
+	var/breeding_timeout = 2 MINUTES
 
 /datum/aquarium_behaviour/fish/on_inserted()
 	. = ..()
@@ -260,7 +260,7 @@
 	update_animation()
 
 /datum/aquarium_behaviour/fish/proc/ready_to_reproduce()
-	return health == initial(health) && stable_population > 1 && world.time - last_breeding >= breeding_timeout
+	return parent.current_aquarium && parent.current_aquarium.allow_breeding && health == initial(health) && stable_population > 1 && world.time - last_breeding >= breeding_timeout
 
 /datum/aquarium_behaviour/fish/proc/try_to_reproduce()
 	if(!parent.current_aquarium)

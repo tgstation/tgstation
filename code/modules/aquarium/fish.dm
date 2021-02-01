@@ -50,6 +50,8 @@
 	sprite_width = 8
 	sprite_height = 8
 
+	stable_population = 3
+
 /datum/aquarium_behaviour/fish/angelfish
 	name = "angelfish"
 	desc = "Young Angelfish often live in groups, while adults prefer solitary life. They become territorial and aggressive toward other fish when they reach adulthood."
@@ -57,6 +59,8 @@
 	dedicated_in_aquarium_icon_state = "bigfish"
 	sprite_height = 7
 	source_height = 7
+
+	stable_population = 3
 
 /datum/aquarium_behaviour/fish/guppy
 	name = "guppy"
@@ -67,7 +71,7 @@
 	sprite_width = 8
 	sprite_height = 5
 
-	stable_population = 10
+	stable_population = 6
 
 /datum/aquarium_behaviour/fish/plasmatetra
 	name = "plasma tetra"
@@ -76,12 +80,16 @@
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#D30EB0"
 
+	stable_population = 3
+
 /datum/aquarium_behaviour/fish/catfish
 	name = "cory catfish"
 	desc = "A catfish has about 100,000 taste buds, and their bodies are covered with them to help detect chemicals present in the water and also to respond to touch."
 	icon_state = "catfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	aquarium_vc_color = "#907420"
+
+	stable_population = 3
 
 /datum/aquarium_behaviour/fish/spacecarp
 	name = "space carp"
@@ -102,12 +110,16 @@
 	sprite_width = 8
 	sprite_height = 5
 
+	stable_population = 4
+
 /datum/aquarium_behaviour/fish/cardinal
 	name = "cardinalfish"
 	desc = "Cardinalfish are often found near sea urchins, where the fish hide when threatened."
 	icon_state = "cardinalfish"
 	dedicated_in_aquarium_icon_state = "fish_greyscale"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
+
+	stable_population = 4
 
 /datum/aquarium_behaviour/fish/greenchromis
 	name = "green chromis"
@@ -117,6 +129,8 @@
 	aquarium_vc_color = "#00ff00"
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 
+	stable_population = 5
+
 /datum/aquarium_behaviour/fish/firefish
 	name = "firefish goby"
 	desc = "To communicate in the wild, the firefish uses its dorsal fin to alert others of potential danger."
@@ -125,6 +139,8 @@
 	sprite_height = 5
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 
+	stable_population = 3
+
 /datum/aquarium_behaviour/fish/pufferfish
 	name = "pufferfish"
 	desc = "One Pufferfish contains enough toxins in its liver to kill 30 people."
@@ -132,6 +148,8 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	sprite_width = 8
 	sprite_height = 8
+
+	stable_population = 3
 
 /datum/aquarium_behaviour/fish/lanternfish
 	name = "lanternfish"
@@ -143,3 +161,5 @@
 	source_height = 21
 	sprite_width = 8
 	sprite_height = 8
+
+	stable_population = 3
