@@ -53,6 +53,7 @@
 
 /atom/movable/screen/blob/blobbernaut
 	icon_state = "ui_blobbernaut"
+	// Name and description get given their proper values on Initialize()
 	name = "Produce Blobbernaut (ERROR)"
 	desc = "Produces a strong, smart blobbernaut from a factory blob for (ERROR) resources.<br>The factory blob used will become fragile and unable to produce spores."
 
@@ -68,6 +69,7 @@
 
 /atom/movable/screen/blob/resource_blob
 	icon_state = "ui_resource"
+	// Name and description get given their proper values on Initialize()
 	name = "Produce Resource Blob (ERROR)"
 	desc = "Produces a resource blob for ERROR resources.<br>Resource blobs will give you resources every few seconds."
 
@@ -83,6 +85,7 @@
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"
+	// Name and description get given their proper values on Initialize()
 	name = "Produce Node Blob (ERROR)"
 	desc = "Produces a node blob for ERROR resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
@@ -98,6 +101,7 @@
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
+	// Name and description get given their proper values on Initialize()
 	name = "Produce Factory Blob (ERROR)"
 	desc = "Produces a factory blob for ERROR resources.<br>Factory blobs will produce spores every few seconds."
 
@@ -113,6 +117,7 @@
 
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"
+	// Description gets given its proper values on Initialize()
 	name = "Readapt Strain"
 	desc = "Allows you to choose a new strain from ERROR random choices for ERROR resources."
 
@@ -134,6 +139,7 @@
 
 /atom/movable/screen/blob/relocate_core
 	icon_state = "ui_swap"
+	// Name and description get given their proper values on Initialize()
 	name = "Relocate Core (ERROR)"
 	desc = "Swaps a node and your core for ERROR resources."
 
