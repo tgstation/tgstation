@@ -1352,11 +1352,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(hitroll == user.dna.species.punchdamagelow)
-			if(target.body_position == LYING_DOWN || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //attacks on prone targets never miss (provided your species deals more than 0 damage).
-				miss_chance = 0 //Resolute Technique users don't miss either. Perfect Attacker is debug.
-			else
-				miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+		if(target.body_position == LYING_DOWN || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //attacks on prone targets never miss (provided your species deals more than 0 damage).
+			miss_chance = 0 //Resolute Technique users don't miss either. Perfect Attacker is debug.
+		else if(hitroll == user.dna.species.punchdamagelow)
+			miss_chance = min((user.dna.species.punchdamagehigh/user.dna.species.punchdamagelow) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
