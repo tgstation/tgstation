@@ -185,7 +185,7 @@
 #define JUMP_Y_DISTANCE 6
 /// This animation should be applied to actual parent atom instead of vc_object.
 /datum/component/aquarium_content/proc/flop_animation(atom/movable/animation_target)
-	var/pause_between = PAUSE_BETWEEN_PHASES + rand(1,5) //randomized a bit so fish are not in sync
+	var/pause_between = PAUSE_BETWEEN_PHASES + rand(1, 5) //randomized a bit so fish are not in sync
 	animate(animation_target, time = pause_between, loop = -1)
 	//move nose down and up
 	for(var/_ in 1 to FLOP_COUNT)
@@ -226,7 +226,7 @@
 /datum/component/aquarium_content/proc/stop_flopping()
 	if(flopping)
 		flopping = FALSE
-		animate(parent,transform = matrix()) //stop animation
+		animate(parent, transform = matrix()) //stop animation
 
 /datum/component/aquarium_content/proc/set_vc_base_position()
 	var/list/aq_properties = current_aquarium.get_surface_properties()
