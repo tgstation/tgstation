@@ -22,7 +22,7 @@
 															"security HUD" = 20,
 															"loudness booster" = 20,
 															"newscaster" = 20,
-															"internal gps" = 20,
+															"internal gps" = 35,
 															"door jack" = 25,
 															"encryption keys" = 25,
 															"universal translator" = 35

@@ -142,7 +142,8 @@
 	required_software = "internal gps"
 
 /atom/movable/screen/pai/internal_gps/Click()
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
 	if(!pAI.internal_gps)
