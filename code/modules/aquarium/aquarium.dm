@@ -14,7 +14,7 @@
 	integrity_failure = 0.3
 
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
-	var/fluid_temp = MIN_AQUARIUM_TEMP
+	var/fluid_temp = DEFAULT_AQUARIUM_TEMP
 	var/min_fluid_temp = MIN_AQUARIUM_TEMP
 	var/max_fluid_temp = MAX_AQUARIUM_TEMP
 
