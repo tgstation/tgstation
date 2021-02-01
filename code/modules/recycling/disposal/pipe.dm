@@ -93,13 +93,11 @@
 	var/eject_range = 5
 	var/turf/open/floor/floorturf
 
-	if(isfloorturf(T)) //intact floor, pop the tile
+	if(isfloorturf(T) && T.intact) //intact floor, pop the tile
 		floorturf = T
-		if(floorturf.forced_plating == TRUE)
-			floorturf.pop_tile = TRUE
-		if(floorturf.floor_tile && floorturf.pop_tile == TRUE)
+		if(floorturf.floor_tile && floorturf.forced_plating == TRUE)
 			new floorturf.floor_tile(T)
-		floorturf.force_plating(floorturf.forced_plating)
+		floorturf.make_plating(floorturf.forced_plating)
 
 	if(direction)		// direction is specified
 		if(isspaceturf(T)) // if ended in space, then range is unlimited

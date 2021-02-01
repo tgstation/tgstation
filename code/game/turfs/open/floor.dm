@@ -24,7 +24,6 @@
 	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops
 	var/forced_plating = FALSE
-	var/pop_tile = TRUE
 	var/list/broken_states
 	var/list/burnt_states
 
@@ -46,8 +45,6 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-/turf/open/floor/proc/force_plating(forced_plating)
-	make_plating(forced_plating)
 
 /turf/open/floor/Destroy()
 	if(is_station_level(z))
