@@ -1324,7 +1324,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	
 	var/damage = calculate_unarmed_damage(user, target)
-	var/critroll = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+	var/hitroll = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
 	if(attacker_style?.harm_act(user,target))
 		return TRUE
@@ -1352,7 +1352,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(user.dna.species.punchdamagelow)
+		if(hitroll == user.dna.species.punchdamagelow)
 			if(target.body_position == LYING_DOWN || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //attacks on prone targets never miss (provided your species deals more than 0 damage).
 				miss_chance = 0 //Resolute Technique users don't miss either. Perfect Attacker is debug.
 			else
@@ -1392,7 +1392,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.apply_damage(damage + 5, STAMINA, affecting, armor_block)
 		log_combat(user, target, "struck with an unarmed strike")
 
-		if(target.body_position == STANDING_UP && critroll >= user.dna.species.punchstunthreshold && !HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //If our target is standing, we do not have resolute technique and our damage exceeds our stun threshold, we crit
+		if(target.body_position == STANDING_UP && hitroll >= user.dna.species.punchstunthreshold && !HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //If our target is standing, we do not have resolute technique and our damage exceeds our stun threshold, we crit
 			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
 							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
