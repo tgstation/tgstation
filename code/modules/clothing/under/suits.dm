@@ -177,7 +177,6 @@
 
 
 //Reshia
-//Reshia
 /obj/item/clothing/under/suit/reshia
 	name = "Red Ribbon"
 	desc = "A red ribbon that uncomfortably constricts your neck."
@@ -198,15 +197,15 @@
 		return
 	if(ismoth(user))
 		handled = TRUE
-		user.set_species(/datum/species/human)
+		user.set_species(/datum/species/void)
 		to_chat(user, "<span class='notice'>Your body is overtaken by a dark force!</span.?>")
 
-/obj/item/clothing/under/suit/reshia/dropped(mob/user)
-	if(handled)
-		if(ishuman(user)) //same as above
-			user.set_species(/datum/species/moth)
-			handled = FALSE
-			to_chat(user, "<span class='notice'>You feel a wave of light wash over you!</span.?>")
+//obj/item/clothing/under/suit/reshia/dropped(mob/user)
+//	if(handled)
+//		if(ishuman(user)) //same as above
+//			user.set_species(/datum/species/moth)
+//			handled = FALSE
+//			to_chat(user, "<span class='notice'>You feel a wave of light wash over you!</span.?>")
 
 /obj/item/clothing/under/suit/tuxedo
 	name = "tuxedo"
@@ -220,3 +219,21 @@
 	icon_state = "stolen_captain_uniform"
 	inhand_icon_state = "nothing"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
+
+/obj/item/clothing/under/suit/prince
+	name = "Prince Uniform"
+	desc = "A formal uniform fit for your position, specially made with four sleeves."
+	icon_state = "prince"
+	inhand_icon_state = "prince"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/under/suit/redlady
+	name = "Her Gift"
+	desc = "A new form, courtesy of Her. How nice!"
+	icon = 'icons/obj/clothing/under/suits.dmi'
+	icon_state = "redlady"
+	inhand_icon_state = "redlady"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACE|HIDEFACIALHAIR
+	var/handled = FALSE

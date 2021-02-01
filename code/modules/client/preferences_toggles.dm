@@ -270,6 +270,16 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings, listen_bank_card)()
 /datum/verbs/menu/settings/listen_bank_card/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_BANKCARD
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/settings, toggleantagperks)()
+	set name = "Show/Hide Syndicate Info"
+	set category = "Preferences"
+	set desc = "Show or Hide Syndicate Information"
+	usr.client.prefs.toggles ^= CAN_SEE_EXPOITABLE_INFO
+	usr.client.prefs.save_preferences()
+	to_chat(usr, "You will [(usr.client.prefs.toggles & CAN_SEE_EXPOITABLE_INFO) ? "now" : "no longer"] see Syndicate information when you examine someone.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Syndicate Info", "[usr.client.prefs.toggles & CAN_SEE_EXPOITABLE_INFO ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/verbs/menu/settings/toggleantagperks/Get_checked(client/C)
+	return C.prefs.toggles & CAN_SEE_EXPOITABLE_INFO
 
 GLOBAL_LIST_INIT(ghost_forms, sortList(list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \

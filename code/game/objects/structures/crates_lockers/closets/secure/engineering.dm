@@ -27,6 +27,7 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 	new /obj/item/clothing/under/rank/engineering/engineeringsuit(src)
+	new /obj/item/clothing/neck/tie/red/guirec(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

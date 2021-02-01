@@ -13,19 +13,16 @@
 	circuit = /obj/item/circuitboard/computer/labor_shuttle/one_way
 	req_access = list( )
 
-/obj/machinery/computer/shuttle/labor/one_way/ui_act(action, params)
-	if(!allowed(usr))
-		to_chat(usr, "<span class='danger'>Access denied.</span>")
-		return
-
-	switch(action)
-		if("move")
-			var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
-			if(!M)
-				to_chat(usr, "<span class='warning'>Cannot locate shuttle!</span>")
-				return
-			var/obj/docking_port/stationary/S = M.get_docked()
-			if(S?.name == "laborcamp_away")
-				to_chat(usr, "<span class='warning'>Shuttle is already at the outpost!</span>")
-				return
-	return ..()
+/obj/machinery/computer/shuttle/labor/one_way/launch_check(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
+	if(!M)
+		to_chat(user, "<span class='warning'>Cannot locate shuttle!</span>")
+		return FALSE
+	var/obj/docking_port/stationary/S = M.get_docked()
+	if(S?.name == "laborcamp_away")
+		to_chat(user, "<span class='warning'>Shuttle is already at the outpost!</span>")
+		return FALSE
+	return TRUE

@@ -291,7 +291,7 @@ ALLOW_AI_MULTICAM
 #VIRTUAL_REALITY
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
-ROUNDSTART_AWAY
+#ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
@@ -557,7 +557,7 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 MICE_ROUNDSTART 10
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
-EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
+#EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
 
 ## Uncomment to allow roundstart quirk selection in the character setup menu.
 ## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!

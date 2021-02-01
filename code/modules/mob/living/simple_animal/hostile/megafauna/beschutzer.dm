@@ -12,8 +12,10 @@
 	icon = 'icons/mob/beschutzer.dmi'
 	icon_state = "beschutzer"
 	icon_living = "beschutzer"
+	icon_dead = "beschutzer_death"
 	hud_type = /datum/hud/human
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	gender = MALE
 	AIStatus = AI_OFF
 	pixel_x = -16
 	speak_emote = list("screeches")
@@ -45,115 +47,59 @@
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	deathsound = 'sound/voice/mook_death.ogg'
 	pet_bonus = TRUE
+	deathmessage = "rips off his necklace and immediately collapses, motionless."
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	mouse_opacity = MOUSE_OPACITY_ICON
-	attack_action_types = list(/datum/action/innate/megafauna_attack/voidspread,
-							   /datum/action/innate/megafauna_attack/summon_apostle,
-							   /datum/action/innate/megafauna_attack/leap,
+	attack_action_types = list(/datum/action/innate/megafauna_attack/leap,
 							   /datum/action/innate/megafauna_attack/peaceful,
 							   /datum/action/innate/megafauna_attack/signing,
 							   /datum/action/innate/megafauna_attack/speaking)
 	var/attack_state = FERAL_ATTACK_NEUTRAL
+	var/list/available_channels = list()
 	var/struck_target_leap = FALSE
+	var/obj/item/radio/headset/ears = null
 	faction = list("neutral","silicon","turret")
-
-/datum/action/innate/megafauna_attack/voidspread
-	name = "Void Spread"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "sniper_zoom"
-	chosen_message = "<span class='danger'>You are now spreading Her influence.</span>"
-	chosen_attack_num = 1
-
-/datum/action/innate/megafauna_attack/summon_apostle
-	name = "Summon Apostle"
-	icon_icon = 'icons/effects/bubblegum.dmi'
-	button_icon_state = "smack ya one"
-	chosen_message = "<span class='danger'>You summon your minions.</span>"
-	chosen_attack_num = 2
 
 /datum/action/innate/megafauna_attack/leap
 	name = "Leap"
 	icon_icon = 'icons/effects/blood.dmi'
 	button_icon_state = "floor1"
 	chosen_message = "<span class='danger'>You can now leap to attack.</span>"
-	chosen_attack_num = 3
+	chosen_attack_num = 1
 
 /datum/action/innate/megafauna_attack/peaceful
 	name = "Peaceful"
 	icon_icon = 'icons/effects/blood.dmi'
 	button_icon_state = "floor1"
 	chosen_message = "<span class='danger'>You're not feeling bloodthirsty.</span>"
-	chosen_attack_num = 4
+	chosen_attack_num = 2
 
 /datum/action/innate/megafauna_attack/signing
 	name = "Signing"
 	icon_icon = 'icons/effects/blood.dmi'
 	button_icon_state = "floor1"
 	chosen_message = "<span class='danger'>You're signing.</span>"
-	chosen_attack_num = 5
+	chosen_attack_num = 3
 
 /datum/action/innate/megafauna_attack/speaking
 	name = "Screaming"
 	icon_icon = 'icons/effects/blood.dmi'
 	button_icon_state = "floor1"
 	chosen_message = "<span class='danger'>You're speaking.</span>"
-	chosen_attack_num = 6
+	chosen_attack_num = 4
 
 /mob/living/simple_animal/hostile/megafauna/beschutzer/OpenFire()
 	if(client)
 		switch(chosen_attack)
 			if(1)
-				voidspread()
-			if(2)
-				summon_robot()
-				summon_guirec()
-				summon_carrey()
-				summon_olivia()
-			if(3)
 				leap()
-			if(4)
+			if(2)
 				peaceful()
-			if(5)
+			if(3)
 				signing()
-			if(6)
+			if(4)
 				speaking()
 		return
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/voidspread()
-	if(!isturf(loc) || isspaceturf(loc))
-		return
-	if(locate(/obj/structure/void/weeds/node) in get_turf(src))
-		return
-	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
-		to_chat(L, "<span class='danger'>Beschützer spreads the void!</span>")
-	new /obj/structure/void/weeds/node(loc)
-
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/summon_robot()
-	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
-		to_chat(L, "<span class='danger'>Beschützer summons his apostles!</span>")
-	var/mob/living/simple_animal/hostile/apostle/robot/A = new(loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/summon_guirec()
-	var/mob/living/simple_animal/hostile/apostle/poison/guirec/A = new(loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/summon_carrey()
-	var/mob/living/simple_animal/hostile/apostle/carrey/A = new(loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/summon_olivia()
-	var/mob/living/simple_animal/hostile/apostle/olivia/A = new(loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
 
 /mob/living/simple_animal/hostile/megafauna/beschutzer/proc/leap()
 	if(isliving(target))
@@ -172,17 +118,19 @@
 /mob/living/simple_animal/hostile/megafauna/beschutzer/proc/speaking()
 	speak_emote = list("screeches")
 
-///mob/living/simple_animal/hostile/megafauna/beschutzer/CanAllowThrough(atom/movable/O)
-//	. = ..()
-//	if(istype(O, /mob/living/simple_animal/hostile/megafauna/beschutzer))
-//		var/mob/living/simple_animal/hostile/beschutzer/M = O
-//		if(M.attack_state == FERAL_ATTACK_ACTIVE && M.throwing)
-//			return TRUE
+/mob/living/simple_animal/hostile/megafauna/beschutzer/Initialize()
+	. = ..()
+	if(!ears)
+		var/headset = pick(/obj/item/radio/headset/headset_sec, \
+						/obj/item/radio/headset/headset_eng, \
+						/obj/item/radio/headset/headset_med, \
+						/obj/item/radio/headset/headset_sci, \
+						/obj/item/radio/headset/headset_cargo)
+		ears = new headset(src)
 
-//mob/living/simple_animal/hostile/megafauna/beschutzer/Moved(atom/OldLoc, Dir, Forced = FALSE)
-//	if(Dir)
-//		new /obj/effect/decal/cleanable/blood/drip(src.loc)
-//	return ..()
+/mob/living/simple_animal/hostile/megafauna/beschutzer/death()
+	desc = "Beschützer's body, now lifeless and useless. Who will save you now?"
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/beschutzer/AttackingTarget()
 	if(isliving(target))
@@ -325,82 +273,72 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/beschutzer/AttackingTarget(mob/living/M, mob/living/user, def_zone)
-	. = ..()
-	if(istype(target, /obj/item/reagent_containers/food))
-		if (health >= maxHealth)
-			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
-			return
-		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(10)
-		qdel(target)
-
-//Throwing stuff
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/toggle_throw_mode()
-	if(stat)
-		return
-	if(in_throw_mode)
-		throw_mode_off()
-	else
-		throw_mode_on()
-
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/throw_mode_off()
-	in_throw_mode = FALSE
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_off"
-
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/proc/throw_mode_on()
-	in_throw_mode = TRUE
-	if(hud_used)
-		hud_used.throw_icon.icon_state = "act_throw_on"
-
-/mob/living/simple_animal/hostile/megafauna/beschutzer/throw_item(atom/target)
-	. = ..()
-	throw_mode_off()
-	if(!target || !isturf(loc))
-		return
-	if(istype(target, /obj/screen))
+/mob/living/simple_animal/hostile/megafauna/beschutzer/Topic(href, href_list)
+	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		usr << browse(null, "window=mob[REF(src)]")
+		usr.unset_machine()
 		return
 
-	var/atom/movable/thrown_thing
-	var/obj/item/I = get_active_held_item()
-
-	if(!I)
-		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
-			var/mob/living/throwable_mob = pulling
-			if(!throwable_mob.buckled)
-				thrown_thing = throwable_mob
-				stop_pulling()
-				if(HAS_TRAIT(src, TRAIT_PACIFISM))
-					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+	//Removing from inventory
+	if(href_list["remove_inv"])
+		var/remove_from = href_list["remove_inv"]
+		switch(remove_from)
+			if("ears")
+				if(!ears)
+					to_chat(usr, "<span class='warning'>There is nothing to remove from his [remove_from]!</span>")
 					return
+				ears.forceMove(drop_location())
+				ears = null
+
+	//Adding things to inventory
+	else if(href_list["add_inv"])
+		var/add_to = href_list["add_inv"]
+		if(!usr.get_active_held_item())
+			to_chat(usr, "<span class='warning'>You have nothing in your hand to put on his [add_to]!</span>")
+			return
+		switch(add_to)
+			if("ears")
+				if(ears)
+					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
+					return
+				else
+					var/obj/item/item_to_add = usr.get_active_held_item()
+					if(!item_to_add)
+						return
+
+					if( !istype(item_to_add,  /obj/item/radio/headset) )
+						to_chat(usr, "<span class='warning'>This object won't fit!</span>")
+						return
+
+					var/obj/item/radio/headset/headset_to_add = item_to_add
+
+					if(!usr.transferItemToLoc(headset_to_add, src))
+						return
+					ears = headset_to_add
+					to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
+
+					available_channels.Cut()
+					for(var/ch in headset_to_add.channels)
+						switch(ch)
+							if(RADIO_CHANNEL_ENGINEERING)
+								available_channels.Add(RADIO_TOKEN_ENGINEERING)
+							if(RADIO_CHANNEL_COMMAND)
+								available_channels.Add(RADIO_TOKEN_COMMAND)
+							if(RADIO_CHANNEL_SECURITY)
+								available_channels.Add(RADIO_TOKEN_SECURITY)
+							if(RADIO_CHANNEL_SCIENCE)
+								available_channels.Add(RADIO_TOKEN_SCIENCE)
+							if(RADIO_CHANNEL_MEDICAL)
+								available_channels.Add(RADIO_TOKEN_MEDICAL)
+							if(RADIO_CHANNEL_SUPPLY)
+								available_channels.Add(RADIO_TOKEN_SUPPLY)
+							if(RADIO_CHANNEL_SERVICE)
+								available_channels.Add(RADIO_TOKEN_SERVICE)
+
+					if(headset_to_add.translate_binary)
+						available_channels.Add(MODE_TOKEN_BINARY)
 	else
-		thrown_thing = I.on_thrown(src, target)
-
-	if(thrown_thing)
-
-		if(isliving(thrown_thing))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-		var/power_throw = 0
-		if(HAS_TRAIT(src, TRAIT_HULK))
-			power_throw++
-		if(HAS_TRAIT(src, TRAIT_DWARF))
-			power_throw--
-		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-			power_throw++
-		if(pulling && grab_state >= GRAB_NECK)
-			power_throw++
-		visible_message("<span class='danger'>[src] throws [thrown_thing][power_throw ? " really hard!" : "."]</span>", \
-						"<span class='danger'>You throw [thrown_thing][power_throw ? " really hard!" : "."]</span>")
-		log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
-		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
-
+		return ..()
 /mob/living/simple_animal/hostile/megafauna/beschutzer/update_icons()
 	. = ..()
 	if(!stat)

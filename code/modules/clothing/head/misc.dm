@@ -182,6 +182,22 @@
 	icon_state = "chefbandana"
 	inhand_icon_state = "chefbandana"
 	dynamic_hair_suffix = ""
+	var/handled = FALSE
+
+/obj/item/clothing/neck/chefbandana/equipped(mob/user, slot)
+	if(slot != ITEM_SLOT_NECK)
+		return
+	if(iscarbon(user) && !handled)
+		handled = TRUE
+		ADD_TRAIT(user, TRAIT_HOLY, "cape")
+		to_chat(user, "<span class='notice'>The bandana glows around your neck.</span.?>")
+		user.AddElement(/datum/element/holy_light)
+
+/obj/item/clothing/neck/chefbandana/dropped(mob/user)
+	if(handled)
+		handled = FALSE
+		REMOVE_TRAIT(user, TRAIT_HOLY, "cape")
+		user.RemoveElement(/datum/element/holy_light)
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
@@ -533,9 +549,16 @@
     desc = "A seemingly ordinary crown. But you feel as if this particular item is also hiding something."
     icon_state = "valor_crown"
     inhand_icon_state = "crown"
- 
+
 /obj/item/clothing/head/weddingveil
 	name = "wedding veil"
 	desc = "A gauzy white veil."
 	icon_state = "weddingveil"
 	inhand_icon_state = "weddingveil"
+
+/obj/item/clothing/head/prince
+	name = "Prince's crown"
+	desc = "A crown of thorns, but it's blossoming."
+	icon_state = "prince"
+	inhand_icon_state = "prince"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF

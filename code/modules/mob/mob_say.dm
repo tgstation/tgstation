@@ -4,6 +4,7 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
+
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return

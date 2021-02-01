@@ -84,8 +84,8 @@
 	desc = "Comes with a built-in voice changer, perfect for pretending you're good at celebrity impressions."
 	item = /obj/item/clothing/mask/chameleon
 
-	price_min = 2000
-	price_max = 3500
+	price_min = 2500
+	price_max = 4000
 	stock_max = 1
 	availability_prob = 50
 

@@ -431,6 +431,11 @@
 	. += "*---------*</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+	var/invisible_man = skipface || get_visible_name() == "Unknown" // SKYRAT EDIT -- BEGIN
+	if(!invisible_man)
+		if(client)
+			if(CAN_SEE_EXPOITABLE_INFO)
+				. += "Exploitable Information: <a href='?src=[REF(src)];exploitable_info=1'>\[View\]</a>" // SKYRAT EDIT -- END
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
 	var/list/dat = list()

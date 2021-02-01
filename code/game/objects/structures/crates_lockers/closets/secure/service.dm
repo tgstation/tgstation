@@ -32,3 +32,4 @@
 	new /obj/item/toy/plush/goatplush(src)
 	new /obj/item/specialphoto(src)
 	new /obj/item/guirecphoto(src)
+	new /obj/item/clothing/neck/chefbandana(src)

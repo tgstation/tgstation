@@ -552,3 +552,10 @@
 	desc = "Sturdy boots made for everyday use."
 	icon_state = "practical_boots"
 	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/prince
+	name = "Prince's Boots"
+	desc = "Comfortable boots, though you could do without the heels..."
+	icon_state = "prince"
+	can_be_tied = FALSE
+	resistance_flags = FIRE_PROOF

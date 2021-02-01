@@ -20,6 +20,14 @@
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 	undyeable = TRUE
 
+/obj/item/clothing/gloves/prince
+	name = "Prince Gloves"
+	desc = "Four gloves. Two of armor and two that just look cool."
+	icon_state = "prince"
+	inhand_icon_state = "prince"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	undyeable = TRUE
+
 /obj/item/clothing/gloves/frenchmaid
 	name = "maid gloves"
 	desc = "Elbow length gloves. Perfect for dusting."
