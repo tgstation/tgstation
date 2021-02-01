@@ -233,7 +233,7 @@
 	if(!is_type_in_list(O, food_type))
 		return ..()
 	if(stat == DEAD)
-		to_chat(user, "<span class='warning'>[capitalize(src)] is dead!</span>")
+		to_chat(user, "<span class='warning'>[src] is dead!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
 	qdel(O)
