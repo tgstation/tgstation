@@ -1,9 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - rscadd: "New Xenobiology Satellite"
-  - rscadd: "1 Additional Slime Pen"
-  - rscdel: "The Old Xenobiology Satellite"
-  - tweak: "Shrunk 2 Slime Pens"
-  - tweak: "Integrated Cytology closer in to the Xenobiology Lab."
-  - tweak: "Slimes now are centralized around the Execution Room, and get to watch."

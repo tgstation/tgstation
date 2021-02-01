@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - tweak: "The seed extractor will now dispense seeds directly into hands first like vending machines."

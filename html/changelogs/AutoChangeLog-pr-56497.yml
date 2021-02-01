@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - tweak: "you can now joust with friends on ridden animals, not just borgs anymore! to joust have a spear in one of your hands, ride a mob of some kind and you can knock other people off the mobs they are riding!"
-  - bugfix: "you can no longer ride goliaths without a lasso"
-  - bugfix: "you can no longer feed dead mobs"
