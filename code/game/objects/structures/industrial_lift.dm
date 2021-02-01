@@ -237,6 +237,25 @@ GLOBAL_LIST_EMPTY(lifts)
 		for(var/mob/living/crushed in destination.contents)
 			to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
 			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
+	else if(going != UP) //can't really crush something upwards
+		for(var/mob/living/collided in destination.contents)
+			to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
+			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+			var/damage = rand(5,10)
+			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD)
+			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM)
+
+			var/turf/T = get_turf(src)
+			T.add_mob_blood(collided)
+
+			collided.throw_at()
+			//if going EAST, will turn to the NORTH or SOUTH and throw the ran over guy away
+			var/atom/throw_target = get_edge_target_turf(collided, turn(going, pick(90, -90)))
+			collided.throw_at(throw_target, 200, 4)
 	forceMove(destination)
 	for(var/am in things2move)
 		var/atom/movable/thing = am
@@ -386,7 +405,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/travel_distance = 40
 	var/current_location = "middle_part"
 	var/travel_direction
-	glide_size = 4
 	var/time_inbetween_moves = 1
 
 /obj/structure/industrial_lift/tram/use(mob/user, is_ghost=FALSE)
@@ -395,7 +413,7 @@ GLOBAL_LIST_EMPTY(lifts)
 //NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
 
 	if(controls_locked || travelling)
-		to_chat(user, "<span class='warning'>[src] has its controls locked! It must already be trying to do something!</span>")
+		to_chat(user, "<span class='warning'>[src] has its controls locked!</span>")
 		add_fingerprint(user)
 		return
 
@@ -451,7 +469,11 @@ GLOBAL_LIST_EMPTY(lifts)
 		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 		addtimer(CALLBACK(src, .proc/continue_movement), time_inbetween_moves)
 		return
-	visible_message("<span class='notice'>[src] has reached its destination. Controls are unlocked.</span")
+	visible_message("<span class='notice'>[src] has reached its destination.</span")
+	addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
+
+/obj/structure/industrial_lift/tram/proc/unlock_controls()
+	visible_message("<span class='notice'>[src]'s controls are now unlocked.</span")
 	for(var/lift in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		var/obj/structure/industrial_lift/tram/other_tram_part = lift
 		other_tram_part.travelling = FALSE
