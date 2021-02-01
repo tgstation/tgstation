@@ -707,6 +707,7 @@
 		var/list/L = list() 
 		L = trajectory.return_coordinates()
 		pcache.initialize_location(L[1], L[2], L[3]) // Take the center of the hitscan collision tile, so it looks good on reflector boxes and the like
+		trajectory.initialize_location(L[1], L[2], L[3]) // Sets the trajectory to it as well, to prevent a strange visual bug
 		store_hitscan_collision(pcache)
 	return TRUE
 
