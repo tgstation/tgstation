@@ -37,13 +37,10 @@
 	. = ..()
 	AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB)
 
-
 /obj/item/food/fishmeat/carp/imitation
 	name = "imitation carp fillet"
 	desc = "Almost just like the real thing, kinda."
-
-/obj/item/food/carpmeat
-	name = "deprecated"
+	cell_line = null
 
 /obj/item/food/fishfingers
 	name = "fish fingers"
