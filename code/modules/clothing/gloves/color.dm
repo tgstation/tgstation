@@ -193,20 +193,26 @@
 	///Have we worn these gloves?
 	var/wornonce = FALSE
 	///What damage do the gloves make our punches?
-	var/currentdamage = STAMINA
+	var/currentdamage = BURN
 	///What sound are we replacing our attacks with?
-	var/replacing_attack_sound = "sound/weapons/egloves.ogg"
+	var/replacing_attack_sound = 'sound/weapons/blade1.ogg'
+
+/obj/item/clothing/gloves/color/infiltrator/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>\The [src] are currently set to [currentdamage].</span>"
 
 /obj/item/clothing/gloves/color/infiltrator/AltClick(mob/living/carbon/human/user)
 	switch(currentdamage)
 		if(STAMINA)
 			currentdamage = BURN
-			to_chat(user, "<span class='notice'>You change the gloves to superheated blows.</span>")
+			to_chat(user, "<span class='warning'>You change the gloves to superheated blows.</span>")
 			replacing_attack_sound = 'sound/weapons/blade1.ogg' //funny esword sounds by punching corpses
+			update_icon()
 		if(BURN)
 			currentdamage = STAMINA
-			to_chat(user, "<span class='notice'>You change the gloves to softened concussive blows.</span>")
+			to_chat(user, "<span class='warning'>You change the gloves to softened concussive blows.</span>")
 			replacing_attack_sound = 'sound/weapons/egloves.ogg' //we have come full circle
+			update_icon()
 	
 	if(wornonce)
 		applyglovebuffs(user, TRUE, FALSE)
@@ -233,6 +239,12 @@
 		REMOVE_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE, GLOVE_TRAIT)
 		user.dna.species.attack_type = initial(user.dna.species.attack_type)
 		user.dna.species.attack_sound = initial(user.dna.species.attack_sound)
+
+/obj/item/clothing/gloves/color/infiltrator/update_icon_state()
+	if(currentdamage == STAMINA)
+		icon_state = "[initial(icon_state)]_stamina"
+	else
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
