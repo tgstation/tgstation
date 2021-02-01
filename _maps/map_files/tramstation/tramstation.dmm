@@ -6878,6 +6878,9 @@
 	dir = 10
 	},
 /obj/item/kirbyplants/random,
+/obj/item/radio/intercom{
+	pixel_x = -30
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aqj" = (
@@ -34844,6 +34847,10 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
+	},
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -31
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -183724,7 +183731,7 @@ aYr
 aYr
 aYr
 aYr
-eMA
+aYr
 aYr
 aYr
 aYr
