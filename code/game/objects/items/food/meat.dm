@@ -35,7 +35,8 @@
 
 /obj/item/food/fishmeat/carp/Initialize()
 	. = ..()
-	AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB)
+	if(cell_line)
+		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/food/fishmeat/carp/imitation
 	name = "imitation carp fillet"
