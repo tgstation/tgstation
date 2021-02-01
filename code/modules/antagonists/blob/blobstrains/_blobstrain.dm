@@ -25,31 +25,41 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	/// For blob-mobs and extinguishing-based effects
 	var/fire_based = FALSE 
 	var/mob/camera/blob/overmind
+	/// The amount of health regenned on core_process
 	var/base_core_regen = BLOB_CORE_HP_REGEN
+	/// The amount of points gained on core_process
 	var/point_rate = BLOB_BASE_POINT_RATE
 
 	// Various vars that strains can buff the blob with
+	/// HP regen bonus added by strain
 	var/core_regen_bonus = 0
+	/// resource point bonus added by strain
 	var/point_rate_bonus = 0
 
 	/// Adds to claim, pulse, and expand range
 	var/core_range_bonus = 0
 	/// The core can sustain this many extra spores with this strain
 	var/core_spore_bonus = 0
+	/// Extra range up to which the core reinforces blobs
 	var/core_strong_reinforcement_range_bonus = 0
+	/// Extra range up to which the core reinforces blobs into reflectors
 	var/core_reflector_reinforcement_range_bonus = 0
 
 	/// Adds to claim, pulse, and expand range
 	var/node_range_bonus = 0
 	/// Nodes can sustain this any extra spores with this strain
 	var/node_spore_bonus = 0
+	/// Extra range up to which the node reinforces blobs
 	var/node_strong_reinforcement_range_bonus = 0
+	/// Extra range up to which the node reinforces blobs into reflectors
 	var/node_reflector_reinforcement_range_bonus = 0
 
+	/// Extra spores produced by factories with this strain
 	var/factory_spore_bonus = 0
 
 	/// Multiplies the max and current health of every blob with this value upon selecting this strain.
 	var/max_structure_health_multiplier = 1
+	/// Multiplies the max and current health of every mob with this value upon selecting this strain.
 	var/max_mob_health_multiplier = 1
 
 	/// Makes blobbernauts inject a bonus amount of reagents, making their attacks more powerful

@@ -24,7 +24,7 @@
 	var/brute_resist = BLOB_BRUTE_RESIST
 	/// Multiplies burn damage by this 
 	var/fire_resist = BLOB_FIRE_RESIST 
-	/// Literally only used by the synchronous mesh strain
+	/// Only used by the synchronous mesh strain. If set to true, these blobs won't share or receive damage taken with others.
 	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE 
