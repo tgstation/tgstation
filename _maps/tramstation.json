@@ -8,7 +8,7 @@
 		"ferry": "ferry_fancy",
 		"whiteship": "whiteship_box",
 		"emergency": "emergency_tram"
-	}
+	},
 	"traits": [
 		{
 			"Up": 1,
