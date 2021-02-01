@@ -49,17 +49,9 @@
 				keys += P.key
 
 	keys = sortList(keys)
-
-	for(var/emote in keys)
-		if(LAZYLEN(message) > 1)
-			message += ", [emote]"
-		else
-			message += "[emote]"
-
+	message += keys.Join(", ")
 	message += "."
-
-	message = jointext(message, "")
-
+	message = message.Join("")
 	to_chat(user, message)
 
 /datum/emote/flip
