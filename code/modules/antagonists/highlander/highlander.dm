@@ -10,6 +10,8 @@
 	ADD_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	ADD_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
 	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, "highlander")
+	ADD_TRAIT(L, TRAIT_NO_SELFCOMBUSTION, "highlander")
+	ADD_TRAIT(L, TRAIT_NOBREATH	, "highlander")
 	REMOVE_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
@@ -17,6 +19,8 @@
 	REMOVE_TRAIT(L, TRAIT_NOGUNS, "highlander")
 	REMOVE_TRAIT(L, TRAIT_NODISMEMBER, "highlander")
 	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, "highlander")
+	REMOVE_TRAIT(L, TRAIT_NO_SELFCOMBUSTION, "highlander")
+	REMOVE_TRAIT(L, TRAIT_NOBREATH	, "highlander")
 	if(L.has_quirk(/datum/quirk/nonviolent))
 		ADD_TRAIT(L, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
@@ -32,9 +36,6 @@
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
 	owner.special_role = "highlander"
-	var/mob/living/carbon/human/humanlander = owner.current
-	if(ishuman(humanlander) && humanlander.dna.species.outfit_important_for_life) //things that cannot live with the scottish kilt will be owned
-		humanlander.set_species(/datum/species/plasmaman/stable)//Admin only plasmamen that don't breath or burn
 	give_equipment()
 	. = ..()
 
