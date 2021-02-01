@@ -153,8 +153,7 @@
 	name = "Space Wizard Corpse"
 	outfit = /datum/outfit/wizardcorpse
 	hairstyle = "Bald"
-	facial_hairstyle = "Beard (Very Long)"
-	facial_haircolor = COLOR_WHITE
+	facial_hairstyle = "Long Beard"
 	skin_tone = "caucasian1"
 
 /datum/outfit/wizardcorpse
