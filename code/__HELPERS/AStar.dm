@@ -131,6 +131,8 @@ Actual Adjacent procs :
 
 /proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
 	//sanitation
+	maxnodedepth = round(maxnodedepth * 0.3)
+
 	var/turf/end = get_turf(_end)
 	var/turf/start = get_turf(caller)
 	if(!start || !end)
@@ -189,7 +191,7 @@ Actual Adjacent procs :
 					path.Add(iter_turf)
 					var/turf/add_turf = iter_turf
 					iter_turf = get_step(iter_turf, dir_heading)
-					testing("1 ([iter_turf.x], [iter_turf.y]) to ([add_turf.x], [add_turf.y])")
+					//testing("1 ([iter_turf.x], [iter_turf.y]) to ([add_turf.x], [add_turf.y])")
 				cur = cur.prevNode
 
 			var/turf/final = cur.source
@@ -259,7 +261,26 @@ Actual Adjacent procs :
 
 						if(!adjacent_next_turf || adjacent_next_turf == exclude || !call(next_turf,adjacent)(caller, adjacent_next_turf, id, simulated_only))
 							interesting = TRUE
-							break
+							//break
+							continue // break just quits once we know a tile is interesting, by continuing we can see if any of the neighboring tiles are interesting as well, like forced neighbor corners
+
+						/*
+						var/possible_blocker_turf = get_step(adjacent_next_turf, r)
+						if(!call(adjacent_next_turf,adjacent)(caller, possible_blocker_turf, id, simulated_only))
+							// make sure adjacent_next_turf becomes interesting too
+							var/datum/jpsnode/forced_neighbor_node = openc[adjacent_next_turf]  //see if this turf is in the open list
+							if(forced_neighbor_node)
+							//is already in open list, check if it's a better way from the current turf
+								forced_neighbor_node.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
+								if((newt < forced_neighbor_node.nt) )
+									forced_neighbor_node.setp(*cur*,forced_neighbor_node.h,forced_neighbor_node.nt+steps_taken, _jmp = steps_taken)?????
+									open.ReSort(forced_neighbor_node)//reorder the changed element in the list
+							else
+							//is not already in open list, so add it
+								forced_neighbor_node = new(adjacent_next_turf,*cur*,call(adjacent_next_turf,dist)(end),*cur.nt*+steps_taken*+1?*,15^r, _jmp = steps_taken*+1?*)
+								open.Insert(forced_neighbor_node)
+								openc[adjacent_next_turf] = forced_neighbor_node
+						*/
 
 
 				if(!interesting) // empty space with nothing next to it, keep moving
