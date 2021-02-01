@@ -241,8 +241,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COAGULATING		"coagulating" //from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE	"antennae"
-/// The holder of this trait won't react with the atmosphere and burn (Plasmamen)
-#define TRAIT_NO_SELFCOMBUSTION "no_selfcombustion"
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
 // You can stare into the abyss, but it does not stare back.
