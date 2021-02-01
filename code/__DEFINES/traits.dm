@@ -235,7 +235,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune" // nobody can use martial arts on this mob
-#define TRAIT_RESOLUTE_TECHNIQUE "resolute_technique" // punching cannot crit, but will always hit and deal consistent damage, different to perfect_attacker
+#define TRAIT_RESOLUTE_TECHNIQUE "resolute_technique" // punching cannot crit, but will always hit. Different to perfect_attacker, which is a debug trait
+#define TRAIT_FACEBREAKER "facebreaker" //punching always deals maximum damage
+#define TRAIT_TERRIBLE_PUNCHER "terrible_puncher" //punching never benefits from any of the various bonuses to enemy state
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE			"cant_ride"
 #define TRAIT_BLOODY_MESS		"bloody_mess" //from heparin, makes open bleeding wounds rapidly spill more blood

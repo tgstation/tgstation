@@ -1324,6 +1324,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	
 	var/damage = calculate_unarmed_damage(user, target)
+	var/critroll = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
 	if(attacker_style?.harm_act(user,target))
 		return TRUE
@@ -1383,12 +1384,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		///once we sorted all of our calculations, apply damage
 		if(user.dna.species.attack_type == STAMINA) //pure stamina attackers will only roll once
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
+		else if(HAS_TRAIT(user, TRAIT_TERRIBLE_PUNCHER))
+			target.apply_damage(damage, STAMINA, affecting, armor_block)
+			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 		else 
 			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
 			target.apply_damage(damage + 5, STAMINA, affecting, armor_block)
 		log_combat(user, target, "struck with an unarmed strike")
 
-		if(target.body_position == STANDING_UP && damage >= user.dna.species.punchstunthreshold && !HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //If our target is standing, we do not have resolute technique and our damage exceeds our stun threshold, we crit
+		if(target.body_position == STANDING_UP && critroll >= user.dna.species.punchstunthreshold && !HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //If our target is standing, we do not have resolute technique and our damage exceeds our stun threshold, we crit
 			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
 							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
@@ -1399,15 +1403,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/calculate_unarmed_damage(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/damage ///We start here before returning this value after calculations
 
-	if(HAS_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE)) //Resolute technique sets our damage to our highest potential punch value
+	if(HAS_TRAIT(user, TRAIT_FACEBREAKER)) //Facebreaker sets our damage to our highest potential punch value
 		damage = user.dna.species.punchdamagehigh
 	else //otherwise we roll
 		damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 	
-	if(target.body_position == LYING_DOWN) //If our target is prone, we get a flat bonus
+	if(target.body_position == LYING_DOWN && HAS_TRAIT(user, TRAIT_TERRIBLE_PUNCHER)) //If our target is prone, we get a flat bonus
 		damage += 5
 
-	if(user.dna.species.attack_type == STAMINA) //Purely stamina based punches get ANOTHER flat bonus
+	if(user.dna.species.attack_type == STAMINA && HAS_TRAIT(user, TRAIT_TERRIBLE_PUNCHER)) //Purely stamina based punches get ANOTHER flat bonus
 		damage += 5
 	
 	return damage

@@ -182,7 +182,7 @@
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
-	desc = "Specialized combat gloves that alter your unarmed strikes to deliver superheated or nonlethal blows."
+	desc = "Specialized combat gloves that alter your unarmed strikes to deliver empowered or nonlethal blows."
 	icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
 	siemens_coefficient = 0
@@ -193,9 +193,9 @@
 	///Have we worn these gloves?
 	var/wornonce = FALSE
 	///What damage do the gloves make our punches?
-	var/currentdamage = BURN
+	var/currentdamage = BRUTE
 	///What sound are we replacing our attacks with?
-	var/replacing_attack_sound = 'sound/weapons/blade1.ogg'
+	var/replacing_attack_sound = 'sound/weapons/kenetic_accel.ogg'
 
 /obj/item/clothing/gloves/color/infiltrator/examine(mob/user)
 	. = ..()
@@ -204,11 +204,11 @@
 /obj/item/clothing/gloves/color/infiltrator/AltClick(mob/living/carbon/human/user)
 	switch(currentdamage)
 		if(STAMINA)
-			currentdamage = BURN
-			to_chat(user, "<span class='warning'>You change the gloves to superheated blows.</span>")
-			replacing_attack_sound = 'sound/weapons/blade1.ogg' //funny esword sounds by punching corpses
+			currentdamage = BRUTE
+			to_chat(user, "<span class='warning'>You change the gloves to empowered kinetic blows.</span>")
+			replacing_attack_sound = 'sound/weapons/kenetic_accel.ogg' //it's like a pka for your hands!
 			update_icon()
-		if(BURN)
+		if(BRUTE)
 			currentdamage = STAMINA
 			to_chat(user, "<span class='warning'>You change the gloves to softened concussive blows.</span>")
 			replacing_attack_sound = 'sound/weapons/egloves.ogg' //we have come full circle
@@ -235,8 +235,10 @@
 		user.dna.species.attack_sound = replacing_attack_sound
 		if(first_buff)
 			ADD_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE, GLOVE_TRAIT)
+			ADD_TRAIT(user, TRAIT_FACEBREAKER, GLOVE_TRAIT)
 	else
 		REMOVE_TRAIT(user, TRAIT_RESOLUTE_TECHNIQUE, GLOVE_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_FACEBREAKER, GLOVE_TRAIT)
 		user.dna.species.attack_type = initial(user.dna.species.attack_type)
 		user.dna.species.attack_sound = initial(user.dna.species.attack_sound)
 

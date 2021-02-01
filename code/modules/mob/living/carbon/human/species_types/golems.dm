@@ -534,6 +534,7 @@
 	say_mod = "honks"
 	inherent_traits = list(
 		TRAIT_RESISTHEAT,
+		TRAIT_TERRIBLE_PUNCHER,
 		TRAIT_NOBREATH,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
@@ -546,13 +547,14 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 	)
-	punchdamagelow = 0
-	punchdamagehigh = 1
-	punchstunthreshold = 2 //Harmless and can't stun
+	punchdamagelow = 1
+	punchdamagehigh = 2
+	punchstunthreshold = 3 //no way to stun
 	meat = /obj/item/stack/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you can barely even hurt people when punching them. Your skin also bleeds banana peels when damaged."
 	attack_verb = "honk"
 	attack_sound = 'sound/items/airhorn2.ogg'
+	attack_type = STAMINA //honk
 	prefix = "Bananium"
 	special_names = null
 
