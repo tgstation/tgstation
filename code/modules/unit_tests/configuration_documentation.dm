@@ -8,10 +8,10 @@
 
 /datum/unit_test/configuration_documentation/Run()
 	undocumented_entries = list()
-	for(var/I in global.config.entries)
-		var/datum/config_entry/CE = global.config.entries[I]
-		if(!CE.deprecated_by)
-			undocumented_entries += I
+	for(var/entry_key in global.config.entries)
+		var/datum/config_entry/config_entry = global.config.entries[entry_key]
+		if(!config_entry.deprecated_by)
+			undocumented_entries += entry_key
 
 	extraneous_entries = list()
 	seen_entries = list()

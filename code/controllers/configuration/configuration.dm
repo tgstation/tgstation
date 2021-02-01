@@ -47,7 +47,7 @@
 		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
 		for(var/I in legacy_configs)
 			if(fexists("[directory]/[I]"))
-				log_config("No $include directives found in [DEFAULT_CONFIGURATION_FILE]! Loading legacy [legacy_configs.Join("/")] files...")
+				log_config("No [CONFIGURATION_INCLUDE_TOKEN] directives found in [DEFAULT_CONFIGURATION_FILE]! Loading legacy [legacy_configs.Join("/")] files...")
 				for(var/J in legacy_configs)
 					LoadEntries(J)
 				break
@@ -166,7 +166,7 @@
 	if(filename_to_test in stack)
 		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
 		return
-	stack = stack + filename_to_test
+	stack += filename_to_test
 
 	var/list/parsed_entries = ParseConfigFile(filename_to_test)
 	// Don't care about disabled entries here
