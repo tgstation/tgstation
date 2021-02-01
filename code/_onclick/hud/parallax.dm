@@ -322,3 +322,9 @@
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move
+
+
+/atom/movable/screen/parallax_layer/planet/gas
+	icon_state = "gasplanet"
+	speed = 2
+	layer = 25
