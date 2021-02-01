@@ -182,7 +182,7 @@
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
-	desc = "Specialized combat gloves that alter your unarmed strikes to deliver empowered or nonlethal blows."
+	desc = "Specialized combat gloves that alter your unarmed strikes to deliver empowered or nonlethal blows. You can swap between modes using Alt-Click!"
 	icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
 	siemens_coefficient = 0
