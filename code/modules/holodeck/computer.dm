@@ -43,7 +43,9 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	///bottom left corner of the loading room, used for placing
 	var/turf/bottom_left
 
+	///if TRUE the holodeck is busy spawning another simulation and should immediately stop loading the newest one
 	var/spawning_simulation = FALSE
+
 	//old vars
 
 	///the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
@@ -187,7 +189,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		map_id = offline_program
 		force = TRUE
 
-	if ((!COOLDOWN_FINISHED(src, holodeck_cooldown) || spawning_simulation) && !force)
+	if ((!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force) || spawning_simulation)
 		say("ERROR. Recalibrating projection apparatus.")
 		return
 
