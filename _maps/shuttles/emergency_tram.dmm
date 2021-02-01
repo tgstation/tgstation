@@ -429,12 +429,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/openspace/airless,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "bk" = (
 /obj/structure/window/reinforced,
-/turf/open/openspace/airless,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "bl" = (
@@ -445,7 +443,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/openspace/airless,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 

@@ -1338,7 +1338,7 @@
 	name = "Tramstation emergency evac bay";
 	width = 32
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "acW" = (
 /obj/structure/cable,
@@ -4542,7 +4542,7 @@
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
 	width = 7
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "akD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -10457,7 +10457,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "azn" = (
 /obj/effect/turf_decal/tile/blue{
@@ -18907,7 +18907,7 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "aYr" = (
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "aYs" = (
 /obj/effect/spawner/randomsnackvend,
@@ -24151,7 +24151,7 @@
 	dir = 9;
 	network = list("aicore")
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "dDF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -26591,7 +26591,7 @@
 	name = "SS13: Auxiliary Dock, Station-Port";
 	width = 35
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "eJR" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -26688,7 +26688,7 @@
 /area/maintenance/central/secondary)
 "eMA" = (
 /obj/effect/landmark/carpspawn,
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "eNw" = (
 /obj/structure/chair/office{
@@ -31133,7 +31133,7 @@
 /area/security/brig)
 "gNY" = (
 /obj/structure/lattice,
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space/nearstation)
 "gNZ" = (
 /obj/machinery/nuclearbomb/selfdestruct,
@@ -41611,7 +41611,7 @@
 	name = "port bay 2";
 	width = 5
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "mkI" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -44728,7 +44728,7 @@
 /area/quartermaster/miningdock)
 "nOG" = (
 /obj/structure/lattice,
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/mine/explored)
 "nOZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -50410,7 +50410,7 @@
 	id = "pod_lavaland";
 	name = "lavaland"
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/space)
 "qCf" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -59514,7 +59514,7 @@
 	dir = 6;
 	network = list("aicore")
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "vaX" = (
 /obj/structure/table/optable,
@@ -64460,7 +64460,7 @@
 	dir = 5;
 	network = list("aicore")
 	},
-/turf/open/openspace/airless,
+/turf/open/openspace/airless/planetary,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "xyc" = (
 /turf/closed/wall,
