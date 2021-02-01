@@ -51,13 +51,12 @@
 					if(H.on_fire && H.fire_stacks > 0)
 						H.adjust_fire_stacks(-20)
 				else if(!HAS_TRAIT(H, TRAIT_NOFIRE))
-					if(!HAS_TRAIT(H, TRAIT_NO_SELFCOMBUSTION))
-						if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
-							H.adjust_fire_stacks(0.5)
-							if(!H.on_fire && H.fire_stacks > 0)
-								H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
-							H.IgniteMob()
-							internal_fire = TRUE
+					if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
+						H.adjust_fire_stacks(0.5)
+						if(!H.on_fire && H.fire_stacks > 0)
+							H.visible_message("<span class='danger'>[H]'s body reacts with the atmosphere and bursts into flames!</span>","<span class='userdanger'>Your body reacts with the atmosphere and bursts into flame!</span>")
+						H.IgniteMob()
+						internal_fire = TRUE
 	else if(H.fire_stacks)
 		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 		if(istype(P))
