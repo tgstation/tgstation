@@ -50,8 +50,8 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/turf/turf = get_turf(user)
-	if(!LAZYFIND(dview(8, turf),target))
+	var/turf/turfie = get_turf(user)
+	if(!LAZYFIND(dview(8, turfie),target))
 		return FALSE
 	if(!is_type_in_typecache(target, compatible_mobs_typecache))
 		if(!silent)
