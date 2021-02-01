@@ -232,8 +232,7 @@ export const NaniteCloudBackupDetails = (props, context) => {
                           color="good"
                           onClick={() => act('add_rule', {
                             program_id: program.id,
-                          })} />
-                      }
+                          })} />}
                       <Button
                         icon={program.all_rules_required ? 'check-double' : 'check'}
                         content={program.all_rules_required ? 'Meet all' : 'Meet any'}
