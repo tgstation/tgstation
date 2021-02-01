@@ -166,7 +166,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
 	if(!choking)
 		return
-	deathmessage = "lets out one final oxygen-deprived honk before they go limp and lifeless.."
+	deathmessage = "lets out one final oxygen-deprived honk before [p_they()] go[p_es()] limp and lifeless.."
 	death()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()

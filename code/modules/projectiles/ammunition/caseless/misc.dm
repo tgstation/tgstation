@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/caseless/laser
 	name = "laser casing"
 	desc = "You shouldn't be seeing this."
-	caliber = "laser"
+	caliber = CALIBER_LASER
 	icon_state = "s-casing-live"
 	slot_flags = null
 	projectile_type = /obj/projectile/beam
@@ -17,6 +17,6 @@
 
 /obj/item/ammo_casing/caseless/harpoon
 	name = "harpoon"
-	caliber = "harpoon"
+	caliber = CALIBER_HARPOON
 	icon_state = "magspear"
 	projectile_type = /obj/projectile/bullet/harpoon

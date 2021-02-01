@@ -160,23 +160,32 @@ nobiliumsuppression = INFINITY
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
 	var/burned_fuel = 0
+
 	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES] || MINIMUM_TRIT_OXYBURN_ENERGY > air.thermal_energy())
 		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES] / TRITIUM_BURN_OXY_FACTOR
 		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
-	else
-		burned_fuel = cached_gases[/datum/gas/tritium][MOLES] * TRITIUM_BURN_TRIT_FACTOR
-		cached_gases[/datum/gas/tritium][MOLES] -= cached_gases[/datum/gas/tritium][MOLES] / TRITIUM_BURN_TRIT_FACTOR
-		cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]
-
-	if(burned_fuel)
-		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
-		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
-			radiation_pulse(location, energy_released / TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_OXY_FACTOR
 
+		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
 		cached_results["fire"] += burned_fuel
+		
+	else
+		burned_fuel = cached_gases[/datum/gas/tritium][MOLES]
+
+		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel / TRITIUM_BURN_TRIT_FACTOR
+		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
+		
+		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
+		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_TRIT_FACTOR
+
+		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
+		cached_results["fire"] += burned_fuel * 10
+
+	if(burned_fuel)
+		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
+			radiation_pulse(location, energy_released / TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -343,20 +352,26 @@ nobiliumsuppression = INFINITY
 	var/turf/open/location = isturf(holder) ? holder : null
 	var/burned_fuel = 0
 	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/hydrogen][MOLES] || MINIMUM_H2_OXYBURN_ENERGY > air.thermal_energy())
-		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/HYDROGEN_BURN_OXY_FACTOR
+		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES] / HYDROGEN_BURN_OXY_FACTOR
 		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel
-	else
-		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES] * HYDROGEN_BURN_H2_FACTOR
-		cached_gases[/datum/gas/hydrogen][MOLES] -= cached_gases[/datum/gas/hydrogen][MOLES] / HYDROGEN_BURN_H2_FACTOR
-		cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/hydrogen][MOLES]
-
-	if(burned_fuel)
-		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_OXY_FACTOR
 
+		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
 		cached_results["fire"] += burned_fuel
+
+	else
+		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES]
+
+		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel / HYDROGEN_BURN_H2_FACTOR
+		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
+
+		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
+		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_H2_FACTOR
+
+		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
+		cached_results["fire"] += burned_fuel * 10
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -480,7 +495,6 @@ nobiliumsuppression = INFINITY
 		/datum/gas/nitrous_oxide = 10,
 		/datum/gas/plasma = 10
 	)
-
 
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases

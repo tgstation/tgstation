@@ -1,7 +1,7 @@
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
-	caliber = "foam_force"
+	caliber = CALIBER_FOAM
 
 /obj/item/ammo_box/magazine/toy/smg
 	name = "foam force SMG magazine"
@@ -31,7 +31,7 @@
 /obj/item/ammo_box/magazine/toy/smgm45
 	name = "donksoft SMG magazine"
 	icon_state = "c20r45-toy"
-	caliber = "foam_force"
+	caliber = CALIBER_FOAM
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 20
 
@@ -46,7 +46,6 @@
 /obj/item/ammo_box/magazine/toy/m762
 	name = "donksoft box magazine"
 	icon_state = "a762-toy"
-	caliber = "foam_force"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 50
 
