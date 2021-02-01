@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - admin: "Nuke arming and disarming is now logged"
