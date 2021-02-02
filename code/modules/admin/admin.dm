@@ -548,6 +548,16 @@
 	GLOB.admin_notice = new_admin_notice
 	return
 
+/datum/admins/proc/toggledeadchat()
+	set category = "Server"
+	set desc="Toggle Dead Chat"
+	set name="Toggle Dead Chat"
+	GLOB.dchat_allowed = !GLOB.dchat_allowed
+	deadchat_broadcast(" has toggled Dead Chat.", "<span class='name'>An admin</span>", message_type=DEADCHAT_ANNOUNCEMENT)
+	log_admin("[key_name(usr)] toggled Dead Chat.")
+	message_admins("[key_name_admin(usr)] toggled Dead Chat.")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead Chat", "[GLOB.dchat_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/toggleooc()
 	set category = "Server"
 	set desc="Toggle dis bitch"

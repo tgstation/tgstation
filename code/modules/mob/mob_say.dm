@@ -45,6 +45,10 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
+	if(!GLOB.dchat_allowed)
+		to_chat(usr, "<span class='danger'>Dead Chat is currently admin-disabled.</span>")
+		return
+
 	var/jb = is_banned_from(ckey, "Deadchat")
 	if(QDELETED(src))
 		return
