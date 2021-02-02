@@ -53,7 +53,7 @@
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")
-			var/dat = "<meta charset=UTF-8><B>Admin Log<HR></B>"
+			var/dat = "<meta charset='UTF-8'><B>Admin Log<HR></B>"
 			for(var/l in GLOB.admin_log)
 				dat += "<li>[l]</li>"
 			if(!GLOB.admin_log.len)
