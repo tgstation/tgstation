@@ -169,13 +169,13 @@
 	affected_mob = null
 
 /**
- * Checks the mob's type against the list of viable mobtypes.
+ * Checks the given typepath against the list of viable mobtypes.
  *
- * Returns TRUE if the mob_type is a type of or subtype of any entry in viable_mobtypes.
+ * Returns TRUE if the mob_type path is derived from of any entry in the viable_mobtypes list.
  * Returns FALSE otherwise.
  *
  * Arguments:
- * * mob_type - Mob or mob type path to check against the viable_mobtypes list.
+ * * mob_type - Type path to check against the viable_mobtypes list.
  */
 /datum/disease/proc/is_viable_mobtype(mob_type)
 	for(var/viable_type in viable_mobtypes)
