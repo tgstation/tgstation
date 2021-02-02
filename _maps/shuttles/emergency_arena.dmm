@@ -44,11 +44,6 @@
 	},
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
-"p" = (
-/obj/structure/healingfountain,
-/obj/item/skeleton_key,
-/turf/open/indestructible/necropolis/air,
-/area/shuttle/escape/arena)
 "z" = (
 /obj/effect/landmark/shuttle_arena_safe,
 /turf/open/indestructible/necropolis/air,
@@ -63,8 +58,6 @@
 /area/shuttle/escape/arena)
 "V" = (
 /obj/structure/healingfountain,
-/obj/item/skeleton_key,
-/obj/item/skeleton_key,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 
@@ -137,7 +130,7 @@ j
 j
 j
 h
-p
+V
 g
 "}
 (4,1,1) = {"
@@ -185,7 +178,7 @@ j
 j
 j
 j
-p
+V
 g
 "}
 (6,1,1) = {"
@@ -233,7 +226,7 @@ j
 j
 j
 j
-p
+V
 g
 "}
 (8,1,1) = {"
@@ -281,7 +274,7 @@ j
 m
 j
 j
-p
+V
 g
 "}
 (10,1,1) = {"
