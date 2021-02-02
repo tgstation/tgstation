@@ -406,6 +406,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define POWER_LACK_TRAIT "power-lack"
 /// Trait associated with mafia
 #define MAFIA_TRAIT "mafia"
+/// Trait associated with highlander
+#define HIGHLANDER_TRAIT "highlander"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
