@@ -233,29 +233,32 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
-	if(going == DOWN)//make sure this stays pre-item moving, or you'll crush anything on the lift under the lift.
-		for(var/mob/living/crushed in destination.contents)
-			to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
-			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
-	else if(going != UP) //can't really crush something upwards
-		for(var/mob/living/collided in destination.contents)
-			to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
-			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-			var/damage = rand(5,10)
-			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD)
-			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM)
+	if(!locate(/obj/structure/industrial_lift) in destination.contents)//people aren't on the lift
+		if(going == DOWN)
+			for(var/mob/living/crushed in destination.contents)
+				to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
+				crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
+		else if(going != UP) //can't really crush something upwards
+			for(var/mob/living/collided in destination.contents)
+				to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
+				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+				var/damage = rand(5,10)
+				collided.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD)
+				collided.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST)
+				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG)
+				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG)
+				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM)
+				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM)
 
-			var/turf/T = get_turf(src)
-			T.add_mob_blood(collided)
+				if(QDELETED(collided)) //in case it was a mob that dels on death
+					continue
+				var/turf/T = get_turf(src)
+				T.add_mob_blood(collided)
 
-			collided.throw_at()
-			//if going EAST, will turn to the NORTH or SOUTH and throw the ran over guy away
-			var/atom/throw_target = get_edge_target_turf(collided, turn(going, pick(90, -90)))
-			collided.throw_at(throw_target, 200, 4)
+				collided.throw_at()
+				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
+				var/atom/throw_target = get_edge_target_turf(collided, turn(going, pick(45, -45)))
+				collided.throw_at(throw_target, 200, 4)
 	forceMove(destination)
 	for(var/am in things2move)
 		var/atom/movable/thing = am
@@ -401,34 +404,39 @@ GLOBAL_LIST_EMPTY(lifts)
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	//kind of a centerpiece of the station, so pretty tough to destroy
+	armor = list(MELEE = 80, BULLET = 80, LASER = 80, ENERGY = 80, BOMB = 100, BIO = 80, RAD = 80, FIRE = 100, ACID = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/travelling = FALSE
-	var/travel_distance = 40
-	var/current_location = "middle_part"
+	var/travel_distance = 0
+	///for finding the landmark initially - should be the exact same as the landmark's destination id.
+	var/initial_id = "middle_part"
+	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 	var/time_inbetween_moves = 1
 
 /obj/structure/industrial_lift/tram/use(mob/user, is_ghost=FALSE)
 	if(is_ghost && !in_range(src, user))
 		return
-//NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
 
 	if(controls_locked || travelling)
 		to_chat(user, "<span class='warning'>[src] has its controls locked!</span>")
 		add_fingerprint(user)
 		return
 
-	var/obj/effect/landmark/tram/current_landmark_location
+
 	var/list/radial_buttons = list()
 	var/list/button2landmark = list()
 
-	for(var/obj/effect/landmark/tram/our_location in GLOB.landmarks_list)
-		if(our_location.destination_id == current_location)
-			current_landmark_location = our_location
-			break
+	if(!from_where) //only needs to grab landmark the first time
+		for(var/obj/effect/landmark/tram/our_location in GLOB.landmarks_list)
+			if(our_location.destination_id == initial_id)
+				from_where = our_location
+				break
 	for(var/obj/effect/landmark/tram/destination in GLOB.landmarks_list)
-		if(destination.destination_id == current_location)
+		if(destination == from_where)
 			continue
-		var/direction_to_destination = get_dir(current_landmark_location, destination)
+		var/direction_to_destination = get_dir(from_where, destination)
 		var/direction_text = uppertext(dir2text(direction_to_destination))
 		//far left or far right tram destination have multiple in the left and right slot, so lets add this as SOUTH
 		var/button_direction
@@ -447,17 +455,18 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(controls_locked || travelling) // someone else started
 		to_chat(user, "<span class='warning'>[src]'s controls are locked up! Someone else started the tram!</span>")
 		return
+	tram_travel(from_where, button2landmark[result])
 
-	visible_message("<span class='notice'>[src] clinks and whirrs into automated motion, locking controls.</span")
-	lift_master_datum.set_controls(LOCKED) //by now we're definitely going to move
-	var/obj/effect/landmark/tram/picked_destination_landmark = button2landmark[result]
+/obj/structure/industrial_lift/tram/proc/tram_travel(obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
+	visible_message("<span class='notice'>[src] has been called to the [to_where]!</span")
+	lift_master_datum.set_controls(LOCKED)
 	for(var/lift in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		var/obj/structure/industrial_lift/tram/other_tram_part = lift
 		other_tram_part.travelling = TRUE
-		other_tram_part.current_location = picked_destination_landmark.destination_id
-	travel_direction = get_dir(current_landmark_location, picked_destination_landmark)
-	if(picked_destination_landmark.destination_id != "middle_part" && current_landmark_location.destination_id != "middle_part") //long travel, bad implementation I know
-		travel_distance *= 2
+		other_tram_part.from_where = to_where
+	travel_direction = get_dir(from_where, to_where)
+	travel_distance = get_dist(from_where, to_where)
+	//first movement is immediate
 	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 	travel_distance--
 
@@ -469,7 +478,6 @@ GLOBAL_LIST_EMPTY(lifts)
 		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 		addtimer(CALLBACK(src, .proc/continue_movement), time_inbetween_moves)
 		return
-	visible_message("<span class='notice'>[src] has reached its destination.</span")
 	addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
@@ -477,19 +485,21 @@ GLOBAL_LIST_EMPTY(lifts)
 	for(var/lift in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		var/obj/structure/industrial_lift/tram/other_tram_part = lift
 		other_tram_part.travelling = FALSE
-	travel_distance = initial(travel_distance)
 	lift_master_datum.set_controls(UNLOCKED)
 
 /obj/effect/landmark/tram
-	name = "tram destination"
+	name = "tram destination" //the tram buttons will mention this.
 	icon_state = "tram"
 	var/destination_id
 
 /obj/effect/landmark/tram/left_part
+	name = "west wing"
 	destination_id = "left_part"
 
 /obj/effect/landmark/tram/middle_part
+	name = "central wing"
 	destination_id = "middle_part"
 
 /obj/effect/landmark/tram/right_part
+	name = "east wing"
 	destination_id = "right_part"

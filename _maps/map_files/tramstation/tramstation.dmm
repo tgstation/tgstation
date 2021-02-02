@@ -1051,7 +1051,6 @@
 	dir = 1
 	},
 /obj/structure/sign/plaques/deempisi{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/structure/cable,
@@ -1256,17 +1255,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"acK" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/obj/structure/railing,
-/turf/open/floor/plasteel,
-/area/hallway/primary/tram/center)
 "acL" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -2208,17 +2196,10 @@
 /turf/open/floor/wood,
 /area/library)
 "aeR" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
+/obj/machinery/button/tram{
+	id = "middle_part"
 	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/turf/closed/wall,
 /area/hallway/primary/tram/center)
 "aeS" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2502,8 +2483,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Hydroponics Maintenance Access";
-	req_access_txt = "35,12";
-	req_one_access_txt = "0"
+	req_access_txt = "35,12"
 	},
 /turf/open/floor/plating,
 /area/hydroponics)
@@ -4094,7 +4074,6 @@
 /obj/machinery/button/door{
 	id = "aux_base_shutters";
 	name = "Public Shutters Control";
-	pixel_x = 0;
 	pixel_y = -28;
 	req_one_access_txt = "72"
 	},
@@ -4883,7 +4862,6 @@
 	pixel_y = 4
 	},
 /obj/structure/reagent_dispensers/virusfood{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/white,
@@ -5697,8 +5675,7 @@
 "anC" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Mining Maintenance Access";
-	req_access_txt = "48";
-	req_one_access_txt = "0"
+	req_access_txt = "48"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -6248,7 +6225,6 @@
 /obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	name = "Prison Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -25;
 	prison_radio = 1
 	},
@@ -6296,7 +6272,6 @@
 	},
 /obj/machinery/flasher{
 	id = "Cell 3";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/machinery/light/small,
@@ -9475,7 +9450,6 @@
 	pixel_y = -34
 	},
 /obj/structure/sign/directions/engineering{
-	dir = 2;
 	pixel_y = -40
 	},
 /obj/machinery/light,
@@ -9693,7 +9667,6 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/trimline/neutral/filled/arrow_cw,
 /obj/structure/sign/directions/upload{
-	dir = 2;
 	pixel_y = -22
 	},
 /obj/structure/disposalpipe/segment{
@@ -11497,7 +11470,6 @@
 	department = "Hydroponics";
 	departmentType = 2;
 	name = "Hydroponics RC";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
@@ -11682,8 +11654,7 @@
 	},
 /obj/machinery/requests_console{
 	department = "Tool Storage";
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -12177,11 +12148,9 @@
 	pixel_y = 28
 	},
 /obj/structure/sign/directions/medical{
-	dir = 2;
 	pixel_y = 34
 	},
 /obj/structure/sign/directions/engineering{
-	dir = 2;
 	pixel_y = 40
 	},
 /obj/machinery/light{
@@ -12448,7 +12417,6 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/upload{
-	dir = 2;
 	pixel_y = 22
 	},
 /turf/open/floor/plasteel,
@@ -13645,8 +13613,7 @@
 "aHf" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Chapel Maintenance Access";
-	req_access_txt = "22";
-	req_one_access_txt = "0"
+	req_access_txt = "22"
 	},
 /turf/open/floor/plating,
 /area/chapel/main)
@@ -14693,7 +14660,6 @@
 	department = "Chief Medical Officer's Desk";
 	departmentType = 5;
 	name = "Chief Medical Officer's RC";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/structure/cable,
@@ -18113,8 +18079,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - South-East Escape Wing Entry";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -20134,8 +20099,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Hallway - Starboard Tram Platform South-West";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel,
@@ -20175,8 +20139,7 @@
 	dir = 9
 	},
 /obj/machinery/gulag_item_reclaimer{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/plasteel,
@@ -20997,8 +20960,7 @@
 	department = "Genetics";
 	dir = 8;
 	name = "Genetics Requests Console";
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -21783,8 +21745,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/machinery/camera{
 	c_tag = "Hallway - Port Tram Platform South-East";
-	dir = 9;
-	network = list("ss13")
+	dir = 9
 	},
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel,
@@ -22173,8 +22134,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Departures - East Main";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -23301,8 +23261,7 @@
 "dey" = (
 /obj/machinery/vending/wardrobe/engi_wardrobe,
 /obj/structure/sign/poster/official/safety_eye_protection{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -23798,7 +23757,6 @@
 /obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	name = "Prison Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -25;
 	prison_radio = 1
 	},
@@ -23890,8 +23848,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Hallway - Starboard Tram Platform North-West";
-	dir = 4;
-	network = list("ss13")
+	dir = 4
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -23970,8 +23927,7 @@
 "dzh" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Secure - Telecomms Server Room";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
@@ -25433,8 +25389,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Port Tram Platform South-West";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel,
@@ -27176,8 +27131,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - North-West Escape Wing Entry";
-	dir = 1;
-	network = list("ss13")
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -27905,7 +27859,6 @@
 /obj/machinery/requests_console{
 	department = "Cargo Bay";
 	departmentType = 2;
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -28798,8 +28751,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Central Tram Platform North";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -28952,8 +28904,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Starboard Tram Platform North";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -29042,7 +28993,6 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	initialize_directions = 2;
 	name = "euthanization chamber freezer"
 	},
 /turf/open/floor/plasteel/white,
@@ -29102,8 +29052,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Upper Right Command";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -29621,7 +29570,6 @@
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
 	name = "sorting disposal pipe (Chief Medical Officer's Office)";
-	sortType = 0;
 	sortTypes = list(10,27)
 	},
 /turf/open/floor/plasteel/white,
@@ -29833,8 +29781,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - South-West Escape Wing Entry";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -29862,8 +29809,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Hallway - Starboard Tram Platform North-East";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -30667,8 +30613,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Port Tram Platform North";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -30903,7 +30848,6 @@
 	},
 /obj/machinery/door/window/brigdoor/southright{
 	name = "Security Desk";
-	pixel_y = 0;
 	req_access_txt = "63"
 	},
 /obj/structure/cable,
@@ -31551,8 +31495,7 @@
 /obj/item/multitool,
 /obj/machinery/camera/emp_proof{
 	c_tag = "Secure - Telecomms Control Room";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
@@ -31703,8 +31646,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Hallway - Central Tram Platform North-West";
-	dir = 4;
-	network = list("ss13")
+	dir = 4
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -32300,8 +32242,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/arrow_cw,
 /obj/machinery/camera{
 	c_tag = "Hallway - Central Tram Platform South";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel,
@@ -32889,19 +32830,6 @@
 "hHy" = (
 /turf/closed/wall,
 /area/crew_quarters/heads/cmo)
-"hHN" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/tram/right)
 "hHP" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three"
@@ -33874,8 +33802,7 @@
 /obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Command - Bridge South";
-	dir = 1;
-	network = list("ss13")
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/bridge)
@@ -34000,8 +33927,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Lower Left Command";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -35323,7 +35249,6 @@
 "iVt" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue External Access";
-	req_access_txt = "0";
 	req_one_access_txt = "5;28"
 	},
 /turf/open/floor/plating,
@@ -36424,8 +36349,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Upper Left Command";
-	dir = 9;
-	network = list("ss13")
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -37253,8 +37177,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/arrow_cw,
 /obj/machinery/camera{
 	c_tag = "Hallway - Port Tram Platform South";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel,
@@ -37542,7 +37465,6 @@
 	department = "Chief Engineer's Desk";
 	departmentType = 3;
 	name = "Chief Engineer RC";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
@@ -38562,8 +38484,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner,
 /obj/machinery/camera{
 	c_tag = "Secure - EVA Lobby";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -38677,8 +38598,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Hallway - Central Tram Platform North-East";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -38701,8 +38621,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Mid Right Command";
-	dir = 4;
-	network = list("ss13")
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -40424,8 +40343,7 @@
 	department = "Engineering";
 	departmentType = 4;
 	name = "Engineering RC";
-	pixel_x = -28;
-	pixel_y = 0
+	pixel_x = -28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -40443,8 +40361,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Port Tram Platform North-West";
-	dir = 4;
-	network = list("ss13")
+	dir = 4
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -40726,8 +40643,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/arrow_cw,
 /obj/machinery/camera{
 	c_tag = "Hallway - Starboard Tram Platform South";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel,
@@ -41273,7 +41189,6 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
-	initialize_directions = 2;
 	name = "euthanization chamber freezer"
 	},
 /turf/open/floor/plasteel/dark,
@@ -41993,8 +41908,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command - Bridge North";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -42091,8 +42005,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Secure - Teleporter";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -43348,8 +43261,7 @@
 /obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Command - Bridge Left Airlock";
-	dir = 9;
-	network = list("ss13")
+	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -43582,8 +43494,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Port Tram Platform North-East";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /obj/effect/turf_decal/caution{
 	dir = 1
@@ -45320,8 +45231,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Secure - Gateway South";
-	dir = 9;
-	network = list("ss13")
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/gateway)
@@ -45741,8 +45651,7 @@
 /obj/effect/turf_decal/trimline/blue,
 /obj/machinery/camera{
 	c_tag = "Secure - EVA Main";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -46268,15 +46177,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "oDr" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
+/obj/machinery/button/tram{
+	id = "right_part"
 	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/obj/structure/railing,
-/turf/open/floor/plasteel,
+/turf/closed/wall,
 /area/hallway/primary/tram/right)
 "oDv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -47117,7 +47021,6 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
 	pixel_x = 24;
-	pixel_y = 0;
 	req_access_txt = "39"
 	},
 /obj/structure/cable,
@@ -47129,7 +47032,6 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/vending/wallmed{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/structure/cable,
@@ -48804,8 +48706,7 @@
 /obj/machinery/button/door{
 	id = "ceprivacy";
 	name = "Privacy Shutters Control";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
@@ -49938,8 +49839,7 @@
 	department = "Bridge";
 	departmentType = 5;
 	name = "Bridge RC";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -51699,8 +51599,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/camera{
-	c_tag = "Command - Captain's Quarters";
-	network = list("ss13")
+	c_tag = "Command - Captain's Quarters"
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
@@ -52539,8 +52438,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command - Bridge Right Airlock";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
@@ -53331,15 +53229,10 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "scg" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
+/obj/machinery/button/tram{
+	id = "left_part"
 	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/obj/structure/railing,
-/turf/open/floor/plasteel,
+/turf/closed/wall,
 /area/hallway/primary/tram/left)
 "sck" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -54600,19 +54493,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"sHP" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/tram/left)
 "sHY" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -54747,8 +54627,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command - Head of Personnel's Office";
-	dir = 6;
-	network = list("ss13")
+	dir = 6
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -54987,8 +54866,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Hallway - Central Tram Platform South-East";
-	dir = 9;
-	network = list("ss13")
+	dir = 9
 	},
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plasteel,
@@ -55129,7 +55007,6 @@
 /obj/machinery/requests_console{
 	department = "Cargo Bay";
 	departmentType = 2;
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /obj/structure/disposalpipe/trunk{
@@ -55516,7 +55393,6 @@
 "tfy" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
-	req_access_txt = "0";
 	req_one_access_txt = "31;48"
 	},
 /obj/machinery/door/firedoor,
@@ -55706,8 +55582,7 @@
 /obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Departures - West Main";
-	dir = 9;
-	network = list("ss13")
+	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -56881,8 +56756,7 @@
 "tJL" = (
 /obj/machinery/camera{
 	c_tag = "Secure - Gateway North";
-	dir = 4;
-	network = list("ss13")
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/gateway)
@@ -56899,9 +56773,7 @@
 	dir = 4
 	},
 /obj/item/clipboard,
-/obj/machinery/computer/security/telescreen/cmo{
-	pixel_x = 0
-	},
+/obj/machinery/computer/security/telescreen/cmo,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "tKs" = (
@@ -59805,8 +59677,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Lower Right Command";
-	dir = 4;
-	network = list("ss13")
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -60448,7 +60319,6 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
 	pixel_x = 24;
-	pixel_y = 0;
 	req_access_txt = "39"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
@@ -60514,8 +60384,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Hallway - Starboard Tram Platform South-East";
-	dir = 9;
-	network = list("ss13")
+	dir = 9
 	},
 /obj/effect/turf_decal/caution,
 /obj/structure/extinguisher_cabinet{
@@ -60653,8 +60522,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Mid Left Command";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -60710,7 +60578,6 @@
 	},
 /obj/machinery/flasher{
 	id = "Cell 2";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/machinery/light/small,
@@ -61609,8 +61476,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Civilian - Disposals";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
@@ -61697,8 +61563,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - North-East Escape Wing Entry";
-	dir = 1;
-	network = list("ss13")
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -62866,7 +62731,6 @@
 	department = "Telecomms Admin";
 	departmentType = 5;
 	name = "Telecomms RC";
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
@@ -64330,8 +64194,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/d_day_promo{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -64792,7 +64655,6 @@
 /obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	name = "Prison Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -25;
 	prison_radio = 1
 	},
@@ -64913,8 +64775,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Hallway - Central Escape Wing Entry";
-	dir = 5;
-	network = list("ss13")
+	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -65755,8 +65616,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/camera{
 	c_tag = "Command - Captain's Office";
-	dir = 8;
-	network = list("ss13")
+	dir = 8
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
@@ -65824,8 +65684,7 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera{
 	c_tag = "Departures - South Main";
-	dir = 1;
-	network = list("ss13")
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
@@ -153426,7 +153285,7 @@ axX
 sFL
 axX
 axX
-sHP
+anG
 aDf
 aEH
 nOe
@@ -163700,7 +163559,7 @@ wCt
 qBE
 atg
 avS
-acK
+aeR
 biz
 biz
 aXY
@@ -173986,7 +173845,7 @@ ayt
 roW
 ayt
 ayt
-hHN
+oDr
 aEh
 aFW
 ykx
