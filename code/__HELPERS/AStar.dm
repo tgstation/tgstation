@@ -91,7 +91,7 @@ Actual Adjacent procs :
 	else
 		var/datum/pathfind/pathfind_datum = new(caller, end)
 		path = pathfind_datum.start_search()
-		path = path.Copy()
+		//path = path.Copy()
 		testing("finished start_search(), length of path: [path.len]")
 		qdel(pathfind_datum)
 
@@ -222,7 +222,7 @@ Actual Adjacent procs :
 					breakout = TRUE
 					break
 
-				var/lowest_possible
+				//var/lowest_possible
 				if(!next_turf || next_turf == exclude || !call(sturf,adjacent)(caller, next_turf, id, simulated_only)) // RYLL: should this be a typecheck?
 					//breakout = TRUE
 					break
