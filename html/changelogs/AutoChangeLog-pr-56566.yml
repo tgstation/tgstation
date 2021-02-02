@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "holodeck doesnt absentmindedly forget to clear previous programs anymore when hit with the free lag hammer"
