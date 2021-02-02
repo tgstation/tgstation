@@ -1830,7 +1830,6 @@
 
 	var/list/pizza_types = list(
 		/obj/item/food/pizza/margherita = 1,
-		/obj/item/food/pizza/margherita/robo = 0.1,
 		/obj/item/food/pizza/meat = 1,
 		/obj/item/food/pizza/mushroom = 1,
 		/obj/item/food/pizza/vegetable = 1,
@@ -1839,7 +1838,7 @@
 		/obj/item/food/pizza/sassysage = 1,
 		/obj/item/food/pizza/pineapple = 1,
 		/obj/item/food/pizza/arnold = 0.3
-	) //pizzas here are weighted by chance to be disruptive
+	) //weighted by chance to disrupt eaters' rounds
 
 	for(var/obj/item/pizzabox/P in C)
 		if(!anomalous_box_provided)
@@ -1883,8 +1882,6 @@
 			P.boxtag = P.pizza.boxtag
 			P.boxtag_set = TRUE
 			P.update_icon()
-			if(istype(replacement_type, /obj/item/food/pizza/margherita/robo))
-				message_admins("A nanomachine margherita pizza was created in a pizza crate delivery.")
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
