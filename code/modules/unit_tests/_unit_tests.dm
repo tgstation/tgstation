@@ -44,6 +44,7 @@
 #include "chain_pull_through_space.dm"
 #include "combat.dm"
 #include "component_tests.dm"
+#include "configuration_documentation.dm"
 #include "confusion.dm"
 #include "designs.dm"
 #include "emoting.dm"

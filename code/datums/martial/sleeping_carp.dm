@@ -7,6 +7,7 @@
 	id = MARTIALART_SLEEPINGCARP
 	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/sleeping_carp_help
+	display_combos = TRUE
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))

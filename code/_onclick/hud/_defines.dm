@@ -45,6 +45,7 @@
 #define ui_back "CENTER-2:14,SOUTH:5"
 #define ui_storage1 "CENTER+1:18,SOUTH:5"
 #define ui_storage2 "CENTER+2:20,SOUTH:5"
+#define ui_combo "CENTER+4:24,SOUTH+1:7" //combo meter for martial arts
 
 //Lower right, persistent menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"

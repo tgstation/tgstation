@@ -225,7 +225,7 @@
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(starting_points = 60)
+/mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
 	var/mob/camera/blob/B = new /mob/camera/blob(get_turf(src), starting_points)
 	B.key = key
 	. = B

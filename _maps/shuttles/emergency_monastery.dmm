@@ -1,0 +1,8389 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"af" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space,
+/area/shuttle/escape)
+"ap" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ar" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"as" = (
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/shuttle/escape)
+"aF" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"aH" = (
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/shuttle/escape)
+"aN" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"aO" = (
+/obj/structure/sign/plaques/kiddie{
+	desc = "It reads: PRIVATE EXHIBIT -  Please inquire with library staff for guided tours.";
+	name = "\improper Private Section Notice";
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"aR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/closed/wall,
+/area/shuttle/escape)
+"aT" = (
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"aW" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/shuttle/escape)
+"bb" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Monastery Docking Bay APC";
+	pixel_x = 24
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bc" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/item/radio/intercom{
+	pixel_y = 26
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bd" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space,
+/area/shuttle/escape)
+"be" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bf" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bl" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"bn" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Library APC";
+	pixel_x = 24
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bq" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bu" = (
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -32
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/glass/mortar{
+	pixel_y = 8
+	},
+/obj/item/pestle,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bv" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bx" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"by" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/painting/library_private{
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bC" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bJ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"bK" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/watermelon/holy,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"bT" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/lattice,
+/turf/open/space,
+/area/shuttle/escape)
+"cu" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/flashlight/lantern,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"cx" = (
+/obj/machinery/vending/games,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"cC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cL" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -24
+	},
+/obj/machinery/light/small,
+/obj/machinery/camera{
+	c_tag = "Monastery Dock";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"cP" = (
+/obj/item/radio/intercom{
+	pixel_x = 27
+	},
+/obj/machinery/light/small,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"cY" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Transit";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cZ" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"dl" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"dn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/closed/wall,
+/area/shuttle/escape)
+"do" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Library Lounge APC";
+	pixel_x = 24
+	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"dp" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/shuttle/escape)
+"dq" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"du" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dF" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/terminal,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"dG" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"dJ" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Dining Room";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"dR" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"dX" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/space,
+/area/shuttle/escape)
+"dY" = (
+/obj/structure/table/wood,
+/obj/item/folder/yellow,
+/obj/item/pen,
+/obj/machinery/camera{
+	c_tag = "Monastery Library";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ed" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"eg" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Asteroid Dock Port";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"en" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/dim{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"eu" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/light/small,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"eA" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"eG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"eM" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"eQ" = (
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"eR" = (
+/obj/structure/sign/painting/library_private{
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"eU" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"eW" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"fi" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Asteroid Dock Staboard";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"fm" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/shuttle/escape)
+"fn" = (
+/obj/effect/spawner/xmastree,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"fq" = (
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/shuttle/escape)
+"fv" = (
+/obj/structure/bookcase/random/religion,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"fx" = (
+/obj/structure/flora/ausbushes,
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"fz" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"fA" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/shuttle/escape)
+"fJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"fL" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/lattice,
+/obj/structure/window/reinforced,
+/turf/open/space,
+/area/shuttle/escape)
+"fT" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/camera,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"gb" = (
+/obj/item/paper{
+	text = "Lord, today let our dreams runneth on prayer. Amen."
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"gl" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/shuttle/escape)
+"gL" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/door/window/northright{
+	dir = 2;
+	name = "Curator Desk Door";
+	req_access_txt = "37"
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"gW" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"hq" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"hC" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"hI" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4;
+	name = "Air Out"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"hN" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"hV" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"hZ" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	layer = 2.9;
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ib" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/closed/mineral,
+/area/shuttle/escape)
+"io" = (
+/obj/structure/lattice,
+/turf/closed/mineral,
+/area/shuttle/escape)
+"it" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"iv" = (
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"iw" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space,
+/area/shuttle/escape)
+"iB" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/photocopier,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"iE" = (
+/obj/item/storage/crayons{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/crayons,
+/obj/structure/table/wood,
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"iI" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"iJ" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Chapel Office APC";
+	pixel_x = 24
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"iK" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/ausbushes/reedbush,
+/obj/machinery/camera{
+	c_tag = "Monastery Asteroid Primary Entrance";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"iM" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"iS" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"iT" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"iV" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Cloister Port";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"iW" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"jd" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/storage/box/lights/bulbs,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jf" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"jk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/sign/warning/vacuum/external,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jn" = (
+/obj/machinery/door/poddoor/massdriver_chapel,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jr" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"jt" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jx" = (
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"jG" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"jR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"jS" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"jU" = (
+/obj/item/shovel/spade,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"jW" = (
+/obj/structure/window/reinforced,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"ka" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/machinery/camera{
+	c_tag = "Monastery Asteroid Starboard Aft";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"kh" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ki" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Chapel Crematorium";
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"kn" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ko" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"kq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"kt" = (
+/obj/structure/table/wood,
+/obj/item/instrument/saxophone,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"kv" = (
+/obj/structure/sign/warning/vacuum/external,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"kw" = (
+/obj/structure/chair/wood,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"kI" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"kJ" = (
+/obj/structure/lattice,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/shuttle/escape)
+"kM" = (
+/obj/structure/table/wood/fancy,
+/obj/item/folder,
+/obj/item/pen,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"kN" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"kV" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/station_crash/devastating,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"lc" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"lj" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/shuttle/escape)
+"lB" = (
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/shuttle/escape)
+"lE" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"lP" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/box/bodybags,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"lX" = (
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"me" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"mh" = (
+/obj/effect/spawner/lootdrop/gross_decal_spawner,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"mi" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"mm" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/shuttle/escape)
+"mn" = (
+/obj/structure/chair/wood,
+/obj/item/radio/intercom/chapel{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"mw" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"my" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/shuttle/escape)
+"mG" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"mH" = (
+/obj/machinery/door/morgue{
+	name = "Confession Booth"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"mK" = (
+/obj/machinery/camera{
+	c_tag = "Chapel Office Tunnel";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"mP" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"mQ" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/seeds/watermelon/holy,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"nd" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"nf" = (
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/chapel,
+/area/shuttle/escape)
+"nl" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/computer/pod/old/mass_driver_controller/chapelgun{
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"nr" = (
+/turf/closed/wall,
+/area/shuttle/escape)
+"nt" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Crematorium"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"nK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"nO" = (
+/obj/machinery/door/window/eastleft{
+	dir = 1;
+	name = "Coffin Storage";
+	req_one_access_txt = "22"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"nQ" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"oa" = (
+/obj/structure/chair/wood,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"ob" = (
+/obj/machinery/skill_station,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"od" = (
+/obj/machinery/vending/wardrobe/curator_wardrobe,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"om" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/space,
+/area/shuttle/escape)
+"ov" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Chapel Starboard";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oz" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oH" = (
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 28
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21";
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oI" = (
+/obj/machinery/airalarm/unlocked{
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oS" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/obj/item/radio/intercom/chapel{
+	pixel_x = 29
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oT" = (
+/obj/item/flashlight/lantern,
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/shuttle/escape)
+"oV" = (
+/obj/structure/table/wood,
+/obj/item/food/breadslice/plain,
+/obj/item/food/breadslice/plain{
+	pixel_y = 4
+	},
+/obj/item/food/breadslice/plain{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"oZ" = (
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"pa" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"pr" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"pv" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"pw" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"pA" = (
+/obj/structure/flora/ausbushes/leafybush,
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"pB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"pD" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"pO" = (
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/shuttle/escape)
+"pS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"qi" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	layer = 2.9;
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"qj" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"qm" = (
+/obj/item/flashlight/lantern{
+	icon_state = "lantern-on"
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"qp" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Monastery Cemetary"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"qr" = (
+/obj/item/radio/intercom{
+	pixel_y = 26
+	},
+/obj/machinery/requests_console{
+	department = "Chapel";
+	departmentType = 2;
+	pixel_x = -32
+	},
+/obj/structure/closet,
+/obj/item/storage/backpack/cultpack,
+/obj/item/clothing/head/nun_hood,
+/obj/item/clothing/suit/chaplainsuit/nun,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"qx" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"qA" = (
+/obj/structure/window/reinforced,
+/turf/open/space/basic,
+/area/shuttle/escape)
+"qJ" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"qT" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"qU" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Chapel Port Access";
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"rb" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"rk" = (
+/obj/structure/chair/wood,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ru" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel Access"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"rw" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"rF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"rV" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"rW" = (
+/obj/structure/filingcabinet,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"rX" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"sa" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"sc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"sf" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"sg" = (
+/obj/structure/table/wood,
+/obj/item/stack/package_wrap,
+/obj/item/coin/gold,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"sk" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"sm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"sq" = (
+/obj/effect/landmark/start/chaplain,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"sz" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Chapel Starboard Access";
+	network = list("ss13","monastery")
+	},
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"sC" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/newscaster{
+	pixel_x = -32
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"sD" = (
+/obj/structure/table/wood/fancy,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -32
+	},
+/obj/machinery/light/dim,
+/obj/item/reagent_containers/food/drinks/trophy{
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"sF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"sT" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"td" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"th" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Monastery Transit"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"tm" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/box/matches{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"tz" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/fancy/candle_box,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"tT" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"tV" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Monastery APC";
+	pixel_y = 23
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ua" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ub" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/bookmanagement,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"uc" = (
+/obj/structure/bookcase/random/religion,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"un" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"uu" = (
+/obj/structure/table/wood,
+/obj/item/storage/photo_album,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ux" = (
+/obj/machinery/light/small,
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"uC" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"uO" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"uX" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"va" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"vj" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vk" = (
+/obj/machinery/light/small,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vE" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel Access"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vJ" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vO" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vR" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"vU" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21";
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vW" = (
+/obj/machinery/camera{
+	c_tag = "Chapel Office";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"vY" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wh" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wp" = (
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/shuttle/escape)
+"wq" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wz" = (
+/obj/machinery/mass_driver/chapelgun,
+/obj/machinery/door/window/eastleft{
+	dir = 8;
+	name = "Mass Driver"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wG" = (
+/obj/structure/chair,
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"wM" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Cloister Fore";
+	network = list("ss13","monastery")
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"wS" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Secondary Dock";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"xd" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"xl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"xm" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/plasteel/showroomfloor,
+/area/shuttle/escape)
+"xs" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"xt" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"xv" = (
+/obj/structure/table/wood,
+/obj/item/kirbyplants{
+	icon_state = "plant-05";
+	pixel_y = 10
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"xB" = (
+/obj/machinery/vending/wardrobe/chap_wardrobe,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"xX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Archives Access Tunnel";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"xZ" = (
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -24
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yc" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/escape)
+"yh" = (
+/obj/item/extinguisher,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"yl" = (
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yo" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yr" = (
+/obj/structure/closet,
+/obj/machinery/light/small,
+/obj/item/storage/book/bible,
+/obj/item/storage/book/bible,
+/obj/item/storage/book/bible,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"yu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yA" = (
+/obj/machinery/door/morgue{
+	name = "Private Exhibit";
+	req_access_txt = "37"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yC" = (
+/obj/structure/flora/ausbushes,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"yE" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"yI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yO" = (
+/obj/structure/closet{
+	name = "beekeeping wardrobe"
+	},
+/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/suit/beekeeper_suit,
+/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/beekeeper_head,
+/obj/item/melee/flyswatter,
+/obj/item/melee/flyswatter,
+/obj/item/melee/flyswatter,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"yP" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	layer = 3.1;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"yS" = (
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"yZ" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"zb" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"zh" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/stack/sheet/glass/fifty{
+	layer = 4
+	},
+/obj/item/stack/sheet/metal{
+	amount = 20;
+	layer = 3.1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"zj" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/door/window/northright{
+	base_state = "left";
+	dir = 2;
+	icon_state = "left";
+	name = "Curator Desk Door";
+	req_access_txt = "37"
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"zm" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"zp" = (
+/obj/item/storage/bag/plants,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24
+	},
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/plants/portaseeder,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"zr" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"zw" = (
+/obj/machinery/door/airlock/external{
+	name = "Pod Docking Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"zB" = (
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"zE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"zF" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/storage/crayons,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"zP" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/tea,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"zQ" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"zU" = (
+/obj/structure/dresser,
+/obj/structure/sign/plaques/deempisi{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"zX" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/pointybush,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Ab" = (
+/obj/structure/closet{
+	name = "beekeeping supplies"
+	},
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/obj/item/honey_frame,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Ac" = (
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Am" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"An" = (
+/obj/structure/table/wood,
+/obj/item/trash/plate,
+/obj/item/kitchen/fork,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ax" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"Ay" = (
+/obj/structure/chair/wood,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"AF" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/harebell,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"AM" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"AW" = (
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/item/clothing/under/misc/burial,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ba" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Bh" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Bp" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/beebox,
+/obj/item/queen_bee/bought,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"BA" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"BC" = (
+/obj/structure/table/wood/fancy,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -32
+	},
+/obj/item/kitchen/knife/combat/bone{
+	desc = "An old bone sharpened into a blade. It's rather dull nowadays.";
+	force = 8;
+	name = "ancient bone dagger";
+	pixel_y = 6;
+	throwforce = 8
+	},
+/obj/machinery/light/dim,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"BQ" = (
+/obj/machinery/door/airlock{
+	id_tag = "Cell1";
+	name = "Cell 1"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"BR" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"BX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Cg" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Cn" = (
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"CA" = (
+/obj/item/hatchet,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"CJ" = (
+/obj/structure/bookcase/random/adult,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"CM" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"CN" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"CR" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/storage/fancy/candle_box,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Dc" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Garden APC";
+	pixel_x = -25
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/cable,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Dk" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"Dn" = (
+/obj/item/paint/paint_remover{
+	pixel_y = 8
+	},
+/obj/structure/table/wood,
+/obj/item/soap/nanotrasen,
+/obj/structure/sign/poster/official/fruit_bowl{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Dr" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Kitchen";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Ds" = (
+/obj/machinery/holopad,
+/obj/item/flashlight/lantern,
+/turf/open/floor/plasteel/chapel,
+/area/shuttle/escape)
+"Dv" = (
+/obj/item/storage/book/bible,
+/obj/structure/cable,
+/obj/structure/altar_of_gods,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"DE" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"DG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"DM" = (
+/obj/machinery/door/airlock{
+	name = "Dining Room"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"DS" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"DV" = (
+/obj/structure/bed,
+/obj/item/bedsheet/green,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"DW" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"DY" = (
+/obj/structure/cable,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Eb" = (
+/obj/structure/water_source/puddle,
+/obj/item/reagent_containers/glass/bucket,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"En" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Eo" = (
+/obj/machinery/door/airlock{
+	name = "Garden"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ep" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Art Storage";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Eu" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Library"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ew" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/radio/intercom{
+	pixel_y = 26
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Ex" = (
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"EL" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/carrot,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"EN" = (
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"ET" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"EU" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/wheat,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Fa" = (
+/obj/structure/table/wood,
+/obj/item/disk/nuclear/fake,
+/obj/item/barcodescanner,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ff" = (
+/obj/structure/flora/ausbushes/genericbush,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Fh" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
+/obj/item/clothing/head/nun_hood,
+/obj/machinery/button/door{
+	id = "Cell2";
+	name = "Cell Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"Fm" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"Fp" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Fx" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/storage/box/ingredients/wildcard{
+	layer = 3.1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"FA" = (
+/obj/machinery/button/crematorium{
+	id = "foo";
+	pixel_x = 25
+	},
+/obj/structure/bodycontainer/crematorium{
+	id = "foo"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"FK" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"FO" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel Office"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"FY" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Gb" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Gk" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/harebell,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Gu" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/easel,
+/obj/item/canvas/twentythree_nineteen,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"Gv" = (
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Gy" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"GB" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"GN" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"GU" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Hc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Hf" = (
+/obj/machinery/door/airlock{
+	id_tag = "Cell2";
+	name = "Cell 2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"Ho" = (
+/turf/closed/mineral,
+/area/shuttle/escape)
+"Hw" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/chaplainsuit/holidaypriest,
+/obj/item/clothing/suit/chaplainsuit/nun,
+/obj/item/clothing/head/nun_hood,
+/obj/machinery/button/door{
+	id = "Cell1";
+	name = "Cell Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"HD" = (
+/turf/open/floor/plasteel/chapel,
+/area/shuttle/escape)
+"HL" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/poppy,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"HO" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"HS" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Ig" = (
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Ih" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Il" = (
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Iv" = (
+/obj/machinery/door/airlock{
+	name = "Kitchen"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Iw" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"IA" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"IK" = (
+/obj/structure/destructible/cult/tome,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"IL" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Archives Fore";
+	network = list("ss13","monastery")
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = 29
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"IM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"IR" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"IT" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Cloister Starboard";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Jf" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Jg" = (
+/obj/structure/closet/emcloset,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Jl" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/space,
+/area/shuttle/escape)
+"Jp" = (
+/obj/structure/table,
+/obj/item/crowbar,
+/obj/item/clothing/mask/gas,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Jt" = (
+/obj/structure/table/wood/fancy,
+/obj/item/flashlight/lantern{
+	icon_state = "lantern-on";
+	pixel_y = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Ju" = (
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar";
+	name = "skeletal minibar"
+	},
+/obj/item/book/codex_gigas,
+/obj/machinery/camera{
+	c_tag = "Monastery Archives Aft";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Jv" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/camera{
+	c_tag = "Monastery Garden";
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Jy" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Jz" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"JA" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel Garden"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"JG" = (
+/turf/template_noop,
+/area/template_noop)
+"JJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"JS" = (
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"JW" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Art Storage"
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"JX" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"JZ" = (
+/obj/docking_port/mobile/emergency{
+	dwidth = 40;
+	height = 43;
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 6);
+	name = "\proper a monastery with engines strapped to it";
+	port_direction = 1;
+	width = 80
+	},
+/turf/closed/mineral,
+/area/shuttle/escape)
+"Kd" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Kf" = (
+/obj/structure/table/wood,
+/obj/item/nullrod,
+/turf/open/floor/carpet/black,
+/area/shuttle/escape)
+"Kg" = (
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Kl" = (
+/obj/machinery/chem_master/condimaster,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Km" = (
+/obj/item/flashlight/lantern,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Kp" = (
+/obj/structure/table,
+/obj/item/trash/plate,
+/obj/item/kitchen/fork,
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"Kw" = (
+/obj/machinery/door/window/eastleft{
+	base_state = "right";
+	dir = 1;
+	icon_state = "right";
+	name = "Coffin Storage";
+	req_one_access_txt = "22"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"KE" = (
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"KH" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-08"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"KR" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"KV" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/shuttle/escape)
+"La" = (
+/obj/structure/cable,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Li" = (
+/obj/structure/bookcase/random/adult,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ll" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Lq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Lu" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Lz" = (
+/obj/item/clothing/suit/apron/chef,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"LC" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Chapel Port";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"LK" = (
+/turf/closed/wall/r_wall,
+/area/shuttle/escape)
+"LP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"LQ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"LU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"LV" = (
+/obj/machinery/light/small,
+/obj/machinery/camera{
+	c_tag = "Monastery Cloister Aft";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"LX" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Mb" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/instrument/violin,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"Mc" = (
+/obj/machinery/door/window/northright{
+	name = "Secure Art Exhibit";
+	req_access_txt = "37"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Md" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Archives Starboard";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Mf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Mi" = (
+/obj/machinery/light/small,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ms" = (
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/space,
+/area/shuttle/escape)
+"Mt" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/shuttle/escape)
+"MC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"MF" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Art Gallery"
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ML" = (
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"MX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"MZ" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/pharaoh,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Na" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Nb" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Nf" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/kitchen/rollingpin,
+/obj/item/kitchen/knife,
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Ng" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/chair/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Nh" = (
+/obj/item/wrench,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Nm" = (
+/obj/structure/sign/painting/library_private{
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Np" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Nt" = (
+/obj/structure/sign/painting/library_private{
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Nw" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Library"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"NJ" = (
+/obj/structure/table,
+/obj/item/storage/crayons,
+/obj/item/wrench,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"NS" = (
+/obj/machinery/newscaster{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"NX" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"NZ" = (
+/obj/machinery/door/airlock{
+	name = "Garden"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Oc" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Library"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Og" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Oi" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = -32
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Cemetary";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Om" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/fancy/candle_box,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Or" = (
+/obj/structure/chair/wood,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ov" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"OB" = (
+/obj/structure/chair/wood,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"OH" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Monastery Maintenance";
+	req_one_access_txt = "22;24;10;11;37"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"OJ" = (
+/obj/effect/station_crash/devastating,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"OK" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"OM" = (
+/obj/item/cultivator,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"OW" = (
+/obj/item/seeds/banana,
+/obj/item/seeds/grass,
+/obj/item/seeds/grape,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"OY" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"Pb" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Pu" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"Pv" = (
+/obj/item/flashlight/lantern{
+	icon_state = "lantern-on"
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape)
+"Py" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/sugarcane,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Pz" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"PA" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"PB" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/shuttle/escape)
+"PC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"PD" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/poppy,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"PN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"PU" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Library"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qg" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Library"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qj" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	layer = 2.9;
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qm" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qs" = (
+/obj/structure/table/wood,
+/obj/item/newspaper,
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qt" = (
+/obj/structure/sign/painting/library_private{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qv" = (
+/obj/item/storage/box/matches{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Qw" = (
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -32
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/stack/sheet/bone{
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"QG" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"QH" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"QY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Rc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/tank/air,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Rd" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light/small,
+/obj/item/seeds/poppy,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Rg" = (
+/obj/structure/bed,
+/obj/item/bedsheet/yellow,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"Rp" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Rs" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/power/terminal,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Rv" = (
+/obj/structure/closet/crate,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/twentythree_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/canvas/nineteen_nineteen,
+/obj/item/wirecutters,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Rx" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Rz" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"RA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"RG" = (
+/obj/structure/bookcase/random/nonfiction,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"RJ" = (
+/obj/machinery/camera{
+	c_tag = "Monastery Art Gallery";
+	dir = 8;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"RQ" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"RZ" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/sugarcane,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Sb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/dim{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Sc" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/poppy,
+/obj/item/food/grown/harebell,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Se" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Chapel Office"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Sg" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Si" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/book/bible,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Sk" = (
+/obj/item/toy/crayon/spraycan{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/toy/crayon/spraycan,
+/obj/structure/table/wood,
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Sq" = (
+/obj/structure/table/wood/fancy,
+/obj/item/candle,
+/obj/item/candle{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/candle{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Sr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ss" = (
+/obj/machinery/light/dim{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Su" = (
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Sx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"SC" = (
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/shuttle/escape)
+"SJ" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"SK" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"SQ" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24
+	},
+/obj/item/stack/rods/fifty,
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"SR" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"SU" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"SV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Tc" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Te" = (
+/obj/structure/table/wood,
+/obj/item/camera,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ti" = (
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Tk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Tm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Tp" = (
+/obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Tt" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Tx" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/trophy{
+	pixel_y = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"TJ" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/shuttle/escape)
+"TK" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"TR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"TU" = (
+/obj/machinery/computer/emergency_shuttle{
+	use_power = 0
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ua" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Ud" = (
+/obj/item/toy/crayon/black,
+/obj/item/toy/crayon/white{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/toy/crayon/black,
+/obj/item/toy/crayon/white{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/structure/table/wood,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Monastery Art Gallery APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Up" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Ut" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/sign/painting/library{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"UC" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/wheat,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"UJ" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Monastery Archives Port";
+	dir = 4;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"UK" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"UQ" = (
+/obj/machinery/door/airlock/external{
+	name = "Pod Docking Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"UR" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"UW" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Vg" = (
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Vi" = (
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Vl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Vt" = (
+/obj/structure/table/wood,
+/obj/item/folder/yellow,
+/obj/item/pen,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Vu" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/sign/painting/library{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Vv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/painting/library_private{
+	pixel_x = 32
+	},
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"VA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"VE" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"VF" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+	name = "Outlet Injector"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"VM" = (
+/obj/machinery/mass_driver/chapelgun,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"VN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/closed/wall,
+/area/shuttle/escape)
+"VU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"VV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"We" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Wh" = (
+/obj/machinery/door/airlock/external{
+	name = "Dock Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Wl" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Wo" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Wp" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ws" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Wz" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"WF" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"WG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"WH" = (
+/obj/structure/cable,
+/obj/machinery/light/dim{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"WJ" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/soap/homemade,
+/turf/open/floor/plasteel/showroomfloor,
+/area/shuttle/escape)
+"WM" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"WO" = (
+/obj/machinery/light/dim{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"WQ" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"WW" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Xb" = (
+/obj/structure/table/wood,
+/obj/item/kirbyplants{
+	icon_state = "plant-22";
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Xm" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Xs" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Xu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Xx" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"XF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+	dir = 1;
+	name = "Outlet Injector"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"XK" = (
+/obj/structure/closet/crate/bin,
+/obj/item/reagent_containers/glass/rag,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"XL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"XN" = (
+/obj/structure/chair/wood,
+/turf/open/floor/plasteel/chapel{
+	dir = 8
+	},
+/area/shuttle/escape)
+"XP" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"XQ" = (
+/obj/structure/chair/wood,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"XZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Yc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"Ye" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Yi" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Ym" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"YB" = (
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"YC" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"YD" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"YE" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"YO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"YU" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/space/basic,
+/area/shuttle/escape)
+"YZ" = (
+/obj/structure/table/wood,
+/obj/item/storage/bag/books,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Zb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"Zf" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Zh" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	req_one_access_txt = "63"
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"Zj" = (
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/shuttle/escape)
+"Zl" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/libraryscanner,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"Zn" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"Zr" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Monastery Maintenance APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ZA" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/photo_album,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"ZF" = (
+/obj/machinery/newscaster{
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+"ZM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ZP" = (
+/obj/machinery/door/window/northright{
+	base_state = "left";
+	icon_state = "left";
+	name = "Secure Art Exhibit";
+	req_access_txt = "37"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ZU" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Library"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/escape)
+"ZZ" = (
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+nr
+nr
+zE
+nr
+nr
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+JZ
+zE
+lc
+zE
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(2,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+nr
+nr
+qr
+rW
+sC
+nr
+nr
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+zE
+Zf
+zE
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(3,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+zE
+lX
+lX
+sa
+lX
+lX
+zE
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+zE
+Ll
+zE
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(4,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+nr
+nr
+pv
+Kf
+Fm
+qi
+ux
+nr
+nr
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+nr
+nr
+zE
+ko
+zE
+nr
+Ho
+Tc
+VE
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(5,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+zE
+zE
+Ho
+nr
+nr
+nr
+nr
+oH
+lX
+yE
+yE
+yE
+lX
+vU
+nr
+nr
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+nr
+Jg
+Kd
+VA
+NJ
+nr
+Ho
+Tc
+VE
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(6,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+hN
+Zf
+iT
+jx
+kM
+lP
+nr
+oI
+zb
+YE
+OK
+eW
+rX
+eQ
+xB
+nr
+nr
+nr
+nr
+nr
+nr
+nr
+nr
+Jp
+OJ
+Lq
+NX
+nr
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(7,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+zE
+zE
+jR
+Gv
+kN
+mh
+nr
+rw
+zb
+YE
+OK
+eW
+rX
+eQ
+yr
+nr
+yO
+Ab
+Cg
+nr
+Ew
+Fp
+nr
+nr
+wS
+VU
+nr
+nr
+nr
+nr
+om
+nQ
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(8,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+nr
+ki
+yu
+oz
+nt
+Hc
+eM
+Og
+xs
+eW
+rX
+eQ
+eA
+nr
+yS
+Ac
+CA
+Dr
+Ex
+Fx
+nr
+nr
+nr
+Wh
+nr
+Qv
+Sc
+nr
+zE
+zE
+Ym
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(9,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+nr
+FA
+jx
+UK
+nr
+iJ
+pw
+qJ
+sk
+sT
+uC
+vW
+nr
+nr
+Kl
+OW
+RQ
+DE
+Nh
+Nf
+nr
+Gy
+nO
+VU
+Oi
+jx
+jx
+YC
+Km
+zE
+YU
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(10,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+hq
+Ho
+Ho
+nr
+nr
+nr
+nr
+nr
+nr
+Jy
+YE
+rV
+eW
+vk
+nr
+nr
+nr
+Pu
+xl
+jU
+Lz
+mi
+gW
+nr
+Gy
+Ov
+XQ
+Or
+jx
+jx
+jx
+jx
+zE
+zE
+Ym
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(11,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qA
+zE
+Ho
+ib
+ib
+Ho
+Ho
+nr
+lE
+du
+jx
+YE
+rV
+eW
+Xb
+nr
+Ho
+nr
+WQ
+zp
+JX
+VV
+Cn
+QG
+nr
+Gy
+Pz
+kw
+oa
+eQ
+Si
+Ti
+wz
+Xs
+jn
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(12,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+qA
+zE
+uO
+uO
+uO
+uO
+jW
+nr
+du
+nr
+nr
+nr
+FO
+nr
+nr
+nr
+Ho
+nr
+nr
+nr
+nr
+Iv
+nr
+nr
+nr
+Gy
+Pz
+kw
+oa
+QY
+Sq
+Tp
+VM
+Xx
+jn
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(13,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+PB
+PB
+PB
+JG
+JG
+JG
+qA
+zE
+Ax
+Ax
+Ax
+Ax
+OY
+EN
+EN
+EN
+pA
+Kg
+GB
+Kg
+Ho
+Ho
+Ho
+nr
+Ih
+kI
+yq
+Qq
+YC
+Gb
+nr
+Gy
+Ov
+Ay
+OB
+Rp
+mG
+jx
+jx
+zE
+zE
+Ym
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(14,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+PB
+lj
+iw
+iw
+iw
+iw
+gl
+zE
+SU
+Zh
+SU
+SU
+Zn
+EN
+EN
+iv
+EN
+Kg
+mK
+Kg
+Ho
+Ho
+Ho
+nr
+Gv
+An
+CM
+BR
+mG
+kh
+nr
+Gy
+Kw
+VU
+kn
+jx
+jx
+nl
+Km
+zE
+hV
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(15,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+PB
+lj
+iw
+JG
+JG
+fL
+zE
+zE
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+Kg
+iW
+Kg
+Ho
+Ho
+Ho
+nr
+Gv
+zP
+CM
+VU
+Gv
+yP
+nr
+nr
+nr
+qp
+nr
+CR
+AW
+nr
+zE
+zE
+Ym
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(16,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+PB
+lj
+Mt
+af
+fA
+zE
+zE
+Pv
+EN
+EN
+EN
+EN
+EN
+EN
+fx
+EN
+iv
+Kg
+GB
+Kg
+Ho
+Ho
+Ho
+nr
+jx
+SJ
+dJ
+VU
+jx
+SJ
+nr
+Jz
+SK
+LP
+nr
+nr
+nr
+nr
+aT
+aT
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+io
+JG
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(17,1,1) = {"
+JG
+JG
+JG
+JG
+iw
+Mt
+iw
+iw
+iw
+zE
+DS
+zE
+zE
+zE
+zE
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+Pv
+nr
+nr
+nr
+nr
+Se
+nr
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+DM
+yc
+yc
+yc
+JA
+yc
+yc
+yc
+Jf
+sf
+nr
+VN
+XF
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+PB
+JG
+JG
+JG
+Ho
+io
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+"}
+(18,1,1) = {"
+JG
+JG
+JG
+JG
+iw
+JG
+JG
+dp
+af
+zE
+Zf
+zE
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+nr
+nr
+nr
+jx
+mH
+Ih
+mw
+jx
+yc
+vY
+wh
+yI
+zr
+iV
+wh
+Tk
+wh
+yI
+zr
+Tk
+wh
+vj
+yc
+Jf
+sf
+Tt
+dn
+nr
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+io
+Ho
+io
+JG
+PB
+JG
+JG
+JG
+JG
+PB
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+bC
+Nb
+JG
+JG
+JG
+JG
+"}
+(19,1,1) = {"
+JG
+JG
+JG
+JG
+bd
+Mt
+bT
+zE
+zE
+zE
+qx
+zE
+fx
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+iv
+nr
+mn
+nK
+oS
+nr
+qU
+ZM
+td
+vE
+wl
+rF
+rF
+rF
+rF
+rF
+Am
+rF
+rF
+rF
+rF
+rF
+kq
+yc
+nd
+cC
+cC
+bq
+nr
+Ho
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+PB
+JG
+PB
+JG
+PB
+PB
+PB
+PB
+PB
+PB
+JG
+Ho
+Ho
+io
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+"}
+(20,1,1) = {"
+JG
+aH
+iw
+iw
+iw
+as
+zE
+zE
+EN
+eg
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+nr
+nr
+nr
+mH
+nr
+nr
+nr
+nr
+mP
+nr
+yc
+ZM
+rF
+nr
+Kg
+Kg
+nr
+NZ
+nr
+Kg
+Kg
+nr
+rF
+ZM
+yc
+Rx
+Su
+YB
+dR
+nr
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+PB
+JG
+PB
+JG
+PB
+JG
+JG
+JG
+JG
+PB
+JG
+JG
+JG
+PB
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(21,1,1) = {"
+af
+af
+nQ
+aW
+nQ
+bl
+zE
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+nr
+YC
+jx
+jx
+LC
+Ih
+yq
+iI
+mw
+nr
+yc
+tV
+rF
+Kg
+zB
+it
+Dc
+DY
+EU
+Gk
+HL
+Kg
+rF
+kq
+yc
+Zr
+Ig
+TK
+dR
+nr
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+nr
+zE
+nr
+zE
+nr
+nr
+zE
+nr
+zE
+nr
+zE
+PB
+PB
+PB
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(22,1,1) = {"
+zE
+zE
+aR
+LK
+LK
+LK
+LK
+nr
+EN
+HO
+EN
+HO
+EN
+HO
+EN
+HO
+EN
+HO
+nr
+nr
+jx
+fq
+XN
+fq
+XN
+pO
+lB
+ZM
+KH
+yc
+vF
+rF
+Kg
+it
+Bp
+Wl
+Vi
+Vi
+Xm
+it
+Kg
+rF
+LQ
+OH
+DG
+Zf
+oZ
+dR
+nr
+nr
+nr
+nr
+nr
+PB
+PB
+PB
+PB
+nr
+nr
+jx
+YC
+jx
+jx
+jx
+jx
+UJ
+jx
+xt
+zE
+JG
+JG
+PB
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(23,1,1) = {"
+zw
+Zf
+UQ
+DW
+be
+yq
+cL
+nr
+nr
+Pv
+EN
+EN
+EN
+Pv
+EN
+EN
+EN
+Pv
+nr
+jx
+jx
+SC
+nf
+SC
+Ds
+wp
+HD
+ZM
+tm
+yc
+pa
+rF
+nr
+Rz
+AM
+GN
+Vi
+UC
+Gk
+Rd
+nr
+rF
+LV
+yc
+jd
+Zf
+hI
+We
+nr
+Ho
+nr
+Ho
+JG
+JG
+JG
+JG
+JG
+nr
+cx
+jx
+WM
+jx
+oa
+me
+me
+ar
+jx
+jx
+nr
+nr
+zE
+PB
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(24,1,1) = {"
+zE
+zE
+jk
+Am
+bf
+bJ
+Am
+bJ
+dq
+un
+un
+un
+un
+un
+un
+un
+un
+un
+iM
+Am
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+Dv
+sm
+jx
+iS
+VU
+rF
+Kg
+Jv
+Bp
+Xm
+Eb
+Vi
+Vi
+HS
+Kg
+rF
+ZM
+yc
+zh
+SQ
+yh
+Wo
+nr
+Ho
+nr
+nr
+PB
+Kg
+DS
+Kg
+PB
+nr
+ob
+jx
+jx
+jx
+oa
+me
+Om
+ar
+TR
+jx
+zj
+QH
+zE
+nr
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(25,1,1) = {"
+VF
+Sg
+Sx
+WG
+Ba
+rF
+jx
+rF
+dG
+qj
+qj
+qj
+qj
+qj
+qj
+qj
+qj
+qj
+iS
+jx
+eQ
+eQ
+eQ
+eQ
+eQ
+eQ
+Tx
+sq
+Hc
+vJ
+LX
+rF
+Kg
+CN
+YD
+Zj
+En
+Wl
+FK
+it
+Kg
+rF
+ZM
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+Ho
+JG
+Kg
+Zf
+Kg
+JG
+nr
+RG
+jx
+WM
+jx
+oa
+ZA
+Jt
+ar
+PC
+rF
+xv
+jx
+aF
+nr
+zE
+JG
+JG
+JG
+JG
+Ho
+JG
+JG
+"}
+(26,1,1) = {"
+as
+zE
+Rc
+bb
+aa
+Tm
+cP
+nr
+nr
+Pv
+EN
+EN
+EN
+Pv
+gb
+EN
+EN
+Pv
+nr
+jx
+jx
+fq
+XN
+fq
+oT
+pO
+lB
+PC
+tz
+yc
+wM
+rF
+nr
+mQ
+EL
+Py
+OM
+Vi
+GU
+eu
+nr
+rF
+Mi
+yc
+bc
+iB
+rk
+dY
+CM
+Zl
+yc
+yc
+nr
+Kg
+qx
+Kg
+nr
+nr
+IL
+jx
+jx
+jx
+jx
+jx
+jx
+jx
+PC
+rF
+UW
+jx
+PC
+od
+zE
+PB
+PB
+PB
+io
+Ho
+Ho
+JG
+"}
+(27,1,1) = {"
+qA
+LK
+LK
+LK
+th
+zE
+nr
+nr
+EN
+HO
+EN
+HO
+EN
+HO
+EN
+HO
+EN
+iK
+nr
+nr
+jx
+SC
+nf
+SC
+nf
+wp
+HD
+PC
+KH
+yc
+vF
+rF
+Kg
+YD
+Vi
+Vi
+Vi
+GN
+YD
+IR
+Kg
+rF
+LQ
+PU
+RA
+RA
+Up
+RA
+XL
+ZF
+RA
+ZU
+KR
+oE
+xX
+fJ
+wq
+Nw
+YO
+YO
+YO
+YO
+YO
+YO
+fn
+yq
+BX
+WW
+MZ
+ap
+pB
+IK
+zE
+JG
+JG
+JG
+Ho
+Ho
+Ho
+JG
+"}
+(28,1,1) = {"
+JG
+aN
+zE
+wt
+Mf
+dF
+uX
+nr
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+nr
+kn
+jx
+jx
+ov
+Sr
+pS
+rb
+eG
+nr
+yc
+ML
+rF
+Kg
+bK
+EL
+RZ
+Vi
+Ff
+zX
+ET
+Kg
+rF
+kq
+Qg
+ZZ
+ZZ
+Bh
+ZZ
+Yc
+ZZ
+ZZ
+Eu
+dl
+dU
+oO
+PN
+eU
+Oc
+sc
+sc
+Np
+Np
+Np
+Np
+Np
+pS
+jr
+IA
+Te
+pD
+Iw
+Ju
+zE
+JG
+JG
+JG
+Ho
+Ho
+Ho
+JG
+"}
+(29,1,1) = {"
+JG
+qA
+zE
+TU
+Xu
+dF
+cY
+nr
+EN
+fi
+EN
+EN
+EN
+fx
+EN
+EN
+EN
+EN
+EN
+nr
+nr
+AF
+PD
+nr
+oV
+SR
+nr
+ru
+nr
+yc
+VU
+rF
+nr
+Kg
+Kg
+nr
+Eo
+nr
+Kg
+Kg
+nr
+rF
+ZM
+yc
+do
+Gb
+Vl
+Ws
+UK
+tT
+yc
+yc
+nr
+Kg
+DS
+Kg
+nr
+nr
+xt
+Am
+jx
+jx
+jx
+jx
+jx
+jx
+Xu
+rF
+UW
+jx
+Xu
+Vg
+zE
+JG
+JG
+Ho
+Ho
+Ho
+jt
+bx
+"}
+(30,1,1) = {"
+JG
+qA
+zE
+jx
+sF
+Rs
+uX
+LK
+zE
+zE
+zE
+zE
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+nr
+nr
+nr
+nr
+nr
+nr
+nr
+XP
+ua
+vO
+LX
+kV
+rF
+rF
+rF
+rF
+jx
+rF
+rF
+rF
+rF
+rF
+kq
+yc
+yc
+Lu
+jx
+Wz
+jx
+yo
+yc
+Ho
+JG
+Kg
+Zf
+Kg
+JG
+nr
+uc
+Am
+WM
+jx
+cZ
+hZ
+Vt
+YZ
+Xu
+rF
+xv
+jx
+yZ
+nr
+zE
+JG
+JG
+Ho
+Ho
+Ho
+Ua
+VE
+"}
+(31,1,1) = {"
+JG
+qA
+LK
+zE
+zE
+LK
+zE
+LK
+dX
+Jl
+fm
+zE
+zE
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+iv
+EN
+qj
+ru
+jx
+PC
+yc
+xd
+Hc
+Hc
+zQ
+BA
+ed
+Hc
+ed
+BA
+IT
+Hc
+ed
+MC
+yc
+yc
+uc
+jx
+qT
+jx
+CJ
+yc
+nr
+PB
+Kg
+qx
+Kg
+PB
+nr
+Lu
+Am
+jx
+jx
+ub
+SJ
+SJ
+kt
+UK
+jx
+gL
+QH
+zE
+nr
+PB
+PB
+PB
+io
+Ho
+Ho
+Pb
+hC
+"}
+(32,1,1) = {"
+JG
+JG
+aT
+aT
+Ms
+Ms
+Ms
+aT
+JG
+JG
+JG
+fm
+zE
+zE
+zE
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+EN
+qj
+ru
+jx
+Vl
+yc
+yc
+lc
+yc
+yc
+BQ
+yc
+yc
+yc
+Hf
+yc
+yc
+yc
+MF
+yc
+yc
+fv
+jx
+va
+jx
+yo
+yc
+Ho
+Ho
+JG
+JG
+JG
+JG
+nr
+Qj
+Am
+WM
+jx
+Fa
+jx
+jx
+sg
+jx
+jx
+nr
+nr
+zE
+PB
+JG
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+JG
+"}
+(33,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Jl
+fm
+zE
+zE
+Pv
+EN
+EN
+EN
+qj
+qj
+qj
+EN
+EN
+qm
+nr
+sz
+uu
+nr
+WF
+Zf
+yc
+Hw
+Zb
+Mb
+yc
+Fh
+Zb
+zF
+yc
+KE
+kq
+kh
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+nr
+nr
+PB
+PB
+PB
+PB
+nr
+nr
+Am
+bn
+jx
+Wp
+NS
+jx
+Md
+jx
+xt
+zE
+JG
+JG
+PB
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+JG
+"}
+(34,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+fm
+zE
+zE
+zE
+iv
+EN
+kv
+lc
+zE
+EN
+EN
+EN
+nr
+jR
+nr
+nr
+nr
+ko
+yc
+zU
+vh
+Dk
+yc
+zU
+vh
+Dk
+yc
+fz
+ZM
+Qm
+yc
+yl
+Ut
+Ss
+Ut
+yl
+yc
+yc
+yc
+Ho
+JG
+JG
+JG
+PB
+nr
+zE
+nr
+zE
+nr
+nr
+zE
+nr
+zE
+nr
+zE
+PB
+PB
+PB
+PB
+io
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+"}
+(35,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+IM
+fm
+zE
+zE
+zE
+zE
+lE
+zE
+EN
+EN
+EN
+EN
+wG
+Kp
+vR
+EN
+qj
+yc
+cu
+JJ
+DV
+yc
+Gu
+JJ
+Rg
+yc
+Il
+kq
+SJ
+yc
+rF
+UR
+rF
+rF
+rF
+PA
+BC
+yc
+Ho
+JG
+JG
+JG
+PB
+JG
+JG
+PB
+JG
+JG
+PB
+JG
+PB
+JG
+PB
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+JG
+Ho
+Ho
+JG
+JG
+"}
+(36,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Jl
+Jl
+jS
+zE
+ko
+zE
+EN
+EN
+EN
+EN
+EN
+Pv
+EN
+EN
+ka
+yc
+yc
+JS
+yc
+yc
+yc
+JS
+yc
+yc
+en
+MX
+ed
+RA
+jf
+Na
+eQ
+eQ
+eQ
+ZP
+Qw
+yc
+Ho
+Ho
+JG
+JG
+PB
+PB
+PB
+PB
+JG
+JG
+PB
+PB
+PB
+JG
+PB
+JG
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(37,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+kJ
+mm
+zE
+EN
+EN
+iv
+EN
+EN
+EN
+EN
+iv
+yC
+yc
+KV
+TJ
+WJ
+yc
+my
+TJ
+xm
+yc
+Il
+kq
+jx
+RJ
+SV
+eQ
+eQ
+eQ
+eQ
+Mc
+bu
+yc
+Ho
+Ho
+JG
+JG
+PB
+JG
+JG
+PB
+Ho
+Ho
+io
+Ho
+PB
+JG
+PB
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(38,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+PB
+mm
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+fz
+ZM
+wx
+yc
+zm
+WW
+WW
+Yi
+rF
+PA
+sD
+yc
+Ho
+Ho
+JG
+JG
+PB
+JG
+Ho
+io
+Ho
+Ho
+Ho
+Ho
+io
+Ho
+io
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(39,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Mt
+mm
+kJ
+IM
+IM
+IM
+IM
+IM
+IM
+IM
+IM
+IM
+Ho
+Ho
+yc
+Ud
+Ep
+WH
+xZ
+XZ
+JW
+La
+Ng
+Qs
+yc
+aO
+Vu
+WO
+Vu
+jx
+yc
+yc
+yc
+Ho
+JG
+JG
+JG
+io
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+pr
+bv
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(40,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+PB
+PB
+PB
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+yc
+Dn
+Vl
+rF
+rF
+Xu
+yc
+yc
+yc
+yc
+yc
+yA
+yc
+yc
+yc
+yc
+yc
+Ho
+Ho
+Ho
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+jG
+Ye
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(41,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+yc
+Sk
+kh
+wx
+wx
+UK
+yc
+fT
+by
+Nt
+Nt
+LU
+XK
+yc
+Ho
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(42,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+yc
+iE
+FY
+FY
+FY
+Rv
+yc
+Li
+Nm
+Qt
+Sb
+eR
+Vv
+yc
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+Ho
+Ho
+Ho
+Ho
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}
+(43,1,1) = {"
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+yc
+yc
+zE
+zE
+zE
+zE
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+yc
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+JG
+"}

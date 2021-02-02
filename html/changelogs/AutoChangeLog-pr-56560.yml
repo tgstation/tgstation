@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "Floors now properly select a destruction method to use when blown up"

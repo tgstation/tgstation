@@ -124,16 +124,18 @@
 		if(drop_the_gun_it_actually_fired) //We do it like this instead of directly checking chambered.BB here because process_fire will cycle the chamber.
 			user.dropItemToGround(src)
 		return TRUE
-	if(magazine.caliber == "38")
-		magazine.caliber = "357"
-		fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
-		desc = "A classic, if not outdated, law enforcement firearm. \nIt has been modified to fire .357 rounds."
-		to_chat(user, "<span class='notice'>You loosen the barrel of [src]. Now it will fire .357 rounds.</span>")
-	else
-		magazine.caliber = "38"
-		fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
-		desc = initial(desc)
-		to_chat(user, "<span class='notice'>You tighten the barrel of [src]. Now it will fire .38 rounds.</span>")
+
+	switch(magazine.caliber)
+		if(CALIBER_38)
+			magazine.caliber = CALIBER_357
+			fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+			desc = "A classic, if not outdated, law enforcement firearm. \nIt has been modified to fire .357 rounds."
+			to_chat(user, "<span class='notice'>You loosen the barrel of [src]. Now it will fire .357 rounds.</span>")
+		else
+			magazine.caliber = CALIBER_38
+			fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+			desc = initial(desc)
+			to_chat(user, "<span class='notice'>You tighten the barrel of [src]. Now it will fire .38 rounds.</span>")
 
 
 /obj/item/gun/ballistic/revolver/mateba

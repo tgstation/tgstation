@@ -141,7 +141,7 @@
 	using.hud = src
 	static_inventory += using
 
-//Combat Mode
+	//Combat Mode
 	action_intent = new /atom/movable/screen/combattoggle/robot()
 	action_intent.hud = src
 	action_intent.icon = ui_style

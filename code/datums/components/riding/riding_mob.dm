@@ -78,7 +78,11 @@
 /datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
 		return COMPONENT_DRIVER_BLOCK_MOVE
-
+	if(!keycheck(user))
+		if(ispath(keytype, /obj/item))
+			var/obj/item/key = keytype
+			to_chat(user, "<span class='warning'>You need a [initial(key.name)] to ride [movable_parent]!</span>")
+		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
 	var/turf/next = get_step(living_parent, direction)
 	step(living_parent, direction)

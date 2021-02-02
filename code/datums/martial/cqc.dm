@@ -12,6 +12,7 @@
 	smashes_tables = TRUE
 	var/old_grab_state = null
 	var/restraining = FALSE
+	display_combos = TRUE
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
 	. = ..()
