@@ -136,6 +136,16 @@
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	allowed_instrument_ids = "guitar"
 
+/obj/item/instrument/catguitar
+	name = "guitar"
+	desc = "It's made of wood and has bronze strings."
+	icon_state = "catguitar"
+	inhand_icon_state = "catguitar"
+	attack_verb_continuous = list("plays metal on", "serenades", "crashes", "smashes")
+	attack_verb_simple = list("play metal on", "serenade", "crash", "smash")
+	hitsound = 'sound/weapons/stringsmash.ogg'
+	allowed_instrument_ids = "meow"
+
 /obj/item/instrument/eguitar
 	name = "electric guitar"
 	desc = "Makes all your shredding needs possible."

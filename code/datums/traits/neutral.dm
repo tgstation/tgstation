@@ -312,6 +312,7 @@
 /datum/quirk/faux
 	name = "Faux Mask"
 	desc = "For the sake of RP, please do not use this trait. Thank you for understanding."
+	value = 0
 
 /datum/quirk/faux/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -321,3 +322,13 @@
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
 	H.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
+
+/datum/quirk/unholy
+	name = "Borrowed Time"
+	desc = "You feel your heart squeezing onto its last fibres of life."
+	value = 0
+	mob_trait = TRAIT_UNHOLY
+
+/datum/quirk/unholy/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.AddElement(/datum/element/unholy)

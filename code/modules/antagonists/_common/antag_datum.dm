@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
 	var/antag_hud_type
 	var/antag_hud_name
-
+	var/antag_flags = CAN_SEE_EXPOITABLE_INFO
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED

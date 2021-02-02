@@ -101,3 +101,15 @@ config/title_music/sounds/Funny2.ogg
 config/title_music/sounds/Funny2.ogg
 config/title_music/sounds/Raceway.ogg
 config/title_music/sounds/3D Galax.ogg
+config/title_music/sounds/23rd Century Life.ogg
+config/title_music/sounds/Whatever it means.ogg
+config/title_music/sounds/Hopeless Romantic.ogg
+config/title_music/sounds/Papillons.ogg
+config/title_music/sounds/Raceway.ogg
+config/title_music/sounds/Lil B Station.ogg
+config/title_music/sounds/Coastline.ogg
+config/title_music/sounds/Pamp radion.ogg
+config/title_music/sounds/Hopeless Romantic.ogg
+config/title_music/sounds/Bakamitai.ogg
+config/title_music/sounds/Neon Starlight.ogg
+config/title_music/sounds/It Was At That Point I Realised.ogg

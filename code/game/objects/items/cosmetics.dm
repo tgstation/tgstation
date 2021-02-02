@@ -99,6 +99,15 @@
 	else
 		..()
 
+/obj/item/smokingpipe
+	name = "vintage smoking pipe"
+	desc = "A vintage smoking pipe. It smells like blood."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "smokingpipe"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
+
 /obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."

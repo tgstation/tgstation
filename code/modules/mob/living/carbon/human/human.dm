@@ -219,6 +219,35 @@
 	spreadFire(AM)
 
 /mob/living/carbon/human/Topic(href, href_list)
+	. = ..()
+	if(href_list["general_records"])
+		if(client && usr.client.holder)
+			var/datum/browser/popup = new(usr, "[name]'s gen rec", "[name]'s General Record", 500, 200)
+			popup.set_content(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", "[name]'s general records", replacetext(client.prefs.general_records, "\n", "<BR>")))
+			popup.open()
+			return
+
+	if(href_list["security_records"])
+		if(client && usr.client.holder)
+			var/datum/browser/popup = new(usr, "[name]'s sec rec", "[name]'s Security Record", 500, 200)
+			popup.set_content(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", "[name]'s security records", replacetext(client.prefs.security_records, "\n", "<BR>")))
+			popup.open()
+			return
+
+	if(href_list["medical_records"])
+		if(client && usr.client.holder)
+			var/datum/browser/popup = new(usr, "[name]'s med rec", "[name]'s Medical Record", 500, 200)
+			popup.set_content(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", "[name]'s medical records", replacetext(client.prefs.medical_records, "\n", "<BR>")))
+			popup.open()
+			return
+
+	if(href_list["exploitable_info"])
+		if(client && (usr.client.holder || usr.mind?.antag_datums))
+			var/datum/browser/popup = new(usr, "[name]'s exp info", "[name]'s Exploitable Info", 500, 200)
+			popup.set_content(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", "[name]'s exploitable information", replacetext(client.prefs.exploitable_info, "\n", "<BR>")))
+			popup.open()
+			return
+
 	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)

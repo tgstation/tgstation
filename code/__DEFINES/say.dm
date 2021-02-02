@@ -87,6 +87,7 @@
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			1024
+#define MAX_FLAVOR_LEN			2048		//double the maximum message length.
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80

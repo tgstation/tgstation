@@ -476,3 +476,13 @@
 	backpack_contents = list(
 		/obj/item/gun/energy/laser/ghost=2,\
 		)
+
+/datum/outfit/prince
+	name = "Prince of Goats"
+	uniform = /obj/item/clothing/under/suit/prince
+	head = /obj/item/clothing/head/prince
+	neck = /obj/item/clothing/neck/cloak/prince
+	gloves = /obj/item/clothing/gloves/prince
+	shoes = /obj/item/clothing/shoes/prince
+	ears = /obj/item/radio/headset/headset_cent/commander
+	back = /obj/item/storage/backpack/invis

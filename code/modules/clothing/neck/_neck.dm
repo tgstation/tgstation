@@ -32,6 +32,26 @@
 	name = "red tie"
 	icon_state = "redtie"
 
+/obj/item/clothing/neck/tie/red/guirec
+	name = "Chief Engineer's tie"
+	resistance_flags = FIRE_PROOF
+	var/handled = FALSE
+
+/obj/item/clothing/neck/tie/red/guirec/equipped(mob/user, slot)
+	if(slot != ITEM_SLOT_NECK)
+		return
+	if(iscarbon(user) && !handled)
+		handled = TRUE
+		ADD_TRAIT(user, TRAIT_HOLY, "tie")
+		to_chat(user, "<span class='notice'>The tie glows around your neck.</span.?>")
+		user.AddElement(/datum/element/holy_light)
+
+/obj/item/clothing/neck/tie/red/guirec/dropped(mob/user)
+	if(handled)
+		handled = FALSE
+		REMOVE_TRAIT(user, TRAIT_HOLY, "cape")
+		user.RemoveElement(/datum/element/holy_light)
+
 /obj/item/clothing/neck/tie/black
 	name = "black tie"
 	icon_state = "blacktie"

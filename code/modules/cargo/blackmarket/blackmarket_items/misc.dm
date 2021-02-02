@@ -77,7 +77,7 @@
 	name = "Random Item"
 	desc = "Picking this will purchase a random item from our fourty seven packed warehouses! Most of these items aren't even on our main stock list, so roll the dice if you dare!"
 	item = /obj/effect/gibspawner/generic
-	price_min = 3000
+	price_min = 2000
 	price_max = 6000
 	availability_prob = 100
 	stock_min = 3
@@ -205,8 +205,7 @@
 	desc = "Perfect for any xenobiologist or geneticist who needs to get their science on! Not Quality Tested."
 	item = /mob/living/simple_animal/hostile/gorilla
 
-
-	price_min = 1000
+	price_min = 975
 	price_max = 1500
 	stock_min = 1
 	stock_max = 3

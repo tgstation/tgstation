@@ -538,43 +538,59 @@
 	icon_state = "fox"
 	inhand_icon_state = "fox"
 	var/handled = FALSE
-	strip_delay = 70
-	darkness_view = 4
+	strip_delay = 100
+	darkness_view = 5
+	var/old_hair
+	var/old_beard
+	var/old_beard_color
+	var/old_hair_color
+	var/old_name
 
-/obj/item/clothing/glasses/fox/examine(mob/user)
-	. = ..()
-	if(in_range(src, user) || isobserver(user))
-		. += "<span class='notice'>OOC: This item is only for Wallem, don't be cringe.</span.?>"
 
 /obj/item/clothing/glasses/fox/equipped(mob/user, slot)
 	if(slot != ITEM_SLOT_EYES)
 		return
-	var/mob/living/carbon/human/hairstyling = user
+	var/mob/living/carbon/human/H = user
 	if(user.gender == FEMALE)
+		old_hair = H.hairstyle
+		old_beard = H.facial_hairstyle
+		old_hair_color = H.hair_color
+		old_beard_color = H.facial_hair_color
+		old_name = H.real_name
 		user.gender = MALE
 		handled = TRUE
-		to_chat(user, "<span class='notice'>Your disguise is set.</span.?>")
-		hairstyling.hairstyle = "Business Hair 2"
-		hairstyling.facial_hairstyle = "Beard (Seven o Clock Shadow)"
-		hairstyling.hair_color = sanitize_hexcolor("#1E1D27")
-		hairstyling.facial_hair_color = sanitize_hexcolor("#1E1D27")
+		H.real_name = "Rob Vortex"
+		H.hairstyle = "Business Hair 2"
+		H.facial_hairstyle = "Beard (Seven o Clock Shadow)"
+		H.hair_color = sanitize_hexcolor("#1E1D27")
+		H.facial_hair_color = sanitize_hexcolor("#1E1D27")
 		user.update_hair()
+		icon_state = "red_glasses"
+		inhand_icon_state = "red_glasses"
+		name = "red glasses"
 		user.regenerate_icons()
+
+		to_chat(user, "<span class='notice'>Your disguise is set.</span.?>")
 
 /obj/item/clothing/glasses/fox/dropped(mob/user)
 	if(handled)
-		var/mob/living/carbon/human/hairstyling = user
+		var/mob/living/carbon/human/H = user
 		var/turf/T = get_turf(user)
 		if(user.gender == MALE)
 			user.gender = FEMALE
 			handled = FALSE
 			user.visible_message("<span class='boldnotice'>In a flash of light, the façade is broken!</span>", "<span class='boldwarning'>Your disguise has been revealed!</span>")
-			hairstyling.hairstyle = "Ponytail 3"
-			hairstyling.facial_hairstyle = "Shaved"
-			hairstyling.hair_color = sanitize_hexcolor("#DDDDDD")
-			hairstyling.update_hair()
-			user.regenerate_icons()
+			H.hairstyle = old_hair
+			H.facial_hairstyle = old_beard
+			H.hair_color = old_hair_color
+			H.facial_hair_color = old_beard_color
+			H.real_name = old_name
+			H.update_hair()
 			playsound(T, 'sound/effects/phasein.ogg', 40, TRUE)
 
 			for(var/mob/living/carbon/C in viewers(T, null))
 				C.flash_act()
+			icon_state = "fox"
+			inhand_icon_state = "fox"
+			name = "Fox Mask"
+			user.regenerate_icons()
