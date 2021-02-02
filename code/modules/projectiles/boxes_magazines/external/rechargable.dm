@@ -4,7 +4,7 @@
 	icon_state = "oldrifle-20"
 	base_icon_state = "oldrifle"
 	ammo_type = /obj/item/ammo_casing/caseless/laser
-	caliber = "laser"
+	caliber = CALIBER_LASER
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/recharge/update_desc()

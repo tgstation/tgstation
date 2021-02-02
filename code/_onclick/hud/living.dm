@@ -11,6 +11,9 @@
 	pull_icon.hud = src
 	static_inventory += pull_icon
 
+	combo_display = new /atom/movable/screen/combo()
+	infodisplay += combo_display
+
 	//mob health doll! assumes whatever sprite the mob is
 	healthdoll = new /atom/movable/screen/healthdoll/living()
 	healthdoll.hud = src

@@ -13422,6 +13422,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/button/door{
+	id = "Toilet1";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = 25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aGn" = (
@@ -13432,6 +13439,13 @@
 	dir = 8
 	},
 /obj/effect/landmark/blobstart,
+/obj/machinery/button/door{
+	id = "Toilet2";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = 25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aGo" = (
@@ -14255,12 +14269,14 @@
 /area/crew_quarters/toilet)
 "aHV" = (
 /obj/machinery/door/airlock{
+	id_tag = "Toilet1";
 	name = "Unit 1"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aHW" = (
 /obj/machinery/door/airlock{
+	id_tag = "Toilet2";
 	name = "Unit 2"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -20568,6 +20584,13 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/button/door{
+	id = "AuxToilet1";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/locker)
 "aZu" = (
@@ -20576,6 +20599,7 @@
 /area/bridge/meeting_room)
 "aZv" = (
 /obj/machinery/door/airlock{
+	id_tag = "AuxToilet1";
 	name = "Unit 1"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -21368,6 +21392,7 @@
 /area/security/execution/transfer)
 "bbL" = (
 /obj/machinery/door/airlock{
+	id_tag = "AuxToilet2";
 	name = "Unit 2"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -22035,6 +22060,7 @@
 /area/bridge/meeting_room)
 "bdJ" = (
 /obj/machinery/door/airlock{
+	id_tag = "AuxToilet3";
 	name = "Unit 3"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -22986,6 +23012,7 @@
 /area/science/research)
 "bgr" = (
 /obj/machinery/door/airlock{
+	id_tag = "AuxToilet4";
 	name = "Unit 4"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -46068,6 +46095,23 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"dyF" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "AuxToilet4";
+	id_tag = null;
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet/locker)
 "dyN" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
@@ -51485,6 +51529,22 @@
 /mob/living/simple_animal/hostile/carp/cayenne/lia,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
+"nZR" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "AuxToilet2";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet/locker)
 "ofT" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -55013,6 +55073,23 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"vwa" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "AuxToilet3";
+	id_tag = null;
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/crew_quarters/toilet/locker)
 "vwd" = (
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hor)
@@ -73293,11 +73370,11 @@ aPA
 aXQ
 aZt
 aXQ
-aZt
+nZR
 aXQ
-aZt
+vwa
 aXQ
-aZt
+dyF
 aXQ
 bgw
 bkF

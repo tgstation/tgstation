@@ -513,6 +513,11 @@
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
 	inhand_icon_state = "JackFrostShoes_worn"
+/obj/item/clothing/shoes/swagshoes
+	name = "swag shoes"
+	desc = "They got me for my foams!"
+	icon_state = "SwagShoes"
+	inhand_icon_state = "SwagShoes"
 
 /obj/item/clothing/shoes/gunboots //admin boots that fire gunshots randomly while walking
 	name = "gunboots"

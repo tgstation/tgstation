@@ -4,7 +4,7 @@
 	icon_state = "m12gb"
 	base_icon_state = "m12gb"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-	caliber = "shotgun"
+	caliber = CALIBER_SHOTGUN
 	max_ammo = 8
 
 /obj/item/ammo_box/magazine/m12g/update_icon_state()
