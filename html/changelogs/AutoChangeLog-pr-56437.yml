@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "The chef's CQC (close quarters cooking) ability is now imparted
+by a skillchip in their brain, similar to Station Engineer's skillchip
+for wire colours."

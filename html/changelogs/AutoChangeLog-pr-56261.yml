@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - bugfix: "fixed thermomachines still working even without power, apc off, in space etc..."
