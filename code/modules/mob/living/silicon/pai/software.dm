@@ -491,7 +491,7 @@
 /mob/living/silicon/pai/proc/softwareTranslator()
 	var/datum/language_holder/H = get_language_holder()
 	. = {"<h3>Universal Translator</h3><br>
-				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
+				When enabled, this device will permanently be able to speak and understand all known forms of communication.<br><br>
 				The device is currently [H.omnitongue ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[H.omnitongue ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 

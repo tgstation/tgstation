@@ -184,7 +184,7 @@
 	if(cell)
 		data["powerLevel"] = round(cell.percent(), 1)
 	data["targetTemp"] = round(targetTemperature - T0C, 1)
-	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
+	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange, TCMB) - T0C
 	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
 
 	var/turf/L = get_turf(loc)
