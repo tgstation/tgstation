@@ -3,7 +3,7 @@
 	var/max_tile_charge = 5
 	var/min_tile_charge = 2				//tiles before this code gets into effect.
 	var/current_tile_charge = 0
-	var/movement_reset_tolerance = 2			//deciseconds
+	var/movement_reset_tolerance = 3			//deciseconds
 	var/unmounted_damage_boost_per_tile = 0
 	var/unmounted_knockdown_chance_per_tile = 0
 	var/unmounted_knockdown_time = 0
