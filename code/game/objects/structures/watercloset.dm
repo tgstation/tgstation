@@ -377,10 +377,10 @@
 		return
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/C = O
+		var/obj/item/stack/sheet/cloth/cloth = O
 		new /obj/item/reagent_containers/glass/rag(loc)
 		to_chat(user, "<span class='notice'>You tear off a strip of cloth and make a rag.</span>")
-		C.use(1)
+		cloth.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/ore/glass))
@@ -562,10 +562,10 @@
 		return
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/C = O
+		var/obj/item/stack/sheet/cloth/cloth = O
 		new /obj/item/reagent_containers/glass/rag(loc)
 		to_chat(user, "<span class='notice'>You tear off a strip of cloth and make a rag.</span>")
-		C.use(1)
+		cloth.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/ore/glass))
