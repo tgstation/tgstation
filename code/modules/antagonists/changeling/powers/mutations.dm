@@ -280,7 +280,7 @@
 	name = "tentacle"
 	desc = "A tentacle."
 	projectile_type = /obj/projectile/tentacle
-	caliber = "tentacle"
+	caliber = CALIBER_TENTACLE
 	icon_state = "tentacle_end"
 	firing_effect_type = null
 	var/obj/item/gun/magic/tentacle/gun //the item that shot it

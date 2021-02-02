@@ -144,6 +144,7 @@
 				cloud_program["rules"] = rules
 				if(LAZYLEN(rules))
 					cloud_program["has_rules"] = TRUE
+				cloud_program["all_rules_required"] = P.all_rules_required
 
 				var/list/extra_settings = P.get_extra_settings_frontend()
 				cloud_program["extra_settings"] = extra_settings
@@ -233,6 +234,15 @@
 
 				investigate_log("[key_name(usr)] removed rule [rule.display()] from program [P.name] in cloud #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
+		if("toggle_rule_logic")
+			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
+			if(backup)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
+				var/datum/component/nanites/nanites = backup.nanites
+				var/datum/nanite_program/P = nanites.programs[text2num(params["program_id"])]
+				P.all_rules_required = !P.all_rules_required
+				investigate_log("[key_name(usr)] edited rule logic for program [P.name] into [P.all_rules_required ? "All" : "Any"] in cloud #[current_view]", INVESTIGATE_NANITES)
+				. = TRUE
 
 /datum/nanite_cloud_backup
 	var/cloud_id = 0
