@@ -99,7 +99,6 @@
 		temp.react(src)
 
 	var/pressure = temp.return_pressure()
-	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
 		return 0
 	return ((pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE)
