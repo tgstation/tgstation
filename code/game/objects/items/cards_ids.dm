@@ -71,18 +71,29 @@
 	slot_flags = ITEM_SLOT_ID
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/mining_points = 0 //For redeeming at mining equipment vendors
-	///The stuff that makes you open doors and shit
-	var/list/access = list()
-	///Access that cannot be removed by the ID console. Do not add access levels that are actually visible in the console here if a HoP knowing what kind of ID he's modifying is a concern.
-	var/list/sticky_access
+
+	/// How many magical mining Disney Dollars this card has for spending at the mining equipment vendors.
+	var/mining_points = 0
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
-	/// The job name registered on the card (for example: Assistant). In /card/id/advanced types, this trim can modify the appearance of the card.
-	var/trim = null
+	/// Linked bank account.
 	var/datum/bank_account/registered_account
+	/// Linked paystand.
 	var/obj/machinery/paystand/my_store
-	var/registered_age = 13 // default age for ss13 players
+	/// Registered owner's age.
+	var/registered_age = 13
+
+	/// The job name registered on the card (for example: Assistant).
+	var/assignment
+
+	/// Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.
+	var/datum/id_trim/trim = null
+
+	/// Access levels held by this card.
+	var/list/access = list()
+
+	/// List of access flag keys to number values controlling how many and which wildcards this card can have. Can have negative values if wildcards are forced onto cards.
+	var/list/wildcard_limits = list()
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -96,6 +107,47 @@
 		my_store.my_card = null
 	return ..()
 
+/obj/item/card/id/proc/can_add_wildcards(list/wildcard_list)
+	var/list/new_limits = wildcard_limits.Copy()
+
+	var/wildcard_allocated
+	for(var/wildcard in wildcard_list)
+		var/wildcard_flag = SSid_access.access_to_flag(wildcard)
+		wildcard_allocated = FALSE
+		for(var/limit_flag in new_limits)
+			if(!(wildcard_flag & limit_flag))
+				continue
+			if(new_limits[limit_flag] <= 0)
+				continue
+			new_limits[limit_flag]--
+			wildcard_allocated = TRUE
+			break
+		if(!wildcard_allocated)
+			return FALSE
+
+	return TRUE
+
+/obj/item/card/id/proc/add_wildcards(list/wildcard_list, force = FALSE)
+	var/wildcard_allocated
+	for(var/wildcard in wildcard_list)
+		var/wildcard_flag = SSid_access.access_to_flag(wildcard)
+		wildcard_allocated = FALSE
+		for(var/limit_flag in wildcard_limits)
+			if(!(wildcard_flag & limit_flag))
+				continue
+			if(wildcard_limits[limit_flag] <= 0)
+				continue
+			wildcard_limits[limit_flag]--
+			access += wildcard
+			wildcard_allocated = TRUE
+			break
+		if(!wildcard_allocated)
+			if(!force)
+				stack_trace("Wildcard could not be added to [src]. Use force = TRUE to force wildcard addition anyway.")
+				continue
+			wildcard_limits[wildcard_flag]--
+			access += wildcard
+
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
 		var/minor
@@ -108,8 +160,10 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if(NAMEOF(src, trim), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
+			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
+			if(NAMEOF(src, trim))
+				trim.apply_to_card(src)
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/holochip))
@@ -404,7 +458,11 @@
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, assigned_icon_state)
 
-	. += mutable_appearance(icon, SSid_access.title_to_trim_icon(trim))
+
+	if(!(trim?.trim_state))
+		return
+
+	. += mutable_appearance(trim.trim_icon, trim.trim_state)
 
 /obj/item/card/id/advanced/update_label()
 	. = ..()
@@ -431,7 +489,7 @@
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	sticky_access = list(ACCESS_SYNDICATE)
+	//sticky_access = list(ACCESS_SYNDICATE)
 	///Can anyone forge the ID or just syndicate?
 	var/anyone = FALSE
 	///have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
@@ -530,7 +588,7 @@
 /obj/item/card/id/advanced/chameleon/nuke_leader
 	name = "lead agent card"
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
-	sticky_access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
+	//sticky_access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
@@ -640,7 +698,7 @@
 	trim = "Syndicate Overlord"
 	icon_state = "card_black"
 	access = list(ACCESS_SYNDICATE)
-	sticky_access = list(ACCESS_SYNDICATE)
+	//sticky_access = list(ACCESS_SYNDICATE)
 	registered_age = null
 
 /obj/item/card/id/advanced/black/syndicate_command/crew_id
@@ -649,7 +707,7 @@
 	registered_name = "Syndicate"
 	trim = "Syndicate Operative"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	sticky_access = list(ACCESS_SYNDICATE)
+	//sticky_access = list(ACCESS_SYNDICATE)
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	name = "syndicate captain ID card"
@@ -657,7 +715,7 @@
 	registered_name = "Syndicate"
 	trim = "Syndicate Ship Captain"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	sticky_access = list(ACCESS_SYNDICATE)
+	//sticky_access = list(ACCESS_SYNDICATE)
 
 /obj/item/card/id/advanced/black/deathsquad/Initialize(mapload)
 	. = ..()

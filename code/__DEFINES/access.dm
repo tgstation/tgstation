@@ -150,3 +150,56 @@
 	log_game("[key_name(user)] [change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]"); \
 	user.investigate_log("([key_name(user)]) [change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", INVESTIGATE_ACCESSCHANGES); \
 	user.log_message("[change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", LOG_GAME); \
+
+#define ACCESS_FLAG_COMMON 		(1 << 0)
+#define ACCESS_FLAG_COMMAND		((1 << 1) | ACCESS_FLAG_COMMON)
+#define ACCESS_FLAG_PRV_COMMAND	((1 << 2) | ACCESS_FLAG_COMMAND)
+#define ACCESS_FLAG_CAPTAIN		((1 << 3) | ACCESS_FLAG_PRV_COMMAND)
+#define ACCESS_FLAG_CENTCOM		((1 << 4) | ACCESS_FLAG_CAPTAIN)
+/// Flag for syndicate wildcard accesses
+#define ACCESS_FLAG_SYNDICATE	((1 << 5) | ACCESS_FLAG_CAPTAIN)
+/// Flag for away mission wildcard accesses.
+#define ACCESS_FLAG_AWAY		(1 << 6)
+/// Flag for special accesses that should not ordinarily go on ID cards.
+#define ACCESS_FLAG_SPECIAL		(1 << 7)
+
+/// Departmental/general/common area accesses
+#define COMMON_ACCESS 			list(ACCESS_MECH_MINING, ACCESS_MECH_MEDICAL, ACCESS_MECH_SECURITY, ACCESS_MECH_SCIENCE, \
+								ACCESS_MECH_ENGINE, ACCESS_AUX_BASE, ACCESS_PSYCHOLOGY, ACCESS_PHARMACY, ACCESS_NETWORK, \
+								ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM, ACCESS_SEC_DOORS, ACCESS_XENOBIOLOGY, \
+								ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_RESEARCH, ACCESS_THEATRE, \
+								ACCESS_SURGERY, ACCESS_COURT, ACCESS_QM, ACCESS_VIROLOGY, ACCESS_LAWYER, ACCESS_LIBRARY, \
+								ACCESS_HYDROPONICS, ACCESS_CHEMISTRY, ACCESS_CONSTRUCTION, ACCESS_CARGO, ACCESS_ROBOTICS, \
+								ACCESS_KITCHEN, ACCESS_CREMATORIUM, ACCESS_JANITOR, ACCESS_BAR, ACCESS_CHAPEL_OFFICE, \
+								ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MAINT_TUNNELS, ACCESS_ENGINE_EQUIP, ACCESS_ENGINE, \
+								ACCESS_GENETICS, ACCESS_RND, ACCESS_MORGUE, ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS, \
+								ACCESS_BRIG, ACCESS_SECURITY)
+/// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves.
+#define COMMAND_ACCESS 			list(ACCESS_TOXINS_STORAGE, ACCESS_MINISAT, ACCESS_TCOMSAT, ACCESS_KEYCARD_AUTH, \
+								ACCESS_RC_ANNOUNCE, ACCESS_VAULT, ACCESS_ATMOSPHERICS, ACCESS_TECH_STORAGE, ACCESS_HEADS, \
+								ACCESS_TELEPORTER, ACCESS_ARMORY, ACCESS_AI_UPLOAD, ACCESS_CHANGE_IDS, ACCESS_TOXINS, \
+								ACCESS_EVA, ACCESS_GATEWAY, ACCESS_ALL_PERSONAL_LOCKERS)
+/// Private head of staff offices, usually only granted to most cards by trimming
+#define PRIVATE_COMMAND_ACCESS 	list(ACCESS_HOS, ACCESS_HOP, ACCESS_CE, ACCESS_CMO, ACCESS_RD)
+/// Captains private rooms.
+#define CAPTAIN_ACCESS 			list(ACCESS_CAPTAIN)
+/// Centcomm area stuff
+#define CENTCOM_ACCESS 			list(ACCESS_CENT_BAR, ACCESS_CENT_CAPTAIN, ACCESS_CENT_TELEPORTER, ACCESS_CENT_STORAGE,\
+								ACCESS_CENT_LIVING, ACCESS_CENT_MEDICAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_THUNDER, \
+								ACCESS_CENT_GENERAL)
+/// Syndicate areas off station
+#define SYNDICATE_ACCESS 		list(ACCESS_SYNDICATE_LEADER, ACCESS_SYNDICATE)
+/// Away missions/gateway
+#define AWAY_ACCESS 			list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_MED, ACCESS_AWAY_SEC, ACCESS_AWAY_ENGINE, \
+								ACCESS_AWAY_GENERIC1, ACCESS_AWAY_GENERIC2, ACCESS_AWAY_GENERIC3, ACCESS_AWAY_GENERIC4)
+/// Special
+#define CULT_ACCESS 			list(ACCESS_BLOODCULT)
+
+#define ACCESS_REGION_ALL				0
+#define ACCESS_REGION_GENERAL			1
+#define ACCESS_REGION_SECURITY			2
+#define ACCESS_REGION_MEDBAY			3
+#define ACCESS_REGION_RESEARCH			4
+#define ACCESS_REGION_ENGINEERING		5
+#define ACCESS_REGION_SUPPLY			6
+#define ACCESS_REGION_COMMAND			7
