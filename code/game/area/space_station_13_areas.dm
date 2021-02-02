@@ -261,44 +261,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/space_hut/observatory
 	name = "Space Observatory"
 
-/area/maintenance/tram
-	name = "Primary Tram Maintenance"
-
-/area/maintenance/tram/left
-	name = "Port Tram Underpass"
-	icon_state = "mainttramL"
-
-/area/maintenance/tram/mid
-	name = "Central Tram Underpass"
-	icon_state = "mainttramM"
-
-/area/maintenance/tram/right
-	name = "Starboard Tram Underpass"
-	icon_state = "mainttramR"
-
-//Radation storm shelter
-/area/maintenance/radshelter
-	name = "Radstorm Shelter"
-	icon_state = "green"
-
-/area/maintenance/radshelter/medical
-	name = "Medical Radstorm Shelter"
-
-/area/maintenance/radshelter/sec
-	name = "Security Radstorm Shelter"
-
-/area/maintenance/radshelter/service
-	name = "Service Radstorm Shelter"
-
-/area/maintenance/radshelter/civil
-	name = "Civilian Radstorm Shelter"
-
-/area/maintenance/radshelter/sci
-	name = "Science Radstorm Shelter"
-
-/area/maintenance/radshelter/cargo
-	name = "Cargo Radstorm Shelter"
-
 //Hallway
 /area/hallway
 	sound_environment = SOUND_AREA_STANDARD_STATION
@@ -329,21 +291,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/primary/upper
 	name = "Upper Central Primary Hallway"
 	icon_state = "hallC"
-
-/area/hallway/primary/tram
-	name = "Primary Tram"
-
-/area/hallway/primary/tram/left
-	name = "Port Tram Dock"
-	icon_state = "halltramL"
-
-/area/hallway/primary/tram/center
-	name = "Central Tram Dock"
-	icon_state = "halltramM"
-
-/area/hallway/primary/tram/right
-	name = "Starboard Tram Dock"
-	icon_state = "halltramR"
 
 /area/hallway/secondary/command
 	name = "Command Hallway"
