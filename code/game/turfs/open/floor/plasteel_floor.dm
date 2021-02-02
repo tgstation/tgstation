@@ -225,6 +225,10 @@
 /turf/open/floor/plasteel/elevatorshaft
 	icon_state = "elevatorshaft"
 	base_icon_state = "elevatorshaft"
+	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 
 /turf/open/floor/plasteel/bluespace
 	icon_state = "bluespace"
