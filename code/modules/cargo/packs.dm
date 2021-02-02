@@ -2686,14 +2686,14 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/assist,
 					/obj/item/vending_refill/youtool)
-	crate_name = "vendomat & youtool supply crate"
+	crate_name = "Vendomat & YouTool supply crate"
 
 /datum/supply_pack/vending/clothesmate
 	name = "ClothesMate Supply Crate"
 	desc = "Out of cowboy boots? Buy this."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/clothing)
-	crate_name = "clothesmate supply crate"
+	crate_name = "ClothesMate supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Clothing Vending Restocks ////////////////////////////
