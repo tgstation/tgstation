@@ -74,11 +74,11 @@
 		brute_healed += round((target.getBruteLoss() * (brute_multiplier * 0.2)),0.1)
 		burn_healed += round((target.getFireLoss() * (burn_multiplier * 0.2)),0.1)
 	if(!get_location_accessible(target, target_zone))
-		urhealedamt_brute *= 0.55
-		urhealedamt_burn *= 0.55
+		brute_healed *= 0.55
+		burn_healed *= 0.55
 		umsg += " as best as you can while [target.p_they()] [target.p_have()] clothing on"
 		tmsg += " as best as [user.p_they()] can while [target.p_they()] [target.p_have()] clothing on"
-	target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)
+	target.heal_bodypart_damage(brute_healed,burn_healed)
 
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
@@ -96,7 +96,6 @@
 	var/burn_dealt = burnhealing * 0.8
 	brute_dealt	+= round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
 	burn_dealt += round((target.getFireLoss() * (burn_multiplier * 0.5)),0.1)
-
 	target.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus=CANT_WOUND)
 	return FALSE
 
