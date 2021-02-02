@@ -26,9 +26,9 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("Special Ops Officer")
-	W.trim = "Special Ops Officer"
+	//W.access = get_all_accesses()
+	//W.access += get_centcom_access("Special Ops Officer")
+	//W.trim = "Special Ops Officer"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -169,8 +169,8 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.trim = "Tunnel Clown!"
+	//W.access = get_all_accesses()
+	//W.trim = "Tunnel Clown!"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -206,7 +206,8 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
-	id = /obj/item/card/id/advanced/chameleon
+	// TIMBERTODO - NEW CLOWN OP ID CARD
+	id = /obj/item/card/id
 	belt = /obj/item/pda/heads
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -232,9 +233,10 @@
 	pda.ownjob = "Reaper"
 	pda.update_label()
 
-	var/obj/item/card/id/advanced/chameleon/W = H.wear_id
-	W.access = get_all_accesses()
-	W.trim = "Reaper"
+	// TIMBERTODO WHAT THE FUCK IS THIS
+	// var/obj/item/card/id/W = H.wear_id
+	// W.access = get_all_accesses()
+	// W.trim = "Reaper"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -260,9 +262,9 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("CentCom Commander")
-	W.trim = "CentCom Commander"
+	// W.access = get_all_accesses()
+	// W.access += get_centcom_access("CentCom Commander")
+	// W.trim = "CentCom Commander"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
@@ -336,9 +338,9 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("Admiral")
-	W.trim = "Admiral"
+	// W.access = get_all_accesses()
+	// W.access += get_centcom_access("Admiral")
+	// W.trim = "Admiral"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
@@ -360,7 +362,7 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.trim = "Assistant"
+	//W.trim = "Assistant"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -409,9 +411,9 @@
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()//They get full station access.
-	W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
-	W.trim = "Death Commando"
+	// W.access = get_all_accesses()//They get full station access.
+	// W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
+	// W.trim = "Death Commando"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()

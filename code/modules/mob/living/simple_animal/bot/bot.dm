@@ -153,8 +153,8 @@
 	. = ..()
 	GLOB.bots_list += src
 	access_card = new /obj/item/card/id(src)
-//This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
-	access_card.access += ACCESS_ROBOTICS
+	//This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
+	access_card.add_access(ACCESS_ROBOTICS)
 	set_custom_texts()
 	Radio = new/obj/item/radio(src)
 	if(radio_key)
@@ -552,7 +552,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/check_bot_access()
 	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
-		access_card.access = prev_access
+		access_card.set_access(prev_access)
 
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
@@ -560,7 +560,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	//For giving the bot temporary all-access.
 	var/obj/item/card/id/all_access = new /obj/item/card/id
 	var/datum/job/captain/All = new/datum/job/captain
-	all_access.access = All.get_access()
+	// TIMBERTODO MAKE THIS LESS SHIT
+	//all_access.access = All.get_access()
 
 	set_path(get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access))
 	calling_ai = caller //Link the AI to the bot!
@@ -604,7 +605,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	set_path(null)
 	summon_target = null
 	pathset = 0
-	access_card.access = prev_access
+	access_card.set_access(prev_access)
 	tries = 0
 	mode = BOT_IDLE
 	diag_hud_set_botstat()
@@ -742,7 +743,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			bot_reset()
 			summon_target = get_turf(user)
 			if(user_access.len != 0)
-				access_card.access = user_access + prev_access //Adds the user's access, if any.
+				access_card.set_access(user_access + prev_access) //Adds the user's access, if any.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
 			calc_summon_path()
@@ -995,7 +996,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	access_card.access += player_access
+	access_card.add_access(player_access)
 	diag_hud_set_botmode()
 
 /mob/living/simple_animal/bot/Logout()

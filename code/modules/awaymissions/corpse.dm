@@ -247,14 +247,15 @@
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
 				if(J.title == id_access)
-					W.access = J.get_access()
+				// TIMBERTODO UNFUCK THIS SHIT TOO
+					W.timberpoes_access = J.get_access()
 					break
 		if(id_access_list)
-			if(!islist(W.access))
-				W.access = list()
-			W.access |= id_access_list
+			if(!islist(W.timberpoes_access))
+				W.timberpoes_access = list()
+			W.timberpoes_access |= id_access_list
 		if(id_job)
-			W.trim = id_job
+			W.assignment = id_job
 		W.registered_name = H.real_name
 		W.update_label()
 

@@ -227,7 +227,7 @@
 				active1 = null
 				active2 = null
 				authenticated = I.registered_name
-				rank = I.trim
+				rank = I.assignment
 				screen = 1
 			else
 				to_chat(usr, "<span class='danger'>Unauthorized access.</span>")

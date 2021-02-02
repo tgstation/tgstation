@@ -107,8 +107,8 @@
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
 	var/datum/job/paramedic/J = new /datum/job/paramedic
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	access_card.add_access(J.get_access())
+	prev_access = access_card.timberpoes_access
 	qdel(J)
 	skin = new_skin
 	update_icon()

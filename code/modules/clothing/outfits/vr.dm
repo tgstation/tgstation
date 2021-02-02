@@ -10,8 +10,8 @@
 
 /datum/outfit/vr/post_equip(mob/living/carbon/human/H)
 	var/obj/item/card/id/id = H.wear_id
-	if (istype(id))
-		id.access |= get_all_accesses()
+	//if (istype(id))
+		//id.access |= get_all_accesses()
 
 /datum/outfit/vr/syndicate
 	name = "Syndicate VR Operative - Basic"
@@ -19,7 +19,8 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	back = /obj/item/storage/backpack
-	id = /obj/item/card/id/advanced/chameleon
+	// TIMBERTODO - NEW CLOWN OP ID CARD
+	id = /obj/item/card/id
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	l_pocket = /obj/item/paper/fluff/vr/fluke_ops
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\

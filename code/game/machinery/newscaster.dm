@@ -818,7 +818,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(!id_card)
 			scanned_user ="Unknown"
 			return
-		scanned_user = "[id_card.registered_name] ([id_card.trim])"
+		scanned_user = "[id_card.registered_name] ([id_card.assignment])"
 	else if(issilicon(user))
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"

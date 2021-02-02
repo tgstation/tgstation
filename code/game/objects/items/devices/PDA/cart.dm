@@ -626,7 +626,7 @@ Code:
 			host_pda.mode = 53
 
 		if("Newscaster Message")
-			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.trim])" : "Unknown"
+			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
 			var/message = host_pda.msg_input()
 			var/datum/newscaster/feed_channel/current
 			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)

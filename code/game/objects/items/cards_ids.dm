@@ -87,17 +87,23 @@
 	var/assignment
 
 	/// Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.
-	var/datum/id_trim/trim = null
+	var/datum/id_trim/timberpoes_trim
 
 	/// Access levels held by this card.
-	var/list/access = list()
+	var/list/timberpoes_access = list()
 
 	/// List of access flag keys to number values controlling how many and which wildcards this card can have. Can have negative values if wildcards are forced onto cards.
 	var/list/wildcard_limits = list()
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
+
+	if(ispath(timberpoes_trim))
+		var/datum/new_trim = SSid_access.get_trim(timberpoes_trim)
+		new_trim.apply_to_card(src)
+
 	update_label()
+
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
 /obj/item/card/id/Destroy()
@@ -112,7 +118,7 @@
 
 	var/wildcard_allocated
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = SSid_access.access_to_flag(wildcard)
+		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/limit_flag in new_limits)
 			if(!(wildcard_flag & limit_flag))
@@ -130,7 +136,7 @@
 /obj/item/card/id/proc/add_wildcards(list/wildcard_list, force = FALSE)
 	var/wildcard_allocated
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = SSid_access.access_to_flag(wildcard)
+		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/limit_flag in wildcard_limits)
 			if(!(wildcard_flag & limit_flag))
@@ -138,7 +144,7 @@
 			if(wildcard_limits[limit_flag] <= 0)
 				continue
 			wildcard_limits[limit_flag]--
-			access += wildcard
+			timberpoes_access += wildcard
 			wildcard_allocated = TRUE
 			break
 		if(!wildcard_allocated)
@@ -146,7 +152,11 @@
 				stack_trace("Wildcard could not be added to [src]. Use force = TRUE to force wildcard addition anyway.")
 				continue
 			wildcard_limits[wildcard_flag]--
-			access += wildcard
+			timberpoes_access += wildcard
+
+/obj/item/card/id/proc/add_access()
+/obj/item/card/id/proc/remove_access()
+/obj/item/card/id/proc/set_access()
 
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
@@ -162,8 +172,8 @@
 		switch(var_name)
 			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
-			if(NAMEOF(src, trim))
-				trim.apply_to_card(src)
+			if(NAMEOF(src, timberpoes_trim))
+				timberpoes_trim.apply_to_card(src)
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/holochip))
@@ -331,7 +341,7 @@
 	return msg
 
 /obj/item/card/id/GetAccess()
-	return access
+	return timberpoes_access
 
 /obj/item/card/id/GetID()
 	return src
@@ -350,50 +360,71 @@
 
 /obj/item/card/id/proc/update_label()
 	var/blank = !registered_name
-	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!trim) ? "" : " ([trim])"]"
+	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+
+/datum/id_trim/away
+	basic_access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	access = list(ACCESS_AWAY_GENERAL)
+	trim = /datum/id_trim/away
 	icon_state = "retro"
 	registered_age = null
+
+/datum/id_trim/away/hotel
+	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
 
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
+	trim = /datum/id_trim/away/hotel
+
+/datum/id_trim/away/hotel/security
+	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/hotel/securty
 	name = "Officer ID"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
+	trim = /datum/id_trim/away/hotel/security
 
 /obj/item/card/id/away/old
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
 
+/datum/id_trim/away/old/sec
+	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
+	assignment = "Charlie Station Security Officer"
+
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	trim = "Charlie Station Security Officer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
+	trim = /datum/id_trim/away/old/sec
+
+/datum/id_trim/away/old/sci
+	basic_access = list(ACCESS_AWAY_GENERAL)
+	assignment = "Charlie Station Scientist"
 
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	trim = "Charlie Station Scientist"
-	access = list(ACCESS_AWAY_GENERAL)
+	trim = /datum/id_trim/away/old/sci
+
+/datum/id_trim/away/old/end
+	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
+	assignment = "Charlie Station Engineer"
 
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	trim = "Charlie Station Engineer"
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
+	trim = /datum/id_trim/away/old/eng
+
+/datum/id_trim/away/old/apc
+	basic_access = list(ACCESS_ENGINE_EQUIP)
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
-	access = list(ACCESS_ENGINE_EQUIP)
+	trim = /datum/id_trim/away/old/apc
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
@@ -459,10 +490,10 @@
 		. += mutable_appearance(icon, assigned_icon_state)
 
 
-	if(!(trim?.trim_state))
+	if(!(timberpoes_trim?.trim_state))
 		return
 
-	. += mutable_appearance(trim.trim_icon, trim.trim_state)
+	. += mutable_appearance(timberpoes_trim.trim_icon, timberpoes_trim.trim_state)
 
 /obj/item/card/id/advanced/update_label()
 	. = ..()
@@ -474,10 +505,14 @@
 	icon_state = "card_silver"
 	inhand_icon_state = "silver_id"
 
+/datum/id_trim/maint_reaper
+	basic_access = list(ACCESS_MAINT_TUNNELS)
+	trim_state = "trim_janitor"
+	assignment = "Reaper"
+
 /obj/item/card/id/advanced/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
-	access = list(ACCESS_MAINT_TUNNELS)
-	trim = "Reaper"
+	trim = /datum/id_trim/maint_reaper
 	registered_name = "Thirteen"
 
 /obj/item/card/id/advanced/gold
@@ -486,125 +521,30 @@
 	icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
 
-/obj/item/card/id/advanced/chameleon
-	name = "agent card"
-	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
-	//sticky_access = list(ACCESS_SYNDICATE)
-	///Can anyone forge the ID or just syndicate?
-	var/anyone = FALSE
-	///have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
-	var/forged = FALSE
-	/// The name var of the ID we've forged.
-	var/forged_card_name
+/datum/id_trim/captains_spare
+	trim_state = "trim_captain"
+	assignment = "Captain"
 
-/obj/item/card/id/advanced/chameleon/Initialize()
+/datum/id_trim/captains_spare/Initialize()
+	var/datum/job/captain/J = new/datum/job/captain
+	basic_access = J.get_access()
 	. = ..()
-	var/datum/action/item_action/chameleon/change/id/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/card/id/advanced
-	chameleon_action.chameleon_name = "ID Card"
-	chameleon_action.initialize_disguises()
-
-/obj/item/card/id/advanced/chameleon/update_label()
-	var/blank = !registered_name
-	name = "[blank ? forged_card_name : "[registered_name]'s ID Card"][(!trim) ? "" : " ([trim])"]"
-	update_icon()
-
-/obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
-	if(!proximity)
-		return
-	if(istype(O, /obj/item/card/id))
-		var/obj/item/card/id/I = O
-		src.access |= I.access
-		if(isliving(user) && user.mind)
-			if(user.mind.special_role || anyone)
-				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
-
-/obj/item/card/id/advanced/chameleon/attack_self(mob/user)
-	if(isliving(user) && user.mind)
-		var/first_use = registered_name ? FALSE : TRUE
-		if(!(user.mind.special_role || anyone)) //Unless anyone is allowed, only syndies can use the card, to stop metagaming.
-			if(first_use) //If a non-syndie is the first to forge an unassigned agent ID, then anyone can forge it.
-				anyone = TRUE
-			else
-				return ..()
-
-		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
-		if(user.incapacitated())
-			return
-		if(popup_input == "Forge/Reset" && !forged)
-			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-			input_name = sanitize_name(input_name)
-			if(!input_name)
-				// Invalid/blank names give a randomly generated one.
-				if(user.gender == MALE)
-					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-				else if(user.gender == FEMALE)
-					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
-				else
-					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
-
-			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", trim ? trim : "Assistant", MAX_MESSAGE_LEN)
-			if(!target_occupation)
-				return
-
-			var/newAge = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
-			if(newAge)
-				registered_age = max(round(text2num(newAge)), 0)
-
-			registered_name = input_name
-			trim = target_occupation
-			update_label()
-			forged = TRUE
-			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[trim]\".")
-
-			// First time use automatically sets the account id to the user.
-			if (first_use && !registered_account)
-				if(ishuman(user))
-					var/mob/living/carbon/human/accountowner = user
-
-					var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
-					if(account)
-						account.bank_cards += src
-						registered_account = account
-						to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
-			return
-		else if (popup_input == "Forge/Reset" && forged)
-			registered_name = initial(registered_name)
-			trim = initial(trim)
-			log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
-			update_label()
-			forged = FALSE
-			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
-			return
-		else if (popup_input == "Change Account ID")
-			set_new_account(user)
-			return
-	return ..()
-
-/obj/item/card/id/advanced/chameleon/anyone
-	anyone = TRUE
-
-/obj/item/card/id/advanced/chameleon/nuke_leader
-	name = "lead agent card"
-	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
-	//sticky_access = list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	registered_name = "Captain"
-	trim = "Captain"
+	trim = /datum/id_trim/captains_spare
 	registered_age = null
 
 /obj/item/card/id/advanced/gold/captains_spare/Initialize()
-	var/datum/job/captain/J = new/datum/job/captain
-	access = J.get_access()
+	//var/datum/job/captain/J = new/datum/job/captain
+	//access = J.get_access()
 	. = ..()
 
 /obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
-		name = "[initial(name)][(!trim || trim == "Captain") ? "" : " ([trim])"]"
+		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
 		update_icon()
 	else
 		..()
@@ -615,11 +555,11 @@
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	registered_name = "Central Command"
-	trim = "Central Command"
+	//assignment = "Central Command"
 	registered_age = null
 
 /obj/item/card/id/advanced/centcom/Initialize()
-	access = get_all_centcom_access()
+	//access = get_all_centcom_access()
 	. = ..()
 
 /obj/item/card/id/advanced/centcom/ert
@@ -629,55 +569,55 @@
 
 /obj/item/card/id/advanced/centcom/ert/Initialize()
 	. = ..()
-	access = get_all_accesses() - ACCESS_CHANGE_IDS
+	//access = get_all_accesses() - ACCESS_CHANGE_IDS
 
 /obj/item/card/id/advanced/centcom/ert/commander
 	registered_name = "Emergency Response Team Commander"
-	trim = "Emergency Response Team Commander"
+	//assignment = "Emergency Response Team Commander"
 
 /obj/item/card/id/advanced/centcom/ert/commander/Initialize()
 	. = ..()
-	access += get_ert_access("commander")
+	//access += get_ert_access("commander")
 
 /obj/item/card/id/advanced/centcom/ert/security
 	registered_name = "Security Response Officer"
-	trim = "Security Response Officer"
+	//assignment = "Security Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/security/Initialize()
 	. = ..()
-	access += get_ert_access("sec")
+	//access += get_ert_access("sec")
 
 /obj/item/card/id/advanced/centcom/ert/engineer
 	registered_name = "Engineering Response Officer"
-	trim = "Engineering Response Officer"
+	//assignment = "Engineering Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/engineer/Initialize()
 	. = ..()
-	access += get_ert_access("eng")
+	//access += get_ert_access("eng")
 
 /obj/item/card/id/advanced/centcom/ert/medical
 	registered_name = "Medical Response Officer"
-	trim = "Medical Response Officer"
+	//assignment = "Medical Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/medical/Initialize()
 	. = ..()
-	access |= get_ert_access("med")
+	//access |= get_ert_access("med")
 
 /obj/item/card/id/advanced/centcom/ert/chaplain
 	registered_name = "Religious Response Officer"
-	trim = "Religious Response Officer"
+	//assignment = "Religious Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/chaplain/Initialize()
 	. = ..()
-	access |= get_ert_access("sec")
+	//access |= get_ert_access("sec")
 
 /obj/item/card/id/advanced/centcom/ert/janitor
 	registered_name = "Janitorial Response Officer"
-	trim = "Janitorial Response Officer"
+	//assignment = "Janitorial Response Officer"
 
 /obj/item/card/id/advanced/centcom/ert/clown
 	registered_name = "Entertainment Response Officer"
-	trim = "Entertainment Response Officer"
+	//assignment = "Entertainment Response Officer"
 
 /obj/item/card/id/advanced/black
 	name = "black identification card"
@@ -689,15 +629,15 @@
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
 	registered_name = "Death Commando"
-	trim = "Death Commando"
+	//assignment = "Death Commando"
 
 /obj/item/card/id/advanced/black/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	trim = "Syndicate Overlord"
+	//assignment = "Syndicate Overlord"
 	icon_state = "card_black"
-	access = list(ACCESS_SYNDICATE)
+	//access = list(ACCESS_SYNDICATE)
 	//sticky_access = list(ACCESS_SYNDICATE)
 	registered_age = null
 
@@ -705,32 +645,32 @@
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	trim = "Syndicate Operative"
-	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	//assignment = "Syndicate Operative"
+	//access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	//sticky_access = list(ACCESS_SYNDICATE)
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	name = "syndicate captain ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	trim = "Syndicate Ship Captain"
-	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
+	//assignment = "Syndicate Ship Captain"
+	//access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	//sticky_access = list(ACCESS_SYNDICATE)
 
 /obj/item/card/id/advanced/black/deathsquad/Initialize(mapload)
 	. = ..()
-	access = get_all_accesses() + get_all_centcom_access()
+	//access = get_all_accesses() + get_all_centcom_access()
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
-	trim = "assigned_centcom"
-	trim = "Jannie"
+	assigned_icon_state = "assigned_centcom"
+	//assignment = "Jannie"
 
 /obj/item/card/id/advanced/debug/Initialize()
 	. = ..()
-	access = get_all_accesses() + get_all_centcom_access() + get_all_syndicate_access()
+	//access = get_all_accesses() + get_all_centcom_access() + get_all_syndicate_access()
 	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 /obj/item/card/id/advanced/prisoner
@@ -740,7 +680,7 @@
 	inhand_icon_state = "orange-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	trim = "Prisoner"
+	//assignment = "Prisoner"
 	registered_name = "Scum"
 	var/goal = 0 //How far from freedom?
 	var/points = 0
@@ -752,38 +692,38 @@
 /obj/item/card/id/advanced/prisoner/one
 	name = "Prisoner #13-001"
 	registered_name = "Prisoner #13-001"
-	trim = "Prisoner #13-001"
+	//assignment = "Prisoner #13-001"
 
 /obj/item/card/id/advanced/prisoner/two
 	name = "Prisoner #13-002"
 	registered_name = "Prisoner #13-002"
-	trim = "Prisoner #13-002"
+	//assignment = "Prisoner #13-002"
 
 /obj/item/card/id/advanced/prisoner/three
 	name = "Prisoner #13-003"
 	registered_name = "Prisoner #13-003"
-	trim = "Prisoner #13-003"
+	//assignment = "Prisoner #13-003"
 
 /obj/item/card/id/advanced/prisoner/four
 	name = "Prisoner #13-004"
 	registered_name = "Prisoner #13-004"
-	trim = "Prisoner #13-004"
+	//assignment = "Prisoner #13-004"
 
 /obj/item/card/id/advanced/prisoner/five
 	name = "Prisoner #13-005"
 	registered_name = "Prisoner #13-005"
-	trim = "Prisoner #13-005"
+	//assignment = "Prisoner #13-005"
 
 /obj/item/card/id/advanced/prisoner/six
 	name = "Prisoner #13-006"
 	registered_name = "Prisoner #13-006"
-	trim = "Prisoner #13-006"
+	//assignment = "Prisoner #13-006"
 
 /obj/item/card/id/advanced/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
-	trim = "Prisoner #13-007"
+	//assignment = "Prisoner #13-007"
 
 /obj/item/card/id/advanced/mining
 	name = "mining ID"
-	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+	//access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)

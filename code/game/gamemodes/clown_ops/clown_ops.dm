@@ -36,7 +36,8 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	r_pocket = /obj/item/bikehorn
-	id = /obj/item/card/id/advanced/chameleon
+	// TIMBERTODO - NEW CLOWN OP ID CARD
+	id = /obj/item/card/id
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival,
 		/obj/item/dnainjector/clumsymut, //in case you want to be clumsy for the memes
@@ -51,6 +52,7 @@
 
 /datum/outfit/syndicate/clownop/leader
 	name = "Clown Operative Leader - Basic"
-	id = /obj/item/card/id/advanced/chameleon/nuke_leader
+	// TIMBERTODO - NEW CLOWN OP LEADER ID CARD
+	id = /obj/item/card/id
 	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	command_radio = TRUE

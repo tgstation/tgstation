@@ -754,7 +754,8 @@
 	var/obj/item/implant/radio/syndicate/imp = new(src)
 	imp.implant(SM, user)
 
-	SM.access_card = new /obj/item/card/id/advanced/chameleon(SM)
+	// TIMBERTODO - FIGURE THIS OUT
+	SM.access_card = new /obj/item/card/id
 	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/slimepotion/transference

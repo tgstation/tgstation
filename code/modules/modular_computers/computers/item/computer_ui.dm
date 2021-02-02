@@ -53,7 +53,7 @@
 		var/obj/item/card/id/stored_card = cardholder.GetID()
 		if(stored_card)
 			var/stored_name = stored_card.registered_name
-			var/stored_title = stored_card.trim
+			var/stored_title = stored_card.assignment
 			if(!stored_name)
 				stored_name = "Unknown"
 			if(!stored_title)

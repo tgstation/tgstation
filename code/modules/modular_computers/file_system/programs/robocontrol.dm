@@ -30,7 +30,7 @@
 		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
 		data["has_id"] = !!id_card
 		data["id_owner"] = id_card ? id_card.registered_name : "No Card Inserted."
-		data["access_on_card"] = id_card ? id_card.access : null
+		data["access_on_card"] = id_card ? id_card.timberpoes_access : null
 
 	botcount = 0
 	current_user = user
@@ -80,12 +80,12 @@
 		Bot.bot_control(action, current_user, current_access, TRUE)
 	switch(action)
 		if("summon")
-			Bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
+			Bot.bot_control(action, current_user, id_card ? id_card.timberpoes_access : current_access)
 		if("ejectcard")
 			if(!computer || !card_slot)
 				return
 			if(id_card)
-				GLOB.data_core.manifest_modify(id_card.registered_name, id_card.trim)
+				GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
 				card_slot.try_eject(current_user)
 			else
 				playsound(get_turf(ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)

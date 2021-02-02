@@ -57,7 +57,8 @@
 
 	access_card = new /obj/item/card/id(src)
 	var/datum/job/mining/M = new
-	access_card.access = M.get_access()
+	// TIMBERTODO FEEX
+	//access_card.access = M.get_access()
 
 	SetCollectBehavior()
 

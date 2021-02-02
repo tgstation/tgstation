@@ -3,35 +3,15 @@ SUBSYSTEM_DEF(id_access)
 	init_order = INIT_ORDER_IDACCESS
 	flags = SS_NO_FIRE
 
-	/// Dictionary of trim icon states. Keys are job titles, including on-station job titles, Centcom, Syndie, ERT, etc. Values are icon states of their associated trims.
-	var/list/trim_states_by_title = list()
 	/// Dictionary of access flags. Keys are accesses. Values are their associated bitflags.
 	var/list/flags_by_access = list()
+	/// Dictionary of trim singletons. Keys are paths. Values are their associated singletons.
+	var/list/trim_singletons_by_path = list()
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
-	setup_trims()
 	setup_access_flags()
+	setup_trim_singletons()
 	return ..()
-
-/// Populates the trim_states_by_title dictionary.
-/datum/controller/subsystem/id_access/proc/setup_trims()
-	var/list/all_hud_jobs = get_all_job_icons() + get_all_prisoner_jobs()
-
-	for(var/title in all_hud_jobs)
-		trim_states_by_title[title] = "trim_[ckey(title)]"
-
-	var/list/all_centcom_jobs = get_all_centcom_jobs()
-
-	for(var/title in all_centcom_jobs)
-		trim_states_by_title[title] = "trim_centcom"
-
-	var/list/all_syndicate_jobs = get_all_syndicate_jobs()
-
-	for(var/title in all_syndicate_jobs)
-		trim_states_by_title[title] = "trim_syndicate"
-
-	trim_states_by_title["Jannie"] = "trim_janitorialresponseofficer"
-	trim_states_by_title["Unknown"] = "trim_unknown"
 
 /datum/controller/subsystem/id_access/proc/setup_access_flags()
 	for(var/access in COMMON_ACCESS)
@@ -51,9 +31,12 @@ SUBSYSTEM_DEF(id_access)
 	for(var/access in CULT_ACCESS)
 		flags_by_access[access] = ACCESS_FLAG_SPECIAL
 
-/// Takes a title and returns an appropriate ID card card trim icon state.
-/datum/controller/subsystem/id_access/proc/title_to_trim_icon(title)
-	return trim_states_by_title[title] ? trim_states_by_title[title] : trim_states_by_title["Unknown"]
+/datum/controller/subsystem/id_access/proc/setup_trim_singletons()
+	for(var/trim in typesof(/datum/id_trim))
+		trim_singletons_by_path[trim] = new trim()
 
-/datum/controller/subsystem/id_access/proc/access_to_flag(access)
+/datum/controller/subsystem/id_access/proc/get_access_flag(access)
 	return flags_by_access[access] ? flags_by_access[access] : ACCESS_FLAG_SPECIAL
+
+/datum/controller/subsystem/id_access/proc/get_trim(trim)
+	return trim_singletons_by_path[trim]

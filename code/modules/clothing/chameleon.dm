@@ -256,26 +256,6 @@
 /datum/action/item_action/chameleon/change/proc/apply_job_data(datum/job/job_datum)
 	return
 
-/datum/action/item_action/chameleon/change/id/update_item(obj/item/picked_item)
-	..()
-	var/obj/item/card/id/advanced/chameleon/agent_card = target
-	if(istype(agent_card))
-		var/obj/item/card/id/advanced/copied_card = picked_item
-		agent_card.forged_card_name = initial(copied_card.name)
-		if(!agent_card.forged)
-			agent_card.registered_name = initial(copied_card.registered_name)
-			agent_card.trim = initial(copied_card.trim)
-		agent_card.update_label()
-		if(!agent_card.forged)
-			agent_card.name = initial(copied_card.name) //e.g. captain's spare ID, not Captain's ID Card (Captain)
-
-/datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)
-	..()
-	var/obj/item/card/id/advanced/chameleon/agent_card = target
-	if(istype(agent_card) && istype(job_datum))
-		agent_card.forged = TRUE
-		agent_card.trim = job_datum.title
-
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/picked_item)
 	..()
 	var/obj/item/pda/agent_pda = target

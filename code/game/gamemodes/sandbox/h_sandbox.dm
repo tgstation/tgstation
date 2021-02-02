@@ -207,8 +207,8 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			if("hsbaaid")
 				var/obj/item/card/id/advanced/gold/ID = new(usr.loc)
 				ID.registered_name = usr.real_name
-				ID.trim = "Sandbox"
-				ID.access = get_all_accesses()
+				var/datum/id_trim/trim = SSid_access.get_trim(/datum/id_trim/sandbox)
+				trim.apply_to_card(ID)
 				ID.update_label()
 
 			//
@@ -301,3 +301,9 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 				if(CONFIG_GET(flag/sandbox_autoclose))
 					usr << browse(null,"window=sandbox")
+
+/datum/id_trim/sandbox
+	var/trim_icon = 'icons/obj/card.dmi'
+	var/trim_state = "trim_captain"
+
+	var/list/basic_access = ALL_ACCESS_STATION

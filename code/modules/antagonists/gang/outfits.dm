@@ -3,8 +3,9 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses() // I have a warrant.
-	W.trim = "Space Police"
+	// TIMBERTODO UNSHIT THIS
+	//W.access = get_all_accesses() // I have a warrant.
+	//W.assignment = "Space Police"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()

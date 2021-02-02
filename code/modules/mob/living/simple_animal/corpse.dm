@@ -25,7 +25,8 @@
 	mask = /obj/item/clothing/mask/gas
 	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack
-	id = /obj/item/card/id/advanced/chameleon
+	// TIMBERTODO - NEW CLOWN OP ID CARD
+	id = /obj/item/card/id
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
@@ -44,7 +45,8 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
-	id = /obj/item/card/id/advanced/chameleon
+	// TIMBERTODO - NEW CLOWN OP ID CARD
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
@@ -63,7 +65,8 @@
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen/harness
-	id = /obj/item/card/id/advanced/chameleon
+	// TIMBERTODO - NEW CLOWN OP ID CARD
+	id = /obj/item/card/id
 
 
 /obj/effect/mob_spawn/human/clown/corpse

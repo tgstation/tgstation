@@ -64,7 +64,7 @@
 		return
 
 	region_access = list()
-	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.access))
+	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.timberpoes_access))
 		minor = FALSE
 		authenticated = TRUE
 		update_static_data(user)
@@ -74,7 +74,7 @@
 	for(var/access_text in sub_managers)
 		var/list/info = sub_managers[access_text]
 		var/access = text2num(access_text)
-		if((access in id_card.access) && ((info["region"] in target_dept) || !length(target_dept)))
+		if((access in id_card.timberpoes_access) && ((info["region"] in target_dept) || !length(target_dept)))
 			region_access += info["region"]
 			//I don't even know what I'm doing anymore
 			head_types += info["head"]
@@ -136,12 +136,12 @@
 						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
 						<hr>
-						<u>Assignment:</u> [target_id_card.trim]<br>
+						<u>Assignment:</u> [target_id_card.assignment]<br>
 						<u>Access:</u><br>
 						"}
 
 			var/known_access_rights = get_all_accesses()
-			for(var/A in target_id_card.access)
+			for(var/A in target_id_card.timberpoes_access)
 				if(A in known_access_rights)
 					contents += "  [get_access_desc(A)]"
 
@@ -156,7 +156,7 @@
 			if(!computer || !card_slot2)
 				return
 			if(target_id_card)
-				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.trim)
+				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment)
 				return card_slot2.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
@@ -167,11 +167,12 @@
 			if(!computer || !authenticated)
 				return
 			if(minor)
-				if(!(target_id_card.trim in head_subordinates) && target_id_card.trim != "Assistant")
+				if(!(target_id_card.assignment in head_subordinates) && target_id_card.assignment != "Assistant")
 					return
 
-			target_id_card.access -= get_all_centcom_access() + get_all_accesses()
-			target_id_card.trim = "Unassigned"
+			// TIMBERTODO UNFUCK
+			target_id_card.remove_access(get_all_centcom_access() + get_all_accesses())
+			target_id_card.assignment = "Unassigned"
 			target_id_card.update_label()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
@@ -209,7 +210,7 @@
 			if(target == "Custom")
 				var/custom_name = params["custom_name"]
 				if(custom_name)
-					target_id_card.trim = custom_name
+					target_id_card.assignment = custom_name
 					target_id_card.update_label()
 			else
 				if(minor && !(target in head_subordinates))
@@ -233,9 +234,10 @@
 							message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 							break
 					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")
-				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
-				target_id_card.access |= new_access
-				target_id_card.trim = target
+				// TIMBERTODO UNFUCK
+				target_id_card.remove_access(get_all_centcom_access() + get_all_accesses())
+				target_id_card.add_access(new_access)
+				target_id_card.assignment = target
 				target_id_card.update_label()
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
@@ -244,10 +246,10 @@
 				return
 			var/access_type = text2num(params["access_target"])
 			if(access_type in (is_centcom ? get_all_centcom_access() : get_all_accesses()))
-				if(access_type in target_id_card.access)
-					target_id_card.access -= access_type
+				if(access_type in target_id_card.timberpoes_access)
+					target_id_card.remove_access(access_type)
 				else
-					target_id_card.access |= access_type
+					target_id_card.add_access(access_type)
 					if(access_type in ACCESS_ALERT_ADMINS)
 						message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 					LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_access_desc(access_type)]")
@@ -256,7 +258,7 @@
 		if("PRG_grantall")
 			if(!computer || !authenticated || minor)
 				return
-			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
+			target_id_card.add_access(is_centcom ? get_all_centcom_access() : get_all_accesses())
 
 			message_admins("[ADMIN_LOOKUPFLW(user)] just added All Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added All Access")
@@ -266,7 +268,8 @@
 		if("PRG_denyall")
 			if(!computer || !authenticated || minor)
 				return
-			target_id_card.access.Cut()
+			// TIMBERTODO Remove all accesses from a card
+			//target_id_card.access.Cut()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_grantregion")
@@ -277,12 +280,12 @@
 				return
 
 			if(is_centcom)
-				target_id_card.access |= get_all_centcom_access()
+				target_id_card.add_access(CENTCOM_ACCESS)
 				message_admins("[ADMIN_LOOKUPFLW(user)] just added CentCom Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added CentCom access")
 			else
 				var/list/region_accesses = get_region_accesses(region)
-				target_id_card.access |= region_accesses
+				target_id_card.add_access(region_accesses)
 
 				for(var/logged_access in ACCESS_ALERT_ADMINS)
 					if(logged_access in region_accesses)
@@ -300,12 +303,10 @@
 			if(isnull(region))
 				return
 			if(is_centcom)
-				target_id_card.access -= get_all_centcom_access()
-			target_id_card.access -= get_region_accesses(region)
+				target_id_card.remove_access(CENTCOM_ACCESS)
+			target_id_card.remove_access(get_region_accesses(region))
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
-
-
 
 /datum/computer_file/program/card_mod/ui_static_data(mob/user)
 	var/list/data = list()
@@ -403,9 +404,9 @@
 	data["has_id"] = !!id_card
 	data["id_name"] = id_card ? id_card.name : "-----"
 	if(id_card)
-		data["id_rank"] = id_card.trim ? id_card.trim : "Unassigned"
+		data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
 		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
-		data["access_on_card"] = id_card.access
+		data["access_on_card"] = id_card.timberpoes_access
 		data["id_age"] = id_card.registered_age
 
 	return data

@@ -62,7 +62,7 @@
 	for(var/i in authorized)
 		var/obj/item/card/id/ID = i
 		var/name = ID.registered_name
-		var/job = ID.trim
+		var/job = ID.assignment
 
 		if(obj_flags & EMAGGED)
 			name = Gibberish(name)
@@ -96,7 +96,7 @@
 		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
 		return
 
-	if(!(ACCESS_HEADS in ID.access))
+	if(!(ACCESS_HEADS in ID.timberpoes_access))
 		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
@@ -270,7 +270,7 @@
 		var/obj/item/card/id/ID = new(src)
 		var/datum/job/J = pick(SSjob.occupations)
 		ID.registered_name = S.random_name(pick(MALE, FEMALE))
-		ID.trim = J.title
+		ID.assignment = J.title
 
 		authorized += ID
 

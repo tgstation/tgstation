@@ -143,8 +143,9 @@
 	var/obj/item/id_slot = H.get_item_by_slot(ITEM_SLOT_ID)
 	if(id_slot)
 		var/obj/item/card/id/card = id_slot.GetID()
-		if(istype(card))
-			card.access |= stored_access
+		//if(istype(card))
+			// TIMBERTODO UNFUCK
+			//card.access |= stored_access
 		if(update_id_name)
 			card.registered_name = H.real_name
 			card.update_label()

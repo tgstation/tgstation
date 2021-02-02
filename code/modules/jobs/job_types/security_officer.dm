@@ -82,8 +82,9 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			qdel(H.ears)
 		H.equip_to_slot_or_del(new ears(H),ITEM_SLOT_EARS)
 
-	var/obj/item/card/id/W = H.wear_id
-	W.access |= dep_access
+	// TIMBERTODO FEEX
+	//var/obj/item/card/id/W = H.wear_id
+	//W.access |= dep_access
 
 	var/teleport = 0
 	if(!CONFIG_GET(flag/sec_start_brig))

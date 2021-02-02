@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
-				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.trim]" : "----------"]")
+				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[station_time_timestamp()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
@@ -486,9 +486,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if ("Authenticate")//Checks for ID
 				id_check(U)
 			if("UpdateInfo")
-				ownjob = id.trim
-				if(istype(id, /obj/item/card/id/advanced/chameleon))
-					owner = id.registered_name
+				ownjob = id.assignment
 				update_label()
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
@@ -996,7 +994,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return
 		if(!owner)
 			owner = idcard.registered_name
-			ownjob = idcard.trim
+			ownjob = idcard.assignment
 			update_label()
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 			if(!silent)

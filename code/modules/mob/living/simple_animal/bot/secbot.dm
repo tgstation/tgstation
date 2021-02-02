@@ -79,8 +79,8 @@
 	weapon = new baton_type()
 	update_icon()
 	var/datum/job/detective/J = new/datum/job/detective
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	access_card.add_access(J.get_access())
+	prev_access = access_card.timberpoes_access
 
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]

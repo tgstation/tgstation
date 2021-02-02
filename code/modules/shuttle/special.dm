@@ -145,7 +145,8 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= ACCESS_CENT_BAR
+	// TIMBERTODO SNOWFLAKE
+	access_card.add_access(ACCESS_CENT_BAR)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
 	check_barstaff_godmode()
 
@@ -163,8 +164,9 @@
 	. = ..()
 	access_card = new /obj/item/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
-	access_card.access = C.get_access()
-	access_card.access |= ACCESS_CENT_BAR
+	// TIMBERTODO FEEX
+	//access_card.access = C.get_access()
+	//access_card.access |= ACCESS_CENT_BAR
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
 	check_barstaff_godmode()
@@ -210,7 +212,7 @@
 			return TRUE
 
 	var/obj/item/card/id/ID = user.get_idcard(FALSE)
-	if(ID && (ACCESS_CENT_BAR in ID.access))
+	if(ID && (ACCESS_CENT_BAR in ID.timberpoes_access))
 		return TRUE
 
 //Luxury Shuttle Blockers

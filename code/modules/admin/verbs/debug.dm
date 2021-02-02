@@ -199,12 +199,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			id = worn.GetID()
 		if(id)
 			id.icon_state = "card_gold"
-			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+			// TIMBERTODO MAKE THIS NOT SHIT
+			//id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 		else
 			id = new /obj/item/card/id/advanced/gold(H.loc)
-			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+			//id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 			id.registered_name = H.real_name
-			id.trim = "Captain"
+			//id.assignment = "Captain"
 			id.update_label()
 
 			if(worn)

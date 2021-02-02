@@ -41,8 +41,8 @@
 	. = ..()
 	update_icon()
 	var/datum/job/janitor/J = new/datum/job/janitor
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	access_card.add_access(J.get_access())
+	prev_access = access_card.timberpoes_access
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	walk_to(src,0)

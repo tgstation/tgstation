@@ -95,11 +95,11 @@
 			if(ID && istype(ID))
 				if(check_access(ID))
 					authenticated = TRUE
-					auth_id = "[ID.registered_name] ([ID.trim]):"
+					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] logged in to the terminal")
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				else
-					auth_id = "[ID.registered_name] ([ID.trim]):"
+					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
 				return
 			auth_id = "Unknown (Unknown):"

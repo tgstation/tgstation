@@ -10,7 +10,7 @@
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
 	var/obj/item/card/id/id = get_idcard(hand_first)
 	if(id)
-		. = id.trim
+		. = id.assignment
 	else
 		var/obj/item/pda/pda = wear_id
 		if(istype(pda))
@@ -90,8 +90,6 @@
 
 
 /mob/living/carbon/human/can_track(mob/living/user)
-	if(wear_id && istype(wear_id.GetID(), /obj/item/card/id/advanced/chameleon))
-		return 0
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/hat = head
 		if(hat.blockTracking)
