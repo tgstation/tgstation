@@ -90,9 +90,9 @@
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 /// a hack for now
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1
-/// space is much more realistic now, still cold as fuck but that can be "radiation"
+/// current temperature capacity of space, used to make it cool down exposed areas, lower it to make it affect temperature less, increase to make it affect area temperature more
 #define HEAT_CAPACITY_VACUUM				700
-/// old vacuum magic number, sacrificing realism for gameplay, use it whenever something related to old vacuum breaks
+/// old heat capacity of space, its used to keep things that needed old vacuum heat capacity to work effectively, like heat exchangers. use it if something using old value breaks
 #define OLD_HEAT_CAPACITY_VACUUM            7000
 
 //FIRE
