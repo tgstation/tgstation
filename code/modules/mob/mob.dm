@@ -513,10 +513,10 @@
 
 	//now we touch the thing we're examining
 	/// our current intent, so we can go back to it after touching
-	var/previous_intent = a_intent
-	a_intent = INTENT_HELP
+	var/previous_combat_mode = combat_mode
+	set_combat_mode(FALSE)
 	INVOKE_ASYNC(examined_thing, /atom/proc/attack_hand, src)
-	a_intent = previous_intent
+	set_combat_mode(previous_combat_mode)
 	return TRUE
 
 
@@ -818,7 +818,11 @@
 	if(ismob(dropping) && src == user && dropping != user)
 		var/mob/M = dropping
 		var/mob/U = user
-		if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+		if(iscyborg(U))
+			var/mob/living/silicon/robot/cyborg = U
+			if(cyborg.combat_mode)
+				M.show_inv(cyborg)
+		else
 			M.show_inv(U)
 
 ///Is the mob muzzled (default false)

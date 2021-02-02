@@ -193,7 +193,7 @@
 
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
-			if(user.a_intent == INTENT_HARM) // Flogging action
+			if(user.combat_mode) // Flogging action
 				return
 
 	if(isliving(user))

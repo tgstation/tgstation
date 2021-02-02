@@ -47,10 +47,10 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I, breakdown_flags=NONE)
+/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/living/user, obj/item/stack/I, breakdown_flags=NONE)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
-	if(user.a_intent != INTENT_HELP)
+	if(user.combat_mode)
 		return
 	if(I.item_flags & ABSTRACT)
 		return

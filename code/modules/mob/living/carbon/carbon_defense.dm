@@ -140,7 +140,7 @@
 	return //so we don't call the carbon's attack_hand().
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+/mob/living/carbon/attack_hand(mob/living/carbon/human/user, modifiers)
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
@@ -156,8 +156,8 @@
 
 	for(var/datum/surgery/S in surgeries)
 		if(body_position == LYING_DOWN || !S.lying_required)
-			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
-				if(S.next_step(user, user.a_intent))
+			if(!user.combat_mode)
+				if(S.next_step(user, modifiers))
 					return TRUE
 
 	for(var/i in all_wounds)
@@ -165,13 +165,13 @@
 		if(W.try_handling(user))
 			return TRUE
 
-	if (user.apply_martial_art(src))
+	if (user.apply_martial_art(src, modifiers))
 		return TRUE
 
 	return FALSE
 
 
-/mob/living/carbon/attack_paw(mob/living/carbon/human/M)
+/mob/living/carbon/attack_paw(mob/living/carbon/human/M, modifiers)
 
 	if(can_inject(M, TRUE))
 		for(var/thing in diseases)
@@ -184,7 +184,7 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	if(M.a_intent == INTENT_HELP)
+	if(!M.combat_mode)
 		help_shake_act(M)
 		return FALSE
 
@@ -246,7 +246,7 @@
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
 	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
+		var/target_on_help_and_unarmed = !target.combat_mode && !target.get_active_held_item()
 		if(target_on_help_and_unarmed || HAS_TRAIT(target, TRAIT_RESTRAINED))
 			do_slap_animation(target)
 			playsound(target.loc, 'sound/weapons/slap.ogg', 50, TRUE, -1)

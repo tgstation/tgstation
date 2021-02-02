@@ -134,7 +134,7 @@
 	return NONE
 
 /obj/structure/aquarium/interact(mob/user)
-	if(!broken && user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(!broken && user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
 		SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
 		var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
@@ -147,7 +147,7 @@
 
 /// Tries to put mob pulled by the user in the aquarium after a delay
 /obj/structure/aquarium/proc/try_to_put_mob_in(mob/user)
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
 		if(living_pulled.buckled || living_pulled.has_buckled_mobs())
 			to_chat(user, "<span class='warning'>[living_pulled] is attached to something!</span>")
