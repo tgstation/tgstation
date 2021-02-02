@@ -744,10 +744,10 @@
 
 /atom/movable/screen/combo/update_icon_state(streak = "")
 	clear_streak()
-	if (timerid)
+	if(timerid)
 		deltimer(timerid)
-	if (!streak)
-		return
+	if(!streak)
+		return ..()
 	timerid = addtimer(CALLBACK(src, .proc/clear_streak), 20, TIMER_UNIQUE | TIMER_STOPPABLE)
 	icon_state = "combo"
 	for (var/i = 1; i <= length(streak); ++i)
@@ -755,3 +755,4 @@
 		var/image/intent_icon = image(icon,src,"combo_[intent_text]")
 		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
 		add_overlay(intent_icon)
+	return ..()
