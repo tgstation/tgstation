@@ -37,7 +37,7 @@
 	integrity_modifier = 1.5 // Heavy duty.
 	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, RAD = 1.5, FIRE = 1.1, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/plasteel
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
+	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
 
 /datum/material/alloy/plasteel/on_applied_obj(obj/item/target_item, amount, material_flags)
@@ -69,7 +69,7 @@
 	integrity_modifier = 1.3
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.4, ENERGY = 1.4, BOMB = 1.1, BIO = 1.2, RAD = 1.1, FIRE = 1.5, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
+	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
 
 /** Plasmaglass
@@ -87,7 +87,7 @@
 	sheet_type = /obj/item/stack/sheet/plasmaglass
 	shard_type = /obj/item/shard/plasma
 	value_per_unit = 0.075
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
+	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
 
 /** Titaniumglass
@@ -104,7 +104,7 @@
 	sheet_type = /obj/item/stack/sheet/titaniumglass
 	shard_type = /obj/item/shard
 	value_per_unit = 0.04
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
+	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
 
 /** Plastitanium Glass
@@ -122,7 +122,7 @@
 	sheet_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard/plasma
 	value_per_unit = 0.125
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
+	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/alloy/plastitanium=0.5)
 
 /** Alien Alloy
@@ -141,7 +141,7 @@
 	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.2, ENERGY = 1.2, BOMB = 1.5, BIO = 1.2, RAD = 1.5, FIRE = 1.2, ACID = 1.2)
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	value_per_unit = 0.4
-	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE)
+	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
 
 /datum/material/alloy/alien/on_applied_obj(obj/item/target_item, amount, material_flags)
