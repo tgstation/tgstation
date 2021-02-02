@@ -76,8 +76,8 @@
 	if(!get_location_accessible(target, target_zone))
 		urhealedamt_brute *= 0.55
 		urhealedamt_burn *= 0.55
-		umsg += " as best as you can while they have clothing on"
-		tmsg += " as best as they can while [target] has clothing on"
+		umsg += " as best as you can while [target.p_they()] [target.p_have()] clothing on"
+		tmsg += " as best as [user.p_they()] can while [target.p_they()] [target.p_have()] clothing on"
 	target.heal_bodypart_damage(urhealedamt_brute,urhealedamt_burn)
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",

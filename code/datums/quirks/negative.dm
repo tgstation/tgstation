@@ -750,6 +750,7 @@
 /datum/quirk/bad_touch/proc/uncomfortable_touch()
 	SIGNAL_HANDLER
 
+	new /obj/effect/temp_visual/annoyed(quirk_holder.loc)
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	if(mood.sanity <= SANITY_NEUTRAL)
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)
