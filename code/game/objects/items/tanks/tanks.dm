@@ -88,7 +88,7 @@
 		QDEL_NULL(air_contents)
 
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/item/tank/ComponentInitialize()
 	. = ..()
