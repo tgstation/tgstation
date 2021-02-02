@@ -37,7 +37,7 @@
 	time = 25
 	var/brutehealing = 0
 	var/burnhealing = 0
-	var/brutemultilpier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.
+	var/brutemultiplier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.
 	var/burnmultiplier = 0
 
 /datum/surgery_step/heal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -68,10 +68,10 @@
 	var/brutehealed = brutehealing
 	var/burnhealed = burnhealing
 	if(target.stat != DEAD)
-		brutehealed += round((target.getBruteLoss() * brutemultilpier),0.1)
+		brutehealed += round((target.getBruteLoss() * brutemultiplier),0.1)
 		burnhealed += round((target.getFireLoss() * burnmultiplier),0.1)
 	else //less healing bonus for the dead since they're expected to have lots of damage to begin with (to make TW into defib not TOO simple)
-		brutehealed += round((target.getBruteLoss() * (brutemultilpier * 0.2)),0.1)
+		brutehealed += round((target.getBruteLoss() * (brutemultiplier * 0.2)),0.1)
 		burnhealed += round((target.getFireLoss() * (burnmultiplier * 0.2)),0.1)
 	if(!get_location_accessible(target, target_zone))
 		brutehealed *= 0.55
@@ -93,7 +93,7 @@
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
 	var/brutedealt = brutehealing * 0.8
 	var/burndealt = burnhealing * 0.8
-	brutedealt	+= round((target.getBruteLoss() * (brutemultilpier * 0.5)),0.1)
+	brutedealt	+= round((target.getBruteLoss() * (brutemultiplier * 0.5)),0.1)
 	burndealt += round((target.getFireLoss() * (burnmultiplier * 0.5)),0.1)
 
 	target.take_bodypart_damage(brutedealt, burndealt, wound_bonus=CANT_WOUND)
@@ -127,15 +127,15 @@
 /datum/surgery_step/heal/brute/basic
 	name = "tend bruises"
 	brutehealing = 5
-	brutemultilpier = 0.07
+	brutemultiplier = 0.07
 
 /datum/surgery_step/heal/brute/upgraded
 	brutehealing = 5
-	brutemultilpier = 0.1
+	brutemultiplier = 0.1
 
 /datum/surgery_step/heal/brute/upgraded/femto
 	brutehealing = 5
-	brutemultilpier = 0.2
+	brutemultiplier = 0.2
 
 /***************************BURN***************************/
 /datum/surgery/healing/burn
@@ -204,20 +204,20 @@
 	name = "tend physical wounds"
 	brutehealing = 3
 	burnhealing = 3
-	brutemultilpier = 0.07
+	brutemultiplier = 0.07
 	burnmultiplier = 0.07
 	time = 10
 
 /datum/surgery_step/heal/combo/upgraded
 	brutehealing = 3
 	burnhealing = 3
-	brutemultilpier = 0.1
+	brutemultiplier = 0.1
 	burnmultiplier = 0.1
 
 /datum/surgery_step/heal/combo/upgraded/femto
 	brutehealing = 1
 	burnhealing = 1
-	brutemultilpier = 0.4
+	brutemultiplier = 0.4
 	burnmultiplier = 0.4
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
