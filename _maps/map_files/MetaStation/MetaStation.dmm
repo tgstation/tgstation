@@ -16948,6 +16948,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"aRJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/sign/warning/electricshock,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio8";
+	name = "Xenobio Pen 8 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "aRK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/internals,
@@ -64458,6 +64468,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
+"kRv" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/sign/warning/electricshock,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio1";
+	name = "Xenobio Pen 1 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "kRP" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -65712,6 +65732,10 @@
 "lQN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio8";
+	name = "Xenobio Pen 8 Blast Door"
+	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "lQP" = (
@@ -70226,7 +70250,7 @@
 /obj/machinery/smartfridge/extract/preloaded,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
-/area/science/cytology)
+/area/science/xenobiology)
 "pkr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -70582,7 +70606,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/plasteel,
-/area/science/cytology)
+/area/science/xenobiology)
 "pwv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
@@ -73331,7 +73355,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio8";
-	name = "Xenobio Pen 7 Blast Door"
+	name = "Xenobio Pen 8 Blast Door"
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -77504,7 +77528,7 @@
 /obj/structure/cable,
 /obj/machinery/monkey_recycler,
 /turf/open/floor/plasteel,
-/area/science/cytology)
+/area/science/xenobiology)
 "uyw" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/wood,
@@ -78998,6 +79022,15 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"vJW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio1";
+	name = "Xenobio Pen 1 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "vKq" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Genetics Maintenance";
@@ -80732,7 +80765,7 @@
 /obj/machinery/processor/slime,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
-/area/science/cytology)
+/area/science/xenobiology)
 "wZw" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -81196,7 +81229,7 @@
 /obj/structure/cable,
 /obj/machinery/smartfridge/organ,
 /turf/open/floor/plasteel,
-/area/science/cytology)
+/area/science/xenobiology)
 "xpZ" = (
 /turf/closed/wall,
 /area/medical/abandoned)
@@ -81929,7 +81962,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/cytology)
+/area/science/xenobiology)
 "xSC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -125893,7 +125926,7 @@ qKh
 cSn
 omN
 tQb
-lQN
+vJW
 xpX
 qie
 hSD
@@ -126150,13 +126183,13 @@ qKh
 cSn
 cSy
 cSn
-wXQ
+kRv
 pjC
 mTR
 xey
 dEM
 wZr
-wXQ
+aRJ
 cSn
 cSy
 cSn
@@ -126407,7 +126440,7 @@ cRi
 ltH
 xNj
 ltH
-lQN
+vJW
 xSB
 gYm
 tlO
