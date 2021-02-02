@@ -33,6 +33,7 @@
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\bitfields.dm"
 #include "code\__DEFINES\blackmarket.dm"
+#include "code\__DEFINES\blob_defines.dm"
 #include "code\__DEFINES\botany.dm"
 #include "code\__DEFINES\callbacks.dm"
 #include "code\__DEFINES\cargo.dm"
