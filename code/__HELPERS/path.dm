@@ -147,19 +147,6 @@
 		current_turf = original_turf
 		var/f= 1<<i //get cardinal directions.1,2,4,8
 		while(TRUE)
-
-			if(steps_taken > 30)
-				testing("too many steps, breaking to next")
-				break
-			if(!(unwind_node.bf & f))
-				//testing("skip dir: [f] br: [cur.bf]")
-				break
-
-			var/turf/next_turf = get_step(current_turf,f)
-			if(next_turf == exclude) //typecheck?
-				break
-
-
 			var/closeenough
 			if(mintargetdist)
 				closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
@@ -170,6 +157,17 @@
 				//openc[possible_interest] = neighbor_node
 				unwind_path(final_node)
 				return
+
+			if(steps_taken > 30)
+				testing("too many steps, breaking to next")
+				break
+			if(!(unwind_node.bf & f))
+				//testing("skip dir: [f] br: [cur.bf]")
+				break
+
+			var/turf/next_turf = get_step(current_turf,f)
+			if(next_turf == exclude || !call(current_turf,adjacent)(caller, next_turf, id, simulated_only)) //typecheck?
+				break
 
 			steps_taken++
 			testing("taking step [steps_taken] in dir [f]")
