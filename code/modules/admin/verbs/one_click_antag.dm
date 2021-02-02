@@ -372,12 +372,12 @@
 		var/numagents = min(ertemplate.teamsize,candidates.len)
 
 		//Create team
-		var/datum/team/ert/ert_team = new ertemplate.team
+		var/datum/team/ert/ert_team = new ertemplate.team ()
 		if(ertemplate.rename_team)
 			ert_team.name = ertemplate.rename_team
 
 		//Asign team objective
-		var/datum/objective/missionobj = new
+		var/datum/objective/missionobj = new ()
 		missionobj.team = ert_team
 		missionobj.explanation_text = ertemplate.mission
 		missionobj.completed = TRUE
@@ -421,12 +421,12 @@
 			var/datum/antagonist/ert/ert_antag
 
 			if((chosen_candidate == earmarked_leader) || (numagents == 1 && !leader_spawned))
-				ert_antag = new ertemplate.leader_role
+				ert_antag = new ertemplate.leader_role ()
 				earmarked_leader = null
 				leader_spawned = TRUE
 			else
 				ert_antag = ertemplate.roles[WRAP(numagents,1,length(ertemplate.roles) + 1)]
-				ert_antag = new ert_antag
+				ert_antag = new ert_antag ()
 			ert_antag.random_names = ertemplate.random_names
 
 			ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
