@@ -319,6 +319,7 @@
 		else
 			target.LAssailant = user
 		cooldown_check = world.time + cooldown
+		return
 	if(!..())
 		return
 

@@ -202,9 +202,11 @@
 					return
 			else
 				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
+				return
 		else
 			M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
 						"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
+			return
 	else if(turned_on)
 		if(attack_cooldown_check <= world.time)
 			baton_effect(M, user)
