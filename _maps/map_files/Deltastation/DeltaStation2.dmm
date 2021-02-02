@@ -5261,7 +5261,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "aoh" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -31296,7 +31296,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "bnZ" = (
-/obj/machinery/computer/card/minor/hos{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -36796,7 +36796,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "byg" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -46245,7 +46245,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/transit_tube)
 "bNO" = (
-/obj/machinery/computer/card/minor/ce{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/status_display/evac{
@@ -49998,7 +49998,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
 "bUL" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/keycard_auth{
@@ -53584,7 +53584,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "caN" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -87557,7 +87557,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "dtu" = (
-/obj/machinery/computer/card/minor/rd{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/machinery/status_display/ai{
@@ -91149,7 +91149,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "dCK" = (
-/obj/machinery/computer/card/minor/cmo{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/machinery/status_display/ai{
@@ -97739,7 +97739,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "dPV" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/camera{

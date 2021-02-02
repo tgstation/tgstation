@@ -833,7 +833,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "abU" = (
-/obj/machinery/computer/card/minor/hos,
+/obj/machinery/modular_computer/console/preset/id,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "abV" = (
@@ -19358,7 +19358,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/computer/card/minor/rd{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -23860,7 +23860,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bil" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -25132,7 +25132,7 @@
 /turf/open/openspace/icemoon,
 /area/icemoon/surface/outdoors)
 "blr" = (
-/obj/machinery/computer/card/minor/cmo,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -27155,7 +27155,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bqA" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -40482,7 +40482,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cjg" = (
-/obj/machinery/computer/card/minor/ce{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/requests_console{
@@ -48984,7 +48984,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "jEL" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/machinery/light{
 	dir = 1
 	},
