@@ -333,13 +333,7 @@
 "ba" = (
 /obj/machinery/power/apc/auto_name/east,
 /obj/structure/cable,
-/obj/structure/closet/crate/secure/freezer{
-	desc = "An insulated crate with a lock on it, used to secure pizza.";
-	name = "secure pizza crate";
-	req_access = list(28);
-	tamperproof = 1
-	},
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/structure/closet/crate/secure/freezer/pizza,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bb" = (

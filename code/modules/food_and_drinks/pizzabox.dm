@@ -36,6 +36,8 @@
 
 /obj/item/pizzabox/Initialize()
 	. = ..()
+	if(pizza)
+		pizza = new pizza
 	update_icon()
 
 
@@ -285,44 +287,44 @@
 	update_icon()
 
 /obj/item/pizzabox/bomb/Initialize()
-	var/randompizza = pick(subtypesof(/obj/item/food/pizza))
+	. = ..()
 	if(!pizza)
+		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
 		pizza = new randompizza(src)
 	bomb = new(src)
 	wires = new /datum/wires/explosive/pizza(src)
-	return ..()
 
-/obj/item/pizzabox/bomb/armed/Initialize()
-	. = ..()
+/obj/item/pizzabox/bomb/armed
 	bomb_timer = 5
 	bomb_defused = FALSE
-	pizza = new /obj/item/food/pizza/meat
 	boxtag = "Meat Explosion"
 	boxtag_set = TRUE
-	update_icon()
+	pizza = /obj/item/food/pizza/meat
 
 /obj/item/pizzabox/margherita
-	pizza = new /obj/item/food/pizza/margherita
+	pizza = /obj/item/food/pizza/margherita
 
 /obj/item/pizzabox/margherita/robo
-	pizza = new /obj/item/food/pizza/margherita/robo
+	pizza = /obj/item/food/pizza/margherita/robo
 
 /obj/item/pizzabox/vegetable
-	pizza = new /obj/item/food/pizza/vegetable
+	pizza = /obj/item/food/pizza/vegetable
 
 /obj/item/pizzabox/mushroom
-	pizza = new /obj/item/food/pizza/mushroom
+	pizza = /obj/item/food/pizza/mushroom
 
-/obj/item/pizzabox/meat/
-	pizza = new /obj/item/food/pizza/meat
+/obj/item/pizzabox/meat
+	pizza = /obj/item/food/pizza/meat
 
-/obj/item/pizzabox/pineapple/
-	pizza = new /obj/item/food/pizza/pineapple
+/obj/item/pizzabox/pineapple
+	pizza = /obj/item/food/pizza/pineapple
 
 //An anomalous pizza box that, when opened, produces the opener's favorite kind of pizza.
 /obj/item/pizzabox/infinite
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
 	can_open_on_fall = FALSE
+	boxtag = "Your Favourite" //used to give it a tag overlay, shouldn't be seen by players
+	///List of pizzas this box can spawn. Weighted by chance to be someone's favorite.
 	var/list/pizza_types = list(
 		/obj/item/food/pizza/meat = 1,
 		/obj/item/food/pizza/mushroom = 1,
@@ -332,9 +334,10 @@
 		/obj/item/food/pizza/pineapple = 0.5,
 		/obj/item/food/pizza/donkpocket = 0.3,
 		/obj/item/food/pizza/dank = 0.1,
-	) //pizzas here are weighted by chance to be someone's favorite
+	)
+	///List of ckeys and their favourite pizzas. e.g. pizza_preferences[ckey] = /obj/item/food/pizza/meat
 	var/static/list/pizza_preferences
-	boxtag = "Your Favourite"
+	///Who the box is currently attuned to. Prevents it re-attuning needlessly.
 	var/mob/living/carbon/human/attuned_to
 
 /obj/item/pizzabox/infinite/Initialize()
@@ -344,7 +347,7 @@
 
 /obj/item/pizzabox/infinite/examine(mob/user)
 	if(!open && ishuman(user))
-		attune_pizza(user) //this is so our boxtag is always correct
+		attune_pizza(user) //pizza tag changes based on examiner
 	. = ..()
 	if(isobserver(user))
 		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
@@ -356,6 +359,7 @@
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/nommer) //tonight on "proc names I never thought I'd type"
 	if(nommer.ckey)
+		//list our ckey and assign a favourite pizza
 		if(!pizza_preferences[nommer.ckey])
 			pizza_preferences[nommer.ckey] = pickweight(pizza_types)
 			if(nommer.has_quirk(/datum/quirk/pineapple_liker))
@@ -366,10 +370,10 @@
 				pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
 			else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
 				pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
-
+		//delete the current pizza if it isn't for us
 		if(pizza && attuned_to && attuned_to != nommer)
 			QDEL_NULL(pizza)
-
+		//if there's no pizza and we have a favourite, create it and update the boxtag
 		if(!pizza && pizza_preferences[nommer.ckey])
 			var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
 			pizza = new favourite_pizza_type
