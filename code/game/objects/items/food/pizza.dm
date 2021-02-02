@@ -9,7 +9,7 @@
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
 	var/obj/item/food/pizzaslice/slice_type
 	///What label pizza boxes use if this pizza spawns in them.
-	var/boxtag
+	var/boxtag = ""
 
 /obj/item/food/pizza/MakeProcessable()
 	if (slice_type)
