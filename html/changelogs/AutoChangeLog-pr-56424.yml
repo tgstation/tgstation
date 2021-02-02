@@ -1,0 +1,5 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "admin spawned holy nades work"
+  - bugfix: "holy explosion is more efficient at doing whats supposed to do"

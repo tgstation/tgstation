@@ -26,6 +26,7 @@ const taskTgui = new Task('tgui')
   .provides('tgui/public/tgui-common.bundle.js')
   .provides('tgui/public/tgui-panel.bundle.css')
   .provides('tgui/public/tgui-panel.bundle.js')
+  .provides('code/modules/tgui/USE_BUILD_BAT_INSTEAD_OF_DREAM_MAKER.dm')
   .build(async () => {
     // Instead of calling `tgui/bin/tgui`, we reproduce the whole pipeline
     // here for maximum compilation speed.
