@@ -60,7 +60,7 @@
 				dat += "No-one has done anything this round!"
 			holder << browse(dat, "window=admin_log")
 		if("show_admins")
-			var/dat = "<meta charset=UTF-8><B>Current admins:</B><HR>"
+			var/dat = "<meta charset='UTF-8'><B>Current admins:</B><HR>"
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
