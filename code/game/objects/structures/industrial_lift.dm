@@ -233,34 +233,36 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
-	if(!locate(/obj/structure/industrial_lift) in destination.contents)//people aren't on the lift
-		if(going == DOWN)
-			for(var/mob/living/crushed in destination.contents)
-				to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
-				crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
-		else if(going != UP) //can't really crush something upwards
-			for(var/mob/living/collided in destination.contents)
-				to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
-				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(5,10)
-				collided.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD)
-				collided.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST)
-				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG)
-				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG)
-				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM)
-				collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM)
+	if(going == DOWN)
+		for(var/mob/living/crushed in destination.contents)
+			to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
+			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
+	else if(going != UP) //can't really crush something upwards
+		for(var/mob/living/collided in destination.contents)
+			to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
+			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+			var/damage = rand(5,10)
+			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD)
+			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM)
+			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM)
 
-				if(QDELETED(collided)) //in case it was a mob that dels on death
-					continue
-				var/turf/T = get_turf(src)
-				T.add_mob_blood(collided)
+			if(QDELETED(collided)) //in case it was a mob that dels on death
+				continue
+			var/turf/T = get_turf(src)
+			T.add_mob_blood(collided)
 
-				collided.throw_at()
-				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
-				var/atom/throw_target = get_edge_target_turf(collided, turn(going, pick(45, -45)))
-				collided.throw_at(throw_target, 200, 4)
+			collided.throw_at()
+			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
+			var/atom/throw_target = get_edge_target_turf(collided, turn(going, pick(45, -45)))
+			collided.throw_at(throw_target, 200, 4)
 	forceMove(destination)
 	for(var/am in things2move)
+		if(isnull(am))
+			LAZYREMOVE(lift_load, am)//after enough use, one of these always ends up inside despite signals. when they show, we need to scrub them out.
+			continue
 		var/atom/movable/thing = am
 		thing.forceMove(destination)
 
