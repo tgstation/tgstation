@@ -245,7 +245,7 @@
 		AM.setDir(current_dir)
 	now_pushing = FALSE
 
-/mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE, can_be_martial = FALSE)
+/mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
 	if(!(AM.can_be_pulled(src, state, force)))
@@ -302,10 +302,6 @@
 			M.LAssailant = usr
 		if(isliving(M))
 			var/mob/living/L = M
-
-			if(can_be_martial) //If this can be a martial pull, go for it.
-				if (src.apply_martial_art(L, null, TRUE))
-					return TRUE
 
 			SEND_SIGNAL(M, COMSIG_LIVING_GET_PULLED, src)
 			//Share diseases that are spread by touch
@@ -368,7 +364,7 @@
 	set category = "Object"
 
 	if(istype(AM) && Adjacent(AM))
-		start_pulling(AM, can_be_martial = TRUE)
+		start_pulling(AM)
 	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
 		stop_pulling()
 
