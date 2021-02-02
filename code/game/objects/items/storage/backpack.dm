@@ -352,7 +352,7 @@
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"
-	desc = "A cursed clown duffel bag that hungers for food of any kind."
+	desc = "A cursed clown duffel bag that hungers for food of any kind.\n A warning label suggests that it eats food inside. If that food happens to be a horribly ruined, burned mess the chef scrapped out of the microwave, then it might have negative effects on the bag..."
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
 	slowdown = 2
@@ -363,8 +363,6 @@
 
 /obj/item/storage/backpack/duffelbag/cursed/examine(mob/user)
 	. = ..()
-	. += "<span class='danger'>A warning label suggests that it eats food inside.</span>"
-	. += "<span class='danger'>If that food happens to be a horribly ruined, burned mess the chef scrapped out of the microwave, then it might have negative effects on the bag...</span>"
 	
 	if(hunger > 25)
 		. += "<span class='danger'>The bag is growling for food...</span>"
@@ -382,14 +380,12 @@
 	REMOVE_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
 	STOP_PROCESSING(SSobj,src)
-	
-	var/datum/component/storage/ST = GetComponent(/datum/component/storage)
-	ST.do_quick_empty()
+
 	var/turf/T = get_turf(user)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/vomit(T)
 
-	return ..()
+	. = ..()
 
 /obj/item/storage/backpack/duffelbag/cursed/process()
 	///don't process if it's somehow on the floor

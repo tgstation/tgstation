@@ -114,10 +114,10 @@
 /obj/item/melee/touch_attack/duffelbag
 	name = "\improper burdening touch"
 	desc = "Where is the bar from here?"
-	catchphrase = "BA'R A'RP!!"
-	on_use_sound = 'sound/magic/disintegrate.ogg'
-	icon_state = "disintegrate"
-	inhand_icon_state = "disintegrate"
+	catchphrase = "HU'SWCH H'ANS!!"
+	on_use_sound = 'sound/magic/mm_hit.ogg'
+	icon_state = "duffelcurse"
+	inhand_icon_state = "duffelcurse"
 
 /obj/item/melee/touch_attack/duffelbag/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //Roleplay involving touching is equally as bad
@@ -149,14 +149,16 @@
 	var/obj/item/storage/backpack/duffelbag/cursed/C = new get_turf(target)
 
 	M.visible_message("<span class='danger'>A growling duffel bag appears on [M]!</span>", \
-						   "<span class='danger'>You feel something attaching itself to you!</span>")
+						   "<span class='danger'>You feel something attaching itself to you, and a strong desire to discuss your [elaborate_backstory] at length!</span>")
 
 	if(M.dropItemToGround(M.back))
-		M.equip_to_slot_if_possible(C, ITEM_SLOT_BACK, 1, 1)
+		M.equip_to_slot_if_possible(C, ITEM_SLOT_BACK, TRUE, TRUE)
 	else
 		if(!M.put_in_hands(C))
 			M.dropItemToGround(M.get_inactive_held_item())
 			if(!M.put_in_hands(C))
 				M.dropItemToGround(M.get_active_held_item())
 				M.put_in_hands(C)
+			else
+				return ..()
 	return ..()
