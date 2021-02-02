@@ -31,6 +31,7 @@ Actual Adjacent procs :
 #define MASK_ODD 85
 #define MASK_EVEN 170
 
+#define IS_ADJACENT(X, Y) (call(X,adjacent)(caller, Y, id, simulated_only))
 
 //A* nodes variables
 /datum/pathnode
@@ -61,32 +62,7 @@ Actual Adjacent procs :
 /datum/pathnode/proc/calc_f()
 	f = g + h
 
-//JPS nodes variables
-/datum/jpsnode
-	var/turf/source //turf associated with the PathNode
-	var/datum/jpsnode/prevNode //link to the parent PathNode
-	var/f		//A* Node weight (f = g + h)
-	var/g = 1	// all steps cost 1, i dunno if we really need this var, nt works fine
-	var/h		//A* heuristic variable
-	var/nt		//count the number of Nodes traversed
-	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
-	var/jumps // how many steps it took from the last node
 
-/datum/jpsnode/New(s,p,ph,pnt,_bf, _jmp)
-	source = s
-	prevNode = p
-	h = ph
-	f = g + h*(1+ PF_TIEBREAKER)
-	nt = pnt
-	bf = _bf
-	jumps = _jmp
-
-/datum/jpsnode/proc/setp(p,ph,pnt, _jmp)
-	prevNode = p
-	h = ph
-	f = g + h*(1+ PF_TIEBREAKER)
-	nt = pnt
-	jumps = _jmp
 
 //////////////////////
 //A* procs
@@ -108,10 +84,16 @@ Actual Adjacent procs :
 		l = SSpathfinder.mobs.getfree(caller)
 
 	var/list/path
-	if(old)
+	if(old == 2)
 		path = oldAStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-	else
+	else if(old == 1)
 		path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+	else
+		var/datum/pathfind/pathfind_datum = new(caller, end)
+		path = pathfind_datum.start_search()
+		path = path.Copy()
+		testing("finished start_search(), length of path: [path.len]")
+		qdel(pathfind_datum)
 
 	SSpathfinder.mobs.found(l)
 	if(!path)
@@ -189,7 +171,6 @@ Actual Adjacent procs :
 						break
 					iter_turf.color = COLOR_YELLOW
 					path.Add(iter_turf)
-					var/turf/add_turf = iter_turf
 					iter_turf = get_step(iter_turf, dir_heading)
 					//testing("1 ([iter_turf.x], [iter_turf.y]) to ([add_turf.x], [add_turf.y])")
 				cur = cur.prevNode
@@ -202,7 +183,6 @@ Actual Adjacent procs :
 					break
 				final.color = COLOR_VIVID_YELLOW
 				path.Add(final)
-				var/turf/add_turf = final
 				final = get_step(final, dir_heading)
 				//testing("2 ([final.x], [final.y]) to ([add_turf.x], [add_turf.y])")
 			break
@@ -224,7 +204,6 @@ Actual Adjacent procs :
 
 			while(TRUE) // keep checking in the given direction until we get an interesting hit or some other stop condition
 				var/next_turf = get_step(sturf,f)
-				var/turf/next_tu = next_turf
 				steps_taken++
 				if(steps_taken > maxnodedepth)
 					//testing("Cut out at [steps_taken] steps")
@@ -306,97 +285,6 @@ Actual Adjacent procs :
 	//cleaning after us
 	testing("New path done with [total_tiles] tiles popped")
 	return path
-
-/proc/scan_lateral(datum/jpsnode/check_node, caller, datum/heap/open, list/openc, turf/end_turf, adjacent = /turf/proc/reachableTurftest, dist = /turf/proc/Distance_cardinal)
-	var/maxnodedepth = 30
-	var/simulated_only = TRUE
-	var/id = null
-
-
-	for(var/i = 0 to 3) // this is where we handle expanding vertically/horizontally to see which directions we can expand in. no preference for directions that go closer to the goal atm
-		var/f= 1<<i //get cardinal directions.1,2,4,8
-		if(!(check_node.bf & f)) // we don't care about the direction we came from
-			continue
-
-		var/interesting = FALSE // have we found a tile that has a forced neighbor, I.E. will we be adding whatever tile we're inspecting to the open list?
-		var/steps_taken = 0 // how many steps down the line horizontally/vertically we've gone from the tile we popped off the open list
-		var/turf/sturf = check_node.source // tracking what tile we have one step behind next_turf
-		var/breakout = FALSE // used for
-
-		while(TRUE) // keep checking in the given direction until we get an interesting hit or some other stop condition
-			var/turf/next_turf = get_step(sturf,f)
-			steps_taken++
-			if(steps_taken > maxnodedepth)
-				//testing("Cut out at [steps_taken] steps")
-				break
-			//testing("From ([next_tu.x], [next_tu.y]) step [steps_taken] in dir [f]")
-
-			if(next_turf == end_turf || call(next_turf,dist)(end_turf) <= mintargetdist) // this is a specific and somewhat redundant check to see if we hit our goal, this should be optimized out
-				//testing("got to end in [steps_taken] steps")
-				var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1)
-				var/datum/jpsnode/CN = openc[next_turf]
-				CN = new(next_turf,cur,call(next_turf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
-				open.Insert(CN)
-				openc[next_turf] = CN
-				breakout = TRUE
-				break
-
-			var/lowest_possible
-			if(!next_turf || next_turf == exclude || !call(sturf,adjacent)(caller, next_turf, id, simulated_only)) // RYLL: should this be a typecheck?
-				//breakout = TRUE
-				break
-			else if(call(next_turf,dist)(end) > call(sturf,dist)(end))
-				//testing("increasing dist, interesting")
-				interesting = TRUE
-			else
-				for(var/i2 = 0 to 3) // we're checking some tile some number of steps down the line from the tile we popped off the open stack, see if there are any forced neighbor tiles we might find interesting adjacent to it
-					var/f2= 1<<i2 //get cardinal directions.1,2,4,8
-					var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1)
-					if((f2 == r)) // ignore the direction we came from when looking for adjacent obstacles
-						continue
-					var/adjacent_next_turf = get_step(next_turf, f2) // this is the tile adjacent to the tile (next_turf) adjacent to the tile we're checking neighbors for (sturf). This lets us see if there's a diagonal forced neighbor, since 2 cards = diagonal
-
-
-					if(!adjacent_next_turf || adjacent_next_turf == exclude || !call(next_turf,adjacent)(caller, adjacent_next_turf, id, simulated_only))
-						interesting = TRUE
-						//break
-						continue // break just quits once we know a tile is interesting, by continuing we can see if any of the neighboring tiles are interesting as well, like forced neighbor corners
-
-			if(!interesting) // empty space with nothing next to it, keep moving
-				var/turf/nex_tu = next_turf
-				nex_tu.color = COLOR_MAROON
-				sturf = next_turf
-				continue // take one more step in whatever direction we're heading and repeat
-			else
-				var/turf/nex_tu = sturf
-				nex_tu.color = COLOR_LIGHT_GRAYISH_RED
-
-			// we have decided that sturf is an interesting tile, so let's handle adding it to the open list/modifying it if it's already in the open list
-			var/datum/jpsnode/CN = openc[next_turf]  //see if this turf is in the open list
-			var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
-			//var/newt = cur.nt + (call(cur.source,dist)(next_turf) * steps_taken)
-			var/newt = cur.nt + steps_taken
-
-			var/turf/nex_tu = next_turf
-			nex_tu.color = COLOR_RED
-			if(CN)
-			//is already in open list, check if it's a better way from the current turf
-				CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-				if((newt < CN.nt) )
-					CN.setp(cur,CN.h,cur.nt+steps_taken, _jmp = steps_taken)
-					open.ReSort(CN)//reorder the changed element in the list
-			else
-			//is not already in open list, so add it
-				CN = new(next_turf,cur,call(next_turf,dist)(end),cur.nt+steps_taken,15^r, _jmp = steps_taken)
-				open.Insert(CN)
-				openc[next_turf] = CN
-			break
-
-		if(breakout)
-			break
-	cur.bf = 0
-	CHECK_TICK
-
 
 /proc/oldAStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
 	//sanitation

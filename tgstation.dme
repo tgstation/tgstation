@@ -161,6 +161,7 @@
 #include "code\__HELPERS\mobs.dm"
 #include "code\__HELPERS\mouse_control.dm"
 #include "code\__HELPERS\names.dm"
+#include "code\__HELPERS\path.dm"
 #include "code\__HELPERS\priority_announce.dm"
 #include "code\__HELPERS\pronouns.dm"
 #include "code\__HELPERS\qdel.dm"
