@@ -37,8 +37,8 @@
 	time = 25
 	var/brutehealing = 0
 	var/burnhealing = 0
-	var/brutemultiplier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.
-	var/burnmultiplier = 0
+	var/brute_multiplier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.
+	var/burn_multiplier = 0
 
 /datum/surgery_step/heal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/woundtype
@@ -65,20 +65,20 @@
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/umsg = "You succeed in fixing some of [target]'s wounds" //no period, add initial space to "addons"
 	var/tmsg = "[user] fixes some of [target]'s wounds" //see above
-	var/brutehealed = brutehealing
-	var/burnhealed = burnhealing
+	var/brute_healed = brutehealing
+	var/burn_healed = burnhealing
 	if(target.stat != DEAD)
-		brutehealed += round((target.getBruteLoss() * brutemultiplier),0.1)
-		burnhealed += round((target.getFireLoss() * burnmultiplier),0.1)
+		brute_healed += round((target.getBruteLoss() * brute_multiplier),0.1)
+		burn_healed += round((target.getFireLoss() * burn_multiplier),0.1)
 	else //less healing bonus for the dead since they're expected to have lots of damage to begin with (to make TW into defib not TOO simple)
-		brutehealed += round((target.getBruteLoss() * (brutemultiplier * 0.2)),0.1)
-		burnhealed += round((target.getFireLoss() * (burnmultiplier * 0.2)),0.1)
+		brute_healed += round((target.getBruteLoss() * (brute_multiplier * 0.2)),0.1)
+		burn_healed += round((target.getFireLoss() * (burn_multiplier * 0.2)),0.1)
 	if(!get_location_accessible(target, target_zone))
-		brutehealed *= 0.55
-		burnhealed *= 0.55
+		brute_healed *= 0.55
+		burn_healed *= 0.55
 		umsg += " as best as you can while they have clothing on"
 		tmsg += " as best as they can while [target] has clothing on"
-	target.heal_bodypart_damage(brutehealed,burnhealed)
+	target.heal_bodypart_damage(brute_healed,burn_healed)
 	display_results(user, target, "<span class='notice'>[umsg].</span>",
 		"[tmsg].",
 		"[tmsg].")
@@ -91,12 +91,12 @@
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",
 		"<span class='warning'>[user] screws up!</span>",
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
-	var/brutedealt = brutehealing * 0.8
-	var/burndealt = burnhealing * 0.8
-	brutedealt	+= round((target.getBruteLoss() * (brutemultiplier * 0.5)),0.1)
-	burndealt += round((target.getFireLoss() * (burnmultiplier * 0.5)),0.1)
+	var/brute_dealt = brutehealing * 0.8
+	var/burn_dealt = burnhealing * 0.8
+	brute_dealt	+= round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
+	burn_dealt += round((target.getFireLoss() * (burn_multiplier * 0.5)),0.1)
 
-	target.take_bodypart_damage(brutedealt, burndealt, wound_bonus=CANT_WOUND)
+	target.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus=CANT_WOUND)
 	return FALSE
 
 /***************************BRUTE***************************/
@@ -127,15 +127,15 @@
 /datum/surgery_step/heal/brute/basic
 	name = "tend bruises"
 	brutehealing = 5
-	brutemultiplier = 0.07
+	brute_multiplier = 0.07
 
 /datum/surgery_step/heal/brute/upgraded
 	brutehealing = 5
-	brutemultiplier = 0.1
+	brute_multiplier = 0.1
 
 /datum/surgery_step/heal/brute/upgraded/femto
 	brutehealing = 5
-	brutemultiplier = 0.2
+	brute_multiplier = 0.2
 
 /***************************BURN***************************/
 /datum/surgery/healing/burn
@@ -165,15 +165,15 @@
 /datum/surgery_step/heal/burn/basic
 	name = "tend burn wounds"
 	burnhealing = 5
-	burnmultiplier = 0.07
+	burn_multiplier = 0.07
 
 /datum/surgery_step/heal/burn/upgraded
 	burnhealing = 5
-	burnmultiplier = 0.1
+	burn_multiplier = 0.1
 
 /datum/surgery_step/heal/burn/upgraded/femto
 	burnhealing = 5
-	burnmultiplier = 0.2
+	burn_multiplier = 0.2
 
 /***************************COMBO***************************/
 /datum/surgery/healing/combo
@@ -204,21 +204,21 @@
 	name = "tend physical wounds"
 	brutehealing = 3
 	burnhealing = 3
-	brutemultiplier = 0.07
-	burnmultiplier = 0.07
+	brute_multiplier = 0.07
+	burn_multiplier = 0.07
 	time = 10
 
 /datum/surgery_step/heal/combo/upgraded
 	brutehealing = 3
 	burnhealing = 3
-	brutemultiplier = 0.1
-	burnmultiplier = 0.1
+	brute_multiplier = 0.1
+	burn_multiplier = 0.1
 
 /datum/surgery_step/heal/combo/upgraded/femto
 	brutehealing = 1
 	burnhealing = 1
-	brutemultiplier = 0.4
-	burnmultiplier = 0.4
+	brute_multiplier = 0.4
+	burn_multiplier = 0.4
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",
