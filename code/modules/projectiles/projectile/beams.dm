@@ -150,13 +150,13 @@
 	tracer_type = /obj/effect/projectile/tracer/laser/emitter
 	impact_type = /obj/effect/projectile/impact/laser/emitter
 	impact_effect_type = null
-	hitscan_light_intensity = 2
+	hitscan_light_intensity = 3
 	hitscan_light_range = 0.75
 	hitscan_light_color_override = COLOR_LIME
-	muzzle_flash_intensity = 4
+	muzzle_flash_intensity = 6
 	muzzle_flash_range = 2
 	muzzle_flash_color_override = COLOR_LIME
-	impact_light_intensity = 5
+	impact_light_intensity = 7
 	impact_light_range = 2.5
 	impact_light_color_override = COLOR_LIME
 
