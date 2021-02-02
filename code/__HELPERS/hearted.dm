@@ -18,15 +18,16 @@
 
 /// Once the round is actually over, cycle through the ckeys in the hearts list and give them the hearted status
 /datum/controller/subsystem/ticker/proc/handle_hearts()
-	var/message = "The following players were commended this round: "
+	var/list/message = list("The following players were commended this round: ")
 	var/i = 0
 	for(var/hearted_ckey in hearts)
 		i++
 		var/mob/hearted_mob = get_mob_by_ckey(hearted_ckey)
-		if(hearted_mob?.client)
-			hearted_mob.client.adjust_heart()
-			message += "[hearted_ckey][i==hearts.len ? "" : ", "]"
-	message_admins(message)
+		if(!hearted_mob?.client)
+			continue
+		hearted_mob.client.adjust_heart()
+		message += "[hearted_ckey][i==hearts.len ? "" : ", "]"
+	message_admins(message.Join())
 
 /// Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up
 /mob/proc/query_heart(attempt=1)
@@ -65,7 +66,7 @@
 				return
 			if("Nope")
 				continue
-			if("Cancel")
+			else
 				return
 
 	query_heart(attempt + 1)
