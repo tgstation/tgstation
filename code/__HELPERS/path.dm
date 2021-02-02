@@ -157,3 +157,64 @@
 		unwind_node = unwind_node.prevNode
 		path.Add(unwind_node.source)
 		unwind_node.source.color = COLOR_YELLOW
+
+/datum/pathfind/proc/lateral_scan(datum/jpsnode/unwind_node)
+	var/steps_taken = 0
+	for(var/i = 0 to 3)
+		steps_taken = 0
+		var/f= 1<<i //get cardinal directions.1,2,4,8
+		if(!(unwind_node.bf & f))
+			//testing("skip dir: [f] br: [cur.bf]")
+			continue
+		var/turf/current_turf = unwind_node.source
+		var/turf/next_turf = get_step(current_turf,f)
+		if(next_turf == exclude) //typecheck?
+			continue
+
+		steps_taken++
+		var/datum/jpsnode/next_node = openc[next_turf]  //current checking turf
+		var/r=PATH_REVERSE(f) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
+		var/newt = unwind_node.nt + 1//PATH_DIST(cur.source, next_turf)
+
+		var/next_interesting = FALSE
+
+		for(var/i2 = 0 to 3)
+			var/f2= 1<<i2 //get cardinal directions.1,2,4,8
+			if(r == f2 || f == f2)  // not going in the continuing direction, check the left and right turns
+				continue
+			//if(f != f2)
+			var/turf/possible_block = get_step(current_turf, f2)
+			var/turf/possible_interest = get_step(next_turf, f2)
+			if(!call(current_turf,adjacent)(caller, possible_block, id, simulated_only) && call(next_turf,adjacent)(caller, possible_interest, id, simulated_only))
+				var/datum/jpsnode/neighbor_node = openc[possible_interest]
+				//testing("let's see if CN exists [CN]")
+				if(neighbor_node)
+				//is already in open list, check if it's a better way from the current turf
+
+					if((newt < neighbor_node.nt))
+						neighbor_node.setp(unwind_node,unwind_node.h,newt)
+						open.ReSort(neighbor_node)//reorder the changed element in the list
+						next_interesting = TRUE
+				else
+				//is not already in open list, so add it
+					neighbor_node = new(possible_interest,unwind_node,PATH_DIST(possible_interest, end),newt,15^r)
+					open.Insert(neighbor_node)
+					openc[possible_interest] = neighbor_node
+					next_interesting = TRUE
+
+		if(next_interesting)
+			var/turf/continuing_turf = get_step(next_turf, f)
+			var/datum/jpsnode/continuing_node = openc[continuing_turf]
+			//testing("let's see if CN exists [CN]")
+			if(continuing_node)
+			//is already in open list, check if it's a better way from the current turf
+
+				if((newt < continuing_node.nt))
+					continuing_node.setp(unwind_node,unwind_node.h,newt)
+					open.ReSort(continuing_node)//reorder the changed element in the list
+			else
+			//is not already in open list, so add it
+				continuing_node = new(continuing_turf,unwind_node,PATH_DIST(continuing_turf, end),newt,15^r)
+				open.Insert(continuing_node)
+				openc[possible_interest] = continuing_node
+				next_interesting = TRUE

@@ -373,8 +373,8 @@ Actual Adjacent procs :
 	var/turf/T
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 
-	for(var/k in 1 to GLOB.cardinals.len)
-		T = get_step(src,GLOB.cardinals[k])
+	for(var/k in 1 to GLOB.alldirs.len)
+		T = get_step(src,GLOB.alldirs[k])
 		if(!T || (simulated_only && space_type_cache[T.type]))
 			continue
 		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
