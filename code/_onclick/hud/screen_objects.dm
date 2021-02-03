@@ -145,7 +145,7 @@
 		if(inv_item)
 			return inv_item.Click(location, control, params)
 
-	if(usr.attack_ui(slot_id))
+	if(usr.attack_ui(slot_id, params))
 		usr.update_inv_hands()
 	return TRUE
 

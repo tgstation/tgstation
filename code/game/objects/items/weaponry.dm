@@ -961,12 +961,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
-/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user)
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, params)
 	var/dist = get_dist(M, user)
 	if(dist < min_reach)
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
-	M.attack_hand(user)
+	var/list/modifiers = params2list(params)
+	M.attack_hand(user, modifiers)
 
 /obj/item/gohei
 	name = "gohei"

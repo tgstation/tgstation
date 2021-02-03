@@ -6,7 +6,7 @@
 	ADD_TRAIT(puncher, TRAIT_PERFECT_ATTACKER, INNATE_TRAIT)
 
 	puncher.set_combat_mode(TRUE)
-	victim.attack_hand(puncher)
+	victim.attack_hand(puncher, list("right" = FALSE))
 
 	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being punched")
 

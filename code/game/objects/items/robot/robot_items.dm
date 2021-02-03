@@ -64,14 +64,15 @@
 		if(3)
 			to_chat(user, "ERROR: ARM ACTUATORS OVERLOADED.")
 
-/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
+/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user, params)
 	if(M == user)
 		return
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
 				if(isanimal(M))
-					M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+					var/list/modifiers = params2list(params)
+					M.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
 					return
 				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \

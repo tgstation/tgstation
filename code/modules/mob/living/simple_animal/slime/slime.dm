@@ -269,7 +269,7 @@
 /mob/living/simple_animal/slime/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
-/mob/living/simple_animal/slime/attack_ui(slot)
+/mob/living/simple_animal/slime/attack_ui(slot, params)
 	return
 
 /mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M)
