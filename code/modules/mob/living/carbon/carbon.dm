@@ -1,9 +1,15 @@
-/mob/living/carbon/Initialize()
+/mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000)
 	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
+
+	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
+	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+
 	GLOB.carbon_list += src
+	if(!mapload)  //I don't want no gas leaks on my space ruin you hear?
+		RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -81,14 +87,19 @@
 	var/hurt = TRUE
 	var/extra_speed = 0
 	if(throwingdatum.thrower != src)
-		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), 3)
+		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 
-	if(istype(throwingdatum, /datum/thrownthing))
+	if(istype(throwingdatum))
 		hurt = !throwingdatum.gentle
-	if(hit_atom.density && isturf(hit_atom))
-		if(hurt)
-			Paralyze(20)
+	if(hurt && hit_atom.density)
+		if(isturf(hit_atom))
+			Paralyze(2 SECONDS)
 			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		else if(isstructure(hit_atom) && extra_speed)
+			Paralyze(1 SECONDS)
+			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		else if(!iscarbon(hit_atom) && extra_speed)
+			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
@@ -96,8 +107,8 @@
 		if(hurt)
 			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-			victim.Paralyze(20)
-			Paralyze(20)
+			victim.Paralyze(2 SECONDS)
+			Paralyze(2 SECONDS)
 			visible_message("<span class='danger'>[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!</span>",\
 				"<span class='userdanger'>You violently crash into [victim][extra_speed ? " extra hard" : ""]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
@@ -180,44 +191,43 @@
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat = {"
-	<HR>
-	<B><FONT size=3>[name]</FONT></B>
-	<HR>
-	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_HEAD]'>[(head && !(head.item_flags & ABSTRACT)) ? head : "Nothing"]</A>"}
-
+	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/obscured = check_obscured_slots()
+	var/list/dat = list()
 
-	if(obscured & ITEM_SLOT_NECK)
-		dat += "<BR><B>Neck:</B> Obscured"
-	else
-		dat += "<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_NECK]'>[(wear_neck && !(wear_neck.item_flags & ABSTRACT)) ? (wear_neck) : "Nothing"]</A>"
-
-	if(obscured & ITEM_SLOT_MASK)
-		dat += "<BR><B>Mask:</B> Obscured"
-	else
-		dat += "<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_MASK]'>[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</a>"
-
+	dat += "<table>"
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B> </td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "Nothing"]</a>"
+		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td>&nbsp;</td></tr>"
 
-	dat += "<BR><B>Back:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_BACK]'>[back ? back : "Nothing"]</A>"
+	dat += "<tr><td><B>Back:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_BACK]'>[(back && !(back.item_flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A>"
+	if(has_breathable_mask && istype(back, /obj/item/tank))
+		dat += "&nbsp;<A href='?src=[REF(src)];internal=[ITEM_SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
-	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
-		dat += "<BR><A href='?src=[REF(src)];internal=[ITEM_SLOT_BACK]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
+
+	dat += "<tr><td><B>Head:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HEAD]'>[(head && !(head.item_flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
+
+	if(obscured & ITEM_SLOT_MASK)
+		dat += "<tr><td><font color=grey><B>Mask:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+	else
+		dat += "<tr><td><B>Mask:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_MASK]'>[(wear_mask && !(wear_mask.item_flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
+
+	dat += "<tr><td><B>Neck:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_NECK]'>[(wear_neck && !(wear_neck.item_flags & ABSTRACT)) ? wear_neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	if(handcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDCUFFED]'>Handcuffed</A>"
+		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_HANDCUFFED]'>Remove</A></td></tr>"
 	if(legcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Legcuffed</A>"
+		dat += "<tr><td><B>Legcuffed:</B> <A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Remove</A></td></tr>"
 
-	dat += {"
-	<BR>
-	<BR><A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	dat += {"</table>
+	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
 	"}
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "mob[REF(src)]")
+
+	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)
+	popup.set_content(dat.Join())
+	popup.open()
 
 /mob/living/carbon/Topic(href, href_list)
 	..()
@@ -449,7 +459,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE, purge = FALSE)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
@@ -482,7 +492,6 @@
 		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
 
-	var/obj/item/organ/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
@@ -490,12 +499,8 @@
 			if(harm)
 				adjustBruteLoss(3)
 		else
-			if(belly?.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
-				if(T)
-					T.add_vomit_floor(src, VOMIT_PURPLE)
-			else
-				if(T)
-					T.add_vomit_floor(src, VOMIT_TOXIC, purge) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
+			if(T)
+				T.add_vomit_floor(src, vomit_type, purge_ratio) //toxic barf looks different || call purge when doing detoxicfication to pump more chems out of the stomach.
 		T = get_step(T, dir)
 		if (T?.is_blocked_turf())
 			break
@@ -883,7 +888,7 @@
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
-	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
+	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
 
 /mob/living/carbon/proc/can_defib()
@@ -1203,14 +1208,14 @@
 	return total_bleed_rate
 
 /**
-  * generate_fake_scars()- for when you want to scar someone, but you don't want to hurt them first. These scars don't count for temporal scarring (hence, fake)
-  *
-  * If you want a specific wound scar, pass that wound type as the second arg, otherwise you can pass a list like WOUND_LIST_SLASH to generate a random cut scar.
-  *
-  * Arguments:
-  * * num_scars- A number for how many scars you want to add
-  * * forced_type- Which wound or category of wounds you want to choose from, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN (or some combination). If passed a list, picks randomly from the listed wounds. Defaults to all 3 types
-  */
+ * generate_fake_scars()- for when you want to scar someone, but you don't want to hurt them first. These scars don't count for temporal scarring (hence, fake)
+ *
+ * If you want a specific wound scar, pass that wound type as the second arg, otherwise you can pass a list like WOUND_LIST_SLASH to generate a random cut scar.
+ *
+ * Arguments:
+ * * num_scars- A number for how many scars you want to add
+ * * forced_type- Which wound or category of wounds you want to choose from, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN (or some combination). If passed a list, picks randomly from the listed wounds. Defaults to all 3 types
+ */
 /mob/living/carbon/proc/generate_fake_scars(num_scars, forced_type)
 	for(var/i in 1 to num_scars)
 		var/datum/scar/scaries = new
@@ -1234,10 +1239,10 @@
 	return !(wear_mask?.flags_inv & HIDEFACE) && !(head?.flags_inv & HIDEFACE)
 
 /**
-  * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
-  *
-  * go look at the species def for more info [/datum/species/proc/get_biological_state]
-  */
+ * get_biological_state is a helper used to see what kind of wounds we roll for. By default we just assume carbons (read:monkeys) are flesh and bone, but humans rely on their species datums
+ *
+ * go look at the species def for more info [/datum/species/proc/get_biological_state]
+ */
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
 
@@ -1317,3 +1322,14 @@
 		return
 
 	return ..()
+
+
+/mob/living/carbon/get_attack_type()
+	var/datum/species/species = dna?.species
+	if (species)
+		return species.attack_type
+	return ..()
+
+
+/mob/living/carbon/proc/attach_rot(mapload)
+	AddComponent(/datum/component/rot/corpse)

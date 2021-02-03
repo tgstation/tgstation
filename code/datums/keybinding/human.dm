@@ -56,18 +56,3 @@
 	slot_type = ITEM_SLOT_SUITSTORE
 	slot_item_name = "suit storage slot item"
 	keybind_signal = COMSIG_KB_HUMAN_SUITEQUIP_DOWN
-
-/datum/keybinding/human/equipment_swap
-	hotkey_keys = list("V")
-	name = "equipment_swap"
-	full_name = "Equipment Swap"
-	description = "Equip the currently held item by swapping it out with the already equipped item after a small delay"
-	keybind_signal = COMSIG_KB_HUMAN_EQUIPMENTSWAP_DOWN
-
-/datum/keybinding/human/equipment_swap/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/carbon/human/H = user.mob
-	H.equipment_swap()
-	return TRUE

@@ -10,9 +10,21 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/structure/closet/crate/necropolis/tendril
-	desc = "It's watching you suspiciously."
+	desc = "It's watching you suspiciously. You need a skeleton key to open it."
+	///prevents bust_open to fire
+	integrity_failure = 0
+	/// var to check if it got opened by a key
+	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/PopulateContents()
+/obj/structure/closet/crate/necropolis/tendril/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
+
+/obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/item, mob/user, params) ///proc that handles key checking and generating loot
+	SIGNAL_HANDLER
+
+	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
+		return FALSE
 	var/loot = rand(1,21)
 	switch(loot)
 		if(1)
@@ -45,7 +57,7 @@
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/berserker(src)
 		if(12)
 			new /obj/item/jacobs_ladder(src)
 		if(13)
@@ -67,6 +79,15 @@
 			new /obj/item/bedsheet/cult(src)
 		if(21)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+	spawned_loot = TRUE
+	qdel(item)
+	to_chat(user, "<span class='notice'>You disable the magic lock, revealing the loot.</span>")
+	return TRUE
+
+/obj/structure/closet/crate/necropolis/tendril/can_open(mob/living/user, force = FALSE)
+	if(!spawned_loot)
+		return FALSE
+	return ..()
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -377,9 +398,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-/obj/effect/warp_cube/ex_act(severity, target)
-	return
-
 //Meat Hook
 /obj/item/gun/magic/hook
 	name = "meat hook"
@@ -398,7 +416,7 @@
 	name = "hook"
 	desc = "A hook."
 	projectile_type = /obj/projectile/hook
-	caliber = "hook"
+	caliber = CALIBER_HOOK
 	icon_state = "hook"
 
 /obj/projectile/hook
@@ -416,7 +434,7 @@
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
+		chain = firer.Beam(src, icon_state = "chain")
 	..()
 	//TODO: root the firer until the chain returns
 
@@ -518,9 +536,6 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
-/obj/effect/immortality_talisman/ex_act()
-	return
-
 /obj/effect/immortality_talisman/singularity_pull()
 	return
 
@@ -615,7 +630,11 @@
 			return
 		if(exposed_carbon.dna.species.has_innate_wings)
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
+			if(!exposed_carbon.dna.features["original_moth_wings"]) //Stores their wings for later possible reconstruction
+				exposed_carbon.dna.features["original_moth_wings"] = exposed_carbon.dna.features["moth_wings"]
 			exposed_carbon.dna.features["moth_wings"] = "None"
+			if(!exposed_carbon.dna.features["original_moth_antennae"]) //Stores their antennae type as well
+				exposed_carbon.dna.features["original_moth_antennae"] = exposed_carbon.dna.features["moth_antennae"]
 			exposed_carbon.dna.features["moth_antennae"] = "Regal"
 		else
 			to_chat(exposed_carbon, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
@@ -838,7 +857,7 @@
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
-	GLOB.poi_list |= src
+	AddElement(/datum/element/point_of_interest)
 	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
@@ -846,7 +865,6 @@
 		G.invisibility = GLOB.observer_default_invisibility
 	spirits.Cut()
 	STOP_PROCESSING(SSobj, src)
-	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)
@@ -1281,7 +1299,8 @@
 
 /obj/item/hierophant_club/proc/teleport_mob(turf/source, mob/M, turf/target, mob/user)
 	var/turf/turf_to_teleport_to = get_step(target, get_dir(source, M)) //get position relative to caster
-	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
+	var/area/destination_area = turf_to_teleport_to.loc
+	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE) || destination_area.area_flags & NOTELEPORT)
 		return
 	animate(M, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	sleep(1)
@@ -1326,6 +1345,13 @@
 			new /obj/item/wisp_lantern(src)
 		if(3)
 			new /obj/item/prisoncube(src)
+
+/obj/item/skeleton_key
+	name = "skeleton key"
+	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds a monopoly on."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "skeleton_key"
+	w_class = WEIGHT_CLASS_SMALL
 
 #undef HIEROPHANT_BLINK_RANGE
 #undef HIEROPHANT_BLINK_COOLDOWN

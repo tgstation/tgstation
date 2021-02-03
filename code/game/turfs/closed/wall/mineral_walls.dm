@@ -133,7 +133,7 @@
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
-/turf/closed/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
+/turf/closed/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature)//Doesn't work because walls have superconduction turned off
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 

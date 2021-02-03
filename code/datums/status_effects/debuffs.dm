@@ -400,10 +400,10 @@
 	return ..()
 
 /**
-  * What happens when this mark gets poppedd
-  *
-  * Adds actual functionality to each mark
-  */
+ * What happens when this mark gets poppedd
+ *
+ * Adds actual functionality to each mark
+ */
 /datum/status_effect/eldritch/proc/on_effect()
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
@@ -456,6 +456,16 @@
 		//Affects roughly 75% of items
 		if(!QDELETED(I) && prob(75)) //Just in case
 			I.take_damage(100)
+	return ..()
+
+/datum/status_effect/eldritch/void
+	id = "void_mark"
+	effect_sprite = "emark4"
+
+/datum/status_effect/eldritch/void/on_effect()
+	var/turf/open/turfie = get_turf(owner)
+	turfie.TakeTemperature(-40)
+	owner.adjust_bodytemperature(-20)
 	return ..()
 
 /// A status effect used for specifying confusion on a living mob.
@@ -682,10 +692,14 @@
 
 	if(!owner.can_hear())
 		return
-	if(hearing_args[HEARING_SPEAKER] == owner)
+	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
+	if(hearing_speaker == owner)
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
+	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_ATTACK)
+	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, log_globally = FALSE)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
@@ -905,7 +919,7 @@
 
 /datum/status_effect/amok/on_apply(mob/living/afflicted)
 	. = ..()
-	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+	to_chat(owner, "<span class='boldwarning'>You feel filled with a rage that is not your own!</span>")
 
 /datum/status_effect/amok/tick()
 	. = ..()

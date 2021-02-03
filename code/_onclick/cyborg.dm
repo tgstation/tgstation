@@ -160,7 +160,10 @@
 	change attack_robot() above to the proper function
 */
 /mob/living/silicon/robot/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
 	A.attack_robot(src)
+
 /mob/living/silicon/robot/RangedAttack(atom/A)
 	A.attack_robot(src)
 

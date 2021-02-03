@@ -9,12 +9,12 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 
 /**
-  * Proc called to activate space ninja's adrenaline.
-  *
-  * Proc called to use space ninja's adrenaline.  Gets the ninja out of almost any stun.
-  * Also makes them shout MGS references when used.  After a bit, it injects the user with
-  * radium by calling a different proc.
-  */
+ * Proc called to activate space ninja's adrenaline.
+ *
+ * Proc called to use space ninja's adrenaline.  Gets the ninja out of almost any stun.
+ * Also makes them shout MGS references when used.  After a bit, it injects the user with
+ * radium by calling a different proc.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
 	if(ninjacost(0,N_ADRENALINE))
 		return
@@ -34,11 +34,11 @@
 	addtimer(CALLBACK(src, .proc/ninjaboost_after), 70)
 
 /**
-  * Proc called to inject the ninja with radium.
-  *
-  * Used after 7 seconds of using the ninja's adrenaline.
-  * Injects the user with how much radium the suit needs to refill an adrenaline boost.
-  */
+ * Proc called to inject the ninja with radium.
+ *
+ * Used after 7 seconds of using the ninja's adrenaline.
+ * Injects the user with how much radium the suit needs to refill an adrenaline boost.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost_after()
 	var/mob/living/carbon/human/ninja = affecting
 	ninja.reagents.add_reagent(/datum/reagent/uranium/radium, a_transfer * 0.25)

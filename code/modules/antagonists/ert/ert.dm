@@ -38,16 +38,6 @@
 /datum/antagonist/ert/proc/update_name()
 	owner.current.fully_replace_character_name(owner.current.real_name,"[role] [pick(name_source)]")
 
-/datum/antagonist/ert/deathsquad/New()
-	. = ..()
-	name_source = GLOB.commando_names
-
-/datum/antagonist/ert/deathsquad/apply_innate_effects(mob/living/mob_override)
-	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
-
-/datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
-	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
-
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
 /datum/antagonist/ert/security/red
@@ -79,6 +69,10 @@
 	outfit = /datum/outfit/centcom/death_commando
 	role = "Trooper"
 	rip_and_tear = TRUE
+
+/datum/antagonist/ert/deathsquad/New()
+	. = ..()
+	name_source = GLOB.commando_names
 
 /datum/antagonist/ert/medic/inquisitor
 	outfit = /datum/outfit/centcom/ert/medic/inquisitor
@@ -241,7 +235,7 @@
 	if(policy)
 		to_chat(owner, policy)
 	var/mob/living/M = owner.current
-	M.playsound_local(M, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
+	M.playsound_local(M, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /datum/antagonist/ert/families/undercover_cop
 	name = "Undercover Cop"

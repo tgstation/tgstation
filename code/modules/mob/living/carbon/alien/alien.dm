@@ -32,6 +32,8 @@
 
 	create_internal_organs()
 
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, ROUNDSTART_TRAIT)
+
 	. = ..()
 
 /mob/living/carbon/alien/create_internal_organs()
@@ -130,8 +132,8 @@ Des: Removes all infected images from the alien.
 		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
-/mob/living/carbon/alien/can_hold_items()
-	return ISADVANCEDTOOLUSER(src) && ..()
+/mob/living/carbon/alien/can_hold_items(obj/item/I)
+	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 /mob/living/carbon/alien/on_lying_down(new_lying_angle)
 	. = ..()

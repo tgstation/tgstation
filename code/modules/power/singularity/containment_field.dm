@@ -19,13 +19,14 @@
 
 /obj/machinery/field/containment/Initialize()
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
 
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
 	FG2.fields -= src
 	CanAtmosPass = ATMOS_PASS_YES
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -78,6 +79,11 @@
 	FG1 = master1
 	FG2 = master2
 	return TRUE
+
+/obj/machinery/field/containment/proc/block_singularity()
+	SIGNAL_HANDLER
+
+	return SINGULARITY_TRY_MOVE_BLOCK
 
 /obj/machinery/field/containment/shock(mob/living/user)
 	if(!FG1 || !FG2)

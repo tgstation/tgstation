@@ -1026,7 +1026,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/research)
 "cF" = (
-/obj/machinery/vending/cola/random,
+/obj/effect/spawner/randomcolavend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1444,7 +1444,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/research)
 "dm" = (
-/obj/machinery/vending/snack/random,
+/obj/effect/spawner/randomsnackvend,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2583,14 +2583,14 @@
 /area/awaymission/snowdin/outside)
 "gc" = (
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
 "gd" = (
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -2601,7 +2601,7 @@
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -2933,14 +2933,14 @@
 "gU" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
 "gV" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -3220,7 +3220,7 @@
 "hF" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -3230,7 +3230,7 @@
 	name = "overseer's winter coat"
 	},
 /obj/item/clothing/shoes/winterboots,
-/obj/item/key,
+/obj/item/key/atv,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
@@ -3473,7 +3473,7 @@
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/lootdrop/snowdin/dungeonmid,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -3483,7 +3483,7 @@
 	max_mobs = 5
 	},
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -3493,7 +3493,7 @@
 	name = "Caleb Reed"
 	},
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -4267,7 +4267,7 @@
 	name = "Jacob Ullman"
 	},
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -5314,7 +5314,7 @@
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/lootdrop/snowdin/dungeonlite,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -5730,8 +5730,8 @@
 /area/awaymission/snowdin/post/garage)
 "mV" = (
 /obj/structure/table,
-/obj/item/key,
-/obj/item/key,
+/obj/item/key/atv,
+/obj/item/key/atv,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/garage)
@@ -7093,7 +7093,7 @@
 "qg" = (
 /obj/structure/flora/rock/pile/icy,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120";
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
 	},
 /area/awaymission/snowdin/cave/cavern)
@@ -9248,7 +9248,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "wB" = (
-/obj/item/key,
+/obj/item/key/atv,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "wC" = (
@@ -10739,7 +10739,9 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/outside)
 "AD" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	},
 /area/awaymission/snowdin/outside)
 "AE" = (
 /obj/item/pen,
@@ -10809,7 +10811,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "AN" = (
-/obj/item/key,
+/obj/item/key/atv,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},

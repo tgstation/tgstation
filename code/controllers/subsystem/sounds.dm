@@ -85,8 +85,8 @@ SUBSYSTEM_DEF(sounds)
 	using_channels_by_datum[D] += .
 
 /**
-  * Reserves a channel and updates the datastructure. Private proc.
-  */
+ * Reserves a channel and updates the datastructure. Private proc.
+ */
 /datum/controller/subsystem/sounds/proc/reserve_channel()
 	PRIVATE_PROC(TRUE)
 	if(channel_reserve_high <= random_channels_min)		// out of channels
@@ -96,8 +96,8 @@ SUBSYSTEM_DEF(sounds)
 	return channel
 
 /**
-  * Frees a channel and updates the datastructure. Private proc.
-  */
+ * Frees a channel and updates the datastructure. Private proc.
+ */
 /datum/controller/subsystem/sounds/proc/free_channel(number)
 	PRIVATE_PROC(TRUE)
 	var/text_channel = num2text(number)

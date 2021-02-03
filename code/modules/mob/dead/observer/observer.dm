@@ -160,6 +160,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 10)
 
 /mob/dead/observer/Destroy()
+	if(data_huds_on)
+		remove_data_huds()
+
 	// Update our old body's medhud since we're abandoning it
 	if(mind?.current)
 		mind.current.med_hud_set_status()
@@ -802,7 +805,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	update_icon()
 
-/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
+/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	return isAdminGhostAI(usr)
 
 /mob/dead/observer/is_literate()

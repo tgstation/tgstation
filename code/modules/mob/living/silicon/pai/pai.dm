@@ -22,6 +22,7 @@
 	head_icon = 'icons/mob/pai_item_head.dmi'
 	radio = /obj/item/radio/headset/silicon/pai
 	can_buckle_to = FALSE
+	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -203,11 +204,8 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
-	if(be_close && !in_range(M, src))
-		to_chat(src, "<span class='warning'>You are too far away!</span>")
-		return FALSE
-	return TRUE
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+	return ..(M, be_close, no_dexterity, no_tk, need_hands, TRUE) //Resting is just an aesthetic feature for them.
 
 /mob/proc/makePAI(delold)
 	var/obj/item/paicard/card = new /obj/item/paicard(get_turf(src))

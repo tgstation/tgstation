@@ -23,6 +23,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
+	var/list/holodeck_templates = list()
 
 	var/list/areas_in_z = list()
 
@@ -69,6 +70,8 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
+	run_map_generation()
+
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
 	while (space_levels_so_far < config.space_ruin_levels)
@@ -155,7 +158,7 @@ SUBSYSTEM_DEF(mapping)
 		qdel(T, TRUE)
 
 /* Nuke threats, for making the blue tiles on the station go RED
-   Used by the AI doomsday and the self-destruct nuke.
+Used by the AI doomsday and the self-destruct nuke.
 */
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
@@ -189,6 +192,7 @@ SUBSYSTEM_DEF(mapping)
 	unused_turfs = SSmapping.unused_turfs
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
+	holodeck_templates = SSmapping.holodeck_templates
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -306,6 +310,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
 
+/datum/controller/subsystem/mapping/proc/run_map_generation()
+	for(var/area/A in world)
+		A.RunGeneration()
+
 /datum/controller/subsystem/mapping/proc/maprotate()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
 		return
@@ -388,6 +396,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
+	preloadHolodeckTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -441,6 +450,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/datum/controller/subsystem/mapping/proc/preloadHolodeckTemplates()
+	for(var/item in subtypesof(/datum/map_template/holodeck))
+		var/datum/map_template/holodeck/holodeck_type = item
+		if(!(initial(holodeck_type.mappath)))
+			continue
+		var/datum/map_template/holodeck/holo_template = new holodeck_type()
+
+		holodeck_templates[holo_template.template_id] = holo_template
+		map_templates[holo_template.template_id] = holo_template
 
 //Manual loading of away missions.
 /client/proc/admin_away()

@@ -8,6 +8,7 @@
 	microwaved_type = /obj/item/food/toastedsandwich
 	tastes = list("meat" = 2, "cheese" = 1, "bread" = 2, "lettuce" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/toastedsandwich
 	name = "toasted sandwich"
@@ -18,6 +19,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/carbon = 4)
 	tastes = list("toast" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/grilledcheese
 	name = "cheese sandwich"
@@ -28,6 +30,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("toast" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jellysandwich
 	name = "jelly sandwich"
@@ -38,6 +41,7 @@
 	bite_consumption = 3
 	tastes = list("bread" = 1, "jelly" = 1)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jellysandwich/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -56,6 +60,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("nothing suspicious" = 1)
 	foodtypes = GRAIN | GROSS
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jelliedtoast
 	name = "jellied toast"
@@ -66,6 +71,7 @@
 	bite_consumption = 3
 	tastes = list("toast" = 1, "jelly" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jelliedtoast/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -84,6 +90,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "toast" = 1)
 	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/twobread
 	name = "two bread"
@@ -93,3 +100,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bread" = 2)
 	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL

@@ -207,7 +207,7 @@
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
 /datum/component/embedded/proc/safeRemove(to_hands)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
@@ -216,7 +216,7 @@
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 		if(to_hands)
-			victim.put_in_hands(weapon)
+			INVOKE_ASYNC(victim, /mob.proc/put_in_hands, weapon)
 		else
 			weapon.forceMove(get_turf(victim))
 

@@ -84,6 +84,8 @@
 
 /datum/config_entry/flag/log_pda	// log pda messages
 
+/datum/config_entry/flag/log_uplink	// log uplink/spellbook/codex ciatrix purchases and refunds
+
 /datum/config_entry/flag/log_telecomms	// log telecomms messages
 
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
@@ -217,7 +219,10 @@
 	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
-	config_entry_value = "https://www.github.com/tgstation/-tg-station"
+	config_entry_value = "https://www.github.com/tgstation/tgstation"
+
+/datum/config_entry/string/discordbotcommandprefix
+	config_entry_value = "?"
 
 /datum/config_entry/string/roundstatsurl
 

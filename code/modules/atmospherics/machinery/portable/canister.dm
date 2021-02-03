@@ -1,9 +1,9 @@
 #define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
 ///Used when setting the mode of the canisters, enabling us to switch the overlays
 //These are used as icon states later down the line for tier overlays
-#define CANISTER_TIER_1					"tier 1"
-#define CANISTER_TIER_2					"tier 2"
-#define CANISTER_TIER_3					"tier 3"
+#define CANISTER_TIER_1					1
+#define CANISTER_TIER_2					2
+#define CANISTER_TIER_3					3
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -68,8 +68,14 @@
 		"healium" = /obj/machinery/portable_atmospherics/canister/healium,
 		"proto_nitrate" = /obj/machinery/portable_atmospherics/canister/proto_nitrate,
 		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
+		"helium" = /obj/machinery/portable_atmospherics/canister/helium,
+		"antinoblium" = /obj/machinery/portable_atmospherics/canister/antinoblium,
 		"halon" = /obj/machinery/portable_atmospherics/canister/halon
 	)
+
+/obj/machinery/portable_atmospherics/canister/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	if(!allowed(user))
@@ -81,7 +87,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
+		. += "<span class='notice'>This canister is Tier [mode]. A sticker on its side says <b>MAX PRESSURE: [siunit_pressure(pressure_limit, 0)]</b>.</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
@@ -230,6 +236,22 @@
 	gas_type = /datum/gas/halon
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/helium
+	name = "Helium canister"
+	desc = "Helium, inert gas"
+	icon_state = "halon"
+	base_icon_state = "halon"
+	gas_type = /datum/gas/helium
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/antinoblium
+	name = "Antinoblium canister"
+	desc = "Antinoblium, we still don't know what it does, but it sells for a lot"
+	icon_state = "halon"
+	base_icon_state = "halon"
+	gas_type = /datum/gas/antinoblium
+	filled = 1
+
 /obj/machinery/portable_atmospherics/canister/fusion_test
 	name = "fusion test canister"
 	desc = "Don't be a badmin."
@@ -238,10 +260,9 @@
 	mode = CANISTER_TIER_3
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium)
-	air_contents.gases[/datum/gas/hydrogen][MOLES] = 500
-	air_contents.gases[/datum/gas/plasma][MOLES] = 500
-	air_contents.gases[/datum/gas/tritium][MOLES] = 350
+	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
+	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
+	air_contents.gases[/datum/gas/tritium][MOLES] = 300
 	air_contents.temperature = 10000
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
@@ -334,7 +355,7 @@
 	. = ..()
 	var/isBroken = machine_stat & BROKEN
 	///Function is used to actually set the overlays
-	. += "[mode]-[isBroken]"
+	. += "tier [mode]-[isBroken]"
 	if(isBroken)
 		return
 	if(holding)
@@ -351,10 +372,12 @@
 	else if(pressure >= 10)
 		. += "can-0"
 
-/obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > (temperature_resistance * mode))
-		take_damage(5, BURN, 0)
 
+/obj/machinery/portable_atmospherics/canister/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > temperature_resistance * mode
+
+/obj/machinery/portable_atmospherics/canister/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0)
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -405,7 +428,7 @@
 	var/datum/gas_mixture/expelled_gas = air_contents.remove(air_contents.total_moles())
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 	obj_break()
 	density = FALSE
@@ -440,7 +463,7 @@
 		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
 
 		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
@@ -459,32 +482,44 @@
 		ui = new(user, src, "Canister", name)
 		ui.open()
 
+/obj/machinery/portable_atmospherics/canister/ui_static_data(mob/user)
+	return list(
+		"defaultReleasePressure" = round(CAN_DEFAULT_RELEASE_PRESSURE),
+		"minReleasePressure" = round(can_min_release_pressure),
+		"maxReleasePressure" = round(can_max_release_pressure),
+		"pressureLimit" = round(pressure_limit),
+		"holdingTankLeakPressure" = round(TANK_LEAK_PRESSURE),
+		"holdingTankFragPressure" = round(TANK_FRAGMENT_PRESSURE)
+	)
+
 /obj/machinery/portable_atmospherics/canister/ui_data()
-	var/data = list()
-	data["portConnected"] = connected_port ? 1 : 0
-	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(release_pressure ? release_pressure : 0)
-	data["defaultReleasePressure"] = round(CAN_DEFAULT_RELEASE_PRESSURE)
-	data["minReleasePressure"] = round(can_min_release_pressure)
-	data["maxReleasePressure"] = round(can_max_release_pressure)
-	data["valveOpen"] = valve_open ? 1 : 0
+	. = list(
+		"portConnected" = !!connected_port,
+		"tankPressure" = round(air_contents.return_pressure()),
+		"releasePressure" = round(release_pressure),
+		"valveOpen" = !!valve_open,
+		"isPrototype" = !!prototype,
+		"hasHoldingTank" = !!holding
+	)
 
-	data["isPrototype"] = prototype ? 1 : 0
 	if (prototype)
-		data["restricted"] = restricted
-		data["timing"] = timing
-		data["time_left"] = get_time_left()
-		data["timer_set"] = timer_set
-		data["timer_is_not_default"] = timer_set != default_timer_set
-		data["timer_is_not_min"] = timer_set != minimum_timer_set
-		data["timer_is_not_max"] = timer_set != maximum_timer_set
+		. += list(
+			"restricted" = restricted,
+			"timing" = timing,
+			"time_left" = get_time_left(),
+			"timer_set" = timer_set,
+			"timer_is_not_default" = timer_set != default_timer_set,
+			"timer_is_not_min" = timer_set != minimum_timer_set,
+			"timer_is_not_max" = timer_set != maximum_timer_set
+		)
 
-	data["hasHoldingTank"] = holding ? 1 : 0
 	if (holding)
-		data["holdingTank"] = list()
-		data["holdingTank"]["name"] = holding.name
-		data["holdingTank"]["tankPressure"] = round(holding.air_contents.return_pressure())
-	return data
+		. += list(
+			"holdingTank" = list(
+				"name" = holding.name,
+				"tankPressure" = round(holding.air_contents.return_pressure())
+			)
+		)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	. = ..()

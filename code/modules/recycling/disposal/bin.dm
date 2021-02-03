@@ -120,7 +120,7 @@
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
 		if (iscyborg(user))
 			var/mob/living/silicon/robot/borg = user
-			if (!borg.module || !borg.module.canDispose)
+			if (!borg.model || !borg.model.canDispose)
 				return
 		else
 			return
@@ -142,10 +142,12 @@
 		target.forceMove(src)
 		if(user == target)
 			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", "<span class='notice'>You climb into [src].</span>")
+			. = TRUE
 		else
 			target.visible_message("<span class='danger'>[user] places [target] in [src].</span>", "<span class='userdanger'>[user] places you in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
+			. = TRUE
 		update_icon()
 
 /obj/machinery/disposal/relaymove(mob/living/user, direction)
@@ -165,8 +167,10 @@
 	user.forceMove(loc)
 	update_icon()
 
-// monkeys and xenos can only pull the flush lever
+// clumsy monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
+	if(ISADVANCEDTOOLUSER(user))
+		return ..()
 	if(machine_stat & BROKEN)
 		return
 	flush = !flush
@@ -406,16 +410,16 @@
 	var/atom/L = loc //recharging from loc turf
 
 	var/datum/gas_mixture/env = L.return_air()
+	if(!env.temperature)
+		return
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	if(env.temperature > 0)
-		var/transfer_moles = 0.05 * delta_time * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_moles = 0.05 * delta_time * (pressure_delta*air_contents.volume)/(env.temperature * R_IDEAL_GAS_EQUATION)
 
-		//Actually transfer the gas
-		var/datum/gas_mixture/removed = env.remove(transfer_moles)
-		air_contents.merge(removed)
-		air_update_turf()
-
+	//Actually transfer the gas
+	var/datum/gas_mixture/removed = env.remove(transfer_moles)
+	air_contents.merge(removed)
+	air_update_turf(FALSE, FALSE)
 
 	//if full enough, switch to ready mode
 	if(air_contents.return_pressure() >= SEND_PRESSURE)

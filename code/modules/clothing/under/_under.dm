@@ -239,13 +239,12 @@
 	if(.)
 		return
 
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
+	if(attached_accessory)
+		remove_accessory(user)
 	else
-		if(attached_accessory)
-			remove_accessory(user)
-		else
-			rolldown()
+		rolldown()
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"

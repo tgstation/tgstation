@@ -7,6 +7,10 @@
 	density = FALSE
 	max_integrity = 15
 
+/obj/structure/spider/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive)
+
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
@@ -20,9 +24,11 @@
 				damage_amount *= 0.25
 	. = ..()
 
-/obj/structure/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/obj/structure/spider/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/spider/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
 	var/genetic = FALSE
@@ -90,12 +96,13 @@
 	pixel_x = base_pixel_x + rand(3,-3)
 	pixel_y = base_pixel_y + rand(3,-3)
 	START_PROCESSING(SSobj, src)
-	. = ..()
+	AddElement(/datum/element/point_of_interest)
+	return ..()
 
 /obj/structure/spider/eggcluster/process(delta_time)
 	amount_grown += rand(0,1) * delta_time
 	if(amount_grown >= 100 && !ghost_ready)
-		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ATTACK, ignore_key = POLL_IGNORE_SPIDER)
+		notify_ghosts("[src] is ready to hatch!", null, enter_link="<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source=src, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER)
 		ghost_ready = TRUE
 
 /obj/structure/spider/eggcluster/attack_ghost(mob/user)
@@ -104,12 +111,12 @@
 		make_spider(user)
 
 /**
-  * Makes a ghost into a spider based on the type of egg cluster.
-  *
-  * Allows a ghost to get a prompt to use the egg cluster to become a spider.
-  * Arguments:
-  * * user - The ghost attempting to become a spider.
-  */
+ * Makes a ghost into a spider based on the type of egg cluster.
+ *
+ * Allows a ghost to get a prompt to use the egg cluster to become a spider.
+ * Arguments:
+ * * user - The ghost attempting to become a spider.
+ */
 /obj/structure/spider/eggcluster/proc/make_spider(mob/user)
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
@@ -163,7 +170,7 @@
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/spiderling/Destroy()
-	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
+	new/obj/item/food/spiderling(get_turf(src))
 	. = ..()
 
 /obj/structure/spider/spiderling/Initialize()

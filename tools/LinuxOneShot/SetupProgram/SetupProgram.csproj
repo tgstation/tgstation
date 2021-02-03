@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Tgstation.Server.Client" Version="6.1.0" />
+    <PackageReference Include="Tgstation.Server.Client" Version="8.4.0" />
   </ItemGroup>
 
 </Project>

@@ -21,28 +21,28 @@
 	remove_antag_hud(antag_hud_type, ninja)
 
 /**
-  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
-  *
-  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
-  * Arguments:
-  * * ninja - The human to receive the gear
-  * * Returns a proc call on the given human which will equip them with all the gear.
-  */
+ * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
+ *
+ * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
+ * Arguments:
+ * * ninja - The human to receive the gear
+ * * Returns a proc call on the given human which will equip them with all the gear.
+ */
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/ninja = owner.current)
 	return ninja.equipOutfit(/datum/outfit/ninja)
 
 /**
-  * Proc that adds the proper memories to the antag datum
-  *
-  * Proc that adds the ninja starting memories to the owner of the antagonist datum.
-  */
+ * Proc that adds the proper memories to the antag datum
+ *
+ * Proc that adds the ninja starting memories to the owner of the antagonist datum.
+ */
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
 	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
 
 /datum/objective/cyborg_hijack
 	explanation_text = "Use your gloves to convert at least one cyborg to aide you in sabotaging the station."
-	
+
 /datum/objective/door_jack
 	///How many doors that need to be opened using the gloves to pass the objective
 	var/doors_required = 0
@@ -52,32 +52,32 @@
 
 /datum/objective/security_scramble
 	explanation_text = "Use your gloves on a security console to set everyone to arrest at least once.  Note that the AI will be alerted once you begin!"
-	
+
 /datum/objective/terror_message
 	explanation_text = "Use your gloves on a communication console in order to bring another threat to the station.  Note that the AI will be alerted once you begin!"
 
 /**
-  * Proc that adds all the ninja's objectives to the antag datum.
-  *
-  * Proc that adds all the ninja's objectives to the antag datum.  Called when the datum is gained.
-  */
+ * Proc that adds all the ninja's objectives to the antag datum.
+ *
+ * Proc that adds all the ninja's objectives to the antag datum.  Called when the datum is gained.
+ */
 /datum/antagonist/ninja/proc/addObjectives()
 	//Cyborg Hijack: Flag set to complete in the DrainAct in ninjaDrainAct.dm
 	var/datum/objective/hijack = new /datum/objective/cyborg_hijack()
 	objectives += hijack
-	
+
 	//Research stealing
 	var/datum/objective/download/research = new /datum/objective/download()
 	research.owner = owner
 	research.gen_amount_goal()
 	objectives += research
-	
+
 	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()
 	doorobjective.doors_required = rand(15,40)
 	doorobjective.explanation_text = "Use your gloves to doorjack [doorobjective.doors_required] airlocks on the station."
 	objectives += doorobjective
-	
+
 	//Explosive plant, the bomb will register its completion on priming
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
 	for(var/sanity in 1 to 100) // 100 checks at most.

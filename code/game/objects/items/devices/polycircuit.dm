@@ -5,6 +5,7 @@
 	inhand_icon_state = "rods"
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 8
+	merge_type = /obj/item/stack/circuit_stack
 	var/circuit_type = /obj/item/electronics/airlock
 	var/chosen_circuit = "airlock"
 

@@ -3,6 +3,7 @@
 	icon_state = "cbbolt"
 	damage = 6
 	embedding = null
+	shrapnel_type = null
 	var/piercing = FALSE
 
 /obj/projectile/bullet/dart/Initialize()
@@ -36,3 +37,6 @@
 /obj/projectile/bullet/dart/syringe
 	name = "syringe"
 	icon_state = "syringeproj"
+
+/obj/projectile/bullet/dart/piercing
+	piercing = TRUE

@@ -58,10 +58,10 @@
 	return ..()
 
 /**
-  * Updates the contents of the portable chemical mixer
-  *
-  * A list of dispensable reagents is created by iterating through each source beaker in the portable chemical beaker and reading its contents
-  */
+ * Updates the contents of the portable chemical mixer
+ *
+ * A list of dispensable reagents is created by iterating through each source beaker in the portable chemical beaker and reading its contents
+ */
 /obj/item/storage/portable_chem_mixer/proc/update_contents()
 	dispensable_reagents.Cut()
 
@@ -94,13 +94,13 @@
 	update_icon()
 
 /**
-  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
-  *
-  * Checks if a valid user and a valid new beaker exist and attempts to replace the current beaker in the portable chemical mixer with the one in hand. Simply places the new beaker in if no beaker is currently loaded
-  *	Arguments:
-  * * mob/living/user							-	The user who is trying to exchange beakers
-  *	* obj/item/reagent_containers/new_beaker	-	The new beaker that the user wants to put into the device
-  */
+ * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
+ *
+ * Checks if a valid user and a valid new beaker exist and attempts to replace the current beaker in the portable chemical mixer with the one in hand. Simply places the new beaker in if no beaker is currently loaded
+ *	Arguments:
+ * * mob/living/user							-	The user who is trying to exchange beakers
+ *	* obj/item/reagent_containers/new_beaker	-	The new beaker that the user wants to put into the device
+ */
 /obj/item/storage/portable_chem_mixer/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE

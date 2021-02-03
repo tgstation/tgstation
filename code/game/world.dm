@@ -3,31 +3,31 @@
 GLOBAL_VAR(restart_counter)
 
 /**
-  * World creation
-  *
-  * Here is where a round itself is actually begun and setup.
-  * * db connection setup
-  * * config loaded from files
-  * * loads admins
-  * * Sets up the dynamic menu system
-  * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
-  *
-  *
-  * Nothing happens until something moves. ~Albert Einstein
-  *
-  * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
-  *
-  * Initialization Pipeline:
-  *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
-  *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
-  *		world/New() (You are here)
-  *		Once world/New() returns, client's can connect.
-  *		1 second sleep
-  *		Master Controller initialization.
-  *		Subsystem initialization.
-  *			Non-compiled-in maps are maploaded, all atoms are new()ed
-  *			All atoms in both compiled and uncompiled maps are initialized()
-  */
+ * World creation
+ *
+ * Here is where a round itself is actually begun and setup.
+ * * db connection setup
+ * * config loaded from files
+ * * loads admins
+ * * Sets up the dynamic menu system
+ * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
+ *
+ *
+ * Nothing happens until something moves. ~Albert Einstein
+ *
+ * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
+ *
+ * Initialization Pipeline:
+ *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
+ *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
+ *		world/New() (You are here)
+ *		Once world/New() returns, client's can connect.
+ *		1 second sleep
+ *		Master Controller initialization.
+ *		Subsystem initialization.
+ *			Non-compiled-in maps are maploaded, all atoms are new()ed
+ *			All atoms in both compiled and uncompiled maps are initialized()
+ */
 /world/New()
 	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
 	if (fexists(extools))
@@ -132,6 +132,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_econ_log = "[GLOB.log_directory]/econ.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
+	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
@@ -155,6 +156,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_attack_log)
 	start_log(GLOB.world_econ_log)
 	start_log(GLOB.world_pda_log)
+	start_log(GLOB.world_uplink_log)
 	start_log(GLOB.world_telecomms_log)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
@@ -243,8 +245,6 @@ GLOBAL_VAR(restart_counter)
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
 
-	TgsReboot()
-
 	#ifdef UNIT_TESTS
 	FinishTestRun()
 	return
@@ -272,6 +272,8 @@ GLOBAL_VAR(restart_counter)
 			TgsEndProcess()
 
 	log_world("World rebooted at [time_stamp()]")
+
+	TgsReboot()
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 

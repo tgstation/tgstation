@@ -117,9 +117,8 @@
 	return (MANUAL_SUICIDE)
 
 /obj/item/surgicaldrill/augment
-	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
+	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
@@ -192,9 +191,8 @@
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
 /obj/item/circular_saw/augment
-	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
-	w_class = WEIGHT_CLASS_SMALL
-	force = 10
+	desc = "A small but very fast spinning saw. It rips and tears until it is done."
+	w_class = WEIGHT_CLASS_SMALL	
 	toolspeed = 0.5
 
 
@@ -411,6 +409,18 @@
 		else
 			limb_snip_candidate.dismember()
 		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
+
+/obj/item/shears/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	var/timer = 1 SECONDS
+	for(var/obj/item/bodypart/thing in user.bodyparts)
+		if(thing.body_part == CHEST)
+			continue
+		addtimer(CALLBACK(thing, /obj/item/bodypart/.proc/dismember), timer)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, user, 'sound/weapons/bladeslice.ogg', 70), timer)
+		timer += 1 SECONDS
+	sleep(timer)
+	return BRUTELOSS
 
 /obj/item/bonesetter
 	name = "bonesetter"

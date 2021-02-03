@@ -1,7 +1,7 @@
 /obj/item/ammo_box/magazine/internal/shot
 	name = "shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
-	caliber = "shotgun"
+	caliber = CALIBER_SHOTGUN
 	max_ammo = 4
 	multiload = FALSE
 
@@ -15,7 +15,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/com
 	name = "combat shotgun internal magazine"
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/shot/dual

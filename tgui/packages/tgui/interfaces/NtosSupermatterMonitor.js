@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Button, LabeledList, ProgressBar, Section, Stack, Table } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { NtosWindow } from '../layouts';
 
@@ -41,8 +41,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
   ])(data.gases || []);
   const gasMaxAmount = Math.max(1, ...gases.map(gas => gas.amount));
   return (
-    <Flex spacing={1}>
-      <Flex.Item width="270px">
+    <Stack>
+      <Stack.Item width="270px">
         <Section title="Metrics">
           <LabeledList>
             <LabeledList.Item label="Integrity">
@@ -96,8 +96,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-      </Flex.Item>
-      <Flex.Item grow={1} basis={0}>
+      </Stack.Item>
+      <Stack.Item grow={1} basis={0}>
         <Section
           title="Gases"
           buttons={(
@@ -122,8 +122,8 @@ export const NtosSupermatterMonitorContent = (props, context) => {
             ))}
           </LabeledList>
         </Section>
-      </Flex.Item>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
 };
 

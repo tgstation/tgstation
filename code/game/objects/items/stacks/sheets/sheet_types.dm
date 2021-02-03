@@ -130,6 +130,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
+	cost = 500
+	source = /datum/robot_energy_storage/metal
 
 /obj/item/stack/sheet/metal/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -146,11 +148,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/metal/five
 	amount = 5
-
-/obj/item/stack/sheet/metal/cyborg
-	mats_per_unit = null
-	is_cyborg = 1
-	cost = 500
 
 /obj/item/stack/sheet/metal/get_main_recipes()
 	. = ..()
@@ -390,7 +387,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
-	var/pull_effort = 30
+	var/pull_effort = 10
 	var/loom_result = /obj/item/stack/sheet/cloth
 	grind_results = list(/datum/reagent/cellulose = 20)
 
@@ -400,7 +397,6 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	singular_name = "raw durathread ball"
 	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
-	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
 	grind_results = list()
 
@@ -599,7 +595,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	. = ..()
 	. += GLOB.bronze_recipes
 
-/obj/item/stack/sheet/paperframes/Initialize()
+/obj/item/stack/sheet/paperframes/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = 0
 	pixel_y = 0
@@ -617,7 +613,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	icon_state = "sheet-lessergem"
 	inhand_icon_state = "sheet-lessergem"
 	novariants = TRUE
-
+	merge_type = /obj/item/stack/sheet/lessergem
 
 /obj/item/stack/sheet/greatergem
 	name = "greater gems"
@@ -626,8 +622,9 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	icon_state = "sheet-greatergem"
 	inhand_icon_state = "sheet-greatergem"
 	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/greatergem
 
-	/*
+/*
  * Bones
  */
 /obj/item/stack/sheet/bone
@@ -755,4 +752,23 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/sandblock/twenty
 	amount = 20
 /obj/item/stack/sheet/sandblock/five
+	amount = 5
+
+
+/obj/item/stack/sheet/hauntium
+	name = "haunted sheets"
+	desc = "These sheets seem cursed."
+	singular_name = "haunted sheet"
+	icon_state = "sheet-meat"
+	material_flags = MATERIAL_COLOR
+	mats_per_unit = list(/datum/material/hauntium = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/hauntium
+	material_type = /datum/material/hauntium
+	material_modifier = 1 //None of that wussy stuff
+
+/obj/item/stack/sheet/hauntium/fifty
+	amount = 50
+/obj/item/stack/sheet/hauntium/twenty
+	amount = 20
+/obj/item/stack/sheet/hauntium/five
 	amount = 5

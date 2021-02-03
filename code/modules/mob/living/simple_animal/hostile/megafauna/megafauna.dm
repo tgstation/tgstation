@@ -11,7 +11,7 @@
 	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
-	movement_type = FLYING
+	is_flying_animal = TRUE
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	stat_attack = DEAD
@@ -61,6 +61,7 @@
 		AddComponent(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, MEGAFAUNA_TRAIT)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
 		attack_action.Grant(src)

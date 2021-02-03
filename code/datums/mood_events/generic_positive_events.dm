@@ -138,7 +138,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/religiously_comforted
-	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>\n"
+	description = "<span class='nicegreen'>I feel comforted by the presence of a holy person.</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
 
@@ -217,4 +217,9 @@
 /datum/mood_event/down_low
 	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
 	mood_change = 4
+	timeout = 1.5 MINUTES
+
+/datum/mood_event/aquarium_positive
+	description = "<span class='nicegreen'>Watching fish in aquarium is calming.</span>\n"
+	mood_change = 3
 	timeout = 1.5 MINUTES

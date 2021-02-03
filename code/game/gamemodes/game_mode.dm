@@ -196,7 +196,7 @@
 		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
 		round_converted = 0
 		return
-	 //somewhere between 1 and 3 minutes from now
+	//somewhere between 1 and 3 minutes from now
 	if(!CONFIG_GET(keyed_list/midround_antag)[SSticker.mode.config_tag])
 		round_converted = 0
 		return TRUE
@@ -478,7 +478,7 @@
 //Reports player logouts//
 //////////////////////////
 /proc/display_roundstart_logout_report()
-	var/list/msg = list("<span class='boldnotice'>Roundstart logout report\n\n</span>")
+	var/list/msg = list("<span class='boldnotice'>Roundstart logout report</span>\n\n")
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/mob/living/carbon/C = L

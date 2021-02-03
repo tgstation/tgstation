@@ -8,12 +8,12 @@
 
 
 /**
-  * Telekinesis attack act, happens when the TK user clicks on a non-adjacent target in range.
-  *
-  * * By default, emulates the user's unarmed attack.
-  * * Called indirectly by the `COMSIG_MOB_ATTACK_RANGED` signal.
-  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
-  */
+ * Telekinesis attack act, happens when the TK user clicks on a non-adjacent target in range.
+ *
+ * * By default, emulates the user's unarmed attack.
+ * * Called indirectly by the `COMSIG_MOB_ATTACK_RANGED` signal.
+ * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
+ */
 /atom/proc/attack_tk(mob/user)
 	if(user.stat || !tkMaxRangeCheck(user, src))
 		return
@@ -38,11 +38,11 @@
 
 
 /**
-  * Telekinesis object grab act.
-  *
-  * * Called by `/obj/attack_tk()`.
-  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
-  */
+ * Telekinesis object grab act.
+ *
+ * * Called by `/obj/attack_tk()`.
+ * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
+ */
 /obj/proc/attack_tk_grab(mob/user)
 	var/obj/item/tk_grab/O = new(src)
 	O.tk_user = user
@@ -58,13 +58,13 @@
 
 
 /**
-  * Telekinesis item attack_self act.
-  *
-  * * This is similar to item attack_self, but applies to anything that you can grab with a telekinetic grab.
-  * * It is used for manipulating things at range, for example, opening and closing closets..
-  * * Defined at the `/atom` level but only used at the `/obj/item` one.
-  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
-  */
+ * Telekinesis item attack_self act.
+ *
+ * * This is similar to item attack_self, but applies to anything that you can grab with a telekinetic grab.
+ * * It is used for manipulating things at range, for example, opening and closing closets..
+ * * Defined at the `/atom` level but only used at the `/obj/item` one.
+ * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
+ */
 /atom/proc/attack_self_tk(mob/user)
 	return
 
@@ -93,6 +93,7 @@
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
+	///Object focused / selected by the TK user
 	var/atom/movable/focus
 	var/mob/living/carbon/tk_user
 
@@ -171,7 +172,8 @@
 	else
 		. = TRUE
 		apply_focus_overlay()
-		focus.throw_at(target, 10, 1,user)
+		//Only items can be thrown 10 tiles everything else only 1 tile
+		focus.throw_at(target, focus.tk_throw_range, 1,user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_icon()
 

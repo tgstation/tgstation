@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = "A coder's love (theoretical)."
 	agent = "Shenanigans"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey, /mob/living/carbon/alien)
+	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/alien)
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	stage_prob = 10
 	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
@@ -103,7 +103,7 @@
 	cures = list(/datum/reagent/medicine/adminordrazine)
 	spread_text = "Monkey Bites"
 	spread_flags = DISEASE_SPREAD_SPECIAL
-	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
+	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
 	cure_chance = 1
 	disease_flags = CAN_CARRY|CAN_RESIST
@@ -112,7 +112,7 @@
 	stage_prob = 4
 	visibility_flags = NONE
 	agent = "Kongey Vibrion M-909"
-	new_form = /mob/living/carbon/monkey
+	new_form = /mob/living/carbon/human/species/monkey
 	bantype = ROLE_MONKEY
 
 
@@ -126,9 +126,8 @@
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(affected_mob.mind && !is_monkey(affected_mob.mind))
 		add_monkey(affected_mob.mind)
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
-		M.ventcrawler = VENTCRAWLER_ALWAYS
+		affected_mob.monkeyize()
+		affected_mob.ventcrawler = VENTCRAWLER_ALWAYS
 
 
 /datum/disease/transformation/jungle_fever/stage_act()

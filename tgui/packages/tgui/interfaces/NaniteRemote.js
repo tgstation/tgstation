@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section, NoticeBox, Input, Table } from '../components';
 import { Window } from '../layouts';
@@ -46,7 +45,7 @@ export const NaniteRemoteContent = (props, context) => {
   }
 
   return (
-    <Fragment>
+    <>
       <Section
         title="Nanite Control"
         buttons={(
@@ -174,6 +173,6 @@ export const NaniteRemoteContent = (props, context) => {
           </NoticeBox>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };

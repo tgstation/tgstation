@@ -140,7 +140,7 @@
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
+	food_type = list(/obj/item/food/grown/wheat)
 	tame_chance = 25
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
@@ -171,13 +171,7 @@
 	. = ..()
 	can_buckle = TRUE
 	buckle_lying = 0
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
-	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-	D.drive_verb = "ride"
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /mob/living/simple_animal/cow/Life()
 	. = ..()
@@ -314,7 +308,7 @@
 	turns_per_move = 3
 	butcher_results = list(/obj/item/food/meat/slab/chicken = 2)
 	var/egg_type = /obj/item/food/egg
-	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
+	food_type = list(/obj/item/food/grown/wheat)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -449,5 +443,5 @@
 	health = 75
 	maxHealth = 75
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = list(/obj/item/reagent_containers/food/snacks/grown/apple)
+	food_type = list(/obj/item/food/grown/apple)
 	footstep_type = FOOTSTEP_MOB_SHOE

@@ -1,6 +1,6 @@
 /**
-  * Can be applied to /atom/movable subtypes to make them apply fire stacks to things they hit
-  */
+ * Can be applied to /atom/movable subtypes to make them apply fire stacks to things they hit
+ */
 /datum/element/firestacker
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
@@ -9,12 +9,12 @@
 
 /datum/element/firestacker/Attach(datum/target, amount)
 	. = ..()
-	
+
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	
+
 	src.amount = amount
-	
+
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/impact, override = TRUE)
 	if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/item_attack, override = TRUE)

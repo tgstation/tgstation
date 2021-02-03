@@ -1463,7 +1463,7 @@
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
- /* used by crayons, can't color living things but still used for stuff like food recipes */
+/* used by crayons, can't color living things but still used for stuff like food recipes */
 
 /datum/reagent/colorful_reagent/powder/red/crayon
 	name = "Red Crayon Powder"
@@ -1677,15 +1677,17 @@
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M)
 	. = ..()
-	if(!M.mind?.assigned_role)
-		return
-	switch(M.mind.assigned_role)
-		if("Chief Medical Officer", "Captain", "Chief Engineer", "Research Director", "Head of Personnel")
+	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	if(liver)
+		// Heads of staff and the captain have a "royal metabolism"
+		if(HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM))
 			if(prob(10))
 				to_chat(M, "You feel like royalty.")
 			if(prob(5))
 				M.say(pick("Peasants..","This carpet is worth more than your contracts!","I could fire you at any time..."), forced = "royal carpet")
-		if("Quartermaster")
+
+		// The quartermaster, as a semi-head, has a "pretender royal" metabolism
+		else if(HAS_TRAIT(liver, TRAIT_PRETENDER_ROYAL_METABOLISM))
 			if(prob(15))
 				to_chat(M, "You feel like an impostor...")
 
@@ -2012,7 +2014,7 @@
 
 /datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
 	..()
-	if((ismonkey(M) || ishuman(M)) && current_cycle >= 10)
+	if((ishuman(M)) && current_cycle >= 10)
 		M.gorillize()
 
 /datum/reagent/growthserum
@@ -2125,9 +2127,6 @@
 	name = "synthpax"
 	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
-/datum/reagent/peaceborg
-	can_synth = FALSE
 
 /datum/reagent/peaceborg/confuse
 	name = "Dizzying Solution"
@@ -2265,8 +2264,11 @@
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
+
+	/// The material flags used to apply the transmuted materials
 	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
-	var/minumum_material_amount = 100
+	/// The amount of materials to apply to the transmuted objects if they don't contain materials
+	var/default_material_amount = 100
 
 /datum/reagent/metalgen/expose_obj(obj/exposed_obj, volume)
 	. = ..()
@@ -2281,19 +2283,19 @@
 	var/metal_ref = data["material"]
 	if(!metal_ref)
 		return
-	var/metal_amount = 0
 
-	for(var/B in A.custom_materials) //list with what they're made of
-		metal_amount += A.custom_materials[B]
+	var/metal_amount = 0
+	var/list/materials_to_transmute = A.get_material_composition(BREAKDOWN_INCLUDE_ALCHEMY)
+	for(var/metal_key in materials_to_transmute) //list with what they're made of
+		metal_amount += materials_to_transmute[metal_key]
 
 	if(!metal_amount)
-		metal_amount = minumum_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesnt exist
+		metal_amount = default_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesn't exist
 
-	var/list/metal_dat = list()
-	metal_dat[metal_ref] = metal_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
-
+	var/list/metal_dat = list((metal_ref) = metal_amount)
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
+	ADD_TRAIT(A, TRAIT_MAT_TRANSMUTED, type)
 
 /datum/reagent/gravitum
 	name = "Gravitum"
@@ -2321,13 +2323,7 @@
 	color = "#E6E6DA"
 	taste_mult = 0
 
-/datum/reagent/consumable/gravy
-	name = "Gravy"
-	description = "A mixture of flour, water, and the juices of cooked meat."
-	taste_description = "gravy"
-	color = "#623301"
-	taste_mult = 1.2
-
+// "Second wind" reagent generated when someone suffers a wound. Epinephrine, adrenaline, and stimulants are all already taken so here we are
 /datum/reagent/determination
 	name = "Determination"
 	description = "For when you need to push on a little more. Do NOT allow near plants."

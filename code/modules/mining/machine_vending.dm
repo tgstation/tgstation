@@ -13,6 +13,7 @@
 		new /datum/data/mining_equipment("1 Marker Beacon",				/obj/item/stack/marker_beacon,										10),
 		new /datum/data/mining_equipment("10 Marker Beacons",			/obj/item/stack/marker_beacon/ten,									100),
 		new /datum/data/mining_equipment("30 Marker Beacons",			/obj/item/stack/marker_beacon/thirty,								300),
+		new /datum/data/mining_equipment("Skeleton Key",				/obj/item/skeleton_key,												777),
 		new /datum/data/mining_equipment("Whiskey",						/obj/item/reagent_containers/food/drinks/bottle/whiskey,			100),
 		new /datum/data/mining_equipment("Absinthe",					/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium,	100),
 		new /datum/data/mining_equipment("Bubblegum Gum Packet",		/obj/item/storage/box/gum/bubblegum,								100),
@@ -278,6 +279,8 @@
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
 
 /obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
 	new /obj/item/clothing/glasses/meson(src)

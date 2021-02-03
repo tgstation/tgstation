@@ -133,7 +133,7 @@
 	after_rotation.Invoke(user,rotation_type)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
-	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY))
+	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return FALSE
 	return TRUE
 

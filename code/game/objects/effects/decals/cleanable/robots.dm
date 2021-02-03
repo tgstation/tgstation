@@ -11,6 +11,7 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	mergeable_decal = FALSE
 	beauty = -50
+	clean_type = CLEAN_TYPE_BLOOD
 
 /obj/effect/decal/cleanable/robot_debris/Initialize()
 	. = ..()
@@ -19,7 +20,7 @@
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions, mapload=FALSE)
 	set waitfor = FALSE
 	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50), i++)
+	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4, 17; 50), i++) //the 3% chance of 50 steps is intentional and played for laughs.
 		if (!mapload)
 			sleep(2)
 		if (i > 0)
@@ -67,6 +68,7 @@
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
+	clean_type = CLEAN_TYPE_BLOOD
 
 /obj/effect/decal/cleanable/oil/Initialize()
 	. = ..()

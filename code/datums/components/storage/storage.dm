@@ -8,7 +8,9 @@
 
 	var/list/can_hold								//if this is set, only items, and their children, will fit
 	var/list/cant_hold								//if this is set, items, and their children, won't fit
-	var/list/exception_hold           //if set, these items will be the exception to the max size of object that can fit.
+	var/list/exception_hold							//if set, these items will be the exception to the max size of object that can fit.
+	/// If set can only contain stuff with this single trait present.
+	var/list/can_hold_trait
 
 	var/can_hold_description
 
@@ -91,6 +93,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
@@ -182,13 +185,13 @@
 			hide_from(L)
 
 /datum/component/storage/proc/attack_self(datum/source, mob/M)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
 	if((M.get_active_held_item() == parent) && allow_quick_empty)
-		quick_empty(M)
+		INVOKE_ASYNC(src, .proc/quick_empty, M)
 
 /datum/component/storage/proc/preattack_intercept(datum/source, obj/O, mob/M, params)
 	SIGNAL_HANDLER_DOES_SLEEP
@@ -351,7 +354,7 @@
 			var/datum/numbered_display/ND = numerical_display_contents[type]
 			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			ND.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
+			ND.sample_object.maptext = MAPTEXT("<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>")
 			ND.sample_object.layer = ABOVE_HUD_LAYER
 			ND.sample_object.plane = ABOVE_HUD_PLANE
 			cx++
@@ -550,7 +553,7 @@
 	to_chat(user, "<span class='notice'>[source] can hold: [can_hold_description]</span>")
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	set waitfor = FALSE
 	. = COMPONENT_NO_MOUSEDROP
@@ -568,7 +571,7 @@
 	if(over_object == M)
 		user_show_to_mob(M)
 	if(!istype(over_object, /atom/movable/screen))
-		dump_content_at(over_object, M)
+		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, M)
 		return
 	if(A.loc != M)
 		return
@@ -626,7 +629,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold) || HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT)) //Items which this container can't hold.
+	if(is_type_in_typecache(I, cant_hold) || HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT) || (can_hold_trait && !HAS_TRAIT(I, can_hold_trait))) //Items which this container can't hold.
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
@@ -768,7 +771,7 @@
 
 
 /datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/atom/A = parent
 	if(!attack_hand_interact)
@@ -786,12 +789,12 @@
 		var/mob/living/carbon/human/H = user
 		if(H.l_store == A && !H.get_active_held_item())	//Prevents opening if it's in a pocket.
 			. = COMPONENT_CANCEL_ATTACK_CHAIN
-			H.put_in_hands(A)
+			INVOKE_ASYNC(H, /mob.proc/put_in_hands, A)
 			H.l_store = null
 			return
 		if(H.r_store == A && !H.get_active_held_item())
 			. = COMPONENT_CANCEL_ATTACK_CHAIN
-			H.put_in_hands(A)
+			INVOKE_ASYNC(H, /mob.proc/put_in_hands, A)
 			H.r_store = null
 			return
 

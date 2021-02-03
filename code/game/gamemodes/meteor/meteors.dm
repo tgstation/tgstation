@@ -177,9 +177,6 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		meteor_effect()
 		qdel(src)
 
-/obj/effect/meteor/ex_act()
-	return
-
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
@@ -375,7 +372,7 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	hits = 10
 	heavy = TRUE
 	dropamt = 1
-	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/reagent_containers/food/snacks/grown/pumpkin)
+	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
 	threat = 100
 
 /obj/effect/meteor/pumpkin/Initialize()

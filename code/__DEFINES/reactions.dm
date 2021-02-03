@@ -7,7 +7,8 @@
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define FIRE_CARBON_ENERGY_RELEASED			100000	//Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_HYDROGEN_ENERGY_RELEASED		280000  //Amount of heat released per mole of burnt hydrogen and/or tritium(hydrogen isotope)
+#define FIRE_HYDROGEN_ENERGY_RELEASED		2800000  //Amount of heat released per mole of burnt hydrogen and/or tritium(hydrogen isotope)
+#define FIRE_HYDROGEN_ENERGY_WEAK           280000
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
@@ -53,16 +54,3 @@
 #define BZ_RESEARCH_MAX_AMOUNT				400
 #define METAL_HYDROGEN_RESEARCH_MAX_AMOUNT	3000
 #define STIMULUM_RESEARCH_AMOUNT			50
-//Plasma fusion properties
-#define FUSION_MOLE_THRESHOLD				250 	//Mole count required (tritium/plasma) to start a fusion reaction
-#define FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
-#define INSTABILITY_GAS_POWER_FACTOR 		0.003
-#define FUSION_TRITIUM_MOLES_USED  			1
-#define PLASMA_BINDING_ENERGY  				20000000
-#define TOROID_VOLUME_BREAKEVEN				1000
-#define FUSION_TEMPERATURE_THRESHOLD	    9000
-#define PARTICLE_CHANCE_CONSTANT 			(-20000000)
-#define FUSION_RAD_MAX						1500
-#define FUSION_RAD_COEFFICIENT				(-1000)
-#define FUSION_INSTABILITY_ENDOTHERMALITY   2
-#define FUSION_MAXIMUM_TEMPERATURE			1e8

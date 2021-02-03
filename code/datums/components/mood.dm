@@ -26,6 +26,8 @@
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
 
+	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+
 	var/mob/living/owner = parent
 	if(owner.hud_used)
 		modify_hud()
@@ -81,7 +83,7 @@
 		if(9)
 			msg += "<span class='nicegreen'>I love life!</span>\n"
 
-	msg += "<span class='notice'>Moodlets:\n</span>"//All moodlets
+	msg += "<span class='notice'>Moodlets:</span>\n"//All moodlets
 	if(mood_events.len)
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
@@ -364,7 +366,7 @@
 	SIGNAL_HANDLER
 
 	update_beauty(A)
-	if(A.mood_bonus)
+	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
 		clear_event(null, "area")
@@ -400,11 +402,19 @@
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
 
+
+///Causes direct drain of someone's sanity, call it with a numerical value corresponding how badly you want to hurt their sanity
+/datum/component/mood/proc/direct_sanity_drain(datum/source, amount)
+	SIGNAL_HANDLER
+	setSanity(sanity + amount, override = TRUE)
+
 ///Called when parent slips.
 /datum/component/mood/proc/on_slip(datum/source)
 	SIGNAL_HANDLER
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
 
+
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
+

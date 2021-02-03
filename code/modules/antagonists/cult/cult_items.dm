@@ -58,7 +58,7 @@
 		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
-							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
+				"<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
@@ -323,7 +323,7 @@
 	icon_state = "magus"
 	inhand_icon_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
 	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -361,13 +361,13 @@
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
 	icon_state = "cult_sharpener"
-	used = 0
+	uses = 1
 	increment = 5
 	max = 40
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon_state()
-	icon_state = "cult_sharpener[used ? "_used" : ""]"
+	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -477,7 +477,7 @@
 		to_chat(user, "<span class='warning'>You try to shatter the orb, but it remains as solid as a rock!</span>")
 		to_chat(user, "<span class='danger'><span class='big'>It seems that the blood cult has exhausted its ability to curse the emergency escape shuttle. It would be unwise to create more cursed orbs or to continue to try to shatter this one.</span></span>")
 		return
-	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
+	if(locate(/obj/narsie) in GLOB.poi_list)
 		to_chat(user, "<span class='warning'>Nar'Sie is already on this plane, there is no delaying the end of all things.</span>")
 		return
 
@@ -832,7 +832,8 @@
 		return
 	var/C = user.client
 	if(ishuman(user) && C)
-		angle = mouse_angle_from_client(C)
+		var/list/angle_vector = calculate_projectile_angle_and_pixel_offsets(user, params)
+		angle = angle_vector[1]
 	else
 		qdel(src)
 		return
@@ -912,8 +913,7 @@
 						L.adjustBruteLoss(45)
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, TRUE)
 						L.emote("scream")
-		var/datum/beam/current_beam = new(user,temp_target,time=7,beam_icon_state="blood_beam",btype=/obj/effect/ebeam/blood)
-		INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
 
 
 /obj/effect/ebeam/blood

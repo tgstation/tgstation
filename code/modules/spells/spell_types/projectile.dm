@@ -91,7 +91,7 @@
 		projectile.icon_state = proj_icon_state
 		projectile.name = proj_name
 		if(proj_insubstantial)
-			projectile.movement_type |= UNSTOPPABLE
+			projectile.movement_type |= PHASING
 		if(proj_homing)
 			projectile.homing = TRUE
 			projectile.homing_turn_speed = 360 //Perfect tracking

@@ -95,6 +95,17 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost/chatterbox, toggle_ghost_laws)(
 /datum/verbs/menu/settings/ghost/chatterbox/toggle_ghost_laws/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_GHOSTLAWS
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost/chatterbox, toggle_hear_login_logout)()
+	set name = "Show/Hide Login/Logout messages"
+	set category = "Preferences"
+	set desc = "As a ghost, see when someone reconnects or disconnects"
+	usr.client.prefs.chat_toggles ^= CHAT_LOGIN_LOGOUT
+	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_LOGIN_LOGOUT) ? "be notified" : "no longer be notified"] when someone disconnects or reconnects.")
+	usr.client.prefs.save_preferences()
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Hearing Login/Logout", "[usr.client.prefs.chat_toggles & CHAT_LOGIN_LOGOUT ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/verbs/menu/settings/ghost/chatterbox/toggle_hear_login_logout/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_LOGIN_LOGOUT
+
 /datum/verbs/menu/settings/ghost/chatterbox/events
 	name = "Events"
 

@@ -33,7 +33,7 @@
 	ass_image = 'icons/ass/asslizard.png'
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
-/datum/species/lizard/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+/datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi)
 	return
 
 /datum/species/lizard/random_name(gender,unique,lastname)
@@ -102,12 +102,12 @@
 		new_tail.Insert(C, TRUE, FALSE)
 
 /*
- Lizard subspecies: ASHWALKERS
+Lizard subspecies: ASHWALKERS
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
-	inherent_traits = list(TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_CHUNKYFINGERS,TRAIT_NOBREATH)
 	species_language_holder = /datum/language_holder/lizard/ash

@@ -19,7 +19,7 @@
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/heretic/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
 	<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
@@ -32,12 +32,12 @@
 	var/mob/living/current = owner.current
 	if(ishuman(current))
 		forge_primary_objectives()
-		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
-		gain_knowledge(/datum/eldritch_knowledge/living_heart)
-		gain_knowledge(/datum/eldritch_knowledge/codex_cicatrix)
+		for(var/eldritch_knowledge in GLOB.heretic_start_knowledge)
+			gain_knowledge(eldritch_knowledge)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
+	RegisterSignal(owner.current,COMSIG_LIVING_DEATH,.proc/on_death)
 	if(give_equipment)
 		equip_cultist()
 	return ..()
@@ -53,6 +53,8 @@
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing,src)
+
+	on_death()
 
 	return ..()
 
@@ -85,9 +87,19 @@
 
 /datum/antagonist/heretic/process()
 
+	if(owner.current.stat == DEAD)
+		return
+
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_life(owner.current)
+
+///What happens to the heretic once he dies, used to remove any custom perks
+/datum/antagonist/heretic/proc/on_death()
+
+	for(var/X in researched_knowledge)
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
+		EK.on_death(owner.current)
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()

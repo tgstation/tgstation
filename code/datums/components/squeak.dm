@@ -25,7 +25,7 @@
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
 	if(ismovable(parent))
-		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT), .proc/play_squeak)
+		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_BEFORE_FIRE), .proc/play_squeak)
 		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_crossed)
 		RegisterSignal(parent, COMSIG_ITEM_WEARERCROSSED, .proc/play_squeak_crossed)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
@@ -38,6 +38,10 @@
 				RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 		else if(isstructure(parent))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/use_squeak)
+
+	if(istype(parent, /obj/item/organ/liver))
+		// Liver squeaking is depending on them functioning like a clown's liver
+		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_comedy_metabolism_removal)
 
 	override_squeak_sounds = custom_sounds
 	if(chance_override)
@@ -80,16 +84,8 @@
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
 			return
-		else if(istype(AM, /obj/projectile))
-			var/obj/projectile/P = AM
-			if(P.original != parent)
-				return
-	if(istype(AM, /obj/effect/dummy/phased_mob)) //don't squeek if they're in a phased/jaunting container.
+	if(AM.movement_type & (FLYING|FLOATING) || !AM.has_gravity())
 		return
-	if(ismob(AM))
-		var/mob/M = AM
-		if(M.movement_type & (FLYING|FLOATING))
-			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()
@@ -124,3 +120,8 @@
 	//If the dir changes it means we're going through a bend in the pipes, let's pretend we bumped the wall
 	if(old_dir != new_dir)
 		play_squeak()
+
+/datum/component/squeak/proc/on_comedy_metabolism_removal(datum/source, trait)
+	SIGNAL_HANDLER
+
+	qdel(src)

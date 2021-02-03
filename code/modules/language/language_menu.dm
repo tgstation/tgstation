@@ -96,6 +96,10 @@
 					if("Both")
 						spoken = TRUE
 						understood = TRUE
+				if(language_holder.blocked_languages && language_holder.blocked_languages[language_datum])
+					choice = alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", "Yes", "No")
+					if(choice == "Yes")
+						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, understood, spoken)
 				if(is_admin)
 					message_admins("[key_name_admin(user)] granted the [language_name] language to [key_name_admin(AM)].")

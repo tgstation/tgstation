@@ -184,11 +184,11 @@
 
 	switch(borg_to_spawn)
 		if("Medical")
-			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
+			R = new /mob/living/silicon/robot/model/syndicate/medical(T)
 		if("Saboteur")
-			R = new /mob/living/silicon/robot/modules/syndicate/saboteur(T)
+			R = new /mob/living/silicon/robot/model/syndicate/saboteur(T)
 		else
-			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
+			R = new /mob/living/silicon/robot/model/syndicate(T) //Assault borg by default
 
 	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
@@ -247,7 +247,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(T)
+	var/obj/effect/dummy/phased_mob/holder = new /obj/effect/dummy/phased_mob(T)
 	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(holder)
 	S.key = C.key
 	S.mind.assigned_role = S.name

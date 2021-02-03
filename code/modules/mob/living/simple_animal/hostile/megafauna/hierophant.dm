@@ -731,9 +731,6 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/ex_act()
-	return
-
 /obj/effect/hierophant/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = I

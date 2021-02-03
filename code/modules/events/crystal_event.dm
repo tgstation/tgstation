@@ -373,7 +373,7 @@ This section is for the destabilized SM
 	removed.gases[/datum/gas/bz][MOLES] += 15.5
 	removed.gases[/datum/gas/miasma][MOLES] += 5.5
 	env.merge(removed)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(user))
@@ -477,6 +477,7 @@ This section is for the crystal stabilizer item and the crystal from the closed 
 	singular_name = "otherworld crystal"
 	icon = 'icons/obj/stack_objects.dmi'
 	material_type = /datum/material/otherworld_crystal
+	merge_type = /obj/item/stack/sheet/otherworld_crystal
 
 /*
 This section is for the signaler part of the crystal portals

@@ -10,7 +10,7 @@
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "basic_electrolite", "c-reader", "desttagger", "salestagger", "handlabel", "packagewrap",
 					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
+					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
 					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon", "conveyor_belt", "conveyor_switch")
 
 /datum/techweb_node/mmi
@@ -83,7 +83,7 @@
 	display_name = "Biological Processing"
 	description = "From slimes to kitchens."
 	prereq_ids = list("biotech")
-	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive", "fat_sucker")
+	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive", "fat_sucker", "griddle")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /////////////////////////Advanced Surgery/////////////////////////
@@ -147,7 +147,8 @@
 	display_name = "Advanced Engineering"
 	description = "Pushing the boundaries of physics, one chainsaw-fist at a time."
 	prereq_ids = list("engineering", "emp_basic")
-	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier")
+	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask", "rcd_loaded", "rpd_loaded", "sheetifier", "HFR_core", "HFR_fuel_input",
+	"HFR_waste_output", "HFR_moderator_input", "HFR_corner", "HFR_interface")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/anomaly
@@ -575,14 +576,6 @@
 	design_ids = list("nuclear_gun")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/medical_weapons
-	id = "medical_weapons"
-	display_name = "Medical Weaponry"
-	description = "Weapons using medical technology."
-	prereq_ids = list("adv_biotech", "weaponry")
-	design_ids = list("rapidsyringe")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/beam_weapons
 	id = "beam_weapons"
 	display_name = "Beam Weaponry"
@@ -619,7 +612,7 @@
 	id = "exotic_ammo"
 	display_name = "Exotic Ammunition"
 	description = "They won't know what hit em."
-	prereq_ids = list("adv_weaponry", "medical_weapons")
+	prereq_ids = list("adv_weaponry")
 	design_ids = list("techshotshell", "c38_hotshot", "c38_iceblox")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -899,9 +892,19 @@
 /datum/techweb_node/nanite_replication_protocols
 	id = "nanite_replication_protocols"
 	display_name = "Nanite Replication Protocols"
-	description = "Advanced behaviours that allow nanites to exploit certain circumstances to replicate faster."
+	description = "Protocols that overwrite the default nanite replication routine to achieve more efficiency in certain circumstances."
 	prereq_ids = list("nanite_smart")
-	design_ids = list("kickstart_nanites","factory_nanites","tinker_nanites","offline_nanites")
+	design_ids = list("kickstart_nanites","factory_nanites","pyramid_nanites","offline_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/nanite_storage_protocols
+	id = "nanite_storage_protocols"
+	display_name = "Nanite Storage Protocols"
+	description = "Protocols that overwrite the default nanite storage routine to achieve more efficiency or greater capacity."
+	prereq_ids = list("nanite_smart")
+	design_ids = list("hive_nanites","zip_nanites","free_range_nanites","unsafe_storage_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
 	hidden = TRUE
 	experimental = TRUE
@@ -951,7 +954,7 @@
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
 	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
-	design_ids = list("decloner", "borg_syndicate_module", "ai_cam_upgrade", "suppressor", "largecrossbow", "donksofttoyvendor", "donksoft_refill", "advanced_camera")
+	design_ids = list("decloner", "borg_syndicate_module", "ai_cam_upgrade", "suppressor", "largecrossbow", "donksofttoyvendor", "donksoft_refill", "advanced_camera", "rapidsyringe")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	hidden = TRUE
 

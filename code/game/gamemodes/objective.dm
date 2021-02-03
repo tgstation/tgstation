@@ -61,10 +61,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		return TRUE
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
-	var/turf/location = get_turf(M.current)
-	if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/red/brig)) // Fails if they are in the shuttle brig
+	var/area/current_area = get_area(M.current)
+	if(!current_area || istype(current_area, /area/shuttle/escape/brig)) // Fails if they are in the shuttle brig
 		return FALSE
-	return location.onCentCom() || location.onSyndieBase()
+	var/turf/current_turf = get_turf(M.current)
+	return current_turf.onCentCom() || current_turf.onSyndieBase()
 
 /datum/objective/proc/check_completion()
 	return completed
@@ -687,12 +688,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/captured_amount = 0
 	var/area/centcom/holding/A = GLOB.areas_by_type[/area/centcom/holding]
 	for(var/mob/living/carbon/human/M in A)//Humans.
+		if(ismonkey(M))
+			captured_amount+=0.1
+			continue
 		if(M.stat == DEAD)//Dead folks are worth less.
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
-		captured_amount+=0.1
 	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
 		if(M.stat == DEAD)
 			captured_amount+=0.5

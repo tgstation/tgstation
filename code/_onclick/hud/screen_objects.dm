@@ -122,7 +122,7 @@
 	var/slot_id
 	/// Icon when empty. For now used only by humans.
 	var/icon_empty
-	 /// Icon when contains an item. For now used only by humans.
+	/// Icon when contains an item. For now used only by humans.
 	var/icon_full
 	/// The overlay when hovering over with an item in your hand
 	var/image/object_overlay
@@ -672,6 +672,9 @@
 	icon_state = "mood5"
 	screen_loc = ui_mood
 
+/atom/movable/screen/mood/attack_tk()
+	return
+
 /atom/movable/screen/splash
 	icon = 'icons/blank_title.png'
 	icon_state = ""
@@ -727,3 +730,28 @@
 /atom/movable/screen/component_button/Click(params)
 	if(parent)
 		parent.component_click(src, params)
+
+/atom/movable/screen/combo
+	icon_state = ""
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screen_loc = ui_combo
+	layer = ABOVE_HUD_LAYER
+	var/timerid
+
+/atom/movable/screen/combo/proc/clear_streak()
+	cut_overlays()
+	icon_state = ""
+
+/atom/movable/screen/combo/update_icon_state(streak = "")
+	clear_streak()
+	if (timerid)
+		deltimer(timerid)
+	if (!streak)
+		return
+	timerid = addtimer(CALLBACK(src, .proc/clear_streak), 20, TIMER_UNIQUE | TIMER_STOPPABLE)
+	icon_state = "combo"
+	for (var/i = 1; i <= length(streak); ++i)
+		var/intent_text = copytext(streak, i, i + 1)
+		var/image/intent_icon = image(icon,src,"combo_[intent_text]")
+		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
+		add_overlay(intent_icon)

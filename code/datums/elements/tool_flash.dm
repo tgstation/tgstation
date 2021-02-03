@@ -1,8 +1,8 @@
 /**
-  * Tool flash bespoke element
-  *
-  * Flashes the user when using this tool
-  */
+ * Tool flash bespoke element
+ *
+ * Flashes the user when using this tool
+ */
 /datum/element/tool_flash
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2

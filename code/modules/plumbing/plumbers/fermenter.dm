@@ -44,8 +44,8 @@
 		return
 	if(!isitem(AM))
 		return
-	if(istype(AM, /obj/item/reagent_containers/food/snacks/grown))
-		var/obj/item/reagent_containers/food/snacks/grown/G = AM
+	if(istype(AM, /obj/item/food/grown))
+		var/obj/item/food/grown/G = AM
 		if(G.distill_reagent)
 			var/amount = G.seed.potency * 0.25
 			reagents.add_reagent(G.distill_reagent, amount)

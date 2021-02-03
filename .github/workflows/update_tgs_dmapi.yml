@@ -7,7 +7,7 @@ on:
 
 jobs:
   update-dmapi:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: Update the TGS DMAPI
     steps:
     - name: Clone
@@ -26,6 +26,7 @@ jobs:
         library-path: 'code/modules/tgs'
 
     - name: Commit and Push
+      continue-on-error: true
       run: |
         git config user.name tgstation-server
         git config user.email tgstation-server@users.noreply.github.com
@@ -35,6 +36,7 @@ jobs:
 
     - name: Create Pull Request
       uses: repo-sync/pull-request@v2
+      if: ${{ success() }}
       with:
         source_branch: "tgs-dmapi-update"
         destination_branch: "master"
@@ -42,4 +44,4 @@ jobs:
         pr_body: "This pull request updates the TGS DMAPI to the latest version. Please note any breaking or unimplemented changes before merging."
         pr_label: "Tools"
         pr_allow_empty: false
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.TGS_UPDATER }}

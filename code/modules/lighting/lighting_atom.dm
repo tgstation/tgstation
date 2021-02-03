@@ -48,11 +48,11 @@
 
 
 /**
-  * Updates the atom's opacity value.
-  *
-  * This exists to act as a hook for associated behavior.
-  * It notifies (potentially) affected light sources so they can update (if needed).
-  */
+ * Updates the atom's opacity value.
+ *
+ * This exists to act as a hook for associated behavior.
+ * It notifies (potentially) affected light sources so they can update (if needed).
+ */
 /atom/proc/set_opacity(new_opacity)
 	if (new_opacity == opacity)
 		return

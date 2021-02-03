@@ -61,6 +61,7 @@
 	icon_state = "plunger"
 
 	slot_flags = ITEM_SLOT_MASK
+	flags_inv = HIDESNOUT
 
 	///time*plunge_mod = total time we take to plunge an object
 	var/plunge_mod = 1

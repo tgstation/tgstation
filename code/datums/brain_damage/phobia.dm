@@ -78,6 +78,8 @@
 		return
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
+	if(!owner.has_language(hearing_args[HEARING_LANGUAGE])) //can't be triggered if you don't know the language
+		return
 	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]) != 0)
 		addtimer(CALLBACK(src, .proc/freak_out, null, trigger_regex.group[2]), 10) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='phobia'>$2</span>$3")
