@@ -115,6 +115,10 @@
 
 // Ordinary survival box
 /obj/item/storage/box/survival
+	name = "survival box"
+	desc = "A box with the bare essentials of ensuring the survival of you and others."
+	icon_state = "internals"
+	illustration = "emergencytank"
 	var/mask_type = /obj/item/clothing/mask/breath
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
@@ -143,6 +147,7 @@
 
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
+	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
