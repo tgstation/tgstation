@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	else
 		destination = going
 	if(iswallturf(destination)) //so it knocks down walls
-		var/turf/closed/wall = destination
+		var/turf/closed/wall/wall = destination
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		visible_message("<span class='notice'>[src] smashes through [destination]!</span>")
 		destination = wall.dismantle_wall(devastated = TRUE)
