@@ -368,7 +368,7 @@
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	trim = /datum/id_trim/away
+	timberpoes_trim = /datum/id_trim/away
 	icon_state = "retro"
 	registered_age = null
 
@@ -378,14 +378,14 @@
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
-	trim = /datum/id_trim/away/hotel
+	timberpoes_trim = /datum/id_trim/away/hotel
 
 /datum/id_trim/away/hotel/security
 	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/hotel/securty
 	name = "Officer ID"
-	trim = /datum/id_trim/away/hotel/security
+	timberpoes_trim = /datum/id_trim/away/hotel/security
 
 /obj/item/card/id/away/old
 	name = "\proper a perfectly generic identification card"
@@ -398,7 +398,7 @@
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	trim = /datum/id_trim/away/old/sec
+	timberpoes_trim = /datum/id_trim/away/old/sec
 
 /datum/id_trim/away/old/sci
 	basic_access = list(ACCESS_AWAY_GENERAL)
@@ -407,7 +407,7 @@
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	trim = /datum/id_trim/away/old/sci
+	timberpoes_trim = /datum/id_trim/away/old/sci
 
 /datum/id_trim/away/old/end
 	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
@@ -416,7 +416,7 @@
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	trim = /datum/id_trim/away/old/eng
+	timberpoes_trim = /datum/id_trim/away/old/eng
 
 /datum/id_trim/away/old/apc
 	basic_access = list(ACCESS_ENGINE_EQUIP)
@@ -424,7 +424,7 @@
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
-	trim = /datum/id_trim/away/old/apc
+	timberpoes_trim = /datum/id_trim/away/old/apc
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
@@ -512,7 +512,7 @@
 
 /obj/item/card/id/advanced/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
-	trim = /datum/id_trim/maint_reaper
+	timberpoes_trim = /datum/id_trim/maint_reaper
 	registered_name = "Thirteen"
 
 /obj/item/card/id/advanced/gold
@@ -521,26 +521,12 @@
 	icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
 
-/datum/id_trim/captains_spare
-	trim_state = "trim_captain"
-	assignment = "Captain"
-
-/datum/id_trim/captains_spare/Initialize()
-	var/datum/job/captain/J = new/datum/job/captain
-	basic_access = J.get_access()
-	. = ..()
-
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	registered_name = "Captain"
-	trim = /datum/id_trim/captains_spare
+	timberpoes_trim = /datum/id_trim/job/captain
 	registered_age = null
-
-/obj/item/card/id/advanced/gold/captains_spare/Initialize()
-	//var/datum/job/captain/J = new/datum/job/captain
-	//access = J.get_access()
-	. = ..()
 
 /obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
 	if(registered_name == "Captain")
