@@ -1,0 +1,4 @@
+author: "Gamer025"
+delete-after: True
+changes: 
+  - bugfix: "The recycler now fully recycles items, including their contents"
