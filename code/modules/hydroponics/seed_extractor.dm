@@ -190,11 +190,20 @@
 		if("select")
 			var/item = params["item"]
 			if(piles[item] && length(piles[item]) > 0)
-				var/datum/weakref/WO = piles[item][1]
-				var/obj/item/seeds/O = WO.resolve()
-				if(O)
-					piles[item] -= WO
-					O.forceMove(drop_location())
-					. = TRUE
-					//to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+				var/datum/weakref/found_seed_weakref = piles[item][1]
+				var/obj/item/seeds/found_seed = found_seed_weakref.resolve()
+				if(!found_seed)
+					return
+
+				piles[item] -= found_seed_weakref
+				if(usr)
+					var/mob/user = usr
+					if(user.put_in_hands(found_seed))
+						to_chat(user, "<span class='notice'>You take [found_seed] out of the slot.</span>")
+					else
+						to_chat(user, "<span class='notice'>[found_seed] falls onto the floor.</span>")
+				else
+					found_seed.forceMove(drop_location())
+					visible_message("<span class='notice'>[found_seed] falls onto the floor.</span>", null, "<span class='hear'>You hear a soft clatter.</span>", COMBAT_MESSAGE_RANGE)
+				. = TRUE
 

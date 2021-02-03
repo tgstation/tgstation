@@ -36,7 +36,7 @@
 	///Message sent when the armor is still on cooldown, but activates.
 	var/cooldown_message = "<span class='danger'>The reactive armor fails to do much, as it is recharging! From what? Only the reactive armor knows.</span>"
 	///Duration of the cooldown specific to reactive armor for when it can activate again.
-	var/reactivearmor_cooldown_duration = 0
+	var/reactivearmor_cooldown_duration = 10 SECONDS
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"

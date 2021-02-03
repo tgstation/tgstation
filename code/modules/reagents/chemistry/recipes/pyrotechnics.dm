@@ -131,14 +131,19 @@
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
 	strengthdiv = 20
 
-/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
+/datum/chemical_reaction/reagent_explosion/holyboom
 	required_reagents = list(/datum/reagent/water/holywater = 1, /datum/reagent/potassium = 1)
+	strengthdiv = 20
 
-/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/reagent_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 150)
-		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, FALSE, round(created_volume/48))
 		strengthdiv = 8
-		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
+		///turf where to play sound
+		var/turf/T = get_turf(holder.my_atom)
+		///special size for anti cult effect
+		var/effective_size = round(created_volume/48)
+		playsound(T, 'sound/effects/pray.ogg', 80, FALSE, effective_size)
+		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,T))
 			var/deity
 			if(GLOB.deity)
 				deity = GLOB.deity
@@ -148,16 +153,13 @@
 			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
-		addtimer(CALLBACK(src, .proc/divine_explosion, round(created_volume/48,1),get_turf(holder.my_atom)), 2 SECONDS)
+		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
+			if(iscultist(C))
+				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
+				C.Paralyze(40)
+				C.adjust_fire_stacks(5)
+				C.IgniteMob()
 	..()
-
-/datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/proc/divine_explosion(size, turf/T)
-	for(var/mob/living/carbon/C in get_hearers_in_view(size,T))
-		if(iscultist(C))
-			to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-			C.Paralyze(40)
-			C.adjust_fire_stacks(5)
-			C.IgniteMob()
 
 /datum/chemical_reaction/gunpowder
 	results = list(/datum/reagent/gunpowder = 3)

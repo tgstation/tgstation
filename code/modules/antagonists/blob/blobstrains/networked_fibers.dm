@@ -9,7 +9,7 @@
 	color = "#4F4441"
 	complementary_color = "#414C4F"
 	reagent = /datum/reagent/blob/networked_fibers
-	core_regen = 5
+	core_regen_bonus = 5
 
 /datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/spawning_blob, obj/structure/blob/new_blob, turf/chosen_turf, mob/camera/blob/overmind)
 	if(!overmind && new_blob.overmind)
@@ -19,7 +19,7 @@
 	if(isspaceturf(chosen_turf))
 		return
 	for(var/obj/structure/blob/possible_expander in range(1, new_blob))
-		if(possible_expander.overmind == overmind && (istype(possible_expander, /obj/structure/blob/core) || istype(possible_expander, /obj/structure/blob/node)))
+		if(possible_expander.overmind == overmind && (istype(possible_expander, /obj/structure/blob/special/core) || istype(possible_expander, /obj/structure/blob/special/node)))
 			new_blob.forceMove(get_turf(possible_expander))
 			possible_expander.forceMove(chosen_turf)
 			possible_expander.setDir(get_dir(new_blob, possible_expander))

@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(!hallucination)
 		return
 
-	hallucination--
+	hallucination = max(hallucination - 1, 0)
 
 	if(world.time < next_hallucination)
 		return

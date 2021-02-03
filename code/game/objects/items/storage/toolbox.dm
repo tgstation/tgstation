@@ -230,6 +230,19 @@
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
 
+/obj/item/storage/toolbox/maint_kit
+	name = "gun maintenance kit"
+	desc = "It contains some gun maintenance supplies"
+	icon_state = "maint_kit"
+	inhand_icon_state = "ammobox"
+	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
+	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
+
+/obj/item/storage/toolbox/maint_kit/PopulateContents()
+	new /obj/item/gun_maintenance_supplies(src)
+	new /obj/item/gun_maintenance_supplies(src)
+	new /obj/item/gun_maintenance_supplies(src)
+
 /obj/item/storage/toolbox/infiltrator
 	name = "insidious case"
 	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
@@ -302,3 +315,11 @@
 	else
 		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
 		return
+
+
+/obj/item/storage/toolbox/haunted
+	name = "old toolbox"
+	custom_materials = list(/datum/material/hauntium = 500)
+
+
+
