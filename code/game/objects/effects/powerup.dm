@@ -4,11 +4,15 @@
 	density = FALSE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
-	var/respawning = FALSE
+	/// How long in deciseconds it will take for the powerup to respawn, if no value it won't respawn
 	var/respawn_time
+	/// How long the powerup stays on the ground, if no value it will stay forever
 	var/lifetime
+	/// Message given when powerup is picked up
 	var/pickup_message
+	/// Sound played when powerup is picked up
 	var/pickup_sound
+	/// Cooldown for the powerup to respawn after it's been used
 	COOLDOWN_DECLARE(respawn_cooldown)
 
 /obj/effect/powerup/Initialize()
@@ -16,20 +20,21 @@
 	if(lifetime)
 		QDEL_IN(src, lifetime)
 
-/obj/effect/powerup/Crossed(atom/movable/AM)
+/obj/effect/powerup/Crossed(atom/movable/movable_atom)
 	. = ..()
-	trigger(AM)
+	trigger(movable_atom)
 
-/obj/effect/powerup/Bump(atom/A)
-	trigger(A)
+/obj/effect/powerup/Bump(atom/bumped_atom)
+	trigger(bumped_atom)
 
-/obj/effect/powerup/Bumped(atom/movable/AM)
-	trigger(AM)
+/obj/effect/powerup/Bumped(atom/movable/movable_atom)
+	trigger(movable_atom)
 
-/obj/effect/powerup/proc/trigger(mob/living/M)
-	if(!istype(M) || M.stat == DEAD)
+/// Triggers the effect of the powerup on the target, returns FALSE if the target is not /mob/living, is dead or the cooldown hasn't finished, returns TRUE otherwise
+/obj/effect/powerup/proc/trigger(mob/living/target)
+	if(!istype(M) || target.stat == DEAD)
 		return FALSE
-	if(respawning)
+	if(respawn_time)
 		if(!COOLDOWN_FINISHED(src, respawn_cooldown))
 			return FALSE
 		COOLDOWN_START(src, respawn_cooldown, respawn_time)
@@ -52,17 +57,19 @@
 	respawn_time = 30 SECONDS
 	pickup_message = "Health restored!"
 	pickup_sound = 'sound/magic/staff_healing.ogg'
+	/// How much the pickup heals when picked up
 	var/heal_amount = 50
+	/// Does this pickup fully heal when picked up
 	var/full_heal = FALSE
 
-/obj/effect/powerup/health/trigger(mob/living/M)
+/obj/effect/powerup/health/trigger(mob/living/target)
 	. = ..()
 	if(!.)
 		return
 	if(full_heal)
-		M.fully_heal()
+		target.fully_heal()
 	else if(heal_amount)
-		M.heal_ordered_damage(heal_amount, list(BRUTE, BURN))
+		target.heal_ordered_damage(heal_amount, list(BRUTE, BURN))
 
 /obj/effect/powerup/health/full
 	name = "mega health pickup"
@@ -80,11 +87,11 @@
 	pickup_message = "Ammunition reloaded!"
 	pickup_sound = 'sound/weapons/gun/shotgun/rack.ogg'
 
-/obj/effect/powerup/ammo/trigger(mob/living/M)
+/obj/effect/powerup/ammo/trigger(mob/living/target)
 	. = ..()
 	if(!.)
 		return
-	var/gear_list = M.GetAllContents()
+	var/gear_list = target.GetAllContents()
 	for(var/obj/item/gun/magic/wand in gear_list)
 		wand.charges = wand.max_charges
 		wand.recharge_newshot()
@@ -113,19 +120,19 @@
 	icon_state = "electricity2"
 	pickup_sound = 'sound/magic/lightningshock.ogg'
 
-/obj/effect/powerup/speed/trigger(mob/living/M)
+/obj/effect/powerup/speed/trigger(mob/living/target)
 	. = ..()
 	if(!.)
 		return
-	M.apply_status_effect(STATUS_EFFECT_LIGHTNINGORB)
+	target.apply_status_effect(STATUS_EFFECT_LIGHTNINGORB)
 
 /obj/effect/powerup/mayhem
 	name = "Orb of Mayhem"
 	desc = "You feel angry just looking at it."
 	icon_state = "impact_laser"
 
-/obj/effect/powerup/mayhem/trigger(mob/living/M)
+/obj/effect/powerup/mayhem/trigger(mob/living/target)
 	. = ..()
 	if(!.)
 		return
-	M.apply_status_effect(STATUS_EFFECT_MAYHEM)
+	target.apply_status_effect(STATUS_EFFECT_MAYHEM)
