@@ -44,6 +44,12 @@
 /obj/item/mod/armor/engineering
 	theme = "engineering"
 
+/obj/item/modpaint
+	name = "MOD paint kit"
+	desc = "This kit will repaint your MODsuit to something unique."
+	icon = 'icons/obj/mod.dmi'
+	icon_state = "paintkit"
+
 /obj/item/mod/construction/shell/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	var/atom/Tsec = drop_location()

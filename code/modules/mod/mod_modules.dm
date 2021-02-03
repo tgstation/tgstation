@@ -63,15 +63,3 @@
 /obj/item/mod/module/storage/on_uninstall()
 	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
 	modstorage.RemoveComponent()
-
-/obj/item/modpaint
-	name = "MOD paint kit"
-	desc = "This kit will repaint your MOD suit back to it's default grey."
-	icon = 'icons/obj/mod.dmi'
-	icon_state = "paintkit"
-	///This is what the MOD suit's theme will be set to. Only use themes we have sprites for!
-	var/style = "standard"
-
-/obj/item/modpaint/engineering
-	desc = "This kit will repaint your MOD suit to bright engineering orange."
-	style = "engineering"

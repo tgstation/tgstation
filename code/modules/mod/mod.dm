@@ -10,7 +10,6 @@
 	name = "MOD control module"
 	desc = "The control piece of a Modular Outerwear Device, a special powered suit that protects against various environments. Wear it on your back, deploy it and activate it."
 	icon_state = "control"
-	worn_icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 2
@@ -22,9 +21,10 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
-	COOLDOWN_DECLARE(cooldown_mod_move)
-	/// How the MOD and things connected to it look
+	/// The MOD's theme, decides on some stuff like armor and statistics
 	var/theme = "standard"
+	/// Looks of the MOD
+	var/skin
 	/// If the suit is deployed and turned on
 	var/active = FALSE
 	/// If the suit wire/module hatch is open
@@ -73,6 +73,8 @@
 	var/mob/living/silicon/ai/AI
 	/// Delay between moves as AI
 	var/movedelay = 0
+	/// Cooldown for AI moves
+	COOLDOWN_DECLARE(cooldown_mod_move)
 	/// Person wearing the MODsuit
 	var/mob/living/carbon/human/wearer
 
@@ -80,8 +82,8 @@
 	. = ..()
 	START_PROCESSING(SSobj,src)
 	name = "[theme] [initial(name)]"
-	icon_state = "[theme]-[icon_state]"
-	worn_icon_state = "[theme]-[worn_icon_state]"
+	skin = theme
+	icon_state = "[skin]-[icon_state]"
 	wires = new /datum/wires/mod(src)
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
@@ -114,8 +116,7 @@
 			piece.gas_transfer_coefficient = gas_transfer_coefficient
 			piece.permeability_coefficient = permeability_coefficient
 			piece.siemens_coefficient = siemens_coefficient
-			piece.icon_state = "[theme]-[piece.icon_state]"
-			piece.worn_icon_state = "[theme]-[piece.worn_icon_state]"
+			piece.icon_state = "[skin]-[piece.icon_state]"
 	if(initial_modules.len)
 		for(var/obj/item/mod/module/module in initial_modules)
 			module = new module(src)
@@ -263,11 +264,13 @@
 	else if(is_wire_tool(I) && open)
 		wires.interact(user)
 	else if(istype(I, /obj/item/modpaint))
-		var/obj/item/modpaint/paint = I
-		theme = paint.style
-		update_icon_state()
-		user.update_icons()
+		paint()
+		qdel(I)
 	..()
+
+/obj/item/mod/control/proc/paint()
+	update_icon_state()
+	wearer.update_icons()
 
 /obj/item/mod/control/proc/shock(mob/living/user)
 	if(!istype(wearer) || cell.charge < 1)
@@ -327,7 +330,6 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/mod.dmi'
-	worn_icon_state = "helmet"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	flash_protect = FLASH_PROTECTION_NONE
 	resistance_flags = NONE
@@ -351,7 +353,6 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/mod.dmi'
-	worn_icon_state = "chestplate"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
@@ -376,7 +377,6 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/mod.dmi'
-	worn_icon_state = "gauntlets"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
@@ -402,7 +402,6 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "boots"
 	worn_icon = 'icons/mob/mod.dmi'
-	worn_icon_state = "boots"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 30, ACID = 75, WOUND = 0)
 	resistance_flags = NONE
 	var/obj/item/mod/control/mod
