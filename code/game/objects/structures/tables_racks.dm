@@ -296,8 +296,8 @@
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
 	. = ..()
-	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
-		M.forceMove(loc)
+	for(var/mob/living/living_mob in OldLoc.contents)//Kidnap everyone on top
+		living_mob.forceMove(loc)
 	for(var/x in attached_items)
 		var/atom/movable/AM = x
 		if(!AM.Move(loc))
