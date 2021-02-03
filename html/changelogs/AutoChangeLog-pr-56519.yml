@@ -1,6 +1,0 @@
-author: "Gamer025"
-delete-after: True
-changes: 
-  - bugfix: "The help emote will no longer tell you that you cant use is"
-  - code_imp: "Ghosts can now use the help emote and emotes generally behave like they normally would instead of being posted into death chat"
-  - bugfix: "Crack emote no longer runtimes when trying to be used by ghosts"
