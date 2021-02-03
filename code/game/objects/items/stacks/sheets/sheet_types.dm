@@ -451,7 +451,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		null,																					\
 
 		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
-		new /datum/stack_recipe("extended-capacity survival box", /obj/item/storage/box/survival/engi),					\
+		new /datum/stack_recipe("extended-capacity survival box", /obj/item/storage/box/survival/engineer),					\
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
