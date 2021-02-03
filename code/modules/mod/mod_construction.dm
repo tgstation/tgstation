@@ -44,7 +44,7 @@
 /obj/item/mod/armor/engineering
 	theme = "engineering"
 
-/obj/item/modpaint
+/obj/item/mod/paint
 	name = "MOD paint kit"
 	desc = "This kit will repaint your MODsuit to something unique."
 	icon = 'icons/obj/mod.dmi'

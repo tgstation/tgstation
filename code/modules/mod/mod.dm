@@ -263,7 +263,7 @@
 			return FALSE
 	else if(is_wire_tool(I) && open)
 		wires.interact(user)
-	else if(istype(I, /obj/item/modpaint))
+	else if(istype(I, /obj/item/mod/paint))
 		paint()
 		qdel(I)
 	..()
