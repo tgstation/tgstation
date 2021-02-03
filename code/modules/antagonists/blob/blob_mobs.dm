@@ -290,14 +290,14 @@
 			damagesources++
 		else
 			if(locate(/obj/structure/blob/special/core) in blobs_in_area)
-				adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_CORE)
+				adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_CORE * delta_time)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 				if(overmind)
 					H.color = overmind.blobstrain.complementary_color
 				else
 					H.color = "#000000"
 			if(locate(/obj/structure/blob/special/node) in blobs_in_area)
-				adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_NODE)
+				adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_NODE * delta_time)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				if(overmind)
 					H.color = overmind.blobstrain.complementary_color
@@ -305,7 +305,7 @@
 					H.color = "#000000"
 		if(damagesources)
 			for(var/i in 1 to damagesources)
-				adjustHealth(maxHealth*BLOBMOB_BLOBBERNAUT_HEALTH_DECAY) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+				adjustHealth(maxHealth*BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 			I.appearance_flags = RESET_COLOR
 			if(overmind)
