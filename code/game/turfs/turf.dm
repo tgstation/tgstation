@@ -58,6 +58,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Lazylist of movable atoms providing opacity sources.
 	var/list/atom/movable/opacity_sources
 
+	///the holodeck can load onto this turf if TRUE
+	var/holodeck_compatible = FALSE
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -187,11 +189,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		// We don't want to block ourselves or consider any ignored atoms.
 		if((content == source_atom) || (content in ignore_atoms))
 			continue
-
 		var/atom/atom_content = content
 		// If the thing is dense AND we're including mobs or the thing isn't a mob AND if there's a source atom and
-		// it cannot pass through the thing on the turf, we consider the turf blocked.
-		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)) && (source_atom && !atom_content.CanPass(source_atom, src)))
+		// it cannot pass through the thing on the turf,  we consider the turf blocked.
+		if(atom_content.density && (!exclude_mobs || !ismob(atom_content)))
+			if(source_atom && atom_content.CanPass(source_atom, src))
+				continue
 			return TRUE
 	return FALSE
 
