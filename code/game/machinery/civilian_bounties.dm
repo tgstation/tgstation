@@ -244,11 +244,11 @@
 	icon_state = "bounty_cube"
 	///Value of the bounty that this bounty cube sells for.
 	var/bounty_value = 0
-	///Percentage of the bounty payout received by the Supply budget if the cube is sent without having to nag.
+	///Amount of the bounty payout received by the Supply budget if the cube is sent without having to nag.
 	var/speed_bonus = 0.2
-	///Percentage of the bounty payout received by the person who completed the bounty.
+	///Amount of the bounty payout received by the person who completed the bounty.
 	var/holder_cut = 0.3
-	///Percentage of the bounty payout received by the person who claims the handling tip.
+	///Amount of the bounty payout received by the person who claims the handling tip.
 	var/handler_cut = 0.1
 	///Countdown timer that is used to indicate when cargo loses its speedy delivery bonus.
 	var/bonus_countdown
@@ -313,6 +313,24 @@
 	COOLDOWN_START(src, next_nag_time, world.time + nag_cooldown) //grace period before the nagging begins
 	bonus_countdown = next_nag_time - world.time
 	radio.talk_into(src,"Bounty cube created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Cargo speedy delivery bonus of [bounty_value * speed_bonus] credit\s lost in [time2text(bonus_countdown,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
+
+/obj/item/bounty_cube/test_cube
+	name = "test bounty cube"
+	desc = "It needs to be squeezed by someone with a bank account it can detect to set itself up. This will alert Supply."
+	var/set_up = FALSE
+
+/obj/item/bounty_cube/test_cube/attack_self(mob/user)
+	if(!set_up)
+		if(isliving(user))
+			var/mob/living/squeezer = user
+			if(squeezer.get_bank_account())
+				set_up(random_bounty(), squeezer.get_idcard())
+				set_up = TRUE
+			else
+				to_chat(user, "<span class='notice'>It can't detect your bank account.</span>")
+		else
+			to_chat(user, "<span class='warning'>You aren't eligible to use this!</span>")
+	return ..()
 
 ///Beacon to launch a new bounty setup when activated.
 /obj/item/civ_bounty_beacon
