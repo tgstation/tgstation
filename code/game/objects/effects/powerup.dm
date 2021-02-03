@@ -32,7 +32,7 @@
 
 /// Triggers the effect of the powerup on the target, returns FALSE if the target is not /mob/living, is dead or the cooldown hasn't finished, returns TRUE otherwise
 /obj/effect/powerup/proc/trigger(mob/living/target)
-	if(!istype(M) || target.stat == DEAD)
+	if(!istype(target) || target.stat == DEAD)
 		return FALSE
 	if(respawn_time)
 		if(!COOLDOWN_FINISHED(src, respawn_cooldown))
@@ -43,9 +43,9 @@
 	else
 		qdel(src)
 	if(pickup_message)
-		to_chat(M, "<span class='notice'>[pickup_message]</span>")
+		to_chat(target, "<span class='notice'>[pickup_message]</span>")
 	if(pickup_sound)
-		playsound(get_turf(M), pickup_sound, 50, TRUE, -1)
+		playsound(get_turf(target), pickup_sound, 50, TRUE, -1)
 	return TRUE
 
 /obj/effect/powerup/health
@@ -53,7 +53,6 @@
 	desc = "Blessing from the havens."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "medicalpack"
-	respawning = TRUE
 	respawn_time = 30 SECONDS
 	pickup_message = "Health restored!"
 	pickup_sound = 'sound/magic/staff_healing.ogg'
@@ -82,7 +81,6 @@
 	desc = "You like revenge, right? Everybody likes revenge! Well, let's go get some!"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "ammobox"
-	respawning = TRUE
 	respawn_time = 30 SECONDS
 	pickup_message = "Ammunition reloaded!"
 	pickup_sound = 'sound/weapons/gun/shotgun/rack.ogg'
@@ -91,27 +89,13 @@
 	. = ..()
 	if(!.)
 		return
-	var/gear_list = target.GetAllContents()
-	for(var/obj/item/gun/magic/wand in gear_list)
-		wand.charges = wand.max_charges
-		wand.recharge_newshot()
-		wand.update_icon()
-	for(var/obj/item/gun/energy/energygun in gear_list)
-		if(energygun.cell)
-			var/obj/item/stock_parts/cell/battery = energygun.cell
-			battery.charge = battery.maxcharge
-			energygun.update_icon()
-	for(var/obj/item/gun/ballistic/realgun in gear_list)
-		if(realgun.mag_type)
-			qdel(realgun.magazine)
-			realgun.magazine = new realgun.mag_type(realgun)
-			realgun.chamber_round()
-			realgun.update_icon()
+	for(var/obj/item/gun/goon in target.GetAllContents())
+		SEND_SIGNAL(goon, COMSIG_ITEM_RECHARGED)
 
 /obj/effect/powerup/ammo/ctf
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield1"
-	respawning = FALSE
+	respawn_time = FALSE
 	lifetime = 30 SECONDS
 
 /obj/effect/powerup/speed
