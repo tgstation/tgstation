@@ -1,0 +1,12 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscadd: "Replaces improvised shotguns with Pipeguns (with a special variant for those willing to go through arbitrary bullshit to acquire it and sheer good luck)."
+  - rscadd: "Now all guns can be set to misfire and swap ammunition."
+  - rscadd: "Misfire chance is incremental as you fire the weapon, and not a flat static chance. This can be reset by using a piece of cloth on the gun and 10 seconds of cleaning."
+  - balance: "This has been applied to the detective revolver, but it only increments while using .357 bullets."
+  - rscadd: "Guns can have damage multipliers attached for the bullets they fire. The pipegun (but not the regal version) is the first example with a 75% damage output."
+  - balance: "The Ice Hermit now has a regal pipegun instead of a Mosin Nagant."
+  - balance: "The bandolier fits 7.62mm."
+  - balance: "You can construct receivers and rifle stocks in the crafting menu."
+  - balance: "Detaches the magical rifles from the boltaction subtype, since they are just basically not using any variables attached to that subtype and made from a series of early returns."
