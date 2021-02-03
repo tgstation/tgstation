@@ -276,9 +276,8 @@
 /obj/item/clothing/shoes/bhop/rocket 
 	name = "rocket boots"
 	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
-	var/jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
-	var/jumpspeed = 5
-	var/recharging_rate = 60 //default 6 seconds between each dash
+	jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
+	jumpspeed = 5
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
