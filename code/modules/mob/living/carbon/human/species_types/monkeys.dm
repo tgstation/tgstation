@@ -88,7 +88,7 @@
 			var/datum/disease/bite_infection = d
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
-	target.attack_paw(user)
+	target.attack_paw(user, modifiers)
 	return TRUE
 
 

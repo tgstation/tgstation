@@ -287,41 +287,42 @@
 	var/list/modifiers = params2list(params)
 
 	if(modifiers["right"])
-		if(cooldown_check > world.time)
-			var/wait_desc = get_wait_description()
-			if (wait_desc)
-				to_chat(user, wait_desc)
+		..()
+		return
+	if(cooldown_check > world.time)
+		var/wait_desc = get_wait_description()
+		if (wait_desc)
+			to_chat(user, wait_desc)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 			return
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-				return
-			if(check_martial_counter(H, user))
-				return
+		if(check_martial_counter(H, user))
+			return
 
-		var/list/desc = get_stun_description(target, user)
+	var/list/desc = get_stun_description(target, user)
 
-		if (stun_animation)
-			user.do_attack_animation(target)
+	if (stun_animation)
+		user.do_attack_animation(target)
 
-		playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
-		target.Knockdown(knockdown_time_carbon)
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-		additional_effects_carbon(target, user)
+	playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
+	target.Knockdown(knockdown_time_carbon)
+	target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+	additional_effects_carbon(target, user)
 
-		log_combat(user, target, "stunned", src)
-		add_fingerprint(user)
+	log_combat(user, target, "stunned", src)
+	add_fingerprint(user)
 
-		target.visible_message(desc["visible"], desc["local"])
+	target.visible_message(desc["visible"], desc["local"])
 
-		if(!iscarbon(user))
-			target.LAssailant = null
-		else
-			target.LAssailant = user
-		cooldown_check = world.time + cooldown
-		return
-	if(!..())
-		return
+	if(!iscarbon(user))
+		target.LAssailant = null
+	else
+		target.LAssailant = user
+	cooldown_check = world.time + cooldown
+	return
+
 
 /obj/item/conversion_kit
 	name = "conversion kit"
