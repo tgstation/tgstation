@@ -56841,6 +56841,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
+"fgW" = (
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/solar/starboard/fore)
 "fhk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/brown/filled/line,
@@ -79689,7 +79694,7 @@
 	id = "pod_4_lavaland";
 	name = "lavaland"
 	},
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "vWK" = (
 /obj/effect/turf_decal/stripes/line{
@@ -127399,13 +127404,13 @@ aaa
 aaa
 aaa
 aaa
-aaY
+rok
 aaa
 aaa
 aaa
 aaa
 aaa
-aaY
+rok
 aaa
 aaa
 aaa
@@ -127662,7 +127667,7 @@ fbU
 aaa
 fbU
 fbU
-ake
+fgW
 fbU
 fbU
 aaa
@@ -127919,7 +127924,7 @@ fbU
 aaa
 fbU
 fbU
-ake
+fgW
 fbU
 fbU
 aaa
@@ -128176,7 +128181,7 @@ rok
 lMJ
 rok
 rok
-ake
+fgW
 rok
 rok
 lMJ
@@ -128433,7 +128438,7 @@ fbU
 aaa
 fbU
 fbU
-ake
+fgW
 fbU
 fbU
 aaa
@@ -128690,7 +128695,7 @@ fbU
 aaa
 fbU
 fbU
-aaY
+rok
 fbU
 fbU
 aaa
@@ -128947,7 +128952,7 @@ rok
 lMJ
 rok
 rok
-aaY
+rok
 ake
 ake
 sik
@@ -129204,7 +129209,7 @@ fbU
 aaa
 fbU
 fbU
-aaY
+rok
 fbU
 fbU
 aaa
@@ -129461,7 +129466,7 @@ fbU
 aaa
 fbU
 fbU
-ake
+fgW
 fbU
 fbU
 aaa
@@ -129503,11 +129508,11 @@ lMJ
 lMJ
 lMJ
 lMJ
-lMJ
-aav
+quc
+aaa
 vWu
-aav
-lMJ
+aaa
+quc
 bpy
 aaa
 aaa
@@ -129718,7 +129723,7 @@ rok
 lMJ
 rok
 rok
-ake
+fgW
 rok
 rok
 lMJ
@@ -129760,11 +129765,11 @@ aaa
 aaa
 aaa
 aaa
-quc
+lMJ
 aaa
 aaa
 aaa
-quc
+lMJ
 uGa
 lMJ
 lMJ
@@ -129975,7 +129980,7 @@ fbU
 aaa
 fbU
 fbU
-ake
+fgW
 fbU
 fbU
 aaa
@@ -130232,7 +130237,7 @@ fbU
 aaa
 fbU
 fbU
-aaY
+rok
 fbU
 fbU
 aaa
@@ -130489,7 +130494,7 @@ rok
 lMJ
 rok
 rok
-aaY
+rok
 rok
 rok
 lMJ
@@ -132330,7 +132335,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lMJ
 aaa
 aaa
 aaa
@@ -132587,7 +132592,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lMJ
 aaa
 aaa
 aaa
