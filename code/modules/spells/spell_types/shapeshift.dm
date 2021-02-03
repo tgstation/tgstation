@@ -54,7 +54,8 @@
 		else
 			M = Shapeshift(M)
 		if(M.movement_type & (VENTCRAWLING))
-			if(!M.ventcrawler) //you're shapeshifting into something that can't fit into a vent
+			var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
+			if(!ventcrawler) //you're shapeshifting into something that can't fit into a vent
 				var/obj/machinery/atmospherics/pipeyoudiein = M.loc
 				var/datum/pipeline/ourpipeline
 				var/pipenets = pipeyoudiein.returnPipenets()

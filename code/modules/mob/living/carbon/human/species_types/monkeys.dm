@@ -11,7 +11,7 @@
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	species_traits = list(HAS_FLESH,HAS_BONE,NO_UNDERWEAR,LIPS,NOEYESPRITES,NOBLOODOVERLAY,NOTRANSSTING, NOAUGMENTS)
-	inherent_traits = list(TRAIT_MONKEYLIKE)
+	inherent_traits = list(TRAIT_MONKEYLIKE, TRAIT_VENTCRAWLER_NUDE)
 	no_equip = list(ITEM_SLOT_EARS, ITEM_SLOT_EYES, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT
@@ -42,7 +42,6 @@
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	H.ventcrawler = VENTCRAWLER_NUDE
 	H.pass_flags |= PASSTABLE
 	H.butcher_results = knife_butcher_results
 	if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
@@ -55,7 +54,6 @@
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.ventcrawler = initial(C.ventcrawler)
 	C.pass_flags = initial(C.pass_flags)
 	C.butcher_results = null
 	C.dna.remove_mutation(RACEMUT)
