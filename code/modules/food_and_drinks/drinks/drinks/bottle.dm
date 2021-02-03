@@ -68,7 +68,7 @@
 	if(!target)
 		return
 
-	if(user.combat_mode || !isGlass)
+	if(!user.combat_mode || !isGlass)
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
