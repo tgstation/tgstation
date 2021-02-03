@@ -428,7 +428,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box),			\
 		null,																					\
 
-		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
 		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\
 		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot),		\
 		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag),			\
@@ -451,6 +450,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("extended-capacity emergency oxygen tank box", /obj/item/storage/box/engitank),	\
 		null,																					\
 
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
+		new /datum/stack_recipe("extended-capacity survival box", /obj/item/storage/box/survival/engi),					\
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
