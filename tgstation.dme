@@ -3139,7 +3139,6 @@
 #include "code\modules\spells\spell_types\wizard.dm"
 #include "code\modules\spells\spell_types\pointed\barnyard.dm"
 #include "code\modules\spells\spell_types\pointed\blind.dm"
-#include "code\modules\spells\spell_types\pointed\duffelbag_curse.dm"
 #include "code\modules\spells\spell_types\pointed\mind_transfer.dm"
 #include "code\modules\spells\spell_types\pointed\pointed.dm"
 #include "code\modules\station_goals\bsa.dm"
