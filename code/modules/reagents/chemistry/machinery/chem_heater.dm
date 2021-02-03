@@ -352,9 +352,9 @@ To continue set your target temperature to 390K."}
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. Normally, this reaction will resolve above 0.7 without intervention. Did you maybe add too much basic buffer and go past 9? If you like - you're welcome to try again. Just double press the help button!"
 					if(0.75 to 0.85)
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. You got pretty close to optimal! Feel free to try again if you like by double pressing the help button."
-					if(0.75 to 0.999)
+					if(0.75 to 0.99)
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. You got pretty close to optimal! Feel free to try again if you like by double pressing the help button, but this is a respectable purity."
-					if(0.999 to 1)
+					if(0.99 to 1)
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. Your calomel is as pure as they come! You've mastered the basics of chemistry, but there's plenty more challenges on the horizon. Good luck!"
 			if(10) //Missing
 				data["tutorialMessage"] = "Uh oh, something went wrong. Did you take the beaker out, heat it up too fast, or have other things in the beaker? Try restarting the tutorial by double pressing the help button."

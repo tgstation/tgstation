@@ -278,8 +278,8 @@ export const ChemHeater = (props, context) => {
             style={{
               'white-space': 'pre-wrap',
             }}>
-              <img left={-1} mx={-1} src={resolveAsset("chem_help_advisor.gif")} width={"30px"} />
-              {tutorialMessage} 
+            <img left={-1} mx={-1} src={resolveAsset("chem_help_advisor.gif")} width={"30px"} />
+            {tutorialMessage} 
           </Section>
         )}
         <Section
