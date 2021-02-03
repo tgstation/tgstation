@@ -9,7 +9,8 @@
 	H.dna.species.before_equip_job(null, H)
 
 /datum/outfit/vr/post_equip(mob/living/carbon/human/H)
-	var/obj/item/card/id/id = H.wear_id
+	// TIMBERTODO - SNOWFLAKE SHIT
+	//var/obj/item/card/id/id = H.wear_id
 	//if (istype(id))
 		//id.access |= get_all_accesses()
 

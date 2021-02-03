@@ -41,9 +41,10 @@
 	. = ..()
 	update_icon()
 	auto_patrol = TRUE
-	var/datum/job/clown/J = new/datum/job/clown
-	access_card.add_access(J.get_access())
-	prev_access = access_card.timberpoes_access
+	// TIMBERTODO - FIX THIS RETARDED SNOWFLAKE SHIT
+	//var/datum/job/clown/J = new/datum/job/clown
+	//access_card.add_access(J.get_access())
+	//prev_access = access_card.timberpoes_access
 
 /mob/living/simple_animal/bot/honkbot/proc/limiting_spam_false() //used for addtimer
 	limiting_spam = FALSE

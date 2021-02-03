@@ -1,4 +1,4 @@
-/datum/job/engineer
+/datum/job/station_engineer
 	title = "Station Engineer"
 	department_head = list("Chief Engineer")
 	faction = "Station"
@@ -21,7 +21,7 @@
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"
-	jobtype = /datum/job/engineer
+	jobtype = /datum/job/station_engineer
 
 	belt = /obj/item/storage/belt/utility/full/engi
 	l_pocket = /obj/item/pda/engineering

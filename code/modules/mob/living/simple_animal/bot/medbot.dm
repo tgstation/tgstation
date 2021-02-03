@@ -106,10 +106,11 @@
 
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
-	var/datum/job/paramedic/J = new /datum/job/paramedic
-	access_card.add_access(J.get_access())
-	prev_access = access_card.timberpoes_access
-	qdel(J)
+	// TIMBERTODO - FIX THIS RETARDED SNOWFLAKE SHIT
+	//var/datum/job/paramedic/J = new /datum/job/paramedic
+	//access_card.add_access(J.get_access())
+	//prev_access = access_card.timberpoes_access
+	//qdel(J)
 	skin = new_skin
 	update_icon()
 	linked_techweb = SSresearch.science_tech

@@ -105,9 +105,10 @@
 	get_targets()
 	icon_state = "cleanbot[on]"
 
-	var/datum/job/janitor/J = new/datum/job/janitor
-	access_card.add_access(J.get_access())
-	prev_access = access_card.timberpoes_access
+	// TIMBERTODO - FIX THIS RETARDED SNOWFLAKE SHIT
+	//var/datum/job/janitor/J = new/datum/job/janitor
+	//access_card.add_access(J.get_access())
+	//prev_access = access_card.timberpoes_access
 	stolen_valor = list()
 
 	prefixes = list(command, security, engineering)

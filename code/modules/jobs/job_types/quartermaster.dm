@@ -1,4 +1,4 @@
-/datum/job/qm
+/datum/job/quartermaster
 	title = "Quartermaster"
 	department_head = list("Head of Personnel")
 	faction = "Station"
@@ -20,7 +20,7 @@
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
-	jobtype = /datum/job/qm
+	jobtype = /datum/job/quartermaster
 
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo

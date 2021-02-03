@@ -42,9 +42,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	update_icon()
-	var/datum/job/engineer/J = new/datum/job/engineer
-	access_card.add_access(J.get_access())
-	prev_access = access_card.timberpoes_access
+	// TIMBERTODO - FIX THIS RETARDED SNOWFLAKE SHIT
+	//var/datum/job/station_engineer/J = new/datum/job/station_engineer
+	//access_card.add_access(J.get_access())
+	//prev_access = access_card.timberpoes_access
 
 	create_extinguisher()
 

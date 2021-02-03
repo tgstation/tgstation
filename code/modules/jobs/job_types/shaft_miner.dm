@@ -1,4 +1,4 @@
-/datum/job/mining
+/datum/job/shaft_miner
 	title = "Shaft Miner"
 	department_head = list("Head of Personnel")
 	faction = "Station"
@@ -17,7 +17,7 @@
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
-	jobtype = /datum/job/mining
+	jobtype = /datum/job/shaft_miner
 
 	belt = /obj/item/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining

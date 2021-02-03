@@ -20,14 +20,16 @@
 	var/list/splits = splittext(string_type, "/")
 	var/endpart = splits[splits.len]
 
-	if(islist(job_changes["additional_access"]))
-		access |= job_changes["additional_access"]
-	if(islist(job_changes["additional_minimal_access"]))
-		minimal_access |= job_changes["additional_minimal_access"]
-	if(islist(job_changes["additional_wildcard_access"]))
-		wildcard_access |= job_changes["additional_wildcard_access"]
-	if(islist(job_changes["additional_minimal_wildcard_access"]))
-		minimal_wildcard_access |= job_changes["additional_minimal_wildcard_access"]
+	var/list/access_changes = job_changes[endpart]
+
+	if(islist(access_changes["additional_access"]))
+		access |= access_changes["additional_access"]
+	if(islist(access_changes["additional_minimal_access"]))
+		minimal_access |= access_changes["additional_minimal_access"]
+	if(islist(access_changes["additional_wildcard_access"]))
+		wildcard_access |= access_changes["additional_wildcard_access"]
+	if(islist(access_changes["additional_minimal_wildcard_access"]))
+		minimal_wildcard_access |= access_changes["additional_minimal_wildcard_access"]
 
 /datum/id_trim/job/New()
 	// Needed for robots?
@@ -353,3 +355,10 @@
 	trim_state = "trim_warden"
 	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MECH_SECURITY, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_MECH_SECURITY, ACCESS_COURT, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM) // See /datum/job/warden/get_access()
+
+/datum/id_trim/job/warden/New()
+	. = ..()
+
+	// Config check for if sec has maint access.
+	if(CONFIG_GET(flag/security_has_maint_access))
+		access |= list(ACCESS_MAINT_TUNNELS)

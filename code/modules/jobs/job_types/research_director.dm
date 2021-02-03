@@ -1,4 +1,4 @@
-/datum/job/rd
+/datum/job/research_director
 	title = "Research Director"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
@@ -24,7 +24,7 @@
 
 /datum/outfit/job/rd
 	name = "Research Director"
-	jobtype = /datum/job/rd
+	jobtype = /datum/job/research_director
 
 	id = /obj/item/card/id/advanced/silver
 	belt = /obj/item/pda/heads/rd

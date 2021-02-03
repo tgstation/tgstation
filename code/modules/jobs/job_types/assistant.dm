@@ -17,8 +17,6 @@ Assistant
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 
-	trim = /datum/id_trim/job/assistant
-
 /datum/outfit/job/assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant

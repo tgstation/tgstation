@@ -140,7 +140,7 @@
 						<u>Access:</u><br>
 						"}
 
-			var/known_access_rights = get_all_accesses()
+			var/known_access_rights = ALL_ACCESS_STATION
 			for(var/A in target_id_card.timberpoes_access)
 				if(A in known_access_rights)
 					contents += "  [get_access_desc(A)]"
@@ -170,8 +170,8 @@
 				if(!(target_id_card.assignment in head_subordinates) && target_id_card.assignment != "Assistant")
 					return
 
-			// TIMBERTODO UNFUCK
-			target_id_card.remove_access(get_all_centcom_access() + get_all_accesses())
+			// TIMBERTODO UNFUCK THIS
+			target_id_card.remove_access(CENTCOM_ACCESS + ALL_ACCESS_STATION)
 			target_id_card.assignment = "Unassigned"
 			target_id_card.update_label()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
@@ -216,7 +216,8 @@
 				if(minor && !(target in head_subordinates))
 					return
 				var/list/new_access = list()
-				if(is_centcom)
+				// TIMBERTODO - FIX THIS TRIMMING SHIT
+				/*if(is_centcom)
 					new_access = get_centcom_access(target)
 				else
 					var/datum/job/job
@@ -233,9 +234,9 @@
 						if(logged_access in new_access)
 							message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 							break
-					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")
+					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")*/
 				// TIMBERTODO UNFUCK
-				target_id_card.remove_access(get_all_centcom_access() + get_all_accesses())
+				target_id_card.remove_access(CENTCOM_ACCESS + ALL_ACCESS_STATION)
 				target_id_card.add_access(new_access)
 				target_id_card.assignment = target
 				target_id_card.update_label()
@@ -245,7 +246,7 @@
 			if(!computer || !authenticated)
 				return
 			var/access_type = text2num(params["access_target"])
-			if(access_type in (is_centcom ? get_all_centcom_access() : get_all_accesses()))
+			if(access_type in (is_centcom ? CENTCOM_ACCESS : ALL_ACCESS_STATION))
 				if(access_type in target_id_card.timberpoes_access)
 					target_id_card.remove_access(access_type)
 				else
@@ -258,7 +259,7 @@
 		if("PRG_grantall")
 			if(!computer || !authenticated || minor)
 				return
-			target_id_card.add_access(is_centcom ? get_all_centcom_access() : get_all_accesses())
+			target_id_card.add_access(is_centcom ? CENTCOM_ACCESS : ALL_ACCESS_STATION)
 
 			message_admins("[ADMIN_LOOKUPFLW(user)] just added All Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added All Access")
@@ -316,7 +317,7 @@
 
 	var/list/departments = target_dept
 	if(is_centcom)
-		departments = list("CentCom" = get_all_centcom_jobs())
+		departments = list("CentCom" = ALL_CENTCOM_JOBS_LIST)
 	else if(isnull(departments))
 		departments = list(
 			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
