@@ -47836,6 +47836,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"cGk" = (
+/obj/item/stack/rods,
+/turf/open/space/basic,
+/area/space)
 "cGo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -48691,6 +48695,7 @@
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
 /obj/structure/closet/crate/engineering/electrical,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -57392,6 +57397,7 @@
 "fAr" = (
 /obj/item/stack/rods/fifty,
 /obj/item/stack/sheet/metal/fifty,
+/obj/structure/closet/crate,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "fBG" = (
@@ -64410,6 +64416,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "kLC" = (
@@ -66301,6 +66308,11 @@
 "mjT" = (
 /turf/closed/wall,
 /area/medical/psychology)
+"mkR" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/rods,
+/turf/open/space/basic,
+/area/solar/port/fore)
 "mla" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -67060,6 +67072,11 @@
 "mOb" = (
 /turf/open/floor/plating/airless,
 /area/solar/port/aft)
+"mOe" = (
+/obj/structure/lattice,
+/obj/item/stack/rods,
+/turf/open/space/basic,
+/area/space/nearstation)
 "mOZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -67694,6 +67711,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"nrQ" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/cable_coil,
+/turf/open/space/basic,
+/area/solar/starboard/fore)
 "nsi" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small{
@@ -72896,6 +72918,7 @@
 "qSg" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/fifty,
+/obj/structure/closet/crate,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "qSq" = (
@@ -79601,11 +79624,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"vTw" = (
-/obj/structure/lattice/catwalk,
-/obj/item/shard,
-/turf/open/space/basic,
-/area/solar/port/fore)
 "vTA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 9
@@ -81050,6 +81068,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
+"wYx" = (
+/obj/structure/lattice,
+/obj/item/stack/cable_coil,
+/turf/open/space/basic,
+/area/space/nearstation)
 "wZr" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/processor/slime,
@@ -93991,9 +94014,9 @@ lMJ
 aaa
 aaa
 aaa
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 eVl
 lMJ
 aak
@@ -94248,10 +94271,10 @@ lMJ
 aaa
 aaa
 aaa
-pgK
-pgK
-pgK
-eVl
+ukq
+ukq
+ukq
+ukq
 aaa
 jhf
 aaa
@@ -94762,9 +94785,9 @@ lMJ
 aaa
 aaa
 aaa
-pgK
-pgK
-pgK
+ukq
+ukq
+ukq
 eVl
 aaa
 aak
@@ -95019,9 +95042,9 @@ lMJ
 aaa
 aaa
 aaa
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 eVl
 lMJ
 aak
@@ -95283,7 +95306,7 @@ lMJ
 aaa
 hLY
 aaa
-lMJ
+wYx
 aaa
 aaa
 aaa
@@ -95790,17 +95813,17 @@ lMJ
 aaa
 aaa
 aaa
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 eVl
 lMJ
 hLY
 lMJ
 eVl
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 aaa
 aaa
 aaa
@@ -96047,17 +96070,17 @@ lMJ
 aaa
 aaa
 aaa
-pgK
-pgK
-pgK
+ukq
+ukq
+ukq
 eVl
 aaa
 aak
 aaa
 eVl
-pgK
-pgK
-pgK
+eVl
+ukq
+eVl
 aaa
 aaa
 aaa
@@ -96561,17 +96584,17 @@ lMJ
 aaa
 aaa
 aaa
-pgK
-pgK
-pgK
-eVl
+ukq
+ukq
+ukq
+mkR
 aaa
 aak
 aaa
 eVl
-pgK
-pgK
-pgK
+eVl
+ukq
+eVl
 aaa
 aaa
 aaa
@@ -96818,17 +96841,17 @@ lMJ
 aaa
 aaa
 aaa
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 eVl
 lMJ
 xCh
-lMJ
+mOe
 eVl
-eVl
-eVl
-vTw
+pgK
+pgK
+pgK
 aaa
 aaa
 aaa
@@ -97082,7 +97105,7 @@ lMJ
 aaa
 dfN
 aaa
-lMJ
+mOe
 aaa
 aaa
 aaa
@@ -98618,7 +98641,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cGk
 aaa
 rLO
 aaa
@@ -98874,17 +98897,17 @@ lMJ
 aaa
 aaa
 aaa
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 eVl
 aaa
 vlt
 aaa
-eVl
-eVl
-eVl
-eVl
+mkR
+pgK
+pgK
+pgK
 aaa
 aaa
 aaa
@@ -99131,17 +99154,17 @@ lMJ
 aaa
 aaa
 aaa
-pgK
-pgK
-pgK
+ukq
+ukq
+ukq
 eVl
 aaa
 hLY
 aaa
 eVl
-pgK
-pgK
-pgK
+eVl
+eVl
+ukq
 aaa
 aaa
 aaa
@@ -99391,7 +99414,7 @@ lMJ
 pgK
 pgK
 pgK
-eVl
+ukq
 ukq
 aak
 aak
@@ -99645,17 +99668,17 @@ lMJ
 aaa
 aaa
 aaa
-pgK
-pgK
-pgK
+ukq
+ukq
+ukq
 eVl
 aaa
 hLY
 aaa
 eVl
-pgK
-pgK
-pgK
+ukq
+eVl
+eVl
 aaa
 aaa
 aaa
@@ -99902,17 +99925,17 @@ lMJ
 aaa
 aaa
 aaa
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 eVl
 aaa
 aak
 aaa
 eVl
-eVl
-eVl
-eVl
+pgK
+pgK
+pgK
 aaa
 aaa
 aaa
@@ -128950,7 +128973,7 @@ rok
 rok
 rok
 lMJ
-rok
+nrQ
 rok
 rok
 ake
