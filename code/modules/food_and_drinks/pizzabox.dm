@@ -337,8 +337,6 @@
 	)
 	///List of ckeys and their favourite pizzas. e.g. pizza_preferences[ckey] = /obj/item/food/pizza/meat
 	var/static/list/pizza_preferences
-	///Who the box is currently attuned to. Prevents it re-attuning needlessly.
-	var/mob/living/carbon/human/attuned_to
 
 /obj/item/pizzabox/infinite/Initialize()
 	. = ..()
@@ -370,8 +368,8 @@
 				pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
 			else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
 				pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
-		//delete the current pizza if it isn't for us
-		if(pizza && attuned_to && attuned_to != nommer)
+		//delete the current pizza if it isn't our favourite type or if it IS our favourite type but not something our species likes
+		if(pizza?.type != pizza_preferences[nommer.ckey] || pizza?.foodtypes != nommer.dna.species.liked_food)
 			QDEL_NULL(pizza)
 		//if there's no pizza and we have a favourite, create it and update the boxtag
 		if(!pizza && pizza_preferences[nommer.ckey])
@@ -380,4 +378,3 @@
 			boxtag_set = FALSE
 			update_icon() //update our boxtag to match our new pizza
 			pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
-			attuned_to = nommer
