@@ -91,8 +91,10 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/item/gun/goon in target.GetAllContents())
-		SEND_SIGNAL(goon, COMSIG_ITEM_RECHARGED)
+	for(var/obj/item/gun in target.GetAllContents())
+		if(!isgun(gun) && !istype(gun, /obj/item/flamethrower))
+			continue
+		SEND_SIGNAL(gun, COMSIG_ITEM_RECHARGED)
 
 /obj/effect/powerup/ammo/ctf
 	icon = 'icons/effects/effects.dmi'
