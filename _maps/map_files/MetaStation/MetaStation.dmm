@@ -79288,6 +79288,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"vKJ" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "aftport";
+	name = "Aft-Port Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/port/aft)
 "vKV" = (
 /turf/open/floor/plasteel/dark,
 /area/security/main)
@@ -95867,14 +95875,14 @@ aaa
 lMJ
 aaa
 aaa
-qQl
+vKJ
 vYg
-qQl
-qQl
-qQl
-qQl
-qQl
-qQl
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
 lMJ
 lMJ
 lMJ
@@ -96123,7 +96131,7 @@ lMJ
 lMJ
 lMJ
 lMJ
-qQl
+vKJ
 plA
 vYg
 plA
@@ -96132,7 +96140,7 @@ plA
 plA
 plA
 plA
-qQl
+vKJ
 aaa
 anS
 hXe
@@ -96381,14 +96389,14 @@ aaa
 aaa
 aaa
 lMJ
-qQl
+vKJ
 vYg
-qQl
-qQl
-qQl
-qQl
-qQl
-qQl
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
 lMJ
 lMJ
 lMJ
@@ -96895,14 +96903,14 @@ aaa
 aaa
 aaa
 lMJ
-qQl
+vKJ
 mOb
-qQl
-qQl
-qQl
-qQl
-qQl
-qQl
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
 lMJ
 lMJ
 lMJ
@@ -97151,7 +97159,7 @@ lMJ
 lMJ
 lMJ
 lMJ
-qQl
+vKJ
 plA
 vYg
 plA
@@ -97160,7 +97168,7 @@ plA
 plA
 plA
 plA
-qQl
+vKJ
 aaa
 lMJ
 aaa
@@ -97409,14 +97417,14 @@ aaa
 aaa
 aaa
 lMJ
-qQl
+vKJ
 mOb
-qQl
-qQl
-qQl
-qQl
-qQl
-qQl
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
+vKJ
 lMJ
 lMJ
 lMJ
