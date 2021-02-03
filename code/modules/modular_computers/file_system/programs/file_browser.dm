@@ -38,10 +38,21 @@
 				return
 			RHDD.remove_file(file)
 			return TRUE
-		if("PRG_rename")
+		if("PRG_renamefile")
 			if(!HDD)
 				return
 			var/datum/computer_file/file = HDD.find_file_by_name(params["name"])
+			if(!file)
+				return
+			var/newname = params["new_name"]
+			if(!newname)
+				return
+			file.filename = newname
+			return TRUE
+		if("PRG_usbrenamefile")
+			if(!RHDD)
+				return
+			var/datum/computer_file/file = RHDD.find_file_by_name(params["name"])
 			if(!file)
 				return
 			var/newname = params["new_name"]
