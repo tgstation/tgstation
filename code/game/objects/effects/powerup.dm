@@ -27,6 +27,8 @@
 	trigger(AM)
 
 /obj/effect/powerup/proc/trigger(mob/living/M)
+	if(M.stat == DEAD)
+		return FALSE
 	if(respawning)
 		if(!COOLDOWN_FINISHED(src, respawn_cooldown))
 			return FALSE
