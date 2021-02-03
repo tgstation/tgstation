@@ -48690,6 +48690,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
+/obj/structure/closet/crate/engineering/electrical,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -61393,6 +61394,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
+/obj/structure/closet/crate/engineering/electrical,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "iFr" = (
@@ -62693,6 +62695,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
+/obj/structure/closet/crate/engineering/electrical,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "jCZ" = (
@@ -63839,7 +63842,7 @@
 	pixel_x = 32
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "kpa" = (
 /obj/machinery/light_switch{
 	pixel_x = 26
@@ -68047,10 +68050,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/starboard/secondary)
-"nGV" = (
-/obj/effect/gibspawner/human,
-/turf/open/space/basic,
-/area/space)
 "nGX" = (
 /obj/structure/chair,
 /obj/item/toy/plush/pkplush{
@@ -78821,6 +78820,7 @@
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
 /obj/item/stack/sheet/glass/fifty,
+/obj/structure/closet/crate/engineering/electrical,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "vpX" = (
@@ -96808,13 +96808,13 @@ dne
 dne
 arY
 dne
-jqd
+lMJ
 dne
 dne
 aip
 dne
 dne
-jqd
+lMJ
 dne
 dne
 dne
@@ -98864,9 +98864,9 @@ dne
 dne
 asc
 dne
-jqd
-jqd
-jqd
+lMJ
+lMJ
+lMJ
 ayi
 azj
 aEx
@@ -99129,10 +99129,10 @@ azk
 aAC
 aBT
 ayi
-jqd
-jqd
-jqd
-jqd
+lMJ
+lMJ
+lMJ
+lMJ
 aJB
 aKN
 aMs
@@ -99140,10 +99140,10 @@ aJB
 aMs
 aQg
 aJB
-jqd
-jqd
-jqd
-jqd
+lMJ
+lMJ
+lMJ
+lMJ
 dne
 doJ
 bbM
@@ -99350,9 +99350,9 @@ aaa
 fwb
 aaa
 lMJ
-jqd
-jqd
-jqd
+lMJ
+lMJ
+lMJ
 pgK
 pgK
 pgK
@@ -100127,7 +100127,7 @@ aaa
 aaa
 aaa
 aaa
-jqd
+lMJ
 aaa
 aaa
 aaa
@@ -100384,7 +100384,7 @@ aaa
 aaa
 aaa
 aaa
-jqd
+lMJ
 aaa
 aaa
 aaa
@@ -100641,7 +100641,7 @@ aaa
 aaa
 aaa
 aaa
-jqd
+lMJ
 aaa
 aaa
 aaa
@@ -123369,7 +123369,7 @@ aaa
 aaa
 aaa
 aaa
-nGV
+aaa
 aaa
 aaa
 aaa
