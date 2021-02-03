@@ -29,7 +29,7 @@
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [oldAI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
 			AI = null
 
-		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to a mech.
+		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to the suit.
 			var/mob/living/silicon/ai/cardAI = card.AI
 			if(!cardAI)
 				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
@@ -61,7 +61,7 @@
 		newaction.Grant(newAI)
 
 /obj/item/mod/control/relaymove(mob/user, direction)
-	if(!COOLDOWN_FINISHED(src, cooldown_mod_move) || user != AI || !wearer || !wearer.has_gravity() || !(wearer.mobility_flags & MOBILITY_STAND) || !active)
+	if(!COOLDOWN_FINISHED(src, cooldown_mod_move) || user != AI || !wearer || !wearer.has_gravity()|| !active)
 		return FALSE
 	var/timemodifier = (direction in GLOB.cardinals) ? 2 : 3
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)

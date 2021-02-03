@@ -82,19 +82,19 @@
 		return
 	activating = TRUE
 	to_chat(wearer, "<span class='notice'>MODsuit [active ? "shutting down" : "starting up"].</span>")
-	if(do_after(wearer,2 SECONDS,src,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
+	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [boots.name] [active ? "relax their grip on your legs" : "seal around your feet"].</span>")
 		boots.icon_state = "[theme]-boots[active ? "" : "-sealed"]"
 		boots.worn_icon_state = "[theme]-boots[active ? "" : "-sealed"]"
 		wearer.update_inv_shoes()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
-	if(do_after(wearer,2 SECONDS,src,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
+	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [gauntlets.name] [active ? "become loose around your fingers" : "tighten around your fingers and wrists"].</span>")
 		gauntlets.icon_state = "[theme]-gauntlets[active ? "" : "-sealed"]"
 		gauntlets.worn_icon_state = "[theme]-gauntlets[active ? "" : "-sealed"]"
 		wearer.update_inv_gloves()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
-	if(do_after(wearer,2 SECONDS,src,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
+	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [chestplate.name] [active ? "releases your chest" : "cinches tight again your chest"].</span>")
 		chestplate.icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
 		chestplate.worn_icon_state = "[theme]-chestplate[active ? "" : "-sealed"]"
@@ -103,9 +103,10 @@
 			chestplate.flags_inv &= ~chestplate.visor_flags_inv
 		else
 			chestplate.clothing_flags |= chestplate.visor_flags
+			chestplate.flags_inv |= chestplate.visor_flags_inv
 		wearer.update_inv_wear_suit()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
-	if(do_after(wearer,2 SECONDS,src,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
+	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>The [helmet.name] hisses [active ? "open" : "closed"].</span>")
 		helmet.icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
 		helmet.worn_icon_state = "[theme]-helmet[active ? "" : "-sealed"]"
@@ -123,7 +124,7 @@
 		wearer.update_inv_wear_mask()
 		wearer.update_hair()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE)
-	if(do_after(wearer,2 SECONDS,src,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
+	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, "<span class='notice'>Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer.real_name].</span>")
 		icon_state = "[theme]-control[active ? "" : "-sealed"]"
 		worn_icon_state = "[theme]-control[active ? "" : "-sealed"]"
