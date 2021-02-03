@@ -1607,7 +1607,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Rocket Boots"
 	desc = "A pair of heavily modified jump boots with added rocket thrusters. Great for making quick escapes, although you need a very long, unobstructed space to not slam into anything."
 	item = /obj/item/clothing/shoes/bhop/rocket
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 3 //you have to choose between this or noslips. Personally I'd go with the noslips.
 	illegal_tech = FALSE //It's a bad idea, not an illegal one.
 
