@@ -57,7 +57,7 @@
 /obj/item/storage/box/attack_self(mob/user)
 	..()
 
-	if(!foldable)
+	if(!foldable || (flags_1 & HOLOGRAM_1))
 		return
 	if(contents.len)
 		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
