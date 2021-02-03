@@ -183,7 +183,7 @@
 	if(len)
 		for(var/obj/item/I in held_items)
 			if(!holding.len)
-				holding += "They are holding \a [I]"
+				holding += "[p_they(TRUE)] [p_are()] holding \a [I]"
 			else if(held_items.Find(I) == len)
 				holding += ", and \a [I]."
 			else
@@ -1902,6 +1902,8 @@
  */
 /mob/living/proc/apply_martial_art(mob/living/target)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
+		return FALSE
+	if(ishuman(target) && ishuman(src)) //Human vs human are handled in species code
 		return FALSE
 	var/datum/martial_art/style = mind?.martial_art
 	var/attack_result = FALSE

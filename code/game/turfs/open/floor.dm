@@ -74,7 +74,7 @@
 		if(1)
 			ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 		if(2)
-			switch(pick(1,2;75,3))
+			switch(rand(1,3))
 				if(1)
 					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)

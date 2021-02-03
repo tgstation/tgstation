@@ -23,10 +23,10 @@
 	a_intent = INTENT_HARM
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
 	faction = list(ROLE_ALIEN)
 	status_flags = CANPUSH
 	minbodytemp = 0
+	unsuitable_heat_damage = 20
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
@@ -146,16 +146,6 @@
 	name = "neurotoxin"
 	damage = 30
 	icon_state = "toxin"
-
-/mob/living/simple_animal/hostile/alien/handle_temperature_damage()
-	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(2)
-		throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
-		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-	else
-		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/alien/maid
 	name = "lusty xenomorph maid"

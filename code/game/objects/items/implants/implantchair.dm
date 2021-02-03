@@ -199,5 +199,7 @@
 		return FALSE
 	brainwash(C, objective)
 	message_admins("[ADMIN_LOOKUPFLW(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
+	C.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using \the [src]", LOG_ATTACK)
+	user.log_message("has brainwashed [key_name(C)] with the objective '[objective]' using \the [src]", LOG_ATTACK, log_globally = FALSE)
 	log_game("[key_name(user)] brainwashed [key_name(C)] with objective '[objective]'.")
 	return TRUE

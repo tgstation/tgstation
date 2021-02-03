@@ -1,0 +1,5 @@
+author: "NotRanged"
+delete-after: True
+changes: 
+  - tweak: "Emitters are now hitscan beams."
+  - bugfix: "Fixed a bug with hitscan beams and reflector boxes."
