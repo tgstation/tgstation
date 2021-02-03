@@ -14,7 +14,7 @@
 	/// Skill description shown on UI
 	var/skill_description
 	/// Category string. Used alongside SKILLCHIP_RESTRICTED_CATEGORIES flag to make a chip incompatible with chips from another category.
-	var/chip_category = "general"
+	var/chip_category = SKILLCHIP_CATEGORY_GENERAL
 	/// List of any incompatible categories.
 	var/list/incompatibility_list
 	/// Fontawesome icon show on UI, list of possible icons https://fontawesome.com/icons?d=gallery&m=free
@@ -438,9 +438,9 @@
 	name = "Ant Hauler skillchip"
 	auto_traits = list(TRAIT_QUICK_CARRY)
 	skill_name = "Ant Hauler"
-	chip_category = "bodycarrying"
+	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
 	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
-	incompatibility_list = list("bodycarrying")
+	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
 	skill_description = "Discover various lifting techniques to more accurately and quickly lift someone up into a fireman carry."
 	skill_icon = "hand-holding"
 	activate_message = "<span class='notice'>You feel like you can easily lift and carry people around.</span>"
@@ -450,9 +450,9 @@
 	name = "RES-Q skillchip"
 	auto_traits = list(TRAIT_QUICKER_CARRY)
 	skill_name = "RES-Q"
-	chip_category = "bodycarrying"
+	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
 	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
-	incompatibility_list = list("bodycarrying")
+	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
 	skill_description = "Learn how to fireman carry like a professional, and haul the injured, sick or dying with speed!"
 	skill_icon = "hand-holding"
 	activate_message = "<span class='notice'>Carrying people across your back feels like second nature to you.</span>"
