@@ -78,8 +78,8 @@
 /datum/keybinding/living/toggle_combat_mode
 	hotkey_keys = list("F", "4")
 	name = "toggle_combat_mode"
-	full_name = "Look Down"
-	description = "Look down at the previous z-level.  Only works if directly above open space."
+	full_name = "Toggle Combat Mode"
+	description = "Toggles combat mode. Like Help/Harm but cooler."
 	keybind_signal = COMSIG_KB_LIVING_TOGGLE_COMBAT_DOWN
 
 
