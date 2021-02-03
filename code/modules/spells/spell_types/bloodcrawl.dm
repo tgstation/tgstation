@@ -20,7 +20,7 @@
 		return FALSE
 	var/area/noteleport_check = get_area(user)
 	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
-		to_chat(user, "<span class='danger'>Some dull, universal force is inbetween you and your other existence, preventing you from blood crawling.</span>")
+		to_chat(user, "<span class='danger'>Some dull, universal force is between you and your other existence, preventing you from blood crawling.</span>")
 		return FALSE
 
 /obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
