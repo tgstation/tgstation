@@ -233,11 +233,22 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
+	if(iswallturf(destination)) //so it knocks down walls
+		var/turf/closed/wall = destination
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+		visible_message("<span class='notice'>[src] smashes through [destination]!</span>")
+		destination = wall.dismantle_wall(devastated = TRUE)
+		destination = destination.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(going == DOWN)
 		for(var/mob/living/crushed in destination.contents)
 			to_chat(crushed, "<span class='userdanger'>You are crushed by [src]!</span>")
 			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
 	else if(going != UP) //can't really crush something upwards
+		for(var/obj/structure/anchortrouble in destination.contents)
+			if(anchortrouble.anchored && anchortrouble.layer >= GAS_PUMP_LAYER) //to avoid pipes, wires, etc
+				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+				visible_message("<span class='notice'>[src] smashes through [anchortrouble]!</span>")
+				anchortrouble.deconstruct(FALSE)
 		for(var/mob/living/collided in destination.contents)
 			to_chat(collided, "<span class='userdanger'>[src] collides into you!</span>")
 			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)

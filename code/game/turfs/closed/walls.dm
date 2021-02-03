@@ -62,7 +62,7 @@
 /turf/closed/wall/attack_tk()
 	return
 
-/turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)
+/turf/closed/wall/proc/dismantle_wall(devastated = FALSE, explode = FALSE)
 	if(devastated)
 		devastate_wall()
 	else
@@ -76,7 +76,7 @@
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 
-	ScrapeAway()
+	return ScrapeAway()
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
