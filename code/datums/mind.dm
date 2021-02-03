@@ -484,7 +484,7 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in sortList(get_all_jobs())
+		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in sortList(ALL_STATION_JOBS_LIST)
 		if (!new_role)
 			return
 		assigned_role = new_role

@@ -234,7 +234,7 @@
 	pda.update_label()
 
 	// TIMBERTODO WHAT THE FUCK IS THIS
-	// var/obj/item/card/id/W = H.wear_id
+	var/obj/item/card/id/W = H.wear_id
 	// W.access = get_all_accesses()
 	// W.trim = "Reaper"
 	W.registered_name = H.real_name

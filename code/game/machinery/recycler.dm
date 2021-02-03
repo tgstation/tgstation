@@ -34,7 +34,7 @@
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
 	. = ..()
 	update_icon()
-	req_one_access = get_all_accesses() + get_all_centcom_access()
+	req_one_access = ALL_ACCESS_STATION + CENTCOM_ACCESS
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0

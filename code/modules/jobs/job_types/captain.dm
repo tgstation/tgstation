@@ -15,17 +15,12 @@
 
 	outfit = /datum/outfit/job/captain
 
-	access = list() 			//See get_access()
-	minimal_access = list() 	//See get_access()
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
-
-/datum/job/captain/get_access()
-	return get_all_accesses()
 
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()
@@ -56,6 +51,8 @@
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
+
+	id_trim = /datum/id_trim/job/captain
 
 /datum/outfit/job/captain/hardsuit
 	name = "Captain (Hardsuit)"

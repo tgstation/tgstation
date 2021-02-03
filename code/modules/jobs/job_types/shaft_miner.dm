@@ -9,8 +9,6 @@
 
 	outfit = /datum/outfit/job/miner
 
-	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_QM, ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM, ACCESS_AUX_BASE)
-	minimal_access = list(ACCESS_MINING, ACCESS_MECH_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM, ACCESS_AUX_BASE)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_CAR
 
@@ -40,6 +38,8 @@
 	box = /obj/item/storage/box/survival/mining
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
+
+	id_trim = /datum/id_trim/job/shaft_miner
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"

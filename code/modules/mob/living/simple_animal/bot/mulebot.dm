@@ -64,7 +64,7 @@
 		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
 	wires = new /datum/wires/mulebot(src)
-	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
+	var/datum/job/cargo_technician/J = new/datum/job/cargo_technician
 	access_card.add_access(J.get_access())
 	prev_access = access_card.timberpoes_access
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)

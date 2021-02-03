@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(id_access)
 	var/list/trim_singletons_by_path = list()
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
+	// We use this because creating the trim singletons requires the config to be loaded.
+	SSmapping.HACK_LoadMapConfig()
 	setup_access_flags()
 	setup_trim_singletons()
 	return ..()
@@ -40,3 +42,18 @@ SUBSYSTEM_DEF(id_access)
 
 /datum/controller/subsystem/id_access/proc/get_trim(trim)
 	return trim_singletons_by_path[trim]
+
+/datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path)
+	var/datum/id_trim/trim = get_trim(trim_path)
+
+	if(!id_card.can_add_wildcards(trim.wildcard_access))
+		return FALSE
+
+	id_card.timberpoes_trim = trim
+	id_card.timberpoes_access = trim.access.Copy()
+	id_card.add_wildcards(trim.wildcard_access)
+
+	if(trim.assignment)
+		id_card.assignment = trim.assignment
+
+	id_card.update_label()

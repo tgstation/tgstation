@@ -75,7 +75,7 @@
 		return
 	obj_flags |= EMAGGED
 	if (authenticated)
-		authorize_access = get_all_accesses()
+		authorize_access = ALL_ACCESS_STATION
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 
@@ -302,7 +302,7 @@
 
 			if (obj_flags & EMAGGED)
 				authenticated = TRUE
-				authorize_access = get_all_accesses()
+				authorize_access = ALL_ACCESS_STATION
 				authorize_name = "Unknown"
 				to_chat(usr, "<span class='warning'>[src] lets out a quiet alarm as its login is overridden.</span>")
 				playsound(src, 'sound/machines/terminal_alert.ogg', 25, FALSE)

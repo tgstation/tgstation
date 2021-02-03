@@ -99,8 +99,7 @@
 	. = ..()
 
 	if(ispath(timberpoes_trim))
-		var/datum/new_trim = SSid_access.get_trim(timberpoes_trim)
-		new_trim.apply_to_card(src)
+		SSid_access.apply_trim_to_card(src, timberpoes_trim)
 
 	update_label()
 
@@ -173,7 +172,8 @@
 			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
 			if(NAMEOF(src, timberpoes_trim))
-				timberpoes_trim.apply_to_card(src)
+				if(ispath(timberpoes_trim))
+					SSid_access.apply_trim_to_card(src, timberpoes_trim)
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/holochip))
@@ -363,7 +363,7 @@
 	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
 /datum/id_trim/away
-	basic_access = list(ACCESS_AWAY_GENERAL)
+	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
@@ -373,7 +373,7 @@
 	registered_age = null
 
 /datum/id_trim/away/hotel
-	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
 
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
@@ -381,7 +381,7 @@
 	timberpoes_trim = /datum/id_trim/away/hotel
 
 /datum/id_trim/away/hotel/security
-	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/hotel/securty
 	name = "Officer ID"
@@ -392,7 +392,7 @@
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
 
 /datum/id_trim/away/old/sec
-	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
 	assignment = "Charlie Station Security Officer"
 
 /obj/item/card/id/away/old/sec
@@ -401,7 +401,7 @@
 	timberpoes_trim = /datum/id_trim/away/old/sec
 
 /datum/id_trim/away/old/sci
-	basic_access = list(ACCESS_AWAY_GENERAL)
+	access = list(ACCESS_AWAY_GENERAL)
 	assignment = "Charlie Station Scientist"
 
 /obj/item/card/id/away/old/sci
@@ -410,16 +410,17 @@
 	timberpoes_trim = /datum/id_trim/away/old/sci
 
 /datum/id_trim/away/old/end
-	basic_access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
 	assignment = "Charlie Station Engineer"
 
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	timberpoes_trim = /datum/id_trim/away/old/eng
+	// TIMBERTODO - Implement
+	// timberpoes_trim = /datum/id_trim/away/old/eng
 
 /datum/id_trim/away/old/apc
-	basic_access = list(ACCESS_ENGINE_EQUIP)
+	access = list(ACCESS_ENGINE_EQUIP)
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
@@ -506,7 +507,7 @@
 	inhand_icon_state = "silver_id"
 
 /datum/id_trim/maint_reaper
-	basic_access = list(ACCESS_MAINT_TUNNELS)
+	access = list(ACCESS_MAINT_TUNNELS)
 	trim_state = "trim_janitor"
 	assignment = "Reaper"
 
@@ -541,69 +542,43 @@
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	registered_name = "Central Command"
-	//assignment = "Central Command"
 	registered_age = null
-
-/obj/item/card/id/advanced/centcom/Initialize()
-	//access = get_all_centcom_access()
-	. = ..()
+	timberpoes_trim = /datum/id_trim/centcom
 
 /obj/item/card/id/advanced/centcom/ert
 	name = "\improper CentCom ID"
 	desc = "An ERT ID card."
 	registered_age = null
+	registered_name = "Emergency Response Intern"
+	timberpoes_trim = /datum/id_trim/centcom/ert
 
-/obj/item/card/id/advanced/centcom/ert/Initialize()
-	. = ..()
-	//access = get_all_accesses() - ACCESS_CHANGE_IDS
-
-/obj/item/card/id/advanced/centcom/ert/commander
+/obj/item/card/id/advanced/centcom/ert
 	registered_name = "Emergency Response Team Commander"
-	//assignment = "Emergency Response Team Commander"
-
-/obj/item/card/id/advanced/centcom/ert/commander/Initialize()
-	. = ..()
-	//access += get_ert_access("commander")
+	timberpoes_trim = /datum/id_trim/centcom/ert/commander
 
 /obj/item/card/id/advanced/centcom/ert/security
 	registered_name = "Security Response Officer"
-	//assignment = "Security Response Officer"
-
-/obj/item/card/id/advanced/centcom/ert/security/Initialize()
-	. = ..()
-	//access += get_ert_access("sec")
+	timberpoes_trim = /datum/id_trim/centcom/ert/security
 
 /obj/item/card/id/advanced/centcom/ert/engineer
 	registered_name = "Engineering Response Officer"
-	//assignment = "Engineering Response Officer"
-
-/obj/item/card/id/advanced/centcom/ert/engineer/Initialize()
-	. = ..()
-	//access += get_ert_access("eng")
+	timberpoes_trim = /datum/id_trim/centcom/ert/engineer
 
 /obj/item/card/id/advanced/centcom/ert/medical
 	registered_name = "Medical Response Officer"
-	//assignment = "Medical Response Officer"
-
-/obj/item/card/id/advanced/centcom/ert/medical/Initialize()
-	. = ..()
-	//access |= get_ert_access("med")
+	timberpoes_trim = /datum/id_trim/centcom/ert/medical
 
 /obj/item/card/id/advanced/centcom/ert/chaplain
 	registered_name = "Religious Response Officer"
-	//assignment = "Religious Response Officer"
-
-/obj/item/card/id/advanced/centcom/ert/chaplain/Initialize()
-	. = ..()
-	//access |= get_ert_access("sec")
+	timberpoes_trim = /datum/id_trim/centcom/ert/chaplain
 
 /obj/item/card/id/advanced/centcom/ert/janitor
 	registered_name = "Janitorial Response Officer"
-	//assignment = "Janitorial Response Officer"
+	timberpoes_trim = /datum/id_trim/centcom/ert/janitor
 
 /obj/item/card/id/advanced/centcom/ert/clown
 	registered_name = "Entertainment Response Officer"
-	//assignment = "Entertainment Response Officer"
+	timberpoes_trim = /datum/id_trim/centcom/ert/clown
 
 /obj/item/card/id/advanced/black
 	name = "black identification card"
@@ -615,48 +590,41 @@
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
 	registered_name = "Death Commando"
-	//assignment = "Death Commando"
+	timberpoes_trim = /datum/id_trim/centcom/deathsquad
 
 /obj/item/card/id/advanced/black/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	//assignment = "Syndicate Overlord"
 	icon_state = "card_black"
-	//access = list(ACCESS_SYNDICATE)
-	//sticky_access = list(ACCESS_SYNDICATE)
 	registered_age = null
+	// TIMBERTODO - Implement
+	// timberpoes_trim = /datum/id_trim/syndicom
 
 /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	//assignment = "Syndicate Operative"
-	//access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	//sticky_access = list(ACCESS_SYNDICATE)
+	// TIMBERTODO - Implement
+	// timberpoes_trim = /datum/id_trim/syndicom/crew
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	name = "syndicate captain ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	//assignment = "Syndicate Ship Captain"
-	//access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	//sticky_access = list(ACCESS_SYNDICATE)
-
-/obj/item/card/id/advanced/black/deathsquad/Initialize(mapload)
-	. = ..()
-	//access = get_all_accesses() + get_all_centcom_access()
+	// TIMBERTODO - Implement
+	// timberpoes_trim = /datum/id_trim/syndicom/captain
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
-	//assignment = "Jannie"
+	// TIMBERTODO - Implement
+	// timberpoes_trim = /datum/id_trim/admin
 
 /obj/item/card/id/advanced/debug/Initialize()
 	. = ..()
-	//access = get_all_accesses() + get_all_centcom_access() + get_all_syndicate_access()
 	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 /obj/item/card/id/advanced/prisoner
@@ -666,11 +634,14 @@
 	inhand_icon_state = "orange-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	//assignment = "Prisoner"
 	registered_name = "Scum"
-	var/goal = 0 //How far from freedom?
-	var/points = 0
 	registered_age = null
+	timberpoes_trim = /datum/id_trim/job/prisoner
+
+	/// Number of gulag points required to earn freedom.
+	var/goal = 0
+	/// Number of gulag points earned.
+	var/points = 0
 
 /obj/item/card/id/advanced/prisoner/attack_self(mob/user)
 	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
@@ -678,38 +649,39 @@
 /obj/item/card/id/advanced/prisoner/one
 	name = "Prisoner #13-001"
 	registered_name = "Prisoner #13-001"
-	//assignment = "Prisoner #13-001"
+	timberpoes_trim = /datum/id_trim/job/prisoner/one
 
 /obj/item/card/id/advanced/prisoner/two
 	name = "Prisoner #13-002"
 	registered_name = "Prisoner #13-002"
-	//assignment = "Prisoner #13-002"
+	timberpoes_trim = /datum/id_trim/job/prisoner/two
 
 /obj/item/card/id/advanced/prisoner/three
 	name = "Prisoner #13-003"
 	registered_name = "Prisoner #13-003"
-	//assignment = "Prisoner #13-003"
+	timberpoes_trim = /datum/id_trim/job/prisoner/three
 
 /obj/item/card/id/advanced/prisoner/four
 	name = "Prisoner #13-004"
 	registered_name = "Prisoner #13-004"
-	//assignment = "Prisoner #13-004"
+	timberpoes_trim = /datum/id_trim/job/prisoner/four
 
 /obj/item/card/id/advanced/prisoner/five
 	name = "Prisoner #13-005"
 	registered_name = "Prisoner #13-005"
-	//assignment = "Prisoner #13-005"
+	timberpoes_trim = /datum/id_trim/job/prisoner/five
 
 /obj/item/card/id/advanced/prisoner/six
 	name = "Prisoner #13-006"
 	registered_name = "Prisoner #13-006"
-	//assignment = "Prisoner #13-006"
+	timberpoes_trim = /datum/id_trim/job/prisoner/six
 
 /obj/item/card/id/advanced/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
-	//assignment = "Prisoner #13-007"
+	timberpoes_trim = /datum/id_trim/job/prisoner/seven
 
 /obj/item/card/id/advanced/mining
 	name = "mining ID"
-	//access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+	// TIMBERTODO - Implement
+	// timberpoes_trim = /datum/id_trim/job/miner/spare

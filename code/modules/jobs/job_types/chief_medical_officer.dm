@@ -1,4 +1,4 @@
-/datum/job/cmo
+/datum/job/chief_medical_officer
 	title = "Chief Medical Officer"
 	department_head = list("Captain")
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
@@ -16,12 +16,6 @@
 
 	outfit = /datum/outfit/job/cmo
 
-	access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
-			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE, ACCESS_MECH_MEDICAL,
-			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS, ACCESS_EVA, ACCESS_TELEPORTER)
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
-			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE, ACCESS_MECH_MEDICAL,
-			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS, ACCESS_EVA)
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_MED
 
@@ -32,7 +26,7 @@
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
-	jobtype = /datum/job/cmo
+	jobtype = /datum/job/chief_medical_officer
 
 	id = /obj/item/card/id/advanced/silver
 	belt = /obj/item/pda/heads/cmo
@@ -53,6 +47,8 @@
 	box = /obj/item/storage/box/survival/medical
 
 	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
+
+	id_trim = /datum/id_trim/job/chief_medical_officer
 
 /datum/outfit/job/cmo/hardsuit
 	name = "Chief Medical Officer (Hardsuit)"

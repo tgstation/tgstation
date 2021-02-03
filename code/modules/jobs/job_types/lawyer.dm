@@ -10,8 +10,6 @@
 
 	outfit = /datum/outfit/job/lawyer
 
-	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
-	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
@@ -35,6 +33,7 @@
 
 	chameleon_extras = /obj/item/stamp/law
 
+	id_trim = /datum/id_trim/job/lawyer
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

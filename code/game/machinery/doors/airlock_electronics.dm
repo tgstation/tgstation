@@ -62,7 +62,7 @@
 			one_access = 0
 			. = TRUE
 		if("grant_all")
-			accesses = get_all_accesses()
+			accesses = ALL_ACCESS_STATION
 			. = TRUE
 		if("one_access")
 			one_access = !one_access

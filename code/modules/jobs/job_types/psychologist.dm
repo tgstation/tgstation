@@ -9,8 +9,6 @@
 
 	outfit = /datum/outfit/job/psychologist
 
-	access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY)
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_SRV
 
@@ -37,3 +35,5 @@
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+	id_trim = /datum/id_trim/job/psychologist

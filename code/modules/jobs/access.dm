@@ -102,78 +102,10 @@
 /obj/proc/check_access_ntnet(list/passkey)
 	return check_access_list(passkey)
 
-/proc/get_centcom_access(job)
-	switch(job)
-		if("VIP Guest")
-			return list(ACCESS_CENT_GENERAL)
-		if("Custodian")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
-		if("Thunderdome Overseer")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER)
-		if("CentCom Official")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
-		if("CentCom Intern")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
-		if("CentCom Head Intern")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
-		if("Medical Officer")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_MEDICAL)
-		if("Death Commando")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
-		if("Research Officer")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_TELEPORTER, ACCESS_CENT_STORAGE)
-		if("Special Ops Officer")
-			return get_all_centcom_access()
-		if("Admiral")
-			return get_all_centcom_access()
-		if("CentCom Commander")
-			return get_all_centcom_access()
-		if("Emergency Response Team Commander")
-			return get_ert_access("commander")
-		if("Security Response Officer")
-			return get_ert_access("sec")
-		if("Engineer Response Officer")
-			return get_ert_access("eng")
-		if("Medical Response Officer")
-			return get_ert_access("med")
-		if("CentCom Bartender")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
-
-/proc/get_all_accesses()
-	return list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS, ACCESS_COURT,
-				ACCESS_MEDICAL, ACCESS_GENETICS, ACCESS_MORGUE, ACCESS_RD,
-				ACCESS_RND, ACCESS_TOXINS, ACCESS_CHEMISTRY, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS,
-				ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CHANGE_IDS, ACCESS_AI_UPLOAD,
-				ACCESS_TELEPORTER, ACCESS_EVA, ACCESS_HEADS, ACCESS_CAPTAIN, ACCESS_ALL_PERSONAL_LOCKERS,
-				ACCESS_TECH_STORAGE, ACCESS_CHAPEL_OFFICE, ACCESS_ATMOSPHERICS, ACCESS_KITCHEN,
-				ACCESS_BAR, ACCESS_JANITOR, ACCESS_CREMATORIUM, ACCESS_ROBOTICS, ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_AUX_BASE,
-				ACCESS_HYDROPONICS, ACCESS_LIBRARY, ACCESS_LAWYER, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_QM, ACCESS_SURGERY, ACCESS_PSYCHOLOGY,
-				ACCESS_THEATRE, ACCESS_RESEARCH, ACCESS_MINING, ACCESS_MAILSORTING, ACCESS_WEAPONS,
-				ACCESS_MECH_MINING, ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY, ACCESS_MECH_MEDICAL,
-				ACCESS_VAULT, ACCESS_MINING_STATION, ACCESS_XENOBIOLOGY, ACCESS_CE, ACCESS_HOP, ACCESS_HOS, ACCESS_PHARMACY, ACCESS_RC_ANNOUNCE,
-				ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_NETWORK, ACCESS_TOXINS_STORAGE)
-
-/proc/get_all_centcom_access()
-	return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE, ACCESS_CENT_TELEPORTER, ACCESS_CENT_CAPTAIN)
-
-/proc/get_ert_access(class)
-	switch(class)
-		if("commander")
-			return get_all_centcom_access()
-		if("sec")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING)
-		if("eng")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
-		if("med")
-			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING)
-
-/proc/get_all_syndicate_access()
-	return list(ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
-
 /proc/get_region_accesses(code)
 	switch(code)
 		if(0)
-			return get_all_accesses()
+			return ALL_ACCESS_STATION
 		if(1) //station general
 			return list(ACCESS_KITCHEN,ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_LIBRARY, ACCESS_THEATRE, ACCESS_LAWYER)
 		if(2) //security
@@ -368,33 +300,17 @@
 		if(ACCESS_CENT_BAR)
 			return "Code Scotch"
 
-/proc/get_all_jobs()
-	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
-				"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist",
-				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
-
-/proc/get_all_job_icons() //For all existing HUD icons
-	return get_all_jobs() + list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", "Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando")
-
-/proc/get_all_centcom_jobs()
-	return list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer","Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
-
 /// Returns a list of all "recognised" syndicate jobs which should be represented on ID cards with syndicate trim icons.
 /proc/get_all_syndicate_jobs()
 	return list("Syndicate Overlord", "Syndicate Operative", "Syndicate Ship Captain")
-
-/// Returns a list of all "recognised" prisoner jobs which have unique numbered trim icon states.
-/proc/get_all_prisoner_jobs()
-	return list("Prisoner #13-001", "Prisoner #13-002", "Prisoner #13-003", "Prisoner #13-004", "Prisoner #13-005", "Prisoner #13-006", "Prisoner #13-007")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/card/id/I = GetID()
 	if(!I)
 		return
 	var/jobName = I.assignment
-	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
+	if(jobName in ALL_STATION_JOBS_LIST + ADDITIONAL_ICON_JOBS) //Check if the job has a hud icon
 		return jobName
-	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a CentCom job
+	if(jobName in ALL_CENTCOM_JOBS_LIST) //Return with the NT logo if it is a CentCom job
 		return "CentCom"
 	return "Unknown" //Return unknown if none of the above apply

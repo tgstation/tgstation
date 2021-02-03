@@ -247,8 +247,8 @@
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
 				if(J.title == id_access)
-				// TIMBERTODO UNFUCK THIS SHIT TOO
-					W.timberpoes_access = J.get_access()
+					// TIMBERTODO UNFUCK THIS SHIT TOO
+					// W.timberpoes_access = J.get_access()
 					break
 		if(id_access_list)
 			if(!islist(W.timberpoes_access))
