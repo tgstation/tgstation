@@ -128,37 +128,37 @@
 	if(!user.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You can't get the words out!</span>")
 		return
-	var/mob/living/carbon/M = target
+	var/mob/living/carbon/duffelvictim = target
 	var/elaborate_backstory = pick("spacewar origin story", "military background", "corporate connections", "life in the colonies", "anti-government activities", "upbringing on the space farm", "fond memories with your buddy Keith")
-	if(M.anti_magic_check())
-		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
-		to_chat(M, "<span class='warning'>You really don't feel like talking about your [elaborate_backstory] with complete strangers today.</span>")
+	if(duffelvictim.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [duffelvictim]!</span>")
+		to_chat(duffelvictim, "<span class='warning'>You really don't feel like talking about your [elaborate_backstory] with complete strangers today.</span>")
 		..()
 		return
 
-	M.flash_act()
-	M.Immobilize(5 SECONDS)
-	M.apply_damage(80, STAMINA)
-	M.Knockdown(5 SECONDS)
+	duffelvictim.flash_act()
+	duffelvictim.Immobilize(5 SECONDS)
+	duffelvictim.apply_damage(80, STAMINA)
+	duffelvictim.Knockdown(5 SECONDS)
 
 	if(HAS_TRAIT(target, TRAIT_DUFFEL_CURSED))
-		to_chat(user, "<span class='warning'>The burden of [M]'s duffel bag becomes too much, shoving them to the floor!</span>")
-		to_chat(M, "<span class='warning'>The weight of this bag becomes overburdening!</span>")
+		to_chat(user, "<span class='warning'>The burden of [duffelvictim]'s duffel bag becomes too much, shoving them to the floor!</span>")
+		to_chat(duffelvictim, "<span class='warning'>The weight of this bag becomes overburdening!</span>")
 		return ..()
 	
-	var/obj/item/storage/backpack/duffelbag/cursed/C = new get_turf(target)
+	var/obj/item/storage/backpack/duffelbag/cursed/conjuredduffel= new get_turf(target)
 
-	M.visible_message("<span class='danger'>A growling duffel bag appears on [M]!</span>", \
+	duffelvictim.visible_message("<span class='danger'>A growling duffel bag appears on [duffelvictim]!</span>", \
 						   "<span class='danger'>You feel something attaching itself to you, and a strong desire to discuss your [elaborate_backstory] at length!</span>")
 
-	if(M.dropItemToGround(M.back))
-		M.equip_to_slot_if_possible(C, ITEM_SLOT_BACK, TRUE, TRUE)
+	if(duffelvictim.dropItemToGround(duffelvictim.back))
+		duffelvictim.equip_to_slot_if_possible(conjuredduffel, ITEM_SLOT_BACK, TRUE, TRUE)
 	else
-		if(!M.put_in_hands(C))
-			M.dropItemToGround(M.get_inactive_held_item())
-			if(!M.put_in_hands(C))
-				M.dropItemToGround(M.get_active_held_item())
-				M.put_in_hands(C)
+		if(!duffelvictim.put_in_hands(conjuredduffel))
+			duffelvictim.dropItemToGround(duffelvictim.get_inactive_held_item())
+			if(!duffelvictim.put_in_hands(conjuredduffel))
+				duffelvictim.dropItemToGround(duffelvictim.get_active_held_item())
+				duffelvictim.put_in_hands(conjuredduffel)
 			else
 				return ..()
 	return ..()
