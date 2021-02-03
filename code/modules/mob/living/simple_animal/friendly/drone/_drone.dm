@@ -49,6 +49,8 @@
 	health = 30
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
+	minbodytemp = 0
+	maxbodytemp = 0
 	wander = 0
 	speed = 0
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -299,9 +301,6 @@
 					L -= I
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
-
-/mob/living/simple_animal/drone/handle_temperature_damage()
-	return
 
 /mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	if(affect_silicon)
