@@ -1437,7 +1437,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
 
-	if(modifiers["right"])
+	if(modifiers && modifiers["right"])
 		disarm(M, H, attacker_style)
 		return // dont attack after
 	if(M.combat_mode)

@@ -133,9 +133,6 @@
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
-	if(!user.combat_mode)
-		to_chat(user, "<span class='danger'>You need to be in combat mode to tighten your grip on [src]!</span>")
-		return
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
 		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
@@ -248,7 +245,7 @@
 
 	if (M.apply_martial_art(src, modifiers))
 		return TRUE
-	if(modifiers["right"])
+	if(modifiers && modifiers["right"])
 		if (M != src)
 			M.disarm(src)
 			return TRUE
@@ -301,7 +298,7 @@
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
-	if(modifiers["right"])
+	if(modifiers && modifiers["right"])
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
 	if(M.combat_mode)

@@ -194,7 +194,7 @@
 			return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["right"])
+	if(modifiers && modifiers["right"])
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
 				baton_effect(M, user)

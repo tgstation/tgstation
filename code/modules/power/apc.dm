@@ -807,7 +807,7 @@
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
 		var/list/modifiers = params2list(params)
 		if(H.combat_mode && E.drain_time < world.time)
-			if(modifiers["right"]) //Disarm
+			if(modifiers && modifiers["right"]) //Disarm
 				if(cell.charge == cell.maxcharge)
 					to_chat(H, "<span class='warning'>The APC is full!</span>")
 					return

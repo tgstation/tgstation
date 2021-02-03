@@ -164,7 +164,7 @@
 
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(!(flags_1 & NODECONSTRUCT_1) && modifiers["right"])
+	if(!(flags_1 & NODECONSTRUCT_1) && modifiers && modifiers["right"])
 		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(I.use_tool(src, user, 20, volume=50))
@@ -511,7 +511,7 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(W.tool_behaviour == TOOL_WELDER && modifiers["right"])
+	if(W.tool_behaviour == TOOL_WELDER && modifiers && modifiers["right"])
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -633,7 +633,7 @@
 
 /obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && modifiers["right"])
+	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && modifiers && modifiers["right"])
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return

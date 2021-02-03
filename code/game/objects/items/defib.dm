@@ -431,7 +431,7 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["right"])
+	if(modifiers && modifiers["right"])
 		do_disarm(M, user)
 		return
 

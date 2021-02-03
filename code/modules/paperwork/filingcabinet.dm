@@ -47,7 +47,7 @@
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(P.tool_behaviour == TOOL_WRENCH && modifiers["right"])
+	if(P.tool_behaviour == TOOL_WRENCH && modifiers && modifiers["right"])
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")

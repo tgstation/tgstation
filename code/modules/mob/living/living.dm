@@ -1913,7 +1913,7 @@
 	if (style)
 		if (is_grab)
 			attack_result = style.grab_act(src, target)
-		if(modifiers["right"])
+		if(modifiers && modifiers["right"])
 			attack_result = style.disarm_act(src, target)
 		if(combat_mode)
 			if (HAS_TRAIT(src, TRAIT_PACIFISM))

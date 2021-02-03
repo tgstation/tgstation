@@ -362,7 +362,7 @@
 				var/mob/living/living_shooter = firer
 				if(istype(living_shooter))
 					firer_combat_mode = living_shooter.combat_mode
-				if(fire_modifiers["right"])
+				if(fire_modifiers && fire_modifiers["right"])
 					var/obj/item/I = C.get_active_held_item()
 					if(I)
 						if(C.dropItemToGround(I))

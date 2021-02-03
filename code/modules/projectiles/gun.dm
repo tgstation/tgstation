@@ -191,7 +191,7 @@
 
 /obj/item/gun/attack(mob/M, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(ismob(M) && modifiers["right"]) //Right click to hold someone up
+	if(ismob(M) && modifiers && modifiers["right"]) //Right click to hold someone up
 		if(user.GetComponent(/datum/component/gunpoint))
 			to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
 			return
