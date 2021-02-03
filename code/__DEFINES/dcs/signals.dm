@@ -130,8 +130,6 @@
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"
 	/// Blocks [/atom/proc/set_light]
 	#define COMPONENT_BLOCK_LIGHT_UPDATE	(1<<0)
-///from base of [/atom/proc/update_light]: ()
-#define COMSIG_ATOM_UPDATE_LIGHT	"atom_update_light"
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
 ///from base of atom/handle_atom_del(): (atom/deleted)

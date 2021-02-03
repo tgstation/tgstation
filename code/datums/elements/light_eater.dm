@@ -67,11 +67,11 @@
  *
  * Arguments:
  * - [comissary][/atom]: The origin node of all of the light sources to search through.
- * - [light_eater][/datum]: The light eater being applied to the target.
+ * - [devourer][/datum]: The light eater this element is attached to. Since the element is compatible with reagents this needs to be a datum.
  */
-/datum/element/light_eater/proc/table_buffet(atom/commisary, datum/light_eater)
+/datum/element/light_eater/proc/table_buffet(atom/commisary, datum/devourer)
 	. = list()
-	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., light_eater)
+	SEND_SIGNAL(commisary, COMSIG_LIGHT_EATER_QUEUE, ., devourer)
 	for(var/nom in commisary.light_sources)
 		var/datum/light_source/morsel = nom
 		. += morsel.source_atom
@@ -81,13 +81,13 @@
  *
  * Arguments:
  * - [morsel][/atom]: The light-producing thing we are eating
- * - [eater][/datum]: The light eater eating the morsel
+ * - [eater][/datum]: The light eater eating the morsel. This is the datum that the element is attached to that started this chain.
  */
 /datum/element/light_eater/proc/devour(atom/morsel, datum/eater)
 	if(morsel.light_power <= 0 || morsel.light_range <= 0 || !morsel.light_on)
 		return FALSE
 	if(SEND_SIGNAL(morsel, COMSIG_LIGHT_EATER_ACT, eater) & COMPONENT_BLOCK_LIGHT_EATER)
-		return FALSE
+		return FALSE // Either the light eater can't eat it or it had special behaviors.
 
 	morsel.AddElement(/datum/element/light_eaten)
 	SEND_SIGNAL(src, COMSIG_LIGHT_EATER_DEVOUR, morsel)

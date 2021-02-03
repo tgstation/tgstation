@@ -10,16 +10,16 @@
 		return
 
 	if (!isnull(l_power))
-		light_power = l_power
+		set_light_power(l_power)
 
 	if (!isnull(l_range))
-		light_range = l_range
+		set_light_range(l_range)
 
 	if (l_color != NONSENSICAL_VALUE)
-		light_color = l_color
+		set_light_color(l_color)
 
 	if(!isnull(l_on))
-		light_on = l_on
+		set_light_on(l_on)
 
 	update_light()
 
@@ -32,7 +32,6 @@
 	if (QDELETED(src))
 		return
 
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT)
 	if(light_system != STATIC_LIGHT)
 		CRASH("update_light() for [src] with following light_system value: [light_system]")
 
@@ -115,42 +114,42 @@
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _range, _power, _color, _duration)
 	return mob_light_obj
 
-
-/atom/proc/set_light_range(new_range)
-	if(new_range == light_range)
-		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range)
-	. = light_range
-	light_range = new_range
-
-
+/// Setter for the light power of this atom.
 /atom/proc/set_light_power(new_power)
 	if(new_power == light_power)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power)
 	. = light_power
 	light_power = new_power
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power, .)
 
+/// Setter for the light range of this atom.
+/atom/proc/set_light_range(new_range)
+	if(new_range == light_range)
+		return
+	. = light_range
+	light_range = new_range
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range, .)
 
+/// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
 	if(new_color == light_color)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color)
 	. = light_color
 	light_color = new_color
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color, .)
 
-
+/// Setter for whether or not this atom's light is on.
 /atom/proc/set_light_on(new_value)
 	if(new_value == light_on)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value)
 	. = light_on
 	light_on = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value, .)
 
-
+/// Seter for the light flags of this atom.
 /atom/proc/set_light_flags(new_value)
 	if(new_value == light_flags)
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value)
 	. = light_flags
 	light_flags = new_value
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value, .)
