@@ -428,6 +428,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box),			\
 		null,																					\
 
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
 		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\
 		new /datum/stack_recipe("rubber shot ammo box", /obj/item/storage/box/rubbershot),		\
 		new /datum/stack_recipe("bean bag ammo box", /obj/item/storage/box/beanbag),			\
@@ -446,6 +447,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
 		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses),	\
 		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens),					\
+		new /datum/stack_recipe("emergency oxygen tank box", /obj/item/storage/box/emergencytank),	\
+		new /datum/stack_recipe("extended-capacity emergency oxygen tank box", /obj/item/storage/box/engitank),	\
 		null,																					\
 
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
@@ -453,7 +456,6 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
 		new /datum/stack_recipe("mixed lights box", /obj/item/storage/box/lights/mixed),		\
 		new /datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps),			\
-		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
 		new /datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box)
 		)),
 
