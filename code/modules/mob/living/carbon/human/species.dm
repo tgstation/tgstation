@@ -2051,7 +2051,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				var/image/img = image(icon = 'icons/mob/clothing/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND")	//Process the HUD elements
 				img.transform *= 0.5
 				img.pixel_x = -32
-				wings += list(S.name = img)
+				if(wings[S.name])
+					stack_trace("Different wing types with repeated names. Please fix as this may cause issues.")
+				else
+					wings[S.name] = img
 			wings_icon = show_radial_menu(H, H, wings, tooltips = TRUE)
 			if(!wings_icon)
 				wings_icon = pick(wings_icons)
