@@ -273,6 +273,13 @@
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
 
+/obj/item/clothing/shoes/bhop/rocket 
+	name = "rocket boots"
+	desc = "Very special boots with built-in rocket thrusters! SHAZBOT!"
+	var/jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
+	var/jumpspeed = 5
+	var/recharging_rate = 60 //default 6 seconds between each dash
+
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
 	desc = "These boots were made for dancing."
