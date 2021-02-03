@@ -516,10 +516,13 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 			. = TRUE
 
 /obj/item/gun/ballistic/proc/instant_reload()
-	if(!mag_type)
-		return
-	qdel(magazine)
-	magazine = new mag_type(src)
+	if(!magazine)
+		if(mag_type)
+			magazine = new mag_type(src)
+		else
+			return
+	else
+		magazine.top_off()
 	chamber_round()
 	update_icon()
 
