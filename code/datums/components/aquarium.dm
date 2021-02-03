@@ -16,8 +16,6 @@
 	//Current layer for the visual object
 	var/base_layer
 
-	/// Is the flopping animation allowed. Animation was made for fish sprites so will look off on other things so consider toggling this.
-	var/floppable = TRUE
 	//If flopping animation was applied to parent, tracked to stop it on removal/destroy
 	var/flopping = FALSE
 
@@ -184,7 +182,7 @@
 #define JUMP_X_DISTANCE 5
 #define JUMP_Y_DISTANCE 6
 /// This animation should be applied to actual parent atom instead of vc_object.
-/datum/component/aquarium_content/proc/flop_animation(atom/movable/animation_target)
+/proc/flop_animation(atom/movable/animation_target)
 	var/pause_between = PAUSE_BETWEEN_PHASES + rand(1, 5) //randomized a bit so fish are not in sync
 	animate(animation_target, time = pause_between, loop = -1)
 	//move nose down and up
@@ -218,7 +216,7 @@
 
 /// Starts flopping animation
 /datum/component/aquarium_content/proc/start_flopping()
-	if(!flopping && floppable)
+	if(!flopping && istype(parent,/obj/item/fish)) //Requires update_transform/animate_wrappers to be less restrictive.
 		flopping = TRUE
 		flop_animation(parent)
 
