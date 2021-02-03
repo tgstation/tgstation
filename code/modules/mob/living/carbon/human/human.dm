@@ -1061,7 +1061,7 @@
 		to_chat(src, "<span class='warning'>You can't fireman carry [target] while [target.p_they()] [target.p_are()] standing!</span>")
 		return
 
-	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
+	var/carrydelay = 5 SECONDS //This is augmented by traits from your skillchip
 	var/skills_space = "" //cobby told me to do this
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay = 3 SECONDS
@@ -1072,8 +1072,8 @@
 
 	visible_message("<span class='notice'>[src] starts[skills_space] lifting [target] onto [p_their()] back..</span>",
 	//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-	"<span class='notice'>[carrydelay < 3.5 SECONDS ? "Using your gloves' nanochips, you" : "You"][skills_space] start to lift [target] onto your back[carrydelay == 4 SECONDS ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
-	//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
+	"<span class='notice'>[carrydelay < 3.5 SECONDS ? "Using your fireman carrying training, you" : "You"][skills_space] start to lift [target] onto your back[carrydelay == 4 SECONDS ? ", with ease thanks to your advanced knowledge.." : "..."]</span>")
+	//(Using your fireman carrying training, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, with ease thanks to your advanced knowledge../...)
 	if(!do_after(src, carrydelay, target))
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
 		return
