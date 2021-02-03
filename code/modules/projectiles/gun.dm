@@ -42,6 +42,10 @@
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 	var/dual_wield_spread = 24			//additional spread when dual wielding
+	
+	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
+	var/projectile_damage_multiplier = 1
+
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
@@ -138,7 +142,7 @@
 		. += "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it."
 		if(can_bayonet) //if it has a bayonet and this is false, the bayonet is permanent.
 			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
-	else if(can_bayonet)
+	if(can_bayonet)
 		. += "It has a <b>bayonet</b> lug on it."
 
 /obj/item/gun/equipped(mob/living/user, slot)
@@ -370,6 +374,7 @@
 	if(user)
 		user.update_inv_hands()
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
+
 	return TRUE
 
 /obj/item/gun/proc/reset_semicd()
@@ -449,7 +454,6 @@
 								"<span class='warning'>You pry [pin] out with [I], destroying the pin in the process.</span>", null, 3)
 			QDEL_NULL(pin)
 			return TRUE
-
 
 /obj/item/gun/welder_act(mob/living/user, obj/item/I)
 	. = ..()

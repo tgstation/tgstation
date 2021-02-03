@@ -51579,7 +51579,7 @@
 	pixel_y = -2
 	},
 /obj/item/storage/belt/bandolier,
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised,
+/obj/item/gun/ballistic/rifle/boltaction/pipegun,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
