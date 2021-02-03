@@ -27,7 +27,6 @@
 	freq_to_check += !(freq_to_check % 2) //make sure freq_to_check is odd
 	while(TRUE)
 		if("[freq_to_check]" in GLOB.reverseradiochannels)
-			message_admins("it worked!")
 			freq_to_check = rand(start, end)
 			freq_to_check += !(freq_to_check % 2)
 		else
