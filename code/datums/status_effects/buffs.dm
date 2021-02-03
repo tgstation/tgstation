@@ -463,25 +463,25 @@
 	desc = "Some people seek power through redemption, one thing many people don't know is that battle is the ultimate redemption and wounds let you bask in eternal glory."
 	icon_state = "wounded_soldier"
 
-/datum/status_effect/lightingorb
-	id = "Lighting Orb"
+/datum/status_effect/lightningorb
+	id = "Lightning orb"
 	duration = 30 SECONDS
-	alert_type = /atom/movable/screen/alert/status_effect/lightingorb
+	alert_type = /atom/movable/screen/alert/status_effect/lightningorb
 
-/datum/status_effect/lightingorb/on_apply()
+/datum/status_effect/lightningorb/on_apply()
 	. = ..()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	to_chat(owner, "<span class='notice'>You feel fast!</span>")
 
-/datum/status_effect/lightingorb/on_remove()
+/datum/status_effect/lightningorb/on_remove()
 	. = ..()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	to_chat(owner, "<span class='notice'>You slow down.</span>")
 
-/atom/movable/screen/alert/status_effect/lightingorb
-	name = "Lighting Orb"
+/atom/movable/screen/alert/status_effect/lightningorb
+	name = "Lightning orb"
 	desc = "The speed surges through you!"
-	icon_state = "lightingorb"
+	icon_state = "lightningorb"
 
 /datum/status_effect/mayhem
 	id = "Mayhem"

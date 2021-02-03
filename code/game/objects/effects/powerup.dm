@@ -107,7 +107,7 @@
 	lifetime = 30 SECONDS
 
 /obj/effect/powerup/speed
-	name = "Lighting Orb"
+	name = "Lightning orb"
 	desc = "You feel faster just looking at it."
 	icon_state = "electricity2"
 	pickup_sound = 'sound/magic/lightningshock.ogg'
@@ -116,7 +116,7 @@
 	. = ..()
 	if(!.)
 		return
-	M.apply_status_effect(STATUS_EFFECT_LIGHTINGORB)
+	M.apply_status_effect(STATUS_EFFECT_LIGHTNINGORB)
 
 /obj/effect/powerup/mayhem
 	name = "Orb of Mayhem"
