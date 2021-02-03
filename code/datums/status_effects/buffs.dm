@@ -464,7 +464,7 @@
 	icon_state = "wounded_soldier"
 
 /datum/status_effect/lightningorb
-	id = "Lightning orb"
+	id = "Lightning Orb"
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/lightningorb
 
@@ -479,7 +479,7 @@
 	to_chat(owner, "<span class='notice'>You slow down.</span>")
 
 /atom/movable/screen/alert/status_effect/lightningorb
-	name = "Lightning orb"
+	name = "Lightning Orb"
 	desc = "The speed surges through you!"
 	icon_state = "lightningorb"
 

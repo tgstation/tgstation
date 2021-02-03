@@ -107,7 +107,7 @@
 	lifetime = 30 SECONDS
 
 /obj/effect/powerup/speed
-	name = "Lightning orb"
+	name = "Lightning Orb"
 	desc = "You feel faster just looking at it."
 	icon_state = "electricity2"
 	pickup_sound = 'sound/magic/lightningshock.ogg'
