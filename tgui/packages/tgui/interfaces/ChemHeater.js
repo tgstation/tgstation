@@ -1,6 +1,7 @@
+import { resolveAsset } from '../assets';
 import { round, toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table, RoundGauge, Flex, Icon } from '../components';
+import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table, RoundGauge, Flex, Icon, TextArea } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
@@ -21,23 +22,34 @@ export const ChemHeater = (props, context) => {
     basicBufferVol,
     dispenseVolume,
     upgradeLevel,
+    tutorialMessage,
     beakerContents = [],
     activeReactions = [],
   } = data;
-  return (
+  return (  
     <Window
-      width={330}
-      height={350}
+      width={tutorialMessage ? 380 : 330}
+      height={tutorialMessage ? 780 : 350}
+      key={String(tutorialMessage)}
       resizable>
       <Window.Content scrollable>
         <Section
           title="Controls"
           buttons={(
-            <Button
-              icon={isActive ? 'power-off' : 'times'}
-              selected={isActive}
-              content={isActive ? 'On' : 'Off'}
-              onClick={() => act('power')} />
+            <Flex>
+              <Button
+                icon={"question"}
+                selected={tutorialMessage}
+                content={"Help"}
+                left={-2}
+                tooltip={"Guides you through a tutorial reaction!"}
+                onClick={() => act('help')} />
+              <Button
+                icon={isActive ? 'power-off' : 'times'}
+                selected={isActive}
+                content={isActive ? 'On' : 'Off'}
+                onClick={() => act('power')} />
+            </Flex>
           )}>
           <Table>
             <Table.Row>
@@ -258,6 +270,16 @@ export const ChemHeater = (props, context) => {
                 <TableRow />
               </Table>
             )}
+          </Section>
+        )}
+        {tutorialMessage && (
+          <Section 
+            title="Tutorial" 
+            style={{
+              'white-space': 'pre-wrap',
+            }}>
+              <img left={-1} mx={-1} src={resolveAsset("chem_help_advisor.gif")} width={"30px"} />
+              {tutorialMessage} 
           </Section>
         )}
         <Section
