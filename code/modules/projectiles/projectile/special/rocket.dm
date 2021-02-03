@@ -10,6 +10,7 @@
 	explosion(target, -1, 0, 2)
 	return BULLET_ACT_HIT
 
+/// PM9 HEDP rocket
 /obj/projectile/bullet/a84mm
 	name ="\improper HEDP rocket"
 	desc = "USE A WEEL GUN"
@@ -33,11 +34,12 @@
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return BULLET_ACT_HIT
 
+/// PM9 standard rocket
 /obj/projectile/bullet/a84mm_he
 	name ="\improper HE missile"
 	desc = "Boom."
 	icon_state = "missile"
-	damage = 30
+	damage = 50
 	ricochets_max = 0 //it's a MISSILE
 	embedding = null
 	shrapnel_type = null
@@ -45,11 +47,30 @@
 /obj/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=0)
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
-		explosion(target, 0, 1, 2, 4)
+		explosion(target, 0, 1, 2, 4, flame_range = 3)
 	else
-		explosion(target, 0, 0, 2, 4)
+		explosion(target, 0, 0, 2, 4, flame_range = 3)
 	return BULLET_ACT_HIT
 
+/// PM9 weak rocket
+/obj/projectile/bullet/a84mm_weak
+	name ="low-yield HE missile"
+	desc = "Boom, but less so."
+	icon_state = "missile"
+	damage = 30
+	ricochets_max = 0 //it's a MISSILE
+	embedding = null
+	shrapnel_type = null
+
+/obj/projectile/bullet/a84mm_weak/on_hit(atom/target, blocked=0)
+	..()
+	if(!isliving(target)) //if the target isn't alive, so is a wall or something
+		explosion(target, 0, 1, 2, 4, flame_range = 3)
+	else
+		explosion(target, 0, 0, 2, 4, flame_range = 3)
+	return BULLET_ACT_HIT
+
+/// Mech BRM-6 missile
 /obj/projectile/bullet/a84mm_br
 	name ="\improper HE missile"
 	desc = "Boom."

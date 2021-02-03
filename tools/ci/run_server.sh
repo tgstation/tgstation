@@ -2,7 +2,6 @@
 set -euo pipefail
 
 tools/deploy.sh ci_test
-rm ci_test/*.dll
 mkdir ci_test/config
 
 #test config

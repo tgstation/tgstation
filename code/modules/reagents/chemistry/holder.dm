@@ -139,7 +139,11 @@
 
 			iter_reagent.on_merge(data, amount)
 			if(reagtemp != cached_temp)
-				set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
+				var/new_heat_capacity = heat_capacity()
+				if(new_heat_capacity)
+					set_temperature(((old_heat_capacity * cached_temp) + (iter_reagent.specific_heat * amount * reagtemp)) / new_heat_capacity)
+				else
+					set_temperature(reagtemp)
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ADD_REAGENT, iter_reagent, amount, reagtemp, data, no_react)
 			if(!no_react)
@@ -160,7 +164,11 @@
 
 	update_total()
 	if(reagtemp != cached_temp)
-		set_temperature(((old_heat_capacity * cached_temp) + (new_reagent.specific_heat * amount * reagtemp)) / heat_capacity())
+		var/new_heat_capacity = heat_capacity()
+		if(new_heat_capacity)
+			set_temperature(((old_heat_capacity * cached_temp) + (new_reagent.specific_heat * amount * reagtemp)) / new_heat_capacity)
+		else
+			set_temperature(reagtemp)
 
 	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
 	if(!no_react)
@@ -557,7 +565,6 @@
  */
 /datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
-	var/list/cached_addictions = addiction_list
 	if(C)
 		expose_temperature(C.bodytemperature, 0.25)
 	var/need_mob_update = 0
@@ -582,18 +589,18 @@
 							R.overdosed = TRUE
 							need_mob_update += R.overdose_start(C)
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
-					var/is_addicted_to = cached_addictions && is_type_in_list(R, cached_addictions)
+					var/is_addicted_to = addiction_list && is_type_in_list(R, addiction_list)
 					if(R.addiction_threshold)
 						if(R.volume >= R.addiction_threshold && !is_addicted_to)
 							var/datum/reagent/new_reagent = new R.addiction_type()
-							LAZYADD(cached_addictions, new_reagent)
+							LAZYADD(addiction_list, new_reagent)
 							is_addicted_to = TRUE
 							log_game("[key_name(C)] has become addicted to [R.name] at [R.volume] units.")
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
 					var/datum/reagent/addiction_type = new R.addiction_type()
 					if(is_addicted_to)
-						for(var/addiction in cached_addictions)
+						for(var/addiction in addiction_list)
 							var/datum/reagent/A = addiction
 							if(istype(addiction_type, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
@@ -602,7 +609,7 @@
 	if(can_overdose)
 		if(addiction_tick == 6)
 			addiction_tick = 1
-			for(var/addiction in cached_addictions)
+			for(var/addiction in addiction_list)
 				var/datum/reagent/R = addiction
 				if(!C)
 					break
@@ -923,9 +930,10 @@
  * Returns what this holder's reagents taste like
  *
  * Arguments:
+ * * mob/living/taster - who is doing the tasting. Some mobs can pick up specific flavours.
  * * minimum_percent - the lower the minimum percent, the more sensitive the message is.
  */
-/datum/reagents/proc/generate_taste_message(minimum_percent=15,mob/living/taster)
+/datum/reagents/proc/generate_taste_message(mob/living/taster, minimum_percent)
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
 	if(minimum_percent <= 100)
@@ -977,6 +985,8 @@
  */
 /datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000)
 	var/heat_capacity = heat_capacity()
+	if(!heat_capacity)
+		return	// no div/0 please
 	set_temperature(clamp(chem_temp + (delta_energy / heat_capacity), min_temp, max_temp))
 
 /// Applies heat to this holder

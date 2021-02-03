@@ -9,6 +9,13 @@
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
+	var/emagged = FALSE
+
+/datum/computer_file/program/borg_monitor/run_emag()
+	if(emagged)
+		return FALSE
+	emagged = TRUE
+	return TRUE
 
 /datum/computer_file/program/borg_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -36,7 +43,7 @@
 			status = R.stat,
 			shell_discon = shell,
 			charge = R.cell ? round(R.cell.percent()) : null,
-			module = R.module ? "[R.module.name] Module" : "No Module Detected",
+			module = R.model ? "[R.model.name] Model" : "No Model Detected",
 			upgrades = upgrade,
 			ref = REF(R)
 		)
@@ -82,6 +89,8 @@
 /datum/computer_file/program/borg_monitor/proc/checkID()
 	var/obj/item/card/id/ID = computer.GetID()
 	if(!ID)
+		if(emagged)
+			return "STDERR:UNDF"
 		return FALSE
 	return ID.registered_name
 
@@ -96,6 +105,9 @@
 	available_on_syndinet = TRUE
 	transfer_access = null
 	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
+
+/datum/computer_file/program/borg_monitor/syndicate/run_emag()
+	return FALSE
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
 	if((get_turf(computer)).z != (get_turf(R)).z)

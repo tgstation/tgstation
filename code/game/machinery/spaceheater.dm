@@ -110,7 +110,7 @@
 			deltaTemperature *= -1
 		if(deltaTemperature)
 			env.temperature += deltaTemperature
-			air_update_turf()
+			air_update_turf(FALSE, FALSE)
 		cell.use(requiredEnergy / efficiency)
 	else
 		on = FALSE
@@ -184,7 +184,7 @@
 	if(cell)
 		data["powerLevel"] = round(cell.percent(), 1)
 	data["targetTemp"] = round(targetTemperature - T0C, 1)
-	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
+	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange, TCMB) - T0C
 	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
 
 	var/turf/L = get_turf(loc)

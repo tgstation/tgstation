@@ -389,6 +389,7 @@
 	req_access = null
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
+	pass_flags = PASSTABLE ///Can be placed and moved onto a table.
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
@@ -580,8 +581,3 @@
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
 
-/obj/structure/displaycase/forsale/insert_showpiece(obj/item/wack, mob/user)
-	if(!IS_EDIBLE(wack))
-		to_chat(user, "<span class='notice'>\The [src] smartly rejects [wack], as it only accepts food and drinks.</span>")
-		return TRUE
-	. = ..()

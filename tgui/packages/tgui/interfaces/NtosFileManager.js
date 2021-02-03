@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
@@ -99,7 +98,7 @@ const FileTable = props => {
                 onClick={() => onToggleSilence(file.name)} />
             )}
             {!file.undeletable && (
-              <Fragment>
+              <>
                 <Button.Confirm
                   icon="trash"
                   confirmIcon="times"
@@ -119,7 +118,7 @@ const FileTable = props => {
                       onClick={() => onUpload(file.name)} />
                   )
                 )}
-              </Fragment>
+              </>
             )}
           </Table.Cell>
         </Table.Row>

@@ -106,7 +106,7 @@
 	var/health_doll_icon ///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 
 	var/last_bumped = 0
-	var/unique_name = 0 ///if a mob's name should be appended with an id when created e.g. Mob (666)
+	var/unique_name = FALSE ///if a mob's name should be appended with an id when created e.g. Mob (666)
 	var/numba = 0 ///the id a mob gets when it's created
 
 	var/list/butcher_results = null ///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
@@ -132,8 +132,6 @@
 	var/derpspeech = 0
 
 	var/list/implants = null
-
-	var/datum/riding/riding_datum
 
 	var/last_words	///used for database logging
 

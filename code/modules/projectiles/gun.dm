@@ -322,6 +322,8 @@
 	if(user)
 		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
 
+	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
+
 	add_fingerprint(user)
 
 	if(semicd)
@@ -333,6 +335,7 @@
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
 	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
+		user.blind_eyes(1)
 		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 

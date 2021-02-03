@@ -449,3 +449,10 @@
 	author = "Nanotrasen"
 	title = "Chemical Factories Without Narcotics"
 	page_link = "Guide_to_plumbing"
+
+/obj/item/book/manual/wiki/cytology
+	name = "Unethically Grown Organics"
+	icon_state ="cytologybook"
+	author = "Kryson"
+	title = "Unethically Grown Organics"
+	page_link = "Guide_to_cytology"

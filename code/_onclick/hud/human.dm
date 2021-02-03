@@ -55,30 +55,21 @@
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
 
-	var/widescreen_layout = FALSE
-	if(owner.client?.prefs?.widescreenpref)
-		widescreen_layout = TRUE
-
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
 
 	using = new/atom/movable/screen/language_menu
 	using.icon = ui_style
-	if(!widescreen_layout)
-		using.screen_loc = UI_BOXLANG
 	using.hud = src
 	static_inventory += using
 
 	using = new/atom/movable/screen/skills
 	using.icon = ui_style
-	if(!widescreen_layout)
-		using.screen_loc = UI_BOXLANG
+	using.hud = src
 	static_inventory += using
 
 	using = new /atom/movable/screen/area_creator
 	using.icon = ui_style
-	if(!widescreen_layout)
-		using.screen_loc = UI_BOXAREA
 	using.hud = src
 	static_inventory += using
 
@@ -318,6 +309,9 @@
 	zone_select.hud = src
 	zone_select.update_icon()
 	static_inventory += zone_select
+
+	combo_display = new /atom/movable/screen/combo()
+	infodisplay += combo_display
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)

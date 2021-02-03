@@ -2,6 +2,7 @@
 	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
 	name = "\improper Durand"
 	icon_state = "durand"
+	base_icon_state = "durand"
 	movedelay = 4
 	dir_in = 1 //Facing North.
 	max_integrity = 400
@@ -183,7 +184,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/proc/activate(datum/source, mob/owner, list/signal_args)
 	SIGNAL_HANDLER
 	currentuser = owner
-	if(!chassis?.occupants)
+	if(!LAZYLEN(chassis?.occupants))
 		return
 	if(switching && !signal_args[1])
 		return

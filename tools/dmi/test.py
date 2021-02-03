@@ -19,7 +19,7 @@ def _self_test():
                     raise
                 count += 1
 
-    print(f"Successfully parsed {count} dmi files")
+    print(f"{os.path.relpath(__file__)}: successfully parsed {count} .dmi files")
 
 
 def _usage():

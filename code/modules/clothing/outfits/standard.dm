@@ -392,6 +392,8 @@
 	id = /obj/item/card/id/ert/deathsquad
 	ears = /obj/item/radio/headset/headset_cent/alt
 
+	skillchips = list(/obj/item/skillchip/disk_verifier)
+
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/ammo_box/a357=1,\
 		/obj/item/storage/firstaid/regular=1,\

@@ -14,7 +14,11 @@
 /obj/structure/emergency_shield/Initialize()
 	. = ..()
 	setDir(pick(GLOB.cardinals))
-	air_update_turf(1)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/emergency_shield/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 
 /obj/structure/emergency_shield/Move()
 	var/turf/T = loc
@@ -96,7 +100,7 @@
 */
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	density = !density
-	air_update_turf(1)
+	air_update_turf(TRUE, !density)
 	invisibility = initial(invisibility)
 	if(!density)
 		invisibility = INVISIBILITY_OBSERVER

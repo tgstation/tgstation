@@ -227,6 +227,14 @@
 	credit_cost = CARGO_CRATE_VALUE * 30
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
+/datum/map_template/shuttle/emergency/monastery
+	suffix = "monastery"
+	name = "Grand Corporate Monastery"
+	description = "Originally built for a public station, this grand edifice to religion, due to budget cuts, is now available as an escape shuttle for the right... donation. Due to its large size and callous owners, this shuttle may cause collateral damage."
+	admin_notes = "WARNING: This shuttle WILL destroy a fourth of the station, likely picking up a lot of objects with it."
+	credit_cost = CARGO_CRATE_VALUE * 250
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 5)
+
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
 	name = "Luxury Shuttle"
@@ -234,6 +242,16 @@
 	extra_desc = "This shuttle costs 500 credits to board."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = CARGO_CRATE_VALUE * 20
+
+/datum/map_template/shuttle/emergency/medisim
+	suffix = "medisim"
+	name = "Medieval Reality Simulation Dome"
+	description = "A state of the art simulation dome, loaded onto your shuttle! Watch and laugh at how petty humanity used to be before it reached the stars. Guaranteed to be at least 40% historically accurate."
+	admin_notes = "Ghosts can spawn in and fight as knights or archers. The CTF auto restarts, so no admin intervention necessary."
+	credit_cost = 20000
+
+/datum/map_template/shuttle/emergency/medisim/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM]
 
 /datum/map_template/shuttle/emergency/discoinferno
 	suffix = "discoinferno"

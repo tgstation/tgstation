@@ -56,3 +56,44 @@
 			forgedseal = C.crayon_color
 			to_chat(user, "<span class='notice'>You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?</span>")
 			update_icon()
+
+/obj/item/inspector
+	name = "in-spect scanner"
+	desc = "Cental commmand issued inspection device. Does company grade station inspection protocols when activated, and prints encripted sheets of paper regarding the mainenance of the station. Hard to Replace."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "inspector"
+	worn_icon_state = "salestagger"
+	inhand_icon_state = "electronic"
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_range = 1
+	throw_speed = 1
+
+/obj/item/inspector/attack_self(mob/user)
+	. = ..()
+	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
+		print_report()
+
+///Prints out a report for bounty purposes, and plays a short audio blip.
+/obj/item/inspector/proc/print_report()
+	// Create our report
+	var/obj/item/report/slip = new(get_turf(src))
+	slip.scanned_area = get_area(src)
+	playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
+
+/obj/item/report
+	name = "encrypted station inspection"
+	desc = "Contains detailed information about the station's current status, too bad you can't really read it."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "slipfull"
+	///What area the inspector scanned when the report was made. Used to verify the security bounty.
+	var/area/scanned_area
+
+/obj/item/report/examine(mob/user)
+	. = ..()
+	if(scanned_area?.name)
+		. += "<span class='notice'>\The [src] contains data on [scanned_area.name].</span>"
+	else if(scanned_area)
+		. += "<span class='notice'>\The [src] contains data on a vague area on station, you should throw it away.</span>"
+	else
+		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"

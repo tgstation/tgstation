@@ -110,7 +110,7 @@
 		return
 
 	var/mob/living/carbon/possible_throwable = user.pulling
-	if(!possible_throwable.getorganslot(ORGAN_SLOT_TAIL) && !ismonkey(possible_throwable))
+	if(!possible_throwable.getorganslot(ORGAN_SLOT_TAIL))
 		return
 
 	if(ishuman(possible_throwable))
@@ -151,7 +151,13 @@
 	yeeted_person.emote("scream")
 	swing_loop(the_hulk, yeeted_person, 0, original_dir)
 
-/// For each step of the swinging, with the delay getting shorter along the way. Checks to see we still have them in our grasp at each step.
+/**
+ * Does the animations for the hulk swing loop
+ *
+ * This code is based in part on the wrestling swing code ported from goon, see [code/datums/martial/wrestling.dm]
+ * credit to: cogwerks, pistoleer, spyguy, angriestibm, marquesas, and stuntwaffle.
+ * For each step of the swinging, with the delay getting shorter along the way. Checks to see we still have them in our grasp at each step.
+ */
 /datum/mutation/human/hulk/proc/swing_loop(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, step, original_dir)
 	if(!yeeted_person || !the_hulk || the_hulk.incapacitated())
 		return

@@ -7,7 +7,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-
+	
 	var/destination_z
 	var/destination_x
 	var/destination_y
@@ -18,7 +18,6 @@
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	bullet_bounce_sound = null
-
 	vis_flags = VIS_INHERIT_ID	//when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 /turf/open/space/basic/New()	//Do not convert to Initialize
@@ -55,7 +54,7 @@
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		SSair.add_to_active(src)
+		SSair.add_to_active(src, TRUE)
 
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()

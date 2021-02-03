@@ -135,24 +135,6 @@
 		death(FALSE)
 		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
-/mob/living/carbon/monkey/verb/suicide()
-	set hidden = TRUE
-	if(!canSuicide())
-		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
-	if(!canSuicide())
-		return
-	if(confirm == "Yes")
-		set_suicide(TRUE)
-		visible_message("<span class='danger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>")
-
-		suicide_log()
-
-		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		death(FALSE)
-		ghostize(FALSE)	// Disallows reentering body and disassociates mind
-
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = TRUE
 	if(!canSuicide())

@@ -59,12 +59,13 @@
 	required_distance = 0
 
 /datum/ai_behavior/monkey_equip/ground/perform(delta_time, datum/ai_controller/controller)
+	. = ..()
 	equip_item(controller)
 
 /datum/ai_behavior/monkey_equip/pickpocket
 
 /datum/ai_behavior/monkey_equip/pickpocket/perform(delta_time, datum/ai_controller/controller)
-
+	. = ..()
 	if(controller.blackboard[BB_MONKEY_PICKPOCKETING]) //We are pickpocketing, don't do ANYTHING!!!!
 		return
 	INVOKE_ASYNC(src, .proc/attempt_pickpocket, controller)
@@ -156,6 +157,8 @@
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
+	var/mob/living/living_pawn = controller.pawn
+	walk(living_pawn, 0)
 	controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = null
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
@@ -176,8 +179,7 @@
 	if(weapon)
 		weapon.melee_attack_chain(living_pawn, target)
 	else
-		target.attack_paw(living_pawn)
-
+		living_pawn.UnarmedAttack(target)
 	// no de-aggro
 	if(controller.blackboard[BB_MONKEY_AGRESSIVE])
 		return

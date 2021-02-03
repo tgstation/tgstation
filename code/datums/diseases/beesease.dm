@@ -7,7 +7,7 @@
 	cure_text = "Sugar"
 	cures = list(/datum/reagent/consumable/sugar)
 	agent = "Apidae Infection"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "If left untreated subject will regurgitate bees."
 	severity = DISEASE_SEVERITY_MEDIUM
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD //bees nesting in corpses

@@ -97,7 +97,6 @@
 	icon_state = "nucgun"
 	inhand_icon_state = "nucgun"
 	charge_delay = 10
-	pin = null
 	can_charge = FALSE
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)

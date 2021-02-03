@@ -69,7 +69,7 @@
  */
 /obj/item/reagent_containers/food/drinks/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	if(isGlass && !custom_materials)
-		set_custom_materials(list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5))
+		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)

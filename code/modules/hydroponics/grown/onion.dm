@@ -46,7 +46,7 @@
 	icon_state = "onion_red"
 	wine_power = 60
 
-/obj/item/food/grown/onion/MakeProcessable()
+/obj/item/food/grown/onion/red/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15)
 
 /obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)

@@ -126,7 +126,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
-	connected.setDir(dir)
+	if (connected)
+		connected.setDir(dir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
@@ -181,7 +182,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			icon_state = "morgue1"
 		else
 			icon_state = "morgue2" // Dead, brainded mob.
-			var/list/compiled = GetAllContents(/mob/living) // Search for mobs in all contents.
+			var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
 			if(!length(compiled)) // No mobs?
 				icon_state = "morgue3"
 				return
@@ -295,7 +296,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
-	for(var/i_scream in GetAllContents(/mob/living))
+	for(var/i_scream in get_all_contents_type(/mob/living))
 		var/obj/item/food/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)

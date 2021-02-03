@@ -156,6 +156,9 @@
 /obj/machinery/computer/pod/old/mass_driver_controller/trash
 	id = MASSDRIVER_DISPOSALS
 
+/obj/machinery/computer/pod/old/mass_driver_controller/shack
+	id = MASSDRIVER_SHACK
+
 /obj/machinery/computer/pod/old/syndicate
 	name = "\improper ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."

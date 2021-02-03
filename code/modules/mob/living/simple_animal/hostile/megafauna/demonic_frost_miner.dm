@@ -256,7 +256,7 @@ Difficulty: Extremely Hard
 	for(var/mob/living/L in viewers(src))
 		shake_camera(L, 3, 2)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	setMovetype(movement_type | FLYING)
+	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
 	enraging = FALSE
 	adjustHealth(-maxHealth)
 
@@ -315,6 +315,10 @@ Difficulty: Extremely Hard
 	var/change_turf = /turf/open/floor/plating/ice/icemoon
 	var/duration = 6 SECONDS
 
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
+
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
@@ -333,8 +337,9 @@ Difficulty: Extremely Hard
 	. = ..()
 	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
 
-/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/step_action()
-	. = ..()
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/proc/on_step()
+	SIGNAL_HANDLER
+
 	var/turf/T = get_turf(loc)
 	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
 		return

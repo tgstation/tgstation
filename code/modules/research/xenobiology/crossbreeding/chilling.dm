@@ -111,7 +111,7 @@ Chilling extracts:
 			G.gases[/datum/gas/plasma][MOLES] = 0
 			filtered = TRUE
 			G.garbage_collect()
-			T.air_update_turf()
+			T.air_update_turf(FALSE, FALSE)
 	if(filtered)
 		user.visible_message("<span class='notice'>Cracks spread throughout [src], and some air is sucked in!</span>")
 	else

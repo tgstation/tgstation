@@ -87,7 +87,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	QDEL_IN(WEAKREF(src), 8 MINUTES) //Self-destruct after 8 min
 	SSeconomy.market_crashing = TRUE
 
 

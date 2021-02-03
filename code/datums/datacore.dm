@@ -140,7 +140,16 @@
 		foundrecord.fields["rank"] = assignment
 
 /datum/datacore/proc/get_manifest()
-	var/list/manifest_out = list()
+	var/list/manifest_out = list(
+		"Command",
+		"Security",
+		"Engineering",
+		"Medical",
+		"Science",
+		"Supply",
+		"Service",
+		"Silicon"
+	)
 	var/list/departments = list(
 		"Command" = GLOB.command_positions,
 		"Security" = GLOB.security_positions,
@@ -173,6 +182,9 @@
 				"name" = name,
 				"rank" = rank
 			))
+	for (var/department in departments)
+		if (!manifest_out[department])
+			manifest_out -= department
 	return manifest_out
 
 /datum/datacore/proc/get_manifest_html(monochrome = FALSE)

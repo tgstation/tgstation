@@ -93,6 +93,9 @@
 		if(!mob_gender)
 			mob_gender = pick(MALE, FEMALE)
 		M.gender = mob_gender
+		if(ishuman(M))
+			var/mob/living/carbon/human/hoomie = M
+			hoomie.body_type = mob_gender
 	if(faction)
 		M.faction = list(faction)
 	if(disease)
@@ -174,6 +177,8 @@
 
 	var/hairstyle
 	var/facial_hairstyle
+	var/haircolor
+	var/facial_haircolor
 	var/skin_tone
 
 /obj/effect/mob_spawn/human/Initialize()
@@ -201,6 +206,14 @@
 		H.facial_hairstyle = facial_hairstyle
 	else
 		H.facial_hairstyle = random_facial_hairstyle(H.gender)
+	if(haircolor)
+		H.hair_color = haircolor
+	else
+		H.hair_color = random_short_color()
+	if(facial_haircolor)
+		H.facial_hair_color = facial_haircolor
+	else
+		H.facial_hair_color = random_short_color()
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else

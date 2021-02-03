@@ -1048,7 +1048,8 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/screwdriver = 1)
+		/obj/item/screwdriver = 1,
+		/obj/item/wrench = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/material
