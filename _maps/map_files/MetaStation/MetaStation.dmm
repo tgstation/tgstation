@@ -57035,7 +57035,9 @@
 /area/science/research)
 "flc" = (
 /obj/item/book/manual/nuclear,
-/turf/open/floor/plating/foam,
+/turf/open/floor/plating/foam{
+	initial_gas_mix = ""TEMP=2.7""
+	},
 /area/space/nearstation)
 "flh" = (
 /obj/structure/cable,
@@ -64107,7 +64109,9 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "kAA" = (
-/turf/open/floor/plating/foam,
+/turf/open/floor/plating/foam{
+	initial_gas_mix = ""TEMP=2.7""
+	},
 /area/space/nearstation)
 "kBb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
@@ -65683,7 +65687,9 @@
 /area/space/nearstation)
 "lMM" = (
 /obj/structure/grille,
-/turf/open/floor/plating/foam,
+/turf/open/floor/plating/foam{
+	initial_gas_mix = ""TEMP=2.7""
+	},
 /area/space/nearstation)
 "lNj" = (
 /obj/structure/disposalpipe/segment,
@@ -73280,6 +73286,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
+"rdu" = (
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "rdB" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -74369,6 +74379,7 @@
 /area/science/xenobiology)
 "rUr" = (
 /obj/structure/frame/machine,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "rUu" = (
@@ -93526,7 +93537,7 @@ aaa
 blx
 lMJ
 anS
-anS
+sik
 lMJ
 lMJ
 lMJ
@@ -93784,7 +93795,7 @@ lMJ
 aaa
 lMJ
 anS
-anS
+rdu
 aaa
 blx
 aaa
