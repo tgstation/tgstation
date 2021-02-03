@@ -27,7 +27,7 @@
 	trigger(AM)
 
 /obj/effect/powerup/proc/trigger(mob/living/M)
-	if(M.stat == DEAD)
+	if(!istype(M) || M.stat == DEAD)
 		return FALSE
 	if(respawning)
 		if(!COOLDOWN_FINISHED(src, respawn_cooldown))
@@ -72,8 +72,7 @@
 
 /obj/effect/powerup/ammo
 	name = "ammo pickup"
-	desc = "You like revenge, right? Everybody likes revenge! Well, \
-		let's go get some!"
+	desc = "You like revenge, right? Everybody likes revenge! Well, let's go get some!"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "ammobox"
 	respawning = TRUE
