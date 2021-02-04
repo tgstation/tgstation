@@ -61,8 +61,8 @@
 	return TRUE
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/kitchenspike/attack_hand(mob/user)
-	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
+/obj/structure/kitchenspike/attack_hand(mob/living/user)
+	if(VIABLE_MOB_CHECK(user.pulling) && user.combat_mode && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks

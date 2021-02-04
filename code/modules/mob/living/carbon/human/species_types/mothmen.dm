@@ -16,7 +16,7 @@
 	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
-	wings_icon = "Megamoth"
+	wings_icons = list("Megamoth", "Mothra")
 	has_innate_wings = TRUE
 	payday_modifier = 0.75
 

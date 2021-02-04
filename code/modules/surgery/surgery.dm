@@ -93,14 +93,14 @@
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
 
-/datum/surgery/proc/next_step(mob/user, intent)
+/datum/surgery/proc/next_step(mob/living/user, modifiers)
 	if(location != user.zone_selected)
 		return FALSE
 	if(step_in_progress)
 		return TRUE
 
 	var/try_to_fail = FALSE
-	if(intent == INTENT_DISARM)
+	if(modifiers && modifiers["right"])
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/S = get_surgery_step()

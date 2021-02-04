@@ -122,12 +122,12 @@
 				mob_swap = TRUE
 		else
 			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
+			if(M.pulledby == src && !too_strong)
 				mob_swap = TRUE
 			else if(
 				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
-				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || M.a_intent == INTENT_HELP) &&\
-				(HAS_TRAIT(src, TRAIT_RESTRAINED) || a_intent == INTENT_HELP)
+				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !combat_mode) &&\
+				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
 			)
 				mob_swap = TRUE
 		if(mob_swap)
@@ -168,8 +168,10 @@
 		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
 			return TRUE
 	//If they're a human, and they're not in help intent, block pushing
-	if(ishuman(M) && (M.a_intent != INTENT_HELP))
-		return TRUE
+	if(ishuman(M))
+		var/mob/living/carbon/human/human = M
+		if(human.combat_mode)
+			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
@@ -300,6 +302,7 @@
 			M.LAssailant = usr
 		if(isliving(M))
 			var/mob/living/L = M
+
 			SEND_SIGNAL(M, COMSIG_LIVING_GET_PULLED, src)
 			//Share diseases that are spread by touch
 			for(var/thing in diseases)
@@ -362,7 +365,7 @@
 
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
-	else
+	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
 		stop_pulling()
 
 /mob/living/stop_pulling()
@@ -1900,7 +1903,7 @@
  * It is also used to process martial art attacks by nonhumans, even against humans
  * Human vs human attacks are handled in species code right now.
  */
-/mob/living/proc/apply_martial_art(mob/living/target)
+/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
 		return FALSE
 	if(ishuman(target) && ishuman(src)) //Human vs human are handled in species code
@@ -1908,15 +1911,16 @@
 	var/datum/martial_art/style = mind?.martial_art
 	var/attack_result = FALSE
 	if (style)
-		switch (a_intent)
-			if (INTENT_GRAB)
-				attack_result = style.grab_act(src, target)
-			if (INTENT_HARM)
-				if (HAS_TRAIT(src, TRAIT_PACIFISM))
-					return FALSE
-				attack_result = style.harm_act(src, target)
-			if (INTENT_DISARM)
-				attack_result = style.disarm_act(src, target)
-			if (INTENT_HELP)
-				attack_result = style.help_act(src, target)
+		if (is_grab)
+			attack_result = style.grab_act(src, target)
+		if(modifiers && modifiers["right"])
+			attack_result = style.disarm_act(src, target)
+		if(combat_mode)
+			if (HAS_TRAIT(src, TRAIT_PACIFISM))
+				return FALSE
+			attack_result = style.harm_act(src, target)
+		else
+			attack_result = style.help_act(src, target)
+
+
 	return attack_result

@@ -141,10 +141,11 @@
 	using.hud = src
 	static_inventory += using
 
-//Intent
-	action_intent = new /atom/movable/screen/act_intent/robot()
-	action_intent.icon_state = mymob.a_intent
+	//Combat Mode
+	action_intent = new /atom/movable/screen/combattoggle/robot()
 	action_intent.hud = src
+	action_intent.icon = ui_style
+	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
 
 //Health

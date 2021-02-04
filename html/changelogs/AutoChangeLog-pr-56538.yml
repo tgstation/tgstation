@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - code_imp: "simple animals no longer reset their icon file on death"

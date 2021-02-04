@@ -1,0 +1,6 @@
+author: "maxymax13"
+delete-after: True
+changes: 
+  - imageadd: "Emergency survival boxes now have an unique blue sprite and description to tell them apart from regular boxes."
+  - imageadd: "Added craftable normal/extended emergency oxygen tank boxes to put your emergency oxygen tank collection inside."
+  - imageadd: "Emergency first aid kits now look visually consistent with full first aid kits."
