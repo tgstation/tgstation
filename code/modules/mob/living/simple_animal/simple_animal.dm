@@ -529,7 +529,6 @@
 	. = ..()
 	if(!.)
 		return
-	icon = initial(icon)
 	icon_state = icon_living
 	density = initial(density)
 	if(is_flying_animal)
