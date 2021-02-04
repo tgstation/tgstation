@@ -115,6 +115,10 @@
 
 // Ordinary survival box
 /obj/item/storage/box/survival
+	name = "survival box"
+	desc = "A box with the bare essentials of ensuring the survival of you and others."
+	icon_state = "internals"
+	illustration = "emergencytank"
 	var/mask_type = /obj/item/clothing/mask/breath
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
@@ -147,6 +151,9 @@
 
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
+	name = "extended-capacity survival box"
+	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
+	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
@@ -154,10 +161,13 @@
 	new /obj/item/radio/off(src)
 
 // Syndie survival box
-/obj/item/storage/box/survival/syndie
+/obj/item/storage/box/survival/syndie //why is this its own thing if it's just the engi box with a syndie mask and medipen?
+	name = "extended-capacity survival box"
+	desc = "A box with the bare essentials of ensuring the survival of you and others. This one is labelled to contain an extended-capacity tank."
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type = null
+	illustration = "extendedtank"
 
 // Security survival box
 /obj/item/storage/box/survival/security
@@ -1317,6 +1327,26 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
+		
+/obj/item/storage/box/emergencytank
+	name = "emergency oxygen tank box"
+	desc = "A box of emergency oxygen tanks."
+	illustration = "emergencytank"
+
+/obj/item/storage/box/emergencytank/PopulateContents()
+	..()
+	for(var/i in 1 to 7)
+		new /obj/item/tank/internals/emergency_oxygen(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
+		
+/obj/item/storage/box/engitank
+	name = "extended-capacity emergency oxygen tank box"
+	desc = "A box of extended-capacity emergency oxygen tanks."
+	illustration = "extendedtank"
+
+/obj/item/storage/box/engitank/PopulateContents()
+	..()
+	for(var/i in 1 to 7)
+		new /obj/item/tank/internals/emergency_oxygen/engi(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
 
 /obj/item/storage/box/stabilized //every single stabilized extract from xenobiology
 	name = "box of stabilized extracts"
