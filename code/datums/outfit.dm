@@ -191,8 +191,8 @@
 		H.equip_to_slot_or_del(new id(H),ITEM_SLOT_ID, TRUE)
 	if(id_trim && H.wear_id)
 		var/obj/item/card/id/id_card = H.wear_id
-		if(istype(id_card))
-			SSid_access.apply_trim_to_card(id_card, id_trim)
+		if(istype(id_card) && !SSid_access.apply_trim_to_card(id_card, id_trim))
+			WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),ITEM_SLOT_SUITSTORE, TRUE)
 

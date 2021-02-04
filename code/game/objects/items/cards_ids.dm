@@ -362,9 +362,6 @@
 	var/blank = !registered_name
 	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
-/datum/id_trim/away
-	access = list(ACCESS_AWAY_GENERAL)
-
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
@@ -372,16 +369,10 @@
 	icon_state = "retro"
 	registered_age = null
 
-/datum/id_trim/away/hotel
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
-
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
 	timberpoes_trim = /datum/id_trim/away/hotel
-
-/datum/id_trim/away/hotel/security
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT, ACCESS_AWAY_SEC)
 
 /obj/item/card/id/away/hotel/securty
 	name = "Officer ID"
@@ -391,36 +382,20 @@
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
 
-/datum/id_trim/away/old/sec
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_SEC)
-	assignment = "Charlie Station Security Officer"
-
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
 	timberpoes_trim = /datum/id_trim/away/old/sec
-
-/datum/id_trim/away/old/sci
-	access = list(ACCESS_AWAY_GENERAL)
-	assignment = "Charlie Station Scientist"
 
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
 	timberpoes_trim = /datum/id_trim/away/old/sci
 
-/datum/id_trim/away/old/end
-	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
-	assignment = "Charlie Station Engineer"
-
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	// TIMBERTODO - Implement
-	// timberpoes_trim = /datum/id_trim/away/old/eng
-
-/datum/id_trim/away/old/apc
-	access = list(ACCESS_ENGINE_EQUIP)
+	timberpoes_trim = /datum/id_trim/away/old/eng
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
@@ -474,6 +449,11 @@
 	/// Cached icon that has been built for this card.
 	var/icon/cached_flat_icon
 
+	/// If this is set, will manually override the icon file for the trim. Intended for admins to VV edit.
+	var/trim_icon_override
+	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit.
+	var/trim_state_override
+
 /// If no cached_flat_icon exists, this proc creates it. This proc then returns the cached_flat_icon.
 /obj/item/card/id/advanced/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
@@ -487,14 +467,17 @@
 	. = ..()
 
 	cached_flat_icon = null
+
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, assigned_icon_state)
 
+	var/trim_icon_file = trim_icon_override ? trim_icon_override : timberpoes_trim?.trim_icon
+	var/trim_icon_state = trim_state_override ? trim_state_override : timberpoes_trim?.trim_state
 
-	if(!(timberpoes_trim?.trim_state))
+	if(!trim_icon_file || !trim_icon_state)
 		return
 
-	. += mutable_appearance(timberpoes_trim.trim_icon, timberpoes_trim.trim_state)
+	. += mutable_appearance(trim_icon_file, trim_icon_state)
 
 /obj/item/card/id/advanced/update_label()
 	. = ..()
@@ -598,30 +581,26 @@
 	registered_name = "Syndicate"
 	icon_state = "card_black"
 	registered_age = null
-	// TIMBERTODO - Implement
-	// timberpoes_trim = /datum/id_trim/syndicom
+	timberpoes_trim = /datum/id_trim/syndicom
 
 /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	// TIMBERTODO - Implement
-	// timberpoes_trim = /datum/id_trim/syndicom/crew
+	timberpoes_trim = /datum/id_trim/syndicom/crew
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	name = "syndicate captain ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	// TIMBERTODO - Implement
-	// timberpoes_trim = /datum/id_trim/syndicom/captain
+	timberpoes_trim = /datum/id_trim/syndicom/captain
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
-	// TIMBERTODO - Implement
-	// timberpoes_trim = /datum/id_trim/admin
+	timberpoes_trim = /datum/id_trim/admin
 
 /obj/item/card/id/advanced/debug/Initialize()
 	. = ..()
@@ -683,5 +662,12 @@
 
 /obj/item/card/id/advanced/mining
 	name = "mining ID"
-	// TIMBERTODO - Implement
-	// timberpoes_trim = /datum/id_trim/job/miner/spare
+	timberpoes_trim = /datum/id_trim/job/shaft_miner/spare
+
+/obj/item/card/id/advanced/highlander
+	name = "highlander ID"
+	registered_name = "Highlander"
+	desc = "There can be only one!"
+	icon_state = "card_black"
+	assigned_icon_state = "assigned_syndicate"
+	timberpoes_trim = /datum/id_trim/highlander
