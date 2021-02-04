@@ -182,9 +182,9 @@
 /area/ruin/powered)
 "rC" = (
 /obj/structure/closet/secure_closet/freezer,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,
 /obj/item/reagent_containers/food/condiment/pack/ketchup,

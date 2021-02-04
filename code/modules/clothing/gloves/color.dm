@@ -255,7 +255,6 @@
 	inhand_icon_state = "latex"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
-	clothing_traits = list(TRAIT_QUICK_CARRY)
 	transfer_prints = TRUE
 	resistance_flags = NONE
 
@@ -264,7 +263,6 @@
 	desc = "Pricy sterile gloves that are thicker than latex. Transfers intimate paramedic knowledge into the user via nanochips."
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
-	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/engineering

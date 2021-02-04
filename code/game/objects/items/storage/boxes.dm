@@ -57,7 +57,7 @@
 /obj/item/storage/box/attack_self(mob/user)
 	..()
 
-	if(!foldable)
+	if(!foldable || (flags_1 & HOLOGRAM_1))
 		return
 	if(contents.len)
 		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
@@ -1248,6 +1248,29 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
+
+/obj/item/storage/box/skillchips/quick
+	name = "box of Ant Hauler skill chips"
+	desc = "Contains Ant Hauler skill chips."
+
+/obj/item/storage/box/skillchips/quick/PopulateContents()
+	new/obj/item/skillchip/quickcarry(src)
+	new/obj/item/skillchip/quickcarry(src)
+	new/obj/item/skillchip/quickcarry(src)
+	new/obj/item/skillchip/quickcarry(src)
+	new/obj/item/skillchip/quickcarry(src)
+	new/obj/item/skillchip/quickcarry(src)
+	new/obj/item/skillchip/quickcarry(src)
+
+/obj/item/storage/box/skillchips/quicker
+	name = "box of RES-Q skill chips"
+	desc = "Contains RES-Q skill chips."
+
+/obj/item/storage/box/skillchips/quicker/PopulateContents()
+	new/obj/item/skillchip/quickercarry(src)
+	new/obj/item/skillchip/quickercarry(src)
+	new/obj/item/skillchip/quickercarry(src)
+	new/obj/item/skillchip/quickercarry(src)
 
 /obj/item/storage/box/swab
 	name = "box of microbiological swabs"

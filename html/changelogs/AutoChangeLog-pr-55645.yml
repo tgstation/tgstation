@@ -1,5 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - refactor: "Nanotrasen overhauled much of the holodecks programming so that it didnt have to keep physical copies of the simulations anymore."
-  - code_imp: "holodeck uses map templates instead of area_copy"

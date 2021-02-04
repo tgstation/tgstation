@@ -87,8 +87,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/part/get_status()
 	return main_part?.get_status()
 
-/obj/machinery/gravity_generator/part/attack_hand(mob/user)
-	return main_part.attack_hand(user)
+/obj/machinery/gravity_generator/part/attack_hand(mob/user, modifiers)
+	return main_part.attack_hand(user, modifiers)
 
 /obj/machinery/gravity_generator/part/set_broken()
 	..()

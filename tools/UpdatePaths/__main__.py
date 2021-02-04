@@ -140,7 +140,7 @@ def update_map(map_filepath, updates, verbose=False):
     dmm_data = DMM.from_file(map_filepath)
     for update_string in updates:
         update_path(dmm_data, update_string, verbose)
-    dmm_data.to_file(map_filepath, True)
+    dmm_data.to_file(map_filepath)
 
 
 def update_all_maps(map_directory, updates, verbose=False):

@@ -1570,40 +1570,6 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
 
-/datum/supply_pack/service/carpet_neon
-	name = "Simple Neon Carpet Crate"
-	desc = "Simple knitted carpets with phosphorescent lining. Contains 120 tiles each of 13 color variants."
-	cost = CARGO_CRATE_VALUE * 15
-	contains = list(
-		/obj/item/stack/tile/carpet/emissive/neon/simple/white/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/white/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/red/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/red/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/orange/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/orange/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/green/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/green/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/teal/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/teal/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/blue/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/blue/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/purple/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/purple/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/violet/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/violet/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/pink/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/pink/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/black/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/black/sixty,
-	)
-	crate_name = "neon carpet crate"
-
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
@@ -1709,7 +1675,7 @@
 					/obj/item/food/meat/rawbacon,
 					/obj/item/food/meat/slab/penguin,
 					/obj/item/food/spiderleg,
-					/obj/item/food/carpmeat,
+					/obj/item/food/fishmeat/carp,
 					/obj/item/food/meat/slab/human)
 	crate_name = "food crate"
 

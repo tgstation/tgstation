@@ -48,7 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_RIGID], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -85,7 +85,7 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
-/obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
+/obj/machinery/autolathe/attackby(obj/item/O, mob/living/user, params)
 	if (busy)
 		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return TRUE
@@ -101,7 +101,7 @@
 		wires.interact(user)
 		return TRUE
 
-	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+	if(user.combat_mode) //so we can hit the machine
 		return ..()
 
 	if(machine_stat)
