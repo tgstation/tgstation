@@ -197,7 +197,6 @@
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
-	UnregisterSignal(src, COMSIG_ATOM_UPDATE_ICON)
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
@@ -229,7 +228,6 @@
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_UPDATE_ICON, .proc/check_updates)
 	if(!mapload)
 		return
 	has_electronics = APC_ELECTRONICS_SECURED
@@ -294,10 +292,54 @@
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-	. = ..()
-	if(!.)
+	var/update = check_updates() 		//returns 0 if no need to update icons.
+						// 1 if we need to update the icon_state
+						// 2 if we need to update the overlays
+	if(!update)
 		icon_update_needed = FALSE
 		return
+
+	if(update & 1) // Updating the icon state
+		if(update_state & UPSTATE_ALLGOOD)
+			icon_state = "apc0"
+		else if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
+			var/basestate = "apc[ cell ? "2" : "1" ]"
+			if(update_state & UPSTATE_OPENED1)
+				if(update_state & (UPSTATE_MAINT|UPSTATE_BROKE))
+					icon_state = "apcmaint" //disabled APC cannot hold cell
+				else
+					icon_state = basestate
+			else if(update_state & UPSTATE_OPENED2)
+				if (update_state & UPSTATE_BROKE || malfhack)
+					icon_state = "[basestate]-b-nocover"
+				else
+					icon_state = "[basestate]-nocover"
+		else if(update_state & UPSTATE_BROKE)
+			icon_state = "apc-b"
+		else if(update_state & UPSTATE_BLUESCREEN)
+			icon_state = "apcemag"
+		else if(update_state & UPSTATE_WIREEXP)
+			icon_state = "apcewires"
+		else if(update_state & UPSTATE_MAINT)
+			icon_state = "apc0"
+
+	if(!(update_state & UPSTATE_ALLGOOD))
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+
+	if(update & 2)
+		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+		if(!(machine_stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
+			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, plane, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, EMISSIVE_PLANE, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, plane, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, EMISSIVE_PLANE, dir)
+			if(operating)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, EMISSIVE_PLANE, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, EMISSIVE_PLANE, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, EMISSIVE_PLANE, dir)
 
 	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)
@@ -317,49 +359,7 @@
 
 	icon_update_needed = FALSE
 
-/obj/machinery/power/apc/update_icon_state()
-	if(update_state & UPSTATE_ALLGOOD)
-		icon_state = "apc0"
-		return
-	if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
-		var/basestate = "apc[cell ? 2 : 1]"
-		if(update_state & UPSTATE_OPENED1)
-			icon_state = (update_state & (UPSTATE_MAINT|UPSTATE_BROKE)) ? "apcmaint" : basestate
-		else if(update_state & UPSTATE_OPENED2)
-			icon_state = "[basestate][((update_state & UPSTATE_BROKE) || malfhack) ? "-b" : null]-nocover"
-		return
-	if(update_state & UPSTATE_BROKE)
-		icon_state = "apc-b"
-		return
-	if(update_state & UPSTATE_BLUESCREEN)
-		icon_state = "apcemag"
-		return
-	if(update_state & UPSTATE_WIREEXP)
-		icon_state = "apcewires"
-		return
-	if(update_state & UPSTATE_MAINT)
-		icon_state = "apc0"
-		return
-
-/obj/machinery/power/apc/update_overlays()
-	. = ..()
-	if((machine_stat & (BROKEN|MAINT)) || !(update_state & UPSTATE_ALLGOOD))
-		return
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, EMISSIVE_STRUCTURE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, EMISSIVE_STRUCTURE_PLANE, dir)
-	if(!operating)
-		return
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, EMISSIVE_STRUCTURE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, EMISSIVE_STRUCTURE_PLANE, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, EMISSIVE_STRUCTURE_PLANE, dir)
-
-/obj/machinery/power/apc/proc/check_updates(obj/machinery/power/apc/self)
-	SIGNAL_HANDLER
+/obj/machinery/power/apc/proc/check_updates()
 	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
 	update_state = 0
@@ -419,11 +419,14 @@
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
 
 
-	. = NONE
-	if(last_update_state == update_state)
-		. |= COMSIG_ATOM_NO_UPDATE_ICON_STATE
-	if((last_update_overlay == update_overlay) && (update_state & UPSTATE_ALLGOOD))
-		. |= COMSIG_ATOM_NO_UPDATE_OVERLAYS
+	var/results = 0
+	if(last_update_state == update_state && last_update_overlay == update_overlay)
+		return 0
+	if(last_update_state != update_state)
+		results += 1
+	if(last_update_overlay != update_overlay)
+		results += 2
+	return results
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
@@ -796,7 +799,7 @@
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user)
+/obj/machinery/power/apc/attack_hand(mob/user, params)
 	. = ..()
 	if(.)
 		return
@@ -805,7 +808,28 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
+		var/list/modifiers = params2list(params)
+		if(H.combat_mode && E.drain_time < world.time)
+			if(modifiers && modifiers["right"]) //Disarm
+				if(cell.charge == cell.maxcharge)
+					to_chat(H, "<span class='warning'>The APC is full!</span>")
+					return
+				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+				if(stomach.crystal_charge < 10)
+					to_chat(H, "<span class='warning'>Your charge is too low!</span>")
+					return
+				E.drain_time = world.time + 75
+				to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
+				if(do_after(user, 75, target = src))
+					if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
+						return
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
+						stomach.adjust_charge(-10)
+						cell.charge += 10
+					else
+						to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
+				return
 			if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
 				to_chat(H, "<span class='warning'>The APC's syphon safeties prevent you from draining power!</span>")
 				return
@@ -824,26 +848,6 @@
 					cell.charge -= APC_POWER_GAIN
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
-			return
-		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
-			if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-				to_chat(H, "<span class='warning'>The APC is full!</span>")
-				return
-			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach.crystal_charge < APC_POWER_GAIN)
-				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
-				return
-			E.drain_time = world.time + APC_DRAIN_TIME
-			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
-			if(do_after(user, APC_DRAIN_TIME, target = src))
-				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < APC_POWER_GAIN))
-					return
-				if(istype(stomach))
-					to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
-					stomach.adjust_charge(-APC_POWER_GAIN)
-					cell.charge += APC_POWER_GAIN
-				else
-					to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
 			return
 
 	if(opened && (!issilicon(user)))

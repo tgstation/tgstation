@@ -192,7 +192,7 @@
 
 /obj/item/circular_saw/augment
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."
-	w_class = WEIGHT_CLASS_SMALL	
+	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
 
@@ -359,8 +359,8 @@
 	sharpness = SHARP_EDGED
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-/obj/item/shears/attack(mob/living/M, mob/user)
-	if(!iscarbon(M) || user.a_intent != INTENT_HELP)
+/obj/item/shears/attack(mob/living/M, mob/living/user)
+	if(!iscarbon(M) || user.combat_mode)
 		return ..()
 
 	if(user.zone_selected == BODY_ZONE_CHEST)

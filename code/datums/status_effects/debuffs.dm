@@ -692,10 +692,14 @@
 
 	if(!owner.can_hear())
 		return
-	if(hearing_args[HEARING_SPEAKER] == owner)
+	var/mob/hearing_speaker = hearing_args[HEARING_SPEAKER]
+	if(hearing_speaker == owner)
 		return
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
+	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
+	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_ATTACK)
+	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, log_globally = FALSE)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
@@ -721,8 +725,7 @@
 					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
 					I.attack_self(owner)
 			if(3)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
+				owner.set_combat_mode(TRUE)
 
 				var/range = 1
 				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
@@ -736,14 +739,13 @@
 					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
 					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
 					owner.ClickOn(pick(targets))
-				owner.a_intent = prev_intent
+				owner.set_combat_mode(FALSE)
 			if(4)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
+				owner.set_combat_mode(TRUE)
 				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
 				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
 				owner.ClickOn(owner)
-				owner.a_intent = prev_intent
+				owner.set_combat_mode(FALSE)
 			if(5)
 				if(owner.incapacitated())
 					return
@@ -919,8 +921,8 @@
 
 /datum/status_effect/amok/tick()
 	. = ..()
-	var/prev_intent = owner.a_intent
-	owner.a_intent = INTENT_HARM
+	var/prev_combat_mode = owner.combat_mode
+	owner.set_combat_mode(TRUE)
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
@@ -930,7 +932,7 @@
 	if(LAZYLEN(targets))
 		owner.log_message(" attacked someone due to the amok debuff.", LOG_ATTACK) //the following attack will log itself
 		owner.ClickOn(pick(targets))
-	owner.a_intent = prev_intent
+	owner.set_combat_mode(prev_combat_mode)
 
 /datum/status_effect/cloudstruck
 	id = "cloudstruck"

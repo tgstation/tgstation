@@ -23,7 +23,7 @@
 	attack_verb_continuous = "slimes"
 	attack_verb_simple = "slime"
 	attack_sound = 'sound/effects/blobattack.ogg'
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	mob_size = MOB_SIZE_LARGE
 	initial_language_holder = /datum/language_holder/slime

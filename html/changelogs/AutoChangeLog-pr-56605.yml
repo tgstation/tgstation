@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - refactor: "Refactors CTF pickups and mine powerup subtypes into a new powerup system!"

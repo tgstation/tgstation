@@ -1,9 +1,7 @@
 /*
 Map Template Holodeck
 
-Holodeck finds the location of mapped_start_area and loads offline_program in it on LateInitialize. It then loads the programs that have the
-same holodeck_access flag as it (e.g. the station holodeck has the holodeck_access flag STATION_HOLODECK, and it loads all programs with this
-flag). These program templates are then given to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
+Holodeck finds the location of mapped_start_area and loads offline_program in it on LateInitialize. It then passes its program templates to Holodeck.js in the form of program_cache and emag_programs. when a user selects a program the
 ui calls load_program() with the id of the selected program.
 load_program() -> map_template/load() on map_template/holodeck.
 
@@ -36,9 +34,6 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	active_power_usage = 50
 
 	//new vars
-	///what access type this holodeck has, used to specify programs for another holodeck that others cant load.
-	var/holodeck_access = STATION_HOLODECK
-
 	///what area type this holodeck loads into. linked turns into the nearest instance of this area
 	var/area/mapped_start_area = /area/holodeck/rec_center
 
@@ -47,6 +42,9 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 	///bottom left corner of the loading room, used for placing
 	var/turf/bottom_left
+
+	///if TRUE the holodeck is busy spawning another simulation and should immediately stop loading the newest one
+	var/spawning_simulation = FALSE
 
 	//old vars
 
@@ -121,9 +119,9 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	for(var/typekey in subtypesof(program_type))
 		var/datum/map_template/holodeck/program = typekey
 		var/list/info_this = list("id" = initial(program.template_id), "name" = initial(program.name))
-		if(initial(program.restricted) && (initial(program.access_flags) & holodeck_access))
+		if(initial(program.restricted))
 			LAZYADD(emag_programs, list(info_this))
-		else if (initial(program.access_flags) & holodeck_access)
+		else
 			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
@@ -191,7 +189,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		map_id = offline_program
 		force = TRUE
 
-	if (!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force)
+	if ((!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force) || spawning_simulation)
 		say("ERROR. Recalibrating projection apparatus.")
 		return
 
@@ -200,6 +198,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		if (damaged && floorcheck())
 			damaged = FALSE
 
+	spawning_simulation = TRUE
 	active = (map_id != offline_program)
 	use_power = active + IDLE_POWER_USE
 	program = map_id
@@ -275,6 +274,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 				if(istype(machines, /obj/machinery/button))
 					var/obj/machinery/button/buttons = machines
 					buttons.setup_device()
+	spawning_simulation = FALSE
 
 ///this qdels holoitems that should no longer exist for whatever reason
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
@@ -401,13 +401,6 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
 	emergency_shutdown()
 	return ..()
-
-/obj/machinery/computer/holodeck/offstation //second holodeck if you want to add one to a ruin :flushed:
-	name = "holodeck control console"
-	desc = "A computer used to control a nearby holodeck."
-	offline_program = "holodeck_offline"
-	holodeck_access = HOLODECK_DEBUG | STATION_HOLODECK
-	mapped_start_area = /area/holodeck/rec_center/offstation_one
 
 #undef HOLODECK_CD
 #undef HOLODECK_DMG_CD
