@@ -35988,6 +35988,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
+"jpF" = (
+/turf/open/floor/engine/hull,
+/area/space)
 "jpW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -50691,7 +50694,7 @@
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
 "qxt" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/floor/plating/asteroid,
 /area/maintenance/central/secondary)
 "qxF" = (
 /obj/machinery/porta_turret/ai{
@@ -169952,9 +169955,9 @@ aYr
 aYr
 aYr
 aYr
-aYr
-aYr
-aYr
+jpF
+jpF
+jpF
 aae
 aBM
 aBM
@@ -170209,9 +170212,9 @@ aYr
 aYr
 aYr
 aYr
-aYr
-aYr
-aYr
+jpF
+jpF
+jpF
 aBM
 aBM
 aBM
@@ -170466,13 +170469,13 @@ aYr
 aYr
 aYr
 aYr
-aYr
-aYr
-aYr
-aYr
-aYr
-aYr
-aYr
+jpF
+jpF
+jpF
+jpF
+jpF
+jpF
+jpF
 aBM
 aBM
 aae
@@ -170723,13 +170726,13 @@ aYr
 aYr
 aYr
 aYr
-aYr
-aYr
-aYr
-aYr
-aYr
-aYr
-aYr
+jpF
+jpF
+jpF
+jpF
+jpF
+jpF
+jpF
 aBM
 aBM
 aae
@@ -170980,11 +170983,11 @@ aYr
 aYr
 aYr
 aYr
-aYr
-aYr
-aYr
-aYr
-aYr
+jpF
+jpF
+jpF
+jpF
+jpF
 aYr
 aYr
 aBM
@@ -171238,9 +171241,9 @@ aYr
 aYr
 aYr
 aYr
-aYr
-aYr
-aYr
+jpF
+jpF
+jpF
 aYr
 aYr
 aYr
@@ -171495,9 +171498,9 @@ aYr
 aYr
 aYr
 aYr
-aYr
-aYr
-aYr
+jpF
+jpF
+jpF
 aYr
 aYr
 aYr
