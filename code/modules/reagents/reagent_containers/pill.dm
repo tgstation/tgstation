@@ -278,7 +278,7 @@
 /obj/item/reagent_containers/pill/maintenance/on_consumption(mob/M, mob/user)
 	. = ..()
 
-	M.client?.give_award(MAINTENANCE_PILL_SCORE, M)
+	M.client?.give_award(/datum/award/score/maintenance_pill, M)
 
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"
