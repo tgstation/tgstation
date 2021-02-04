@@ -156,8 +156,8 @@
 	var/text = ""
 	text += "- Plant Reagent Genes -\n"
 	text += "*---------*\n<span class='notice'>"
-	for(var/datum/plant_gene/reagent/G in scanned.genes)
-		text += "- [G.get_name()] -\n"
+	for(var/datum/plant_gene/reagent/gene in scanned.genes)
+		text += "- [gene.get_name()] -\n"
 	text += "</span>*---------*"
 	return text
 
@@ -174,11 +174,11 @@
 	text += "<br><span class='info'>- Plant Reagents -</span>"
 	text += "<br><span class='info'>Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]</span>"
 	var/chem_cap = 0
-	for(var/reagent_id in scanned_plant.reagents.reagent_list)
-		var/datum/reagent/R  = reagent_id
-		var/amt = R.volume
-		chem_cap += R.volume
-		reagents_text += "\n<span class='info'>- [R.name]: [amt]</span>"
+	for(var/_reagent in scanned_plant.reagents.reagent_list)
+		var/datum/reagent/reagent  = _reagent
+		var/amount = reagent.volume
+		chem_cap += reagent.volume
+		reagents_text += "\n<span class='info'>- [reagent.name]: [amount]</span>"
 	if(chem_cap > 100)
 		text += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
 

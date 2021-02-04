@@ -314,8 +314,8 @@
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		/// Our plant's max yield
 		var/max_yield = MAX_PLANT_YIELD
-		for(var/datum/plant_gene/trait/T in genes)
-			if(T.trait_flags & TRAIT_HALVES_YIELD)
+		for(var/datum/plant_gene/trait/trait in genes)
+			if(trait.trait_flags & TRAIT_HALVES_YIELD)
 				max_yield = round(max_yield/2)
 				break
 
@@ -340,7 +340,7 @@
  * Adjusts seed endurance up or down according to adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
-	endurance = clamp(endurance + adjustamt, 10, MAX_PLANT_ENDURANCE)
+	endurance = clamp(endurance + adjustamt, MIN_PLANT_ENDURANCE, MAX_PLANT_ENDURANCE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
@@ -429,7 +429,7 @@
  * Sets the plant's endurance stat to the value of adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/set_endurance(adjustamt)
-	endurance = clamp(adjustamt, 10, MAX_PLANT_ENDURANCE)
+	endurance = clamp(adjustamt, MIN_PLANT_ENDURANCE, MAX_PLANT_ENDURANCE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
@@ -485,21 +485,21 @@
 
 /**
  * Override for seeds with unique text for their analyzer. (No newlines at the start or end of unique text!)
- * Returns FALSE if no unique text, or a string of text if there is.
+ * Returns null if no unique text, or a string of text if there is.
  */
 /obj/item/seeds/proc/get_unique_analyzer_text()
-	return FALSE
+	return null
 
 /**
  * Override for seeds with special chem reactions.
  */
-/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)
+/obj/item/seeds/proc/on_chem_reaction(datum/reagents/reagents)
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/P_analyzer = O
-		to_chat(user, P_analyzer.scan_plant(src))
+		var/obj/item/plant_analyzer/plant_analyzer = O
+		to_chat(user, plant_analyzer.scan_plant(src))
 		return
 
 	if(istype(O, /obj/item/pen))
@@ -639,12 +639,12 @@
 		genes += new_trait.Copy()
 
 	// Adjust stats based on graft stats
-	set_lifespan(round(max(lifespan,		(lifespan	+ (2/3)*(snip.lifespan - lifespan)			))))
-	set_endurance(round(max(endurance,		(endurance	+ (2/3)*(snip.endurance - endurance)		))))
-	set_production(round(max(production,	(production	+ (2/3)*(snip.production - production)		))))
-	set_weed_rate(round(max(weed_rate,		(weed_rate	+ (2/3)*(snip.weed_rate - weed_rate)		))))
-	set_weed_chance(round(max(weed_chance,	(weed_chance+ (2/3)*(snip.weed_chance - weed_chance)	))))
-	set_yield(round(max(yield,				(yield		+ (2/3)*(snip.yield - yield)				))))
+	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.lifespan - lifespan)))))
+	set_endurance(round(max(endurance, (endurance + (2/3)*(snip.endurance - endurance)))))
+	set_production(round(max(production, (production + (2/3)*(snip.production - production)))))
+	set_weed_rate(round(max(weed_rate, (weed_rate + (2/3)*(snip.weed_rate - weed_rate)))))
+	set_weed_chance(round(max(weed_chance, (weed_chance+ (2/3)*(snip.weed_chance - weed_chance)))))
+	set_yield(round(max(yield, (yield + (2/3)*(snip.yield - yield)))))
 
 	// Add in any reagents, too.
 	reagents_from_genes()

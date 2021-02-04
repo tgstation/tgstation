@@ -228,10 +228,10 @@
 		myseed.adjust_endurance(-amount)
 	else // Timed decay
 		myseed.adjust_endurance(-1)
-		if (myseed.endurance > 10)
+		if (myseed.endurance > MIN_PLANT_ENDURANCE)
 			addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT) // Recall decay timer
 			return
-	if (myseed.endurance <= 10) // Plant is gone
+	if (myseed.endurance <= MIN_PLANT_ENDURANCE) // Plant is gone
 		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -253,8 +253,8 @@
 
 /obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
 	if (istype(I, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/P_analyzer = I
-		to_chat(user, P_analyzer.scan_plant(myseed))
+		var/obj/item/plant_analyzer/plant_analyzer = I
+		to_chat(user, plant_analyzer.scan_plant(myseed))
 		return
 
 	return ..() // Attack normally

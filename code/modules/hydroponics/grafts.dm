@@ -51,6 +51,6 @@
 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/plant_analyzer) && !user.combat_mode)
-		var/obj/item/plant_analyzer/P_analyzer = I
-		to_chat(user, P_analyzer.get_graft_text(src))
+		var/obj/item/plant_analyzer/plant_analyzer = I
+		to_chat(user, plant_analyzer.get_graft_text(src))
 	return ..()

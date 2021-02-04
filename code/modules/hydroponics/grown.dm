@@ -81,8 +81,8 @@
 /obj/item/food/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/P_analyzer = O
-		to_chat(user, P_analyzer.scan_plant(src))
+		var/obj/item/plant_analyzer/plant_analyzer = O
+		to_chat(user, plant_analyzer.scan_plant(src))
 	else
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)

@@ -272,11 +272,13 @@
 
 /obj/item/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
-	if(!user.gloves)
-		to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
-		var/obj/item/bodypart/affecting = user.get_active_hand()
-		if(affecting?.receive_damage(0, 5))
-			user.update_damage_overlays()
+	if(user.gloves)
+		return
+
+	to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
+	var/obj/item/bodypart/affecting = user.get_active_hand()
+	if(affecting?.receive_damage(0, 5))
+		user.update_damage_overlays()
 
 // Rose
 /obj/item/seeds/rose
@@ -312,11 +314,16 @@
 
 /obj/item/food/grown/rose/pickup(mob/living/carbon/human/user)
 	..()
-	if(!user.gloves && (seed.get_gene(/datum/plant_gene/trait/sticky) || prob(33)))
-		to_chat(user, "<span class='danger'>You prick your hand on \the [name]'s thorns. Ouch.</span>")
-		var/obj/item/bodypart/affecting = user.get_active_hand()
-		if(affecting?.receive_damage(2))
-			user.update_damage_overlays()
+	if(user.gloves)
+		return
+
+	if(!seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
+		return
+
+	to_chat(user, "<span class='danger'>You prick your hand on \the [name]'s thorns. Ouch.</span>")
+	var/obj/item/bodypart/affecting = user.get_active_hand()
+	if(affecting?.receive_damage(2))
+		user.update_damage_overlays()
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose
