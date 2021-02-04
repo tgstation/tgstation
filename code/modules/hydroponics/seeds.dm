@@ -403,8 +403,8 @@
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		/// Our plant's max yield
 		var/max_yield = MAX_PLANT_YIELD
-		for(var/datum/plant_gene/trait/T in genes)
-			if(T.trait_flags & TRAIT_HALVES_YIELD)
+		for(var/datum/plant_gene/trait/trait in genes)
+			if(trait.trait_flags & TRAIT_HALVES_YIELD)
 				max_yield = round(max_yield/2)
 				break
 
