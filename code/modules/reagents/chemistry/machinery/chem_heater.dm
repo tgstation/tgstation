@@ -301,15 +301,15 @@
 			if(TUT_NO_BUFFER)//missing buffer
 				data["tutorialMessage"] = {"It looks like you’re a little low on buffers, here’s how to make more:
 
-Acidic buffer: 	1 parts Saline-Glucose Solution
+Acidic buffer: 	1 parts Saline-Glucose
 			3 parts Ethanol
 			3 parts Oxygen 
 			3 parts Water 
 
-Basic buffer:   1 parts Lye
+Basic buffer:    1 parts Lye
 			2 parts Ethanol
 			2 parts Water 
-  catalyst:   1u Sulphuric acid
+Catalyst:       1u Sulphuric acid
 
 Heat either up to speed up the reaction.
 
