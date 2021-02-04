@@ -75,12 +75,12 @@
 	combat_mode = new_mode
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_icon()
-	if(silent)
+	if(silent || !(client?.prefs.toggles & SOUND_COMBATMODE))
 		return
 	if(combat_mode)
-		playsound_local(src, 'sound/misc/ui_togglecombat.ogg', 50, FALSE, pressure_affected = FALSE) //Sound from interbay!
+		playsound_local(src, 'sound/misc/ui_togglecombat.ogg', 25, FALSE, pressure_affected = FALSE) //Sound from interbay!
 	else
-		playsound_local(src, 'sound/misc/ui_toggleoffcombat.ogg', 50, FALSE, pressure_affected = FALSE) //Slightly modified version of the above
+		playsound_local(src, 'sound/misc/ui_toggleoffcombat.ogg', 25, FALSE, pressure_affected = FALSE) //Slightly modified version of the above
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(isitem(AM))
