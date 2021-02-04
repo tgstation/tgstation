@@ -336,7 +336,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
-		var/json_file = file("[global.config.directory]/dynamic2021.json")
+		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
 			configuration = json_decode(file2text(json_file))
 			if(configuration["Dynamic"])
