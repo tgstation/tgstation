@@ -44,7 +44,7 @@
 
 	var/list/params = params2list(click_parameters)
 
-	if(params["right"] && !Adjacent(target) && !target.density)
+	if(params["right"] && !target.density)
 		jaunt.Teleport(user, target)
 
 /obj/item/energy_katana/pickup(mob/living/user)
