@@ -827,8 +827,8 @@
 	var/mafiareg_left = 2
 	var/mafiaspe_left = 1
 
+	// if there is one killing role, there will be less disruptors
 	var/neutral_killing_role = prob(50)
-	// 1-2 disruptors to equal up to 12, depending on if there was a killing role
 
 	var/list/random_setup = list()
 	var/list/unique_roles_added = list()

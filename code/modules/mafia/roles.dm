@@ -10,19 +10,21 @@
 	var/mob/living/carbon/human/body
 	var/obj/effect/landmark/mafia/assigned_landmark
 
+	///role flags (special status of roles like detection immune)
 	var/role_flags = NONE
 	///how many votes submitted when you vote. used in voting, but not victory
 	var/vote_power = 1
 	///how many votes your role COULD count for, now or later. used in checking victory
 	var/vote_potential = 1
-	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant //what they get equipped with when they are revealed
-	//action = uses
+	///what they get equipped with when they are revealed
+	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant
+	///action = uses
 	var/list/actions = list()
 	var/list/targeted_actions = list()
-	//what the role gets when it wins a game
+	///what the role gets when it wins a game
 	var/winner_award = /datum/award/achievement/mafia/assistant
 
-	//so mafia have to also kill them to have a majority
+	///so mafia have to also kill them to have a majority
 	var/game_status = MAFIA_ALIVE
 
 	///icon state in the mafia dmi of the hud of the role, used in the mafia ui
