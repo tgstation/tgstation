@@ -10,7 +10,6 @@
 
 /obj/effect/mob_spawn/human/corpse/syndicatesoldier
 	name = "Syndicate Operative"
-	id_job = "Operative"
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 	outfit = /datum/outfit/syndicatesoldiercorpse
@@ -27,10 +26,10 @@
 	back = /obj/item/storage/backpack
 	// TIMBERTODO - NEW CLOWN OP ID CARD
 	id = /obj/item/card/id
+	id_trim = /datum/id_trim/syndicom/crew
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
-	id_job = "Operative"
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 	outfit = /datum/outfit/syndicatecommandocorpse
@@ -47,11 +46,11 @@
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	// TIMBERTODO - NEW CLOWN OP ID CARD
 	id = /obj/item/card/id
+	id_trim = /datum/id_trim/syndicom/crew
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
-	id_job = "Operative"
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 	outfit = /datum/outfit/syndicatestormtroopercorpse
@@ -67,6 +66,7 @@
 	back = /obj/item/tank/jetpack/oxygen/harness
 	// TIMBERTODO - NEW CLOWN OP ID CARD
 	id = /obj/item/card/id
+	id_trim = /datum/id_trim/syndicom/crew
 
 
 /obj/effect/mob_spawn/human/clown/corpse
@@ -170,8 +170,6 @@
 
 /obj/effect/mob_spawn/human/corpse/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
-	id_job = "Private Security Force"
-	id_access = "Security Officer"
 	outfit = /datum/outfit/nanotrasensoldiercorpse2
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -186,12 +184,11 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id/advanced
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/corpse/private_security
 
 /obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier
 	name = "Nanotrasen Private Security Officer"
-	id_job = "Nanotrasen Assault Force"
-	id_access = "Security Officer"
 	outfit = /datum/outfit/nanotrasenassaultsoldiercorpse
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -206,12 +203,11 @@
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
-	id = /obj/item/card/id/advanced
+	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/corpse/assault
 
 /obj/effect/mob_spawn/human/corpse/cat_butcher
 	name = "The Cat Surgeon"
-	id_job = "Cat Surgeon"
-	id_access_list = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
 	hairstyle = "Cut Hair"
 	facial_hairstyle = "Watson Mustache"
 	skin_tone = "caucasian1"
@@ -227,6 +223,7 @@
 	back = /obj/item/storage/backpack/satchel/med
 	id = /obj/item/card/id/advanced
 	glasses = /obj/item/clothing/glasses/hud/health
+	id_trim = /datum/id_trim/away/cat_surgeon
 
 /obj/effect/mob_spawn/human/corpse/bee_terrorist
 	name = "BLF Operative"
