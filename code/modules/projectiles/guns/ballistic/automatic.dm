@@ -135,7 +135,7 @@
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
-	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be fired using right click."
+	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "m90"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "m90"
@@ -165,8 +165,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
-	var/list/modifiers = params2list(params)
-	if(modifiers["right"] && !Adjacent(target))
+	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
 		return ..()
@@ -186,6 +185,8 @@
 			. += "[initial(icon_state)]_semi"
 		if(1)
 			. += "[initial(icon_state)]_burst"
+		if(2)
+			. += "[initial(icon_state)]_gren"
 
 /obj/item/gun/ballistic/automatic/m90/burst_select()
 	var/mob/living/carbon/human/user = usr
@@ -196,6 +197,9 @@
 			fire_delay = initial(fire_delay)
 			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 		if(1)
+			select = 2
+			to_chat(user, "<span class='notice'>You switch to grenades.</span>")
+		if(2)
 			select = 0
 			burst_size = 1
 			fire_delay = 0
