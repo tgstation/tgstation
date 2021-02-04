@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - balance: "Changes the carrying traits on Latex/Nitrile gloves into a skillchip."
-  - balance: "Medical doctors start the round with a quick carry skillchip (was the latex glove trait)."
-  - balance: "Paramedics and the CMO start the round with a quicker carry skillchip (was the nitrile glove trait)."

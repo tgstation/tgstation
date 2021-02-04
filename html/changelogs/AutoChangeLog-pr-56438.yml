@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - balance: "Turns the Duffel Bag Curse into a melee spell, with significant rebalances and changes to rework the spell for being a melee spell."
-  - balance: "Dealing with the duffel bag is slightly more easy, but it inflicts you with a lot of fairly disruptive debuffs while attached, and not dealing with the bag will hurt quite a bit."
-  - tweak: "Tidies up some of the living duffel bag code."

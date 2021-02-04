@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Repeated EMPs should no longer render a secborg's disabler permanently unusable."
