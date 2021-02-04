@@ -30,7 +30,7 @@
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat."
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/carpotoxin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
-	// Cytology category you can swab the meat for.
+	/// Cytology category you can swab the meat for.
 	var/cell_line = CELL_LINE_TABLE_CARP
 
 /obj/item/food/fishmeat/carp/Initialize()
