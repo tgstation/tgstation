@@ -228,7 +228,7 @@
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/tutorial_advisors)
 
-/obj/machinery/chem_heater/ui_data()
+/obj/machinery/chem_heater/ui_data(mob/user)
 	var/data = list()
 	data["targetTemp"] = target_temperature
 	data["isActive"] = on
@@ -267,7 +267,7 @@
 		if(reagent.purity < equilibrium.reaction.purity_min)
 			purity_alert = ENABLE_FLASHING//Because 0 is seen as null
 			danger = TRUE
-		if(!(flashing == ENABLE_FLASHING) && (upgrade_level > 1))//So that the pH meter flashes for ANY reactions out of optimal
+		if(!(flashing == ENABLE_FLASHING))//So that the pH meter flashes for ANY reactions out of optimal
 			if(equilibrium.reaction.optimal_ph_min > beaker?.reagents.ph || equilibrium.reaction.optimal_ph_max < beaker?.reagents.ph)
 				flashing = ENABLE_FLASHING
 		if(equilibrium.reaction.is_cold_recipe)
@@ -299,50 +299,52 @@
 	if(tutorial_active)
 		switch(tutorial_state)
 			if(TUT_NO_BUFFER)//missing buffer
-				data["tutorialMessage"] = {"Hello and welcome to the exciting world of chemistry! Or that’s what I would be saying if your reaction chamber had enough buffer in it. Don’t worry! We’ll go over how to make some and add some to your reaction chamber.
+				data["tutorialMessage"] = {"It looks like you’re a little low on buffers, here’s how to make more:
 
-If you’re low on acidic buffer, add 1 parts Saline-Glucose Solution, 3 parts Ethanol, 3 parts Oxygen and 3 parts Water to a beaker. Then place it back here and heat it up to speed up the reaction. This reaction doesn’t have an overheat, so feel free to go as high as you like.
+Acidic buffer: 	1 parts Saline-Glucose Solution
+			3 parts Ethanol
+			3 parts Oxygen 
+			3 parts Water 
 
-If you’re low on basic buffer, add 1 parts Lye, 2 parts Ethanol, 2 parts Water with it's catalyst; Sulphuric acid to a beaker. Then place it back here and heat it up to speed up the reaction. This reaction doesn’t have an overheat, so feel free to go as high as you like.
+Basic buffer:   1 parts Lye
+			2 parts Ethanol
+			2 parts Water 
+  catalyst:   1u Sulphuric acid
+
+Heat either up to speed up the reaction.
 
 When the reactions are done, refill your chamber by pressing the Draw all buttons, to the right of the respective volume indicators.
 
 To continue with the tutorial, fill both of your acidic and alkaline volumes to at least 5u."}
 			if(TUT_START)//Default start
-				data["tutorialMessage"] = {"Hello and welcome to the exciting world of chemistry! This help option will teach you the basic of reactions in a practical way.
+				data["tutorialMessage"] = {"Hello and welcome to the exciting world of chemistry! This help option will teach you the basic of reactions by guiding you through a calomel reaction.
 
-For the most part the hotter your reaction is, the faster it will react. But be careful to not heat it too much! "If your reaction is slow, your temperature is too low"!
-How pure your solution is at the end depends on how well you keep your reaction within the optimal pH range. "If you're getting sludge, give your pH a nudge"! 
+For the majority of reactions, the overheat temperature is 900K, and the pH range is 5-9, though it's always worth looking up the ranges as these are changing. Calomel is no different.
 
-Purity has an affect on all chemical’s efficacy. The higher it is, usually the more potent it is. If it’s low enough however some chems can convert into other forms, it really depends on the chemical in question. The Nanotrasen libraries should have more details on them as research comes in.
-
-For the majority of reactions the overheat temperature is 900K, and the pH range is 5-9, though it's always worth looking up the ranges as these are changing.
-
-To get us started, lets practice a calomel reaction.
-
-To continue the tutorial, insert a beaker with 10u mercury and 10u chlorine added."}
+To continue the tutorial, insert a beaker with at least 10u mercury and 10u chlorine added."}
 			if(TUT_HAS_REAGENTS) //10u Hg and Cl
-				data["tutorialMessage"] = {"Good job! You'll see that at present this isn't reacting. That's because this reaction needs a minimum temperature of 375K. But before we do that, let’s review some of the properties of Calomel's reaction.
+				data["tutorialMessage"] = {"Good job! You'll see that at present this isn't reacting. That's because this reaction needs a minimum temperature of 375K.
 
-For one thing it is mildly exothermic - what this means is that over the course of a reaction it will produce heat. The main way you can combat heat shifts is by setting the dial on the heater itself. Sometimes you might want to warm it up to counter endothermic reactions, or set it low to counter exothermic. 
-
-Additionally, this reaction produces H+ ions across a reaction. This means that the pH will drift towards acidic conditions during the reaction. The way you counter this is by adding buffer to the solution. If you don't know how to make buffer and your reaction chamber is out, press the help button while it's empty and the step before this will guide you. To add buffer to a beaker, simply press the leftmost inject button. Acidic buffer will decrease the pH, whereas basic buffer will increase it. This reaction will require a bit of basic buffer, so get ready.
+For the most part the hotter your reaction is, the faster it will react when it’s past it’s minimum temperature. But be careful to not heat it too much! "If your reaction is slow, your temperature is too low"!
 
 When you’re ready, set your temperature to 375K and heat up the beaker to that amount."}
 			if(TUT_IS_ACTIVE) //heat 375K
-				data["tutorialMessage"] = {"Great! You should see your reaction slowly progressing. The chamber should be detecting the reaction and estimating the yield on current conditions above. In addition, your pH should be slowly drifting to the left on the dial.
+				data["tutorialMessage"] = {"Great! You should see your reaction slowly progressing.
 
-Depending on the level of upgrades on your reaction chamber you can see different things. For a level 2 chamber, the pH meter will flash if you’re outside of the optimal, level 3 will give you a progression bar on a reaction, and a level 4 chamber will determine how optimal your reaction is at the present step – not the total purity at the end of a reaction.
+Notice the pH dial on the right; the sum pH should be slowly drifting towards the left on the dial. How pure your solution is at the end depends on how well you keep your reaction within the optimal pH range. The dial will flash if any of the present reactions are outside their optimal. "If you're getting sludge, give your pH a nudge"! 
 
-In a moment, we’ll increase the temperature so that our rate is faster. It’s up to you to keep your pH within the limits, so keep an eye on that dial.
+In a moment, we’ll increase the temperature so that our rate is faster. It’s up to you to keep your pH within the limits, so keep an eye on that dial, and get ready to add basic buffer using the injection button to the left of the volume indicator.
 
 To continue set your target temperature to 390K."}
 			if(TUT_IS_REACTING) //Heat 390K
 				data["tutorialMessage"] = "Stay focused on the reaction! You can do it!"
 			if(TUT_FAIL) //Sludge
 				data["tutorialMessage"] = "Ah, unfortunately your purity was too low and the reaction fell apart into errant sludge. Don't worry, you can always try again! Be careful though, for some reactions, failing isn't nearly as forgiving."
-			if(5) //Complete
-				var/datum/reagent/calo = beaker.reagents.has_reagent(/datum/reagent/medicine/calomel)
+			if(TUT_COMPLETE) //Complete
+				var/datum/reagent/calo = beaker?.reagents.has_reagent(/datum/reagent/medicine/calomel)
+				if(!calo)
+					tutorial_state = TUT_COMPLETE
+					return
 				switch(calo.purity)
 					if(-INFINITY to 0.25)
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. That's pretty close to the fail purity of 0.15 - which can often make some reactions explode. This chem will invert into Toxic sludge when ingested by another person, and will not cause of calomel's normal effects. Sneaky, huh?"
@@ -356,11 +358,10 @@ To continue set your target temperature to 390K."}
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. You got pretty close to optimal! Feel free to try again if you like by double pressing the help button, but this is a respectable purity."
 					if(0.99 to 1)
 						data["tutorialMessage"] = "You did it! Congratulations! I can tell you that your final purity was [calo.purity]. Your calomel is as pure as they come! You've mastered the basics of chemistry, but there's plenty more challenges on the horizon. Good luck!"
-			if(10) //Missing
+						user.client?.give_award(/datum/award/achievement/misc/chemistry_tut, user)
+				data["tutorialMessage"] += "\n\nDid you notice that your temperature increased past 390K while reacting too? That's because this reaction is exothermic (heat producing), so for some reactions you might have to adjust your target to compensate."
+			if(TUT_MISSING) //Missing
 				data["tutorialMessage"] = "Uh oh, something went wrong. Did you take the beaker out, heat it up too fast, or have other things in the beaker? Try restarting the tutorial by double pressing the help button."
-
-
-				
 
 	return data
 

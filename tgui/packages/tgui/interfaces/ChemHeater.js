@@ -28,8 +28,8 @@ export const ChemHeater = (props, context) => {
   } = data;
   return (  
     <Window
-      width={tutorialMessage ? 380 : 330}
-      height={tutorialMessage ? 780 : 350}
+      width={330}
+      height={tutorialMessage ? 680 : 350}
       key={String(tutorialMessage)}
       resizable>
       <Window.Content scrollable>
