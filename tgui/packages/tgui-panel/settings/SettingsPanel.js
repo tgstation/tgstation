@@ -5,13 +5,14 @@
  */
 
 import { toFixed } from 'common/math';
+import { useLocalState } from 'tgui/backend';
 import { useDispatch, useSelector } from 'common/redux';
 import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, NumberInput, Section, Stack, Tabs, TextArea } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings } from './actions';
-import { SETTINGS_TABS } from './constants';
+import { FONTS, SETTINGS_TABS } from './constants';
 import { selectActiveTab, selectSettings } from './selectors';
 
 export const SettingsPanel = (props, context) => {
@@ -50,12 +51,14 @@ export const SettingsPanel = (props, context) => {
 export const SettingsGeneral = (props, context) => {
   const {
     theme,
+    fontFamily,
     fontSize,
     lineHeight,
     highlightText,
     highlightColor,
   } = useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
+  const [freeFont, setFreeFont] = useLocalState(context, "freeFont", false);
   return (
     <Section>
       <LabeledList>
@@ -66,6 +69,38 @@ export const SettingsGeneral = (props, context) => {
             onSelected={value => dispatch(updateSettings({
               theme: value,
             }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Font style">
+          <Stack inline align="baseline">
+            <Stack.Item>
+              {!freeFont && (
+                <Dropdown
+                  selected={fontFamily}
+                  options={FONTS}
+                  onSelected={value => dispatch(updateSettings({
+                    fontFamily: value,
+                  }))} />
+              ) || (
+                <Input
+                  value={fontFamily}
+                  onChange={(e, value) => dispatch(updateSettings({
+                    fontFamily: value,
+                  }))}
+                />
+              )}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                content="Custom font"
+                icon={freeFont? "lock-open" : "lock"}
+                color={freeFont? "good" : "bad"}
+                ml={1}
+                onClick={() => {
+                  setFreeFont(!freeFont);
+                }}
+              />
+            </Stack.Item>
+          </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Font size">
           <NumberInput
