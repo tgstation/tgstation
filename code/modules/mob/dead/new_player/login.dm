@@ -21,7 +21,6 @@
 		to_chat(src, "<span class='notice'><b>Admin Notice:</b>\n \t [GLOB.admin_notice]</span>")
 
 	to_chat(src, "<span class='notice'><b>Combat Mode Changes</b>\n \t</span>")
-	to_chat(src, "<span class='notice'><b>READ THIS PR BEFORE PLAYING TODAY:</b> https://github.com/tgstation/tgstation/pull/56601 \n \t</span>")
 
 	var/spc = CONFIG_GET(number/soft_popcap)
 	if(spc && living_player_count() >= spc)

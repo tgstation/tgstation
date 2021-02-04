@@ -137,11 +137,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
-	if(fexists("data/player_saves/combat_test/[ckey[1]]/[ckey]/[filename]"))
-		path = "data/player_saves/combat_test/[ckey[1]]/[ckey]/[filename]"
-		return
 	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
-	save_path = "data/player_saves/combat_test/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -281,7 +277,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_preferences()
 	if(!path)
 		return FALSE
-	var/savefile/S = new /savefile()
+	var/savefile/S = new /savefile(path)
 	if(!S)
 		return FALSE
 	S.cd = "/"
