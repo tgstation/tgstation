@@ -245,6 +245,11 @@
 	if(weapon != limb.embedded_objects[1]) // just pluck the first one, since we can't easily coordinate with other embedded components affecting this limb who is highest priority
 		return
 
+	if(ishuman(victim)) // check to see if the limb is actually exposed
+		var/mob/living/carbon/human/victim_human = victim
+		if(!victim_human.can_inject(user, TRUE, limb.body_zone, ignore_species = TRUE))
+			return TRUE
+
 	INVOKE_ASYNC(src, .proc/tweezePluck, possible_tweezers, user)
 	return COMPONENT_NO_AFTERATTACK
 
