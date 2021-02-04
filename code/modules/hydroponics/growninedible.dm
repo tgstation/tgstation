@@ -53,6 +53,25 @@
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_throw_impact(src, hit_atom)
 
+/obj/item/grown/proc/squash(atom/target)
+	var/turf/our_turf = get_turf(target)
+	forceMove(our_turf)
+	var/obj/effect/decal/cleanable/food/plant_smudge/smudge = new(our_turf)
+	smudge.name = "[name] smudge"
+	smudge.color = "#82b900"
+
+	visible_message("<span class='warning'>[src] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
+	if(seed)
+		for(var/datum/plant_gene/trait/trait in seed.genes)
+			trait.on_squash(src, target)
+
+	if(reagents)
+		reagents.expose(our_turf)
+		for(var/things in our_turf)
+			reagents.expose(things)
+
+	qdel(src)
+
 /obj/item/grown/microwave_act(obj/machinery/microwave/M)
 	return
 
