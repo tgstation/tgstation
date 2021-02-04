@@ -41,7 +41,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/proc/pick_traits(trait_type, amount)
 	if(!amount)
 		return
-	for(var/i in 1 to amount)
+	for(var/iterator in 1 to amount)
 		var/datum/station_trait/picked_trait = pickweight(selectable_traits_by_types[trait_type]) //Rolls from the table for the specific trait type
 		picked_trait = new picked_trait()
 		station_traits += picked_trait
