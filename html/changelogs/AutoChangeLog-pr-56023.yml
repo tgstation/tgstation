@@ -1,0 +1,9 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Tapes can now be turned over for double the recording time"
+  - tweak: "Tapes can now be renamed by clicking them with a pen"
+  - rscdel: "Tapes can no longer be respooled using a pen (triggered renaming)"
+  - soundadd: "Tape and tape recorder handling sounds"
+  - soundadd: "Tape recorder play/record loop"
+  - tweak: "Tape and tape recorder misc. improvements (see PR #56023 for details)"
