@@ -257,7 +257,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	if(feeder.a_intent == INTENT_HARM)
+	if(feeder.combat_mode)
 		return
 
 	if(IsFoodGone(owner, feeder))

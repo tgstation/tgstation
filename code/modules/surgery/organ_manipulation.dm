@@ -129,7 +129,7 @@
 				return -1
 
 
-/datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/manipulate_organs/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]
@@ -150,7 +150,7 @@
 			display_results(user, target, "<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>",
 				"<span class='notice'>[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!</span>",
 				"<span class='notice'>[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!</span>")
-			log_combat(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
+			log_combat(user, target, "surgically removed [I.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			I.Remove(target)
 			I.forceMove(get_turf(target))
 		else

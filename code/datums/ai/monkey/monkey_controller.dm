@@ -160,16 +160,13 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/L)
 	SIGNAL_HANDLER
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
-		retaliate(L)
+
 
 /datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/L)
 	SIGNAL_HANDLER
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
-		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(L)
 
 /datum/ai_controller/monkey/proc/on_bullet_act(datum/source, obj/projectile/Proj)

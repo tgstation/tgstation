@@ -107,10 +107,6 @@
 	/// How many ticks this mob has been over reating
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 
-	/// The current intent of the mob
-	var/a_intent = INTENT_HELP//Living
-	/// List of possible intents a mob can have
-	var/list/possible_a_intents = null//Living
 	/// The movement intent of the mob (run/wal)
 	var/m_intent = MOVE_INTENT_RUN//Living
 

@@ -193,6 +193,16 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
+/obj/item/gun/attack(mob/M, mob/living/user, params)
+	var/list/modifiers = params2list(params)
+	if(ismob(M) && modifiers && modifiers["right"]) //Right click to hold someone up
+		if(user.GetComponent(/datum/component/gunpoint))
+			to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
+			return
+		user.AddComponent(/datum/component/gunpoint, M, src)
+		return TRUE
+	return ..()
+
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
 	if(QDELETED(target))
@@ -202,15 +212,9 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
+		if(!ismob(target) || !user.combat_mode) //melee attack
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return
-		if(ismob(target) && user.a_intent == INTENT_GRAB)
-			if(user.GetComponent(/datum/component/gunpoint))
-				to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
-				return
-			user.AddComponent(/datum/component/gunpoint, target, src)
 			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -243,7 +247,7 @@
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
-	if(ishuman(user) && user.a_intent == INTENT_HARM)
+	if(ishuman(user) && user.combat_mode)
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/gun/G in H.held_items)
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
@@ -380,8 +384,8 @@
 /obj/item/gun/proc/reset_semicd()
 	semicd = FALSE
 
-/obj/item/gun/attack(mob/M as mob, mob/user)
-	if(user.a_intent == INTENT_HARM) //Flogging
+/obj/item/gun/attack(mob/M, mob/living/user)
+	if(user.combat_mode) //Flogging
 		if(bayonet)
 			M.attackby(bayonet, user)
 			return
@@ -389,15 +393,15 @@
 			return ..()
 	return
 
-/obj/item/gun/attack_obj(obj/O, mob/user)
-	if(user.a_intent == INTENT_HARM)
+/obj/item/gun/attack_obj(obj/O, mob/living/user)
+	if(user.combat_mode)
 		if(bayonet)
 			O.attackby(bayonet, user)
 			return
 	return ..()
 
-/obj/item/gun/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent == INTENT_HARM)
+/obj/item/gun/attackby(obj/item/I, mob/living/user, params)
+	if(user.combat_mode)
 		return ..()
 	else if(istype(I, /obj/item/flashlight/seclite))
 		if(!can_flashlight)

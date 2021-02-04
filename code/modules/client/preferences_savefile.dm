@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	38
+#define SAVEFILE_VERSION_MAX	39
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -87,6 +87,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (!found_block_movement)
 			LAZYADD(key_bindings["Ctrl"], "block_movement")
 
+	if (current_version < 39)
+		LAZYADD(key_bindings["F"], "toggle_combat_mode")
+		LAZYADD(key_bindings["4"], "toggle_combat_mode")
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	return
 
@@ -133,7 +137,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
+	if(fexists("data/player_saves/combat_test/[ckey[1]]/[ckey]/[filename]"))
+		path = "data/player_saves/combat_test/[ckey[1]]/[ckey]/[filename]"
+		return
 	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
+	save_path = "data/player_saves/combat_test/[ckey[1]]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -273,7 +281,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_preferences()
 	if(!path)
 		return FALSE
-	var/savefile/S = new /savefile(path)
+	var/savefile/S = new /savefile()
 	if(!S)
 		return FALSE
 	S.cd = "/"
@@ -495,7 +503,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_character()
 	if(!path)
 		return FALSE
-	var/savefile/S = new /savefile(path)
+	var/savefile/S = new /savefile(save_path)
 	if(!S)
 		return FALSE
 	S.cd = "/character[default_slot]"
