@@ -2313,7 +2313,7 @@
 				usr.nominate_heart(heart_recepient, instant = TRUE)
 			if("Apply at round end")
 				usr.nominate_heart(heart_recepient)
-			if("Cancel")
+			else
 				return
 
 	else if(href_list["force_war"])
