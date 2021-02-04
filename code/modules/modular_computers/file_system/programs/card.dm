@@ -185,7 +185,7 @@
 			new_name = reject_bad_name(new_name, allow_numbers = TRUE)
 
 			if(!new_name)
-				to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new name as contains prohibited characters.</span>")
+				to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new name as it contains prohibited characters.</span>")
 				return
 
 			target_id_card.registered_name = new_name
@@ -206,7 +206,7 @@
 				custom_name = reject_bad_text(custom_name)
 
 				if(!custom_name)
-					to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new custom assignment as contains prohibited characters.</span>")
+					to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new custom assignment as it contains prohibited characters.</span>")
 				else
 					target_id_card.assignment = custom_name
 					target_id_card.update_label()
