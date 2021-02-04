@@ -1,6 +1,6 @@
 /turf/open/floor/plasteel
 	icon_state = "floor"
-	floor_tile = /obj/item/stack/tile/plasteel
+	floor_tile = /obj/item/stack/tile/iron
 
 /turf/open/floor/plasteel/setup_broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")

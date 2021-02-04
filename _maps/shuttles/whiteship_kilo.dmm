@@ -1265,7 +1265,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cn" = (
 /obj/effect/turf_decal/tile/bar,
@@ -1287,7 +1287,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "co" = (
 /obj/effect/turf_decal/delivery,
@@ -1447,7 +1447,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/greenglow,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cD" = (
 /obj/effect/turf_decal/tile/bar,
@@ -1463,7 +1463,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1483,7 +1483,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/greenglow,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/crew)
 "cG" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -1505,7 +1505,7 @@
 /mob/living/simple_animal/hostile/netherworld/migo{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/crew)
 "cH" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1513,7 +1513,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/crew)
 "cI" = (
 /obj/effect/turf_decal/delivery,
@@ -1616,7 +1616,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/greenglow,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cS" = (
 /obj/effect/turf_decal/tile/bar,
@@ -1628,7 +1628,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cT" = (
 /obj/effect/turf_decal/tile/bar,
@@ -1647,7 +1647,7 @@
 /mob/living/simple_animal/hostile/netherworld{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cU" = (
 /obj/effect/turf_decal/tile/bar,
@@ -1664,7 +1664,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned/bar)
 "cV" = (
 /obj/structure/closet/secure_closet/personal,

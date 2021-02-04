@@ -826,7 +826,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cx" = (
-/obj/item/stack/tile/plasteel,
+/obj/item/stack/tile/iron,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cy" = (
@@ -1001,7 +1001,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ms" = (
-/obj/item/stack/tile/plasteel,
+/obj/item/stack/tile/iron,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/onehalf/bridge)

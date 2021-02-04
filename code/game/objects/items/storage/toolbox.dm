@@ -286,7 +286,7 @@
 							/obj/item/storage/toolbox/artistic,
 							/obj/item/storage/toolbox/syndicate)
 
-	if(!istype(T, /obj/item/stack/tile/plasteel))
+	if(!istype(T, /obj/item/stack/tile/iron))
 		..()
 		return
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))

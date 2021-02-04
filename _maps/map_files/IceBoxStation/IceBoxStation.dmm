@@ -101,7 +101,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "aan" = (
-/obj/item/stack/tile/plasteel,
+/obj/item/stack/tile/iron,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "aao" = (
