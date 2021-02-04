@@ -39,7 +39,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
-	if(user.a_intent == INTENT_HELP || pushed_over)
+	if(!user.combat_mode || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)

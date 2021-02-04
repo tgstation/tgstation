@@ -10,10 +10,11 @@
 	max_integrity = 250
 	integrity_failure = 0.1
 	custom_materials = list(/datum/material/iron = 2000)
+	layer = OBJ_LAYER
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
-	layer = OBJ_LAYER
+
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
@@ -25,6 +26,8 @@
 	. = ..()
 	if(!anchored)	//why would you put these on the shuttle?
 		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+	if(prob(0.2))
+		name = "tactical [name]"
 
 /obj/structure/chair/ComponentInitialize()
 	. = ..()
@@ -320,7 +323,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
+	else if(custom_materials[GET_MATERIAL_REF(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 

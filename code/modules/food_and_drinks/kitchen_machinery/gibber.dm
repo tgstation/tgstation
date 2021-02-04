@@ -74,7 +74,7 @@
 		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
 		return
 
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
@@ -139,6 +139,7 @@
 	if(!occupant)
 		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
+
 	use_power(1000)
 	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
@@ -174,12 +175,14 @@
 		gibtype = C.gib_type
 		if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
+
 	var/occupant_volume
 	if(occupant?.reagents)
 		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
 		var/obj/item/food/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
+		newmeat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, occupant) = 4 * MINERAL_MATERIAL_AMOUNT))
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first

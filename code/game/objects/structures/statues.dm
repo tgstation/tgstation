@@ -52,7 +52,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
-			var/datum/material/custom_material = SSmaterials.GetMaterialRef(mat)
+			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
 			var/amount = max(0,round(custom_materials[mat]/MINERAL_MATERIAL_AMOUNT) + amount_mod)
 			if(amount > 0)
 				new custom_material.sheet_type(drop_location(),amount)
@@ -520,7 +520,7 @@ Moving interrupts
 		var/list/carving_cost = statue_costs[statue_path]
 		var/enough_materials = TRUE
 		for(var/required_material in carving_cost)
-			if(!custom_materials[required_material] || custom_materials[required_material] < carving_cost[required_material])
+			if(!has_material_type(required_material, TRUE, carving_cost[required_material]))
 				enough_materials = FALSE
 				break
 		if(enough_materials)

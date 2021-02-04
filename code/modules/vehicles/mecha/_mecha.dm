@@ -237,9 +237,9 @@
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		icon_state = silicon_icon_state
 	else if(LAZYLEN(occupants))
-		icon_state = initial(icon_state)
+		icon_state = base_icon_state
 	else
-		icon_state = initial(icon_state)+ "-open"
+		icon_state = "[base_icon_state]-open"
 
 
 /obj/vehicle/sealed/mecha/get_cell()
@@ -251,7 +251,7 @@
 /obj/vehicle/sealed/mecha/proc/restore_equipment()
 	equipment_disabled = FALSE
 	for(var/occupant in occupants)
-		var/mob/mob_occupant
+		var/mob/mob_occupant = occupant
 		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
 		to_chat(mob_occupant, "<span=notice>Equipment control unit has been rebooted successfully.</span>")
 		mob_occupant.update_mouse_pointer()
@@ -1202,8 +1202,7 @@
 					to_chat(user, "<span class='notice'>You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]</span>")
 					A.rounds = A.rounds - ammo_needed
 					if(A.custom_materials)
-						for(var/i in A.custom_materials)
-							A.custom_materials[i] = A.custom_materials[i] * (A.rounds/initial(A.rounds))
+						A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
 					A.update_name()
 					return TRUE
 

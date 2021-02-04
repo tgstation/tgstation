@@ -1,4 +1,0 @@
-author: "CoffeeDragon16"
-delete-after: True
-changes: 
-  - bugfix: "Explosive lances will properly show the grenade on them at construction."

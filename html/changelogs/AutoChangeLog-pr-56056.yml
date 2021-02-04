@@ -1,8 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscadd: "You'll now get messages when you're bleeding telling you roughly how much blood you're losing and whether the bloodloss is getting better, worse, or holding steady."
-  - tweak: "Burn wounds will slowly heal their flesh as long as the limb has < 10 burn damage, the burn has no infection, and the patient is fed."
-  - balance: "Hearts now decay slower, failing after roughly 6 minutes instead of 4. Livers and stomachs fail a bit faster than before now, while lungs fail a bit slower, meaning they won't all fail at the same time"
-  - balance: "Epipen coagulant will no longer clot all bleeding wounds at the same time. Coagulant now slows bleeding by 30%, and will only clot the wound currently losing the most blood. Determination from suffering wounds will slow bleeding by an additional 15%."
-  - balance: "Renamed \"Rapid Coagulating\" nanite program to \"Vein Repressurization\". It now reduces bleeding by 50% rather than 90%, and costs twice as much."

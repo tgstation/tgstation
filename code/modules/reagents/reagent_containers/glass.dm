@@ -9,7 +9,7 @@
 	resistance_flags = ACID_PROOF
 
 
-/obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
+/obj/item/reagent_containers/glass/attack(mob/M, mob/living/user, obj/target)
 	if(!canconsume(M, user))
 		return
 
@@ -21,7 +21,7 @@
 		return
 
 	if(istype(M))
-		if(user.a_intent == INTENT_HARM)
+		if(user.combat_mode)
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
@@ -63,7 +63,7 @@
 					if(LAZYLEN(diseases_to_add))
 						AddComponent(/datum/component/infective, diseases_to_add)
 
-/obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/glass/afterattack(obj/target, mob/living/user, proximity)
 	. = ..()
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
@@ -96,7 +96,7 @@
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(reagents.total_volume)
-		if(user.a_intent == INTENT_HARM)
+		if(user.combat_mode)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
 			reagents.expose(target, TOUCH)
@@ -125,7 +125,7 @@
  */
 /obj/item/reagent_containers/glass/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
 	if(!custom_materials)
-		set_custom_materials(list(SSmaterials.GetMaterialRef(/datum/material/glass) = 5))//sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
+		set_custom_materials(list(GET_MATERIAL_REF(/datum/material/glass) = 5))//sets it to glass so, later on, it gets picked up by the glass catch (hope it doesn't 'break' things lol)
 	return ..()
 
 /obj/item/reagent_containers/glass/beaker

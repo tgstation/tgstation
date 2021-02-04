@@ -227,6 +227,10 @@
 	name = "Buzzcut"
 	icon_state = "hair_buzzcut"
 
+/datum/sprite_accessory/hair/comet
+	name = "Comet"
+	icon_state = "hair_comet"
+
 /datum/sprite_accessory/hair/cia
 	name = "CIA"
 	icon_state = "hair_cia"
@@ -1732,6 +1736,23 @@
 /datum/sprite_accessory/wings_open/megamoth
 	name = "Megamoth"
 	icon_state = "megamoth"
+	color_src = 0
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
+/datum/sprite_accessory/wings/mothra
+	name = "Mothra"
+	icon_state = "mothra"
+	color_src = 0
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/mothra
+	name = "Mothra"
+	icon_state = "mothra"
 	color_src = 0
 	dimension_x = 96
 	center = TRUE

@@ -33,7 +33,11 @@ fi
 
 ## Fall back to running Yarn from the repo
 if ! hash yarn 2>/dev/null; then
-  alias yarn="node '${base_dir}/.yarn/releases/yarn.cjs'"
+  yarn_releases=("${base_dir}"/.yarn/releases/yarn-*.cjs)
+  yarn_release="${yarn_releases[0]}"
+  yarn() {
+    node "${yarn_release}" "${@}"
+  }
 fi
 
 
@@ -50,6 +54,7 @@ task-install() {
 task-webpack() {
   cd "${base_dir}"
   yarn run webpack-cli "${@}"
+  touch "../code/modules/tgui/USE_BUILD_BAT_INSTEAD_OF_DREAM_MAKER.dm"
 }
 
 ## Runs a development server
@@ -77,12 +82,15 @@ task-clean() {
   ## Yarn artifacts
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
+  rm -rf .yarn/webpack
   rm -rf .yarn/build-state.yml
   rm -rf .yarn/install-state.gz
   rm -f .pnp.js
   ## NPM artifacts
   rm -rf **/node_modules
   rm -f **/package-lock.json
+  ## Dummy DM
+  rm -f ../code/modules/tgui/USE_BUILD_BAT_INSTEAD_OF_DREAM_MAKER.dm
 }
 
 ## Installs merge drivers and git hooks
@@ -177,7 +185,7 @@ fi
 ## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
-  task-eslint
+  task-eslint --fix
   task-webpack --mode=production
   exit 0
 fi

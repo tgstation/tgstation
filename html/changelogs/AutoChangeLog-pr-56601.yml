@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "Intents have been replaced with a combat mode. For more info find the PR here: https://github.com/tgstation/tgstation/pull/56601"

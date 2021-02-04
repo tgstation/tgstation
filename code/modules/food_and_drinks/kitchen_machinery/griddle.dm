@@ -25,6 +25,15 @@
 /obj/machinery/griddle/Initialize()
 	. = ..()
 	grill_loop = new(list(src), FALSE)
+	if(isnum(variant))
+		variant = rand(1,3)
+
+/obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
+		return
 	variant = rand(1,3)
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
 
@@ -50,21 +59,22 @@
 
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
-	. = ..()
 	if(griddled_objects.len >= max_items)
 		to_chat(user, "<span class='notice'>[src] can't fit more items!</span>")
 		return
+	var/list/click_params = params2list(params)
+	//Center the icon where the user clicked.
+	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+		return
 	if(user.transferItemToLoc(I, src, silent = FALSE))
-		var/list/click_params = params2list(params)
-		//Center the icon where the user clicked.
-		if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-			return
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 		I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
 		AddToGrill(I, user)
 		update_icon()
+	else
+		return ..()
 
 /obj/machinery/griddle/attack_hand(mob/user)
 	. = ..()
@@ -125,3 +135,11 @@
 	. = ..()
 	icon_state = "griddle[variant]_[on ? "on" : "off"]"
 
+/obj/machinery/griddle/stand
+	name = "griddle stand"
+	desc = "A more commercialized version of your traditional griddle. What happened to the good old days where people griddled with passion?"
+	variant = "stand"
+
+/obj/machinery/griddle/stand/update_overlays()
+	. = ..()
+	. += "front_bar"

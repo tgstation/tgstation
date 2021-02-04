@@ -35,14 +35,9 @@
 
 /obj/item/ammo_box/Initialize()
 	. = ..()
-	if (!bullet_cost)
-		for (var/material in custom_materials)
-			var/material_amount = custom_materials[material]
-			LAZYSET(base_cost, material, (material_amount * 0.10))
-
-			material_amount *= 0.90 // 10% for the container
-			material_amount /= max_ammo
-			LAZYSET(bullet_cost, material, material_amount)
+	if(!bullet_cost)
+		base_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.1)
+		bullet_cost = SSmaterials.FindOrCreateMaterialCombo(custom_materials, 0.9 / max_ammo)
 	if(!start_empty)
 		top_off(starting=TRUE)
 	update_icon()
@@ -59,7 +54,7 @@
 		load_type = ammo_type
 
 	var/obj/item/ammo_casing/round_check = load_type
-	if(!starting && (caliber && initial(round_check.caliber) != caliber) || (!caliber && load_type != ammo_type))
+	if(!starting && !(caliber ? (caliber == initial(round_check.caliber)) : (ammo_type == load_type)))
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
@@ -81,7 +76,7 @@
 ///puts a round into the magazine
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
-	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
+	if(!R || !(caliber ? (caliber == R.caliber) : (ammo_type == R.type)))
 		return FALSE
 
 	if (stored_ammo.len < max_ammo)

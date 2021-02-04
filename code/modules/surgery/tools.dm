@@ -117,9 +117,8 @@
 	return (MANUAL_SUICIDE)
 
 /obj/item/surgicaldrill/augment
-	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
+	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	force = 10
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
@@ -192,9 +191,8 @@
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
 /obj/item/circular_saw/augment
-	desc = "A small but very fast spinning saw. Edges dulled to prevent accidental cutting inside of the surgeon."
+	desc = "A small but very fast spinning saw. It rips and tears until it is done."
 	w_class = WEIGHT_CLASS_SMALL
-	force = 10
 	toolspeed = 0.5
 
 
@@ -361,8 +359,8 @@
 	sharpness = SHARP_EDGED
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-/obj/item/shears/attack(mob/living/M, mob/user)
-	if(!iscarbon(M) || user.a_intent != INTENT_HELP)
+/obj/item/shears/attack(mob/living/M, mob/living/user)
+	if(!iscarbon(M) || user.combat_mode)
 		return ..()
 
 	if(user.zone_selected == BODY_ZONE_CHEST)

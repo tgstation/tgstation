@@ -81,9 +81,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	d2 = text2num(copytext(icon_state, dash + length(icon_state[dash])))
 
 	if(d1)
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 2, color)
+		stored = new/obj/item/stack/pipe_cleaner_coil(null, 2, null, null, null, color)
 	else
-		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, color)
+		stored = new/obj/item/stack/pipe_cleaner_coil(null, 1, null, null, null, color)
 
 	color = param_color || color
 	if(!color)
@@ -234,10 +234,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, list/mat_override=null, mat_amt=1, param_color = null)
 	. = ..()
 
-	color = param_color || color
+	if(param_color)
+		color = param_color
 	if(!color)
 		var/list/pipe_cleaner_colors = GLOB.pipe_cleaner_colors
 		var/random_color = pick(pipe_cleaner_colors)

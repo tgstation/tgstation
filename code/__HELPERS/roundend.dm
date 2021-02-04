@@ -57,7 +57,7 @@
 						mob_data["module"] = "pAI"
 					else if(iscyborg(L))
 						var/mob/living/silicon/robot/R = L
-						mob_data["module"] = R.module.name
+						mob_data["module"] = R.model.name
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
@@ -352,7 +352,7 @@
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
-		parts += "[FOURSPACES]Threat left: [mode.threat]"
+		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
 			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
@@ -366,8 +366,8 @@
  *
  * Composits the roundend report, and saves it in two locations.
  * The report is first saved along with the round's logs
- * Then, the report is copied to a fixed directory specifically for 
- * housing the server's last roundend report. In this location, 
+ * Then, the report is copied to a fixed directory specifically for
+ * housing the server's last roundend report. In this location,
  * the file will be overwritten at the end of each shift.
  */
 /datum/controller/subsystem/ticker/proc/log_roundend_report()
@@ -381,7 +381,7 @@
 	//Log the rendered HTML in the round log directory
 	fdel(filename)
 	text2file(content, filename)
-	//Place a copy in the root folder, to be overwritten each round. 
+	//Place a copy in the root folder, to be overwritten each round.
 	filename = "data/server_last_roundend_report.html"
 	fdel(filename)
 	text2file(content, filename)

@@ -206,7 +206,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 10), \
-	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -446,8 +445,12 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
 		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses),	\
 		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens),					\
+		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank),	\
+		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank),	\
 		null,																					\
 
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
+		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer),					\
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
@@ -595,7 +598,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	. = ..()
 	. += GLOB.bronze_recipes
 
-/obj/item/stack/sheet/paperframes/Initialize()
+/obj/item/stack/sheet/paperframes/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	pixel_x = 0
 	pixel_y = 0
@@ -752,4 +755,23 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/sandblock/twenty
 	amount = 20
 /obj/item/stack/sheet/sandblock/five
+	amount = 5
+
+
+/obj/item/stack/sheet/hauntium
+	name = "haunted sheets"
+	desc = "These sheets seem cursed."
+	singular_name = "haunted sheet"
+	icon_state = "sheet-meat"
+	material_flags = MATERIAL_COLOR
+	mats_per_unit = list(/datum/material/hauntium = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/hauntium
+	material_type = /datum/material/hauntium
+	material_modifier = 1 //None of that wussy stuff
+
+/obj/item/stack/sheet/hauntium/fifty
+	amount = 50
+/obj/item/stack/sheet/hauntium/twenty
+	amount = 20
+/obj/item/stack/sheet/hauntium/five
 	amount = 5

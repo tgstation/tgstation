@@ -50,7 +50,7 @@
 	return ..()
 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/plant_analyzer) && user.a_intent == INTENT_HELP)
+	if(istype(I, /obj/item/plant_analyzer) && !user.combat_mode)
 		to_chat(user, get_graft_text())
 	return ..()
 

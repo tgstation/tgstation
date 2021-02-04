@@ -354,7 +354,7 @@
 /datum/chemical_reaction/grappa
 	results = list(/datum/reagent/consumable/ethanol/grappa = 10)
 	required_reagents = list (/datum/reagent/consumable/ethanol/wine = 10)
-	required_catalysts = list (/datum/reagent/consumable/enzyme = 5)
+	required_catalysts = list (/datum/reagent/consumable/enzyme = 10)
 
 /datum/chemical_reaction/whiskey_sour
 	results = list(/datum/reagent/consumable/ethanol/whiskey_sour = 3)

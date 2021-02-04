@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/floorpill = 1,
+		/obj/item/reagent_containers/pill/maintenance = 1,
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -246,6 +246,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/head/helmet/justice =1,
 		/obj/item/clothing/suit/space/hardsuit/carp = 1,
+		/obj/item/book/granter/crafting_recipe/pipegun_prime =1,
 		/obj/item/dice/d20/fate/stealth/one_use = 1,	//Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/dice/d20/fate/stealth/cursed = 1, 	//Only rolls 1
 		/obj/item/clothing/shoes/jackboots/fast = 1,

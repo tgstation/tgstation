@@ -169,13 +169,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	conveying = FALSE
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
+/obj/machinery/conveyor/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
 		if(I.use_tool(src, user, 40, volume=40))
 			if(!(machine_stat & BROKEN))
-				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, id)
+				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 			qdel(src)
@@ -193,7 +193,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
 
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		user.transferItemToLoc(I, drop_location())
 	else
 		return ..()
@@ -425,7 +425,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	///id for linking
 	var/id = ""
 
-/obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, _id)
+/obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1, _id)
 	. = ..()
 	id = _id
 

@@ -1,8 +1,0 @@
-author: "Dr. Harimoto + Zytlog"
-delete-after: True
-changes: 
-  - rscadd: "Petri Dish Smart Fridge - Nari Harimoto"
-  - rscadd: "Cytology Area - Nari Harimoto"
-  - rscadd: "Cytology Lab (Metastation) - Nari Harimoto"
-  - tweak: "Completly redone Science Department on Metastation - Zytlog + 10% Nari Harimoto"
-  - rscadd: "Cytology Wikibook - Nari Harimoto"

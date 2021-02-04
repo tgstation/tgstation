@@ -24,6 +24,9 @@
 	/// Whether to change the turf's icon_state to "[base_icon_state]_dug" when its dugged up
 	var/postdig_icon_change = TRUE
 
+/turf/open/floor/plating/asteroid/setup_broken_states()
+	return list("asteroid_dug")
+
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
 	. = ..()
@@ -99,6 +102,9 @@
 	floor_variance = 15
 	digResult = /obj/item/stack/ore/glass/basalt
 
+/turf/open/floor/plating/asteroid/basalt/setup_broken_states()
+	return list("basalt_dug")
+
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
 
@@ -149,11 +155,12 @@
 	slowdown = 2
 	flags_1 = NONE
 	planetary_atmos = TRUE
-	broken_states = list("snow_dug")
-	burnt_states = list("snow_dug")
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	digResult = /obj/item/stack/sheet/mineral/snow
+
+/turf/open/floor/plating/asteroid/snow/setup_broken_states()
+	return list("snow_dug")
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -178,7 +185,7 @@
 	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	floor_variance = 0
 	icon_state = "snow-ice"
 	base_icon_state = "snow-ice"
@@ -187,6 +194,8 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/floor/plating/asteroid/snow/ice/setup_broken_states()
+	return list("snow-ice")
 /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

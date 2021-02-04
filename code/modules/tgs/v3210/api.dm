@@ -160,7 +160,7 @@
 		var/datum/tgs_revision_information/test_merge/tm = new
 		tm.number = text2num(I)
 		var/list/entry = json[I]
-		tm.pull_request_commit = entry["commit"]
+		tm.head_commit = entry["commit"]
 		tm.author = entry["author"]
 		tm.title = entry["title"]
 		. += tm

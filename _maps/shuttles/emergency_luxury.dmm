@@ -801,15 +801,15 @@
 /area/shuttle/escape/luxury)
 "cv" = (
 /obj/structure/table,
-/obj/item/reagent_containers/pill/floorpill{
+/obj/item/reagent_containers/pill/maintenance{
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/pill/floorpill{
+/obj/item/reagent_containers/pill/maintenance{
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/pill/floorpill,
+/obj/item/reagent_containers/pill/maintenance,
 /obj/item/healthanalyzer{
 	pixel_y = 9
 	},

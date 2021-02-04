@@ -735,7 +735,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
-	else if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(machine_stat & BROKEN)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -778,8 +778,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 
 
-/obj/machinery/newscaster/attack_paw(mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/newscaster/attack_paw(mob/living/user)
+	if(!user.combat_mode)
 		to_chat(user, "<span class='warning'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	else
 		take_damage(5, BRUTE, MELEE)

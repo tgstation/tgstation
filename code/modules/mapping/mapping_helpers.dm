@@ -501,3 +501,57 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		stack_trace("Trait mapper found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name] | trait name: [trait_name]")
 	qdel(src)
 
+/// Fetches an external dmi and applies to the target object
+/obj/effect/mapping_helpers/custom_icon
+	name = "Custom Icon Helper"
+	icon_state = "trait"
+	late = TRUE
+	///Will inject into all fitting the criteria if false, otherwise first found.
+	var/first_match_only = TRUE
+	///Will inject into atoms of this type.
+	var/target_type
+	///Will inject into atoms with this name.
+	var/target_name
+	/// This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+	var/target_variable = "icon"
+	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi"
+	var/icon_url
+
+/obj/effect/mapping_helpers/custom_icon/LateInitialize()
+	///TODO put this injector stuff under common root
+	var/I = fetch_icon(icon_url)
+	var/turf/target_turf = get_turf(src)
+	var/matches_found = 0
+	for(var/a in target_turf.GetAllContents())
+		var/atom/atom_on_turf = a
+		if(atom_on_turf == src)
+			continue
+		if(target_name && atom_on_turf.name != target_name)
+			continue
+		if(target_type && !istype(atom_on_turf,target_type))
+			continue
+		atom_on_turf.vars[target_variable] = I
+		matches_found++
+		if(first_match_only)
+			qdel(src)
+			return
+	if(!matches_found)
+		stack_trace("[src] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]")
+	qdel(src)
+
+/obj/effect/mapping_helpers/custom_icon/proc/fetch_icon(url)
+	var/static/icon_cache = list()
+	if(icon_cache[url])
+		return icon_cache[url]
+	log_asset("Custom Icon Helper fetching dmi from: [url]")
+	var/datum/http_request/request = new()
+	var/file_name = "tmp/custom_map_icon.dmi"
+	request.prepare(RUSTG_HTTP_METHOD_GET, url , "", "", file_name)
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		stack_trace("Failed to fetch mapped custom icon from url [url], code: [response.status_code]")
+	var/icon/I = new(file_name)
+	icon_cache[url] = I
+	return I

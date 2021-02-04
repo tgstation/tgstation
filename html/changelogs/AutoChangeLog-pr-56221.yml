@@ -1,0 +1,9 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "Dynamic now rolls a separate budget for round start and midround antagonists, meaning less round start antags will roll in favor of more midround ones."
+  - admin: "The antag_cap value now uses an equation that scales with population, rather than a fixed array."
+  - admin: "autotraitor_cooldown now uses deciseconds rather than ticks, so the older value of 450 now means 45 seconds. Set it to be 9000 if you want it to be accurate to the old value (15 minutes), or simply unset it."
+  - admin: "Midround/latejoin dynamic timers are now configurable."
+  - admin: "Syndicate Sleeper Agent will now give details when ti fails."
+  - bugfix: "The autotraitor cooldown now respects configuration, rather than resetting back to 15 minutes after it is rolled."

@@ -68,7 +68,7 @@
 	if(!target)
 		return
 
-	if(user.a_intent != INTENT_HARM || !isGlass)
+	if(!user.combat_mode || !isGlass)
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -635,5 +635,5 @@
 	name = "lean"
 	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
 	icon_state = "lean"
-	list_reagents = list(/datum/reagent/consumable/lean = 50)
+	list_reagents = list(/datum/reagent/consumable/lean = 20)
 	random_sprite = FALSE
