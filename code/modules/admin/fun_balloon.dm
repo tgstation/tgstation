@@ -91,16 +91,28 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
+	var/min_crash_strength = 3
+	var/max_crash_strength = 15
 
 /obj/effect/station_crash/Initialize()
 	..()
-	for(var/S in SSshuttle.stationary)
-		var/obj/docking_port/stationary/SM = S
-		if(SM.id == "emergency_home")
-			var/new_dir = turn(SM.dir, 180)
-			SM.forceMove(get_ranged_target_turf(SM, new_dir, rand(3,15)))
-			break
+	shuttle_crash()
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/station_crash/proc/shuttle_crash()
+	var/crash_strength = rand(min_crash_strength,max_crash_strength)
+	for (var/S in SSshuttle.stationary)
+		var/obj/docking_port/stationary/SM = S
+		if (SM.id == "emergency_home")
+			var/new_dir = turn(SM.dir, 180)
+			SM.forceMove(get_ranged_target_turf(SM, new_dir, crash_strength))
+			break
+
+/obj/effect/station_crash/devastating
+	name = "devastating station crash"
+	desc = "Absolute Destruction. Will crash the shuttle far into the station."
+	min_crash_strength = 15
+	max_crash_strength = 25
 
 
 //Arena
@@ -158,11 +170,7 @@
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
-	INVOKE_ASYNC(src, .proc/do_bloodbath, M)
-
-/obj/effect/forcefield/arena_shuttle_entrance/proc/do_bloodbath(mob/living/L)
-	var/obj/effect/mine/pickup/bloodbath/B = new (L)
-	B.mineEffect(L)
+	M.apply_status_effect(STATUS_EFFECT_MAYHEM)
 
 /area/shuttle_arena
 	name = "arena"
