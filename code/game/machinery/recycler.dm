@@ -145,7 +145,6 @@
 	if(not_eaten)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
 	if(!ismob(AM0))
-		AM0.moveToNullspace()
 		qdel(AM0)
 	else // Lets not move a mob to nullspace and qdel it, yes?
 		for(var/i in AM0.contents)

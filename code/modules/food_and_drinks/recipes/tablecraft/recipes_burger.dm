@@ -75,7 +75,7 @@
 /datum/crafting_recipe/food/fishburger
 	name = "Fish burger"
 	reqs = list(
-		/obj/item/food/carpmeat = 1,
+		/obj/item/food/fishmeat = 1,
 		/obj/item/food/bun = 1,
 		/obj/item/food/cheesewedge = 1
 	)

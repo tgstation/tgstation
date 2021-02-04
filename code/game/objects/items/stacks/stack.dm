@@ -83,7 +83,7 @@
  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
  */
 /obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = LAZYLEN(mats) ? SSmaterials.FindOrCreateMaterialCombo(mats, multiplier) : mats
+	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
 	update_custom_materials()
 
 /** Updates the custom materials list of this stack.

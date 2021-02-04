@@ -142,6 +142,28 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/reciever
+	name = "Modular Rifle Reciever"
+	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SAW)
+	result = /obj/item/weaponcrafting/receiver
+	reqs = list(/obj/item/stack/sheet/metal = 5,
+				/obj/item/stack/sticky_tape = 1,
+				/obj/item/screwdriver = 1,
+				/obj/item/assembly/mousetrap = 1)
+	time = 100
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/riflestock
+	name = "Wooden Rifle Stock"
+	tools = list(/obj/item/hatchet)
+	result = /obj/item/weaponcrafting/stock
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 8,
+				/obj/item/stack/sticky_tape = 1)
+	time = 50
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/advancedegun
 	name = "Advanced Energy Gun"
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
@@ -475,15 +497,29 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
-/datum/crafting_recipe/ishotgun
-	name = "Improvised Shotgun"
-	result = /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
+/datum/crafting_recipe/pipegun
+	name = "Pipegun"
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/package_wrap = 5)
+				/obj/item/stack/sticky_tape = 1)
 	tools = list(TOOL_SCREWDRIVER)
-	time = 100
+	time = 50
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/pipegun_prime
+	name = "Regal Pipegun"
+	always_available = FALSE
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
+	reqs = list(/obj/item/gun/ballistic/rifle/boltaction/pipegun = 1,
+				/obj/item/food/deadmouse = 1,
+				/datum/reagent/consumable/grey_bull = 20,
+				/obj/item/spear = 1,
+				/obj/item/storage/toolbox= 1)
+	tools = list(TOOL_SCREWDRIVER, /obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas, /obj/item/melee/baton/cattleprod)
+	time = 300 //contemplate for a bit
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 

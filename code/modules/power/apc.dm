@@ -197,7 +197,6 @@
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
-	UnregisterSignal(src, COMSIG_ATOM_UPDATE_ICON)
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
@@ -229,7 +228,6 @@
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_UPDATE_ICON, .proc/check_updates)
 	if(!mapload)
 		return
 	has_electronics = APC_ELECTRONICS_SECURED
@@ -428,11 +426,14 @@
 	if(last_update_state == update_state && last_update_overlay == update_overlay)
 		return NONE
 
-	. = NONE
-	if(last_update_state == update_state)
-		. |= COMSIG_ATOM_NO_UPDATE_ICON_STATE
-	if((last_update_overlay == update_overlay) && (update_state & UPSTATE_ALLGOOD))
-		. |= COMSIG_ATOM_NO_UPDATE_OVERLAYS
+	var/results = 0
+	if(last_update_state == update_state && last_update_overlay == update_overlay)
+		return 0
+	if(last_update_state != update_state)
+		results += 1
+	if(last_update_overlay != update_overlay)
+		results += 2
+	return results
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
@@ -805,7 +806,7 @@
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user)
+/obj/machinery/power/apc/attack_hand(mob/user, params)
 	. = ..()
 	if(.)
 		return
@@ -814,7 +815,28 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
-		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
+		var/list/modifiers = params2list(params)
+		if(H.combat_mode && E.drain_time < world.time)
+			if(modifiers && modifiers["right"]) //Disarm
+				if(cell.charge == cell.maxcharge)
+					to_chat(H, "<span class='warning'>The APC is full!</span>")
+					return
+				var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+				if(stomach.crystal_charge < 10)
+					to_chat(H, "<span class='warning'>Your charge is too low!</span>")
+					return
+				E.drain_time = world.time + 75
+				to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
+				if(do_after(user, 75, target = src))
+					if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
+						return
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
+						stomach.adjust_charge(-10)
+						cell.charge += 10
+					else
+						to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
+				return
 			if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
 				to_chat(H, "<span class='warning'>The APC's syphon safeties prevent you from draining power!</span>")
 				return
@@ -833,26 +855,6 @@
 					cell.charge -= APC_POWER_GAIN
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
-			return
-		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
-			if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
-				to_chat(H, "<span class='warning'>The APC is full!</span>")
-				return
-			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach.crystal_charge < APC_POWER_GAIN)
-				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
-				return
-			E.drain_time = world.time + APC_DRAIN_TIME
-			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
-			if(do_after(user, APC_DRAIN_TIME, target = src))
-				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < APC_POWER_GAIN))
-					return
-				if(istype(stomach))
-					to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
-					stomach.adjust_charge(-APC_POWER_GAIN)
-					cell.charge += APC_POWER_GAIN
-				else
-					to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
 			return
 
 	if(opened && (!issilicon(user)))

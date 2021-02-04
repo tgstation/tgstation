@@ -632,6 +632,8 @@
 	if(contents.len > 0)
 		to_chat(user, "<span class='warning'>You can't fold down [src] with crayons inside!</span>")
 		return
+	if(flags_1 & HOLOGRAM_1)
+		return
 
 	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
 	to_chat(user, "<span class='notice'>You fold the [src] into cardboard.</span>")
