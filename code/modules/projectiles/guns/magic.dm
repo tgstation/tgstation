@@ -54,6 +54,7 @@
 	chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 
 /obj/item/gun/magic/Destroy()
@@ -89,3 +90,8 @@
 	switch(var_name)
 		if(NAMEOF(src, charges))
 			recharge_newshot()
+
+/obj/item/gun/magic/proc/instant_recharge()
+	charges = max_charges
+	recharge_newshot()
+	update_icon()

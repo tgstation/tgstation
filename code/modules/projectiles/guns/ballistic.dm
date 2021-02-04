@@ -124,6 +124,7 @@
 	else
 		chamber_round(replace_new_round = TRUE)
 	update_icon()
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_reload)
 
 /obj/item/gun/ballistic/vv_edit_var(vname, vval)
 	. = ..()
@@ -612,6 +613,15 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 			process_fire(user, user, FALSE)
 			. = TRUE
 
+/obj/item/gun/ballistic/proc/instant_reload()
+	if(magazine)
+		magazine.top_off()
+	else
+		if(!mag_type)
+			return
+		magazine = new mag_type(src)
+	chamber_round()
+	update_icon()
 
 /obj/item/suppressor
 	name = "suppressor"
