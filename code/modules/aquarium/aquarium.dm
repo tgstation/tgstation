@@ -14,10 +14,12 @@
 	integrity_failure = 0.3
 
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
-	var/fluid_temp = MIN_AQUARIUM_TEMP
+	var/fluid_temp = DEFAULT_AQUARIUM_TEMP
 	var/min_fluid_temp = MIN_AQUARIUM_TEMP
 	var/max_fluid_temp = MAX_AQUARIUM_TEMP
-	var/lamp = FALSE
+
+	/// Can fish reproduce in this quarium.
+	var/allow_breeding = FALSE
 
 	var/glass_icon_state = "aquarium_glass"
 	var/broken_glass_icon_state = "aquarium_glass_broken"
@@ -180,6 +182,7 @@
 	. = ..()
 	.["fluid_type"] = fluid_type
 	.["temperature"] = fluid_temp
+	.["allow_breeding"] = allow_breeding
 	var/list/content_data = list()
 	for(var/atom/movable/fish in contents)
 		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
@@ -208,6 +211,9 @@
 				fluid_type = params["fluid"]
 				SEND_SIGNAL(src, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
 				. = TRUE
+		if("allow_breeding")
+			allow_breeding = !allow_breeding
+			. = TRUE
 		if("remove")
 			var/atom/movable/inside = locate(params["ref"]) in contents
 			if(inside)

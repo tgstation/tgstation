@@ -9308,11 +9308,11 @@
 /area/wizard_station)
 "zV" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "zX" = (
@@ -12219,10 +12219,10 @@
 /obj/item/food/meat/rawcutlet,
 /obj/item/food/meat/rawcutlet,
 /obj/item/food/meat/rawcutlet,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
-/obj/item/food/carpmeat,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
+/obj/item/food/fishmeat/carp,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
