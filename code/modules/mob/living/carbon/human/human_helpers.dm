@@ -108,10 +108,9 @@
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, "<span class='warning'>You can't bring yourself to use a ranged weapon!</span>")
 		return FALSE
-	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(HAS_TRAIT(src, TRAIT_TINY))
-			to_chat(src, "<span class='warning'>You're too small to reach the trigger!'</span>")
-			return FALSE
+	if(HAS_TRAIT(src, TRAIT_TINY))
+		to_chat(src, "<span class='warning'>You're too small to reach the trigger!'</span>")
+		return FALSE
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
