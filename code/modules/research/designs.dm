@@ -8,11 +8,11 @@ you use one of the material IDs below. These are NOT ids in the usual sense (the
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
 The currently supporting non-reagent materials. All material amounts are set as the define MINERAL_MATERIAL_AMOUNT, which defaults to 2000
 
-Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
+Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from iron). Only add raw materials.
 
 Design Guidelines
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
-- A single sheet of anything is 2000 units of material. Materials besides metal/glass require help from other jobs (mining for
+- A single sheet of anything is 2000 units of material. Materials besides iron/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
