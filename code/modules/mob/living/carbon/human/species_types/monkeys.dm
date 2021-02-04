@@ -93,11 +93,9 @@
 
 /datum/species/monkey/handle_mutations_and_radiation(mob/living/carbon/human/H)
 	. = ..()
-	var/radiation = H.radiation	
-	if(radiation)
-		if(radiation > RAD_MOB_MUTATE * 2 && prob(50))	
-			H.gorillize()	
-			return
+	if(H.radiation > RAD_MOB_MUTATE * 2 && prob(50))	
+		H.gorillize()	
+		return
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
