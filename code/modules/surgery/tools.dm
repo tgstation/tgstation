@@ -397,9 +397,9 @@
 	if(patient.stat >= UNCONSCIOUS || patient.IsImmobilized()) //if you can't move (due to paralysis, a stun, being in staminacrit, etc.), it's much easier to properly "snip" you
 		amputation_speed_mod *= 0.5
 	if(patient.jitteriness >= 1) //jittering will make it harder to secure the shears, even if you can't otherwise move
-		amputation_speed_mod *= 1.5 //15*0.5*1.5, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
+		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
 
-	if(do_after(user,  toolspeed * 150 * amputation_speed_mod, target = patient))
+	if(do_after(user,  toolspeed * 15 SECONDS * amputation_speed_mod, target = patient))
 		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 250, TRUE)
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
 			tail_snip_candidate.Remove(patient)
