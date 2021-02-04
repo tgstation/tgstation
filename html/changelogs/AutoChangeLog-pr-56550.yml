@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Robotics can now properly use their maintenance on Meta"
+  - bugfix: "Removed an active turf in science solars"

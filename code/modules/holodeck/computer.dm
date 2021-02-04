@@ -43,6 +43,9 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	///bottom left corner of the loading room, used for placing
 	var/turf/bottom_left
 
+	///if TRUE the holodeck is busy spawning another simulation and should immediately stop loading the newest one
+	var/spawning_simulation = FALSE
+
 	//old vars
 
 	///the area that this holodeck loads templates into, used for power and deleting holo objects that leave it
@@ -186,7 +189,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		map_id = offline_program
 		force = TRUE
 
-	if (!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force)
+	if ((!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force) || spawning_simulation)
 		say("ERROR. Recalibrating projection apparatus.")
 		return
 
@@ -195,6 +198,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		if (damaged && floorcheck())
 			damaged = FALSE
 
+	spawning_simulation = TRUE
 	active = (map_id != offline_program)
 	use_power = active + IDLE_POWER_USE
 	program = map_id
@@ -270,6 +274,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 				if(istype(machines, /obj/machinery/button))
 					var/obj/machinery/button/buttons = machines
 					buttons.setup_device()
+	spawning_simulation = FALSE
 
 ///this qdels holoitems that should no longer exist for whatever reason
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)

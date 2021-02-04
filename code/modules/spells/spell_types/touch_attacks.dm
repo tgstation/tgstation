@@ -83,3 +83,14 @@
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/duffelbag
+	name = "Bestow Cursed Duffel Bag"
+	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
+	hand_path = /obj/item/melee/touch_attack/duffelbag
+	action_icon_state = "duffelbag_curse"
+	
+	school = "conjuration"
+	charge_max = 60
+	clothes_req = FALSE
+	cooldown_min = 20
