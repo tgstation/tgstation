@@ -153,7 +153,7 @@
 	var/number = max(targ_len * (4-(targ_len-1)) - smash_len,1)
 
 	for(var/i in 0 to number)
-		var/turf/chosen_location = get_safe_random_station_turf(GLOB.the_station_areas)
+		var/turf/chosen_location = get_safe_random_station_turf()
 
 		//we also dont want them close to each other, at least 1 tile of seperation
 		var/obj/effect/reality_smash/what_if_i_have_one = locate() in range(1, chosen_location)

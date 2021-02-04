@@ -29,10 +29,9 @@
 	report_message = "Ian has gone exploring somewhere in the station."
 
 /datum/station_trait/ian_adventure/on_round_start()
-	for(var/mob in GLOB.mob_list)
-		if(!(istype(mob, /mob/living/simple_animal/pet/dog/corgi/ian) || istype(mob, /mob/living/simple_animal/pet/dog/corgi/puppy/ian)))
+	for(var/mob/living/simple_animal/pet/dog/corgi/dog in GLOB.mob_list)
+		if(!(istype(dog, /mob/living/simple_animal/pet/dog/corgi/ian) || istype(dog, /mob/living/simple_animal/pet/dog/corgi/puppy/ian)))
 			continue
-		var/mob/living/simple_animal/dog = mob
 
 		// The extended safety checks at time of writing are about chasms and lava
 		// if there are any chasms and lava on stations in the future, woah

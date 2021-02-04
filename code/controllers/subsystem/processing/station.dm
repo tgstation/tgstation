@@ -41,11 +41,12 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/proc/pick_traits(trait_type, amount)
 	if(!amount)
 		return
-	var/datum/station_trait/picked_trait = pickweight(selectable_traits_by_types[trait_type]) //Rolls from the table for the specific trait type
-	picked_trait = new picked_trait()
-	station_traits += picked_trait
-	if(!picked_trait.blacklist)
-		return
-	for(var/i in picked_trait.blacklist)
-		var/datum/station_trait/trait_to_remove = i
-		selectable_traits_by_types[initial(trait_to_remove.trait_type)] -= trait_to_remove
+	for(var/i in 1 to amount)
+		var/datum/station_trait/picked_trait = pickweight(selectable_traits_by_types[trait_type]) //Rolls from the table for the specific trait type
+		picked_trait = new picked_trait()
+		station_traits += picked_trait
+		if(!picked_trait.blacklist)
+			return
+		for(var/i in picked_trait.blacklist)
+			var/datum/station_trait/trait_to_remove = i
+			selectable_traits_by_types[initial(trait_to_remove.trait_type)] -= trait_to_remove

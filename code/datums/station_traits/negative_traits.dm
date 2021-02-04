@@ -46,7 +46,7 @@
 	. = ..()
 	for(var/a in GLOB.apcs_list)
 		var/obj/machinery/power/apc/current_apc = a
-		if(prob(30))
+		if(prob(60))
 			current_apc.overload_lighting()
 
 /datum/station_trait/empty_maint
