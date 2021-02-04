@@ -499,7 +499,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_character()
 	if(!path)
 		return FALSE
-	var/savefile/S = new /savefile(save_path)
+	var/savefile/S = new /savefile(path)
 	if(!S)
 		return FALSE
 	S.cd = "/character[default_slot]"
