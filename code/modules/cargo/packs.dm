@@ -1570,40 +1570,6 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
 
-/datum/supply_pack/service/carpet_neon
-	name = "Simple Neon Carpet Crate"
-	desc = "Simple knitted carpets with phosphorescent lining. Contains 120 tiles each of 13 color variants."
-	cost = CARGO_CRATE_VALUE * 15
-	contains = list(
-		/obj/item/stack/tile/carpet/emissive/neon/simple/white/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/white/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/red/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/red/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/orange/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/orange/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/green/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/green/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/teal/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/teal/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/blue/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/blue/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/purple/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/purple/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/violet/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/violet/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/pink/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/pink/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/black/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/black/sixty,
-	)
-	crate_name = "neon carpet crate"
-
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
@@ -1709,7 +1675,7 @@
 					/obj/item/food/meat/rawbacon,
 					/obj/item/food/meat/slab/penguin,
 					/obj/item/food/spiderleg,
-					/obj/item/food/carpmeat,
+					/obj/item/food/fishmeat/carp,
 					/obj/item/food/meat/slab/human)
 	crate_name = "food crate"
 
@@ -2364,6 +2330,27 @@
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/aquarium_kit
+	name = "Aquarium Kit"
+	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, fish catalog, feed can and three freshwater fish from our collection."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/book/fish_catalog,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/fish_feed,
+					/obj/item/storage/box/aquarium_props,
+					/obj/item/aquarium_kit)
+	crate_name = "aquarium kit crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/aquarium_fish
+	name = "Aquarium Fish Case"
+	desc = "An aquarium fish handpicked by monkeys from our collection."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random)
+	crate_name = "aquarium fish crate"
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"

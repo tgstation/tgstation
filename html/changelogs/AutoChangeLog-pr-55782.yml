@@ -1,7 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - rscadd: "Neon carpets exists. Bug your local chemist or quartermaster for a supply."
-  - code_imp: "Decals support user-defined planes and some forms of smoothing."
-  - code_imp: "Emissive layers now support emissive turfs, items, and mobs as well as emissive blocking structures."
-  - bugfix: "You can recombine stacks of carpet you split apart again. Did anyone notice that this was broken?"

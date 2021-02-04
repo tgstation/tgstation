@@ -1,7 +1,0 @@
-author: "SparkezelPL"
-delete-after: True
-changes: 
-  - balance: "Mosins now have 10 armor penetration and lowered wound chance"
-  - balance: "Russian surplus now costs 50% more"
-  - balance: "Due to their old age and poor maintenance Mosin Nagants can jam now, use a gun maintenance supplies on them after combat to make them keep their reliability."
-  - rscadd: "Added gun maintenance kit, it contains gun maintenance supplies you can use to make sure your mosin doesnt jam. You can find them in russian surplus crates"

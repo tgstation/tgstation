@@ -8,7 +8,6 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
-	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	var/icon_door = null
 	var/icon_door_override = FALSE //override to have open overlay use icon different to its base's
@@ -72,6 +71,7 @@
 
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	luminosity = 0
 	if(!opened)
 		if(icon_door)
@@ -83,7 +83,7 @@
 		if(secure && !broken)
 			//Overlay is similar enough for both that we can use the same mask for both
 			luminosity = 1
-			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_STRUCTURE_LAYER, EMISSIVE_STRUCTURE_PLANE, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 			if(locked)
 				. += "locked"
 			else
@@ -256,7 +256,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
@@ -303,7 +303,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='hear'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE
