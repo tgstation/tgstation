@@ -190,7 +190,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglecombatmodesound)()
 		to_chat(usr, "You will no longer hear a sound when combat mode is turned on.")
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Combat Mode Toggle Sounds", "[usr.client.prefs.toggles & SOUND_COMBATMODE ? "Enabled" : "Disabled"]"))
 
-datum/verbs/menu/settings/sound/togglecombatmodesound/Get_checked(client/C)
+/datum/verbs/menu/settings/sound/togglecombatmodesound/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_COMBATMODE
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglemidis)()
