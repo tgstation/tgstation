@@ -1093,7 +1093,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)
-		///		var/command1 = "\".winset \\\"mapwindow.map.right-click=false\\\"\\\"\\\"\""
 		winset(src, "mapwindow.map", "right-click=true")
 		winset(src, "ShiftUp", "is-disabled=false")
 		winset(src, "Shift", "is-disabled=false")
