@@ -46,7 +46,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		picked_trait = new picked_trait()
 		station_traits += picked_trait
 		if(!picked_trait.blacklist)
-			return
+			continue
 		for(var/i in picked_trait.blacklist)
 			var/datum/station_trait/trait_to_remove = i
 			selectable_traits_by_types[initial(trait_to_remove.trait_type)] -= trait_to_remove

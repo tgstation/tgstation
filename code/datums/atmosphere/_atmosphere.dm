@@ -21,7 +21,7 @@
 	var/pressure_scalar = target_pressure / maximum_pressure
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNNATURAL_ATMOSPHERE))
-		restricted_chance = restricted_chance + 20
+		restricted_chance = restricted_chance + 30
 
 	// First let's set up the gasmix and base gases for this template
 	// We make the string from a gasmix in this proc because gases need to calculate their pressure
