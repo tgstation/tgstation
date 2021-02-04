@@ -202,8 +202,8 @@
 			if(target == "Custom")
 				// Sanitize the custom assignment name first.
 				var/custom_name = sanitize(params["custom_name"])
-				// However, we are going to reject bad assignment names overall including names with invalid characters in them, while allowing numbers.
-				custom_name = reject_bad_name(custom_name, allow_numbers = TRUE)
+				// However, we are going to assignments containing bad text overall.
+				custom_name = reject_bad_text(custom_name)
 
 				if(!custom_name)
 					to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new custom assignment as contains prohibited characters.</span>")
