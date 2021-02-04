@@ -66299,7 +66299,7 @@
 "mne" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/solar/starboard/aft)
 "mnI" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -78812,7 +78812,7 @@
 /area/hallway/secondary/service)
 "vAO" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;5;33;69"
+	req_one_access_txt = "5;12;29;33;69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
