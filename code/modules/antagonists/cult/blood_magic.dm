@@ -583,7 +583,7 @@
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 			else
-				to_chat(user, "<span class='warning'>You need [METAL_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!</span>")
+				to_chat(user, "<span class='warning'>You need [IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!</span>")
 				return
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target

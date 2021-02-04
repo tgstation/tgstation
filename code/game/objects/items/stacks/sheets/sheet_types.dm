@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	material_type = /datum/material/iron
 	matter_amount = 4
 	cost = 500
-	source = /datum/robot_energy_storage/metal
+	source = /datum/robot_energy_storage/iron
 
 /obj/item/stack/sheet/iron/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
