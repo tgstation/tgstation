@@ -649,3 +649,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	return log(temp_diff * change_rate + 1) * BODYTEMP_AUTORECOVERY_DIVISOR
 
 #define ISADVANCEDTOOLUSER(mob) (HAS_TRAIT(mob, TRAIT_ADVANCEDTOOLUSER) && !HAS_TRAIT(mob, TRAIT_MONKEYLIKE))
+
+/// Gets the client of the mob, allowing for mocking of the client.
+/// You only need to use this if you know you're going to be mocking clients somewhere else.
+#define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)

@@ -875,25 +875,12 @@
 		<b>No stacking:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_no_stacking=1'> <b>[GLOB.dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
 		<br/>Unless the threat goes above [GLOB.dynamic_stacking_limit], only one "round-ender" ruleset will be drafted. <br/>
 		<br/>
-		<b>Classic secret mode:</b> - Option is <a href='?src=[REF(src)];[HrefToken()];f_dynamic_classic_secret=1'> <b>[GLOB.dynamic_classic_secret ? "ON" : "OFF"]</b></a>.
-		<br/>Only one roundstart ruleset will be drafted. Only traitors and minor roles will latespawn. <br/>
-		<br/>
-		<br/>
 		<b>Forced threat level:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_forced_threat=1'><b>[GLOB.dynamic_forced_threat_level]</b></a>.
 		<br/>The value threat is set to if it is higher than -1.<br/>
 		<br/>
 		<br/>
 		<b>Stacking threeshold:</b> Current value : <a href='?src=[REF(src)];[HrefToken()];f_dynamic_stacking_limit=1'><b>[GLOB.dynamic_stacking_limit]</b></a>.
 		<br/>The threshold at which "round-ender" rulesets will stack. A value higher than 100 ensure this never happens. <br/>
-		<h3>Advanced parameters</h3>
-		Curve centre: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_centre=1'>-> [GLOB.dynamic_curve_centre] <-</A><br>
-		Curve width: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_width=1'>-> [GLOB.dynamic_curve_width] <-</A><br>
-		Latejoin injection delay:<br>
-		Minimum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_latejoin_min=1'>-> [GLOB.dynamic_latejoin_delay_min / 60 / 10] <-</A> Minutes<br>
-		Maximum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_latejoin_max=1'>-> [GLOB.dynamic_latejoin_delay_max / 60 / 10] <-</A> Minutes<br>
-		Midround injection delay:<br>
-		Minimum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_midround_min=1'>-> [GLOB.dynamic_midround_delay_min / 60 / 10] <-</A> Minutes<br>
-		Maximum: <A href='?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_midround_max=1'>-> [GLOB.dynamic_midround_delay_max / 60 / 10] <-</A> Minutes<br>
 		"}
 
 	user << browse(dat, "window=dyn_mode_options;size=900x650")

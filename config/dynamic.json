@@ -2,8 +2,8 @@
 	"Dynamic": {},
 	"Roundstart": {
 		"Traitors": {
-			"cost": 10,
-			"scaling_cost": 10,
+			"cost": 8,
+			"scaling_cost": 9,
 			"weight": 5,
 			"required_candidates": 1,
 			"minimum_required_age": 0,
@@ -19,18 +19,9 @@
 				10,
 				10
 			],
-			"antag_cap": [
-				1,
-				1,
-				1,
-				2,
-				2,
-				2,
-				3,
-				3,
-				3,
-				3
-			],
+			"antag_cap": {
+				"denominator": 24
+			},
 			"protected_roles": [
 				"Prisoner",
 				"Security Officer",
@@ -41,8 +32,7 @@
 			],
 			"restricted_roles": [
 				"Cyborg"
-			],
-			"autotraitor_cooldown": 450
+			]
 		}
 	},
 	"Midround": {},
