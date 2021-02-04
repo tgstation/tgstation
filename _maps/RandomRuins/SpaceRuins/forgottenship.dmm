@@ -264,7 +264,7 @@
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aR" = (
 /obj/machinery/power/terminal{
@@ -575,16 +575,16 @@
 /obj/structure/mirror{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bH" = (
 /obj/structure/sink{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bI" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bJ" = (
 /obj/machinery/suit_storage_unit/syndicate{
@@ -715,7 +715,7 @@
 "cd" = (
 /obj/machinery/light,
 /mob/living/simple_animal/hostile/nanotrasen/ranged/assault,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ce" = (
 /obj/structure/closet/syndicate{
@@ -1106,7 +1106,7 @@
 	name = "Syndicate Ship Airlock";
 	req_one_access_txt = "150"
 	},
-/turf/open/floor/plasteel/dark/side{
+/turf/open/floor/iron/dark/side{
 	dir = 1
 	},
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1120,14 +1120,14 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dc" = (
 /obj/machinery/shower{
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dd" = (
 /obj/structure/closet/crate/secure/gear{

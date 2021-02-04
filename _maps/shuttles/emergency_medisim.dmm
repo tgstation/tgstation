@@ -130,7 +130,7 @@
 /obj/item/toy/crayon/blue{
 	pixel_x = -4
 	},
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/shuttle/escape/simulation)
@@ -140,7 +140,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic,
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic,
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 4
 	},
 /area/shuttle/escape/simulation)
@@ -199,7 +199,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "jf" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/shuttle/escape/simulation)
@@ -216,7 +216,7 @@
 /obj/item/toy/crayon/red{
 	pixel_x = 8
 	},
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/shuttle/escape/simulation)
@@ -508,14 +508,14 @@
 "uW" = (
 /obj/structure/rack,
 /obj/item/documents/syndicate/blue,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/shuttle/escape/simulation)
 "vl" = (
 /obj/item/food/egg/blue,
 /obj/structure/rack,
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/iron/chapel,
 /area/shuttle/escape/simulation)
 "wc" = (
 /obj/structure/flora/ausbushes/brflowers,
@@ -826,7 +826,7 @@
 /turf/open/floor/plating/grass,
 /area/shuttle/escape/simulation)
 "Ho" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/shuttle/escape/simulation)
@@ -942,7 +942,7 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/shuttle/escape/simulation)
 "Nm" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 4
 	},
 /area/shuttle/escape/simulation)
@@ -1018,7 +1018,7 @@
 "QH" = (
 /obj/structure/rack,
 /obj/item/food/egg/red,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 4
 	},
 /area/shuttle/escape/simulation)
@@ -1107,7 +1107,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Su" = (
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/iron/chapel,
 /area/shuttle/escape/simulation)
 "SA" = (
 /obj/structure/flora/ausbushes/palebush,
@@ -1118,7 +1118,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/iron/chapel,
 /area/shuttle/escape/simulation)
 "SF" = (
 /obj/effect/turf_decal/sand,
@@ -1215,7 +1215,7 @@
 "Vv" = (
 /obj/structure/rack,
 /obj/item/documents/syndicate/red,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/shuttle/escape/simulation)
