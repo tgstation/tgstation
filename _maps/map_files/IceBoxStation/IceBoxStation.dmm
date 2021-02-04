@@ -63,6 +63,19 @@
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
+"aag" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "aah" = (
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
@@ -339,6 +352,11 @@
 /obj/item/toy/cards/deck,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aaX" = (
+/obj/structure/cable,
+/mob/living/simple_animal/sloth/paperwork,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "aaY" = (
 /obj/item/stack/sheet/cardboard{
 	amount = 14
@@ -1079,6 +1097,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
+"acz" = (
+/obj/structure/bed/dogbed/ian,
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/mob/living/simple_animal/pet/dog/corgi/ian{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/heads/hop)
 "acA" = (
 /obj/machinery/flasher{
 	id = "executionflash";
@@ -15291,18 +15318,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
-"aKP" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aKQ" = (
@@ -46056,11 +46071,6 @@
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"fpc" = (
-/mob/living/simple_animal/sloth/paperwork,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "fqL" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
@@ -54550,15 +54560,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/tools)
-"tQM" = (
-/obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/ian{
-	dir = 8
-	},
-/obj/machinery/power/apc/auto_name/north,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/crew_quarters/heads/hop)
 "tRv" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
@@ -77699,7 +77700,7 @@ bxu
 aZE
 epD
 bmh
-fpc
+aaX
 bmh
 ofT
 aKM
@@ -84125,7 +84126,7 @@ bbX
 bjE
 eoi
 bmo
-tQM
+acz
 bpd
 bqz
 bqq
@@ -93098,7 +93099,7 @@ myW
 aGI
 xzk
 xge
-aKP
+aag
 aMx
 aNJ
 aQe
