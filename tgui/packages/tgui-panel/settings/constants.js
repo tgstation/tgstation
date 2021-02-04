@@ -16,7 +16,7 @@ export const SETTINGS_TABS = [
 ];
 
 
-export const FONTS_DISABLED = "Use CSS";
+export const FONTS_DISABLED = "Default";
 
 export const FONTS = [
   FONTS_DISABLED,

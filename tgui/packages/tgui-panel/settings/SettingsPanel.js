@@ -12,7 +12,7 @@ import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import { changeSettingsTab, updateSettings } from './actions';
-import { SETTINGS_TABS, FONTS } from './constants';
+import { FONTS, SETTINGS_TABS } from './constants';
 import { selectActiveTab, selectSettings } from './selectors';
 
 export const SettingsPanel = (props, context) => {

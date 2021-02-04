@@ -5,7 +5,7 @@
  */
 
 import { changeSettingsTab, loadSettings, openChatSettings, toggleSettings, updateSettings } from './actions';
-import { SETTINGS_TABS, FONTS } from './constants';
+import { FONTS, SETTINGS_TABS } from './constants';
 
 const initialState = {
   version: 1,
