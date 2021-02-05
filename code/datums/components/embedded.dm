@@ -184,26 +184,42 @@
 
 
 /// Called when a carbon with an object embedded/stuck to them inspects themselves and clicks the appropriate link to begin ripping the item out. This handles the ripping attempt, descriptors, and dealing damage, then calls safe_remove()
-/datum/component/embedded/proc/ripOut(datum/source, obj/item/I, obj/item/bodypart/limb)
+/datum/component/embedded/proc/ripOut(datum/source, obj/item/I, obj/item/bodypart/limb, mob/user)
 	SIGNAL_HANDLER_DOES_SLEEP
 
 	if(I != weapon || src.limb != limb)
 		return
 	var/mob/living/carbon/victim = parent
 	var/time_taken = rip_time * weapon.w_class
-	victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [limb.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [limb.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
-	if(!do_after(victim, time_taken, target = victim))
-		return
-	if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
-		qdel(src)
-		return
-	if(harmful)
-		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
-		victim.emote("scream")
+	if(victim == user)
+		victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [limb.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [limb.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
+		if(!do_after(victim, time_taken, target = victim))
+			return
+		if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
+			qdel(src)
+			return
+		if(harmful)
+			var/damage = weapon.w_class * remove_pain_mult
+			limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
+			victim.emote("scream")
 
-	victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
-	safeRemove(victim)
+		victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
+		safeRemove(victim)
+	else
+		time_taken = 2*rip_time/weapon.w_class
+		victim.visible_message("<span class='warning>[user] attempts to forcefully remove [weapon] from [victim.p_their()] [limb.name].</span>","<span class='warning'>[user] attempts to remove [weapon] from your [limb.name]!</span>")
+		if(!do_after(user, time_taken, victim))
+			return
+		if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
+			qdel(src)
+			return
+		if(harmful)
+			var/damage = weapon.w_class * remove_pain_mult
+			limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
+		victim.emote("scream")
+		victim.visible_message("<span class='notice'>[user] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>[user] forcefully removes [weapon] from your [limb.name]!</span>")
+		safeRemove(victim)
+
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// If you want the thing to go into someone's hands rather than the floor, pass them in to_hands

@@ -142,9 +142,9 @@
 		missing -= body_part.body_zone
 		for(var/obj/item/I in body_part.embedded_objects)
 			if(I.isEmbedHarmless())
-				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] stuck to [t_his] [body_part.name]!</B>\n"
+				msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)];ripper=[REF(user)]' [t_He] [t_has] [icon2html(I, user)] There is \a [I] stuck to [t_his] [body_part.name]!</a>\n"
 			else
-				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] embedded in [t_his] [body_part.name]!</B>\n"
+				msg += "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(body_part)];ripper=[REF(user)]' [t_He] [t_has] [icon2html(I, user)] There is \a [I] embedded in [t_his] [body_part.name]!</a>\n"
 
 		for(var/i in body_part.wounds)
 			var/datum/wound/iter_wound = i
