@@ -22,6 +22,8 @@
 /obj/effect/particle_effect/water/Bump(atom/A)
 	if(reagents)
 		reagents.expose(A)
+	if(A.reagents)
+		A.reagents.expose_temperature(-25)
 	return ..()
 
 
@@ -51,3 +53,7 @@
 
 /datum/effect_system/steam_spread
 	effect_type = /obj/effect/particle_effect/steam
+
+/obj/effect/particle_effect/water/Bump(atom/A)
+	if(A.reagents && reagents)
+		A.reagents.expose_temperature(reagents.chem_temp)

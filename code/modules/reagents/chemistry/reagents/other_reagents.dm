@@ -2544,3 +2544,14 @@
 		M.adjustBruteLoss(2, FALSE)
 	..()
 
+/datum/reagent/universal_indicator
+	name = "Universal indicator"
+	description = "A solution that can be used to create pH paper booklets, or sprayed on things to colour them by their pH."
+	taste_description = "a strong chemical taste"
+	color = "#1f8016"
+
+//Colours things by their pH
+/datum/reagent/universal_indicator/expose_atom(atom/exposed_atom, reac_volume)
+	. = ..()
+	if(exposed_atom.reagents)
+		exposed_atom.add_atom_colour(convert_pH_to_color(exposed_atom.reagents.ph), WASHABLE_COLOUR_PRIORITY)

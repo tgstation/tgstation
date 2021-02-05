@@ -129,6 +129,16 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
+
+	//Cooling method
+	if(istype(I, /obj/item/extinguisher))
+		var/obj/item/extinguisher/extin = I
+		var/cooling = (extin.cooling_power * extin.power)*5
+		reagents.expose_temperature(cooling)
+		to_chat(user, "<span class='notice'>You cool [name] with [I]!</span>")
+		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		extin.reagents.remove_all(1)
+
 	return ..()
 
 /obj/item/reagent_containers/spray/verb/empty()

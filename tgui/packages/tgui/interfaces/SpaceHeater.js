@@ -100,6 +100,15 @@ export const SpaceHeater = (props, context) => {
                 </>
               )}
             </LabeledList.Item>
+            {data.chemHacked && (
+              <LabeledList label="Beaker">
+                <Button
+                  icon="eject"
+                  content="Eject"
+                  disabled={!data.beaker}
+                  onClick={() => act('eject')} />
+              </LabeledList>
+            )}
             <LabeledList.Divider />
           </LabeledList>
         </Section>
