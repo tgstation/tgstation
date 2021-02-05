@@ -30,7 +30,7 @@
 			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
 				"<span class='notice'>You cut \the [src] apart with \the [I].</span>",
 				"<span class='hear'>You hear welding.</span>")
-			new /obj/item/stack/sheet/metal(src.loc, 4)
+			new /obj/item/stack/sheet/iron(src.loc, 4)
 			qdel(src)
 		return
 	else
@@ -142,7 +142,7 @@
 		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc)
 		transfer_fingerprints_to(F)
 	else
-		new /obj/item/stack/sheet/metal(src.loc, 4)
+		new /obj/item/stack/sheet/iron(src.loc, 4)
 	new /obj/item/stack/rods(loc, 4)
 	qdel(src)
 
