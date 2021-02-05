@@ -1,7 +1,7 @@
 ///if the ph_meter gives a detailed output
-#define DETAILED_CHEM_OUTPUT 1 
+#define DETAILED_CHEM_OUTPUT 1
 ///if the pH meter gives a shorter output
-#define SHORTENED_CHEM_OUTPUT 0 
+#define SHORTENED_CHEM_OUTPUT 0
 
 /*
 * a pH booklet that contains pH paper pages that will change color depending on the pH of the reagents datum it's attacked onto
@@ -61,7 +61,7 @@
 	playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	add_fingerprint(user)
 	if(!number_of_pages)
-		icon_state = "pHbookletEmpty"		
+		icon_state = "pHbookletEmpty"
 
 /*
 * pH paper will change color depending on the pH of the reagents datum it's attacked onto
@@ -72,7 +72,7 @@
 	icon_state = "pHpaper"
 	icon = 'icons/obj/chemical.dmi'
 	item_flags = NOBLUDGEON
-	color = "#f5c352"	
+	color = "#f5c352"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	///If the paper was used, and therefore cannot change color again
@@ -102,7 +102,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	///level of detail for output for the meter
-	var/scanmode = DETAILED_CHEM_OUTPUT 
+	var/scanmode = DETAILED_CHEM_OUTPUT
 
 /obj/item/ph_meter/attack_self(mob/user)
 	if(scanmode == SHORTENED_CHEM_OUTPUT)
@@ -173,10 +173,10 @@
 			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transfered_by = user)
 			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [container].</span>")
 	if(I.heat < 1000)
-		return 
+		return
 	set_lit(TRUE)
 	user.visible_message("<span class='notice'>[user] lights up the [src].</span>")
-	
+
 /obj/item/burner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(lit)
@@ -261,7 +261,7 @@
 			number_of_burning_reagents += 1
 			reagents.remove_reagent(/datum/reagent/toxin/plasma, 0.07)//But burns fast
 			continue
-	
+
 	if(!number_of_burning_reagents)
 		set_lit(FALSE)
 		heat = 0
@@ -288,7 +288,7 @@
 	desc = "A thermometer for checking a beaker's temperature"
 	icon_state = "thermometer"
 	icon = 'icons/obj/chemical.dmi'
-	item_flags = NOBLUDGEON	
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/item/reagent_containers/attached_beaker
 
@@ -299,7 +299,7 @@
 		if(!user.transferItemToLoc(src, target))
 			return
 		ui_interact(usr, null)
-		
+
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -311,9 +311,12 @@
 	remove_thermometer()
 
 /obj/item/thermometer/ui_status(mob/user)
-	if(in_range(src, user))
+	if(!(in_range(src, user)))
 		return UI_CLOSE
 	return UI_INTERACTIVE
+
+/obj/item/thermometer/ui_state(mob/user)
+	return GLOB.physical_state
 
 /obj/item/thermometer/ui_data(mob/user)
 	if(!attached_beaker)

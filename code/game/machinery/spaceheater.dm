@@ -253,10 +253,10 @@
 
 	if(cell?.charge < 0)
 		return PROCESS_KILL
-	
+
 	if(!beaker)//No beaker to heat
 		return
-	
+
 	if(beaker?.reagents.total_volume)
 		var/power_mod = 0.1 * chem_heating_power
 		switch(setMode)
@@ -275,14 +275,12 @@
 		var/requiredEnergy = heatingPower * delta_time * (power_mod * 3)
 		cell.use(requiredEnergy / efficiency)
 	update_icon()
-		
-
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()
 	. = ..()
 	.["chemHacked"] = TRUE
 	.["beaker"] = beaker
-	.["currentTemp"] = beaker ? (round(beaker.reagents.chem_temp - T0C)) : "N/A" 
+	.["currentTemp"] = beaker ? (round(beaker.reagents.chem_temp - T0C)) : "N/A"
 	return .
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_act(action, params)
@@ -368,14 +366,29 @@
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
 	if(on && beaker)
 		if(targetTemperature < beaker.reagents.chem_temp)
-			icon_state = "sheater-cool"	
+			icon_state = "sheater-cool"
 		else if(targetTemperature > beaker.reagents.chem_temp)
 			icon_state = "sheater-heat"
 	else
 		icon_state = "sheater-off"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
-	. = ..()
+	var/laser = 0
+	var/cap = 0
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
+		laser += M.rating
+	for(var/obj/item/stock_parts/capacitor/M in component_parts)
+		cap += M.rating
+
+	heatingPower = laser * 20000
+
+	settableTemperatureRange = cap * 50 //-20 - 80 at base
+	efficiency = (cap + 1) * 10000
+
+	targetTemperature = clamp(targetTemperature,
+		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
+		settableTemperatureMedian + settableTemperatureRange)
+
 	chem_heating_power = efficiency/20000 //1-2.5
 
 #undef HEATER_MODE_STANDBY
