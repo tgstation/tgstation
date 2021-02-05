@@ -58201,7 +58201,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /obj/item/toy/plush/lizardplushie/space{
-	desc = "He stared into the void and listend. Only when he didn't expect an answer...";
+	desc = "He stared into the void and listened. He didn't expect an answer...";
 	name = "Void-Stares-Back"
 	},
 /turf/open/space/basic,
@@ -66299,7 +66299,7 @@
 "mne" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/solar/starboard/aft)
 "mnI" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -78812,7 +78812,7 @@
 /area/hallway/secondary/service)
 "vAO" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;5;33;69"
+	req_one_access_txt = "5;12;29;33;69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4

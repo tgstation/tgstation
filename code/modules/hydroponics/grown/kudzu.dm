@@ -49,18 +49,18 @@
 		plant(user)
 		to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
 
-/obj/item/seeds/kudzu/get_analyzer_text()
-	var/text = ..()
-	var/text_string = ""
+/obj/item/seeds/kudzu/get_unique_analyzer_text()
+	var/kudzu_mutations = ""
+	var/output_message = ""
 	for(var/datum/spacevine_mutation/SM in mutations)
-		text_string += "[(text_string == "") ? "" : ", "][SM.name]"
-	text += "\n- Plant Mutations: [(text_string == "") ? "None" : text_string]"
-	return text
+		kudzu_mutations += "[(kudzu_mutations == "") ? "" : ", "][SM.name]"
+	output_message += "- Plant Mutations: [(kudzu_mutations == "") ? "None." : "[kudzu_mutations]."]"
+	return output_message
 
-/obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/S)
+/obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/reagents)
 	var/list/temp_mut_list = list()
 
-	if(S.has_reagent(/datum/reagent/space_cleaner/sterilizine, 5))
+	if(reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine, 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == NEGATIVE)
 				temp_mut_list += SM
@@ -68,7 +68,7 @@
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
-	if(S.has_reagent(/datum/reagent/fuel, 5))
+	if(reagents.has_reagent(/datum/reagent/fuel, 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == POSITIVE)
 				temp_mut_list += SM
@@ -76,7 +76,7 @@
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
-	if(S.has_reagent(/datum/reagent/phenol, 5))
+	if(reagents.has_reagent(/datum/reagent/phenol, 5))
 		for(var/datum/spacevine_mutation/SM in mutations)
 			if(SM.quality == MINOR_NEGATIVE)
 				temp_mut_list += SM
@@ -84,16 +84,16 @@
 			mutations.Remove(pick(temp_mut_list))
 		temp_mut_list.Cut()
 
-	if(S.has_reagent(/datum/reagent/blood, 15))
+	if(reagents.has_reagent(/datum/reagent/blood, 15))
 		adjust_production(rand(15, -5))
 
-	if(S.has_reagent(/datum/reagent/toxin/amatoxin, 5))
+	if(reagents.has_reagent(/datum/reagent/toxin/amatoxin, 5))
 		adjust_production(rand(5, -15))
 
-	if(S.has_reagent(/datum/reagent/toxin/plasma, 5))
+	if(reagents.has_reagent(/datum/reagent/toxin/plasma, 5))
 		adjust_potency(rand(5, -15))
 
-	if(S.has_reagent(/datum/reagent/water/holywater, 10))
+	if(reagents.has_reagent(/datum/reagent/water/holywater, 10))
 		adjust_potency(rand(15, -5))
 
 

@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - code_imp: "adds vars for damage done by temp on simplemobs"

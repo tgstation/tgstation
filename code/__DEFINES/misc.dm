@@ -539,3 +539,11 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_TARGET_LOC_CHANGE (1<<1)
 #define IGNORE_HELD_ITEM (1<<2)
 #define IGNORE_INCAPACITATED (1<<3)
+
+// Skillchip categories
+//Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
+//while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
+#define SKILLCHIP_CATEGORY_GENERAL "general"
+#define SKILLCHIP_CATEGORY_JOB "job"
+#define SKILLCHIP_CATEGORY_FIREMAN_CARRYING "fireman carrying"
+#define SKILLCHIP_CATEGORY_SYNDICATE "syndicate"
