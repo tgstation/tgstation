@@ -356,25 +356,31 @@
 	return ..()
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/nommer) //tonight on "proc names I never thought I'd type"
-	if(nommer.ckey)
-		//list our ckey and assign a favourite pizza
-		if(!pizza_preferences[nommer.ckey])
-			pizza_preferences[nommer.ckey] = pickweight(pizza_types)
-			if(nommer.has_quirk(/datum/quirk/pineapple_liker))
-				pizza_preferences[nommer.ckey] = /obj/item/food/pizza/pineapple
-			else if(nommer.has_quirk(/datum/quirk/pineapple_hater))
-				var/list/pineapple_pizza_liker = pizza_types.Copy()
-				pineapple_pizza_liker -= /obj/item/food/pizza/pineapple
-				pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
-			else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
-				pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
-		//delete the current pizza if it isn't our favourite type or if it IS our favourite type but not something our species likes
-		if(pizza?.type != pizza_preferences[nommer.ckey] || pizza?.foodtypes != nommer.dna.species.liked_food)
+	if(!nommer.ckey)
+		return
+
+	//list our ckey and assign a favourite pizza
+	if(!pizza_preferences[nommer.ckey])
+		pizza_preferences[nommer.ckey] = pickweight(pizza_types)
+		if(nommer.has_quirk(/datum/quirk/pineapple_liker))
+			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/pineapple
+		else if(nommer.has_quirk(/datum/quirk/pineapple_hater))
+			var/list/pineapple_pizza_liker = pizza_types.Copy()
+			pineapple_pizza_liker -= /obj/item/food/pizza/pineapple
+			pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
+		else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
+			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
+
+	if(pizza)
+		//if the pizza isn't our favourite, delete it
+		if(pizza.type != pizza_preferences[nommer.ckey])
 			QDEL_NULL(pizza)
-		//if there's no pizza and we have a favourite, create it and update the boxtag
-		if(!pizza && pizza_preferences[nommer.ckey])
-			var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
-			pizza = new favourite_pizza_type
-			boxtag_set = FALSE
-			update_icon() //update our boxtag to match our new pizza
-			pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+		else
+			pizza.foodtypes = nommer.dna.species.liked_food //make sure it's our favourite
+			return
+
+	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
+	pizza = new favourite_pizza_type
+	boxtag_set = FALSE
+	update_icon() //update our boxtag to match our new pizza
+	pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
