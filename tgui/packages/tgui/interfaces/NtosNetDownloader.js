@@ -97,7 +97,7 @@ const Program = (props, context) => {
               maxValue={downloadsize}
               value={downloadcompletion} />
           ) || (
-            (!program.installed && program.compatibility == 'Compatible' && program.access && program.size < disk_free) && (
+            (!program.installed && program.compatible && program.access && program.size < disk_free) && (
               <Button
                 fluid
                 icon="download"
@@ -111,7 +111,7 @@ const Program = (props, context) => {
                 fluid
                 icon={program.installed ? 'check' : 'times'}
                 color={program.installed ? 'green' : 'red'}
-                content={program.installed ? 'Installed' : program.compatibility !== 'Compatible' ? 'Incompatible' : !program.access ? 'No Access' : 'Need Space'} />
+                content={program.installed ? 'Installed' : !program.compatible ? 'Incompatible' : !program.access ? 'No Access' : 'Need Space'} />
             )
           )}
         </Flex.Item>

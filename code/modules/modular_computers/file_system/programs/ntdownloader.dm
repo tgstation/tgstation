@@ -169,7 +169,7 @@
 				"filedesc" = P.filedesc,
 				"fileinfo" = P.extended_desc,
 				"installed" = hard_drive.find_file_by_name(P.filename),
-				"compatibility" = check_compatibility(P),
+				"compatible" = check_compatibility(P),
 				"size" = P.size,
 				"access" = TRUE,
 			)))
@@ -183,8 +183,8 @@
 	var/hardflag = computer.hardware_flag
 
 	if(P?.is_supported_by_hardware(hardflag,0))
-		return "Compatible"
-	return "Incompatible!"
+		return TRUE
+	return FALSE
 
 /datum/computer_file/program/ntnetdownload/kill_program(forced)
 	abort_file_download()
