@@ -359,7 +359,7 @@
 	if(!nommer.ckey)
 		return
 
-	//list our ckey and assign a favourite pizza
+	//list our ckey and assign it a favourite pizza
 	if(!pizza_preferences[nommer.ckey])
 		pizza_preferences[nommer.ckey] = pickweight(pizza_types)
 		if(nommer.has_quirk(/datum/quirk/pineapple_liker))
