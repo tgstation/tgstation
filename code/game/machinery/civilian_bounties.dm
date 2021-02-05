@@ -244,28 +244,32 @@
 	icon_state = "bounty_cube"
 	///Value of the bounty that this bounty cube sells for.
 	var/bounty_value = 0
-	///Amount of the bounty payout received by the Supply budget if the cube is sent without having to nag.
+	///Multiplier for the bounty payout received by the Supply budget if the cube is sent without having to nag.
 	var/speed_bonus = 0.2
-	///Amount of the bounty payout received by the person who completed the bounty.
+	///Multiplier for the bounty payout received by the person who completed the bounty.
 	var/holder_cut = 0.3
-	///Amount of the bounty payout received by the person who claims the handling tip.
-	var/handler_cut = 0.1
-	///Countdown timer that is used to indicate when cargo loses its speedy delivery bonus.
-	var/bonus_countdown
-	///Base time to nag Supply listeners to send this cube.
+	///Multiplier for the bounty payout received by the person who claims the handling tip.
+	var/handler_tip = 0.1
+	///Time until speed bonus expires.
+	var/bonus_countdown = 5 MINUTES
+	///Time between nags.
 	var/nag_cooldown = 5 MINUTES
 	///How much the time between nags extends each nag.
 	var/nag_cooldown_multiplier = 1.25
 	///Next world tick to nag Supply listeners.
-	COOLDOWN_DECLARE(next_nag_time)
+	var/next_nag_time
 	///Who completed the bounty.
 	var/bounty_holder
 	///What job the bounty holder had.
 	var/bounty_holder_job
 	///What the bounty was for.
 	var/bounty_name
-	///Bank account of a person who scans the cube with an export scanner when it's in the supply shuttle area.
+	///Bank account of the person who receives the handling tip.
 	var/datum/bank_account/bounty_handler_account
+	///Bank account of the person who completed the bounty.
+	var/datum/bank_account/bounty_holder_account
+	///When the cube was created.
+	var/creation_time
 	///Our internal radio.
 	var/obj/item/radio/radio
 	///The key our internal radio uses.
@@ -285,17 +289,18 @@
 /obj/item/bounty_cube/examine()
 	. = ..()
 	if(speed_bonus)
-		. += "<span class='notice'><b>[time2text(bonus_countdown,"mm:ss")]</b> remaining until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.</span>"
-	if(handler_cut && !bounty_handler_account)
-		. += "<span class='notice'>Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_cut]</b> credit handling tip.</span>"
+		. += "<span class='notice'><b>[time2text(bonus_countdown,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.</span>"
+	if(handler_tip && !bounty_handler_account)
+		. += "<span class='notice'>Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.</span>"
 
 /obj/item/bounty_cube/process(delta_time)
 	if(speed_bonus)
 		bonus_countdown = next_nag_time - world.time
 	if(COOLDOWN_FINISHED(src, next_nag_time))
 		if(!is_centcom_level(z) && !is_reserved_level(z)) //don't send message if we're on Centcom or in transit
-			radio.talk_into(src, "Bounty cube unsent in <b>[get_area(src)]</b>.[speed_bonus ? " Speedy delivery bonus of <b>[bounty_value * speed_bonus]</b> credit\s lost." : ""]", RADIO_CHANNEL_SUPPLY)
+			radio.talk_into(src, "Unsent in <b>[get_area(src)]</b>.[speed_bonus ? " Speedy delivery bonus of <b>[bounty_value * speed_bonus]</b> credit\s lost." : ""]", RADIO_CHANNEL_SUPPLY)
 			speed_bonus = 0
+			bounty_holder_account.bank_card_talk("\The [src] is unsent in <b>[get_area(src)]</b>.")
 			if(bounty_handler_account)
 				bounty_handler_account.bank_card_talk("\The [src] is unsent in <b>[get_area(src)]</b>.")
 		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
@@ -306,13 +311,13 @@
 	bounty_name = my_bounty.name
 	bounty_holder = holder_id.registered_name
 	bounty_holder_job = holder_id.assignment
+	bounty_holder_account = holder_id.registered_account
 	name = "\improper [bounty_value] cr [name]"
 	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
 	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut)
 	START_PROCESSING(SSobj, src)
-	COOLDOWN_START(src, next_nag_time, world.time + nag_cooldown) //grace period before the nagging begins
-	bonus_countdown = next_nag_time - world.time
-	radio.talk_into(src,"Bounty cube created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Cargo speedy delivery bonus of [bounty_value * speed_bonus] credit\s lost in [time2text(bonus_countdown,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
+	COOLDOWN_START(src, next_nag_time, bonus_countdown) //First nag after we've lost our speed bonus
+	radio.talk_into(src,"Created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Speedy delivery bonus lost in [time2text(bonus_countdown,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
 
 /obj/item/bounty_cube/test_cube
 	name = "test bounty cube"
@@ -320,16 +325,18 @@
 	var/set_up = FALSE
 
 /obj/item/bounty_cube/test_cube/attack_self(mob/user)
+	if(!isliving(user))
+		to_chat(user, "<span class='warning'>You aren't eligible to use this!</span>")
+		return ..()
+
 	if(!set_up)
-		if(isliving(user))
-			var/mob/living/squeezer = user
-			if(squeezer.get_bank_account())
-				set_up(random_bounty(), squeezer.get_idcard())
-				set_up = TRUE
-			else
-				to_chat(user, "<span class='notice'>It can't detect your bank account.</span>")
-		else
-			to_chat(user, "<span class='warning'>You aren't eligible to use this!</span>")
+		var/mob/living/squeezer = user
+		if(squeezer.get_bank_account())
+			set_up(random_bounty(), squeezer.get_idcard())
+			set_up = TRUE
+			return ..()
+		to_chat(user, "<span class='notice'>It can't detect your bank account.</span>")
+
 	return ..()
 
 ///Beacon to launch a new bounty setup when activated.

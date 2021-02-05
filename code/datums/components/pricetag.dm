@@ -32,7 +32,7 @@
 			var/adjusted_value = price*profit_ratio
 			var/datum/bank_account/bank_account = payee
 			bank_account.adjust_money(adjusted_value)
-			bank_account.bank_card_talk("Sale recorded. [adjusted_value] credits added to account.")
+			bank_account.bank_card_talk("Sale of [parent] recorded. [adjusted_value] credits added to account.")
 		return TRUE
 
 /datum/component/pricetag/proc/return_ratio()

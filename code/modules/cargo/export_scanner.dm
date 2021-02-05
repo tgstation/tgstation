@@ -39,8 +39,8 @@
 			else if(scan_human.get_bank_account() && cube.GetComponent(/datum/component/pricetag))
 				var/datum/component/pricetag/pricetag = cube.GetComponent(/datum/component/pricetag)
 				cube.bounty_handler_account = scan_human.get_bank_account()
-				pricetag.payees[scan_human.get_bank_account()] += cube.handler_cut
-				to_chat(user, "<span class='notice'>Bank account for [price ? "<b>[price * cube.handler_cut]</b> credit " : ""]handling tip successfully registered.</span>")
-
+				pricetag.payees[cube.bounty_handler_account] += cube.handler_tip
+				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> credit " : ""]handling tip successfully registered.")
+				cube.bounty_holder_account.bank_card_talk("<b>[cube]</b> was scanned in \the <b>[get_area(cube)]</b> by <b>[scan_human] ([scan_human.job])</b>.")
 			else
 				to_chat(user, "<span class='warning'>Bank account not detected. Handling tip not registered.</span>")
