@@ -1608,14 +1608,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	category = "Implants"
 	surplus = 50
 
-/datum/uplink_item/implants/adrenal
-	name = "Adrenal Implant"
-	desc = "An implant injected into the body, and later activated at the user's will. It will inject a chemical \
-			cocktail which lets you push yourself harder to get out of sticky situations. Avoid large doses if possible."
-	item = /obj/item/storage/box/syndie_kit/imp_adrenal
-	cost = 8
-	player_minimum = 25
-
 /datum/uplink_item/implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
