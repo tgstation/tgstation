@@ -10,18 +10,18 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "af" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ag" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
 	},
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "ai" = (
 /turf/template_noop,
 /area/ruin/space/derelict/singularity_engine)
@@ -32,12 +32,12 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "aq" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solar/derelict_starboard)
+/area/solars/derelict_starboard)
 "as" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/solar_control)
@@ -3518,7 +3518,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "on" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -3526,7 +3526,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "op" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -3536,26 +3536,26 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oq" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oy" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oz" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oD" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless,
-/area/solar/derelict_aft)
+/area/solars/derelict_aft)
 "oE" = (
 /obj/structure/frame/computer{
 	dir = 1

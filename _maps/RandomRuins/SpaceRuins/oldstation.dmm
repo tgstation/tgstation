@@ -1353,7 +1353,7 @@
 "dH" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solar/ancientstation)
+/area/solars/ancientstation)
 "dJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3990,7 +3990,7 @@
 /obj/item/solar_assembly,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solar/ancientstation)
+/area/solars/ancientstation)
 "jE" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/mining)
@@ -4771,7 +4771,7 @@
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "lz" = (
 /turf/open/floor/plating/airless,
-/area/solar/ancientstation)
+/area/solars/ancientstation)
 "lA" = (
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
@@ -4925,7 +4925,7 @@
 /obj/machinery/power/solar,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solar/ancientstation)
+/area/solars/ancientstation)
 "lT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
@@ -5167,7 +5167,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solar/ancientstation)
+/area/solars/ancientstation)
 "mz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
