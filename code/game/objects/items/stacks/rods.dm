@@ -59,8 +59,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 		if(W.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/iron/new_item = new(usr.loc)
-			user.visible_message("<span class='notice'>[user.name] shaped [src] into iron with [W].</span>", \
-				"<span class='notice'>You shape [src] into iron with [W].</span>", \
+			user.visible_message("<span class='notice'>[user.name] shaped [src] into iron sheets with [W].</span>", \
+				"<span class='notice'>You shape [src] into iron sheets with [W].</span>", \
 				"<span class='hear'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
