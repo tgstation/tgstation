@@ -108,11 +108,11 @@
 		if(user.transferItemToLoc(W, drop_location()))
 			visible_message("<span class='warning'>[user] dunks [W] into \the [src]!</span>")
 
-/obj/structure/holohoop/attack_hand(mob/user)
+/obj/structure/holohoop/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
