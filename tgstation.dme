@@ -3181,7 +3181,6 @@
 #include "code\modules\surgery\organic_steps.dm"
 #include "code\modules\surgery\plastic_surgery.dm"
 #include "code\modules\surgery\prosthetic_replacement.dm"
-#include "code\modules\surgery\remove_embedded_object.dm"
 #include "code\modules\surgery\repair_puncture.dm"
 #include "code\modules\surgery\revival.dm"
 #include "code\modules\surgery\stomachpump.dm"
