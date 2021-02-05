@@ -188,9 +188,3 @@
 
 /obj/machinery/porta_turret_construct/attack_ai()
 	return
-
-/obj/machinery/porta_turret_construct/Destroy()
-	if(installed_gun)
-		qdel(installed_gun)
-		installed_gun = null
-	. = ..()
