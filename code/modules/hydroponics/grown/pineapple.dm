@@ -10,9 +10,10 @@
 	endurance = 30
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/juicing)
 	mutatelist = list(/obj/item/seeds/apple)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.2, /datum/reagent/water = 0.04)
+	graft_gene = /datum/plant_gene/trait/juicing
 
 /obj/item/food/grown/pineapple
 	seed = /obj/item/seeds/pineapple

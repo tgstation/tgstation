@@ -680,12 +680,3 @@ SUBSYSTEM_DEF(ticker)
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
-
-/datum/controller/subsystem/ticker/Topic(href, list/href_list)
-	. = ..()
-	if(href_list["cancel_heart"] && usr.client.holder)
-		var/mob/heart_sender = locate(href_list["heart_source"])
-		var/mob/intended_recepient = locate(href_list["heart_target"])
-		log_admin("[usr.ckey] blocked commendation from [heart_sender] ([heart_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
-		message_admins("[usr.ckey] blocked commendation from [heart_sender] ([heart_sender.ckey]) to [intended_recepient] ([intended_recepient.ckey])")
-		hearts[intended_recepient] = null

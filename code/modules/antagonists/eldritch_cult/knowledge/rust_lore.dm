@@ -19,7 +19,7 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
 	route = PATH_RUST
 
-/datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
 	var/check = FALSE
 	if(ismob(target))
@@ -28,7 +28,7 @@
 			return FALSE
 		else
 			check = TRUE
-	if(user.a_intent == INTENT_HARM || check)
+	if(user.combat_mode || check)
 		target.rust_heretic_act()
 		return TRUE
 

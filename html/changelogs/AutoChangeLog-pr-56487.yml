@@ -1,4 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - code_imp: "Moved \\n's outside of the /span's they were next to"

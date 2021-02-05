@@ -290,7 +290,7 @@
 
 	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
-	new_mob.a_intent = INTENT_HARM
+	new_mob.set_combat_mode(TRUE)
 
 	M.wabbajack_act(new_mob)
 

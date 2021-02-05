@@ -1,4 +1,0 @@
-author: "HugoOdaX"
-delete-after: True
-changes: 
-  - rscadd: "Added blast doors and shutters to the crafting menu and blast door controllers to autolathes. As well as deconstruction steps."

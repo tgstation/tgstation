@@ -30,7 +30,7 @@
 	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
 	maxHealth = 400
 	health = 400
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	speed = 0
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"

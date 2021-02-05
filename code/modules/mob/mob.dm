@@ -294,7 +294,7 @@
  * Mostly tries to put the item into the slot if possible, or call attack hand
  * on the item in the slot if the users active hand is empty
  */
-/mob/proc/attack_ui(slot)
+/mob/proc/attack_ui(slot, params)
 	var/obj/item/W = get_active_held_item()
 
 	if(istype(W))
@@ -305,7 +305,8 @@
 		// Activate the item
 		var/obj/item/I = get_item_by_slot(slot)
 		if(istype(I))
-			I.attack_hand(src)
+			var/list/modifiers = params2list(params)
+			I.attack_hand(src, modifiers)
 
 	return FALSE
 
@@ -513,10 +514,10 @@
 
 	//now we touch the thing we're examining
 	/// our current intent, so we can go back to it after touching
-	var/previous_intent = a_intent
-	a_intent = INTENT_HELP
+	var/previous_combat_mode = combat_mode
+	set_combat_mode(FALSE)
 	INVOKE_ASYNC(examined_thing, /atom/proc/attack_hand, src)
-	a_intent = previous_intent
+	set_combat_mode(previous_combat_mode)
 	return TRUE
 
 
@@ -818,7 +819,11 @@
 	if(ismob(dropping) && src == user && dropping != user)
 		var/mob/M = dropping
 		var/mob/U = user
-		if(!iscyborg(U) || U.a_intent == INTENT_HARM)
+		if(iscyborg(U))
+			var/mob/living/silicon/robot/cyborg = U
+			if(cyborg.combat_mode)
+				M.show_inv(cyborg)
+		else
 			M.show_inv(U)
 
 ///Is the mob muzzled (default false)
