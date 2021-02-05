@@ -9,7 +9,7 @@
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
-	var/buildstacktype = /obj/item/stack/sheet/iron //they're metal now, shut up
+	var/buildstacktype = /obj/item/stack/sheet/iron //they're iron now, shut up
 	var/buildstackamount = 1
 
 /obj/structure/toilet/Initialize()
