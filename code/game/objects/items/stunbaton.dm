@@ -182,36 +182,39 @@
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
 	if(clumsy_check(user))
 		return FALSE
-
 	if(iscyborg(M))
 		..()
 		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/L = M
+		if(check_martial_counter(L, user))
+			return
+	if(turned_on)
+		if(attack_cooldown_check <= world.time)
+			baton_effect(M, user)
+	..()
 
-
+/obj/item/melee/baton/attack_alt(mob/living/victim, mob/living/user, params)
+	. = ALT_ATTACK_CANCEL_ATTACK_CHAIN //right click never harmbatons
+	if(clumsy_check(user))
+		return
+	if(iscyborg(M))
+		..()
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		if(check_martial_counter(L, user))
 			return
 
-	var/list/modifiers = params2list(params)
-	if(modifiers && modifiers["right"])
-		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				baton_effect(M, user)
-		..()
-		return
-	else if(turned_on)
-		if(attack_cooldown_check <= world.time)
-			if(baton_effect(M, user))
-				user.do_attack_animation(M)
-				return
-		else
-			to_chat(user, "<span class='danger'>The baton is still charging!</span>")
-			return
-	else
+	if(!turned_on)
 		M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
 					"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
 		return
+	if(attack_cooldown_check >= world.time)
+		to_chat(user, "<span class='danger'>The baton is still charging!</span>")
+		return
+	if(baton_effect(M, user))
+		user.do_attack_animation(M)
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(shields_blocked(L, user))
