@@ -13,63 +13,53 @@
 As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
 In all, this is a lot like the monkey code. /N
 */
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M)
+/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/M, modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
 
-	switch(M.a_intent)
+	if(M.combat_mode)
+		if(M == src && check_self_for_injuries())
+			return
+		set_resting(FALSE)
+		AdjustStun(-60)
+		AdjustKnockdown(-60)
+		AdjustImmobilized(-60)
+		AdjustParalyzed(-60)
+		AdjustUnconscious(-60)
+		AdjustSleeping(-100)
+		visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+	else if(health > 0)
+		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
+		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+						"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
+		to_chat(M, "<span class='danger'>You bite [src]!</span>")
+		adjustBruteLoss(1)
+		log_combat(M, src, "attacked")
+		updatehealth()
+	else
+		to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
 
-		if ("help")
-			if(M == src && check_self_for_injuries())
-				return
-			set_resting(FALSE)
-			AdjustStun(-60)
-			AdjustKnockdown(-60)
-			AdjustImmobilized(-60)
-			AdjustParalyzed(-60)
-			AdjustUnconscious(-60)
-			AdjustSleeping(-100)
-			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
-
-		if ("grab")
-			grabbedby(M)
-
-		else
-			if(health > 0)
-				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-								"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
-				to_chat(M, "<span class='danger'>You bite [src]!</span>")
-				adjustBruteLoss(1)
-				log_combat(M, src, "attacked")
-				updatehealth()
-			else
-				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
 	return attack_alien(L)
 
 
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M, modifiers)
 	. = ..()
 	if(.)	//to allow surgery to return properly.
 		return FALSE
 
-	switch(M.a_intent)
-		if("help")
-			help_shake_act(M)
-		if("grab")
-			grabbedby(M)
-		if ("harm")
-			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-			return TRUE
-		if("disarm")
+	if(M.combat_mode)
+		if(modifiers && modifiers["right"])
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
-	return FALSE
+		M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		return TRUE
+	else
+		help_shake_act(M)
 
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/M)

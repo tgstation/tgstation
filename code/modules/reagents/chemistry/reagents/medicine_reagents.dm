@@ -1320,38 +1320,6 @@
 	M.adjustToxLoss(0.2 * REM, 0) //Only really deadly if you eat over 100u
 	..()
 
-/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Used in adrenal implant.
-	name = "Experimental Stimulants"
-	description = "Experimental Stimulants designed to get you away from trouble."
-	reagent_state = LIQUID
-	color = "#F5F5F5"
-
-/datum/reagent/medicine/badstims/on_mob_life(mob/living/carbon/M)
-	..()
-	if(prob(30) && iscarbon(M))
-		var/obj/item/I = M.get_active_held_item()
-		if(I && M.dropItemToGround(I))
-			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
-	M.adjustStaminaLoss(-10, 0)
-	M.Jitter(10)
-	M.Dizzy(15)
-
-/datum/reagent/medicine/badstims/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
-	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-
-/datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
-	..()
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
-	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	L.Dizzy(0)
-	L.Jitter(0)
-
 // helps bleeding wounds clot faster
 /datum/reagent/medicine/coagulant
 	name = "Sanguirite"

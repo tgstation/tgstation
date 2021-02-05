@@ -296,7 +296,7 @@ DEFINE_BITFIELD(turret_flags, list(
 						stored_gun = null
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(prob(50))
-						new /obj/item/stack/sheet/metal(loc, rand(1,4))
+						new /obj/item/stack/sheet/iron(loc, rand(1,4))
 					if(prob(50))
 						new /obj/item/assembly/prox_sensor(loc)
 				else

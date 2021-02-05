@@ -1,4 +1,0 @@
-author: "NotRanged"
-delete-after: True
-changes: 
-  - refactor: "Changed a lot of blob code backend around, making it easier to mess with balance and work with in the future."
