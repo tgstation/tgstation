@@ -16,6 +16,15 @@
 	action_icon_state = "ninja_cloak"
 	action_background_icon_state = "bg_alien"
 
+/obj/effect/proc_holder/spell/targeted/shadowwalk/cast_check(skipcharge = 0,mob/user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/area/noteleport_check = get_area(user)
+	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+		to_chat(user, "<span class='danger'>Some dull, universal force is stopping you from melting into the shadows here.</span>")
+		return FALSE
+
 /obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc
 	if(istype(user.loc, /obj/effect/dummy/phased_mob/shadow))
