@@ -373,7 +373,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bf" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
@@ -643,7 +643,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/onehalf/bridge)
 "bV" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/template_noop,
 /area/template_noop)
 "bW" = (

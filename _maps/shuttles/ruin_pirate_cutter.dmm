@@ -765,7 +765,7 @@
 	dir = 1
 	},
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},

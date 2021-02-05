@@ -41,7 +41,7 @@
 
 	return !R
 
-/atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
+/atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()

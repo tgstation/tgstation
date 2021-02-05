@@ -310,7 +310,7 @@
 	},
 /area/ruin/unpowered/no_grav)
 "bb" = (
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "XA" = (

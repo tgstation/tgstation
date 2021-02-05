@@ -197,7 +197,6 @@
 		return FALSE
 	return TRUE
 
-
 // ------------------------------------------ Setting base model modules
 // --------------------- Clown
 /obj/item/robot_model/clown
@@ -248,7 +247,7 @@
 		/obj/item/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
-		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
@@ -333,7 +332,7 @@
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze,
 		/obj/item/stack/medical/bone_gel,
-		/obj/item/organ_storage,
+		/obj/item/borg/apparatus/organ_storage,
 		/obj/item/borg/lollipop)
 	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
@@ -436,7 +435,7 @@
 
 /obj/item/robot_model/security/do_transform_animation()
 	..()
-	to_chat(loc, "<span class='userdanger'>While you have picked the security configuration, you still have to follow your laws, NOT Space Law. \
+	to_chat(loc, "<span class='userdanger'>While you have picked the security model, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
 /obj/item/robot_model/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
@@ -564,7 +563,7 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze,
 		/obj/item/gun/medbeam,
-		/obj/item/organ_storage)
+		/obj/item/borg/apparatus/organ_storage)
 
 	cyborg_base_icon = "synd_medical"
 	model_select_icon = "malf"
@@ -587,7 +586,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/wirecutters/cyborg,
 		/obj/item/multitool/cyborg,
-		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
@@ -660,8 +659,8 @@
 /datum/robot_energy_storage/proc/add_charge(amount)
 	energy = min(energy + amount, max_energy)
 
-/datum/robot_energy_storage/metal
-	name = "Metal Synthesizer"
+/datum/robot_energy_storage/iron
+	name = "Iron Synthesizer"
 
 /datum/robot_energy_storage/glass
 	name = "Glass Synthesizer"
