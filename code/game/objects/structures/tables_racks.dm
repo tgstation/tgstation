@@ -69,15 +69,16 @@
 			if(pushed_mob.buckled)
 				to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
 				return
-			if(user.a_intent == INTENT_GRAB)
-				if(user.grab_state < GRAB_AGGRESSIVE)
-					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
-					return
-				if(user.grab_state >= GRAB_NECK)
-					tablelimbsmash(user, pushed_mob)
-				else
-					tablepush(user, pushed_mob)
-			if(user.a_intent == INTENT_HELP)
+			if(user.combat_mode)
+				switch(user.grab_state)
+					if(GRAB_PASSIVE)
+						to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+						return
+					if(GRAB_AGGRESSIVE)
+						tablepush(user, pushed_mob)
+					if(GRAB_NECK to GRAB_KILL)
+						tablelimbsmash(user, pushed_mob)
+			else
 				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
 				if(do_after(user, 35, target = pushed_mob))
@@ -161,8 +162,9 @@
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
 	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
 
-/obj/structure/table/attackby(obj/item/I, mob/user, params)
-	if(!(flags_1 & NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
+/obj/structure/table/attackby(obj/item/I, mob/living/user, params)
+	var/list/modifiers = params2list(params)
+	if(!(flags_1 & NODECONSTRUCT_1) && modifiers && modifiers["right"])
 		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(I.use_tool(src, user, 20, volume=50))
@@ -192,30 +194,26 @@
 		var/mob/living/carried_mob = riding_item.rider
 		if(carried_mob == user) //Piggyback user.
 			return
-		switch(user.a_intent)
-			if(INTENT_HARM)
-				user.unbuckle_mob(carried_mob)
-				tablelimbsmash(user, carried_mob)
-			if(INTENT_HELP)
-				var/tableplace_delay = 3.5 SECONDS
-				var/skills_space = ""
-				if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-					tableplace_delay = 2 SECONDS
-					skills_space = " expertly"
-				else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-					tableplace_delay = 2.75 SECONDS
-					skills_space = " quickly"
-				carried_mob.visible_message("<span class='notice'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>",
-					"<span class='userdanger'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>")
-				if(do_after(user, tableplace_delay, target = carried_mob))
-					user.unbuckle_mob(carried_mob)
-					tableplace(user, carried_mob)
-			else
+		if(user.combat_mode)
+			user.unbuckle_mob(carried_mob)
+			tablelimbsmash(user, carried_mob)
+		else
+			var/tableplace_delay = 3.5 SECONDS
+			var/skills_space = ""
+			if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+				tableplace_delay = 2 SECONDS
+				skills_space = " expertly"
+			else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+				tableplace_delay = 2.75 SECONDS
+				skills_space = " quickly"
+			carried_mob.visible_message("<span class='notice'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>",
+				"<span class='userdanger'>[user] begins to[skills_space] place [carried_mob] onto [src]...</span>")
+			if(do_after(user, tableplace_delay, target = carried_mob))
 				user.unbuckle_mob(carried_mob)
 				tablepush(user, carried_mob)
 		return TRUE
 
-	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
+	if(!user.combat_mode && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
@@ -511,8 +509,9 @@
 	else
 		return "<span class='notice'>The top cover is firmly <b>welded</b> on.</span>"
 
-/obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HELP)
+/obj/structure/table/reinforced/attackby(obj/item/W, mob/living/user, params)
+	var/list/modifiers = params2list(params)
+	if(W.tool_behaviour == TOOL_WELDER && modifiers && modifiers["right"])
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -632,12 +631,13 @@
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
 
-/obj/structure/rack/attackby(obj/item/W, mob/user, params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
+/obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
+	var/list/modifiers = params2list(params)
+	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && modifiers && modifiers["right"])
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 	if(user.transferItemToLoc(W, drop_location()))
 		return 1

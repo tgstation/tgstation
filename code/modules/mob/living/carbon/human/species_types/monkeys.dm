@@ -60,13 +60,13 @@
 	C.butcher_results = null
 	C.dna.remove_mutation(RACEMUT)
 
-/datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target)
+/datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		if(!iscarbon(target))
 			return TRUE
 		var/mob/living/carbon/victim = target
-		if(user.a_intent != INTENT_HARM || user.is_muzzled())
+		if(user.is_muzzled())
 			return TRUE
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(victim))
@@ -88,7 +88,7 @@
 			var/datum/disease/bite_infection = d
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
-	target.attack_paw(user)
+	target.attack_paw(user, modifiers)
 	return TRUE
 
 
