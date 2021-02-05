@@ -168,11 +168,11 @@
 "D" = (
 /mob/living/simple_animal/hostile/asteroid/gutlunch,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/commons/storage/mining)
 "E" = (
 /obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/commons/storage/mining)
 "G" = (
 /obj/item/bodypart/head,
 /obj/effect/decal/cleanable/blood,
@@ -189,7 +189,7 @@
 /obj/item/bodypart/chest,
 /obj/item/organ/heart,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/commons/storage/mining)
 "H" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
@@ -204,7 +204,7 @@
 /area/mine/eva)
 "J" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/commons/storage/mining)
 "K" = (
 /turf/open/floor/circuit,
 /area/mine/eva)
@@ -221,7 +221,7 @@
 "O" = (
 /obj/item/clothing/head/helmet/skull,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/storage/mining)
+/area/commons/storage/mining)
 "P" = (
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)

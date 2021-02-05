@@ -225,7 +225,7 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
-	var/list/valid_areas = list(/area/crew_quarters/kitchen)
+	var/list/valid_areas = list(/area/service/kitchen)
 
 ///Prevents use if the cook is not in the kitchen.
 /datum/martial_art/cqc/under_siege/can_use(mob/living/owner) //this is used to make chef CQC only work in kitchen
