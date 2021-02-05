@@ -744,7 +744,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 				nameWords += string
 
 		for(var/string in nameWords)
-			testing("Name word [string]")
 			if(string in msglist)
 				potential_hits += M
 				break
