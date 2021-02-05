@@ -51,6 +51,91 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">05 February 2021</h2>
+			<h3 class="author">AnturK updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Aquarium fish now reproduce.</li>
+			</ul>
+			<h3 class="author">Fikou updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Refactors CTF pickups and mine powerup subtypes into a new powerup system!</li>
+				<li class="code_imp">simple animals no longer reset their icon file on death</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Dynamic now rolls a separate budget for round start and midround antagonists, meaning less round start antags will roll in favor of more midround ones.</li>
+				<li class="admin">The antag_cap value now uses an equation that scales with population, rather than a fixed array.</li>
+				<li class="admin">autotraitor_cooldown now uses deciseconds rather than ticks, so the older value of 450 now means 45 seconds. Set it to be 9000 if you want it to be accurate to the old value (15 minutes), or simply unset it.</li>
+				<li class="admin">Midround/latejoin dynamic timers are now configurable.</li>
+				<li class="admin">Syndicate Sleeper Agent will now give details when ti fails.</li>
+				<li class="bugfix">The autotraitor cooldown now respects configuration, rather than resetting back to 15 minutes after it is rolled.</li>
+			</ul>
+			<h3 class="author">Maurukas updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">A Public mining shuttle dock has been installed near the holodeck on Kilostation</li>
+				<li class="rscadd">Kilostation's incinerator has been expanded to accommodate the HFR and provide Atmospherics with an additional work area</li>
+				<li class="rscadd">Adds a trash chute to tool storage and the morgue on Kilostation</li>
+				<li class="rscdel">Removed the nonfunctional public mining dock from Kilostation aux base construction</li>
+				<li class="bugfix">A number of small piping issues on Kilostation have been fixed</li>
+			</ul>
+			<h3 class="author">Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Intents have been replaced with a combat mode. For more info find the PR here: https://github.com/tgstation/tgstation/pull/56601</li>
+				<li class="bugfix">removes the test-merge only code from the combat mode commit</li>
+			</ul>
+			<h3 class="author">RaveRadbury updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">fixed description for Void-Stares-Back</li>
+			</ul>
+			<h3 class="author">Son-of-Space updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Robotics can now properly use their maintenance on Meta</li>
+				<li class="bugfix">Removed an active turf in science solars</li>
+			</ul>
+			<h3 class="author">Time-Green updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Oops, maint pill consumption counter now works</li>
+			</ul>
+			<h3 class="author">Watermelon914 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added chat fonts that can be chosen via settings. You can also input a custom font.</li>
+				<li class="bugfix">Fixed dropdown overflow if the selected input is too long.</li>
+			</ul>
+			<h3 class="author">and Jack7D1 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds new flight potion moth wings.</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Tapes can now be turned over for double the recording time</li>
+				<li class="tweak">Tapes can now be renamed by clicking them with a pen</li>
+				<li class="rscdel">Tapes can no longer be respooled using a pen (triggered renaming)</li>
+				<li class="soundadd">Tape and tape recorder handling sounds</li>
+				<li class="soundadd">Tape recorder play/record loop</li>
+				<li class="tweak">Tape and tape recorder misc. improvements (see PR #56023 for details)</li>
+			</ul>
+			<h3 class="author">esainane updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Added a missing Power Cable on Ice Box, so the Bar APC can charge without intervention again</li>
+				<li class="tweak">The Temperature Gate's description now makes it clear that the gas flows only from the input side to the output side when open.</li>
+			</ul>
+			<h3 class="author">maxymax13 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Emergency survival boxes now have an unique blue sprite and description to tell them apart from regular boxes.</li>
+				<li class="imageadd">Added craftable normal/extended emergency oxygen tank boxes to put your emergency oxygen tank collection inside.</li>
+				<li class="imageadd">Emergency first aid kits now look visually consistent with full first aid kits.</li>
+			</ul>
+			<h3 class="author">nightred updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Icebox: Genetics monkey pen is larger</li>
+				<li class="tweak">Icebox: Toxins area reworked layout</li>
+				<li class="bugfix">Icebox: Toxins burn chamber moved to prevent overheating Science hallway</li>
+			</ul>
+			<h3 class="author">silicons updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">modular id consoles are now sanitized</li>
+			</ul>
+
 			<h2 class="date">04 February 2021</h2>
 			<h3 class="author">ATHATH updated:</h3>
 			<ul class="changes bgimages16">
@@ -2341,21 +2426,6 @@
 			<ul class="changes bgimages16">
 				<li class="bugfix">Fixed an issue where Herald's mirror would look like a normal herald on being shot</li>
 				<li class="bugfix">Fixed an issue where Herald's mirror would gain the second set of projectiles at 50% health.</li>
-			</ul>
-
-			<h2 class="date">04 December 2020</h2>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">Slays the last of old-food, making new-food the new normal.</li>
-				<li class="code_imp">Removes a rogue arg from a register signal</li>
-			</ul>
-			<h3 class="author">Urumasi updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">RCD suicide now tries to place a wall and gib you</li>
-			</ul>
-			<h3 class="author">tf-4 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Uses unused NanoDrug Plus sprite</li>
 			</ul>
 		</div>
 
