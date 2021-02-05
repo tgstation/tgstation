@@ -539,7 +539,7 @@
 							"<span class='hear'>You hear welding.</span>")
 		if(W.use_tool(src, user, 50, volume=50, amount=3))
 			if ((machine_stat & BROKEN) || opened==APC_COVER_REMOVED)
-				new /obj/item/stack/sheet/metal(loc)
+				new /obj/item/stack/sheet/iron(loc)
 				user.visible_message("<span class='notice'>[user.name] cuts [src] apart with [W].</span>",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else

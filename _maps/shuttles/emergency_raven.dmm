@@ -1993,7 +1993,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/metal/fifty{
+/obj/item/stack/sheet/iron/fifty{
 	pixel_x = 4;
 	pixel_y = -4
 	},

@@ -89,12 +89,12 @@
 	message = "cm3 of runite"
 	material_id = /datum/material/runite
 
-/datum/export/material/metal
+/datum/export/material/iron
 	cost = CARGO_CRATE_VALUE * 0.01
-	message = "cm3 of metal"
+	message = "cm3 of iron"
 	material_id = /datum/material/iron
 	export_types = list(
-		/obj/item/stack/sheet/metal, /obj/item/stack/tile/plasteel,
+		/obj/item/stack/sheet/iron, /obj/item/stack/tile/plasteel,
 		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
 
 /datum/export/material/glass

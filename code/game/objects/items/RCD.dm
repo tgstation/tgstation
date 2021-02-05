@@ -11,7 +11,7 @@ RLD
 
 /obj/item/construction
 	name = "not for ingame use"
-	desc = "A device used to rapidly build and deconstruct. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly build and deconstruct. Reload with iron, plasteel, glass or compressed matter cartridges."
 	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
@@ -53,7 +53,7 @@ RLD
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
-			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 metal
+			. += "Remote connection has iron in equivalent to [silo_mats.mat_container.get_material_amount(/datum/material/iron)/500] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -749,7 +749,7 @@ RLD
 
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
-	desc = "A prototype RCD with ranged capability and extended capacity. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A prototype RCD with ranged capability and extended capacity. Reload with iron, plasteel, glass or compressed matter cartridges."
 	max_matter = 300
 	matter = 300
 	delay_mod = 0.6
@@ -774,7 +774,7 @@ RLD
 
 /obj/item/construction/rld
 	name = "Rapid Lighting Device (RLD)"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	worn_icon_state = "RPD"
@@ -931,7 +931,7 @@ RLD
 
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device (MRLD)"
-	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rld-5"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'

@@ -21,7 +21,7 @@
 	},
 /area/ruin/unpowered)
 "ae" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
@@ -96,7 +96,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "as" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -106,7 +106,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "au" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
@@ -116,7 +116,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aw" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "ax" = (
@@ -156,7 +156,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -291,7 +291,7 @@
 /area/ruin/unpowered)
 "aY" = (
 /obj/structure/lattice,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/template_noop,
 /area/template_noop)
 "aZ" = (
@@ -326,7 +326,7 @@
 	},
 /area/ruin/unpowered)
 "bg" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
@@ -339,7 +339,7 @@
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
 "bi" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/item/clothing/head/chefhat,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
@@ -373,7 +373,7 @@
 /turf/template_noop,
 /area/template_noop)
 "bp" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/structure/girder,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
@@ -387,7 +387,7 @@
 /area/ruin/unpowered)
 "br" = (
 /obj/structure/girder,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},

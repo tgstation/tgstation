@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/cell = 1,
 		/obj/item/stack/rods/twentyfive = 1,
-		/obj/item/stack/sheet/metal/twenty = 1,
+		/obj/item/stack/sheet/iron/twenty = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 		/obj/item/sign = 1,
 

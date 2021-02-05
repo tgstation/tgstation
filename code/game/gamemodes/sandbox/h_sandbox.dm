@@ -190,7 +190,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				new/obj/item/stack/sheet/rglass{amount=50}(usr.loc)
 
 			if("hsbmetal")
-				new/obj/item/stack/sheet/metal{amount=50}(usr.loc)
+				new/obj/item/stack/sheet/iron/fifty(usr.loc)
 
 			if("hsbplasteel")
 				new/obj/item/stack/sheet/plasteel{amount=50}(usr.loc)

@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
 	if (!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(drop_location(), 2)
+		new /obj/item/stack/sheet/iron(drop_location(), 2)
 	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)

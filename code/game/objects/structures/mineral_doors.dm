@@ -2,7 +2,7 @@
 //machineryness
 
 /obj/structure/mineral_door
-	name = "metal door"
+	name = "iron door"
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
@@ -23,7 +23,7 @@
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
 
-	var/sheetType = /obj/item/stack/sheet/metal //what we're made of
+	var/sheetType = /obj/item/stack/sheet/iron //what we're made of
 	var/sheetAmount = 7 //how much we drop when deconstructed
 
 /obj/structure/mineral_door/Initialize()

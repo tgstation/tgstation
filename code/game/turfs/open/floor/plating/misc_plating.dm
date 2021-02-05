@@ -191,7 +191,7 @@
 /turf/open/floor/plating/ironsand
 	gender = PLURAL
 	name = "iron sand"
-	desc = "Like sand, but more <i>metal</i>."
+	desc = "Like sand, but more <i>iron</i>."
 	icon_state = "ironsand1"
 	base_icon_state = "ironsand1"
 	footstep = FOOTSTEP_SAND

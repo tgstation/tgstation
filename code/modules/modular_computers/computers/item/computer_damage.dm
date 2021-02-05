@@ -20,7 +20,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		physical.visible_message("<span class='notice'>\The [src] breaks apart!</span>")
 		var/turf/newloc = get_turf(src)
-		new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
+		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost/2))
 		for(var/C in all_components)
 			var/obj/item/computer_hardware/H = all_components[C]
 			if(QDELETED(H))

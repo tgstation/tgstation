@@ -2306,7 +2306,7 @@
 /obj/item/stack/sheet/glass/fifty{
 	layer = 4
 	},
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 20;
 	layer = 3.1
 	},

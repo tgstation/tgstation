@@ -552,7 +552,7 @@
 	. = ..()
 
 
-//Construction: Converts 50 metal to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
+//Construction: Converts 50 iron to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Twisting Aura"
 	desc = "Corrupts certain metalic objects on contact."
@@ -564,7 +564,7 @@
 	. = ..()
 	. += {"<u>A sinister spell used to convert:</u>\n
 	Plasteel into runed metal\n
-	[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell\n
+	[IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron into a construct shell\n
 	Living cyborgs into constructs after a delay\n
 	Cyborg shells into construct shells\n
 	Airlocks into brittle runed airlocks after a delay (harm intent)"}
@@ -575,15 +575,15 @@
 			to_chat(user, "<span class='cultitalic'>You are already invoking twisted construction!</span>")
 			return
 		var/turf/T = get_turf(target)
-		if(istype(target, /obj/item/stack/sheet/metal))
+		if(istype(target, /obj/item/stack/sheet/iron))
 			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(METAL_TO_CONSTRUCT_SHELL_CONVERSION))
+			if(candidate.use(IRON_TO_CONSTRUCT_SHELL_CONVERSION))
 				uses--
-				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
+				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the iron, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 			else
-				to_chat(user, "<span class='warning'>You need [METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal to produce a construct shell!</span>")
+				to_chat(user, "<span class='warning'>You need [IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!</span>")
 				return
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target

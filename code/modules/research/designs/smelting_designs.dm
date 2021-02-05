@@ -32,7 +32,7 @@
 	maxstack = 50
 
 /datum/design/plasmarglass_alloy
-	name = "Plasma + Metal + Glass alloy"
+	name = "Plasma + Iron + Glass alloy"
 	id = "plasmareinforcedglass"
 	build_type = SMELTER | PROTOLATHE
 	materials = list(/datum/material/plasma = MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5,  /datum/material/glass = MINERAL_MATERIAL_AMOUNT)

@@ -645,7 +645,7 @@
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
 		if(!R.use(1))//borgs can still fail this if they have no metal
-			to_chat(user, "<span class='warning'>You do not have enough metal to put [src] on a stick!</span>")
+			to_chat(user, "<span class='warning'>You do not have enough iron to put [src] on a stick!</span>")
 			return ..()
 		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
 		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)

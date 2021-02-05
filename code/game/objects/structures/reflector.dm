@@ -10,9 +10,9 @@
 	var/finished = FALSE
 	var/admin = FALSE //Can't be rotated or deconstructed
 	var/can_rotate = TRUE
-	var/framebuildstacktype = /obj/item/stack/sheet/metal
+	var/framebuildstacktype = /obj/item/stack/sheet/iron
 	var/framebuildstackamount = 5
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 0
 	var/list/allowed_projectile_typecache = list(/obj/projectile/beam)
 	var/rotation_angle = -1

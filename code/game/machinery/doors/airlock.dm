@@ -39,7 +39,7 @@
 #define AIRLOCK_EMAG	6
 
 #define AIRLOCK_SECURITY_NONE			0 //Normal airlock				//Wires are not secured
-#define AIRLOCK_SECURITY_METAL			1 //Medium security airlock		//There is a simple metal over wires (use welder)
+#define AIRLOCK_SECURITY_IRON			1 //Medium security airlock		//There is a simple iron plate over wires (use welder)
 #define AIRLOCK_SECURITY_PLASTEEL_I_S	2 								//Sliced inner plating (use crowbar), jumps to 0
 #define AIRLOCK_SECURITY_PLASTEEL_I		3 								//Removed outer plating, second layer here (use welder)
 #define AIRLOCK_SECURITY_PLASTEEL_O_S	4 								//Sliced outer plating (use crowbar)
@@ -127,13 +127,13 @@
 		addtimer(CALLBACK(.proc/update_other_id), 5)
 	if(glass)
 		airlock_material = "glass"
-	if(security_level > AIRLOCK_SECURITY_METAL)
+	if(security_level > AIRLOCK_SECURITY_IRON)
 		obj_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 	else
 		obj_integrity = normal_integrity
 		max_integrity = normal_integrity
-	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_METAL)
+	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_IRON)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -646,8 +646,8 @@
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
 				. += "Its wires are exposed!"
-			if(AIRLOCK_SECURITY_METAL)
-				. += "Its wires are hidden behind a welded metal cover."
+			if(AIRLOCK_SECURITY_IRON)
+				. += "Its wires are hidden behind a welded iron cover."
 			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
 				. += "There is some shredded plasteel inside."
 			if(AIRLOCK_SECURITY_PLASTEEL_I)
@@ -659,7 +659,7 @@
 			if(AIRLOCK_SECURITY_PLASTEEL)
 				. += "There is a protective grille over its panel."
 	else if(security_level)
-		if(security_level == AIRLOCK_SECURITY_METAL)
+		if(security_level == AIRLOCK_SECURITY_IRON)
 			. += "It looks a bit stronger."
 		else
 			. += "It looks very robust."
@@ -810,18 +810,18 @@
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
-				if(istype(C, /obj/item/stack/sheet/metal))
-					var/obj/item/stack/sheet/metal/S = C
+				if(istype(C, /obj/item/stack/sheet/iron))
+					var/obj/item/stack/sheet/iron/S = C
 					if(S.get_amount() < 2)
-						to_chat(user, "<span class='warning'>You need at least 2 metal sheets to reinforce [src].</span>")
+						to_chat(user, "<span class='warning'>You need at least 2 iron sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
 					if(do_after(user, 2 SECONDS, src))
 						if(!panel_open || !S.use(2))
 							return
-						user.visible_message("<span class='notice'>[user] reinforces \the [src] with metal.</span>",
-											"<span class='notice'>You reinforce \the [src] with metal.</span>")
-						security_level = AIRLOCK_SECURITY_METAL
+						user.visible_message("<span class='notice'>[user] reinforces \the [src] with iron.</span>",
+											"<span class='notice'>You reinforce \the [src] with iron.</span>")
+						security_level = AIRLOCK_SECURITY_IRON
 						update_icon()
 					return
 				else if(istype(C, /obj/item/stack/sheet/plasteel))
@@ -840,7 +840,7 @@
 						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
 						update_icon()
 					return
-			if(AIRLOCK_SECURITY_METAL)
+			if(AIRLOCK_SECURITY_IRON)
 				if(C.tool_behaviour == TOOL_WELDER)
 					if(!C.tool_start_check(user, amount=2))
 						return
@@ -852,7 +852,7 @@
 										"<span class='notice'>You cut through \the [src]'s shielding.</span>",
 										"<span class='hear'>You hear welding.</span>")
 						security_level = AIRLOCK_SECURITY_NONE
-						spawn_atom_to_turf(/obj/item/stack/sheet/metal, user.loc, 2)
+						spawn_atom_to_turf(/obj/item/stack/sheet/iron, user.loc, 2)
 						update_icon()
 					return
 			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
@@ -1582,7 +1582,7 @@
 #undef AIRLOCK_EMAG
 
 #undef AIRLOCK_SECURITY_NONE
-#undef AIRLOCK_SECURITY_METAL
+#undef AIRLOCK_SECURITY_IRON
 #undef AIRLOCK_SECURITY_PLASTEEL_I_S
 #undef AIRLOCK_SECURITY_PLASTEEL_I
 #undef AIRLOCK_SECURITY_PLASTEEL_O_S

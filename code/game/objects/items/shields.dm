@@ -100,7 +100,7 @@
 
 /obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/grillehit.ogg', 100)
-	new /obj/item/stack/sheet/metal(get_turf(src))
+	new /obj/item/stack/sheet/iron(get_turf(src))
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"

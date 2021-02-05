@@ -1059,7 +1059,7 @@
 
 /obj/item/storage/box/dishdrive/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/stack/sheet/metal/five = 1,
+		/obj/item/stack/sheet/iron/five = 1,
 		/obj/item/stack/cable_coil/five = 1,
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/stack/sheet/glass = 1,
@@ -1075,7 +1075,7 @@
 
 /obj/item/storage/box/material/PopulateContents() 	//less uranium because radioactive
 	var/static/items_inside = list(
-		/obj/item/stack/sheet/metal/fifty=1,\
+		/obj/item/stack/sheet/iron/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
 		/obj/item/stack/sheet/rglass=50,\
 		/obj/item/stack/sheet/plasmaglass=50,\
@@ -1309,13 +1309,13 @@
 
 /obj/item/storage/box/plumbing
 	name = "box of plumbing supplies"
-	desc = "Contains a small supply of pipes, water recyclers, and metal to connect to the rest of the station."
+	desc = "Contains a small supply of pipes, water recyclers, and iron to connect to the rest of the station."
 
 /obj/item/storage/box/plumbing/PopulateContents()
 	var/list/items_inside = list(
 		/obj/item/stock_parts/water_recycler = 2,
 		/obj/item/stack/ducts/fifty = 1,
-		/obj/item/stack/sheet/metal/ten = 1,
+		/obj/item/stack/sheet/iron/ten = 1,
 		)
 	generate_items_inside(items_inside, src)
 

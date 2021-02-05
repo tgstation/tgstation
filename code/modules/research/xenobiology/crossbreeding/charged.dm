@@ -70,7 +70,7 @@ Charged extracts:
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
-	new /obj/item/stack/sheet/metal(get_turf(user), 25)
+	new /obj/item/stack/sheet/iron(get_turf(user), 25)
 	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] grows into a plethora of metals!</span>")
 	..()

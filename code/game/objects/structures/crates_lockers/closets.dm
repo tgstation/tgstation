@@ -32,7 +32,7 @@
 	var/close_sound = 'sound/machines/closet_close.ogg'
 	var/open_sound_volume = 35
 	var/close_sound_volume = 50
-	var/material_drop = /obj/item/stack/sheet/metal
+	var/material_drop = /obj/item/stack/sheet/iron
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE

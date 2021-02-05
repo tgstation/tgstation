@@ -4,7 +4,7 @@
 
 /obj/machinery/autolathe
 	name = "autolathe"
-	desc = "It produces items using metal and glass."
+	desc = "It produces items using iron and glass."
 	icon_state = "autolathe"
 	density = TRUE
 	use_power = IDLE_POWER_USE

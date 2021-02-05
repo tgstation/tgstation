@@ -2647,8 +2647,8 @@
 /area/ruin/space/has_grav/hotel/power)
 "ix" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},

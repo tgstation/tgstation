@@ -1415,7 +1415,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cY" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 12
 	},
 /obj/effect/decal/cleanable/dirt,

@@ -627,7 +627,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "cJ" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "cK" = (
@@ -2195,7 +2195,7 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "iF" = (

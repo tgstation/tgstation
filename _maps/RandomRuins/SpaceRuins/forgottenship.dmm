@@ -331,9 +331,9 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/mineral/plastitanium{
 	amount = 50
@@ -363,7 +363,7 @@
 	},
 /obj/item/circuitboard/machine/circuit_imprinter,
 /obj/item/circuitboard/machine/protolathe,
-/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},

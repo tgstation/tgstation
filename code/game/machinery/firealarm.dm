@@ -326,7 +326,7 @@
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 1)
+		new /obj/item/stack/sheet/iron(loc, 1)
 		if(!(machine_stat & BROKEN))
 			var/obj/item/I = new /obj/item/electronics/firealarm(loc)
 			if(!disassembled)

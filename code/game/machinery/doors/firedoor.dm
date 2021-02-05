@@ -366,7 +366,7 @@
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
 						"<span class='notice'>You cut [src] into metal.</span>")
 					var/turf/T = get_turf(src)
-					new /obj/item/stack/sheet/metal(T, 3)
+					new /obj/item/stack/sheet/iron(T, 3)
 					if(reinforced)
 						new /obj/item/stack/sheet/plasteel(T, 2)
 					qdel(src)

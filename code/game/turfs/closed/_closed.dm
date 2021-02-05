@@ -240,8 +240,8 @@
 	return TRUE
 
 /turf/closed/indestructible/iron
-	name = "impervious metal wall"
-	desc = "A wall with tough metal plating."
+	name = "impervious iron wall"
+	desc = "A wall with tough iron plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron_wall-0"
 	base_icon_state = "iron_wall"

@@ -189,7 +189,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/obj/item/stack/sheet/metal/O = new(null, 5)
+			var/obj/item/stack/sheet/iron/O = new(null, 5)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)

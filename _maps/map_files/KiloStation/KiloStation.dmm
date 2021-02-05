@@ -3291,7 +3291,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/stack/sheet/metal/ten,
+/obj/item/stack/sheet/iron/ten,
 /obj/item/stack/cable_coil,
 /obj/item/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
@@ -14264,9 +14264,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -15363,7 +15363,7 @@
 /area/engine/engineering)
 "azK" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/rods/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/electronics/airlock,
@@ -30131,9 +30131,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/head/welding,
@@ -31415,7 +31415,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/clothing/glasses/welding,
 /obj/item/radio/intercom{
@@ -45189,7 +45189,7 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/wrench,
 /obj/item/crowbar/red,
@@ -49907,8 +49907,8 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/machinery/button/door{
@@ -56253,7 +56253,7 @@
 "bNk" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/table,
-/obj/item/stack/sheet/metal/ten{
+/obj/item/stack/sheet/iron/ten{
 	amount = 5
 	},
 /obj/item/assembly/prox_sensor,
@@ -59615,7 +59615,7 @@
 	},
 /obj/structure/table,
 /obj/item/stack/sheet/plasteel/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -66379,8 +66379,8 @@
 /area/ai_monitored/turret_protected/ai)
 "cee" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/clothing/head/welding{
 	pixel_x = 4;
 	pixel_y = 4
@@ -68875,7 +68875,7 @@
 /area/ai_monitored/storage/satellite)
 "ciD" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 5
@@ -80970,9 +80970,9 @@
 "cEz" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/storage/belt/utility,
 /obj/item/clothing/head/welding,
@@ -83569,8 +83569,8 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/pipe_dispenser,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 28
@@ -85074,8 +85074,8 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/construction/plumbing,
 /obj/item/construction/plumbing,
 /obj/machinery/button/door{
@@ -91431,7 +91431,7 @@
 "weO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"

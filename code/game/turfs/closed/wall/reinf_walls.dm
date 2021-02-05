@@ -36,7 +36,7 @@
 
 /turf/closed/wall/r_wall/devastate_wall()
 	new sheet_type(src, sheet_amount)
-	new /obj/item/stack/sheet/metal(src, 2)
+	new /obj/item/stack/sheet/iron(src, 2)
 
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)

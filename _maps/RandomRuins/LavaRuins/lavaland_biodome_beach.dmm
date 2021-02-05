@@ -1444,7 +1444,7 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/powered/beach)
 "UZ" = (
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
