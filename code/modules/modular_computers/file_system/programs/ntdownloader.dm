@@ -149,13 +149,11 @@
 	var/list/all_entries[0]
 	for(var/A in main_repo)
 		var/datum/computer_file/program/P = A
-		// Only those programs our user can run will show in the list
-		if(hard_drive.find_file_by_name(P.filename))
-			continue
 		all_entries.Add(list(list(
 			"filename" = P.filename,
 			"filedesc" = P.filedesc,
 			"fileinfo" = P.extended_desc,
+			"installed" = hard_drive.find_file_by_name(P.filename),
 			"compatibility" = check_compatibility(P),
 			"size" = P.size,
 			"access" = P.can_run(user,transfer = 1, access = access)
@@ -165,13 +163,12 @@
 		var/list/hacked_programs[0]
 		for(var/S in antag_repo)
 			var/datum/computer_file/program/P = S
-			if(hard_drive.find_file_by_name(P.filename))
-				continue
 			data["hackedavailable"] = TRUE
 			hacked_programs.Add(list(list(
 				"filename" = P.filename,
 				"filedesc" = P.filedesc,
 				"fileinfo" = P.extended_desc,
+				"installed" = hard_drive.find_file_by_name(P.filename),
 				"compatibility" = check_compatibility(P),
 				"size" = P.size,
 				"access" = TRUE,

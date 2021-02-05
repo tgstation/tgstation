@@ -97,45 +97,53 @@ const Program = (props, context) => {
         <Flex.Item color="label" nowrap>
           {program.size} GQ
         </Flex.Item>
-        <Flex.Item ml={2} width="94px" textAlign="center">
-          {program.filename === downloadname && (
+        <Flex.Item ml={2} width="120px" textAlign="center">
+          {program.installed && (
+            <Button
+              fluid
+              icon="check"
+              color="green"
+              content="Installed" />
+          )}
+          {!program.installed && program.compatibility !== 'Compatible' && (
+            <Button
+              fluid
+              icon="times"
+              color="red"
+              content="Incompatible" />
+          )}
+          {(!program.installed && program.compatibility == 'Compatible' && !program.access) && (
+            <Button
+              fluid
+              icon="times"
+              color="red"
+              content="No Access" />
+          )}
+          {(!program.installed && program.compatibility == 'Compatible' && program.access && program.size > disk_free) && (
+            <Button
+              fluid
+              icon="times"
+              color="red"
+              content="No space" />
+          )}
+          {(downloading && program.filename === downloadname) && (
             <ProgressBar
               color="green"
               minValue={0}
               maxValue={downloadsize}
               value={downloadcompletion} />
-          ) || (
+          )}
+          {(!program.installed && program.compatibility == 'Compatible' && program.access && !downloading && program.size < disk_free) && (
             <Button
               fluid
               icon="download"
               content="Download"
-              disabled={
-                downloading || program.size > disk_free || !program.access
-              }
               onClick={() => act('PRG_downloadfile', {
                 filename: program.filename,
               })} />
           )}
         </Flex.Item>
       </Flex>
-      {program.compatibility !== 'Compatible' && (
-        <Box mt={1} italic fontSize="12px" position="relative">
-          <Icon mx={1} color="red" name="times" />
-          Incompatible!
-        </Box>
-      )}
-      {!(program.access) && (
-        <Box mt={1} italic fontSize="12px" position="relative">
-          <Icon mx={1} color="red" name="times" />
-          Invalid credentials loaded!
-        </Box>
-      )}
-      {program.size > disk_free && (
-        <Box mt={1} italic fontSize="12px" position="relative">
-          <Icon mx={1} color="red" name="times" />
-          Not enough disk space!
-        </Box>
-      )}
       <Box mt={1} italic color="label" fontSize="12px">
         {program.fileinfo}
       </Box>
