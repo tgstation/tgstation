@@ -76074,7 +76074,7 @@
 /area/science/xenobiology)
 "tla" = (
 /turf/open/floor/plating/foam{
-	initial_gas_mix = ""TEMP=2.7""
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/space/nearstation)
 "tll" = (
@@ -78287,13 +78287,13 @@
 "uST" = (
 /obj/structure/grille,
 /turf/open/floor/plating/foam{
-	initial_gas_mix = ""TEMP=2.7""
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/space/nearstation)
 "uTa" = (
 /obj/item/book/manual/nuclear,
 /turf/open/floor/plating/foam{
-	initial_gas_mix = ""TEMP=2.7""
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/space/nearstation)
 "uTm" = (
