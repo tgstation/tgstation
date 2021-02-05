@@ -866,7 +866,7 @@
 	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
 	storable = list(/obj/item/reagent_containers/glass/beaker,
-				/obj/item/reagent_containers/glass/bottle)
+					/obj/item/reagent_containers/glass/bottle)
 
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
@@ -925,8 +925,8 @@
 	name = "beverage storage apparatus"
 	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
 	icon_state = "borg_beaker_apparatus"
-	storable = list(/obj/item/reagent_containers/food/drinks/,
-				/obj/item/reagent_containers/food/condiment)
+	storable = list(/obj/item/reagent_containers/food/drinks,
+					/obj/item/reagent_containers/food/condiment)
 
 /obj/item/borg/apparatus/beaker/service/Initialize()
 	. = ..()
@@ -934,9 +934,58 @@
 	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
 	update_icon()
 
-////////////////////
-//engi part holder//
-////////////////////
+/////////////////////
+//organ storage bag//
+/////////////////////
+
+/obj/item/borg/apparatus/organ_storage //allows medical cyborgs to manipulate organs without hands
+	name = "organ storage bag"
+	desc = "A container for holding body parts."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "evidenceobj"
+	item_flags = SURGICAL_TOOL
+	storable = list(/obj/item/organ,
+					/obj/item/bodypart)
+
+/obj/item/borg/apparatus/organ_storage/examine()
+	. = ..()
+	. += "The organ bag currently contains:"
+	if(stored)
+		var/obj/item/organ = stored
+		. += organ.name
+	else
+		. += "Nothing."
+
+/obj/item/borg/apparatus/organ_storage/update_overlays()
+	. = ..()
+	icon_state = null // hides the original icon (otherwise it's drawn underneath)
+	var/mutable_appearance/bag
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
+		stored_organ.layer = FLOAT_LAYER
+		stored_organ.plane = FLOAT_PLANE
+		stored_organ.pixel_x = 0
+		stored_organ.pixel_y = 0
+		. += stored_organ
+		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
+	else
+		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
+	. += bag
+
+/obj/item/borg/apparatus/organ_storage/attack_self(mob/user)
+	if(stored)
+		var/obj/item/organ = stored
+		user.visible_message("<span class='notice'>[user] dumps [organ] from [src].</span>", "<span class='notice'>You dump [organ] from [src].</span>")
+		cut_overlays()
+		organ.forceMove(get_turf(src))
+	else
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+	return
+
+////////////////////////////
+//engi circuitboard holder//
+////////////////////////////
 
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"

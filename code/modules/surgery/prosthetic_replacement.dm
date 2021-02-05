@@ -18,12 +18,12 @@
 
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"
-	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
+	implements = list(/obj/item/bodypart = 100, /obj/item/borg/apparatus/organ_storage = 100, /obj/item/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(istype(tool, /obj/item/organ_storage))
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 		if(!tool.contents.len)
 			to_chat(user, "<span class='warning'>There is nothing inside [tool]!</span>")
 			return -1
@@ -65,7 +65,7 @@
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	. = ..()
-	if(istype(tool, /obj/item/organ_storage))
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 		tool.icon_state = initial(tool.icon_state)
 		tool.desc = initial(tool.desc)
 		tool.cut_overlays()
