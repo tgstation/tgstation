@@ -10,9 +10,12 @@ export const Thermometer = (props, context) => {
         height={500}
         key="Thermometer"
         resizable>
-            <Icon rotation = {90}>
-                <ProgressBar value={data.temperature} />
-            </Icon>
-        </Window>
+        <Section>
+        <Icon rotation = {90}>
+            <ProgressBar value={data.temperature} />
+        </Icon>
+        test
+        </Section>
+    </Window>
     );
-}
+};

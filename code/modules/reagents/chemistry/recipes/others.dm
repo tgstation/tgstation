@@ -682,7 +682,7 @@
 	results = list(/datum/reagent/consumable/ice = 1.09)//density
 	required_reagents = list(/datum/reagent/water = 1)
 	is_cold_recipe = TRUE
-	required_temp = 273
+	required_temp = 274 // So we can be sure that basic ghetto rigged stuff can freeze
 	optimal_temp = 200
 	overheat_temp = 0
 	optimal_ph_min = 0
@@ -696,7 +696,7 @@
 /datum/chemical_reaction/water
 	results = list(/datum/reagent/water = 0.92)//rough density excahnge
 	required_reagents = list(/datum/reagent/consumable/ice = 1)
-	required_temp = 274
+	required_temp = 275
 	optimal_temp = 350
 	overheat_temp = 99999
 	optimal_ph_min = 0

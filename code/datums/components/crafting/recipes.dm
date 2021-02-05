@@ -27,6 +27,9 @@
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
 
+/datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
+	return
+
 /datum/crafting_recipe/improv_explosive
 	name = "IED"
 	result = /obj/item/grenade/iedcasing
@@ -1113,7 +1116,7 @@
 	name = "Alcohol burner"
 	result = /obj/item/burner
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
 				/datum/reagent/consumable/ethanol = 15,
 				/obj/item/paper = 1
 				)
@@ -1123,7 +1126,7 @@
 	name = "Oil burner"
 	result = /obj/item/burner/oil
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
 				/datum/reagent/fuel/oil = 15,
 				/obj/item/paper = 1
 				)
@@ -1133,7 +1136,7 @@
 	name = "Fuel burner"
 	result = /obj/item/burner/fuel
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
 				/datum/reagent/fuel = 15,
 				/obj/item/paper = 1
 				)
@@ -1141,6 +1144,7 @@
 
 /datum/crafting_recipe/thermometer
 	name = "Thermometer"
+	tools = list(TOOL_WELDER)
 	result = /obj/item/thermometer
 	time = 5 SECONDS
 	reqs = list(
@@ -1169,23 +1173,23 @@
 				)
 	category = CAT_CHEMISTRY
 
-/datum/crafting_recipe/dropper
-	name = "pH booklet"
+/datum/crafting_recipe/dropper //Maybe make a glass pipette icon?
+	name = "Dropper"
 	result = /obj/item/reagent_containers/dropper 
+	tools = list(TOOL_WELDER)
 	time = 5 SECONDS
 	reqs = list(
-				/obj/item/reagent_containers/glass = 1,
-				/obj/item/paper = 1
+				/obj/item/stack/sheet/glass  = 1,
 				)
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/improvised_chem_heater
-	name = "pH booklet"
+	name = "Improvised chem heater"
 	result = /obj/machinery/space_heater/improvised_chem_heater
-	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
-	time = 5 SECONDS
+	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER)
+	time = 15 SECONDS
+	additional_req_text = " 1 adjacent space heater"
 	reqs = list(
-				/obj/machinery/space_heater = 1,
 				/obj/item/stack/cable_coil = 2,
 				/obj/item/stack/sheet/glass = 2,
 				/obj/item/stack/sheet/metal = 2,
@@ -1193,13 +1197,22 @@
 				/obj/item/thermometer = 1
 				)
 	category = CAT_CHEMISTRY
+	var/cached_heater
 
 /datum/crafting_recipe/improvised_chem_heater/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
 	var/obj/machinery/space_heater/s_heater = locate(/obj/machinery/space_heater) in orange(user, 1)
 	if(!s_heater)
-		to_chat(user, "<span class='boldwarning'>You need to be next to a space heater to craft this!</span>")
 		return FALSE
+	cached_heater = s_heater
 	return TRUE
+
+/datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
+	var/turf/turf = get_turf(cached_heater)
+	qdel(cached_heater)
+	//qdelling makes a battery
+	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in orange(turf, 1)
+	qdel(cell)
 
 /datum/crafting_recipe/improvised_coolant
 	name = "Improvised cooling spray"

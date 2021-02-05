@@ -56,7 +56,7 @@
 	force = 3
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
 	max_water = 30
-	sprite_name = "miniFE"
+	sprite_name = "coolant"
 	dog_fashion = null
 	cooling_power = 1.5
 	power = 3

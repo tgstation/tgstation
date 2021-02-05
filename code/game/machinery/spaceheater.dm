@@ -243,6 +243,7 @@
 	desc = "A space heater hacked to reroute heating to a water bath on the top."
 	panel_open = TRUE //This is always open
 	var/obj/item/reagent_containers/beaker = null
+	var/chem_heating_power = 1
 
 /obj/machinery/space_heater/improvised_chem_heater/process(delta_time)
 	if(!on || !is_operational)
@@ -257,27 +258,31 @@
 		return
 	
 	if(beaker?.reagents.total_volume)
-		var/kalvin_temperature = targetTemperature + 273.15
-		switch(mode)
-			if(HEATER_MODE_STANDBY)
-				//keep constant with the chemical acclimator please
-				beaker.reagents.adjust_thermal_energy((kalvin_temperature - beaker.reagents.chem_temp) * 0.05 * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+		var/power_mod = 0.1 * chem_heating_power
+		switch(setMode)
+			if("auto")
+				power_mod *= 0.5
+				beaker.reagents.adjust_thermal_energy((targetTemperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 				beaker.reagents.handle_reactions()
 			if(HEATER_MODE_HEAT)
-				if(kalvin_temperature < beaker.reagents.chem_temp)
+				if(targetTemperature < beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((kalvin_temperature - beaker.reagents.chem_temp) * 0.1 * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+				beaker.reagents.adjust_thermal_energy((targetTemperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			if(HEATER_MODE_COOL)
-				if(kalvin_temperature > beaker.reagents.chem_temp)
+				if(targetTemperature > beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((kalvin_temperature - beaker.reagents.chem_temp) * 0.1 * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+				beaker.reagents.adjust_thermal_energy((targetTemperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+		var/requiredEnergy = heatingPower * delta_time * (power_mod * 3)
+		cell.use(requiredEnergy / efficiency)
+	update_icon()
+		
 
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()
 	. = ..()
 	.["chemHacked"] = TRUE
 	.["beaker"] = beaker
-	.["currentTemp"] = beaker ? (beaker.reagents.chem_temp - 273.15) : "N/A" 
+	.["currentTemp"] = beaker ? (round(beaker.reagents.chem_temp - T0C)) : "N/A" 
 	return .
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_act(action, params)
@@ -285,7 +290,7 @@
 	if(.)
 		return
 	switch(action)
-		if("eject")
+		if("ejectBeaker")
 			//Eject doesn't turn it off, so you can preheat for beaker swapping
 			replace_beaker(usr)
 			. = TRUE
@@ -313,9 +318,8 @@
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
-		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		to_chat(user, "<span class='notice'>You add [B] to [src]'s water bath.</span>")
 		updateUsrDialog()
-		//update_icon()
 		return
 	//Dropper tools
 	if(beaker)
@@ -330,8 +334,6 @@
 
 	else if(default_deconstruction_crowbar(I))
 		return
-	else
-		return ..()
 
 /obj/machinery/space_heater/improvised_chem_heater/deconstruct(disassembled = TRUE)
 	. = ..()
@@ -365,12 +367,16 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
 	if(on && beaker)
-		if((targetTemperature + 273.15) < beaker.reagents.chem_temp)
-			icon_state = "sheater-cool"
-		else if((targetTemperature + 273.15) > beaker.reagents.chem_temp)
+		if(targetTemperature < beaker.reagents.chem_temp)
+			icon_state = "sheater-cool"	
+		else if(targetTemperature > beaker.reagents.chem_temp)
 			icon_state = "sheater-heat"
 	else
 		icon_state = "sheater-off"
+
+/obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
+	. = ..()
+	chem_heating_power = efficiency/20000 //1-2.5
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT

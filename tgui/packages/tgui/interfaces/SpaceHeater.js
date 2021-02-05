@@ -13,6 +13,13 @@ export const SpaceHeater = (props, context) => {
           title="Power"
           buttons={(
             <>
+              {!!data.chemHacked && (
+                  <Button
+                    icon="eject"
+                    content="Eject beaker"
+                    disabled={!data.beaker}
+                    onClick={() => act('ejectBeaker')} />
+              )}
               <Button
                 icon="eject"
                 content="Eject Cell"
@@ -24,6 +31,7 @@ export const SpaceHeater = (props, context) => {
                 selected={data.on}
                 disabled={!data.hasPowercell}
                 onClick={() => act('power')} />
+              
             </>
           )}>
           <LabeledList>
@@ -100,15 +108,6 @@ export const SpaceHeater = (props, context) => {
                 </>
               )}
             </LabeledList.Item>
-            {data.chemHacked && (
-              <LabeledList label="Beaker">
-                <Button
-                  icon="eject"
-                  content="Eject"
-                  disabled={!data.beaker}
-                  onClick={() => act('eject')} />
-              </LabeledList>
-            )}
             <LabeledList.Divider />
           </LabeledList>
         </Section>

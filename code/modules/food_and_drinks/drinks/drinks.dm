@@ -120,9 +120,9 @@
 	//Cooling method
 	if(istype(I, /obj/item/extinguisher))
 		var/obj/item/extinguisher/extin = I
-		var/cooling = (extin.cooling_power * extin.power)*5
+		var/cooling = (extin.cooling_power * extin.power)*50
 		reagents.expose_temperature(cooling)
-		to_chat(user, "<span class='notice'>You cool [name] with [I]!</span>")
+		to_chat(user, "<span class='notice'>You cool the [name] with the [I]!</span>")
 		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extin.reagents.remove_all(1)
 	..()

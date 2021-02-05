@@ -146,21 +146,32 @@
 	var/max_volume = 50
 	var/reagent_type = /datum/reagent/consumable/ethanol
 
-/obj/item/burner/Initialize(volume = 30, _max_volume = 50)
+/obj/item/burner/Initialize()
 	. = ..()
-	max_volume = _max_volume
-	create_reagents(max_volume, AMOUNT_VISIBLE)
-	reagents.add_reagent(reagent_type, volume)
+	create_reagents(max_volume, TRANSPARENT)//WE have our own refillable - since we want to heat and pour
+	reagents.add_reagent(reagent_type, 15)
 
 /obj/item/burner/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(lit)
-		if(istype(I, /obj/item/reagent_containers))
+	if(istype(I, /obj/item/reagent_containers))
+		if(lit)
 			var/obj/item/reagent_containers/container = I
 			container.reagents.expose_temperature(get_temperature())
 			to_chat(user, "<span class='notice'>You heat up the [src].</span>")
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
 			return
+		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
+			var/obj/item/reagent_containers/container = I
+			if(!container.reagents.total_volume)
+				to_chat(user, "<span class='warning'>[container] is empty and can't be poured!</span>")
+				return
+
+			if(reagents.holder_full())
+				to_chat(user, "<span class='warning'>[src] is full.</span>")
+				return
+
+			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transfered_by = user)
+			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [container].</span>")
 	if(I.heat < 1000)
 		return 
 	set_lit(TRUE)
@@ -230,25 +241,25 @@
 		if(istype(reagent, /datum/reagent/consumable/ethanol))
 			current_heat += 2193//ethanol burns at 1970C (at it's peak)
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/consumable/ethanol, 0.05)
+			reagents.remove_reagent(/datum/reagent/consumable/ethanol, 0.025)
 			continue
 
 		if(ispath(reagent, /datum/reagent/fuel))
 			current_heat += 1725//Refined slightly
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/fuel, 0.1)
+			reagents.remove_reagent(/datum/reagent/fuel, 0.05)
 			continue
 
 		if(istype(reagent, /datum/reagent/fuel/oil))
 			current_heat += 1200//Oil is crude
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/fuel/oil, 0.025)//But lasts longer
+			reagents.remove_reagent(/datum/reagent/fuel/oil, 0.01)//But lasts longer
 			continue
 
 		if(istype(reagent, /datum/reagent/toxin/plasma))//For fun
 			current_heat += 4500//plasma is hot!!
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/toxin/plasma, 0.15)//But burns fast
+			reagents.remove_reagent(/datum/reagent/toxin/plasma, 0.07)//But burns fast
 			continue
 	
 	if(!number_of_burning_reagents)
@@ -282,9 +293,11 @@
 	var/obj/item/reagent_containers/attached_beaker
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
 	if(istype(target, /obj/item/reagent_containers))
 		attached_beaker = target
-		loc = target
+		if(!user.transferItemToLoc(src, target))
+			return
 		ui_interact(usr, null)
 		
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
