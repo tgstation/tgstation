@@ -22,6 +22,14 @@
 	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
+	var/list/show_categories = list(
+		PROGRAM_CATEGORY_MISC,
+		PROGRAM_CATEGORY_CREW,
+		PROGRAM_CATEGORY_SUPL,
+		PROGRAM_CATEGORY_ENGI,
+		PROGRAM_CATEGORY_ROBO,
+	)
+	var/selected_cat = PROGRAM_CATEGORY_MISC
 
 /datum/computer_file/program/ntnetdownload/run_program()
 	. = ..()
@@ -120,6 +128,9 @@
 				downloaded_file = null
 				downloaderror = ""
 			return TRUE
+		if("select")
+			selected_cat = params["category"]
+			return TRUE
 	return FALSE
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
@@ -146,37 +157,44 @@
 	var/obj/item/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
 	data["disk_size"] = hard_drive.max_capacity
 	data["disk_used"] = hard_drive.used_capacity
-	var/list/all_entries[0]
+	var/list/programs[0]
 	for(var/A in main_repo)
 		var/datum/computer_file/program/P = A
-		all_entries.Add(list(list(
-			"filename" = P.filename,
-			"filedesc" = P.filedesc,
-			"fileinfo" = P.extended_desc,
-			"installed" = hard_drive.find_file_by_name(P.filename),
-			"compatibility" = check_compatibility(P),
-			"size" = P.size,
-			"access" = P.can_run(user,transfer = 1, access = access)
-		)))
+		programs.Add(P)
 	data["hackedavailable"] = FALSE
 	if(emagged) // If we are running on emagged computer we have access to some "bonus" software
-		var/list/hacked_programs[0]
 		for(var/S in antag_repo)
 			var/datum/computer_file/program/P = S
 			data["hackedavailable"] = TRUE
-			hacked_programs.Add(list(list(
+			programs.Add(P)
+
+	programs = sortList(programs, /proc/cmp_program_asc)
+
+	var/categories = show_categories.Copy()
+	for(var/V in categories)
+		categories[V] = list()
+	for(var/I in programs)
+		var/datum/computer_file/program/P = I
+		for(var/C in categories)
+			if(C == P.category)
+				categories[C] += P
+	for(var/category in categories)
+		var/list/cat = list(
+			"name" = category,
+			"items" = (category == selected_cat ? list() : null))
+		for(var/I in categories[category])
+			var/datum/computer_file/program/P = I
+			cat["items"] += list(list(
 				"filename" = P.filename,
 				"filedesc" = P.filedesc,
 				"fileinfo" = P.extended_desc,
-				"installed" = hard_drive.find_file_by_name(P.filename),
-				"compatible" = check_compatibility(P),
+				"category" = P.category,
+				"installed" = !!hard_drive.find_file_by_name(P.filename),
+				"compatibility" = check_compatibility(P),
 				"size" = P.size,
-				"access" = TRUE,
-			)))
-		data["hacked_programs"] = hacked_programs
-
-	data["downloadable_programs"] = sortList(all_entries, /proc/cmp_program_asc)
-
+				"access" = emagged ? TRUE : P.can_run(user,transfer = 1, access = access)
+			))
+		data["categories"] += list(cat)
 	return data
 
 /datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)

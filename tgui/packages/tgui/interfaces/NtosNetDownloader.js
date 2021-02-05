@@ -1,5 +1,5 @@
-import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetDownloader = (props, context) => {
@@ -12,11 +12,20 @@ export const NtosNetDownloader = (props, context) => {
     error,
     hacked_programs = [],
     hackedavailable,
+    categories = [],
   } = data;
+  const [
+    selectedCategory,
+    setSelectedCategory,
+  ] = useLocalState(context, 'category', categories[0]?.name);
+  const items = categories
+    .find(category => category.name === selectedCategory)
+    ?.items
+    || [];
   return (
     <NtosWindow
       theme={PC_device_theme}
-      width={480}
+      width={512}
       height={735}
       resizable>
       <NtosWindow.Content scrollable>
@@ -42,21 +51,36 @@ export const NtosNetDownloader = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section>
-          {downloadable_programs
-            .map(program => (
-              <Program
-                key={program.filename}
-                program={program} />
-            ))}
-        </Section>
+        <Flex>
+          <Flex.Item minWidth="110px" shrink={0} basis={0}>
+          <Tabs vertical>
+              {categories.map(category => (
+                <Tabs.Tab
+                  key={category.name}
+                  selected={category.name === selectedCategory}
+                  onClick={() => setSelectedCategory(category.name)}>
+                  {category.name}
+                </Tabs.Tab>
+              ))}
+            </Tabs>
+          </Flex.Item>
+          <Flex.Item grow={1} basis={0}>
+            <Section>
+              {items.map(program => (
+                  <Program
+                    key={program.filename}
+                    program={program} />
+                ))}
+            </Section>
+          </Flex.Item>
+        </Flex>
         {!!hackedavailable && (
           <Section title="UNKNOWN Software Repository">
             <NoticeBox mb={1}>
               Please note that Nanotrasen does not recommend download
               of software from non-official servers.
             </NoticeBox>
-            {hacked_programs.map(program => (
+            {items.map(program => (
               <Program
                 key={program.filename}
                 program={program} />
@@ -97,9 +121,10 @@ const Program = (props, context) => {
               maxValue={downloadsize}
               value={downloadcompletion} />
           ) || (
-            (!program.installed && program.compatible && program.access && program.size < disk_free) && (
+            (!program.installed && program.compatibility && program.access && program.size < disk_free) && (
               <Button
                 fluid
+                bold
                 icon="download"
                 content="Download"
                 disabled={downloading}
@@ -109,9 +134,10 @@ const Program = (props, context) => {
             ) || (
               <Button
                 fluid
+                bold
                 icon={program.installed ? 'check' : 'times'}
                 color={program.installed ? 'green' : 'red'}
-                content={program.installed ? 'Installed' : !program.compatible ? 'Incompatible' : !program.access ? 'No Access' : 'Need Space'} />
+                content={program.installed ? 'Installed' : !program.compatibility ? 'Incompatible' : !program.access ? 'No Access' : 'Need Space'} />
             )
           )}
         </Flex.Item>

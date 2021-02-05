@@ -1,6 +1,7 @@
 /datum/computer_file/program/borg_monitor
 	filename = "siliconnect"
 	filedesc = "SiliConnect"
+	category = PROGRAM_CATEGORY_ROBO
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."

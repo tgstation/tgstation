@@ -1,6 +1,7 @@
 /datum/computer_file/program/radar //generic parent that handles most of the process
 	filename = "genericfinder"
 	filedesc = "debug_finder"
+	category = PROGRAM_CATEGORY_CREW
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_icon_state = "radarntos"
 	requires_ntnet = TRUE
