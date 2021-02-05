@@ -39,7 +39,7 @@
 #define AIRLOCK_EMAG	6
 
 #define AIRLOCK_SECURITY_NONE			0 //Normal airlock				//Wires are not secured
-#define AIRLOCK_SECURITY_IRON			1 //Medium security airlock		//There is a simple iron over wires (use welder)
+#define AIRLOCK_SECURITY_IRON			1 //Medium security airlock		//There is a simple iron plate over wires (use welder)
 #define AIRLOCK_SECURITY_PLASTEEL_I_S	2 								//Sliced inner plating (use crowbar), jumps to 0
 #define AIRLOCK_SECURITY_PLASTEEL_I		3 								//Removed outer plating, second layer here (use welder)
 #define AIRLOCK_SECURITY_PLASTEEL_O_S	4 								//Sliced outer plating (use crowbar)
