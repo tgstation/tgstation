@@ -195,6 +195,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 ///destroys reference to stored_gun to prevent hard deletions
 /obj/machinery/porta_turret/proc/null_gun()
+	SIGNAL_HANDLER
 	stored_gun = null
 
 /obj/machinery/porta_turret/Destroy()
@@ -413,7 +414,13 @@ DEFINE_BITFIELD(turret_flags, list(
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
-	if(!on || (machine_stat & (NOPOWER|BROKEN)) || manual_control || (!stored_gun && uses_stored))
+	if(!on || (machine_stat & (NOPOWER|BROKEN)))
+		return PROCESS_KILL
+
+	if(manual_control)
+		return PROCESS_KILL
+
+	if(uses_stored && !stored_gun)
 		return PROCESS_KILL
 
 	var/list/targets = list()
