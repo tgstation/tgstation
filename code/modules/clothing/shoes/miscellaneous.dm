@@ -72,7 +72,7 @@
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
-	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
+	desc = "A pair of purple rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
 
 /obj/item/clothing/shoes/galoshes/dry/Initialize()
