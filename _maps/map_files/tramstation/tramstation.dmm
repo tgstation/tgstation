@@ -49715,8 +49715,8 @@
 /area/maintenance/starboard/secondary)
 "pEH" = (
 /obj/machinery/mineral/ore_redemption{
-	input_dir = 8;
-	output_dir = 4
+	input_dir = 1;
+	output_dir = 2
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/brown/filled/line{
