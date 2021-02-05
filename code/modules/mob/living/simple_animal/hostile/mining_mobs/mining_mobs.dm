@@ -8,10 +8,11 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = INFINITY
+	unsuitable_heat_damage = 20
 	response_harm_continuous = "strikes"
 	response_harm_simple = "strike"
 	status_flags = 0
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	var/crusher_loot
 	var/throw_message = "bounces off of"
 	var/fromtendril = FALSE
@@ -59,13 +60,3 @@
 
 /mob/living/simple_animal/hostile/asteroid/proc/spawn_crusher_loot()
 	butcher_results[crusher_loot] = 1
-
-/mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
-	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(2)
-		throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(20)
-		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-	else
-		clear_alert("temp")

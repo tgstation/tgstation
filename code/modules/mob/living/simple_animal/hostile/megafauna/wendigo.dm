@@ -170,9 +170,10 @@ Difficulty: Hard
 		if(isclosedturf(T))
 			continue
 		possible_ends |= T
-	var/turf/end = pick(possible_ends)
-	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
-	SetRecoveryTime(20, 0)
+	if (LAZYLEN(possible_ends))
+		var/turf/end = pick(possible_ends)
+		do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
+		SetRecoveryTime(20, 0)
 
 /// Applies dizziness to all nearby enemies that can hear the scream and animates the wendigo shaking up and down
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/disorienting_scream()
@@ -183,7 +184,7 @@ Difficulty: Hard
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
 		L.Dizzy(6)
-		to_chat(L, "<span class='danger'>[capitalize(src)] screams loudly!</span>")
+		to_chat(L, "<span class='danger'>[src] screams loudly!</span>")
 	SetRecoveryTime(30, 0)
 	SLEEP_CHECK_DEATH(12)
 	can_move = TRUE

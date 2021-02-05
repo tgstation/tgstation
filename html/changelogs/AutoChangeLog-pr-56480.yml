@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - code_imp: "mechs now use base_icon_state for their icon changes"

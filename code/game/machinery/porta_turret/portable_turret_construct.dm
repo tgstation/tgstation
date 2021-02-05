@@ -33,19 +33,19 @@
 			else if(I.tool_behaviour == TOOL_CROWBAR && !anchored)
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You dismantle the turret construction.</span>")
-				new /obj/item/stack/sheet/metal( loc, 5)
+				new /obj/item/stack/sheet/iron( loc, 5)
 				qdel(src)
 				return
 
 		if(PTURRET_BOLTED)
-			if(istype(I, /obj/item/stack/sheet/metal))
-				var/obj/item/stack/sheet/metal/M = I
+			if(istype(I, /obj/item/stack/sheet/iron))
+				var/obj/item/stack/sheet/iron/M = I
 				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the interior frame.</span>")
 					build_step = PTURRET_START_INTERNAL_ARMOUR
 					icon_state = "turret_frame2"
 				else
-					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
+					to_chat(user, "<span class='warning'>You need two sheets of iron to continue construction!</span>")
 				return
 
 			else if(I.tool_behaviour == TOOL_WRENCH)
@@ -72,7 +72,7 @@
 				if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
 					build_step = PTURRET_BOLTED
 					to_chat(user, "<span class='notice'>You remove the turret's interior metal armor.</span>")
-					new /obj/item/stack/sheet/metal(drop_location(), 2)
+					new /obj/item/stack/sheet/iron(drop_location(), 2)
 					return
 
 
@@ -111,13 +111,13 @@
 
 
 		if(PTURRET_CLOSED)
-			if(istype(I, /obj/item/stack/sheet/metal))
-				var/obj/item/stack/sheet/metal/M = I
+			if(istype(I, /obj/item/stack/sheet/iron))
+				var/obj/item/stack/sheet/iron/M = I
 				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the exterior frame.</span>")
 					build_step = PTURRET_START_EXTERNAL_ARMOUR
 				else
-					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
+					to_chat(user, "<span class='warning'>You need two sheets of iron to continue construction!</span>")
 				return
 
 			else if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -153,7 +153,7 @@
 			else if(I.tool_behaviour == TOOL_CROWBAR)
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You pry off the turret's exterior armor.</span>")
-				new /obj/item/stack/sheet/metal(loc, 2)
+				new /obj/item/stack/sheet/iron(loc, 2)
 				build_step = PTURRET_CLOSED
 				return
 
