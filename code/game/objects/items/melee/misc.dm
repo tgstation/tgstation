@@ -244,51 +244,8 @@
 /obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
 	return
 
-/obj/item/melee/classic_baton/attack(mob/living/target, mob/living/user, params)
-	if(!on)
-		return ..()
-
-	add_fingerprint(user)
-	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
-		to_chat(user, "<span class ='userdanger'>You hit yourself over the head!</span>")
-
-		user.Paralyze(knockdown_time_carbon * force)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
-
-		additional_effects_carbon(user) // user is the target here
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
-		else
-			user.take_bodypart_damage(2*force)
-		return
-	if(iscyborg(target))
-		// We don't stun if we're on harm.
-		if (!user.combat_mode)
-			if (affect_silicon)
-				var/list/desc = get_silicon_stun_description(target, user)
-
-				target.flash_act(affect_silicon = TRUE)
-				target.Paralyze(stun_time_silicon)
-				additional_effects_silicon(target, user)
-
-				user.visible_message(desc["visible"], desc["local"])
-				playsound(get_turf(src), on_stun_sound, 100, TRUE, -1)
-
-				if (stun_animation)
-					user.do_attack_animation(target)
-			else
-				..()
-		else
-			..()
-		return
-	if(!isliving(target))
-		return
-	var/list/modifiers = params2list(params)
-
-	if(modifiers && modifiers["right"])
-		..()
-		return
+/obj/item/melee/classic_baton/attack_alt(mob/living/target, mob/living/user, params)
+	. = ALT_ATTACK_CANCEL_ATTACK_CHAIN //right click never harmbatons
 	if(cooldown_check > world.time)
 		var/wait_desc = get_wait_description()
 		if (wait_desc)
@@ -321,8 +278,6 @@
 	else
 		target.LAssailant = user
 	cooldown_check = world.time + cooldown
-	return
-
 
 /obj/item/conversion_kit
 	name = "conversion kit"
