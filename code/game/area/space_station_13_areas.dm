@@ -612,6 +612,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	airlock_wires = /datum/wires/airlock/service
 	sound_environment = SOUND_AREA_WOODFLOOR
 
+/area/service/bar/Initialize(mapload)
+	. = ..()
+	GLOB.bar_areas += src
+
 /area/service/bar/atrium
 	name = "Atrium"
 	icon_state = "bar"
