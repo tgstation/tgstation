@@ -198,7 +198,7 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = TRUE //Quiet in the library!
-	overlays_x_offset = -3
+	overlays_x_offset = -4
 
 /obj/item/pda/clear
 	name = "clear PDA"
