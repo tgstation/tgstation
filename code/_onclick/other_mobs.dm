@@ -4,7 +4,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		if(src == A)
 			check_self_for_injuries()
@@ -25,16 +25,16 @@
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 	//This signal is needed to prevent gloves of the north star + hulk.
-	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity, modifiers)
 
-	if(dna?.species?.spec_unarmedattack(src, A)) //Because species like monkeys dont use attack hand
+	if(dna?.species?.spec_unarmedattack(src, A, modifiers)) //Because species like monkeys dont use attack hand
 		return
-	A.attack_hand(src)
+	A.attack_hand(src, modifiers)
 
-/// Return TRUE to cancel other attack hand effects that respect it.
-/atom/proc/attack_hand(mob/user)
+/// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
+/atom/proc/attack_hand(mob/user, modifiers)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
@@ -99,16 +99,16 @@
 /*
 	Animals & All Unspecified
 */
-/mob/living/UnarmedAttack(atom/A)
+/mob/living/UnarmedAttack(atom/A, proximity, modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	A.attack_animal(src)
+	A.attack_animal(src, modifiers)
 
-/atom/proc/attack_animal(mob/user)
+/atom/proc/attack_animal(mob/user, modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 
 ///Attacked by monkey
-/atom/proc/attack_paw(mob/user)
+/atom/proc/attack_paw(mob/user, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE
@@ -118,12 +118,12 @@
 	Aliens
 	Defaults to same as monkey in most places
 */
-/mob/living/carbon/alien/UnarmedAttack(atom/A)
+/mob/living/carbon/alien/UnarmedAttack(atom/A, proximity, modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	A.attack_alien(src)
+	A.attack_alien(src, modifiers)
 
-/atom/proc/attack_alien(mob/living/carbon/alien/user)
+/atom/proc/attack_alien(mob/living/carbon/alien/user, modifiers)
 	attack_paw(user)
 	return
 
@@ -185,13 +185,13 @@
 	Simple animals
 */
 
-/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity, modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(!dextrous)
 		return ..()
 	if(!ismob(A))
-		A.attack_hand(src)
+		A.attack_hand(src, modifiers)
 		update_inv_hands()
 
 

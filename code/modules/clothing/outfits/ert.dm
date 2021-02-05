@@ -393,7 +393,7 @@
 	suit_store = null
 	l_hand = /obj/item/areaeditor/blueprints
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
-		/obj/item/stack/sheet/metal/fifty=1,\
+		/obj/item/stack/sheet/iron/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
 		/obj/item/stack/sheet/plasteel/twenty=1,\
 		/obj/item/etherealballdeployer=1,\

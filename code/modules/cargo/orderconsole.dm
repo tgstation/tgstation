@@ -60,7 +60,7 @@
 	obj_flags |= EMAGGED
 	contraband = TRUE
 
-	// This also permamently sets this on the circuit board
+	// This also permanently sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED

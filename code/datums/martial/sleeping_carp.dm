@@ -7,6 +7,7 @@
 	id = MARTIALART_SLEEPINGCARP
 	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/sleeping_carp_help
+	display_combos = TRUE
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
@@ -191,7 +192,7 @@
 /obj/item/staff/bostaff/update_icon_state()
 	icon_state = "bostaff0"
 
-/obj/item/staff/bostaff/attack(mob/target, mob/living/user)
+/obj/item/staff/bostaff/attack(mob/target, mob/living/user, params)
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head with [src].</span>")
@@ -210,7 +211,8 @@
 	if(C.stat)
 		to_chat(user, "<span class='warning'>It would be dishonorable to attack a foe while they cannot retaliate.</span>")
 		return
-	if(user.a_intent == INTENT_DISARM)
+	var/list/modifiers = params2list(params)
+	if(modifiers && modifiers["right"])
 		if(!wielded)
 			return ..()
 		if(!ishuman(target))
