@@ -67,12 +67,12 @@
 	var/tmsg = "[user] fixes some of [target]'s wounds" //see above
 	var/brute_healed = brutehealing
 	var/burn_healed = burnhealing
-	if(target.stat != DEAD)
-		brute_healed += round((target.getBruteLoss() * brute_multiplier),0.1)
-		burn_healed += round((target.getFireLoss() * burn_multiplier),0.1)
-	else //less healing bonus for the dead since they're expected to have lots of damage to begin with (to make TW into defib not TOO simple)
+	if(target.stat == DEAD) //dead patients get way less additional heal from the damage they have.
 		brute_healed += round((target.getBruteLoss() * (brute_multiplier * 0.2)),0.1)
 		burn_healed += round((target.getFireLoss() * (burn_multiplier * 0.2)),0.1)
+	else
+		brute_healed += round((target.getBruteLoss() * brute_multiplier),0.1)
+		burn_healed += round((target.getFireLoss() * burn_multiplier),0.1)
 	if(!get_location_accessible(target, target_zone))
 		brute_healed *= 0.55
 		burn_healed *= 0.55
