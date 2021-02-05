@@ -455,35 +455,7 @@
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
 
-/datum/emote/living/help
-	key = "help"
-
-/datum/emote/living/help/run_emote(mob/user, params, type_override, intentional)
-	var/list/keys = list()
-	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
-
-	for(var/key in GLOB.emote_list)
-		for(var/datum/emote/P in GLOB.emote_list[key])
-			if(P.key in keys)
-				continue
-			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
-				keys += P.key
-
-	keys = sortList(keys)
-
-	for(var/emote in keys)
-		if(LAZYLEN(message) > 1)
-			message += ", [emote]"
-		else
-			message += "[emote]"
-
-	message += "."
-
-	message = jointext(message, "")
-
-	to_chat(user, message)
-
-/datum/emote/beep
+/datum/emote/living/beep
 	key = "beep"
 	key_third_person = "beeps"
 	message = "beeps."
@@ -492,13 +464,13 @@
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/inhale
+/datum/emote/living/inhale
 	key = "inhale"
 	key_third_person = "inhales"
 	message = "breathes in."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/exhale
+/datum/emote/living/exhale
 	key = "exhale"
 	key_third_person = "exhales"
 	message = "breathes out."

@@ -76,6 +76,8 @@
 
 /obj/machinery/firealarm/update_overlays()
 	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+
 	if(machine_stat & NOPOWER)
 		return
 
@@ -84,26 +86,26 @@
 	if(is_station_level(z))
 		. += "fire_[GLOB.security_level]"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", layer, EMISSIVE_STRUCTURE_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", layer, EMISSIVE_PLANE, dir)
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", layer, EMISSIVE_STRUCTURE_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", layer, EMISSIVE_PLANE, dir)
 
 	var/area/A = get_area(src)
 
 	if(!detecting || !A.fire)
 		. += "fire_off"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", layer, EMISSIVE_STRUCTURE_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", layer, EMISSIVE_PLANE, dir)
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", layer, EMISSIVE_STRUCTURE_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", layer, EMISSIVE_PLANE, dir)
 	else
 		. += "fire_on"
 		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", layer, EMISSIVE_STRUCTURE_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", layer, EMISSIVE_PLANE, dir)
 
 	if(!panel_open && detecting && triggered) //It just looks horrible with the panel open
 		. += "fire_detected"
@@ -183,7 +185,7 @@
 /obj/machinery/firealarm/attack_robot(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
@@ -195,7 +197,7 @@
 
 	if(panel_open)
 
-		if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+		if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(obj_integrity < max_integrity)
 				if(!W.tool_start_check(user, amount=0))
 					return

@@ -276,7 +276,7 @@ effective or pretty fucking useless.
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/emergency/turret/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
+	if(I.tool_behaviour == TOOL_WRENCH && user.combat_mode)
 		user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
 			"<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
 		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
