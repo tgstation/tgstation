@@ -466,7 +466,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 
