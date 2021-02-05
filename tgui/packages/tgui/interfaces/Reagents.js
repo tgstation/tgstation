@@ -154,6 +154,22 @@ export const Reagents = (props, context) => {
                         <TableCell>
                           <Icon name="circle" mr={1} color={reagent_mode_recipe.reagentCol} />
                           {reagent_mode_recipe.name}
+                          <Button
+                            key={"reduce_index"}
+                            icon="arrow-left"
+                            disabled={reagent_mode_recipe.subReactIndex === 1 ? true : false}
+                            content={null}
+                            onClick={() => act('reduce_index', {
+                              id: product.id,
+                            })} />
+                          <Button
+                            key={"increment_index"}
+                            icon="arrow-right"
+                            disabled={reagent_mode_recipe.subReactIndex === reagent_mode_recipe.subReactLen ? true : false}
+                            content={null}
+                            onClick={() => act('increment_index', {
+                              id: product.id,
+                            })} />
                         </TableCell>
                       </TableRow>
                       <TableRow>

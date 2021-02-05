@@ -1670,6 +1670,10 @@
 			return data
 		//Required holder
 		var/container_name
+		//Find out if we have multiple reactions for the same product
+		var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
+		//Count the length
+		var/sub_reaction_length = length(sub_reactions)
 		if(reaction.required_container)
 			var/list/names = splittext("[reaction.required_container]", "/")
 			container_name = "[names[names.len-1]] [names[names.len]]"
@@ -1679,10 +1683,10 @@
 			has_product = FALSE
 			var/list/names = splittext("[reaction.type]", "/")
 			var/product_name = names[names.len]
-			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name)
+			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reactions_length, "subReactIndex" = ui_reaction_index)
 		else
 			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])
-			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name)
+			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reactions_length, "subReactIndex" = ui_reaction_index)
 		//Results sweep
 		var/has_reagent = "red"
 		for(var/_reagent in reaction.results)
@@ -1762,6 +1766,18 @@
 
 	return data
 
+///Converts a typepath into a list of possible reactons
+/datum/reagents/proc/get_reaction_from_indexed_possibilities(list/sub_reactions, index)
+	var/list/sub_reactions = get_recipe_from_reagent_product(text2path(params["id"]))
+			if(!length(sub_reactions))
+				to_chat(usr, "There is no recipe associated with this reagent.")
+				return FALSE
+			if(ui_reaction_index > length(sub_reactions))
+				ui_reaction_index = 1
+			var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
+			ui_reaction_id = reaction.type
+	///TODO HERE
+
 /datum/reagents/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -1772,7 +1788,10 @@
 			if(!length(sub_reactions))
 				to_chat(usr, "There is no recipe associated with this reagent.")
 				return FALSE
-			ui_reaction_id = sub_reactions[1]
+			if(ui_reaction_index > length(sub_reactions))
+				ui_reaction_index = 1
+			var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
+			ui_reaction_id = reaction.type
 			return TRUE
 		if("reagent_click")
 			ui_reagent_id = text2path(params["id"])
@@ -1805,6 +1824,9 @@
 				return
 			ui_reaction_id = reaction.type
 			return TRUE
+		if("increment_index")
+			ui_reaction_index += 1
+		if("reduce_index")
 		if("toggle_tag_brute")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_BRUTE
 			return TRUE
