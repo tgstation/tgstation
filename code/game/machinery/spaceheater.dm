@@ -251,7 +251,8 @@
 			on = FALSE
 		return PROCESS_KILL
 
-	if(cell?.charge < 0)
+	if(!cell || cell.charge < 0)
+		on = FALSE
 		return PROCESS_KILL
 
 	if(!beaker)//No beaker to heat
@@ -274,6 +275,7 @@
 				beaker.reagents.adjust_thermal_energy((targetTemperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 		var/requiredEnergy = heatingPower * delta_time * (power_mod * 3)
 		cell.use(requiredEnergy / efficiency)
+		beaker.reagents.handle_reactions()
 	update_icon()
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()
@@ -321,19 +323,14 @@
 		return
 	//Dropper tools
 	if(beaker)
-		if(istype(I, /obj/item/reagent_containers/dropper))
-			var/obj/item/reagent_containers/dropper/D = I
-			D.afterattack(beaker, user, 1)
-			return
-		if(istype(I, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/syringe/S = I
-			S.afterattack(beaker, user, 1)
+		if(is_type_in_list(I, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
+			I.afterattack(beaker, user, 1)
 			return
 
 	else if(default_deconstruction_crowbar(I))
 		return
 
-/obj/machinery/space_heater/improvised_chem_heater/deconstruct(disassembled = TRUE)
+/obj/machinery/space_heater/improvised_chem_heater/on_deconstruction()
 	. = ..()
 	var/bonus_junk = list(
 		/obj/item/stack/cable_coil = 2,

@@ -157,7 +157,7 @@
 		if(lit)
 			var/obj/item/reagent_containers/container = I
 			container.reagents.expose_temperature(get_temperature())
-			to_chat(user, "<span class='notice'>You heat up the [src].</span>")
+			to_chat(user, "<span class='notice'>You heat up the [I] with the [src].</span>")
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
 			return
 		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
@@ -241,25 +241,25 @@
 		if(istype(reagent, /datum/reagent/consumable/ethanol))
 			current_heat += 2193//ethanol burns at 1970C (at it's peak)
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/consumable/ethanol, 0.025)
+			reagents.remove_reagent(/datum/reagent/consumable/ethanol, 0.05)
 			continue
 
 		if(ispath(reagent, /datum/reagent/fuel))
 			current_heat += 1725//Refined slightly
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/fuel, 0.05)
+			reagents.remove_reagent(/datum/reagent/fuel, 0.1)
 			continue
 
 		if(istype(reagent, /datum/reagent/fuel/oil))
 			current_heat += 1200//Oil is crude
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/fuel/oil, 0.01)//But lasts longer
+			reagents.remove_reagent(/datum/reagent/fuel/oil, 0.025)//But lasts longer
 			continue
 
 		if(istype(reagent, /datum/reagent/toxin/plasma))//For fun
 			current_heat += 4500//plasma is hot!!
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/toxin/plasma, 0.07)//But burns fast
+			reagents.remove_reagent(/datum/reagent/toxin/plasma, 0.15)//But burns fast
 			continue
 
 	if(!number_of_burning_reagents)
@@ -298,6 +298,7 @@
 		attached_beaker = target
 		if(!user.transferItemToLoc(src, target))
 			return
+		to_chat(user, "<span class='notice'>You add the [src] to the [attached_beaker].</span>")
 		ui_interact(usr, null)
 
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
@@ -308,7 +309,7 @@
 
 /obj/item/thermometer/ui_close(mob/user)
 	. = ..()
-	remove_thermometer()
+	remove_thermometer(user)
 
 /obj/item/thermometer/ui_status(mob/user)
 	if(!(in_range(src, user)))
@@ -322,14 +323,16 @@
 	if(!attached_beaker)
 		ui_close(user)
 	var/data = list()
-	data["Temperature"] = attached_beaker.reagents.chem_temp
+	data["Temperature"] = round(attached_beaker.reagents.chem_temp)
 	return data
 
 /obj/item/thermometer/proc/remove_thermometer(mob/target)
 	try_put_in_hand(src, target)
+	attached_beaker = null
 
 /obj/item/thermometer/proc/try_put_in_hand(obj/object, mob/living/user)
-	if(!issilicon(user) && in_range(src, user))
+	to_chat(user, "<span class='notice'>You remove the [src] from the [attached_beaker].</span>")
+	if(!issilicon(user) && in_range(src.loc, user))
 		user.put_in_hands(object)
 	else
 		object.forceMove(drop_location())

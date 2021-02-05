@@ -1197,7 +1197,7 @@
 				/obj/item/thermometer = 1
 				)
 	category = CAT_CHEMISTRY
-	var/cached_heater
+	var/obj/cached_heater
 
 /datum/crafting_recipe/improvised_chem_heater/check_requirements(mob/user, list/collected_requirements)
 	. = ..()
@@ -1208,11 +1208,14 @@
 	return TRUE
 
 /datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
-	var/turf/turf = get_turf(cached_heater)
-	qdel(cached_heater)
+	var/location = cached_heater.loc
+	qdel(cached_heater, TRUE)//So the battery is amde to delete right after
 	//qdelling makes a battery
-	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in orange(turf, 1)
-	qdel(cell)
+	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in location
+	qdel(cell)	
+	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
+	heater.forceMove(location)
+	
 
 /datum/crafting_recipe/improvised_coolant
 	name = "Improvised cooling spray"

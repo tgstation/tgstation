@@ -14,11 +14,11 @@ export const SpaceHeater = (props, context) => {
           buttons={(
             <>
               {!!data.chemHacked && (
-                  <Button
-                    icon="eject"
-                    content="Eject beaker"
-                    disabled={!data.beaker}
-                    onClick={() => act('ejectBeaker')} />
+                <Button
+                  icon="eject"
+                  content="Eject beaker"
+                  disabled={!data.beaker}
+                  onClick={() => act('ejectBeaker')} />
               )}
               <Button
                 icon="eject"
