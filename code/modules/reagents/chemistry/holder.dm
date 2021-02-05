@@ -16,12 +16,17 @@
 		var/datum/reagent/D = new path()
 		GLOB.chemical_reagents_list[path] = D
 
-/proc/build_chemical_reactions_list()
+/proc/build_chemical_reactions_lists()
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
 	// For example:
 	// chemical_reaction_list[/datum/reagent/toxin/plasma] is a list of all reactions relating to plasma
-	
+	//For chemical reaction list product index - indexes reactions based off the product reagent type - see get_recipe_from_reagent_product() in helpers
+	//For chemical reactions list lookup list - creates a bit list of info passed to the UI. This is saved to reduce lag from new windows opening, since it's a lot of data.
+
+	//Prevent these reactions from appearing in lookup tables (UI code)
+	var/list/blacklist = (/datum/chemical_reaction/randomized)
+
 	if(GLOB.chemical_reactions_list)
 		return
 
@@ -33,6 +38,7 @@
 	for(var/path in paths)
 		var/datum/chemical_reaction/D = new path()
 		var/list/reaction_ids = list()
+		var/list/product_ids = list()
 		var/list/reagents = list()
 		var/list/product_names = list()
 		var/bitflags = D.reaction_tags
@@ -48,7 +54,8 @@
 		for(var/product in D.results)
 			var/datum/reagent/reagent = find_reagent_object_from_type(product)
 			product_names += reagent.name
-		
+			product_ids += product
+
 		var/product_name
 		if(!length(product_names))
 			var/list/names = splittext("[D.type]", "/")
@@ -56,43 +63,23 @@
 		else
 			product_name = product_names[1]
 
-		GLOB.chemical_reactions_results_lookup_list += list(list("name" = product_name, "id" = D.type, "bitflags" = bitflags, "reactants" = reagents))
+		// Create filters based on each reagent id in the required reagents list - this is specifically for finding reactions from product(reagent) ids/typepaths.
+		for(var/id in product_ids)
+			if(is_type_in_list(D.type, blacklist))
+				continue
+			if(!GLOB.chemical_reactions_list_product_index[id])
+				GLOB.chemical_reactions_list_product_index[id] = list()
+			GLOB.chemical_reactions_list_product_index[id] += D
 
-		// Create filters based on each reagent id in the required reagents list
+		//Master list of ALL reactions that is used in the UI lookup table. This is expensive to make, and we don't want to lag the server by creating it on UI request, so it's cached to send to UIs instantly.
+		if(!(is_type_in_list(D.type, blacklist)))
+			GLOB.chemical_reactions_results_lookup_list += list(list("name" = product_name, "id" = D.type, "bitflags" = bitflags, "reactants" = reagents))
+
+		// Create filters based on each reagent id in the required reagents list - this is used to speed up handle_reactions()
 		for(var/id in reaction_ids)
 			if(!GLOB.chemical_reactions_list[id])
 				GLOB.chemical_reactions_list[id] = list()
 			GLOB.chemical_reactions_list[id] += D
-			break // Don't bother adding ourselves to other reagent ids, it is redundant
-
-/proc/build_chemical_reactions_list_product_index()
-//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
-	// It is filtered into multiple lists within a list.
-	// For example:
-	// chemical_reaction_list[/datum/reagent/toxin/plasma] is a list of all reactions relating to plasma
-
-	if(GLOB.chemical_reactions_list_product_index)
-		return
-
-	//Randomized need to go last since they need to check against conflicts with normal recipes
-	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
-	GLOB.chemical_reactions_list_product_index = list()
-
-	for(var/path in paths)
-		var/datum/chemical_reaction/D = new path()
-		var/list/reaction_ids = list()
-
-		if(!D.results || !D.results.len) //Skip impossible reactions
-			continue
-
-		for(var/reaction in D.results)
-			reaction_ids += reaction
-
-		// Create filters based on each reagent id in the required reagents list
-		for(var/id in reaction_ids)
-			if(!GLOB.chemical_reactions_list_product_index[id])
-				GLOB.chemical_reactions_list_product_index[id] = list()
-			GLOB.chemical_reactions_list_product_index[id] += D
 			break // Don't bother adding ourselves to other reagent ids, it is redundant
 
 ///////////////////////////////Main reagents code/////////////////////////////////////////////
@@ -123,7 +110,7 @@
 	var/list/datum/equilibrium/reaction_list
 	///cached list of reagents typepaths (not object references), this is a lazylist for optimisation
 	var/list/datum/reagent/previous_reagent_list
-	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled. 
+	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled.
 	var/list/failed_but_capable_reactions
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
@@ -134,6 +121,8 @@
 	var/ui_reagent_id = null
 	///The bitflag of the currently selected tags in the ui
 	var/ui_tags_selected = NONE
+	///What index we're at if we have multiple reactions for a reagent product
+	var/ui_reaction_index = 1
 
 /datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
@@ -550,7 +539,7 @@
 		return
 	if(amount < 0)
 		return
-	
+
 	var/cached_amount = amount
 	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
@@ -880,7 +869,7 @@
 
 			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 				meets_temp_requirement = TRUE
-			
+
 			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
 				meets_ph_requirement = TRUE
 
@@ -904,7 +893,7 @@
 			for(var/_equilibrium in reaction_list)
 				var/datum/equilibrium/E_exist = _equilibrium
 				if(ispath(E_exist.reaction.type, selected_reaction.type)) //Don't add duplicates
-					exists = TRUE 
+					exists = TRUE
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
@@ -956,7 +945,7 @@
 				mix_message += temp_mix_message
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
-	
+
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, delta_time)
 
@@ -989,7 +978,7 @@
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
-	qdel(equilibrium)	
+	qdel(equilibrium)
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message
@@ -1064,7 +1053,7 @@
 		var/exists = FALSE
 		for(var/reaction2 in target.reaction_list) //Don't add duplicates
 			var/datum/equilibrium/reaction_target = reaction2
-			if(reaction_source.reaction.type == reaction_target.reaction.type) 
+			if(reaction_source.reaction.type == reaction_target.reaction.type)
 				exists = TRUE
 		if(exists)
 			continue
@@ -1077,7 +1066,7 @@
 
 	target.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	target.is_reacting = is_reacting
-	
+
 
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 ///Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change
@@ -1089,7 +1078,7 @@
 			total_matching_reagents++
 	if(total_matching_reagents != reagent_list.len)
 		return TRUE
-	
+
 	//Check our last reactions
 	for(var/_reaction in failed_but_capable_reactions)
 		var/datum/chemical_reaction/reaction = _reaction
@@ -1284,7 +1273,7 @@
 		var/datum/reagent/R = _reagent
 		if (R.type == reagent)
 			return round(R.purity, 0.01)
-	return 0 
+	return 0
 
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()
@@ -1527,14 +1516,14 @@
 		ui_reagent_id = null
 		ui_reaction_id = null
 		ui.open()
-		
+
 
 /datum/reagents/ui_status(mob/user)
-	return UI_INTERACTIVE
+	return UI_INTERACTIVE //please advise
 
 /datum/reagents/ui_state(mob/user)
 	return GLOB.physical_state
-	
+
 /datum/reagents/proc/generate_possible_reactions()
 	var/list/cached_reagents = reagent_list
 	if(!cached_reagents)
@@ -1610,7 +1599,10 @@
 
 ///Returns a string descriptor of a reactions themic_constant
 /datum/reagents/proc/determine_reaction_thermics(datum/chemical_reaction/reaction)
-	switch(reaction.thermic_constant)
+	var/thermic = reaction.thermic_constant
+	if(reaction.reaction_flags & REACTION_HEAT_ARBITARY)
+		thermic *= 100 //Because arbitary is a lower scale
+	switch(thermic)
 		if(-INFINITY to -1500)
 			return "Overwhelmingly endothermic"
 		if(-1500 to -1000)
@@ -1641,7 +1633,7 @@
 /datum/reagents/ui_data(mob/user)
 	var/data = list()
 	data["hasReagent"] = ui_reagent_id ? TRUE : FALSE
-	data["hasReaction"] = ui_reaction_id ? TRUE : FALSE	
+	data["hasReaction"] = ui_reaction_id ? TRUE : FALSE
 	data["selectedBitflags"] = ui_tags_selected
 	data["currentReagents"] = previous_reagent_list //This keeps the string of reagents that's updated when handle_reactions() is called
 
@@ -1653,19 +1645,19 @@
 			ui_reagent_id = null
 		else
 			data["reagent_mode_reagent"] = list("name" = reagent.name, "id" = reagent.type, "desc" = reagent.description, "reagentCol" = reagent.color, "pH" = reagent.ph, "pHCol" = convert_ph_to_readable_color(reagent.ph), "metaRate" = (reagent.metabolization_rate/2), "OD" = reagent.overdose_threshold, "Addiction" = reagent.addiction_threshold)
-			
+
 			var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
 			if(impure_reagent)
 				data["reagent_mode_reagent"] += list("impureReagent" = impure_reagent.name, "impureId" = impure_reagent.type)
-			
+
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 			if(inverse_reagent)
 				data["reagent_mode_reagent"] += list("inverseReagent" = inverse_reagent.name, "inverseId" = inverse_reagent.type)
-			
+
 			var/datum/reagent/failed_reagent = GLOB.chemical_reagents_list[reagent.failed_chem]
 			if(failed_reagent)
 				data["reagent_mode_reagent"] += list("failedReagent" = failed_reagent.name, "failedId" = failed_reagent.type)
-			
+
 			if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 				data["reagent_mode_reagent"] += list("deadProcess" = TRUE)
 
@@ -1676,15 +1668,21 @@
 			to_chat(user, "Could not find reaction!")
 			ui_reaction_id = null
 			return data
+		//Required holder
+		var/container_name
+		if(reaction.required_container)
+			var/list/names = splittext("[reaction.required_container]", "/")
+			container_name = "[names[names.len-1]] [names[names.len]]"
+			container_name = replacetext(container_name, "_", " ")
 		var/has_product = TRUE
 		if(!length(reaction.results))
 			has_product = FALSE
 			var/list/names = splittext("[reaction.type]", "/")
 			var/product_name = names[names.len]
-			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp)
+			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name)
 		else
 			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])
-			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp)
+			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name)
 		//Results sweep
 		var/has_reagent = "red"
 		for(var/_reagent in reaction.results)
@@ -1709,7 +1707,24 @@
 					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
 					tooltip_bool = TRUE
 			data["reagent_mode_recipe"]["reactants"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
-	
+		//Catalyst sweep
+		for(var/_reagent in reaction.required_catalysts)
+			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+			var/color_r = "average"
+			if(has_reagent(reagent.type))
+				color_r = "good"
+			var/tooltip
+			var/tooltip_bool = FALSE
+			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
+			if(length(sub_reactions))
+				var/datum/chemical_reaction/sub_reaction = sub_reactions[1]
+				//Subreactions sweep (if any)
+				for(var/_sub_reagent in sub_reaction.required_reagents)
+					var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)
+					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
+					tooltip_bool = TRUE
+			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+
 	//TODO:
 	/*var/list/possible_reactions = generate_possible_reactions()
 	if(possible_reactions)
@@ -1782,7 +1797,9 @@
 				debug_world("Could not find product reagent!")
 				return
 			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
-			var/datum/chemical_reaction/reaction = sub_reactions[1]
+			if(ui_reaction_index > length(sub_reactions))
+				ui_reaction_index = 1
+			var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
 			if(!reaction)
 				debug_world("Could not find associated reaction!")
 				return
@@ -1833,7 +1850,7 @@
 		if("toggle_tag_dangerous")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DANGEROUS
 			return TRUE
-		
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

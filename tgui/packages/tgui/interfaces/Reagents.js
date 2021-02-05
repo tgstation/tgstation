@@ -37,6 +37,8 @@ export const Reagents = (props, context) => {
     context, 'food', false);
   const [damaging, setDamaging] = useLocalState(
     context, 'damaging', false);
+  const [slime, setSlime] = useLocalState(
+    context, 'slime', false);
   const [explosive, setExplosive] = useLocalState(
     context, 'explosive', false);
   const [other, setOther] = useLocalState(
@@ -67,6 +69,7 @@ export const Reagents = (props, context) => {
   const ORGAN = 1 << 13;
   const DRINK = 1 << 14;
   const FOOD = 1 << 15;
+  const SLIME = 1 << 16;
   const flagsObject = {
     "gavel": BRUTE,
     "burn": BURN,
@@ -81,9 +84,10 @@ export const Reagents = (props, context) => {
     "chess-pawn": EASY,
     "chess-knight": MODERATE,
     "chess-queen": HARD,
-    "hand-holding-heart": ORGAN,
+    "brain": ORGAN,
     "cocktail": DRINK,
     "drumstick-bite": FOOD,
+    "microscope": SLIME,
   };
   
   /* es-lint please no */
@@ -201,6 +205,50 @@ export const Reagents = (props, context) => {
                           ))}
                         </TableCell>
                       </TableRow>
+                      {reagent_mode_reagent.catalysts && (
+                        <TableRow>
+                        <TableCell bold color="label">
+                          Catalysts:
+                        </TableCell>
+                        <TableCell>
+                          {reagent_mode_recipe.catalysts.map(catalyst => (
+                            <Box key={catalyst.id}>
+                              {catalyst.tooltipBool && (                    
+                                <Button
+                                  key={catalyst.name}
+                                  icon="vial"
+                                  color={catalyst.color}
+                                  content={catalyst.ratio + "u " + catalyst.name}
+                                  tooltip={catalyst.tooltip}
+                                  tooltipPosition={"right"}
+                                  onClick={() => act('reagent_click', {
+                                    id: catalyst.id,
+                                  })} />
+                              ) || (
+                                <Button
+                                  key={catalyst.name}
+                                  icon="vial"
+                                  color={catalyst.color}
+                                  content={catalyst.ratio + "u " + catalyst.name}
+                                  onClick={() => act('reagent_click', {
+                                    id: catalyst.id,
+                                  })} />
+                              )}
+                            </Box>
+                          ))}
+                        </TableCell>
+                      </TableRow>
+                      )}
+                      {reqContainer && (
+                        <TableRow>
+                          <TableCell bold color ="label">
+                            Required Container:
+                          </TableCell>
+                          <TableCell>
+                            {reqContainer}
+                          </TableCell>
+                        </TableRow>
+                      )}
                       <TableRow>
                         <TableCell bold color="label">
                           Purity:
@@ -428,7 +476,7 @@ export const Reagents = (props, context) => {
                   </Button>
                   <Button
                     color={organ ? "green" : "red"}
-                    icon="hand-holding-heart"
+                    icon="brain"
                     onClick={() => { act('toggle_tag_organ'); setOrgan(!organ); }}>
                     Organ
                   </Button>
@@ -457,6 +505,12 @@ export const Reagents = (props, context) => {
                     color={damaging ? "green" : "red"}
                     onClick={() => { act('toggle_tag_damaging'); setDamaging(!damaging); }}>
                     Damaging
+                  </Button>
+                  <Button
+                    icon="microscope"
+                    color={slime ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_slime'); setSlime(!slime); }}>
+                    Slime
                   </Button>
                   <Button
                     icon="bomb"

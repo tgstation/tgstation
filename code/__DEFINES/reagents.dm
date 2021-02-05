@@ -119,4 +119,6 @@
 #define REACTION_TAG_DRINK (1<<14)
 /// This reaction has something to do with food
 #define REACTION_TAG_FOOD (1<<15)
+/// This reaction is a slime reaction
+#define REACTION_TAG_SLIME (1<<16)
 
