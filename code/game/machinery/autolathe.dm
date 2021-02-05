@@ -24,7 +24,9 @@
 	var/shock_wire
 
 	var/busy = FALSE
-	var/prod_coeff = 1
+
+	///the multiplier for how much materials the created object takes from this machines stored materials
+	var/creation_efficiency = 1.6
 
 	var/datum/design/being_built
 	var/datum/techweb/stored_research
@@ -160,7 +162,7 @@
 
 			/////////////////
 
-			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
+			var/coeff = (is_stack ? 1 : creation_efficiency) //stacks are unaffected by production coefficient
 			var/total_amount = 0
 
 			for(var/MAT in being_built.materials)
@@ -242,21 +244,22 @@
 	updateDialog()
 
 /obj/machinery/autolathe/RefreshParts()
-	var/T = 0
-	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
-		T += MB.rating*75000
+	var/mat_capacity = 0
+	for(var/obj/item/stock_parts/matter_bin/new_matter_bin in component_parts)
+		mat_capacity += new_matter_bin.rating*75000
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.max_amount = T
-	T=1.2
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		T -= M.rating*0.2
-	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+	materials.max_amount = mat_capacity
+
+	var/efficiency=1.8
+	for(var/obj/item/stock_parts/manipulator/new_manipulator in component_parts)
+		efficiency -= new_manipulator.rating*0.2
+	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of manipulator efficiency
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[prod_coeff*100]%</b>.</span>"
+		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.</span>"
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
@@ -369,7 +372,7 @@
 	if(D.make_reagents.len)
 		return FALSE
 
-	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
+	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 
 	var/list/required_materials = list()
 
@@ -382,7 +385,7 @@
 
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
-	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : prod_coeff)
+	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 	var/dat
 	for(var/i in D.materials)
 		if(istext(i)) //Category handling
