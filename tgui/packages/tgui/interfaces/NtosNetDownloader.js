@@ -44,14 +44,6 @@ export const NtosNetDownloader = (props, context) => {
         </Section>
         <Section>
           {downloadable_programs
-            .filter(program => program.access)
-            .map(program => (
-              <Program
-                key={program.filename}
-                program={program} />
-            ))}
-          {downloadable_programs
-            .filter(program => !program.access)
             .map(program => (
               <Program
                 key={program.filename}
@@ -94,53 +86,33 @@ const Program = (props, context) => {
         <Flex.Item bold grow={1}>
           {program.filedesc}
         </Flex.Item>
-        <Flex.Item color="label" nowrap>
+        <Flex.Item shrink={0} width="48px" textAlign="right" color="label" nowrap>
           {program.size} GQ
         </Flex.Item>
-        <Flex.Item ml={2} width="120px" textAlign="center">
-          {program.installed && (
-            <Button
-              fluid
-              icon="check"
-              color="green"
-              content="Installed" />
-          )}
-          {!program.installed && program.compatibility !== 'Compatible' && (
-            <Button
-              fluid
-              icon="times"
-              color="red"
-              content="Incompatible" />
-          )}
-          {(!program.installed && program.compatibility == 'Compatible' && !program.access) && (
-            <Button
-              fluid
-              icon="times"
-              color="red"
-              content="No Access" />
-          )}
-          {(!program.installed && program.compatibility == 'Compatible' && program.access && program.size > disk_free) && (
-            <Button
-              fluid
-              icon="times"
-              color="red"
-              content="No space" />
-          )}
+        <Flex.Item ml={2} shrink={0} width="128px" textAlign="center">
           {(downloading && program.filename === downloadname) && (
             <ProgressBar
               color="green"
               minValue={0}
               maxValue={downloadsize}
               value={downloadcompletion} />
-          )}
-          {(!program.installed && program.compatibility == 'Compatible' && program.access && !downloading && program.size < disk_free) && (
-            <Button
-              fluid
-              icon="download"
-              content="Download"
-              onClick={() => act('PRG_downloadfile', {
-                filename: program.filename,
-              })} />
+          ) || (
+            (!program.installed && program.compatibility == 'Compatible' && program.access && program.size < disk_free) && (
+              <Button
+                fluid
+                icon="download"
+                content="Download"
+                disabled={downloading}
+                onClick={() => act('PRG_downloadfile', {
+                  filename: program.filename,
+                })} />
+            ) || (
+              <Button
+                fluid
+                icon={program.installed ? 'check' : 'times'}
+                color={program.installed ? 'green' : 'red'}
+                content={program.installed ? 'Installed' : program.compatibility !== 'Compatible' ? 'Incompatible' : !program.access ? 'No Access' : 'Need Space'} />
+            )
           )}
         </Flex.Item>
       </Flex>

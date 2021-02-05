@@ -175,7 +175,7 @@
 			)))
 		data["hacked_programs"] = hacked_programs
 
-	data["downloadable_programs"] = all_entries
+	data["downloadable_programs"] = sortList(all_entries, /proc/cmp_program_asc)
 
 	return data
 
