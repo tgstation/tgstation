@@ -62811,13 +62811,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
-"jMb" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "jMc" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -62935,12 +62928,6 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
-"jNQ" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "jNT" = (
 /obj/structure/grille/broken,
 /turf/open/space/basic,
@@ -95379,11 +95366,11 @@ alK
 alK
 alK
 alK
-jMb
-jMb
-jMb
-jMb
-jMb
+aox
+aox
+aox
+aox
+aox
 aaa
 aaa
 aaa
@@ -95645,7 +95632,7 @@ aaa
 aaa
 aaa
 aaa
-jNQ
+pWo
 aaa
 aaa
 aaa
