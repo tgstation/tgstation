@@ -394,7 +394,7 @@
 
 	patient.visible_message("<span class='danger'>[user] begins to secure [src] around [patient]'s [candidate_name].</span>", "<span class='userdanger'>[user] begins to secure [src] around your [candidate_name]!</span>")
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
-	if(patient.stat >= UNCONSCIOUS || patient.IsImmobilized()) //if you can't move (due to paralysis, a stun, being in staminacrit, etc.), it's much easier to properly "snip" you
+	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
 	if(patient.stat != DEAD && patient.jitteriness) //jittering will make it harder to secure the shears, even if you can't otherwise move
 		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
