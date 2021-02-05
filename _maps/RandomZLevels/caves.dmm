@@ -1192,7 +1192,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/northblock)
 "dL" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plating,
 /area/awaymission/caves/northblock)
 "dM" = (
@@ -1261,7 +1261,7 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "ea" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "eb" = (
@@ -1992,7 +1992,7 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "gt" = (
 /obj/structure/table_frame,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plasteel,
 /area/awaymission/caves/bmp_asteroid)
 "gu" = (

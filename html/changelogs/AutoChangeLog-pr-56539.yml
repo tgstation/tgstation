@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "Oops, maint pill consumption counter now works"
