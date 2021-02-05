@@ -50,17 +50,7 @@
 	return ..()
 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/plant_analyzer) && user.a_intent == INTENT_HELP)
-		to_chat(user, get_graft_text())
+	if(istype(I, /obj/item/plant_analyzer) && !user.combat_mode)
+		var/obj/item/plant_analyzer/plant_analyzer = I
+		to_chat(user, plant_analyzer.get_graft_text(src))
 	return ..()
-
-/**
- *Adds text to the plant analyzer which describes the graft's parent plant and any stored trait it has, if any.
- */
-/obj/item/graft/proc/get_graft_text()
-	var/text = "- Plant Graft -\n"
-	if(parent_name)
-		text += "- Parent Plant: [parent_name] -\n"
-	if(stored_trait)
-		text += "- Graftable Traits: [stored_trait.get_name()] -\n"
-	return text

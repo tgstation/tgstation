@@ -1,3 +1,8 @@
+#define GLOW_ID "glow"
+#define PLANT_TYPE_ID "plant_type"
+#define TEMP_CHANGE_ID "temperature_change"
+#define CONTENTS_CHANGE_ID "contents_change"
+
 /datum/plant_gene
 	var/name
 	var/mutability_flags = PLANT_GENE_EXTRACTABLE | PLANT_GENE_REMOVABLE ///These flags tells the genemodder if we want the gene to be extractable, only removable or neither.
@@ -164,7 +169,6 @@
  *
  * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
  */
-
 /datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
 	for(var/datum/plant_gene/reagent/reagent in seed.genes)
 		if(reagent.reagent_id != reagent_id || reagent.rate <= rate)
@@ -183,11 +187,19 @@
 	reagent_id = /datum/reagent/consumable/liquidelectricity
 	rate = 0.1
 
-// Various traits affecting the product.
+/datum/plant_gene/reagent/carbon
+	name = "Carbon"
+	reagent_id = /datum/reagent/carbon
+	rate = 0.1
+
+/// Traits that affect the grown product.
 /datum/plant_gene/trait
 	var/rate = 0.05
 	var/examine_line = ""
-	var/trait_id // must be set and equal for any two traits of the same type
+	/// Must be set and equal for any two traits of the same type
+	var/trait_id
+	/// Flags that modify the final product.
+	var/trait_flags
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
@@ -309,7 +321,7 @@
 	name = "Bioluminescence"
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
-	trait_id = "glow"
+	trait_id = GLOW_ID
 	var/glow_color = "#C3E381"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
@@ -403,6 +415,7 @@
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
 	rate = 2
+	trait_flags = TRAIT_HALVES_YIELD
 
 /datum/plant_gene/trait/maxchem/on_new(obj/item/food/grown/G, newloc)
 	..()
@@ -520,9 +533,45 @@
  *
  * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
  * This exception is executed in seeds.dm under 'prepare_result'.
+ *
+ * Incompatible with auto-juicing composition.
  */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
+	trait_id = CONTENTS_CHANGE_ID
+
+/**
+ * Similar to auto-distilling, but instead of brewing the plant's contents it juices it.
+ *
+ * Incompatible with auto-distilling composition.
+ */
+/datum/plant_gene/trait/juicing
+	name = "Auto-Juicing Composition"
+	trait_id = CONTENTS_CHANGE_ID
+
+/**
+ * Plays a laughter sound when someone slips on it.
+ * Like the sitcom component but for plants.
+ * Just like slippery skin, if we have a trash type this only functions on that. (Banana peels)
+ */
+/datum/plant_gene/trait/plant_laughter
+	name = "Hallucinatory Feedback"
+	/// Sounds that play when this trait triggers
+	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
+	/// Whether or not we can trigger. (If we have a trash type it'll trigger on that instead)
+	var/can_trigger = TRUE
+
+/datum/plant_gene/trait/plant_laughter/on_new(obj/item/food/grown/G, newloc)
+	..()
+	if(istype(G) && ispath(G.trash_type, /obj/item/grown))
+		can_trigger = FALSE
+
+/datum/plant_gene/trait/plant_laughter/on_slip(obj/item/food/grown/G, atom/target)
+	if(!can_trigger)
+		return
+
+	G.audible_message("<span_class='notice'>[G] lets out burst of laughter.</span>")
+	playsound(G, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /**
  * A plant trait that causes the plant to gain aesthetic googly eyes.
@@ -556,9 +605,27 @@
 		return FALSE
 	. = ..()
 
+/**
+ * This trait automatically heats up the plant's chemical contents when harvested.
+ * This requires nutriment to fuel. 1u nutriment = 25 K.
+ */
+/datum/plant_gene/trait/chem_heating
+	name = "Exothermic Activity"
+	trait_id = TEMP_CHANGE_ID
+	trait_flags = TRAIT_HALVES_YIELD
+
+/**
+ * This trait is the opposite of above - it cools down the plant's chemical contents on harvest.
+ * This requires nutriment to fuel. 1u nutriment = -5 K.
+ */
+/datum/plant_gene/trait/chem_cooling
+	name = "Endothermic Activity"
+	trait_id = TEMP_CHANGE_ID
+	trait_flags = TRAIT_HALVES_YIELD
+
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"
-	trait_id = "plant_type"
+	trait_id = PLANT_TYPE_ID
 
 /datum/plant_gene/trait/plant_type/weed_hardy
 	name = "Weed Adaptation"
@@ -571,3 +638,8 @@
 
 /datum/plant_gene/trait/plant_type/carnivory
 	name = "Obligate Carnivory"
+
+#undef GLOW_ID
+#undef PLANT_TYPE_ID
+#undef TEMP_CHANGE_ID
+#undef CONTENTS_CHANGE_ID
