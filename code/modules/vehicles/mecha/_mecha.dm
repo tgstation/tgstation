@@ -237,9 +237,9 @@
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		icon_state = silicon_icon_state
 	else if(LAZYLEN(occupants))
-		icon_state = initial(icon_state)
+		icon_state = base_icon_state
 	else
-		icon_state = initial(icon_state)+ "-open"
+		icon_state = "[base_icon_state]-open"
 
 
 /obj/vehicle/sealed/mecha/get_cell()

@@ -69,7 +69,7 @@
 		if(istype(new_mob))
 			if(bantype && is_banned_from(affected_mob.ckey, bantype))
 				replace_banned_player(new_mob)
-			new_mob.a_intent = INTENT_HARM
+			new_mob.set_combat_mode(TRUE)
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else

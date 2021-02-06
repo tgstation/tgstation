@@ -1,5 +1,5 @@
 /mob/dead/observer/check_emote(message, forced)
-	if(message == "*spin" || message == "*flip")
+	if(message[1] == "*")
 		emote(copytext(message, length(message[1]) + 1), intentional = !forced)
 		return TRUE
 

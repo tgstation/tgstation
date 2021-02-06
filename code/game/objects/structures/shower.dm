@@ -165,7 +165,7 @@
 		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(drop_location(), 3)
+	new /obj/item/stack/sheet/iron(drop_location(), 3)
 	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)

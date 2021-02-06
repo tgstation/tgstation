@@ -11,8 +11,10 @@
 	var/has_blueprints = FALSE
 	var/logpath						//If the picture has been logged this is the path.
 	var/id							//this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
+	///Was this image capable of seeing ghosts?
+	var/see_ghosts = CAMERA_NO_GHOSTS
 
-/datum/picture/New(name, desc, mobs_spotted, dead_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon)
+/datum/picture/New(name, desc, mobs_spotted, dead_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon, can_see_ghosts)
 	if(!isnull(name))
 		picture_name = name
 	if(!isnull(desc))
@@ -35,6 +37,8 @@
 		caption = caption_
 	if(autogenerate_icon && !picture_icon && picture_image)
 		regenerate_small_icon()
+	if(can_see_ghosts)
+		see_ghosts = can_see_ghosts
 
 /datum/picture/proc/get_small_icon(iconstate)
 	if(!picture_icon)
