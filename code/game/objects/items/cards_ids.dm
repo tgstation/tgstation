@@ -671,3 +671,83 @@
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	timberpoes_trim = /datum/id_trim/highlander
+
+// TIMBERTODO - TGUI INTERFACE FOR COPYING ACCESS ON CHAMELEON ID CARDS
+/obj/item/card/id/advanced/chameleon
+	name = "agent card"
+	desc = "A highly advanced chameleon ID card. Touch this card on another ID card to choose which accesses to copy."
+	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
+	var/forged = FALSE
+	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
+	var/anyone = FALSE
+
+/obj/item/card/id/advanced/chameleon/Initialize()
+	var/datum/action/item_action/chameleon/change/id/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/card/id/advanced
+	chameleon_action.chameleon_name = "ID Card"
+	chameleon_action.initialize_disguises()
+
+/obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
+	if(!proximity)
+		return
+	if(istype(O, /obj/item/card/id))
+		// TIMBERTODO - Opening TGUI interface goes here
+		return
+
+/obj/item/card/id/advanced/chameleon/attack_self(mob/user)
+	if(isliving(user) && user.mind)
+		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
+		if(user.incapacitated())
+			return
+		if(popup_input == "Forge/Reset" && !forged)
+			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			input_name = sanitize_name(input_name)
+			if(!input_name)
+				// Invalid/blank names give a randomly generated one.
+				if(user.gender == MALE)
+					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+				else if(user.gender == FEMALE)
+					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+				else
+					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
+
+			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
+			if(!target_occupation)
+				return
+
+			var/newAge = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
+			if(newAge)
+				registered_age = max(round(text2num(newAge)), 0)
+
+			registered_name = input_name
+			assignment = target_occupation
+			update_label()
+			forged = TRUE
+			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
+			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
+
+			// First time use automatically sets the account id to the user.
+			if (first_use && !registered_account)
+				if(ishuman(user))
+					var/mob/living/carbon/human/accountowner = user
+
+					var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
+					if(account)
+						account.bank_cards += src
+						registered_account = account
+						to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
+			return
+		else if (popup_input == "Forge/Reset" && forged)
+			registered_name = initial(registered_name)
+			assignment = initial(assignment)
+			timberpoes_trim = initial(tibmerpoes_trim)
+			icon_state
+			log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
+			update_label()
+			forged = FALSE
+			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
+			return
+		else if (popup_input == "Change Account ID")
+			set_new_account(user)
+			return
+	return ..()

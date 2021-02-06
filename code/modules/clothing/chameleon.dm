@@ -256,6 +256,50 @@
 /datum/action/item_action/chameleon/change/proc/apply_job_data(datum/job/job_datum)
 	return
 
+/datum/action/item_action/chameleon/change/id/update_item(obj/item/picked_item)
+	..()
+	var/obj/item/card/id/advanced/chameleon/agent_card = target
+	if(istype(agent_card))
+		var/obj/item/card/id/copied_card = picked_item
+		agent_card.timberpoes_trim = SSid_access.get_trim(initial(copied_card.timberpoes_trim))
+		agent_card.icon_state = initial(copied_card.icon_state)
+		agent_card.assigned_icon_state = initial(copied_card.assigned_icon_state)
+		if(!agent_card.forged)
+			agent_card.registered_name = initial(copied_card.registered_name)
+			agent_card.assignment = agent_card.timberpoes_trim.assignment ? agent_card.timberpoes_trim.assignment : initial(copied_card.assignment)
+		agent_card.update_label()
+
+/datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)
+	..()
+	var/obj/item/card/id/advanced/chameleon/agent_card = target
+	if(istype(agent_card) && istype(job_datum))
+		agent_card.forged = TRUE
+
+		// job_outfit is going to be a path.
+		var/datum/outfit/job/job_outfit = job_datum.outfit
+		if(!job_outfit)
+			return
+
+		// copied_card is also going to be a path.
+		var/obj/item/card/id/copied_card = initial(job_outfit.id)
+		if(!copied_card)
+			return
+
+		// If the outfit comes with a special trim override, we'll use that. Otherwise, use the card's default trim. Failing that, no trim at all.
+		var/datum/id_trim/new_trim = job_outfit.id_trim ? job_outfit.id_trim : initial(copied_card.timberpoes_trim)
+		if(new_trim)
+			agent_card.timberpoes_trim = SSid_access.get_trim(new_trim)
+		else
+			agent_card.timberpoes_trim = null
+
+		agent_card.icon_state = initial(copied_advanced_card.icon_state)
+		if(ispath(copied_card, /obj/item/card/id/advanced))
+			var/obj/item/card/id/advanced/copied_advanced_card = copied_card
+			agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
+
+		// Same again. If the trim has an assignment we'll override it. Otherwise, we'll use the job datum's title.
+		agent_card.assignment = agent_card.timberpoes_trim.assignment ? agent_card.timberpoes_trim.assignment : job_datum.title
+
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/picked_item)
 	..()
 	var/obj/item/pda/agent_pda = target

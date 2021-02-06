@@ -107,6 +107,8 @@
 		return
 	. = ..()
 
+
+// TIMBERTODO - CHANGELING ID BULLSHIT. INVESTIGATE THIS SHIT.
 /obj/item/changeling/id
 	slot_flags = ITEM_SLOT_ID
 	/// Cached flat icon of the ID
