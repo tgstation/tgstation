@@ -205,10 +205,9 @@
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	///Name of the grown products.
 	var/product_name
-	///The Number of products produced by the plant, typically the yield. Modified by Densified Chemicals.
+	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
 	var/product_count = getYield()
-	if(get_gene(/datum/plant_gene/trait/maxchem))
-		product_count = clamp(round(product_count/2),0,5)
+
 	while(t_amount < product_count)
 		var/obj/item/food/grown/t_prod
 		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
@@ -228,7 +227,7 @@
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
 			t_amount++
 			if(t_prod.seed)
-				t_prod.seed.instability = round(instability * 0.5)
+				t_prod.seed.set_instability(round(instability * 0.5))
 			continue
 		else
 			t_prod = new product(output_loc, src)
@@ -244,8 +243,8 @@
 			return
 		t_amount++
 		product_name = parent.myseed.plantname
-	if(getYield() >= 1)
-		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
+	if(product_count >= 1)
+		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
 	parent.update_tray(user)
 
 	return result
@@ -254,7 +253,8 @@
  * This is where plant chemical products are handled.
  *
  * Individually, the formula for individual amounts of chemicals is Potency * the chemical production %, rounded to the fullest 1.
- * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling trait.
+ * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling/autojuicing traits.
+ * This is where chemical reactions can occur, and the heating / cooling traits effect the reagent container.
  */
 /obj/item/seeds/proc/prepare_result(obj/item/T)
 	if(!T.reagents)
@@ -262,7 +262,7 @@
 	var/reagent_max = 0
 	for(var/rid in reagents_add)
 		reagent_max += reagents_add[rid]
-	if(IS_EDIBLE(T))
+	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
 		var/obj/item/food/grown/grown_edible = T
 		for(var/rid in reagents_add)
 			var/reagent_overflow_mod = reagents_add[rid]
@@ -273,14 +273,37 @@
 			var/list/data
 			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
 				data = list("blood_type" = "O-")
-			if(rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin)
+			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
 				data = grown_edible.tastes // apple tastes of apple.
 				//Handles the distillary trait, swaps nutriment and vitamins for that species brewable if it exists.
 				if(get_gene(/datum/plant_gene/trait/brewing) && grown_edible.distill_reagent)
 					T.reagents.add_reagent(grown_edible.distill_reagent, amount/2)
 					continue
+
 			T.reagents.add_reagent(rid, amount, data)
 
+		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
+		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_results)
+			grown_edible.on_juice()
+			grown_edible.reagents.add_reagent_list(grown_edible.juice_results)
+
+		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
+		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+
+		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
+		if(get_gene(/datum/plant_gene/trait/chem_heating))
+			T.visible_message("<span class='notice'>[T] releases freezing air, consuming its nutriments to heat its contents.</span>")
+			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
+			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
+			T.reagents.handle_reactions()
+			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
+		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
+		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
+			T.visible_message("<span class='notice'>[T] releases a blast of hot air, consuming its nutriments to cool its contents.</span>")
+			T.reagents.remove_all_type(/datum/reagent/consumable/nutriment, num_nutriment, strict = TRUE)
+			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
+			T.reagents.handle_reactions()
+			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
 
 /// Setters procs ///
 
@@ -289,10 +312,17 @@
  */
 /obj/item/seeds/proc/adjust_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		yield = clamp(yield + adjustamt, 0, 10)
+		/// Our plant's max yield
+		var/max_yield = MAX_PLANT_YIELD
+		for(var/datum/plant_gene/trait/trait in genes)
+			if(trait.trait_flags & TRAIT_HALVES_YIELD)
+				max_yield = round(max_yield/2)
+				break
+
+		yield = clamp(yield + adjustamt, 0, max_yield)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-			yield = 1 // Mushrooms always have a minimum yield of 1.
+			yield = FUNGAL_METAB_YIELD_MIN // Mushrooms always have a minimum yield.
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
 		if(C)
 			C.value = yield
@@ -301,7 +331,7 @@
  * Adjusts seed lifespan up or down according to adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/adjust_lifespan(adjustamt)
-	lifespan = clamp(lifespan + adjustamt, 10, 100)
+	lifespan = clamp(lifespan + adjustamt, 10, MAX_PLANT_LIFESPAN)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
 	if(C)
 		C.value = lifespan
@@ -310,7 +340,7 @@
  * Adjusts seed endurance up or down according to adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
-	endurance = clamp(endurance + adjustamt, 10, 100)
+	endurance = clamp(endurance + adjustamt, MIN_PLANT_ENDURANCE, MAX_PLANT_ENDURANCE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
@@ -320,7 +350,7 @@
  */
 /obj/item/seeds/proc/adjust_production(adjustamt)
 	if(yield != -1)
-		production = clamp(production + adjustamt, 1, 10)
+		production = clamp(production + adjustamt, 1, MAX_PLANT_PRODUCTION)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
@@ -330,7 +360,7 @@
  */
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency != -1)
-		potency = clamp(potency + adjustamt, 0, 100)
+		potency = clamp(potency + adjustamt, 0, MAX_PLANT_POTENCY)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency
@@ -341,7 +371,7 @@
 /obj/item/seeds/proc/adjust_instability(adjustamt)
 	if(instability == -1)
 		return
-	instability = clamp(instability + adjustamt, 0, 100)
+	instability = clamp(instability + adjustamt, 0, MAX_PLANT_INSTABILITY)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
 	if(C)
 		C.value = instability
@@ -350,7 +380,7 @@
  * Adjusts seed weed grwoth speed up or down according to adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
-	weed_rate = clamp(weed_rate + adjustamt, 0, 10)
+	weed_rate = clamp(weed_rate + adjustamt, 0, MAX_PLANT_WEEDRATE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
@@ -359,7 +389,7 @@
  * Adjusts seed weed chance up or down according to adjustamt. (Max 67%)
  */
 /obj/item/seeds/proc/adjust_weed_chance(adjustamt)
-	weed_chance = clamp(weed_chance + adjustamt, 0, 67)
+	weed_chance = clamp(weed_chance + adjustamt, 0, MAX_PLANT_WEEDCHANCE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
@@ -367,14 +397,21 @@
 //Directly setting stats
 
 /**
- * Sets the plant's yield stat to the value of adjustamt. (Max 10)
+ * Sets the plant's yield stat to the value of adjustamt. (Max 10, or 5 with some traits)
  */
 /obj/item/seeds/proc/set_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		yield = clamp(adjustamt, 0, 10)
+		/// Our plant's max yield
+		var/max_yield = MAX_PLANT_YIELD
+		for(var/datum/plant_gene/trait/trait in genes)
+			if(trait.trait_flags & TRAIT_HALVES_YIELD)
+				max_yield = round(max_yield/2)
+				break
+
+		yield = clamp(adjustamt, 0, max_yield)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-			yield = 1 // Mushrooms always have a minimum yield of 1.
+			yield = FUNGAL_METAB_YIELD_MIN // Mushrooms always have a minimum yield.
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
 		if(C)
 			C.value = yield
@@ -383,7 +420,7 @@
  * Sets the plant's lifespan stat to the value of adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/set_lifespan(adjustamt)
-	lifespan = clamp(adjustamt, 10, 100)
+	lifespan = clamp(adjustamt, 10, MAX_PLANT_LIFESPAN)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
 	if(C)
 		C.value = lifespan
@@ -392,7 +429,7 @@
  * Sets the plant's endurance stat to the value of adjustamt. (Max 100)
  */
 /obj/item/seeds/proc/set_endurance(adjustamt)
-	endurance = clamp(adjustamt, 10, 100)
+	endurance = clamp(adjustamt, MIN_PLANT_ENDURANCE, MAX_PLANT_ENDURANCE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
@@ -402,7 +439,7 @@
  */
 /obj/item/seeds/proc/set_production(adjustamt)
 	if(yield != -1)
-		production = clamp(adjustamt, 1, 10)
+		production = clamp(adjustamt, 1, MAX_PLANT_PRODUCTION)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
@@ -412,7 +449,7 @@
  */
 /obj/item/seeds/proc/set_potency(adjustamt)
 	if(potency != -1)
-		potency = clamp(adjustamt, 0, 100)
+		potency = clamp(adjustamt, 0, MAX_PLANT_POTENCY)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency
@@ -423,7 +460,7 @@
 /obj/item/seeds/proc/set_instability(adjustamt)
 	if(instability == -1)
 		return
-	instability = clamp(adjustamt, 0, 100)
+	instability = clamp(adjustamt, 0, MAX_PLANT_INSTABILITY)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
 	if(C)
 		C.value = instability
@@ -432,7 +469,7 @@
  * Sets the plant's weed production rate to the value of adjustamt. (Max 10)
  */
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
-	weed_rate = clamp(adjustamt, 0, 10)
+	weed_rate = clamp(adjustamt, 0, MAX_PLANT_WEEDRATE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
@@ -441,65 +478,28 @@
  * Sets the plant's weed growth percentage to the value of adjustamt. (Max 67%)
  */
 /obj/item/seeds/proc/set_weed_chance(adjustamt)
-	weed_chance = clamp(adjustamt, 0, 67)
+	weed_chance = clamp(adjustamt, 0, MAX_PLANT_WEEDCHANCE)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
 
+/**
+ * Override for seeds with unique text for their analyzer. (No newlines at the start or end of unique text!)
+ * Returns null if no unique text, or a string of text if there is.
+ */
+/obj/item/seeds/proc/get_unique_analyzer_text()
+	return null
 
-/obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
-	var/text = ""
-	if(!get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && !get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
-		text += "- Plant type: Normal plant\n"
-	if(get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-		text += "- Plant type: Weed. Can grow in nutrient-poor soil.\n"
-	if(get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-		text += "- Plant type: Mushroom. Can grow in dry soil.\n"
-	if(get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
-		text += "- Plant type: <span class='warning'>UNKNOWN</span> \n"
-	if(potency != -1)
-		text += "- Potency: [potency]\n"
-	if(yield != -1)
-		text += "- Yield: [yield]\n"
-	text += "- Maturation speed: [maturation]\n"
-	if(yield != -1)
-		text += "- Production speed: [production]\n"
-	text += "- Endurance: [endurance]\n"
-	text += "- Lifespan: [lifespan]\n"
-	text += "- Instability: [instability]\n"
-	text += "- Weed Growth Rate: [weed_rate]\n"
-	text += "- Weed Vulnerability: [weed_chance]\n"
-	if(rarity)
-		text += "- Species Discovery Value: [rarity]\n"
-	var/all_traits = ""
-	for(var/datum/plant_gene/trait/traits in genes)
-		if(istype(traits, /datum/plant_gene/trait/plant_type))
-			continue
-		all_traits += " [traits.get_name()]"
-	text += "- Plant Traits:[all_traits]\n"
-	text += "*---------*"
-	return text
-
-/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
+/**
+ * Override for seeds with special chem reactions.
+ */
+/obj/item/seeds/proc/on_chem_reaction(datum/reagents/reagents)
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/plant_analyzer))
-		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
-		var/text
-		var/obj/item/plant_analyzer/P_analyzer = O
-		if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
-			text = get_analyzer_text()
-			if(text)
-				to_chat(user, "<span class='notice'>[text]</span>")
-		if(reagents_add && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
-			to_chat(user, "<span class='notice'>- Plant Reagents -</span>")
-			to_chat(user, "<span class='notice'>*---------*</span>")
-			for(var/datum/plant_gene/reagent/G in genes)
-				to_chat(user, "<span class='notice'>- [G.get_name()] -</span>")
-			to_chat(user, "<span class='notice'>*---------*</span>")
-
-
+		var/obj/item/plant_analyzer/plant_analyzer = O
+		to_chat(user, plant_analyzer.scan_plant(src))
 		return
 
 	if(istype(O, /obj/item/pen))
@@ -638,13 +638,13 @@
 	if(new_trait?.can_add(src))
 		genes += new_trait.Copy()
 
-	// Adjust stats based on graft stats.
-	src.lifespan	= round(clamp(max(src.lifespan,		(src.lifespan	+(2/3)*(snip.lifespan	-src.lifespan)		)),0,100))
-	src.endurance	= round(clamp(max(src.endurance,	(src.endurance	+(2/3)*(snip.endurance	-src.endurance)		)),0,100))
-	src.production	= round(clamp(max(src.production,	(src.production	+(2/3)*(snip.production	-src.production)	)),0,100))
-	src.weed_rate	= round(clamp(max(src.weed_rate,	(src.weed_rate	+(2/3)*(snip.weed_rate	-src.weed_rate)		)),0,100))
-	src.weed_chance	= round(clamp(max(src.weed_chance,	(src.weed_chance+(2/3)*(snip.weed_chance-src.weed_chance)	)),0,100))
-	src.yield		= round(clamp(max(src.yield,		(src.yield		+(2/3)*(snip.yield		-src.yield)			)),0,10	))
+	// Adjust stats based on graft stats
+	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.lifespan - lifespan)))))
+	set_endurance(round(max(endurance, (endurance + (2/3)*(snip.endurance - endurance)))))
+	set_production(round(max(production, (production + (2/3)*(snip.production - production)))))
+	set_weed_rate(round(max(weed_rate, (weed_rate + (2/3)*(snip.weed_rate - weed_rate)))))
+	set_weed_chance(round(max(weed_chance, (weed_chance+ (2/3)*(snip.weed_chance - weed_chance)))))
+	set_yield(round(max(yield, (yield + (2/3)*(snip.yield - yield)))))
 
 	// Add in any reagents, too.
 	reagents_from_genes()

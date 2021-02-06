@@ -997,12 +997,12 @@
 	contains = list(/obj/item/stack/sheet/glass/fifty)
 	crate_name = "glass sheets crate"
 
-/datum/supply_pack/materials/metal50
-	name = "50 Metal Sheets"
-	desc = "Any construction project begins with a good stack of fifty metal sheets!"
+/datum/supply_pack/materials/iron50
+	name = "50 Iron Sheets"
+	desc = "Any construction project begins with a good stack of fifty iron sheets!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/stack/sheet/metal/fifty)
-	crate_name = "metal sheets crate"
+	contains = list(/obj/item/stack/sheet/iron/fifty)
+	crate_name = "iron sheets crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
@@ -1819,7 +1819,7 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains fourteen different seeds."
+	desc = "Big things have small beginnings. Contains fifteen different seeds."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/seeds/chili,
 					/obj/item/seeds/cotton,
@@ -1832,6 +1832,7 @@
 					/obj/item/seeds/wheat/rice,
 					/obj/item/seeds/carrot,
 					/obj/item/seeds/sunflower,
+					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
 					/obj/item/seeds/sugarcane)
@@ -2647,11 +2648,19 @@
 	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/vending/vendomat
-	name = "Vendomat Supply Crate"
+	name = "Vendomat & YouTool Supply Crate"
 	desc = "More tools for your IED testing facility."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/vending_refill/assist)
-	crate_name = "vendomat supply crate"
+	contains = list(/obj/item/vending_refill/assist,
+					/obj/item/vending_refill/youtool)
+	crate_name = "Vendomat & YouTool supply crate"
+
+/datum/supply_pack/vending/clothesmate
+	name = "ClothesMate Supply Crate"
+	desc = "Out of cowboy boots? Buy this crate."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/vending_refill/clothing)
+	crate_name = "ClothesMate supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Clothing Vending Restocks ////////////////////////////

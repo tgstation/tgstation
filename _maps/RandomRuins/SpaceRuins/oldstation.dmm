@@ -2076,7 +2076,7 @@
 "fv" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty{
 	pixel_x = 3;
 	pixel_y = 3
@@ -3748,10 +3748,10 @@
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "jf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 20
 	},
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 20
 	},
 /obj/structure/closet/crate,
@@ -5924,7 +5924,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -6067,10 +6067,10 @@
 /area/ruin/space/has_grav/ancientstation/medbay)
 "ox" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 50
 	},
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 25
 	},
 /obj/item/clothing/gloves/color/yellow,

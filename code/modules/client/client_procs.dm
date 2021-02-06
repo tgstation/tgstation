@@ -1018,15 +1018,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/get_award_status(achievement_type, mob/user, value = 1)
 	return	player_details.achievements.get_achievement_status(achievement_type)
 
-///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
-/client/proc/award_heart(heart_reason)
-	to_chat(src, "<span class='nicegreen'>Someone awarded you a heart![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
-	if(!src)
+///Gives someone hearted status for OOC, from behavior commendations
+/client/proc/adjust_heart(duration = 24 HOURS)
+	var/new_duration = world.realtime + duration
+	if(prefs.hearted_until > new_duration)
 		return
-	prefs.hearted_until = world.realtime + (24 HOURS)
+	to_chat(src, "<span class='nicegreen'>Someone awarded you a heart!</span>")
+	prefs.hearted_until = new_duration
 	prefs.hearted = TRUE
-	if(!src)
-		return
 	prefs.save_preferences()
 
 /// compiles a full list of verbs and sends it to the browser
