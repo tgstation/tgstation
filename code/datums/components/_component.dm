@@ -301,6 +301,52 @@
 		. += current_type
 
 /**
+  * A datum which can send signals after the signal source has been deleted.
+  */
+/datum/signal_sender
+	var/target
+	var/typep
+
+/datum/signal_sender/New(target, typep)
+	src.target = target
+	src.typep = typep
+
+/**
+  * Send the signal with given arguments.
+  */
+/datum/signal_sender/proc/send(list/arguments)
+	if(!target)
+		return NONE
+	if(!length(target))
+		var/datum/C = target
+		if(!C.signal_enabled)
+			return NONE
+		var/proctype = C.signal_procs[src][typep]
+		return NONE | CallAsync(C, proctype, arguments)
+	. = NONE
+	for(var/I in target)
+		var/datum/C = I
+		if(!C.signal_enabled)
+			continue
+		var/proctype = C.signal_procs[src][typep]
+		. |= CallAsync(C, proctype, arguments)
+
+/**
+  * Unregisters all the signal handlers that match,
+  * and returns a /datum/signal_sender which can be used to send the signal once again.
+  *
+  * Useful for sending signals after deleting.
+  */
+/datum/proc/TakeSignalSender(sigtype)
+	if(!comp_lookup || !comp_lookup[sigtype])
+		return null
+
+	. = new /datum/signal_sender(comp_lookup[sigtype], sigtype)
+	comp_lookup -= sigtype
+	if(!length(comp_lookup))
+		comp_lookup = null
+
+/**
  * Internal proc to handle most all of the signaling procedure
  *
  * Will runtime if used on datums with an empty component list

@@ -91,10 +91,13 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_type = type
 
 	var/list/transferring_comps = list()
-	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
+	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, src, path, new_baseturfs, flags, transferring_comps)
 	for(var/i in transferring_comps)
 		var/datum/component/comp = i
 		comp.RemoveComponent()
+
+	//sending the signal after `qdel(src)` means we have to remove the signal beforehand
+	var/datum/signal_sender/changed = TakeSignalSender(COMSIG_TURF_CHANGED)
 
 	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
@@ -134,6 +137,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
+
+	changed.send(list(W))
 
 	return W
 
