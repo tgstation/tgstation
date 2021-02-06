@@ -30,7 +30,6 @@
 		PROGRAM_CATEGORY_SUPL,
 		PROGRAM_CATEGORY_MISC,
 	)
-	var/selected_cat = PROGRAM_CATEGORY_ALL
 
 /datum/computer_file/program/ntnetdownload/run_program()
 	. = ..()
@@ -183,9 +182,11 @@
 			if(C == P.category || C == PROGRAM_CATEGORY_ALL)
 				categories[C] += P
 	for(var/category in categories)
+		if (!categories[category].len)
+			continue
 		var/list/cat = list(
 			"name" = category,
-			"items" = (category == selected_cat ? list() : null))
+			"items" = list())
 		for(var/I in categories[category])
 			var/datum/computer_file/program/P = I
 			cat["items"] += list(list(

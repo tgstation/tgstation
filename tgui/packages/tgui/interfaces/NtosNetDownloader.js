@@ -98,6 +98,7 @@ const Program = (props, context) => {
   const { program } = props;
   const { act, data } = useBackend(context);
   const {
+    PC_device_theme,
     disk_size,
     disk_used,
     downloading,
@@ -154,7 +155,7 @@ const Program = (props, context) => {
       <Box mt={1} italic color="label">
         {program.fileinfo}
       </Box>
-      {!program.verifiedsource && (
+      {(!program.verifiedsource && PC_device_theme == "ntos") && (
         <NoticeBox mt={1} mb={0} danger fontSize="12px">
           Unverified source. Please note that Nanotrasen does not recommend
           download and usage of software from non-official servers.
