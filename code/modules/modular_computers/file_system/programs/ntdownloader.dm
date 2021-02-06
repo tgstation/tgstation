@@ -23,13 +23,14 @@
 	var/list/main_repo
 	var/list/antag_repo
 	var/list/show_categories = list(
-		PROGRAM_CATEGORY_MISC,
+		PROGRAM_CATEGORY_ALL,
 		PROGRAM_CATEGORY_CREW,
-		PROGRAM_CATEGORY_SUPL,
 		PROGRAM_CATEGORY_ENGI,
 		PROGRAM_CATEGORY_ROBO,
+		PROGRAM_CATEGORY_SUPL,
+		PROGRAM_CATEGORY_MISC,
 	)
-	var/selected_cat = PROGRAM_CATEGORY_MISC
+	var/selected_cat = PROGRAM_CATEGORY_ALL
 
 /datum/computer_file/program/ntnetdownload/run_program()
 	. = ..()
@@ -158,25 +159,31 @@
 	data["disk_size"] = hard_drive.max_capacity
 	data["disk_used"] = hard_drive.used_capacity
 	var/list/programs[0]
+	var/list/programs_incompatible[0]
 	for(var/A in main_repo)
 		var/datum/computer_file/program/P = A
-		programs.Add(P)
-	data["hackedavailable"] = FALSE
+		if (check_compatibility(P))
+			programs.Add(P)
+		else
+			programs_incompatible.Add(P)
 	if(emagged) // If we are running on emagged computer we have access to some "bonus" software
 		for(var/S in antag_repo)
 			var/datum/computer_file/program/P = S
-			data["hackedavailable"] = TRUE
-			programs.Add(P)
+			if (check_compatibility(P))
+				programs.Add(P)
+			else
+				programs_incompatible.Add(P)
 
 	programs = sortList(programs, /proc/cmp_program_asc)
+	programs_incompatible = sortList(programs_incompatible, /proc/cmp_program_asc)
 
 	var/categories = show_categories.Copy()
 	for(var/V in categories)
 		categories[V] = list()
-	for(var/I in programs)
+	for(var/I in programs | programs_incompatible)
 		var/datum/computer_file/program/P = I
 		for(var/C in categories)
-			if(C == P.category)
+			if(C == P.category || C == PROGRAM_CATEGORY_ALL)
 				categories[C] += P
 	for(var/category in categories)
 		var/list/cat = list(
@@ -185,6 +192,7 @@
 		for(var/I in categories[category])
 			var/datum/computer_file/program/P = I
 			cat["items"] += list(list(
+				"icon" = P.program_icon,
 				"filename" = P.filename,
 				"filedesc" = P.filedesc,
 				"fileinfo" = P.extended_desc,
@@ -192,7 +200,8 @@
 				"installed" = !!hard_drive.find_file_by_name(P.filename),
 				"compatibility" = check_compatibility(P),
 				"size" = P.size,
-				"access" = emagged ? TRUE : P.can_run(user,transfer = 1, access = access)
+				"access" = emagged ? TRUE : P.can_run(user,transfer = 1, access = access),
+				"verifiedsource" = P.available_on_ntnet,
 			))
 		data["categories"] += list(cat)
 	return data

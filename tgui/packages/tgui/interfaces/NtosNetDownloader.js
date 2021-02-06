@@ -8,10 +8,11 @@ export const NtosNetDownloader = (props, context) => {
     PC_device_theme,
     disk_size,
     disk_used,
-    downloadable_programs = [],
+    downloadcompletion,
+    downloading,
+    downloadname,
+    downloadsize,
     error,
-    hacked_programs = [],
-    hackedavailable,
     categories = [],
   } = data;
   const [
@@ -25,8 +26,8 @@ export const NtosNetDownloader = (props, context) => {
   return (
     <NtosWindow
       theme={PC_device_theme}
-      width={512}
-      height={735}
+      width={600}
+      height={600}
       resizable>
       <NtosWindow.Content scrollable>
         {!!error && (
@@ -41,19 +42,31 @@ export const NtosNetDownloader = (props, context) => {
         )}
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Disk usage">
-              <ProgressBar
-                value={disk_used}
-                minValue={0}
-                maxValue={disk_size}>
-                {`${disk_used} GQ / ${disk_size} GQ`}
-              </ProgressBar>
-            </LabeledList.Item>
+            {downloading && (
+              <LabeledList.Item label="Downloading">
+                <ProgressBar
+                  color="green"
+                  minValue={0}
+                  maxValue={downloadsize}
+                  value={downloadcompletion}>
+                  {`File: ${downloadname}, ${downloadcompletion * 10}% complete`}
+                </ProgressBar>
+              </LabeledList.Item>
+            ) || (
+              <LabeledList.Item label="Disk usage">
+                <ProgressBar
+                  value={disk_used}
+                  minValue={0}
+                  maxValue={disk_size}>
+                  {`${disk_used} GQ / ${disk_size} GQ`}
+                </ProgressBar>
+              </LabeledList.Item>
+            )}
           </LabeledList>
         </Section>
         <Flex>
-          <Flex.Item minWidth="110px" shrink={0} basis={0}>
-          <Tabs vertical>
+          <Flex.Item minWidth="105px" shrink={0} basis={0}>
+            <Tabs vertical>
               {categories.map(category => (
                 <Tabs.Tab
                   key={category.name}
@@ -65,28 +78,13 @@ export const NtosNetDownloader = (props, context) => {
             </Tabs>
           </Flex.Item>
           <Flex.Item grow={1} basis={0}>
-            <Section>
-              {items.map(program => (
-                  <Program
-                    key={program.filename}
-                    program={program} />
-                ))}
-            </Section>
+            {items.map(program => (
+                <Program
+                  key={program.filename}
+                  program={program} />
+              ))}
           </Flex.Item>
         </Flex>
-        {!!hackedavailable && (
-          <Section title="UNKNOWN Software Repository">
-            <NoticeBox mb={1}>
-              Please note that Nanotrasen does not recommend download
-              of software from non-official servers.
-            </NoticeBox>
-            {items.map(program => (
-              <Program
-                key={program.filename}
-                program={program} />
-            ))}
-          </Section>
-        )}
       </NtosWindow.Content>
     </NtosWindow>
   );
@@ -105,25 +103,25 @@ const Program = (props, context) => {
   } = data;
   const disk_free = disk_size - disk_used;
   return (
-    <Box mb={3}>
+    <Section>
       <Flex align="baseline">
-        <Flex.Item bold grow={1}>
-          {program.filedesc}
+        <Flex.Item grow={1}>
+          <Icon name={program.icon} /> <Box inline bold>{program.filedesc}</Box>
         </Flex.Item>
         <Flex.Item shrink={0} width="48px" textAlign="right" color="label" nowrap>
           {program.size} GQ
         </Flex.Item>
-        <Flex.Item ml={2} shrink={0} width="128px" textAlign="center">
+        <Flex.Item shrink={0} width="132px" textAlign="right">
           {(downloading && program.filename === downloadname) && (
-            <ProgressBar
-              color="green"
-              minValue={0}
-              maxValue={downloadsize}
-              value={downloadcompletion} />
+            <Button
+              bold
+              color="good"
+              icon="spinner"
+              iconSpin={1}
+              content="Downloading" />
           ) || (
             (!program.installed && program.compatibility && program.access && program.size < disk_free) && (
               <Button
-                fluid
                 bold
                 icon="download"
                 content="Download"
@@ -133,18 +131,22 @@ const Program = (props, context) => {
                 })} />
             ) || (
               <Button
-                fluid
                 bold
                 icon={program.installed ? 'check' : 'times'}
-                color={program.installed ? 'green' : 'red'}
-                content={program.installed ? 'Installed' : !program.compatibility ? 'Incompatible' : !program.access ? 'No Access' : 'Need Space'} />
+                color={program.installed ? 'good' : !program.compatibility ? 'grey' : 'bad'}
+                content={program.installed ? 'Installed' : !program.compatibility ? 'Incompatible' : !program.access ? 'No Access' : 'No Space'} />
             )
           )}
         </Flex.Item>
       </Flex>
-      <Box mt={1} italic color="label" fontSize="12px">
+      <Box mt={1} italic color="label">
         {program.fileinfo}
       </Box>
-    </Box>
+      {!program.verifiedsource && (
+        <NoticeBox mt={3} mb={0} danger fontSize="12px">
+          Unverified source. Please note that Nanotrasen does not recommend download of software from non-official servers.
+        </NoticeBox>
+      )}
+    </Section>
   );
 };

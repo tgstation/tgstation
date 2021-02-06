@@ -85,12 +85,12 @@
 #define PROGRAM_STATE_BACKGROUND 1
 #define PROGRAM_STATE_ACTIVE 2
 //Program categories
-#define PROGRAM_CATEGORY_MISC "Misc."
+#define PROGRAM_CATEGORY_ALL "All"
 #define PROGRAM_CATEGORY_CREW "Crew"
-#define PROGRAM_CATEGORY_SUPL "Supply"
 #define PROGRAM_CATEGORY_ENGI "Engineering"
 #define PROGRAM_CATEGORY_ROBO "Robotics"
-#define PROGRAM_CATEGORY_SYND "Syndicate"
+#define PROGRAM_CATEGORY_SUPL "Supply"
+#define PROGRAM_CATEGORY_MISC "Other"
 
 #define FIREDOOR_OPEN 1
 #define FIREDOOR_CLOSED 2
