@@ -699,55 +699,55 @@
 		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
 		if(user.incapacitated())
 			return
-		if(popup_input == "Forge/Reset" && !forged)
-			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
-			input_name = sanitize_name(input_name)
-			if(!input_name)
-				// Invalid/blank names give a randomly generated one.
-				if(user.gender == MALE)
-					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-				else if(user.gender == FEMALE)
-					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
-				else
-					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
+		if(!user.is_holding(src))
+			return
+		if(popup_input == "Forge/Reset")
+			if(!forged)
+				var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+				input_name = sanitize_name(input_name)
+				if(!input_name)
+					// Invalid/blank names give a randomly generated one.
+					if(user.gender == MALE)
+						input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+					else if(user.gender == FEMALE)
+						input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+					else
+						input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
-			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
-			if(!target_occupation)
+				var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
+				if(!target_occupation)
+					return
+
+				var/new_age = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
+				if(new_age)
+					registered_age = max(round(text2num(new_age)), 0)
+
+				registered_name = input_name
+				assignment = target_occupation
+				update_label()
+				forged = TRUE
+				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
+				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
+
+				if(!registered_account)
+					if(ishuman(user))
+						var/mob/living/carbon/human/accountowner = user
+
+						var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
+						if(account)
+							account.bank_cards += src
+							registered_account = account
+							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
 				return
-
-			var/newAge = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
-			if(newAge)
-				registered_age = max(round(text2num(newAge)), 0)
-
-			registered_name = input_name
-			assignment = target_occupation
-			update_label()
-			forged = TRUE
-			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
-
-			// First time use automatically sets the account id to the user.
-			if (first_use && !registered_account)
-				if(ishuman(user))
-					var/mob/living/carbon/human/accountowner = user
-
-					var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
-					if(account)
-						account.bank_cards += src
-						registered_account = account
-						to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
-			return
-		else if (popup_input == "Forge/Reset" && forged)
-			registered_name = initial(registered_name)
-			assignment = initial(assignment)
-			timberpoes_trim = initial(tibmerpoes_trim)
-			icon_state
-			log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
-			update_label()
-			forged = FALSE
-			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
-			return
-		else if (popup_input == "Change Account ID")
+			if(forged)
+				registered_name = initial(registered_name)
+				assignment = initial(assignment)
+				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
+				update_label()
+				forged = FALSE
+				to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
+				return
+		if (popup_input == "Change Account ID")
 			set_new_account(user)
 			return
 	return ..()

@@ -263,7 +263,9 @@
 		var/obj/item/card/id/copied_card = picked_item
 		agent_card.timberpoes_trim = SSid_access.get_trim(initial(copied_card.timberpoes_trim))
 		agent_card.icon_state = initial(copied_card.icon_state)
-		agent_card.assigned_icon_state = initial(copied_card.assigned_icon_state)
+		if(ispath(copied_card, /obj/item/card/id/advanced))
+			var/obj/item/card/id/advanced/copied_advanced_card = copied_card
+			agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
 		if(!agent_card.forged)
 			agent_card.registered_name = initial(copied_card.registered_name)
 			agent_card.assignment = agent_card.timberpoes_trim.assignment ? agent_card.timberpoes_trim.assignment : initial(copied_card.assignment)
@@ -292,7 +294,7 @@
 		else
 			agent_card.timberpoes_trim = null
 
-		agent_card.icon_state = initial(copied_advanced_card.icon_state)
+		agent_card.icon_state = initial(copied_card.icon_state)
 		if(ispath(copied_card, /obj/item/card/id/advanced))
 			var/obj/item/card/id/advanced/copied_advanced_card = copied_card
 			agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
