@@ -156,7 +156,7 @@
 	if(target == user)
 		to_chat(user, "<span class='notice'>Target another toy mech if you want to start a battle with yourself.</span>")
 		return
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		if(wants_to_battle) //prevent spamming someone with offers
 			to_chat(user, "<span class='notice'>You already are offering battle to someone!</span>")
 			return

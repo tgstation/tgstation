@@ -36,6 +36,10 @@
 	fill(C)
 	return C
 
+/datum/supply_pack/proc/get_cost()
+	. = cost
+	. *= SSeconomy.pack_price_modifier
+
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	if (admin_spawned)
 		for(var/item in contains)
@@ -997,12 +1001,12 @@
 	contains = list(/obj/item/stack/sheet/glass/fifty)
 	crate_name = "glass sheets crate"
 
-/datum/supply_pack/materials/metal50
-	name = "50 Metal Sheets"
-	desc = "Any construction project begins with a good stack of fifty metal sheets!"
+/datum/supply_pack/materials/iron50
+	name = "50 Iron Sheets"
+	desc = "Any construction project begins with a good stack of fifty iron sheets!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/stack/sheet/metal/fifty)
-	crate_name = "metal sheets crate"
+	contains = list(/obj/item/stack/sheet/iron/fifty)
+	crate_name = "iron sheets crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
@@ -1570,40 +1574,6 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
 
-/datum/supply_pack/service/carpet_neon
-	name = "Simple Neon Carpet Crate"
-	desc = "Simple knitted carpets with phosphorescent lining. Contains 120 tiles each of 13 color variants."
-	cost = CARGO_CRATE_VALUE * 15
-	contains = list(
-		/obj/item/stack/tile/carpet/emissive/neon/simple/white/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/white/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/red/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/red/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/orange/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/orange/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/yellow/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/lime/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/green/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/green/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/cyan/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/teal/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/teal/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/blue/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/blue/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/purple/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/purple/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/violet/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/violet/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/pink/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/pink/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/black/sixty,
-		/obj/item/stack/tile/carpet/emissive/neon/simple/black/sixty,
-	)
-	crate_name = "neon carpet crate"
-
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
@@ -1709,7 +1679,7 @@
 					/obj/item/food/meat/rawbacon,
 					/obj/item/food/meat/slab/penguin,
 					/obj/item/food/spiderleg,
-					/obj/item/food/carpmeat,
+					/obj/item/food/fishmeat/carp,
 					/obj/item/food/meat/slab/human)
 	crate_name = "food crate"
 
@@ -1853,7 +1823,7 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains fourteen different seeds."
+	desc = "Big things have small beginnings. Contains fifteen different seeds."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/seeds/chili,
 					/obj/item/seeds/cotton,
@@ -1866,6 +1836,7 @@
 					/obj/item/seeds/wheat/rice,
 					/obj/item/seeds/carrot,
 					/obj/item/seeds/sunflower,
+					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
 					/obj/item/seeds/sugarcane)
@@ -2681,11 +2652,19 @@
 	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/vending/vendomat
-	name = "Vendomat Supply Crate"
+	name = "Vendomat & YouTool Supply Crate"
 	desc = "More tools for your IED testing facility."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/vending_refill/assist)
-	crate_name = "vendomat supply crate"
+	contains = list(/obj/item/vending_refill/assist,
+					/obj/item/vending_refill/youtool)
+	crate_name = "Vendomat & YouTool supply crate"
+
+/datum/supply_pack/vending/clothesmate
+	name = "ClothesMate Supply Crate"
+	desc = "Out of cowboy boots? Buy this crate."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/vending_refill/clothing)
+	crate_name = "ClothesMate supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Clothing Vending Restocks ////////////////////////////

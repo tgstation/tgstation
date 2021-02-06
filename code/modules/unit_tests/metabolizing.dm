@@ -74,7 +74,7 @@
 	syringe.reagents.add_reagent(meth.type, meth.addiction_threshold)
 
 	syringe.mode = SYRINGE_INJECT
-	syringe_user.a_intent = INTENT_HARM
+	syringe_user.set_combat_mode(TRUE)
 	syringe.afterattack(syringe_user, syringe_user, TRUE)
 
 	syringe_user.Life()
@@ -91,7 +91,7 @@
 	pill_two.reagents.add_reagent(meth.type, (meth.addiction_threshold * 0.5) + 1)
 	pill_two.attack(pill_syringe_user, pill_syringe_user)
 
-	pill_syringe_user.a_intent = INTENT_HARM
+	pill_syringe_user.set_combat_mode(TRUE)
 	syringe.mode = SYRINGE_INJECT
 	syringe.afterattack(pill_syringe_user, pill_syringe_user, TRUE)
 
