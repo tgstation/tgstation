@@ -106,7 +106,7 @@
 /area/ruin/space/has_grav/hellfactoryoffice)
 "ar" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/five,
+/obj/item/stack/sheet/iron/five,
 /obj/item/grenade/firecracker,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hellfactory)

@@ -166,7 +166,7 @@
 /area/awaymission/research/interior/engineering)
 "aF" = (
 /obj/item/stack/rods,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
@@ -356,7 +356,7 @@
 	},
 /area/awaymission/research/interior/engineering)
 "bh" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -587,7 +587,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/engineering)
 "bG" = (
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},

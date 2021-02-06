@@ -32,7 +32,7 @@
 	var/close_sound = 'sound/machines/closet_close.ogg'
 	var/open_sound_volume = 35
 	var/close_sound_volume = 50
-	var/material_drop = /obj/item/stack/sheet/metal
+	var/material_drop = /obj/item/stack/sheet/iron
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
@@ -256,7 +256,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
@@ -303,7 +303,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='hear'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
 			return FALSE
