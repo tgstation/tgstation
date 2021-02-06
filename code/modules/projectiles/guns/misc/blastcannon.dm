@@ -4,8 +4,8 @@
  * It's basically an immovable rod launcher.
  */
 /obj/item/gun/blastcannon
-	name = "pipe gun"
-	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole. Small enough to stow in a bag."
+	name = "blast cannon"
+	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
 	icon_state = "empty_blastcannon"
 	inhand_icon_state = "blastcannon_empty"
 	base_icon_state = "blastcannon"
@@ -37,6 +37,11 @@
 	debug_power = 80
 	bombcheck = FALSE
 
+/obj/item/gun/blastcannon/examine(mob/user)
+	. = ..()
+	if(bomb)
+		. += "<span class='notice'>A bomb is loaded inside.</span>"
+
 /obj/item/gun/blastcannon/Initialize()
 	. = ..()
 	if(!pin)
@@ -53,8 +58,6 @@
 		user.put_in_hands(bomb)
 		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
-		name = initial(name)
-		desc = initial(desc)
 	update_appearance()
 	return ..()
 
@@ -75,8 +78,6 @@
 
 	user.visible_message("<span class='warning'>[user] attaches [bomb_to_attach] to [src]!</span>")
 	bomb = bomb_to_attach
-	name = "blast cannon"
-	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave."
 	update_appearance()
 	return TRUE
 

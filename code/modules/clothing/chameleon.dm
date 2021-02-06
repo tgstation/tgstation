@@ -466,6 +466,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 
@@ -660,6 +661,7 @@
 	icon_state = "blacktie"
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action

@@ -400,7 +400,7 @@
 				rev_head_body.makeUncloneable()
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
+		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
 		for (var/_player in GLOB.player_list)
 			var/mob/player = _player
@@ -436,7 +436,7 @@
 
 		priority_announce("A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials. \
 		For the safety of our staff, we have blacklisted your station for new employment of security and command. \
-		[pick(world.file2list("strings/anti_union_propaganda.txt"))]", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
+		[pick(world.file2list("strings/anti_union_propaganda.txt"))]", null, null, null, "Central Command Loyalty Monitoring Division")
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)

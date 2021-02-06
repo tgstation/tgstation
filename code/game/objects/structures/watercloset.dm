@@ -9,7 +9,7 @@
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
-	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
+	var/buildstacktype = /obj/item/stack/sheet/iron //they're iron now, shut up
 	var/buildstackamount = 1
 
 /obj/structure/toilet/Initialize()
@@ -256,7 +256,7 @@
 	///What kind of reagent is produced by this sink by default? (We now have actual plumbing, Arcane, August 2020)
 	var/dispensedreagent = /datum/reagent/water
 	///Material to drop when broken or deconstructed.
-	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstacktype = /obj/item/stack/sheet/iron
 	///Number of sheets of material to drop when broken or deconstructed.
 	var/buildstackamount = 1
 	///Does the sink have a water recycler to recollect it's water supply?

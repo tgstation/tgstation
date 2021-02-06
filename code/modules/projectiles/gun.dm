@@ -42,7 +42,7 @@
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 	var/dual_wield_spread = 24			//additional spread when dual wielding
-	
+
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
@@ -193,15 +193,13 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
-/obj/item/gun/attack(mob/M, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	if(ismob(M) && modifiers && modifiers["right"]) //Right click to hold someone up
-		if(user.GetComponent(/datum/component/gunpoint))
-			to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
-			return
-		user.AddComponent(/datum/component/gunpoint, M, src)
-		return TRUE
-	return ..()
+/obj/item/gun/attack_alt(mob/living/victim, mob/living/user, params)
+	if (user.GetComponent(/datum/component/gunpoint))
+		to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
+		return ALT_ATTACK_CANCEL_ATTACK_CHAIN
+
+	user.AddComponent(/datum/component/gunpoint, victim, src)
+	return ALT_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
@@ -212,7 +210,7 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || !user.combat_mode) //melee attack
+		if(!ismob(target) || user.combat_mode) //melee attack
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return

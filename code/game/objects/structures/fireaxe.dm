@@ -95,7 +95,7 @@
 		if(fireaxe && loc)
 			fireaxe.forceMove(loc)
 			fireaxe = null
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 	qdel(src)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)

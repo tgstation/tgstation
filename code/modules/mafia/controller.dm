@@ -15,6 +15,8 @@
 	var/phase = MAFIA_PHASE_SETUP
 	///how long the game has gone on for, changes with every sunrise. day one, night one, day two, etc.
 	var/turn = 0
+	///if enabled, the game has fallen under half pop and is sped up
+	var/speed_up = FALSE
 	///for debugging and testing a full game, or adminbuse. If this is not empty, it will use this as a setup. clears when game is over
 	var/list/custom_setup = list()
 	///first day has no voting, and thus is shorter
@@ -158,6 +160,20 @@
 	turn += 1
 	phase = MAFIA_PHASE_DAY
 	if(!check_victory())
+		if(!speed_up)//lets check if the game should be sped up, if not already.
+			var/living_players = 0
+			for(var/i in all_roles)
+				var/datum/mafia_role/player = i
+				if(player.game_status == MAFIA_ALIVE)
+					living_players += 1
+			if(living_players < all_roles.len / 2)
+				speed_up = TRUE
+				send_message("<span class='bold notice'>With only [living_players] living players left, the game timers have been sped up.</span>")
+				day_phase_period /= 2
+				voting_phase_period /= 2
+				judgement_phase_period /= 2
+				judgement_lynch_period /= 2
+				night_phase_period /= 2
 		if(turn == 1)
 			send_message("<span class='notice'><b>The selected map is [current_map.name]!</b></br>[current_map.description]</span>")
 			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
@@ -237,7 +253,7 @@
 		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
-		on_trial.kill(src, lynch = TRUE)
+		on_trial.kill(src,lynch = TRUE)
 		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
 	else
 		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>")
@@ -271,11 +287,14 @@
 	var/list/total_town = list()
 	var/list/total_mafia = list()
 
-	var/alive_town = 0
+	//voting power of town + solos (since they don't want mafia to overpower)
+	var/anti_mafia_power = 0
+	//voting power of mafia (greater than anti mafia power + team end not blocked = mafia victory)
 	var/alive_mafia = 0
 	var/list/solos_to_ask = list() //need to ask after because first round is counting team sizes
 	var/list/total_victors = list() //if this list gets filled with anyone, they win. list because side antags can with with people
 	var/blocked_victory = FALSE //if a solo antagonist is stopping the town or mafia from finishing the game.
+	var/town_can_kill = FALSE //Town has a killing role and it cannot allow mafia to win
 
 	///PHASE ONE: TALLY UP ALL NUMBERS OF PEOPLE STILL ALIVE
 
@@ -284,23 +303,24 @@
 			if(MAFIA_TEAM_MAFIA)
 				total_mafia += R
 				if(R.game_status == MAFIA_ALIVE)
-					alive_mafia += R.vote_power
+					alive_mafia += R.vote_potential
 			if(MAFIA_TEAM_TOWN)
 				total_town += R
 				if(R.game_status == MAFIA_ALIVE)
-					alive_town += R.vote_power
+					anti_mafia_power += R.vote_potential
+				if(R.role_flags & ROLE_CAN_KILL) //the game cannot autoresolve with killing roles (unless a solo wins anyways, like traitors who are immune)
+					town_can_kill = TRUE
 			if(MAFIA_TEAM_SOLO)
 				if(R.game_status == MAFIA_ALIVE)
-					if(R.solo_counts_as_town)
-						alive_town += R.vote_power
+					anti_mafia_power += R.vote_potential
 					solos_to_ask += R
 
 	///PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN
 
 	for(var/datum/mafia_role/solo in solos_to_ask)
-		if(solo.check_total_victory(alive_town, alive_mafia))
+		if(solo.check_total_victory(anti_mafia_power, alive_mafia))
 			total_victors += solo
-		if(solo.block_team_victory(alive_town, alive_mafia))
+		if(solo.block_team_victory(anti_mafia_power, alive_mafia))
 			blocked_victory = TRUE
 
 	//solo victories!
@@ -319,7 +339,7 @@
 			award_role(townie.winner_award, townie)
 		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
 		return TRUE
-	else if(alive_mafia >= alive_town) //guess could change if town nightkill is added
+	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
 		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
 		for(var/datum/mafia_role/changeling in total_mafia)
 			award_role(changeling.winner_award, changeling)
@@ -367,6 +387,13 @@
 	custom_setup = list()
 	turn = 0
 	votes = list()
+
+	day_phase_period = initial(day_phase_period)
+	voting_phase_period = initial(voting_phase_period)
+	judgement_phase_period = initial(judgement_phase_period)
+	judgement_lynch_period = initial(judgement_lynch_period)
+	night_phase_period = initial(night_phase_period)
+
 	//map gen does not deal with landmarks
 	QDEL_LIST(landmarks)
 	QDEL_NULL(town_center_landmark)
@@ -422,14 +449,15 @@
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_START)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_ACTION_PHASE)
 	//resolve mafia kill, todo unsnowflake this
-	var/datum/mafia_role/R = get_vote_winner("Mafia")
-	if(R)
+	var/datum/mafia_role/victim = get_vote_winner("Mafia")
+	if(victim)
 		var/datum/mafia_role/killer = get_random_voter("Mafia")
-		if(SEND_SIGNAL(killer,COMSIG_MAFIA_CAN_PERFORM_ACTION,src,"mafia killing",R) & MAFIA_PREVENT_ACTION)
-			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [R.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
+		if(!victim.can_action(src, killer, "changeling murder"))
+			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [victim.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
 		else
-			send_message("<span class='danger'>[killer.body.real_name] has attacked [R.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
-			R.kill(src)
+			send_message("<span class='danger'>[killer.body.real_name] has attacked [victim.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
+			if(victim.kill(src,killer,lynch=FALSE))
+				to_chat(victim.body, "<span class='userdanger'>You have been killed by a Changeling!</span>")
 	reset_votes("Mafia")
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_END)
@@ -678,6 +706,7 @@
 					if(role_count > 0)
 						debug_setup[found_path] = role_count
 				custom_setup = debug_setup
+				try_autostart()//don't worry, this fails if there's a game in progress
 			if("cancel_setup")
 				custom_setup = list()
 	switch(action) //both living and dead
@@ -715,7 +744,7 @@
 					to_chat(usr, "<span class='notice'>You will now get messages from the game.</span>")
 					spectators += C.ckey
 				return TRUE
-	if(user_role.game_status == MAFIA_DEAD)
+	if(user_role && user_role.game_status == MAFIA_DEAD)
 		return
 	//User actions (just living)
 	switch(action)
@@ -785,58 +814,59 @@
 		. += L[key]
 
 /**
- * Returns a semirandom setup, with...
- * Town, Two invest roles, one protect role, sometimes a misc role, and the rest assistants for town.
- * Mafia, 2 normal mafia and one special.
- * Neutral, two disruption roles, sometimes one is a killing.
+ * Returns a semirandom setup with 12 roles. balance not guaranteed!
  *
- * See _defines.dm in the mafia folder for a rundown on what these groups of roles include.
+ * please check the variables at the top of the proc to see how much of each role types it picks
  */
 /datum/mafia_controller/proc/generate_random_setup()
 	var/invests_left = 2
-	var/protects_left = 1
-	var/miscs_left = prob(35)
+	var/protects_left = 2
+	var/killings_left = 1
+	var/supports_left = 2
+
 	var/mafiareg_left = 2
 	var/mafiaspe_left = 1
-	var/killing_role = prob(50)
-	var/disruptors = killing_role ? 1 : 2 //still required to calculate overflow
-	var/overflow_left = MAFIA_MAX_PLAYER_COUNT - (invests_left + protects_left + miscs_left + mafiareg_left + mafiaspe_left + killing_role + disruptors)
+
+	// if there is one killing role, there will be less disruptors
+	var/neutral_killing_role = prob(50)
 
 	var/list/random_setup = list()
+	var/list/unique_roles_added = list()
 	for(var/i in 1 to MAFIA_MAX_PLAYER_COUNT) //should match the number of roles to add
-		if(overflow_left)
-			add_setup_role(random_setup, TOWN_OVERFLOW)
-			overflow_left--
-		else if(invests_left)
-			add_setup_role(random_setup, TOWN_INVEST)
+		if(invests_left)
+			add_setup_role(random_setup, unique_roles_added, TOWN_INVEST)
 			invests_left--
 		else if(protects_left)
-			add_setup_role(random_setup, TOWN_PROTECT)
+			add_setup_role(random_setup, unique_roles_added, TOWN_PROTECT)
 			protects_left--
-		else if(miscs_left)
-			add_setup_role(random_setup, TOWN_MISC)
-			miscs_left--
+		else if(killings_left)
+			add_setup_role(random_setup, unique_roles_added, TOWN_KILLING)
+			killings_left--
+		else if(supports_left)
+			add_setup_role(random_setup, unique_roles_added, TOWN_SUPPORT)
+			supports_left--
 		else if(mafiareg_left)
-			add_setup_role(random_setup, MAFIA_REGULAR)
+			add_setup_role(random_setup, unique_roles_added, MAFIA_REGULAR)
 			mafiareg_left--
 		else if(mafiaspe_left)
-			add_setup_role(random_setup, MAFIA_SPECIAL)
+			add_setup_role(random_setup, unique_roles_added, MAFIA_SPECIAL)
 			mafiaspe_left--
-		else if(killing_role)
-			add_setup_role(random_setup, NEUTRAL_KILL)
-			killing_role--
+		else if(neutral_killing_role)
+			add_setup_role(random_setup, unique_roles_added, NEUTRAL_KILL)
+			neutral_killing_role--
 		else
-			add_setup_role(random_setup, NEUTRAL_DISRUPT)
+			add_setup_role(random_setup, unique_roles_added, NEUTRAL_DISRUPT)
+	debug = random_setup
 	return random_setup
 
 /**
- * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one
+ * Helper proc that adds a random role of a type to a setup. if it doesn't exist in the setup, it adds the path to the list and otherwise bumps the path in the list up one. unique roles can only get added once.
  */
-/datum/mafia_controller/proc/add_setup_role(setup_list, wanted_role_type)
+/datum/mafia_controller/proc/add_setup_role(setup_list, banned_roles, wanted_role_type)
 	var/list/role_type_paths = list()
 	for(var/path in typesof(/datum/mafia_role))
 		var/datum/mafia_role/instance = path
-		if(initial(instance.role_type) == wanted_role_type)
+		if(initial(instance.role_type) == wanted_role_type && !(path in banned_roles))
 			role_type_paths += instance
 
 	var/mafia_path = pick(role_type_paths)
@@ -851,6 +881,8 @@
 		setup_list[found_role] += 1
 		return
 	setup_list[mafia_path] = 1
+	if(initial(mafia_path_type.role_flags) & ROLE_UNIQUE) //check to see if we should no longer consider this okay to add to the game
+		banned_roles += mafia_path
 
 /**
  * Called when enough players have signed up to fill a setup. DOESN'T NECESSARILY MEAN THE GAME WILL START.

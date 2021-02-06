@@ -108,7 +108,7 @@
 		for(var/X in src)
 			var/obj/item/I = X
 			I.forceMove(loc)
-		new /obj/item/stack/sheet/metal (loc, 2)
+		new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
 #undef TANK_DISPENSER_CAPACITY
