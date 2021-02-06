@@ -319,9 +319,10 @@
 	COOLDOWN_START(src, next_nag_time, bonus_countdown) //First nag after we've lost our speed bonus
 	radio.talk_into(src,"Created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Speedy delivery bonus lost in [time2text(bonus_countdown,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
 
+//for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
 /obj/item/bounty_cube/test_cube
-	name = "test bounty cube"
-	desc = "It needs to be squeezed by someone with a bank account it can detect to set itself up. This will alert Supply."
+	name = "debug bounty cube"
+	desc = "Use in-hand to set it up with a random bounty. Requires an ID it can detect with a bank account attached. This will alert Supply over the radio with your name and location."
 	var/set_up = FALSE
 
 /obj/item/bounty_cube/test_cube/attack_self(mob/user)
