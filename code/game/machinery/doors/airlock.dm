@@ -31,6 +31,10 @@
 
 // Wires for the airlock are located in the datum folder, inside the wires datum folder.
 
+#define ANIMATION_STAGE_ONE 1
+#define ANIMATION_STAGE_TWO 2
+#define ANIMATION_STAGE_THREE 3
+
 #define AIRLOCK_CLOSED	1
 #define AIRLOCK_CLOSING	2
 #define AIRLOCK_OPEN	3
@@ -1130,22 +1134,30 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(AIRLOCK_OPENING, 1)
-	sleep(1)
-	set_opacity(0)
-	update_freelook_sight()
-	sleep(4)
-	density = FALSE
-	flags_1 &= ~PREVENT_CLICK_UNDER_1
-	air_update_turf(TRUE, FALSE)
-	sleep(1)
-	layer = OPEN_DOOR_LAYER
-	update_icon(AIRLOCK_OPEN, 1)
-	operating = FALSE
-	if(delayed_close_requested)
-		delayed_close_requested = FALSE
-		addtimer(CALLBACK(src, .proc/close), 1)
+	addtimer(CALLBACK(src, .proc/open_animation, ANIMATION_STAGE_ONE), 1)
 	return TRUE
 
+/obj/machinery/door/airlock/proc/open_animation(stage = ANIMATION_STAGE_ONE)
+	switch(stage)
+		if(ANIMATION_STAGE_ONE)
+			set_opacity(0)
+			update_freelook_sight()
+			addtimer(CALLBACK(src, .proc/open_animation, ANIMATION_STAGE_TWO), 4)
+			return
+		if(ANIMATION_STAGE_TWO)
+			density = FALSE
+			flags_1 &= ~PREVENT_CLICK_UNDER_1
+			flags_1 &= ~PREVENT_CLICK_UNDER_1
+			air_update_turf(TRUE, FALSE)
+			addtimer(CALLBACK(src, .proc/open_animation, ANIMATION_STAGE_THREE), 1)
+			return
+		if(ANIMATION_STAGE_THREE)
+			layer = OPEN_DOOR_LAYER
+			update_icon(AIRLOCK_OPEN, 1)
+			operating = FALSE
+			if(delayed_close_requested)
+				delayed_close_requested = FALSE
+				addtimer(CALLBACK(src, .proc/close), 1)
 
 /obj/machinery/door/airlock/close(forced = FALSE, force_crush = FALSE)
 	if(operating || welded || locked || seal)
@@ -1182,24 +1194,34 @@
 		density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(1)
-	if(!air_tight)
-		density = TRUE
-		flags_1 |= PREVENT_CLICK_UNDER_1
-		air_update_turf(TRUE, TRUE)
-	sleep(4)
-	if(dangerous_close)
-		crush()
-	if(visible && !glass)
-		set_opacity(1)
-	update_freelook_sight()
-	sleep(1)
-	update_icon(AIRLOCK_CLOSED, 1)
-	operating = FALSE
-	delayed_close_requested = FALSE
-	if(!dangerous_close)
-		CheckForMobs()
+	addtimer(CALLBACK(src, .proc/close_animation, ANIMATION_STAGE_ONE, dangerous_close), 1)
 	return TRUE
+
+/obj/machinery/door/airlock/proc/close_animation(stage = ANIMATION_STAGE_ONE, dangerous_close)
+	switch(stage)
+		if(ANIMATION_STAGE_ONE)
+			if(!air_tight)
+				density = TRUE
+				flags_1 |= PREVENT_CLICK_UNDER_1
+				air_update_turf(TRUE, TRUE)
+			addtimer(CALLBACK(src, .proc/close_animation, ANIMATION_STAGE_TWO, dangerous_close), 4)
+			return
+		if(ANIMATION_STAGE_TWO)
+			if(dangerous_close)
+				crush()
+			if(visible && !glass)
+				set_opacity(1)
+			update_freelook_sight()
+			addtimer(CALLBACK(src, .proc/close_animation, ANIMATION_STAGE_THREE, dangerous_close), 1)
+			return
+		if(ANIMATION_STAGE_THREE)
+			update_icon(AIRLOCK_CLOSED, 1)
+			operating = FALSE
+			delayed_close_requested = FALSE
+			if(!dangerous_close)
+				CheckForMobs()
+
+
 
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)
@@ -1598,3 +1620,7 @@
 #undef AIRLOCK_DENY_ANIMATION_TIME
 
 #undef DOOR_CLOSE_WAIT
+
+#undef ANIMATION_STAGE_ONE
+#undef ANIMATION_STAGE_TWO
+#undef ANIMATION_STAGE_THREE
