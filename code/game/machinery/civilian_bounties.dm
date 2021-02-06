@@ -304,7 +304,7 @@
 			if(bounty_handler_account)
 				bounty_handler_account.bank_card_talk("\The [src] is unsent in <b>[get_area(src)]</b>.")
 		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
-		COOLDOWN_START(src, next_nag_time, world.time + nag_cooldown)
+		COOLDOWN_START(src, next_nag_time, nag_cooldown)
 
 /obj/item/bounty_cube/proc/set_up(datum/bounty/my_bounty, obj/item/card/id/holder_id)
 	bounty_value = my_bounty.reward
