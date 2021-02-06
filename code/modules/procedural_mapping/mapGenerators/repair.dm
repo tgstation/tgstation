@@ -1,5 +1,5 @@
 /datum/map_generator_module/bottom_layer/repair_floor_plasteel
-	spawnableTurfs = list(/turf/open/floor/plasteel = 100)
+	spawnableTurfs = list(/turf/open/floor/iron = 100)
 	var/ignore_wall = FALSE
 	allowAtomsOnSpace = TRUE
 

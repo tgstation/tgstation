@@ -3,15 +3,15 @@
 /turf/open/genturf,
 /area/icemoon/underground/unexplored/rivers/deep)
 "c" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mine/eva)
 "d" = (
 /obj/structure/ladder,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "e" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "f" = (
 /obj/machinery/light/small{
@@ -24,7 +24,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "h" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -35,20 +35,20 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "j" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "k" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance";
 	req_access_txt = "48"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "l" = (
 /obj/effect/turf_decal/tile/brown{
@@ -57,16 +57,16 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "m" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "n" = (
 /obj/machinery/space_heater,
 /obj/item/trash/waffles,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "o" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -76,39 +76,39 @@
 /obj/structure/showcase/machinery/tv{
 	desc = "A slightly battered looking TV. Sadly, being surrounded by a metric ton of rubble prevents it from getting a signal."
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "q" = (
 /obj/structure/chair/sofa/right{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "r" = (
 /obj/structure/chair/sofa{
 	dir = 1
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "s" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "t" = (
 /obj/structure/chair/sofa/left{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "u" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "v" = (
 /obj/effect/turf_decal/tile/brown{
@@ -117,17 +117,17 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "w" = (
 /obj/effect/turf_decal/tile/brown,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "x" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "y" = (
 /turf/closed/wall,
@@ -136,7 +136,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "A" = (
 /obj/machinery/telecomms/relay/preset/mining,
@@ -153,17 +153,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mine/eva)
 "B" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "C" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "D" = (
 /mob/living/simple_animal/hostile/asteroid/gutlunch,
@@ -200,7 +200,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "J" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -216,7 +216,7 @@
 /obj/machinery/computer/mechpad{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "O" = (
 /obj/item/clothing/head/helmet/skull,
@@ -234,13 +234,13 @@
 /area/mine/eva)
 "R" = (
 /obj/machinery/mechpad,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "T" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "V" = (
 /turf/open/floor/plating,
@@ -249,18 +249,18 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "X" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Communications";
 	req_access_txt = "48"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 "Y" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mine/eva)
 
 (1,1,1) = {"

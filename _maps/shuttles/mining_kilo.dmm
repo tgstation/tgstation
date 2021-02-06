@@ -138,7 +138,7 @@
 	name = "Mining Shuttle Cockpit"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
 "t" = (
 /obj/item/clothing/suit/hazardvest{

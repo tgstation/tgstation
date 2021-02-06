@@ -96,7 +96,7 @@
 /obj/structure/sign/poster/contraband/have_a_puff{
 	pixel_x = -32
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/beach)
 "aO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -114,7 +114,7 @@
 "aT" = (
 /obj/machinery/vending/cola,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/beach)
 "aU" = (
 /obj/effect/overlay/palmtree_l,
@@ -128,7 +128,7 @@
 "aY" = (
 /obj/machinery/vending/snack,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/beach)
 "aZ" = (
 /obj/effect/overlay/coconut,
@@ -143,7 +143,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/ruin/powered/beach)
 "bx" = (
 /obj/structure/flora/rock,
@@ -207,7 +207,7 @@
 	},
 /area/ruin/powered/beach)
 "bM" = (
-/turf/open/floor/plasteel/stairs/old,
+/turf/open/floor/iron/stairs/old,
 /area/ruin/powered/beach)
 "bN" = (
 /obj/structure/extinguisher_cabinet{
@@ -311,7 +311,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/beach)
 "et" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -327,7 +327,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "fB" = (
-/turf/open/floor/plasteel/stairs/medium,
+/turf/open/floor/iron/stairs/medium,
 /area/ruin/powered/beach)
 "fL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -381,7 +381,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand"
 	},
@@ -449,7 +449,7 @@
 /obj/structure/sign/poster/contraband/ambrosia_vulgaris{
 	pixel_y = 32
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "kd" = (
 /obj/structure/table/wood,
@@ -570,7 +570,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel{
+/turf/open/floor/iron{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand"
 	},
@@ -662,7 +662,7 @@
 /area/ruin/powered/beach)
 "sV" = (
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "sZ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer4,
@@ -670,7 +670,7 @@
 /area/lavaland/surface/outdoors/explored)
 "ta" = (
 /obj/structure/curtain,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/ruin/powered/beach)
 "tf" = (
 /obj/structure/closet/crate/hydroponics,
@@ -685,7 +685,7 @@
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/item/food/grown/ambrosia/vulgaris,
 /obj/machinery/light,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "tg" = (
 /obj/structure/closet/crate/freezer{
@@ -871,7 +871,7 @@
 /obj/item/shovel/spade,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/cultivator,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Bl" = (
 /obj/effect/turf_decal/sand,
@@ -952,14 +952,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Dg" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "Dn" = (
 /obj/effect/overlay/palmtree_r,
@@ -1079,7 +1079,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/iron/stairs/left,
 /area/ruin/powered/beach)
 "HV" = (
 /turf/open/floor/plating/beach/coastline_b{
@@ -1136,7 +1136,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
 "Iv" = (
-/turf/open/floor/plasteel/stairs/right,
+/turf/open/floor/iron/stairs/right,
 /area/ruin/powered/beach)
 "IG" = (
 /turf/open/floor/carpet/royalblue,
@@ -1295,7 +1295,7 @@
 /area/ruin/powered/beach)
 "Pr" = (
 /obj/machinery/vending/hydronutrients,
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/ruin/powered/beach)
 "PN" = (
 /obj/effect/turf_decal/sand,

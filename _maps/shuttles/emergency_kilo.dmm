@@ -1591,7 +1591,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cS" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -1656,7 +1656,7 @@
 /obj/item/surgical_drapes,
 /obj/item/retractor,
 /obj/item/cautery,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "dc" = (
 /obj/structure/shuttle/engine/heater,

@@ -94,7 +94,7 @@
 	message = "cm3 of iron"
 	material_id = /datum/material/iron
 	export_types = list(
-		/obj/item/stack/sheet/iron, /obj/item/stack/tile/plasteel,
+		/obj/item/stack/sheet/iron, /obj/item/stack/tile/iron,
 		/obj/item/stack/rods, /obj/item/stack/ore, /obj/item/coin)
 
 /datum/export/material/glass
