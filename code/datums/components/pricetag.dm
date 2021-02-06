@@ -29,7 +29,7 @@
 	if(price)
 		for(var/datum/bank_account/payee in payees)
 			var/profit_ratio = payees[payee]
-			var/adjusted_value = price*profit_ratio
+			var/adjusted_value = price * profit_ratio
 			var/datum/bank_account/bank_account = payee
 			bank_account.adjust_money(adjusted_value)
 			bank_account.bank_card_talk("Sale of [parent] recorded. [adjusted_value] credits added to account.")
