@@ -1,0 +1,4 @@
+author: "ATH1909"
+delete-after: True
+changes: 
+  - balance: "Using amputation shears on incapacitated, critted, dead, unconscious, paralyzed, staminacritted, etc. targets is now much faster. Jittering still penalizes the speed at which you can cut someone's limbs off with amputation shears, and that penalty now applies even if the target is stunned or in critical condition."

@@ -130,7 +130,7 @@
 /area/shuttle/escape)
 "wf" = (
 /obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
-/turf/open/floor/plasteel/elevatorshaft,
+/turf/open/floor/iron/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
 /obj/structure/chair/comfy/brown{
