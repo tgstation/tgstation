@@ -129,9 +129,6 @@
 				downloaded_file = null
 				downloaderror = ""
 			return TRUE
-		if("select")
-			selected_cat = params["category"]
-			return TRUE
 	return FALSE
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)

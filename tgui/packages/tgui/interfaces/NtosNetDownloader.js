@@ -1,3 +1,4 @@
+import { scale, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
@@ -15,6 +16,9 @@ export const NtosNetDownloader = (props, context) => {
     error,
     categories = [],
   } = data;
+  const downloadpercentage = toFixed(
+    scale(downloadcompletion, 0, downloadsize) * 100
+  );
   const [
     selectedCategory,
     setSelectedCategory,
@@ -49,7 +53,7 @@ export const NtosNetDownloader = (props, context) => {
                   minValue={0}
                   maxValue={downloadsize}
                   value={downloadcompletion}>
-                  {`File: ${downloadname}, ${toFixed(scale(downloadcompletion, 0, downloadsize) * 100)}% complete`}
+                  {`File: ${downloadname}, ${downloadpercentage}% complete`}
                 </ProgressBar>
               </LabeledList.Item>
             ) || (
@@ -79,10 +83,10 @@ export const NtosNetDownloader = (props, context) => {
           </Flex.Item>
           <Flex.Item grow={1} basis={0}>
             {items.map(program => (
-                <Program
-                  key={program.filename}
-                  program={program} />
-              ))}
+              <Program
+                key={program.filename}
+                program={program} />
+            ))}
           </Flex.Item>
         </Flex>
       </NtosWindow.Content>
@@ -96,10 +100,8 @@ const Program = (props, context) => {
   const {
     disk_size,
     disk_used,
-    downloadcompletion,
     downloading,
     downloadname,
-    downloadsize,
   } = data;
   const disk_free = disk_size - disk_used;
   return (
@@ -120,7 +122,10 @@ const Program = (props, context) => {
               iconSpin={1}
               content="Downloading" />
           ) || (
-            (!program.installed && program.compatibility && program.access && program.size < disk_free) && (
+            (!program.installed
+              && program.compatibility
+              && program.access
+              && program.size < disk_free) && (
               <Button
                 bold
                 icon="download"
@@ -133,8 +138,15 @@ const Program = (props, context) => {
               <Button
                 bold
                 icon={program.installed ? 'check' : 'times'}
-                color={program.installed ? 'good' : !program.compatibility ? 'bad' : 'grey'}
-                content={program.installed ? 'Installed' : !program.compatibility ? 'Incompatible' : !program.access ? 'No Access' : 'No Space'} />
+                color={
+                  program.installed ? 'good'
+                    : !program.compatibility ? 'bad' : 'grey'
+                }
+                content={
+                  program.installed ? 'Installed'
+                    : !program.compatibility ? 'Incompatible'
+                      : !program.access ? 'No Access' : 'No Space'
+                } />
             )
           )}
         </Flex.Item>
@@ -144,7 +156,8 @@ const Program = (props, context) => {
       </Box>
       {!program.verifiedsource && (
         <NoticeBox mt={1} mb={0} danger fontSize="12px">
-          Unverified source. Please note that Nanotrasen does not recommend download and usage of software from non-official servers.
+          Unverified source. Please note that Nanotrasen does not recommend
+          download and usage of software from non-official servers.
         </NoticeBox>
       )}
     </Section>
