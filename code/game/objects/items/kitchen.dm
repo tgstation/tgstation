@@ -96,6 +96,23 @@
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	tool_behaviour = TOOL_KNIFE
+	var/armor_pene_stab = 20
+	var/force_stabby = 5
+	var/wound_bonus_stabby = 5
+
+/obj/item/kitchen/knife/attack_alt(mob/living/victim, mob/living/user, params)
+	force -= force_stabby
+	wound_bonus += wound_bonus_stabby
+	armour_penetration += armor_pene_stab
+	attack_verb_continuous = list("stabs")
+	attack_verb_simple = list("stab")
+	sharpness = SHARP_POINTY
+	attack(victim, user, params)
+	armour_penetration = initial(armour_penetration)
+	attack_verb_continuous = initial(attack_verb_continuous)
+	attack_verb_simple = initial(attack_verb_simple)
+	sharpness = initial(sharpness)
+	return ALT_ATTACK_CONTINUE_CHAIN
 
 /obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()
@@ -110,6 +127,7 @@
 						"<span class='suicide'>[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.</span>"))
 	return (BRUTELOSS)
+
 
 /obj/item/kitchen/knife/plastic
 	name = "plastic knife"
