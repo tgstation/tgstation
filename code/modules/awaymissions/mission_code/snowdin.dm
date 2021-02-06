@@ -158,7 +158,7 @@
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
 	icon_state = "liquidplasma"
-	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
 	baseturfs = /turf/open/lava/plasma
 	slowdown = 2
 

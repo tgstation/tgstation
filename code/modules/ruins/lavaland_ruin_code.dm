@@ -58,7 +58,7 @@
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
 	var/static/list/golem_shell_species_types = list(
-		/obj/item/stack/sheet/metal	                = /datum/species/golem,
+		/obj/item/stack/sheet/iron	                = /datum/species/golem,
 		/obj/item/stack/sheet/glass 	            = /datum/species/golem/glass,
 		/obj/item/stack/sheet/plasteel 	            = /datum/species/golem/plasteel,
 		/obj/item/stack/sheet/mineral/sandstone	    = /datum/species/golem/sand,

@@ -18,7 +18,7 @@
 	icon_living = "imp"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speed = 1
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -112,6 +112,11 @@
 /mob/living/simple_animal/hostile/imp/slaughter/CtrlShiftClickOn(atom/A)
 	if(!isliving(A))
 		return ..()
+
+	if(!Adjacent(A))
+		to_chat(src, "<span class='warning'>You are too far away to use your slam attack on [A]!</span>")
+		return
+
 	if(slam_cooldown + slam_cooldown_time > world.time)
 		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
 		return
