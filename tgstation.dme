@@ -1199,6 +1199,7 @@
 #include "code\game\objects\items\implants\implanter.dm"
 #include "code\game\objects\items\implants\implantpad.dm"
 #include "code\game\objects\items\implants\implantuplink.dm"
+#include "code\game\objects\items\melee\baton.dm"
 #include "code\game\objects\items\melee\energy.dm"
 #include "code\game\objects\items\melee\misc.dm"
 #include "code\game\objects\items\melee\transforming.dm"
