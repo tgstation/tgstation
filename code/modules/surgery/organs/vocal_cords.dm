@@ -413,38 +413,6 @@
 			if(L.m_intent != MOVE_INTENT_RUN)
 				L.toggle_move_intent()
 
-	//HELP INTENT
-	else if((findtext(message, helpintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HELP), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
-	//DISARM INTENT
-	else if((findtext(message, disarmintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_DISARM), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
-	//GRAB INTENT
-	else if((findtext(message, grabintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_GRAB), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
-	//HARM INTENT
-	else if((findtext(message, harmintent_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/mob/living/carbon/human/H in listeners)
-			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HARM), i * 2)
-			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
-			i++
-
 	//THROW/CATCH
 	else if((findtext(message, throwmode_words)))
 		cooldown = COOLDOWN_MEME

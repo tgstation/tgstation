@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 //RESOURCE SWARMER:
-//Similar to the original Player-Swarmers, these dismantle things to obtain the metal inside
+//Similar to the original Player-Swarmers, these dismantle things to obtain the iron inside
 //They then use this medal to produce more swarmers or traps/barricades
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource

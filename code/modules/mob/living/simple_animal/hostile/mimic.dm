@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/M)
 	. = ..()
-	if(M.a_intent != "help")
+	if(M.combat_mode)
 		return
 	toggle_open()
 

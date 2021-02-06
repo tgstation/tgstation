@@ -16,7 +16,7 @@
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
 	emote_see = list("honks", "squeaks")
 	speak_chance = 1
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	maxHealth = 75
 	health = 75
 	speed = 1
@@ -32,21 +32,12 @@
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = 370
-	unsuitable_atmos_damage = 5
+	unsuitable_atmos_damage = 10
+	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
 	var/banana_time = 0 // If there's no time set it won't spawn.
 	var/banana_type = /obj/item/grown/bananapeel
 	var/attack_reagent
-
-/mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage(delta_time, times_fired)
-	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(5 * delta_time)
-		throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(7.5 * delta_time)
-		throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-	else
-		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
 	..()

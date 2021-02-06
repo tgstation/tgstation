@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Dropdown, Knob, LabeledControls, Section } from '../components';
+import { Button, Dropdown, Flex, Knob, LabeledControls, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Aquarium = (props, context) => {
@@ -11,10 +11,11 @@ export const Aquarium = (props, context) => {
     maxTemperature,
     fluidTypes,
     contents,
+    allow_breeding,
   } = data;
   return (
     <Window
-      width={450}
+      width={500}
       height={400}
       resizable>
       <Window.Content>
@@ -35,13 +36,23 @@ export const Aquarium = (props, context) => {
                 })} />
             </LabeledControls.Item>
             <LabeledControls.Item label="Fluid">
-              {fluidTypes.map(f => (
-                <Button
-                  key={f}
-                  content={f}
-                  selected={fluid_type === f}
-                  onClick={() => act('fluid', { fluid: f })} />
-              ))}
+              <Flex direction="column" mb={1}>
+                {fluidTypes.map(f => (
+                  <Flex.Item key={f}>
+                    <Button
+                      fluid
+                      content={f}
+                      selected={fluid_type === f}
+                      onClick={() => act('fluid', { fluid: f })} />
+                  </Flex.Item>
+                ))}
+              </Flex>
+            </LabeledControls.Item>
+            <LabeledControls.Item label="Reproduction Prevention System">
+              <Button
+                content={allow_breeding ? "Offline" : "Online"}
+                selected={!allow_breeding}
+                onClick={() => act('allow_breeding')} />
             </LabeledControls.Item>
           </LabeledControls>
         </Section>

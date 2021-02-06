@@ -270,7 +270,7 @@
 	if(do_mob(src, target, 100))
 		to_chat(src, "<span class='info'>Dismantling complete.</span>")
 		var/atom/target_loc = target.drop_location()
-		new /obj/item/stack/sheet/metal(target_loc, 5)
+		new /obj/item/stack/sheet/iron(target_loc, 5)
 		for(var/p in target.component_parts)
 			var/obj/item/part = p
 			part.forceMove(target_loc)

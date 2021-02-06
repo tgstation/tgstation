@@ -29,8 +29,8 @@
 /obj/machinery/porta_turret_cover/attack_robot(mob/user)
 	return ..() || parent_turret.attack_robot(user)
 
-/obj/machinery/porta_turret_cover/attack_hand(mob/user)
-	return ..() || parent_turret.attack_hand(user)
+/obj/machinery/porta_turret_cover/attack_hand(mob/user, modifiers)
+	return ..() || parent_turret.attack_hand(user, modifiers)
 
 /obj/machinery/porta_turret_cover/attack_ghost(mob/user)
 	return ..() || parent_turret.attack_ghost(user)
