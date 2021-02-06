@@ -182,7 +182,7 @@
 			if(C == P.category || C == PROGRAM_CATEGORY_ALL)
 				categories[C] += P
 	for(var/category in categories)
-		if (!categories[category].len)
+		if (!LAZYLEN(categories[category]))
 			continue
 		var/list/cat = list(
 			"name" = category,
