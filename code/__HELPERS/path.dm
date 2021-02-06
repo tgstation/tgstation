@@ -70,12 +70,13 @@
 	var/id
 
 	var/mintargetdist = 0
-	var/maxnodedepth = 50
-	var/maxnodes = 50
+	var/maxnodedepth = 70
+	var/maxnodes = 70
 	var/adjacent = /turf/proc/reachableTurftest
 	var/dist = /turf/proc/Distance_cardinal
 	var/turf/exclude = null
 	var/simulated_only = FALSE
+	var/done = FALSE
 
 /datum/pathfind/New(atom/movable/caller, atom/goal)
 	src.caller = caller
@@ -110,6 +111,9 @@
 
 	var/iii = 0
 	while(!open.IsEmpty() && !path)
+		if(done)
+			testing("main exit: done [done] path [path]")
+			return
 		if(!caller)
 			return
 		testing("pop [iii]")
@@ -141,11 +145,13 @@
 		queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
 		queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
 		queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
-
+		if(done || path)
+			testing("mid main exit: done [done] path [path]")
+			break
 		queue_node(diag_scan_spec(current_turf, NORTHWEST)) // this is a turf not a node, fix
 		queue_node(diag_scan_spec(current_turf, NORTHEAST)) // this is a turf not a node, fix
 		queue_node(diag_scan_spec(current_turf, SOUTHWEST)) // this is a turf not a node, fix
-		queue_node(diag_scan_spec(current_turf, SOUTHWEST)) // this is a turf not a node, fix
+		queue_node(diag_scan_spec(current_turf, SOUTHEAST)) // this is a turf not a node, fix
 		CHECK_TICK
 	//reverse the path to get it from start to finish
 	if(path)
@@ -175,17 +181,19 @@
 */
 /datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
 	//testing("unwind?")
+	done = TRUE
 	path = new()
 	var/turf/iter_turf = unwind_node.tile
 	var/turf/checkpoint_turf = visited[iter_turf]
+	var/datum/jpsnode/iter_node = unwind_node.prevNode
 	path.Add(iter_turf)
 	var/i = 0
-	while(TRUE)
+	while(iter_node)
 		i++
 		testing("unwinding path leg [i]")
 		if(i > 200)
 			CRASH("broke lol on unwind")
-		var/turf/next_turf_goal = visited[checkpoint_turf]
+		var/turf/next_turf_goal = iter_node.tile
 		//var/dir_goal = get_dir(iter_turf, unwind_node.prevNode.tile)
 		var/dir_goal = get_dir(iter_turf, next_turf_goal)
 
@@ -198,12 +206,14 @@
 		if(visited[iter_turf] == -1)
 			return path
 		else
-			checkpoint_turf = visited[iter_turf]
+			iter_node = iter_node.prevNode
 
 /datum/pathfind/proc/can_step(turf/a, turf/next)
 	return !call(a,adjacent)(caller, next, id, simulated_only)
 
 /datum/pathfind/proc/queue_node(datum/tiles/t)
+	if(done || path)
+		return
 	if(!t)
 		return
 	var/turf/turf_for_node = t.dest_tile
@@ -236,10 +246,13 @@
 	var/steps_taken = 0
 	var/datum/jpsnode/unwind_node = openc[original_turf]
 	var/turf/current_turf = original_turf
+	var/turf/lag_turf = original_turf
 
 	while(TRUE)
-		if(path) // lazy way to force out when done, do better
+		if(done || path) // lazy way to force out when done, do better
+			testing("card exit: done [done] path [path]")
 			return
+		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		if(!current_turf)
 			return
@@ -255,7 +268,7 @@
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
-		else if(!visited[current_turf])
+		else if(!visited[current_turf] && can_step(lag_turf, current_turf))
 			visited[current_turf] = original_turf
 		else
 			return
@@ -269,7 +282,7 @@
 		*/
 
 		steps_taken++
-		if(steps_taken % 5 == 0)
+		if(steps_taken % 5 == 1)
 			testing("taking diag step [steps_taken] in dir [heading]")
 
 		switch(heading)
@@ -301,10 +314,13 @@
 	var/steps_taken = 0
 	var/datum/jpsnode/unwind_node = openc[original_turf]
 	var/turf/current_turf = original_turf
+	var/turf/lag_turf = original_turf
 
 	while(TRUE)
-		if(path) // lazy way to force out when done, do better
+		if(done || path) // lazy way to force out when done, do better
+			testing("diag exit: done [done] path [path]")
 			return
+		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		if(!current_turf)
 			return
@@ -320,7 +336,7 @@
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
-		else if(!visited[current_turf])
+		else if(!visited[current_turf] && can_step(lag_turf, current_turf))
 			visited[current_turf] = original_turf
 		else
 			return
@@ -335,7 +351,7 @@
 		*/
 
 		steps_taken++
-		if(steps_taken % 5 == 0)
+		if(steps_taken % 5 == 1)
 			testing("taking diag step [steps_taken] in dir [heading]")
 
 
