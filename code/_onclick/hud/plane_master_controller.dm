@@ -1,4 +1,4 @@
- ///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
+///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
 /datum/plane_master_controller
 	///Identifier to use as assoc key
 	var/name
