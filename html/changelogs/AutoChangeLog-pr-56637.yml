@@ -1,8 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscadd: "You can now remove embedded objects in a patient by using a hemostat on the patient's affected limb, no surgery necessary!"
-  - rscdel: "Removed the now obsolete \"remove embedded objects\" surgery"
-  - balance: "Objects thrown at high speed (like by a hulk or amped up disposal outlet) are now more likely to embed, scaling with the speed they're flung into you at"
-  - balance: "Most bullets are now slightly more likely to embed"
-  - balance: ".357 bullets are now somewhat more likely to cause piercing wounds"
