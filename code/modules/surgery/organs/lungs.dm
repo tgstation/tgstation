@@ -339,8 +339,6 @@
 				to_chat(H, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
 				healium_euphoria = EUPHORIA_ACTIVE
 				H.emote("gasp")
-		else
-			healium_euphoria = EUPHORIA_INACTIVE
 
 		if(healium_pp > healium_para_min)
 			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
