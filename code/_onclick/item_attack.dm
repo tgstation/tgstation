@@ -13,7 +13,19 @@
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return TRUE
 
-	if(pre_attack(target, user, params))
+	var/pre_attack_result
+	if (is_right_clicking)
+		switch (pre_attack_alt(target, user, params))
+			if (ALT_ATTACK_CALL_NORMAL)
+				pre_attack_result = pre_attack(src, user, params)
+			if (ALT_ATTACK_CANCEL_ATTACK_CHAIN)
+				return TRUE
+			if (null)
+				CRASH("pre_attack_alt must return an ALT_ATTACK_* define, please consult code/__DEFINES/combat.dm")
+	else
+		pre_attack_result = pre_attack(src, user, params)
+
+	if(pre_attack_result)
 		return TRUE
 
 	var/attackby_result
@@ -65,6 +77,19 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
+
+/**
+ * Called on the item before it hits something, when right clicking.
+ *
+ * Arguments:
+ * * atom/target - The atom about to be hit
+ * * mob/living/user - The mob doing the htting
+ * * params - click params such as alt/shift etc
+ *
+ * See: [/obj/item/proc/melee_attack_chain]
+ */
+/obj/item/proc/pre_attack_alt(atom/target, mob/living/user, params)
+	return ALT_ATTACK_CALL_NORMAL
 
 /**
  * Called on an object being hit by an item

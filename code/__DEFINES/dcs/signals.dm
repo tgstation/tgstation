@@ -554,6 +554,10 @@
 ///from /obj/machinery/set_occupant(atom/movable/O): (new_occupant)
 #define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
 
+// /obj/machinery/computer/teleporter
+/// from /obj/machinery/computer/teleporter/proc/set_target(target, old_target)
+#define COMSIG_TELEPORTER_NEW_TARGET "teleporter_new_target"
+
 // /obj/machinery/power/supermatter_crystal signals
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
 #define COMSIG_SUPERMATTER_DELAM_START_ALARM "sm_delam_start_alarm"

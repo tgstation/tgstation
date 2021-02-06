@@ -93,6 +93,11 @@
 			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			. = TRUE
 
+/obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
+	var/old_target = target
+	target = new_target
+	SEND_SIGNAL(src, COMSIG_TELEPORTER_NEW_TARGET, target, old_target)
+
 /obj/machinery/computer/teleporter/proc/finish_calibration()
 	calibrating = FALSE
 	if(check_hub_connection())
@@ -110,7 +115,7 @@
 	return TRUE
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
-	target = null
+	set_teleport_target(null)
 	if(regime_set == "Teleporter")
 		regime_set = "Gate"
 	else
@@ -140,7 +145,7 @@
 					L[avoid_assoc_duplicate_keys("[M.real_name] ([get_area(M)])", areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in sortList(L)
-		target = L[desc]
+		set_teleport_target(L[desc])
 		var/turf/T = get_turf(target)
 		log_game("[key_name(user)] has set the teleporter target to [target] at [AREACOORD(T)]")
 
@@ -159,7 +164,7 @@
 			return
 		var/turf/T = get_turf(target_station)
 		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(T)]")
-		target = target_station.teleporter_hub
+		set_teleport_target(target_station.teleporter_hub)
 		target_station.linked_stations |= power_station
 		target_station.set_machine_stat(target_station.machine_stat & ~NOPOWER)
 		if(target_station.teleporter_hub)
