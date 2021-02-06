@@ -11,7 +11,7 @@
 /obj/item/shrapnel/stingball // stingbang grenades
 	name = "stingball"
 	icon_state = "tiny"
-	sharpness = SHARP_NONE
+	sharpness = NONE
 
 /obj/item/shrapnel/bullet // bullets
 	name = "bullet"

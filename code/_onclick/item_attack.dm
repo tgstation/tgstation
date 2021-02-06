@@ -160,6 +160,20 @@
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_alt(mob/living/victim, mob/living/user, params)
+	if(sharpness == SHARP_EDGED && sharpness == SHARP_POINTY)
+		force -= force_reduction_stab
+		wound_bonus += wound_bonus_stab
+		armour_penetration += armor_pene_stab
+		attack_verb_continuous = list("stabs")
+		attack_verb_simple = list("stab")
+		sharpness -= SHARP_EDGED
+		attack(victim, user, params)
+		force += force_reduction_stab
+		wound_bonus -= wound_bonus_stab
+		armour_penetration -= armor_pene_stab
+		attack_verb_continuous = initial(attack_verb_continuous)
+		attack_verb_simple = initial(attack_verb_simple)
+		sharpness = initial(sharpness)
 	return ALT_ATTACK_CALL_NORMAL
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.

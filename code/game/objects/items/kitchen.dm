@@ -89,30 +89,16 @@
 	custom_materials = list(/datum/material/iron=12000)
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	item_flags = EYE_STAB
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	tool_behaviour = TOOL_KNIFE
-	var/armor_pene_stab = 20
-	var/force_stabby = 5
-	var/wound_bonus_stabby = 5
-
-/obj/item/kitchen/knife/attack_alt(mob/living/victim, mob/living/user, params)
-	force -= force_stabby
-	wound_bonus += wound_bonus_stabby
-	armour_penetration += armor_pene_stab
-	attack_verb_continuous = list("stabs")
-	attack_verb_simple = list("stab")
-	sharpness = SHARP_POINTY
-	attack(victim, user, params)
-	armour_penetration = initial(armour_penetration)
-	attack_verb_continuous = initial(attack_verb_continuous)
-	attack_verb_simple = initial(attack_verb_simple)
-	sharpness = initial(sharpness)
-	return ALT_ATTACK_CONTINUE_CHAIN
+	armor_pene_stab = 20
+	force_reduction_stab = 5
+	wound_bonus_stab = 5
 
 /obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()
