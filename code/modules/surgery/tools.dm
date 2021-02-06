@@ -213,52 +213,6 @@
 	AddComponent(/datum/component/surgery_initiator, null)
 
 
-/obj/item/organ_storage //allows medical cyborgs to manipulate organs without hands
-	name = "organ storage bag"
-	desc = "A container for holding body parts."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "evidenceobj"
-	item_flags = SURGICAL_TOOL
-
-/obj/item/organ_storage/afterattack(obj/item/I, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(contents.len)
-		to_chat(user, "<span class='warning'>[src] already has something inside it!</span>")
-		return
-	if(!isorgan(I) && !isbodypart(I))
-		to_chat(user, "<span class='warning'>[src] can only hold body parts!</span>")
-		return
-
-	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
-	icon_state = "evidence"
-	var/xx = I.pixel_x
-	var/yy = I.pixel_y
-	I.pixel_x = 0
-	I.pixel_y = 0
-	var/image/img = image("icon"=I, "layer"=FLOAT_LAYER)
-	img.plane = FLOAT_PLANE
-	I.pixel_x = xx
-	I.pixel_y = yy
-	add_overlay(img)
-	add_overlay("evidence")
-	desc = "An organ storage container holding [I]."
-	I.forceMove(src)
-	w_class = I.w_class
-
-/obj/item/organ_storage/attack_self(mob/user)
-	if(contents.len)
-		var/obj/item/I = contents[1]
-		user.visible_message("<span class='notice'>[user] dumps [I] from [src].</span>", "<span class='notice'>You dump [I] from [src].</span>")
-		cut_overlays()
-		I.forceMove(get_turf(src))
-		icon_state = "evidenceobj"
-		desc = "A container for holding body parts."
-	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
-	return
-
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "\improper Surgical Processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."

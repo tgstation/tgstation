@@ -28,7 +28,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/structure/tank_dispenser,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
@@ -127,7 +127,7 @@
 /area/shuttle/abandoned)
 "ax" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "ay" = (
@@ -308,7 +308,7 @@
 /area/shuttle/abandoned)
 "aY" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -520,7 +520,7 @@
 /area/shuttle/abandoned)
 "tT" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/iron{
 	amount = 50
 	},
 /turf/open/floor/plasteel/airless,
