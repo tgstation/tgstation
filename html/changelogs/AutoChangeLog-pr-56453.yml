@@ -1,6 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Friendly commendations now track by the recipient's ckey rather than the mob they controlled at the time of commending. You'll still have to use their character name when specifying them."
-  - bugfix: "Trying to commend an invalid target as an admin will give you proper feedback that it did not go through"
-  - config: "The config entry for friendly commendations has been changed from 'COMMENDATION' to 'COMMENDATION_PERCENT_POLL'"

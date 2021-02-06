@@ -1,7 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "MAFIA: Three new security roles have been added for townies!"
-  - tweak: "MAFIA: speeds up when half the people are dead, thank god"
-  - balance: "MAFIA: Assistants are no longer in the game. Too boring of a role when mafia rarely starts"
-  - bugfix: "MAFIA: Lawyers didn't roleblock like half the roles in the game?!? now they do."
