@@ -3,6 +3,14 @@
 
 #define PATH_REVERSE(A) ((A & MASK_ODD)<<1)|((A & MASK_EVEN)>>1)
 
+/datum/tiles
+	var/turf/dest_tile
+	var/turf/from
+
+/datum/tiles/New(_a, _b)
+	dest_tile = _a
+	from = _b
+
 //JPS nodes variables
 /datum/jpsnode
 	var/turf/tile //turf associated with the PathNode
@@ -14,6 +22,7 @@
 	var/jumps // how many steps it took from the last node
 	var/retired
 	var/turf/goal
+	var/dir_from
 
 //s,p,ph,pnt,*bf*,jmp
 /datum/jpsnode/New(s,p, turf/goal)
@@ -24,6 +33,7 @@
 		jumps = PATH_DIST(prevNode.tile, tile)
 		nt = prevNode.nt + jumps
 		goal = prevNode.goal
+		dir_from = get_dir(tile, prevNode.tile)
 	else
 		nt = 0
 	h = PATH_DIST(tile, goal)
@@ -33,6 +43,7 @@
 /datum/jpsnode/proc/setp(p, _jmp) // even jmp shouldnt be necessaryt, should be inferrable
 	prevNode = p
 
+	dir_from = get_dir(tile, prevNode.tile)
 	jumps = _jmp
 	goal = prevNode.goal
 	nt = prevNode.nt + jumps
@@ -54,7 +65,7 @@
 
 	var/list/path
 
-	var/list/closed
+	var/list/visited
 
 	var/id
 
@@ -71,6 +82,7 @@
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	openc = new() //open list for node check
+	visited = new() //open list for node check
 
 //datum/pathfind/proc/generate_node(turf/the_tile, )
 /datum/pathfind/proc/start_search()
@@ -92,14 +104,20 @@
 	var/datum/jpsnode/cur = new (start,null,end)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
+	visited[start] = -1
 	//then run the main loop
 	var/total_tiles
 
+	var/iii = 0
 	while(!open.IsEmpty() && !path)
 		if(!caller)
 			return
-		//testing("pop")
+		testing("pop [iii]")
 		cur = open.Pop() //get the lower f turf in the open list
+		iii++
+		if(iii > 90)
+			testing("[iii] hit 90")
+			return
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
 		total_tiles++
@@ -118,8 +136,16 @@
 		if((maxnodedepth)&&(cur.nt > maxnodedepth))//if too many steps, don't process that path
 			continue
 
-		lateral_scan(cur)
-		cur.bf = 0
+		var/turf/current_turf = cur.tile
+		queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
+		queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
+		queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
+		queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
+
+		queue_node(diag_scan_spec(current_turf, NORTHWEST)) // this is a turf not a node, fix
+		queue_node(diag_scan_spec(current_turf, NORTHEAST)) // this is a turf not a node, fix
+		queue_node(diag_scan_spec(current_turf, SOUTHWEST)) // this is a turf not a node, fix
+		queue_node(diag_scan_spec(current_turf, SOUTHWEST)) // this is a turf not a node, fix
 		CHECK_TICK
 	//reverse the path to get it from start to finish
 	if(path)
@@ -127,11 +153,11 @@
 			path.Swap(i,path.len-i+1)
 	openc = null
 	//cleaning after us
-	testing("Old path done with [total_tiles] tiles popped")
+	testing("new path done with [total_tiles] tiles popped")
 	caller.calculating_path = FALSE
 	return path
 
-/datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
+/*/datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
 	//testing("unwind?")
 	path = new()
 	var/turf/iter_turf = unwind_node.tile
@@ -146,14 +172,43 @@
 			iter_turf.color = COLOR_YELLOW
 		unwind_node = unwind_node.prevNode
 	return path
+*/
+/datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
+	//testing("unwind?")
+	path = new()
+	var/turf/iter_turf = unwind_node.tile
+	var/turf/checkpoint_turf = visited[iter_turf]
+	path.Add(iter_turf)
+	var/i = 0
+	while(TRUE)
+		i++
+		testing("unwinding path leg [i]")
+		if(i > 200)
+			CRASH("broke lol on unwind")
+		var/turf/next_turf_goal = visited[checkpoint_turf]
+		//var/dir_goal = get_dir(iter_turf, unwind_node.prevNode.tile)
+		var/dir_goal = get_dir(iter_turf, next_turf_goal)
 
-/datum/pathfind/proc/can_step(turf/start, turf/next)
-	return !call(start,adjacent)(caller, next, id, simulated_only)
+		while(iter_turf != next_turf_goal)
 
-/datum/pathfind/proc/can_step_dir(turf/start, turf/next)
-	return !call(start,adjacent)(caller, next, id, simulated_only)
+			//iter_turf = get_step(iter_turf,dir_goal)
+			iter_turf = get_step_towards(iter_turf,next_turf_goal)
+			path.Add(iter_turf)
+			iter_turf.color = COLOR_YELLOW
+		if(visited[iter_turf] == -1)
+			return path
+		else
+			checkpoint_turf = visited[iter_turf]
 
-/datum/pathfind/proc/queue_node(turf/turf_for_node, turf/moved_from)
+/datum/pathfind/proc/can_step(turf/a, turf/next)
+	return !call(a,adjacent)(caller, next, id, simulated_only)
+
+/datum/pathfind/proc/queue_node(datum/tiles/t)
+	if(!t)
+		return
+	var/turf/turf_for_node = t.dest_tile
+	var/turf/moved_from = t.from
+	qdel(t)
 	if(!turf_for_node || !moved_from)
 		return
 	var/datum/jpsnode/our_node = openc[turf_for_node]
@@ -177,100 +232,19 @@
 		openc[turf_for_node] = our_node
 		turf_for_node.color = COLOR_RED
 
-/datum/pathfind/proc/lateral_scan(datum/jpsnode/unwind_node)
+/datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
-	var/turf/original_turf = unwind_node.tile
-	var/turf/current_turf
-	for(var/i = 0 to 3)
-		steps_taken = 0
-		current_turf = original_turf
-		var/f= 1<<i //get cardinal directions.1,2,4,8
-		while(TRUE)
-			var/closeenough
-			if(mintargetdist)
-				closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
-			if(current_turf == end || closeenough)
-				testing("done? lat close enough: [closeenough]")
-				var/datum/jpsnode/final_node = new(current_turf,unwind_node)
-				unwind_path(final_node)
-				return
-
-			if(steps_taken > 30)
-				testing("too many steps, breaking to next")
-				break
-			if(!(unwind_node.bf & f))
-				//testing("skip dir: [f] br: [cur.bf]")
-				break
-
-			var/turf/next_turf = get_step(current_turf,f)
-			next_turf.color = COLOR_GRAY
-			if(next_turf == exclude || !call(current_turf,adjacent)(caller, next_turf, id, simulated_only)) //typecheck?
-				break
-
-			steps_taken++
-			testing("taking step [steps_taken] in dir [f]")
-
-
-			var/r=PATH_REVERSE(f) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
-			var/newt = unwind_node.nt + steps_taken//PATH_DIST(cur.tile, next_turf)
-
-			var/next_interesting = FALSE
-
-			for(var/i2 = 0 to 3)
-				var/f2= 1<<i2 //get cardinal directions.1,2,4,8
-				if(r == f2 || f == f2)  // not going in the continuing direction, check the left and right turns
-					continue
-				//if(f != f2)
-				var/turf/possible_block = get_step(current_turf, f2)
-				var/turf/possible_interest = get_step(next_turf, f2)
-				if(!call(current_turf,adjacent)(caller, possible_block, id, simulated_only) && call(next_turf,adjacent)(caller, possible_interest, id, simulated_only))
-					var/datum/jpsnode/neighbor_node = openc[possible_interest]
-					//testing("let's see if CN exists [CN]")
-					if(neighbor_node)
-					//is already in open list, check if it's a better way from the current turf
-
-						if((newt < neighbor_node.nt))
-							neighbor_node.setp(unwind_node, steps_taken)
-							open.ReSort(neighbor_node)//reorder the changed element in the list
-					else
-					//is not already in open list, so add it
-						testing("adding neighbor node")
-						neighbor_node = new(possible_interest,unwind_node)
-						open.Insert(neighbor_node)
-						openc[possible_interest] = neighbor_node
-						next_interesting = TRUE
-						possible_interest.color = COLOR_RED
-
-			var/turf/continuing_turf = get_step(next_turf, f)
-			if(next_interesting || !call(next_turf,adjacent)(caller, continuing_turf, id, simulated_only))
-				var/datum/jpsnode/next_node = openc[next_turf]  //current checking turf
-				//testing("let's see if CN exists [CN]")
-				if(next_node)
-				//is already in open list, check if it's a better way from the current turf
-
-					if((newt < next_node.nt))
-						next_node.setp(unwind_node, steps_taken)
-						open.ReSort(next_node)//reorder the changed element in the list
-				else
-				//is not already in open list, so add it
-					testing("adding further node")
-					next_node = new(next_turf,unwind_node, steps_taken, end)
-					open.Insert(next_node)
-					openc[next_turf] = next_node
-					next_interesting = TRUE
-					next_turf.color = COLOR_RED
-				break
-			current_turf = next_turf
-		testing("took [steps_taken] steps in dir [f]")
-
-
-
-/datum/pathfind/proc/lateral_scan_spec(datum/jpsnode/unwind_node, heading)
-	var/steps_taken = 0
-	var/turf/original_turf = unwind_node.tile
+	var/datum/jpsnode/unwind_node = openc[original_turf]
 	var/turf/current_turf = original_turf
 
 	while(TRUE)
+		if(path) // lazy way to force out when done, do better
+			return
+		current_turf = get_step(current_turf, heading)
+		if(!current_turf)
+			return
+		current_turf.color = COLOR_GRAY
+
 		var/closeenough
 		if(mintargetdist)
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
@@ -281,59 +255,61 @@
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
+		else if(!visited[current_turf])
+			visited[current_turf] = original_turf
+		else
+			return
 
 		if(steps_taken > 30)
 			testing("too many steps, breaking to next")
-			break
+			return
 		/*if(!(unwind_node.bf & heading))
 			//testing("skip dir: [f] br: [cur.bf]")
 			break
 		*/
 
-		var/turf/next_turf = get_step(current_turf,heading)
-		next_turf.color = COLOR_GRAY
-		if(!can_step(current_turf, next_turf)) //typecheck?
-			return
-
 		steps_taken++
-		testing("taking step [steps_taken] in dir [heading]")
-
-
-		var/r=PATH_REVERSE(heading) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
-		var/newt = unwind_node.nt + steps_taken//PATH_DIST(cur.tile, next_turf)
-
+		if(steps_taken % 5 == 0)
+			testing("taking diag step [steps_taken] in dir [heading]")
 
 		switch(heading)
 			if(NORTH)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 			if(SOUTH)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 			if(EAST)
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 			if(WEST)
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 
 	testing("took [steps_taken] steps in dir [heading]")
 
 
-/datum/pathfind/proc/diagonal_scan_spec(datum/jpsnode/unwind_node, x_heading, y_heading)
+/datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
-	var/turf/original_turf = unwind_node.tile
+	var/datum/jpsnode/unwind_node = openc[original_turf]
 	var/turf/current_turf = original_turf
 
 	while(TRUE)
+		if(path) // lazy way to force out when done, do better
+			return
+		current_turf = get_step(current_turf, heading)
+		if(!current_turf)
+			return
+		current_turf.color = COLOR_GRAY
+
 		var/closeenough
 		if(mintargetdist)
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
@@ -344,82 +320,69 @@
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
+		else if(!visited[current_turf])
+			visited[current_turf] = original_turf
+		else
+			return
 
 		if(steps_taken > 30)
 			testing("too many steps, breaking to next")
-			break
+			return
+
 		/*if(!(unwind_node.bf & heading))
 			//testing("skip dir: [f] br: [cur.bf]")
 			break
 		*/
 
-		var/turf/next_turf = get_step(current_turf,heading)
-		next_turf.color = COLOR_GRAY
-		if(!can_step(current_turf, next_turf)) //typecheck?
-			return
-
 		steps_taken++
-		testing("taking step [steps_taken] in dir [heading]")
-
-
-		var/r=PATH_REVERSE(heading) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
-		var/newt = unwind_node.nt + steps_taken//PATH_DIST(cur.tile, next_turf)
+		if(steps_taken % 5 == 0)
+			testing("taking diag step [steps_taken] in dir [heading]")
 
 
 		switch(heading)
 			if(NORTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
 					//cardinal scan west
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
 					//cardinal scan north
 			if(NORTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
 					//cardinal scan east
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
 					//cardinal scan north
 			if(SOUTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
 					//cardinal scan west
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
 					//cardinal scan south
 			if(SOUTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
 					//cardinal scan east
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return current_turf
+					return new /datum/tiles(current_turf, original_turf)
 				else
 					queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
 					//cardinal scan south
 
 	testing("took [steps_taken] steps in dir [heading]")
-
-
-
-
-/datum/pathfind/proc/insert_node()
-	neighbor_node = new(possible_interest,unwind_node,PATH_DIST(possible_interest, end),newt,15^r, steps_taken)
-	open.Insert(neighbor_node)
-	openc[possible_interest] = neighbor_node
-	next_interesting = TRUE
-	possible_interest.color = COLOR_RED
