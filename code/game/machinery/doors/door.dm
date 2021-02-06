@@ -267,8 +267,8 @@
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][density]"
+	return ..()
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)

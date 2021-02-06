@@ -71,19 +71,21 @@
 
 /obj/structure/fireplace/update_overlays()
 	. = ..()
-	if(lit)
-		switch(burn_time_remaining())
-			if(0 to 500)
-				. += "fireplace_fire0"
-			if(500 to 1000)
-				. += "fireplace_fire1"
-			if(1000 to 1500)
-				. += "fireplace_fire2"
-			if(1500 to 2000)
-				. += "fireplace_fire3"
-			if(2000 to MAXIMUM_BURN_TIMER)
-				. += "fireplace_fire4"
-		. += "fireplace_glow"
+	if(!lit)
+		return
+
+	switch(burn_time_remaining())
+		if(0 to 500)
+			. += "fireplace_fire0"
+		if(500 to 1000)
+			. += "fireplace_fire1"
+		if(1000 to 1500)
+			. += "fireplace_fire2"
+		if(1500 to 2000)
+			. += "fireplace_fire3"
+		if(2000 to MAXIMUM_BURN_TIMER)
+			. += "fireplace_fire4"
+	. += "fireplace_glow"
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)

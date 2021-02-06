@@ -133,17 +133,19 @@
 
 /obj/item/canvas/update_overlays()
 	. = ..()
-	if(!icon_generated)
-		if(used)
-			var/mutable_appearance/detail = mutable_appearance(icon,"[icon_state]wip")
-			detail.pixel_x = 1
-			detail.pixel_y = 1
-			. += detail
-	else
+	if(icon_generated)
 		var/mutable_appearance/detail = mutable_appearance(generated_icon)
 		detail.pixel_x = 1
 		detail.pixel_y = 1
 		. += detail
+		return
+	if(!used)
+		return
+
+	var/mutable_appearance/detail = mutable_appearance(icon, "[icon_state]wip")
+	detail.pixel_x = 1
+	detail.pixel_y = 1
+	. += detail
 
 /obj/item/canvas/proc/generate_proper_overlay()
 	if(icon_generated)

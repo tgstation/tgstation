@@ -68,8 +68,8 @@
 		setDir(ndir)
 
 /obj/structure/camera_assembly/update_icon_state()
-	. = ..()
 	icon_state = "[xray_module ? "xray" : null][initial(icon_state)]"
+	return ..()
 
 /obj/structure/camera_assembly/handle_atom_del(atom/A)
 	if(A == xray_module)

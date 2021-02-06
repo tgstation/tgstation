@@ -179,7 +179,7 @@
 /obj/machinery/nuclearbomb/update_icon_state()
 	if(deconstruction_state != NUKESTATE_INTACT)
 		icon_state = "nuclearbomb_base"
-		return
+		return ..()
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
 			icon_state = "nuclearbomb_base"

@@ -55,11 +55,8 @@
 	return ..()
 
 /obj/machinery/blackbox_recorder/update_icon_state()
-	. = ..()
-	if(!stored)
-		icon_state = "blackbox_b"
-	else
-		icon_state = "blackbox"
+	icon_state = "blackbox[stored ? null : "_b"]"
+	return ..()
 
 /obj/item/blackbox
 	name = "\proper the blackbox"

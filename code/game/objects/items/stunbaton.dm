@@ -111,10 +111,11 @@
 /obj/item/melee/baton/update_icon_state()
 	if(turned_on)
 		icon_state = "[initial(icon_state)]_active"
-	else if(!cell)
+		return ..()
+	if(!cell)
 		icon_state = "[initial(icon_state)]_nocell"
-	else
-		icon_state = "[initial(icon_state)]"
+		return ..()
+	icon_state = "[initial(icon_state)]"
 	return ..()
 
 /obj/item/melee/baton/examine(mob/user)

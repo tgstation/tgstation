@@ -12,12 +12,12 @@
 
 /obj/item/ammo_casing/caseless/foam_dart/update_icon_state()
 	. = ..()
-	if (modified)
+	if(modified)
 		icon_state = "foamdart_empty"
 		BB?.icon_state = "foamdart_empty"
-	else
-		icon_state = initial(icon_state)
-		BB?.icon_state = initial(BB.icon_state)
+		return
+	icon_state = initial(icon_state)
+	BB?.icon_state = initial(BB.icon_state)
 
 /obj/item/ammo_casing/caseless/foam_dart/update_desc()
 	. = ..()

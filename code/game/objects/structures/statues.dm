@@ -458,10 +458,11 @@ Moving interrupts
 
 /obj/structure/carving_block/update_overlays()
 	. = ..()
-	if(target_appearance_with_filters)
-		//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
-		var/mutable_appearance/clone = new(target_appearance_with_filters)
-		. += clone
+	if(!target_appearance_with_filters)
+		return
+	//We're only keeping one instance here that changes in the middle so we have to clone it to avoid managed overlay issues
+	var/mutable_appearance/clone = new(target_appearance_with_filters)
+	. += clone
 
 /obj/structure/carving_block/proc/is_viable_target(atom/movable/target)
 	//Only things on turfs

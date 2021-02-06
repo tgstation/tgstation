@@ -20,9 +20,10 @@
 
 /obj/item/storage/belt/update_overlays()
 	. = ..()
-	if(content_overlays)
-		for(var/obj/item/I in contents)
-			. += I.get_belt_overlay()
+	if(!content_overlays)
+		return
+	for(var/obj/item/I in contents)
+		. += I.get_belt_overlay()
 
 /obj/item/storage/belt/Initialize()
 	. = ..()

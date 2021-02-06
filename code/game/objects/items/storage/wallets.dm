@@ -67,10 +67,11 @@
 /obj/item/storage/wallet/update_overlays()
 	. = ..()
 	cached_flat_icon = null
-	if(front_id)
-		. += mutable_appearance(front_id.icon, front_id.icon_state)
-		. += front_id.overlays
-		. += mutable_appearance(icon, "wallet_overlay")
+	if(!front_id)
+		return
+	. += mutable_appearance(front_id.icon, front_id.icon_state)
+	. += front_id.overlays
+	. += mutable_appearance(icon, "wallet_overlay")
 
 /obj/item/storage/wallet/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)

@@ -25,8 +25,8 @@
 		update_appearance()
 
 /obj/machinery/chem_heater/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
+	return ..()
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
 	. = ..()

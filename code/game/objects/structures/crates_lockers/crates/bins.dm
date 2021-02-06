@@ -16,10 +16,11 @@
 	. = ..()
 	if(contents.len == 0)
 		. += "largebing"
-	else if(contents.len >= storage_capacity)
+		return
+	if(contents.len >= storage_capacity)
 		. += "largebinr"
-	else
-		. += "largebino"
+		return
+	. += "largebino"
 
 /obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage/bag/trash))

@@ -532,8 +532,8 @@
 	recentlyExperimented = FALSE
 
 /obj/machinery/rnd/experimentor/update_icon_state()
-	. = ..()
 	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/rnd/experimentor/proc/warn_admins(user, ReactionName)
 	var/turf/T = get_turf(user)

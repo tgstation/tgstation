@@ -35,11 +35,11 @@
 	heat_gen /= max(1, tot_rating)
 
 /obj/machinery/rnd/server/update_icon_state()
-	. = ..()
 	if(machine_stat & EMPED || machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]-off"
-		return
+		return ..()
 	icon_state = "[base_icon_state]-[research_disabled ? "halt" : "on"]"
+	return ..()
 
 /obj/machinery/rnd/server/power_change()
 	. = ..()

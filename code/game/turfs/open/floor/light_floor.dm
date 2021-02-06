@@ -81,10 +81,9 @@
 			set_light(0)
 
 /turf/open/floor/light/update_icon_state()
-	. = ..()
 	if(!on)
 		icon_state = "light_off"
-		return
+		return ..()
 
 	switch(state)
 		if(LIGHTFLOOR_FINE)
@@ -95,6 +94,7 @@
 			icon_state = "light_on_broken"
 		if(LIGHTFLOOR_BROKEN)
 			icon_state = "light_off"
+	return ..()
 
 /turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
 	set_light(0)

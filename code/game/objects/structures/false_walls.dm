@@ -67,11 +67,11 @@
 		QUEUE_SMOOTH(src)
 
 /obj/structure/falsewall/update_icon_state()
-	. = ..()
 	if(opening)
 		icon_state = "fwall_[density ? "opening" : "closing"]"
-	else
-		icon_state = density ? "[base_icon_state]-[smoothing_junction]" : "fwall_open"
+		return ..()
+	icon_state = density ? "[base_icon_state]-[smoothing_junction]" : "fwall_open"
+	return ..()
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)

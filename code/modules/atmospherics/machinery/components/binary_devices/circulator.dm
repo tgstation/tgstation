@@ -70,16 +70,18 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon_state()
-	. = ..()
 	if(!is_operational)
 		icon_state = "circ-p-[flipped]"
-	else if(last_pressure_delta > 0)
+		return ..()
+	if(last_pressure_delta > 0)
 		if(last_pressure_delta > ONE_ATMOSPHERE)
 			icon_state = "circ-run-[flipped]"
 		else
 			icon_state = "circ-slow-[flipped]"
-	else
-		icon_state = "circ-off-[flipped]"
+		return ..()
+
+	icon_state = "circ-off-[flipped]"
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)

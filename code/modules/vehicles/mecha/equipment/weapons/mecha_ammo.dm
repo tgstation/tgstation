@@ -21,8 +21,8 @@
 	desc = rounds ? initial(desc) : "An exosuit ammuniton box that has since been emptied. Please recycle."
 
 /obj/item/mecha_ammo/update_icon_state()
-	. = ..()
 	icon_state = rounds ? initial(icon_state) : "empty"
+	return ..()
 
 /obj/item/mecha_ammo/attack_self(mob/user)
 	..()

@@ -43,7 +43,7 @@
 
 /obj/structure/blob/core/update_icon()
 	color = null
-	. = ..()
+	return ..()
 
 /obj/structure/blob/core/Destroy()
 	GLOB.blob_cores -= src

@@ -49,7 +49,7 @@
 		attached_overlays += flashing_overlay
 		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
 	if(holder)
-		holder.update_icon(updates)
+		holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()
 	attached_overlays = list()

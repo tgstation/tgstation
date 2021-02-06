@@ -23,10 +23,11 @@
 /obj/machinery/grill/update_icon_state()
 	if(grilled_item)
 		icon_state = "grill"
-	else if(grill_fuel > 0)
+		return ..()
+	if(grill_fuel > 0)
 		icon_state = "grill_on"
-	else
-		icon_state = "grill_open"
+		return ..()
+	icon_state = "grill_open"
 	return ..()
 
 /obj/machinery/grill/attackby(obj/item/I, mob/user)

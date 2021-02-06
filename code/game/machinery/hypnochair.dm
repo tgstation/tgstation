@@ -170,8 +170,8 @@
 	victim = null
 
 /obj/machinery/hypnochair/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][state_open ? "_open" : null][occupant ? "_[interrogating ? "active" : "occupied"]" : null]"
+	return ..()
 
 /obj/machinery/hypnochair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)

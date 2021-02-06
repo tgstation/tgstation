@@ -54,10 +54,7 @@
 		set_light(0)
 
 /obj/structure/life_candle/update_icon_state()
-	if(linked_minds.len)
-		icon_state = icon_state_active
-	else
-		icon_state = icon_state_inactive
+	icon_state = linked_minds.len ? icon_state_active : icon_state_inactive
 	return ..()
 
 /obj/structure/life_candle/examine(mob/user)

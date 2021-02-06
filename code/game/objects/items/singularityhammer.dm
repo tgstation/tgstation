@@ -41,8 +41,8 @@
 	wielded = FALSE
 
 /obj/item/singularityhammer/update_icon_state()
-	. = ..()
 	icon_state = "singularity_hammer0"
+	return ..()
 
 /obj/item/singularityhammer/proc/recharge()
 	charged = TRUE

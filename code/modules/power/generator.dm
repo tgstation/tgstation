@@ -33,13 +33,14 @@
 
 /obj/machinery/power/generator/update_overlays()
 	. = ..()
-	if(!(machine_stat & (NOPOWER|BROKEN)))
-		var/L = min(round(lastgenlev/100000),11)
-		if(L != 0)
-			. += mutable_appearance('icons/obj/power.dmi', "teg-op[L]")
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
 
-		if(hot_circ && cold_circ)
-			. += "teg-oc[lastcirc]"
+	var/L = min(round(lastgenlev / 100000), 11)
+	if(L != 0)
+		. += mutable_appearance('icons/obj/power.dmi', "teg-op[L]")
+	if(hot_circ && cold_circ)
+		. += "teg-oc[lastcirc]"
 
 
 #define GENRATE 800		// generator output coefficient from Q

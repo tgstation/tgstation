@@ -52,14 +52,8 @@
 	return ..()
 
 /obj/machinery/flasher/update_icon_state()
-	. = ..()
-	if(powered())
-		if(bulb.burnt_out)
-			icon_state = "[base_icon_state]1-p"
-		else
-			icon_state = "[base_icon_state]1"
-	else
-		icon_state = "[base_icon_state]1-p"
+	icon_state = "[base_icon_state]1[(bulb?.burnt_out || !powered()) ? "-p" : null]"
+	return ..()
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/W, mob/user, params)

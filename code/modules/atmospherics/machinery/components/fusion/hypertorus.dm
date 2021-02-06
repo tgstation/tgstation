@@ -109,13 +109,14 @@
 		SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
-	. = ..()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(active)
+		return ..()
+	if(active)
 		icon_state = icon_state_active
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
@@ -1157,10 +1158,11 @@
 /obj/machinery/hypertorus/update_icon_state()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(active)
+		return ..()
+	if(active)
 		icon_state = icon_state_active
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
 	return ..()
 
 /obj/machinery/hypertorus/interface

@@ -248,13 +248,15 @@
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
 	. = ..()
-	if(reagents)
-		if(reagents.total_volume)
-			var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
-			tank_color.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(tank_color)
-		else
-			cut_overlays()
+	if(!reagents)
+		return
+
+	if(!reagents.total_volume)
+		return
+
+	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
+	tank_color.color = mix_color_from_reagents(reagents.reagent_list)
+	. += tank_color
 
 /obj/structure/reagent_dispensers/plumbed/storage/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)

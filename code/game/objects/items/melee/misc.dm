@@ -610,7 +610,7 @@
 
 /obj/item/melee/roastingstick/update_overlays()
 	. = ..()
-	if (held_sausage)
+	if(held_sausage)
 		. += mutable_appearance(icon, "roastingstick_sausage")
 
 /obj/item/melee/roastingstick/proc/extend(user)

@@ -138,7 +138,11 @@
 
 /obj/machinery/computer/mech_bay_power_console/update_overlays()
 	. = ..()
-	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || machine_stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+	if(!recharge_port?.recharging_mech?.cell)
+		return
+	if(recharge_port.recharging_mech.cell.charge >= recharge_port.recharging_mech.cell.maxcharge)
 		return
 	. += "recharge_comp_on"
 

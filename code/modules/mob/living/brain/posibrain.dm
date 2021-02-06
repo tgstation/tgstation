@@ -193,10 +193,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/update_icon_state()
 	if(searching)
 		icon_state = "[initial(icon_state)]-searching"
-	else if(brainmob?.key)
+		return ..()
+	if(brainmob?.key)
 		icon_state = "[initial(icon_state)]-occupied"
-	else
-		icon_state = initial(icon_state)
+		return ..()
+	icon_state = initial(icon_state)
 	return ..()
 
 /obj/item/mmi/posibrain/add_mmi_overlay()

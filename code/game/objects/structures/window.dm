@@ -319,21 +319,19 @@
 //merges adjacent full-tile windows into one
 /obj/structure/window/update_overlays()
 	. = ..()
-	if(!QDELETED(src))
-		if(!fulltile)
-			return
+	if(QDELETED(src) || !fulltile)
+		return
 
-		var/ratio = obj_integrity / max_integrity
-		ratio = CEILING(ratio*4, 1) * 25
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		QUEUE_SMOOTH(src)
 
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
-			QUEUE_SMOOTH(src)
-
-		cut_overlay(crack_overlay)
-		if(ratio > 75)
-			return
-		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-		. += crack_overlay
+	var/ratio = obj_integrity / max_integrity
+	ratio = CEILING(ratio*4, 1) * 25
+	cut_overlay(crack_overlay)
+	if(ratio > 75)
+		return
+	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
+	. += crack_overlay
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance

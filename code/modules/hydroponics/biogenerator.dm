@@ -64,12 +64,14 @@
 /obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
-	else if(!src.beaker)
+		return ..()
+	if(!beaker)
 		icon_state = "biogen-empty"
-	else if(!src.processing)
+		return ..()
+	if(!processing)
 		icon_state = "biogen-stand"
-	else
-		icon_state = "biogen-work"
+		return ..()
+	icon_state = "biogen-work"
 	return ..()
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/living/user, params)

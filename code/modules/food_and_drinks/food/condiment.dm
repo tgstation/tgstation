@@ -25,14 +25,16 @@
 
 /obj/item/reagent_containers/food/condiment/update_icon_state()
 	. = ..()
-	if (reagents.reagent_list.len)
-		if (icon_preempty)
+	if(reagents.reagent_list.len)
+		if(icon_preempty)
 			icon_state = icon_preempty
 			icon_preempty = null
-	else
-		if (icon_empty && !icon_preempty)
-			icon_preempty = icon_state
-			icon_state = icon_empty
+		return ..()
+
+	if(icon_empty && !icon_preempty)
+		icon_preempty = icon_state
+		icon_state = icon_empty
+	return ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")

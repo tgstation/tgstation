@@ -55,17 +55,20 @@
 		for(var/left_overlay in a_left.attached_overlays)
 			. += "[left_overlay]_l"
 
-	if(a_right)
-		if(a_right.is_position_sensitive)
-			. += "[a_right.icon_state]_right"
-			for(var/right_overlay in a_right.attached_overlays)
-				. += "[right_overlay]_r"
-		else
-			var/mutable_appearance/right = mutable_appearance(icon, "[a_right.icon_state]_left")
-			right.transform = matrix(-1, 0, 0, 0, 1, 0)
-			for(var/right_overlay in a_right.attached_overlays)
-				right.add_overlay("[right_overlay]_l")
-			. += right
+	if(!a_right)
+		return
+
+	if(a_right.is_position_sensitive)
+		. += "[a_right.icon_state]_right"
+		for(var/right_overlay in a_right.attached_overlays)
+			. += "[right_overlay]_r"
+		return
+
+	var/mutable_appearance/right = mutable_appearance(icon, "[a_right.icon_state]_left")
+	right.transform = matrix(-1, 0, 0, 0, 1, 0)
+	for(var/right_overlay in a_right.attached_overlays)
+		right.add_overlay("[right_overlay]_l")
+	. += right
 
 /obj/item/assembly_holder/Crossed(atom/movable/AM as mob|obj)
 	. = ..()

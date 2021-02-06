@@ -123,24 +123,25 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
 		icon_state = "l[cable_layer]-noconnection"
-	else
-		var/list/dir_icon_list = list()
-		for(var/check_dir in GLOB.cardinals)
-			if(linked_dirs & check_dir)
-				dir_icon_list += "[check_dir]"
-		var/dir_string = dir_icon_list.Join("-")
-		if(dir_icon_list.len > 1)
-			for(var/obj/O in loc)
-				if(GLOB.wire_node_generating_types[O.type])
+		return ..()
+
+	var/list/dir_icon_list = list()
+	for(var/check_dir in GLOB.cardinals)
+		if(linked_dirs & check_dir)
+			dir_icon_list += "[check_dir]"
+	var/dir_string = dir_icon_list.Join("-")
+	if(dir_icon_list.len > 1)
+		for(var/obj/O in loc)
+			if(GLOB.wire_node_generating_types[O.type])
+				dir_string = "[dir_string]-node"
+				break
+			else if(istype(O, /obj/machinery/power))
+				var/obj/machinery/power/P = O
+				if(P.should_have_node())
 					dir_string = "[dir_string]-node"
 					break
-				else if(istype(O, /obj/machinery/power))
-					var/obj/machinery/power/P = O
-					if(P.should_have_node())
-						dir_string = "[dir_string]-node"
-						break
-		dir_string = "l[cable_layer]-[dir_string]"
-		icon_state = dir_string
+	dir_string = "l[cable_layer]-[dir_string]"
+	icon_state = dir_string
 	return ..()
 
 

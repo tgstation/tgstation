@@ -30,10 +30,7 @@
 		stop()
 
 /obj/item/hourglass/update_icon_state()
-	if(timing_id)
-		icon_state = "hourglass_active"
-	else
-		icon_state = "hourglass_idle"
+	icon_state = "hourglass_[timing_id ? "active" : "idle"]"
 	return ..()
 
 /obj/item/hourglass/proc/start()

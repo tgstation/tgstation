@@ -167,16 +167,15 @@
 	return discover_after
 
 /obj/item/reagent_containers/syringe/update_icon_state()
-	. = ..()
 	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
 	inhand_icon_state = "[base_icon_state]_[rounded_vol]"
+	return ..()
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()
-	var/rounded_vol = get_rounded_vol()
 	if(reagents?.total_volume)
-		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[get_rounded_vol()]")
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
 	if(ismob(loc))
@@ -190,10 +189,9 @@
 
 ///Used by update_appearance() and update_overlays()
 /obj/item/reagent_containers/syringe/proc/get_rounded_vol()
-	if(reagents?.total_volume)
-		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
-	else
+	if(!reagents?.total_volume)
 		return 0
+	return clamp(round((reagents.total_volume / volume * 15), 5), 1, 15)
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

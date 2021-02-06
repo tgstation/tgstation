@@ -43,7 +43,7 @@
 
 /obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)
-		return
+		return ..()
 	var/icon/I = picture.get_small_icon(initial(icon_state))
 	if(I)
 		icon = I

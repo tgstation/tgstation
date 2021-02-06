@@ -35,15 +35,14 @@
 	desc = largest_reagent?.glass_desc || initial(desc)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
-	. = ..()
 	if(!length(reagents.reagent_list))
 		icon_state = "glass_empty"
-		return
+		return ..()
 
 	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
 	if(largest_reagent?.glass_icon_state)
 		icon_state = largest_reagent.glass_icon_state
-	return NONE
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_overlays()
 	. = ..()

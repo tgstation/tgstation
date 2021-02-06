@@ -59,10 +59,7 @@
 
 
 /obj/machinery/ntnet_relay/update_icon_state()
-	if(is_operational)
-		icon_state = "bus"
-	else
-		icon_state = "bus_off"
+	icon_state = "bus[is_operational ? null : "_off"]"
 	return ..()
 
 /obj/machinery/ntnet_relay/process(delta_time)

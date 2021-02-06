@@ -69,10 +69,7 @@
 	update_appearance()
 
 /obj/structure/fermenting_barrel/update_icon_state()
-	if(open)
-		icon_state = "barrel_open"
-	else
-		icon_state = "barrel"
+	icon_state = open ? "barrel_open" : "barrel"
 	return ..()
 
 /datum/crafting_recipe/fermenting_barrel

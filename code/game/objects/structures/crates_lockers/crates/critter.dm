@@ -34,10 +34,11 @@
 	. = ..()
 	if(opened)
 		. += "crittercrate_door_open"
-	else
-		. += "crittercrate_door"
-		if(manifest)
-			. += "manifest"
+		return
+
+	. += "crittercrate_door"
+	if(manifest)
+		. += "manifest"
 
 /obj/structure/closet/crate/critter/return_air()
 	if(tank)

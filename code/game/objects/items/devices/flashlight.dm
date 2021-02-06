@@ -490,13 +490,15 @@
 	. = ..()
 	if(fuel <= 0)
 		set_light_on(FALSE)
-	else if(on)
+		return
+	if(on)
 		set_light_on(TRUE)
+		return
 
 /obj/item/flashlight/glowstick/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][(fuel <= 0) ? "-empty" : ""]"
 	inhand_icon_state = "[base_icon_state][((fuel > 0) && on) ? "-on" : ""]"
+	return ..()
 
 /obj/item/flashlight/glowstick/update_overlays()
 	. = ..()

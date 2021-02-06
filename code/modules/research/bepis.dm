@@ -167,22 +167,22 @@
 	return
 
 /obj/machinery/rnd/bepis/update_icon_state()
-	. = ..()
 	if(panel_open == TRUE)
 		icon_state = "[base_icon_state]_open"
-		return
+		return ..()
 	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational))
 		icon_state = "[base_icon_state]_active_loaded"
-		return
+		return ..()
 	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational))
 		icon_state = "[base_icon_state]_loaded"
-		return
+		return ..()
 	if(use_power == ACTIVE_POWER_USE && is_operational)
 		icon_state = "[base_icon_state]_active"
-		return
+		return ..()
 	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational))
 		icon_state = base_icon_state
-		return
+		return ..()
+	return ..()
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

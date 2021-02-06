@@ -168,7 +168,7 @@
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
-		return
+		return ..()
 	var/amount = contents.len
 	if(load_random_books)
 		amount += books_to_load

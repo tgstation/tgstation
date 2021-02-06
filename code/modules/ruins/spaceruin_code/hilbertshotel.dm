@@ -258,8 +258,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	update_icon_state()
 
 /turf/open/space/bluespace/update_icon_state()
-	. = ..()
 	icon_state = base_icon_state
+	return ..()
 
 /turf/open/space/bluespace/Entered(atom/movable/A)
 	. = ..()

@@ -86,11 +86,11 @@
 	update_appearance()
 
 /obj/machinery/door_buttons/access_button/update_icon_state()
-	. = ..()
 	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]_off"
-		return
+		return ..()
 	icon_state = "[base_icon_state]_[busy ? "cycle" : "standby"]"
+	return ..()
 
 /obj/machinery/door_buttons/access_button/removeMe(obj/O)
 	if(O == door)
@@ -246,11 +246,11 @@
 			exteriorAirlock = A
 
 /obj/machinery/door_buttons/airlock_controller/update_icon_state()
-	. = ..()
 	if(machine_stat & NOPOWER)
 		icon_state = "access_control_off"
-		return
+		return ..()
 	icon_state = "[base_icon_state]_[(busy || lostPower) ? "process" : "standby"]"
+	return ..()
 
 /obj/machinery/door_buttons/airlock_controller/ui_interact(mob/user)
 	var/datum/browser/popup = new(user, "computer", name)

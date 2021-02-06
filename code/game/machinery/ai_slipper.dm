@@ -19,13 +19,13 @@
 	. += "<span class='notice'>It has <b>[uses]</b> uses of foam remaining.</span>"
 
 /obj/machinery/ai_slipper/update_icon_state()
-	. = ..()
 	if(machine_stat & BROKEN)
-		return
+		return ..()
 	if((machine_stat & NOPOWER) || cooldown_time > world.time || !uses)
 		icon_state = "[base_icon_state]0"
-	else
-		icon_state = "[base_icon_state]1"
+		return ..()
+	icon_state = "[base_icon_state]1"
+	return ..()
 
 /obj/machinery/ai_slipper/interact(mob/user)
 	if(!allowed(user))

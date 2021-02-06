@@ -7,7 +7,7 @@
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon_state()
-	..()
+	. = ..()
 	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtap
@@ -17,7 +17,7 @@
 	ammo_type = /obj/item/ammo_casing/c46x30mm/ap
 
 /obj/item/ammo_box/magazine/wt550m9/wtap/update_icon_state()
-	..()
+	. = ..()
 	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtic
@@ -27,7 +27,7 @@
 	ammo_type = /obj/item/ammo_casing/c46x30mm/inc
 
 /obj/item/ammo_box/magazine/wt550m9/wtic/update_icon_state()
-	..()
+	. = ..()
 	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
 
 /obj/item/ammo_box/magazine/plastikov9mm
@@ -83,7 +83,7 @@
 	max_ammo = 24
 
 /obj/item/ammo_box/magazine/smgm45/update_icon_state()
-	..()
+	. = ..()
 	icon_state = "[base_icon_state]-[round(ammo_count(), 2)]"
 
 /obj/item/ammo_box/magazine/smgm45/ap

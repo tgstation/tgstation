@@ -122,7 +122,6 @@
 	handle_maptext()
 
 /obj/machinery/ticket_machine/update_icon_state()
-	. = ..()
 	switch(ticket_number) //Gives you an idea of how many tickets are left
 		if(0 to 49)
 			icon_state = "[base_icon_state]_100"
@@ -130,6 +129,7 @@
 			icon_state = "[base_icon_state]_50"
 		if(100)
 			icon_state = "[base_icon_state]_0"
+	return ..()
 
 /obj/machinery/ticket_machine/proc/handle_maptext()
 	switch(ticket_number) //This is here to handle maptext offsets so that the numbers align.

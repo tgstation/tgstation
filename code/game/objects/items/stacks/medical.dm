@@ -285,10 +285,9 @@
 		update_appearance()
 
 /obj/item/stack/medical/mesh/update_icon_state()
-	if(!is_open)
-		icon_state = "regen_mesh_closed"
-	else
+	if(is_open)
 		return ..()
+	icon_state = "regen_mesh_closed"
 
 /obj/item/stack/medical/mesh/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!is_open)
@@ -330,10 +329,9 @@
 	merge_type = /obj/item/stack/medical/mesh/advanced
 
 /obj/item/stack/medical/mesh/advanced/update_icon_state()
-	if(!is_open)
-		icon_state = "aloe_mesh_closed"
-	else
+	if(is_open)
 		return ..()
+	icon_state = "aloe_mesh_closed"
 
 /obj/item/stack/medical/aloe
 	name = "aloe cream"

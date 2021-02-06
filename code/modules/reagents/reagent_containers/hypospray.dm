@@ -83,8 +83,8 @@
 	list_reagents = list(/datum/reagent/medicine/adminordrazine/quantum_heal = 80, /datum/reagent/medicine/synaptizine = 20)
 
 /obj/item/reagent_containers/hypospray/combat/nanites/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? null : 0]"
+	return ..()
 
 /obj/item/reagent_containers/hypospray/combat/heresypurge
 	name = "holy water piercing injector"
@@ -131,8 +131,8 @@
 		inject(user, user)
 
 /obj/item/reagent_containers/hypospray/medipen/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][(reagents.total_volume > 0) ? null : 0]"
+	return ..()
 
 /obj/item/reagent_containers/hypospray/medipen/examine()
 	. = ..()

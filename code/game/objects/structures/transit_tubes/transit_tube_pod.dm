@@ -22,10 +22,7 @@
 	return ..()
 
 /obj/structure/transit_tube_pod/update_icon_state()
-	if(contents.len)
-		icon_state = occupied_icon_state
-	else
-		icon_state = initial(icon_state)
+	icon_state = contents.len ? occupied_icon_state : initial(icon_state)
 	return ..()
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)

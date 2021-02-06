@@ -19,8 +19,8 @@
 	name = "[inflamed ? "inflamed " : null][initial(name)]"
 
 /obj/item/organ/appendix/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][inflamed ? "inflamed" : ""]"
+	return ..()
 
 /obj/item/organ/appendix/on_life()
 	..()

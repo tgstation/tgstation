@@ -377,16 +377,18 @@
 	qdel(src)
 
 /obj/machinery/camera/update_icon_state() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
-	. = ..()
 	var/xray_module
 	if(isXRay(TRUE))
 		xray_module = "xray"
+
 	if(!status)
 		icon_state = "[xray_module][default_camera_icon]_off"
-	else if (machine_stat & EMPED)
+		return ..()
+	if(machine_stat & EMPED)
 		icon_state = "[xray_module][default_camera_icon]_emp"
-	else
-		icon_state = "[xray_module][default_camera_icon][in_use_lights ? "_in_use" : ""]"
+		return ..()
+	icon_state = "[xray_module][default_camera_icon][in_use_lights ? "_in_use" : ""]"
+	return ..()
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status

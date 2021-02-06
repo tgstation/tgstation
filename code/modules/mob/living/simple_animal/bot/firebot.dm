@@ -297,12 +297,10 @@
 	if(!on)
 		icon_state = "firebot0"
 		return
-	if(IsStun() || IsParalyzed())
+	if(IsStun() || IsParalyzed() || stationary_mode) //Bot has yellow light to indicate stationary mode.
 		icon_state = "firebots1"
-	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
-		icon_state = "firebots1"
-	else
-		icon_state = "firebot1"
+		return
+	icon_state = "firebot1"
 
 
 /mob/living/simple_animal/bot/firebot/explode()

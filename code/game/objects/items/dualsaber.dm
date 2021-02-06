@@ -71,10 +71,7 @@
 	return wielded * sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	if(wielded)
-		icon_state = "dualsaber[saber_color][wielded]"
-	else
-		icon_state = "dualsaber0"
+	icon_state = wielded ? "dualsaber[saber_color][wielded]" : "dualsaber0"
 	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)

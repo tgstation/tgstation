@@ -37,8 +37,8 @@
 	set_light(1.4, 0.5)
 
 /turf/open/floor/circuit/update_icon_state()
-	. = ..()
 	icon_state = on ? (LAZYLEN(SSmapping.nuke_threats) ? "rcircuitanim" : icon_normal) : "[icon_normal]off"
+	return ..()
 
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"

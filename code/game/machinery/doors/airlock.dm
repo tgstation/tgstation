@@ -454,6 +454,7 @@
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
+
 	var/mutable_appearance/frame_overlay
 	var/mutable_appearance/filling_overlay
 	var/mutable_appearance/lights_overlay
@@ -464,7 +465,6 @@
 	var/mutable_appearance/note_overlay
 	var/mutable_appearance/seal_overlay
 	var/notetype = note_type()
-
 	switch(airlock_state)
 		if(AIRLOCK_CLOSED)
 			frame_overlay = get_airlock_overlay("closed", icon)

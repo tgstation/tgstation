@@ -56,6 +56,6 @@
 /obj/machinery/plumbing/liquid_pump/update_icon_state()
 	if(geyser)
 		icon_state = "[base_icon_state]-on"
-		return
+		return ..()
 	icon_state = "[base_icon_state][panel_open ? "-open" : null]"
 	return ..()

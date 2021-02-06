@@ -29,11 +29,11 @@
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
 /obj/machinery/light_switch/update_icon_state()
-	. = ..()
 	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]-p"
-		return
+		return ..()
 	icon_state = "[base_icon_state][area.lightswitch ? 1 : 0]"
+	return ..()
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()

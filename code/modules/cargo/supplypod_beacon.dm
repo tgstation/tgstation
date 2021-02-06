@@ -33,12 +33,15 @@
 
 /obj/item/supplypod_beacon/update_overlays()
 	. = ..()
-	if (launched)
+	if(launched)
 		. += "sp_green"
-	else if (ready)
+		return
+	if(ready)
 		. += "sp_yellow"
-	else if (linked)
+		return
+	if(linked)
 		. += "sp_orange"
+		return
 
 /obj/item/supplypod_beacon/proc/endLaunch()
 	launched = FALSE

@@ -55,8 +55,8 @@
 	program = new_prog
 
 /obj/machinery/embedded_controller/radio/simple_vent_controller/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state]_[(on && program) ? "standby" : "off"]"
+	return ..()
 
 
 /obj/machinery/embedded_controller/radio/simple_vent_controller/return_text()

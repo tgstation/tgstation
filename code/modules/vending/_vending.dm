@@ -251,19 +251,17 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 
 /obj/machinery/vending/update_icon_state()
-	. = ..()
 	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
-		return
+		return ..()
 	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	return ..()
 
 
 /obj/machinery/vending/update_overlays()
 	. = ..()
 	if(!light_mask)
 		return
-
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!(machine_stat & BROKEN) && powered())
 		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
 

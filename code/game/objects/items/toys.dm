@@ -106,7 +106,7 @@
 		qdel(src)
 
 /obj/item/toy/waterballoon/update_icon_state()
-	if(src.reagents.total_volume >= 1)
+	if(reagents.total_volume >= 1)
 		icon_state = "waterballoon"
 		inhand_icon_state = "balloon"
 	else

@@ -43,8 +43,8 @@
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
 /obj/item/ammo_casing/update_icon_state()
-	. = ..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
+	return ..()
 
 /obj/item/ammo_casing/update_desc()
 	. = ..()

@@ -87,26 +87,28 @@
 	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
 /obj/machinery/public_nanite_chamber/update_icon_state()
-	. = ..()
 	//running and someone in there
 	if(occupant)
 		icon_state = busy ? busy_icon_state : "[base_icon_state]_occupied"
-		return
+		return ..()
 	//running
 	icon_state = "[base_icon_state][state_open ? "_open" : null]"
+	return ..()
 
 /obj/machinery/public_nanite_chamber/update_overlays()
 	. = ..()
 	if((machine_stat & MAINT) || panel_open)
 		. += "maint"
+		return
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
 
-	else if(!(machine_stat & (NOPOWER|BROKEN)))
-		if(busy || locked)
-			. += "red"
-			if(locked)
-				. += "bolted"
-		else
-			. += "green"
+	if(busy || locked)
+		. += "red"
+		if(locked)
+			. += "bolted"
+		return
+	. += "green"
 
 /obj/machinery/public_nanite_chamber/proc/toggle_open(mob/user)
 	if(panel_open)

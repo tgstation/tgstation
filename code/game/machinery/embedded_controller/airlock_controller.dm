@@ -256,11 +256,11 @@
 	program = new_prog
 
 /obj/machinery/embedded_controller/radio/airlock_controller/update_icon_state()
-	. = ..()
 	if(on && program)
 		icon_state = "[base_icon_state]_[program.memory["processing"] ? "process" : "standby"]"
-		return
+		return ..()
 	icon_state = "[base_icon_state]_off"
+	return ..()
 
 
 /obj/machinery/embedded_controller/radio/airlock_controller/return_text()

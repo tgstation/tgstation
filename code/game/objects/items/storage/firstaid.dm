@@ -586,8 +586,8 @@
 			unfreeze(C)
 
 /obj/item/storage/organbox/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
+	return ..()
 
 ///freezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)

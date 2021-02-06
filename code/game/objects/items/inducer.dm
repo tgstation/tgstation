@@ -167,11 +167,9 @@
 
 /obj/item/inducer/update_overlays()
 	. = ..()
-	if(opened)
-		if(!cell)
-			. += "inducer-nobat"
-		else
-			. += "inducer-bat"
+	if(!opened)
+		return
+	. += "inducer-[cell ? "bat" : "nobat"]"
 
 /obj/item/inducer/sci
 	icon_state = "inducer-sci"

@@ -24,8 +24,8 @@
 	icon_state = "he_map-4"
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon_state()
-	. = ..()
 	icon_state = "he[nodes[1] ? 1 : 0]"
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
 	. = ..()

@@ -40,16 +40,17 @@
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
-	if (dirty)
+	if(dirty)
 		. +="grbloody"
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if (!occupant)
+	if(!occupant)
 		. += "grjam"
-	else if (operating)
+		return
+	if(operating)
 		. += "gruse"
-	else
-		. += "gridle"
+		return
+	. += "gridle"
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return attack_hand(user)

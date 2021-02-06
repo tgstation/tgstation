@@ -211,18 +211,11 @@
 	if(panel_open)
 		return
 
-	if(outputting)
-		. += "smes-op1"
-	else
-		. += "smes-op0"
-
-	if(inputting)
-		. += "smes-oc1"
-	else if(input_attempt)
-		. += "smes-oc0"
+	. += "smes-op[outputting ? 1 : 0]"
+	. += "smes-oc[inputting ? 1 : 0]"
 
 	var/clevel = chargedisplay()
-	if(clevel>0)
+	if(clevel > 0)
 		. += "smes-og[clevel]"
 
 

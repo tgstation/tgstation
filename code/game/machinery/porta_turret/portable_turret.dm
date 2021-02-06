@@ -142,24 +142,24 @@ DEFINE_BITFIELD(turret_flags, list(
 			begin_processing()
 
 /obj/machinery/porta_turret/update_icon_state()
-	. = ..()
 	if(!anchored)
 		icon_state = "turretCover"
-		return
+		return ..()
 	if(machine_stat & BROKEN)
 		icon_state = "[base_icon_state]_broken"
-	else
-		if(powered())
-			if(on && raised)
-				switch(mode)
-					if(TURRET_STUN)
-						icon_state = "[base_icon_state]_stun"
-					if(TURRET_LETHAL)
-						icon_state = "[base_icon_state]_lethal"
-			else
-				icon_state = "[base_icon_state]_off"
-		else
-			icon_state = "[base_icon_state]_unpowered"
+		return ..()
+	if(!powered())
+		icon_state = "[base_icon_state]_unpowered"
+		return ..()
+	if(!on || !raised)
+		icon_state = "[base_icon_state]_off"
+		return ..()
+	switch(mode)
+		if(TURRET_STUN)
+			icon_state = "[base_icon_state]_stun"
+		if(TURRET_LETHAL)
+			icon_state = "[base_icon_state]_lethal"
+	return ..()
 
 /obj/machinery/porta_turret/proc/setup(obj/item/gun/turret_gun)
 	if(stored_gun)
@@ -999,13 +999,14 @@ DEFINE_BITFIELD(turret_flags, list(
 	update_appearance()
 
 /obj/machinery/turretid/update_icon_state()
-	. = ..()
 	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]_off"
-	else if (enabled)
+		return ..()
+	if (enabled)
 		icon_state = "[base_icon_state]_[lethal ? "kill" : "stun"]"
-	else
-		icon_state = "[base_icon_state]_standby"
+		return ..()
+	icon_state = "[base_icon_state]_standby"
+	return ..()
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"

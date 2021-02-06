@@ -678,11 +678,11 @@
 
 	. = NONE
 	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON, updates)
-	if(updates & COMSIG_ATOM_NO_UPDATE_ICON_STATE)
+	if(updates & UPDATE_ICON_STATE)
 		update_icon_state()
 		. |= UPDATE_ICON_STATE
 
-	if(updates & COMSIG_ATOM_NO_UPDATE_OVERLAYS)
+	if(updates & UPDATE_OVERLAYS)
 		if(LAZYLEN(managed_vis_overlays))
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 

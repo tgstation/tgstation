@@ -17,12 +17,9 @@
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
 
-/obj/item/gun/ballistic/bow/update_icon()
+/obj/item/gun/ballistic/bow/update_icon_state()
 	. = ..()
-	if(!chambered)
-		icon_state = "bow"
-	else
-		icon_state = "bow_[drawn]"
+	icon_state = chambered ? "bow_[drawn]" : "bow"
 
 /obj/item/gun/ballistic/bow/proc/drop_arrow()
 	drawn = FALSE

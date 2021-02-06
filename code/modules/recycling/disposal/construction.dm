@@ -47,14 +47,13 @@
 	setDir(old_dir) //pipes changing direction when moved is just annoying and buggy
 
 /obj/structure/disposalconstruct/update_icon_state()
-	. = ..()
 	if(ispath(pipe_type, /obj/machinery/disposal/bin))
 		// Disposal bins receive special icon treating
 		icon_state = "[anchored ? "con" : null]disposal"
-		return
+		return ..()
 
 	icon_state = "[is_pipe() ? "con" : null][initial(pipe_type.icon_state)]"
-	return
+	return ..()
 
 // Extra layer handling
 /obj/structure/disposalconstruct/update_icon()
@@ -62,10 +61,7 @@
 	if(!is_pipe())
 		return
 
-	if(anchored)
-		layer = initial(pipe_type.layer)
-	else
-		layer = initial(layer)
+	layer = anchored ? initial(pipe_type.layer) : initial(layer)
 
 /obj/structure/disposalconstruct/proc/get_disposal_dir()
 	if(!is_pipe())

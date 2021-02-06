@@ -70,12 +70,14 @@
 /obj/machinery/computer/slot_machine/update_icon_state()
 	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]0"
-	else if(machine_stat & BROKEN)
+		return ..()
+	if(machine_stat & BROKEN)
 		icon_state = "[base_icon_state]b"
-	else if(working)
+		return ..()
+	if(working)
 		icon_state = "[base_icon_state]2"
-	else
-		icon_state = "[base_icon_state]1"
+		return ..()
+	icon_state = "[base_icon_state]1"
 	return ..()
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)

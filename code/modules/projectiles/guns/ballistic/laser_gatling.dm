@@ -75,8 +75,8 @@
 
 
 /obj/item/minigunpack/update_icon_state()
-	. = ..()
 	icon_state = armed ? "notholstered" : "holstered"
+	return ..()
 
 /obj/item/minigunpack/proc/attach_gun(mob/user)
 	if(!gun)

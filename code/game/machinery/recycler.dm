@@ -84,11 +84,11 @@
 	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
 
 /obj/machinery/recycler/update_icon_state()
-	..()
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(bloody ? "bld" : "")]" // add the blood tag at the end
+	return ..()
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/AM)
 	. = ..()

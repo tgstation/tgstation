@@ -282,11 +282,13 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/update_icon_state()
 	if(busy)
 		icon_state = "wm_running_[bloody_mess]"
-	else if(bloody_mess)
+		return ..()
+	if(bloody_mess)
 		icon_state = "wm_[state_open]_blood"
-	else
-		var/full = contents.len ? 1 : 0
-		icon_state = "wm_[state_open]_[full]"
+		return ..()
+
+	var/full = contents.len ? 1 : 0
+	icon_state = "wm_[state_open]_[full]"
 	return ..()
 
 /obj/machinery/washing_machine/update_overlays()

@@ -75,9 +75,9 @@
 		timer_end()
 		time = saved_time
 
-/obj/item/assembly/timer/update_icon()
+/obj/item/assembly/timer/update_appearance()
 	. = ..()
-	holder?.update_icon()
+	holder?.update_appearance()
 
 /obj/item/assembly/timer/update_overlays()
 	. = ..()

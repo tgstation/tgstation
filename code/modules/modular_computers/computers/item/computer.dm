@@ -168,19 +168,16 @@
 	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon_state()
-	. = ..()
 	icon_state = enabled ? icon_state_powered : icon_state_unpowered
+	return ..()
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
 	if(!display_overlays)
 		return
-	if(enabled)
-		if(active_program)
-			. += active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu
-		else
-			. += icon_state_menu
 
+	if(enabled)
+		. += active_program?.program_icon_state || icon_state_menu
 	if(obj_integrity <= integrity_failure * max_integrity)
 		. += "bsod"
 		. += "broken"

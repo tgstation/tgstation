@@ -99,11 +99,11 @@
 	return ..()
 
 /obj/item/reagent_containers/glass/maunamug/update_icon_state()
-	. = ..()
 	if(open)
 		icon_state = "[base_icon_state][cell ? null : "_no"]_bat"
-		return
+		return ..()
 	icon_state = "[base_icon_state][on ? "_on" : null]"
+	return ..()
 
 /obj/item/reagent_containers/glass/maunamug/update_overlays()
 	. = ..()

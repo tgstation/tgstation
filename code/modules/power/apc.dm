@@ -1,45 +1,100 @@
-//update_state
-#define UPSTATE_CELL_IN		(1<<0)
-#define UPSTATE_OPENED1		(1<<1)
-#define UPSTATE_OPENED2		(1<<2)
-#define UPSTATE_MAINT		(1<<3)
-#define UPSTATE_BROKE		(1<<4)
-#define UPSTATE_BLUESCREEN	(1<<5)
-#define UPSTATE_WIREEXP		(1<<6)
-#define UPSTATE_ALLGOOD		(1<<7)
+// APC electronics status:
+/// There are no electronics in the APC.
+#define APC_ELECTRONICS_MISSING 0
+/// The electronics are installed but not secured.
+#define APC_ELECTRONICS_INSTALLED 1
+/// The electronics are installed and secured.
+#define APC_ELECTRONICS_SECURED 2
 
-#define APC_RESET_EMP "emp"
-
-//update_overlay
-#define APC_UPOVERLAY_CHARGEING0	(1<<0)
-#define APC_UPOVERLAY_CHARGEING1	(1<<1)
-#define APC_UPOVERLAY_CHARGEING2	(1<<2)
-#define APC_UPOVERLAY_EQUIPMENT0	(1<<3)
-#define APC_UPOVERLAY_EQUIPMENT1	(1<<4)
-#define APC_UPOVERLAY_EQUIPMENT2	(1<<5)
-#define APC_UPOVERLAY_LIGHTING0		(1<<6)
-#define APC_UPOVERLAY_LIGHTING1		(1<<7)
-#define APC_UPOVERLAY_LIGHTING2		(1<<8)
-#define APC_UPOVERLAY_ENVIRON0		(1<<9)
-#define APC_UPOVERLAY_ENVIRON1		(1<<10)
-#define APC_UPOVERLAY_ENVIRON2		(1<<11)
-#define APC_UPOVERLAY_LOCKED		(1<<12)
-#define APC_UPOVERLAY_OPERATING		(1<<13)
-
-#define APC_ELECTRONICS_MISSING 0 // None
-#define APC_ELECTRONICS_INSTALLED 1 // Installed but not secured
-#define APC_ELECTRONICS_SECURED 2 // Installed and secured
-
+// APC cover status:
+/// The APCs cover is closed.
 #define APC_COVER_CLOSED 0
+/// The APCs cover is open.
 #define APC_COVER_OPENED 1
+/// The APCs cover is missing.
 #define APC_COVER_REMOVED 2
 
+// APC charging status:
+/// The APC is not charging.
 #define APC_NOT_CHARGING 0
+/// The APC is charging.
 #define APC_CHARGING 1
+/// The APC is fully charged.
 #define APC_FULLY_CHARGED 2
 
-#define APC_DRAIN_TIME 75
+// APC channel status:
+/// The APCs power channel is manually set off.
+#define APC_CHANNEL_OFF 0
+/// The APCs power channel is automatically off.
+#define APC_CHANNEL_AUTO_OFF 1
+/// The APCs power channel is manually set on.
+#define APC_CHANNEL_ON 2
+/// The APCs power channel is automatically on.
+#define APC_CHANNEL_AUTO_ON 3
+
+// APC autoset enums:
+/// The APC turns automated and manual power channels off.
+#define AUTOSET_FORCE_OFF 0
+/// The APC turns automated power channels off.
+#define AUTOSET_OFF 2
+/// The APC turns automated power channels on.
+#define AUTOSET_ON 1
+
+// External power status:
+/// The APC either isn't attached to a powernet or there is no power on the external powernet.
+#define APC_NO_POWER 0
+/// The APCs external powernet does not have enough power to charge the APC.
+#define APC_LOW_POWER 1
+/// The APCs external powernet has enough power to charge the APC.
+#define APC_HAS_POWER 2
+
+// Etherials:
+/// How long it takes an ethereal to drain or charge APCs. Also used as a spam limiter.
+#define APC_DRAIN_TIME (7.5 SECONDS)
+/// How much power ethereals gain/drain from APCs.
 #define APC_POWER_GAIN 200
+
+// Wires & EMPs:
+/// The wire value used to reset the APCs wires after one's EMPed.
+#define APC_RESET_EMP "emp"
+
+// update_state
+// Bitshifts: (If you change the status values to be something other than an int or able to exceed 3 you will need to change these too)
+/// The bit shift for the APCs cover status.
+#define UPSTATE_COVER_SHIFT	(0)
+	/// The bitflag representing the APCs cover being open for icon purposes.
+	#define UPSTATE_OPENED1	(APC_COVER_OPENED << UPSTATE_COVER_SHIFT)
+	/// The bitflag representing the APCs cover being missing for icon purposes.
+	#define UPSTATE_OPENED2 (APC_COVER_REMOVED << UPSTATE_COVER_SHIFT)
+
+// Bitflags:
+/// The APC has a power cell.
+#define UPSTATE_CELL_IN		(1<<2)
+/// The APC is broken or damaged.
+#define UPSTATE_BROKE		(1<<3)
+/// The APC is undergoing maintenance.
+#define UPSTATE_MAINT		(1<<4)
+/// The APC is emagged or malfed.
+#define UPSTATE_BLUESCREEN	(1<<5)
+/// The APCs wires are exposed.
+#define UPSTATE_WIREEXP		(1<<6)
+
+// update_overlay
+// Bitflags:
+/// Bitflag indicating that the APCs operating status overlay should be shown.
+#define UPOVERLAY_OPERATING			(1<<0)
+/// Bitflag indicating that the APCs locked status overlay should be shown.
+#define UPOVERLAY_LOCKED			(1<<1)
+
+// Bitshifts: (If you change the status values to be something other than an int or able to exceed 3 you will need to change these too)
+/// Bit shift for the charging status of the APC.
+#define UPOVERLAY_CHARGING_SHIFT	(2)
+/// Bit shift for the equipment status of the APC.
+#define UPOVERLAY_EQUIPMENT_SHIFT	(4)
+/// Bit shift for the lighting channel status of the APC.
+#define UPOVERLAY_LIGHTING_SHIFT	(6)
+/// Bit shift for the environment channel status of the APC.
+#define UPOVERLAY_ENVIRON_SHIFT		(8)
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
@@ -69,9 +124,9 @@
 	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	var/opened = APC_COVER_CLOSED
 	var/shorted = FALSE
-	var/lighting = 3
-	var/equipment = 3
-	var/environ = 3
+	var/lighting = APC_CHANNEL_AUTO_ON
+	var/equipment = APC_CHANNEL_AUTO_ON
+	var/environ = APC_CHANNEL_AUTO_ON
 	var/operating = TRUE
 	var/charging = APC_NOT_CHARGING
 	var/chargemode = 1
@@ -298,7 +353,7 @@
 
 	. = ..()
 	// And now, separately for cleanness, the lighting changing
-	if(update_state & UPSTATE_ALLGOOD)
+	if(!update_state)
 		switch(charging)
 			if(APC_NOT_CHARGING)
 				set_light_color(COLOR_SOFT_RED)
@@ -307,40 +362,42 @@
 			if(APC_FULLY_CHARGED)
 				set_light_color(LIGHT_COLOR_GREEN)
 		set_light(lon_range)
-	else if(update_state & UPSTATE_BLUESCREEN)
+		return
+
+	if(update_state & UPSTATE_BLUESCREEN)
 		set_light_color(LIGHT_COLOR_BLUE)
 		set_light(lon_range)
-	else
-		set_light(0)
+		return
+
+	set_light(0)
 
 /obj/machinery/power/apc/update_icon_state()
-	if(update_state & UPSTATE_ALLGOOD)
+	if(!update_state)
 		icon_state = "apc0"
-		return
+		return ..()
 	if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
 		var/basestate = "apc[cell ? 2 : 1]"
 		if(update_state & UPSTATE_OPENED1)
 			icon_state = (update_state & (UPSTATE_MAINT|UPSTATE_BROKE)) ? "apcmaint" : basestate
 		else if(update_state & UPSTATE_OPENED2)
 			icon_state = "[basestate][((update_state & UPSTATE_BROKE) || malfhack) ? "-b" : null]-nocover"
-		return
+		return ..()
 	if(update_state & UPSTATE_BROKE)
 		icon_state = "apc-b"
-		return
+		return ..()
 	if(update_state & UPSTATE_BLUESCREEN)
 		icon_state = "apcemag"
-		return
+		return ..()
 	if(update_state & UPSTATE_WIREEXP)
 		icon_state = "apcewires"
-		return
+		return ..()
 	if(update_state & UPSTATE_MAINT)
 		icon_state = "apc0"
-		return
 	return ..()
 
 /obj/machinery/power/apc/update_overlays()
 	. = ..()
-	if((machine_stat & (BROKEN|MAINT)) || !(update_state & UPSTATE_ALLGOOD))
+	if((machine_stat & (BROKEN|MAINT)) || update_state)
 		return
 
 	SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, plane, dir)
@@ -360,80 +417,47 @@
 /// Checks for what icon updates we will need to handle
 /obj/machinery/power/apc/proc/check_updates()
 	SIGNAL_HANDLER
-	var/last_update_state = update_state
-	var/last_update_overlay = update_overlay
-	update_state = NONE
-	update_overlay = NONE
+	. = NONE
 
-	if(cell)
-		update_state |= UPSTATE_CELL_IN
+	// Handle icon status:
+	var/new_update_state = NONE
 	if(machine_stat & BROKEN)
-		update_state |= UPSTATE_BROKE
+		new_update_state |= UPSTATE_BROKE
 	if(machine_stat & MAINT)
-		update_state |= UPSTATE_MAINT
+		new_update_state |= UPSTATE_MAINT
+
 	if(opened)
-		switch(opened)
-			if(APC_COVER_OPENED)
-				update_state |= UPSTATE_OPENED1
-			if(APC_COVER_REMOVED)
-				update_state |= UPSTATE_OPENED2
+		new_update_state |= (opened << UPSTATE_COVER_SHIFT)
+		if(cell)
+			new_update_state |= UPSTATE_CELL_IN
+
 	else if((obj_flags & EMAGGED) || malfai)
-		update_state |= UPSTATE_BLUESCREEN
+		new_update_state |= UPSTATE_BLUESCREEN
 	else if(panel_open)
-		update_state |= UPSTATE_WIREEXP
-	if(update_state <= 1)
-		update_state |= UPSTATE_ALLGOOD
+		new_update_state |= UPSTATE_WIREEXP
 
+	if(new_update_state != update_state)
+		update_state = new_update_state
+		. |= UPDATE_ICON_STATE
+
+	// Handle overlay status:
+	var/new_update_overlay = NONE
 	if(operating)
-		update_overlay |= APC_UPOVERLAY_OPERATING
+		new_update_overlay |= UPOVERLAY_OPERATING
 
-	if(update_state & UPSTATE_ALLGOOD)
+	if(!update_state)
 		if(locked)
-			update_overlay |= APC_UPOVERLAY_LOCKED
+			new_update_overlay |= UPOVERLAY_LOCKED
 
-		switch(charging)
-			if(APC_NOT_CHARGING)
-				update_overlay |= APC_UPOVERLAY_CHARGEING0
-			if(APC_CHARGING)
-				update_overlay |= APC_UPOVERLAY_CHARGEING1
-			if(APC_FULLY_CHARGED)
-				update_overlay |= APC_UPOVERLAY_CHARGEING2
+		new_update_overlay |= (charging << UPOVERLAY_CHARGING_SHIFT)
+		new_update_overlay |= (equipment << UPOVERLAY_EQUIPMENT_SHIFT)
+		new_update_overlay |= (lighting << UPOVERLAY_LIGHTING_SHIFT)
+		new_update_overlay |= (environ << UPOVERLAY_ENVIRON_SHIFT)
 
-		switch(equipment)
-			if(0)
-				update_overlay |= APC_UPOVERLAY_EQUIPMENT0
-			if(1)
-				update_overlay |= APC_UPOVERLAY_EQUIPMENT1
-			if(2)
-				update_overlay |= APC_UPOVERLAY_EQUIPMENT2
+	if(new_update_overlay != update_overlay)
+		update_overlay = new_update_overlay
+		. |= UPDATE_OVERLAYS
 
-		switch(lighting)
-			if(0)
-				update_overlay |= APC_UPOVERLAY_LIGHTING0
-			if(1)
-				update_overlay |= APC_UPOVERLAY_LIGHTING1
-			if(2)
-				update_overlay |= APC_UPOVERLAY_LIGHTING2
-
-		switch(environ)
-			if(0)
-				update_overlay |= APC_UPOVERLAY_ENVIRON0
-			if(1)
-				update_overlay |= APC_UPOVERLAY_ENVIRON1
-			if(2)
-				update_overlay |= APC_UPOVERLAY_ENVIRON2
-
-	if(last_update_state == update_state && last_update_overlay == update_overlay)
-		return NONE
-
-	var/results = 0
-	if(last_update_state == update_state && last_update_overlay == update_overlay)
-		return 0
-	if(last_update_state != update_state)
-		results += 1
-	if(last_update_overlay != update_overlay)
-		results += 2
-	return results
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
@@ -825,9 +849,9 @@
 				if(stomach.crystal_charge < 10)
 					to_chat(H, "<span class='warning'>Your charge is too low!</span>")
 					return
-				E.drain_time = world.time + 75
+				E.drain_time = world.time + APC_DRAIN_TIME
 				to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
-				if(do_after(user, 75, target = src))
+				if(do_after(user, APC_DRAIN_TIME, target = src))
 					if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
 						return
 					if(istype(stomach))
@@ -942,13 +966,13 @@
 		return 0 // 0 = User is not a Malf AI
 
 /obj/machinery/power/apc/proc/report()
-	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
+	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_total]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
 	if(operating && !shorted && !failure_timer)
-		area.power_light = (lighting > 1)
-		area.power_equip = (equipment > 1)
-		area.power_environ = (environ > 1)
+		area.power_light = (lighting > APC_CHANNEL_AUTO_OFF)
+		area.power_equip = (equipment > APC_CHANNEL_AUTO_OFF)
+		area.power_environ = (environ > APC_CHANNEL_AUTO_OFF)
 	else
 		area.power_light = FALSE
 		area.power_equip = FALSE
@@ -1224,12 +1248,12 @@
 
 	var/excess = surplus()
 
-	if(!src.avail())
-		main_status = 0
+	if(!avail())
+		main_status = APC_NO_POWER
 	else if(excess < 0)
-		main_status = 1
+		main_status = APC_LOW_POWER
 	else
-		main_status = 2
+		main_status = APC_HAS_POWER
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
@@ -1252,9 +1276,9 @@
 				charging = APC_NOT_CHARGING
 				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
-				equipment = autoset(equipment, 0)
-				lighting = autoset(lighting, 0)
-				environ = autoset(environ, 0)
+				equipment = autoset(equipment, AUTOSET_FORCE_OFF)
+				lighting = autoset(lighting, AUTOSET_FORCE_OFF)
+				environ = autoset(environ, AUTOSET_FORCE_OFF)
 
 
 		// set channels depending on how much charge we have left
@@ -1266,24 +1290,24 @@
 			longtermpower -= 2
 
 		if(cell.charge <= 0)					// zero charge, turn all off
-			equipment = autoset(equipment, 0)
-			lighting = autoset(lighting, 0)
-			environ = autoset(environ, 0)
+			equipment = autoset(equipment, AUTOSET_FORCE_OFF)
+			lighting = autoset(lighting, AUTOSET_FORCE_OFF)
+			environ = autoset(environ, AUTOSET_FORCE_OFF)
 			area.poweralert(TRUE, src)
 		else if(cell.percent() < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
-			equipment = autoset(equipment, 2)
-			lighting = autoset(lighting, 2)
-			environ = autoset(environ, 1)
+			equipment = autoset(equipment, AUTOSET_OFF)
+			lighting = autoset(lighting, AUTOSET_OFF)
+			environ = autoset(environ, AUTOSET_ON)
 			area.poweralert(TRUE, src)
 		else if(cell.percent() < 30 && longtermpower < 0)			// <30%, turn off equipment
-			equipment = autoset(equipment, 2)
-			lighting = autoset(lighting, 1)
-			environ = autoset(environ, 1)
+			equipment = autoset(equipment, AUTOSET_OFF)
+			lighting = autoset(lighting, AUTOSET_ON)
+			environ = autoset(environ, AUTOSET_ON)
 			area.poweralert(TRUE, src)
 		else									// otherwise all can be on
-			equipment = autoset(equipment, 1)
-			lighting = autoset(lighting, 1)
-			environ = autoset(environ, 1)
+			equipment = autoset(equipment, AUTOSET_ON)
+			lighting = autoset(lighting, AUTOSET_ON)
+			environ = autoset(environ, AUTOSET_ON)
 			area.poweralert(FALSE, src)
 			if(cell.percent() > 75)
 				area.poweralert(FALSE, src)
@@ -1318,16 +1342,16 @@
 					charging = APC_CHARGING
 
 		else // chargemode off
-			charging = 0
+			charging = APC_NOT_CHARGING
 			chargecount = 0
 
 	else // no cell, switch everything off
 
 		charging = APC_NOT_CHARGING
 		chargecount = 0
-		equipment = autoset(equipment, 0)
-		lighting = autoset(lighting, 0)
-		environ = autoset(environ, 0)
+		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
+		lighting = autoset(lighting, AUTOSET_FORCE_OFF)
+		environ = autoset(environ, AUTOSET_FORCE_OFF)
 		area.poweralert(TRUE, src)
 
 	// update icon & area power if anything changed
@@ -1339,22 +1363,53 @@
 	else if (last_ch != charging)
 		queue_icon_update()
 
-// val 0=off, 1=off(auto) 2=on 3=on(auto)
-// on 0=off, 1=on, 2=autooff
-
+/**
+ * Returns the new status value for an APC channel.
+ *
+ * // val 0=off, 1=off(auto) 2=on 3=on(auto)
+ * // on 0=off, 1=on, 2=autooff
+ * TODO: Make this use bitflags instead. It should take at most three lines, but it's out of scope for now.
+ *
+ * Arguments:
+ * - val: The current status of the power channel.
+ *   - [APC_CHANNEL_OFF]: The APCs channel has been manually set to off. This channel will not automatically change.
+ *   - [APC_CHANNEL_AUTO_OFF]: The APCs channel is running on automatic and is currently off. Can be automatically set to [APC_CHANNEL_AUTO_ON].
+ *   - [APC_CHANNEL_ON]: The APCs channel has been manually set to on. This will be automatically changed only if the APC runs completely out of power or is disabled.
+ *   - [APC_CHANNEL_AUTO_ON]: The APCs channel is running on automatic and is currently on. Can be automatically set to [APC_CHANNEL_AUTO_OFF].
+ * - on: An enum dictating how to change the channel's status.
+ *   - [AUTOSET_FORCE_OFF]: The APC forces the channel to turn off. This includes manually set channels.
+ *   - [AUTOSET_ON]: The APC allows automatic channels to turn back on.
+ *   - [AUTOSET_OFF]: The APC turns automatic channels off.
+ */
 /obj/machinery/power/apc/proc/autoset(val, on)
-	if(on==0)
-		if(val==2)			// if on, return off
-			return 0
-		else if(val==3)		// if auto-on, return auto-off
-			return 1
-	else if(on==1)
-		if(val==1)			// if auto-off, return auto-on
-			return 3
-	else if(on==2)
-		if(val==3)			// if auto-on, return auto-off
-			return 1
+	if(on == AUTOSET_FORCE_OFF)
+		if(val == APC_CHANNEL_ON)			// if on, return off
+			return APC_CHANNEL_OFF
+		else if(val == APC_CHANNEL_AUTO_ON)		// if auto-on, return auto-off
+			return APC_CHANNEL_AUTO_OFF
+	else if(on == AUTOSET_ON)
+		if(val == APC_CHANNEL_AUTO_OFF)			// if auto-off, return auto-on
+			return APC_CHANNEL_AUTO_ON
+	else if(on == AUTOSET_OFF)
+		if(val == APC_CHANNEL_AUTO_ON)			// if auto-on, return auto-off
+			return APC_CHANNEL_AUTO_OFF
 	return val
+
+/**
+ * Used by external forces to set the APCs channel status's.
+ *
+ * Arguments:
+ * - val: The desired value of the subsystem:
+ *   - 1: Manually sets the APCs channel to be [APC_CHANNEL_OFF].
+ *   - 2: Manually sets the APCs channel to be [APC_CHANNEL_AUTO_ON]. If the APC doesn't have any power this defaults to [APC_CHANNEL_OFF] instead.
+ *   - 3: Sets the APCs channel to be [APC_CHANNEL_AUTO_ON]. If the APC doesn't have enough power this defaults to [APC_CHANNEL_AUTO_OFF] instead.
+ */
+/obj/machinery/power/apc/proc/setsubsystem(val)
+	if(cell && cell.charge > 0)
+		return (val == 1) ? APC_CHANNEL_OFF : val
+	if(val == 3)
+		return APC_CHANNEL_AUTO_OFF
+	return APC_CHANNEL_OFF
 
 /obj/machinery/power/apc/proc/reset(wire)
 	switch(wire)
@@ -1367,8 +1422,8 @@
 			if(!wires.is_cut(WIRE_AI))
 				aidisabled = FALSE
 		if(APC_RESET_EMP)
-			equipment = 3
-			environ = 3
+			equipment = APC_CHANNEL_AUTO_ON
+			environ = APC_CHANNEL_AUTO_ON
 			update_appearance()
 			update()
 
@@ -1382,9 +1437,9 @@
 			occupier.emp_act(severity)
 	if(. & EMP_PROTECT_SELF)
 		return
-	lighting = 0
-	equipment = 0
-	environ = 0
+	lighting = APC_CHANNEL_OFF
+	equipment = APC_CHANNEL_OFF
+	environ = APC_CHANNEL_OFF
 	update_appearance()
 	update()
 	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
@@ -1433,14 +1488,6 @@
 	else
 		return FALSE
 
-/obj/machinery/power/apc/proc/setsubsystem(val)
-	if(cell && cell.charge > 0)
-		return (val==1) ? 0 : val
-	else if(val == 3)
-		return TRUE
-	else
-		return FALSE
-
 
 /obj/machinery/power/apc/proc/energy_fail(duration)
 	for(var/obj/machinery/M in area.contents)
@@ -1462,16 +1509,19 @@
 			L.update(FALSE)
 		CHECK_TICK
 
-#undef UPSTATE_CELL_IN
-#undef UPSTATE_OPENED1
-#undef UPSTATE_OPENED2
-#undef UPSTATE_MAINT
-#undef UPSTATE_BROKE
-#undef UPSTATE_BLUESCREEN
-#undef UPSTATE_WIREEXP
-#undef UPSTATE_ALLGOOD
 
-#undef APC_RESET_EMP
+#undef APC_CHANNEL_OFF
+#undef APC_CHANNEL_AUTO_OFF
+#undef APC_CHANNEL_ON
+#undef APC_CHANNEL_AUTO_ON
+
+#undef AUTOSET_FORCE_OFF
+#undef AUTOSET_OFF
+#undef AUTOSET_ON
+
+#undef APC_NO_POWER
+#undef APC_LOW_POWER
+#undef APC_HAS_POWER
 
 #undef APC_ELECTRONICS_MISSING
 #undef APC_ELECTRONICS_INSTALLED
@@ -1488,21 +1538,23 @@
 #undef APC_DRAIN_TIME
 #undef APC_POWER_GAIN
 
+#undef APC_RESET_EMP
+
+// update_state
+#undef UPSTATE_CELL_IN
+#undef UPSTATE_COVER_SHIFT
+#undef UPSTATE_BROKE
+#undef UPSTATE_MAINT
+#undef UPSTATE_BLUESCREEN
+#undef UPSTATE_WIREEXP
+
 //update_overlay
-#undef APC_UPOVERLAY_CHARGEING0
-#undef APC_UPOVERLAY_CHARGEING1
-#undef APC_UPOVERLAY_CHARGEING2
-#undef APC_UPOVERLAY_EQUIPMENT0
-#undef APC_UPOVERLAY_EQUIPMENT1
-#undef APC_UPOVERLAY_EQUIPMENT2
-#undef APC_UPOVERLAY_LIGHTING0
-#undef APC_UPOVERLAY_LIGHTING1
-#undef APC_UPOVERLAY_LIGHTING2
-#undef APC_UPOVERLAY_ENVIRON0
-#undef APC_UPOVERLAY_ENVIRON1
-#undef APC_UPOVERLAY_ENVIRON2
-#undef APC_UPOVERLAY_LOCKED
-#undef APC_UPOVERLAY_OPERATING
+#undef UPOVERLAY_OPERATING
+#undef UPOVERLAY_LOCKED
+#undef UPOVERLAY_CHARGING_SHIFT
+#undef UPOVERLAY_EQUIPMENT_SHIFT
+#undef UPOVERLAY_LIGHTING_SHIFT
+#undef UPOVERLAY_ENVIRON_SHIFT
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

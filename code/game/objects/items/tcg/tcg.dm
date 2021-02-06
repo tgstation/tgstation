@@ -117,12 +117,13 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		desc = "It's the back of a trading card... no peeking!"
 
 /obj/item/tcgcard/update_icon_state()
-	. = ..()
-	if(!flipped)
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
-		icon_state = template.icon_state
-	else
+	if(flipped)
 		icon_state = "cardback"
+		return ..()
+
+	var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+	icon_state = template.icon_state
+	return ..()
 
 /obj/item/tcgcard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/tcgcard))
@@ -194,18 +195,20 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
 /obj/item/tcgcard_deck/update_icon_state()
-	. = ..()
-	if(flipped)
-		icon_state = "[base_icon_state]_tcg"
-		switch(contents.len)
-			if(1 to 10)
-				icon_state = "[icon_state]_tcg_low"
-			if(11 to 20)
-				icon_state = "[icon_state]_tcg_half"
-			if(21 to INFINITY)
-				icon_state = "[icon_state]_tcg_full"
-	else
+	if(!flipped)
 		icon_state = "[base_icon_state]_up"
+		return ..()
+
+	switch(contents.len)
+		if(1 to 10)
+			icon_state = "[icon_state]_tcg_low"
+		if(11 to 20)
+			icon_state = "[icon_state]_tcg_half"
+		if(21 to INFINITY)
+			icon_state = "[icon_state]_tcg_full"
+		else
+			icon_state = "[base_icon_state]_tcg"
+	return ..()
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()

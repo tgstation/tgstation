@@ -57,10 +57,7 @@ FLOOR SAFES
 			I.forceMove(src)
 
 /obj/structure/safe/update_icon_state()
-	if(open)
-		icon_state = "[initial(icon_state)]-open"
-	else
-		icon_state = initial(icon_state)
+	icon_state = "[initial(icon_state)][open ? "-open" : null]"
 	return ..()
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)

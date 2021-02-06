@@ -74,27 +74,27 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	. = ..()
 	if(machine_stat & NOPOWER)
 		set_light(0)
-	else
-		set_light(1.4,0.7,"#34D352")//green light
+		return
+	set_light(1.4,0.7,"#34D352")//green light
 
 /obj/machinery/requests_console/update_icon_state()
 	if(open)
-		if(!hackState)
-			icon_state="[base_icon_state]_open"
-		else
-			icon_state="[base_icon_state]_rewired"
-	else if(machine_stat & NOPOWER)
-		if(icon_state != "[base_icon_state]_off")
-			icon_state = "[base_icon_state]_off"
-	else
-		if(emergency || (newmessagepriority == REQ_EXTREME_MESSAGE_PRIORITY))
-			icon_state = "[base_icon_state]3"
-		else if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
-			icon_state = "[base_icon_state]2"
-		else if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
-			icon_state = "[base_icon_state]1"
-		else
-			icon_state = "[base_icon_state]0"
+		icon_state="[base_icon_state]_[hackState ? "rewired" : "open"]"
+		return ..()
+	if(machine_stat & NOPOWER)
+		icon_state = "[base_icon_state]_off"
+		return ..()
+
+	if(emergency || (newmessagepriority == REQ_EXTREME_MESSAGE_PRIORITY))
+		icon_state = "[base_icon_state]3"
+		return ..()
+	if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
+		icon_state = "[base_icon_state]2"
+		return ..()
+	if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
+		icon_state = "[base_icon_state]1"
+		return ..()
+	icon_state = "[base_icon_state]0"
 	return ..()
 
 /obj/machinery/requests_console/Initialize()

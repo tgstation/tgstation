@@ -511,13 +511,16 @@
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
-	if (delay < 10)
+	if(delay < 10)
 		icon_state += "_shortest"
-	else if (delay < 20)
+		return ..()
+	if (delay < 20)
 		icon_state += "_shorter"
-	else if (delay < 37)
+		return ..()
+	if (delay < 37)
 		icon_state += "_short"
-	if (status == RCD_DECONSTRUCT)
+		return ..()
+	if(status == RCD_DECONSTRUCT)
 		icon_state += "_reverse"
 	return ..()
 

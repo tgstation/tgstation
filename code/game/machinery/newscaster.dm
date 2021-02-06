@@ -243,11 +243,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 	return ..()
 
 /obj/machinery/newscaster/update_icon_state()
-	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = "[base_icon_state]_off"
-		return
+		return ..()
 	icon_state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
+	return ..()
 
 /obj/machinery/newscaster/update_overlays()
 	. = ..()

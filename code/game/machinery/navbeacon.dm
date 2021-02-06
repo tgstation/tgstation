@@ -91,8 +91,8 @@
 
 // update the icon_state
 /obj/machinery/navbeacon/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][open]"
+	return ..()
 
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc

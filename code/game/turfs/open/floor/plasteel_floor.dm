@@ -22,7 +22,7 @@
 
 /turf/open/floor/plasteel/update_icon_state()
 	if(broken || burnt)
-		return
+		return ..()
 	icon_state = base_icon_state
 	return ..()
 

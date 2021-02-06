@@ -85,5 +85,6 @@
 		return
 	if(priority_alarms.len)
 		. += "alert:2"
-	else if(minor_alarms.len)
+		return
+	if(minor_alarms.len)
 		. += "alert:1"

@@ -175,19 +175,18 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 
 /obj/structure/bodycontainer/morgue/update_icon_state()
-	. = ..()
 	if(!connected || connected.loc != src) // Open or tray is gone.
 		icon_state = "morgue0"
-		return
+		return ..()
 
 	if(contents.len == 1)  // Empty
 		icon_state = "morgue1"
-		return
+		return ..()
 
 	var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
 	if(!length(compiled)) // No mobs?
 		icon_state = "morgue3"
-		return
+		return ..()
 
 	for(var/mob/living/M in compiled)
 		var/mob/living/mob_occupant = get_mob_or_brainmob(M)
@@ -196,10 +195,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			if(mob_occupant.stat == DEAD && beeper && COOLDOWN_FINISHED(src, next_beep))
 				playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
 				COOLDOWN_START(src, next_beep, beep_cooldown)
-			return
+			return ..()
 
 	icon_state = "morgue2" // Dead, brainded mob.
-	return
+	return ..()
 
 
 /obj/item/paper/guides/jobs/medical/morgue
@@ -239,14 +238,14 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	id = "[port.id]_[id]"
 
 /obj/structure/bodycontainer/crematorium/update_icon_state()
-	. = ..()
 	if(!connected || connected.loc != src)
 		icon_state = "[base_icon_state]0"
-		return
+		return ..()
 	if(locked)
 		icon_state = "[base_icon_state]_active"
-		return
+		return ..()
 	icon_state = "[base_icon_state][(contents.len > 1) ? 2 : 1]"
+	return ..()
 
 /obj/structure/bodycontainer/crematorium/proc/cremate(mob/user)
 	if(locked)

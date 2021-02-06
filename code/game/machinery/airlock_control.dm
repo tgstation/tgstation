@@ -115,13 +115,13 @@
 	master_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
 
 /obj/machinery/airlock_sensor/update_icon_state()
-	if(on)
+	if(!on)
+		icon_state = "[base_icon_state]_off"
+	else
 		if(alert)
 			icon_state = "[base_icon_state]_alert"
 		else
 			icon_state = "[base_icon_state]_standby"
-	else
-		icon_state = "[base_icon_state]_off"
 	return ..()
 
 /obj/machinery/airlock_sensor/attack_hand(mob/user)

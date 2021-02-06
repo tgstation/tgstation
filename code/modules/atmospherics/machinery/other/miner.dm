@@ -113,7 +113,9 @@
 	. = ..()
 	if(broken)
 		. += "broken"
-	else if(active)
+		return
+
+	if(active)
 		var/mutable_appearance/on_overlay = mutable_appearance(icon, "on")
 		on_overlay.color = overlay_color
 		. += on_overlay

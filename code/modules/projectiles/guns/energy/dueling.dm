@@ -324,15 +324,14 @@
 	STR.set_holdable(list(/obj/item/gun/energy/dueling))
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
-	. = ..()
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if(locked)
+	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		icon_state = icon_locked
-		return
+		return ..()
 	if(broken)
 		icon_state = icon_broken
-		return
+		return ..()
 	icon_state = open ? "[base_icon_state]open" : icon_closed
+	return ..()
 
 /obj/item/storage/lockbox/dueling/PopulateContents()
 	. = ..()

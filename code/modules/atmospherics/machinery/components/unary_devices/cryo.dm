@@ -186,8 +186,8 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon_state()
-	. = ..()
 	icon_state = (state_open) ? "pod-open" : ((on && is_operational) ? "pod-on" : "pod-off")
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	. = ..()
@@ -202,10 +202,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		. += "pod-panel"
 	if(state_open)
 		return
-	if(on && is_operational)
-		. += GLOB.cryo_overlay_cover_on
-	else
-		. += GLOB.cryo_overlay_cover_off
+	. += (on && is_operational) ? GLOB.cryo_overlay_cover_on : GLOB.cryo_overlay_cover_off
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
@@ -325,7 +322,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
-		
+
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)

@@ -245,10 +245,7 @@
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldgen/update_icon_state()
-	if(active)
-		icon_state = (machine_stat & BROKEN) ? "shieldonbr":"shieldon"
-	else
-		icon_state = (machine_stat & BROKEN) ? "shieldoffbr":"shieldoff"
+	icon_state = "shield[active ? "on" : "off"][(machine_stat & BROKEN) ? "br" : null]"
 	return ..()
 
 #define ACTIVE_SETUPFIELDS 1

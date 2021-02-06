@@ -114,10 +114,7 @@
 	var/matrix/turner = matrix()
 	turner.Turn(azimuth_current)
 	panel.transform = turner
-	if(machine_stat & BROKEN)
-		panel.icon_state = "solar_panel-b"
-	else
-		panel.icon_state = "solar_panel"
+	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -346,11 +343,12 @@
 	if(machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[icon_keyboard]_off")
 		return
+
 	. += mutable_appearance(icon, icon_keyboard)
 	if(machine_stat & BROKEN)
 		. += mutable_appearance(icon, "[icon_state]_broken")
-	else
-		. += mutable_appearance(icon, icon_screen)
+		return
+	. += mutable_appearance(icon, icon_screen)
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

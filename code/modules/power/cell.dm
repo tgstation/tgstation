@@ -55,10 +55,7 @@
 		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
 	if(charge < 0.01)
 		return
-	else if(charge/maxcharge >=0.995)
-		. += mutable_appearance('icons/obj/power.dmi', "cell-o2")
-	else
-		. += mutable_appearance('icons/obj/power.dmi', "cell-o1")
+	. += mutable_appearance('icons/obj/power.dmi', "cell-o[((charge / maxcharge) >= 0.995) ? 2 : 1]")
 
 /obj/item/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge

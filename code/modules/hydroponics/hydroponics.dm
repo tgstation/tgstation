@@ -300,11 +300,12 @@
 	. = ..()
 	if(self_sustaining)
 		set_light(3)
-	else if(myseed?.get_gene(/datum/plant_gene/trait/glow))
+		return
+	if(myseed?.get_gene(/datum/plant_gene/trait/glow)) // Hydroponics needs a refactor, badly.
 		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 		set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
-	else
-		set_light(0)
+		return
+	set_light(0)
 
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()

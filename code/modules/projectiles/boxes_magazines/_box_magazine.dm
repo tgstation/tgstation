@@ -152,13 +152,13 @@
 	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
 
 /obj/item/ammo_box/update_icon_state()
-	. = ..()
 	var/shells_left = LAZYLEN(stored_ammo)
 	switch(multiple_sprites)
 		if(AMMO_BOX_PER_BULLET)
 			icon_state = "[initial(icon_state)]-[shells_left]"
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
+	return ..()
 
 /// Updates the amount of material in this ammo box according to how many bullets are left in it.
 /obj/item/ammo_box/proc/update_custom_materials()

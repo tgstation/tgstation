@@ -10,15 +10,17 @@
 	var/pressing = FALSE
 
 /obj/machinery/plate_press/update_icon_state()
-	. = ..()
 	if(!is_operational)
 		icon_state = "offline"
-	else if(pressing)
+		return ..()
+	if(pressing)
 		icon_state = "loop"
-	else if(current_plate)
+		return ..()
+	if(current_plate)
 		icon_state = "online_loaded"
-	else
-		icon_state = "online"
+		return ..()
+	icon_state = "online"
+	return ..()
 
 /obj/machinery/plate_press/Destroy()
 	QDEL_NULL(current_plate)

@@ -141,12 +141,11 @@
 	return
 
 /obj/item/gun/energy/update_icon_state()
-	. = ..()
 	var/skip_inhand = initial(inhand_icon_state) //only build if we aren't using a preset inhand icon
 	var/skip_worn_icon = initial(worn_icon_state) //only build if we aren't using a preset worn icon
 
 	if(skip_inhand && skip_worn_icon) //if we don't have either, don't do the math.
-		return
+		return ..()
 
 	var/ratio = get_charge_ratio()
 	var/temp_icon_to_use = initial(icon_state)
@@ -159,29 +158,33 @@
 		inhand_icon_state = temp_icon_to_use
 	if(!skip_worn_icon)
 		worn_icon_state = temp_icon_to_use
+	return ..()
 
 
 /obj/item/gun/energy/update_overlays()
 	. = ..()
 	if(!automatic_charge_overlays)
 		return
+
 	var/overlay_icon_state = "[icon_state]_charge"
-	var/ratio = get_charge_ratio()
 	if(modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		overlay_icon_state += "_[shot.select_name]"
 		. += "[icon_state]_[shot.select_name]"
+
+	var/ratio = get_charge_ratio()
 	if(ratio == 0)
 		. += "[icon_state]_empty"
-	else
-		if(!shaded_charge)
-			var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
-			for(var/i = ratio, i >= 1, i--)
-				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
-				charge_overlay.pixel_y = ammo_y_offset * (i - 1)
-				. += new /mutable_appearance(charge_overlay)
-		else
-			. += "[icon_state]_charge[ratio]"
+		return
+	if(shaded_charge)
+		. += "[icon_state]_charge[ratio]"
+		return
+	var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
+	for(var/i = ratio, i >= 1, i--)
+		charge_overlay.pixel_x = ammo_x_offset * (i - 1)
+		charge_overlay.pixel_y = ammo_y_offset * (i - 1)
+		. += new /mutable_appearance(charge_overlay)
+
 
 ///Used by update_icon_state() and update_overlays()
 /obj/item/gun/energy/proc/get_charge_ratio()

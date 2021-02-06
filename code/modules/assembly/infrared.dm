@@ -58,17 +58,18 @@
 
 /obj/item/assembly/infra/update_appearance(updates=ALL)
 	. = ..()
-	holder.update_appearance(updates)
+	holder?.update_appearance(updates)
 
 /obj/item/assembly/infra/update_overlays()
 	. = ..()
 	attached_overlays = list()
-	if(on)
-		. += "infrared_on"
-		attached_overlays += "infrared_on"
-		if(visible && secured)
-			. += "infrared_visible"
-			attached_overlays += "infrared_visible"
+	if(!on)
+		return
+	. += "infrared_on"
+	attached_overlays += "infrared_on"
+	if(visible && secured)
+		. += "infrared_visible"
+		attached_overlays += "infrared_visible"
 
 /obj/item/assembly/infra/dropped()
 	. = ..()

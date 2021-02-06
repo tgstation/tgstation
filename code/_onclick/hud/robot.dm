@@ -284,8 +284,8 @@
 	update_appearance()
 
 /atom/movable/screen/robot/lamp/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state]_[robot?.lamp_enabled ? "on" : "off"]"
+	return ..()
 
 /atom/movable/screen/robot/modPC
 	name = "Modular Interface"

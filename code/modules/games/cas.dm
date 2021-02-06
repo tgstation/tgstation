@@ -138,10 +138,7 @@
 	Flip()
 
 /obj/item/toy/cards/singlecard/cas/update_icon_state()
-	if(flipped)
-		icon_state = "[card_face]_flipped"
-	else
-		icon_state = "[card_face]"
+	icon_state = "[card_face][flipped ? "_flipped" : null]"
 	return ..()
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)

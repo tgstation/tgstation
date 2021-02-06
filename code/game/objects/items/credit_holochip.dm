@@ -27,7 +27,6 @@
 	return ..()
 
 /obj/item/holochip/update_icon_state()
-	. = ..()
 	var/icon_suffix = ""
 	switch(credits)
 		if(1e3 to (1e6 - 1))
@@ -38,6 +37,7 @@
 			icon_suffix = "_giga"
 
 	icon_state = "[base_icon_state][icon_suffix]"
+	return ..()
 
 /obj/item/holochip/update_overlays()
 	. = ..()

@@ -38,8 +38,8 @@
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][((obj_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : ""]"
+	return ..()
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()

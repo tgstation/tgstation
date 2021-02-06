@@ -384,7 +384,6 @@
 	return ..()
 
 /obj/machinery/light/update_icon_state()
-	. = ..()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			var/area/A = get_area(src)
@@ -398,18 +397,21 @@
 			icon_state = "[base_state]-burned"
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
+	return ..()
 
 /obj/machinery/light/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	if(on && status == LIGHT_OK)
-		var/area/A = get_area(src)
-		if(emergency_mode || (A?.fire))
-			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
-		else if (nightshift_enabled)
-			SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
-		else
-			SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
+	if(!on || status != LIGHT_OK)
+		return
+
+	var/area/A = get_area(src)
+	if(emergency_mode || (A?.fire))
+		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_emergency", layer, plane, dir)
+		return
+	if(nightshift_enabled)
+		SSvis_overlays.add_vis_overlay(src, overlayicon, "[base_state]_nightshift", layer, plane, dir)
+		return
+	SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, layer, plane, dir)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)

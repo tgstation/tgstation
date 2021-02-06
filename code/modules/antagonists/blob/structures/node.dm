@@ -25,7 +25,7 @@
 
 /obj/structure/blob/node/update_icon()
 	color = null
-	. = ..()
+	return ..()
 
 /obj/structure/blob/node/update_overlays()
 	. = ..()

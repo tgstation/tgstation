@@ -106,8 +106,8 @@
 	holdingitems = list()
 
 /obj/machinery/reagentgrinder/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][beaker ? 1 : 0]"
+	return ..()
 
 /obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)

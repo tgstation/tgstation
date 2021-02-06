@@ -69,23 +69,22 @@ The console is located at computer/gulag_teleporter.dm
 	return ..()
 
 /obj/machinery/gulag_teleporter/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][state_open ? "_open" : null]"
 	//no power or maintenance
 	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "_unpowered"
 		if((machine_stat & MAINT) || panel_open)
 			icon_state += "_maintenance"
-		return
+		return ..()
 
 	if((machine_stat & MAINT) || panel_open)
 		icon_state += "_maintenance"
-		return
+		return ..()
 
 	//running and someone in there
 	if(occupant)
 		icon_state += "_occupied"
-		return
+	return ..()
 
 
 /obj/machinery/gulag_teleporter/relaymove(mob/living/user, direction)

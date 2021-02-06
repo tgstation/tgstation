@@ -132,8 +132,8 @@
 			visible_message("<span class='danger'>[griddled_item] doesn't seem to be doing too great on the [src]!</span>")
 
 /obj/machinery/griddle/update_icon_state()
-	. = ..()
 	icon_state = "griddle[variant]_[on ? "on" : "off"]"
+	return ..()
 
 /obj/machinery/griddle/stand
 	name = "griddle stand"

@@ -23,7 +23,7 @@
 /obj/machinery/aug_manipulator/update_icon_state()
 	if(machine_stat & BROKEN)
 		icon_state = "[base_icon_state]-broken"
-		return
+		return ..()
 	icon_state = "[base_icon_state][powered() ? null : "-off"]"
 	return ..()
 

@@ -116,7 +116,7 @@
 	if(!loaded)
 		icon_state = "rcl-0"
 		inhand_icon_state = "rcl-0"
-		return
+		return ..()
 	switch(loaded.amount)
 		if(61 to INFINITY)
 			icon_state = "rcl-30"
@@ -339,7 +339,7 @@
 	if(!loaded)
 		icon_state = "rclg-0"
 		inhand_icon_state = "rclg-0"
-		return
+		return ..()
 	switch(loaded.amount)
 		if(1 to INFINITY)
 			icon_state = "rclg-1"

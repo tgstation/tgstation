@@ -34,7 +34,7 @@
 	for(var/obj/machinery/power/apc/C in GLOB.machines)
 		if(C.cell && is_station_level(C.z))
 			C.cell.charge = C.cell.maxcharge
-			C.failure_timer = 0
+			COOLDOWN_RESET(C, failure_timer)
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
 		if(!is_station_level(S.z))
 			continue

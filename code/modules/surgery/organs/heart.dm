@@ -23,8 +23,8 @@
 	var/operated = FALSE	//whether the heart's been operated on to fix some of its damages
 
 /obj/item/organ/heart/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
+	return ..()
 
 /obj/item/organ/heart/Remove(mob/living/carbon/M, special = 0)
 	..()

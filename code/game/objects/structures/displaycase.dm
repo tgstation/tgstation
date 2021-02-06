@@ -110,8 +110,10 @@
 		return
 	if(broken)
 		. += "[initial(icon_state)]_broken"
-	else if(!open)
+		return
+	if(!open)
 		. += "[initial(icon_state)]_closed"
+		return
 
 /obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID() && !broken && openable)

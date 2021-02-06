@@ -72,13 +72,10 @@
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
 	if(on)
-		var/mutable_appearance/fire_overlay = mutable_appearance(icon, "hygienebot-flame")
-		. +=fire_overlay
-
+		. += mutable_appearance(icon, "hygienebot-flame")
 
 	if(washing)
-		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
-		. += water_overlay
+		. += mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
 
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()

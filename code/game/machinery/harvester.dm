@@ -30,15 +30,17 @@
 	interval = max(max_time,1)
 
 /obj/machinery/harvester/update_icon_state()
-	. = ..()
 	if(state_open)
 		icon_state = "[base_icon_state]-open"
-	else if(warming_up)
+		return ..()
+	if(warming_up)
 		icon_state = "[base_icon_state]-charging"
-	else if(harvesting)
+		return ..()
+	if(harvesting)
 		icon_state = "[base_icon_state]-active"
-	else
-		icon_state = base_icon_state
+		return ..()
+	icon_state = base_icon_state
+	return ..()
 
 /obj/machinery/harvester/open_machine(drop = TRUE)
 	if(panel_open)

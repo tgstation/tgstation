@@ -101,8 +101,8 @@
 	update_icon_state()
 
 /obj/structure/eldritch_crucible/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][(current_mass == max_mass) ? null : "_empty"]"
+	return ..()
 
 /obj/structure/trap/eldritch
 	name = "elder carving"

@@ -55,12 +55,11 @@
 		. += "There is no power cell installed."
 
 /obj/machinery/electrolyzer/update_icon_state()
-	. = ..()
 	icon_state = "electrolyzer-[on ? "[mode]" : "off"]"
+	return ..()
 
 /obj/machinery/electrolyzer/update_overlays()
 	. = ..()
-
 	if(panel_open)
 		. += "electrolyzer-open"
 

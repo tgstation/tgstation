@@ -174,10 +174,7 @@
 	. = ..()
 	if(!welded)
 		return
-	if(density)
-		. += "welded"
-	else
-		. += "welded_open"
+	. += density ? "welded" : "welded_open"
 
 /obj/machinery/door/firedoor/open()
 	. = ..()
@@ -278,8 +275,8 @@
 			. += "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .</span>"
 
 /obj/structure/firelock_frame/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][constructionStep]"
+	return ..()
 
 /obj/structure/firelock_frame/attackby(obj/item/C, mob/user)
 	switch(constructionStep)

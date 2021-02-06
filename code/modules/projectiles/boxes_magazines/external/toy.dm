@@ -11,7 +11,7 @@
 	max_ammo = 20
 
 /obj/item/ammo_box/magazine/toy/smg/update_icon_state()
-	..()
+	. = ..()
 	icon_state = "[base_icon_state]-[ammo_count() ? 42 : 0]"
 
 /obj/item/ammo_box/magazine/toy/smg/riot

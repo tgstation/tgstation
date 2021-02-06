@@ -61,9 +61,9 @@
 	signal()
 	return TRUE
 
-/obj/item/assembly/signaler/update_icon()
+/obj/item/assembly/signaler/update_appearance()
 	. = ..()
-	holder?.update_icon()
+	holder?.update_appearance()
 
 /obj/item/assembly/signaler/ui_status(mob/user)
 	if(is_secured(user))

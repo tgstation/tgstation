@@ -246,8 +246,8 @@
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/drinks/mug/update_icon_state()
-	. = ..()
 	icon_state = reagents.total_volume ? "tea" : "tea_empty"
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple tea"
@@ -449,8 +449,8 @@
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/sillycup/update_icon_state()
-	. = ..()
 	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"
+	return ..()
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
 	name = "small carton"

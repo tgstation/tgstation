@@ -34,10 +34,11 @@
 /obj/item/mmi/update_icon_state()
 	if(!brain)
 		icon_state = "mmi_off"
-	else if(istype(brain, /obj/item/organ/brain/alien))
+		return ..()
+	if(istype(brain, /obj/item/organ/brain/alien))
 		icon_state = "mmi_brain_alien"
-	else
-		icon_state = "mmi_brain"
+		return ..()
+	icon_state = "mmi_brain"
 	return ..()
 
 /obj/item/mmi/update_overlays()

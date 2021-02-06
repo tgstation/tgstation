@@ -59,8 +59,8 @@
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
-	. = ..()
 	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
+	return ..()
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
 	if(!istype(bomb_to_attach))

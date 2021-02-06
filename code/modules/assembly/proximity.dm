@@ -95,7 +95,7 @@
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
 
-/obj/item/assembly/prox_sensor/update_icon()
+/obj/item/assembly/prox_sensor/update_appearance()
 	. = ..()
 	holder?.update_appearance()
 

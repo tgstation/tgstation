@@ -56,15 +56,19 @@
 	dump_contents()
 	return ..()
 
+/obj/structure/closet/update_appearance(updates)
+	. = ..()
+	if(opened || broken || !secure)
+		luminosity = 0
+		return
+	luminosity = 1
+
 /obj/structure/closet/update_icon()
 	. = ..()
 	if(istype(src, /obj/structure/closet/supplypod))
 		return
 
-	if(!opened)
-		layer = OBJ_LAYER
-	else
-		layer = BELOW_OBJ_LAYER
+	layer = opened ? BELOW_OBJ_LAYER : OBJ_LAYER
 
 /obj/structure/closet/update_overlays()
 	. = ..()
@@ -72,28 +76,19 @@
 
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	luminosity = 0
-	if(!opened)
-		if(icon_door)
-			. += "[icon_door]_door"
-		else
-			. += "[icon_state]_door"
-		if(welded)
-			. += icon_welded
-		if(secure && !broken)
-			//Overlay is similar enough for both that we can use the same mask for both
-			luminosity = 1
-			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
-			if(locked)
-				. += "locked"
-			else
-				. += "unlocked"
-	else
-		if(icon_door_override)
-			. += "[icon_door]_open"
-		else
-			. += "[icon_state]_open"
+	if(opened)
+		. += "[icon_door_override ? icon_door : icon_state]_door"
+		return
+
+	. += "[icon_door || icon_state]_door"
+	if(welded)
+		. += icon_welded
+
+	if(broken || !secure)
+		return
+	//Overlay is similar enough for both that we can use the same mask for both
+	SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	. += locked ? "locked" : "unlocked"
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()

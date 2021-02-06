@@ -32,10 +32,12 @@
 	. = ..()
 	if(!selector_switch_icon)
 		return
-	if(!select)
-		. += "[initial(icon_state)]_semi"
-	if(select == 1)
-		. += "[initial(icon_state)]_burst"
+
+	switch(select)
+		if(0)
+			. += "[initial(icon_state)]_semi"
+		if(1)
+			. += "[initial(icon_state)]_burst"
 
 /obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_firemode))

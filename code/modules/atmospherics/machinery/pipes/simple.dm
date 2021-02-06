@@ -28,5 +28,5 @@
 			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/pipe/simple/update_icon_state()
-	. = ..()
 	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
+	return ..()

@@ -62,13 +62,13 @@
 			desc = "[desc] The [boxes.len ? "top box" : "box"]'s tag reads: [box.boxtag]"
 
 /obj/item/pizzabox/update_icon_state()
-	. = ..()
 	if(!open)
 		icon_state = "[base_icon_state]"
-		return
+		return ..()
 
 	icon_state = pizza ? "[base_icon_state]_messy" : "[base_icon_state]_open"
 	bomb?.icon_state = "pizzabomb_[bomb_active ? "active" : "inactive"]"
+	return ..()
 
 /obj/item/pizzabox/update_overlays()
 	. = ..()

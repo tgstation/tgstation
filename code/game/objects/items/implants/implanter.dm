@@ -15,10 +15,7 @@
 
 
 /obj/item/implanter/update_icon_state()
-	if(imp)
-		icon_state = "implanter1"
-	else
-		icon_state = "implanter0"
+	icon_state = "implanter[imp ? 1 : 0]"
 	return ..()
 
 

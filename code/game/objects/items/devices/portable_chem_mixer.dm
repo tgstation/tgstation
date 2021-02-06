@@ -75,19 +75,19 @@
 	return
 
 /obj/item/storage/portable_chem_mixer/update_icon_state()
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if (!locked)
+	if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		icon_state = "portablechemicalmixer_open"
-	else if (beaker)
+		return ..()
+	if(beaker)
 		icon_state = "portablechemicalmixer_full"
-	else
-		icon_state = "portablechemicalmixer_empty"
+		return ..()
+	icon_state = "portablechemicalmixer_empty"
 	return ..()
 
 
 /obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if (!locked)
+	if(!locked)
 		return ..()
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return

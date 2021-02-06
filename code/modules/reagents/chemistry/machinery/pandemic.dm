@@ -128,8 +128,8 @@
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 /obj/machinery/computer/pandemic/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][beaker ? 1 : 0][(machine_stat & BROKEN) ? "_b" : (powered() ? null : "_nopower")]"
+	return ..()
 
 /obj/machinery/computer/pandemic/update_overlays()
 	. = ..()

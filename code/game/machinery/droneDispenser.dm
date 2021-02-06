@@ -181,15 +181,17 @@
 			.++
 
 /obj/machinery/drone_dispenser/update_icon_state()
-	. = ..()
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
-	else if(mode == DRONE_RECHARGING)
+		return ..()
+	if(mode == DRONE_RECHARGING)
 		icon_state = icon_recharging
-	else if(mode == DRONE_PRODUCTION)
+		return ..()
+	if(mode == DRONE_PRODUCTION)
 		icon_state = icon_creating
-	else
-		icon_state = icon_on
+		return ..()
+	icon_state = icon_on
+	return ..()
 
 /obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)

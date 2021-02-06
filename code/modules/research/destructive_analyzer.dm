@@ -46,8 +46,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	reset_busy()
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"
+	return ..()
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src))

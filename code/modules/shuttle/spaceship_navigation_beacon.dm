@@ -31,8 +31,8 @@
 
 // update the icon_state
 /obj/machinery/spaceship_navigation_beacon/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][powered() ? null : "-open"]"
+	return ..()
 
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
 	..()

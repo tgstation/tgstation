@@ -170,8 +170,8 @@
 	update_appearance()
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][on ? "-on" : null]"
+	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/move_react()
 	if(!on)//If jet dont work, it dont work

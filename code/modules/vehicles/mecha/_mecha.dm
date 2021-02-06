@@ -234,13 +234,14 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/update_icon_state()
-	. = ..()
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		icon_state = silicon_icon_state
-	else if(LAZYLEN(occupants))
+		return ..()
+	if(LAZYLEN(occupants))
 		icon_state = base_icon_state
-	else
-		icon_state = "[base_icon_state]-open"
+		return ..()
+	icon_state = "[base_icon_state]-open"
+	return ..()
 
 
 /obj/vehicle/sealed/mecha/get_cell()

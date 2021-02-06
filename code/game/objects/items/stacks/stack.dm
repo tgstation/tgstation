@@ -123,13 +123,14 @@
 
 /obj/item/stack/update_icon_state()
 	if(novariants)
-		return
+		return ..()
 	if(amount <= (max_amount * (1/3)))
 		icon_state = initial(icon_state)
-	else if (amount <= (max_amount * (2/3)))
+		return ..()
+	if (amount <= (max_amount * (2/3)))
 		icon_state = "[initial(icon_state)]_2"
-	else
-		icon_state = "[initial(icon_state)]_3"
+		return ..()
+	icon_state = "[initial(icon_state)]_3"
 	return ..()
 
 /obj/item/stack/examine(mob/user)

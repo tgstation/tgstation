@@ -42,11 +42,11 @@
 
 
 /obj/machinery/smoke_machine/update_icon_state()
-	. = ..()
 	if((!is_operational) || (!on) || (reagents.total_volume == 0))
 		icon_state = "[base_icon_state]0[panel_open ? "-o" : null]"
-		return
+		return ..()
 	icon_state = "[base_icon_state]1"
+	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
 	var/new_volume = REAGENTS_BASE_VOLUME

@@ -155,10 +155,7 @@
 
 /atom/movable/screen/movable/action_button/hide_toggle/update_overlays()
 	. = ..()
-	if(hidden)
-		. += show_appearance
-	else
-		. += hide_appearance
+	. += hidden ? show_appearance : hide_appearance
 
 /atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	if(!QDELETED(src))

@@ -112,8 +112,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update()
 
 /obj/machinery/conveyor/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][(machine_stat & BROKEN) ? "-broken" : (operating * verted)]"
+	return ..()
 
 /obj/machinery/conveyor/proc/update()
 	if(machine_stat & BROKEN || !operable || machine_stat & NOPOWER)
@@ -280,14 +280,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // update the icon depending on the position
 
 /obj/machinery/conveyor_switch/update_icon_state()
-	. = ..()
 	if(position < 0)
 		icon_state = "[base_icon_state]-[invert_icon ? "fwd" : "rev"]"
-		return
+		return ..()
 	if(position > 0)
 		icon_state = "[base_icon_state]-[invert_icon ? "rev" : "fwd"]"
-		return
+		return ..()
 	icon_state = "[base_icon_state]-off"
+	return ..()
 
 /// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()

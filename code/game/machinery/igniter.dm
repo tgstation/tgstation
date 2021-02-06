@@ -49,8 +49,8 @@
 	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][(machine_stat & NOPOWER) ? 0 : on]"
+	return ..()
 
 /obj/machinery/igniter/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
@@ -83,11 +83,11 @@
 	return ..()
 
 /obj/machinery/sparker/update_icon_state()
-	. = ..()
 	if(disable)
 		icon_state = "[base_icon_state]-d"
-		return
+		return ..()
 	icon_state = "[base_icon_state][powered() ? null : "-p"]"
+	return ..()
 
 /obj/machinery/sparker/powered()
 	if(disable)

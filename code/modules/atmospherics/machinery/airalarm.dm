@@ -648,11 +648,11 @@
 				icon_state = "alarm_b2"
 			if(0)
 				icon_state = "alarm_b1"
-		return
+		return ..()
 
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
-		return
+		return ..()
 
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))

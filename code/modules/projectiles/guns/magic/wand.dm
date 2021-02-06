@@ -23,8 +23,8 @@
 	. += "Has [charges] charge\s remaining."
 
 /obj/item/gun/magic/wand/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][charges ? null : "-drained"]"
+	return ..()
 
 /obj/item/gun/magic/wand/attack(atom/target, mob/living/user)
 	if(target == user)

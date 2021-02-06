@@ -159,15 +159,13 @@
 	QDEL_NULL(object_overlay)
 
 /atom/movable/screen/inventory/update_icon_state()
-	. = ..()
 	if(!icon_empty)
 		icon_empty = icon_state
 
-	if(hud?.mymob && slot_id && icon_full)
-		if(hud.mymob.get_item_by_slot(slot_id))
-			icon_state = icon_full
-		else
-			icon_state = icon_empty
+	if(!hud?.mymob || !slot_id || !icon_full)
+		return ..()
+	icon_state = hud.mymob.get_item_by_slot(slot_id) ? icon_full : icon_empty
+	return ..()
 
 /atom/movable/screen/inventory/proc/add_overlays()
 	var/mob/user = hud?.mymob
@@ -284,11 +282,11 @@
 		update_icon()
 
 /atom/movable/screen/combattoggle/update_icon_state()
-	. = ..()
 	var/mob/living/user = hud?.mymob
 	if(!istype(user) || !user.client)
-		return
+		return ..()
 	icon_state = user.combat_mode ? "combat" : "combat_off" //Treats the combat_mode
+	return ..()
 
 //Version of the combat toggle with the flashy overlay
 /atom/movable/screen/combattoggle/flashy
@@ -301,11 +299,13 @@
 	if(!istype(user) || !user.client)
 		return
 
-	if(user.combat_mode)
-		if(!flashy)
-			flashy = mutable_appearance('icons/hud/screen_gen.dmi', "togglefull_flash")
-			flashy.color = "#C62727"
-		. += flashy
+	if(!user.combat_mode)
+		return
+
+	if(!flashy)
+		flashy = mutable_appearance('icons/hud/screen_gen.dmi', "togglefull_flash")
+		flashy.color = "#C62727"
+	. += flashy
 
 /atom/movable/screen/combattoggle/robot
 	icon = 'icons/hud/screen_cyborg.dmi'
@@ -385,12 +385,12 @@
 	toggle(usr)
 
 /atom/movable/screen/mov_intent/update_icon_state()
-	. = ..()
 	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
 			icon_state = "running"
+	return ..()
 
 /atom/movable/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
@@ -409,8 +409,8 @@
 	usr.stop_pulling()
 
 /atom/movable/screen/pull/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state][hud?.mymob?.pulling ? null : 0]"
+	return ..()
 
 /atom/movable/screen/resist
 	name = "resist"
@@ -438,11 +438,11 @@
 		L.toggle_resting()
 
 /atom/movable/screen/rest/update_icon_state()
-	. = ..()
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
-		return
+		return ..()
 	icon_state = "[base_icon_state][user.resting ? 0 : null]"
+	return ..()
 
 /atom/movable/screen/storage
 	name = "storage"
@@ -759,7 +759,7 @@
 		return ..()
 	timerid = addtimer(CALLBACK(src, .proc/clear_streak), 20, TIMER_UNIQUE | TIMER_STOPPABLE)
 	icon_state = "combo"
-	for (var/i = 1; i <= length(streak); ++i)
+	for(var/i = 1; i <= length(streak); ++i)
 		var/intent_text = copytext(streak, i, i + 1)
 		var/image/intent_icon = image(icon,src,"combo_[intent_text]")
 		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)

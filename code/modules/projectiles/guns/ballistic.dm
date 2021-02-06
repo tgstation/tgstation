@@ -91,7 +91,7 @@
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
 
 	///Gun internal magazine modification and misfiring
-	
+
 	///Can we modify our ammo type in this gun's internal magazine?
 	var/can_modify_ammo = FALSE
 	///our initial ammo type. Should match initial caliber, but a bit of redundency doesn't hurt.
@@ -106,7 +106,7 @@
 	var/alternative_ammo_misfires = FALSE
 	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires.
 	var/can_misfire = FALSE
-	///How likely is our gun to misfire? 
+	///How likely is our gun to misfire?
 	var/misfire_probability = 0
 	///How much does shooting the gun increment the misfire probability?
 	var/misfire_percentage_increment = 0
@@ -132,11 +132,11 @@
 		update_appearance()
 
 /obj/item/gun/ballistic/update_icon_state()
-	. = ..()
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][sawn_off ? "_sawn" : ""]"
 	else
 		icon_state = "[base_icon_state || initial(icon_state)][sawn_off ? "_sawn" : ""]"
+	return ..()
 
 /obj/item/gun/ballistic/update_overlays()
 	. = ..()
@@ -145,38 +145,45 @@
 			. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
 		if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
 			. += "[icon_state]_bolt"
-	if (suppressed)
+
+	if(suppressed)
 		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
 		if(suppressor_x_offset)
 			MA.pixel_x = suppressor_x_offset
 		if(suppressor_y_offset)
 			MA.pixel_y = suppressor_y_offset
 		. += MA
+
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"
-	if (magazine && !internal_magazine)
-		if (special_mags)
-			. += "[icon_state]_mag_[initial(magazine.icon_state)]"
-			if (mag_display_ammo && !magazine.ammo_count())
-				. += "[icon_state]_mag_empty"
-		else
-			. += "[icon_state]_mag"
-			if(!mag_display_ammo)
-				return
-			var/capacity_number
-			switch(get_ammo() / magazine.max_ammo)
-				if(1 to INFINITY) //cause we can have one in the chamber.
-					capacity_number = 100
-				if(0.8 to 1)
-					capacity_number = 80
-				if(0.6 to 0.8)
-					capacity_number = 60
-				if(0.4 to 0.6)
-					capacity_number = 40
-				if(0.2 to 0.4)
-					capacity_number = 20
-			if (capacity_number)
-				. += "[icon_state]_mag_[capacity_number]"
+
+	if(!magazine || internal_magazine)
+		return
+
+	if(special_mags)
+		. += "[icon_state]_mag_[initial(magazine.icon_state)]"
+		if(mag_display_ammo && !magazine.ammo_count())
+			. += "[icon_state]_mag_empty"
+		return
+
+	. += "[icon_state]_mag"
+	if(!mag_display_ammo)
+		return
+
+	var/capacity_number
+	switch(get_ammo() / magazine.max_ammo)
+		if(1 to INFINITY) //cause we can have one in the chamber.
+			capacity_number = 100
+		if(0.8 to 1)
+			capacity_number = 80
+		if(0.6 to 0.8)
+			capacity_number = 60
+		if(0.4 to 0.6)
+			capacity_number = 40
+		if(0.2 to 0.4)
+			capacity_number = 20
+	if(capacity_number)
+		. += "[icon_state]_mag_[capacity_number]"
 
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
@@ -324,11 +331,11 @@
 	if (can_be_sawn_off)
 		if (sawoff(user, A))
 			return
-	
+
 	if(can_misfire && istype(A, /obj/item/stack/sheet/cloth))
 		if(guncleaning(user, A))
 			return
-	
+
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
@@ -345,7 +352,7 @@
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
-	
+
 	. = ..()
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
@@ -555,10 +562,10 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(misfire_probability == 0)
 		to_chat(user, "<span class='notice'>\The [src] seems to be already clean of fouling.</span>")
 		return
-	
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
-	
+
 	if(do_after(user, 100, target = src))
 		var/original_misfire_value = initial(misfire_probability)
 		if(misfire_probability > original_misfire_value)
@@ -570,15 +577,15 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(!user.is_holding(src))
 		to_chat(user, "<span class='notice'>You need to hold [src] to modify it.</span>")
 		return TRUE
-	
+
 	if(!can_modify_ammo)
 		return
-	
+
 	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo())	
+		if(get_ammo())
 			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
 			return
-		
+
 		else if(!bolt_locked)
 			to_chat(user, "<span class='notice'>You can't get at the internals while the bolt is down!</span>")
 			return
@@ -587,7 +594,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 3 SECONDS))
 		return TRUE
-	
+
 	if(blow_up(user))
 		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
 		return

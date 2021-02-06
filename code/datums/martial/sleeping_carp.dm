@@ -191,8 +191,8 @@
 	wielded = FALSE
 
 /obj/item/staff/bostaff/update_icon_state()
-	. = ..()
 	icon_state = "[base_icon_state]0"
+	return ..()
 
 /obj/item/staff/bostaff/attack(mob/target, mob/living/user, params)
 	add_fingerprint(user)

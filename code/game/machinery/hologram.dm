@@ -450,12 +450,12 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	update_appearance()
 
 /obj/machinery/holopad/update_icon_state()
-	. = ..()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
-		return
+		return ..()
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
+	return ..()
 
 /obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, user, h)

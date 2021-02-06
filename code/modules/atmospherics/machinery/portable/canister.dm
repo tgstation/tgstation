@@ -363,15 +363,16 @@
 		. += "can-open"
 	if(connected_port)
 		. += "can-connector"
-	var/pressure = air_contents.return_pressure()
-	if(pressure >= 40 * ONE_ATMOSPHERE)
-		. += "can-3"
-	else if(pressure >= 10 * ONE_ATMOSPHERE)
-		. += "can-2"
-	else if(pressure >= 5 * ONE_ATMOSPHERE)
-		. += "can-1"
-	else if(pressure >= 10)
-		. += "can-0"
+
+	switch(air_contents.return_pressure())
+		if((40 * ONE_ATMOSPHERE) to INFINITY)
+			. += "can-3"
+		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
+			. += "can-2"
+		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
+			. += "can-1"
+		if((10) to (5 * ONE_ATMOSPHERE))
+			. += "can-0"
 
 
 /obj/machinery/portable_atmospherics/canister/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

@@ -51,8 +51,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon_state()
-	. = ..()
 	icon_state = "[get_status()]_[sprite_number]"
+	return ..()
 
 /obj/machinery/gravity_generator/proc/get_status()
 	return "off"

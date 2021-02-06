@@ -212,10 +212,12 @@
 /obj/machinery/teleport/station/update_icon_state()
 	if(panel_open)
 		icon_state = "[base_icon_state]-o"
-	else if(machine_stat & (BROKEN|NOPOWER))
+		return ..()
+	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "[base_icon_state]-p"
-	else if(teleporter_console?.calibrating)
+		return ..()
+	if(teleporter_console?.calibrating)
 		icon_state = "[base_icon_state]-c"
-	else
-		icon_state = base_icon_state
+		return ..()
+	icon_state = base_icon_state
 	return ..()

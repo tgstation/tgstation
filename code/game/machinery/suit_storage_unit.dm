@@ -165,23 +165,31 @@
 	if(uv)
 		if(uv_super)
 			. += "super"
-		else if(occupant)
+			return
+		if(occupant)
 			. += "uvhuman"
-		else
-			. += "uv"
-	else if(state_open)
+			return
+
+		. += "uv"
+		return
+
+	if(state_open)
 		if(machine_stat & BROKEN)
 			. += "broken"
-		else
-			. += "open"
-			if(suit)
-				. += "suit"
-			if(helmet)
-				. += "helm"
-			if(storage)
-				. += "storage"
-	else if(occupant)
+			return
+
+		. += "open"
+		if(suit)
+			. += "suit"
+		if(helmet)
+			. += "helm"
+		if(storage)
+			. += "storage"
+		return
+
+	if(occupant)
 		. += "human"
+		return
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()

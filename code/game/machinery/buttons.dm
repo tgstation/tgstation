@@ -44,13 +44,14 @@
 	setup_device()
 
 /obj/machinery/button/update_icon_state()
-	. = ..()
 	if(panel_open)
 		icon_state = "button-open"
-	else if(machine_stat & (NOPOWER|BROKEN))
+		return ..()
+	if(machine_stat & (NOPOWER|BROKEN))
 		icon_state = "[skin]-p"
-	else
-		icon_state = skin
+		return ..()
+	icon_state = skin
+	return ..()
 
 /obj/machinery/button/update_overlays()
 	. = ..()

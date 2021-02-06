@@ -29,10 +29,7 @@
 		for(var/i in 1 to contents.len)
 			gun_overlay.pixel_x = 3 * (i - 1)
 			. += new /mutable_appearance(gun_overlay)
-	if(open)
-		. += "[icon_state]_open"
-	else
-		. += "[icon_state]_door"
+	. += "[icon_state]_[open ? "open" : "door"]"
 
 /obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
 	if(iscyborg(user) || isalien(user))

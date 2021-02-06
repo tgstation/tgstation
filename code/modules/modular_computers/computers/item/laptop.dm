@@ -41,11 +41,10 @@
 	return ..()
 
 /obj/item/modular_computer/laptop/update_overlays()
-	if(screen_on)
-		return ..()
-	else
+	if(!screen_on)
 		cut_overlays()
-		icon_state = icon_state_closed
+		return
+	return ..()
 
 /obj/item/modular_computer/laptop/attack_self(mob/user)
 	if(!screen_on)

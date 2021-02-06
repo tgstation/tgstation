@@ -73,13 +73,14 @@
 		max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
-	. = ..()
 	if(panel_open)
 		icon_state = icon_state_open
-	else if(on && is_operational)
+		return ..()
+	if(on && is_operational)
 		icon_state = icon_state_on
-	else
-		icon_state = icon_state_off
+		return ..()
+	icon_state = icon_state_off
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
