@@ -311,12 +311,13 @@
 	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut)
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
-	radio.talk_into(src,"Created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Speedy delivery bonus lost in [time2text(bonus_countdown,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
+	radio.talk_into(src,"Created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Speedy delivery bonus lost in [time2text(next_nag_time - world.time,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
 
 //for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
 /obj/item/bounty_cube/test_cube
 	name = "debug bounty cube"
-	desc = "Use in-hand to set it up with a random bounty. Requires an ID it can detect with a bank account attached. This will alert Supply over the radio with your name and location."
+	desc = "Use in-hand to set it up with a random bounty. Requires an ID it can detect with a bank account attached. \
+	This will alert Supply over the radio with your name and location, and cargo techs will be dispatched to your location with kill on sight clearance."
 	var/set_up = FALSE
 
 /obj/item/bounty_cube/test_cube/attack_self(mob/user)
