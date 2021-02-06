@@ -312,8 +312,8 @@
 	src.typep = typep
 
 /**
-  * Send the signal with given arguments.
-  */
+ * Send the signal with given arguments.
+ */
 /datum/signal_sender/proc/send(list/arguments)
 	if(!target)
 		return NONE
@@ -332,11 +332,11 @@
 		. |= CallAsync(C, proctype, arguments)
 
 /**
-  * Unregisters all the signal handlers that match,
-  * and returns a /datum/signal_sender which can be used to send the signal once again.
-  *
-  * Useful for sending signals after deleting.
-  */
+ * Unregisters all the signal handlers that match,
+ * and returns a /datum/signal_sender which can be used to send the signal once again.
+ *
+ * Useful for sending signals after deleting.
+ */
 /datum/proc/TakeSignalSender(sigtype)
 	if(!comp_lookup || !comp_lookup[sigtype])
 		return null
