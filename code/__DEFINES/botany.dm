@@ -48,4 +48,4 @@
 #define TRAIT_HALVES_YIELD (1<<0)
 
 /// Macro for determining if the object is a plant (either edible or inedible plant).
-#define IS_PLANT(O) ((istype(O, /obj/item/grown) || (istype(O, /obj/item/food/grown))))
+#define IS_PLANT(O) ((istype(O, /obj/item/grown)) || (istype(O, /obj/item/food/grown)))

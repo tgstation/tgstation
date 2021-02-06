@@ -266,6 +266,13 @@
 /datum/plant_gene/trait/squash/on_throw_impact(obj/item/food/grown/our_plant, atom/target)
 	SEND_SIGNAL(our_plant, COMSIG_PLANT_SQUASH, target)
 
+/*
+ * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
+ *
+ * Arguments
+ * our_plant - the plant this trait belongs to.
+ * target - the atom being hit by this squashed plant.
+ */
 /datum/plant_gene/trait/squash/proc/squash_plant(obj/item/food/grown/our_plant, atom/target)
 	SIGNAL_HANDLER
 
