@@ -250,8 +250,6 @@
 	var/holder_cut = 0.3
 	///Multiplier for the bounty payout received by the person who claims the handling tip.
 	var/handler_tip = 0.1
-	///Time until speed bonus expires.
-	var/bonus_countdown = 5 MINUTES
 	///Time between nags.
 	var/nag_cooldown = 5 MINUTES
 	///How much the time between nags extends each nag.
@@ -268,8 +266,6 @@
 	var/datum/bank_account/bounty_handler_account
 	///Bank account of the person who completed the bounty.
 	var/datum/bank_account/bounty_holder_account
-	///When the cube was created.
-	var/creation_time
 	///Our internal radio.
 	var/obj/item/radio/radio
 	///The key our internal radio uses.
@@ -289,13 +285,11 @@
 /obj/item/bounty_cube/examine()
 	. = ..()
 	if(speed_bonus)
-		. += "<span class='notice'><b>[time2text(bonus_countdown,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.</span>"
+		. += "<span class='notice'><b>[time2text(next_nag_time - world.time,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.</span>"
 	if(handler_tip && !bounty_handler_account)
 		. += "<span class='notice'>Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.</span>"
 
 /obj/item/bounty_cube/process(delta_time)
-	if(speed_bonus)
-		bonus_countdown = next_nag_time - world.time
 	if(COOLDOWN_FINISHED(src, next_nag_time))
 		if(!is_centcom_level(z) && !is_reserved_level(z)) //don't send message if we're on Centcom or in transit
 			radio.talk_into(src, "Unsent in [get_area(src)].[speed_bonus ? " Speedy delivery bonus of [bounty_value * speed_bonus] credit\s lost." : ""]", RADIO_CHANNEL_SUPPLY)
@@ -316,7 +310,7 @@
 	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
 	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut)
 	START_PROCESSING(SSobj, src)
-	COOLDOWN_START(src, next_nag_time, bonus_countdown) //First nag after we've lost our speed bonus
+	COOLDOWN_START(src, next_nag_time, nag_cooldown)
 	radio.talk_into(src,"Created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Speedy delivery bonus lost in [time2text(bonus_countdown,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
 
 //for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
