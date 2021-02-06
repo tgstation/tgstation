@@ -14,7 +14,7 @@
 
 
 /datum/round_event/disease_outbreak/announce(fake)
-	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
+	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
 	announceWhen = rand(15, 30)
