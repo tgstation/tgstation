@@ -92,8 +92,8 @@
 	/// Access levels held by this card.
 	var/list/timberpoes_access = list()
 
-	/// List of access flag keys to number values controlling how many and which wildcards this card can have. Can have negative values if wildcards are forced onto cards.
-	var/list/wildcard_limits = list()
+	/// List of wildcard slot datums as keys with the number of wildcard slots as values.
+	var/list/wildcard_slots = list()
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -113,18 +113,20 @@
 	return ..()
 
 /obj/item/card/id/proc/can_add_wildcards(list/wildcard_list)
-	var/list/new_limits = wildcard_limits.Copy()
+	var/list/new_limits = wildcard_slots.Copy()
 
 	var/wildcard_allocated
 	for(var/wildcard in wildcard_list)
 		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
-		for(var/limit_flag in new_limits)
-			if(!(wildcard_flag & limit_flag))
+		for(var/flag_name in new_limits)
+			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
+			if(!(wildcard_flag & limit_flags))
 				continue
-			if(new_limits[limit_flag] <= 0)
+			// Negative limits mean infinite slots. Positive limits mean limited slots still available. 0 slots means no slots.
+			if(new_limits[flag_name] == 0)
 				continue
-			new_limits[limit_flag]--
+			new_limits[flag_name]--
 			wildcard_allocated = TRUE
 			break
 		if(!wildcard_allocated)
@@ -137,20 +139,22 @@
 	for(var/wildcard in wildcard_list)
 		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
-		for(var/limit_flag in wildcard_limits)
-			if(!(wildcard_flag & limit_flag))
+		for(var/flag_name in wildcard_slots)
+			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
+			if(!(wildcard_flag & limit_flags))
 				continue
-			if(wildcard_limits[limit_flag] <= 0)
+			// Negative limits mean infinite slots. Positive limits mean limited slots still available. 0 slots means no slots.
+			if(wildcard_slots[flag_name] == 0)
 				continue
-			wildcard_limits[limit_flag]--
-			timberpoes_access += wildcard
+			wildcard_slots[flag_name]--
+			timberpoes_access |= wildcard
 			wildcard_allocated = TRUE
 			break
 		if(!wildcard_allocated)
 			if(!force)
 				stack_trace("Wildcard could not be added to [src]. Use force = TRUE to force wildcard addition anyway.")
 				continue
-			wildcard_limits[wildcard_flag]--
+			wildcard_slots[wildcard_flag]--
 			timberpoes_access += wildcard
 
 /obj/item/card/id/proc/add_access()
@@ -444,14 +448,16 @@
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."
 	icon_state = "card_grey"
 
+	wildcard_slots = WILDCARD_LIMIT_GREY
+
 	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"
 	/// Cached icon that has been built for this card.
 	var/icon/cached_flat_icon
 
-	/// If this is set, will manually override the icon file for the trim. Intended for admins to VV edit.
+	/// If this is set, will manually override the icon file for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_icon_override
-	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit.
+	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
 
 /// If no cached_flat_icon exists, this proc creates it. This proc then returns the cached_flat_icon.
@@ -488,6 +494,7 @@
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "card_silver"
 	inhand_icon_state = "silver_id"
+	wildcard_slots = WILDCARD_LIMIT_SILVER
 
 /datum/id_trim/maint_reaper
 	access = list(ACCESS_MAINT_TUNNELS)
@@ -504,6 +511,7 @@
 	desc = "A golden card which shows power and might."
 	icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
+	wildcard_slots = WILDCARD_LIMIT_GOLD
 
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
@@ -527,6 +535,7 @@
 	registered_name = "Central Command"
 	registered_age = null
 	timberpoes_trim = /datum/id_trim/centcom
+	wildcard_slots = WILDCARD_LIMIT_CENTCOM
 
 /obj/item/card/id/advanced/centcom/ert
 	name = "\improper CentCom ID"
@@ -568,12 +577,14 @@
 	desc = "This card is telling you one thing and one thing alone. The person holding this card is an utter badass."
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
+	wildcard_slots = WILDCARD_LIMIT_GOLD
 
 /obj/item/card/id/advanced/black/deathsquad
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
 	registered_name = "Death Commando"
 	timberpoes_trim = /datum/id_trim/centcom/deathsquad
+	wildcard_slots = WILDCARD_LIMIT_DEATHSQUAD
 
 /obj/item/card/id/advanced/black/syndicate_command
 	name = "syndicate ID card"
@@ -582,6 +593,7 @@
 	icon_state = "card_black"
 	registered_age = null
 	timberpoes_trim = /datum/id_trim/syndicom
+	wildcard_slots = WILDCARD_LIMIT_SYNDICATE
 
 /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	name = "syndicate ID card"
@@ -601,6 +613,7 @@
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
 	timberpoes_trim = /datum/id_trim/admin
+	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
 /obj/item/card/id/advanced/debug/Initialize()
 	. = ..()
@@ -616,6 +629,8 @@
 	registered_name = "Scum"
 	registered_age = null
 	timberpoes_trim = /datum/id_trim/job/prisoner
+
+	wildcard_slots = WILDCARD_LIMIT_PRISONER
 
 	/// Number of gulag points required to earn freedom.
 	var/goal = 0
@@ -671,21 +686,30 @@
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
 	timberpoes_trim = /datum/id_trim/highlander
+	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
 // TIMBERTODO - TGUI INTERFACE FOR COPYING ACCESS ON CHAMELEON ID CARDS
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card to choose which accesses to copy."
+	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
 	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
 	var/anyone = FALSE
 
 /obj/item/card/id/advanced/chameleon/Initialize()
-	var/datum/action/item_action/chameleon/change/id/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/card/id/advanced
-	chameleon_action.chameleon_name = "ID Card"
-	chameleon_action.initialize_disguises()
+	. = ..()
+	var/datum/action/item_action/chameleon/change/id/chameleon_card_action = new(src)
+	chameleon_card_action.chameleon_type = /obj/item/card/id/advanced
+	chameleon_card_action.chameleon_name = "ID Card"
+	chameleon_card_action.initialize_disguises()
+
+	var/datum/action/item_action/chameleon/change/id_trim/chameleon_trim_action = new(src)
+	chameleon_trim_action.chameleon_type = /datum/id_trim
+	chameleon_trim_action.chameleon_name = "ID Card Trim"
+	chameleon_trim_action.initialize_disguises()
 
 /obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
 	if(!proximity)
@@ -693,6 +717,8 @@
 	if(istype(O, /obj/item/card/id))
 		// TIMBERTODO - Opening TGUI interface goes here
 		return
+
+	return ..()
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
@@ -751,3 +777,9 @@
 			set_new_account(user)
 			return
 	return ..()
+
+/obj/item/card/id/advanced/engioutpost
+	registered_name = "George 'Plastic' Miller"
+	desc = "A card used to provide ID and determine access across the station. There's blood dripping from the corner. Ew."
+	timberpoes_trim = /datum/id_trim/engioutpost
+	registered_age = 47

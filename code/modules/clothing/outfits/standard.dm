@@ -26,6 +26,7 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
+	// TIMBERTODO THIS ENTIRE FILE LOOK AT THIS
 	//W.access = get_all_accesses()
 	//W.access += get_centcom_access("Special Ops Officer")
 	//W.trim = "Special Ops Officer"

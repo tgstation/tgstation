@@ -22,6 +22,9 @@
 
 	var/list/access_changes = job_changes[endpart]
 
+	if(!length(access_changes))
+		return
+
 	if(islist(access_changes["additional_access"]))
 		access |= access_changes["additional_access"]
 	if(islist(access_changes["additional_minimal_access"]))
@@ -49,6 +52,7 @@
 	return ..()
 
 /datum/id_trim/job/assistant
+	assignment = "Assistant"
 	trim_state = "trim_assistant"
 	access = list(ACCESS_MAINT_TUNNELS)
 	minimal_access = list()
