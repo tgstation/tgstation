@@ -271,7 +271,7 @@
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				H.emote(pick("giggle", "laugh"))
-			n2o_euphoria = TRUE
+				n2o_euphoria = TRUE
 		else
 			n2o_euphoria = FALSE
 
