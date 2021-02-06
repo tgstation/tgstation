@@ -104,7 +104,7 @@
 	desc = "A perfect replica of the famous Mosin Nagant, issued by Nanotrasen for their interns. Made from real, moisturized synthoak flesh!"
 	icon_state = "mosinprime"
 	inhand_icon_state = "mosinprime"
-	worm_icon_state = "mosinprime"
+	worn_icon_state = "mosinprime"
 	can_jam = FALSE //obrez at your leisure, intern!
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
