@@ -196,15 +196,8 @@
 /datum/emote/living/kiss
 	key = "kiss"
 	key_third_person = "kisses"
-	message = "blows a kiss."
-	message_param = "blows a kiss to %t."
 
 /datum/emote/living/kiss/run_emote(mob/living/user, params, type_override, intentional)
-	if(!user.usable_hands) // so simple mobs and such can still get in on the fun
-		return ..()
-
-	message = "" // the kisser item displays the message on firing
-	message_param = ""
 	. = ..()
 	if(!.)
 		return
