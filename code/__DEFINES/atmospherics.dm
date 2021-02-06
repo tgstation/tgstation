@@ -538,7 +538,7 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 #define MIASMA_CORPSE_MOLES 0.02
 #define MIASMA_GIBS_MOLES 0.005
 
-//flags for N2O and Healium euphoria moodlets
+//Defines for N2O and Healium euphoria moodlets
 #define EUPHORIA_INACTIVE 0 
 #define EUPHORIA_ACTIVE 1
 #define EUPHORIA_LAST_FLAG 2

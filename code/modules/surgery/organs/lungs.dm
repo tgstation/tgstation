@@ -39,10 +39,6 @@
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
 	var/healium_sleep_min = 6
-	///Minimum amount of hexane needed to start having effect
-	var/hexane_min = 2
-	var/n2o_euphoria
-	var/healium_euphoria
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -131,7 +127,9 @@
 	var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
-
+	//Vars for n2o and healium induced euphorias.
+	var/n2o_euphoria = EUPHORIA_LAST_FLAG
+	var/healium_euphoria = EUPHORIA_LAST_FLAG
 	//-- OXY --//
 
 	//Too much oxygen! //Yes, some species may not like it.
@@ -271,8 +269,6 @@
 			if(prob(20))
 				n2o_euphoria = EUPHORIA_ACTIVE
 				H.emote(pick("giggle", "laugh"))
-			else
-				n2o_euphoria = EUPHORIA_LAST_FLAG
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
 
@@ -343,8 +339,6 @@
 				to_chat(H, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
 				healium_euphoria = EUPHORIA_ACTIVE
 				H.emote("gasp")
-			else
-				healium_euphoria = EUPHORIA_LAST_FLAG
 		else
 			healium_euphoria = EUPHORIA_INACTIVE
 
