@@ -49,7 +49,7 @@ export const NtosNetDownloader = (props, context) => {
                   minValue={0}
                   maxValue={downloadsize}
                   value={downloadcompletion}>
-                  {`File: ${downloadname}, ${downloadcompletion * 10}% complete`}
+                  {`File: ${downloadname}, ${toFixed(scale(downloadcompletion, 0, downloadsize) * 100)}% complete`}
                 </ProgressBar>
               </LabeledList.Item>
             ) || (
@@ -111,7 +111,7 @@ const Program = (props, context) => {
         <Flex.Item shrink={0} width="48px" textAlign="right" color="label" nowrap>
           {program.size} GQ
         </Flex.Item>
-        <Flex.Item shrink={0} width="132px" textAlign="right">
+        <Flex.Item shrink={0} width="134px" textAlign="right">
           {(downloading && program.filename === downloadname) && (
             <Button
               bold
@@ -133,7 +133,7 @@ const Program = (props, context) => {
               <Button
                 bold
                 icon={program.installed ? 'check' : 'times'}
-                color={program.installed ? 'good' : !program.compatibility ? 'grey' : 'bad'}
+                color={program.installed ? 'good' : !program.compatibility ? 'bad' : 'grey'}
                 content={program.installed ? 'Installed' : !program.compatibility ? 'Incompatible' : !program.access ? 'No Access' : 'No Space'} />
             )
           )}
@@ -143,8 +143,8 @@ const Program = (props, context) => {
         {program.fileinfo}
       </Box>
       {!program.verifiedsource && (
-        <NoticeBox mt={3} mb={0} danger fontSize="12px">
-          Unverified source. Please note that Nanotrasen does not recommend download of software from non-official servers.
+        <NoticeBox mt={1} mb={0} danger fontSize="12px">
+          Unverified source. Please note that Nanotrasen does not recommend download and usage of software from non-official servers.
         </NoticeBox>
       )}
     </Section>
