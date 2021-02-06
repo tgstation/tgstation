@@ -292,10 +292,10 @@
 		misc_smudge.color = "#82b900"
 
 	our_plant.visible_message("<span class='warning'>[our_plant] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
-	if(IS_PLANT(our_plant))
-		if(our_plant.seed)
-			for(var/datum/plant_gene/trait/trait in our_plant.seed.genes)
-				trait.on_squash(our_plant, target)
+	var/obj/item/seeds/seed = our_plant.get_plant_seed()
+	if(seed)
+		for(var/datum/plant_gene/trait/trait in seed.genes)
+			trait.on_squash(our_plant, target)
 
 	our_plant.reagents?.expose(our_turf)
 	for(var/things in our_turf)
@@ -314,7 +314,7 @@
 	..()
 	if(istype(G) && ispath(G.trash_type, /obj/item/grown))
 		return
-	var/obj/item/seeds/seed = G.seed
+	var/obj/item/seeds/seed = G.get_plant_seed()
 	var/stun_len = seed.potency * rate
 
 	if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent(/datum/reagent/lube)))
