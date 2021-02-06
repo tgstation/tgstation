@@ -120,11 +120,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
 	///Armor penetration on stabbing action
-	var/armor_pene_stab = 0
+	var/armor_pene_stab = 20
 	///Force reduction on stabbing
-	var/force_reduction_stab = 0
+	var/force_reduction_stab = 5
 	///Wound chance increase on stabbing
-	var/wound_bonus_stab = 0
+	var/wound_bonus_stab = 5
 	///What objects the suit storage can store
 	var/list/allowed = null
 	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.

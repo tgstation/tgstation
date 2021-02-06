@@ -100,7 +100,7 @@
 	attack_verb_off = list("taps", "pokes")
 	throw_speed = 3
 	throw_range = 5
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 	armour_penetration = 35
 	block_chance = 50
@@ -220,7 +220,7 @@
 	throw_range = 1
 	w_class = WEIGHT_CLASS_BULKY//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/melee/transforming/energy/blade/Initialize()

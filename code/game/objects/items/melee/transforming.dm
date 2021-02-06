@@ -1,5 +1,5 @@
 /obj/item/melee/transforming
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	bare_wound_bonus = 20
 	stealthy_audio = TRUE //Most of these are antag weps so we dont want them to be /too/ overt.
 	var/active = FALSE

@@ -39,7 +39,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
@@ -92,7 +92,7 @@
 	armour_penetration = 45
 	throw_speed = 1
 	throw_range = 3
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	light_system = MOVABLE_LIGHT
 	light_range = 4
 	light_color = COLOR_RED
@@ -645,7 +645,7 @@
 	block_chance = 30
 	attack_verb_continuous = list("attacks", "impales", "stabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "impale", "stab", "tear", "lacerate", "gore")
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
 	var/wielded = FALSE // track wielded status on item

@@ -347,7 +347,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 30
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
@@ -606,7 +606,7 @@
 	inhand_icon_state = "render"
 	worn_icon_state = "render"
 	hitsound = 'sound/items/bikehorn.ogg'
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 
@@ -675,7 +675,7 @@
 	slot_flags = null
 	item_flags = ABSTRACT
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	wound_bonus = -20
 	bare_wound_bonus = 25
 
@@ -737,7 +737,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "arrhythmic knife"
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	slot_flags = null
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
@@ -773,7 +773,7 @@
 	attack_verb_continuous = list("pokes", "impales", "pierces", "jabs")
 	attack_verb_simple = list("poke", "impale", "pierce", "jab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_POINTY
 
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"

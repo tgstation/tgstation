@@ -173,7 +173,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	wound_bonus = -30
 	bare_wound_bonus = 20

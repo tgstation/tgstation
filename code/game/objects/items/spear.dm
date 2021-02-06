@@ -70,12 +70,14 @@
 	SIGNAL_HANDLER
 
 	wielded = TRUE
+	sharpness |= SHARP_POINTY
 
 /// triggered on unwield of two handed item
 /obj/item/spear/explosive/proc/on_unwield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
 	wielded = FALSE
+	sharpness &= ~SHARP_POINTY
 
 /obj/item/spear/explosive/update_icon_state()
 	icon_state = "spearbomb0"

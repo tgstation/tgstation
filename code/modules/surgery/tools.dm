@@ -142,7 +142,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
 	wound_bonus = 15
@@ -250,7 +250,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_color = LIGHT_COLOR_GREEN
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 
 
 /obj/item/scalpel/advanced/attack_self(mob/user)

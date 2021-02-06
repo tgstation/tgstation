@@ -249,8 +249,11 @@
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 	if(wounding_type == WOUND_BLUNT && sharpness)
-		wounding_type = (sharpness == SHARP_EDGED ? WOUND_SLASH : WOUND_PIERCE)
-
+		if(sharpness & SHARP_EDGED)
+			wounding_type = WOUND_SLASH
+		else if (sharpness & SHARP_POINTY)
+			wounding_type = WOUND_PIERCE
+			
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
 	switch(bio_state)
 		// if we're bone only, all cutting attacks go straight to the bone
@@ -329,7 +332,10 @@
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 	if(wounding_type == WOUND_BLUNT && sharpness)
-		wounding_type = (sharpness == SHARP_EDGED ? WOUND_SLASH : WOUND_PIERCE)
+		if(sharpness & SHARP_EDGED)
+			wounding_type = WOUND_SLASH
+		else if (sharpness & SHARP_POINTY)
+			wounding_type = WOUND_PIERCE
 
 	//Handling for bone only/flesh only(none right now)/flesh and bone targets
 	switch(bio_state)

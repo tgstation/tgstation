@@ -68,7 +68,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	max_integrity = 200
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
@@ -369,7 +369,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = SHARP_EDGED
+		sharpness = SHARP_EDGED | SHARP_POINTY
 	else
 		force = 3
 		w_class = WEIGHT_CLASS_SMALL
@@ -995,7 +995,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 20
 	throwforce = 20
 	throw_speed = 4
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	attack_verb_continuous = list("cuts", "slices", "dices")
 	attack_verb_simple = list("cut", "slice", "dice")
 	w_class = WEIGHT_CLASS_BULKY
@@ -1053,7 +1053,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 20
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	force = 14
 	throwforce = 12
 	hitsound = 'sound/weapons/bladeslice.ogg'

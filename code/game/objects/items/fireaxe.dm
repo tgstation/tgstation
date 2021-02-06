@@ -37,12 +37,14 @@
 	SIGNAL_HANDLER
 
 	wielded = TRUE
+	sharpness |= SHARP_POINTY
 
 /// triggered on unwield of two handed item
 /obj/item/fireaxe/proc/on_unwield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
 	wielded = FALSE
+	sharpness &= ~SHARP_POINTY
 
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "fireaxe0"

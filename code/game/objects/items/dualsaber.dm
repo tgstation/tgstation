@@ -12,7 +12,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
 	armour_penetration = 35

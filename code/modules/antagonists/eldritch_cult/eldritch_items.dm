@@ -295,7 +295,7 @@
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "rune_carver"
 	flags_1 = CONDUCT_1
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	w_class = WEIGHT_CLASS_SMALL
 	wound_bonus = 20
 	force = 10

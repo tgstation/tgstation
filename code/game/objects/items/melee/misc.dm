@@ -47,7 +47,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 
 /obj/item/melee/synthetic_arm_blade/Initialize()
 	. = ..()
@@ -149,7 +149,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = SHARP_EDGED
+	sharpness = SHARP_EDGED | SHARP_POINTY
 	throwforce = 10
 	block_chance = 20
 	armour_penetration = 65
