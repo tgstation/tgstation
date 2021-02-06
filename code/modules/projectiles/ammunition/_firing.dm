@@ -39,6 +39,8 @@
 	if(isgun(fired_from))
 		var/obj/item/gun/G = fired_from
 		BB.damage *= G.projectile_damage_multiplier
+		if(BB.stamina)
+			BB.stamina *= G.projectile_damage_multiplier
 
 	if(reagents && BB.reagents)
 		reagents.trans_to(BB, reagents.total_volume, transfered_by = user) //For chemical darts/bullets

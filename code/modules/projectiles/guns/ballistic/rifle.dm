@@ -63,50 +63,24 @@
 	knife_x_offset = 27
 	knife_y_offset = 13
 	can_be_sawn_off = TRUE
-	var/jamming_chance = 20
-	var/unjam_chance = 10
-	var/jamming_increment = 5
-	var/jammed = FALSE
-	var/can_jam = TRUE
+	can_jam = TRUE
+	jam_clear_resets = TRUE //The jamming is meant to inconvenience you, not render the weapon inoperable after a certain point.
+	unjam_probability = 10
+	unjam_increment = 10
+	malfunction_probability = 20
+	malfunction_percentage_increment = 10
+	jam_threshold = 60 //three shots before you can see a jam
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
+		weapon_weight = WEAPON_MEDIUM
+		if(!can_misfire && can_jam) //obrez at your own risk
+			can_misfire = TRUE
+			misfire_threshold = (jam_threshold*0.5)
 		update_icon()
-
-/obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
-	if(can_jam)
-		if(jammed)
-			if(prob(unjam_chance))
-				jammed = FALSE
-				unjam_chance = 10
-			else
-				unjam_chance += 10
-				to_chat(user, "<span class='warning'>[src] is jammed!</span>")
-				playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
-				return FALSE
-	..()
-
-/obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
-	if(can_jam)
-		if(chambered.BB)
-			if(prob(jamming_chance))
-				jammed = TRUE
-			jamming_chance  += jamming_increment
-			jamming_chance = clamp (jamming_chance, 0, 100)
-	return ..()
-
-/obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
-	. = ..()
-	if(can_jam)
-		if(bolt_locked)
-			if(istype(item, /obj/item/gun_maintenance_supplies))
-				if(do_after(user, 10 SECONDS, target = src))
-					user.visible_message("<span class='notice'>[user] finishes maintenance of [src].</span>")
-					jamming_chance = 10
-					qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
@@ -123,12 +97,15 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
-
-/obj/item/gun/ballistic/rifle/boltaction/brand_new
-	name = "Mosin Nagant"
-	desc = "Brand new Mosin Nagant issued by Nanotrasen for their interns. You would rather not to damage it."
-	can_be_sawn_off = FALSE
 	can_jam = FALSE
+
+/obj/item/gun/ballistic/rifle/boltaction/prime
+	name = "\improper Regal Mosin Nagant"
+	desc = "A perfect replica of the famous Mosin Nagant, issued by Nanotrasen for their interns. Made from real, moisturized synthoak flesh!"
+	icon_state = "mosinprime"
+	inhand_icon_state = "mosinprime"
+	worm_icon_state = "mosinprime"
+	can_jam = FALSE //obrez at your leisure, intern!
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
@@ -148,15 +125,19 @@
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
 	can_misfire = TRUE
-	misfire_probability = 0
-	misfire_percentage_increment = 5 //Slowly increases every shot
+	malfunction_probability = 0
+	malfunction_probability_cap = 30 //Given it never resets, this is so the value doesn't get too out of hand.
+	malfunction_percentage_increment = 10 //Slowly increases every shot
+	misfire_threshold = 30 //You won't see a misfire until 3 shots in
+	jam_clear_resets = FALSE //Our gun starts to go to crap and we need proper equipment to fix that
+	jam_threshold = 0 //Unlike it's parent, it's basically going to jam at any point
 	can_bayonet = FALSE
 	can_be_sawn_off = FALSE
 	projectile_damage_multiplier = 0.75
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/process_chamber(empty_chamber, from_firing, chamber_next_round)
 	. = ..()
-	do_sparks(1, TRUE, src)
+	do_sparks(rand(1-4), TRUE, src)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"
@@ -165,9 +146,12 @@
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "musket_prime"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
-	can_misfire = FALSE
-	misfire_probability = 0
-	misfire_percentage_increment = 0
+	can_misfire = FALSE //For some reason it doesn't misfire. Probably maint magic.
+	can_jam = FALSE //Somehow this weapon doesn't jam either despite being lubricated in grey bull.
+	malfunction_probability = 0
+	malfunction_percentage_increment = 0
+	misfire_threshold = 0
+	jam_threshold = 0
 	projectile_damage_multiplier = 1
 
 /// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///

@@ -102,14 +102,40 @@
 	var/initial_fire_sound
 	///our alternative fire sound, in case we want our gun to be louder or quieter or whatever
 	var/alternative_fire_sound
+	
+	///Weapon malfunction variables
+	
+	///How likely is our gun to malfunction? Either it jams, misfires or possibly both depending on what is set to TRUE. 
+	var/malfunction_probability = 0
+	///what is the upper limit on the probability for a malfunction? Lets you keep weapons from going too high for probability. Keep within 0-100.
+	var/malfunction_probability_cap = 100
+	///How much does shooting the gun increment the misfire probability?
+	var/malfunction_percentage_increment = 0
+	///How many times can the gun be fired before malfunction protection is removed. Malfunction protection prevents malfunction increments from climbing or jams from occuring. 
+	///Does not prevent misfires.
+	var/malfunction_protection = 0
+	
+	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires. Misfires shoot the wielder with the currently loaded shot.
+	var/can_misfire = FALSE
 	///If only our alternative ammuntion misfires and not our main ammunition, we set this to TRUE
 	var/alternative_ammo_misfires = FALSE
-	/// Whether our ammo misfires now or when it's set by the wrench_act. TRUE means it misfires.
-	var/can_misfire = FALSE
-	///How likely is our gun to misfire? 
-	var/misfire_probability = 0
-	///How much does shooting the gun increment the misfire probability?
-	var/misfire_percentage_increment = 0
+	///What is the probability point for the weapon to misfire? If left at 0, it will always roll for misfire if possible.
+	var/misfire_threshold = 0
+	
+	///Whether our weapon jams at all. TRUE means it can jam. Jamming requires you to rapidly click the gun to unjam it. Dink.
+	var/can_jam = FALSE
+	///Whether our weapon is currently jammed, which requires forcing the weapon to rack before it can be fired again. TRUE means it is jammed.
+	var/jammed = FALSE
+	///if only our alternative ammuntion jams and not our main ammunition, we set this to TRUE.
+	var/alternative_ammo_jams = FALSE
+	///In the case of jamming, how likely are we to unjam. Increases as you click the gun, and resets to intial value when successful.
+	var/unjam_probability = 0
+	///How much does our chance of unjamming the weapon increase on every click?
+	var/unjam_increment = 0
+	///What is the probability point for the weapon to jam? If left at 0, it will always roll for a jam if possible.
+	var/jam_threshold = 0
+	///Does clearing our jam clear the malfunction probability? Allows for misfires to be the extreme end of a malfunction.
+	var/jam_clear_resets = FALSE
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -324,16 +350,18 @@
 		if (sawoff(user, A))
 			return
 	
-	if(can_misfire && istype(A, /obj/item/stack/sheet/cloth))
-		if(guncleaning(user, A))
-			return
+	if(can_misfire || can_jam && istype(A, /obj/item/gun_maintenance_supplies))
+		var/obj/item/gun_maintenance_supplies/GM = A
+		to_chat(user, "<span class='notice'>You set to work using \the [GM] to clean \the [src].</span>")
+		guncleaning(user, A)
+		return
 	
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 
-	if(magazine && chambered.BB && can_misfire && misfire_probability > 0)
-		if(prob(misfire_probability))
+	if(magazine && chambered.BB && can_misfire && malfunction_probability >= misfire_threshold)
+		if(prob(malfunction_probability))
 			if(blow_up(user))
 				to_chat(user, "<span class='userdanger'>[src] misfires!</span>")
 
@@ -342,9 +370,19 @@
 	. = ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
-	if(can_misfire)
-		misfire_probability += misfire_percentage_increment
+	if(can_misfire || can_jam)
+		if(malfunction_protection == 0)
+			malfunction_probability += malfunction_percentage_increment
+			malfunction_probability = clamp(malfunction_probability, 0, malfunction_probability_cap)
 	
+	if(malfunction_protection)
+		malfunction_protection --
+
+	///Yes, our shot can increment and jam on the same process, it's a little more likely as a result but jamming is far less horrible than misfiring
+	if(can_jam && malfunction_probability >= jam_threshold && malfunction_protection == 0)
+		if(prob(malfunction_probability))
+			jammed = TRUE
+
 	. = ..()
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
@@ -405,6 +443,18 @@
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
+	if(can_jam && jammed)
+		if(prob(unjam_probability))
+			jammed = FALSE
+			unjam_probability = initial(unjam_probability)
+			if(jam_clear_resets)
+				malfunction_probability = initial(malfunction_probability)
+		else
+			unjam_probability += unjam_increment
+			to_chat(user, "<span class='warning'>[src] is jammed!</span>")
+			playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
+			return FALSE
+	
 	if(HAS_TRAIT(user, TRAIT_GUNFLIP))
 		if(flip_cooldown <= world.time)
 			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
@@ -416,10 +466,12 @@
 			flip_cooldown = (world.time + 30)
 			user.visible_message("<span class='notice'>[user] spins the [src] around their finger by the trigger. That’s pretty badass.</span>")
 			playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
+	
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)
 			return
+	
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
 		chambered = null
 		var/num_unloaded = 0
@@ -437,11 +489,14 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
+
 	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
 		drop_bolt(user)
 		return
+
 	if (recent_rack > world.time)
 		return
+
 	recent_rack = world.time + rack_delay
 	rack(user)
 	return
@@ -458,10 +513,12 @@
 		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."
 	if (suppressed)
 		. += "It has a suppressor attached that can be removed with <b>alt+click</b>."
+	if(can_jam)
+		. += "<span class='danger'>You get the feeling this might jam if you fire it....</span>"
 	if(can_misfire)
 		. += "<span class='danger'>You get the feeling this might explode if you fire it....</span>"
-		if(misfire_probability > 0)
-			. += "<span class='danger'>Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.</span>"
+	if(malfunction_probability > 0)
+		. += "<span class='danger'>Given the state of the gun, there is a [malfunction_probability]% chance it will malfunction.</span>"
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
@@ -550,19 +607,21 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		update_icon()
 		return TRUE
 
-/obj/item/gun/ballistic/proc/guncleaning(mob/user, /obj/item/A)
-	if(misfire_probability == 0)
+/obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/gun_maintenance_supplies/GM)
+	if(malfunction_probability == 0)
 		to_chat(user, "<span class='notice'>\The [src] seems to be already clean of fouling.</span>")
 		return
 	
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
-	
+
 	if(do_after(user, 100, target = src))
-		var/original_misfire_value = initial(misfire_probability)
-		if(misfire_probability > original_misfire_value)
-			misfire_probability = original_misfire_value
-			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing misfire.</span>")
+		var/original_malfunction_value = initial(malfunction_probability)
+		if(malfunction_probability > original_malfunction_value)
+			malfunction_probability = original_malfunction_value
+			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing malfunction.</span>")
+			malfunction_protection = GUN_MALFUNCTION_PROTECTION
+			qdel(GM)
 			return TRUE
 
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)
@@ -595,12 +654,16 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		magazine.caliber = alternative_caliber
 		if(alternative_ammo_misfires)
 			can_misfire = TRUE
+		if(alternative_ammo_jams)
+			can_jam = TRUE
 		fire_sound = alternative_fire_sound
 		to_chat(user, "<span class='notice'>You modify [src]. Now it will fire [alternative_caliber] rounds.</span>")
 	else
 		magazine.caliber = initial_caliber
 		if(alternative_ammo_misfires)
 			can_misfire = FALSE
+		if(alternative_ammo_jams)
+			can_jam = FALSE
 		fire_sound = initial_fire_sound
 		to_chat(user, "<span class='notice'>You reset [src]. Now it will fire [initial_caliber] rounds.</span>")
 
