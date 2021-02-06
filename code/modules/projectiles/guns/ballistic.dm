@@ -608,10 +608,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/gun_maintenance_supplies/GM)
-	if(malfunction_probability == 0)
-		to_chat(user, "<span class='notice'>\The [src] seems to be already clean of fouling.</span>")
-		return
-	
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
 
