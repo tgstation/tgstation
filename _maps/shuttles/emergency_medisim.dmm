@@ -633,7 +633,7 @@
 	end_create_message = "dispenses a pair of binoculars.";
 	glass_cost = 0;
 	maximum_idle = 1;
-	metal_cost = 0;
+	iron_cost = 0;
 	name = "binoculars fabricator";
 	power_used = 0;
 	starting_amount = 25000

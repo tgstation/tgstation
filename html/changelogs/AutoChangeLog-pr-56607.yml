@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Added a missing Power Cable on Ice Box, so the Bar APC can charge without intervention again"
