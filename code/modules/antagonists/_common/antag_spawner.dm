@@ -100,8 +100,8 @@
  * Device to request reinforcments from ghost pop
  */
 /obj/item/antag_spawner/nuke_ops
-	name = "syndicate operative teleporter"
-	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
+	name = "syndicate operative beacon"
+	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
@@ -142,7 +142,7 @@
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
-		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
+		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the beacon on your uplink to get your points refunded.</span>")
 
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
@@ -163,8 +163,8 @@
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
-	name = "clown operative teleporter"
-	desc = "A single-use teleporter designed to quickly reinforce clown operatives in the field."
+	name = "clown operative beacon"
+	desc = "A single-use beacon designed to quickly launch reinforcement clown operatives into the field."
 	special_role_name = "Clown Operative"
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
 	antag_datum = /datum/antagonist/nukeop/clownop
@@ -172,21 +172,21 @@
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
-	name = "syndicate cyborg teleporter"
-	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
+	name = "syndicate cyborg beacon"
+	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
-	name = "syndicate assault cyborg teleporter"
+	name = "syndicate assault cyborg beacon"
 	borg_to_spawn = "Assault"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/medical
-	name = "syndicate medical teleporter"
+	name = "syndicate medical beacon"
 	borg_to_spawn = "Medical"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
-	name = "syndicate saboteur teleporter"
+	name = "syndicate saboteur beacon"
 	borg_to_spawn = "Saboteur"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
