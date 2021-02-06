@@ -1,4 +1,4 @@
-#define PATH_DIST(A, B) (A.Distance_cardinal(B))
+#define PATH_DIST(A, B) (A.Distance(B))
 #define PATH_ADJ(A, B) (A.reachableTurftest(B))
 
 #define PATH_REVERSE(A) ((A & MASK_ODD)<<1)|((A & MASK_EVEN)>>1)
@@ -6,10 +6,12 @@
 /datum/tiles
 	var/turf/dest_tile
 	var/turf/from
+	var/jumps
 
-/datum/tiles/New(_a, _b)
+/datum/tiles/New(_a, _b, _c)
 	dest_tile = _a
 	from = _b
+	jumps = _c
 
 //JPS nodes variables
 /datum/jpsnode
@@ -34,10 +36,12 @@
 		goal = prevNode.goal
 		dir_from = get_dir(tile, prevNode.tile)
 	else
+		testing("<<<<<<<<<>>>>>>>>>>>>>>>introduced a new node with no parent ")
+		tile.color = COLOR_VERY_PALE_LIME_GREEN
 		nt = 0
 	h = PATH_DIST(tile, goal)
 
-	f = nt + h*(1+ PF_TIEBREAKER)
+	f = nt + h//*(1+ PF_TIEBREAKER)
 
 /datum/jpsnode/proc/setp(p, _jmp) // even jmp shouldnt be necessaryt, should be inferrable
 	prevNode = p
@@ -47,7 +51,7 @@
 	goal = prevNode.goal
 	nt = prevNode.nt + jumps
 	h = PATH_DIST(tile, goal)
-	f = nt + h*(1+ PF_TIEBREAKER)
+	f = nt + h//*(1+ PF_TIEBREAKER)
 
 
 /datum/pathfind
@@ -72,7 +76,7 @@
 	var/maxnodedepth = 70
 	var/maxnodes = 70
 	var/adjacent = /turf/proc/reachableTurftest
-	var/dist = /turf/proc/Distance_cardinal
+	var/dist = /turf/proc/Distance
 	var/turf/exclude = null
 	var/simulated_only = TRUE
 	var/done = FALSE
@@ -86,6 +90,7 @@
 
 //datum/pathfind/proc/generate_node(turf/the_tile, )
 /datum/pathfind/proc/start_search()
+	testing("**********start")
 	caller.calculating_path = TRUE
 
 	start = get_turf(caller)
@@ -112,7 +117,7 @@
 	while(!open.IsEmpty() && !path)
 		if(done)
 			testing("main exit: done [done] path [path]")
-			return
+			break
 		if(!caller)
 			return
 		testing("pop [iii]")
@@ -124,16 +129,16 @@
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
 		total_tiles++
-		var/closeenough
-		if(mintargetdist)
-			closeenough = call(cur.tile,dist)(end) <= mintargetdist
-		cur.tile.color = COLOR_BLUE
+		//var/closeenough
+		//if(mintargetdist)
+		//	closeenough = call(cur.tile,dist)(end) <= mintargetdist
+		//cur.tile.color = COLOR_BLUE
 
 		//found the target turf (or close enough), let's create the path to it
-		if(cur.tile == end || closeenough)
-			testing("done? close enough: [closeenough]")
-			unwind_path(cur)
-			break
+		//if(cur.tile == end || closeenough)
+		//	testing("done? close enough: [closeenough]")
+		//	unwind_path(cur)
+		//	break
 
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		if((maxnodedepth)&&(cur.nt > maxnodedepth))//if too many steps, don't process that path
@@ -148,9 +153,9 @@
 			testing("mid main exit: done [done] path [path]")
 			break
 		queue_node(diag_scan_spec(current_turf, NORTHWEST)) // this is a turf not a node, fix
-		queue_node(diag_scan_spec(current_turf, NORTHEAST)) // this is a turf not a node, fix
-		queue_node(diag_scan_spec(current_turf, SOUTHWEST)) // this is a turf not a node, fix
 		queue_node(diag_scan_spec(current_turf, SOUTHEAST)) // this is a turf not a node, fix
+		queue_node(diag_scan_spec(current_turf, SOUTHWEST)) // this is a turf not a node, fix
+		queue_node(diag_scan_spec(current_turf, NORTHEAST)) // this is a turf not a node, fix
 		CHECK_TICK
 	//reverse the path to get it from start to finish
 	if(path)
@@ -158,7 +163,7 @@
 			path.Swap(i,path.len-i+1)
 	openc = null
 	//cleaning after us
-	testing("new path done with [total_tiles] tiles popped")
+	testing("*********new path done with [total_tiles] tiles popped, [iii] rounds")
 	caller.calculating_path = FALSE
 	return path
 
@@ -217,6 +222,7 @@
 		return
 	var/turf/turf_for_node = t.dest_tile
 	var/turf/moved_from = t.from
+	var/jmps = t.jumps
 	qdel(t)
 	if(!turf_for_node || !moved_from)
 		return
@@ -226,12 +232,11 @@
 	if(!from_node)
 		CRASH("missing from node in queue?")
 
-	var/steps_taken = PATH_DIST(moved_from, turf_for_node)
-
 	if(our_node)
 		//is already in open list, check if it's a better way from the current turf
-		if((our_node.nt + steps_taken) < from_node.nt)
-			our_node.setp(from_node, steps_taken)
+		if((our_node.nt + jmps) < from_node.nt)
+			testing("!!!!!!!!!!better rate [our_node.nt + jmps] shouldn't be lower than [from_node.nt]")
+			our_node.setp(from_node, jmps)
 			open.ReSort(our_node)//reorder the changed element in the list
 	else
 	//is not already in open list, so add it
@@ -256,7 +261,7 @@
 		current_turf = get_step(current_turf, heading)
 		steps_taken++
 		if(steps_taken % 5 == 1)
-			testing("taking diag step [steps_taken] in dir [heading]")
+			testing("taking lat step [steps_taken] in dir [heading]")
 
 		if(!current_turf)
 			return
@@ -328,7 +333,7 @@
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
-	original_turf.color = COLOR_PURPLE
+	original_turf.color = COLOR_VIBRANT_LIME
 	while(TRUE)
 		if(done || path) // lazy way to force out when done, do better
 			testing("diag exit: done [done] path [path]")
