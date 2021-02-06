@@ -1,6 +1,6 @@
 import { scale, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetDownloader = (props, context) => {
@@ -68,27 +68,29 @@ export const NtosNetDownloader = (props, context) => {
             )}
           </LabeledList>
         </Section>
-        <Flex>
-          <Flex.Item minWidth="105px" shrink={0} basis={0}>
-            <Tabs vertical>
-              {categories.map(category => (
-                <Tabs.Tab
-                  key={category.name}
-                  selected={category.name === selectedCategory}
-                  onClick={() => setSelectedCategory(category.name)}>
-                  {category.name}
-                </Tabs.Tab>
-              ))}
-            </Tabs>
-          </Flex.Item>
-          <Flex.Item grow={1} basis={0}>
+        <Stack>
+          <Stack.Item minWidth="105px" shrink={0} basis={0}>
+            <Section fill fitted>
+              <Tabs vertical>
+                {categories.map(category => (
+                  <Tabs.Tab
+                    key={category.name}
+                    selected={category.name === selectedCategory}
+                    onClick={() => setSelectedCategory(category.name)}>
+                    {category.name}
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow={1} basis={0}>
             {items.map(program => (
               <Program
                 key={program.filename}
                 program={program} />
             ))}
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       </NtosWindow.Content>
     </NtosWindow>
   );
@@ -107,14 +109,14 @@ const Program = (props, context) => {
   const disk_free = disk_size - disk_used;
   return (
     <Section>
-      <Flex align="baseline">
-        <Flex.Item grow={1}>
-          <Icon name={program.icon} /> <Box inline bold>{program.filedesc}</Box>
-        </Flex.Item>
-        <Flex.Item shrink={0} width="48px" textAlign="right" color="label" nowrap>
+      <Stack align="baseline">
+        <Stack.Item grow={1} blod>
+          <Icon name={program.icon} /> {program.filedesc}
+        </Stack.Item>
+        <Stack.Item shrink={0} width="48px" textAlign="right" color="label" nowrap>
           {program.size} GQ
-        </Flex.Item>
-        <Flex.Item shrink={0} width="134px" textAlign="right">
+        </Stack.Item>
+        <Stack.Item shrink={0} width="134px" textAlign="right">
           {(downloading && program.filename === downloadname) && (
             <Button
               bold
@@ -150,8 +152,8 @@ const Program = (props, context) => {
                 } />
             )
           )}
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
       <Box mt={1} italic color="label">
         {program.fileinfo}
       </Box>
