@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "radio uplinks can no longer become unusable due to the code frequency"

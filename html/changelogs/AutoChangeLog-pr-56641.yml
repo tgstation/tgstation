@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "turrets made via the holodeck laser guns now stop working when the guns get deleted"
