@@ -745,6 +745,8 @@ function checkchangelog($payload, $compile = true) {
 		}
 
 		if (!strlen($firstword)) {
+			if (count($currentchangelogblock) <= 0)
+				continue;
 			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n";
 			continue;
 		}

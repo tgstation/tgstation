@@ -31,7 +31,7 @@
 	. = ..()
 	if(!istype(I,/obj/item/tail_pin))
 		return
-	if(!(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))) //We're using the same trick that tables use for placing objects x and y onto the click location.
+	if(!(I.item_flags & ABSTRACT)) //We're using the same trick that tables use for placing objects x and y onto the click location.
 		return
 	if(!user.transferItemToLoc(I, drop_location(), silent = FALSE))
 		return

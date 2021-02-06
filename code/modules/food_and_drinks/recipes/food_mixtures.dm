@@ -116,7 +116,7 @@
 
 /datum/chemical_reaction/food/imitationcarpmeat/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/food/carpmeat/imitation(location)
+	new /obj/item/food/fishmeat/carp/imitation(location)
 	if(holder?.my_atom)
 		qdel(holder.my_atom)
 
