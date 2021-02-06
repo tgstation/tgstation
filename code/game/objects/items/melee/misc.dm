@@ -74,10 +74,40 @@
 	custom_materials = list(/datum/material/iron = 1000)
 	wound_bonus = 10
 	bare_wound_bonus = 25
+	//lunge vars
+	COOLDOWN_DECLARE(lunge_cooldown)
+	var/lunge_cooldown_time = 5 SECONDS
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+
+/obj/item/melee/sabre/alt_attack(mob/living/target, mob/living/user, params)
+	if(!COOLDOWN_FINISHED(src, lunge_cooldown))
+		var/time_left = COOLDOWN_TIMELEFT(src, lunge_cooldown)
+		to_chat(user, "<span class='warning'>You need to wait [DisplayTimeText(time_left)] before lunging again!</span>")
+		return
+	COOLDOWN_START(src, lunge_cooldown, lunge_cooldown_time)
+	to_chat(user, "<span class='notice'>You lunge at [target]!</span>")
+	attack_verb_continuous = list("lunges")
+	attack_verb_simple = list("lunge")
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, .proc/lunge_hit)
+	user.throw_at(target, 2, 10, spin = FALSE, callback = CALLBACK(src, .proc/end_lunge), gentle = TRUE)
+
+/obj/item/melee/sabre/proc/lunge_hit(mob/living/carbon/user, atom/hit)
+	SIGNAL_HANDLER
+
+	if(!isliving(hit))
+		return
+	user.SetKnockdown(0)
+	user.get_up(TRUE)
+	melee_attack_chain(user, hit)
+	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH //they won't get pushed back from the lunge!
+
+/obj/item/melee/sabre/proc/end_lunge()
+	attack_verb_continuous = initial(attack_verb_continuous)
+	attack_verb_simple = initial(attack_verb_simple)
+	UnregisterSignal(src, COMSIG_MOVABLE_IMPACT)
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
