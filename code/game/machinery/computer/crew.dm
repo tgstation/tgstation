@@ -128,8 +128,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			stack_trace("Tracked mob has no loc and is likely in nullspace: [tracked_living_mob] ([tracked_living_mob.type])")
 			continue
 
-		// Machinery and the target should be on the same level or different levels of the same station
-		if(pos.z != z && (!is_station_level(pos.z) || !is_station_level(z)))
+		if (pos.z != z)
 			continue
 
 		var/sensor_mode

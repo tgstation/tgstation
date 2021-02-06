@@ -41,9 +41,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	integrity_failure = 0.5
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
 	base_icon_state = "standard"
-
-	///if TRUE this will cause the turret to stop working if the stored_gun var is null in process()
-	var/uses_stored = TRUE
 	/// Scan range of the turret for locating targets
 	var/scan_range = 7
 	/// For turrets inside other objects
@@ -171,10 +168,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(installation && !turret_gun)
 		stored_gun = new installation(src)
 	else if (turret_gun)
-		turret_gun.forceMove(src)
 		stored_gun = turret_gun
 
-	RegisterSignal(stored_gun, COMSIG_PARENT_PREQDELETED, .proc/null_gun)
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
 	//required properties
@@ -192,11 +187,6 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	update_icon()
 	return gun_properties
-
-///destroys reference to stored_gun to prevent hard deletions
-/obj/machinery/porta_turret/proc/null_gun()
-	SIGNAL_HANDLER
-	stored_gun = null
 
 /obj/machinery/porta_turret/Destroy()
 	//deletes its own cover with it
@@ -414,13 +404,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
-	if(!on || (machine_stat & (NOPOWER|BROKEN)))
-		return PROCESS_KILL
-
-	if(manual_control)
-		return PROCESS_KILL
-
-	if(uses_stored && !stored_gun)
+	if(!on || (machine_stat & (NOPOWER|BROKEN)) || manual_control)
 		return PROCESS_KILL
 
 	var/list/targets = list()
@@ -707,12 +691,11 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/syndicate
 	installation = null
-	always_up = TRUE
+	always_up = 1
 	use_power = NO_POWER_USE
-	has_cover = TRUE
+	has_cover = 0
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
-	uses_stored = FALSE
 	mode = TURRET_LETHAL
 	stun_projectile = /obj/projectile/bullet
 	lethal_projectile = /obj/projectile/bullet
@@ -816,7 +799,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/porta_turret/centcom_shuttle
 	installation = null
 	max_integrity = 260
-	always_up = TRUE
+	always_up = 1
 	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
