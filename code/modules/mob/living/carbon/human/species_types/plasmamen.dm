@@ -179,18 +179,18 @@
 
 	return randname
 
-/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	. = ..()
 	if(istype(chem, /datum/reagent/toxin/plasma))
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
 		for(var/i in H.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(4) // plasmamen use plasma to reform their bones or whatever
+			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
 		return TRUE
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		H.adjustStaminaLoss(7.5, 0)
-		H.adjustBruteLoss(0.5, 0)
-		if(prob(20))
+		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+		H.adjustBruteLoss(0.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+		if(DT_PROB(10, delta_time))
 			switch(rand(1, 3))
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
@@ -199,7 +199,7 @@
 				if(3)
 					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
 		if(chem.overdosed)
-			if(prob(4) && iscarbon(H)) //big oof
+			if(DT_PROB(2, delta_time) && iscarbon(H)) //big oof
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
@@ -210,5 +210,5 @@
 				else
 					to_chat(H, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
 					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
 		return TRUE

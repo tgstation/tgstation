@@ -281,8 +281,8 @@
 	return FALSE
 
 
-/mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
-	return 1
+/mob/proc/reagent_check(datum/reagent/R, delta_time, times_fired) // utilized in the species code
+	return TRUE
 
 
 /**

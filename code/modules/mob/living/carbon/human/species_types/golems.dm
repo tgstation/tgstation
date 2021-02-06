@@ -306,11 +306,11 @@
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(2,0)
 
-/datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
+		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		return TRUE
 
 //Radioactive puncher, hits for burn but only as hard as human, slightly more durable against brute but less against everything else
 /datum/species/golem/uranium
@@ -589,7 +589,7 @@
 
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
-	if(world.time > last_banana + banana_cooldown && M != H &&  M.combat_mode)
+	if(COOLDOWN_FINISHED(src, banana_cooldown) && M != H &&  M.combat_mode)
 		new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
 		COOLDOWN_START(src, banana_cooldown, banana_delay)
 
@@ -674,15 +674,15 @@
 	if(dominate)
 		C.RemoveSpell(dominate)
 
-/datum/species/golem/runic/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/golem/runic/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(istype(chem, /datum/reagent/water/holywater))
-		H.adjustFireLoss(4)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.adjustFireLoss(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 
 	if(chem.type == /datum/reagent/fuel/unholywater)
-		H.adjustBruteLoss(-4)
-		H.adjustFireLoss(-4)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.adjustBruteLoss(-4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.adjustFireLoss(-4 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 
 /datum/species/golem/cloth
 	name = "Cloth Golem"
@@ -989,12 +989,12 @@
 		bonechill.Remove(C)
 	..()
 
-/datum/species/golem/bone/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/golem/bone/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	. = ..()
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustStaminaLoss(7.5, 0)
-		H.adjustBruteLoss(0.5, 0)
-		if(prob(20))
+		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+		H.adjustBruteLoss(0.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
+		if(DT_PROB(10, delta_time))
 			switch(rand(1, 3))
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
@@ -1003,7 +1003,7 @@
 				if(3)
 					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
 		if(chem.overdosed)
-			if(prob(4) && iscarbon(H)) //big oof
+			if(DT_PROB(2, delta_time) && iscarbon(H)) //big oof
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
@@ -1014,7 +1014,7 @@
 				else
 					to_chat(H, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
 					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
 		return TRUE
 
 /datum/action/innate/bonechill

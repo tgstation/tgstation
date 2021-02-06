@@ -65,7 +65,7 @@
 			to_chat(victim, "<span class='notice'>You feel the [lowertext(name)] in your [limb.name] firming up from the cold!</span>")
 
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
-		blood_flow += 0.25 * delta_time // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+		blood_flow += 0.25 * delta_time // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
 		blood_flow -= limb.current_gauze.absorption_rate * gauzed_clot_rate * delta_time
@@ -89,9 +89,9 @@
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
 		tool_cauterize(I, user)
 
-/datum/wound/pierce/on_xadone(power, delta_time, times_fired)
+/datum/wound/pierce/on_xadone(power)
 	. = ..()
-	blood_flow -= 0.03 * power * delta_time // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
 /datum/wound/pierce/on_synthflesh(power)
 	. = ..()

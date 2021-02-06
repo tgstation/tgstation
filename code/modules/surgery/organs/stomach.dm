@@ -178,7 +178,7 @@
 
 		for(var/i in body.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(1, delta_time, times_fired)
+			iter_wound.on_xadone(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		reagents.remove_reagent(milk.type, milk.metabolization_rate * delta_time)
 	return ..()
 

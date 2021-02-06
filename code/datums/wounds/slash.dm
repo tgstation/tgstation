@@ -103,7 +103,7 @@
 	blood_flow = min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW)
 
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
-		blood_flow += 0.25 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
+		blood_flow += 0.25 // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
 		if(clot_rate > 0)
@@ -187,9 +187,9 @@
 	else if(demotes_to)
 		to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
 
-/datum/wound/slash/on_xadone(power, delta_time, times_fired)
+/datum/wound/slash/on_xadone(power)
 	. = ..()
-	blood_flow -= 0.03 * power * delta_time // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
 /datum/wound/slash/on_synthflesh(power)
 	. = ..()

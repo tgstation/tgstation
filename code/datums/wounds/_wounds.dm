@@ -328,8 +328,8 @@
 	return
 
 /// Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh
-/datum/wound/proc/on_xadone(power, delta_time, times_fired)
-	cryo_progress += power * delta_time
+/datum/wound/proc/on_xadone(power)
+	cryo_progress += power
 	if(cryo_progress > 33 * severity)
 		qdel(src)
 

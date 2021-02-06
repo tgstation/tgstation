@@ -55,8 +55,8 @@
 	maxHealth = 80
 	health = 80
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
-	unsuitable_cold_damage = 20
-	unsuitable_heat_damage = 20
+	unsuitable_cold_damage = 10
+	unsuitable_heat_damage = 10
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25

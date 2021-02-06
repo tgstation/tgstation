@@ -36,11 +36,11 @@
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(1 * delta_time, 0)
 
-/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
-		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return 1
+		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
+		return TRUE
 
 /datum/species/pod/on_hit(obj/projectile/P, mob/living/carbon/human/H)
 	switch(P.type)

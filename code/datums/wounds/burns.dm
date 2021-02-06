@@ -83,26 +83,37 @@
 				if(prob(6))
 					to_chat(victim, "<span class='warning'>The blisters on your [limb.name] ooze a strange pus...</span>")
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-			if(!disabling && DT_PROB(1, delta_time))
-				to_chat(victim, "<span class='warning'><b>Your [limb.name] completely locks up, as you struggle for control against the infection!</b></span>")
-				set_disabling(TRUE)
-			else if(disabling && DT_PROB(4, delta_time))
+			if(!disabling)
+				if(DT_PROB(1, delta_time))
+					to_chat(victim, "<span class='warning'><b>Your [limb.name] completely locks up, as you struggle for control against the infection!</b></span>")
+					set_disabling(TRUE)
+					return
+			else if(DT_PROB(4, delta_time))
 				to_chat(victim, "<span class='notice'>You regain sensation in your [limb.name], but it's still in terrible shape!</span>")
 				set_disabling(FALSE)
-			else if(DT_PROB(10, delta_time))
+				return
+
+			if(DT_PROB(10, delta_time))
 				victim.adjustToxLoss(0.5)
+
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-			if(!disabling && DT_PROB(1.5, delta_time))
-				to_chat(victim, "<span class='warning'><b>You suddenly lose all sensation of the festering infection in your [limb.name]!</b></span>")
-				set_disabling(TRUE)
-			else if(disabling && DT_PROB(1.5, delta_time))
+			if(!disabling)
+				if(DT_PROB(1.5, delta_time))
+					to_chat(victim, "<span class='warning'><b>You suddenly lose all sensation of the festering infection in your [limb.name]!</b></span>")
+					set_disabling(TRUE)
+					return
+			else if(DT_PROB(1.5, delta_time))
 				to_chat(victim, "<span class='notice'>You can barely feel your [limb.name] again, and you have to strain to retain motor control!</span>")
 				set_disabling(FALSE)
-			else if(DT_PROB(0.5, delta_time))
-				to_chat(victim, "<span class='warning'>You contemplate life without your [limb.name]...</span>")
-				victim.adjustToxLoss(0.75)
-			else if(DT_PROB(2, delta_time))
-				victim.adjustToxLoss(1)
+				return
+
+			if(DT_PROB(2.48, delta_time))
+				if(prob(20))
+					to_chat(victim, "<span class='warning'>You contemplate life without your [limb.name]...</span>")
+					victim.adjustToxLoss(0.75)
+				else
+					victim.adjustToxLoss(1)
+
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
 			if(DT_PROB(0.5 * infestation, delta_time))
 				switch(strikes_to_lose_limb)

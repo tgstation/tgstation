@@ -161,7 +161,7 @@
 		M.adjustCloneLoss(-power * REM * delta_time, 0)
 		for(var/i in M.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(power, delta_time, times_fired)
+			iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
@@ -214,7 +214,7 @@
 		M.adjustCloneLoss(-power * REM * delta_time, FALSE)
 		for(var/i in M.all_wounds)
 			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(power, delta_time, times_fired)
+			iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	..()

@@ -7,14 +7,14 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(!IS_IN_STASIS(src))
-
+	if(IS_IN_STASIS(src))
+		. = ..()
+	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs(delta_time, times_fired)
 
 		. = ..()
-
-		if (QDELETED(src))
+		if(QDELETED(src))
 			return
 
 		if(.) //not dead
@@ -23,13 +23,10 @@
 		if(stat != DEAD)
 			handle_brain_damage(delta_time, times_fired)
 
-	else
-		. = ..()
-
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
-		var/bprv = handle_bodyparts()
+		var/bprv = handle_bodyparts(delta_time, times_fired)
 		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
 			update_stamina() //needs to go before updatehealth to remove stamcrit
 			updatehealth()
@@ -328,7 +325,7 @@
 /mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return
 
-/mob/living/carbon/proc/handle_bodyparts()
+/mob/living/carbon/proc/handle_bodyparts(delta_time, times_fired)
 	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
 		stam_regen = TRUE
@@ -337,7 +334,7 @@
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
-			. |= BP.on_life(stam_regen)
+			. |= BP.on_life(delta_time, times_fired, stam_regen)
 
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
 	if(stat != DEAD)

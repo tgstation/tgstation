@@ -19,12 +19,11 @@
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
 /mob/living/carbon/human/Life(delta_time = SSMOBS_DT, times_fired)
-	if (notransform)
+	if(notransform)
 		return
 
 	. = ..()
-
-	if (QDELETED(src))
+	if(QDELETED(src))
 		return FALSE
 
 	//Body temperature stability and damage

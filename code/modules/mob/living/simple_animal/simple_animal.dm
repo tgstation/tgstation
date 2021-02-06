@@ -397,7 +397,7 @@
 			else
 				adjust_bodytemperature(clamp(temp_delta * delta_time / 10, 0, temp_delta))
 
-	if(!environment_air_is_safe())
+	if(!environment_air_is_safe() && unsuitable_atmos_damage)
 		adjustHealth(unsuitable_atmos_damage * delta_time)
 		if(unsuitable_atmos_damage > 0)
 			throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
@@ -407,8 +407,9 @@
 	handle_temperature_damage(delta_time, times_fired)
 
 /mob/living/simple_animal/proc/handle_temperature_damage(delta_time, times_fired)
-	if(bodytemperature < minbodytemp)
-		adjustHealth(unsuitable_cold_damage)
+	. = FALSE
+	if((bodytemperature < minbodytemp) && unsuitable_cold_damage)
+		adjustHealth(unsuitable_cold_damage * delta_time)
 		switch(unsuitable_cold_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
@@ -416,8 +417,10 @@
 				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 			if(10 to INFINITY)
 				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-	else if(bodytemperature > maxbodytemp)
-		adjustHealth(unsuitable_heat_damage)
+		. = TRUE
+
+	if((bodytemperature > maxbodytemp) && unsuitable_heat_damage)
+		adjustHealth(unsuitable_heat_damage * delta_time)
 		switch(unsuitable_heat_damage)
 			if(1 to 5)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
@@ -425,7 +428,9 @@
 				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 			if(10 to INFINITY)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
-	else
+		. = TRUE
+
+	if(!.)
 		clear_alert("temp")
 
 /mob/living/simple_animal/gib()
