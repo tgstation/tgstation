@@ -77,37 +77,54 @@
 	//lunge vars
 	COOLDOWN_DECLARE(lunge_cooldown)
 	var/lunge_cooldown_time = 5 SECONDS
+	var/is_lunging = FALSE
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
-
-/obj/item/melee/sabre/alt_attack(mob/living/target, mob/living/user, params)
-	if(!COOLDOWN_FINISHED(src, lunge_cooldown))
-		var/time_left = COOLDOWN_TIMELEFT(src, lunge_cooldown)
-		to_chat(user, "<span class='warning'>You need to wait [DisplayTimeText(time_left)] before lunging again!</span>")
-		return
-	COOLDOWN_START(src, lunge_cooldown, lunge_cooldown_time)
-	to_chat(user, "<span class='notice'>You lunge at [target]!</span>")
-	attack_verb_continuous = list("lunges")
-	attack_verb_simple = list("lunge")
 	RegisterSignal(src, COMSIG_MOVABLE_IMPACT, .proc/lunge_hit)
-	user.throw_at(target, 2, 10, spin = FALSE, callback = CALLBACK(src, .proc/end_lunge), gentle = TRUE)
+
+/obj/item/melee/sabre/examine(datum/source, mob/user, list/examine_list)
+	. = ..()
+	. += "<span class='notice'><b>right-click</b> to lunge with [src]. 5 second cooldown.</span>"
+
+/obj/item/melee/sabre/pickup(mob/user)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOVABLE_IMPACT, .proc/lunge_hit)
+
+/obj/item/melee/sabre/dropped(mob/user, silent)
+	. = ..()
+	UnregisterSignal(src, COMSIG_MOVABLE_IMPACT)
+
+/obj/item/melee/sabre/attack_alt(mob/living/victim, mob/living/user, params)
+	return ALT_ATTACK_CANCEL_ATTACK_CHAIN //so trying to lunge doesn't also count as a normal attack (read: double dipping)
+
+/obj/item/melee/sabre/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	var/list/params = params2list(click_parameters)
+
+	if(params["right"] && get_dist(user, target) < 3)
+		if(!COOLDOWN_FINISHED(src, lunge_cooldown))
+			var/time_left = COOLDOWN_TIMELEFT(src, lunge_cooldown)
+			to_chat(user, "<span class='warning'>You need to wait [DisplayTimeText(time_left)] before lunging again!</span>")
+			return
+		COOLDOWN_START(src, lunge_cooldown, lunge_cooldown_time)
+		is_lunging = TRUE
+		to_chat(user, "<span class='notice'>You lunge at [target]!</span>")
+		attack_verb_continuous = list("stabs")
+		attack_verb_simple = list("stab")
+
+		user.throw_at(target, 2, 10, spin = FALSE, gentle = TRUE)
 
 /obj/item/melee/sabre/proc/lunge_hit(mob/living/carbon/user, atom/hit)
 	SIGNAL_HANDLER
-
-	if(!isliving(hit))
+	if(!is_lunging)
 		return
-	user.SetKnockdown(0)
-	user.get_up(TRUE)
+	is_lunging = FALSE
 	melee_attack_chain(user, hit)
+	attack_verb_continuous = list("slashes", "cuts")
+	attack_verb_simple = list("slash", "cut")
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH //they won't get pushed back from the lunge!
-
-/obj/item/melee/sabre/proc/end_lunge()
-	attack_verb_continuous = initial(attack_verb_continuous)
-	attack_verb_simple = initial(attack_verb_simple)
-	UnregisterSignal(src, COMSIG_MOVABLE_IMPACT)
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
