@@ -1,12 +1,14 @@
  ///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
 /datum/plane_master_controller
+	///Identifier to use as assoc key
+	var/name
 	///List of planes in this controllers control. Initially this is a normal list, but becomes an assoc list of plane numbers as strings | plane instance
 	var/list/controlled_planes = list()
 	///hud that owns this controller
 	var/datum/hud/owner_hud
 
 ///Ensures that all the planes are correctly in the controlled_planes list.
-/datum/plane_master_controller/New(loc, hud)
+/datum/plane_master_controller/New(hud)
 	. = ..()
 	owner_hud = hud
 	var/assoc_controlled_planes = list()
@@ -16,7 +18,7 @@
 	controlled_planes = assoc_controlled_planes
 
 ///Full override so we can just use filterrific
-/datum/plane_master_controller//proc/add_filter(name, priority, list/params)
+/datum/plane_master_controller/proc/add_filter(name, priority, list/params)
 	for(var/i in controlled_planes)
 		var/atom/movable/screen/plane_master/pm_iterator = controlled_planes[i]
 		pm_iterator.add_filter(name, priority, params)
