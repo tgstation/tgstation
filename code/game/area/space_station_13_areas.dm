@@ -424,6 +424,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Construction Area"
 	icon_state = "construction"
 
+/area/hallway/secondary/construction/engineering
+	name = "Engineering Hallway"
+
 /area/hallway/secondary/exit
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
