@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "autolathes can no longer create items for less materials than they can be recycled for"

@@ -39,10 +39,13 @@
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
 	var/healium_sleep_min = 6
+<<<<<<< HEAD
 	///Minimum amount of hexane needed to start having effect
 	var/hexane_min = 2
 	var/n2o_euphoria
 	var/healium_euphoria
+=======
+>>>>>>> 19bd675e5b175549e486717bc431b51be5b7cd40
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
