@@ -352,18 +352,40 @@
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"
-	desc = "A cursed clown duffel bag that hungers for food of any kind. Putting some food for it to eat inside of it should distract it from eating you for a while. A warning label on one of the duffel bag's sides cautions against feeding your \"new pet\" anything poisonous..."
+	desc = "A cursed clown duffel bag that hungers for food of any kind.\n A warning label suggests that it eats food inside. If that food happens to be a horribly ruined, burned mess the chef scrapped out of the microwave, then it might have negative effects on the bag..."
 	icon_state = "duffel-curse"
 	inhand_icon_state = "duffel-curse"
-	slowdown = 1.3
+	slowdown = 2
+	item_flags = DROPDEL
 	max_integrity = 100
 	///counts time passed since it ate food
 	var/hunger = 0
 
-/obj/item/storage/backpack/duffelbag/cursed/Initialize()
+/obj/item/storage/backpack/duffelbag/cursed/examine(mob/user)
+	. = ..()
+	
+	if(hunger > 25)
+		. += "<span class='danger'>The bag is growling for food...</span>"
+
+/obj/item/storage/backpack/duffelbag/cursed/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	START_PROCESSING(SSobj,src)
-	ADD_TRAIT(src, TRAIT_NODROP, "duffelbag")
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
+
+/obj/item/storage/backpack/duffelbag/cursed/dropped(mob/living/carbon/human/user)
+	REMOVE_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
+	STOP_PROCESSING(SSobj,src)
+
+	var/turf/T = get_turf(user)
+	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
+	new /obj/effect/decal/cleanable/vomit(T)
+
+	. = ..()
 
 /obj/item/storage/backpack/duffelbag/cursed/process()
 	///don't process if it's somehow on the floor
@@ -371,14 +393,8 @@
 		return
 	var/mob/living/carbon/user = src.loc
 	///check hp
-	if(obj_integrity < 0)
+	if(obj_integrity == 0)
 		user.dropItemToGround(src, TRUE)
-		var/datum/component/storage/ST = GetComponent(/datum/component/storage)
-		ST.do_quick_empty()
-		var/turf/T = get_turf(user)
-		playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
-		new /obj/effect/decal/cleanable/vomit(T)
-		qdel(src)
 	hunger++
 	///check hunger
 	if((hunger > 50) && prob(20))
@@ -388,9 +404,9 @@
 				F.forceMove(user.loc)
 				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 				///poisoned food damages it
-				if(F.reagents.has_reagent(/datum/reagent/toxin))
+				if(istype(F, /obj/item/food/badrecipe))
 					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
-					obj_integrity -= 20
+					obj_integrity -= 50
 				else
 					to_chat(user, "<span class='notice'>The [name] eats your [F]!</span>")
 				qdel(F)
@@ -398,15 +414,11 @@
 				return
 		///no food found: it bites you and loses some hp
 		var/affecting = user.get_bodypart(BODY_ZONE_CHEST)
-		user.apply_damage(40, BRUTE, affecting)
-		hunger = 5
+		user.apply_damage(60, BRUTE, affecting)
+		hunger = initial(hunger)
 		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 		to_chat(user, "<span class='warning'>The [name] eats your back!</span>")
-		obj_integrity -= 15
-
-/obj/item/storage/backpack/duffelbag/cursed/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSobj,src)
+		obj_integrity -= 25
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"

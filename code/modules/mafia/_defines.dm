@@ -6,14 +6,16 @@
 #define MAFIA_TEAM_SOLO "solo"
 
 //types of town roles for random setup gen
-/// assistants it's just assistants filling up the rest of the roles
+/// Add this if you don't want a role to be a choice in the selection
 #define TOWN_OVERFLOW "overflow"
 /// roles that learn info about others in the game (chaplain, detective, psych)
 #define TOWN_INVEST "invest"
-/// roles that keep other roles safe (doctor, and weirdly enough lawyer counts)
+/// roles that keep other roles safe (doctor, sec officer, and weirdly enough lawyer counts)
 #define TOWN_PROTECT "protect"
+/// roles that are only there to kill bad guys.
+#define TOWN_KILLING "killing"
 /// roles that don't fit into anything else (hop)
-#define TOWN_MISC "misc"
+#define TOWN_SUPPORT "support"
 
 //other types (mafia team, neutrals)
 /// normal vote kill changelings
@@ -25,6 +27,20 @@
 /// role that upsets the game aka obsessed, usually worse for town than mafia but they can vote against mafia
 #define NEUTRAL_DISRUPT "disrupt"
 
+//role flags (special status of roles like detection immune)
+///to all forms of detection, shows themselves as an assistant.
+#define ROLE_UNDETECTABLE	(1<<0)
+///has the ability to kill at night and thus, blocks the game from ending with other teams alive.
+#define ROLE_CAN_KILL		(1<<1)
+///can only be one in a randomly generated game
+#define ROLE_UNIQUE			(1<<2)
+///role is public to all other players in the game.
+#define ROLE_REVEALED		(1<<3)
+///can not be defended, protected, or any other form of protection. all kills succeed no matter what.
+#define ROLE_VULNERABLE		(1<<4)
+///cannot perform any actions that night, preselected actions fail
+#define ROLE_ROLEBLOCKED	(1<<5)
+
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2
 #define MAFIA_PHASE_VOTING 3
@@ -35,11 +51,11 @@
 #define MAFIA_ALIVE 1
 #define MAFIA_DEAD 2
 
+#define COMSIG_MAFIA_ON_VISIT "mafia_onvisit"
+#define MAFIA_VISIT_INTERRUPTED 1
+
 #define COMSIG_MAFIA_ON_KILL "mafia_onkill"
 #define MAFIA_PREVENT_KILL 1
-
-#define COMSIG_MAFIA_CAN_PERFORM_ACTION "mafia_can_perform_action"
-#define MAFIA_PREVENT_ACTION 1
 
 //in order of events + game end
 

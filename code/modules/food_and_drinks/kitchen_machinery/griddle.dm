@@ -59,21 +59,22 @@
 
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
-	. = ..()
 	if(griddled_objects.len >= max_items)
 		to_chat(user, "<span class='notice'>[src] can't fit more items!</span>")
 		return
+	var/list/click_params = params2list(params)
+	//Center the icon where the user clicked.
+	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+		return
 	if(user.transferItemToLoc(I, src, silent = FALSE))
-		var/list/click_params = params2list(params)
-		//Center the icon where the user clicked.
-		if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-			return
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 		I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
 		AddToGrill(I, user)
 		update_icon()
+	else
+		return ..()
 
 /obj/machinery/griddle/attack_hand(mob/user)
 	. = ..()

@@ -547,7 +547,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "bN" = (
 /obj/structure/table_frame,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "trails_1";
 	name = "dried blood trail"
@@ -732,7 +732,7 @@
 	},
 /obj/structure/alien/weeds/creature,
 /obj/structure/table_frame,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/iron,
 /obj/item/stack/sheet/plasteel,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1584,8 +1584,8 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eA" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
