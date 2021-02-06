@@ -111,19 +111,16 @@
 		COOLDOWN_START(src, lunge_cooldown, lunge_cooldown_time)
 		is_lunging = TRUE
 		to_chat(user, "<span class='notice'>You lunge at [target]!</span>")
-		attack_verb_continuous = list("stabs")
-		attack_verb_simple = list("stab")
 
 		user.throw_at(target, 2, 10, spin = FALSE, gentle = TRUE)
 
 /obj/item/melee/sabre/proc/lunge_hit(mob/living/carbon/user, atom/hit)
 	SIGNAL_HANDLER
+
 	if(!is_lunging)
 		return
 	is_lunging = FALSE
-	melee_attack_chain(user, hit)
-	attack_verb_continuous = list("slashes", "cuts")
-	attack_verb_simple = list("slash", "cut")
+	INVOKE_ASYNC(src, /obj/item.proc/melee_attack_chain, user, hit)//this sleeps, signal procs can not sleep
 	return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH //they won't get pushed back from the lunge!
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
