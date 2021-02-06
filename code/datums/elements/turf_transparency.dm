@@ -83,7 +83,7 @@
 	our_turf.show_below_turf(show_bottom_level)
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
 
-	change_north(null, get_step(our_turf, NORTH))
+	change_north(get_step(our_turf, NORTH))
 
 /datum/element/turf_z_transparency/Detach(datum/source, force)
 	. = ..()
