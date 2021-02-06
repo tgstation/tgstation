@@ -200,7 +200,7 @@
 				"installed" = !!hard_drive.find_file_by_name(P.filename),
 				"compatibility" = check_compatibility(P),
 				"size" = P.size,
-				"access" = emagged ? TRUE : P.can_run(user,transfer = 1, access = access),
+				"access" = emagged && P.available_on_syndinet ? TRUE : P.can_run(user,transfer = 1, access = access),
 				"verifiedsource" = P.available_on_ntnet,
 			))
 		data["categories"] += list(cat)
