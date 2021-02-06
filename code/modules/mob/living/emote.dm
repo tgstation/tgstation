@@ -199,6 +199,22 @@
 	message = "blows a kiss."
 	message_param = "blows a kiss to %t."
 
+/datum/emote/living/kiss/run_emote(mob/living/user, params, type_override, intentional)
+	if(!user.usable_hands) // so simple mobs and such can still get in on the fun
+		return ..()
+
+	message = "" // the kisser item displays the message on firing
+	message_param = ""
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/kisser/kiss_blower = new(user)
+	if(user.put_in_hands(kiss_blower))
+		to_chat(user, "<span class='notice'>You ready your kiss-blowing hand.</span>")
+	else
+		qdel(kiss_blower)
+		to_chat(user, "<span class='warning'>You're incapable of blowing a kiss in your current state.</span>")
+
 /datum/emote/living/laugh
 	key = "laugh"
 	key_third_person = "laughs"

@@ -1058,6 +1058,7 @@
 #include "code\game\objects\items\flamethrower.dm"
 #include "code\game\objects\items\gift.dm"
 #include "code\game\objects\items\granters.dm"
+#include "code\game\objects\items\hand_items.dm"
 #include "code\game\objects\items\handcuffs.dm"
 #include "code\game\objects\items\his_grace.dm"
 #include "code\game\objects\items\holosign_creator.dm"
