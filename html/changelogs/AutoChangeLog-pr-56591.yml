@@ -1,0 +1,6 @@
+author: "MTandi"
+delete-after: True
+changes: 
+  - bugfix: "Nanite Monitoring now works with pinpointers and Lifeline"
+  - bugfix: "Pinpointers now track properly on multi-z stations"
+  - bugfix: "Stationary crew monitor now shows data from all levels of multi-z station"
