@@ -116,9 +116,10 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, .proc/ripOut)
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, .proc/safeRemove)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/checkTweeze)
 
 /datum/component/embedded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY))
 
 /datum/component/embedded/process(delta_time)
 	var/mob/living/carbon/victim = parent
@@ -202,11 +203,11 @@
 		victim.emote("scream")
 
 	victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
-	safeRemove(TRUE)
+	safeRemove(victim)
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
-/// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
-/datum/component/embedded/proc/safeRemove(to_hands)
+/// If you want the thing to go into someone's hands rather than the floor, pass them in to_hands
+/datum/component/embedded/proc/safeRemove(mob/to_hands)
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/victim = parent
@@ -216,7 +217,7 @@
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 		if(to_hands)
-			INVOKE_ASYNC(victim, /mob.proc/put_in_hands, weapon)
+			INVOKE_ASYNC(to_hands, /mob.proc/put_in_hands, weapon)
 		else
 			weapon.forceMove(get_turf(victim))
 
@@ -233,3 +234,48 @@
 		to_chat(victim, "<span class='userdanger'>\The [weapon] that was embedded in your [limb.name] disappears!</span>")
 
 	qdel(src)
+
+/// The signal for listening to see if someone is using a hemostat on us to pluck out this object
+/datum/component/embedded/proc/checkTweeze(mob/living/carbon/victim, obj/item/possible_tweezers, mob/user)
+	SIGNAL_HANDLER
+
+	if(!istype(victim) || possible_tweezers.tool_behaviour != TOOL_HEMOSTAT || user.zone_selected != limb.body_zone)
+		return
+
+	if(weapon != limb.embedded_objects[1]) // just pluck the first one, since we can't easily coordinate with other embedded components affecting this limb who is highest priority
+		return
+
+	if(ishuman(victim)) // check to see if the limb is actually exposed
+		var/mob/living/carbon/human/victim_human = victim
+		if(!victim_human.can_inject(user, TRUE, limb.body_zone, ignore_species = TRUE))
+			return TRUE
+
+	INVOKE_ASYNC(src, .proc/tweezePluck, possible_tweezers, user)
+	return COMPONENT_NO_AFTERATTACK
+
+/// The actual action for pulling out an embedded object with a hemostat
+/datum/component/embedded/proc/tweezePluck(obj/item/possible_tweezers, mob/user)
+	var/mob/living/carbon/victim = parent
+
+	var/self_pluck = (user == victim)
+
+	if(self_pluck)
+		user.visible_message("<span class='danger'>[user] begins plucking [weapon] from [user.p_their()] [limb.name]</span>", "<span class='notice'>You start plucking [weapon] from your [limb.name]...</span>",\
+			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
+	else
+		user.visible_message("<span class='danger'>[user] begins plucking [weapon] from [victim]'s [limb.name]</span>","<span class='notice'>You start plucking [weapon] from [victim]'s [limb.name]...</span>", \
+			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[user] begins plucking [weapon] from your [limb.name]...</span>")
+
+	var/pluck_time = 2.5 SECONDS * weapon.w_class * (self_pluck ? 2 : 1)
+	if(!do_after(user, pluck_time, victim))
+		if(self_pluck)
+			to_chat(user, "<span class='danger'>You fail to pluck [weapon] from your [limb.name].</span>")
+		else
+			to_chat(user, "<span class='danger'>You fail to pluck [weapon] from [victim]'s [limb.name].</span>")
+			to_chat(victim, "<span class='danger'>[user] fails to pluck [weapon] from your [limb.name].</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You successfully pluck [weapon] from [victim]'s [limb.name].</span>")
+	to_chat(victim, "<span class='notice'>[user] plucks [weapon] from your [limb.name].</span>")
+	safeRemove(user)

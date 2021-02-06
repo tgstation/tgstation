@@ -57,7 +57,7 @@
 	response_harm_continuous = "swats"
 	response_harm_simple = "swat"
 	stop_automated_movement = 1
-	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
+	combat_mode = TRUE //parrots now start "aggressive" since only player parrots will nuzzle.
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	friendly_verb_continuous = "grooms"
@@ -152,7 +152,7 @@
 	. = ..()
 	. += ""
 	. += "Held Item: [held_item]"
-	. += "Mode: [a_intent]"
+	. += "Combat mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -286,7 +286,7 @@
 	..()
 	if(client)
 		return
-	if(!stat && M.a_intent == INTENT_HARM)
+	if(!stat && M.combat_mode)
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
@@ -301,7 +301,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && M.a_intent == INTENT_HELP)
+	if(stat != DEAD && !M.combat_mode)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -571,7 +571,7 @@
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			a_intent = INTENT_HARM
+			set_combat_mode(TRUE)
 
 		//If the mob is close enough to interact with
 		if(Adjacent(parrot_interest))
@@ -865,13 +865,13 @@
 	if(stat || !client)
 		return
 
-	if(a_intent != INTENT_HELP)
+	if(combat_mode)
 		melee_damage_upper = 0
-		a_intent = INTENT_HELP
+		set_combat_mode(FALSE)
 	else
 		melee_damage_upper = parrot_damage_upper
-		a_intent = INTENT_HARM
-	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
+		set_combat_mode(TRUE)
+	to_chat(src, "<span class='notice'>You will now [combat_mode ? "Harm" : "Help"] others.</span>")
 	return
 
 /*
