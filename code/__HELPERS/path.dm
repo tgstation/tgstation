@@ -25,12 +25,11 @@
 	var/dir_from
 
 //s,p,ph,pnt,*bf*,jmp
-/datum/jpsnode/New(s,p, turf/goal)
+/datum/jpsnode/New(s,p, _jumps, turf/goal)
 	tile = s
 	prevNode = p
-
+	jumps = _jumps
 	if(prevNode)
-		jumps = PATH_DIST(prevNode.tile, tile)
 		nt = prevNode.nt + jumps
 		goal = prevNode.goal
 		dir_from = get_dir(tile, prevNode.tile)
@@ -75,7 +74,7 @@
 	var/adjacent = /turf/proc/reachableTurftest
 	var/dist = /turf/proc/Distance_cardinal
 	var/turf/exclude = null
-	var/simulated_only = FALSE
+	var/simulated_only = TRUE
 	var/done = FALSE
 
 /datum/pathfind/New(atom/movable/caller, atom/goal)
@@ -102,7 +101,7 @@
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 
 	//initialization
-	var/datum/jpsnode/cur = new (start,null,end)//current processed turf
+	var/datum/jpsnode/cur = new (start,null,0,end)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
 	visited[start] = -1
@@ -203,13 +202,13 @@
 			iter_turf = get_step_towards(iter_turf,next_turf_goal)
 			path.Add(iter_turf)
 			iter_turf.color = COLOR_YELLOW
-		if(visited[iter_turf] == -1)
+		if(iter_turf == end)
 			return path
 		else
 			iter_node = iter_node.prevNode
 
 /datum/pathfind/proc/can_step(turf/a, turf/next)
-	return !call(a,adjacent)(caller, next, id, simulated_only)
+	return call(a,adjacent)(caller, next, id, simulated_only)
 
 /datum/pathfind/proc/queue_node(datum/tiles/t)
 	if(done || path)
@@ -247,6 +246,7 @@
 	var/datum/jpsnode/unwind_node = openc[original_turf]
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
+	original_turf.color = COLOR_PURPLE
 
 	while(TRUE)
 		if(done || path) // lazy way to force out when done, do better
@@ -254,23 +254,37 @@
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
+		steps_taken++
+		if(steps_taken % 5 == 1)
+			testing("taking diag step [steps_taken] in dir [heading]")
+
 		if(!current_turf)
 			return
-		current_turf.color = COLOR_GRAY
+		if(current_turf != original_turf)
+			current_turf.color = COLOR_GRAY
 
 		var/closeenough
 		if(mintargetdist)
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
 			testing("done? lat close enough: [closeenough]")
-			var/datum/jpsnode/final_node = new(current_turf,unwind_node)
+			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
 			//open.Insert(current_turf)
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
-		else if(!visited[current_turf] && can_step(lag_turf, current_turf))
+		else if(!visited[current_turf])
 			visited[current_turf] = original_turf
+			if(!can_step(lag_turf, current_turf))
+				testing("lat went into a turf that it couldn't step into??")
+				current_turf.color = COLOR_WHITE
+				return
+		else if(!can_step(lag_turf, current_turf))
+			testing("lat went into a turf that was visited but it couldn't step into??")
+			current_turf.color = COLOR_ORANGE
+			return
 		else
+			current_turf.color = COLOR_BLACK
 			return
 
 		if(steps_taken > 30)
@@ -281,31 +295,29 @@
 			break
 		*/
 
-		steps_taken++
-		if(steps_taken % 5 == 1)
-			testing("taking diag step [steps_taken] in dir [heading]")
+
 
 		switch(heading)
 			if(NORTH)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 			if(SOUTH)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 			if(EAST)
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 			if(WEST)
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 
 	testing("took [steps_taken] steps in dir [heading]")
 
@@ -316,29 +328,40 @@
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
+	original_turf.color = COLOR_PURPLE
 	while(TRUE)
 		if(done || path) // lazy way to force out when done, do better
 			testing("diag exit: done [done] path [path]")
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
+		steps_taken++
+		if(steps_taken % 5 == 1)
+			testing("taking diag step [steps_taken] in dir [heading]")
+
 		if(!current_turf)
 			return
-		current_turf.color = COLOR_GRAY
+		if(current_turf != original_turf)
+			current_turf.color = COLOR_GRAY
 
 		var/closeenough
 		if(mintargetdist)
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
-			testing("done? lat close enough: [closeenough]")
-			var/datum/jpsnode/final_node = new(current_turf,unwind_node)
+			testing("done? diag close enough: [closeenough]")
+			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
 			//open.Insert(current_turf)
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
-		else if(!visited[current_turf] && can_step(lag_turf, current_turf))
+		else if(!visited[current_turf])
 			visited[current_turf] = original_turf
+		else if(!can_step(lag_turf, current_turf))
+			testing("diag went into a turf that was visited but it couldn't step into??")
+			current_turf.color = COLOR_ORANGE
+			return
 		else
+			current_turf.color = COLOR_BLACK
 			return
 
 		if(steps_taken > 30)
@@ -350,53 +373,48 @@
 			break
 		*/
 
-		steps_taken++
-		if(steps_taken % 5 == 1)
-			testing("taking diag step [steps_taken] in dir [heading]")
-
-
 		switch(heading)
 			if(NORTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
 					//cardinal scan west
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
 					//cardinal scan north
 			if(NORTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
 					//cardinal scan east
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
 					//cardinal scan north
 			if(SOUTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
 					//cardinal scan west
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
 					//cardinal scan south
 			if(SOUTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
 					//cardinal scan east
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return new /datum/tiles(current_turf, original_turf)
+					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				else
 					queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
 					//cardinal scan south
