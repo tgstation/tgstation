@@ -298,7 +298,7 @@
 		bonus_countdown = next_nag_time - world.time
 	if(COOLDOWN_FINISHED(src, next_nag_time))
 		if(!is_centcom_level(z) && !is_reserved_level(z)) //don't send message if we're on Centcom or in transit
-			radio.talk_into(src, "Unsent in <b>[get_area(src)]</b>.[speed_bonus ? " Speedy delivery bonus of <b>[bounty_value * speed_bonus]</b> credit\s lost." : ""]", RADIO_CHANNEL_SUPPLY)
+			radio.talk_into(src, "Unsent in [get_area(src)].[speed_bonus ? " Speedy delivery bonus of [bounty_value * speed_bonus] credit\s lost." : ""]", RADIO_CHANNEL_SUPPLY)
 			speed_bonus = 0
 			bounty_holder_account.bank_card_talk("\The [src] is unsent in <b>[get_area(src)]</b>.")
 			if(bounty_handler_account)
