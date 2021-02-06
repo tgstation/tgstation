@@ -1,0 +1,4 @@
+author: "Useroth"
+delete-after: True
+changes: 
+  - bugfix: "proc/reset_pull_offsets() resets the mob's offsets to their own base_pixel_x and base_pixel_x, instead of the puller's"
