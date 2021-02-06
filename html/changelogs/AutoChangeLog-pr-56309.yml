@@ -1,5 +1,0 @@
-author: "Qustinnus, Actionninja & Goof for some audio, fikou for beeping twice"
-delete-after: True
-changes: 
-  - rscadd: "Adds station traits: Small modifiers that can randomly be chosen each round. They are usually logged in the intercept the station receives early in the round"
-  - refactor: "Announcement audio is now stored in a datum to make it easy to add different announcers"
