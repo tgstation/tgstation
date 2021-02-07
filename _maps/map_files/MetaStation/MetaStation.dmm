@@ -22750,7 +22750,7 @@
 	name = "Xenobiology Lockdown"
 	},
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "fRc" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera{
@@ -43143,6 +43143,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -65091,7 +65092,7 @@
 	name = "Xenobiology Lockdown"
 	},
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "tef" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -65263,7 +65264,7 @@
 	name = "Xenobiology Lockdown"
 	},
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "tgh" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
