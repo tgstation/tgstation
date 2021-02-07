@@ -180,8 +180,8 @@
 	hardness = 50
 
 /turf/closed/wall/mineral/iron
-	name = "rough metal wall"
-	desc = "A wall with rough metal plating."
+	name = "rough iron wall"
+	desc = "A wall with rough iron plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron_wall-0"
 	base_icon_state = "iron_wall"

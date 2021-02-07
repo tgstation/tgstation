@@ -21,7 +21,6 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	density = FALSE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -41,6 +40,8 @@
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
 	add_cell_sample()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/mouse/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
@@ -209,8 +210,8 @@
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
 		. += "<span class='warning'>It's dripping with fuel and smells terrible.</span>"
 
-/obj/item/food/deadmouse/attackby(obj/item/I, mob/user, params)
-	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
+/obj/item/food/deadmouse/attackby(obj/item/I, mob/living/user, params)
+	if(I.get_sharpness() && user.combat_mode)
 		if(isturf(loc))
 			new /obj/item/food/meat/slab/mouse(loc)
 			to_chat(user, "<span class='notice'>You butcher [src].</span>")

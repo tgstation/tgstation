@@ -1,6 +1,6 @@
 /obj/item/melee/baton
 	name = "stun baton"
-	desc = "A stun baton for incapacitating people with."
+	desc = "A stun baton for incapacitating people with. Left click to stun, right click to harm."
 
 	icon_state = "stunbaton"
 	inhand_icon_state = "baton"
@@ -179,7 +179,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
+/obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user, params)
 	if(clumsy_check(user))
 		return FALSE
 
@@ -193,23 +193,25 @@
 		if(check_martial_counter(L, user))
 			return
 
-	if(user.a_intent != INTENT_HARM)
-		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				if(baton_effect(M, user))
-					user.do_attack_animation(M)
-					return
-			else
-				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
-		else
-			M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
-	else
+	var/list/modifiers = params2list(params)
+	if(modifiers && modifiers["right"])
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
 				baton_effect(M, user)
 		..()
-
+		return
+	else if(turned_on)
+		if(attack_cooldown_check <= world.time)
+			if(baton_effect(M, user))
+				user.do_attack_animation(M)
+				return
+		else
+			to_chat(user, "<span class='danger'>The baton is still charging!</span>")
+			return
+	else
+		M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
+					"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
+		return
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(shields_blocked(L, user))
@@ -277,7 +279,7 @@
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton."
+	desc = "An improvised stun baton. Left click to stun, right click to harm."
 	icon_state = "stunprod"
 	inhand_icon_state = "prod"
 	worn_icon_state = null

@@ -26,7 +26,6 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	is_flying_animal = TRUE
 	speak_emote = list("squeaks")
@@ -40,6 +39,7 @@
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus //Despite being a bat for... reasons, this is now a spider, and is one of the HoS' pets.
 	name = "Sergeant Araneus"

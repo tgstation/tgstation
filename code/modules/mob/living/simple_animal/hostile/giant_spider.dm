@@ -60,7 +60,7 @@
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	faction = list("spiders")
 	pass_flags = PASSTABLE
 	move_to_delay = 6
@@ -694,4 +694,7 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard
 	maxHealth = 80
 	health = 80
-	ventcrawler = VENTCRAWLER_ALWAYS
+
+/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
