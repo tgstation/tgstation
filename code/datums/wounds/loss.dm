@@ -51,3 +51,4 @@
 	log_wound(victim, src)
 	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE)
 	qdel(src)
+	return TRUE
