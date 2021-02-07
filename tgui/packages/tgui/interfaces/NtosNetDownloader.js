@@ -28,7 +28,7 @@ export const NtosNetDownloader = (props, context) => {
     .find(category => category.name === selectedCategory)
     ?.items
     || [];
-  const disk_used_real = !!downloading
+  const disk_used_real = downloading
     ? disk_size - toFixed(disk_used + downloadcompletion)
     : disk_size - disk_used;
   return (
@@ -57,16 +57,18 @@ export const NtosNetDownloader = (props, context) => {
                   icon="spinner"
                   iconSpin={1}
                   tooltipPosition="left"
-                  tooltip={!!downloading && (`Download: ${downloadname}.prg (${downloadpercentage}%)`)}/>
+                  tooltip={!!downloading && (
+                    `Download: ${downloadname}.prg (${downloadpercentage}%)`
+                  )} />
               )}>
-                <ProgressBar
-                  value={!!downloading ? disk_used + downloadcompletion : disk_used}
-                  minValue={0}
-                  maxValue={disk_size}>
-                    <Box textAlign="left">
-                      {`${disk_used_real} GQ free of ${disk_size} GQ`}
-                    </Box>
-                </ProgressBar>
+              <ProgressBar
+                value={downloading ? disk_used + downloadcompletion : disk_used}
+                minValue={0}
+                maxValue={disk_size}>
+                <Box textAlign="left">
+                  {`${disk_used_real} GQ free of ${disk_size} GQ`}
+                </Box>
+              </ProgressBar>
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -112,7 +114,7 @@ const Program = (props, context) => {
     <Section>
       <Stack align="baseline">
         <Stack.Item grow={1} blod>
-          <Icon name={program.icon} mr={1}/>
+          <Icon name={program.icon} mr={1} />
           {program.filedesc}
         </Stack.Item>
         <Stack.Item shrink={0} width="48px" textAlign="right" color="label" nowrap>
@@ -125,7 +127,7 @@ const Program = (props, context) => {
               color="good"
               minValue={0}
               maxValue={program.size}
-              value={downloadcompletion}/>
+              value={downloadcompletion} />
           ) || (
             (!program.installed
               && program.compatibility
