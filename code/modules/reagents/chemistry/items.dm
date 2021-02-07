@@ -18,7 +18,7 @@
 	var/number_of_pages = 50
 
 //A little janky with pockets
-/obj/item/ph_booklet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/ph_booklet/attack_hand(mob/user)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(number_of_pages == 50)
 			icon_state = "pHbooklet_open"
