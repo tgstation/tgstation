@@ -27,7 +27,7 @@
 	var/dir_from
 
 //s,p,ph,pnt,*bf*,jmp
-/datum/jpsnode/New(s,p, _jumps, turf/goal, cost)
+/datum/jpsnode/New(s,p, _jumps, turf/_goal)
 	tile = s
 	prevNode = p
 	jumps = _jumps
@@ -37,9 +37,13 @@
 		dir_from = get_dir(tile, prevNode.tile)
 	else
 		nt = 0
-	h = PATH_DIST(tile, goal)
+		goal = _goal
 
+
+	h = PATH_DIST(tile, goal)
+	//testing("new node at ([tile.x], [tile.y]), goal is at ([goal.x], [goal.y]),  dist should be [PATH_DIST(tile, goal)], or [tile.Distance(goal)]")
 	f = nt + h//*(1+ PF_TIEBREAKER)
+	tile.maptext = "([f],[nt],[h])"
 
 /datum/jpsnode/proc/setp(p, _jmp) // even jmp shouldnt be necessaryt, should be inferrable
 	prevNode = p
@@ -105,6 +109,7 @@
 /datum/pathfind/proc/start_search()
 	for(var/turf/turf_clear in world)
 		turf_clear.color = null
+		turf_clear.maptext = null
 	testing("**********start")
 	caller.calculating_path = TRUE
 
@@ -145,6 +150,7 @@
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
 		total_tiles++
+		cur.tile.color = COLOR_GRAY
 		//var/closeenough
 		//if(mintargetdist)
 		//	closeenough = call(cur.tile,dist)(end) <= mintargetdist
@@ -198,7 +204,7 @@
 			path.Swap(i,path.len-i+1)
 	openc = null
 	//cleaning after us
-	testing("*********new path done with [total_tiles] tiles popped, [iii] rounds")
+	testing("*********new path done with [total_tiles] tiles popped, [iii] rounds (also the distance between a tile and null is [get_dist(start, null)] and the turf of a turf is [get_turf(start)]")
 	caller.calculating_path = FALSE
 	if(success)
 		testing("<span class='reallybig hypnophrase'>SUCCESS</span>")
@@ -513,8 +519,8 @@
 
 		if(!current_turf)
 			return
-		if(current_turf != original_turf)
-			current_turf.color = COLOR_GRAY
+		//if(current_turf != original_turf)
+			//current_turf.color = COLOR_GRAY
 
 		var/closeenough
 		if(mintargetdist)
