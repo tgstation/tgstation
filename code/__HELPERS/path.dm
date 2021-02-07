@@ -73,8 +73,8 @@
 	var/id
 
 	var/mintargetdist = 0
-	var/maxnodedepth = 70
-	var/maxnodes = 70
+	var/maxnodedepth = 150
+	var/maxnodes = 150
 	var/adjacent = /turf/proc/reachableTurftest
 	var/dist = /turf/proc/Distance
 	var/turf/exclude = null
@@ -86,17 +86,21 @@
 	var/nodes_queued_c
 
 	var/list/evilnodes
+	var/success = FALSE
 
-/datum/pathfind/New(atom/movable/caller, atom/goal)
+/datum/pathfind/New(atom/movable/caller, atom/goal, _id)
 	src.caller = caller
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	openc = new() //open list for node check
 	visited = new() //open list for node check
 	evilnodes = new() //open list for node check
+	id = _id
 
 //datum/pathfind/proc/generate_node(turf/the_tile, )
 /datum/pathfind/proc/start_search()
+	for(var/turf/turf_clear in world)
+		turf_clear.color = null
 	testing("**********start")
 	caller.calculating_path = TRUE
 
@@ -109,6 +113,7 @@
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
 		if(PATH_DIST(start, end) > maxnodes)
+			testing("$$$$$$$$$$$$$$$$too far, dead before it began")
 			return FALSE
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 
@@ -117,7 +122,6 @@
 	open.Insert(cur)
 	openc[start] = cur
 	visited[start] = -1
-	evilnodes[start] = cur
 	//then run the main loop
 	var/total_tiles
 
@@ -128,12 +132,12 @@
 			break
 		if(!caller)
 			return
-		testing("pop [iii]")
+		//testing("pop [iii]")
 		cur = open.Pop() //get the lower f turf in the open list
 		iii++
-		if(iii > 90)
-			testing("[iii] hit 90")
-			return
+		//if(iii > 90)
+			//testing("[iii] hit 90")
+			//return
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
 		total_tiles++
@@ -158,7 +162,7 @@
 		lateral_scan_spec(current_turf, EAST) // this is a turf not a node, fix
 		lateral_scan_spec(current_turf, WEST) // this is a turf not a node, fix
 		if(done || path)
-			testing("mid main exit: done [done] path [path]")
+			//testing("mid main exit: done [done] path [path]")
 			break
 		diag_scan_spec(current_turf, NORTHWEST) // this is a turf not a node, fix
 		diag_scan_spec(current_turf, SOUTHEAST) // this is a turf not a node, fix
@@ -173,6 +177,10 @@
 	//cleaning after us
 	testing("*********new path done with [total_tiles] tiles popped, [iii] rounds")
 	caller.calculating_path = FALSE
+	if(success)
+		testing("<span class='reallybig hypnophrase'>SUCCESS</span>")
+	else
+		testing("<span class='userdanger'>FAILURE</span>")
 	return path
 
 /*/datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
@@ -222,9 +230,8 @@
 */
 
 /datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
-	for(var/turf/turf_clear in world)
-		turf_clear.color = null
 	testing("unwinding~~~~~~~~~~~~ (same? [unwind_node.tile == end])")
+	success = unwind_node.tile == end
 	path = new()
 	var/turf/iter_turf = unwind_node.tile
 	var/turf/iter_turf2 = get_turf(unwind_node.tile)
@@ -238,10 +245,10 @@
 		legs++
 
 		var/turf/goal_turf = unwind_node.prevNode.tile
-		testing(">lega [legs] | <b>([goal_turf.x], ([goal_turf.y])</b>")
+		//testing(">lega [legs] | <b>([goal_turf.x], ([goal_turf.y])</b>")
 		var/i
 		a.Add(goal_turf)
-		goal_turf.color = COLOR_BLUE_GRAY
+		goal_turf.color = COLOR_YELLOW
 /*		while(iter_turf != goal_turf)
 			i++
 			testing(">>>stepa [legs] | [i]")
@@ -252,13 +259,13 @@
 		while(iter_turf != goal_turf)
 			i++
 			var/turf/next_turf = get_step_towards(iter_turf, goal_turf)
-			testing(">>>stepa [legs] | [i] - ([iter_turf.x], [iter_turf.y]) -> ([next_turf.x], [next_turf.y])")
+			//testing(">>>stepa [legs] | [i] - ([iter_turf.x], [iter_turf.y]) -> ([next_turf.x], [next_turf.y])")
 			iter_turf = next_turf
 
-			iter_turf.color = COLOR_BLUE_LIGHT
+			iter_turf.color = COLOR_ORANGE
 			//path.Add(iter_turf)
 		unwind_node = unwind_node.prevNode
-	testing("+++++++++end of A")
+	//testing("+++++++++end of A")
 
 	legs = 0
 
@@ -267,20 +274,23 @@
 	while(goal_turf2 && goal_turf2 != -1)
 		b.Add(goal_turf2)
 		legs++
-		testing(">legb [legs] | <b>([goal_turf2.x], ([goal_turf2.y])</b>")
+		//testing(">legb [legs] | <b>([goal_turf2.x], ([goal_turf2.y])</b>")
 		var/i
-		//goal_turf.color = COLOR_BLUE_GRAY
+
 		while(iter_turf2 != goal_turf2)
 			i++
-			if(i > 100)
+			if(i > 150)
 				break
 			var/turf/next_turf = get_step_towards(iter_turf2, goal_turf2)
-			testing(">>>stepa [legs] | [i] - ([iter_turf2.x], [iter_turf2.y]) -> ([next_turf.x], [next_turf.y])")
+			//testing(">>>stepa [legs] | [i] - ([iter_turf2.x], [iter_turf2.y]) -> ([next_turf.x], [next_turf.y])")
 			iter_turf2 = next_turf
 			path.Add(iter_turf2)
-			//iter_turf.color = COLOR_BLUE_LIGHT
+			iter_turf.color = COLOR_BLUE_LIGHT
 		goal_turf2 = visited[iter_turf2]
-	testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goaltuf2 = [goal_turf2])")
+
+	for(var/turf/turff in b)
+		turff.color = COLOR_BLUE_GRAY
+	testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goalturf2 = [goal_turf2])")
 
 /datum/pathfind/proc/can_step(turf/a, turf/next)
 	return call(a,adjacent)(caller, next, id, simulated_only)
@@ -307,11 +317,11 @@
 		CRASH("missing from turf in queue?")
 
 	if(our_node)
-		testing("!!!!!!!!!!!!!!!!!!!!!!!!!!were trying to queue a node that already exists [turf_for_node.x] [turf_for_node.y]")
+		//testing("!!!!!!!!!!!!!!!!!!!!!!!!!!were trying to queue a node that already exists [turf_for_node.x] [turf_for_node.y]")
 		turf_for_node.color = COLOR_BROWN
 	else
 	//is not already in open list, so add it
-		testing("adding further node")
+		//testing("adding further node")
 		nodes_queued_c++
 		our_node = new(turf_for_node,moved_from)
 		open.Insert(our_node)
@@ -324,7 +334,7 @@
 	var/i
 	while(!unwind_node)
 		i++
-		testing("no unwind node on lat [i]")
+		//testing("no unwind node on lat [i]")
 		var/turf/older = visited[original_turf]
 		unwind_node = openc[older]
 
@@ -334,13 +344,13 @@
 
 	while(TRUE)
 		if(done || path) // lazy way to force out when done, do better
-			testing("card exit: done [done] path [path]")
+			//testing("card exit: done [done] path [path]")
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		steps_taken++
 		if(steps_taken % 10 == 1)
-			testing("taking lat step [steps_taken] in dir [heading]")
+			//testing("taking lat step [steps_taken] in dir [heading]")
 
 		if(!current_turf)
 			return
@@ -362,7 +372,7 @@
 			current_turf.color = COLOR_BLACK
 			return
 		else if(!can_step(lag_turf, current_turf))
-			current_turf.color = COLOR_ORANGE
+			current_turf.color = COLOR_WHITE
 			return
 		else
 			//visited[current_turf] = original_turf
@@ -373,9 +383,9 @@
 				return
 			*/
 
-		if(steps_taken > 30)
-			testing("too many steps, breaking to next")
-			return
+		//if(steps_taken > 50)
+			//testing("tooc many steps, breaking to next") // make this add the tile?
+			//return
 		/*if(!(unwind_node.bf & heading))
 			//testing("skip dir: [f] br: [cur.bf]")
 			break
@@ -451,7 +461,7 @@
 					open.Insert(newnode)
 					return
 
-	testing("took [steps_taken] steps in dir [heading]")
+	//testing("took [steps_taken] steps in dir [heading]")
 
 
 /datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading)
@@ -462,20 +472,20 @@
 	var/i
 	while(!unwind_node)
 		i++
-		testing("no unwind node on diag [i]")
+		//testing("no unwind node on diag [i]")
 		var/turf/older = visited[original_turf]
 		unwind_node = openc[older]
 
 	original_turf.color = COLOR_VIBRANT_LIME
 	while(TRUE)
 		if(done || path) // lazy way to force out when done, do better
-			testing("diag exit: done [done] path [path]")
+			//testing("diag exit: done [done] path [path]")
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		steps_taken++
 		if(steps_taken % 10 == 1)
-			testing("taking diag step [steps_taken] in dir [heading]")
+			//testing("taking diag step [steps_taken] in dir [heading]")
 
 		if(!current_turf)
 			return
@@ -502,9 +512,9 @@
 		else
 			visited[current_turf] = original_turf
 
-		if(steps_taken > 30)
-			testing("too many steps, breaking to next")
-			return
+		//if(steps_taken > 50)
+			//testing("tood many steps, breaking to next")
+			//return
 
 
 		switch(heading)
@@ -576,4 +586,4 @@
 				else
 					lateral_scan_spec(current_turf, SOUTH)// this is a turf not a node, fix
 
-	testing("took [steps_taken] steps in dir [heading]")
+	//testing("took [steps_taken] steps in dir [heading]")

@@ -84,12 +84,20 @@ Actual Adjacent procs :
 		l = SSpathfinder.mobs.getfree(caller)
 
 	var/list/path
-	if(old)
+	if(old == 1)
 		path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 	//else if(old == 1)
 		//path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+	else if(old == -1)
+		testing("<span class='danger'>-----------------------------------------------</span>")
+		AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+		var/datum/pathfind/pathfind_datum = new(caller, end, id)
+		path = pathfind_datum.start_search()
+		testing("finished start_search(), length of path: [path ? path.len : "no path generated"]")
+		qdel(pathfind_datum)
+		testing("<span class='danger'>-----------------------------------------------</span>")
 	else
-		var/datum/pathfind/pathfind_datum = new(caller, end)
+		var/datum/pathfind/pathfind_datum = new(caller, end, id)
 		path = pathfind_datum.start_search()
 		//path = path.Copy()
 		testing("finished start_search(), length of path: [path ? path.len : "no path generated"]")
