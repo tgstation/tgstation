@@ -27,7 +27,7 @@
 	var/dir_from
 
 //s,p,ph,pnt,*bf*,jmp
-/datum/jpsnode/New(s,p, _jumps, turf/goal)
+/datum/jpsnode/New(s,p, _jumps, turf/goal, cost)
 	tile = s
 	prevNode = p
 	jumps = _jumps
@@ -36,8 +36,6 @@
 		goal = prevNode.goal
 		dir_from = get_dir(tile, prevNode.tile)
 	else
-		testing("<<<<<<<<<>>>>>>>>>>>>>>>introduced a new node with no parent ")
-		tile.color = COLOR_VERY_PALE_LIME_GREEN
 		nt = 0
 	h = PATH_DIST(tile, goal)
 
@@ -78,7 +76,7 @@
 	var/adjacent = /turf/proc/reachableTurftest
 	var/dist = /turf/proc/Distance
 	var/turf/exclude = null
-	var/simulated_only = TRUE
+	var/simulated_only
 	var/done = FALSE
 
 	var/nodes_queued_a
@@ -87,15 +85,21 @@
 
 	var/list/evilnodes
 	var/success = FALSE
+	var/diag
 
-/datum/pathfind/New(atom/movable/caller, atom/goal, _id)
+/datum/pathfind/New(atom/movable/caller, atom/goal, id, maxnodes, maxnodedepth, mintargetdist, simulated_only, diag=1)
 	src.caller = caller
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	openc = new() //open list for node check
 	visited = new() //open list for node check
 	evilnodes = new() //open list for node check
-	id = _id
+	src.id = id
+	src.maxnodes = maxnodes
+	src.maxnodedepth = maxnodedepth
+	src.mintargetdist = mintargetdist
+	src.simulated_only = simulated_only
+	src.diag = diag
 
 //datum/pathfind/proc/generate_node(turf/the_tile, )
 /datum/pathfind/proc/start_search()
@@ -157,10 +161,29 @@
 			continue
 
 		var/turf/current_turf = cur.tile
-		lateral_scan_spec(current_turf, NORTH) // this is a turf not a node, fix
-		lateral_scan_spec(current_turf, SOUTH) // this is a turf not a node, fix
-		lateral_scan_spec(current_turf, EAST) // this is a turf not a node, fix
-		lateral_scan_spec(current_turf, WEST) // this is a turf not a node, fix
+		var/dx = current_turf.x - end.x
+		var/dy = current_turf.y - end.y
+		var/list/order
+
+		if(abs(dx) > abs(dy))
+			if(dx > 0) // biggest to the left
+				order = list(WEST, NORTH, SOUTH, EAST)
+			else
+				order = list(EAST, NORTH, SOUTH, WEST)
+		else
+			if(dy > 0) // biggest to the down
+				order = list(SOUTH, EAST, WEST, NORTH)
+			else
+				order = list(NORTH, EAST, WEST, SOUTH)
+
+		for(var/aaa in order)
+			lateral_scan_spec(current_turf, aaa) // this is a turf not a node, fix
+/*
+			lateral_scan_spec(current_turf, NORTH) // this is a turf not a node, fix
+			lateral_scan_spec(current_turf, SOUTH) // this is a turf not a node, fix
+			lateral_scan_spec(current_turf, EAST) // this is a turf not a node, fix
+			lateral_scan_spec(current_turf, WEST) // this is a turf not a node, fix
+*/
 		if(done || path)
 			//testing("mid main exit: done [done] path [path]")
 			break
@@ -275,12 +298,12 @@
 		b.Add(goal_turf2)
 		legs++
 		//testing(">legb [legs] | <b>([goal_turf2.x], ([goal_turf2.y])</b>")
-		var/i
+		//var/i
 
 		while(iter_turf2 != goal_turf2)
-			i++
-			if(i > 150)
-				break
+			//i++
+			//if(i > 150)
+				//break
 			var/turf/next_turf = get_step_towards(iter_turf2, goal_turf2)
 			//testing(">>>stepa [legs] | [i] - ([iter_turf2.x], [iter_turf2.y]) -> ([next_turf.x], [next_turf.y])")
 			iter_turf2 = next_turf
@@ -292,7 +315,7 @@
 		turff.color = COLOR_BLUE_GRAY
 	//testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goalturf2 = [goal_turf2])")
 
-/datum/pathfind/proc/can_step(turf/a, turf/next)
+/datum/pathfind/proc/can_step(turf/a, turf/next) // prolly not optimal
 	return call(a,adjacent)(caller, next, id, simulated_only)
 
 /datum/pathfind/proc/queue_node(datum/tiles/t)
@@ -349,7 +372,7 @@
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		steps_taken++
-		if(steps_taken % 10 == 1)
+		//if(steps_taken % 10 == 1)
 			//testing("taking lat step [steps_taken] in dir [heading]")
 
 		if(!current_turf)
@@ -382,7 +405,8 @@
 				current_turf.color = COLOR_WHITE
 				return
 			*/
-
+		if(unwind_node.nt + steps_taken > maxnodedepth)
+			return
 		//if(steps_taken > 50)
 			//testing("tooc many steps, breaking to next") // make this add the tile?
 			//return
@@ -512,6 +536,8 @@
 		else
 			visited[current_turf] = original_turf
 
+		if(unwind_node.nt + steps_taken > maxnodedepth)
+			return
 		//if(steps_taken > 50)
 			//testing("tood many steps, breaking to next")
 			//return

@@ -741,12 +741,17 @@ Pass a positive integer as an argument to override a bot's default speed.
 			auto_patrol = TRUE
 
 		if("summon")
+			for(var/mob/living/simple_animal/iter_anim in GLOB.mob_living_list)
+				if(iter_anim == src)
+					continue
+				qdel(iter_anim)
 			bot_reset()
 			summon_target = get_turf(user)
 			if(user_access.len != 0)
 				access_card.access = user_access + prev_access //Adds the user's access, if any.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
+
 			calc_summon_path()
 
 		if("ejectpai")
@@ -816,13 +821,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 				addtimer(CALLBACK(src, .proc/summon_step_not_moved), 2)
 
 	else	// no path, so calculate new one
-		calc_summon_path()
+		//calc_summon_path()
+		speak("stuck")
 
 /mob/living/simple_animal/bot/proc/summon_step_not_moved()
 	//calc_summon_path()
 	speak("Summon command failed, destination unreachable.",radio_channel)
-	bot_reset()
-	tries = 0
+	//bot_reset()
+	//tries = 0
 
 /mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
 	. = ..()
