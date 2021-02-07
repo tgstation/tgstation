@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
-	screentip_text = new(FALSE, src)
+	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
