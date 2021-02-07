@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/disk/data = 1,
 		/obj/item/stack/sheet/cardboard = 1,
 		/obj/item/storage/box = 1,
+		/obj/item/c_tube = 1,
 
 		/obj/item/reagent_containers/food/drinks/drinkingglass = 1,
 		/obj/item/coin/silver = 1,
@@ -82,6 +83,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/pushbroom = 1,
 		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/toy/crayon/spraycan = 1,
+		/obj/item/weldingtool = 1,
 		) = 1,
 
 	list(//equipment
@@ -98,7 +100,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,
 		/obj/item/storage/belt/fannypack = 1,
-		/obj/item/clothing/gloves/tackler/offbrand = 1,
+		/obj/item/clothing/gloves/color/black = 1,
 		) = 1,
 
 	list(//construction and crafting
@@ -119,6 +121,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/assembly/health = 1,
 
 		/obj/item/stack/package_wrap = 1,
+		/obj/item/stack/wrapping_paper = 1,
 		) = 1,
 
 	list(//medical and chemicals
@@ -157,17 +160,15 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 
 GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 	list(//tools
-		/obj/item/weldingtool/mini = 1,
+		/obj/item/weldingtool/largetank = 1,
 		/obj/item/multitool = 1,
 		/obj/item/hatchet = 1,
 		/obj/item/roller = 1,
 		/obj/item/restraints/legcuffs/bola = 1,
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/spear = 1,
-		/obj/item/shield/riot/buckler = 1,
 		/obj/item/grenade/iedcasing/spawned = 1,
 		/obj/item/melee/baton/cattleprod = 1,
-		/obj/item/throwing_star = 1,
 		/obj/item/pen/fountain = 1,
 		) = 8,
 
@@ -178,12 +179,11 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/glasses/hud/diagnostic = 1,
 		/obj/item/storage/belt/utility = 1,
 		/obj/item/storage/belt/medical = 1,
-
 		/obj/item/clothing/suit/armor/vest/old  = 1,
 		/obj/item/clothing/head/helmet/old = 1,
 		/obj/item/clothing/mask/muzzle = 1,
 		/obj/item/clothing/ears/earmuffs = 1,
-		/obj/item/clothing/gloves/color/black = 1,
+		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		) = 8,
 
 	list(//strange objects
@@ -197,6 +197,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
 		/obj/item/plaque = 1,
+		/obj/item/storage/box/clown = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -208,10 +209,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		list(//medical chems
 			/obj/item/reagent_containers/glass/bottle/multiver = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
+			/obj/item/reagent_containers/hypospray/medipen = 1,
 			) = 1,
 		list(//drinks
 			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,
 			/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
+			/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
 			) = 1,
 		list(//sprayers
 			/obj/item/reagent_containers/spray = 1,
@@ -240,13 +243,71 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		) = 1,
 ))
 
+
+
+GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
+	list(//tools
+		/obj/item/weldingtool/hugetank = 1,
+		/obj/item/kitchen/knife = 1,
+		/obj/item/restraints/handcuffs = 1,
+		/obj/item/shield/riot/buckler = 1,
+		/obj/item/melee/baton/cattleprod/teleprod = 1,
+		/obj/item/throwing_star = 1,
+		/obj/item/pen/survival = 1,
+		/obj/item/flashlight/flashdark = 1,
+		/obj/item/assembly/flash/memorizer = 1,
+		) = 1,
+
+	list(//equipment
+		/obj/item/clothing/glasses/hud/security = 1,
+		/obj/item/clothing/glasses/sunglasses = 1,
+		/obj/item/storage/belt/security = 1,
+		/obj/item/storage/belt/military/assault = 1,
+		/obj/item/clothing/gloves/color/yellow = 1,
+		/obj/item/clothing/gloves/color/black = 1,
+		/obj/item/clothing/gloves/tackler/combat = 1,
+		/obj/item/clothing/head/helmet/justice = 1,
+		) = 1,
+
+	list(//paint
+		/obj/item/paint/red = 1,
+		/obj/item/paint/green = 1,
+		/obj/item/paint/blue = 1,
+		/obj/item/paint/yellow = 1,
+		/obj/item/paint/violet = 1,
+		/obj/item/paint/black = 1,
+		/obj/item/paint/white = 1,
+		/obj/item/paint/anycolor = 1,
+		/obj/item/paint/paint_remover = 1,
+		) = 1,
+
+	list(//medical and chemicals
+		list(//medkits
+			/obj/item/storage/box/hug/medical = 1,
+			/obj/item/storage/firstaid/regular = 1,
+			/obj/item/storage/firstaid/emergency = 1,
+			) = 1,
+		list(//medical chems
+			/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
+			/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
+			/obj/item/reagent_containers/syringe/contraband/methamphetamine = 1,
+			) = 1,
+		) = 1,
+
+	list(//misc
+		/obj/item/disk/nuclear/fake = 1,
+		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
+		) = 1,
+
+))
+
+
+
 GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 		/obj/effect/rune/teleport = 1,
-		/obj/item/clothing/gloves/color/yellow = 1,
+		/obj/item/spear/grey_tide = 1,
+		/obj/item/shadowcloak = 1,
 		/obj/item/clothing/head/helmet/abductor = 1,
-		/obj/item/clothing/head/helmet/justice =1,
-		/obj/item/clothing/suit/space/hardsuit/carp = 1,
-		/obj/item/book/granter/crafting_recipe/pipegun_prime =1,
 		/obj/item/dice/d20/fate/stealth/one_use = 1,	//Looks like a d20, keep the d20 in the uncommon pool.
 		/obj/item/dice/d20/fate/stealth/cursed = 1, 	//Only rolls 1
 		/obj/item/clothing/shoes/jackboots/fast = 1,
@@ -255,9 +316,10 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 	))
 
 //Maintenance loot spawner pools
-#define maint_trash_weight 4499
+#define maint_trash_weight 4500
 #define maint_common_weight 4500
-#define maint_uncommon_weight 1000
+#define maint_uncommon_weight 900
+#define maint_rarity_weight 99
 #define maint_oddity_weight 1 //1 out of 10,000 would give metastation (180 spawns) a 2 in 111 chance of spawning an oddity per round, similar to xeno egg
 #define maint_holiday_weight 3500 // When holiday loot is enabled, it'll give every loot item a 25% chance of being a holiday item
 
@@ -266,6 +328,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.trash_loot = maint_trash_weight,
 	GLOB.common_loot = maint_common_weight,
 	GLOB.uncommon_loot = maint_uncommon_weight,
+	GLOB.rarity_loot = maint_rarity_weight,
 	GLOB.oddity_loot = maint_oddity_weight,
 	))
 

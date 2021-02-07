@@ -94,6 +94,8 @@ SUBSYSTEM_DEF(air)
 		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
 		for(var/thing in pipenet_rebuilds)
 			var/obj/machinery/atmospherics/AT = thing
+			if(!thing) //If a null somehow shows up here, this next line runtimes and the subsystem dies
+				continue
 			AT.build_network()
 		cached_cost += TICK_USAGE_REAL - timer
 		pipenets_needing_rebuilt.Cut()
