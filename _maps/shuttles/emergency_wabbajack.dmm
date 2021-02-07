@@ -21,7 +21,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "ae" = (
 /obj/effect/turf_decal/tile/green{
@@ -34,7 +34,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "af" = (
 /obj/machinery/power/emitter/energycannon/magical,
@@ -48,7 +48,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ag" = (
 /obj/structure/table/abductor/wabbajack/left,
@@ -62,7 +62,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table/abductor/wabbajack/right,
@@ -76,7 +76,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ai" = (
 /obj/structure/sign/warning/biohazard,
@@ -85,7 +85,7 @@
 "aj" = (
 /obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/chair/comfy/shuttle{
@@ -105,14 +105,14 @@
 "an" = (
 /obj/structure/table/wood,
 /obj/item/candle/infinite,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/shuttle/escape)
 "ao" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/shuttle/escape)
 "ap" = (
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/shuttle/escape)
 "aq" = (
 /turf/open/floor/mineral/titanium,
@@ -149,7 +149,7 @@
 /area/shuttle/escape/brig)
 "au" = (
 /obj/structure/chair/wood,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/comfy/shuttle,
@@ -322,7 +322,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "aX" = (
 /obj/effect/turf_decal/stripes/line{
@@ -338,7 +338,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "aY" = (
 /obj/effect/turf_decal/stripes/line{
@@ -354,7 +354,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aZ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -370,7 +370,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/destructible/cult/forge{
@@ -387,7 +387,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -403,7 +403,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bc" = (
 /obj/effect/turf_decal/stripes/line{
@@ -419,7 +419,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/destructible/cult/forge{
@@ -436,7 +436,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "be" = (
 /obj/structure/window/reinforced{
@@ -465,7 +465,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bj" = (
 /obj/machinery/light/small{
@@ -478,7 +478,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/shuttle/escape)
 "bl" = (
 /obj/machinery/light{

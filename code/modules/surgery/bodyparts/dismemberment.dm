@@ -191,8 +191,7 @@
 
 	if(prob(base_chance))
 		var/datum/wound/loss/dismembering = new
-		dismembering.apply_dismember(src, wounding_type)
-		return TRUE
+		return dismembering.apply_dismember(src, wounding_type)
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
@@ -415,8 +414,7 @@
 		H.hairstyle = hairstyle
 		H.facial_hair_color = facial_hair_color
 		H.facial_hairstyle = facial_hairstyle
-		H.lip_style = lip_style
-		H.lip_color = lip_color
+		H.update_lips(lip_style, lip_color, stored_lipstick_trait)
 	if(real_name)
 		C.real_name = real_name
 	real_name = ""

@@ -269,7 +269,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		for(var/i in SSstation.station_traits)
 			var/datum/station_trait/station_trait_iterator = i
 			if(!station_trait_iterator.show_in_report)
-				return
+				continue
 			. += "[station_trait_iterator.get_report()]<BR>"
 
 

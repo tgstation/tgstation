@@ -14,19 +14,19 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "e" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "f" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "g" = (
 /obj/structure/window/reinforced,
@@ -36,11 +36,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -30
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/door/window/southleft,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "i" = (
 /obj/structure/table/reinforced,
@@ -48,7 +48,7 @@
 /obj/item/gps{
 	gpstag = "STV5"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "j" = (
 /obj/machinery/status_display/evac,
@@ -86,12 +86,12 @@
 	name = "8maintenance loot spawner"
 	},
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/closet/crate/secure/loot,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "q" = (
 /obj/machinery/door/airlock/titanium{
@@ -106,7 +106,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "s" = (
 /obj/structure/chair/comfy/shuttle{
@@ -139,7 +139,7 @@
 /obj/structure/closet/crate/secure/weapon,
 /obj/effect/spawner/lootdrop/armory_contraband,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 
 (1,1,1) = {"
