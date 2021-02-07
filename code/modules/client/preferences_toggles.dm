@@ -178,6 +178,20 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggleendofroundsounds)()
 /datum/verbs/menu/settings/sound/toggleendofroundsounds/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_ENDOFROUND
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglecombatmodesound)()
+	set name = "Hear/Silence Combat Mode Toggle Sound"
+	set category = "Preferences"
+	set desc = "Hear Combat Mode Toggle Sound"
+	usr.client.prefs.toggles ^= SOUND_COMBATMODE
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_COMBATMODE)
+		to_chat(usr, "You will now hear a sound when combat mode is turned on.")
+	else
+		to_chat(usr, "You will no longer hear a sound when combat mode is turned on.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Combat Mode Toggle Sounds", "[usr.client.prefs.toggles & SOUND_COMBATMODE ? "Enabled" : "Disabled"]"))
+
+/datum/verbs/menu/settings/sound/togglecombatmodesound/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_COMBATMODE
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglemidis)()
 	set name = "Hear/Silence Midis"

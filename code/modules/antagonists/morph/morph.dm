@@ -9,7 +9,7 @@
 	icon_living = "morph"
 	icon_dead = "morph_dead"
 	speed = 2
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE
