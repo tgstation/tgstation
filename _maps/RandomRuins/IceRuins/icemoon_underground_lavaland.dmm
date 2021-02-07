@@ -7,7 +7,7 @@
 /area/icemoon/underground/unexplored)
 "d" = (
 /obj/item/grown/bananapeel,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/icemoon/underground)
 "h" = (
 /obj/item/paper{
@@ -20,7 +20,7 @@
 /area/icemoon/underground)
 "m" = (
 /obj/structure/trap/cult,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/icemoon/underground)
 "y" = (
 /mob/living/simple_animal/hostile/megafauna/dragon{
@@ -38,7 +38,7 @@
 "H" = (
 /obj/machinery/door/airlock/cult/friendly,
 /obj/structure/fans/tiny,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/icemoon/underground)
 "J" = (
 /turf/closed/wall/mineral/cult,
@@ -50,7 +50,7 @@
 /turf/open/floor/mineral/gold,
 /area/icemoon/underground)
 "U" = (
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/iron/cult,
 /area/icemoon/underground)
 "V" = (
 /obj/item/storage/toolbox/mechanical/old/clean,
