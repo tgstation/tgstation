@@ -177,9 +177,17 @@
 		if("PRG_edit")
 			if(!computer || !authenticated || !target_id_card)
 				return
-			var/new_name = reject_bad_name(params["name"]) // if reject bad name fails, the edit will just not go through instead of discarding all input, as new_name would be blank.
+
+			// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
+			// would not pass as a formal character name, but would still be valid on an ID card created by a player.
+			var/new_name = sanitize(params["name"])
+			// However, we are going to reject bad names overall including names with invalid characters in them, while allowing numbers.
+			new_name = reject_bad_name(new_name, allow_numbers = TRUE)
+
 			if(!new_name)
+				to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new name as it contains prohibited characters.</span>")
 				return
+
 			target_id_card.registered_name = new_name
 			target_id_card.update_label()
 			playsound(computer, "terminal_type", 50, FALSE)
@@ -192,8 +200,14 @@
 				return
 
 			if(target == "Custom")
-				var/custom_name = reject_bad_name(params["custom_name"]) // if reject bad name fails, the edit will just not go through, as custom_name would be empty
-				if(custom_name)
+				// Sanitize the custom assignment name first.
+				var/custom_name = sanitize(params["custom_name"])
+				// However, we are going to assignments containing bad text overall.
+				custom_name = reject_bad_text(custom_name)
+
+				if(!custom_name)
+					to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new custom assignment as it contains prohibited characters.</span>")
+				else
 					target_id_card.assignment = custom_name
 					target_id_card.update_label()
 			else
