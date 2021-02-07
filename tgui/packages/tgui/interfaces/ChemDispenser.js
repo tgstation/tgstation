@@ -53,7 +53,9 @@ export const ChemDispenser = (props, context) => {
               <Button      
                 key="Recipe lookup"
                 icon="book"
-                tooltip="Look up recipes and reagents!"
+                disabled={!data.isBeakerLoaded}
+                content={"Reaction search"}
+                tooltip={data.isBeakerLoaded ? "Look up recipes and reagents!" : "Please insert a beaker!"}
                 tooltipPosition="bottom-left"
                 onClick={() => act('reaction_lookup')} />
             </Fragment>

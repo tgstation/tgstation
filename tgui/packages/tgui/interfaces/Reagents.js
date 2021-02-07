@@ -39,6 +39,8 @@ export const Reagents = (props, context) => {
     context, 'damaging', false);
   const [slime, setSlime] = useLocalState(
     context, 'slime', false);
+  const [drug, setDrug] = useLocalState(
+    context, 'drug', false)
   const [explosive, setExplosive] = useLocalState(
     context, 'explosive', false);
   const [other, setOther] = useLocalState(
@@ -51,6 +53,10 @@ export const Reagents = (props, context) => {
     context, 'hard', false);
   const [dangerous, setDangerous] = useLocalState(
     context, 'dangerous', false);
+  const [unique, setUnique] = useLocalState(
+    context, 'unique', false);
+  const [chemical, setChemical] = useLocalState(
+    context, 'chemical', false);
   const [reagentFilter, setReagentFilter] = useLocalState(
     context, 'reagentFilter', true);
   const BRUTE = 1 << 0;
@@ -70,6 +76,9 @@ export const Reagents = (props, context) => {
   const DRINK = 1 << 14;
   const FOOD = 1 << 15;
   const SLIME = 1 << 16;
+  const DRUG = 1 << 17;
+  const UNIQUE = 1 << 18;
+  const CHEMICAL = 1 << 19;
   const flagsObject = {
     "gavel": BRUTE,
     "burn": BURN,
@@ -88,6 +97,9 @@ export const Reagents = (props, context) => {
     "cocktail": DRINK,
     "drumstick-bite": FOOD,
     "microscope": SLIME,
+    "pills" : DRUG,
+    "puzzle-piece" : UNIQUE,
+    "eye-dropper" : CHEMICAL
   };
   
   /* es-lint please no */
@@ -126,6 +138,15 @@ export const Reagents = (props, context) => {
     return false;
   }
 
+  function hasReagentType(reagent) {
+    for (var index = 0; index < currentReagents.length; ++index) {
+      if(reagent === currentReagents[index]){
+        return true;
+      }
+    }
+    return false;
+  }
+
   return (
     <Window
       width={700}
@@ -143,6 +164,7 @@ export const Reagents = (props, context) => {
                     <Button
                       content="Search recipes"
                       icon="search"
+                      color="purple"
                       onClick={() => act('search_recipe')} />
                   )}>
                   {!!hasReaction && (
@@ -157,10 +179,11 @@ export const Reagents = (props, context) => {
                           <Button
                             key={"reduce_index"}
                             icon="arrow-left"
+                            ml={3}
                             disabled={reagent_mode_recipe.subReactIndex === 1 ? true : false}
                             content={null}
                             onClick={() => act('reduce_index', {
-                              id: product.id,
+                              id: reagent_mode_recipe.name,
                             })} />
                           <Button
                             key={"increment_index"}
@@ -168,27 +191,29 @@ export const Reagents = (props, context) => {
                             disabled={reagent_mode_recipe.subReactIndex === reagent_mode_recipe.subReactLen ? true : false}
                             content={null}
                             onClick={() => act('increment_index', {
-                              id: product.id,
+                              id: reagent_mode_recipe.name,
                             })} />
                         </TableCell>
                       </TableRow>
-                      <TableRow>
-                        <TableCell bold color="label">
-                          Products:
-                        </TableCell>
-                        <TableCell>
-                          {reagent_mode_recipe.products.map(product => (
-                            <Button
-                              key={product.name}
-                              icon="vial"
-                              disabled={product.hasProduct ? true : false}
-                              content={product.ratio + "u " + product.name}
-                              onClick={() => act('reagent_click', {
-                                id: product.id,
-                              })} />
-                          ))}
-                        </TableCell>
-                      </TableRow>
+                      {reagent_mode_recipe.products && (
+                        <TableRow>
+                          <TableCell bold color="label">
+                            Products:
+                          </TableCell>
+                          <TableCell>
+                            {reagent_mode_recipe.products.map(product => (
+                              <Button
+                                key={product.name}
+                                icon="vial"
+                                disabled={product.hasProduct ? true : false}
+                                content={product.ratio + "u " + product.name}
+                                onClick={() => act('reagent_click', {
+                                  id: product.id,
+                                })} />
+                            ))}
+                          </TableCell>
+                        </TableRow>
+                      )}
                       <TableRow>
                         <TableCell bold color="label">
                           Reactants:
@@ -221,7 +246,7 @@ export const Reagents = (props, context) => {
                           ))}
                         </TableCell>
                       </TableRow>
-                      {reagent_mode_reagent.catalysts && (
+                      {reagent_mode_recipe.catalysts && (
                         <TableRow>
                         <TableCell bold color="label">
                           Catalysts:
@@ -255,7 +280,7 @@ export const Reagents = (props, context) => {
                         </TableCell>
                       </TableRow>
                       )}
-                      {reqContainer && (
+                      {reagent_mode_recipe.reqContainer && (
                         <TableRow>
                           <TableCell bold color ="label">
                             Required Container:
@@ -268,6 +293,16 @@ export const Reagents = (props, context) => {
                       <TableRow>
                         <TableCell bold color="label">
                           Purity:
+                          <Box bold
+                          style={{
+                            'position': 'relative',
+                            'width': '50px',
+                            'bottom': '-50px',
+                            'left': '0px',
+                            'right': 0,
+                          }}>
+                            Rate profile:
+                          </Box>
                         </TableCell>
                         <TableCell>
                           <LabeledList>
@@ -291,30 +326,33 @@ export const Reagents = (props, context) => {
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <Box height="50px" position="relative">
+                          <Box height="50px" style={{
+                                'background-color': 'black',
+                              }}
+                               position="relative">
                             <Chart.Line
                               fillPositionedParent
                               data={reagent_mode_recipe.thermodynamics}
-                              strokeColor={"#6cf303"}
-                              strokeWidth={3}
-                              fillColor={"#6ffb9b"} />
+                              //strokeColor={"black"}
+                              strokeWidth={0}
+                              fillColor={"#3cf072"} />
                             <Chart.Line
                               position="absolute"
-                              top={0}
+                              top={0.01}
                               bottom={0}
-                              right={0}
-                              width="10px"
+                              right={reagent_mode_recipe.isColdRecipe ? 17 : 0}
+                              width="28px"
                               data={reagent_mode_recipe.explosive}
-                              strokeColor={"#ff9b9b"}
-                              strokeWidth={3}
-                              fillColor={"#ff9b9b"} />
+                              //strokeColor={"black"}
+                              strokeWidth={0}
+                              fillColor={"#d92727"} />
                           </Box>
                           <TableRow>
                             <Box width="190px" position="relative" top="5px" left="-12px">
-                              {reagent_mode_recipe.tempMin+"K"}
+                              {reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.explodeTemp+"K" : reagent_mode_recipe.tempMin+"K"}
                             </Box>
                             <Box width="190px" position="relative" top="-10px" left="205px">
-                              {reagent_mode_recipe.explodeTemp+"K"}
+                              {reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.tempMin+"K" : reagent_mode_recipe.explodeTemp+"K"}
                             </Box>
                           </TableRow>
                           <TableRow>
@@ -496,6 +534,18 @@ export const Reagents = (props, context) => {
                     onClick={() => { act('toggle_tag_organ'); setOrgan(!organ); }}>
                     Organ
                   </Button>
+                  <Button
+                    icon="eye-dropper"
+                    color={chemical ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_chemical'); setChemical(!chemical); }}>
+                    Chemicals
+                  </Button>
+                  <Button
+                    icon="question"
+                    color={other ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_other'); setOther(!other); }}>
+                    Other
+                  </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Type">
                   <Button
@@ -520,7 +570,13 @@ export const Reagents = (props, context) => {
                     icon="skull-crossbones"
                     color={damaging ? "green" : "red"}
                     onClick={() => { act('toggle_tag_damaging'); setDamaging(!damaging); }}>
-                    Damaging
+                    Toxic
+                  </Button>
+                  <Button
+                    icon="pills"
+                    color={drug ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_drug'); setDrug(!drug); }}>
+                    Drugs
                   </Button>
                   <Button
                     icon="microscope"
@@ -535,10 +591,10 @@ export const Reagents = (props, context) => {
                     Explosive
                   </Button>
                   <Button
-                    icon="question"
-                    color={other ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_other'); setOther(!other); }}>
-                    Other
+                    icon="puzzle-piece"
+                    color={unique ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_unique'); setUnique(!unique); }}>
+                    Unique
                   </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Difficulty">
@@ -613,7 +669,7 @@ export const Reagents = (props, context) => {
                                 mt={0.1}
                                 key={reactant.name}
                                 icon="vial"
-                                color={reactant.color}
+                                color={hasReagentType(reactant.id) ? "green" : "default"}
                                 content={reactant.name}
                                 onClick={() => act('reagent_click', {
                                   id: reactant.id,

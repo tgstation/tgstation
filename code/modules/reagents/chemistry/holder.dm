@@ -34,6 +34,7 @@
 	var/paths = subtypesof(/datum/chemical_reaction) - typesof(/datum/chemical_reaction/randomized) + subtypesof(/datum/chemical_reaction/randomized)
 	GLOB.chemical_reactions_list = list()
 	GLOB.chemical_reactions_results_lookup_list = list()
+	GLOB.chemical_reactions_list_product_index = list()
 
 	for(var/path in paths)
 		var/datum/chemical_reaction/D = new path()
@@ -1592,8 +1593,12 @@
 	var/list/coords = list()
 	coords += list(list(reaction.overheat_temp, 0))
 	coords += list(list(reaction.overheat_temp, 1))
-	coords += list(list(reaction.overheat_temp+50, 1))
-	coords += list(list(reaction.overheat_temp+50, 0))
+	if(reaction.is_cold_recipe)
+		coords += list(list(reaction.overheat_temp-50, 1))
+		coords += list(list(reaction.overheat_temp-50, 0))	
+	else
+		coords += list(list(reaction.overheat_temp+50, 1))
+		coords += list(list(reaction.overheat_temp+50, 0))
 	return coords
 
 
@@ -1663,6 +1668,7 @@
 
 	//reaction lookup data
 	if (ui_reaction_id)
+
 		var/datum/chemical_reaction/reaction = get_chemical_reaction(ui_reaction_id)
 		if(!reaction)
 			to_chat(user, "Could not find reaction!")
@@ -1670,36 +1676,42 @@
 			return data
 		//Required holder
 		var/container_name
-		//Find out if we have multiple reactions for the same product
-		var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
-		//Count the length
-		var/sub_reaction_length = length(sub_reactions)
 		if(reaction.required_container)
 			var/list/names = splittext("[reaction.required_container]", "/")
 			container_name = "[names[names.len-1]] [names[names.len]]"
 			container_name = replacetext(container_name, "_", " ")
+
+		//Next, find the product
 		var/has_product = TRUE
+		//If we have no product, use the typepath to create a name for it
 		if(!length(reaction.results))
 			has_product = FALSE
 			var/list/names = splittext("[reaction.type]", "/")
 			var/product_name = names[names.len]
-			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reactions_length, "subReactIndex" = ui_reaction_index)
+			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = 1, "subReactIndex" = 1)
+		
+		//If we do have a product then we find it
 		else
-			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])
-			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reactions_length, "subReactIndex" = ui_reaction_index)
-		//Results sweep
-		var/has_reagent = "red"
+			//Find out if we have multiple reactions for the same product
+			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])//We use the first product - though it might be worth changing this
+			var/list/sub_reactions = get_recipe_from_reagent_product(primary_reagent.type)
+			var/sub_reaction_length = length(sub_reactions)
+			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reaction_length, "subReactIndex" = ui_reaction_index)
+		
+		//Results sweep 
+		var/has_reagent = "default"
 		for(var/_reagent in reaction.results)
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
 			if(has_reagent(_reagent))
 				has_reagent = "green"
 			data["reagent_mode_recipe"]["products"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.results[reagent.type], "hasReagentCol" = has_reagent))
+		
 		//Reactant sweep
 		for(var/_reagent in reaction.required_reagents)
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-			var/color_r = "average"
+			var/color_r = "default" //If the holder is missing the reagent, it's displayed in orange
 			if(has_reagent(reagent.type))
-				color_r = "good"
+				color_r = "green" //It's green if it's present
 			var/tooltip
 			var/tooltip_bool = FALSE
 			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
@@ -1711,12 +1723,13 @@
 					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
 					tooltip_bool = TRUE
 			data["reagent_mode_recipe"]["reactants"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+		
 		//Catalyst sweep
 		for(var/_reagent in reaction.required_catalysts)
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-			var/color_r = "average"
+			var/color_r = "default"
 			if(has_reagent(reagent.type))
-				color_r = "good"
+				color_r = "green"
 			var/tooltip
 			var/tooltip_bool = FALSE
 			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
@@ -1727,56 +1740,34 @@
 					var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)
 					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
 					tooltip_bool = TRUE
-			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_catalysts[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+		data["reagent_mode_recipe"]["isColdRecipe"] = reaction.is_cold_recipe
 
-	//TODO:
-	/*var/list/possible_reactions = generate_possible_reactions()
-	if(possible_reactions)
-		data["possible_reaction_names"] = possible_reactions
-	*/
 	return data
 
 /datum/reagents/ui_static_data(mob/user)
 	var/data = list()
-	//reaction determin vars
-	//This is last - and not an else if. If either of the above fail to find a reagent, it defaults to this.
-	/*
-	var/list/master_reaction_list = list()
-	for(var/_reaction in possible_reactions)
-		var/datum/chemical_reaction/reaction = _reaction
-		if(!reaction)
-			to_chat(user, "Could not find reaction!")
-			continue
-		if(!length(reaction.results)) //Some reactions have no products
-			continue
-		var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])
-		master_reaction_list.len++
-		master_reaction_list[length(master_reaction_list)] = list("name" = primary_reagent.name, "id" = reaction.type) // "thermodynamics" = generate_thermodynamic_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = optimal_ph_min, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_vol))
-		//Reactant sweep
-		for(var/_reagent in reaction.required_reagents)
-			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
-			var/color_r = "teal"
-			if(has_reagent(reagent))
-				color_r = "green"
-			master_reaction_list[length(master_reaction_list)]["reactants"] += list(list("name" = reagent.name, "id" = reagent.type, "color" = color_r))
-	data["master_reaction_list"] = master_reaction_list
-	*/
-
+	//Use GLOB list - saves processing 
 	data["master_reaction_list"] = GLOB.chemical_reactions_results_lookup_list
 
 	return data
 
-///Converts a typepath into a list of possible reactons
-/datum/reagents/proc/get_reaction_from_indexed_possibilities(list/sub_reactions, index)
-	var/list/sub_reactions = get_recipe_from_reagent_product(text2path(params["id"]))
-			if(!length(sub_reactions))
-				to_chat(usr, "There is no recipe associated with this reagent.")
-				return FALSE
-			if(ui_reaction_index > length(sub_reactions))
-				ui_reaction_index = 1
-			var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
-			ui_reaction_id = reaction.type
-	///TODO HERE
+/* Returns a reaction type by index from an input reagent type
+* i.e. the input reagent's associated reactions are found, and the index determines which one to return
+* If the index is out of range, it is set to 1
+*/
+/datum/reagents/proc/get_reaction_from_indexed_possibilities(path, index = null)
+	if(index)
+		ui_reaction_id = index
+	var/list/sub_reactions = get_recipe_from_reagent_product(path)
+	if(!length(sub_reactions))
+		to_chat(usr, "There is no recipe associated with this product.")
+		return FALSE
+	if(ui_reaction_index > length(sub_reactions))
+		ui_reaction_index = 1
+	to_chat(usr, "There are [length(sub_reactions)] recipes associated with this product.")
+	var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
+	return reaction.type
 
 /datum/reagents/ui_act(action, params)
 	. = ..()
@@ -1784,14 +1775,7 @@
 		return
 	switch(action)
 		if("find_reagent_reaction")
-			var/list/sub_reactions = get_recipe_from_reagent_product(text2path(params["id"]))
-			if(!length(sub_reactions))
-				to_chat(usr, "There is no recipe associated with this reagent.")
-				return FALSE
-			if(ui_reaction_index > length(sub_reactions))
-				ui_reaction_index = 1
-			var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
-			ui_reaction_id = reaction.type
+			ui_reaction_id = get_reaction_from_indexed_possibilities(text2path(params["id"]))
 			return TRUE
 		if("reagent_click")
 			ui_reagent_id = text2path(params["id"])
@@ -1804,7 +1788,7 @@
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			var/datum/reagent/reagent = find_reagent_object_from_type(input_reagent)
 			if(!reagent)
-				debug_world("Could not find reagent!")
+				to_chat(usr, "Could not find reagent!")
 				return FALSE
 			ui_reagent_id = reagent.type
 			return TRUE
@@ -1813,64 +1797,95 @@
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			var/datum/reagent/reagent = find_reagent_object_from_type(input_reagent)
 			if(!reagent)
-				debug_world("Could not find product reagent!")
+				to_chat(usr, "Could not find product reagent!")
 				return
-			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
-			if(ui_reaction_index > length(sub_reactions))
-				ui_reaction_index = 1
-			var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
-			if(!reaction)
-				debug_world("Could not find associated reaction!")
-				return
-			ui_reaction_id = reaction.type
+			ui_reaction_id = get_reaction_from_indexed_possibilities(reagent.type)
 			return TRUE
 		if("increment_index")
 			ui_reaction_index += 1
+			ui_reaction_id = get_reaction_from_indexed_possibilities(get_reagent_type_from_product_string(params["id"]))
+			return TRUE
 		if("reduce_index")
+			if(ui_reaction_index == 1)
+				return
+			ui_reaction_index -= 1
+			ui_reaction_id = get_reaction_from_indexed_possibilities(get_reagent_type_from_product_string(params["id"]))
+			return TRUE
 		if("toggle_tag_brute")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_BRUTE
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_burn")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_BURN
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_toxin")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_TOXIN
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_oxy")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_OXY
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_clone")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_CLONE
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_healing")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_HEALING
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_damaging")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DAMAGING
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_explosive")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_EXPLOSIVE
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_other")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_OTHER
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_easy")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_EASY
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_moderate")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_MODERATE
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_hard")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_HARD
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_organ")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_ORGAN
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_drink")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DRINK
+			SStgui.update_uis(src)
 			return TRUE
 		if("toggle_tag_dangerous")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DANGEROUS
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_tag_slime")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_SLIME
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_tag_drug")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DRUG
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_tag_unique")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_UNIQUE
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_tag_chemical")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_CHEMICAL
+			SStgui.update_uis(src)
 			return TRUE
 
 

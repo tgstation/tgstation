@@ -121,4 +121,11 @@
 #define REACTION_TAG_FOOD (1<<15)
 /// This reaction is a slime reaction
 #define REACTION_TAG_SLIME (1<<16)
-
+/// This reaction is a drug reaction
+#define REACTION_TAG_DRUG (1<<17)
+/// This reaction is a unique reaction
+#define REACTION_TAG_UNIQUE (1<<18)
+/// This reaction is produces a product that affects reactions
+#define REACTION_TAG_REACTION (1<<19)
+/// This reaction is produces a product that affects plants
+#define REACTION_TAG_PLANT (1<<20)
