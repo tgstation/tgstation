@@ -570,16 +570,13 @@
 /datum/mafia_controller/proc/create_bodies()
 	for(var/datum/mafia_role/role in all_roles)
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
+		ADD_TRAIT(H, TRAIT_NOFIRE, MAFIA_TRAIT)
+		ADD_TRAIT(H, TRAIT_NOBREATH, MAFIA_TRAIT)
 		H.equipOutfit(player_outfit)
 		H.status_flags |= GODMODE
 		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
-		var/client/player_client = GLOB.directory[role.player_key]
-		if(player_client)
-			player_client.prefs.copy_to(H)
-			if(H.dna.species.outfit_important_for_life) //plasmamen
-				H.set_species(/datum/species/human)
 		role.body = H
 		player_role_lookup[H] = role
 		H.key = role.player_key
