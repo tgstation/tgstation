@@ -3,7 +3,6 @@
 	icon_state = "alien"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
-	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/alien
 	melee_damage_lower = 20	//Refers to unarmed damage, aliens do unarmed attacks.

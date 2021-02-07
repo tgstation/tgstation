@@ -833,11 +833,11 @@
 	add_overlay(pancake_visual)
 	update_icon()
 
-/obj/item/food/pancakes/attack(mob/M, mob/user, def_zone, stacked = TRUE)
-	if(user.a_intent == INTENT_HARM || !contents.len || !stacked)
+/obj/item/food/pancakes/attack(mob/M, mob/living/user, params, stacked = TRUE)
+	if(user.combat_mode || !contents.len || !stacked)
 		return ..()
 	var/obj/item/O = contents[contents.len]
-	. = O.attack(M, user, def_zone, FALSE)
+	. = O.attack(M, user, params, FALSE)
 	update_icon()
 
 #undef PANCAKE_MAX_STACK

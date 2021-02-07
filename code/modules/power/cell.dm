@@ -348,14 +348,14 @@
 	maxcharge = 500
 	rating = 3
 
+/obj/item/stock_parts/cell/emproof/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+
 /obj/item/stock_parts/cell/emproof/empty/Initialize()
 	. = ..()
 	charge = 0
 	update_icon()
-
-/obj/item/stock_parts/cell/emproof/empty/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return

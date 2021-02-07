@@ -752,15 +752,15 @@
 		spear.throw_at(owner, 10, 2, owner)
 
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood
 	name = "blood bolt barrage"
 	desc = "Blood for blood."
 	color = "#ff0000"
 	guns_left = 24
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
+	mag_type = /obj/item/ammo_box/magazine/internal/blood
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/blood/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='cultlarge'>\"Did you truly think that you could channel MY blood without my approval? Amusing, but futile.\"</span>")
@@ -773,7 +773,8 @@
 		qdel(src)
 		return FALSE
 
-/obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage/blood
+/obj/item/ammo_box/magazine/internal/blood
+	caliber = CALIBER_A762
 	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
 
 /obj/item/ammo_casing/magic/arcane_barrage/blood
