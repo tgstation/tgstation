@@ -225,6 +225,8 @@
 	QDEL_LIST(traumas)
 
 	destroy_all_skillchips()
+	if(owner?.mind)	//You aren't allowed to return to brains that don't exist
+		owner.mind.current = null
 	return ..()
 
 /obj/item/organ/brain/on_life()
