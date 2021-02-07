@@ -69,7 +69,7 @@ class Task {
     if (!this.script) {
       return;
     }
-    console.warn(` => Starting '${this.name}'`);
+    console.warn(` => Starting '${this.name}': ${needsRebuild}`);
     const startedAt = Date.now();
     // Run the script
     await this.script();
