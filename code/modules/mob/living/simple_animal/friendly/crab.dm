@@ -20,10 +20,13 @@
 	stop_automated_movement = 1
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
+
+/mob/living/simple_animal/crab/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/crab/Life()
 	..()

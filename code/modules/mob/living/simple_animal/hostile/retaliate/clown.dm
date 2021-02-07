@@ -124,7 +124,6 @@
 	emote_see = list("honks", "sweats", "jiggles", "contemplates its existence")
 	speak_chance = 5
 	dextrous = TRUE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	maxHealth = 140
 	health = 140
 	speed = -5
@@ -133,6 +132,10 @@
 	attack_verb_simple = "limply slap"
 	obj_damage = 5
 	loot = list(/obj/item/clothing/suit/hooded/bloated_human, /obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
+
+/mob/living/simple_animal/hostile/retaliate/clown/fleshclown/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/retaliate/clown/longface
 	name = "Longface"

@@ -34,11 +34,11 @@
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
-	ventcrawler = VENTCRAWLER_ALWAYS
 
 /mob/living/simple_animal/shade/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/shade/death()
 	if(deathmessage == initial(deathmessage))

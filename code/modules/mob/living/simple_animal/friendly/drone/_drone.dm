@@ -53,7 +53,6 @@
 	maxbodytemp = 0
 	wander = 0
 	speed = 0
-	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
@@ -144,6 +143,8 @@
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]

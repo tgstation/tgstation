@@ -7,7 +7,6 @@
 	icon_dead = "gelatinous_dead"
 	mob_biotypes = MOB_ORGANIC
 	pass_flags = PASSTABLE | PASSGRILLE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
@@ -38,6 +37,8 @@
 	create_reagents(300)
 	add_cell_sample()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))

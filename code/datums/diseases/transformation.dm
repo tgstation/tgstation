@@ -127,7 +127,7 @@
 	if(affected_mob.mind && !is_monkey(affected_mob.mind))
 		add_monkey(affected_mob.mind)
 		affected_mob.monkeyize()
-		affected_mob.ventcrawler = VENTCRAWLER_ALWAYS
+		ADD_TRAIT(affected_mob, TRAIT_VENTCRAWLER_ALWAYS, type)
 
 
 /datum/disease/transformation/jungle_fever/stage_act()

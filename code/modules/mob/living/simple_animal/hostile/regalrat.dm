@@ -27,7 +27,6 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	ventcrawler = VENTCRAWLER_ALWAYS
 	unique_name = TRUE
 	faction = list("rat")
 	///The spell that the rat uses to scrounge up junk.
@@ -42,6 +41,8 @@
 	coffer.Grant(src)
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
@@ -219,7 +220,6 @@
 	health = 15
 	butcher_results = list(/obj/item/food/meat/slab/mouse = 1)
 	density = FALSE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -228,6 +228,8 @@
 /mob/living/simple_animal/hostile/rat/Initialize()
 	. = ..()
 	SSmobs.cheeserats += src
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/rat/Destroy()
 	SSmobs.cheeserats -= src
