@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	///Do we show screentips, if so, how big?
-	var/screentip_pref
+	var/screentip_pref = TRUE
 
 	var/ambientocclusion = TRUE
 	///Should we automatically fit the viewport?
@@ -636,17 +636,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "High"
 			dat += "</a><br>"
 
-			dat += "<b>Screen tips:</b> <a href='?_src_=prefs;preference=screentipdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=screentipup\";return false;'>"
-			switch (parallax)
-				if (SCREENTIP_OFF)
-					dat += "Off"
-				if (SCREENTIP_SMALL)
-					dat += "Small"
-				if (SCREENTIP_MEDIUM)
-					dat += "Medium"
-				else
-					dat += "Big"
-			dat += "</a><br>"
+			dat += "<b>Set screentip mode:</b> <a href='?_src_=prefs;preference=screentipmode'>[screentip_pref ? "Enabled" : "Disabled"]</a><br>"
 
 			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>Fit Viewport:</b> <a href='?_src_=prefs;preference=auto_fit_viewport'>[auto_fit_viewport ? "Auto" : "Manual"]</a><br>"
@@ -1828,16 +1818,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (parent && parent.mob && parent.mob.hud_used)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
 
-				if("screentipup")
-					screentip_pref = WRAP(screentip_pref + 1, SCREENTIP_OFF, SCREENTIP_BIG + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.screentip_text.update_fontsize()
-
-				if("screentipdown")
-					screentip_pref = WRAP(screentip_pref - 1, SCREENTIP_OFF, SCREENTIP_BIG + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.screentip_text.update_fontsize()
-
+				if("screentipmode")
+					screentip_pref = !screentip_pref
 
 				if("ambientocclusion")
 					ambientocclusion = !ambientocclusion
