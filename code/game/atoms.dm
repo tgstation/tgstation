@@ -1869,3 +1869,11 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+//Update the screentip to reflect what we're hoverin over
+/atom/MouseEntered(location, control, params)
+	. = ..()
+	if(flags_1 & NO_SCREENTIPS_1 || !usr.hud_used.screentip_text.enabled)
+		usr.hud_used.screentip_text.maptext = ""
+		return
+	usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: [usr.hud_used.screentip_text.font_size]px'>[name]</span>")
