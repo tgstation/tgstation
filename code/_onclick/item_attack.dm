@@ -161,21 +161,27 @@
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_alt(mob/living/victim, mob/living/user, params)
 	if(sharpness == SHARP_POINTY | SHARP_EDGED)
-		force -= force_reduction_stab
-		wound_bonus += wound_bonus_stab
-		armour_penetration += armor_pene_stab
-		attack_verb_continuous = list("stabs")
-		attack_verb_simple = list("stab")
-		sharpness -= SHARP_EDGED
-		attack(victim, user, params)
-		force += force_reduction_stab
-		wound_bonus -= wound_bonus_stab
-		armour_penetration -= armor_pene_stab
-		attack_verb_continuous = initial(attack_verb_continuous)
-		attack_verb_simple = initial(attack_verb_simple)
-		sharpness = initial(sharpness)
+		sharpnessStabCheck(victim, user, params)
 		return
 	return ALT_ATTACK_CALL_NORMAL
+
+/// Contains the ugly block of code to keep alt_attack tidy
+/obj/item/proc/sharpnessStabCheck(mob/living/victim, mob/living/user, params)
+	var/list/verbs_cont = attack_verb_continuous
+	var/list/verbs_simp = attack_verb_simple
+	force -= force_reduction_stab
+	wound_bonus += wound_bonus_stab
+	armour_penetration += armor_pene_stab
+	attack_verb_continuous = list("stabs")
+	attack_verb_simple = list("stab")
+	sharpness -= SHARP_EDGED
+	attack(victim, user, params)
+	force += force_reduction_stab
+	wound_bonus -= wound_bonus_stab
+	armour_penetration -= armor_pene_stab
+	attack_verb_continuous = verbs_cont
+	attack_verb_simple = verbs_simp
+	sharpness = initial(sharpness)
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
