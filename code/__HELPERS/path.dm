@@ -242,6 +242,13 @@
 		var/i
 		a.Add(goal_turf)
 		goal_turf.color = COLOR_BLUE_GRAY
+/*		while(iter_turf != goal_turf)
+			i++
+			testing(">>>stepa [legs] | [i]")
+			iter_turf = get_step_towards(iter_turf, goal_turf)
+			iter_turf.color = COLOR_BLUE_LIGHT
+			path.Add(iter_turf)
+		unwind_node = unwind_node.prevNode*/
 		while(iter_turf != goal_turf)
 			i++
 			var/turf/next_turf = get_step_towards(iter_turf, goal_turf)
