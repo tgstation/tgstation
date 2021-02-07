@@ -106,7 +106,7 @@
 	if(I.use_tool(src, user, 40, volume=50))
 		to_chat(user, "<span class='notice'>You detach the wheels and deconstruct the chair.</span>")
 		new /obj/item/stack/rods(drop_location(), 8)
-		new /obj/item/stack/sheet/metal(drop_location(), 10)
+		new /obj/item/stack/sheet/iron(drop_location(), 10)
 		var/turf/T = get_turf(src)
 		for(var/c in contents)
 			var/atom/movable/thing = c

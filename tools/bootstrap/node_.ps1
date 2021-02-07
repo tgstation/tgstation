@@ -1,3 +1,5 @@
+#Requires -Version 4.0
+
 # bootstrap/node_.ps1
 #
 # Node bootstrapping script for Windows.

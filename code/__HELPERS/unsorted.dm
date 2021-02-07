@@ -988,9 +988,9 @@ rough example of the "cone" made by the 3 dirs checked
 	if (length(turfs))
 		return pick(turfs)
 
-/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
+/proc/get_safe_random_station_turf(list/areas_to_pick_from = GLOB.the_station_areas) //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)
-		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/list/L = get_area_turfs(pick(areas_to_pick_from))
 		var/turf/target
 		while (L.len && !target)
 			var/I = rand(1, L.len)
@@ -1435,15 +1435,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/each_item in items_list)
 		for(var/i in 1 to items_list[each_item])
 			new each_item(where_to)
-
-
-/proc/num2sign(numeric)
-	if(numeric > 0)
-		return 1
-	else if(numeric < 0)
-		return -1
-	else
-		return 0
 
 /proc/CallAsync(datum/source, proctype, list/arguments)
 	set waitfor = FALSE

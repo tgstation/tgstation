@@ -81,28 +81,8 @@
 /obj/item/food/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/P_analyzer = O
-		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
-		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
-			msg += seed.get_analyzer_text()
-		var/reag_txt = ""
-		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
-			msg += "<br><span class='info'>*Plant Reagents*</span>"
-			msg += "<br><span class='info'>Maximum reagent capacity: [reagents.maximum_volume]</span>"
-			var/chem_cap = 0
-			for(var/reagent_id in reagents.reagent_list)
-				var/datum/reagent/R  = reagent_id
-				var/amt = R.volume
-				chem_cap += R.volume
-				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
-			if(chem_cap > 100)
-				msg += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
-
-		if(reag_txt)
-			msg += "<br><span class='info'>*---------*</span>"
-			msg += reag_txt
-		msg += "<br><span class='info'>*---------*</span>"
-		to_chat(user, msg)
+		var/obj/item/plant_analyzer/plant_analyzer = O
+		to_chat(user, plant_analyzer.scan_plant(src))
 	else
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
@@ -116,8 +96,7 @@
 
 // Various gene procs
 /obj/item/food/grown/attack_self(mob/user)
-	if(seed?.get_gene(/datum/plant_gene/trait/squash))
-		squash(user)
+	SEND_SIGNAL(src, COMSIG_PLANT_SQUASH, user)
 	..()
 
 /obj/item/food/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -125,30 +104,6 @@
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_throw_impact(src, hit_atom)
-			if(seed.get_gene(/datum/plant_gene/trait/squash))
-				squash(hit_atom)
-
-/obj/item/food/grown/proc/squash(atom/target)
-	var/turf/T = get_turf(target)
-	forceMove(T)
-	if(ispath(splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
-		if(filling_color)
-			var/obj/O = new splat_type(T)
-			O.color = filling_color
-			O.name = "[name] smudge"
-	else if(splat_type)
-		new splat_type(T)
-
-	visible_message("<span class='warning'>[src] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
-	if(seed)
-		for(var/datum/plant_gene/trait/trait in seed.genes)
-			trait.on_squash(src, target)
-
-	reagents.expose(T)
-	for(var/A in T)
-		reagents.expose(A)
-
-	qdel(src)
 
 /obj/item/food/grown/proc/OnConsume(mob/living/eater, mob/living/feeder)
 	if(iscarbon(usr))
