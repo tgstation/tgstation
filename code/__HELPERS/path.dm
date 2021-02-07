@@ -81,12 +81,19 @@
 	var/simulated_only = TRUE
 	var/done = FALSE
 
+	var/nodes_queued_a
+	var/nodes_queued_b
+	var/nodes_queued_c
+
+	var/list/evilnodes
+
 /datum/pathfind/New(atom/movable/caller, atom/goal)
 	src.caller = caller
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	openc = new() //open list for node check
 	visited = new() //open list for node check
+	evilnodes = new() //open list for node check
 
 //datum/pathfind/proc/generate_node(turf/the_tile, )
 /datum/pathfind/proc/start_search()
@@ -110,6 +117,7 @@
 	open.Insert(cur)
 	openc[start] = cur
 	visited[start] = -1
+	evilnodes[start] = cur
 	//then run the main loop
 	var/total_tiles
 
@@ -145,17 +153,17 @@
 			continue
 
 		var/turf/current_turf = cur.tile
-		queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
-		queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
-		queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
-		queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
+		lateral_scan_spec(current_turf, NORTH) // this is a turf not a node, fix
+		lateral_scan_spec(current_turf, SOUTH) // this is a turf not a node, fix
+		lateral_scan_spec(current_turf, EAST) // this is a turf not a node, fix
+		lateral_scan_spec(current_turf, WEST) // this is a turf not a node, fix
 		if(done || path)
 			testing("mid main exit: done [done] path [path]")
 			break
-		queue_node(diag_scan_spec(current_turf, NORTHWEST)) // this is a turf not a node, fix
-		queue_node(diag_scan_spec(current_turf, SOUTHEAST)) // this is a turf not a node, fix
-		queue_node(diag_scan_spec(current_turf, SOUTHWEST)) // this is a turf not a node, fix
-		queue_node(diag_scan_spec(current_turf, NORTHEAST)) // this is a turf not a node, fix
+		diag_scan_spec(current_turf, NORTHWEST) // this is a turf not a node, fix
+		diag_scan_spec(current_turf, SOUTHEAST) // this is a turf not a node, fix
+		diag_scan_spec(current_turf, SOUTHWEST) // this is a turf not a node, fix
+		diag_scan_spec(current_turf, NORTHEAST) // this is a turf not a node, fix
 		CHECK_TICK
 	//reverse the path to get it from start to finish
 	if(path)
@@ -182,7 +190,7 @@
 			iter_turf.color = COLOR_YELLOW
 		unwind_node = unwind_node.prevNode
 	return path
-*/
+*
 /datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
 	//testing("unwind?")
 	done = TRUE
@@ -211,11 +219,68 @@
 			return path
 		else
 			iter_node = iter_node.prevNode
+*/
+
+/datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
+	for(var/turf/turf_clear in world)
+		turf_clear.color = null
+	testing("unwinding~~~~~~~~~~~~ (same? [unwind_node.tile == end])")
+	path = new()
+	var/turf/iter_turf = unwind_node.tile
+	var/turf/iter_turf2 = get_turf(unwind_node.tile)
+	path.Add(iter_turf)
+	var/legs
+
+	var/list/a = list(iter_turf)
+
+
+	while(unwind_node.prevNode)
+		legs++
+
+		var/turf/goal_turf = unwind_node.prevNode.tile
+		testing(">lega [legs] | <b>([goal_turf.x], ([goal_turf.y])</b>")
+		var/i
+		a.Add(goal_turf)
+		goal_turf.color = COLOR_BLUE_GRAY
+		while(iter_turf != goal_turf)
+			i++
+			var/turf/next_turf = get_step_towards(iter_turf, goal_turf)
+			testing(">>>stepa [legs] | [i] - ([iter_turf.x], [iter_turf.y]) -> ([next_turf.x], [next_turf.y])")
+			iter_turf = next_turf
+
+			iter_turf.color = COLOR_BLUE_LIGHT
+			//path.Add(iter_turf)
+		unwind_node = unwind_node.prevNode
+	testing("+++++++++end of A")
+
+	legs = 0
+
+	var/list/b = list(iter_turf2)
+	var/turf/goal_turf2 = visited[iter_turf2]
+	while(goal_turf2 && goal_turf2 != -1)
+		b.Add(goal_turf2)
+		legs++
+		testing(">legb [legs] | <b>([goal_turf2.x], ([goal_turf2.y])</b>")
+		var/i
+		//goal_turf.color = COLOR_BLUE_GRAY
+		while(iter_turf2 != goal_turf2)
+			i++
+			if(i > 100)
+				break
+			var/turf/next_turf = get_step_towards(iter_turf2, goal_turf2)
+			testing(">>>stepa [legs] | [i] - ([iter_turf2.x], [iter_turf2.y]) -> ([next_turf.x], [next_turf.y])")
+			iter_turf2 = next_turf
+			path.Add(iter_turf2)
+			//iter_turf.color = COLOR_BLUE_LIGHT
+		goal_turf2 = visited[iter_turf2]
+	testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goaltuf2 = [goal_turf2])")
 
 /datum/pathfind/proc/can_step(turf/a, turf/next)
 	return call(a,adjacent)(caller, next, id, simulated_only)
 
 /datum/pathfind/proc/queue_node(datum/tiles/t)
+	testing("queue node current counts [nodes_queued_a] | [nodes_queued_b] | [nodes_queued_c]")
+	nodes_queued_a++
 	if(done || path)
 		return
 	if(!t)
@@ -224,24 +289,24 @@
 	var/turf/moved_from = t.from
 	var/jmps = t.jumps
 	qdel(t)
+	nodes_queued_b++
+
 	if(!turf_for_node || !moved_from)
 		return
 	var/datum/jpsnode/our_node = openc[turf_for_node]
 	var/datum/jpsnode/from_node = openc[moved_from]
 
-	if(!from_node)
-		CRASH("missing from node in queue?")
+	if(!moved_from)
+		CRASH("missing from turf in queue?")
 
 	if(our_node)
-		//is already in open list, check if it's a better way from the current turf
-		if((our_node.nt + jmps) < from_node.nt)
-			testing("!!!!!!!!!!better rate [our_node.nt + jmps] shouldn't be lower than [from_node.nt]")
-			our_node.setp(from_node, jmps)
-			open.ReSort(our_node)//reorder the changed element in the list
+		testing("!!!!!!!!!!!!!!!!!!!!!!!!!!were trying to queue a node that already exists [turf_for_node.x] [turf_for_node.y]")
+		turf_for_node.color = COLOR_BROWN
 	else
 	//is not already in open list, so add it
 		testing("adding further node")
-		our_node = new(turf_for_node,from_node)
+		nodes_queued_c++
+		our_node = new(turf_for_node,moved_from)
 		open.Insert(our_node)
 		openc[turf_for_node] = our_node
 		turf_for_node.color = COLOR_RED
@@ -249,6 +314,13 @@
 /datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
 	var/datum/jpsnode/unwind_node = openc[original_turf]
+	var/i
+	while(!unwind_node)
+		i++
+		testing("no unwind node on lat [i]")
+		var/turf/older = visited[original_turf]
+		unwind_node = openc[older]
+
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 	original_turf.color = COLOR_PURPLE
@@ -260,13 +332,13 @@
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		steps_taken++
-		if(steps_taken % 5 == 1)
+		if(steps_taken % 10 == 1)
 			testing("taking lat step [steps_taken] in dir [heading]")
 
 		if(!current_turf)
 			return
 		if(current_turf != original_turf)
-			current_turf.color = COLOR_GRAY
+			current_turf.color = COLOR_PINK
 
 		var/closeenough
 		if(mintargetdist)
@@ -274,23 +346,25 @@
 		if(current_turf == end || closeenough)
 			testing("done? lat close enough: [closeenough]")
 			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
+			visited[current_turf] = original_turf
 			//open.Insert(current_turf)
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
-		else if(!visited[current_turf])
-			visited[current_turf] = original_turf
-			if(!can_step(lag_turf, current_turf))
-				testing("lat went into a turf that it couldn't step into??")
-				current_turf.color = COLOR_WHITE
-				return
+		else if(visited[current_turf])
+			current_turf.color = COLOR_BLACK
+			return
 		else if(!can_step(lag_turf, current_turf))
-			testing("lat went into a turf that was visited but it couldn't step into??")
 			current_turf.color = COLOR_ORANGE
 			return
 		else
-			current_turf.color = COLOR_BLACK
-			return
+			//visited[current_turf] = original_turf
+			visited[current_turf] = original_turf
+			/*if(!can_step(lag_turf, current_turf))
+				testing("lat went into a turf that it couldn't step into??")
+				current_turf.color = COLOR_WHITE
+				return
+			*/
 
 		if(steps_taken > 30)
 			testing("too many steps, breaking to next")
@@ -301,7 +375,7 @@
 		*/
 
 
-
+/*
 		switch(heading)
 			if(NORTH)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
@@ -323,6 +397,52 @@
 					return new /datum/tiles(current_turf, original_turf, steps_taken)
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
 					return new /datum/tiles(current_turf, original_turf, steps_taken)
+*/
+		switch(heading)
+			if(NORTH)
+				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+			if(SOUTH)
+				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+			if(EAST)
+				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+			if(WEST)
+				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 
 	testing("took [steps_taken] steps in dir [heading]")
 
@@ -332,6 +452,12 @@
 	var/datum/jpsnode/unwind_node = openc[original_turf]
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
+	var/i
+	while(!unwind_node)
+		i++
+		testing("no unwind node on diag [i]")
+		var/turf/older = visited[original_turf]
+		unwind_node = openc[older]
 
 	original_turf.color = COLOR_VIBRANT_LIME
 	while(TRUE)
@@ -341,7 +467,7 @@
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
 		steps_taken++
-		if(steps_taken % 5 == 1)
+		if(steps_taken % 10 == 1)
 			testing("taking diag step [steps_taken] in dir [heading]")
 
 		if(!current_turf)
@@ -355,73 +481,92 @@
 		if(current_turf == end || closeenough)
 			testing("done? diag close enough: [closeenough]")
 			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
+			visited[current_turf] = original_turf
 			//open.Insert(current_turf)
 			//openc[possible_interest] = neighbor_node
 			unwind_path(final_node)
 			return
-		else if(!visited[current_turf])
-			visited[current_turf] = original_turf
+		else if(visited[current_turf])
+			current_turf.color = COLOR_BLACK
+			return
 		else if(!can_step(lag_turf, current_turf))
-			testing("diag went into a turf that was visited but it couldn't step into??")
 			current_turf.color = COLOR_ORANGE
 			return
 		else
-			current_turf.color = COLOR_BLACK
-			return
+			visited[current_turf] = original_turf
 
 		if(steps_taken > 30)
 			testing("too many steps, breaking to next")
 			return
 
-		/*if(!(unwind_node.bf & heading))
-			//testing("skip dir: [f] br: [cur.bf]")
-			break
-		*/
 
 		switch(heading)
 			if(NORTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
+					lateral_scan_spec(current_turf, WEST)// this is a turf not a node, fix
 					//cardinal scan west
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
+					lateral_scan_spec(current_turf, NORTH)// this is a turf not a node, fix
 					//cardinal scan north
 			if(NORTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
+					lateral_scan_spec(current_turf, EAST)// this is a turf not a node, fix
 					//cardinal scan east
 				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, NORTH)) // this is a turf not a node, fix
+					lateral_scan_spec(current_turf, NORTH)// this is a turf not a node, fix
 					//cardinal scan north
 			if(SOUTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, WEST)) // this is a turf not a node, fix
+					lateral_scan_spec(current_turf, WEST)// this is a turf not a node, fix
 					//cardinal scan west
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
+					lateral_scan_spec(current_turf, SOUTH)// this is a turf not a node, fix
 					//cardinal scan south
 			if(SOUTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, EAST)) // this is a turf not a node, fix
+					lateral_scan_spec(current_turf, EAST)// this is a turf not a node, fix
 					//cardinal scan east
 				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					return new /datum/tiles(current_turf, original_turf, steps_taken)
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
-					queue_node(lateral_scan_spec(current_turf, SOUTH)) // this is a turf not a node, fix
-					//cardinal scan south
+					lateral_scan_spec(current_turf, SOUTH)// this is a turf not a node, fix
 
 	testing("took [steps_taken] steps in dir [heading]")
