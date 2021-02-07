@@ -20,11 +20,18 @@ GLOBAL_LIST_EMPTY(GPS_list)
 /datum/component/gps/item
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
+	/// UI state of GPS, altering when it can be used.
+	var/datum/ui_state/state = null
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE)
+/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	if(isnull(state))
+		state = GLOB.default_state
+	src.state = state
+
 	var/atom/A = parent
 	A.add_overlay("working")
 	A.name = "[initial(A.name)] ([gpstag])"
@@ -97,6 +104,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		ui = new(user, src, "Gps")
 		ui.open()
 	ui.set_autoupdate(updating)
+
+/datum/component/gps/item/ui_state(mob/user)
+	return state
 
 /datum/component/gps/item/ui_data(mob/user)
 	var/list/data = list()

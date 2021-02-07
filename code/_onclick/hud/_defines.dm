@@ -159,6 +159,7 @@
 #define ui_pai_state_laws "SOUTH:6,WEST+8"
 #define ui_pai_pda_send "SOUTH:6,WEST+9"
 #define ui_pai_pda_log "SOUTH:6,WEST+10"
+#define ui_pai_internal_gps "SOUTH:6,WEST+11"
 #define ui_pai_take_picture "SOUTH:6,WEST+12"
 #define ui_pai_view_images "SOUTH:6,WEST+13"
 
