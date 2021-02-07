@@ -81,7 +81,7 @@ const Story = (props, context) => {
         Some text
       </Section>
       <Section>
-        Section-less tabs:
+        Section-less tabs appear the same as tabs in a fitted section:
       </Section>
       <TabsPrefab />
     </>
