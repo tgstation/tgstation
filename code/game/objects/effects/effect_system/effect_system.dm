@@ -69,11 +69,18 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	else
 		direction = pick(GLOB.alldirs)
 	var/steps_amt = pick(1,2,3)
-	for(var/j in 1 to steps_amt)
-		sleep(5)
-		step(E,direction)
+	addtimer(CALLBACK(src, .proc/step_effect, E, direction, steps_amt), 5)
+	//for(var/j in 1 to steps_amt)
+	//	sleep(5)
+	//	step(E,direction)
 	if(!QDELETED(src))
 		addtimer(CALLBACK(src, .proc/decrement_total_effect), 20)
+
+/datum/effect_system/proc/step_effect(obj/effect/to_step, direction, steps_left)
+	steps_left--
+	step(to_step, direction)
+	if (steps_left > 0)
+		addtimer(CALLBACK(src, .proc/step_effect, to_step, direction, steps_left), 5)
 
 /datum/effect_system/proc/decrement_total_effect()
 	total_effects--
