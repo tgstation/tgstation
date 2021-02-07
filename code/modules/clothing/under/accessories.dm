@@ -346,7 +346,7 @@
 
 /obj/item/clothing/accessory/fan_mime_pin
 	name = "\improper Mime Pin"
-	desc = "A pin to show off your appreciation for mimes and miming."
+	desc = "A pin to show off your appreciation for mimes and miming!"
 	icon_state = "fan_mime_pin"
 
 /obj/item/clothing/accessory/fan_mime_pin/on_uniform_equip(obj/item/clothing/under/U, user)
