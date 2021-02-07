@@ -262,7 +262,7 @@
 ///Black and white pills that spawn in maintenance and have random reagent contents
 /obj/item/reagent_containers/pill/maintenance
 	name = "maintenance pill"
-	desc = "A strange pill found in the depths of maintenance"
+	desc = "A strange pill found in the depths of maintenance."
 	icon_state = "pill21"
 	var/static/list/names = list("maintenance pill", "floor pill", "mystery pill", "suspicious pill", "strange pill", "lucky pill", "ominous pill", "eerie pill")
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
