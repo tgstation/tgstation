@@ -241,7 +241,6 @@
 	blown_kiss.fired_from = user
 	blown_kiss.firer = user // don't hit ourself that would be really annoying
 	blown_kiss.impacted = list(user = TRUE) // just to make sure we don't hit the wearer
-	blown_kiss.def_zone = BODY_ZONE_HEAD
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
@@ -272,6 +271,7 @@
 	return ..()
 
 /obj/projectile/kiss/on_hit(atom/target, blocked, pierce_hit)
+	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 	. = ..()
 	if(!ismob(target))
 		return
