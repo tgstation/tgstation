@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Combat mode prevents you from being pushed by movement"

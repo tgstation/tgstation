@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Hosts of Xenomorph Embryos now correctly receive their IMMERSIVE messages in their final moments."

@@ -134,7 +134,7 @@
 					else
 						to_chat(user, "<span class='warning'>You fail to load the plutonium core into [core_box]. [core_box] has already been used!</span>")
 				return
-			if(istype(I, /obj/item/stack/sheet/metal))
+			if(istype(I, /obj/item/stack/sheet/iron))
 				if(!I.tool_start_check(user, amount=20))
 					return
 

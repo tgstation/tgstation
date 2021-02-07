@@ -36,6 +36,10 @@
 	fill(C)
 	return C
 
+/datum/supply_pack/proc/get_cost()
+	. = cost
+	. *= SSeconomy.pack_price_modifier
+
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	if (admin_spawned)
 		for(var/item in contains)
@@ -997,12 +1001,12 @@
 	contains = list(/obj/item/stack/sheet/glass/fifty)
 	crate_name = "glass sheets crate"
 
-/datum/supply_pack/materials/metal50
-	name = "50 Metal Sheets"
-	desc = "Any construction project begins with a good stack of fifty metal sheets!"
+/datum/supply_pack/materials/iron50
+	name = "50 Iron Sheets"
+	desc = "Any construction project begins with a good stack of fifty iron sheets!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/stack/sheet/metal/fifty)
-	crate_name = "metal sheets crate"
+	contains = list(/obj/item/stack/sheet/iron/fifty)
+	crate_name = "iron sheets crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"

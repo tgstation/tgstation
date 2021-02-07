@@ -89,3 +89,31 @@
 		return
 	var/mob/living/user_mob = user.mob
 	user_mob.set_combat_mode(!user_mob.combat_mode, FALSE)
+
+/datum/keybinding/living/enable_combat_mode
+	hotkey_keys = list("Unbound")
+	name = "enable_combat_mode"
+	full_name = "Enable Combat Mode"
+	description = "Enable combat mode."
+	keybind_signal = COMSIG_KB_LIVING_ENABLE_COMBAT_DOWN
+
+/datum/keybinding/living/enable_combat_mode/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/user_mob = user.mob
+	user_mob.set_combat_mode(TRUE, silent = FALSE)
+
+/datum/keybinding/living/disable_combat_mode
+	hotkey_keys = list("Unbound")
+	name = "disable_combat_mode"
+	full_name = "Disable Combat Mode"
+	description = "Disable combat mode."
+	keybind_signal = COMSIG_KB_LIVING_DISABLE_COMBAT_DOWN
+
+/datum/keybinding/living/disable_combat_mode/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/user_mob = user.mob
+	user_mob.set_combat_mode(FALSE, silent = FALSE)

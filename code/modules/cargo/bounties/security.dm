@@ -53,11 +53,10 @@
 	///list of areas for security to choose from to perform an inspection.
 	var/static/list/possible_areas = list(\
 		/area/maintenance,\
-		/area/library,\
-		/area/crew_quarters,\
+		/area/commons,\
+		/area/service,\
 		/area/hallway/primary,\
-		/area/lawoffice,\
-		/area/security/main,\
+		/area/security/office,\
 		/area/security/prison,\
 		/area/security/range,\
 		/area/security/checkpoint)
