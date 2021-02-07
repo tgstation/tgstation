@@ -16,7 +16,7 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disabled anonymous names.</span>")
 		if(SSticker.current_state < GAME_STATE_PREGAME)
 			return
-		priority_announce("Names and Identities have been restored.", "Identity Restoration", 'sound/ai/attention.ogg')
+		priority_announce("Names and Identities have been restored.", "Identity Restoration", SSstation.announcer.get_rand_alert_sound())
 		for(var/mob/living/player in GLOB.player_list)
 			if(!player.mind || (!ishuman(player) && !issilicon(player)) || !SSjob.GetJob(player.mind.assigned_role))
 				continue
@@ -41,7 +41,7 @@
 		alert_players = alert(usr, "Alert crew? These are IC Themed FROM centcom.", "2016 admins didn't miss roundstart", "Yes", "No")
 	SSticker.anonymousnames = new result()
 	if(alert_players == "Yes")
-		priority_announce(SSticker.anonymousnames.announcement_alert, "Identity Loss", 'sound/ai/attention.ogg')
+		priority_announce(SSticker.anonymousnames.announcement_alert, "Identity Loss", SSstation.announcer.get_rand_alert_sound())
 	anonymous_all_players()
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has enabled anonymous names. THEME: [SSticker.anonymousnames].</span>")
@@ -59,8 +59,9 @@
 		if(issilicon(player))
 			player.fully_replace_character_name(player.real_name, theme.anonymous_ai_name(isAI(player)))
 		else
+			var/original_name = player.real_name //id will not be changed if you do not do this
 			randomize_human(player) //do this first so the special name can be given
-			player.fully_replace_character_name(player.real_name, theme.anonymous_name(player))
+			player.fully_replace_character_name(original_name, theme.anonymous_name(player))
 
 /* Datum singleton initialized by the client proc to hold the naming generation */
 /datum/anonymous_theme

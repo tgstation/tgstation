@@ -11,9 +11,9 @@ Crate cost is 500cr for a regular plasteel crate and 100cr for a large wooden on
 This is to avoid easy cargo points dupes.
 
 Credit dupes that require a lot of manual work shouldn't be removed, unless they yield too much profit for too little work.
-For example, if some player buys metal and glass sheets and uses them to make and sell reinforced glass:
+For example, if some player buys iron and glass sheets and uses them to make and sell reinforced glass:
 
-100 glass + 50 metal -> 100 reinforced glass
+100 glass + 50 iron-> 100 reinforced glass
 1500cr -> 1600cr)
 
 Then the player gets the profit from selling his own wasted time.

@@ -1,0 +1,367 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"c" = (
+/obj/machinery/button/massdriver/indestructible{
+	id = "trektorpedo1";
+	layer = 3.9;
+	name = "photon torpedo button";
+	pixel_x = -16;
+	pixel_y = -5
+	},
+/obj/machinery/button/massdriver/indestructible{
+	id = "trektorpedo2";
+	layer = 3.9;
+	name = "photon torpedo button";
+	pixel_x = 16;
+	pixel_y = -5
+	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"d" = (
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"f" = (
+/obj/machinery/door/window/westleft{
+	dir = 2
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"j" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"k" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"l" = (
+/obj/structure/window/reinforced,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"m" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"o" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"p" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"r" = (
+/obj/structure/table,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"s" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"t" = (
+/obj/structure/table/glass,
+/obj/item/gun/energy/e_gun/mini/practice_phaser,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/recharger,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"w" = (
+/obj/structure/table,
+/obj/item/folder,
+/obj/item/pen/blue,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"x" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/computer/arcade/orion_trail/kobayashi,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"y" = (
+/turf/open/floor/holofloor/hyperspace,
+/area/template_noop)
+"z" = (
+/obj/machinery/computer/atmos_alert{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"A" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"B" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/holofloor/hyperspace,
+/area/template_noop)
+"C" = (
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"E" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"F" = (
+/obj/structure/rack,
+/obj/item/clothing/under/trek/engsec,
+/obj/item/clothing/under/trek/engsec,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"H" = (
+/obj/machinery/door/window/westleft{
+	dir = 2;
+	icon_state = "right"
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"J" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"L" = (
+/obj/structure/table/glass,
+/obj/item/gun/energy/e_gun/mini/practice_phaser,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"Q" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/folder,
+/obj/item/pen/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"T" = (
+/obj/structure/rack,
+/obj/item/clothing/under/trek/medsci,
+/obj/item/clothing/under/trek/medsci,
+/obj/item/clothing/under/trek/command,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"V" = (
+/obj/structure/window/reinforced,
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "trektorpedo2";
+	name = "photon torpedo tube"
+	},
+/obj/item/toy/minimeteor{
+	desc = "A primitive long-range weapon, inferior to Nanotrasen's perfected bluespace artillery.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "impact_laser";
+	name = "photon torpedo"
+	},
+/turf/open/floor/holofloor/hyperspace,
+/area/template_noop)
+"X" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"Z" = (
+/obj/structure/table,
+/obj/item/folder,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+
+(1,1,1) = {"
+y
+y
+B
+a
+C
+l
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+y
+y
+B
+a
+k
+k
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+y
+V
+t
+a
+a
+a
+a
+H
+m
+T
+"}
+(4,1,1) = {"
+B
+p
+a
+a
+a
+a
+A
+w
+E
+s
+"}
+(5,1,1) = {"
+B
+c
+j
+a
+a
+o
+A
+Z
+E
+s
+"}
+(6,1,1) = {"
+B
+x
+a
+a
+a
+r
+A
+Q
+E
+s
+"}
+(7,1,1) = {"
+y
+V
+L
+a
+a
+a
+a
+f
+J
+F
+"}
+(8,1,1) = {"
+y
+y
+B
+a
+X
+X
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+y
+y
+B
+a
+d
+z
+a
+a
+a
+a
+"}

@@ -5,7 +5,10 @@
 	icon_state = "railing"
 	density = TRUE
 	anchored = TRUE
-	climbable = TRUE
+
+	var/climbable = TRUE
+	///Initial direction of the railing.
+	var/ini_dir
 
 /obj/structure/railing/corner //aesthetic corner sharp edges hurt oof ouch
 	icon_state = "railing_corner"
@@ -16,11 +19,18 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
+
+/obj/structure/railing/Initialize()
+	. = ..()
+	ini_dir = dir
+	if(climbable)
+		AddElement(/datum/element/climbable)
+
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
 	add_fingerprint(user)
 
-	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return

@@ -84,11 +84,11 @@
 	contains_sample = FALSE
 	return NONE
 
-/obj/item/seeds/replicapod/get_analyzer_text()
-	var/text = ..()
+/obj/item/seeds/replicapod/get_unique_analyzer_text()
 	if(contains_sample)
-		text += "\n It contains a blood sample with blood DNA (UE) \"sampleDNA\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
-	return text
+		return "It contains a blood sample with blood DNA (UE) \"[sampleDNA]\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
+	else
+		return null
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
