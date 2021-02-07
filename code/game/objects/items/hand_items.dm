@@ -292,7 +292,7 @@
 		if(2)
 			other_msg = "stammers softly for a moment before choking on something!"
 			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
-			addtimer(CALLBACK(target_living, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?"), forced="awkward kiss reaction"), rand(0.5 SECONDS, 1.5 SECONDS))
+			addtimer(CALLBACK(target_living, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
 			target_living.stuttering += rand(5, 15)
 		if(3)
 			other_msg = "locks up with a stunned look on [target_living.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
