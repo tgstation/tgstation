@@ -34,7 +34,7 @@
 	else
 		. += "[icon_state]_door"
 
-/obj/structure/guncase/attackby(obj/item/I, mob/user, params)
+/obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
 	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, gun_category) && open)
@@ -47,7 +47,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		return
 
-	else if(user.a_intent != INTENT_HARM)
+	else if(!user.combat_mode)
 		open = !open
 		update_icon()
 	else
