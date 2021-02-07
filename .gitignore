@@ -234,4 +234,3 @@ tools/LinuxOneShot/TGS_Logs
 
 # Common build tooling
 !/tools/build
-code/modules/tgui/USE_BUILD_BAT_INSTEAD_OF_DREAM_MAKER.dm
