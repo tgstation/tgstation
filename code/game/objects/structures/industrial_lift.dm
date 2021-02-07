@@ -459,6 +459,14 @@ GLOBAL_LIST_EMPTY(lifts)
 		return
 	tram_travel(from_where, button2landmark[result])
 
+/obj/structure/industrial_lift/tram/process(delta_time)
+	if(!travel_distance)
+		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
+		return PROCESS_KILL
+	else
+		travel_distance--
+		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
+
 /obj/structure/industrial_lift/tram/proc/tram_travel(obj/effect/landmark/tram/from_where, obj/effect/landmark/tram/to_where)
 	visible_message("<span class='notice'>[src] has been called to the [to_where]!</span")
 	lift_master_datum.set_controls(LOCKED)
@@ -472,15 +480,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 	travel_distance--
 
-	addtimer(CALLBACK(src, .proc/continue_movement), time_inbetween_moves)
-
-/obj/structure/industrial_lift/tram/proc/continue_movement()
-	if(travel_distance)
-		travel_distance--
-		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
-		addtimer(CALLBACK(src, .proc/continue_movement), time_inbetween_moves)
-		return
-	addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
+	START_PROCESSING(SStramprocess, src)
 
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
 	visible_message("<span class='notice'>[src]'s controls are now unlocked.</span")
