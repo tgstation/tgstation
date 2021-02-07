@@ -43,7 +43,7 @@
 ///Bounties that require you to perform documentation and inspection of your department to send to centcom.
 /datum/bounty/item/security/paperwork
 	name = "Routine Security Inspection"
-	description = "Perform a routine security inspection using an in-spect scanner on the following general area on station:"
+	description = "Perform a routine security inspection using an N-spect scanner on the following station area:"
 	required_count = 1
 	wanted_types = list(/obj/item/paper/report)
 	reward = CARGO_CRATE_VALUE * 5
