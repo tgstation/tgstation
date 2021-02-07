@@ -65,7 +65,7 @@ export const NtosNetDownloader = (props, context) => {
                   color="good"
                   icon="download"
                   tooltipPosition="left"
-                  tooltip={`${downloadname}.prg downloaded`}/>
+                  tooltip={`${downloadname}.prg downloaded`} />
               ))}>
               <ProgressBar
                 value={downloading ? disk_used + downloadcompletion : disk_used}
