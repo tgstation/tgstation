@@ -359,7 +359,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	///extend the blade
 	var/extended = 0
 	///damage dealt on backstab
-	var/backstrab_damage = 40
+	var/backstab_damage = 40
 	COOLDOWN_DECLARE(stab_cooldown)
 	///cooldown on stabbing
 	var/stab_cooldown_time = 3 SECONDS
@@ -395,13 +395,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return ALT_ATTACK_CONTINUE_CHAIN
 	/// fast dir checking to check for backstab
 	if(extended && (victim.dir == user.dir) && victim.density)
-		///clumsy clown might backstrab himself
+		///clumsy clown might backstab himself
 		if((victim == user)  && (!HAS_TRAIT(user, TRAIT_CLUMSY)))
 			return ALT_ATTACK_CONTINUE_CHAIN
 		victim.emote("scream")
-		user.visible_message("<span class='danger'>[user] backstrabs [victim] with [src]!</span>")
+		user.visible_message("<span class='danger'>[user] backstabs [victim] with [src]!</span>")
 		user.do_attack_animation(src)
-		victim.apply_damage(backstrab_damage, def_zone = BODY_ZONE_CHEST, wound_bonus = -5, bare_wound_bonus = 15, sharpness = SHARP_EDGED)
+		victim.apply_damage(backstab_damage, def_zone = BODY_ZONE_CHEST, wound_bonus = -5, bare_wound_bonus = 15, sharpness = SHARP_POINTY)
 	else
 	/// face strab
 		attack(victim, user)
@@ -415,7 +415,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 ///admin abuse version
 /obj/item/switchblade/adminbuse
-	backstrab_damage = 600
+	backstab_damage = 600
 
 /obj/item/phone
 	name = "red phone"
