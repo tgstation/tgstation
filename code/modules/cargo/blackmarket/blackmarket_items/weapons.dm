@@ -43,3 +43,13 @@
 	price_max = 400
 	stock_max = 2
 	availability_prob = 50
+
+/datum/blackmarket_item/weapon/butterfly_knife
+	name = "butterfly knife"
+	desc = "funny desc here"
+	item = /obj/item/switchblade
+
+	price_min = 500
+	price_max = 700
+	stock_max = 3
+	availability_prob = 40

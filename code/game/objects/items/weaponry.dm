@@ -340,11 +340,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
 
 /obj/item/switchblade
-	name = "switchblade"
-	icon_state = "switchblade"
+	name = "butterfly knife"
+	icon_state = "butterfly"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "A sharp, concealable, spring-loaded knife."
+	desc = "funny desc here."
 	flags_1 = CONDUCT_1
 	force = 3
 	w_class = WEIGHT_CLASS_SMALL
@@ -356,16 +356,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
+	///extend the blade
 	var/extended = 0
+	///damage dealt on backstab
+	var/backstrab_damage = 40
+	COOLDOWN_DECLARE(stab_cooldown)
+	///cooldown on stabbing
+	var/stab_cooldown_time = 3 SECONDS
 
 /obj/item/switchblade/attack_self(mob/user)
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	if(extended)
-		force = 20
+		force = 10
 		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
-		icon_state = "switchblade_ext"
+		throwforce = 15
+		icon_state = "butterfly_ext"
 		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
@@ -374,15 +380,42 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		force = 3
 		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
-		icon_state = "switchblade"
+		icon_state = "butterfly"
 		attack_verb_continuous = list("stubs", "pokes")
 		attack_verb_simple = list("stub", "poke")
 		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = SHARP_NONE
 
+/obj/item/switchblade/attack_alt(mob/living/victim, mob/living/user, params)
+	if(!COOLDOWN_FINISHED(src, stab_cooldown))
+		to_chat(user, "<span class='warning'>You aren't ready to backstab!</span>")
+		return ALT_ATTACK_CONTINUE_CHAIN
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You are a pacifist.</span>")
+		return ALT_ATTACK_CONTINUE_CHAIN
+	/// fast dir checking to check for backstab
+	if(extended && (victim.dir == user.dir) && victim.density)
+		///clumsy clown might backstrab himself
+		if((victim == user)  && (!HAS_TRAIT(user, TRAIT_CLUMSY)))
+			return ALT_ATTACK_CONTINUE_CHAIN
+		victim.emote("scream")
+		user.visible_message("<span class='danger'>[user] backstrabs [victim] with [src]!</span>")
+		user.do_attack_animation(src)
+		victim.apply_damage(backstrab_damage, def_zone = BODY_ZONE_CHEST, wound_bonus = -5, bare_wound_bonus = 15, sharpness = SHARP_EDGED)
+	else
+	/// face strab
+		attack(victim, user)
+	COOLDOWN_START(src, stab_cooldown, stab_cooldown_time)
+
+	return ALT_ATTACK_CONTINUE_CHAIN
+
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
+
+///admin abuse version
+/obj/item/switchblade/adminbuse
+	backstrab_damage = 600
 
 /obj/item/phone
 	name = "red phone"
