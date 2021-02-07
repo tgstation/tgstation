@@ -735,14 +735,12 @@
 	return TRUE
 
 /**
- * Cleans the lips of any lipstick. Returns TRUE if the lips had any lipstick and was thus cleaned
+ * A wrapper for [mob/living/carbon/human/proc/update_lips] that tells us if there were lip styles to change
  */
 /mob/living/carbon/human/proc/clean_lips()
 	if(isnull(lip_style) && lip_color == initial(lip_color))
 		return FALSE
-	lip_style = null
-	lip_color = initial(lip_color)
-	update_body()
+	update_lips(null)
 	return TRUE
 
 /**
