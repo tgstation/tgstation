@@ -277,7 +277,7 @@
 		return
 	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "kiss", /datum/mood_event/kiss, firer)
 	var/mob/living/target_living = target
-	if(!(HAS_TRAIT(target_living, TRAIT_ANXIOUS) && prob(30)))
+
 	if((target_living.stat > SOFT_CRIT) || !(HAS_TRAIT(target_living, TRAIT_ANXIOUS) && prob(30)))
 		return
 
