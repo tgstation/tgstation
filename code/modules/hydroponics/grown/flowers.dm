@@ -308,7 +308,7 @@
 	icon_state = "rose"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	slot_flags = ITEM_SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES | GROSS
 
