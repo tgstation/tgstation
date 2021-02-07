@@ -242,6 +242,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COAGULATING		"coagulating" //from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE	"antennae"
+/// Blowing kisses actually does damage to the victim
+#define TRAIT_KISS_OF_DEATH	"kiss_of_death"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
@@ -350,6 +352,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BADTOUCH			"bad_touch"
 #define TRAIT_EXTROVERT			"extrovert"
 #define TRAIT_INTROVERT			"introvert"
+#define TRAIT_ANXIOUS			"anxious"
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
@@ -479,6 +482,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ELEMENT_TRAIT "element_trait"
 /// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
 #define BERSERK_TRAIT "berserk_trait"
+/// Trait granted by lipstick
+#define LIPSTICK_TRAIT "lipstick_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
