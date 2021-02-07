@@ -96,8 +96,7 @@
 
 // Various gene procs
 /obj/item/food/grown/attack_self(mob/user)
-	if(seed?.get_gene(/datum/plant_gene/trait/squash))
-		squash(user)
+	SEND_SIGNAL(src, COMSIG_PLANT_SQUASH, user)
 	..()
 
 /obj/item/food/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -105,30 +104,6 @@
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_throw_impact(src, hit_atom)
-			if(seed.get_gene(/datum/plant_gene/trait/squash))
-				squash(hit_atom)
-
-/obj/item/food/grown/proc/squash(atom/target)
-	var/turf/T = get_turf(target)
-	forceMove(T)
-	if(ispath(splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
-		if(filling_color)
-			var/obj/O = new splat_type(T)
-			O.color = filling_color
-			O.name = "[name] smudge"
-	else if(splat_type)
-		new splat_type(T)
-
-	visible_message("<span class='warning'>[src] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
-	if(seed)
-		for(var/datum/plant_gene/trait/trait in seed.genes)
-			trait.on_squash(src, target)
-
-	reagents.expose(T)
-	for(var/A in T)
-		reagents.expose(A)
-
-	qdel(src)
 
 /obj/item/food/grown/proc/OnConsume(mob/living/eater, mob/living/feeder)
 	if(iscarbon(usr))
