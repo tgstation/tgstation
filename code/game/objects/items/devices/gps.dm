@@ -13,10 +13,10 @@
 
 /obj/item/gps/Initialize()
 	. = ..()
-	_add_gps_component()
+	add_gps_component()
 
 /// Adds the GPS component to this item.
-/obj/item/gps/proc/_add_gps_component()
+/obj/item/gps/proc/add_gps_component()
 	AddComponent(/datum/component/gps/item, gpstag)
 
 /obj/item/gps/spaceruin
@@ -55,7 +55,7 @@
 /obj/item/gps/pai
 	gpstag = "PAI0"
 
-/obj/item/gps/pai/_add_gps_component()
+/obj/item/gps/pai/add_gps_component()
 	AddComponent(/datum/component/gps/item, gpstag, state = GLOB.inventory_state)
 
 /obj/item/gps/visible_debug
