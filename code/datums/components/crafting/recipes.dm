@@ -144,7 +144,7 @@
 
 /datum/crafting_recipe/reciever
 	name = "Modular Rifle Reciever"
-	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SAW)
+	tools = list(TOOL_WRENCH, TOOL_WELDER, /obj/item/hatchet)
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(/obj/item/stack/sheet/iron = 5,
 				/obj/item/stack/sticky_tape = 1,
