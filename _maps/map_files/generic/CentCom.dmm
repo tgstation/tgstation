@@ -3968,13 +3968,8 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "om" = (
-<<<<<<< HEAD
-/obj/machinery/modular_computer/console/preset/id/centcom,
-/turf/open/floor/plasteel/grimy,
-=======
 /obj/machinery/computer/card/centcom,
 /turf/open/floor/iron/grimy,
->>>>>>> 8c3017fc3e957461ad5dd91d68898c368fccc52a
 /area/centcom/ferry)
 "on" = (
 /obj/machinery/computer/communications,
