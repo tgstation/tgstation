@@ -28,7 +28,7 @@ export const NtosNetDownloader = (props, context) => {
     .find(category => category.name === selectedCategory)
     ?.items
     || [];
-  const disk_used_real = downloading
+  const disk_free_space = downloading
     ? disk_size - toFixed(disk_used + downloadcompletion)
     : disk_size - disk_used;
   return (
@@ -51,7 +51,7 @@ export const NtosNetDownloader = (props, context) => {
         <Section>
           <LabeledList>
             <LabeledList.Item
-              label="Disk usage"
+              label="Hard drive"
               buttons={(!!downloading) && (
                 <Button
                   icon="spinner"
@@ -60,13 +60,19 @@ export const NtosNetDownloader = (props, context) => {
                   tooltip={!!downloading && (
                     `Download: ${downloadname}.prg (${downloadpercentage}%)`
                   )} />
-              )}>
+              ) || (!!downloadname && (
+                <Button
+                  color="good"
+                  icon="download"
+                  tooltipPosition="left"
+                  tooltip={`${downloadname}.prg downloaded`}/>
+              ))}>
               <ProgressBar
                 value={downloading ? disk_used + downloadcompletion : disk_used}
                 minValue={0}
                 maxValue={disk_size}>
                 <Box textAlign="left">
-                  {`${disk_used_real} GQ free of ${disk_size} GQ`}
+                  {`${disk_free_space} GQ free of ${disk_size} GQ`}
                 </Box>
               </ProgressBar>
             </LabeledList.Item>
