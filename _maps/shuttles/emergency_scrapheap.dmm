@@ -122,14 +122,14 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "av" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "aw" = (
 /turf/open/floor/mineral/titanium,
@@ -164,7 +164,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/structure/grille/broken,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "aB" = (
 /turf/closed/wall/mineral/titanium/interior,
@@ -297,13 +297,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aX" = (
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aY" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aZ" = (
 /obj/machinery/door/airlock/titanium{
@@ -319,7 +319,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bb" = (
 /obj/structure/window/reinforced{
@@ -331,7 +331,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "bc" = (
 /obj/machinery/status_display/evac,
@@ -341,10 +341,10 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "be" = (
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bf" = (
 /obj/structure/extinguisher_cabinet{
@@ -353,25 +353,25 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bg" = (
 /obj/machinery/door/airlock{
 	name = "Unit 1"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bh" = (
 /obj/machinery/door/airlock{
 	name = "Unit 2"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bi" = (
 /obj/machinery/door/airlock{
 	name = "Unit B"
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bj" = (
 /obj/structure/toilet{
@@ -380,14 +380,14 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bl" = (
 /obj/structure/window/reinforced{

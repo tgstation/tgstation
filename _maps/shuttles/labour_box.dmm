@@ -67,7 +67,7 @@
 	input_dir = 2;
 	output_dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/labor)
 "l" = (
 /turf/open/floor/mineral/titanium,
