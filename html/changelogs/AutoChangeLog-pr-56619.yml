@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Heretic's void cloak no longer deletes itself when you take it off after removing the hood using the action button."
-  - bugfix: "Heretic's void cloak is once again visible on examining a player when they have unequipped the hood direct from the equipment menu."

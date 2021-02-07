@@ -1,7 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "you tool can be deconned"
-  - bugfix: "medvendor, syndisoft and youtool no longer are unbreakable"
-  - bugfix: "youtool has a refill"
-  - bugfix: "clothesmate refill is now buyable"

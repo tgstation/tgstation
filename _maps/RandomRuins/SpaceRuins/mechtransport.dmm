@@ -128,7 +128,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "G" = (
-/obj/item/stack/tile/plasteel,
+/obj/item/stack/tile/iron,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "H" = (
@@ -150,7 +150,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "L" = (
 /obj/effect/decal/cleanable/robot_debris,
-/obj/item/stack/tile/plasteel,
+/obj/item/stack/tile/iron,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "M" = (
