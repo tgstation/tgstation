@@ -363,9 +363,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	if(extended)
-		force = 10
+		force = 20
 		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 15
+		throwforce = 23
 		icon_state = "switchblade_ext"
 		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
