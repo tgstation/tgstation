@@ -361,7 +361,6 @@
 
 	//list our ckey and assign it a favourite pizza
 	if(!pizza_preferences[nommer.ckey])
-		pizza_preferences[nommer.ckey] = pickweight(pizza_types)
 		if(nommer.has_quirk(/datum/quirk/pineapple_liker))
 			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/pineapple
 		else if(nommer.has_quirk(/datum/quirk/pineapple_hater))
@@ -370,7 +369,8 @@
 			pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
 		else if(nommer.mind && nommer.mind.assigned_role == "Botanist")
 			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
-
+		else
+			pizza_preferences[nommer.ckey] = pickweight(pizza_types)
 	if(pizza)
 		//if the pizza isn't our favourite, delete it
 		if(pizza.type != pizza_preferences[nommer.ckey])
