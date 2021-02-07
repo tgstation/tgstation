@@ -687,7 +687,7 @@
 			paint_color = "#C0C0C0"
 		update_icon()
 		if(actually_paints)
-			H.update_lips("spray_face", pain_color)
+			H.update_lips("spray_face", paint_color)
 		var/used = use_charges(user, 10, FALSE)
 		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
 

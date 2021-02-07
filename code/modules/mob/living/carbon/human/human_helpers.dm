@@ -235,17 +235,3 @@
 		return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has lost the will to live...</span>"
 	//This mob has a ghost linked that could still reenter the body, so the soul only departed
 	return "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed, but the link is not yet fully broken...</span>"
-
-///
-/mob/living/carbon/human/proc/update_lips(new_style, new_colour, apply_trait)
-	lip_style = new_lips
-	lip_color = new_colour
-	update_body()
-
-	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
-	if(new_lips && apply_trait)
-		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
-		hopefully_a_head?.stored_lipstick_trait = apply_trait
-	else if(!new_lips)
-		REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
-		hopefully_a_head?.stored_lipstick_trait = null

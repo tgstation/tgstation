@@ -219,7 +219,7 @@
 
 
 /obj/item/kisser
-	name = "kiss blower"
+	name = "kiss"
 	desc = "I want you all to know, everyone and anyone, to seal it with a kiss."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "heart"
@@ -227,12 +227,13 @@
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
+	/// The kind of projectile this version of the kiss blower fires
+	var/kiss_type = /obj/projectile/kiss
 
 /obj/item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	user.visible_message("<b>[user]</b> blows a kiss at [target]!", "<span class='notice'>You blow a kiss at [target]!</span>")
-	var/kiss_type = HAS_TRAIT(user, TRAIT_KISS_OF_DEATH) ? /obj/projectile/kiss/death : /obj/projectile/kiss
-	var/obj/projectile/kiss/blown_kiss = new kiss_type(get_turf(user))
+	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
+	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", "<span class='notice'>You blow \a [blown_kiss] at [target]!</span>")
 
 	//Shooting Code:
 	blown_kiss.spread = 0
@@ -245,14 +246,20 @@
 	blown_kiss.fire()
 	qdel(src)
 
+/obj/item/kisser/death
+	name = "kiss of death"
+	desc = "If looks could kill, they'd be this."
+	color = COLOR_BLACK
+	kiss_type = /obj/projectile/kiss/death
+
 /obj/projectile/kiss
 	name = "kiss"
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "heart"
-	gender = PLURAL
 	hitsound = 'sound/effects/kiss.ogg'
 	hitsound_wall = 'sound/effects/kiss.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	speed = 1.6
 	damage_type = BRUTE
 	damage = 0
 	nodamage = TRUE // love can't actually hurt you
@@ -266,15 +273,47 @@
 
 /obj/projectile/kiss/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
-	if(ismob(target))
-		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "kiss", /datum/mood_event/kiss, firer)
+	if(!ismob(target))
+		return
+	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "kiss", /datum/mood_event/kiss, firer)
+	var/mob/living/target_living = target
+	if(!(HAS_TRAIT(target_living, TRAIT_ANXIOUS) && prob(30)))
+		return
+
+	// flustered!!!
+	var/other_msg
+	var/self_msg
+	var/roll = rand(1, 3)
+	switch(roll)
+		if(1)
+			other_msg = "stumbles slightly, turning a bright red!"
+			self_msg = "You lose control of your limbs for a moment as your blood rushes to your face, turning it bright red!"
+			target_living.add_confusion(rand(5, 10))
+		if(2)
+			other_msg = "stammers softly for a moment before choking on something!"
+			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
+			addtimer(CALLBACK(target_living, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?"), forced="awkward kiss reaction"), rand(0.5 SECONDS, 1.5 SECONDS))
+			target_living.stuttering += rand(5, 15)
+		if(3)
+			other_msg = "locks up with a stunned look on [target_living.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
+			self_msg = "Your brain completely fails to process what just happened, leaving you rooted in place staring [firer ? "at [firer]" : "the ceiling"] for what feels like an eternity!"
+			target_living.face_atom(firer)
+			target_living.Stun(rand(3 SECONDS, 8 SECONDS))
+
+	target_living.visible_message("<b>[target_living]</b> [other_msg]", "<span class='userdanger'>Whoa! [self_msg]</span>")
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
 	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
 	damage = 35
+	wound_bonus = 0
 	sharpness = SHARP_POINTY
-
-/obj/projectile/kiss/death/Initialize()
-	. = ..()
 	color = COLOR_BLACK
+
+/obj/projectile/kiss/death/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!iscarbon(target))
+		return
+	var/mob/living/carbon/heartbreakee = target
+	var/obj/item/organ/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
+	dont_go_breakin_my_heart.applyOrganDamage(999)
