@@ -47,9 +47,9 @@
 /datum/blackmarket_item/weapon/butterfly_knife
 	name = "butterfly knife"
 	desc = "funny desc here"
-	item = /obj/item/switchblade
+	item = /obj/item/melee/transforming/butter_fly
 
 	price_min = 500
 	price_max = 700
 	stock_max = 3
-	availability_prob = 40
+	availability_prob = 60

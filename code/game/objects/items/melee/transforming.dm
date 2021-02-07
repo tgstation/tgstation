@@ -17,6 +17,10 @@
 	var/clumsy_check = TRUE
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
 	var/sharpened_bonus
+	/// sound to play when turned on
+	var/sound_when_on = 'sound/weapons/saberon.ogg'
+	/// sound to play when turned on
+	var/sound_when_off = 'sound/weapons/saberoff.ogg'
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
@@ -82,7 +86,7 @@
 	return
 
 /obj/item/melee/transforming/proc/transform_messages(mob/living/user, supress_message_text)
-	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)  //changed it from 50% volume to 35% because deafness
+	playsound(user, active ? sound_when_on : sound_when_off, 35, TRUE)  //changed it from 50% volume to 35% because deafness
 	if(!supress_message_text)
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
@@ -99,3 +103,59 @@
 	if(force_on + increment > max)
 		return COMPONENT_BLOCK_SHARPEN_MAXED
 	sharpened_bonus = increment
+
+/obj/item/melee/transforming/butter_fly
+	name = "butterfly knife"
+	icon_state = "butterfly"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "funny desc here."
+	flags_1 = CONDUCT_1
+	force = 3
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 6
+	bare_wound_bonus = 5
+	stealthy_audio = FALSE
+	force_on = 15
+	icon_state_on = "butterfly_ext"
+	hitsound_on = 'sound/weapons/bladeslice.ogg'
+	attack_verb_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_off = list("pokes")
+	w_class_on = WEIGHT_CLASS_SMALL
+	sound_when_on = 'sound/weapons/batonextend.ogg'
+	sound_when_off = 'sound/weapons/batonextend.ogg'
+	///damage dealt on backstab
+	var/backstab_damage = 40
+	COOLDOWN_DECLARE(stab_cooldown)
+	///cooldown on stabbing
+	var/stab_cooldown_time = 3 SECONDS
+
+/obj/item/melee/transforming/butter_fly/attack_alt(mob/living/victim, mob/living/user, params)
+	if(!COOLDOWN_FINISHED(src, stab_cooldown))
+		to_chat(user, "<span class='warning'>You aren't ready to backstab!</span>")
+		return ALT_ATTACK_CONTINUE_CHAIN
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You are a pacifist.</span>")
+		return ALT_ATTACK_CONTINUE_CHAIN
+	/// fast dir checking to check for backstab
+	if(active && (victim.dir == user.dir) && victim.density)
+		///clumsy clown might backstab himself
+		if((victim == user)  && (!HAS_TRAIT(user, TRAIT_CLUMSY)))
+			return ALT_ATTACK_CONTINUE_CHAIN
+		victim.emote("scream")
+		user.visible_message("<span class='danger'>[user] backstabs [victim] with [src]!</span>")
+		user.do_attack_animation(src)
+		victim.apply_damage(backstab_damage, def_zone = BODY_ZONE_CHEST, wound_bonus = -5, bare_wound_bonus = 15, sharpness = SHARP_EDGED)
+	else
+	/// face strab
+		attack(victim, user)
+	COOLDOWN_START(src, stab_cooldown, stab_cooldown_time)
+
+	return ALT_ATTACK_CONTINUE_CHAIN
+
+
+///admin grief version
+/obj/item/melee/transforming/butter_fly/admingrief
+	backstab_damage = 600
