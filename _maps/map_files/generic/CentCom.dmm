@@ -3968,7 +3968,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "om" = (
-/obj/machinery/computer/card/centcom,
+/obj/machinery/modular_computer/console/preset/id/centcom,
 /turf/open/floor/iron/grimy,
 /area/centcom/ferry)
 "on" = (

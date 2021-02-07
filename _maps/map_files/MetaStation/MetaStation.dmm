@@ -12441,7 +12441,7 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/customs)
 "bda" = (
-/obj/machinery/computer/card,
+,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -25113,7 +25113,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/gravity_generator)
 "cvg" = (
-/obj/machinery/computer/card/minor/hos{
+{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -32719,7 +32719,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "eae" = (
-/obj/machinery/computer/card{
+{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -42759,7 +42759,7 @@
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
 "icI" = (
-/obj/machinery/computer/card{
+{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -52808,7 +52808,7 @@
 /turf/open/floor/iron/dark,
 /area/science/genetics)
 "mng" = (
-/obj/machinery/computer/card/minor/cmo{
+{
 	dir = 4
 	},
 /obj/machinery/requests_console{
@@ -52952,7 +52952,7 @@
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "mpf" = (
-/obj/machinery/computer/card/minor/rd{
+{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -57737,7 +57737,7 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "opF" = (
-/obj/machinery/computer/card,
+,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -59655,7 +59655,7 @@
 	name = "Chief Engineer RC";
 	pixel_y = 32
 	},
-/obj/machinery/computer/card/minor/ce,
+,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
