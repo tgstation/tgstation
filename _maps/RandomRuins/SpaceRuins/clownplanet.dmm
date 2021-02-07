@@ -94,7 +94,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "at" = (
-/turf/open/floor/plasteel/bluespace,
+/turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "au" = (
 /obj/structure/flora/ausbushes/brflowers,
@@ -111,11 +111,11 @@
 /area/ruin/powered/clownplanet)
 "ax" = (
 /obj/item/assembly/mousetrap/armed,
-/turf/open/floor/plasteel/bluespace,
+/turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "ay" = (
 /obj/structure/flora/tree/jungle,
-/turf/open/floor/plasteel/bluespace,
+/turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "az" = (
 /obj/structure/signpost,

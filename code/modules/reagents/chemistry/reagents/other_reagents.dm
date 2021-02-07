@@ -740,10 +740,10 @@
 
 /datum/reagent/copper/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
-	if(!istype(exposed_obj, /obj/item/stack/sheet/metal))
+	if(!istype(exposed_obj, /obj/item/stack/sheet/iron))
 		return
 
-	var/obj/item/stack/sheet/metal/M = exposed_obj
+	var/obj/item/stack/sheet/iron/M = exposed_obj
 	reac_volume = min(reac_volume, M.amount)
 	new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
 	M.use(reac_volume)
@@ -1617,7 +1617,7 @@
 	var/carpet_type = /turf/open/floor/carpet
 
 /datum/reagent/carpet/expose_turf(turf/exposed_turf, reac_volume)
-	if(isplatingturf(exposed_turf) || istype(exposed_turf, /turf/open/floor/plasteel))
+	if(isplatingturf(exposed_turf) || istype(exposed_turf, /turf/open/floor/iron))
 		var/turf/open/floor/target_floor = exposed_turf
 		target_floor.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
 	..()

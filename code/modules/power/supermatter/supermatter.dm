@@ -934,7 +934,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			Consume(dust_arm)
 			qdel(W)
 			return
-		if(cig.lit || user.a_intent != INTENT_HELP)
+		if(cig.lit || user.combat_mode)
 			user.visible_message("<span class='danger'>A hideous sound echoes as [W] is ashed out on contact with \the [src]. That didn't seem like a good idea...</span>")
 			playsound(src, 'sound/effects/supermatter.ogg', 150, TRUE)
 			Consume(W)

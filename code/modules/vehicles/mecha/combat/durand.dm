@@ -2,6 +2,7 @@
 	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
 	name = "\improper Durand"
 	icon_state = "durand"
+	base_icon_state = "durand"
 	movedelay = 4
 	dir_in = 1 //Facing North.
 	max_integrity = 400

@@ -73,10 +73,12 @@
 	using.hud = src
 	static_inventory += using
 
-	action_intent = new /atom/movable/screen/act_intent/segmented
-	action_intent.icon_state = mymob.a_intent
+	action_intent = new /atom/movable/screen/combattoggle/flashy()
 	action_intent.hud = src
+	action_intent.icon = ui_style
+	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
+
 
 	using = new /atom/movable/screen/mov_intent
 	using.icon = ui_style
@@ -309,6 +311,9 @@
 	zone_select.hud = src
 	zone_select.update_icon()
 	static_inventory += zone_select
+
+	combo_display = new /atom/movable/screen/combo()
+	infodisplay += combo_display
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)

@@ -107,8 +107,8 @@
  * Meant for attaching an item to the machine, should only be a training toolbox or target. If emagged, the
  * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
  */
-/obj/structure/training_machine/attackby(obj/item/target, mob/user)
-	if (user.a_intent != INTENT_HELP)
+/obj/structure/training_machine/attackby(obj/item/target, mob/living/user)
+	if (!user.combat_mode)
 		return ..()
 	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
 		return ..()
@@ -357,9 +357,9 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/user, proximity)
+/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
-	if (!proximity || target == user || user.a_intent == INTENT_HELP)
+	if (!proximity || target == user || !user.combat_mode)
 		return
 	if (check_hit(target))
 		user.changeNext_move(CLICK_CD_MELEE)

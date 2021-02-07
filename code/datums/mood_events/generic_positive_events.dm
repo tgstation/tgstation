@@ -218,3 +218,17 @@
 	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
 	mood_change = 4
 	timeout = 1.5 MINUTES
+
+/datum/mood_event/aquarium_positive
+	description = "<span class='nicegreen'>Watching fish in aquarium is calming.</span>\n"
+	mood_change = 3
+	timeout = 1.5 MINUTES
+
+/datum/mood_event/kiss
+	description = "<span class='nicegreen'>Someone blew a kiss at me, I must be a real catch!</span>\n"
+	mood_change = 1.5
+	timeout = 2 MINUTES
+
+/datum/mood_event/kiss/add_effects(mob/beau)
+	if(beau)
+		description = "<span class='nicegreen'>[beau.name] blew a kiss at me, I must be a real catch!</span>\n"

@@ -37,8 +37,8 @@
 	. = ..()
 	. += "<span class='notice'>It is held together by some <b>screws</b>.</span>"
 
-/obj/structure/tank_holder/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent == INTENT_HARM)
+/obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
+	if(user.combat_mode)
 		return ..()
 	if(!SEND_SIGNAL(W, COMSIG_CONTAINER_TRY_ATTACH, src, user))
 		to_chat(user, "<span class='warning'>[W] does not fit in [src].</span>")

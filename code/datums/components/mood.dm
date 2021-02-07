@@ -83,7 +83,7 @@
 		if(9)
 			msg += "<span class='nicegreen'>I love life!</span>\n"
 
-	msg += "<span class='notice'>Moodlets:\n</span>"//All moodlets
+	msg += "<span class='notice'>Moodlets:</span>\n"//All moodlets
 	if(mood_events.len)
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
@@ -366,7 +366,7 @@
 	SIGNAL_HANDLER
 
 	update_beauty(A)
-	if(A.mood_bonus)
+	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
 		clear_event(null, "area")

@@ -20,7 +20,7 @@
 	user.visible_message("<span class='suicide'>[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
-/obj/item/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
+/obj/item/reagent_containers/glass/rag/afterattack(atom/A as obj|turf|area, mob/living/user,proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -28,7 +28,7 @@
 		var/mob/living/carbon/C = A
 		var/reagentlist = pretty_string_from_reagent_list(reagents)
 		var/log_object = "containing [reagentlist]"
-		if(user.a_intent == INTENT_HARM && !C.is_mouth_covered())
+		if(user.combat_mode && !C.is_mouth_covered())
 			reagents.trans_to(C, reagents.total_volume, transfered_by = user, methods = INGEST)
 			C.visible_message("<span class='danger'>[user] smothers \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] smothers you with \the [src]!</span>", "<span class='hear'>You hear some struggling and muffled cries of surprise.</span>")
 			log_combat(user, C, "smothered", src, log_object)
