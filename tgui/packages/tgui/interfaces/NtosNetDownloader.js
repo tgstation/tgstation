@@ -1,6 +1,7 @@
 import { scale, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs, Flex } from '../components';
+import { FlexItem } from '../components/Flex';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetDownloader = (props, context) => {
@@ -27,6 +28,9 @@ export const NtosNetDownloader = (props, context) => {
     .find(category => category.name === selectedCategory)
     ?.items
     || [];
+  const disk_used_real = !!downloading
+    ? disk_size - toFixed(disk_used + downloadcompletion)
+    : disk_size - disk_used;
   return (
     <NtosWindow
       theme={PC_device_theme}
@@ -46,42 +50,38 @@ export const NtosNetDownloader = (props, context) => {
         )}
         <Section>
           <LabeledList>
-            {downloading && (
-              <LabeledList.Item label="Downloading">
+            <LabeledList.Item
+              label="Disk usage"
+              buttons={(!!downloading) && (
+                <Button
+                  icon="spinner"
+                  iconSpin={1}
+                  tooltipPosition="left"
+                  tooltip={!!downloading && (`Download: ${downloadname}.prg (${downloadpercentage}%)`)}/>
+              )}>
                 <ProgressBar
-                  color="green"
-                  minValue={0}
-                  maxValue={downloadsize}
-                  value={downloadcompletion}>
-                  {`File: ${downloadname}, ${downloadpercentage}% complete`}
-                </ProgressBar>
-              </LabeledList.Item>
-            ) || (
-              <LabeledList.Item label="Disk usage">
-                <ProgressBar
-                  value={disk_used}
+                  value={!!downloading ? disk_used + downloadcompletion : disk_used}
                   minValue={0}
                   maxValue={disk_size}>
-                  {`${disk_used} GQ / ${disk_size} GQ`}
+                    <Box textAlign="left">
+                      {`${disk_used_real} GQ free of ${disk_size} GQ`}
+                    </Box>
                 </ProgressBar>
-              </LabeledList.Item>
-            )}
+            </LabeledList.Item>
           </LabeledList>
         </Section>
         <Stack>
           <Stack.Item minWidth="105px" shrink={0} basis={0}>
-            <Section fill fitted>
-              <Tabs vertical>
-                {categories.map(category => (
-                  <Tabs.Tab
-                    key={category.name}
-                    selected={category.name === selectedCategory}
-                    onClick={() => setSelectedCategory(category.name)}>
-                    {category.name}
-                  </Tabs.Tab>
-                ))}
-              </Tabs>
-            </Section>
+            <Tabs vertical>
+              {categories.map(category => (
+                <Tabs.Tab
+                  key={category.name}
+                  selected={category.name === selectedCategory}
+                  onClick={() => setSelectedCategory(category.name)}>
+                  {category.name}
+                </Tabs.Tab>
+              ))}
+            </Tabs>
           </Stack.Item>
           <Stack.Item grow={1} basis={0}>
             {items.map(program => (
@@ -105,25 +105,27 @@ const Program = (props, context) => {
     disk_used,
     downloading,
     downloadname,
+    downloadcompletion,
   } = data;
   const disk_free = disk_size - disk_used;
   return (
     <Section>
       <Stack align="baseline">
         <Stack.Item grow={1} blod>
-          <Icon name={program.icon} /> {program.filedesc}
+          <Icon name={program.icon} mr={1}/>
+          {program.filedesc}
         </Stack.Item>
         <Stack.Item shrink={0} width="48px" textAlign="right" color="label" nowrap>
           {program.size} GQ
         </Stack.Item>
         <Stack.Item shrink={0} width="134px" textAlign="right">
           {(downloading && program.filename === downloadname) && (
-            <Button
-              bold
+            <ProgressBar
+              width="101px"
               color="good"
-              icon="spinner"
-              iconSpin={1}
-              content="Downloading" />
+              minValue={0}
+              maxValue={program.size}
+              value={downloadcompletion}/>
           ) || (
             (!program.installed
               && program.compatibility
@@ -134,6 +136,8 @@ const Program = (props, context) => {
                 icon="download"
                 content="Download"
                 disabled={downloading}
+                tooltipPosition="left"
+                tooltip={!!downloading && ('Awaiting download completion...')}
                 onClick={() => act('PRG_downloadfile', {
                   filename: program.filename,
                 })} />
