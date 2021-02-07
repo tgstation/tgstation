@@ -116,7 +116,7 @@
 		return
 
 	for(var/mob/yeet_mob in user.buckled_mobs)
-		force_dismount(yeet_mob, (user.a_intent == INTENT_HELP)) // gentle on help, byeeee if not
+		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/M)
@@ -179,10 +179,10 @@
 	return ..()
 
 /// If the carrier shoves the person they're carrying, force the carried mob off
-/datum/component/riding/creature/human/proc/on_host_unarmed_melee(mob/living/carbon/human/human_parent, atom/target)
+/datum/component/riding/creature/human/proc/on_host_unarmed_melee(mob/living/carbon/human/human_parent, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(human_parent.a_intent == INTENT_DISARM && (target in human_parent.buckled_mobs))
+	if(modifiers && modifiers["right"] && (target in human_parent.buckled_mobs))
 		force_dismount(target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -196,7 +196,7 @@
 		rider.Paralyze(1 SECONDS)
 		rider.Knockdown(4 SECONDS)
 		human_parent.visible_message("<span class='danger'>[rider] topples off of [human_parent] as they both fall to the ground!</span>", \
-					"<span class='warning'>You fall to the ground, bringing [rider] with you!</span>", COMBAT_MESSAGE_RANGE ,ignored_mobs=rider)
+					"<span class='warning'>You fall to the ground, bringing [rider] with you!</span>", "<span class='hear'>You hear two consecutive thuds.</span>", COMBAT_MESSAGE_RANGE, ignored_mobs=rider)
 		to_chat(rider, "<span class='danger'>[human_parent] falls to the ground, bringing you with [human_parent.p_them()]!</span>")
 
 /datum/component/riding/creature/human/handle_vehicle_layer(dir)

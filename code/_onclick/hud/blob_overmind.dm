@@ -53,8 +53,14 @@
 
 /atom/movable/screen/blob/blobbernaut
 	icon_state = "ui_blobbernaut"
-	name = "Produce Blobbernaut (40)"
-	desc = "Produces a strong, smart blobbernaut from a factory blob for 40 resources.<br>The factory blob used will become fragile and unable to produce spores."
+	// Name and description get given their proper values on Initialize()
+	name = "Produce Blobbernaut (ERROR)"
+	desc = "Produces a strong, smart blobbernaut from a factory blob for (ERROR) resources.<br>The factory blob used will become fragile and unable to produce spores."
+
+/atom/movable/screen/blob/blobbernaut/Initialize()
+	. = ..()
+	name = "Produce Blobbernaut ([BLOBMOB_BLOBBERNAUT_RESOURCE_COST])"
+	desc = "Produces a strong, smart blobbernaut from a factory blob for [BLOBMOB_BLOBBERNAUT_RESOURCE_COST] resources.<br>The factory blob used will become fragile and unable to produce spores."
 
 /atom/movable/screen/blob/blobbernaut/Click()
 	if(isovermind(usr))
@@ -63,38 +69,57 @@
 
 /atom/movable/screen/blob/resource_blob
 	icon_state = "ui_resource"
-	name = "Produce Resource Blob (40)"
-	desc = "Produces a resource blob for 40 resources.<br>Resource blobs will give you resources every few seconds."
+	// Name and description get given their proper values on Initialize()
+	name = "Produce Resource Blob (ERROR)"
+	desc = "Produces a resource blob for ERROR resources.<br>Resource blobs will give you resources every few seconds."
+
+/atom/movable/screen/blob/resource_blob/Initialize()
+	. = ..()
+	name = "Produce Resource Blob ([BLOB_STRUCTURE_RESOURCE_COST])"
+	desc = "Produces a resource blob for [BLOB_STRUCTURE_RESOURCE_COST] resources.<br>Resource blobs will give you resources every few seconds."
 
 /atom/movable/screen/blob/resource_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_resource()
+		B.createSpecial(BLOB_STRUCTURE_RESOURCE_COST, /obj/structure/blob/special/resource, BLOB_RESOURCE_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"
-	name = "Produce Node Blob (50)"
-	desc = "Produces a node blob for 50 resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
+	// Name and description get given their proper values on Initialize()
+	name = "Produce Node Blob (ERROR)"
+	desc = "Produces a node blob for ERROR resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
+
+/atom/movable/screen/blob/node_blob/Initialize()
+	. = ..()
+	name = "Produce Node Blob ([BLOB_STRUCTURE_NODE_COST])"
+	desc = "Produces a node blob for [BLOB_STRUCTURE_NODE_COST] resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
 
 /atom/movable/screen/blob/node_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_node()
+		B.createSpecial(BLOB_STRUCTURE_NODE_COST, /obj/structure/blob/special/node, BLOB_NODE_MIN_DISTANCE, FALSE)
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
-	name = "Produce Factory Blob (60)"
-	desc = "Produces a factory blob for 60 resources.<br>Factory blobs will produce spores every few seconds."
+	// Name and description get given their proper values on Initialize()
+	name = "Produce Factory Blob (ERROR)"
+	desc = "Produces a factory blob for ERROR resources.<br>Factory blobs will produce spores every few seconds."
+
+/atom/movable/screen/blob/factory_blob/Initialize()
+	. = ..()
+	name = "Produce Factory Blob ([BLOB_STRUCTURE_FACTORY_COST])"
+	desc = "Produces a factory blob for [BLOB_STRUCTURE_FACTORY_COST] resources.<br>Factory blobs will produce spores every few seconds."
 
 /atom/movable/screen/blob/factory_blob/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		B.create_factory()
+		B.createSpecial(BLOB_STRUCTURE_FACTORY_COST, /obj/structure/blob/special/factory, BLOB_FACTORY_MIN_DISTANCE, TRUE)
 
 /atom/movable/screen/blob/readapt_strain
 	icon_state = "ui_chemswap"
+	// Description gets given its proper values on Initialize()
 	name = "Readapt Strain"
-	desc = "Allows you to choose a new strain from 6 random choices for 40 resources."
+	desc = "Allows you to choose a new strain from ERROR random choices for ERROR resources."
 
 /atom/movable/screen/blob/readapt_strain/MouseEntered(location,control,params)
 	if(hud?.mymob && isovermind(hud.mymob))
@@ -103,8 +128,8 @@
 			name = "[initial(name)] (FREE)"
 			desc = "Randomly rerolls your strain for free."
 		else
-			name = "[initial(name)] ([BLOB_REROLL_COST])"
-			desc = initial(desc)
+			name = "[initial(name)] ([BLOB_POWER_REROLL_COST])"
+			desc = "Allows you to choose a new strain from [BLOB_POWER_REROLL_CHOICES] random choices for [BLOB_POWER_REROLL_COST] resources."
 	..()
 
 /atom/movable/screen/blob/readapt_strain/Click()
@@ -114,8 +139,14 @@
 
 /atom/movable/screen/blob/relocate_core
 	icon_state = "ui_swap"
-	name = "Relocate Core (80)"
-	desc = "Swaps a node and your core for 80 resources."
+	// Name and description get given their proper values on Initialize()
+	name = "Relocate Core (ERROR)"
+	desc = "Swaps a node and your core for ERROR resources."
+
+/atom/movable/screen/blob/relocate_core/Initialize()
+	. = ..()
+	name = "Relocate Core ([BLOB_POWER_RELOCATE_COST])"
+	desc = "Swaps a node and your core for [BLOB_POWER_RELOCATE_COST] resources."
 
 /atom/movable/screen/blob/relocate_core/Click()
 	if(isovermind(usr))

@@ -205,8 +205,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define	TRAIT_MAGIC_CHOKE		"magic_choke"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_BOOZE_SLIDER      "booze-slider"
-#define TRAIT_QUICK_CARRY		"quick-carry"
-#define TRAIT_QUICKER_CARRY		"quicker-carry"
+#define TRAIT_QUICK_CARRY		"quick-carry" //We place people into a fireman carry quicker than standard
+#define TRAIT_QUICKER_CARRY		"quicker-carry" //We place people into a fireman carry especially quickly compared to quick_carry
 #define TRAIT_QUICK_BUILD		"quick-build"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_UNSTABLE			"unstable"
@@ -236,6 +236,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SIGN_LANG				"sign_language" //Galactic Common Sign Language
 #define TRAIT_NANITE_MONITORING	"nanite_monitoring" //The mob's nanites are sending a monitoring signal visible on diag HUD
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune" // nobody can use martial arts on this mob
+#define TRAIT_DUFFEL_CURSED "duffel_cursed" //You've been cursed with a living duffelbag, and can't have more added
 #define TRAIT_FAST_CLIMBER 		"fast_climber" //Used by implants
 #define TRAIT_SHOVE_RESIST		"shove_resist" //Used by implants
 /// Prevents mob from riding mobs when buckled onto something
@@ -244,6 +245,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COAGULATING		"coagulating" //from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE	"antennae"
+/// Blowing kisses actually does damage to the victim
+#define TRAIT_KISS_OF_DEATH	"kiss_of_death"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
@@ -352,6 +355,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BADTOUCH			"bad_touch"
 #define TRAIT_EXTROVERT			"extrovert"
 #define TRAIT_INTROVERT			"introvert"
+#define TRAIT_ANXIOUS			"anxious"
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
@@ -401,6 +405,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CHOKEHOLD_TRAIT "chokehold" //trait associated to being held in a chokehold
 #define RESTING_TRAIT "resting" //trait associated to resting
 #define STAT_TRAIT "stat" //trait associated to a stat value or range of
+#define STATION_TRAIT "station-trait"
 #define MAPPING_HELPER_TRAIT "mapping-helper" //obtained from mapping helper
 /// Trait associated to wearing a suit
 #define SUIT_TRAIT "suit"
@@ -480,6 +485,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ELEMENT_TRAIT "element_trait"
 /// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
 #define BERSERK_TRAIT "berserk_trait"
+/// Trait granted by lipstick
+#define LIPSTICK_TRAIT "lipstick_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -496,3 +503,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
+
+///Traits given by station traits
+#define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
+#define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
+#define STATION_TRAIT_UNIQUE_AI	"station_trait_unique_ai"
+#define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
+#define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
+#define STATION_TRAIT_LATE_ARRIVALS "station_trait_late_arrivals"
+#define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
+#define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
+#define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
+#define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"

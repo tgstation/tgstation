@@ -202,7 +202,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		open_machine()
 		dump_inventory_contents()
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 	qdel(src)
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
