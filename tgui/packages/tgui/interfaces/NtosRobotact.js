@@ -290,18 +290,18 @@ export const NtosRobotactContent = (props, context) => {
       )}
       {tab_main === 2 && (
         <Flex.Item
-        height={40}>
+          height={40}>
           <Section
             fill
             scrollable
             backgroundColor="black">
-              {borgLog.map(log => (
-                <Box
-                  mb={1}
-                  key={log}>
-                  <font color="green">{log}</font>
-                </Box>
-              ))}
+            {borgLog.map(log => (
+              <Box
+                mb={1}
+                key={log}>
+                <font color="green">{log}</font>
+              </Box>
+            ))}
           </Section>
         </Flex.Item>
       )}
