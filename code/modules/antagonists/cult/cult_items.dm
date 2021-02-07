@@ -46,8 +46,8 @@
 	wound_bonus = -50
 	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 
 /obj/item/melee/cultblade/Initialize()
 	. = ..()
@@ -643,8 +643,8 @@
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
-	attack_verb_continuous = list("attacks", "impales", "stabs", "tears", "lacerates", "gores")
-	attack_verb_simple = list("attack", "impale", "stab", "tear", "lacerate", "gore")
+	attack_verb_continuous = list("attacks", "impales", "tears", "lacerates", "gores")
+	attack_verb_simple = list("attack", "impale", "tear", "lacerate", "gore")
 	sharpness = SHARP_EDGED | SHARP_POINTY
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
