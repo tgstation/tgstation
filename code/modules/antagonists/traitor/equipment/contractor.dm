@@ -207,9 +207,7 @@
 
 	partner_outfit.equip(partner)
 
-	var/obj/structure/closet/supplypod/arrival_pod = new()
-
-	arrival_pod.style = STYLE_SYNDICATE
+	var/obj/structure/closet/supplypod/arrival_pod = new(null, STYLE_SYNDICATE)
 	arrival_pod.explosionSize = list(0,0,0,1)
 	arrival_pod.bluespace = TRUE
 
