@@ -14,6 +14,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	inhand_icon_state = "facehugger"
+	worn_icon_state = "facehugger"
 	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
 	clothing_flags = MASKINTERNALS
 	throw_range = 5
@@ -48,7 +49,7 @@
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
 	inhand_icon_state = "facehugger_impregnated"
-	worn_icon_state = "facehugger_dead"
+	worn_icon_state = "facehugger_impregnated"
 	stat = DEAD
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -212,6 +213,7 @@
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
+		worn_icon_state = "[initial(icon_state)]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
@@ -229,6 +231,7 @@
 
 	stat = CONSCIOUS
 	icon_state = "[initial(icon_state)]"
+	worn_icon_state = "[initial(icon_state)]"
 
 /obj/item/clothing/mask/facehugger/proc/GoIdle()
 	if(stat == DEAD || stat == UNCONSCIOUS)
@@ -236,6 +239,7 @@
 
 	stat = UNCONSCIOUS
 	icon_state = "[initial(icon_state)]_inactive"
+	worn_icon_state = "[initial(icon_state)]_inactive"
 
 	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
@@ -244,6 +248,7 @@
 		return
 
 	icon_state = "[initial(icon_state)]_dead"
+	worn_icon_state = "[initial(icon_state)]_dead"
 	inhand_icon_state = "facehugger_inactive"
 	stat = DEAD
 
