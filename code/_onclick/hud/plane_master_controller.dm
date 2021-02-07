@@ -1,4 +1,4 @@
-///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
+ ///Atom that manages and controls multiple planes. It's an atom so we can hook into add_filter etc. Multiple controllers can control one plane.
 /datum/plane_master_controller
 	///Identifier to use as assoc key
 	var/name
@@ -49,6 +49,13 @@
 	for(var/i in controlled_planes)
 		var/atom/movable/screen/plane_master/pm_iterator = controlled_planes[i]
 		pm_iterator.update_atom_colour()
+
+
+/datum/plane_master_controller/proc/get_filters(name_or_names)
+	. = list()
+	for(var/i in controlled_planes)
+		var/atom/movable/screen/plane_master/pm_iterator = controlled_planes[i]
+		. += pm_iterator.get_filter(name_or_names)
 
 
 /datum/plane_master_controller/game

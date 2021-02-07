@@ -610,3 +610,67 @@
 
 	M.adjustToxLoss(5)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER,3)
+
+
+
+/datum/reagent/drug/blastoff
+	name = "Blastoff"
+	description = "KRYSON PLEASE WRITE THIS HELP AAAAA."
+	reagent_state = LIQUID
+	color = "#9015a9"
+	overdose_threshold = 30
+	addiction_threshold = 10
+	can_synth = TRUE
+
+/datum/reagent/drug/blastoff/on_mob_add(mob/living/L)
+	. = ..()
+	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_blue = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.764,0,0,0) //most blue color
+	var/list/col_filter_mid = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.832,0,0,0) //red/blue mix midpoint
+	var/list/col_filter_red = list(0,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.900,0,0,0) //most red color
+
+	affected_plane_controller.add_filter("blastoff", 1, color_matrix_filter(col_filter_mid, FILTER_COLOR_HCY))
+
+	for(var/i in affected_plane_controller.get_filters("blastoff"))
+		animate(i, color = col_filter_blue, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN, loop = -1)
+		animate(color = col_filter_mid, time = 1 SECONDS, easing = CUBIC_EASING|EASE_OUT)
+		animate(color = col_filter_red, time = 1 SECONDS, easing = CUBIC_EASING|EASE_IN)
+		animate(color = col_filter_mid, time = 1 SECONDS, easing = CUBIC_EASING|EASE_OUT)
+
+/datum/reagent/drug/blastoff/on_mob_delete(mob/living/L)
+	. = ..()
+	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	affected_plane_controller.remove_filter("blastoff")
+
+
+/datum/reagent/drug/rainbow
+	name = "rainbow"
+	description = "KRYSON PLEASE WRITE THIS HELP AAAAA."
+	reagent_state = LIQUID
+	color = "#9015a9"
+	overdose_threshold = 30
+	addiction_threshold = 10
+	can_synth = TRUE
+
+/datum/reagent/drug/rainbow/on_mob_add(mob/living/L)
+	. = ..()
+	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	var/list/col_filter_identity = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.000,0,0,0)
+	var/list/col_filter_green = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.333,0,0,0)
+	var/list/col_filter_blue = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0.666,0,0,0)
+	var/list/col_filter_red = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 1.000,0,0,0) //visually this is identical to the identity
+
+	affected_plane_controller.add_filter("rainbow", 1, color_matrix_filter(col_filter_red, FILTER_COLOR_HSL))
+
+	for(var/i in affected_plane_controller.get_filters("rainbow"))
+		animate(i, color = col_filter_identity, time = 0 SECONDS, loop = -1)
+		animate(color = col_filter_green, time = 4 SECONDS)
+		animate(color = col_filter_blue, time = 4 SECONDS)
+		animate(color = col_filter_red, time = 4 SECONDS)
+
+/datum/reagent/drug/rainbow/on_mob_delete(mob/living/L)
+	. = ..()
+	var/datum/plane_master_controller/affected_plane_controller = L.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	affected_plane_controller.remove_filter("rainbow")
