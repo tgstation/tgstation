@@ -64,12 +64,10 @@
 	knife_y_offset = 13
 	can_be_sawn_off = TRUE
 	can_jam = TRUE
-	jam_clear_resets = TRUE //The jamming is meant to inconvenience you, not render the weapon inoperable after a certain point.
 	unjam_probability = 10
 	unjam_increment = 10
 	malfunction_probability = 20
 	malfunction_percentage_increment = 10
-	jam_threshold = 60 //three shots before you can see a jam
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
@@ -77,9 +75,6 @@
 		spread = 36
 		can_bayonet = FALSE
 		weapon_weight = WEAPON_MEDIUM
-		if(!can_misfire && can_jam) //obrez at your own risk
-			can_misfire = TRUE
-			misfire_threshold = (jam_threshold*0.5)
 		update_icon()
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
@@ -105,7 +100,7 @@
 	icon_state = "mosinprime"
 	inhand_icon_state = "mosinprime"
 	worn_icon_state = "mosinprime"
-	can_jam = FALSE //obrez at your leisure, intern!
+	can_jam = FALSE //Shoot at your leisure, intern!
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"

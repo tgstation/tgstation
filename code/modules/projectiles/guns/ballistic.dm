@@ -134,8 +134,8 @@
 	var/unjam_increment = 0
 	///What is the probability point for the weapon to jam? If left at 0, it will always roll for a jam if possible.
 	var/jam_threshold = 0
-	///Does clearing our jam clear the malfunction probability? Allows for misfires to be the extreme end of a malfunction.
-	var/jam_clear_resets = FALSE
+	///Does clearing our jam fix some malfunction probability? Allows for misfires to be the extreme end of a malfunction.
+	var/jam_clear_probability_restore = FALSE
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
@@ -447,8 +447,9 @@
 		if(prob(unjam_probability))
 			jammed = FALSE
 			unjam_probability = initial(unjam_probability)
-			if(jam_clear_resets)
-				malfunction_probability = initial(malfunction_probability)
+			if(jam_clear_probability_restore)
+				var/malfunction_probability_floor = initial(malfunction_probability)
+				malfunction_probability = clamp(malfunction_probability*0.5, malfunction_probability_floor, malfunctional_probability_cap)
 		else
 			unjam_probability += unjam_increment
 			to_chat(user, "<span class='warning'>[src] is jammed!</span>")
