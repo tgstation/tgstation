@@ -89,12 +89,12 @@
 
 /obj/machinery/modular_computer/console/preset/id/centcom/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
-	var/datum/computer_file/program/card_mod/card_mod_centcom = new/datum/computer_file/program/card_mod()
+	var/datum/computer_file/program/card_mod/card_mod_centcom = new /datum/computer_file/program/card_mod()
 	card_mod_centcom.is_centcom = TRUE
-	hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	hard_drive.store_file(new /datum/computer_file/program/chatclient())
 	hard_drive.store_file(card_mod_centcom)
-	hard_drive.store_file(new/datum/computer_file/program/job_management())
-	hard_drive.store_file(new/datum/computer_file/program/crew_manifest())
+	hard_drive.store_file(new /datum/computer_file/program/job_management())
+	hard_drive.store_file(new /datum/computer_file/program/crew_manifest())
 
 // ===== CIVILIAN CONSOLE =====
 /obj/machinery/modular_computer/console/preset/civilian
