@@ -37,6 +37,8 @@
 	var/lip_style = null
 	var/lip_color = "white"
 
+	var/stored_lipstick_trait
+
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -139,6 +141,7 @@
 		hairstyle = "Bald"
 		facial_hairstyle = "Shaved"
 		lip_style = null
+		stored_lipstick_trait = null
 
 	else if(!animal_origin)
 		var/mob/living/carbon/human/H = C
