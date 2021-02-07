@@ -124,7 +124,6 @@
 	malfunction_probability_cap = 30 //Given it never resets, this is so the value doesn't get too out of hand.
 	malfunction_percentage_increment = 10 //Slowly increases every shot
 	misfire_threshold = 30 //You won't see a misfire until 3 shots in
-	jam_clear_resets = FALSE //Our gun starts to go to crap and we need proper equipment to fix that
 	jam_threshold = 0 //Unlike it's parent, it's basically going to jam at any point
 	can_bayonet = FALSE
 	can_be_sawn_off = FALSE

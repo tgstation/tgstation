@@ -449,7 +449,7 @@
 			unjam_probability = initial(unjam_probability)
 			if(jam_clear_probability_restore)
 				var/malfunction_probability_floor = initial(malfunction_probability)
-				malfunction_probability = clamp(malfunction_probability*0.5, malfunction_probability_floor, malfunctional_probability_cap)
+				malfunction_probability = clamp(malfunction_probability*0.5, malfunction_probability_floor, malfunction_probability_cap)
 		else
 			unjam_probability += unjam_increment
 			to_chat(user, "<span class='warning'>[src] is jammed!</span>")
