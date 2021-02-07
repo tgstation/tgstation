@@ -7,6 +7,9 @@
 	e_cost = 130
 	select_name = "maim"
 
+/obj/item/ammo_casing/energy/laser/hellfire/antique
+	e_cost = 100
+
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = 71
