@@ -160,7 +160,7 @@
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_alt(mob/living/victim, mob/living/user, params)
-	if(sharpness == SHARP_POINTY | SHARP_EDGED)
+	if(sharpness & (SHARP_POINTY | SHARP_EDGED))
 		sharpnessStabCheck(victim, user, params)
 		return
 	return ALT_ATTACK_CALL_NORMAL
