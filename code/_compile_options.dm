@@ -54,6 +54,10 @@
 #error You need version 513.1514 or higher
 #endif
 
+#if 514 > DM_VERSION
+#define USE_EXTOOLS
+#endif
+
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
