@@ -808,6 +808,11 @@
 ///called when an edible ingredient is added: (datum/component/edible/ingredient)
 #define COMSIG_EDIBLE_INGREDIENT_ADDED "edible_ingredient_added"
 
+//Plants / Plant Traits
+
+///called when an action causes a plant to be squashed - slipping, throwing, attack_self.
+#define COMSIG_PLANT_SQUASH "plant_squash"
+
 //Gibs
 
 ///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
