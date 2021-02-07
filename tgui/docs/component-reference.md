@@ -1043,7 +1043,7 @@ Tabs also support a vertical configuration. This is usually paired with
 </Stack>
 ```
 
-If you need to combine tab section with other elements, or if you want to
+If you need to combine a tab section with other elements, or if you want to
 add scrollable functionality to tabs, pair them with the [Section](#section)
 component:
 
@@ -1061,7 +1061,7 @@ component:
 - See inherited props: [Box](#box)
 - `fluid: boolean` - If true, tabs will take all available horizontal space.
 - `fill: boolean` - Similarly to `fill` on [Section](#section), tabs will fill
-all available vertical space. Only makes sense in vertical configuration.
+all available vertical space. Only makes sense in a vertical configuration.
 - `vertical: boolean` - Use a vertical configuration, where tabs will be
 stacked vertically.
 - `children: Tab[]` - This component only accepts tabs as its children.
