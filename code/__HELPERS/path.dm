@@ -237,7 +237,7 @@
 	var/turf/iter_turf2 = get_turf(unwind_node.tile)
 	path.Add(iter_turf)
 	var/legs
-
+/*
 	var/list/a = list(iter_turf)
 
 
@@ -248,7 +248,7 @@
 		//testing(">lega [legs] | <b>([goal_turf.x], ([goal_turf.y])</b>")
 		var/i
 		a.Add(goal_turf)
-		goal_turf.color = COLOR_YELLOW
+		//goal_turf.color = COLOR_YELLOW
 /*		while(iter_turf != goal_turf)
 			i++
 			testing(">>>stepa [legs] | [i]")
@@ -262,11 +262,11 @@
 			//testing(">>>stepa [legs] | [i] - ([iter_turf.x], [iter_turf.y]) -> ([next_turf.x], [next_turf.y])")
 			iter_turf = next_turf
 
-			iter_turf.color = COLOR_ORANGE
+			//iter_turf.color = COLOR_ORANGE
 			//path.Add(iter_turf)
 		unwind_node = unwind_node.prevNode
 	//testing("+++++++++end of A")
-
+*/
 	legs = 0
 
 	var/list/b = list(iter_turf2)
@@ -290,7 +290,7 @@
 
 	for(var/turf/turff in b)
 		turff.color = COLOR_BLUE_GRAY
-	testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goalturf2 = [goal_turf2])")
+	//testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goalturf2 = [goal_turf2])")
 
 /datum/pathfind/proc/can_step(turf/a, turf/next)
 	return call(a,adjacent)(caller, next, id, simulated_only)
@@ -316,10 +316,10 @@
 	if(!moved_from)
 		CRASH("missing from turf in queue?")
 
-	if(our_node)
+	if(!our_node)
 		//testing("!!!!!!!!!!!!!!!!!!!!!!!!!!were trying to queue a node that already exists [turf_for_node.x] [turf_for_node.y]")
-		turf_for_node.color = COLOR_BROWN
-	else
+		//turf_for_node.color = COLOR_BROWN
+	//else
 	//is not already in open list, so add it
 		//testing("adding further node")
 		nodes_queued_c++
@@ -340,7 +340,7 @@
 
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
-	original_turf.color = COLOR_PURPLE
+	//original_turf.color = COLOR_PURPLE
 
 	while(TRUE)
 		if(done || path) // lazy way to force out when done, do better
@@ -354,8 +354,8 @@
 
 		if(!current_turf)
 			return
-		if(current_turf != original_turf)
-			current_turf.color = COLOR_PINK
+		//if(current_turf != original_turf)
+			//current_turf.color = COLOR_PINK
 
 		var/closeenough
 		if(mintargetdist)
@@ -369,10 +369,10 @@
 			unwind_path(final_node)
 			return
 		else if(visited[current_turf])
-			current_turf.color = COLOR_BLACK
+			//current_turf.color = COLOR_BLACK
 			return
 		else if(!can_step(lag_turf, current_turf))
-			current_turf.color = COLOR_WHITE
+			//current_turf.color = COLOR_WHITE
 			return
 		else
 			//visited[current_turf] = original_turf
@@ -476,7 +476,7 @@
 		var/turf/older = visited[original_turf]
 		unwind_node = openc[older]
 
-	original_turf.color = COLOR_VIBRANT_LIME
+	//original_turf.color = COLOR_VIBRANT_LIME
 	while(TRUE)
 		if(done || path) // lazy way to force out when done, do better
 			//testing("diag exit: done [done] path [path]")
@@ -504,10 +504,10 @@
 			unwind_path(final_node)
 			return
 		else if(visited[current_turf])
-			current_turf.color = COLOR_BLACK
+			//current_turf.color = COLOR_BLACK
 			return
 		else if(!can_step(lag_turf, current_turf))
-			current_turf.color = COLOR_ORANGE
+			//current_turf.color = COLOR_ORANGE
 			return
 		else
 			visited[current_turf] = original_turf
