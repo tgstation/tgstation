@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "The civilian remote now properly affects service department doors"
+  - bugfix: "Some areas are now properly affected by ai monitoring"

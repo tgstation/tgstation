@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - spellcheck: "Keybinding conflict message takes up less space"

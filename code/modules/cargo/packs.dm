@@ -36,10 +36,6 @@
 	fill(C)
 	return C
 
-/datum/supply_pack/proc/get_cost()
-	. = cost
-	. *= SSeconomy.pack_price_modifier
-
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	if (admin_spawned)
 		for(var/item in contains)

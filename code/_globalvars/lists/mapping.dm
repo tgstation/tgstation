@@ -35,7 +35,6 @@ GLOBAL_LIST_EMPTY(secequipment) //sec equipment lockers that scale with the numb
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
-GLOBAL_LIST_EMPTY(bar_areas)
 
 //away missions
 GLOBAL_LIST_EMPTY(vr_spawnpoints)

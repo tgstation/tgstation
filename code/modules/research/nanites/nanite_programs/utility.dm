@@ -313,14 +313,16 @@
 /datum/nanite_program/dermal_button/register_extra_settings()
 	extra_settings[NES_SENT_CODE] = new /datum/nanite_extra_setting/number(1, 1, 9999)
 	extra_settings[NES_BUTTON_NAME] = new /datum/nanite_extra_setting/text("Button")
-	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("blank","one","two","three","four","five","plus","minus","exclamation","question","cross","info","heart","skull","brain","brain_damage","injection","blood","shield","reaction","network","power","radioactive","electricity","magnetism","scan","repair","id","wireless","say","sleep","bomb"))
+	extra_settings[NES_ICON] = new /datum/nanite_extra_setting/type("power", list("one","two","three","four","five","plus","minus","power"))
+	extra_settings[NES_COLOR] = new /datum/nanite_extra_setting/type("green", list("green","red","yellow","blue"))
 
 /datum/nanite_program/dermal_button/enable_passive_effect()
 	. = ..()
 	var/datum/nanite_extra_setting/bn_name = extra_settings[NES_BUTTON_NAME]
 	var/datum/nanite_extra_setting/bn_icon = extra_settings[NES_ICON]
+	var/datum/nanite_extra_setting/bn_color = extra_settings[NES_COLOR]
 	if(!button)
-		button = new(src, bn_name.get_value(), bn_icon.get_value())
+		button = new(src, bn_name.get_value(), bn_icon.get_value(), bn_color.get_value())
 	button.target = host_mob
 	button.Grant(host_mob)
 
@@ -344,14 +346,14 @@
 	name = "Button"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
-	button_icon_state = "nanite_power"
+	button_icon_state = "power_green"
 	var/datum/nanite_program/dermal_button/program
 
-/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon)
+/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon, _color)
 	..()
 	program = _program
 	name = _name
-	button_icon_state = "nanite_[_icon]"
+	button_icon_state = "[_icon]_[_color]"
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()
