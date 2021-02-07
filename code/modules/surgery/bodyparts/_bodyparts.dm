@@ -847,10 +847,7 @@
 
 	else
 		limb.icon = icon
-		if(should_draw_gender)
-			limb.icon_state = "[body_zone]_[icon_gender]"
-		else
-			limb.icon_state = "[body_zone]"
+		limb.icon_state = "[body_zone]" //Inorganic limbs are agender
 		if(aux_zone)
 			aux = image(limb.icon, "[aux_zone]", -aux_layer, image_dir)
 			. += aux

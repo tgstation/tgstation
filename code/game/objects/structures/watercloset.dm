@@ -376,6 +376,13 @@
 		G.use(1)
 		return
 
+	if(istype(O, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/cloth = O
+		new /obj/item/reagent_containers/glass/rag(loc)
+		to_chat(user, "<span class='notice'>You tear off a strip of cloth and make a rag.</span>")
+		cloth.use(1)
+		return
+
 	if(istype(O, /obj/item/stack/ore/glass))
 		new /obj/item/stack/sheet/sandblock(loc)
 		to_chat(user, "<span class='notice'>You wet the sand in the sink and form it into a block.</span>")
@@ -552,6 +559,13 @@
 		new /obj/item/reagent_containers/glass/rag(loc)
 		to_chat(user, "<span class='notice'>You tear off a strip of gauze and make a rag.</span>")
 		G.use(1)
+		return
+
+	if(istype(O, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/cloth = O
+		new /obj/item/reagent_containers/glass/rag(loc)
+		to_chat(user, "<span class='notice'>You tear off a strip of cloth and make a rag.</span>")
+		cloth.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/ore/glass))
