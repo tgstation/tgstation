@@ -131,12 +131,13 @@
 	suit_store = /obj/item/gun/energy/e_gun
 	glasses =  /obj/item/clothing/glasses/meson/engine
 	back = /obj/item/storage/backpack/ert/engineer
-	belt = /obj/item/storage/belt/utility/full
+	belt = /obj/item/storage/belt/utility/full/powertools
 	l_pocket = /obj/item/rcd_ammo/large
 	l_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
-		/obj/item/construction/rcd/loaded=1)
+		/obj/item/construction/rcd/loaded/upgraded=1,\
+		/obj/item/pipe_dispenser=1)
 
 
 /datum/outfit/centcom/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -156,7 +157,8 @@
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/gun/energy/pulse/pistol/loyalpin=1,\
-		/obj/item/construction/rcd/combat=1)
+		/obj/item/construction/rcd/combat=1,\
+		/obj/item/pipe_dispenser=1)
 
 
 /datum/outfit/centcom/centcom_official
