@@ -46,6 +46,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/announcement_size = OVERMIND_ANNOUNCEMENT_MIN_SIZE // Announce the biohazard when this size is reached
 	var/announcement_time
 	var/has_announced = FALSE
+	/// If this is TRUE, 
+	var/expansion_restrained = FALSE
 
 	/// The list of strains the blob can reroll for.
 	var/list/strain_choices

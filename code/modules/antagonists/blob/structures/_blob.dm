@@ -135,6 +135,7 @@
 	if(!T)
 		return
 	var/make_blob = TRUE //can we make a blob?
+	var/halted_attack = FALSE // if expansion_restrained happened, don't play an animation
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
@@ -142,11 +143,17 @@
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T)) //is the target turf impassable
-		make_blob = FALSE
-		T.blob_act(src) //hit the turf if it is
+		make_blob = FALSE 
+		if(controller || (overmind && !overmind.expansion_restrained)) // overmind restraint is on, no auto-wall smash
+			T.blob_act(src) //hit the turf if it is
+		else
+			halted_attack = TRUE
 	for(var/atom/A in T)
 		if(!A.CanPass(src, T)) //is anything in the turf impassable
 			make_blob = FALSE
+		if(!controller && overmind && overmind.expansion_restrained && istype(A, /obj/machinery/door))
+			halted_attack = TRUE
+			continue // Don't smash airlocks when expansion_restrained is turned on
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
@@ -160,11 +167,16 @@
 				B.overmind.blobstrain.expand_reaction(src, B, T, controller)
 			return B
 		else
+			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
+			if(!controller && overmind && overmind.expansion_restrained) // !controller check so that manual attacks still work
+				halted_attack = TRUE
+				return // Don't attack turfs when expansion_restrained is toggled on
 			blob_attack_animation(T, controller)
 			T.blob_act(src) //if we can't move in hit the turf again
-			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
 			return
 	else
+		if(halted_attack)
+			return // No attack animation if the attack was stopped by expansion_restrained
 		blob_attack_animation(T, controller) //if we can't, animate that we attacked
 	return
 

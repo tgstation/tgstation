@@ -153,6 +153,20 @@
 		var/mob/camera/blob/B = usr
 		B.relocate_core()
 
+/atom/movable/screen/blob/blob_restrain
+	icon_state = "ui_restrain"
+	name = "Restrain Destructive Expansion"
+	desc = "Prevents automatic expansion from breaking down walls and doors."
+
+/atom/movable/screen/blob/blob_restrain/Click()
+	if(isovermind(usr))
+		var/mob/camera/blob/B = usr
+		B.expansion_restrained = !B.expansion_restrained
+		if(B.expansion_restrained)
+			to_chat(B, "<span class='notice'>Your automatic expansion will now halt itself from attacking walls and doors.</span>")
+		else 
+			to_chat(B, "<span class='notice'>Your automatic expansion will now smash right through walls and doors again.</span>")
+
 /datum/hud/blob_overmind/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
@@ -173,6 +187,11 @@
 
 	using = new /atom/movable/screen/blob/blob_help()
 	using.screen_loc = "WEST:6,NORTH:-3"
+	using.hud = src
+	static_inventory += using
+
+	using = new /atom/movable/screen/blob/blob_restrain()
+	using.screen_loc = "WEST+1:8,NORTH:-3"
 	using.hud = src
 	static_inventory += using
 
