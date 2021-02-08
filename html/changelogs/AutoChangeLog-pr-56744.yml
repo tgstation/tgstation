@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - spellcheck: "Added missing punctuation and removed a bad blind message from climbable things"
