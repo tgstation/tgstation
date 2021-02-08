@@ -107,7 +107,7 @@
 	deathsound = 'sound/creatures/venus_trap_death.ogg'
 	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 0
+	unsuitable_atmos_damage = 5
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -125,16 +125,6 @@
 /mob/living/simple_animal/hostile/venus_human_trap/Life()
 	. = ..()
 	pull_vines()
-
-/mob/living/simple_animal/hostile/venus_human_trap/handle_temperature_damage()
-	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(5)
-		throw_alert("temp", /obj/screen/alert/cold, 1)
-	else if(bodytemperature > maxbodytemp)
-		adjustBruteLoss(10)
-		throw_alert("temp", /obj/screen/alert/hot, 3)
-	else
-		clear_alert("temp")
 
 /mob/living/simple_animal/hostile/venus_human_trap/Moved(atom/OldLoc, Dir)
 	. = ..()
