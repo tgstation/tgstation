@@ -45,9 +45,6 @@
 		//SOUND STUFF//
 		///////////////
 
-	///Next ambience play time
-	COOLDOWN_DECLARE(ambience_cooldown)
-
 		////////////
 		//SECURITY//
 		////////////
