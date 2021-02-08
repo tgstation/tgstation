@@ -42,7 +42,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
-	var/theme = cult //cult is classic red, holy is blue, and wizard is purple
+	var/theme = "cult" //cult is classic red, holy is blue, and wizard is purple
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -183,11 +183,11 @@
 
 //////////////////////////Juggernaut-alts////////////////////////////
 /mob/living/simple_animal/hostile/construct/juggernaut/angelic
-	theme = holy
+	theme = "holy"
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/juggernaut/mystic
-	theme = wizard
+	theme = "wizard"
 
 /mob/living/simple_animal/hostile/construct/juggernaut/noncult
 
@@ -239,12 +239,12 @@
 
 //////////////////////////Wraith-alts////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith/angelic
-	theme = holy
+	theme = "holy"
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/angelic)
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/wraith/mystic
-	theme = wizard
+	theme = "wizard"
 
 /mob/living/simple_animal/hostile/construct/wraith/noncult
 
@@ -333,14 +333,14 @@
 /////////////////////////////Artificer-alts/////////////////////////
 /mob/living/simple_animal/hostile/construct/artificer/angelic
 	desc = "A bulbous construct dedicated to building and maintaining holy armies."
-	theme = holy
+	theme = "holy"
 	loot = list(/obj/item/ectoplasm/angelic)
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 
 /mob/living/simple_animal/hostile/construct/artificer/mystic
-	theme = wizard
+	theme = "wizard"
 
 /mob/living/simple_animal/hostile/construct/artificer/noncult
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
