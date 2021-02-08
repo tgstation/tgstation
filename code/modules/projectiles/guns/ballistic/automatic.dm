@@ -164,12 +164,11 @@
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_icon()
 
-/obj/item/gun/ballistic/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
-	var/list/modifiers = params2list(params)
-	if(modifiers["right"] && !Adjacent(target))
-		underbarrel.afterattack(target, user, flag, params)
+/obj/item/gun/ballistic/automatic/m90/afterattack_alt(atom/target, mob/living/user, flag, params)
+	if(flag == 1)
+		return
 	else
-		return ..()
+		underbarrel.afterattack(target, user, flag, params)
 
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
