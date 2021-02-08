@@ -90,7 +90,6 @@
 	var/conduction_coefficient = 0.3
 
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/reagent_transfer = 0
 	var/consume_gas = FALSE
 
 	var/obj/item/radio/radio
@@ -268,14 +267,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 1000 * delta_time)
 			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 1000 * delta_time)
 		if(beaker)
-			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, CRYO_TX_QTY * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
-				consume_gas = TRUE
-			reagent_transfer += 1
-			if(reagent_transfer >= CRYO_THROTTLE_CTR_MAX * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
-				reagent_transfer = 0
-
-	return 1
+			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
+			consume_gas = TRUE
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos(delta_time)
 	..()
@@ -337,7 +331,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		M.forceMove(get_turf(src))
 	set_occupant(null)
 	flick("pod-open-anim", src)
-	reagent_transfer = efficiency * CRYO_THROTTLE_CTR_MAX * 0.5 // wait before injecting the next occupant
 	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
