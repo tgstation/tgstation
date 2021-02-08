@@ -307,8 +307,7 @@
 				H.color = "#000000"
 
 	if(damagesources)
-		for(var/i in 1 to damagesources)
-			adjustHealth(maxHealth*BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
 		if(overmind)

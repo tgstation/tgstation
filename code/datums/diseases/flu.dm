@@ -19,10 +19,24 @@
 
 	switch(stage)
 		if(2)
+			if(DT_PROB(0.5, delta_time))
+				affected_mob.emote("sneeze")
+			if(DT_PROB(0.5, delta_time))
+				affected_mob.emote("cough")
+			if(DT_PROB(0.5, delta_time))
+				to_chat(affected_mob, "<span class='danger'>Your muscles ache.</span>")
+				if(prob(20))
+					affected_mob.take_bodypart_damage(1, updating_health = FALSE)
+			if(DT_PROB(0.5, delta_time))
+				to_chat(affected_mob, "<span class='danger'>Your stomach hurts.</span>")
+				if(prob(20))
+					affected_mob.adjustToxLoss(1, FALSE)
 			if(affected_mob.body_position == LYING_DOWN && DT_PROB(10, delta_time))
 				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				stage--
 				return
+
+		if(3)
 			if(DT_PROB(0.5, delta_time))
 				affected_mob.emote("sneeze")
 			if(DT_PROB(0.5, delta_time))
@@ -35,21 +49,7 @@
 				to_chat(affected_mob, "<span class='danger'>Your stomach hurts.</span>")
 				if(prob(20))
 					affected_mob.adjustToxLoss(1, FALSE)
-
-		if(3)
 			if(affected_mob.body_position == LYING_DOWN && DT_PROB(7.5, delta_time))
 				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				stage--
 				return
-			if(DT_PROB(0.5, delta_time))
-				affected_mob.emote("sneeze")
-			if(DT_PROB(0.5, delta_time))
-				affected_mob.emote("cough")
-			if(DT_PROB(0.5, delta_time))
-				to_chat(affected_mob, "<span class='danger'>Your muscles ache.</span>")
-				if(prob(20))
-					affected_mob.take_bodypart_damage(1, updating_health = FALSE)
-			if(DT_PROB(0.5, delta_time))
-				to_chat(affected_mob, "<span class='danger'>Your stomach hurts.</span>")
-				if(prob(20))
-					affected_mob.adjustToxLoss(1, FALSE)

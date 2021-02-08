@@ -19,10 +19,6 @@
 	switch(stage)
 		if(2)
 			affected_mob.adjust_bodytemperature(-5 * delta_time)
-			if(DT_PROB(0.05, delta_time))
-				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
-				cure()
-				return FALSE
 			if(DT_PROB(0.5, delta_time))
 				affected_mob.emote("sneeze")
 			if(DT_PROB(0.5, delta_time))
@@ -31,6 +27,10 @@
 				to_chat(affected_mob, "<span class='danger'>Your throat feels sore.</span>")
 			if(DT_PROB(2.5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>You feel stiff.</span>")
+			if(DT_PROB(0.05, delta_time))
+				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
+				cure()
+				return FALSE
 		if(3)
 			affected_mob.adjust_bodytemperature(-10 * delta_time)
 			if(DT_PROB(0.5, delta_time))
