@@ -44,6 +44,8 @@
 	var/thermic_mod = 1
 	///Allow us to deal with lag by "charging" up our reactions to react faster over a period - this means that the reaction doesn't suddenly mass react - which can cause explosions
 	var/time_deficit 
+	///explosion data - used to keep track of things between explosion calls. CANNOT be used as a part of chemical_recipe - those vars are static lookup tables.
+	var/explosion_data
 
 /* 
 * Creates and sets up a new equlibrium object
@@ -329,11 +331,17 @@
 	delta_chem_factor /= product_ratio
 	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
 
+
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
 		holder.remove_reagent(reagent, (delta_chem_factor * reaction.required_reagents[reagent]), safety = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_ph(reagent, (delta_chem_factor * reaction.required_reagents[reagent])*(reaction.H_ion_release*h_ion_mod))
+		var/pH_adjust
+		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
+			pH_adjust = ((delta_chem_factor * reaction.required_reagents[reagent])/target_vol)*(reaction.H_ion_release*h_ion_mod)
+		else //Default adds pH independant of volume
+			pH_adjust = (delta_chem_factor * reaction.required_reagents[reagent])*(reaction.H_ion_release*h_ion_mod)
+		holder.adjust_specific_reagent_ph(reagent, pH_adjust)
 
 	var/step_add
 	for(var/product in reaction.results)
@@ -341,7 +349,12 @@
 		step_add = delta_chem_factor * reaction.results[product]
 		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
 		//Apply pH changes
-		holder.adjust_specific_reagent_ph(product, step_add*reaction.H_ion_release)
+		var/pH_adjust
+		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
+			pH_adjust = (step_add/target_vol)*(reaction.H_ion_release*h_ion_mod)
+		else
+			pH_adjust = step_add*(reaction.H_ion_release*h_ion_mod)
+		holder.adjust_specific_reagent_ph(product, pH_adjust)
 		reacted_vol += step_add
 		total_step_added += step_add
 

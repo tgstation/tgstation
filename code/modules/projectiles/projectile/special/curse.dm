@@ -46,3 +46,11 @@
 	animate(D.visuals, alpha = 0, time = 32)
 	return ..()
 
+/obj/projectile/curse_hand/hel //Used in helbital's impure reagent
+	name = "Hand of Hel"
+	damage = 5
+	paralyze = 0 //Lets not stun people!
+	speed = 1
+	range = 20
+	color = "#ff7e7e"//Tint it slightly
+

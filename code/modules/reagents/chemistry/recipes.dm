@@ -141,6 +141,8 @@
  * * reagent - the target reagent to convert
  */
 /datum/chemical_reaction/proc/convert_into_failed(datum/reagent/reagent, datum/reagents/holder)
+	if(!reagent.failed_chem)
+		return
 	if(reagent.purity < purity_min)
 		var/cached_volume = reagent.volume
 		holder.remove_reagent(reagent.type, cached_volume, FALSE)
@@ -361,6 +363,39 @@
 	explosion(holder.my_atom, 0, 0, 0, 0, flame_range = 3)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly errupts in flames!")
 
+/datum/chemical_reaction/proc/explode_fire_vortex(datum/reagents/holder, datum/equilibrium/equilibrium, x_offset = 1, y_offset = 1)
+	if(!equilibrium.explosion_data)
+		equilibrium.explosion_data = list("x" = x_offset, "y" = y_offset, "tar" = "y")//I could make it so you can have multiple vortexes, but...
+	if(equilibrium.explosion_data["tar"] == "x")		
+		if(equilibrium.explosion_data["x"] >= x_offset)
+			equilibrium.explosion_data["tar"] = "y"
+			equilibrium.explosion_data["y"] += 1
+		else if(equilibrium.explosion_data["x"] <= -x_offset)
+			equilibrium.explosion_data["tar"] = "y"
+			equilibrium.explosion_data["y"] -= 1
+		else
+			if(equilibrium.explosion_data["y"] < 0)
+				equilibrium.explosion_data["x"] += 1
+			else if(equilibrium.explosion_data["y"] > 0)
+				equilibrium.explosion_data["x"] -= 1
+
+	else if (equilibrium.explosion_data["tar"] == "y")	
+		if(equilibrium.explosion_data["y"] >= y_offset)
+			equilibrium.explosion_data["tar"] = "x"
+			equilibrium.explosion_data["x"] -= 1
+		else if(equilibrium.explosion_data["y"] <= -y_offset)
+			equilibrium.explosion_data["tar"] = "x"
+			equilibrium.explosion_data["x"] += 1
+		else
+			if(equilibrium.explosion_data["x"] < 0)
+				equilibrium.explosion_data["y"] -= 1
+			else if(equilibrium.explosion_data["x"] > 0)
+				equilibrium.explosion_data["y"] += 1
+	var/turf/holder_turf = get_turf(holder.my_atom)
+	var/turf/target = locate(holder_turf.x + equilibrium.explosion_data["x"], holder_turf.y + equilibrium.explosion_data["y"], holder_turf.z)
+	new /obj/effect/hotspot(target)
+	debug_world("X: [equilibrium.explosion_data["x"]], Y: [equilibrium.explosion_data["x"]]")
+
 //Clears the beaker of the reagents only
 /datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = null)
 	if(!holder)
@@ -390,3 +425,4 @@
 	if(!holder)
 		return FALSE
 	holder.remove_all(volume)
+

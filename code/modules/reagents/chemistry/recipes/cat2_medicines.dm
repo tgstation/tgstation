@@ -5,6 +5,29 @@
 	results = list(/datum/reagent/medicine/c2/helbital = 3)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fluorine = 1, /datum/reagent/carbon = 1)
 	mix_message = "The mixture turns into a thick, yellow powder."
+	//FermiChem vars:
+	required_temp = 250
+	optimal_temp = 1000
+	overheat_temp = 650 
+	optimal_ph_min = 5
+	optimal_ph_max = 9.5
+	determin_ph_range = 4
+	temp_exponent_factor = 1
+	ph_exponent_factor = 4
+	thermic_constant = 100
+	H_ion_release = 5
+	rate_up_lim = 55
+	purity_min = 0.55
+	reaction_flags = REACTION_PH_VOL_CONSTANT
+
+
+/datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+	. = ..()
+	explode_fire_vortex(holder, equilibrium, 1, 1)
+	//holder.chem_temp += 5
+
+/datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+	. = ..()
 
 /datum/chemical_reaction/medicine/libital
 	results = list(/datum/reagent/medicine/c2/libital = 3)

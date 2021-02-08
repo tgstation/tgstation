@@ -2,6 +2,10 @@
 /datum/reagent/medicine/c2
 	harmful = TRUE
 	metabolization_rate = 0.2
+	impure_chem = null //NONE of these have impure effects, they're all baked in by creation_purity
+	creation_purity = 0.75//All sources by default are 0.75 - reactions are primed to resolve to 0.8 with no intervention for these.
+	purity = 0.75
+	failed_chem = /datum/reagent/impurity/medicine_failure
 
 /******BRUTE******/
 /*Suffix: -bital*/
@@ -13,12 +17,15 @@
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
+	inverse_chem_val = 0.25
+	inverse_chem = /datum/reagent/impurity/helgrasp
+	failed_chem = null
 	var/helbent = FALSE
 	var/reaping = FALSE
 
 /datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
-	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
+	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())*normalise_creation_purity()
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
 	switch(M.stat)
