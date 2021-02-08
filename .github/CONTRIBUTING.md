@@ -360,7 +360,7 @@ Typecasting in `for` loops carries an implied `istype()` check that filters non-
 
 If we know the list is supposed to only contain the desired type then we want to skip the check not only for the small optimization it offers, but also to catch any null entries that may creep into the list.
 
-Nulls in lists tend to point to improperly-handled references, which cause hard deletes are are hard to debug. Generating a runtime on those cases is more often than not positive.
+Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
 
 This is bad:
 ```DM
