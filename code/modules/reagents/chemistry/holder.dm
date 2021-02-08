@@ -1696,6 +1696,12 @@
 			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])//We use the first product - though it might be worth changing this
 			var/list/sub_reactions = get_recipe_from_reagent_product(primary_reagent.type)
 			var/sub_reaction_length = length(sub_reactions)
+			var/i = 1
+			for(var/datum/chemical_reaction/sub_reaction in sub_reactions)
+				if(sub_reaction.type == reaction.type)
+					ui_reaction_index = i //update our index
+					break
+				i += 1
 			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reaction_length, "subReactIndex" = ui_reaction_index)
 		
 		//Results sweep 
@@ -1758,14 +1764,13 @@
 */
 /datum/reagents/proc/get_reaction_from_indexed_possibilities(path, index = null)
 	if(index)
-		ui_reaction_id = index
+		ui_reaction_index = index
 	var/list/sub_reactions = get_recipe_from_reagent_product(path)
 	if(!length(sub_reactions))
 		to_chat(usr, "There is no recipe associated with this product.")
 		return FALSE
 	if(ui_reaction_index > length(sub_reactions))
 		ui_reaction_index = 1
-	to_chat(usr, "There are [length(sub_reactions)] recipes associated with this product.")
 	var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
 	return reaction.type
 
@@ -1867,6 +1872,10 @@
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DRINK
 			SStgui.update_uis(src)
 			return TRUE
+		if("toggle_tag_food")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_FOOD
+			SStgui.update_uis(src)
+			return TRUE
 		if("toggle_tag_dangerous")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_DANGEROUS
 			SStgui.update_uis(src)
@@ -1885,6 +1894,14 @@
 			return TRUE
 		if("toggle_tag_chemical")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_CHEMICAL
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_tag_plant")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_PLANT
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_tag_competitive")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_COMPETITIVE
 			SStgui.update_uis(src)
 			return TRUE
 

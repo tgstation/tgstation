@@ -66,7 +66,7 @@
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/salt = 1)
 	mix_message = "The mixture yields a fine black powder."
 	required_temp = 380
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_PLANT | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/medicine/syriniver
 	results = list(/datum/reagent/medicine/c2/syriniver = 5)

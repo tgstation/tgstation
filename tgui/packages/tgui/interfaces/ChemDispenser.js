@@ -44,13 +44,6 @@ export const ChemDispenser = (props, context) => {
                 </Box>
               )}
               <Button      
-                key="colorButton"
-                icon="cog"
-                tooltip="Color code the reagents by pH"
-                tooltipPosition="bottom-left"
-                selected={hasCol}
-                onClick={() => setHasCol(!hasCol)} />
-              <Button      
                 key="Recipe lookup"
                 icon="book"
                 disabled={!data.isBeakerLoaded}
@@ -58,6 +51,13 @@ export const ChemDispenser = (props, context) => {
                 tooltip={data.isBeakerLoaded ? "Look up recipes and reagents!" : "Please insert a beaker!"}
                 tooltipPosition="bottom-left"
                 onClick={() => act('reaction_lookup')} />
+              <Button      
+                key="colorButton"
+                icon="cog"
+                tooltip="Color code the reagents by pH"
+                tooltipPosition="bottom-left"
+                selected={hasCol}
+                onClick={() => setHasCol(!hasCol)} />
             </Fragment>
           )}>
           <LabeledList>

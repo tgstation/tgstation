@@ -126,6 +126,8 @@
 /// This reaction is a unique reaction
 #define REACTION_TAG_UNIQUE (1<<18)
 /// This reaction is produces a product that affects reactions
-#define REACTION_TAG_REACTION (1<<19)
+#define REACTION_TAG_CHEMICAL (1<<19)
 /// This reaction is produces a product that affects plants
 #define REACTION_TAG_PLANT (1<<20)
+/// This reaction is produces a product that affects plants
+#define REACTION_TAG_COMPETITIVE (1<<21)
