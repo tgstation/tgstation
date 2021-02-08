@@ -694,4 +694,7 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard
 	maxHealth = 80
 	health = 80
-	ventcrawler = VENTCRAWLER_ALWAYS
+
+/mob/living/simple_animal/hostile/poison/giant_spider/viper/wizard/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

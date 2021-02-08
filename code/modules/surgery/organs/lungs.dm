@@ -73,7 +73,6 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
-
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if(H.status_flags & GODMODE)
 		H.failed_last_breath = FALSE //clear oxy issues
@@ -128,8 +127,9 @@
 	var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
-
-
+	//Vars for n2o and healium induced euphorias.
+	var/n2o_euphoria = EUPHORIA_LAST_FLAG
+	var/healium_euphoria = EUPHORIA_LAST_FLAG
 	//-- OXY --//
 
 	//Too much oxygen! //Yes, some species may not like it.
@@ -267,10 +267,11 @@
 				H.Sleeping(min(H.AmountSleeping() + 100, 200))
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
+				n2o_euphoria = EUPHORIA_ACTIVE
 				H.emote(pick("giggle", "laugh"))
-				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			n2o_euphoria = EUPHORIA_INACTIVE
+
 		if(safe_toxins_max && SA_pp > safe_toxins_max*3)
 			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_toxins_max)
 			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
@@ -336,10 +337,11 @@
 		if(healium_pp > gas_stimulation_min)
 			if(prob(15))
 				to_chat(H, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
-				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+				healium_euphoria = EUPHORIA_ACTIVE
 				H.emote("gasp")
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			healium_euphoria = EUPHORIA_INACTIVE
+
 		if(healium_pp > healium_para_min)
 			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
 			if(healium_pp > healium_sleep_min)
@@ -430,6 +432,12 @@
 		// Clear out moods when no miasma at all
 		else
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+
+		if (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+		else if (n2o_euphoria == EUPHORIA_INACTIVE && healium_euphoria == EUPHORIA_INACTIVE)
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+		// Activate mood on first flag, remove on second, do nothing on third.
 
 		handle_breath_temperature(breath, H)
 		breath.garbage_collect()

@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - soundadd: "Added sound effects to the deathrattle implant. Now, when you
+are informed that someone in your deathrattle group has died, you'll
+also hear a deathknell. RIP."
