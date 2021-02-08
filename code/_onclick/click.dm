@@ -122,7 +122,7 @@
 	var/obj/item/W = get_active_held_item()
 
 	if(W == A)
-		W.attack_self(src)
+		W.attack_self(src, modifiers)
 		update_inv_hands()
 		return
 

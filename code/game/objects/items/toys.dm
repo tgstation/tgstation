@@ -177,6 +177,8 @@
 	inhand_icon_state = "arrestballoon"
 	random_color = FALSE
 
+#undef BALLOON_COLORS
+
 /*
  * Fake singularity
  */
@@ -1536,3 +1538,97 @@
 /obj/item/storage/box/heretic_box/PopulateContents()
 	for(var/i in 1 to rand(1,4))
 		new /obj/item/toy/reality_pierce(src)
+
+#define HELP "help"
+#define DISARM "disarm"
+#define GRAB "grab"
+#define HARM "harm"
+
+/obj/item/toy/nintento
+	name = "Nintento"
+	desc = "Fundamentally useless for all intensive purposes."
+	icon = 'icons/obj/intents.dmi'
+	icon_state = "blank"
+	/// Current sequence of intents
+	var/list/current_sequence = list()
+	/// Sequence player inputs
+	var/list/player_sequence = list()
+	/// Score of the player
+	var/score = 0
+	/// High score of this unit
+	var/highscore = 0
+	/// Is this thing on?
+	var/on = FALSE
+	/// Can the player use this yet?
+	var/usable = FALSE
+	/// Associated list of intents to their sounds
+	var/static/list/sound_by_intent = list(HELP = 'sound/items/intents/Help.ogg',
+										DISARM = 'sound/items/intents/Disarm.ogg',
+										GRAB = 'sound/items/intents/Grab.ogg',
+										HARM = 'sound/items/intents/Harm.ogg',
+										)
+
+/obj/item/toy/simon_intents/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
+	..()
+	if(!on)
+		start()
+		return
+	if(!modifiers || !usable)
+		return
+	usable = FALSE
+	var/input
+	var/icon_x = text2num(modifiers["icon-x"])
+	var/icon_y = text2num(modifiers["icon-y"])
+	if(icon_x > 16 && icon_y > 16)
+		input = DISARM
+	if(icon_x < 16 && icon_y > 16)
+		input = HELP
+	if(icon_x > 16 && icon_y < 16)
+		input = GRAB
+	if(icon_x < 16 && icon_y < 16)
+		input = HARM
+	render(input)
+	player_sequence += input
+	for(var/i in 1 to player_sequence.len)
+		if(player_sequence[i] != current_sequence[i])
+			return end()
+	if(player_sequence.len == current_sequence.len)
+		score++
+		addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
+		return
+	usable = TRUE
+
+/obj/item/toy/simon_intents/proc/start()
+	say("Game Starting!")
+	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
+	on = TRUE
+	addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
+
+/obj/item/toy/simon_intents/proc/end()
+	say("GAME OVER. Your score was [score]! [score > highscore ? "You have gotten a new high-score!" : "Try again for a better score!"]")
+	if(score > highscore)
+		highscore = score
+	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
+	score = 0
+	current_sequence.Cut()
+	player_sequence.Cut()
+	on = FALSE
+
+/obj/item/toy/simon_intents/proc/render(input)
+	icon_state = input
+	playsound(src, sound_by_intent[input], 50, FALSE)
+	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 0.5 SECONDS)
+
+/obj/item/toy/simon_intents/proc/start_round()
+	usable = FALSE
+	player_sequence.Cut()
+	current_sequence += pick(list(HELP, DISARM, GRAB, HARM))
+	for(var/input in current_sequence)
+		sleep(0.6 SECONDS)
+		render(input)
+	usable = TRUE
+
+#undef HELP
+#undef DISARM
+#undef GRAB
+#undef HARM
