@@ -991,6 +991,7 @@
 	build_path = /obj/machinery/deepfryer
 	req_components = list(/obj/item/stock_parts/micro_laser = 1)
 	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/griddle
 	name = "circuit board (Griddle)"
 	icon_state = "service"
