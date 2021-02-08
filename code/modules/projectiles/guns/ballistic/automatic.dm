@@ -346,6 +346,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 	mag_display = TRUE
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"

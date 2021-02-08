@@ -5841,7 +5841,7 @@
 /area/maintenance/starboard/fore)
 "asc" = (
 /obj/structure/table/wood,
-/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
+/obj/item/gun/ballistic/automatic/pistol/toy,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
