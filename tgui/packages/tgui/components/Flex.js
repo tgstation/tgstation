@@ -15,7 +15,6 @@ export const computeFlexProps = props => {
     align,
     justify,
     inline,
-    spacing = 0,
     ...rest
   } = props;
   return {
@@ -27,13 +26,12 @@ export const computeFlexProps = props => {
           : 'Flex--iefix'
       ),
       inline && 'Flex--inline',
-      spacing > 0 && 'Flex--spacing--' + spacing,
       className,
     ]),
     style: {
       ...rest.style,
       'flex-direction': direction,
-      'flex-wrap': wrap,
+      'flex-wrap': wrap === true ? 'wrap' : wrap,
       'align-items': align,
       'justify-content': justify,
     },
@@ -50,6 +48,7 @@ Flex.defaultHooks = pureComponentHooks;
 export const computeFlexItemProps = props => {
   const {
     className,
+    style,
     grow,
     order,
     shrink,
@@ -63,12 +62,13 @@ export const computeFlexItemProps = props => {
     className: classes([
       'Flex__item',
       Byond.IS_LTE_IE10 && 'Flex__item--iefix',
+      Byond.IS_LTE_IE10 && grow > 0 && 'Flex__item--iefix--grow',
       className,
     ]),
     style: {
-      ...rest.style,
-      'flex-grow': grow,
-      'flex-shrink': shrink,
+      ...style,
+      'flex-grow': grow !== undefined && Number(grow),
+      'flex-shrink': shrink !== undefined && Number(shrink),
       'flex-basis': unit(basis),
       'order': order,
       'align-self': align,

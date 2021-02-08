@@ -15,11 +15,13 @@
 	verb_exclaim = "beeps"
 	var/listening = FALSE
 	var/recorded = "" //the activation message
-	var/mode = 1
-	var/static/list/modes = list("inclusive",
-								 "exclusive",
-								 "recognizer",
-								 "voice sensor")
+	var/mode = INCLUSIVE_MODE
+	var/static/list/modes = list(
+		"inclusive",
+		"exclusive",
+		"recognizer",
+		"voice sensor",
+	)
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
@@ -29,6 +31,8 @@
 
 /obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
+	if(message_mods[WHISPER_MODE]) //Too quiet lad
+		return
 	if(speaker == src)
 		return
 
@@ -40,7 +44,7 @@
 		record_speech(speaker, raw_message, message_language)
 	else
 		if(check_activation(speaker, raw_message))
-			addtimer(CALLBACK(src, .proc/pulse, 0), 10)
+			send_pulse()
 
 /obj/item/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message, datum/language/message_language)
 	switch(mode)
@@ -58,23 +62,32 @@
 			say("Your voice pattern is saved.", message_language)
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
-				addtimer(CALLBACK(src, .proc/pulse, 0), 10)
+				send_pulse()
 
 /obj/item/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
-	. = FALSE
+	if (recorded == "")
+		return FALSE
+
 	switch(mode)
 		if(INCLUSIVE_MODE)
 			if(findtext(raw_message, recorded))
-				. = TRUE
+				return TRUE
 		if(EXCLUSIVE_MODE)
 			if(raw_message == recorded)
-				. = TRUE
+				return TRUE
 		if(RECOGNIZER_MODE)
 			if(speaker.GetVoice() == recorded)
-				. = TRUE
+				return TRUE
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
-				. = TRUE
+				return TRUE
+
+	return FALSE
+
+/obj/item/assembly/voice/proc/send_pulse()
+	visible_message("clicks", visible_message_flags = EMOTE_MESSAGE)
+	playsound(src, 'sound/effects/whirthunk.ogg', 30)
+	addtimer(CALLBACK(src, .proc/pulse), 2 SECONDS)
 
 /obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)
 	..()

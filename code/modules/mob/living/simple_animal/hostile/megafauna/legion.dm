@@ -1,21 +1,21 @@
 /**
-  *LEGION
-  *
-  *Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
-  *Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL
-  *
-  *It has three attacks.
-  *Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
-  *Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
-  *CHARGE! The legion starts spinning and tries to melee the player. It will try to flick itself towards the player, dealing some damage if it hits.
-  *
-  *When Legion dies, it will split into three smaller skulls up to three times.
-  *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
-  *
-  *Difficulty: Medium
-  *
-  *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
-  */
+ *LEGION
+ *
+ *Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+ *Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort. LOL
+ *
+ *It has three attacks.
+ *Spawn Skull. Most of the time it will use this attack. Spawns a single legion skull.
+ *Spawn Sentinel. The legion will spawn up to three sentinels, depending on its size.
+ *CHARGE! The legion starts spinning and tries to melee the player. It will try to flick itself towards the player, dealing some damage if it hits.
+ *
+ *When Legion dies, it will split into three smaller skulls up to three times.
+ *If you kill all of the smaller ones it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+ *
+ *Difficulty: Medium
+ *
+ *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
+ */
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
 	health = 700
@@ -42,13 +42,15 @@
 	achievement_type = /datum/award/achievement/boss/legion_kill
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
 	score_achievement_type = /datum/award/score/legion_score
-	pixel_y = -16
 	pixel_x = -32
+	base_pixel_x = -32
+	pixel_y = -16
+	base_pixel_y = -16
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
 	elimination = TRUE
-	appearance_flags = 0
+	appearance_flags = LONG_GLIDE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	attack_action_types = list(/datum/action/innate/megafauna_attack/create_skull,
 							   /datum/action/innate/megafauna_attack/charge_target,
@@ -165,14 +167,18 @@
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 
+
 ///In addition to parent functionality, this will also turn the target into a small legion if they are unconcious.
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/L = target
-		if(L.stat == UNCONSCIOUS)
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-			A.infest(L)
+	if(!. || !ishuman(target))
+		return
+	var/mob/living/living_target = target
+	switch(living_target.stat)
+		if(UNCONSCIOUS, HARD_CRIT)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/legion = new(loc)
+			legion.infest(living_target)
+
 
 ///Resets the charge buffs.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
@@ -234,7 +240,7 @@
 	return TRUE
 
 ///Sets the variables for new legion skulls. Usually called after splitting.
-/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(var/mob/living/simple_animal/hostile/megafauna/legion/L)
+/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(mob/living/simple_animal/hostile/megafauna/legion/L)
 	maxHealth = L.maxHealth
 	updatehealth()
 	size = L.size
@@ -323,7 +329,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 100,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
@@ -376,13 +382,13 @@
 	damage = 19
 	range = 6
 	eyeblur = 0
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion
 	muzzle_type = /obj/effect/projectile/tracer/legion
 	impact_type = /obj/effect/projectile/tracer/legion
 	hitscan = TRUE
-	movement_type = UNSTOPPABLE
+	projectile_piercing = ALL
 
 ///Used for the legion turret tracer.
 /obj/effect/projectile/tracer/legion/tracer

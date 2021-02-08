@@ -5,33 +5,30 @@
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/projectile/magic/death/on_hit(target)
+/obj/projectile/magic/death/on_hit(mob/living/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-		if(isliving(M))
-			var/mob/living/L = M
-			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-				if(L.hellbound && L.stat == DEAD)
-					return BULLET_ACT_BLOCK
-				if(L.revive(full_heal = TRUE, admin_revive = TRUE))
-					L.grab_ghost(force = TRUE) // even suicides
-					to_chat(L, "<span class='notice'>You rise with a start, you're undead!!!</span>")
-				else if(L.stat != DEAD)
-					to_chat(L, "<span class='notice'>You feel great!</span>")
-			else
-				L.death(0)
-		else
-			M.death(0)
+	if(!istype(target))
+		return
+
+	if(target.anti_magic_check())
+		target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+		return BULLET_ACT_BLOCK
+
+	if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+			target.grab_ghost(force = TRUE) // even suicides
+			to_chat(target, "<span class='notice'>You rise with a start, you're undead!!!</span>")
+		else if(target.stat != DEAD)
+			to_chat(target, "<span class='notice'>You feel great!</span>")
+		return
+
+	target.death()
 
 /obj/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -49,8 +46,6 @@
 		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			target.death(0)
 		else
-			if(target.hellbound && target.stat == DEAD)
-				return BULLET_ACT_BLOCK
 			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
 				target.grab_ghost(force = TRUE) // even suicides
 				to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
@@ -134,7 +129,7 @@
 	T.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	D.Open()
 
-/obj/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
+/obj/projectile/magic/door/proc/OpenDoor(obj/machinery/door/D)
 	if(istype(D, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		A.locked = FALSE
@@ -159,11 +154,19 @@
 	qdel(src)
 
 /proc/wabbajack(mob/living/M, randomize)
+	// If the mob has a shapeshifted form, we want to pull out the reference of the caster's original body from it.
+	// We then want to restore this original body through the shapeshift holder itself.
+	var/obj/shapeshift_holder/shapeshift = locate() in M
+	if(shapeshift)
+		M = shapeshift.stored
+		shapeshift.restore()
+
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
 	M.notransform = TRUE
-	M.mobility_flags = NONE
+	ADD_TRAIT(M, TRAIT_IMMOBILIZED, MAGIC_TRAIT)
+	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, MAGIC_TRAIT)
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -189,13 +192,13 @@
 		randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
 	switch(randomize)
 		if("monkey")
-			new_mob = new /mob/living/carbon/monkey(M.loc)
+			new_mob = new /mob/living/carbon/human/species/monkey(M.loc)
 
 		if("robot")
 			var/robot = pick(200;/mob/living/silicon/robot,
-							/mob/living/silicon/robot/modules/syndicate,
-							/mob/living/silicon/robot/modules/syndicate/medical,
-							/mob/living/silicon/robot/modules/syndicate/saboteur,
+							/mob/living/silicon/robot/model/syndicate,
+							/mob/living/silicon/robot/model/syndicate/medical,
+							/mob/living/silicon/robot/model/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -287,7 +290,7 @@
 
 	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
-	new_mob.a_intent = INTENT_HARM
+	new_mob.set_combat_mode(TRUE)
 
 	M.wabbajack_act(new_mob)
 
@@ -313,7 +316,7 @@
 	target.animate_atom_living(firer)
 	..()
 
-/atom/proc/animate_atom_living(var/mob/living/owner = null)
+/atom/proc/animate_atom_living(mob/living/owner = null)
 	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
@@ -352,7 +355,7 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = "magic"
+	flag = MAGIC
 	dismemberment = 50
 	nodamage = FALSE
 
@@ -372,7 +375,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	armour_penetration = 0
-	flag = "magic"
+	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/arcane_barrage/on_hit(target)
@@ -389,28 +392,27 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = "magic"
+	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
-	var/obj/structure/closet/locker_temp_instance = /obj/structure/closet/decay
+	var/obj/structure/closet/decay/locker_temp_instance
 
 /obj/projectile/magic/locker/Initialize()
 	. = ..()
 	locker_temp_instance = new(src)
 
-/obj/projectile/magic/locker/prehit(atom/A)
+/obj/projectile/magic/locker/prehit_pierce(atom/A)
+	. = ..()
 	if(isliving(A) && locker_suck)
 		var/mob/living/M = A
-		if(M.anti_magic_check())
+		if(M.anti_magic_check())			// no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
-			qdel(src)
-			return
+			return PROJECTILE_DELETE_WITHOUT_HITTING
 		if(!locker_temp_instance.insertion_allowed(M))
-			return ..()
+			return
 		M.forceMove(src)
-		return FALSE
-	return ..()
+		return PROJECTILE_PIERCE_PHASE
 
 /obj/projectile/magic/locker/on_hit(target)
 	if(created)
@@ -432,7 +434,7 @@
 /obj/structure/closet/decay
 	breakout_time = 600
 	icon_welded = null
-	var/magic_icon = "cursed"
+	icon_state = "cursed"
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
@@ -440,18 +442,12 @@
 	. = ..()
 	if(auto_destroy)
 		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
-	addtimer(CALLBACK(src, .proc/magicly_lock), 5)
-
-/obj/structure/closet/decay/proc/magicly_lock()
-	if(!welded)
-		return
-	icon_state = magic_icon
-	update_icon()
 
 /obj/structure/closet/decay/after_weld(weld_state)
 	if(weld_state)
 		unmagify()
 
+///Fade away into nothing
 /obj/structure/closet/decay/proc/decay()
 	animate(src, alpha = 0, time = 30)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
@@ -459,16 +455,14 @@
 /obj/structure/closet/decay/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(.)
-		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
-			unmagify()
-		else
-			addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+		unmagify()
 
+///Give it the lesser magic icon and tell it to delete itself
 /obj/structure/closet/decay/proc/unmagify()
 	icon_state = weakened_icon
 	update_icon()
+
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
-	icon_welded = "welded"
 
 /obj/projectile/magic/flying
 	name = "bolt of flying"
@@ -545,7 +539,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !L.mind || !L.mind.hasSoul)
+		if(L.anti_magic_check() || !L.mind)
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 		to_chat(L, "<span class='danger'>Your body feels drained and there is a burning pain in your chest.</span>")
@@ -553,7 +547,7 @@
 		L.health = min(L.health, L.maxHealth)
 		if(L.maxHealth <= 0)
 			to_chat(L, "<span class='userdanger'>Your weakened soul is completely consumed by the [src]!</span>")
-			L.mind.hasSoul = FALSE
+			return
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
@@ -578,7 +572,7 @@
 		possession_test(M)
 		return BULLET_ACT_HIT
 
-/obj/projectile/magic/wipe/proc/possession_test(var/mob/living/carbon/M)
+/obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/M)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
@@ -627,7 +621,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15
@@ -637,7 +631,7 @@
 
 /obj/projectile/magic/aoe/lightning/fire(setAngle)
 	if(caster)
-		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]")
 	..()
 
 /obj/projectile/magic/aoe/lightning/on_hit(target)
@@ -650,6 +644,11 @@
 			return BULLET_ACT_BLOCK
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
+
+/obj/projectile/magic/aoe/lightning/no_zap
+	zap_power = 10000
+	zap_range = 4
+	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
@@ -679,22 +678,6 @@
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
 
-/obj/projectile/magic/aoe/fireball/infernal
-	name = "infernal fireball"
-	exp_heavy = -1
-	exp_light = -1
-	exp_flash = 4
-	exp_fire= 5
-
-/obj/projectile/magic/aoe/fireball/infernal/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			return BULLET_ACT_BLOCK
-	var/turf/T = get_turf(target)
-	for(var/i=0, i<50, i+=10)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
 
 //still magic related, but a different path
 
@@ -706,7 +689,7 @@
 	nodamage = FALSE
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
-	flag = "magic"
+	flag = MAGIC
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"

@@ -83,7 +83,7 @@ const touchRecents = (recents, touchedItem, limit = 50) => {
   return [nextRecents, trimmedItem];
 };
 
-export const storeWindowGeometry = windowKey => {
+export const storeWindowGeometry = async () => {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
@@ -92,7 +92,7 @@ export const storeWindowGeometry = windowKey => {
   storage.set(windowKey, geometry);
   // Update the list of stored geometries
   const [geometries, trimmedKey] = touchRecents(
-    storage.get('geometries') || [],
+    await storage.get('geometries') || [],
     windowKey);
   if (trimmedKey) {
     storage.remove(trimmedKey);
@@ -100,9 +100,9 @@ export const storeWindowGeometry = windowKey => {
   storage.set('geometries', geometries);
 };
 
-export const recallWindowGeometry = async (windowKey, options = {}) => {
+export const recallWindowGeometry = async (options = {}) => {
   // Only recall geometry in fancy mode
-  const geometry = options.fancy && storage.get(windowKey);
+  const geometry = options.fancy && await storage.get(windowKey);
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }
@@ -178,6 +178,8 @@ export const dragStartHandler = event => {
     window.screenLeft - event.screenX,
     window.screenTop - event.screenY,
   ];
+  // Focus click target
+  event.target?.focus();
   document.addEventListener('mousemove', dragMoveHandler);
   document.addEventListener('mouseup', dragEndHandler);
   dragMoveHandler(event);
@@ -189,7 +191,7 @@ const dragEndHandler = event => {
   document.removeEventListener('mousemove', dragMoveHandler);
   document.removeEventListener('mouseup', dragEndHandler);
   dragging = false;
-  storeWindowGeometry(windowKey);
+  storeWindowGeometry();
 };
 
 const dragMoveHandler = event => {
@@ -214,6 +216,8 @@ export const resizeStartHandler = (x, y) => event => {
     window.innerWidth,
     window.innerHeight,
   ];
+  // Focus click target
+  event.target?.focus();
   document.addEventListener('mousemove', resizeMoveHandler);
   document.addEventListener('mouseup', resizeEndHandler);
   resizeMoveHandler(event);
@@ -225,7 +229,7 @@ const resizeEndHandler = event => {
   document.removeEventListener('mousemove', resizeMoveHandler);
   document.removeEventListener('mouseup', resizeEndHandler);
   resizing = false;
-  storeWindowGeometry(windowKey);
+  storeWindowGeometry();
 };
 
 const resizeMoveHandler = event => {

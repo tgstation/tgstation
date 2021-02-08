@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-import frontend
 import shutil
-from dmm import *
 from collections import defaultdict
+from . import frontend
+from .dmm import *
 
 def merge_map(new_map, old_map, delete_unused=False):
     if new_map.key_length != old_map.key_length:
@@ -66,7 +66,7 @@ def merge_map(new_map, old_map, delete_unused=False):
 
     # step two: delete unused keys
     if unused_keys:
-        print(f"Notice: Trimming {len(unused_keys)} unused dictionary keys.")
+        #print(f"Notice: Trimming {len(unused_keys)} unused dictionary keys.")
         for key in unused_keys:
             del merged.dictionary[key]
 

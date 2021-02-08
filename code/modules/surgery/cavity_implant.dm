@@ -1,7 +1,7 @@
 /datum/surgery/cavity_implant
 	name = "Cavity implant"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/handle_cavity, /datum/surgery_step/close)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 
@@ -36,7 +36,7 @@
 	if(tool)
 		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || HAS_TRAIT(tool, TRAIT_NODROP) || istype(tool, /obj/item/organ))
 			to_chat(user, "<span class='warning'>You can't seem to fit [tool] in [target]'s [target_zone]!</span>")
-			return 0
+			return FALSE
 		else
 			display_results(user, target, "<span class='notice'>You stuff [tool] into [target]'s [target_zone].</span>",
 				"<span class='notice'>[user] stuffs [tool] into [target]'s [target_zone]!</span>",
@@ -54,4 +54,4 @@
 			return ..()
 		else
 			to_chat(user, "<span class='warning'>You don't find anything in [target]'s [target_zone].</span>")
-			return 0
+			return FALSE

@@ -59,7 +59,7 @@
 	special_screen_obj = "honked_nose"
 	special_screen_replace = FALSE
 
-/datum/mood_event/perform_cpr
+/datum/mood_event/saved_life
 	description = "<span class='nicegreen'>It feels good to save a life.</span>\n"
 	mood_change = 6
 	timeout = 8 MINUTES
@@ -138,7 +138,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/religiously_comforted
-	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>\n"
+	description = "<span class='nicegreen'>I feel comforted by the presence of a holy person.</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
 
@@ -203,3 +203,32 @@
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/high_five
+	description = "<span class='nicegreen'>I love getting high fives!</span>\n"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/high_ten
+	description = "<span class='nicegreen'>AMAZING! A HIGH-TEN!</span>\n"
+	mood_change = 3
+	timeout = 45 SECONDS
+
+/datum/mood_event/down_low
+	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
+	mood_change = 4
+	timeout = 1.5 MINUTES
+
+/datum/mood_event/aquarium_positive
+	description = "<span class='nicegreen'>Watching fish in aquarium is calming.</span>\n"
+	mood_change = 3
+	timeout = 1.5 MINUTES
+
+/datum/mood_event/kiss
+	description = "<span class='nicegreen'>Someone blew a kiss at me, I must be a real catch!</span>\n"
+	mood_change = 1.5
+	timeout = 2 MINUTES
+
+/datum/mood_event/kiss/add_effects(mob/beau)
+	if(beau)
+		description = "<span class='nicegreen'>[beau.name] blew a kiss at me, I must be a real catch!</span>\n"

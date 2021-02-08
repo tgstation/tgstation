@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
-	weapon.attack_self(src)
+	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
 	QDEL_NULL(weapon)

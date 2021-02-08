@@ -27,27 +27,33 @@
 
 /// triggered after an item attacks something
 /datum/component/knockback/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
 	if(!proximity_flag)
 		return
 	do_knockback(target, user, get_dir(source, target))
 
 /// triggered after a hostile simplemob attacks something
 /datum/component/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+	SIGNAL_HANDLER
+
 	do_knockback(target, attacker, get_dir(attacker, target))
 
 /// triggered after a projectile hits something
 /datum/component/knockback/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
+	SIGNAL_HANDLER
+
 	do_knockback(target, null, angle2dir(Angle))
 
 
 /**
-  * Throw a target in a direction
-  *
-  * Arguments:
-  * * target - Target atom to throw
-  * * thrower - Thing that caused this atom to be thrown
-  * * throw_dir - Direction to throw the atom
-  */
+ * Throw a target in a direction
+ *
+ * Arguments:
+ * * target - Target atom to throw
+ * * thrower - Thing that caused this atom to be thrown
+ * * throw_dir - Direction to throw the atom
+ */
 /datum/component/knockback/proc/do_knockback(atom/target, mob/thrower, throw_dir)
 	if(!ismovable(target) || throw_dir == null)
 		return

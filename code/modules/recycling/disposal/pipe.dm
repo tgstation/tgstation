@@ -9,7 +9,7 @@
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	dir = NONE			// dir will contain dominant direction for junction pipes
 	max_integrity = 200
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	damage_deflection = 10
@@ -29,7 +29,7 @@
 	else
 		stored = new /obj/structure/disposalconstruct(src, null , SOUTH , FALSE , src)
 
-	if(dir in GLOB.diagonals) // Bent pipes already have all the dirs set
+	if(ISDIAGONALDIR(dir)) // Bent pipes already have all the dirs set
 		initialize_dirs = NONE
 
 	if(initialize_dirs != DISP_DIR_NONE)
@@ -54,6 +54,11 @@
 	QDEL_NULL(stored)
 	return ..()
 
+/obj/structure/disposalpipe/handle_atom_del(atom/A)
+	if(A == stored && !QDELETED(src))
+		stored = null
+		deconstruct(FALSE) //pipe has broken.
+
 // returns the direction of the next pipe object, given the entrance dir
 // by default, returns the bitmask of remaining directions
 /obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/H)
@@ -69,30 +74,30 @@
 	var/turf/T = H.nextloc()
 	var/obj/structure/disposalpipe/P = H.findpipe(T)
 
-	if(P)
-		// find other holder in next loc, if inactive merge it with current
-		var/obj/structure/disposalholder/H2 = locate() in P
-		if(H2 && !H2.active)
-			H.merge(H2)
+	if(!P) // if there wasn't a pipe, then they'll be expelled.
+		return
+	// find other holder in next loc, if inactive merge it with current
+	var/obj/structure/disposalholder/H2 = locate() in P
+	if(H2 && !H2.active)
+		H.merge(H2)
 
-		H.forceMove(P)
-		return P
-	else			// if wasn't a pipe, then they're now in our turf
-		H.forceMove(get_turf(src))
-		return null
+	H.forceMove(P)
+	return P
 
 // expel the held objects into a turf
 // called when there is a break in the pipe
 /obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
+	if(!T)
+		T = get_turf(src)
 	var/turf/target
 	var/eject_range = 5
 	var/turf/open/floor/floorturf
 
-	if(isfloorturf(T)) //intact floor, pop the tile
+	if(isfloorturf(T) && T.intact) //intact floor, pop the tile
 		floorturf = T
 		if(floorturf.floor_tile)
 			new floorturf.floor_tile(T)
-		floorturf.make_plating()
+		floorturf.make_plating(TRUE)
 
 	if(direction)		// direction is specified
 		if(isspaceturf(T)) // if ended in space, then range is unlimited
@@ -106,12 +111,7 @@
 		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
 	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
-	for(var/A in H)
-		var/atom/movable/AM = A
-		AM.forceMove(get_turf(src))
-		AM.pipe_eject(direction)
-		if(target)
-			AM.throw_at(target, eject_range, 1)
+	pipe_eject(H, direction, TRUE, target, eject_range)
 	H.vent_gas(T)
 	qdel(H)
 

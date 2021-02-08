@@ -18,7 +18,6 @@
 	response_disarm_simple = "shoo"
 	response_harm_continuous = "stomps on"
 	response_harm_simple = "stomp on"
-	ventcrawler = VENTCRAWLER_ALWAYS
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
@@ -27,6 +26,12 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/static/list/edibles = typecacheof(list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/hostile/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
+	pet_bonus = TRUE
+	pet_bonus_emote = "sticks its tongue out contentedly!"
+
+/mob/living/simple_animal/hostile/lizard/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
@@ -52,3 +57,7 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
+
+/mob/living/simple_animal/hostile/lizard/wags_his_tail
+	name = "Wags-His-Tail"
+	desc = "The janitorial department's trusty pet lizard."

@@ -14,6 +14,15 @@
 	action_background_icon_state = "bg_demon"
 	var/phased = FALSE
 
+/obj/effect/proc_holder/spell/bloodcrawl/cast_check(skipcharge = 0,mob/user = usr)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/area/noteleport_check = get_area(user)
+	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+		to_chat(user, "<span class='danger'>Some dull, universal force is between you and your other existence, preventing you from blood crawling.</span>")
+		return FALSE
+
 /obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
 	for(var/obj/effect/decal/cleanable/target in range(range, get_turf(user)))
 		if(target.can_bloodcrawl_in())
@@ -24,8 +33,8 @@
 
 /obj/effect/proc_holder/spell/bloodcrawl/perform(obj/effect/decal/cleanable/target, recharge = 1, mob/living/user = usr)
 	if(istype(user))
-		if(istype(user, /mob/living/simple_animal/slaughter))
-			var/mob/living/simple_animal/slaughter/slaught = user
+		if(istype(user, /mob/living/simple_animal/hostile/imp/slaughter))
+			var/mob/living/simple_animal/hostile/imp/slaughter/slaught = user
 			slaught.current_hitstreak = 0
 			slaught.wound_bonus = initial(slaught.wound_bonus)
 			slaught.bare_wound_bonus = initial(slaught.bare_wound_bonus)

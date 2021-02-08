@@ -21,6 +21,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	pixel_x = -16
+	base_pixel_x = -16
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -44,6 +45,10 @@
 
 	var/is_tree = TRUE
 
+/mob/living/simple_animal/hostile/tree/Initialize()
+	. = ..()
+	add_cell_sample()
+
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
 	if(is_tree && isopenturf(loc))
@@ -65,6 +70,9 @@
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
+/mob/living/simple_animal/hostile/tree/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
@@ -85,7 +93,7 @@
 
 /mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/M)
 	. = ..()
-	if(M.a_intent == "help")
+	if(!M.combat_mode)
 		visible_message("<span class='warning'>[src] crackles with static electricity!</span>")
 		for(var/obj/item/stock_parts/cell/C in range(2, get_turf(src)))
 			C.give(75)
@@ -95,3 +103,6 @@
 		for(var/obj/machinery/power/apc/A in range(2, get_turf(src)))
 			if(A.cell)
 				A.cell.give(75)
+
+/mob/living/simple_animal/hostile/tree/festivus/add_cell_sample()
+	return

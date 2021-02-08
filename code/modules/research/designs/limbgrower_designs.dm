@@ -36,21 +36,13 @@
 
 //Non-limb limb designs
 
-/datum/design/armblade
-	name = "Arm Blade"
-	id = "armblade"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 75)
-	build_path = /obj/item/melee/synthetic_arm_blade
-	category = list("other","emagged")
-
 /datum/design/heart
 	name = "Heart"
 	id = "heart"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 30)
 	build_path = /obj/item/organ/heart
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/lungs
 	name = "Lungs"
@@ -58,7 +50,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/lungs
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/liver
 	name = "Liver"
@@ -66,7 +58,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/liver
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/stomach
 	name = "Stomach"
@@ -74,7 +66,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 15)
 	build_path = /obj/item/organ/stomach
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/appendix
 	name = "Appendix"
@@ -82,7 +74,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 5) //why would you need this
 	build_path = /obj/item/organ/appendix
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/eyes
 	name = "Eyes"
@@ -90,7 +82,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/eyes
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/ears
 	name = "Ears"
@@ -98,7 +90,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/ears
-	category = list("other")
+	category = list("other","initial")
 
 /datum/design/tongue
 	name = "Tongue"
@@ -106,4 +98,12 @@
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/tongue
-	category = list("other")
+	category = list("other","initial")
+
+/datum/design/armblade
+	name = "Arm Blade"
+	id = "armblade"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 75)
+	build_path = /obj/item/melee/synthetic_arm_blade
+	category = list("other","emagged")

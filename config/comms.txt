@@ -8,3 +8,8 @@
 
 ## Name that the server calls itself in communications
 #CROSS_COMMS_NAME
+
+## Network-name used for cross-server broadcasts made from communication consoles.
+## Servers that do not match this network-name will have their messages discarded.
+## Leaving this commented will allow all messages through, regardless of network.
+#CROSS_COMMS_NETWORK default_network

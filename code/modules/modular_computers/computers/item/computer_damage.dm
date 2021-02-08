@@ -2,9 +2,9 @@
 	. = ..()
 	var/component_probability = min(50, max(damage_amount*0.1, 1 - obj_integrity/max_integrity))
 	switch(damage_flag)
-		if("bullet")
+		if(BULLET)
 			component_probability = damage_amount * 0.5
-		if("laser")
+		if(LASER)
 			component_probability = damage_amount * 0.66
 	if(component_probability)
 		for(var/I in all_components)
@@ -20,7 +20,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		physical.visible_message("<span class='notice'>\The [src] breaks apart!</span>")
 		var/turf/newloc = get_turf(src)
-		new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
+		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost/2))
 		for(var/C in all_components)
 			var/obj/item/computer_hardware/H = all_components[C]
 			if(QDELETED(H))

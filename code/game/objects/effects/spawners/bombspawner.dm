@@ -5,7 +5,7 @@
 
 /obj/effect/spawner/newbomb
 	name = "bomb"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x"
 	var/temp_p = 1500
 	var/temp_o = 1000	// tank temperatures

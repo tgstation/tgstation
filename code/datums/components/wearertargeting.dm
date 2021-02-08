@@ -13,10 +13,14 @@
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
 /datum/component/wearertargeting/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
 	if((slot in valid_slots) && istype(equipper, mobtype))
 		RegisterSignal(equipper, signals, proctype, TRUE)
 	else
 		UnregisterSignal(equipper, signals)
 
 /datum/component/wearertargeting/proc/on_drop(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	UnregisterSignal(user, signals)

@@ -4,26 +4,8 @@
  * @license MIT
  */
 
-import { loadCSS as fgLoadCSS } from 'fg-loadcss';
-import { createLogger } from './logging';
-
-const logger = createLogger('assets');
-
-const EXCLUDED_PATTERNS = [
-  /v4shim/i,
-];
-
-const loadedStyles = [];
+const EXCLUDED_PATTERNS = [/v4shim/i];
 const loadedMappings = {};
-
-export const loadCSS = url => {
-  if (loadedStyles.includes(url)) {
-    return;
-  }
-  loadedStyles.push(url);
-  logger.log(`loading stylesheet '${url}'`);
-  fgLoadCSS(url);
-};
 
 export const resolveAsset = name => (
   loadedMappings[name] || name
@@ -32,7 +14,7 @@ export const resolveAsset = name => (
 export const assetMiddleware = store => next => action => {
   const { type, payload } = action;
   if (type === 'asset/stylesheet') {
-    loadCSS(payload);
+    Byond.loadCss(payload);
     return;
   }
   if (type === 'asset/mappings') {
@@ -45,7 +27,10 @@ export const assetMiddleware = store => next => action => {
       const ext = name.split('.').pop();
       loadedMappings[name] = url;
       if (ext === 'css') {
-        loadCSS(url);
+        Byond.loadCss(url);
+      }
+      if (ext === 'js') {
+        Byond.loadJs(url);
       }
     }
     return;

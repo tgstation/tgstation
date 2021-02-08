@@ -9,6 +9,8 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 
 /datum/surgery/advanced/wing_reconstruction/can_start(mob/user, mob/living/carbon/target)
+	if(!istype(target))
+		return FALSE
 	return ..() && target.dna.features["moth_wings"] == "Burnt Off" && ismoth(target)
 
 /datum/surgery_step/wing_reconstruction

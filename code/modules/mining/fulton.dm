@@ -79,7 +79,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(isliving(A))
 				var/mob/living/M = A
 				M.Paralyze(320) // Keep them from moving during the duration of the extraction
-				M.buckled = 0 // Unbuckle them to prevent anchoring problems
+				if(M.buckled)
+					M.buckled.unbuckle_mob(M, TRUE) // Unbuckle them to prevent anchoring problems
 			else
 				A.set_anchored(TRUE)
 				A.density = FALSE
@@ -180,13 +181,13 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(isliving(A))
 		var/mob/living/L = A
 		if(L.stat != DEAD)
-			return 1
+			return TRUE
 	for(var/thing in A.GetAllContents())
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.stat != DEAD)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/effect/extraction_holder/singularity_act()
 	return

@@ -48,7 +48,7 @@
 /obj/structure/flora/tree/pine/Initialize()
 	. = ..()
 
-	if(islist(icon_states && icon_states.len))
+	if(islist(icon_states?.len))
 		icon_state = pick(icon_states)
 
 /obj/structure/flora/tree/pine/xmas
@@ -320,7 +320,7 @@
 	. = ..()
 	AddComponent(/datum/component/tactical)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
-	INVOKE_ASYNC(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 500))
+	AddComponent(/datum/component/beauty, 500)
 
 /obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -371,7 +371,7 @@
 	name = "photosynthetic potted plant"
 	desc = "A bioluminescent plant."
 	icon_state = "plant-09"
-	light_color = "#2cb2e8"
+	light_color = COLOR_BRIGHT_BLUE
 	light_range = 3
 
 /obj/item/kirbyplants/fullysynthetic
@@ -409,11 +409,6 @@
 	. = ..()
 	icon_state = "[icon_state][rand(1,3)]"
 
-/obj/structure/flora/rock/Destroy()
-	if(mineResult && mineAmount)
-		new mineResult(loc, mineAmount)
-	. = ..()
-
 /obj/structure/flora/rock/attackby(obj/item/W, mob/user, params)
 	if(!mineResult || W.tool_behaviour != TOOL_MINING)
 		return ..()
@@ -422,6 +417,8 @@
 	to_chat(user, "<span class='notice'>You start mining...</span>")
 	if(W.use_tool(src, user, 40, volume=50))
 		to_chat(user, "<span class='notice'>You finish mining the rock.</span>")
+		if(mineResult && mineAmount)
+			new mineResult(loc, mineAmount)
 		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 		qdel(src)
 

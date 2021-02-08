@@ -9,13 +9,12 @@
 	light_range = 5
 	icon_state = "light_on-1"
 	floor_tile = /obj/item/stack/tile/light
-	broken_states = list("light_broken")
 	///var to see if its on or off
 	var/on = TRUE
 	///defines on top
 	var/state = LIGHTFLOOR_FINE
 	///list of colours to choose
-	var/static/list/coloredlights = list(LIGHT_COLOR_CYAN, LIGHT_COLOR_RED, LIGHT_COLOR_ORANGE, LIGHT_COLOR_GREEN, LIGHT_COLOR_YELLOW, LIGHT_COLOR_DARK_BLUE, LIGHT_COLOR_LAVENDER, LIGHT_COLOR_WHITE,  LIGHT_COLOR_SLIME_LAMP, LIGHT_COLOR_FIRE)
+	var/static/list/coloredlights = list(LIGHT_COLOR_CYAN, COLOR_SOFT_RED, LIGHT_COLOR_ORANGE, LIGHT_COLOR_GREEN, LIGHT_COLOR_YELLOW, LIGHT_COLOR_DARK_BLUE, LIGHT_COLOR_LAVENDER, COLOR_WHITE,  LIGHT_COLOR_SLIME_LAMP, LIGHT_COLOR_FIRE)
 	///current light color
 	var/currentcolor = LIGHT_COLOR_CYAN
 	///var to prevent changing color on certain admin spawn only tiles
@@ -23,6 +22,9 @@
 	tiled_dirt = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
+
+/turf/open/floor/light/setup_broken_states()
+	return list("light_broken")
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
@@ -36,13 +38,13 @@
 /turf/open/floor/light/proc/populate_lighttile_designs()
 	lighttile_designs = list(
 		LIGHT_COLOR_CYAN = image(icon = src.icon, icon_state = "light_on-1"),
-		LIGHT_COLOR_RED = image(icon = src.icon, icon_state = "light_on-2"),
+		COLOR_SOFT_RED = image(icon = src.icon, icon_state = "light_on-2"),
 		LIGHT_COLOR_ORANGE = image(icon = src.icon, icon_state = "light_on-3"),
 		LIGHT_COLOR_GREEN = image(icon = src.icon, icon_state = "light_on-4"),
 		LIGHT_COLOR_YELLOW = image(icon = src.icon, icon_state = "light_on-5"),
 		LIGHT_COLOR_DARK_BLUE = image(icon = src.icon, icon_state = "light_on-6"),
 		LIGHT_COLOR_LAVENDER = image(icon = src.icon, icon_state = "light_on-7"),
-		LIGHT_COLOR_WHITE = image(icon = src.icon, icon_state = "light_on-8"),
+		COLOR_WHITE = image(icon = src.icon, icon_state = "light_on-8"),
 		LIGHT_COLOR_SLIME_LAMP = image(icon = src.icon, icon_state = "light_on-9"),
 		LIGHT_COLOR_FIRE = image(icon = src.icon, icon_state = "light_on-10")
 		)
@@ -64,12 +66,12 @@
 		switch(state)
 			if(LIGHTFLOOR_FINE)
 				icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
-				light_color = currentcolor
+				set_light_color(currentcolor)
 				set_light(5)
 				light_range = 3
 			if(LIGHTFLOOR_FLICKER)
 				icon_state = "light_on_flicker-[LAZYFIND(coloredlights, currentcolor)]"
-				light_color = currentcolor
+				set_light_color(currentcolor)
 				set_light(3)
 				light_range = 2
 			if(LIGHTFLOOR_BREAKING)
@@ -156,12 +158,12 @@
 	can_modify_colour = FALSE
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  * * multitool The multitool used to interact with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ * * multitool The multitool used to interact with a menu
+ */
 /turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool)
 	if(!istype(user))
 		return FALSE

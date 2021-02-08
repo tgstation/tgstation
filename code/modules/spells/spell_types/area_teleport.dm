@@ -52,7 +52,7 @@
 			to_chat(usr, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
 			return
 
-		if(target && target.buckled)
+		if(target?.buckled)
 			target.buckled.unbuckle_mob(target, force=1)
 
 		var/list/tempL = L

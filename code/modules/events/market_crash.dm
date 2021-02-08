@@ -1,8 +1,8 @@
 /**
-  * An event which decreases the station target temporarily, causing the inflation var to increase heavily.
-  *
-  * Done by decreasing the station_target by a high value per crew member, resulting in the station total being much higher than the target, and causing artificial inflation.
-  */
+ * An event which decreases the station target temporarily, causing the inflation var to increase heavily.
+ *
+ * Done by decreasing the station_target by a high value per crew member, resulting in the station total being much higher than the target, and causing artificial inflation.
+ */
 /datum/round_event_control/market_crash
 	name = "Market Crash"
 	typepath = /datum/round_event/market_crash
@@ -25,19 +25,17 @@
 	var/reason = pick(poss_reasons)
 	priority_announce("Due to [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division")
 
-///This does not work and I could use some help morking this one out further.
 /datum/round_event/market_crash/start()
 	. = ..()
-	var/num_accounts = 0
-	for(var/A in SSeconomy.bank_accounts)
-		num_accounts += 1
-	market_dip = rand(1000,10000) * num_accounts
-	SSeconomy.station_target -= market_dip
-	SSeconomy.station_target = max(SSeconomy.station_target, 1)
+	market_dip = rand(1000,10000) * length(SSeconomy.bank_accounts_by_id)
+	SSeconomy.station_target = max(SSeconomy.station_target - market_dip, 1)
 	SSeconomy.price_update()
+	SSeconomy.market_crashing = TRUE
 
 /datum/round_event/market_crash/end()
 	. = ..()
 	SSeconomy.station_target += market_dip
+	SSeconomy.market_crashing = FALSE
 	SSeconomy.price_update()
 	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division")
+

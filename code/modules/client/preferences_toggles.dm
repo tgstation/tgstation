@@ -3,6 +3,9 @@
 
 //Example usage TOGGLE_CHECKBOX(datum/verbs/menu/settings/Ghost/chatterbox, toggle_ghost_ears)()
 
+/datum/verbs/menu/settings
+	name = "Settings"
+
 //override because we don't want to save preferences twice.
 /datum/verbs/menu/settings/Set_checked(client/C, verbpath)
 	if (checkbox == CHECKBOX_GROUP)
@@ -18,6 +21,9 @@
 	set desc = "Open Game Preferences Window"
 	usr.client.prefs.current_tab = 1
 	usr.client.prefs.ShowChoices(usr)
+
+/datum/verbs/menu/settings/ghost
+	name = "Ghost"
 
 //toggles
 /datum/verbs/menu/settings/ghost/chatterbox
@@ -89,6 +95,17 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost/chatterbox, toggle_ghost_laws)(
 /datum/verbs/menu/settings/ghost/chatterbox/toggle_ghost_laws/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_GHOSTLAWS
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost/chatterbox, toggle_hear_login_logout)()
+	set name = "Show/Hide Login/Logout messages"
+	set category = "Preferences"
+	set desc = "As a ghost, see when someone reconnects or disconnects"
+	usr.client.prefs.chat_toggles ^= CHAT_LOGIN_LOGOUT
+	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_LOGIN_LOGOUT) ? "be notified" : "no longer be notified"] when someone disconnects or reconnects.")
+	usr.client.prefs.save_preferences()
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Hearing Login/Logout", "[usr.client.prefs.chat_toggles & CHAT_LOGIN_LOGOUT ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/verbs/menu/settings/ghost/chatterbox/toggle_hear_login_logout/Get_checked(client/C)
+	return C.prefs.chat_toggles & CHAT_LOGIN_LOGOUT
+
 /datum/verbs/menu/settings/ghost/chatterbox/events
 	name = "Events"
 
@@ -126,6 +143,9 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost, togglemidroundantag)()
 /datum/verbs/menu/settings/ghost/togglemidroundantag/Get_checked(client/C)
 	return C.prefs.toggles & MIDROUND_ANTAG
 
+/datum/verbs/menu/settings/sound
+	name = "Sound"
+
 TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggletitlemusic)()
 	set name = "Hear/Silence Lobby Music"
 	set category = "Preferences"
@@ -158,11 +178,25 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggleendofroundsounds)()
 /datum/verbs/menu/settings/sound/toggleendofroundsounds/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_ENDOFROUND
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglecombatmodesound)()
+	set name = "Hear/Silence Combat Mode Toggle Sound"
+	set category = "Preferences"
+	set desc = "Hear Combat Mode Toggle Sound"
+	usr.client.prefs.toggles ^= SOUND_COMBATMODE
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_COMBATMODE)
+		to_chat(usr, "You will now hear a sound when combat mode is turned on.")
+	else
+		to_chat(usr, "You will no longer hear a sound when combat mode is turned on.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Combat Mode Toggle Sounds", "[usr.client.prefs.toggles & SOUND_COMBATMODE ? "Enabled" : "Disabled"]"))
+
+/datum/verbs/menu/settings/sound/togglecombatmodesound/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_COMBATMODE
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglemidis)()
 	set name = "Hear/Silence Midis"
 	set category = "Preferences"
-	set desc = "Hear Admin Triggered Sounds (Midis)"
+	set desc = "Hear Admin Triggered Music/Sounds"
 	usr.client.prefs.toggles ^= SOUND_MIDI
 	usr.client.prefs.save_preferences()
 	if(usr.client.prefs.toggles & SOUND_MIDI)
@@ -171,8 +205,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, togglemidis)()
 		to_chat(usr, "You will no longer hear sounds uploaded by admins")
 		usr.stop_sound_channel(CHANNEL_ADMIN)
 		var/client/C = usr.client
-		if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-			C.chatOutput.stopMusic()
+		C?.tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Hearing Midis", "[usr.client.prefs.toggles & SOUND_MIDI ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/settings/sound/togglemidis/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_MIDI
@@ -245,8 +278,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/sound, toggle_announcement_sound)()
 	set desc = "Stop Current Sounds"
 	SEND_SOUND(usr, sound(null))
 	var/client/C = usr.client
-	if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-		C.chatOutput.stopMusic()
+	C?.tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -389,7 +421,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	set desc = "Toggle hearing a notification when admin PMs are received"
 	if(!holder)
 		return
@@ -400,7 +432,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	set desc = "Toggle if you want an announcement to admins when you login during a round"
 	if(!holder)
 		return
@@ -411,7 +443,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide Radio Chatter"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
 	if(!holder)
 		return
@@ -422,7 +454,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/deadchat()
 	set name = "Show/Hide Deadchat"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	set desc ="Toggles seeing deadchat"
 	if(!holder)
 		return
@@ -433,7 +465,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	set desc = "Toggles seeing prayers"
 	if(!holder)
 		return
@@ -444,7 +476,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggle_prayer_sound()
 	set name = "Hear/Silence Prayer Sounds"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	set desc = "Hear Prayer Sounds"
 	if(!holder)
 		return
@@ -455,7 +487,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/colorasay()
 	set name = "Set Admin Say Color"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	set desc = "Set the color of your ASAY messages"
 	if(!holder)
 		return
@@ -472,7 +504,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 /client/proc/resetasaycolor()
 	set name = "Reset your Admin Say Color"
 	set desc = "Returns your ASAY Color to default"
-	set category = "Prefs - Admin"
+	set category = "Preferences.Admin"
 	if(!holder)
 		return
 	if(!CONFIG_GET(flag/allow_admin_asaycolor))

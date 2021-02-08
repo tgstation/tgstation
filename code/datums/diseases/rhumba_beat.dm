@@ -11,15 +11,14 @@
 	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/rhumba_beat/stage_act()
-	..()
-	if(affected_mob.ckey == "rosham")
-		cure()
+	. = ..()
+	if(!.)
 		return
+
 	switch(stage)
 		if(2)
 			if(prob(45))
-				affected_mob.adjustFireLoss(5)
-				affected_mob.updatehealth()
+				affected_mob.adjustFireLoss(5, FALSE)
 			if(prob(1))
 				to_chat(affected_mob, "<span class='danger'>You feel strange...</span>")
 		if(3)
@@ -41,5 +40,3 @@
 			to_chat(affected_mob, "<span class='danger'>Your body is unable to contain the Rhumba Beat...</span>")
 			if(prob(50))
 				explosion(get_turf(affected_mob), -1, 0, 2, 3, 0, 2) // This is equivalent to a lvl 1 fireball
-		else
-			return

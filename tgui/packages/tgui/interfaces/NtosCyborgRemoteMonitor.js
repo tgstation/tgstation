@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { NtosWindow } from '../layouts';
@@ -32,7 +31,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
   }
 
   return (
-    <Fragment>
+    <>
       {!card && (
         <NoticeBox>
           Certain features require an ID card login.
@@ -80,7 +79,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                     : "Not Found"}
                 </Box>
               </LabeledList.Item>
-              <LabeledList.Item label="Module">
+              <LabeledList.Item label="Model">
                 {cyborg.module}
               </LabeledList.Item>
               <LabeledList.Item label="Upgrades">
@@ -90,6 +89,6 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
           </Section>
         );
       })}
-    </Fragment>
+    </>
   );
 };

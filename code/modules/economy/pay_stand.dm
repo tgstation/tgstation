@@ -15,13 +15,18 @@
 /obj/machinery/paystand/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id))
 		if(W == my_card)
-			if(user.a_intent == INTENT_DISARM)
+			var/list/items = list(
+			"Rename" = image(icon = 'icons/obj/economy.dmi', icon_state = "name"),
+			"Set the fee" = image(icon = 'icons/obj/economy.dmi', icon_state = "fee")
+			)
+			var/choice = show_radial_menu(user, src, items, null, require_near = TRUE, tooltips = TRUE)
+			if(choice == "Rename")
 				var/rename_msg = stripped_input(user, "Rename the Paystand:", "Paystand Naming", name)
 				if(!rename_msg || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				name = rename_msg
 				return
-			else if(user.a_intent == INTENT_GRAB)
+			else if(choice == "Set the fee")
 				var/force_fee_input = input(user,"Set the fee!","Set a fee!",0) as num|null
 				if(isnull(force_fee_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
@@ -31,32 +36,33 @@
 			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the paystand, protecting the bolts from [anchored ? "loosening" : "tightening"].</span>")
 			return
 		if(!my_card)
-			var/obj/item/card/id/assistant_mains_need_to_die = W
-			if(!assistant_mains_need_to_die.registered_account)
+			var/obj/item/card/id/new_card = W
+			if(!new_card.registered_account)
 				return
-			var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "[user]'s Awesome Paystand")
+			var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "Paystand (owned by [new_card.registered_account.account_holder])")
 			if(!msg)
 				return
 			name = msg
-			desc = "Owned by [assistant_mains_need_to_die.registered_account.account_holder], pays directly into [user.p_their()] account."
-			my_card = assistant_mains_need_to_die
+			desc = "Owned by [new_card.registered_account.account_holder], pays directly into [user.p_their()] account."
+			my_card = new_card
 			to_chat(user, "You link the stand to your account.")
 			return
-		var/obj/item/card/id/vbucks = W
-		if(vbucks.registered_account)
-			var/momsdebitcard = 0
+		var/obj/item/card/id/pay_card = W
+		if(pay_card.registered_account)
+			var/credit_amount = 0
 			if(!force_fee)
-				momsdebitcard = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
+				credit_amount = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
 			else
-				momsdebitcard = force_fee
+				credit_amount = force_fee
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
-			if(momsdebitcard < 1)
+			if(credit_amount < 1)
 				to_chat(user, "<span class='warning'>ERROR: Invalid amount designated.</span>")
 				return
-			if(vbucks.registered_account.adjust_money(-momsdebitcard))
-				purchase(vbucks.registered_account.account_holder, momsdebitcard)
-				to_chat(user, "Thanks for purchasing! The vendor has been informed.")
+			if(pay_card.registered_account.adjust_money(-credit_amount))
+				purchase(pay_card.registered_account.account_holder, credit_amount)
+				say("Thank you for your patronage, [pay_card.registered_account.account_holder]!")
+				playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 				return
 			else
 				to_chat(user, "<span class='warning'>ERROR: Account has insufficient funds to make transaction.</span>")
@@ -121,7 +127,7 @@
 	my_card.registered_account.bank_card_talk("Purchase made at your vendor by [buyer] for [price] credits.")
 	amount_deposited = amount_deposited + price
 	if(signaler && amount_deposited >= signaler_threshold)
-		signaler.activate()
+		signaler.signal()
 		amount_deposited = 0
 
 /obj/machinery/paystand/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
@@ -135,4 +141,4 @@
 	if(force_fee)
 		. += "<span class='warning'>This paystand forces a payment of <b>[force_fee]</b> credit\s per swipe instead of a variable amount.</span>"
 	if(user.get_active_held_item() == my_card)
-		. += "<span class='notice'>Paystands can be edited through swiping your card with different intents. <b>Disarm</b> allows editing the name while <b>Grab</b> changes payment functionality.</span>"
+		. += "<span class='notice'>Paystands can be edited through swiping your card.</span>"

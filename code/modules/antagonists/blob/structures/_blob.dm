@@ -4,35 +4,48 @@
 	icon = 'icons/mob/blob.dmi'
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
-	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
-	opacity = 0
+	density = TRUE
+	opacity = FALSE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
-	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	var/point_return = 0 
 	max_integrity = 30
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	var/health_regen = 2 //how much health this blob regens when pulsed
-	var/pulse_timestamp = 0 //we got pulsed when?
-	var/heal_timestamp = 0 //we got healed when?
-	var/brute_resist = 0.5 //multiplies brute damage by this
-	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = FALSE //if the blob blocks atmos and heat spread
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
+	/// how much health this blob regens when pulsed
+	var/health_regen = BLOB_REGULAR_HP_REGEN
+	/// We got pulsed when?
+	COOLDOWN_DECLARE(pulse_timestamp)
+	/// we got healed when?
+	COOLDOWN_DECLARE(heal_timestamp)
+	/// Multiplies brute damage by this
+	var/brute_resist = BLOB_BRUTE_RESIST
+	/// Multiplies burn damage by this 
+	var/fire_resist = BLOB_FIRE_RESIST 
+	/// Only used by the synchronous mesh strain. If set to true, these blobs won't share or receive damage taken with others.
+	var/ignore_syncmesh_share = 0
+	/// If the blob blocks atmos and heat spread
+	var/atmosblock = FALSE 
 	var/mob/camera/blob/overmind
+
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
 	if(owner_overmind)
 		overmind = owner_overmind
+		overmind.all_blobs += src
 		var/area/Ablob = get_area(src)
-		if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
 			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
 	if(atmosblock)
-		air_update_turf(1)
+		air_update_turf(TRUE, TRUE)
 	ConsumeTile()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -40,9 +53,11 @@
 /obj/structure/blob/Destroy()
 	if(atmosblock)
 		atmosblock = FALSE
-		air_update_turf(1)
+		air_update_turf(TRUE, FALSE)
 	if(overmind)
+		overmind.all_blobs -= src
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+		overmind = null
 	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
 	return ..()
@@ -50,7 +65,7 @@
 /obj/structure/blob/blob_act()
 	return
 
-/obj/structure/blob/Adjacent(var/atom/neighbour)
+/obj/structure/blob/Adjacent(atom/neighbour)
 	. = ..()
 	if(.)
 		var/result = 0
@@ -67,19 +82,8 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanAllowThrough(atom/movable/mover, turf/target)
-	. = ..()
-	if(!(mover.pass_flags & PASSBLOB))
-		return FALSE
-
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
-
-/obj/structure/blob/CanAStarPass(ID, dir, caller)
-	. = 0
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
-		. = . || (mover.pass_flags & PASSBLOB)
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
@@ -87,49 +91,16 @@
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
-/obj/structure/blob/proc/Pulse_Area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
-	if(QDELETED(pulsing_overmind))
-		pulsing_overmind = overmind
-	Be_Pulsed()
-	var/expanded = FALSE
-	if(prob(70) && expand())
-		expanded = TRUE
-	var/list/blobs_to_affect = list()
-	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
-		blobs_to_affect += B
-	shuffle_inplace(blobs_to_affect)
-	for(var/L in blobs_to_affect)
-		var/obj/structure/blob/B = L
-		if(!B.overmind && !istype(B, /obj/structure/blob/core) && prob(30))
-			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
-			B.update_icon()
-		var/distance = get_dist(get_turf(src), get_turf(B))
-		var/expand_probablity = max(20 - distance * 8, 1)
-		if(B.Adjacent(src))
-			expand_probablity = 20
-		if(distance <= expand_range)
-			var/can_expand = TRUE
-			if(blobs_to_affect.len >= 120 && B.heal_timestamp > world.time)
-				can_expand = FALSE
-			if(can_expand && B.pulse_timestamp <= world.time && prob(expand_probablity))
-				var/obj/structure/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
-				if(newB)
-					if(expanded)
-						qdel(newB)
-					expanded = TRUE
-		if(distance <= pulse_range)
-			B.Be_Pulsed()
-
 /obj/structure/blob/proc/Be_Pulsed()
-	if(pulse_timestamp <= world.time)
+	if(COOLDOWN_FINISHED(src, pulse_timestamp))
 		ConsumeTile()
-		if(heal_timestamp <= world.time)
+		if(COOLDOWN_FINISHED(src, heal_timestamp))
 			obj_integrity = min(max_integrity, obj_integrity+health_regen)
-			heal_timestamp = world.time + 20
+			COOLDOWN_START(src, heal_timestamp, 20)
 		update_icon()
-		pulse_timestamp = world.time + 10
-		return 1 //we did it, we were pulsed!
-	return 0 //oh no we failed
+		COOLDOWN_START(src, pulse_timestamp, 10)
+		return TRUE//we did it, we were pulsed!
+	return FALSE //oh no we failed
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
@@ -162,7 +133,7 @@
 			else
 				T = null
 	if(!T)
-		return 0
+		return
 	var/make_blob = TRUE //can we make a blob?
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
@@ -192,10 +163,10 @@
 			blob_attack_animation(T, controller)
 			T.blob_act(src) //if we can't move in hit the turf again
 			qdel(B) //we should never get to this point, since we checked before moving in. destroy the blob so we don't have two blobs on one tile
-			return null
+			return
 	else
 		blob_attack_animation(T, controller) //if we can't, animate that we attacked
-	return null
+	return
 
 /obj/structure/blob/emp_act(severity)
 	. = ..()
@@ -207,13 +178,14 @@
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/zap_act(power)
-	. = ..()
+/obj/structure/blob/zap_act(power, zap_flags)
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
-			take_damage(power/400, BURN, "energy")
+			take_damage(power * 0.0025, BURN, ENERGY)
 	else
-		take_damage(power/400, BURN, "energy")
+		take_damage(power * 0.0025, BURN, ENERGY)
+	power -= power * 0.0025 //You don't get to do it for free
+	return ..() //You don't get to do it for free
 
 /obj/structure/blob/extinguish()
 	..()
@@ -243,7 +215,7 @@
 	if(overmind)
 		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>",
 		"<b>Material Effects:</b> <span class='notice'>[overmind.blobstrain.analyzerdescdamage]</span>",
-		"<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect]</span>")
+		"<b>Material Properties:</b> <span class='notice'>[overmind.blobstrain.analyzerdesceffect || "N/A"]</span>")
 	else
 		. += "<b>No Material Detected!</b>"
 
@@ -334,10 +306,9 @@
 	name = "normal blob"
 	icon_state = "blob"
 	light_range = 0
-	obj_integrity = 21 //doesn't start at full health
-	max_integrity = 25
-	health_regen = 1
-	brute_resist = 0.25
+	max_integrity = BLOB_REGULAR_MAX_HP
+	health_regen = BLOB_REGULAR_HP_REGEN
+	brute_resist = BLOB_BRUTE_RESIST * 0.5
 
 /obj/structure/blob/normal/scannerreport()
 	if(obj_integrity <= 15)
@@ -350,14 +321,92 @@
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
-		brute_resist = 0.5
+		brute_resist = BLOB_BRUTE_RESIST
 	else if (overmind)
 		icon_state = "blob"
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
-		brute_resist = 0.25
+		brute_resist = BLOB_BRUTE_RESIST * 0.5
 	else
 		icon_state = "blob"
 		name = "dead blob"
 		desc = "A thick wall of lifeless tendrils."
-		brute_resist = 0.25
+		brute_resist = BLOB_BRUTE_RESIST * 0.5
+
+/obj/structure/blob/special	// Generic type for nodes/factories/cores/resource
+	// Core and node vars: claiming, pulsing and expanding
+	/// The radius inside which (previously dead) blob tiles are 'claimed' again by the pulsing overmind. Very rarely used.
+	var/claim_range	= 0
+	/// The radius inside which blobs are pulsed by this overmind. Does stuff like expanding, making blob spores from factories, make resources from nodes etc.
+	var/pulse_range = 0
+	/// The radius up to which this special structure naturally grows normal blobs.
+	var/expand_range = 0
+
+	// Spore production vars: for core, factories, and nodes (with strains)
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
+	var/max_spores = 0 
+	var/list/spores	= list()
+	COOLDOWN_DECLARE(spore_delay)
+	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
+
+	// Area reinforcement vars: used by cores and nodes, for strains to modify
+	/// Range this blob free upgrades to strong blobs at: for the core, and for strains
+	var/strong_reinforce_range = 0 
+	/// Range this blob free upgrades to reflector blobs at: for the core, and for strains
+	var/reflector_reinforce_range = 0
+
+/obj/structure/blob/special/proc/reinforce_area(delta_time)	// Used by cores and nodes to upgrade their surroundings
+	if(strong_reinforce_range)
+		for(var/obj/structure/blob/normal/B in range(strong_reinforce_range, src))
+			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+				B.change_to(/obj/structure/blob/shield/core, overmind)
+	if(reflector_reinforce_range)
+		for(var/obj/structure/blob/shield/B in range(reflector_reinforce_range, src))
+			if(DT_PROB(BLOB_REINFORCE_CHANCE, delta_time))
+				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
+
+/obj/structure/blob/special/proc/pulse_area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+	if(QDELETED(pulsing_overmind))
+		pulsing_overmind = overmind
+	Be_Pulsed()
+	var/expanded = FALSE
+	if(prob(70*(1/BLOB_EXPAND_CHANCE_MULTIPLIER)) && expand())
+		expanded = TRUE
+	var/list/blobs_to_affect = list()
+	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
+		blobs_to_affect += B
+	shuffle_inplace(blobs_to_affect)
+	for(var/L in blobs_to_affect)
+		var/obj/structure/blob/B = L
+		if(!B.overmind && prob(30))
+			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
+			B.update_icon()
+		var/distance = get_dist(get_turf(src), get_turf(B))
+		var/expand_probablity = max(20 - distance * 8, 1)
+		if(B.Adjacent(src))
+			expand_probablity = 20
+		if(distance <= expand_range)
+			var/can_expand = TRUE
+			if(blobs_to_affect.len >= 120 && !(COOLDOWN_FINISHED(B, heal_timestamp)))
+				can_expand = FALSE
+			if(can_expand && COOLDOWN_FINISHED(B, pulse_timestamp) && prob(expand_probablity*BLOB_EXPAND_CHANCE_MULTIPLIER))
+				if(!expanded)
+					var/obj/structure/blob/newB = B.expand(null, null, !expanded) //expansion falls off with range but is faster near the blob causing the expansion
+					if(newB)
+						expanded = TRUE
+		if(distance <= pulse_range)
+			B.Be_Pulsed()
+
+/obj/structure/blob/special/proc/produce_spores()
+	if(naut)
+		return
+	if(spores.len >= max_spores)
+		return
+	if(!COOLDOWN_FINISHED(src, spore_delay))
+		return
+	COOLDOWN_START(src, spore_delay, spore_cooldown)
+	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new (loc, src)
+	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
+		BS.overmind = overmind
+		BS.update_icons()
+		overmind.blob_mobs.Add(BS)

@@ -245,7 +245,7 @@
 	name = "Searing Tool"
 	desc = "Used to mend tissue together. Or drill tissue away."
 	id = "searingtool"
-	build_path = /obj/item/surgicaldrill/advanced
+	build_path = /obj/item/cautery/advanced
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	category = list("Tool Designs")
@@ -689,7 +689,8 @@
 /datum/design/surgery/healing //PLEASE ACCOUNT FOR UNIQUE HEALING BRANCHES IN THE hptech HREF (currently 2 for Brute/Burn; Combo is bonus)
 	name = "Tend Wounds"
 	desc = "An upgraded version of the original surgery."
-	id = "surgery_healing_base" //holder because travis cries otherwise. Not used in techweb unlocks.
+	id = "surgery_healing_base" //holder because CI cries otherwise. Not used in techweb unlocks.
+	surgery = /datum/surgery/healing
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/healing/brute_upgrade

@@ -7,13 +7,14 @@
 	desc = "A gas-powered cannon that can fire any object loaded into it."
 	w_class = WEIGHT_CLASS_BULKY
 	force = 8 //Very heavy
-	attack_verb = list("bludgeoned", "smashed", "beaten")
+	attack_verb_continuous = list("bludgeons", "smashes", "beats")
+	attack_verb_simple = list("bludgeon", "smash", "beat")
 	icon = 'icons/obj/pneumaticCannon.dmi'
 	icon_state = "pneumaticCannon"
 	inhand_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -69,8 +70,8 @@
 		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
 	. += out.Join("\n")
 
-/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent == INTENT_HARM)
+/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
+	if(user.combat_mode)
 		return ..()
 	if(istype(W, /obj/item/tank/internals))
 		if(!tank)
@@ -134,7 +135,7 @@
 
 /obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(flag && user.a_intent == INTENT_HARM) //melee attack
+	if(flag && user.combat_mode)//melee attack
 		return
 	if(!istype(user))
 		return
@@ -151,6 +152,9 @@
 		return
 	if(!tank && checktank)
 		to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
+		return
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...</span>" )
 		return
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
@@ -284,7 +288,7 @@
 	throw_amount = 1
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
-	var/static/list/pie_typecache = typecacheof(/obj/item/reagent_containers/food/snacks/pie)
+	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
 /obj/item/pneumatic_cannon/pie/Initialize()
 	. = ..()
@@ -293,54 +297,12 @@
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
 	selfcharge = TRUE
-	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
+	charge_type = /obj/item/food/pie/cream
 	maxWeightClass = 60	//20 pies.
 
 /obj/item/pneumatic_cannon/pie/selfcharge/cyborg
 	name = "low velocity pie cannon"
 	automatic = FALSE
-	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/nostun
+	charge_type = /obj/item/food/pie/cream/nostun
 	maxWeightClass = 6		//2 pies
 	charge_ticks = 2		//4 second/pie
-
-/obj/item/pneumatic_cannon/speargun
-	name = "kinetic speargun"
-	desc = "A weapon favored by carp hunters. Fires specialized spears using kinetic energy."
-	icon = 'icons/obj/guns/projectile.dmi'
-	icon_state = "speargun"
-	inhand_icon_state = "speargun"
-	w_class = WEIGHT_CLASS_BULKY
-	force = 10
-	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	gasPerThrow = 0
-	checktank = FALSE
-	range_multiplier = 3
-	throw_amount = 1
-	pressureSetting = 2
-	maxWeightClass = 2 //a single magspear
-	spin_item = FALSE
-	var/static/list/magspear_typecache = typecacheof(/obj/item/throwing_star/magspear)
-
-/obj/item/pneumatic_cannon/speargun/Initialize()
-	. = ..()
-	allowed_typecache = magspear_typecache
-
-/obj/item/storage/backpack/magspear_quiver
-	name = "quiver"
-	desc = "A quiver for holding magspears."
-	icon_state = "quiver"
-	inhand_icon_state = "quiver"
-
-/obj/item/storage/backpack/magspear_quiver/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 20
-	STR.max_combined_w_class = 40
-	STR.display_numerical_stacking = TRUE
-	STR.set_holdable(list(
-		/obj/item/throwing_star/magspear
-		))
-
-/obj/item/storage/backpack/magspear_quiver/PopulateContents()
-	for(var/i in 1 to 20)
-		new /obj/item/throwing_star/magspear(src)

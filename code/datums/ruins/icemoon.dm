@@ -78,7 +78,7 @@
 	description = "You'll fight and fight and just keep fighting."
 	suffix = "icemoon_underground_wrath.dmm"
 
-/datum/map_template/ruin/lavaland/hermit
+/datum/map_template/ruin/icemoon/underground/hermit
 	name = "Frozen Shack"
 	id = "hermitshack"
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
@@ -99,7 +99,7 @@
 /datum/map_template/ruin/icemoon/underground/bathhouse
 	name = "Bath House"
 	id = "bathhouse"
-	description = "A taste of paradise, locked in the hell of the Ice Moon."
+	description = "A warm, safe place."
 	suffix = "icemoon_underground_bathhouse.dmm"
 
 /datum/map_template/ruin/icemoon/underground/wendigo_cave

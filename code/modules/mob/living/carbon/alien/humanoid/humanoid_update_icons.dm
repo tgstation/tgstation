@@ -12,12 +12,12 @@
 		else
 			icon_state = "alien[caste]_dead"
 
-	else if((stat == UNCONSCIOUS && !asleep) || stat == SOFT_CRIT || IsParalyzed())
+	else if((stat == UNCONSCIOUS && !asleep) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(!(mobility_flags & MOBILITY_STAND))
+	else if(body_position == LYING_DOWN)
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
@@ -34,15 +34,15 @@
 			icon = alt_icon
 			alt_icon = old_icon
 		icon_state = "alien[caste]_leap"
-		pixel_x = -32
-		pixel_y = -32
+		pixel_x = base_pixel_x - 32
+		pixel_y = base_pixel_y - 32
 	else
 		if(alt_icon != initial(alt_icon))
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		pixel_x = get_standard_pixel_x_offset(mobility_flags & MOBILITY_STAND)
-		pixel_y = get_standard_pixel_y_offset(mobility_flags & MOBILITY_STAND)
+	pixel_x = base_pixel_x + body_position_pixel_x_offset
+	pixel_y = base_pixel_y + body_position_pixel_y_offset
 	update_inv_hands()
 	update_inv_handcuffed()
 

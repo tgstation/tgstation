@@ -45,7 +45,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency/shuttle_build{
-	dwidth = 9;
 	height = 15;
 	name = "Shuttle Under Construction";
 	port_direction = 4;
@@ -137,11 +136,11 @@
 /area/shuttle/escape)
 "m" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal/fifty{
+/obj/item/stack/sheet/iron/fifty{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stack/sheet/metal/fifty{
+/obj/item/stack/sheet/iron/fifty{
 	pixel_x = -2;
 	pixel_y = -2
 	},
@@ -174,6 +173,12 @@
 /area/shuttle/escape)
 "p" = (
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"S" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -397,7 +402,7 @@ f
 f
 f
 f
-f
+S
 h
 "}
 (9,1,1) = {"

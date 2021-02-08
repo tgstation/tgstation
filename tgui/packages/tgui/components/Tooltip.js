@@ -9,11 +9,13 @@ import { classes } from 'common/react';
 export const Tooltip = props => {
   const {
     content,
+    overrideLong = false,
     position = 'bottom',
   } = props;
   // Empirically calculated length of the string,
   // at which tooltip text starts to overflow.
-  const long = typeof content === 'string' && content.length > 35;
+  const long = typeof content === 'string' 
+  && (content.length > 35 && !overrideLong);
   return (
     <div
       className={classes([

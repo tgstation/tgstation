@@ -8,6 +8,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosNetDos"
+	program_icon = "satellite-dish"
 
 	var/obj/machinery/ntnet_relay/target = null
 	var/dos_speed = 0
@@ -25,7 +26,7 @@
 			dos_speed = NTNETSPEED_ETHERNET * 10
 	if(target && executed)
 		target.dos_overload += dos_speed
-		if(!target.is_operational())
+		if(!target.is_operational)
 			target.dos_sources.Remove(src)
 			target = null
 			error = "Connection to destination relay lost."
@@ -39,11 +40,12 @@
 	..()
 
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("PRG_target_relay")
-			for(var/obj/machinery/ntnet_relay/R in SSnetworks.station_network.relays)
+			for(var/obj/machinery/ntnet_relay/R in SSnetworks.relays)
 				if("[R.uid]" == params["targid"])
 					target = R
 					break
@@ -61,7 +63,7 @@
 				target.dos_sources.Add(src)
 				if(SSnetworks.station_network.intrusion_detection_enabled)
 					var/obj/item/computer_hardware/network_card/network_card = computer.all_components[MC_NET]
-					SSnetworks.station_network.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [network_card.get_network_tag()]")
+					SSnetworks.add_log("IDS WARNING - Excess traffic flood targeting relay [target.uid] detected from device: [network_card.get_network_tag()]")
 					SSnetworks.station_network.intrusion_detection_alarm = TRUE
 			return TRUE
 
@@ -81,7 +83,7 @@
 	else
 		data["target"] = FALSE
 		data["relays"] = list()
-		for(var/obj/machinery/ntnet_relay/R in SSnetworks.station_network.relays)
+		for(var/obj/machinery/ntnet_relay/R in SSnetworks.relays)
 			data["relays"] += list(list("id" = R.uid))
 		data["focus"] = target ? target.uid : null
 

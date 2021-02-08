@@ -24,7 +24,7 @@
 /obj/machinery/portable_atmospherics/pump/Destroy()
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
@@ -37,14 +37,14 @@
 	if(connected_port)
 		. += "siphon-connector"
 
-/obj/machinery/portable_atmospherics/pump/process_atmos()
+/obj/machinery/portable_atmospherics/pump/process_atmos(delta_time)
 	..()
 
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit) * delta_time * 0.5, 5, 50), BURN, 0)
 		return
 
 	if(!on)
@@ -62,13 +62,13 @@
 
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
-		air_update_turf() // Update the environment if needed.
+		air_update_turf(FALSE, FALSE) // Update the environment if needed.
 
 /obj/machinery/portable_atmospherics/pump/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(is_operational())
+	if(is_operational)
 		if(prob(50 / severity))
 			on = !on
 		if(prob(100 / severity))
@@ -112,7 +112,8 @@
 	return data
 
 /obj/machinery/portable_atmospherics/pump/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")

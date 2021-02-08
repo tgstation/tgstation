@@ -23,13 +23,13 @@
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
 		to_chat(user, "<span class='warning'>[src] is out of water!</span>")
-		return 0
+		return FALSE
 	else
 		var/obj/item/mop/M = mop
 		reagents.trans_to(mop, M.mopcap, transfered_by = user)
 		to_chat(user, "<span class='notice'>You wet [mop] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		return 1
+		return TRUE
 
 /obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
 	if(!user.transferItemToLoc(I, src))
@@ -162,11 +162,11 @@
 	update_icon()
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/structure/janitorialcart/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE

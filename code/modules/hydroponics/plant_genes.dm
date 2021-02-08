@@ -1,3 +1,14 @@
+/// Plants that glow.
+#define GLOW_ID "glow"
+/// Plant types.
+#define PLANT_TYPE_ID "plant_type"
+/// Plants that affect the reagent's temperature.
+#define TEMP_CHANGE_ID "temperature_change"
+/// Plants that affect the reagent contents.
+#define CONTENTS_CHANGE_ID "contents_change"
+/// Plants that do something special when they impact.
+#define THROW_IMPACT_ID "special_throw_impact"
+
 /datum/plant_gene
 	var/name
 	var/mutability_flags = PLANT_GENE_EXTRACTABLE | PLANT_GENE_REMOVABLE ///These flags tells the genemodder if we want the gene to be extractable, only removable or neither.
@@ -35,7 +46,7 @@
 /datum/plant_gene/core/proc/apply_stat(obj/item/seeds/S)
 	return
 
-/datum/plant_gene/core/New(var/i = null)
+/datum/plant_gene/core/New(i = null)
 	..()
 	if(!isnull(i))
 		value = i
@@ -155,9 +166,22 @@
 	if(!..())
 		return FALSE
 	for(var/datum/plant_gene/reagent/R in S.genes)
-		if(R.reagent_id == reagent_id)
+		if(R.reagent_id == reagent_id && R.rate <= rate)
 			return FALSE
 	return TRUE
+
+/**
+ * Intends to compare a reagent gene with a set of seeds, and if the seeds contain the same gene, with more production rate, upgrades the rate to the highest of the two.
+ *
+ * Called when plants are crossbreeding, this looks for two matching reagent_ids, where the rates are greater, in order to upgrade.
+ */
+/datum/plant_gene/reagent/proc/try_upgrade_gene(obj/item/seeds/seed)
+	for(var/datum/plant_gene/reagent/reagent in seed.genes)
+		if(reagent.reagent_id != reagent_id || reagent.rate <= rate)
+			continue
+		rate = reagent.rate
+		return TRUE
+	return FALSE
 
 /datum/plant_gene/reagent/polypyr
 	name = "Polypyrylium Oligomers"
@@ -169,11 +193,19 @@
 	reagent_id = /datum/reagent/consumable/liquidelectricity
 	rate = 0.1
 
-// Various traits affecting the product.
+/datum/plant_gene/reagent/carbon
+	name = "Carbon"
+	reagent_id = /datum/reagent/carbon
+	rate = 0.1
+
+/// Traits that affect the grown product.
 /datum/plant_gene/trait
 	var/rate = 0.05
 	var/examine_line = ""
-	var/trait_id // must be set and equal for any two traits of the same type
+	/// Must be set and equal for any two traits of the same type
+	var/trait_id
+	/// Flags that modify the final product.
+	var/trait_flags
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
@@ -191,22 +223,22 @@
 			return FALSE
 	return TRUE
 
-/datum/plant_gene/trait/proc/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+/datum/plant_gene/trait/proc/on_new(obj/item/food/grown/G, newloc)
 	return
 
-/datum/plant_gene/trait/proc/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
+/datum/plant_gene/trait/proc/on_consume(obj/item/food/grown/G, mob/living/carbon/target)
 	return
 
-/datum/plant_gene/trait/proc/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
+/datum/plant_gene/trait/proc/on_slip(obj/item/food/grown/G, mob/living/carbon/target)
 	return
 
-/datum/plant_gene/trait/proc/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/proc/on_squash(obj/item/food/grown/G, atom/target)
 	return
 
-/datum/plant_gene/trait/proc/on_attackby(obj/item/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
+/datum/plant_gene/trait/proc/on_attackby(obj/item/food/grown/G, obj/item/I, mob/user)
 	return
 
-/datum/plant_gene/trait/proc/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/proc/on_throw_impact(obj/item/food/grown/G, atom/target)
 	return
 
 ///This proc triggers when the tray processes and a roll is sucessful, the success chance scales with production.
@@ -219,15 +251,57 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+	trait_id = THROW_IMPACT_ID
 
-/datum/plant_gene/trait/squash/can_add(obj/item/seeds/S)
-	if(S.get_gene(/datum/plant_gene/trait/sticky))
-		return FALSE
+// Register a signal that our plant can be squashed on add.
+/datum/plant_gene/trait/squash/on_new(obj/item/food/grown/our_plant, newloc)
 	. = ..()
+	RegisterSignal(our_plant, COMSIG_PLANT_SQUASH, .proc/squash_plant)
 
-/datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
-	// Squash the plant on slip.
-	G.squash(C)
+// Squash the plant on slip.
+/datum/plant_gene/trait/squash/on_slip(obj/item/food/grown/our_plant, mob/living/carbon/target)
+	SEND_SIGNAL(our_plant, COMSIG_PLANT_SQUASH, target)
+
+// Squash the plant on thrown impact.
+/datum/plant_gene/trait/squash/on_throw_impact(obj/item/food/grown/our_plant, atom/target)
+	SEND_SIGNAL(our_plant, COMSIG_PLANT_SQUASH, target)
+
+/*
+ * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
+ *
+ * Arguments
+ * our_plant - the plant this trait belongs to.
+ * target - the atom being hit by this squashed plant.
+ */
+/datum/plant_gene/trait/squash/proc/squash_plant(obj/item/food/grown/our_plant, atom/target)
+	SIGNAL_HANDLER
+
+	var/turf/our_turf = get_turf(target)
+	our_plant.forceMove(our_turf)
+	if(istype(our_plant))
+		if(ispath(our_plant.splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
+			var/obj/plant_smudge = new our_plant.splat_type(our_turf)
+			plant_smudge.name = "[our_plant.name] smudge"
+			if(our_plant.filling_color)
+				plant_smudge.color = our_plant.filling_color
+		else if(our_plant.splat_type)
+			new our_plant.splat_type(our_turf)
+	else
+		var/obj/effect/decal/cleanable/food/plant_smudge/misc_smudge = new(our_turf)
+		misc_smudge.name = "[our_plant.name] smudge"
+		misc_smudge.color = "#82b900"
+
+	our_plant.visible_message("<span class='warning'>[our_plant] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
+	var/obj/item/seeds/seed = our_plant.get_plant_seed()
+	if(seed)
+		for(var/datum/plant_gene/trait/trait in seed.genes)
+			trait.on_squash(our_plant, target)
+
+	our_plant.reagents?.expose(our_turf)
+	for(var/things in our_turf)
+		our_plant.reagents?.expose(things)
+
+	qdel(our_plant)
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -236,11 +310,11 @@
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
-/datum/plant_gene/trait/slip/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+/datum/plant_gene/trait/slip/on_new(obj/item/food/grown/G, newloc)
 	..()
-	if(istype(G) && ispath(G.trash, /obj/item/grown))
+	if(istype(G) && ispath(G.trash_type, /obj/item/grown))
 		return
-	var/obj/item/seeds/seed = G.seed
+	var/obj/item/seeds/seed = G.get_plant_seed()
 	var/stun_len = seed.potency * rate
 
 	if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent(/datum/reagent/lube)))
@@ -248,7 +322,7 @@
 
 	G.AddComponent(/datum/component/slippery, min(stun_len,140), NONE, CALLBACK(src, .proc/handle_slip, G))
 
-/datum/plant_gene/trait/slip/proc/handle_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/M)
+/datum/plant_gene/trait/slip/proc/handle_slip(obj/item/food/grown/G, mob/M)
 	for(var/datum/plant_gene/trait/T in G.seed.genes)
 		T.on_slip(G, M)
 
@@ -260,19 +334,19 @@
 	name = "Electrical Activity"
 	rate = 0.2
 
-/datum/plant_gene/trait/cell_charge/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
+/datum/plant_gene/trait/cell_charge/on_slip(obj/item/food/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
 	if(prob(power))
 		C.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
 
-/datum/plant_gene/trait/cell_charge/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/cell_charge/on_squash(obj/item/food/grown/G, atom/target)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		var/power = G.seed.potency*rate
 		if(prob(power))
 			C.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
 
-/datum/plant_gene/trait/cell_charge/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
+/datum/plant_gene/trait/cell_charge/on_consume(obj/item/food/grown/G, mob/living/carbon/target)
 	if(!G.reagents.total_volume)
 		var/batteries_recharged = 0
 		for(var/obj/item/stock_parts/cell/C in target.GetAllContents())
@@ -295,7 +369,7 @@
 	name = "Bioluminescence"
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
-	trait_id = "glow"
+	trait_id = GLOW_ID
 	var/glow_color = "#C3E381"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
@@ -304,9 +378,10 @@
 /datum/plant_gene/trait/glow/proc/glow_power(obj/item/seeds/S)
 	return max(S.potency*(rate + 0.01), 0.1)
 
-/datum/plant_gene/trait/glow/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
-	..()
-	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
+/datum/plant_gene/trait/glow/on_new(obj/item/food/grown/G, newloc)
+	. = ..()
+	G.light_system = MOVABLE_LIGHT
+	G.AddComponent(/datum/component/overlay_lighting, glow_range(G.seed), glow_power(G.seed), glow_color)
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
@@ -360,14 +435,14 @@
 	name = "Bluespace Activity"
 	rate = 0.1
 
-/datum/plant_gene/trait/teleport/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/teleport/on_squash(obj/item/food/grown/G, atom/target)
 	if(isliving(target))
 		var/teleport_radius = max(round(G.seed.potency / 10), 1)
 		var/turf/T = get_turf(target)
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/datum/plant_gene/trait/teleport/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
+/datum/plant_gene/trait/teleport/on_slip(obj/item/food/grown/G, mob/living/carbon/C)
 	var/teleport_radius = max(round(G.seed.potency / 10), 1)
 	var/turf/T = get_turf(C)
 	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
@@ -379,19 +454,20 @@
 		qdel(G)
 
 /**
-  * A plant trait that causes the plant's capacity to double.
-  *
-  * When harvested, the plant's individual capacity is set to double it's default.
-  * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
-  */
+ * A plant trait that causes the plant's capacity to double.
+ *
+ * When harvested, the plant's individual capacity is set to double it's default.
+ * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
+ */
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
 	rate = 2
+	trait_flags = TRAIT_HALVES_YIELD
 
-/datum/plant_gene/trait/maxchem/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+/datum/plant_gene/trait/maxchem/on_new(obj/item/food/grown/G, newloc)
 	..()
-	G.reagents.maximum_volume *= rate
+	G.max_volume *= rate
 
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
@@ -406,7 +482,7 @@
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
 
-/datum/plant_gene/trait/battery/on_attackby(obj/item/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
+/datum/plant_gene/trait/battery/on_attackby(obj/item/food/grown/G, obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
 		if(C.use(5))
@@ -434,24 +510,22 @@
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
 
-/datum/plant_gene/trait/stinging/on_slip(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/stinging/on_slip(obj/item/food/grown/G, atom/target)
 	on_throw_impact(G, target)
 
-/datum/plant_gene/trait/stinging/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/stinging/on_throw_impact(obj/item/food/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
 		var/mob/living/L = target
 		if(L.reagents && L.can_inject(null, 0))
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
-			var/fraction = min(injecting_amount/G.reagents.total_volume, 1)
-			G.reagents.expose(L, INJECT, fraction)
-			G.reagents.trans_to(L, injecting_amount)
+			G.reagents.trans_to(L, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
 			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
 
-/datum/plant_gene/trait/smoke/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/smoke/on_squash(obj/item/food/grown/G, atom/target)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	var/splat_location = get_turf(target)
 	var/smoke_amount = round(sqrt(G.seed.potency * 0.1), 1)
@@ -467,7 +541,7 @@
 	if(!(S.resistance_flags & FIRE_PROOF))
 		S.resistance_flags |= FIRE_PROOF
 
-/datum/plant_gene/trait/fire_resistance/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+/datum/plant_gene/trait/fire_resistance/on_new(obj/item/food/grown/G, newloc)
 	if(!(G.resistance_flags & FIRE_PROOF))
 		G.resistance_flags |= FIRE_PROOF
 
@@ -475,45 +549,88 @@
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
 
-/datum/plant_gene/trait/invasive/on_grow(obj/machinery/hydroponics/H)
+/datum/plant_gene/trait/invasive/on_grow(obj/machinery/hydroponics/our_tray)
 	for(var/step_dir in GLOB.alldirs)
-		var/obj/machinery/hydroponics/HY = locate() in get_step(H, step_dir)
-		if(HY && prob(15))
-			if(HY.myseed) // check if there is something in the tray.
-				if(HY.myseed.type == H.myseed.type && HY.dead != 0)
-					continue //It should not destroy its owm kind.
-				qdel(HY.myseed)
-				HY.myseed = null
-			HY.myseed = H.myseed.Copy()
-			HY.age = 0
-			HY.dead = 0
-			HY.plant_health = HY.myseed.endurance
-			HY.lastcycle = world.time
-			HY.harvest = 0
-			HY.weedlevel = 0 // Reset
-			HY.pestlevel = 0 // Reset
-			HY.update_icon()
-			HY.visible_message("<span class='warning'>The [H.myseed.plantname] spreads!</span>")
+		var/obj/machinery/hydroponics/spread_tray = locate() in get_step(our_tray, step_dir)
+		if(spread_tray && prob(15))
+			if(!our_tray.Adjacent(spread_tray))
+				continue //Don't spread through things we can't go through.
+
+			if(spread_tray.myseed) // Check if there's another seed in the next tray.
+				if(spread_tray.myseed.type == our_tray.myseed.type && !spread_tray.dead)
+					continue // It should not destroy its own kind.
+				spread_tray.visible_message("<span class='warning'>The [spread_tray.myseed.plantname] is overtaken by [our_tray.myseed.plantname]!</span>")
+				QDEL_NULL(spread_tray.myseed)
+			spread_tray.myseed = our_tray.myseed.Copy()
+			spread_tray.age = 0
+			spread_tray.dead = FALSE
+			spread_tray.plant_health = spread_tray.myseed.endurance
+			spread_tray.lastcycle = world.time
+			spread_tray.harvest = FALSE
+			spread_tray.weedlevel = 0 // Reset
+			spread_tray.pestlevel = 0 // Reset
+			spread_tray.update_icon()
+			spread_tray.visible_message("<span class='warning'>The [our_tray.myseed.plantname] spreads!</span>")
+			if(spread_tray.myseed)
+				spread_tray.name = "[initial(spread_tray.name)] ([spread_tray.myseed.plantname])"
+			else
+				spread_tray.name = initial(spread_tray.name)
 
 /**
-  * A plant trait that causes the plant's food reagents to ferment instead.
-  *
-  * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
-  * This exception is executed in seeds.dm under 'prepare_result'.
-  */
+ * A plant trait that causes the plant's food reagents to ferment instead.
+ *
+ * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+ * This exception is executed in seeds.dm under 'prepare_result'.
+ *
+ * Incompatible with auto-juicing composition.
+ */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
+	trait_id = CONTENTS_CHANGE_ID
 
 /**
-  * A plant trait that causes the plant to gain aesthetic googly eyes.
-  *
-  * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
-  */
+ * Similar to auto-distilling, but instead of brewing the plant's contents it juices it.
+ *
+ * Incompatible with auto-distilling composition.
+ */
+/datum/plant_gene/trait/juicing
+	name = "Auto-Juicing Composition"
+	trait_id = CONTENTS_CHANGE_ID
+
+/**
+ * Plays a laughter sound when someone slips on it.
+ * Like the sitcom component but for plants.
+ * Just like slippery skin, if we have a trash type this only functions on that. (Banana peels)
+ */
+/datum/plant_gene/trait/plant_laughter
+	name = "Hallucinatory Feedback"
+	/// Sounds that play when this trait triggers
+	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
+	/// Whether or not we can trigger. (If we have a trash type it'll trigger on that instead)
+	var/can_trigger = TRUE
+
+/datum/plant_gene/trait/plant_laughter/on_new(obj/item/food/grown/G, newloc)
+	..()
+	if(istype(G) && ispath(G.trash_type, /obj/item/grown))
+		can_trigger = FALSE
+
+/datum/plant_gene/trait/plant_laughter/on_slip(obj/item/food/grown/G, atom/target)
+	if(!can_trigger)
+		return
+
+	G.audible_message("<span_class='notice'>[G] lets out burst of laughter.</span>")
+	playsound(G, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/**
+ * A plant trait that causes the plant to gain aesthetic googly eyes.
+ *
+ * Has no functional purpose outside of causing japes, adds eyes over the plant's sprite, which are adjusted for size by potency.
+ */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
 	var/mutable_appearance/googly
 
-/datum/plant_gene/trait/eyes/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+/datum/plant_gene/trait/eyes/on_new(obj/item/food/grown/G, newloc)
 	. = ..()
 	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
 	googly.appearance_flags = RESET_COLOR
@@ -521,8 +638,9 @@
 
 /datum/plant_gene/trait/sticky
 	name = "Prickly Adhesion"
+	trait_id = THROW_IMPACT_ID
 
-/datum/plant_gene/trait/sticky/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+/datum/plant_gene/trait/sticky/on_new(obj/item/food/grown/G, newloc)
 	. = ..()
 	if(G.seed.get_gene(/datum/plant_gene/trait/stinging))
 		G.embedding = EMBED_POINTY
@@ -531,14 +649,27 @@
 	G.updateEmbedding()
 	G.throwforce = (G.seed.potency/20)
 
-/datum/plant_gene/trait/sticky/can_add(obj/item/seeds/S)
-	if(S.get_gene(/datum/plant_gene/trait/squash))
-		return FALSE
-	. = ..()
+/**
+ * This trait automatically heats up the plant's chemical contents when harvested.
+ * This requires nutriment to fuel. 1u nutriment = 25 K.
+ */
+/datum/plant_gene/trait/chem_heating
+	name = "Exothermic Activity"
+	trait_id = TEMP_CHANGE_ID
+	trait_flags = TRAIT_HALVES_YIELD
+
+/**
+ * This trait is the opposite of above - it cools down the plant's chemical contents on harvest.
+ * This requires nutriment to fuel. 1u nutriment = -5 K.
+ */
+/datum/plant_gene/trait/chem_cooling
+	name = "Endothermic Activity"
+	trait_id = TEMP_CHANGE_ID
+	trait_flags = TRAIT_HALVES_YIELD
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"
-	trait_id = "plant_type"
+	trait_id = PLANT_TYPE_ID
 
 /datum/plant_gene/trait/plant_type/weed_hardy
 	name = "Weed Adaptation"
@@ -551,3 +682,9 @@
 
 /datum/plant_gene/trait/plant_type/carnivory
 	name = "Obligate Carnivory"
+
+#undef GLOW_ID
+#undef PLANT_TYPE_ID
+#undef TEMP_CHANGE_ID
+#undef CONTENTS_CHANGE_ID
+#undef THROW_IMPACT_ID

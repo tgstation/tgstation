@@ -37,7 +37,7 @@
 	name = "horrific experiment"
 	desc = "Some sort of pod filled with blood and viscera. You swear you can see it moving..."
 	icon = 'icons/obj/machines/cloning.dmi'
-	icon_state = "pod_g"
+	icon_state = "pod_g" // Please don't delete it and not notice it for months this time.
 
 /obj/structure/showcase/machinery/oldpod
 	name = "damaged cryogenic pod"
@@ -122,7 +122,7 @@
 	if(W.tool_behaviour == TOOL_CROWBAR && deconstruction_state == SHOWCASE_SCREWDRIVERED)
 		if(W.use_tool(src, user, 20, volume=100))
 			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
-			new /obj/item/stack/sheet/metal(drop_location(), 4)
+			new /obj/item/stack/sheet/iron(drop_location(), 4)
 			qdel(src)
 
 	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, W))

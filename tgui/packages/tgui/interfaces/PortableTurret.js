@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
@@ -15,20 +14,20 @@ export const PortableTurret = (props, context) => {
     neutralize_unidentified,
     neutralize_nonmindshielded,
     neutralize_cyborgs,
-    ignore_heads,
+    neutralize_heads,
     manual_control,
     allow_manual_control,
     lasertag_turret,
   } = data;
   return (
     <Window
-      width={305}
-      height={lasertag_turret ? 110 : 300}>
+      width={310}
+      height={lasertag_turret ? 110 : 292}>
       <Window.Content>
         <NoticeBox>
           Swipe an ID card to {locked ? 'unlock' : 'lock'} this interface.
         </NoticeBox>
-        <Fragment>
+        <>
           <Section>
             <LabeledList>
               <LabeledList.Item
@@ -58,8 +57,8 @@ export const PortableTurret = (props, context) => {
               title="Target Settings"
               buttons={(
                 <Button.Checkbox
-                  checked={ignore_heads}
-                  content="Ignore Heads"
+                  checked={!neutralize_heads}
+                  content="Ignore Command"
                   disabled={locked}
                   onClick={() => act('shootheads')} />
               )}>
@@ -101,7 +100,7 @@ export const PortableTurret = (props, context) => {
                 onClick={() => act('shootborgs')} />
             </Section>
           )}
-        </Fragment>
+        </>
       </Window.Content>
     </Window>
   );

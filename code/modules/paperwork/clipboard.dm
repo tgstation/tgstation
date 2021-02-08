@@ -70,7 +70,7 @@
 
 /obj/item/clipboard/Topic(href, href_list)
 	..()
-	if(usr.stat || usr.restrained())
+	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	if(usr.contents.Find(src))

@@ -3,13 +3,44 @@
 //Damage and status effect defines
 
 //Damage defines //TODO: merge these down to reduce on defines
+/// Physical fracturing and warping of the material.
 #define BRUTE		"brute"
-#define BURN		"fire"
+/// Scorching and charring of the material.
+#define BURN		"burn"
+/// Poisoning. Mostly caused by reagents.
 #define TOX			"toxin"
+/// Suffocation.
 #define OXY			"oxygen"
+/// Cellular degredation. Rare and difficult to treat.
 #define CLONE		"clone"
+/// Exhaustion and nonlethal damage.
 #define STAMINA 	"stamina"
+/// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
 #define BRAIN		"brain"
+
+//Damage flag defines //
+/// Involves a melee attack or a thrown object.
+#define MELEE		"melee"
+/// Involves a solid projectile.
+#define BULLET		"bullet"
+/// Involves a laser.
+#define LASER		"laser"
+/// Involves an EMP or energy-based projectile.
+#define ENERGY		"energy"
+/// Involves a shockwave, usually from an explosion.
+#define BOMB		"bomb"
+/// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
+#define BIO			"bio"
+/// Involves ionizing radiation.
+#define RAD			"rad"
+/// Involves fire or temperature extremes.
+#define FIRE		"fire"
+/// Involves corrosive substances.
+#define ACID		"acid"
+/// Involves magic.
+#define MAGIC		"magic"
+/// Involved in checking the likelyhood of applying a wound to a mob.
+#define WOUND		"wound"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 	            	(1<<0)
@@ -50,6 +81,7 @@
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_MELEE 8
+#define CLICK_CD_THROW 8
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
@@ -96,26 +128,16 @@
 #define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
 #define ATTACK_EFFECT_BOOP		"boop" //Honk
 
-//intent defines
-#define INTENT_HELP   "help"
-#define INTENT_GRAB   "grab"
-#define INTENT_DISARM "disarm"
-#define INTENT_HARM   "harm"
-//NOTE: INTENT_HOTKEY_* defines are not actual intents!
-//they are here to support hotkeys
-#define INTENT_HOTKEY_LEFT  "left"
-#define INTENT_HOTKEY_RIGHT "right"
-
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
 #define DEFAULT_MESSAGE_RANGE 7
 
 //Shove knockdown lengths (deciseconds)
-#define SHOVE_KNOCKDOWN_SOLID 30
-#define SHOVE_KNOCKDOWN_HUMAN 30
-#define SHOVE_KNOCKDOWN_TABLE 30
-#define SHOVE_KNOCKDOWN_COLLATERAL 10
-#define SHOVE_CHAIN_PARALYZE 40
+#define SHOVE_KNOCKDOWN_SOLID 20
+#define SHOVE_KNOCKDOWN_HUMAN 20
+#define SHOVE_KNOCKDOWN_TABLE 20
+#define SHOVE_KNOCKDOWN_COLLATERAL 1
+#define SHOVE_CHAIN_PARALYZE 30
 //Shove slowdown
 #define SHOVE_SLOWDOWN_LENGTH 30
 #define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
@@ -128,27 +150,29 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //Embedded objects
 ///Chance for embedded objects to cause pain (damage user)
-#define EMBEDDED_PAIN_CHANCE 					15
+#define EMBEDDED_PAIN_CHANCE 15
 ///Chance for embedded object to fall out (causing pain but removing the object)
-#define EMBEDDED_ITEM_FALLOUT 					5
-///Chance for an object to embed into somebody when thrown (if it's sharp)
-#define EMBED_CHANCE							45
+#define EMBEDDED_ITEM_FALLOUT 5
+///Chance for an object to embed into somebody when thrown
+#define EMBED_CHANCE 45
 ///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
-#define EMBEDDED_PAIN_MULTIPLIER				2
+#define EMBEDDED_PAIN_MULTIPLIER 2
 ///Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
-#define EMBEDDED_IMPACT_PAIN_MULTIPLIER			4
+#define EMBEDDED_IMPACT_PAIN_MULTIPLIER 4
 ///The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
-#define EMBED_THROWSPEED_THRESHOLD				4
+#define EMBED_THROWSPEED_THRESHOLD 4
 ///Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 6
 ///A Time in ticks, total removal time = (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME			30
+#define EMBEDDED_UNSAFE_REMOVAL_TIME 30
 ///Chance for embedded objects to cause pain every time they move (jostle)
-#define EMBEDDED_JOSTLE_CHANCE					5
+#define EMBEDDED_JOSTLE_CHANCE 5
 ///Coefficient of multiplication for the damage the item does while
-#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER			1
+#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER 1
 ///This percentage of all pain will be dealt as stam damage rather than brute (0-1)
-#define EMBEDDED_PAIN_STAM_PCT					0.0
+#define EMBEDDED_PAIN_STAM_PCT 0.0
+///For thrown weapons, every extra speed it's thrown at above its normal throwspeed will add this to the embed chance
+#define EMBED_CHANCE_SPEED_BONUS 10
 
 #define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
 #define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
@@ -249,6 +273,19 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
-#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 
 #define NICE_SHOT_RICOCHET_BONUS	10			//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
+
+/// If a carbon is thrown at a speed faster than normal and impacts something solid, they take extra damage for every extra speed up to this number (see [/mob/living/carbon/proc/throw_impact])
+#define CARBON_MAX_IMPACT_SPEED_BONUS	5
+
+/// Alternate attack defines. Return these at the end of procs like afterattack_alt.
+/// Calls the normal attack proc. For example, if returned in afterattack_alt, will call afterattack.
+/// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.
+#define ALT_ATTACK_CALL_NORMAL 1
+
+/// Cancels the attack chain entirely.
+#define ALT_ATTACK_CANCEL_ATTACK_CHAIN 2
+
+/// Proceed with the attack chain, but don't call the normal methods.
+#define ALT_ATTACK_CONTINUE_CHAIN 3

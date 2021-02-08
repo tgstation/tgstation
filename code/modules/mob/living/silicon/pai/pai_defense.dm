@@ -40,23 +40,20 @@
 			fold_in(force = 1)
 			Paralyze(200)
 
-/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
-	switch(user.a_intent)
-		if("help")
-			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
-		if("disarm")
-			visible_message("<span class='notice'>[user] boops [src] on the head!</span>")
-		if("harm")
-			user.do_attack_animation(src)
-			if (user.name == master)
-				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
-				if(do_after(user, 1 SECONDS, TRUE, src))
-					fold_in()
-					if(user.put_in_hands(card))
-						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
-			else
-				visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
-				take_holo_damage(2)
+/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user, modifiers)
+	if(user.combat_mode)
+		user.do_attack_animation(src)
+		if (user.name == master)
+			visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
+			if(do_after(user, 1 SECONDS, TRUE, src))
+				fold_in()
+				if(user.put_in_hands(card))
+					user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
+		else
+			visible_message("<span class='danger'>[user] stomps on [src]!.</span>")
+			take_holo_damage(2)
+	else
+		visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>")
 
 /mob/living/silicon/pai/bullet_act(obj/projectile/Proj)
 	if(Proj.stun)
@@ -70,7 +67,7 @@
 /mob/living/silicon/pai/stripPanelEquip(obj/item/what, mob/who, where) //prevents stripping
 	to_chat(src, "<span class='warning'>Your holochassis stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
 
-/mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
+/mob/living/silicon/pai/IgniteMob(mob/living/silicon/pai/P)
 	return FALSE //No we're not flammable
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)

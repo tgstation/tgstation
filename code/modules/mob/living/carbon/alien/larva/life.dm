@@ -1,7 +1,6 @@
 
 
 /mob/living/carbon/alien/larva/Life()
-	set invisibility = 0
 	if (notransform)
 		return
 	if(..() && !IS_IN_STASIS(src)) //not dead and not in stasis
@@ -24,6 +23,5 @@
 			if(stat == UNCONSCIOUS)
 				set_resting(FALSE)
 			set_stat(CONSCIOUS)
-	update_mobility()
 	update_damage_hud()
 	update_health_hud()

@@ -35,10 +35,14 @@
 
 /// triggered on wield of two handed item
 /obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	active = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	active = FALSE
 
 /obj/item/rcl/attackby(obj/item/W, mob/user)
@@ -170,6 +174,8 @@
 	listeningTo = to_hook
 
 /obj/item/rcl/proc/trigger(mob/user)
+	SIGNAL_HANDLER
+
 	if(active)
 		layCable(user)
 	if(wiring_gui_menu) //update the wire options as you move
@@ -192,7 +198,7 @@
 		if(last)
 			if(get_dist(last, user) == 1) //hacky, but it works
 				var/turf/T = get_turf(user)
-				if(T.intact || !T.can_have_cabling())
+				if(!T.can_have_cabling())
 					last = null
 					return
 				if(get_dir(last, user) == last.d2)
@@ -204,7 +210,8 @@
 					return //If we've run out, display message and exit
 			else
 				last = null
-		loaded.pipe_cleaner_color = colors[current_color_index]
+		loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
+		loaded.update_icon()
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
 	update_icon()
@@ -217,13 +224,13 @@
 		return
 
 	T = get_turf(user)
-	if(T.intact || !T.can_have_cabling())
+	if(!T.can_have_cabling())
 		return
 
 	for(var/obj/structure/pipe_cleaner/C in T)
 		if(!C)
 			continue
-		if(C.pipe_cleaner_color != GLOB.pipe_cleaner_colors[colors[current_color_index]])
+		if(C.color != GLOB.pipe_cleaner_colors[colors[current_color_index]])
 			continue
 		if(C.d1 == 0)
 			return C
@@ -240,7 +247,7 @@
 		var/pipe_cleanersuffix = "[min(fromdir,dirnum)]-[max(fromdir,dirnum)]"
 		if(fromdir == dirnum) //pipe_cleaners can't loop back on themselves
 			pipe_cleanersuffix = "invalid"
-		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "cable_[pipe_cleanersuffix]")
+		var/image/img = image(icon = 'icons/hud/radial.dmi', icon_state = "cable_[pipe_cleanersuffix]")
 		img.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
 		wiredirs[icondir] = img
 	return wiredirs
@@ -274,10 +281,11 @@
 		return
 
 	var/turf/T = get_turf(user)
-	if(T.intact || !T.can_have_cabling())
+	if(!T.can_have_cabling())
 		return
 
-	loaded.pipe_cleaner_color = colors[current_color_index]
+	loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
+	loaded.update_icon()
 
 	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
@@ -310,7 +318,8 @@
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
-			loaded.pipe_cleaner_color = colors[current_color_index]
+			loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
+			loaded.update_icon()
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
 	else if(istype(action, /datum/action/item_action/rcl_gui))

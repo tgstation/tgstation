@@ -84,6 +84,8 @@
 
 /datum/config_entry/flag/log_pda	// log pda messages
 
+/datum/config_entry/flag/log_uplink	// log uplink/spellbook/codex ciatrix purchases and refunds
+
 /datum/config_entry/flag/log_telecomms	// log telecomms messages
 
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
@@ -217,7 +219,10 @@
 	config_entry_value = "http://www.tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
-	config_entry_value = "https://www.github.com/tgstation/-tg-station"
+	config_entry_value = "https://www.github.com/tgstation/tgstation"
+
+/datum/config_entry/string/discordbotcommandprefix
+	config_entry_value = "?"
 
 /datum/config_entry/string/roundstatsurl
 
@@ -311,6 +316,11 @@
 /datum/config_entry/flag/byond_member_bypass_popcap
 
 /datum/config_entry/flag/panic_bunker	// prevents people the server hasn't seen before from connecting
+
+/datum/config_entry/number/panic_bunker_living // living time in minutes that a player needs to pass the panic bunker
+
+/// Flag for requiring players who would otherwise be denied access by the panic bunker to complete a written interview
+/datum/config_entry/flag/panic_bunker_interview
 
 /datum/config_entry/string/panic_bunker_message
 	config_entry_value = "Sorry but the server is currently not accepting connections from never before seen players."
@@ -491,15 +501,6 @@
 
 /datum/config_entry/flag/auto_profile
 
-// DISCORD ROLE STUFFS
-// Using strings for everything because BYOND does not like numbers this big
-// (exception to the above is required living hours haha)
-/datum/config_entry/flag/enable_discord_autorole
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API
 
-/datum/config_entry/number/required_living_hours
-
-/datum/config_entry/string/discord_token
-
-/datum/config_entry/string/discord_guildid
-
-/datum/config_entry/string/discord_roleid
+/datum/config_entry/string/centcom_source_whitelist

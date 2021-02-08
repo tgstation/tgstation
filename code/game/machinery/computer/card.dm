@@ -1,5 +1,3 @@
-
-
 //Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
 //increase the slots of many jobs.
 GLOBAL_VAR_INIT(time_last_changed_position, 0)
@@ -16,6 +14,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
 	circuit = /obj/item/circuitboard/computer/card
+	light_color = LIGHT_COLOR_BLUE
 	var/mode = 0
 	var/printing = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
@@ -48,7 +47,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/region_access = null
 	var/list/head_subordinates = null
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/card/proc/get_jobs()
 	return get_all_jobs()
@@ -171,7 +169,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
 		return
 	if(inserted_modify_id)
 		if(id_eject(user, inserted_modify_id))
@@ -255,9 +253,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 		var/scan_name = inserted_scan_id ? html_encode(inserted_scan_id.name) : "--------"
 		var/target_name = inserted_modify_id ? html_encode(inserted_modify_id.name) : "--------"
-		var/target_owner = (inserted_modify_id && inserted_modify_id.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
-		var/target_rank = (inserted_modify_id && inserted_modify_id.assignment) ? html_encode(inserted_modify_id.assignment) : "Unassigned"
-		var/target_age = (inserted_modify_id && inserted_modify_id.registered_age) ? html_encode(inserted_modify_id.registered_age) : "--------"
+		var/target_owner = (inserted_modify_id?.registered_name) ? html_encode(inserted_modify_id.registered_name) : "--------"
+		var/target_rank = (inserted_modify_id?.assignment) ? html_encode(inserted_modify_id.assignment) : "Unassigned"
+		var/target_age = (inserted_modify_id?.registered_age) ? html_encode(inserted_modify_id.registered_age) : "--------"
 
 		if(!authenticated)
 			header += {"<br><i>Please insert the cards into the slots</i><br>
@@ -355,14 +353,13 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat = list("<tt>", header.Join(), body, "<br></tt>")
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
 
-	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational())
+	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational)
 		usr.unset_machine()
 		usr << browse(null, "window=id_com")
 		return
@@ -370,27 +367,33 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("inserted_modify_id")
-			if(inserted_modify_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_modify_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_modify_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_modify_id))
 					inserted_modify_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_modify_id))
+				if(id_insert(L, held_item, inserted_modify_id))
 					inserted_modify_id = id_to_insert
 					updateUsrDialog()
 		if ("inserted_scan_id")
-			if(inserted_scan_id && !usr.get_active_held_item())
-				if(id_eject(usr, inserted_scan_id))
+			if(!isliving(usr))
+				return
+			var/mob/living/L = usr
+			if(inserted_scan_id && !L.get_active_held_item())
+				if(id_eject(L, inserted_scan_id))
 					inserted_scan_id = null
 					updateUsrDialog()
 					return
-			if(usr.get_id_in_hand())
-				var/obj/item/held_item = usr.get_active_held_item()
+			if(L.get_id_in_hand())
+				var/obj/item/held_item = L.get_active_held_item()
 				var/obj/item/card/id/id_to_insert = held_item.GetID()
-				if(id_insert(usr, held_item, inserted_scan_id))
+				if(id_insert(L, held_item, inserted_scan_id))
 					inserted_scan_id = id_to_insert
 					updateUsrDialog()
 		if ("auth")
@@ -443,12 +446,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.access -= access_type
 						if(access_allowed == 1)
 							inserted_modify_id.access += access_type
+							if(access_type in ACCESS_ALERT_ADMINS)
+								message_admins("[ADMIN_LOOKUPFLW(usr)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
+							LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "added [get_access_desc(access_type)]")
+
 						playsound(src, "terminal_type", 50, FALSE)
 		if ("assign")
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", inserted_modify_id ? inserted_modify_id.assignment : "Unassigned"), MAX_NAME_LEN)
+					var/newJob = reject_bad_text(stripped_input("Enter a custom job assignment.", "Assignment", inserted_modify_id ? inserted_modify_id.assignment : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
 						t1 = newJob
 
@@ -471,6 +478,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
 
 					inserted_modify_id.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
+					if(inserted_modify_id.sticky_access)
+						inserted_modify_id.access += inserted_modify_id.sticky_access
+
+					// Check if we should alert admins that an ID card has been given a new access level.
+					for(var/logged_access in ACCESS_ALERT_ADMINS)
+						if(logged_access in inserted_modify_id.access)
+							message_admins("[ADMIN_LOOKUPFLW(usr)] assigned the job [jobdatum.title] to an ID card [ADMIN_VV(inserted_modify_id)] [(inserted_modify_id.registered_name) ? "belonging to [inserted_modify_id.registered_name]." : "with no registered name."]")
+							break
+					LOG_ID_ACCESS_CHANGE(usr, inserted_modify_id, "assigned the job [jobdatum.title]")
+
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -492,9 +509,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						to_chat(usr, "<span class='alert'>Invalid age entered- age not updated.</span>")
 						updateUsrDialog()
 
-					var/newName = reject_bad_name(href_list["reg"])
-					if(newName)
-						inserted_modify_id.registered_name = newName
+
+					// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
+					// would not pass as a formal character name, but would still be valid on an ID card created by a player.
+					var/new_name = sanitize(href_list["reg"])
+					// However, we are going to reject bad names overall including names with invalid characters in them, while allowing numbers.
+					new_name = reject_bad_name(new_name, allow_numbers = TRUE)
+
+					if(new_name)
+						inserted_modify_id.registered_name = new_name
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 					else
 						to_chat(usr, "<span class='alert'>Invalid name entered.</span>")
@@ -515,10 +538,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_open_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				if(opened_positions[edit_job_target] >= 0)
 					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
@@ -532,10 +555,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				if(can_close_job(j) != 1)
 					updateUsrDialog()
-					return 0
+					return
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
 					GLOB.time_last_changed_position = world.time / 10
@@ -550,7 +573,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
 					updateUsrDialog()
-					return 0
+					return
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j
@@ -578,6 +601,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if (inserted_modify_id)
 		inserted_modify_id.update_label()
+		if(inserted_modify_id.sticky_access)
+			inserted_modify_id.access += inserted_modify_id.sticky_access
 	updateUsrDialog()
 
 /obj/machinery/computer/card/proc/get_subordinates(rank)
@@ -610,7 +635,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	target_dept = 2
 	icon_screen = "idhos"
 
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3

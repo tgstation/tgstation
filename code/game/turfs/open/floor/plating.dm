@@ -10,6 +10,7 @@
 /turf/open/floor/plating
 	name = "plating"
 	icon_state = "plating"
+	base_icon_state = "plating"
 	intact = FALSE
 	baseturfs = /turf/baseturf_bottom
 	footstep = FOOTSTEP_PLATING
@@ -18,6 +19,12 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	var/attachment_holes = TRUE
+
+/turf/open/floor/plating/setup_broken_states()
+	return list("platingdmg1", "platingdmg2", "platingdmg3")
+
+/turf/open/floor/plating/setup_burnt_states()
+	return list("panelscorched")
 
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()
@@ -29,29 +36,16 @@
 	else
 		. += "<span class='notice'>You might be able to build ontop of it with some <i>tiles</i>...</span>"
 
-/turf/open/floor/plating/Initialize()
-	if (!broken_states)
-		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
-	if (!burnt_states)
-		burnt_states = list("panelscorched")
-	. = ..()
-	if(!attachment_holes || (!broken && !burnt))
-		icon_plating = icon_state
-	else
-		icon_plating = initial(icon_state)
-
-/turf/open/floor/plating/update_icon()
-	if(!..())
-		return
-	if(!broken && !burnt)
-		icon_state = icon_plating //Because asteroids are 'platings' too.
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
-			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
+			if(!iscyborg(user))
+				to_chat(user, "<span class='warning'>Repair the plating first! Use a welding tool to fix the damage.</span>")
+			else
+				to_chat(user, "<span class='warning'>Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.</span>") //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
@@ -72,34 +66,35 @@
 				for(var/M in O.buckled_mobs)
 					to_chat(user, "<span class='warning'>Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way.</span>")
 					return
-			var/obj/item/stack/tile/W = C
-			if(!W.use(1))
-				return
-			if(istype(W, /obj/item/stack/tile/material))
-				var/turf/newturf = PlaceOnTop(/turf/open/floor/material, flags = CHANGETURF_INHERIT_AIR)
-				newturf.set_custom_materials(W.custom_materials)
-			else if(W.turf_type)
-				var/turf/open/floor/T = PlaceOnTop(W.turf_type, flags = CHANGETURF_INHERIT_AIR)
-				if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-					var/obj/item/stack/tile/light/L = W
-					var/turf/open/floor/light/F = T
-					F.state = L.state
-
+			var/obj/item/stack/tile/tile = C
+			tile.place_tile(src)
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 		else
-			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
+			if(!iscyborg(user))
+				to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welding tool to fix the damage.</span>")
+			else
+				to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welding tool or a plating repair tool to fix the damage.</span>")
+	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
+		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
+			to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
+			icon_state = base_icon_state
+			burnt = FALSE
+			broken = FALSE
+
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()
 	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
 		to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-		icon_state = icon_plating
+		icon_state = base_icon_state
 		burnt = FALSE
 		broken = FALSE
 
 	return TRUE
 
 /turf/open/floor/plating/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/plating/make_plating(force = FALSE)
@@ -117,8 +112,8 @@
 	return //jetfuel can't break steel foam...
 
 /turf/open/floor/plating/foam/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/tile/plasteel))
-		var/obj/item/stack/tile/plasteel/P = I
+	if(istype(I, /obj/item/stack/tile/iron))
+		var/obj/item/stack/tile/iron/P = I
 		if(P.use(1))
 			var/obj/L = locate(/obj/structure/lattice) in src
 			if(L)

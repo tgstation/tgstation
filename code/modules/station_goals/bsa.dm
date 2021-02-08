@@ -7,10 +7,10 @@
 
 /datum/station_goal/bluespace_cannon/get_report()
 	return {"Our military presence is inadequate in your sector.
-	 We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
+		We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
 
-	 Base parts are available for shipping via cargo.
-	 -Nanotrasen Naval Command"}
+		Base parts are available for shipping via cargo.
+		-Nanotrasen Naval Command"}
 
 /datum/station_goal/bluespace_cannon/on_report()
 	//Unlock BSA parts
@@ -199,7 +199,7 @@
 			break
 		else
 			SSexplosions.highturf += tile //also fucks everything else on the turf
-	point.Beam(target, icon_state = "bsa_beam", time = 50, maxdistance = world.maxx) //ZZZAP
+	point.Beam(target, icon_state = "bsa_beam", time = 5 SECONDS, maxdistance = world.maxx) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
 	if(!blocker)
@@ -261,8 +261,10 @@
 	return data
 
 /obj/machinery/computer/bsa_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("build")
 			cannon = deploy()

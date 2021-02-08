@@ -1,10 +1,10 @@
 /**
-  * #Chemical Reaction
-  *
-  * Datum that makes the magic between reagents happen.
-  *
-  * Chemical reactions is a class that is instantiated and stored in a global list 'chemical_reactions_list'
-  */
+ * #Chemical Reaction
+ *
+ * Datum that makes the magic between reagents happen.
+ *
+ * Chemical reactions is a class that is instantiated and stored in a global list 'chemical_reactions_list'
+ */
 /datum/chemical_reaction
 	///Results of the chemical reactions
 	var/list/results = new/list()
@@ -35,42 +35,42 @@
 	SSticker.OnRoundstart(CALLBACK(src,.proc/update_info))
 
 /**
-  * Updates information during the roundstart
-  *
-  * This proc is mainly used by explosives but can be used anywhere else
-  * You should generally use the special reactions in [/datum/chemical_reaction/randomized]
-  * But for simple variable edits, like changing the temperature or adding/subtracting required reagents it is better to use this.
-  */
+ * Updates information during the roundstart
+ *
+ * This proc is mainly used by explosives but can be used anywhere else
+ * You should generally use the special reactions in [/datum/chemical_reaction/randomized]
+ * But for simple variable edits, like changing the temperature or adding/subtracting required reagents it is better to use this.
+ */
 /datum/chemical_reaction/proc/update_info()
 	return
 
 /**
-  * Shit that happens on reaction
-  *
-  * Proc where the additional magic happens.
-  * You dont want to handle mob spawning in this since there is a dedicated proc for that.client
-  * Arguments:
-  * * holder - the datum that holds this reagent, be it a beaker or anything else
-  * * created_volume - volume created when this is mixed. look at 'var/list/results'.
-  */
+ * Shit that happens on reaction
+ *
+ * Proc where the additional magic happens.
+ * You dont want to handle mob spawning in this since there is a dedicated proc for that.client
+ * Arguments:
+ * * holder - the datum that holds this reagent, be it a beaker or anything else
+ * * created_volume - volume created when this is mixed. look at 'var/list/results'.
+ */
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
 /**
-  * Magical mob spawning when chemicals react
-  *
-  * Your go to proc when you want to create new mobs from chemicals. please dont use on_reaction.
-  * Arguments:
-  * * holder - the datum that holds this reagent, be it a beaker or anything else
-  * * amount_to_spawn - how much /mob to spawn
-  * * reaction_name - what is the name of this reaction. be creative, the world is your oyster after all!
-  * * mob_class - determines if the mob will be friendly, neutral or hostile
-  * * mob_faction - used in determining targets, mobs from the same faction won't harm eachother.
-  * * random - creates random mobs. self explanatory.
-  */
+ * Magical mob spawning when chemicals react
+ *
+ * Your go to proc when you want to create new mobs from chemicals. please dont use on_reaction.
+ * Arguments:
+ * * holder - the datum that holds this reagent, be it a beaker or anything else
+ * * amount_to_spawn - how much /mob to spawn
+ * * reaction_name - what is the name of this reaction. be creative, the world is your oyster after all!
+ * * mob_class - determines if the mob will be friendly, neutral or hostile
+ * * mob_faction - used in determining targets, mobs from the same faction won't harm eachother.
+ * * random - creates random mobs. self explanatory.
+ */
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
-	if(holder && holder.my_atom)
+	if(holder?.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/message = "Mobs have been spawned in [ADMIN_VERBOSEJMP(T)] by a [reaction_name] reaction."
@@ -102,15 +102,15 @@
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
 /**
-  * Magical move-wooney that happens sometimes.
-  *
-  * Simulates a vortex that moves nearby movable atoms towards or away from the turf T.
-  * Range also determines the strength of the effect. High values cause nearby objects to be thrown.
-  * Arguments:
-  * * T - turf where it happens
-  * * setting_type - does it suck or does it blow?
-  * * range - range.
-  */
+ * Magical move-wooney that happens sometimes.
+ *
+ * Simulates a vortex that moves nearby movable atoms towards or away from the turf T.
+ * Range also determines the strength of the effect. High values cause nearby objects to be thrown.
+ * Arguments:
+ * * T - turf where it happens
+ * * setting_type - does it suck or does it blow?
+ * * range - range.
+ */
 /proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)

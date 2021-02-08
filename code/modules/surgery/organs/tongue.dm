@@ -4,9 +4,14 @@
 	icon_state = "tonguenormal"
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
-	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
+	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
+	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
 	var/say_mod = null
+
+	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
+	var/sense_of_taste = TRUE
+
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
@@ -23,6 +28,7 @@
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
+		/datum/language/nekomimetic
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -39,12 +45,24 @@
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
+	/* This could be slightly simpler, by making the removal of the
+	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
+	* then you can distinguish between ageusia from no tongue, and
+	* ageusia from having a non-tasting tongue.
+	*/
+	REMOVE_TRAIT(M, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+	if(!sense_of_taste)
+		ADD_TRAIT(M, TRAIT_AGEUSIA, ORGAN_TRAIT)
+
 /obj/item/organ/tongue/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 	UnregisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.RegisterSignal(M, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	REMOVE_TRAIT(M, TRAIT_AGEUSIA, ORGAN_TRAIT)
+	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
+	ADD_TRAIT(M, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 /obj/item/organ/tongue/could_speak_language(language)
 	return is_type_in_typecache(language, languages_possible)
@@ -94,16 +112,21 @@
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
+		/datum/language/nekomimetic,
 		/datum/language/buzzwords
 	))
 
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
 	var/static/regex/fly_buzz = new("z+", "g")
 	var/static/regex/fly_buZZ = new("Z+", "g")
+	var/static/regex/fly_buss = new("s+", "g")
+	var/static/regex/fly_buSS = new("S+", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = fly_buzz.Replace(message, "zzz")
 		message = fly_buZZ.Replace(message, "ZZZ")
+		message = fly_buss.Replace(message, "z")
+		message = fly_buSS.Replace(message, "Z")
 	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/fly/Initialize(mapload)
@@ -115,7 +138,7 @@
 	desc = "A mysterious structure that allows for instant communication between users. Pretty impressive until you need to eat something."
 	icon_state = "tongueayylmao"
 	say_mod = "gibbers"
-	taste_sensitivity = 101 // ayys cannot taste anything.
+	sense_of_taste = FALSE
 	modifies_speech = TRUE
 	var/mothership
 
@@ -211,8 +234,9 @@
 	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
-	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
-	taste_sensitivity = 101 // skeletons cannot taste anything
+	attack_verb_continuous = list("bites", "chatters", "chomps", "enamelles", "bones")
+	attack_verb_simple = list("bite", "chatter", "chomp", "enamel", "bone")
+	sense_of_taste = FALSE
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -230,6 +254,7 @@
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
+		/datum/language/nekomimetic,
 		/datum/language/calcic
 	))
 
@@ -260,7 +285,8 @@
 	organ_flags = NONE
 	icon_state = "tonguerobot"
 	say_mod = "states"
-	attack_verb = list("beeped", "booped")
+	attack_verb_continuous = list("beeps", "boops")
+	attack_verb_simple = list("beep", "boop")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
 
@@ -271,7 +297,9 @@
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
 /obj/item/organ/tongue/snail
-	name = "snailtongue"
+	name = "radula"
+	color = "#96DB00" // TODO proper sprite, rather than recoloured pink tongue
+	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/snail/handle_speech(datum/source, list/speech_args)
@@ -289,8 +317,9 @@
 	desc = "A sophisticated ethereal organ, capable of synthesising speech via electrical discharge."
 	icon_state = "electrotongue"
 	say_mod = "crackles"
-	attack_verb = list("shocked", "jolted", "zapped")
-	taste_sensitivity = 101 // Not a tongue, they can't taste shit
+	attack_verb_continuous = list("shocks", "jolts", "zaps")
+	attack_verb_simple = list("shock", "jolt", "zap")
+	sense_of_taste = FALSE
 	var/static/list/languages_possible_ethereal = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
@@ -304,9 +333,60 @@
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
+		/datum/language/nekomimetic,
 		/datum/language/voltaic
 	))
 
 /obj/item/organ/tongue/ethereal/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_ethereal
+
+//Sign Language Tongue - yep, that's how you speak sign language.
+/obj/item/organ/tongue/tied
+	name = "tied tongue"
+	desc = "If only one had a sword so we may finally untie this knot. If you're seeing this, then it's coded wrong."
+	say_mod = "signs"
+	icon_state = "tonguetied"
+	modifies_speech = TRUE
+	organ_flags = ORGAN_UNREMOVABLE
+
+/obj/item/organ/tongue/tied/Insert(mob/living/carbon/M)
+	. = ..()
+	M.verb_ask = "signs"
+	M.verb_exclaim = "signs"
+	M.verb_whisper = "subtly signs"
+	M.verb_sing = "rythmically signs"
+	M.verb_yell = "emphatically signs"
+	ADD_TRAIT(M, TRAIT_SIGN_LANG, "tongue")
+	REMOVE_TRAIT(M, TRAIT_MUTE, "tongue")
+
+/obj/item/organ/tongue/tied/Remove(mob/living/carbon/M, special = 0)
+	..()
+	M.verb_ask = initial(verb_ask)
+	M.verb_exclaim = initial(verb_exclaim)
+	M.verb_whisper = initial(verb_whisper)
+	M.verb_sing = initial(verb_sing)
+	M.verb_yell = initial(verb_yell)
+	REMOVE_TRAIT(M, TRAIT_SIGN_LANG, "tongue") //People who are Ahealed get "cured" of their sign language-having ways. If I knew how to make the tied tongue persist through aheals, I'd do that.
+
+//Thank you Jwapplephobia for helping me with the literal hellcode below
+
+/obj/item/organ/tongue/tied/handle_speech(datum/source, list/speech_args)
+	var/new_message
+	var/message = speech_args[SPEECH_MESSAGE]
+	var/exclamation_found = findtext(message, "!")
+	var/question_found = findtext(message, "?")
+	var/mob/living/carbon/M = owner
+	new_message = message
+	if(exclamation_found)
+		new_message = replacetext(new_message, "!", ".")
+	if(question_found)
+		new_message = replacetext(new_message, "?", ".")
+	speech_args[SPEECH_MESSAGE] = new_message
+
+	if(exclamation_found && question_found)
+		M.visible_message("<span class='notice'>[M] lowers one of [M.p_their()] eyebrows, raising the other.</span>")
+	else if(exclamation_found)
+		M.visible_message("<span class='notice'>[M] raises [M.p_their()] eyebrows.</span>")
+	else if(question_found)
+		M.visible_message("<span class='notice'>[M] lowers [M.p_their()] eyebrows.</span>")

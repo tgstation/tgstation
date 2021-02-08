@@ -19,7 +19,7 @@
 		return
 	density = anchorvalue ? initial(pipe_type.density) : FALSE
 
-/obj/structure/disposalconstruct/Initialize(loc, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
+/obj/structure/disposalconstruct/Initialize(mapload, _pipe_type, _dir = SOUTH, flip = FALSE, obj/make_from)
 	. = ..()
 	if(make_from)
 		pipe_type = make_from.type
@@ -71,7 +71,7 @@
 	var/initialize_dirs = initial(temp.initialize_dirs)
 	var/dpdir = NONE
 
-	if(dir in GLOB.diagonals) // Bent pipes
+	if(ISDIAGONALDIR(dir)) // Bent pipes
 		return dir
 
 	if(initialize_dirs != DISP_DIR_NONE)
@@ -93,7 +93,7 @@
 	if(rotation_type == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
-			if(dir in GLOB.diagonals)	// Fix RPD-induced diagonal turning
+			if(ISDIAGONALDIR(dir))	// Fix RPD-induced diagonal turning
 				setDir(turn(dir, 45))
 			pipe_type = initial(temp.flip_type)
 	update_icon()
@@ -135,11 +135,7 @@
 					return TRUE
 
 		else	// Disposal or outlet
-			var/found_trunk = FALSE
-			for(var/obj/structure/disposalpipe/CP in T)
-				if(istype(CP, /obj/structure/disposalpipe/trunk))
-					found_trunk = TRUE
-					break
+			var/found_trunk = locate(/obj/structure/disposalpipe/trunk) in T
 
 			if(!found_trunk)
 				to_chat(user, "<span class='warning'>The [pipename] requires a trunk underneath it in order to work!</span>")

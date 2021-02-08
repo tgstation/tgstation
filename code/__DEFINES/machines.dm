@@ -35,14 +35,13 @@
 
 //used in design to specify which machine can build it
 #define IMPRINTER		(1<<0)	//For circuits. Uses glass/chemicals.
-#define PROTOLATHE		(1<<1)	//New stuff. Uses glass/metal/chemicals
-#define AUTOLATHE		(1<<2)	//Uses glass/metal only.
-#define CRAFTLATHE		(1<<3)	//Uses fuck if I know. For use eventually.
-#define MECHFAB			(1<<4) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
-#define BIOGENERATOR	(1<<5) 	//Uses biomass
-#define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
-#define SMELTER			(1<<7) 	//uses various minerals
-#define NANITE_COMPILER  (1<<8) //Prints nanite disks
+#define PROTOLATHE		(1<<1)	//New stuff. Uses various minerals
+#define AUTOLATHE		(1<<2)	//Prints basic designs without research
+#define MECHFAB			(1<<3) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
+#define BIOGENERATOR	(1<<4) 	//Uses biomass
+#define LIMBGROWER		(1<<5) 	//Uses synthetic flesh
+#define SMELTER			(1<<6) 	//uses various minerals
+#define NANITE_COMPILER  (1<<7) //Prints nanite disks
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -52,11 +51,13 @@
 #define MC_HDD "HDD"
 #define MC_SDD "SDD"
 #define MC_CARD "CARD"
+#define MC_CARD2 "CARD2"
 #define MC_NET "NET"
 #define MC_PRINT "PRINT"
 #define MC_CELL "CELL"
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
+#define MC_SENSORS "SENSORS"
 
 //NTNet stuff, for modular computers
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
@@ -99,6 +100,13 @@
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
 #define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
 
+#define HYPERTORUS_INACTIVE 0		// No or minimal energy
+#define HYPERTORUS_NOMINAL 1		// Normal operation
+#define HYPERTORUS_WARNING 2		// Integrity damaged
+#define HYPERTORUS_DANGER 3			// Integrity < 50%
+#define HYPERTORUS_EMERGENCY 4		// Integrity < 25%
+#define HYPERTORUS_MELTING 5		// Pretty obvious.
+
 //Nuclear bomb stuff
 #define NUKESTATE_INTACT		5
 #define NUKESTATE_UNSCREWED		4
@@ -126,3 +134,9 @@
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)
 #define PLANT_GENE_EXTRACTABLE	(1<<1)
+
+//mass drivers and related machinery
+#define MASSDRIVER_TOXINS "toxinsdriver"
+#define MASSDRIVER_CHAPEL "chapelgun"
+#define MASSDRIVER_DISPOSALS "trash"
+#define MASSDRIVER_SHACK "shack"

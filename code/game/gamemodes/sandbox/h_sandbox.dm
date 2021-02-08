@@ -4,8 +4,9 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	sandbox = new/datum/h_sandbox
 	sandbox.owner = src.ckey
 	if(src.client.holder)
-		sandbox.admin = 1
-	verbs += new/mob/proc/sandbox_panel
+		sandbox.admin = TRUE
+	add_verb(src, /mob/proc/sandbox_panel)
+
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
 	if(sandbox)
@@ -13,7 +14,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /datum/h_sandbox
 	var/owner = null
-	var/admin = 0
+	var/admin = FALSE
 
 	var/static/clothinfo = null
 	var/static/reaginfo = null
@@ -25,7 +26,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
 		/obj/item/small_delivery, /obj/projectile,
-		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
+		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_model)
 
 /datum/h_sandbox/proc/update()
 	var/static/list/hrefs = list(
@@ -189,7 +190,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				new/obj/item/stack/sheet/rglass{amount=50}(usr.loc)
 
 			if("hsbmetal")
-				new/obj/item/stack/sheet/metal{amount=50}(usr.loc)
+				new/obj/item/stack/sheet/iron/fifty(usr.loc)
 
 			if("hsbplasteel")
 				new/obj/item/stack/sheet/plasteel{amount=50}(usr.loc)

@@ -6,6 +6,11 @@
 		qdel(src)
 	owner = new_owner
 
+/datum/spawners_menu/Destroy()
+	owner = null
+	return ..()
+
+
 /datum/spawners_menu/ui_state(mob/user)
 	return GLOB.observer_state
 
@@ -42,7 +47,8 @@
 	return data
 
 /datum/spawners_menu/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/group_name = params["name"]

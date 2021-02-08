@@ -24,7 +24,6 @@
 	faction = list("hivebot")
 	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	possible_a_intents = list(INTENT_HELP, INTENT_GRAB, INTENT_DISARM, INTENT_HARM)
 	minbodytemp = 0
 	verb_say = "states"
 	verb_ask = "queries"
@@ -44,26 +43,24 @@
 
 /mob/living/simple_animal/hostile/hivebot/Aggro()
 	. = ..()
-	a_intent_change(INTENT_HARM)
+	set_combat_mode(TRUE)
+	update_icons()
 	if(prob(5))
 		say(pick("INTRUDER DETECTED!", "CODE 7-34.", "101010!!"), forced = type)
 
 /mob/living/simple_animal/hostile/hivebot/LoseAggro()
 	. = ..()
-	a_intent_change(INTENT_HELP)
-
-/mob/living/simple_animal/hostile/hivebot/a_intent_change(input as text)
-	. = ..()
+	set_combat_mode(FALSE)
 	update_icons()
 
 /mob/living/simple_animal/hostile/hivebot/update_icons()
 	QDEL_NULL(alert_light)
-	if(a_intent != INTENT_HELP)
+	if(combat_mode)
 		icon_state = "[initial(icon_state)]_attack"
-		alert_light = mob_light(COLOR_RED_LIGHT, 6, 0.4)
+		alert_light = mob_light(6, 0.4, COLOR_RED_LIGHT)
 	else
 		icon_state = initial(icon_state)
-		
+
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
 	do_sparks(3, TRUE, src)
 	..(TRUE)
@@ -96,7 +93,7 @@
 	health = 80
 	maxHealth = 80
 	ranged = TRUE
-	
+
 /mob/living/simple_animal/hostile/hivebot/mechanic
 	name = "hivebot mechanic"
 	icon_state = "strong"
@@ -109,12 +106,12 @@
 	rapid = 3
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/datum/action/innate/hivebot/foamwall/foam
-	
+
 /mob/living/simple_animal/hostile/hivebot/mechanic/Initialize()
 	. = ..()
 	foam = new
 	foam.Grant(src)
-	
+
 /mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
 	if(istype(target, /obj/machinery))
 		var/obj/machinery/fixable = target
@@ -139,14 +136,14 @@
 			to_chat(src, "<span class='warning'>Repairs complete.</span>")
 		return
 	return ..()
-	
+
 /datum/action/innate/hivebot
 	background_icon_state = "bg_default"
-	
+
 /datum/action/innate/hivebot/foamwall
 	name = "Foam Wall"
 	desc = "Creates a foam wall that resists against the vacuum of space."
-	
+
 /datum/action/innate/hivebot/foamwall/Activate()
 	var/mob/living/simple_animal/hostile/hivebot/H = owner
 	var/turf/T = get_turf(H)

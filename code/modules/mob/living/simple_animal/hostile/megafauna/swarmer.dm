@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 //RESOURCE SWARMER:
-//Similar to the original Player-Swarmers, these dismantle things to obtain the metal inside
+//Similar to the original Player-Swarmers, these dismantle things to obtain the iron inside
 //They then use this medal to produce more swarmers or traps/barricades
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource
@@ -285,4 +285,5 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	name = "swarmer catwalk"
 	desc = "A catwalk-like mesh, produced by swarmers to allow them to navigate hostile terrain."
 	icon = 'icons/obj/smooth_structures/swarmer_catwalk.dmi'
-	icon_state = "swarmer_catwalk"
+	icon_state = "swarmer_catwalk-0"
+	base_icon_state = "swarmer_catwalk"

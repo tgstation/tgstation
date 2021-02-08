@@ -61,6 +61,8 @@
 	new /obj/item/door_remote/civilian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
+	new /obj/item/storage/lockbox/medal/hop(src)
+
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -296,16 +298,6 @@
 	new /obj/item/clothing/head/helmet/alt(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/clothing/suit/armor/bulletproof(src)
-
-/obj/structure/closet/secure_closet/lethalshots
-	name = "shotgun lethal rounds"
-	req_access = list(ACCESS_ARMORY)
-	icon_state = "tac"
-
-/obj/structure/closet/secure_closet/lethalshots/PopulateContents()
-	..()
-	for(var/i in 1 to 3)
-		new /obj/item/storage/box/lethalshot(src)
 
 /obj/structure/closet/secure_closet/labor_camp_security
 	name = "labor camp security locker"

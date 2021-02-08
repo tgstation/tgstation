@@ -7,6 +7,7 @@
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_FORENSICS_LOCKERS)
 	circuit = /obj/item/circuitboard/computer/med_data
+	light_color = LIGHT_COLOR_BLUE
 	var/rank = null
 	var/screen = null
 	var/datum/data/record/active1
@@ -17,7 +18,6 @@
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
@@ -172,7 +172,6 @@
 			dat += "<A href='?src=[REF(src)];login=1'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
@@ -208,15 +207,17 @@
 					sortBy = href_list["sort"]
 					order = initial(order)
 		else if(href_list["login"])
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
-			if(issilicon(M))
+			var/obj/item/card/id/I
+			if(isliving(usr))
+				var/mob/living/L = usr
+				I = L.get_idcard(TRUE)
+			if(issilicon(usr))
 				active1 = null
 				active2 = null
 				authenticated = 1
 				rank = "AI"
 				screen = 1
-			else if(isAdminGhostAI(M))
+			else if(isAdminGhostAI(usr))
 				active1 = null
 				active2 = null
 				authenticated = 1
@@ -560,14 +561,12 @@
 				continue
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
-	if(user)
-		if(message)
-			if(authenticated)
-				if(user.canUseTopic(src, !issilicon(user)))
-					if(!record1 || record1 == active1)
-						if(!record2 || record2 == active2)
-							return 1
-	return 0
+	if(user && message && authenticated)
+		if(user.canUseTopic(src, !issilicon(user)))
+			if(!record1 || record1 == active1)
+				if(!record2 || record2 == active2)
+					return TRUE
+	return FALSE
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"

@@ -39,7 +39,7 @@ Possible to do for anyone motivated enough:
 	idle_power_usage = 5
 	active_power_usage = 100
 	max_integrity = 300
-	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
+	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
 	circuit = /obj/item/circuitboard/machine/holopad
 	/// List of living mobs that use the holopad
 	var/list/masters
@@ -109,17 +109,17 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/tutorial/attack_hand(mob/user)
 	if(!istype(user))
 		return
-	if(user.incapacitated() || !is_operational())
+	if(user.incapacitated() || !is_operational)
 		return
 	if(replay_mode)
 		replay_stop()
-	else if(disk && disk.record)
+	else if(disk?.record)
 		replay_start()
 
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if (!isliving(AM))
 		return
-	if(!replay_mode && (disk && disk.record))
+	if(!replay_mode && (disk?.record))
 		replay_start()
 
 /obj/machinery/holopad/Initialize()
@@ -200,7 +200,7 @@ Possible to do for anyone motivated enough:
 	return ..()
 
 /obj/machinery/holopad/ui_status(mob/user)
-	if(!is_operational())
+	if(!is_operational)
 		return UI_CLOSE
 	if(outgoing_call && !calling)
 		return UI_CLOSE
@@ -263,7 +263,7 @@ Possible to do for anyone motivated enough:
 					if(A)
 						LAZYADD(callnames[A], I)
 				callnames -= get_area(src)
-				var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
+				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sortNames(callnames))
 				if(QDELETED(usr) || !result || outgoing_call)
 					return
 				if(usr.loc == loc)
@@ -326,8 +326,8 @@ Possible to do for anyone motivated enough:
 				return TRUE
 
 /**
-  * hangup_all_calls: Disconnects all current holocalls from the holopad
-  */
+ * hangup_all_calls: Disconnects all current holocalls from the holopad
+ */
 /obj/machinery/holopad/proc/hangup_all_calls()
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
@@ -357,7 +357,7 @@ Possible to do for anyone motivated enough:
 			if(!istype(AI))
 				AI = null
 
-			if(!is_operational() || !validate_user(master))
+			if(!is_operational || !validate_user(master))
 				clear_holo(master)
 
 	if(outgoing_call)
@@ -387,7 +387,7 @@ Possible to do for anyone motivated enough:
 	if(!istype(AI))
 		AI = null
 
-	if(is_operational() && (!AI || AI.eyeobj.loc == loc))//If the projector has power and client eye is on it
+	if(is_operational && (!AI || AI.eyeobj.loc == loc))//If the projector has power and client eye is on it
 		if (AI && istype(AI.current, /obj/machinery/holopad))
 			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
 			return
@@ -432,7 +432,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HC.connected_holopad == src && speaker != HC.hologram)
 			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
-	if(outgoing_call && speaker == outgoing_call.user)
+	if(outgoing_call?.hologram && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message)
 
 	if(record_mode && speaker == record_user)
@@ -660,7 +660,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		record_user = null
 
 /obj/machinery/holopad/proc/record_clear()
-	if(disk && disk.record)
+	if(disk?.record)
 		QDEL_NULL(disk.record)
 
 /obj/effect/overlay/holo_pad_hologram

@@ -37,7 +37,6 @@
 //Middle left indicators
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
-#define ui_devilsouldisplay "WEST:6,CENTER-1:15"
 
 //Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
@@ -46,6 +45,7 @@
 #define ui_back "CENTER-2:14,SOUTH:5"
 #define ui_storage1 "CENTER+1:18,SOUTH:5"
 #define ui_storage2 "CENTER+2:20,SOUTH:5"
+#define ui_combo "CENTER+4:24,SOUTH+1:7" //combo meter for martial arts
 
 //Lower right, persistent menu
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
@@ -53,6 +53,7 @@
 #define ui_above_intent "EAST-3:24, SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"
 #define ui_acti "EAST-3:24,SOUTH:5"
+#define ui_combat_toggle "EAST-3:24,SOUTH:5"
 #define ui_zonesel "EAST-1:28,SOUTH:5"
 #define ui_acti_alt "EAST-1:28,SOUTH:5"	//alternative intent switcher for when the interface is hidden (F12)
 #define ui_crafting	"EAST-4:22,SOUTH:5"
@@ -106,16 +107,15 @@
 #define ui_borg_pull "EAST-2:26,SOUTH+1:7"
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"
 #define ui_borg_intents "EAST-2:26,SOUTH:5"
-#define ui_borg_sensor "CENTER-3:16, SOUTH:5"
-#define ui_borg_lamp "CENTER-4:16, SOUTH:5"
-#define ui_borg_thrusters "CENTER-5:16, SOUTH:5"
+#define ui_borg_lamp "CENTER-3:16, SOUTH:5"
+#define ui_borg_tablet "CENTER-4:16, SOUTH:5"
 #define ui_inv1 "CENTER-2:16,SOUTH:5"
 #define ui_inv2 "CENTER-1  :16,SOUTH:5"
 #define ui_inv3 "CENTER  :16,SOUTH:5"
 #define ui_borg_module "CENTER+1:16,SOUTH:5"
 #define ui_borg_store "CENTER+2:16,SOUTH:5"
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
-#define ui_borg_album "CENTER+4:21,SOUTH:5"
+#define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:21,SOUTH+1:5"
 
 //Aliens
@@ -160,6 +160,7 @@
 #define ui_pai_state_laws "SOUTH:6,WEST+8"
 #define ui_pai_pda_send "SOUTH:6,WEST+9"
 #define ui_pai_pda_log "SOUTH:6,WEST+10"
+#define ui_pai_internal_gps "SOUTH:6,WEST+11"
 #define ui_pai_take_picture "SOUTH:6,WEST+12"
 #define ui_pai_view_images "SOUTH:6,WEST+13"
 

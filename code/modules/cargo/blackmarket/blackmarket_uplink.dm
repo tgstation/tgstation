@@ -19,7 +19,7 @@
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]
 		var/list/categories = SSblackmarket.markets[viewing_market].categories
-		if(categories && categories.len)
+		if(categories?.len)
 			viewing_category = categories[1]
 
 /obj/item/blackmarket_uplink/attackby(obj/item/I, mob/user, params)
@@ -98,7 +98,8 @@
 	return data
 
 /obj/item/blackmarket_uplink/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("set_category")
@@ -120,7 +121,7 @@
 			viewing_market = market
 
 			var/list/categories = SSblackmarket.markets[viewing_market].categories
-			if(categories && categories.len)
+			if(categories?.len)
 				viewing_category = categories[1]
 			else
 				viewing_category = null
@@ -160,3 +161,8 @@
 		/obj/item/analyzer = 1
 	)
 	category = CAT_MISC
+
+/datum/crafting_recipe/blackmarket_uplink/New()
+	..()
+	blacklist |= typesof(/obj/item/radio/headset) // because we got shit like /obj/item/radio/off ... WHY!?!
+	blacklist |= typesof(/obj/item/radio/intercom)

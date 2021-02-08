@@ -7,10 +7,10 @@
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
-			 We have a prototype shielding system you must deploy to reduce collision-related accidents.
+		We have a prototype shielding system you must deploy to reduce collision-related accidents.
 
-			 You can order the satellites and control systems at cargo.
-			 "}
+		You can order the satellites and control systems at cargo.
+		"}
 
 
 /datum/station_goal/station_shield/on_report()
@@ -49,8 +49,10 @@
 		ui.open()
 
 /obj/machinery/computer/sat_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("toggle")
 			toggle(text2num(params["id"]))
@@ -156,7 +158,7 @@
 		if(get_dist(M,src) > kill_range)
 			continue
 		if(!(obj_flags & EMAGGED) && space_los(M))
-			Beam(get_turf(M),icon_state="sat_beam",time=5,maxdistance=kill_range)
+			Beam(get_turf(M),icon_state="sat_beam", time = 5)
 			qdel(M)
 
 /obj/machinery/satellite/meteor_shield/toggle(user)

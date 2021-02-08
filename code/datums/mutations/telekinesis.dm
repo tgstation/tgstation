@@ -29,5 +29,6 @@
 	return visual_indicators[type][1]
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
-/datum/mutation/human/telekinesis/proc/on_ranged_attack(datum/source, atom/target)
-	target.attack_tk(owner)
+/datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
+	SIGNAL_HANDLER
+	return target.attack_tk(source)

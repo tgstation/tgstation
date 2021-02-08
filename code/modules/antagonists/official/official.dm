@@ -2,9 +2,9 @@
 	name = "CentCom Official"
 	show_name_in_check_antagonists = TRUE
 	show_in_antagpanel = FALSE
+	can_elimination_hijack = ELIMINATION_PREVENT
 	var/datum/objective/mission
 	var/datum/team/ert/ert_team
-	can_hijack = HIJACK_PREVENT
 	show_to_ghosts = TRUE
 
 /datum/antagonist/official/greet()

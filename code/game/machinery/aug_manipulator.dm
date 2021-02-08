@@ -16,8 +16,8 @@
 		. += "<span class='notice'>Alt-click to eject the limb.</span>"
 
 /obj/machinery/aug_manipulator/Initialize()
-    initial_icon_state = initial(icon_state)
-    return ..()
+	initial_icon_state = initial(icon_state)
+	return ..()
 
 /obj/machinery/aug_manipulator/update_icon_state()
 	if(machine_stat & BROKEN)
@@ -52,7 +52,7 @@
 		storedpart = null
 		update_icon()
 
-/obj/machinery/aug_manipulator/attackby(obj/item/O, mob/user, params)
+/obj/machinery/aug_manipulator/attackby(obj/item/O, mob/living/user, params)
 	if(default_unfasten_wrench(user, O))
 		power_change()
 		return
@@ -73,7 +73,7 @@
 			O.add_fingerprint(user)
 			update_icon()
 
-	else if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+	else if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(obj_integrity < max_integrity)
 			if(!O.tool_start_check(user, amount=0))
 				return
@@ -86,7 +86,7 @@
 				if(!(machine_stat & BROKEN))
 					return
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
-				machine_stat &= ~BROKEN
+				set_machine_stat(machine_stat & ~BROKEN)
 				obj_integrity = max(obj_integrity, max_integrity)
 				update_icon()
 		else
@@ -101,18 +101,35 @@
 	add_fingerprint(user)
 
 	if(storedpart)
-		var/augstyle = input(user, "Select style.", "Augment Custom Fitting") as null|anything in style_list_icons
-		if(!augstyle)
+		var/list/skins = list()
+		for(var/skin_option in style_list_icons)
+			var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = storedpart.icon_state)
+			skins += list("[skin_option]" = part_image)
+		var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, .proc/check_menu, user, storedpart), require_near = TRUE)
+		if(!choice)
 			return
-		if(!in_range(src, user))
-			return
-		if(!storedpart)
-			return
-		storedpart.icon = style_list_icons[augstyle]
+		storedpart.icon = style_list_icons[choice]
 		eject_part(user)
-
 	else
 		to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
+
+/**
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with the menu
+ * * part The body part that is being customized
+ */
+/obj/machinery/aug_manipulator/proc/check_menu(mob/living/user, obj/item/bodypart/part)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(QDELETED(part))
+		return FALSE
+	if(part != storedpart)
+		return FALSE
+	return TRUE
 
 /obj/machinery/aug_manipulator/proc/eject_part(mob/living/user)
 	if(storedpart)

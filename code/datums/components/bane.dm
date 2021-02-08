@@ -28,17 +28,21 @@
 	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
 
 /datum/component/bane/proc/speciesCheck(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
 	if(!proximity_flag || !is_species(target, speciestype))
 		return
 	activate(source, target, user)
 
 /datum/component/bane/proc/mobCheck(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
 	if(!proximity_flag || !istype(target, mobtype))
 		return
 	activate(source, target, user)
 
-/datum/component/bane/proc/activate(obj/item/source, mob/living/target, mob/attacker)
-	if(attacker.a_intent != INTENT_HARM)
+/datum/component/bane/proc/activate(obj/item/source, mob/living/target, mob/living/attacker)
+	if(!attacker.combat_mode)
 		return
 
 	var/extra_damage = max(0, source.force * damage_multiplier)

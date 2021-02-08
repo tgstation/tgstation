@@ -8,6 +8,7 @@
 	playsound(src, 'sound/items/welder.ogg', 150, TRUE)
 	new /obj/effect/decal/cleanable/greenglow(drop_location())
 	qdel(src)
+	return TRUE
 
 /obj/effect/decal/remains/human
 	desc = "They look like human remains. They have a strange aura about them."

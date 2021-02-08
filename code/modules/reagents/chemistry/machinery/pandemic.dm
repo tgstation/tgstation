@@ -50,7 +50,7 @@
 	if(!beaker || !beaker.reagents)
 		return
 	var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
-	if(B && B.data[thing])
+	if(B?.data[thing])
 		return B.data[thing][index]
 
 /obj/machinery/computer/pandemic/proc/get_virus_id_by_index(index)
@@ -139,7 +139,7 @@
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)
-		beaker.forceMove(drop_location())
+		try_put_in_hand(beaker, usr)
 		beaker = null
 		update_icon()
 
@@ -172,7 +172,8 @@
 	return data
 
 /obj/machinery/computer/pandemic/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("eject_beaker")

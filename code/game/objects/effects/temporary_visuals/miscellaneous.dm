@@ -7,7 +7,7 @@
 	var/splatter_type = "splatter"
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
-	if(set_dir in GLOB.diagonals)
+	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
@@ -391,6 +391,18 @@
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
+/obj/effect/temp_visual/annoyed
+	name = "annoyed"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "annoyed"
+	duration = 25
+
+/obj/effect/temp_visual/annoyed/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-4,0)
+	pixel_y = rand(8,12)
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
+
 /obj/effect/temp_visual/love_heart
 	name = "love heart"
 	icon = 'icons/effects/effects.dmi'
@@ -468,6 +480,14 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/cart_space
+	icon_state = "launchpad_launch"
+	duration = 2 SECONDS
+
+/obj/effect/temp_visual/cart_space/bad
+	icon_state = "launchpad_pull"
+	duration = 2 SECONDS
 
 /obj/effect/constructing_effect
 	icon = 'icons/effects/effects_rcd.dmi'

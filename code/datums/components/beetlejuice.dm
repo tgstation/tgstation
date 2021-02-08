@@ -34,7 +34,9 @@
 		update_regex()
 
 /datum/component/beetlejuice/proc/say_react(datum/source, mob/speaker,message)
-	if(!speaker || !message || !active)
+	SIGNAL_HANDLER
+
+	if(!speaker || speaker == parent || !message || !active)
 		return
 	var/found = R.Find(message)
 	if(found)

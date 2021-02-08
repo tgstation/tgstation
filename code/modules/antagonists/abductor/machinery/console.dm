@@ -35,8 +35,8 @@
 	possible_gear = get_abductor_gear()
 
 /**
-  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
-  */
+ * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
+ */
 /obj/machinery/abductor/console/proc/get_abductor_gear()
 	var/list/filtered_modules = list()
 	for(var/path in GLOB.abductor_gear)
@@ -143,7 +143,7 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(pad && gizmo && gizmo.marked)
+	if(pad && gizmo?.marked)
 		pad.Retrieve(gizmo.marked)
 
 /obj/machinery/abductor/console/proc/TeleporterSend()

@@ -1,7 +1,7 @@
 /obj/effect/particle_effect/expl_particles
 	name = "fire"
 	icon_state = "explosion_particle"
-	opacity = 1
+	opacity = TRUE
 	anchored = TRUE
 
 /obj/effect/particle_effect/expl_particles/Initialize()
@@ -10,7 +10,7 @@
 
 /obj/effect/particle_effect/expl_particles/LateInitialize()
 	var/direct = pick(GLOB.alldirs)
-	var/steps_amt = pick(1;25,2;50,3,4;200)
+	var/steps_amt = pick(25;1,50;2,100;3,200;4)
 	for(var/j in 1 to steps_amt)
 		step(src, direct)
 		sleep(1)
@@ -27,7 +27,7 @@
 	name = "fire"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
-	opacity = 1
+	opacity = TRUE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32

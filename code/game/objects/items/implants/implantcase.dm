@@ -65,7 +65,8 @@
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
-	reagents = imp.reagents
+	if(imp)
+		reagents = imp.reagents
 
 
 /obj/item/implantcase/tracking
@@ -77,8 +78,3 @@
 	name = "implant case - 'Firearms Authentication'"
 	desc = "A glass case containing a firearms authentication implant."
 	imp_type = /obj/item/implant/weapons_auth
-
-/obj/item/implantcase/adrenaline
-	name = "implant case - 'Adrenaline'"
-	desc = "A glass case containing an adrenaline implant."
-	imp_type = /obj/item/implant/adrenalin

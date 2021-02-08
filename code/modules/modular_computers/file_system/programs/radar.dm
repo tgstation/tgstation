@@ -7,7 +7,6 @@
 	transfer_access = null
 	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
-	network_destination = "tracking program"
 	size = 5
 	tgui_id = "NtosRadar"
 	///List of trackable entities. Updated by the scan() proc.
@@ -64,7 +63,8 @@
 	return data
 
 /datum/computer_file/program/radar/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -74,13 +74,13 @@
 			scan()
 
 /**
-  *Updates tracking information of the selected target.
-  *
-  *The track() proc updates the entire set of information about the location
-  *of the target, including whether the Ntos window should use a pinpointer
-  *crosshair over the up/down arrows, or none in favor of a rotating arrow
-  *for far away targets. This information is returned in the form of a list.
-  *
+ *Updates tracking information of the selected target.
+ *
+ *The track() proc updates the entire set of information about the location
+ *of the target, including whether the Ntos window should use a pinpointer
+ *crosshair over the up/down arrows, or none in favor of a rotating arrow
+ *for far away targets. This information is returned in the form of a list.
+ *
 */
 /datum/computer_file/program/radar/proc/track()
 	var/atom/movable/signal = find_atom()
@@ -116,13 +116,13 @@
 	return trackinfo
 
 /**
-  *
-  *Checks the trackability of the selected target.
-  *
-  *If the target is on the computer's Z level, or both are on station Z
-  *levels, and the target isn't untrackable, return TRUE.
-  *Arguments:
-  **arg1 is the atom being evaluated.
+ *
+ *Checks the trackability of the selected target.
+ *
+ *If the target is on the computer's Z level, or both are on station Z
+ *levels, and the target isn't untrackable, return TRUE.
+ *Arguments:
+ **arg1 is the atom being evaluated.
 */
 /datum/computer_file/program/radar/proc/trackable(atom/movable/signal)
 	if(!signal || !computer)
@@ -134,30 +134,30 @@
 	return (there.z == here.z) || (is_station_level(here.z) && is_station_level(there.z))
 
 /**
-  *
-  *Runs a scan of all the trackable atoms.
-  *
-  *Checks each entry in the GLOB of the specific trackable atoms against
-  *the track() proc, and fill the objects list with lists containing the
-  *atoms' names and REFs. The objects list is handed to the tgui screen
-  *for displaying to, and being selected by, the user. A two second
-  *sleep is used to delay the scan, both for thematical reasons as well
-  *as to limit the load players may place on the server using these
-  *somewhat costly loops.
+ *
+ *Runs a scan of all the trackable atoms.
+ *
+ *Checks each entry in the GLOB of the specific trackable atoms against
+ *the track() proc, and fill the objects list with lists containing the
+ *atoms' names and REFs. The objects list is handed to the tgui screen
+ *for displaying to, and being selected by, the user. A two second
+ *sleep is used to delay the scan, both for thematical reasons as well
+ *as to limit the load players may place on the server using these
+ *somewhat costly loops.
 */
 /datum/computer_file/program/radar/proc/scan()
 	return
 
 /**
-  *
-  *Finds the atom in the appropriate list that the `selected` var indicates
-  *
-  *The `selected` var holds a REF, which is a string. A mob REF may be
-  *something like "mob_209". In order to find the actual atom, we need
-  *to search the appropriate list for the REF string. This is dependant
-  *on the program (Lifeline uses GLOB.human_list, while Fission360 uses
-  *GLOB.poi_list), but the result will be the same; evaluate the string and
-  *return an atom reference.
+ *
+ *Finds the atom in the appropriate list that the `selected` var indicates
+ *
+ *The `selected` var holds a REF, which is a string. A mob REF may be
+ *something like "mob_209". In order to find the actual atom, we need
+ *to search the appropriate list for the REF string. This is dependant
+ *on the program (Lifeline uses GLOB.human_list, while Fission360 uses
+ *GLOB.poi_list), but the result will be the same; evaluate the string and
+ *return an atom reference.
 */
 /datum/computer_file/program/radar/proc/find_atom()
 	return
@@ -207,12 +207,13 @@
 
 ///A program that tracks crew members via suit sensors
 /datum/computer_file/program/radar/lifeline
-	filename = "Lifeline"
+	filename = "lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_MEDICAL
 	available_on_ntnet = TRUE
+	program_icon = "heartbeat"
 
 /datum/computer_file/program/radar/lifeline/find_atom()
 	return locate(selected) in GLOB.human_list
@@ -229,7 +230,7 @@
 		var/crewmember_name = "Unknown"
 		if(humanoid.wear_id)
 			var/obj/item/card/id/ID = humanoid.wear_id.GetID()
-			if(ID && ID.registered_name)
+			if(ID?.registered_name)
 				crewmember_name = ID.registered_name
 		var/list/crewinfo = list(
 			ref = REF(humanoid),
@@ -240,21 +241,22 @@
 /datum/computer_file/program/radar/lifeline/trackable(mob/living/carbon/human/humanoid)
 	if(!humanoid || !istype(humanoid))
 		return FALSE
-	if(..() && istype(humanoid.w_uniform, /obj/item/clothing/under))
-
-		var/obj/item/clothing/under/uniform = humanoid.w_uniform
-		if(!uniform.has_sensor || (uniform.sensor_mode < SENSOR_COORDS)) // Suit sensors must be on maximum.
-			return FALSE
-
-		return TRUE
+	if(..())
+		if (humanoid in GLOB.nanite_sensors_list)
+			return TRUE
+		if (istype(humanoid.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/uniform = humanoid.w_uniform
+			if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum
+				return TRUE
+	return FALSE
 
 ////////////////////////
 //Nuke Disk Finder App//
 ////////////////////////
 
-///A program that tracks crew members via suit sensors
+///A program that tracks nukes and nuclear accessories
 /datum/computer_file/program/radar/fission360
-	filename = "Fission360"
+	filename = "fission360"
 	filedesc = "Fission360"
 	program_icon_state = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
@@ -263,6 +265,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRadarSyndicate"
+	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
 
@@ -276,8 +279,6 @@
 	objects = list()
 	for(var/i in GLOB.nuke_list)
 		var/obj/machinery/nuclearbomb/nuke = i
-		if(!trackable(nuke))
-			continue
 
 		var/list/nukeinfo = list(
 			ref = REF(nuke),
@@ -285,9 +286,8 @@
 			)
 		objects += list(nukeinfo)
 	var/obj/item/disk/nuclear/disk = locate() in GLOB.poi_list
-	if(trackable(disk))
-		var/list/nukeinfo = list(
-			ref = REF(disk),
-			name = disk.name,
-			)
-		objects += list(nukeinfo)
+	var/list/nukeinfo = list(
+		ref = REF(disk),
+		name = "Nuke Auth. Disk",
+		)
+	objects += list(nukeinfo)

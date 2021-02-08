@@ -10,6 +10,9 @@
 /datum/nanite_extra_setting/text/get_copy()
 	return new /datum/nanite_extra_setting/text(value)
 
+/datum/nanite_extra_setting/text/get_value()
+	return html_encode(value)
+
 /datum/nanite_extra_setting/text/get_frontend_list(name)
 	return list(list(
 		"name" = name,

@@ -29,6 +29,7 @@
 	for(var/direction in GLOB.cardinals)
 		power_station = locate(/obj/machinery/teleport/station, get_step(src, direction))
 		if(power_station)
+			power_station.link_console_and_hub()
 			break
 	return power_station
 
@@ -54,7 +55,8 @@
 	return data
 
 /obj/machinery/computer/teleporter/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(!check_hub_connection())
@@ -159,12 +161,12 @@
 		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(T)]")
 		target = target_station.teleporter_hub
 		target_station.linked_stations |= power_station
-		target_station.machine_stat &= ~NOPOWER
+		target_station.set_machine_stat(target_station.machine_stat & ~NOPOWER)
 		if(target_station.teleporter_hub)
-			target_station.teleporter_hub.machine_stat &= ~NOPOWER
+			target_station.teleporter_hub.set_machine_stat(target_station.teleporter_hub.machine_stat & ~NOPOWER)
 			target_station.teleporter_hub.update_icon()
 		if(target_station.teleporter_console)
-			target_station.teleporter_console.machine_stat &= ~NOPOWER
+			target_station.teleporter_console.set_machine_stat(target_station.teleporter_console.machine_stat & ~NOPOWER)
 			target_station.teleporter_console.update_icon()
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
@@ -174,6 +176,6 @@
 	if(is_centcom_level(T.z) || is_away_level(T.z))
 		return FALSE
 	var/area/A = get_area(T)
-	if(!A || A.noteleport)
+	if(!A ||(A.area_flags & NOTELEPORT))
 		return FALSE
 	return TRUE

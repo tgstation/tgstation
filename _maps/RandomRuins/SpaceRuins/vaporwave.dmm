@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
+/turf/template_noop,
+/area/template_noop)
 "c" = (
 /obj/structure/lattice,
 /turf/open/floor/plating/asteroid/airless,
@@ -28,44 +28,44 @@
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "i" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/structure/window{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "j" = (
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "k" = (
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "l" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "m" = (
 /obj/structure/table/reinforced,
 /obj/item/taperecorder,
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "n" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "o" = (
 /obj/structure/window{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "p" = (
 /obj/effect/overlay/palmtree_l,
@@ -78,14 +78,14 @@
 /obj/structure/window{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "s" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/sunglasses/big{
 	name = "aesthetic sunglasses"
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "t" = (
 /obj/item/instrument/eguitar,
@@ -96,15 +96,16 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "v" = (
 /obj/item/statuebust,
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "w" = (
 /mob/living/simple_animal/butterfly,
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "x" = (
 /obj/structure/closet/crate/bin,
 /obj/item/tape/random,
+/obj/item/gps/spaceruin,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (
@@ -130,6 +131,7 @@
 /area/ruin/unpowered/no_grav)
 "C" = (
 /obj/structure/statue/sandstone/venus{
+	anchored = 1;
 	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
 	dir = 8
 	},
@@ -140,16 +142,17 @@
 /area/ruin/unpowered/no_grav)
 "D" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/iron/airless{
 	icon_state = "recharge_floor_asteroid"
 	},
 /area/ruin/unpowered/no_grav)
 "E" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/iron/airless,
 /area/ruin/unpowered/no_grav)
 "F" = (
 /obj/structure/statue/sandstone/venus{
+	anchored = 1;
 	dir = 4
 	},
 /obj/effect/turf_decal/sand/plating,
@@ -171,23 +174,23 @@
 "I" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/iron/airless,
 /area/ruin/unpowered/no_grav)
 "J" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/iron/airless{
 	icon_state = "stairs-l"
 	},
 /area/ruin/unpowered/no_grav)
 "K" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/iron/airless{
 	icon_state = "stairs-m"
 	},
 /area/ruin/unpowered/no_grav)
 "L" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/iron/airless{
 	icon_state = "stairs-r"
 	},
 /area/ruin/unpowered/no_grav)
@@ -202,12 +205,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "P" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/vaporwave,
+/turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
+"Q" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/lootdrop/space/fancytech,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
 "R" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -307,7 +315,7 @@ a
 a
 a
 c
-d
+Q
 f
 h
 q

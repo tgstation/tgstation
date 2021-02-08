@@ -18,8 +18,6 @@
 	var/list/head_announce = null
 
 	//Bitflags for the job
-	var/flag = NONE //Deprecated
-	var/department_flag = NONE //Deprecated
 	var/auto_deadmin_role_flags = NONE
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
@@ -63,17 +61,44 @@
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 
+	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, among others)
+	var/list/liver_traits = null
+
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	var/bounty_types = CIV_JOB_BASIC
+
+	/// Should this job be allowed to be picked for the bureaucratic error event?
+	var/allow_bureaucratic_error = TRUE
+
+/datum/job/New()
+	. = ..()
+	var/list/jobs_changes = GetMapChanges()
+	if(!jobs_changes)
+		return
+	if(isnum(jobs_changes["additional_access"]))
+		access += jobs_changes["additional_access"]
+	if(isnum(jobs_changes["additional_minimal_access"]))
+		minimal_access += jobs_changes["additional_minimal_access"]
+	if(isnum(jobs_changes["spawn_positions"]))
+		spawn_positions = jobs_changes["spawn_positions"]
+	if(isnum(jobs_changes["total_positions"]))
+		total_positions = jobs_changes["total_positions"]
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, H, M, latejoin)
 	if(mind_traits)
 		for(var/t in mind_traits)
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+
+	var/obj/item/organ/liver/liver = H.getorganslot(ORGAN_SLOT_LIVER)
+
+	if(liver)
+		for(var/t in liver_traits)
+			ADD_TRAIT(liver, t, JOB_TRAIT)
 
 	var/list/roundstart_experience
 
@@ -175,7 +200,26 @@
 	return TRUE
 
 /datum/job/proc/map_check()
+	var/list/job_changes = GetMapChanges()
+	if(!job_changes)
+		return FALSE
 	return TRUE
+
+/**
+ * Gets the changes dictionary made to the job template by the map config. Returns null if job is removed.
+ */
+/datum/job/proc/GetMapChanges()
+	var/string_type = "[type]"
+	var/list/splits = splittext(string_type, "/")
+	var/endpart = splits[splits.len]
+
+	SSmapping.HACK_LoadMapConfig()
+
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!(endpart in job_changes))
+		return list()
+
+	return job_changes[endpart]
 
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
@@ -243,12 +287,10 @@
 		if(H.age)
 			C.registered_age = H.age
 		C.update_label()
-		for(var/A in SSeconomy.bank_accounts)
-			var/datum/bank_account/B = A
-			if(B.account_id == H.account_id)
-				C.registered_account = B
-				B.bank_cards += C
-				break
+		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
+		if(B && B.account_id == H.account_id)
+			C.registered_account = B
+			B.bank_cards += C
 		H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
@@ -259,6 +301,7 @@
 
 	if(H.client?.prefs.playtime_reward_cloak)
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
+
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()

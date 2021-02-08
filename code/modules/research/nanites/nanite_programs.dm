@@ -53,6 +53,7 @@
 	//Rules
 	//Rules that automatically manage if the program's active without requiring separate sensor programs
 	var/list/datum/nanite_rule/rules = list()
+	var/all_rules_required = TRUE			//Whether all rules are required for positive condition or any of specified
 
 /datum/nanite_program/New()
 	. = ..()
@@ -92,12 +93,14 @@
 	for(var/R in rules)
 		var/datum/nanite_rule/rule = R
 		rule.copy_to(target)
+	target.all_rules_required = all_rules_required
 
 	if(istype(target,src))
 		copy_extra_settings_to(target)
 
-///Register extra settings by overriding this.
-///extra_settings[name] = new typepath() for each extra setting
+/// Register extra settings by overriding this.
+///
+/// `extra_settings[name] = new typepath()` for each extra setting.
 /datum/nanite_program/proc/register_extra_settings()
 	return
 
@@ -190,14 +193,18 @@
 		if(passive_enabled)
 			disable_passive_effect()
 
-//If false, disables active and passive effects, but doesn't consume nanites
+//If false, disables active, passive effects, and triggers without consuming nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
+	if (!LAZYLEN(rules))
+		return TRUE
 	for(var/R in rules)
 		var/datum/nanite_rule/rule = R
-		if(!rule.check_rule())
+		if(!all_rules_required && rule.check_rule())
+			return TRUE
+		if(all_rules_required && !rule.check_rule())
 			return FALSE
-	return TRUE
+	return all_rules_required ? TRUE : FALSE
 
 //Constantly procs as long as the program is active
 /datum/nanite_program/proc/active_effect()
@@ -222,6 +229,8 @@
 		return
 	if(world.time < next_trigger)
 		return
+	if(!check_conditions())
+		return
 	if(!consume_nanites(trigger_cost))
 		return
 	next_trigger = world.time + trigger_cooldown
@@ -238,18 +247,22 @@
 	if(program_flags & NANITE_EMP_IMMUNE)
 		return
 	if(prob(80 / severity))
+		host_mob.investigate_log("[src] nanite program received a software error due to emp.", INVESTIGATE_NANITES)
 		software_error()
 
 /datum/nanite_program/proc/on_shock(shock_damage)
 	if(!program_flags & NANITE_SHOCK_IMMUNE)
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to shock.", INVESTIGATE_NANITES)
 			software_error()
 		else if(prob(33))
+			host_mob.investigate_log("[src] nanite program was deleted due to shock.", INVESTIGATE_NANITES)
 			qdel(src)
 
 /datum/nanite_program/proc/on_minor_shock()
 	if(!program_flags & NANITE_SHOCK_IMMUNE)
 		if(prob(10))
+			host_mob.investigate_log("[src] nanite program received a software error due to minor shock.", INVESTIGATE_NANITES)
 			software_error()
 
 /datum/nanite_program/proc/on_death()
@@ -260,21 +273,26 @@
 		type = rand(1,5)
 	switch(type)
 		if(1)
+			host_mob.investigate_log("[src] nanite program was deleted by software error.", INVESTIGATE_NANITES)
 			qdel(src) //kill switch
 			return
 		if(2) //deprogram codes
+			host_mob.investigate_log("[src] nanite program was de-programmed by software error.", INVESTIGATE_NANITES)
 			activation_code = 0
 			deactivation_code = 0
 			kill_code = 0
 			trigger_code = 0
 		if(3)
+			host_mob.investigate_log("[src] nanite program was toggled by software error.", INVESTIGATE_NANITES)
 			toggle() //enable/disable
 		if(4)
 			if(can_trigger)
+				host_mob.investigate_log("[src] nanite program was triggered by software error.", INVESTIGATE_NANITES)
 				trigger()
 		if(5) //Program is scrambled and does something different
 			var/rogue_type = pick(rogue_types)
 			var/datum/nanite_program/rogue = new rogue_type
+			host_mob.investigate_log("[src] nanite program was converted into [rogue.name] by software error.", INVESTIGATE_NANITES)
 			nanites.add_program(null, rogue, src)
 			qdel(src)
 

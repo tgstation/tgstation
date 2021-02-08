@@ -7,7 +7,7 @@
 				/datum/surgery_step/stomach_pump,
 				/datum/surgery_step/close)
 
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = TRUE
 	ignore_clothes = FALSE
@@ -15,8 +15,6 @@
 
 /datum/surgery/stomach_pump/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/stomach/S = target.getorganslot(ORGAN_SLOT_STOMACH)
-	if(target.stat != DEAD)	//shamelessly lifted off the revival surgery but we're looking for the same critera here, a dead, non-husked, revivable patient.
-		return FALSE
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		return FALSE
 	if(!S)
@@ -41,7 +39,7 @@
 		display_results(user, target, "<span class='notice'>[user] forces [H] to vomit, cleansing their stomach of some chemicals!</span>",
 				"<span class='notice'>[user] forces [H] to vomit, cleansing their stomach of some chemicals!</span>",
 				"[user] forces [H] to vomit!")
-		H.vomit(20, FALSE, TRUE, 1, TRUE, FALSE, purge = TRUE) //called with purge as true to lose more reagents
+		H.vomit(20, FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 0.67) //higher purge ratio than regular vomiting
 	return ..()
 
 /datum/surgery_step/stomach_pump/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

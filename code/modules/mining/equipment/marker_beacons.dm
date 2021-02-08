@@ -23,7 +23,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
 	novariants = TRUE
-	var/picked_color = "random"
+	cost = 1
+	source = /datum/robot_energy_storage/beacon
+	var/picked_color = "Random"
 
 /obj/item/stack/marker_beacon/ten //miners start with 10 of these
 	amount = 10
@@ -31,7 +33,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 /obj/item/stack/marker_beacon/thirty //and they're bought in stacks of 1, 10, or 30
 	amount = 30
 
-/obj/item/stack/marker_beacon/Initialize(mapload)
+/obj/item/stack/marker_beacon/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
 	update_icon()
 
@@ -72,17 +74,19 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
-	armor = list("melee" = 50, "bullet" = 75, "laser" = 75, "energy" = 75, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 25, "acid" = 0)
+	armor = list(MELEE = 50, BULLET = 75, LASER = 75, ENERGY = 75, BOMB = 25, BIO = 100, RAD = 100, FIRE = 25, ACID = 0)
 	max_integrity = 50
 	anchored = TRUE
 	light_range = 2
 	light_power = 3
+	var/icon_prefix = "marker"
 	var/remove_speed = 15
 	var/picked_color
 
 /obj/structure/marker_beacon/Initialize(mapload, set_color)
 	. = ..()
-	picked_color = set_color
+	if(set_color)
+		picked_color = set_color
 	update_icon()
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
@@ -99,7 +103,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 /obj/structure/marker_beacon/update_icon()
 	while(!picked_color || !GLOB.marker_beacon_colors[picked_color])
 		picked_color = pick(GLOB.marker_beacon_colors)
-	icon_state = "[initial(icon_state)][lowertext(picked_color)]-on"
+	icon_state = "[icon_prefix][lowertext(picked_color)]-on"
 	set_light(light_range, light_power, GLOB.marker_beacon_colors[picked_color])
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user)
@@ -144,3 +148,11 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	if(input_color)
 		picked_color = input_color
 		update_icon()
+
+
+/* Preset marker beacon types, for mapping */
+
+/obj/structure/marker_beacon/burgundy
+	picked_color = "Burgundy"
+	// set icon_state to make it clear for mappers
+	icon_state = "markerburgundy-on"

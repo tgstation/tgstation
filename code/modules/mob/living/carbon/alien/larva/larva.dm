@@ -6,17 +6,27 @@
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE
 	hud_type = /datum/hud/larva
-
+	melee_damage_lower = 1
+	melee_damage_upper = 3
 	maxHealth = 25
 	health = 25
 	hardcrit_threshold = HEALTH_THRESHOLD_CRIT
 
+	rotate_on_lying = FALSE
+
+	default_num_legs = 1
+	num_legs = 1 //Alien larvas always have a movable apendage.
+	usable_legs = 1 //Alien larvas always have a movable apendage.
+	default_num_hands = 0
+
+	bodyparts = list(
+		/obj/item/bodypart/chest/larva,
+		/obj/item/bodypart/head/larva,
+		)
+
 	var/amount_grown = 0
 	var/max_grown = 100
 	var/time_of_birth
-
-	rotate_on_lying = 0
-	bodyparts = list(/obj/item/bodypart/chest/larva, /obj/item/bodypart/head/larva)
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
@@ -31,10 +41,9 @@
 	..()
 
 //This needs to be fixed
-/mob/living/carbon/alien/larva/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+/mob/living/carbon/alien/larva/get_status_tab_items()
+	. = ..()
+	. += "Progress: [amount_grown]/[max_grown]"
 
 /mob/living/carbon/alien/larva/Login()
 	. = ..()
@@ -48,11 +57,9 @@
 	..(amount)
 
 //can't equip anything
-/mob/living/carbon/alien/larva/attack_ui(slot_id)
+/mob/living/carbon/alien/larva/attack_ui(slot_id, params)
 	return
 
-/mob/living/carbon/alien/larva/restrained(ignore_grab)
-	. = 0
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field
@@ -74,3 +81,7 @@
 /mob/living/carbon/alien/larva/stripPanelEquip(obj/item/what, mob/who)
 	to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 	return
+
+
+/mob/living/carbon/alien/larva/canBeHandcuffed()
+	return TRUE

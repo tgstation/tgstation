@@ -39,7 +39,7 @@
 
 /obj/machinery/limbgrower/ui_interact(mob/user)
 	. = ..()
-	if(!is_operational())
+	if(!is_operational)
 		return
 
 	var/dat = main_win(user)
@@ -61,7 +61,7 @@
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	..()
 
-/obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
+/obj/machinery/limbgrower/attackby(obj/item/O, mob/living/user, params)
 	if (busy)
 		to_chat(user, "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>")
 		return
@@ -73,7 +73,7 @@
 	if(panel_open && default_deconstruction_crowbar(O))
 		return
 
-	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+	if(user.combat_mode) //so we can hit the machine
 		return ..()
 
 /obj/machinery/limbgrower/Topic(href, href_list)
@@ -83,7 +83,7 @@
 		if(href_list["menu"])
 			screen = text2num(href_list["menu"])
 
-		if(href_list["category"])
+		if(href_list["category"] in categories) //Don't let people send invalid categories, selected_category is displayed to anyone who looks at the machine in several places
 			selected_category = href_list["category"]
 
 		if(href_list["disposeI"])  //Get rid of a reagent incase you add the wrong one by mistake

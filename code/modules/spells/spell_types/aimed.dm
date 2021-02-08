@@ -1,10 +1,10 @@
 
 /obj/effect/proc_holder/spell/aimed
 	name = "aimed projectile spell"
+	base_icon_state = "projectile"
 	var/projectile_type = /obj/projectile/magic/teleport
 	var/deactive_msg = "You discharge your projectile..."
 	var/active_msg = "You charge your projectile!"
-	var/base_icon_state = "projectile"
 	var/active_icon_state = "projectile"
 	var/list/projectile_var_overrides = list()
 	var/projectile_amount = 1	//Projectiles per cast.

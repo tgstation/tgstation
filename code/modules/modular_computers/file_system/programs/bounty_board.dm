@@ -4,7 +4,6 @@
 	program_icon_state = "bountyboard"
 	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible.."
 	requires_ntnet = TRUE
-	network_destination = "bounty board interface"
 	size = 10
 	tgui_id = "NtosRequestKiosk"
 	///Reference to the currently logged in user.
@@ -45,7 +44,8 @@
 	return data
 
 /datum/computer_file/program/bounty_board/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]

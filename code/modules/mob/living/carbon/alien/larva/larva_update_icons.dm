@@ -14,10 +14,10 @@
 		icon_state = "larva[state]_dead"
 	else if(handcuffed || legcuffed) //This should be an overlay. Who made this an icon_state?
 		icon_state = "larva[state]_cuff"
-	else if(!(mobility_flags & MOBILITY_STAND))
-		icon_state = "larva[state]_sleep"
-	else if(IsStun())
+	else if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		icon_state = "larva[state]_stun"
+	else if(body_position == LYING_DOWN)
+		icon_state = "larva[state]_sleep"
 	else
 		icon_state = "larva[state]"
 
@@ -29,3 +29,5 @@
 	update_icons() //larva icon_state changes if cuffed/uncuffed.
 
 
+/mob/living/carbon/alien/larva/lying_angle_on_lying_down(new_lying_angle)
+	return // Larvas don't rotate on lying down, they have their own custom icons.

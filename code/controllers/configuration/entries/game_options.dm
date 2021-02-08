@@ -62,7 +62,7 @@
 
 /datum/config_entry/flag/disable_human_mood
 
-/datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
+/datum/config_entry/flag/disable_secborg	// disallow secborg model to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
 
@@ -71,27 +71,27 @@
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
 	config_entry_value = 6
 	integer = FALSE
-	min_val = 1
+	min_val = 0
 
 /datum/config_entry/number/brother_scaling_coeff	//how many players per brother team
 	config_entry_value = 25
 	integer = FALSE
-	min_val = 1
+	min_val = 0
 
 /datum/config_entry/number/changeling_scaling_coeff	//how much does the amount of players get divided by to determine changelings
 	config_entry_value = 6
 	integer = FALSE
-	min_val = 1
+	min_val = 0
 
 /datum/config_entry/number/ecult_scaling_coeff	//how much does the amount of players get divided by to determine e_cult
 	config_entry_value = 6
 	integer = FALSE
-	min_val = 1
+	min_val = 0
 
 /datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
 	config_entry_value = 8
 	integer = FALSE
-	min_val = 1
+	min_val = 0
 
 /datum/config_entry/number/traitor_objectives_amount
 	config_entry_value = 2
@@ -200,7 +200,12 @@
 
 /datum/config_entry/flag/ooc_during_round
 
+// deprecated for unclear name
 /datum/config_entry/number/commendations
+	integer = FALSE
+	deprecated_by = /datum/config_entry/number/commendation_percent_poll
+
+/datum/config_entry/number/commendation_percent_poll
 	integer = FALSE
 
 /datum/config_entry/flag/emojis
@@ -269,8 +274,6 @@
 	movedelay_type = /mob/living/carbon/human
 /datum/config_entry/number/outdated_movedelay/robot_delay
 	movedelay_type = /mob/living/silicon/robot
-/datum/config_entry/number/outdated_movedelay/monkey_delay
-	movedelay_type = /mob/living/carbon/monkey
 /datum/config_entry/number/outdated_movedelay/alien_delay
 	movedelay_type = /mob/living/carbon/alien
 /datum/config_entry/number/outdated_movedelay/slime_delay

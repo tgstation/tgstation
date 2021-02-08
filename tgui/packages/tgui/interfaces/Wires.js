@@ -1,17 +1,24 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section } from '../components';
+import { Box, Button, LabeledList, Section, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 export const Wires = (props, context) => {
   const { act, data } = useBackend(context);
+  const { proper_name } = data;
   const wires = data.wires || [];
   const statuses = data.status || [];
   return (
     <Window
       width={350}
-      height={150 + wires.length * 30}>
+      height={150
+        + (wires.length * 30)
+        + (!!proper_name && 30)}>
       <Window.Content>
+        {(!!proper_name && (
+          <NoticeBox textAlign="center">
+            {proper_name} Wire Configuration
+          </NoticeBox>
+        ))}
         <Section>
           <LabeledList>
             {wires.map(wire => (
@@ -22,7 +29,7 @@ export const Wires = (props, context) => {
                 labelColor={wire.color}
                 color={wire.color}
                 buttons={(
-                  <Fragment>
+                  <>
                     <Button
                       content={wire.cut ? 'Mend' : 'Cut'}
                       onClick={() => act('cut', {
@@ -38,7 +45,7 @@ export const Wires = (props, context) => {
                       onClick={() => act('attach', {
                         wire: wire.color,
                       })} />
-                  </Fragment>
+                  </>
                 )}>
                 {!!wire.wire && (
                   <i>

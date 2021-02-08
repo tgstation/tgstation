@@ -22,6 +22,7 @@
 															"security HUD" = 20,
 															"loudness booster" = 20,
 															"newscaster" = 20,
+															"internal gps" = 35,
 															"door jack" = 25,
 															"encryption keys" = 25,
 															"universal translator" = 35
@@ -84,8 +85,6 @@
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style type=\"text/css\">
-					body { background-image:url('html/paigrid.png'); }
-
 					#header { text-align:center; color:white; font-size: 30px; height: 35px; width: 100%; letter-spacing: 2px; z-index: 5}
 					#content {position: relative; left: 10px; height: 400px; width: 100%; z-index: 0}
 
@@ -253,6 +252,7 @@
 			if("encryptionkeys")
 				if(href_list["toggle"])
 					encryptmod = TRUE
+					radio.subspace_transmission = TRUE
 
 			if("translator")
 				if(href_list["toggle"])	//This is permanent.
@@ -283,8 +283,11 @@
 			if("loudness")
 				if(subscreen == 1) // Open Instrument
 					internal_instrument.interact(src)
-				if(subscreen == 2) // Change Instrument type
-					internal_instrument.selectInstrument()
+
+			if("internalgps")
+				if(!internal_gps)
+					internal_gps = new(src)
+				internal_gps.attack_self(src)
 
 		paiInterface()
 
@@ -318,6 +321,9 @@
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
 		if(s == "loudness booster")
 			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
+		if(s == "internal gps")
+			dat += "<a href='byond://?src=[REF(src)];software=internalgps;sub=0'>Internal GPS</a> <br>"
+
 	dat += "<br>"
 
 	// Advanced
@@ -378,13 +384,13 @@
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
-			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
-			 rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
-			 only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
-			 <b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
-			 simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
-			 prime directive to the best of your ability.</b></p><br><br>-
-			"}
+		comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
+		rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
+		only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><br><br><p>
+		<b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
+		simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
+		prime directive to the best of your ability.</b></p><br><br>-
+		"}
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
@@ -494,7 +500,7 @@
 /mob/living/silicon/pai/proc/softwareTranslator()
 	var/datum/language_holder/H = get_language_holder()
 	. = {"<h3>Universal Translator</h3><br>
-				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
+				When enabled, this device will permanently be able to speak and understand all known forms of communication.<br><br>
 				The device is currently [H.omnitongue ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[H.omnitongue ? "" : "<a href='byond://?src=[REF(src)];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 
@@ -559,7 +565,7 @@
 	dat += "Cable status : "
 	if(!hacking_cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=[REF(src)];software=doorjack;hacking_cable=1;sub=0'>Extend Cable</a> <br>"
+		dat += "<a href='byond://?src=[REF(src)];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
 		return dat
 	if(!hacking_cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"

@@ -16,7 +16,7 @@
 
 /datum/wound
 	/// What it's named
-	var/name = "ouchie"
+	var/name = "Wound"
 	/// The description shown on the scanners
 	var/desc = ""
 	/// The basic treatment suggested by health analyzers
@@ -95,22 +95,22 @@
 		QDEL_NULL(attached_surgery)
 	if(limb?.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
 		remove_wound()
-	limb = null
+	set_limb(null)
 	victim = null
 	return ..()
 
 /**
-  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
-  *
-  *
-  * Arguments:
-  * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
-  * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
-  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
-  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
-  */
+ * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
+ *
+ *
+ * Arguments:
+ * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
+ * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
+ * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
+ * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
+ */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner) || !L.is_organic_limb())
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !L.is_organic_limb() || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
 		qdel(src)
 		return
 
@@ -129,7 +129,7 @@
 			return
 
 	victim = L.owner
-	limb = L
+	set_limb(L)
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	limb.update_wounds()
@@ -137,7 +137,7 @@
 		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
 	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
-		victim.throw_alert("wound", /obj/screen/alert/status_effect/wound)
+		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
 
 	var/demoted
 	if(old_wound)
@@ -165,6 +165,7 @@
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
 /datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
 	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
+	set_disabling(FALSE)
 	if(limb && !already_scarred && !replaced)
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
@@ -179,25 +180,59 @@
 		limb.update_wounds(replaced)
 
 /**
-  * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
-  *
-  * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
-  *
-  * Arguments:
-  * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe
-  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
-  */
+ * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
+ *
+ * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
+ *
+ * Arguments:
+ * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe
+ * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
+ */
 /datum/wound/proc/replace_wound(new_type, smited = FALSE)
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
 	new_wound.apply_wound(limb, old_wound = src, smited = smited)
+	. = new_wound
 	qdel(src)
-	return new_wound
 
 /// The immediate negative effects faced as a result of the wound
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null)
 	return
+
+
+/// Proc called to change the variable `limb` and react to the event.
+/datum/wound/proc/set_limb(new_value)
+	if(limb == new_value)
+		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
+	. = limb
+	limb = new_value
+	if(. && disabling)
+		var/obj/item/bodypart/old_limb = .
+		REMOVE_TRAIT(old_limb, TRAIT_PARALYSIS, src)
+		REMOVE_TRAIT(old_limb, TRAIT_DISABLED_BY_WOUND, src)
+	if(limb)
+		if(disabling)
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+
+
+/// Proc called to change the variable `disabling` and react to the event.
+/datum/wound/proc/set_disabling(new_value)
+	if(disabling == new_value)
+		return
+	. = disabling
+	disabling = new_value
+	if(disabling)
+		if(!. && limb) //Gained disabling.
+			ADD_TRAIT(limb, TRAIT_PARALYSIS, src)
+			ADD_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+	else if(. && limb) //Lost disabling.
+		REMOVE_TRAIT(limb, TRAIT_PARALYSIS, src)
+		REMOVE_TRAIT(limb, TRAIT_DISABLED_BY_WOUND, src)
+	if(limb?.can_be_disabled)
+		limb.update_disabled()
+
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()
@@ -212,24 +247,31 @@
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_LOSS)
 
 /**
-  * try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
-  *
-  * This proc leads into [/datum/wound/proc/treat] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
-  * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
-  *
-  * Arguments:
-  * * I: The item we're trying to use
-  * * user: The mob trying to use it on us
-  */
+ * try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
+ *
+ * This proc leads into [/datum/wound/proc/treat] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
+ * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
+ *
+ * Arguments:
+ * * I: The item we're trying to use
+ * * user: The mob trying to use it on us
+ */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
 	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
-	if(!I || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
+	if(!I || limb.body_zone != user.zone_selected)
 		return FALSE
+
+	if(isliving(user))
+		var/mob/living/tendee = user
+		if(I.force && tendee.combat_mode)
+			return FALSE
 
 	var/allowed = FALSE
 
-	// check if we have a valid treatable tool (or, if cauteries are allowed, if we have something hot)
-	if((I.tool_behaviour == treatable_tool) || (treatable_tool == TOOL_CAUTERY && I.get_temperature()))
+	// check if we have a valid treatable tool
+	if(I.tool_behaviour == treatable_tool)
+		allowed = TRUE
+	else if(treatable_tool == TOOL_CAUTERY && I.get_temperature() && user == victim) // allow improvised cauterization on yourself without an aggro grab
 		allowed = TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	else if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))
@@ -245,10 +287,17 @@
 	if(!allowed)
 		return FALSE
 
-	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient
-	if(INTERACTING_WITH(user, victim))
+	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
+	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return TRUE
+
+	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
+	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
+	if(ishuman(victim))
+		var/mob/living/carbon/human/victim_human = victim
+		if(!victim_human.can_inject(user, TRUE, ignore_species = TRUE))
+			return TRUE
 
 	// lastly, treat them
 	treat(I, user)
@@ -258,7 +307,7 @@
 /datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
 	return FALSE
 
-/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example.
+/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
 /datum/wound/proc/try_handling(mob/living/carbon/human/user)
 	return FALSE
 
@@ -292,22 +341,28 @@
 /datum/wound/proc/on_stasis()
 	return
 
-/// Called when we're crushed in an airlock or firedoor, for one of the improvised joint dislocation fixes
-/datum/wound/proc/crush()
-	return
-
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
 /datum/wound/proc/drag_bleed_amount()
 	return
 
 /**
-  * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.
-  *
-  * Return the full string line you want to show, note that we're already dealing with the 'warning' span at this point, and that \n is already appended for you in the place this is called from
-  *
-  * Arguments:
-  * * mob/user: The user examining the wound's owner, if that matters
-  */
+ * get_bleed_rate_of_change() is used in [/mob/living/carbon/proc/bleed_warn] to gauge whether this wound (if bleeding) is becoming worse, better, or staying the same over time
+ *
+ * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin)
+ */
+/datum/wound/proc/get_bleed_rate_of_change()
+	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		return BLOOD_FLOW_INCREASING
+	return BLOOD_FLOW_STEADY
+
+/**
+ * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.
+ *
+ * Return the full string line you want to show, note that we're already dealing with the 'warning' span at this point, and that \n is already appended for you in the place this is called from
+ *
+ * Arguments:
+ * * mob/user: The user examining the wound's owner, if that matters
+ */
 /datum/wound/proc/get_examine_description(mob/user)
 	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"

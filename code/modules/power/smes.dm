@@ -97,7 +97,7 @@
 		if(!terminal)
 			to_chat(user, "<span class='alert'>No power terminal found.</span>")
 			return
-		machine_stat &= ~BROKEN
+		set_machine_stat(machine_stat & ~BROKEN)
 		update_icon()
 		return
 
@@ -194,7 +194,7 @@
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.setDir(get_dir(T,src))
 	terminal.master = src
-	machine_stat &= ~BROKEN
+	set_machine_stat(machine_stat & ~BROKEN)
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)
@@ -237,11 +237,6 @@
 	var/last_disp = chargedisplay()
 	var/last_chrg = inputting
 	var/last_onln = outputting
-
-	//check for self-recharging cells in stock parts and use them to self-charge
-	for(var/obj/item/stock_parts/cell/C in component_parts)
-		if(C.self_recharge)
-			charge += min(capacity-charge, C.chargerate) // If capacity-charge is smaller than the attempted charge rate, this avoids overcharging
 
 	//inputting
 	if(terminal && input_attempt)
@@ -348,7 +343,8 @@
 	return data
 
 /obj/machinery/power/smes/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("tryinput")

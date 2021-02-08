@@ -2,18 +2,23 @@
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
 	status_flags = 0
-	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
 	pixel_x = -16
+	base_pixel_x = -16
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
+/mob/living/carbon/alien/humanoid/royal/Initialize()
+	. = ..()
+	// as a wise man once wrote: "pull over that ass too fat"
+	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
 /mob/living/carbon/alien/humanoid/royal/can_inject()
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen
 	name = "alien queen"
@@ -83,20 +88,20 @@
 	var/obj/item/queenpromote/prom
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
 		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
-		return 0
+		return
 	else
 		for(prom in user)
 			to_chat(user, "<span class='noticealien'>You discard [prom].</span>")
 			qdel(prom)
-			return 0
+			return
 
 		prom = new (user.loc)
 		if(!user.put_in_active_hand(prom, 1))
 			to_chat(user, "<span class='warning'>You must empty your hands before preparing the parasite.</span>")
-			return 0
+			return
 		else //Just in case telling the player only once is not enough!
 			to_chat(user, "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>")
-	return 0
+	return
 
 /obj/item/queenpromote
 	name = "\improper royal parasite"

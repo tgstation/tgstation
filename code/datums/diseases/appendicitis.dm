@@ -14,8 +14,12 @@
 	required_organs = list(/obj/item/organ/appendix)
 	bypasses_immunity = TRUE // Immunity is based on not having an appendix; this isn't a virus
 
+
 /datum/disease/appendicitis/stage_act()
-	..()
+	. = ..()
+	if(!.)
+		return
+
 	switch(stage)
 		if(1)
 			if(prob(5))
@@ -29,7 +33,7 @@
 				to_chat(affected_mob, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_APPENDIX, 5)
 				affected_mob.Stun(rand(40,60))
-				affected_mob.adjustToxLoss(1)
+				affected_mob.adjustToxLoss(1, FALSE)
 		if(3)
 			if(prob(1))
 				affected_mob.vomit(95)
