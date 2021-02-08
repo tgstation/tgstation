@@ -1,7 +1,6 @@
 /// The subsystem used to play ambience to users every now and then, makes them real excited.
 SUBSYSTEM_DEF(ambience)
 	name = "Ambience"
-	init_order = INIT_ORDER_AMBIENCE
 	flags = SS_BACKGROUND|SS_NO_INIT
 	priority = FIRE_PRIORITY_AMBIENCE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
