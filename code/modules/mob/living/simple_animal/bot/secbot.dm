@@ -78,10 +78,12 @@
 	. = ..()
 	weapon = new baton_type()
 	update_icon()
-	// TIMBERTODO - FIX THIS RETARDED SNOWFLAKE SHIT
-	//var/datum/job/detective/J = new/datum/job/detective
-	//access_card.add_access(J.get_access())
-	//prev_access = access_card.timberpoes_access
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/det_trim = SSid_access.get_trim(/datum/id_trim/job/detective)
+	access_card.add_access(det_trim.access)
+	access_card.add_access(det_trim.wildcard_access)
+	prev_access = access_card.timberpoes_access
 
 	//SECHUD
 	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]

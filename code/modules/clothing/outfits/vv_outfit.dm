@@ -144,7 +144,7 @@
 	if(id_slot)
 		var/obj/item/card/id/card = id_slot.GetID()
 		//if(istype(card))
-			// TIMBERTODO UNFUCK
+			// TIMBERTODO - THIS IS DUMB AND FIXING THIS WILL TAKE EFFORT
 			//card.access |= stored_access
 		if(update_id_name)
 			card.registered_name = H.real_name

@@ -42,10 +42,12 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	update_icon()
-	// TIMBERTODO - FIX THIS RETARDED SNOWFLAKE SHIT
-	//var/datum/job/station_engineer/J = new/datum/job/station_engineer
-	//access_card.add_access(J.get_access())
-	//prev_access = access_card.timberpoes_access
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/engi_trim = SSid_access.get_trim(/datum/id_trim/job/station_engineer)
+	access_card.add_access(engi_trim.access)
+	access_card.add_access(engi_trim.wildcard_access)
+	prev_access = access_card.timberpoes_access
 
 	create_extinguisher()
 

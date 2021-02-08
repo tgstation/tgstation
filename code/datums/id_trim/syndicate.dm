@@ -19,3 +19,22 @@
 /datum/id_trim/battlecruiser/captain
 	assignment = "Syndicate Battlecruiser Captain"
 	access = SYNDICATE_ACCESS
+
+/datum/id_trim/chameleon
+	assignment = "Unknown"
+	access = list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS)
+
+/datum/id_trim/chameleon/operative
+	assignment = "Syndicate Operative"
+	trim_state = "trim_syndicate"
+
+/datum/id_trim/chameleon/operative/clown
+	assignment = "Syndicate Entertainment Operative"
+
+/datum/id_trim/chameleon/operative/clown_leader
+	assignment = "Syndicate Entertainment Operative Leader"
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
+
+/datum/id_trim/chameleon/operative/nuke_leader
+	assignment = "Syndicate Operative Leader"
+	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)

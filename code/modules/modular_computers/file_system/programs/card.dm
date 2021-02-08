@@ -170,7 +170,7 @@
 				if(!(target_id_card.assignment in head_subordinates) && target_id_card.assignment != "Assistant")
 					return
 
-			// TIMBERTODO UNFUCK THIS
+			// TIMBERTODO - DON'T FORGOT ABOUT THIS SHIT. MORE ELEGANT SOLUTION?
 			target_id_card.remove_access(CENTCOM_ACCESS + ALL_ACCESS_STATION)
 			target_id_card.assignment = "Unassigned"
 			target_id_card.update_label()
@@ -216,7 +216,7 @@
 				if(minor && !(target in head_subordinates))
 					return
 				var/list/new_access = list()
-				// TIMBERTODO - FIX THIS TRIMMING SHIT
+				// TIMBERTODO - TRIMMING GOES BRRRRR CODE MACHINE
 				/*if(is_centcom)
 					new_access = get_centcom_access(target)
 				else
@@ -235,7 +235,7 @@
 							message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 							break
 					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")*/
-				// TIMBERTODO UNFUCK
+				// TIMBERTODO - UNFUCK THIS SHIT TOO? ELEGANT SOLUTION INCOMING?
 				target_id_card.remove_access(CENTCOM_ACCESS + ALL_ACCESS_STATION)
 				target_id_card.add_access(new_access)
 				target_id_card.assignment = target
@@ -269,7 +269,7 @@
 		if("PRG_denyall")
 			if(!computer || !authenticated || minor)
 				return
-			// TIMBERTODO Remove all accesses from a card
+			// TIMBERTODO - IMPLEMENT WAY TO REMOVE ALL ACCESSES FROM A CARD BETTER THAN THIS
 			//target_id_card.access.Cut()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE

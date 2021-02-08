@@ -106,11 +106,13 @@
 
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
-	// TIMBERTODO - FIX THIS RETARDED SNOWFLAKE SHIT
-	//var/datum/job/paramedic/J = new /datum/job/paramedic
-	//access_card.add_access(J.get_access())
-	//prev_access = access_card.timberpoes_access
-	//qdel(J)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/para_trim = SSid_access.get_trim(/datum/id_trim/job/paramedic)
+	access_card.add_access(para_trim.access)
+	access_card.add_access(para_trim.wildcard_access)
+	prev_access = access_card.timberpoes_access
+
 	skin = new_skin
 	update_icon()
 	linked_techweb = SSresearch.science_tech

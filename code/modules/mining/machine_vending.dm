@@ -258,25 +258,6 @@
 	..()
 	to_chat(user, "<span class='alert'>There's [points] point\s on the card.</span>")
 
-///Conscript kit
-/obj/item/card/mining_access_card
-	name = "mining access card"
-	desc = "A small card, that when used on any ID, will add mining access."
-	icon_state = "data_1"
-
-/obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
-	. = ..()
-	if(istype(AM, /obj/item/card/id) && proximity)
-		var/obj/item/card/id/I = AM
-		// TIMBERTODO THIS HERE
-		//I.access |=	ACCESS_MINING
-		//I.access |= ACCESS_MINING_STATION
-		//I.access |= ACCESS_MECH_MINING
-		//I.access |= ACCESS_MINERAL_STOREROOM
-		//I.access |= ACCESS_CARGO
-		to_chat(user, "<span class='notice'>You upgrade [I] with mining access.</span>")
-		qdel(src)
-
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
@@ -290,7 +271,7 @@
 	new /obj/item/clothing/suit/hooded/explorer(src)
 	new /obj/item/encryptionkey/headset_mining(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/card/mining_access_card(src)
+	new /obj/item/card/id/advanced/mining(src)
 	new /obj/item/gun/energy/kinetic_accelerator(src)
 	new /obj/item/kitchen/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)

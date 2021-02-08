@@ -38,31 +38,31 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			department = pick_n_take(GLOB.available_depts)
 	var/ears = null
 	var/accessory = null
-	var/list/dep_access = null
+	var/list/dep_trim = null
 	var/destination = null
 	var/spawn_point = null
 	switch(department)
 		if(SEC_DEPT_SUPPLY)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
-			dep_access = list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_CARGO, ACCESS_AUX_BASE)
+			dep_trim = /datum/id_trim/job/security_officer/supply
 			destination = /area/security/checkpoint/supply
 			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
 			accessory = /obj/item/clothing/accessory/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
-			dep_access = list(ACCESS_CONSTRUCTION, ACCESS_ENGINE, ACCESS_ATMOSPHERICS, ACCESS_AUX_BASE)
+			dep_trim = /datum/id_trim/job/security_officer/engineering
 			destination = /area/security/checkpoint/engineering
 			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
-			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
+			dep_trim = /datum/id_trim/job/security_officer/medical
 			destination = /area/security/checkpoint/medical
 			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
 			accessory =  /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
-			dep_access = list(ACCESS_RESEARCH, ACCESS_RND, ACCESS_AUX_BASE)
+			dep_trim = /datum/id_trim/job/security_officer/science
 			destination = /area/security/checkpoint/science
 			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
 			accessory = /obj/item/clothing/accessory/armband/science
@@ -75,9 +75,10 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			qdel(H.ears)
 		H.equip_to_slot_or_del(new ears(H),ITEM_SLOT_EARS)
 
-	// TIMBERTODO FEEX
-	//var/obj/item/card/id/W = H.wear_id
-	//W.access |= dep_access
+	// If there's a departmental sec trim to apply to the card, overwrite.
+	if(dep_trim)
+		var/obj/item/card/id/worn_id = H.wear_id
+		SSid_access.apply_trim_to_card(worn_id, dep_trim)
 
 	var/teleport = 0
 	if(!CONFIG_GET(flag/sec_start_brig))

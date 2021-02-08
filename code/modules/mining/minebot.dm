@@ -55,13 +55,10 @@
 	var/obj/item/implant/radio/mining/imp = new(src)
 	imp.implant(src)
 
-	access_card = new /obj/item/card/id(src)
-	var/datum/job/shaft_miner/M = new
-	// TIMBERTODO FEEX
-	//access_card.access = M.get_access()
+	access_card = new /obj/item/card/id/advanced/gold(src)
+	SSid_access.apply_trim_to_card(access_card, /datum/id_trim/job/shaft_miner)
 
 	SetCollectBehavior()
-
 
 /mob/living/simple_animal/hostile/mining_drone/Destroy()
 	for (var/datum/action/innate/minedrone/action in actions)

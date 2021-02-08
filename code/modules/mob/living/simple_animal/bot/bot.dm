@@ -152,8 +152,9 @@
 /mob/living/simple_animal/bot/Initialize()
 	. = ..()
 	GLOB.bots_list += src
-	access_card = new /obj/item/card/id(src)
-	//This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
+	// Give bots a fancy new ID card that can hold any access.
+	access_card = new /obj/item/card/id/advanced/simple_bot(src)
+	// This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.add_access(ACCESS_ROBOTICS)
 	set_custom_texts()
 	Radio = new/obj/item/radio(src)
@@ -557,11 +558,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 
-	//For giving the bot temporary all-access.
-	var/obj/item/card/id/all_access = new /obj/item/card/id
-	var/datum/job/captain/All = new/datum/job/captain
-	// TIMBERTODO MAKE THIS LESS SHIT
-	//all_access.access = All.get_access()
+	//For giving the bot temporary all-access. This method is bad and makes me feel bad. Refactoring access to a component is for another PR.
+	var/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
 
 	set_path(get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access))
 	calling_ai = caller //Link the AI to the bot!

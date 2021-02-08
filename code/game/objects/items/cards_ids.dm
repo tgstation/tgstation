@@ -688,7 +688,7 @@
 	timberpoes_trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
-// TIMBERTODO - TGUI INTERFACE FOR COPYING ACCESS ON CHAMELEON ID CARDS
+// TIMBERTODO - TGUI INTERFACE FOR CHAMELEON CARDS
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card to choose which accesses to copy."
@@ -722,6 +722,7 @@
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
+		// TIMBERTODO - put forged trim selection here instead?
 		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
 		if(user.incapacitated())
 			return
@@ -778,8 +779,19 @@
 			return
 	return ..()
 
+/// A special variant of the classic chameleon ID card which accepts all access.
+/obj/item/card/id/advanced/chameleon/black
+	icon_state = "card_black"
+	assigned_icon_state = "assigned_syndicate"
+	wildcard_slots = WILDCARD_LIMIT_GOLD
+
 /obj/item/card/id/advanced/engioutpost
 	registered_name = "George 'Plastic' Miller"
 	desc = "A card used to provide ID and determine access across the station. There's blood dripping from the corner. Ew."
 	timberpoes_trim = /datum/id_trim/engioutpost
 	registered_age = 47
+
+/obj/item/card/id/advanced/simple_bot
+	name = "simple bot ID card"
+	desc = "An internal ID card used by the station's non-sentient bots. You should report this to a coder if you're holding it."
+	wildcard_slots = WILDCARD_LIMIT_ADMIN

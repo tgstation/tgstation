@@ -20,16 +20,13 @@
 	r_pocket = /obj/item/lighter
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/specops_officer
 
 /datum/outfit/centcom/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	// TIMBERTODO THIS ENTIRE FILE LOOK AT THIS
-	//W.access = get_all_accesses()
-	//W.access += get_centcom_access("Special Ops Officer")
-	//W.trim = "Special Ops Officer"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -207,9 +204,9 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
-	// TIMBERTODO - NEW CLOWN OP ID CARD
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced/chameleon/black
 	belt = /obj/item/pda/heads
+	id_trim = /datum/id_trim/reaper_assassin
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
@@ -234,10 +231,7 @@
 	pda.ownjob = "Reaper"
 	pda.update_label()
 
-	// TIMBERTODO WHAT THE FUCK IS THIS
 	var/obj/item/card/id/W = H.wear_id
-	// W.access = get_all_accesses()
-	// W.trim = "Reaper"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -257,15 +251,13 @@
 	l_pocket = /obj/item/ammo_box/a357
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/commander
 
 /datum/outfit/centcom/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	// W.access = get_all_accesses()
-	// W.access += get_centcom_access("CentCom Commander")
-	// W.trim = "CentCom Commander"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
@@ -333,15 +325,14 @@
 	belt = /obj/item/gun/ballistic/revolver/mateba
 
 	id = /obj/item/card/id/advanced/centcom
+	id_trim = /datum/id_trim/centcom/admiral
 
 /datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	// W.access = get_all_accesses()
-	// W.access += get_centcom_access("Admiral")
-	// W.trim = "Admiral"
+
 	W.registered_name = H.real_name
 	W.update_label()
 	..()
@@ -357,13 +348,13 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/gun/ballistic/automatic/tommygun
 	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/mobster
 
 /datum/outfit/mobster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	//W.trim = "Assistant"
 	W.registered_name = H.real_name
 	W.update_label()
 
@@ -404,6 +395,8 @@
 		/obj/item/flashlight=1,\
 		/obj/item/grenade/c4/x4=1)
 
+	id_trim = /datum/id_trim/centcom/deathsquad
+
 /datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
@@ -412,9 +405,6 @@
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
 	var/obj/item/card/id/W = H.wear_id
-	// W.access = get_all_accesses()//They get full station access.
-	// W.access += get_centcom_access("Death Commando")//Let's add their alloted CentCom access.
-	// W.trim = "Death Commando"
 	W.registered_name = H.real_name
 	W.update_label()
 	..()

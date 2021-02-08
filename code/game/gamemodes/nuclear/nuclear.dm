@@ -114,8 +114,7 @@
 	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/modular_computer/tablet/nukeops
-	// TIMBERTODO - NEW OP ID CARD
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced/chameleon
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival)
@@ -126,13 +125,14 @@
 	var/command_radio = FALSE
 	var/uplink_type = /obj/item/uplink/nuclear
 
+	id_trim = /datum/id_trim/chameleon/operative
 
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
-	// TIMBERTODO - NEW OP LEADER ID CARD
-	id = /obj/item/card/id
 	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	command_radio = TRUE
+
+	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
 
 /datum/outfit/syndicate/no_crystals
 	name = "Syndicate Operative - Reinforcement"
