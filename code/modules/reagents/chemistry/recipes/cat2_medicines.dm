@@ -15,7 +15,7 @@
 	temp_exponent_factor = 1
 	ph_exponent_factor = 4
 	thermic_constant = 100
-	H_ion_release = 4.5
+	H_ion_release = 4
 	rate_up_lim = 55
 	purity_min = 0.55
 	reaction_flags = REACTION_PH_VOL_CONSTANT
@@ -27,7 +27,7 @@
 	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
 		return
-	if(helbital.purity < 0.2)
+	if(helbital.purity <= 0.25)
 		if(prob(5))
 			new /obj/effect/hotspot(holder.my_atom.loc)
 			holder.remove_reagent(/datum/reagent/medicine/c2/helbital, 10)
@@ -43,8 +43,8 @@
 	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
 		return
-	if(helbital.purity < 0.1) //So people don't ezmode this by keeping it at min
-		explode_fire(holder, equilibrium, 3)
+	if(helbital.purity <= 0.15) //So people don't ezmode this by keeping it at min
+		explode_fire(holder, null, 3)
 		clear_products(holder)
 
 /datum/chemical_reaction/medicine/libital
