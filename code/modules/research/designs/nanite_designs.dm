@@ -231,8 +231,8 @@
 	category = list("Augmentation Nanites")
 
 /datum/design/nanites/coagulating
-	name = "Rapid Coagulation"
-	desc = "The nanites induce rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
+	name = "Vein Repressurization"
+	desc = "The nanites re-route circulating blood away from open wounds, dramatically reducing bleeding rate."
 	id = "coagulating_nanites"
 	program_type = /datum/nanite_program/coagulating
 	category = list("Augmentation Nanites")
