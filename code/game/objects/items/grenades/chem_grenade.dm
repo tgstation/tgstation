@@ -574,11 +574,11 @@
 
 /obj/item/grenade/chem_grenade/holy/Initialize()
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/meta/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/meta/B2 = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/potassium, 100)
-	B2.reagents.add_reagent(/datum/reagent/water/holywater, 100)
+	B1.reagents.add_reagent(/datum/reagent/potassium, 150)
+	B2.reagents.add_reagent(/datum/reagent/water/holywater, 150)
 
 	beakers += B1
 	beakers += B2
