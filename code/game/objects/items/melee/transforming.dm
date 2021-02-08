@@ -159,3 +159,4 @@
 ///admin grief version
 /obj/item/melee/transforming/butter_fly/admingrief
 	backstab_damage = 600
+	stab_cooldown_time = 1 SECONDS
