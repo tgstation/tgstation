@@ -7,7 +7,7 @@
     "dompurify": "^2.2.6",
     "inferno": "^7.4.7",
     "inferno-vnode-flags": "^7.4.7",
-    "marked": "^1.2.7",
+    "marked": "^1.2.9",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"
   }
