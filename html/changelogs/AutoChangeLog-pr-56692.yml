@@ -1,4 +1,0 @@
-author: "CRITAWAKETS"
-delete-after: True
-changes: 
-  - bugfix: "The issue with the autolathe software where Titanium, Plastic, Adamantine, Wood and Mythril were not accepted as autolathe inputs is now fixed. You can now make wooden toolboxes again."
