@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "Toggle suit sensors is now bound to right click."
