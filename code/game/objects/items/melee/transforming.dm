@@ -109,7 +109,7 @@
 	icon_state = "butterfly"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "funny desc here."
+	desc = "Float like a butterfly, sting like a knife."
 	flags_1 = CONDUCT_1
 	force = 3
 	w_class = WEIGHT_CLASS_SMALL
