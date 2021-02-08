@@ -107,7 +107,7 @@
 /obj/item/paper/report/examine(mob/user)
 	. = ..()
 	if(scanned_area?.name)
-		. += "<span class='notice'>\The [src] contains data on \the [scanned_area.name].</span>"
+		. += "<span class='notice'>\The [src] contains data on [scanned_area.name].</span>"
 	else if(scanned_area)
 		. += "<span class='notice'>\The [src] contains data on a vague area on station, you should throw it away.</span>"
 	else if(info)
