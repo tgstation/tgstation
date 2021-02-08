@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/announcement_size = OVERMIND_ANNOUNCEMENT_MIN_SIZE // Announce the biohazard when this size is reached
 	var/announcement_time
 	var/has_announced = FALSE
-	/// If this is TRUE, 
+	/// If this is TRUE, then automatic expansion won't hit walls and airlocks.
 	var/expansion_restrained = FALSE
 
 	/// The list of strains the blob can reroll for.
