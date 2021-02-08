@@ -193,7 +193,7 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
-/obj/item/gun/attack_alt(mob/living/victim, mob/living/user, params)
+/obj/item/gun/attack_secondary(mob/living/victim, mob/living/user, params)
 	if (user.GetComponent(/datum/component/gunpoint))
 		to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
 		return ALT_ATTACK_CANCEL_ATTACK_CHAIN
