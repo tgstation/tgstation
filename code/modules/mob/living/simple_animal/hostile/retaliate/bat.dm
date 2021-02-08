@@ -48,12 +48,12 @@
 	emote_hear = list("chitters")
 	faction = list("spiders")
 	harm_intent_damage = 3
-	health = 250
 	icon_dead = "guard_dead"
 	icon_gib = "guard_dead"
 	icon_living = "guard"
 	icon_state = "guard"
 	maxHealth = 250
+	health = 250
 	max_co2 = 5
 	max_tox = 2
 	melee_damage_lower = 15
