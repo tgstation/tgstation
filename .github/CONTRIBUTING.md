@@ -356,7 +356,7 @@ This is good:
 ```
 
 ### Avoid unnecessary type checks and obscuring nulls in lists
-Typecasting in `for` loops carries and implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
+Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
 
 If we know the list is supposed to only contain the desired type then we want to skip the check not only for the small optimization it offers, but also to catch any null entries that may creep into the list.
 
