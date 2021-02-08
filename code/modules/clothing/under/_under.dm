@@ -44,7 +44,7 @@
 
 /obj/item/clothing/under/attackby_secondary(obj/item/weapon, mob/user, params)
 	toggle()
-	return ALT_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
