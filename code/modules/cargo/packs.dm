@@ -804,6 +804,14 @@
 	crate_name = "huge portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/engineering/space_heater
+	name = "Space Heater Crate"
+	desc = "A dual purpose heater/cooler for when things are too chilly/toasty."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/machinery/space_heater)
+	crate_name = "space heater crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
 	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a devastating feat of human engineering and testament to wartime determination. Highly advanced research is required for proper construction. "
