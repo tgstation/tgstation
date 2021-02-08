@@ -154,7 +154,10 @@
 		if(!controller && overmind && overmind.expansion_restrained && istype(A, /obj/machinery/door))
 			halted_attack = TRUE
 			continue // Don't smash airlocks when expansion_restrained is turned on
-		A.blob_act(src) //also hit everything in the turf
+		if(isliving(A) && overmind) // Make sure to inject strain-reagents with automatic attacks
+			overmind.blobstrain.attack_living(A)
+		else
+			A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
 		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
