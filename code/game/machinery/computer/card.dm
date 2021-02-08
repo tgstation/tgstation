@@ -455,7 +455,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", inserted_modify_id ? inserted_modify_id.assignment : "Unassigned"), MAX_NAME_LEN)
+					var/newJob = reject_bad_text(stripped_input("Enter a custom job assignment.", "Assignment", inserted_modify_id ? inserted_modify_id.assignment : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
 						t1 = newJob
 
@@ -509,9 +509,15 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						to_chat(usr, "<span class='alert'>Invalid age entered- age not updated.</span>")
 						updateUsrDialog()
 
-					var/newName = reject_bad_name(href_list["reg"])
-					if(newName)
-						inserted_modify_id.registered_name = newName
+
+					// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
+					// would not pass as a formal character name, but would still be valid on an ID card created by a player.
+					var/new_name = sanitize(href_list["reg"])
+					// However, we are going to reject bad names overall including names with invalid characters in them, while allowing numbers.
+					new_name = reject_bad_name(new_name, allow_numbers = TRUE)
+
+					if(new_name)
+						inserted_modify_id.registered_name = new_name
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 					else
 						to_chat(usr, "<span class='alert'>Invalid name entered.</span>")

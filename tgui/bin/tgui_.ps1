@@ -43,7 +43,6 @@ function task-install {
 ## Runs webpack
 function task-webpack {
   yarn run webpack-cli @Args
-  New-Item -ItemType file "../code/modules/tgui/USE_BUILD_BAT_INSTEAD_OF_DREAM_MAKER.dm"
 }
 
 ## Runs a development server
