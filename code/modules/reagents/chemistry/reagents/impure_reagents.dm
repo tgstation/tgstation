@@ -71,8 +71,8 @@
 //Warns you about the impenting hands
 /datum/reagent/impurity/helgrasp/on_mob_add(mob/living/L, amount)
 	. = ..()	
-	to_chat(L, "<span class='hierophant'>You hear mad laughing as malevolent spirits apparate before you, eager to drag you down to meet their goddess...! Look out!</span>")
-	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1)
+	to_chat(L, "<span class='hierophant'>You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!</span>")
+	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 
 //Sends hands after you for your hubris
 /datum/reagent/impurity/helgrasp/on_mob_life(mob/living/carbon/owner)
@@ -87,3 +87,5 @@
 	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
 	hand.preparePixelProjectile(owner, spawn_turf)
 	hand.fire()
+
+//Should I make it so that OD on this literally drags you to hell (lavaland)?

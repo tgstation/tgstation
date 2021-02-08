@@ -15,19 +15,37 @@
 	temp_exponent_factor = 1
 	ph_exponent_factor = 4
 	thermic_constant = 100
-	H_ion_release = 5
+	H_ion_release = 4.5
 	rate_up_lim = 55
 	purity_min = 0.55
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 
 
 /datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
-	. = ..()
 	explode_fire_vortex(holder, equilibrium, 1, 1)
-	//holder.chem_temp += 5
+	holder.chem_temp += 2.5
+	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
+	if(!helbital)
+		return
+	if(helbital.purity < 0.2)
+		if(prob(5))
+			new /obj/effect/hotspot(holder.my_atom.loc)
+			holder.remove_reagent(/datum/reagent/medicine/c2/helbital, 10)
+			holder.chem_temp += 5
+			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [src] suddenly lets out a hearty burst of flame, evaporating some of the contents!</span>")	
 
 /datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
+	overly_impure(holder, equilibrium)//faster vortex
+
+/datum/chemical_reaction/medicine/helbital/reaction_finish(datum/reagents/holder, react_vol)
+	. = ..()
+	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
+	if(!helbital)
+		return
+	if(helbital.purity < 0.1) //So people don't ezmode this by keeping it at min
+		explode_fire(holder, equilibrium, 3)
+		clear_products(holder)
 
 /datum/chemical_reaction/medicine/libital
 	results = list(/datum/reagent/medicine/c2/libital = 3)

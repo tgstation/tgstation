@@ -15,9 +15,10 @@
 	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Patients will find the medicine 'aids' their healing if not near death by causing asphyxiation."
 	color = "#9400D3"
 	taste_description = "cold and lifeless"
+	ph = 8
 	overdose_threshold = 35
 	reagent_state = SOLID
-	inverse_chem_val = 0.25
+	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/impurity/helgrasp
 	failed_chem = null
 	var/helbent = FALSE

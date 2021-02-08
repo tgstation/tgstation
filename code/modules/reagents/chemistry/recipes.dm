@@ -424,5 +424,7 @@
 /datum/chemical_reaction/proc/clear_reagents(datum/reagents/holder, volume = null)
 	if(!holder)
 		return FALSE
+	if(!volume)
+		volume = holder.total_volume
 	holder.remove_all(volume)
 

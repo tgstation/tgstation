@@ -265,7 +265,7 @@ Primarily used in reagents/reaction_agents
 	if(!normalise_num_to)
 		normalise_num_to = initial(purity)
 	if(!_creation_purity)
-		_creaction_purity = creation_purity
+		_creation_purity = creation_purity
 	return _creation_purity / normalise_num_to
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
