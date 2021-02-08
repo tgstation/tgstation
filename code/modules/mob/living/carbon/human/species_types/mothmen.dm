@@ -3,7 +3,7 @@
 	id = "moth"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYESPRITES, HAS_FLESH, HAS_BONE, HAS_MARKINGS)
+	species_traits = list(LIPS, NOEYESPRITES, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("moth_wings" = "Plain", "moth_antennae" = "Plain", "moth_markings" = "None")
 	attack_verb = "slash"
@@ -16,7 +16,7 @@
 	mutanteyes = /obj/item/organ/eyes/moth
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/moth
-	wings_icon = "Megamoth"
+	wings_icons = list("Megamoth", "Mothra")
 	has_innate_wings = TRUE
 	payday_modifier = 0.75
 

@@ -169,6 +169,7 @@
 	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
 					/obj/item/storage/backpack/science = 3,
 					/obj/item/storage/backpack/satchel/tox = 3,
+					/obj/item/storage/backpack/duffelbag/toxins = 3,
 					/obj/item/clothing/head/beret/science = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 					/obj/item/clothing/under/rank/rnd/scientist = 3,
@@ -190,6 +191,7 @@
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 2,
 					/obj/item/storage/backpack/satchel/hyd = 2,
+					/obj/item/storage/backpack/duffelbag/hydroponics = 2,
 					/obj/item/clothing/suit/hooded/wintercoat/hydro = 2,
 					/obj/item/clothing/suit/apron = 2,
 					/obj/item/clothing/suit/apron/overalls = 3,
@@ -398,6 +400,7 @@
 					/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
 					/obj/item/storage/backpack/chemistry = 2,
 					/obj/item/storage/backpack/satchel/chem = 2,
+					/obj/item/storage/backpack/duffelbag/chemistry = 2,
 					/obj/item/storage/bag/chemistry = 2)
 	contraband = list(/obj/item/reagent_containers/spray/syndicate = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
@@ -416,7 +419,8 @@
 					/obj/item/clothing/shoes/sneakers/white = 2,
 					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 					/obj/item/storage/backpack/genetics = 2,
-					/obj/item/storage/backpack/satchel/gen = 2)
+					/obj/item/storage/backpack/satchel/gen = 2,
+					/obj/item/storage/backpack/duffelbag/genetics = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/gene_wardrobe
@@ -434,7 +438,8 @@
 					/obj/item/clothing/suit/toggle/labcoat/virologist = 2,
 					/obj/item/clothing/mask/surgical = 2,
 					/obj/item/storage/backpack/virology = 2,
-					/obj/item/storage/backpack/satchel/vir = 2)
+					/obj/item/storage/backpack/satchel/vir = 2,
+					/obj/item/storage/backpack/duffelbag/virology = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/viro_wardrobe

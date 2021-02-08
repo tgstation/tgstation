@@ -23,6 +23,10 @@
 	#define COMPONENT_GLOB_BLOCK_CINEMATIC (1<<0)
 /// ingame button pressed (/obj/machinery/button/button)
 #define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
+/// job subsystem has spawned and equipped a new mob
+#define COMSIG_GLOB_JOB_AFTER_SPAWN "!job_after_spawn"
+/// crewmember joined the game (mob/living, rank)
+#define COMSIG_GLOB_CREWMEMBER_JOINED "!crewmember_joined"
 
 /// signals from globally accessible objects
 
@@ -50,6 +54,10 @@
 #define COMSIG_ELEMENT_ATTACH "element_attach"
 /// fires on the target datum when an element is attached to it  (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
+
+///Subsystem signals
+///From base of datum/controller/subsystem/Initialize: (start_timeofday)
+#define COMSIG_SUBSYSTEM_POST_INITIALIZE "subsystem_post_initialize"
 
 // /atom signals
 ///from base of atom/proc/Initialize(): sent any time a new atom is created
@@ -607,6 +615,10 @@
 	#define COMPONENT_HANDLED_GRILLING (1<<0)
 ///Called when an object is turned into another item through grilling ontop of a griddle
 #define COMSIG_GRILL_COMPLETED "item_grill_completed"
+///Called when an armor plate is successfully applied to an object
+#define COMSIG_ARMOR_PLATED "armor_plated"
+///Called when an item gets recharged by the ammo powerup
+#define COMSIG_ITEM_RECHARGED "item_recharged"
 
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"
@@ -641,7 +653,7 @@
 
 // /obj/item/clothing signals
 
-///from base of obj/item/clothing/shoes/proc/step_action(): ()
+///from [/mob/living/carbon/human/Move]: ()
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"
 ///from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
 #define COMSIG_SUIT_SPACE_TOGGLE "suit_space_toggle"
@@ -657,6 +669,13 @@
 	//#define COMPONENT_STOP_IMPLANTING (1<<0) //The name makes sense for both
 	#define COMPONENT_DELETE_NEW_IMPLANT (1<<1)
 	#define COMPONENT_DELETE_OLD_IMPLANT (1<<2)
+
+/// called on implants, after a successful implantation: (mob/living/target, mob/user, silent, force)
+#define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
+
+/// called on implants, after an implant has been removed: (mob/living/source, silent, special)
+#define COMSIG_IMPLANT_REMOVED "implant_removed"
+
 ///called on implants being implanted into someone with an uplink implant: (datum/component/uplink)
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"
 	//This uses all return values of COMSIG_IMPLANT_OTHER
@@ -788,6 +807,11 @@
 #define COMSIG_ITEM_USED_AS_INGREDIENT "item_used_as_ingredient"
 ///called when an edible ingredient is added: (datum/component/edible/ingredient)
 #define COMSIG_EDIBLE_INGREDIENT_ADDED "edible_ingredient_added"
+
+//Plants / Plant Traits
+
+///called when an action causes a plant to be squashed - slipping, throwing, attack_self.
+#define COMSIG_PLANT_SQUASH "plant_squash"
 
 //Gibs
 
@@ -979,7 +1003,7 @@
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
-///from base of atom/attack_hand(): (mob/user)
+///from base of atom/attack_hand(): (mob/user, modifiers)
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
@@ -995,3 +1019,9 @@
 #define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 ///from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"
+
+
+// Aquarium related signals
+#define COMSIG_AQUARIUM_BEFORE_INSERT_CHECK "aquarium_about_to_be_inserted"
+#define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
+#define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"

@@ -1,8 +1,11 @@
 /// Is the material from an ore? currently unused but exists atm for categorizations sake
 #define MAT_CATEGORY_ORE "ore capable"
 
-/// Hard materials, such as iron or metal
+/// Hard materials, such as iron or silver
 #define MAT_CATEGORY_RIGID "rigid material"
+
+/// Materials that can be used to craft items
+#define MAT_CATEGORY_ITEM_MATERIAL "item material"
 
 ///Use this flag on TRUE if you want the basic recipes
 #define MAT_CATEGORY_BASE_RECIPES "basic recipes"

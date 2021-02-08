@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "Fixes grinders giving out beakers before they're done grinding"

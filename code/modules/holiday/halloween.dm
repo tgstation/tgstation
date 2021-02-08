@@ -185,10 +185,13 @@
 	icon_dead = "scary_clown"
 	icon_gib = "scary_clown"
 	speak = list("...", ". . .")
-	maxHealth = 1e6
-	health = 1e6
+	maxHealth = INFINITY
+	health = INFINITY
 	emote_see = list("silently stares")
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
+	minbodytemp = 0
+	maxbodytemp = INFINITY
 	var/timer
 
 /mob/living/simple_animal/hostile/clown_insane/Initialize()
@@ -253,9 +256,6 @@
 			visible_message("<span class='danger'>[src] seems to be resisting the effect!</span>")
 		return
 	return ..()
-
-/mob/living/simple_animal/hostile/clown_insane/handle_temperature_damage()
-	return
 
 /////////////////////////
 // Spooky Uplink Items //

@@ -36,6 +36,10 @@
 	fill(C)
 	return C
 
+/datum/supply_pack/proc/get_cost()
+	. = cost
+	. *= SSeconomy.pack_price_modifier
+
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	if (admin_spawned)
 		for(var/item in contains)
@@ -587,11 +591,12 @@
 /datum/supply_pack/security/armory/russian
 	name = "Russian Surplus Crate"
 	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 12
 	contraband = TRUE
 	contains = list(/obj/item/food/rationpack,
 					/obj/item/ammo_box/a762,
 					/obj/item/storage/toolbox/ammo,
+					/obj/item/storage/toolbox/maint_kit,
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
@@ -996,12 +1001,12 @@
 	contains = list(/obj/item/stack/sheet/glass/fifty)
 	crate_name = "glass sheets crate"
 
-/datum/supply_pack/materials/metal50
-	name = "50 Metal Sheets"
-	desc = "Any construction project begins with a good stack of fifty metal sheets!"
+/datum/supply_pack/materials/iron50
+	name = "50 Iron Sheets"
+	desc = "Any construction project begins with a good stack of fifty iron sheets!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/stack/sheet/metal/fifty)
-	crate_name = "metal sheets crate"
+	contains = list(/obj/item/stack/sheet/iron/fifty)
+	crate_name = "iron sheets crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
@@ -1674,7 +1679,7 @@
 					/obj/item/food/meat/rawbacon,
 					/obj/item/food/meat/slab/penguin,
 					/obj/item/food/spiderleg,
-					/obj/item/food/carpmeat,
+					/obj/item/food/fishmeat/carp,
 					/obj/item/food/meat/slab/human)
 	crate_name = "food crate"
 
@@ -1818,7 +1823,7 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains fourteen different seeds."
+	desc = "Big things have small beginnings. Contains fifteen different seeds."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/seeds/chili,
 					/obj/item/seeds/cotton,
@@ -1831,6 +1836,7 @@
 					/obj/item/seeds/wheat/rice,
 					/obj/item/seeds/carrot,
 					/obj/item/seeds/sunflower,
+					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
 					/obj/item/seeds/sugarcane)
@@ -2329,6 +2335,27 @@
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/aquarium_kit
+	name = "Aquarium Kit"
+	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, fish catalog, feed can and three freshwater fish from our collection."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/book/fish_catalog,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/fish_feed,
+					/obj/item/storage/box/aquarium_props,
+					/obj/item/aquarium_kit)
+	crate_name = "aquarium kit crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/aquarium_fish
+	name = "Aquarium Fish Case"
+	desc = "An aquarium fish handpicked by monkeys from our collection."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random)
+	crate_name = "aquarium fish crate"
+
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
@@ -2625,11 +2652,19 @@
 	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/vending/vendomat
-	name = "Vendomat Supply Crate"
+	name = "Vendomat & YouTool Supply Crate"
 	desc = "More tools for your IED testing facility."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/vending_refill/assist)
-	crate_name = "vendomat supply crate"
+	contains = list(/obj/item/vending_refill/assist,
+					/obj/item/vending_refill/youtool)
+	crate_name = "Vendomat & YouTool supply crate"
+
+/datum/supply_pack/vending/clothesmate
+	name = "ClothesMate Supply Crate"
+	desc = "Out of cowboy boots? Buy this crate."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/vending_refill/clothing)
+	crate_name = "ClothesMate supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Clothing Vending Restocks ////////////////////////////
@@ -2695,8 +2730,9 @@
 
 /datum/supply_pack/vending/wardrobes/security
 	name = "Security Wardrobe Supply Crate"
-	desc = "This crate contains refills for the SecDrobe and LawDrobe."
-	cost = CARGO_CRATE_VALUE * 3
+	desc = "This crate contains refills for the SecDrobe, DetDrobe and LawDrobe."
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
+					/obj/item/vending_refill/wardrobe/det_wardrobe,
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"

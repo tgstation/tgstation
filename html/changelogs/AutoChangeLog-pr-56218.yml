@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "Fixes reacted wine instantly turning into grappa by setting the grappa reaction's enzyme volume requirement to 10u instead of 5u"

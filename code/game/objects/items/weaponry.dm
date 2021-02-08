@@ -23,13 +23,13 @@ oranges says: This is a meme relating to the english translation of the ss13 rus
 mrdoombringer sez: and remember kids, if you try and PR a fix for this item's grammar, you are admitting that you are, indeed, a newfriend.
 for further reading, please see: https://github.com/tgstation/tgstation/pull/30173 and https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=%2F%2Flurkmore.to%2FSS13&edit-text=&act=url
 */
-/obj/item/banhammer/attack(mob/M, mob/user)
+/obj/item/banhammer/attack(mob/M, mob/living/user)
 	if(user.zone_selected == BODY_ZONE_HEAD)
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer.</span>", "<span class='userdanger'>[user] are stroking your head with a bangammer.</span>", "<span class='hear'>You hear a bangammer stroking a head.</span>") // see above comment
 	else
 		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]!</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]!</span>", "<span class='hear'>You hear a banhammer banning someone.</span>")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
-	if(user.a_intent != INTENT_HELP)
+	if(user.combat_mode)
 		return ..(M, user)
 
 /obj/item/sord
@@ -217,7 +217,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize()
-	var/obj/item/robot_module/kiltkit = loc
+	var/obj/item/robot_model/kiltkit = loc
 	robot = kiltkit.loc
 	if(!istype(robot))
 		qdel(src)
@@ -722,131 +722,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			else
 				qdel(target)
 
-/obj/item/circlegame
-	name = "circled hand"
-	desc = "If somebody looks at this while it's below your waist, you get to bop them."
-	icon_state = "madeyoulook"
-	force = 0
-	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
-	attack_verb_continuous = list("bops")
-	attack_verb_simple = list("bop")
-
-/obj/item/circlegame/Initialize()
-	. = ..()
-	var/mob/living/owner = loc
-	if(!istype(owner))
-		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
-
-/obj/item/circlegame/Destroy()
-	var/mob/owner = loc
-	if(istype(owner))
-		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
-	return ..()
-
-/obj/item/circlegame/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)		//loc will have changed by the time this is called, so Destroy() can't catch it
-	// this is a dropdel item.
-	return ..()
-
-/// Stage 1: The mistake is made
-/obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
-	SIGNAL_HANDLER
-
-	if(!istype(sucker) || !in_range(owner, sucker))
-		return
-	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
-
-/// Stage 2: Fear sets in
-/obj/item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
-	if(QDELETED(sucker) || QDELETED(src) || QDELETED(owner))
-		return
-
-	if(owner == sucker) // big mood
-		to_chat(owner, "<span class='danger'>Wait a second... you just looked at your own [src.name]!</span>")
-		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
-	else
-		to_chat(sucker, "<span class='danger'>Wait a second... was that a-</span>")
-		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
-
-/// Stage 3A: We face our own failures
-/obj/item/circlegame/proc/selfGottem(mob/living/owner)
-	if(QDELETED(src) || QDELETED(owner))
-		return
-
-	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-	owner.visible_message("<span class='danger'>[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name].</span>", "<span class='userdanger'>You shamefully bop yourself with your [src.name].</span>", \
-		"<span class='hear'>You hear a dull thud!</span>")
-	log_combat(owner, owner, "bopped", src.name, "(self)")
-	owner.do_attack_animation(owner)
-	owner.apply_damage(100, STAMINA)
-	owner.Knockdown(10)
-	qdel(src)
-
-/// Stage 3B: We face our reckoning (unless we moved away or they're incapacitated)
-/obj/item/circlegame/proc/GOTTEM(mob/living/owner, mob/living/sucker)
-	if(QDELETED(sucker))
-		return
-
-	if(QDELETED(src) || QDELETED(owner))
-		to_chat(sucker, "<span class='warning'>Nevermind... must've been your imagination...</span>")
-		return
-
-	if(!in_range(owner, sucker) || !(owner.mobility_flags & MOBILITY_USE))
-		to_chat(sucker, "<span class='notice'>Phew... you moved away before [owner] noticed you saw [owner.p_their()] [src.name]...</span>")
-		return
-
-	to_chat(owner, "<span class='warning'>[sucker] looks down at your [src.name] before trying to avert [sucker.p_their()] eyes, but it's too late!</span>")
-	to_chat(sucker, "<span class='danger'><b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b></span>")
-
-	owner.face_atom(sucker)
-	if(owner.client)
-		owner.client.give_award(/datum/award/achievement/misc/gottem, owner) // then everybody clapped
-
-	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-	owner.do_attack_animation(sucker)
-
-	if(HAS_TRAIT(owner, TRAIT_HULK))
-		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", \
-			"<span class='danger'>You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", ignored_mobs=list(sucker))
-		to_chat(sucker, "<span class='userdanger'>[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!</span>")
-		sucker.apply_damage(50, STAMINA)
-		sucker.Knockdown(50)
-		log_combat(owner, sucker, "bopped", src.name, "(setup- Hulk)")
-		var/atom/throw_target = get_edge_target_turf(sucker, owner.dir)
-		sucker.throw_at(throw_target, 6, 3, owner)
-	else
-		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name]!</span>", "<span class='danger'>You bop [sucker] with your [src.name]!</span>", \
-			"<span class='hear'>You hear a dull thud!</span>", ignored_mobs=list(sucker))
-		sucker.apply_damage(15, STAMINA)
-		log_combat(owner, sucker, "bopped", src.name, "(setup)")
-		to_chat(sucker, "<span class='userdanger'>[owner] bops you with [owner.p_their()] [src.name]!</span>")
-	qdel(src)
-
-/obj/item/slapper
-	name = "slapper"
-	desc = "This is how real men fight."
-	icon_state = "latexballon"
-	inhand_icon_state = "nothing"
-	force = 0
-	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
-	attack_verb_continuous = list("slaps")
-	attack_verb_simple = list("slap")
-	hitsound = 'sound/effects/snap.ogg'
-
-/obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/L = M
-		if(L && L.dna && L.dna.species)
-			L.dna.species.stop_wagging_tail(M)
-	user.do_attack_animation(M)
-	playsound(M, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-	user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
-	"<span class='notice'>You slap [M]!</span>",\
-	"<span class='hear'>You hear a slap.</span>")
-	return
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
 		return FALSE
@@ -869,12 +744,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
-/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user)
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, params)
 	var/dist = get_dist(M, user)
 	if(dist < min_reach)
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
-	M.attack_hand(user)
+	var/list/modifiers = params2list(params)
+	M.attack_hand(user, modifiers)
 
 /obj/item/gohei
 	name = "gohei"

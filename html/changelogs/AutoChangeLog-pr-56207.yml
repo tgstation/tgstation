@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - bugfix: "Regular and material floor tile recipes no longer have the same name. You can seal your breaches with less chance of producing the wrong stack."

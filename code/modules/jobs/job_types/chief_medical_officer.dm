@@ -45,7 +45,7 @@
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
 
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	skillchips = list(/obj/item/skillchip/entrails_reader, /obj/item/skillchip/quickercarry)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

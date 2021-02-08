@@ -1,9 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - tweak: "Added mutadone bottle to genetics and removed a random wire in xenobio maint, and raw anomaly cores in toxins launch room"
-  - tweak: "Added a robotics desk facing science hall and replaced a wall next to rnd door with a window, as well as space cleaner in robotics medical area (to clean those dastardly oil spots the previous crew left behind 😉 ), robotics now has their missing medbot items, and 10mj cell replaced with 15mj, like old metarobo"
-  - tweak: "robotics work area has been expanded, robo operating area is moved to the right wall and is opened up a bit, robo work floor is a tad darker"
-  - tweak: "Added shutter access between Toxins and Toxins storage"
-  - tweak: "Added a Pump to cytology gas pipe and a firelock to the cytology door"
-  - bugfix: "robotics morgue tray, and robotics tech fab now face the correct way"
