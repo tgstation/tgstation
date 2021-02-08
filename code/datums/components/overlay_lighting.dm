@@ -107,11 +107,11 @@
 	if(directional)
 		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/on_parent_dir_change)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_moved)
-	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_RANGE, .proc/set_range)
-	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_POWER, .proc/set_power)
-	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_COLOR, .proc/set_color)
-	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_ON, .proc/on_toggle)
-	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_FLAGS, .proc/on_light_flags_change)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .proc/set_range)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_POWER, .proc/set_power)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .proc/set_color)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_ON, .proc/on_toggle)
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .proc/on_light_flags_change)
 	RegisterSignal(parent, COMSIG_ATOM_USED_IN_CRAFT, .proc/on_parent_crafted)
 	RegisterSignal(parent, COMSIG_LIGHT_EATER_QUEUE, .proc/on_light_eater)
 	var/atom/movable/movable_parent = parent
@@ -130,11 +130,11 @@
 	clean_old_turfs()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_ATOM_SET_LIGHT_RANGE,
-		COMSIG_ATOM_SET_LIGHT_POWER,
-		COMSIG_ATOM_SET_LIGHT_COLOR,
-		COMSIG_ATOM_SET_LIGHT_ON,
-		COMSIG_ATOM_SET_LIGHT_FLAGS,
+		COMSIG_ATOM_UPDATE_LIGHT_RANGE,
+		COMSIG_ATOM_UPDATE_LIGHT_POWER,
+		COMSIG_ATOM_UPDATE_LIGHT_COLOR,
+		COMSIG_ATOM_UPDATE_LIGHT_ON,
+		COMSIG_ATOM_UPDATE_LIGHT_FLAGS,
 		COMSIG_ATOM_USED_IN_CRAFT,
 		COMSIG_LIGHT_EATER_QUEUE,
 		))

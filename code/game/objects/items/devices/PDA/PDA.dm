@@ -892,7 +892,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		A.UpdateButtonIcon()
 
 /// Special light eater handling
-/obj/item/pda/proc/on_light_eater(obj/item/pda/source, datum/ligth_eater)
+/obj/item/pda/proc/on_light_eater(obj/item/pda/source, datum/light_eater)
 	SIGNAL_HANDLER
 	set_light_on(FALSE)
 	set_light_range(0) //We won't be turning on again.

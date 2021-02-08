@@ -24,32 +24,32 @@
 	))
 	return ..()
 
-/// Prevents the light power of the target atom from exceeding 0.
+/// Prevents the light power of the target atom from exceeding 0 or increasing.
 /datum/element/light_eaten/proc/block_light_power(atom/eaten_light, new_power, old_power)
 	SIGNAL_HANDLER
-	if(new_power <= 0)
-		return NONE
-
-	eaten_light.set_light_power(min(old_power, 0))
+	if(new_power > 0 && (new_power <= old_power))
+		return COMPONENT_BLOCK_LIGHT_UPDATE
+	if(new_power > old_power)
+		return COMPONENT_BLOCK_LIGHT_UPDATE
 	return NONE
 
 /// Prevents the light range of the target atom from exceeding 0 while the light power is greater than 0.
 /datum/element/light_eaten/proc/block_light_range(atom/eaten_light, new_range, old_range)
 	SIGNAL_HANDLER
-	if(eaten_light.light_power <= 0 || new_range <= 0)
+	if(new_range <= 0)
 		return NONE
-
-	eaten_light.set_light_range(min(old_range, 0))
-	return NONE
+	if(eaten_light.light_power <= 0)
+		return NONE
+	return COMPONENT_BLOCK_LIGHT_UPDATE
 
 /// Prevents the light from turning on while the light power is greater than 0.
 /datum/element/light_eaten/proc/block_light_on(atom/eaten_light, new_on, old_on)
 	SIGNAL_HANDLER
-	if(eaten_light.light_power <= 0 || !new_on)
+	if(!new_on)
 		return NONE
-
-	eaten_light.set_light_on(FALSE)
-	return NONE
+	if(eaten_light.light_power <= 0)
+		return NONE
+	return COMPONENT_BLOCK_LIGHT_UPDATE
 
 /// Signal handler for light eater flavortext
 /datum/element/light_eaten/proc/on_examine(atom/eaten_light, mob/examiner, list/examine_text)

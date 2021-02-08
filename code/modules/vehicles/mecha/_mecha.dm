@@ -1228,7 +1228,7 @@
 
 
 /// Special light eater handling
-/obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/mecha, datum/source)
+/obj/vehicle/sealed/mecha/proc/on_light_eater(obj/vehicle/sealed/source, datum/light_eater)
 	SIGNAL_HANDLER
 	if(mecha_flags & HAS_LIGHTS)
 		visible_message("<span class='danger'>[src]'s lights burn out!</span>")

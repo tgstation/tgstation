@@ -845,13 +845,14 @@
 	sleep(1)
 	qdel(src)
 
-/obj/machinery/light/proc/on_light_eater(obj/machinery/light, datum/light_eater)
+/obj/machinery/light/proc/on_light_eater(obj/machinery/light/source, datum/light_eater)
 	SIGNAL_HANDLER
-	if(status == 1)
-		return COMPONENT_BLOCK_LIGHT_EATER
+	. = COMPONENT_BLOCK_LIGHT_EATER
+	if(status == LIGHT_EMPTY)
+		return
 	var/obj/item/light/tube = drop_light_tube()
 	tube?.burn()
-	return COMPONENT_BLOCK_LIGHT_EATER
+	return
 
 // the light item
 // can be tube or bulb subtypes

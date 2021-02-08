@@ -35,10 +35,9 @@
 	var/max_skillchip_slots = 5
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
-	..()
+	. = ..()
 
 	name = "brain"
-
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, "<span class= danger>You can't feel your body! You're still just a brain!</span>")
@@ -74,7 +73,7 @@
 			// Run the try_ proc with force = TRUE.
 			skillchip.try_deactivate_skillchip(FALSE, TRUE)
 
-	..()
+	. = ..()
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
