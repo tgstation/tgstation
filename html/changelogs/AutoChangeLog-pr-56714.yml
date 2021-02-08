@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "IMPORTANT FIX: Game client will now properly reconnect on roundrestart!!!"

@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - tweak: "reinforcement nukies and borgs get droppodded into their location"
-  - bugfix: "fixes contractor drop pods having the wrong icon"
