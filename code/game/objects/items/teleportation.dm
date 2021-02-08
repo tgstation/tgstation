@@ -153,7 +153,7 @@
 		var/datum/weakref/last_portal_location_ref = last_portal_location
 		portal_location = last_portal_location_ref.resolve()
 
-	if (portal_location == null)
+	if (isnull(portal_location))
 		to_chat(user, "<span class='warning'>[src] flashes briefly. No target is locked in.</span>")
 		return ALT_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -172,7 +172,7 @@
 		var/area/computer_area = get_area(computer.target)
 		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
 			continue
-		if(computer.power_station && computer.power_station.teleporter_hub && computer.power_station.engaged)
+		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
 			locations["[get_area(computer.target)] (Active)"] = computer
 		else
 			locations["[get_area(computer.target)] (Inactive)"] = computer
@@ -183,13 +183,14 @@
 	if (!teleport_location_key || user.get_active_held_item() != src || user.incapacitated())
 		return
 
-	var/teleport_location = locations[teleport_location_key]
+	// Not always a datum, but needed for IS_WEAKREF_OF to cast properly.
+	var/datum/teleport_location = locations[teleport_location_key]
 	if (!try_create_portal_to(user, teleport_location))
 		return
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		last_portal_location = PORTAL_LOCATION_DANGEROUS
-	else if (!is_weakref_of(teleport_location, last_portal_location))
+	else if (!IS_WEAKREF_OF(teleport_location, last_portal_location))
 		if (isweakref(teleport_location))
 			var/datum/weakref/about_to_replace_location_ref = last_portal_location
 			var/obj/machinery/computer/teleporter/about_to_replace_location = about_to_replace_location_ref.resolve()
@@ -266,10 +267,10 @@
 
 	return TRUE
 
-/obj/item/hand_tele/proc/on_teleporter_new_target(datum/source, target, old_target)
+/obj/item/hand_tele/proc/on_teleporter_new_target(datum/source)
 	SIGNAL_HANDLER
 
-	if (target != old_target && is_weakref_of(source, last_portal_location))
+	if (IS_WEAKREF_OF(source, last_portal_location))
 		last_portal_location = null
 		UnregisterSignal(source, COMSIG_TELEPORTER_NEW_TARGET)
 

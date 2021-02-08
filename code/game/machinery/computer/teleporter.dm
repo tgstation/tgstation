@@ -94,9 +94,10 @@
 			. = TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
-	var/old_target = target
+	if (target == new_target)
+		return
+	SEND_SIGNAL(src, COMSIG_TELEPORTER_NEW_TARGET, new_target)
 	target = new_target
-	SEND_SIGNAL(src, COMSIG_TELEPORTER_NEW_TARGET, target, old_target)
 
 /obj/machinery/computer/teleporter/proc/finish_calibration()
 	calibrating = FALSE

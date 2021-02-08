@@ -20,7 +20,9 @@
 				pre_attack_result = pre_attack(src, user, params)
 			if (ALT_ATTACK_CANCEL_ATTACK_CHAIN)
 				return TRUE
-			if (null)
+			if (ALT_ATTACK_CONTINUE_CHAIN)
+				// Normal behavior
+			else
 				CRASH("pre_attack_alt must return an ALT_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 	else
 		pre_attack_result = pre_attack(src, user, params)
@@ -36,7 +38,9 @@
 				attackby_result = target.attackby(src, user, params)
 			if (ALT_ATTACK_CANCEL_ATTACK_CHAIN)
 				return TRUE
-			if (null)
+			if (ALT_ATTACK_CONTINUE_CHAIN)
+				// Normal behavior
+			else
 				CRASH("attackby_alt must return an ALT_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 	else
 		attackby_result = target.attackby(src, user, params)

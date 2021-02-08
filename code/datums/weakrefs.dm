@@ -7,10 +7,6 @@
 			input.weak_reference = new /datum/weakref(input)
 		return input.weak_reference
 
-/// Checks if potential_weakref is a weakref of thing.
-/proc/is_weakref_of(datum/thing, potential_weakref)
-	return istype(thing) && !isnull(potential_weakref) && thing.weak_reference == potential_weakref
-
 /datum/proc/create_weakref()		//Forced creation for admin proccalls
 	return WEAKREF(src)
 
