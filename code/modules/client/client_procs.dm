@@ -634,6 +634,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	qdel(query_log_connection)
 
 	SSserver_maint.UpdateHubStatus()
+	SSambience.ambience_listening_clients -= src
 
 	if(new_player)
 		player_age = -1
