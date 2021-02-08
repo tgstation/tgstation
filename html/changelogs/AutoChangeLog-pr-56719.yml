@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a few cases where links in tgchat opened directly in the panel instead of the browser."

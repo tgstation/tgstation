@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes grown inedible foods not being squashed with liquid contents."
