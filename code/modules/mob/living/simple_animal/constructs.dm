@@ -1,3 +1,7 @@
+#define THEME_WIZARD "wizard"
+#define THEME_CULT "cult"
+#define THEME_HOLY "holy"
+
 /mob/living/simple_animal/hostile/construct
 	name = "Construct"
 	real_name = "Construct"
@@ -42,7 +46,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
-	var/theme = "cult" //cult is classic red, holy is blue, and wizard is purple
+	var/theme = THEME_CULT //cult is classic red, holy is blue, and wizard is purple
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -183,11 +187,11 @@
 
 //////////////////////////Juggernaut-alts////////////////////////////
 /mob/living/simple_animal/hostile/construct/juggernaut/angelic
-	theme = "holy"
+	theme = THEME_HOLY
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/juggernaut/mystic
-	theme = "wizard"
+	theme = THEME_WIZARD
 	loot = list(/obj/item/ectoplasm/mystic)
 
 /mob/living/simple_animal/hostile/construct/juggernaut/noncult
@@ -240,12 +244,12 @@
 
 //////////////////////////Wraith-alts////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith/angelic
-	theme = "holy"
+	theme = THEME_HOLY
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/angelic)
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/wraith/mystic
-	theme = "wizard"
+	theme = THEME_WIZARD
 	loot = list(/obj/item/ectoplasm/mystic)
 
 /mob/living/simple_animal/hostile/construct/wraith/noncult
@@ -335,14 +339,14 @@
 /////////////////////////////Artificer-alts/////////////////////////
 /mob/living/simple_animal/hostile/construct/artificer/angelic
 	desc = "A bulbous construct dedicated to building and maintaining holy armies."
-	theme = "holy"
+	theme = THEME_HOLY
 	loot = list(/obj/item/ectoplasm/angelic)
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult/purified,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
 
 /mob/living/simple_animal/hostile/construct/artificer/mystic
-	theme = "wizard"
+	theme = THEME_WIZARD
 	loot = list(/obj/item/ectoplasm/mystic)
 
 /mob/living/simple_animal/hostile/construct/artificer/noncult
@@ -509,3 +513,7 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
+
+#undef THEME_WIZARD
+#undef THEME_CULT
+#undef THEME_HOLY

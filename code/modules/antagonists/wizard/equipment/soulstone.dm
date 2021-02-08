@@ -1,3 +1,7 @@
+#define THEME_WIZARD "wizard"
+#define THEME_CULT "cult"
+#define THEME_HOLY "holy"
+
 /obj/item/soulstone
 	name = "soulstone shard"
 	icon = 'icons/obj/wizard.dmi'
@@ -13,7 +17,7 @@
 
 	var/old_shard = FALSE
 	var/spent = FALSE
-	var/theme = "cult" //themes include cult red, holy blue, and wizard purple
+	var/theme = THEME_CULT //themes include cult red, holy blue, and wizard purple
 
 /obj/item/soulstone/proc/was_used()
 	if(old_shard)
@@ -28,7 +32,7 @@
 
 /obj/item/soulstone/mystic
 	icon_state = "mystic_soulstone"
-	theme = "wizard"
+	theme = THEME_CULT
 
 /obj/item/soulstone/anybody/revolver
 	old_shard = TRUE
@@ -36,7 +40,7 @@
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
-	theme = "holy"
+	theme = THEME_HOLY
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -87,7 +91,7 @@
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
-	if(theme == "holy" && iscultist(user))
+	if(theme == THEME_HOLY && iscultist(user))
 		hot_potato(user)
 		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
@@ -102,7 +106,7 @@
 		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
-	if(theme == "holy" && iscultist(user))
+	if(theme == THEME_HOLY && iscultist(user))
 		hot_potato(user)
 		return
 	release_shades(user)
@@ -111,12 +115,12 @@
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
-		if(theme == "holy")
+		if(theme == THEME_HOLY)
 			icon_state = "purified_soulstone"
 			A.icon_state = "shade_angelic"
 			A.name = "Purified [initial(A.name)]"
 			A.loot = list(/obj/item/ectoplasm/angelic)
-		if(theme == "wizard")
+		if(theme == THEME_WIZARD)
 			icon_state = "mystic_soulstone"
 			A.icon_state = "shade_mystic"
 			A.loot = list(/obj/item/ectoplasm/mystic)
@@ -136,7 +140,7 @@
 	if(!occupant || !istype(target_toolbox) || target_toolbox.has_soul)
 		return ..()
 
-	if(theme == "holy" && iscultist(user))
+	if(theme == THEME_HOLY && iscultist(user))
 		hot_potato(user)
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
@@ -178,11 +182,11 @@
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
-		if(!iscultist(user) && !iswizard(user) && !SS.theme == "holy")
+		if(!iscultist(user) && !iswizard(user) && !SS.theme == THEME_HOLY)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place [SS] into the shell. It would be wise to be rid of this quickly.</span>")
 			user.Dizzy(30)
 			return
-		if(SS.theme == "holy" && iscultist(user))
+		if(SS.theme == THEME_HOLY && iscultist(user))
 			SS.hot_potato(user)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
@@ -240,15 +244,14 @@
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: [src] is full! Free an existing soul to make room.")
 			else
 				T.AddComponent(/datum/component/soulstoned, src)
-				switch(theme)
-					if("holy")
-						icon_state = "purified_soulstone2"
-						if(iscultist(T))
-							SSticker.mode.remove_cultist(T.mind, FALSE, FALSE)
-					if("wizard")
-						icon_state = "mystic_soulstone2"
-					if("cult")
-						icon_state = "soulstone2"
+				if(THEME_HOLY)
+					icon_state = "purified_soulstone2"
+					if(iscultist(T))
+						SSticker.mode.remove_cultist(T.mind, FALSE, FALSE)
+				if(THEME_WIZARD)
+					icon_state = "mystic_soulstone2"
+				if(THEME_CULT)
+					icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
 				to_chat(T, "<span class='notice'>Your soul has been captured by [src]. Its arcane energies are reknitting your ethereal form.</span>")
 				if(user != T)
@@ -268,35 +271,35 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						if(iscultist(user) || iswizard(user))
-							if(theme == "wizard")
+						if(iscultist(user))
+							if(theme == THEME_WIZARD)
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/mystic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, A, user, 0, T.loc)
 						else
-							if(theme == "holy")
+							if(theme == THEME_HOLY)
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/angelic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/noncult, A, user, 0, T.loc)
 					if("Wraith")
-						if(iscultist(user) || iswizard(user))
-							if(theme == "wizard")
+						if(iscultist(user))
+							if(theme == THEME_WIZARD)
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/mystic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
 						else
-							if((theme == "holy"))
+							if((theme == THEME_HOLY))
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, A, user, 0, T.loc)
 					if("Artificer")
-						if(iscultist(user) || iswizard(user))
-							if(theme == "wizard")
+						if(iscultist(user))
+							if(theme == THEME_WIZARD)
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/mystic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, A, user, 0, T.loc)
 						else
-							if((theme == "holy"))
+							if((theme == THEME_HOLY))
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/angelic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/noncult, A, user, 0, T.loc)
@@ -368,11 +371,11 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
-	if(theme == "holy")
+	if(theme == THEME_HOLY)
 		icon_state = "purified_soulstone2"
-	if(theme == "wizard")
+	if(theme == THEME_WIZARD)
 		icon_state = "mystic_soulstone2"
-	if(theme == "cult")
+	if(theme == THEME_CULT)
 		icon_state = "soulstone2"
 	if(user && (iswizard(user) || usability))
 		to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
@@ -403,3 +406,7 @@
 	init_shade(T, user , shade_controller = chosen_ghost)
 	qdel(T)
 	return TRUE
+
+#undef THEME_WIZARD
+#undef THEME_CULT
+#undef THEME_HOLY
