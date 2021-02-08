@@ -308,7 +308,8 @@
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/stack/marker_beacon,
-		/obj/item/key/lasso
+		/obj/item/key/lasso,
+		/obj/item/skeleton_key
 		))
 
 
@@ -579,7 +580,7 @@
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding shotgun ammunition."
+	desc = "A bandolier for holding rifle and shotgun ammunition."
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
@@ -591,7 +592,8 @@
 	STR.max_combined_w_class = 18
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
-		/obj/item/ammo_casing/shotgun
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_casing/a762
 		))
 
 /obj/item/storage/belt/fannypack

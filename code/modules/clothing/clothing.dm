@@ -121,13 +121,13 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/attacker, mob/user, def_zone)
-	if(user.a_intent != INTENT_HARM && ismoth(attacker))
+/obj/item/clothing/attack(mob/attacker, mob/living/user, params)
+	if(!user.combat_mode && ismoth(attacker))
 		if (isnull(moth_snack))
 			moth_snack = new
 			moth_snack.name = name
 			moth_snack.clothing = WEAKREF(src)
-		moth_snack.attack(attacker, user, def_zone)
+		moth_snack.attack(attacker, user, params)
 	else
 		return ..()
 

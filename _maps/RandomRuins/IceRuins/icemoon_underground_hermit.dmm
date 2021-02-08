@@ -58,7 +58,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "sC" = (
-/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime,
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern,
 /turf/open/floor/wood,

@@ -101,7 +101,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return ..()
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 5)
+	if (!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron (loc, 5)
 	recursive_organ_check(src)
 	qdel(src)
 
@@ -126,7 +127,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
-	connected.setDir(dir)
+	if (connected)
+		connected.setDir(dir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
@@ -325,7 +327,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return ..()
 
 /obj/structure/tray/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 2)
+	new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
 /obj/structure/tray/attack_paw(mob/user)

@@ -82,7 +82,7 @@
 	update_icon()
 
 /obj/item/pet_carrier/attack(mob/living/target, mob/living/user)
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 	if(!open)
 		to_chat(user, "<span class='warning'>You need to open [src]'s door!</span>")
