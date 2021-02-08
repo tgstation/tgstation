@@ -299,12 +299,12 @@
 	category = list("initial","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/metal
-	name = "Metal"
-	id = "metal"
+/datum/design/iron
+	name = "Iron"
+	id = "iron"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT)
-	build_path = /obj/item/stack/sheet/metal
+	build_path = /obj/item/stack/sheet/iron
 	category = list("initial","Construction")
 	maxstack = 50
 
@@ -327,7 +327,7 @@
 	maxstack = 50
 
 /datum/design/rods
-	name = "Metal Rod"
+	name = "Iron Rod"
 	id = "rods"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 1000)
@@ -867,7 +867,7 @@
 	name = "Foam Riot Dart"
 	id = "riot_dart"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 1000) //Discount for making individually - no box = less metal!
+	materials = list(/datum/material/iron = 1000) //Discount for making individually - no box = less iron!
 	build_path = /obj/item/ammo_casing/caseless/foam_dart/riot
 	category = list("hacked", "Security")
 

@@ -21,7 +21,7 @@
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
-					var/obj/item/stack/sheet/metal/M = new (drop_location(), 5)
+					var/obj/item/stack/sheet/iron/M = new (drop_location(), 5)
 					M.add_fingerprint(user)
 					qdel(src)
 				return
