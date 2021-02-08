@@ -1,0 +1,5 @@
+author: "Son of Space, Fikou"
+delete-after: True
+changes: 
+  - rscadd: "A RIPLEY variant with its own set of sprites."
+  - balance: "Mules on Meta have been replaced by a cargo hauler and a few pairs of rollerskates"

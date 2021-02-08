@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a hotkey conflict that by default prevents borgs from toggling combat mode using '4'."
