@@ -6,7 +6,6 @@
 // These three defines control how fast and efficient cryo is
 #define CRYO_MULTIPLY_FACTOR 25
 #define CRYO_TX_QTY 0.5
-#define CRYO_THROTTLE_CTR_MAX 10
 // The minimum O2 moles in the cryotube before it switches off.
 #define CRYO_MIN_GAS_MOLES 5
 #define CRYO_BREAKOUT_TIME 30 SECONDS
@@ -540,6 +539,5 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
 #undef CRYO_TX_QTY
-#undef CRYO_THROTTLE_CTR_MAX
 #undef CRYO_MIN_GAS_MOLES
 #undef CRYO_BREAKOUT_TIME
