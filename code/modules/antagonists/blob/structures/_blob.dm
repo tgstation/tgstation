@@ -144,8 +144,8 @@
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T)) //is the target turf impassable
 		make_blob = FALSE 
-		if(controller || (overmind && !overmind.expansion_restrained)) // overmind restraint is on, no auto-wall smash
-			T.blob_act(src) //hit the turf if it is
+		if(controller || (overmind && !overmind.expansion_restrained))
+			T.blob_act(src) // Hit the turf if expansion_restrained isn't on or it's a manual attack
 		else
 			halted_attack = TRUE
 	for(var/atom/A in T)
@@ -154,7 +154,7 @@
 		if(!controller && overmind && overmind.expansion_restrained && istype(A, /obj/machinery/door))
 			halted_attack = TRUE
 			continue // Don't smash airlocks when expansion_restrained is turned on
-		if(isliving(A) && overmind) // Make sure to inject strain-reagents with automatic attacks
+		if(isliving(A) && overmind) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
 		else
 			A.blob_act(src) //also hit everything in the turf
