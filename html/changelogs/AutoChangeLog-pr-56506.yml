@@ -1,6 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - tweak: "Icebox: Genetics monkey pen is larger"
-  - tweak: "Icebox: Toxins area reworked layout"
-  - bugfix: "Icebox: Toxins burn chamber moved to prevent overheating Science hallway"

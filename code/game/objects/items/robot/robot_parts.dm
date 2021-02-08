@@ -148,8 +148,8 @@
 
 /obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = W
+	if(istype(W, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/iron/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
 				var/obj/item/bot_assembly/ed209/B = new
@@ -160,7 +160,7 @@
 				if (holding_this)
 					user.put_in_inactive_hand(B)
 			else
-				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
+				to_chat(user, "<span class='warning'>You need one sheet of iron to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(l_leg)
