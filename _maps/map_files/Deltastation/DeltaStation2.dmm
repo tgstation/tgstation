@@ -4480,7 +4480,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "aoh" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -54939,7 +54939,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
 "dPV" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -66648,7 +66648,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "gDO" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -66790,7 +66790,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "gGK" = (
-/obj/machinery/computer/card/minor/rd{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/machinery/status_display/ai{
@@ -73124,7 +73124,7 @@
 	},
 /area/engineering/atmos)
 "iXe" = (
-/obj/machinery/computer/card/minor/cmo{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/machinery/status_display/ai{
@@ -73829,7 +73829,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "jpd" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/keycard_auth{
@@ -75478,7 +75478,7 @@
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "jQW" = (
-/obj/machinery/computer/card/minor/ce{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/status_display/evac{
@@ -79325,7 +79325,7 @@
 /turf/open/floor/iron/white,
 /area/medical/psychology)
 "lrZ" = (
-/obj/machinery/computer/card/minor/hos{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -86683,7 +86683,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/gravity_generator)
 "nTB" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

@@ -192,6 +192,12 @@
 			target_id_card.update_label()
 			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
+		if("PRG_age")
+			if(!computer || !authenticated || !target_id_card)
+				return
+			target_id_card.registered_age = params["id_age"]
+			playsound(computer, "terminal_type", 50, FALSE)
+			return TRUE
 		if("PRG_assign")
 			if(!computer || !authenticated || !target_id_card)
 				return
@@ -275,14 +281,19 @@
 			if(isnull(region))
 				return
 
-			var/list/region_accesses = get_region_accesses(region)
-			target_id_card.access |= region_accesses
+			if(is_centcom)
+				target_id_card.access |= get_all_centcom_access()
+				message_admins("[ADMIN_LOOKUPFLW(user)] just added CentCom Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added CentCom access")
+			else
+				var/list/region_accesses = get_region_accesses(region)
+				target_id_card.access |= region_accesses
 
-			for(var/logged_access in ACCESS_ALERT_ADMINS)
-				if(logged_access in region_accesses)
-					message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_region_accesses_name(region)] region access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+				for(var/logged_access in ACCESS_ALERT_ADMINS)
+					if(logged_access in region_accesses)
+						message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_region_accesses_name(region)] region access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 
-			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_region_accesses_name(region)] region access")
+				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_region_accesses_name(region)] region access")
 
 
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -293,6 +304,8 @@
 			var/region = text2num(params["region"])
 			if(isnull(region))
 				return
+			if(is_centcom)
+				target_id_card.access -= get_all_centcom_access()
 			target_id_card.access -= get_region_accesses(region)
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
@@ -333,23 +346,38 @@
 			data["jobs"][department] = department_jobs
 
 	var/list/regions = list()
-	for(var/i in 1 to 7)
-		if((minor || target_dept) && !(i in region_access))
-			continue
-
+	if(is_centcom)
 		var/list/accesses = list()
-		for(var/access in get_region_accesses(i))
-			if (get_access_desc(access))
+		for(var/access in get_all_centcom_access())
+			if (get_centcom_access_desc(access))
 				accesses += list(list(
-					"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
+					"desc" = replacetext(get_centcom_access_desc(access), "&nbsp", " "),
 					"ref" = access,
 				))
 
 		regions += list(list(
-			"name" = get_region_accesses_name(i),
-			"regid" = i,
+			"name" = "CentCom",
+			"regid" = 0,
 			"accesses" = accesses
 		))
+	else
+		for(var/i in 1 to 7)
+			if((minor || target_dept) && !(i in region_access))
+				continue
+
+			var/list/accesses = list()
+			for(var/access in get_region_accesses(i))
+				if (get_access_desc(access))
+					accesses += list(list(
+						"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
+						"ref" = access,
+					))
+
+			regions += list(list(
+				"name" = get_region_accesses_name(i),
+				"regid" = i,
+				"accesses" = accesses
+			))
 
 	data["regions"] = regions
 
@@ -383,6 +411,7 @@
 		data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
 		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
 		data["access_on_card"] = id_card.access
+		data["id_age"] = id_card.registered_age
 
 	return data
 

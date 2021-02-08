@@ -1,12 +1,12 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, NoticeBox, Section, Tabs } from '../components';
+import { Box, Button, Flex, Input, NoticeBox, NumberInput, Section, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
 export const NtosCard = (props, context) => {
   return (
     <NtosWindow
-      width={450}
+      width={500}
       height={520}
       resizable>
       <NtosWindow.Content scrollable>
@@ -30,6 +30,7 @@ export const NtosCardContent = (props, context) => {
     have_printer,
     have_id_slot,
     id_name,
+    id_age,
   } = data;
   const [
     selectedDepartment,
@@ -48,12 +49,23 @@ export const NtosCardContent = (props, context) => {
       <Section
         title={has_id && authenticated
           ? (
-            <Input
-              value={id_owner}
-              width="250px"
-              onInput={(e, value) => act('PRG_edit', {
-                name: value,
-              })} />
+            <>
+              <Input
+                value={id_owner}
+                width="200px"
+                onInput={(e, value) => act('PRG_edit', {
+                  name: value,
+                })} />
+              <NumberInput
+                value={id_age}
+                unit="Years"
+                minValue={17}
+                maxValue={85}
+                onChange={(e, value) => { act('PRG_age', {
+                  id_age: value,
+                });
+                }} />
+            </>
           )
           : (id_owner || 'No Card Inserted')}
         buttons={(
