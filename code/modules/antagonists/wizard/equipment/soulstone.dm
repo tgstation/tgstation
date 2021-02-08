@@ -115,6 +115,11 @@
 			icon_state = "purified_soulstone"
 			A.icon_state = "shade_angelic"
 			A.name = "Purified [initial(A.name)]"
+			A.loot = list(/obj/item/ectoplasm/angelic)
+		if(theme == "wizard")
+			icon_state = "mystic_soulstone"
+			A.icon_state = "shade_mystic"
+			A.loot = list(/obj/item/ectoplasm/mystic)
 		else
 			icon_state = "soulstone"
 		name = initial(name)
@@ -264,7 +269,10 @@
 				switch(construct_class)
 					if("Juggernaut")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, A, user, 0, T.loc)
+							if(theme == "wizard")
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/mystic, A, user, 0, T.loc)
+							else
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, A, user, 0, T.loc)
 						else
 							if(theme == "holy")
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/angelic, A, user, 0, T.loc)
@@ -283,7 +291,10 @@
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, A, user, 0, T.loc)
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, A, user, 0, T.loc)
+							if(theme == "wizard")
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/mystic, A, user, 0, T.loc)
+							else
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, A, user, 0, T.loc)
 						else
 							if((theme == "holy"))
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/angelic, A, user, 0, T.loc)
@@ -357,9 +368,11 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
-	if((theme == "holy"))
+	if(theme == "holy")
 		icon_state = "purified_soulstone2"
-	else
+	if(theme == "wizard")
+		icon_state = "mystic_soulstone2"
+	if(theme == "cult")
 		icon_state = "soulstone2"
 	if(user && (iswizard(user) || usability))
 		to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")

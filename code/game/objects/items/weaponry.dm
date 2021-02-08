@@ -473,6 +473,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "angelplasm"
 
+/obj/item/ectoplasm/mystic
+	icon_state = "revenantEctoplasm"
+
+
 /obj/item/mounted_chainsaw
 	name = "mounted chainsaw"
 	desc = "A chainsaw that has replaced your arm."
