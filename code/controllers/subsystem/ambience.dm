@@ -12,8 +12,13 @@ SUBSYSTEM_DEF(ambience)
 	for(var/i in ambience_listening_clients)
 		var/client/client_iterator = i
 
+		if(isnull(client_iterator))
+			ambience_listening_clients -= client_iterator
+			continue
+
 		if(ambience_listening_clients[client_iterator] > world.time)
 			continue //Not ready for the next sound
+
 		var/area/current_area = get_area(client_iterator.mob)
 
 		var/sound = pick(current_area.ambientsounds)
