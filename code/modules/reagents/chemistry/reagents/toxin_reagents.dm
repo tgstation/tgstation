@@ -808,7 +808,7 @@
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/M)
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
-			var/datum/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+			var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
 			for(var/key in pm_controller.controlled_planes)
@@ -818,7 +818,7 @@
 
 /datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M?.hud_used)
-		var/datum/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+		var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 		for(var/key in pm_controller.controlled_planes)
 			animate(pm_controller.controlled_planes[key], transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
