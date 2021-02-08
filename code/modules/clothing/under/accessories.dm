@@ -330,12 +330,9 @@
 ////////////////
 
 /obj/item/clothing/accessory/fan_clown_pin
-	name = "Clown Pin"
-	desc = "A pin to show off your appreciation for clowns and clowning"
+	name = "\improper Clown Pin"
+	desc = "A pin to show off your appreciation for clowns and clowning!"
 	icon_state = "fan_clown_pin"
-	above_suit = FALSE
-	minimize_when_attached = TRUE
-	attachment_slot = CHEST
 
 /obj/item/clothing/accessory/fan_clown_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
@@ -348,12 +345,9 @@
 		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fan_clown_pin")
 
 /obj/item/clothing/accessory/fan_mime_pin
-	name = "Mime Pin"
-	desc = "A pin to show off your appreciation for mimes and miming"
+	name = "\improper Mime Pin"
+	desc = "A pin to show off your appreciation for mimes and miming!"
 	icon_state = "fan_mime_pin"
-	above_suit = FALSE
-	minimize_when_attached = TRUE
-	attachment_slot = CHEST
 
 /obj/item/clothing/accessory/fan_mime_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
