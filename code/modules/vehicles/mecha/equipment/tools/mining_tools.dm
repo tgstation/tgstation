@@ -108,6 +108,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M as obj)
 	if(..())
+		if(istype(M, /obj/vehicle/sealed/mecha/working/ripley/cargo))
+			return FALSE
 		if(istype(M, /obj/vehicle/sealed/mecha/working) || istype(M, /obj/vehicle/sealed/mecha/combat))
 			return TRUE
 	return FALSE
