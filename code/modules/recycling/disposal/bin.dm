@@ -109,7 +109,6 @@
 		return ..()
 
 /obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
-	. = ..()
 	king.visible_message("<span class='warning'>[king] starts rummaging through [src].</span>","<span class='notice'>You rummage through [src]...</span>")
 	if (do_mob(king, src, 2 SECONDS, interaction_key = "regalrat"))
 		var/loot = rand(1,100)
