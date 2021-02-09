@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - balance: "Venus Flytraps now take burn and cold damage."
