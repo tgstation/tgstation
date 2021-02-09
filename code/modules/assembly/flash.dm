@@ -22,6 +22,9 @@
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	light_on = FALSE
+	/// Whether we currently have the flashing overlay.
+	var/flashing = FALSE
+	/// The overlay we use for flashing.
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnt_out = FALSE     //Is the flash burnt out?
@@ -43,13 +46,11 @@
 	return FIRELOSS
 
 /obj/item/assembly/flash/update_icon(updates=ALL, flash = FALSE)
+	flashing = flash
 	. = ..()
 	if(flash)
-		add_overlay(flashing_overlay)
-		attached_overlays += flashing_overlay
 		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
-	if(holder)
-		holder?.update_icon(updates)
+	holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()
 	attached_overlays = list()
@@ -57,6 +58,9 @@
 	if(burnt_out)
 		. += "flashburnt"
 		attached_overlays += "flashburnt"
+	if(flashing)
+		. += flashing_overlay
+		attached_overlays += flashing_overlay
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))

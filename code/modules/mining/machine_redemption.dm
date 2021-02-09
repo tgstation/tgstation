@@ -350,5 +350,5 @@
 	..()
 
 /obj/machinery/mineral/ore_redemption/update_icon_state()
-	icon_state = "[initial(icon_state)]-[powered() ? null : "off"]"
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
 	return ..()

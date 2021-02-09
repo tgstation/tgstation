@@ -56,7 +56,7 @@
 	dump_contents()
 	return ..()
 
-/obj/structure/closet/update_appearance(updates)
+/obj/structure/closet/update_appearance(updates=ALL)
 	. = ..()
 	if(opened || broken || !secure)
 		luminosity = 0
@@ -77,7 +77,7 @@
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(opened)
-		. += "[icon_door_override ? icon_door : icon_state]_door"
+		. += "[icon_door_override ? icon_door : icon_state]_open"
 		return
 
 	. += "[icon_door || icon_state]_door"
