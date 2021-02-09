@@ -571,8 +571,6 @@
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
-		if(ok)
-			to_chat(world, text("<B>A secret has been activated by []!</B>", holder.key), confidential = TRUE)
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE
