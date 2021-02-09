@@ -1,4 +1,4 @@
-#define PATH_DIST(A, B) (A.Distance(B))
+#define PATH_DIST(A, B) (get_dist(A, B))
 /// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
 #define PATH_START	-1
 
@@ -126,13 +126,15 @@
 			continue
 
 		var/turf/current_turf = cur.tile
-
-		for(var/scan_direction in list(NORTH, EAST, SOUTH, WEST))
-			lateral_scan_spec(current_turf, scan_direction) // this is a turf not a node, fix
+		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
+			lateral_scan_spec(current_turf, scan_direction)
 			if(path)
 				break
 
-		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
+		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
+			var/turf/test = get_step(current_turf, scan_direction)
+			if(!current_turf.Adjacent(test))
+				continue
 			diag_scan_spec(current_turf, scan_direction)
 			if(path)
 				break
@@ -142,7 +144,6 @@
 	if(path)
 		for(var/i = 1 to round(0.5*path.len))
 			path.Swap(i,path.len-i+1)
-	//testing("*********new path done with [total_tiles] tiles popped, [openc.len] nodes added to heap")
 	openc = null
 	//cleaning after us
 	caller.calculating_path = FALSE
@@ -153,23 +154,23 @@
 	success = unwind_node.tile == end
 	path = new()
 	var/turf/iter_turf = unwind_node.tile
-	var/turf/iter_turf2 = get_turf(unwind_node.tile)
 	path.Add(iter_turf)
 
-	var/list/b = list(iter_turf2)
-	var/turf/goal_turf2 = sources[iter_turf2]
-	while(goal_turf2 && goal_turf2 != PATH_START)
-		b.Add(goal_turf2)
-		while(iter_turf2 != goal_turf2)
-			var/turf/next_turf = get_step_towards(iter_turf2, goal_turf2)
-			iter_turf2 = next_turf
-			path.Add(iter_turf2)
-		goal_turf2 = sources[iter_turf2]
+	var/list/b = list(iter_turf)
+	var/turf/goal_turf = sources[iter_turf]
+	while(goal_turf && goal_turf != PATH_START)
+		b.Add(goal_turf)
+		while(iter_turf != goal_turf)
+			var/turf/next_turf = get_step_towards(iter_turf, goal_turf)
+			iter_turf = next_turf
+			path.Add(iter_turf)
+		goal_turf = sources[iter_turf]
 
 	//testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goalturf2 = [goal_turf2])")
 
-/datum/pathfind/proc/can_step(turf/a, turf/next) // prolly not optimal
-	return call(a,adjacent)(caller, next, id, simulated_only)
+/datum/pathfind/proc/reachableTurftestJPS(turf/cur_turf, turf/next)
+	if(next && !next.density && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id))
+		return TRUE
 
 /datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
@@ -202,7 +203,7 @@
 			return
 		else if(sources[current_turf])
 			return
-		else if(!can_step(lag_turf, current_turf))
+		else if(!reachableTurftestJPS(lag_turf, current_turf))
 			return
 		else
 			sources[current_turf] = original_turf
@@ -214,24 +215,24 @@
 
 		switch(heading)
 			if(NORTH)
-				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, WEST)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHWEST)))
 					interesting = TRUE
-				else if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
+				else if(!reachableTurftestJPS(current_turf, get_step(current_turf, EAST)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHEAST)))
 					interesting = TRUE
 			if(SOUTH)
-				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, WEST)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHWEST)))
 					interesting = TRUE
-				else if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
+				else if(!reachableTurftestJPS(current_turf, get_step(current_turf, EAST)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHEAST)))
 					interesting = TRUE
 			if(EAST)
-				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, NORTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHEAST)))
 					interesting = TRUE
-				else if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
+				else if(!reachableTurftestJPS(current_turf, get_step(current_turf, SOUTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHEAST)))
 					interesting = TRUE
 			if(WEST)
-				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, NORTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHWEST)))
 					interesting = TRUE
-				else if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
+				else if(!reachableTurftestJPS(current_turf, get_step(current_turf, SOUTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHWEST)))
 					interesting = TRUE
 
 		if(interesting)
@@ -257,6 +258,7 @@
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
+
 		steps_taken++
 		if(!current_turf)
 			return
@@ -271,7 +273,7 @@
 			return
 		else if(sources[current_turf])
 			return
-		else if(!can_step(lag_turf, current_turf))
+		else if(!reachableTurftestJPS(lag_turf, current_turf))
 			return
 		else
 			sources[current_turf] = original_turf
@@ -279,50 +281,74 @@
 		if(unwind_node.nt + steps_taken > maxnodedepth)
 			return
 
-		var/interesting = FALSE
-		switch(heading) // i know this is very ugly, need to neaten this up while also being efficient
+		switch(heading)
 			if(NORTHWEST)
-				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					interesting = TRUE
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, WEST)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
 					lateral_scan_spec(current_turf, WEST)
-					if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-						interesting = TRUE
-					else
-						lateral_scan_spec(current_turf, NORTH)
+					//cardinal scan west
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, NORTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				else
+					lateral_scan_spec(current_turf, NORTH)
+					//cardinal scan north
 			if(NORTHEAST)
-				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, EAST)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
 					lateral_scan_spec(current_turf, EAST)
-					if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-						interesting = TRUE
-					else
-						lateral_scan_spec(current_turf, NORTH)
+					//cardinal scan east
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, NORTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, NORTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				else
+					lateral_scan_spec(current_turf, NORTH)
+					//cardinal scan north
 			if(SOUTHWEST)
-				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					interesting = TRUE
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, WEST)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
 					lateral_scan_spec(current_turf, WEST)
-					if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-						interesting = TRUE
-					else
-						lateral_scan_spec(current_turf, SOUTH)
+					//cardinal scan west
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, SOUTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHWEST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				else
+					lateral_scan_spec(current_turf, SOUTH)
+					//cardinal scan south
 			if(SOUTHEAST)
-				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					interesting = TRUE
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, EAST)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
 				else
 					lateral_scan_spec(current_turf, EAST)
-					if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-						interesting = TRUE
-					else
-						lateral_scan_spec(current_turf, SOUTH)
-
-		if(interesting)
-			var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-			openc[current_turf] = newnode
-			open.Insert(newnode)
-			return
+					//cardinal scan east
+				if(!reachableTurftestJPS(current_turf, get_step(current_turf, SOUTH)) && reachableTurftestJPS(current_turf, get_step(current_turf, SOUTHEAST)))
+					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+					openc[current_turf] = newnode
+					open.Insert(newnode)
+					return
+				else
+					lateral_scan_spec(current_turf, SOUTH)
 
 #undef PATH_DIST
 #undef PATH_START
