@@ -47,8 +47,7 @@ export const NtosNetDownloader = (props, context) => {
     <NtosWindow
       theme={PC_device_theme}
       width={600}
-      height={600}
-      resizable>
+      height={600}>
       <NtosWindow.Content scrollable>
         {!!error && (
           <NoticeBox>

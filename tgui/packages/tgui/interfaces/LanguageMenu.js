@@ -15,8 +15,7 @@ export const LanguageMenu = (props, context) => {
     <Window
       title="Language Menu"
       width={700}
-      height={600}
-      resizable>
+      height={600}>
       <Window.Content scrollable>
         <Section title="Known Languages">
           <LabeledList>
