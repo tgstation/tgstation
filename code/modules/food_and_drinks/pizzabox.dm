@@ -326,14 +326,14 @@
 	boxtag = "Your Favourite" //used to give it a tag overlay, shouldn't be seen by players
 	///List of pizzas this box can spawn. Weighted by chance to be someone's favorite.
 	var/list/pizza_types = list(
-		/obj/item/food/pizza/meat = 1,
-		/obj/item/food/pizza/mushroom = 1,
-		/obj/item/food/pizza/margherita = 1,
-		/obj/item/food/pizza/sassysage = 0.8,
-		/obj/item/food/pizza/vegetable = 0.8,
-		/obj/item/food/pizza/pineapple = 0.5,
-		/obj/item/food/pizza/donkpocket = 0.3,
-		/obj/item/food/pizza/dank = 0.1,
+		/obj/item/food/pizza/meat = 10,
+		/obj/item/food/pizza/mushroom = 10,
+		/obj/item/food/pizza/margherita = 10,
+		/obj/item/food/pizza/sassysage = 8,
+		/obj/item/food/pizza/vegetable = 8,
+		/obj/item/food/pizza/pineapple = 5,
+		/obj/item/food/pizza/donkpocket = 3,
+		/obj/item/food/pizza/dank = 1,
 	)
 	///List of ckeys and their favourite pizzas. e.g. pizza_preferences[ckey] = /obj/item/food/pizza/meat
 	var/static/list/pizza_preferences
