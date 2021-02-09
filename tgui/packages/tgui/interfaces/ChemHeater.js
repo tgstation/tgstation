@@ -113,9 +113,9 @@ export const ChemHeater = (props, context) => {
                   icon={'upload'}
                   tooltip={'Draw all'}
                   tooltipPosition={"top"}
-                  disabled={acidicBufferVol === 50}
+                  disabled={acidicBufferVol === 100}
                   onClick={() => act('acidBuffer', {
-                    target: -50,
+                    target: -100,
                   })} />
               </TableCell>
             </TableRow>
@@ -154,9 +154,9 @@ export const ChemHeater = (props, context) => {
                 <Button
                   icon={'upload'}
                   tooltip={'Draw all'}
-                  disabled={basicBufferVol === 50}
+                  disabled={basicBufferVol === 100}
                   onClick={() => act('basicBuffer', {
-                    target: -50,
+                    target: -100,
                   })} />
               </TableCell>
             </TableRow>

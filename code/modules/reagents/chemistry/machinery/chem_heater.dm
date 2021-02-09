@@ -35,7 +35,7 @@
 
 /obj/machinery/chem_heater/Initialize()
 	. = ..()
-	create_reagents(100, NO_REACT)//Lets save some calculations here
+	create_reagents(200, NO_REACT)//Lets save some calculations here
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
@@ -431,7 +431,7 @@ To continue set your target temperature to 390K."}
 			var/cur_vol = 0
 			if(acid_reagent_heater)
 				cur_vol = acid_reagent_heater.volume 
-			volume = 50 - cur_vol
+			volume = 100 - cur_vol
 			beaker.reagents.trans_id_to(src, acid_reagent.type, volume)//negative because we're going backwards
 			return
 		//We must be positive here
@@ -448,7 +448,7 @@ To continue set your target temperature to 390K."}
 			var/cur_vol = 0
 			if(basic_reagent_heater)
 				cur_vol = basic_reagent_heater.volume 
-			volume = 50 - cur_vol
+			volume = 100 - cur_vol
 			beaker.reagents.trans_id_to(src, basic_reagent.type, volume)//negative because we're going backwards
 			return
 		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/basic_buffer, dispense_volume)

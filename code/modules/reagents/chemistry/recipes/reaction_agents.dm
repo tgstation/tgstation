@@ -1,6 +1,6 @@
 /datum/chemical_reaction/basic_buffer
 	results = list(/datum/reagent/reaction_agent/basic_buffer = 10)
-	required_reagents = list(/datum/reagent/ammonia = 3, /datum/reagent/consumable/ethanol = 4, /datum/reagent/water = 4) //vagely NH4OH + NH4Cl buffer
+	required_reagents = list(/datum/reagent/ammonia = 3, /datum/reagent/chlorine = 2, /datum/reagent/hydrogen = 2, /datum/reagent/oxygen = 2) //vagely NH4OH + NH4Cl buffer
 	mix_message = "The solution fizzes in the beaker."
 	//FermiChem vars:
 	required_temp = 250
@@ -18,7 +18,7 @@
 
 /datum/chemical_reaction/acidic_buffer
 	results = list(/datum/reagent/reaction_agent/acidic_buffer = 10)
-	required_reagents = list(/datum/reagent/sodium = 2, /datum/reagent/chlorine = 2, /datum/reagent/consumable/ethanol = 2, /datum/reagent/water = 2)
+	required_reagents = list(/datum/reagent/sodium = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/ethanol = 2, /datum/reagent/water = 2)
 	mix_message = "The solution froths in the beaker."
 	required_temp = 250
 	optimal_temp = 500
