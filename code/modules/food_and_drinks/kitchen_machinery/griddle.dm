@@ -29,10 +29,6 @@
 		variant = rand(1,3)
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
 
-/obj/machinery/griddle/Destroy()
-	UnregisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT)
-	. = ..()
-
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(flags_1 & NODECONSTRUCT_1)
