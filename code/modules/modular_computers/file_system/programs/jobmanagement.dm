@@ -1,3 +1,6 @@
+/// The time since the last job opening was created
+GLOBAL_VAR_INIT(time_last_changed_position, 0)
+
 /datum/computer_file/program/job_management
 	filename = "plexagoncore"
 	filedesc = "Plexagon HR Core"
