@@ -54,6 +54,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	generic_canpass = FALSE
+	movement_type = PHASING | FLYING
 	var/mob/living/wizard
 	var/z_original = 0
 	var/destination
@@ -102,22 +103,20 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(istype(ghost))
 			ghost.ManualFollow(src)
 
-// Nothing moves the immovable rod.
-/obj/effect/immovablerod/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
-	. = ..()
-	if(.)
-		return
-
-	// Let's check if we're trying to smash through something indestructible.
-	if(isobj(blocker))
-		var/obj/blocking_obj = blocker
-		if(blocking_obj.resistance_flags & INDESTRUCTIBLE)
-			return TRUE
-
-	if(isindestructiblewall(blocker))
-		return TRUE
-
 /obj/effect/immovablerod/Moved()
+	// If our loc is dense, noogie it.
+	if(loc.density)
+		Bump(loc)
+
+	// So, we're phasing as will harmlessly glide through things. Let's noogie everything in our loc's contents.
+	for(var/clong in loc.contents)
+		if(clong == src)
+			continue
+
+		var/atom/clong_atom = clong
+		if(clong_atom.density || isliving(clong_atom) && !QDELETED(clong_atom))
+			Bump(clong_atom)
+
 	// If we have a special target, we should definitely make an effort to go find them.
 	if(special_target)
 		var/turf/target_turf = get_turf(special_target)
@@ -140,9 +139,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			walk_towards(src, special_target, 1)
 
 		if(loc == target_turf)
-			// We've reached our special target. Let's give them a warm embrace if we can.
-			if(!QDELETED(special_target))
-				Bump(special_target)
 			complete_trajectory()
 
 		return ..()
@@ -194,12 +190,17 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		smoke.start()
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
-		bad_luck.consume(src)
-		bad_luck.consume(clong)
+		qdel(src)
+		qdel(clong)
 
 	// If we Bump into a turf, turf go boom.
 	if(isturf(clong))
-		SSexplosions.medturf += clong
+		SSexplosions.highturf += clong
+		return ..()
+
+	if(isobj(clong))
+		var/obj/clong_obj = clong
+		clong_obj.take_damage(INFINITY, BRUTE, NONE, TRUE, dir, INFINITY)
 		return ..()
 
 	// If we Bump into a living thing, living thing goes splat.
@@ -207,9 +208,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		penetrate(clong)
 		return ..()
 
-	// If we Bump into anything else, anything thing goes boom.
+	// If we Bump into anything else, anything goes boom.
 	if(isatom(clong))
-		SSexplosions.med_mov_atom += clong
+		SSexplosions.high_mov_atom += clong
 		return ..()
 
 	CRASH("[src] Bump()ed into non-atom thing [clong] ([clong.type])")
