@@ -36,7 +36,9 @@ export const NtosNetDownloader = (props, context) => {
     (!emagged && PC_device_theme === "ntos")
     && filter(program => program.verifiedsource === 1),
     // This sorts all programs in the lists by name and compatibility
-    sortBy(program => [-program.compatible, program.filedesc]),
+    sortBy(
+      program => -program.compatible,
+      program => program.filedesc),
   ])(programs);
   const disk_free_space = downloading
     ? disk_size - toFixed(disk_used + downloadcompletion)
