@@ -484,6 +484,7 @@
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
 	hardcore_value = 4
+	mob_trait = TRAIT_ANXIOUS
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add()
