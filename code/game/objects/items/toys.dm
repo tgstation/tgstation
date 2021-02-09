@@ -1543,10 +1543,11 @@
 #define DISARM "disarm"
 #define GRAB "grab"
 #define HARM "harm"
+#define ICON_SPLIT world.icon_size/2
 
-/obj/item/toy/nintento
-	name = "Nintento"
-	desc = "Fundamentally useless for all intensive purposes."
+/obj/item/toy/intento
+	name = "\improper Intento"
+	desc = "Fundamentally useless for all intentsive purposes."
 	icon = 'icons/obj/intents.dmi'
 	icon_state = "blank"
 	/// Current sequence of intents
@@ -1561,12 +1562,12 @@
 	var/usable = FALSE
 	/// Associated list of intents to their sounds
 	var/static/list/sound_by_intent = list(HELP = 'sound/items/intents/Help.ogg',
-										DISARM = 'sound/items/intents/Disarm.ogg',
-										GRAB = 'sound/items/intents/Grab.ogg',
-										HARM = 'sound/items/intents/Harm.ogg',
-										)
+		DISARM = 'sound/items/intents/Disarm.ogg',
+		GRAB = 'sound/items/intents/Grab.ogg',
+		HARM = 'sound/items/intents/Harm.ogg',
+		)
 
-/obj/item/toy/nintento/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
+/obj/item/toy/intento/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
 	..()
 	if(!on)
 		start()
@@ -1577,13 +1578,13 @@
 	var/input
 	var/icon_x = text2num(modifiers["icon-x"])
 	var/icon_y = text2num(modifiers["icon-y"])
-	if(icon_x > 16 && icon_y > 16)
+	if(icon_x > ICON_SPLIT && icon_y > ICON_SPLIT)
 		input = DISARM
-	if(icon_x < 16 && icon_y > 16)
+	if(icon_x < ICON_SPLIT && icon_y > ICON_SPLIT)
 		input = HELP
-	if(icon_x > 16 && icon_y < 16)
+	if(icon_x > ICON_SPLIT && icon_y < ICON_SPLIT)
 		input = GRAB
-	if(icon_x < 16 && icon_y < 16)
+	if(icon_x < ICON_SPLIT && icon_y < ICON_SPLIT)
 		input = HARM
 	render(input)
 	player_sequence += input
@@ -1596,18 +1597,18 @@
 		return
 	usable = TRUE
 
-/obj/item/toy/nintento/proc/start()
+/obj/item/toy/intento/proc/start()
 	say("Game Starting!")
 	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
 	on = TRUE
 	addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
 
-/obj/item/toy/nintento/proc/end(mob/user)
+/obj/item/toy/intento/proc/end(mob/user)
 	var/award_score = score
-	var/award_status = user.client.get_award_status(/datum/award/score/nintento_score)
+	var/award_status = user.client.get_award_status(/datum/award/score/intento_score)
 	if(award_score - award_status > 0)
 		award_score -= award_status
-	user.client.give_award(/datum/award/score/nintento_score, user, award_score, TRUE)
+	user.client.give_award(/datum/award/score/intento_score, user, award_score, TRUE)
 	say("GAME OVER. Your score was [score]!")
 	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
 	score = 0
@@ -1615,12 +1616,12 @@
 	player_sequence.Cut()
 	on = FALSE
 
-/obj/item/toy/nintento/proc/render(input)
+/obj/item/toy/intento/proc/render(input)
 	icon_state = input
 	playsound(src, sound_by_intent[input], 50, FALSE)
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 0.5 SECONDS)
 
-/obj/item/toy/nintento/proc/start_round()
+/obj/item/toy/intento/proc/start_round()
 	usable = FALSE
 	player_sequence.Cut()
 	current_sequence += pick(list(HELP, DISARM, GRAB, HARM))
@@ -1633,3 +1634,4 @@
 #undef DISARM
 #undef GRAB
 #undef HARM
+#undef ICON_SPLIT
