@@ -9,3 +9,9 @@
 	name = "Maintenance Pills Consumed"
 	desc = "Wait why?"
 	database_id = MAINTENANCE_PILL_SCORE
+
+///How high of a score on the Nintento did we get?
+/datum/award/score/nintento_score
+	name = "Nintento Score"
+	desc = "A blast from the future?"
+	database_id = NINTENTO_SCORE

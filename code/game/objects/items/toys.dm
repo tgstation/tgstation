@@ -1555,8 +1555,6 @@
 	var/list/player_sequence = list()
 	/// Score of the player
 	var/score = 0
-	/// High score of this unit
-	var/highscore = 0
 	/// Is this thing on?
 	var/on = FALSE
 	/// Can the player use this yet?
@@ -1568,7 +1566,7 @@
 										HARM = 'sound/items/intents/Harm.ogg',
 										)
 
-/obj/item/toy/simon_intents/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
+/obj/item/toy/nintento/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
 	..()
 	if(!on)
 		start()
@@ -1591,35 +1589,38 @@
 	player_sequence += input
 	for(var/i in 1 to player_sequence.len)
 		if(player_sequence[i] != current_sequence[i])
-			return end()
+			return end(user)
 	if(player_sequence.len == current_sequence.len)
 		score++
 		addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
 		return
 	usable = TRUE
 
-/obj/item/toy/simon_intents/proc/start()
+/obj/item/toy/nintento/proc/start()
 	say("Game Starting!")
 	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
 	on = TRUE
 	addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
 
-/obj/item/toy/simon_intents/proc/end()
-	say("GAME OVER. Your score was [score]! [score > highscore ? "You have gotten a new high-score!" : "Try again for a better score!"]")
-	if(score > highscore)
-		highscore = score
+/obj/item/toy/nintento/proc/end(mob/user)
+	var/award_score = score
+	var/award_status = user.client.get_award_status(/datum/award/score/nintento_score)
+	if(award_score - award_status > 0)
+		award_score -= award_status
+	user.client.give_award(/datum/award/score/nintento_score, user, award_score, TRUE)
+	say("GAME OVER. Your score was [score]!")
 	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
 	score = 0
 	current_sequence.Cut()
 	player_sequence.Cut()
 	on = FALSE
 
-/obj/item/toy/simon_intents/proc/render(input)
+/obj/item/toy/nintento/proc/render(input)
 	icon_state = input
 	playsound(src, sound_by_intent[input], 50, FALSE)
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 0.5 SECONDS)
 
-/obj/item/toy/simon_intents/proc/start_round()
+/obj/item/toy/nintento/proc/start_round()
 	usable = FALSE
 	player_sequence.Cut()
 	current_sequence += pick(list(HELP, DISARM, GRAB, HARM))

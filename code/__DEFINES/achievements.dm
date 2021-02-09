@@ -105,3 +105,6 @@
 
 // DB ID for amount of consumed maintenance pills
 #define MAINTENANCE_PILL_SCORE "Maintenance Pill Score"
+
+// DB ID for nintento score
+#define NINTENTO_SCORE "Nintento Score"
