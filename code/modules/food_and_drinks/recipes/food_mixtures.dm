@@ -46,6 +46,15 @@
 		new /obj/item/food/chocolatebar(location)
 	return
 
+/datum/chemical_reaction/chocolate_bar3
+	required_reagents = list(/datum/reagent/consumable/milk = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/sugar = 2)
+
+/datum/chemical_reaction/chocolate_bar3/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/food/chocolatebar(location)
+	return
+
 /datum/chemical_reaction/soysauce
 	results = list(/datum/reagent/consumable/soysauce = 5)
 	required_reagents = list(/datum/reagent/consumable/soymilk = 4, /datum/reagent/toxin/acid = 1)
