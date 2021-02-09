@@ -244,13 +244,13 @@
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: [src] is full! Free an existing soul to make room.")
 			else
 				T.AddComponent(/datum/component/soulstoned, src)
-				if(THEME_HOLY)
+				if(theme == THEME_HOLY)
 					icon_state = "purified_soulstone2"
 					if(iscultist(T))
 						SSticker.mode.remove_cultist(T.mind, FALSE, FALSE)
-				if(THEME_WIZARD)
+				if(theme == THEME_WIZARD)
 					icon_state = "mystic_soulstone2"
-				if(THEME_CULT)
+				if(theme == THEME_CULT)
 					icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
 				to_chat(T, "<span class='notice'>Your soul has been captured by [src]. Its arcane energies are reknitting your ethereal form.</span>")
