@@ -103,7 +103,6 @@ Actual Adjacent procs :
 	else
 		var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
 		path = pathfind_datum.start_search()
-		//path = path.Copy()
 		testing("finished start_search(), length of path: [path ? path.len : "no path generated"]")
 		qdel(pathfind_datum)
 
