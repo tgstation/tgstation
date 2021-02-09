@@ -15,8 +15,8 @@
 
 //! Defines for the [gc_destroyed][/datum/var/gc_destroyed] var.
 
-#ifdef LEGACY_REFERENCE_TRACKING
-/** If LEGACY_REFERENCE_TRACKING is enabled, qdel will call this object's find_references() verb.
+#ifdef REFERENCE_TRACKING
+/** If REFERENCE_TRACKING is enabled, qdel will call this object's find_references() verb.
  *
  * Functionally identical to [QDEL_HINT_QUEUE] if [GC_FAILURE_HARD_LOOKUP] is not enabled in _compiler_options.dm.
 */

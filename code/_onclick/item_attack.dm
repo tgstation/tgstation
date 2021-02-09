@@ -19,13 +19,13 @@
 	var/attackby_result
 
 	if (is_right_clicking)
-		switch (target.attackby_alt(src, user, params))
-			if (ALT_ATTACK_CALL_NORMAL)
+		switch (target.attackby_secondary(src, user, params))
+			if (SECONDARY_ATTACK_CALL_NORMAL)
 				attackby_result = target.attackby(src, user, params)
-			if (ALT_ATTACK_CANCEL_ATTACK_CHAIN)
+			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return TRUE
 			if (null)
-				CRASH("attackby_alt must return an ALT_ATTACK_* define, please consult code/__DEFINES/combat.dm")
+				CRASH("attackby_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 	else
 		attackby_result = target.attackby(src, user, params)
 
@@ -37,10 +37,10 @@
 		return TRUE
 
 	if (is_right_clicking)
-		var/after_attack_alt_result = afterattack_alt(target, user, TRUE, params)
+		var/after_attack_secondary_result = afterattack_secondary(target, user, TRUE, params)
 
 		// There's no chain left to continue at this point, so CANCEL_ATTACK_CHAIN and CONTINUE_CHAIN are functionally the same.
-		if (after_attack_alt_result == ALT_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_alt_result == ALT_ATTACK_CONTINUE_CHAIN)
+		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 			return TRUE
 
 	return afterattack(target, user, TRUE, params)
@@ -91,8 +91,8 @@
  *
  * See: [/obj/item/proc/melee_attack_chain]
  */
-/atom/proc/attackby_alt(obj/item/weapon, mob/user, params)
-	return ALT_ATTACK_CALL_NORMAL
+/atom/proc/attackby_secondary(obj/item/weapon, mob/user, params)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/I, mob/living/user, params)
 	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
@@ -103,11 +103,11 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return I.attack(src, user, params)
 
-/mob/living/attackby_alt(obj/item/weapon, mob/living/user, params)
-	var/result = weapon.attack_alt(src, user, params)
+/mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
+	var/result = weapon.attack_secondary(src, user, params)
 
 	// Normal attackby updates click cooldown, so we have to make up for it
-	if (result != ALT_ATTACK_CALL_NORMAL)
+	if (result != SECONDARY_ATTACK_CALL_NORMAL)
 		user.changeNext_move(CLICK_CD_MELEE)
 
 	return result
@@ -159,8 +159,8 @@
 	add_fingerprint(user)
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
-/obj/item/proc/attack_alt(mob/living/victim, mob/living/user, params)
-	return ALT_ATTACK_CALL_NORMAL
+/obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, params)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
@@ -225,8 +225,8 @@
  * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
  */
-/obj/item/proc/afterattack_alt(atom/target, mob/user, proximity_flag, click_parameters)
-	return ALT_ATTACK_CALL_NORMAL
+/obj/item/proc/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /// Called if the target gets deleted by our attack
 /obj/item/proc/attack_qdeleted(atom/target, mob/user, proximity_flag, click_parameters)

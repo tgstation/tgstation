@@ -36,12 +36,6 @@
 	var/list/comp_lookup
 	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
 	var/list/list/datum/callback/signal_procs
-	/**
-	  * Is this datum capable of sending signals?
-	  *
-	  * Set to true when a signal has been registered
-	  */
-	var/signal_enabled = FALSE
 
 	/// Datum level flags
 	var/datum_flags = NONE
@@ -106,7 +100,7 @@
 		qdel(timer)
 
 	//BEGIN: ECS SHIT
-	signal_enabled = FALSE
+	datum_flags &= ~DF_SIGNAL_ENABLED
 
 	var/list/dc = datum_components
 	if(dc)
