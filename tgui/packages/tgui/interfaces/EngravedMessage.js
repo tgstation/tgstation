@@ -20,8 +20,7 @@ export const EngravedMessage = (props, context) => {
   return (
     <Window
       width={600}
-      height={300}
-      resizable>
+      height={300}>
       <Window.Content scrollable>
         <Section>
           <Box

@@ -25,7 +25,6 @@ export const Tank = (props, context) => {
   } = data;
   return (
     <Window
-      resizable
       width={275}
       height={120}>
       <Window.Content>

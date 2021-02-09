@@ -23,11 +23,26 @@ const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
   componentDidMount() {
-    const { config, suspended } = useBackend(this.context);
+    const { suspended } = useBackend(this.context);
     if (suspended) {
       return;
     }
     logger.log('mounting');
+    this.updateGeometry();
+  }
+
+  componentDidUpdate(prevProps) {
+    const shouldUpdateGeometry = (
+      this.props.width !== prevProps.width
+      || this.props.height !== prevProps.height
+    );
+    if (shouldUpdateGeometry) {
+      this.updateGeometry();
+    }
+  }
+
+  updateGeometry() {
+    const { config } = useBackend(this.context);
     const options = {
       size: DEFAULT_SIZE,
       ...config.window,
@@ -43,7 +58,6 @@ export class Window extends Component {
 
   render() {
     const {
-      resizable,
       noClose,
       theme,
       title,
@@ -87,7 +101,7 @@ export class Window extends Component {
             <div className="Window__dimmer" />
           )}
         </div>
-        {fancy && resizable && (
+        {fancy && (
           <>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />

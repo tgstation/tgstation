@@ -14,8 +14,7 @@ export const ChemDebugSynthesizer = (props, context) => {
   return (
     <Window
       width={390}
-      height={330}
-      resizable>
+      height={330}>
       <Window.Content scrollable>
         <Section
           title="Recipient"

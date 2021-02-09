@@ -16,8 +16,7 @@ export const Aquarium = (props, context) => {
   return (
     <Window
       width={500}
-      height={400}
-      resizable>
+      height={400}>
       <Window.Content>
         <Section title="Aquarium Controls">
           <LabeledControls>

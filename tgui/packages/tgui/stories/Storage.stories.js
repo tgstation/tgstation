@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { storage } from 'common/storage';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { formatSiUnit } from '../format';
 
@@ -28,6 +29,7 @@ const Story = (props, context) => {
           icon="recycle"
           onClick={() => {
             localStorage.clear();
+            storage.clear();
           }}>
           Clear
         </Button>

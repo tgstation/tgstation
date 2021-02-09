@@ -12,8 +12,7 @@ export const NtosCrewManifest = (props, context) => {
   return (
     <NtosWindow
       width={400}
-      height={480}
-      resizable>
+      height={480}>
       <NtosWindow.Content scrollable>
         <Section
           title="Crew Manifest"

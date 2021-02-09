@@ -19,8 +19,7 @@ export const SkillPanel = (props, context) => {
     <Window
       title="Manage Skills"
       width={600}
-      height={500}
-      resizable>
+      height={500}>
       <Window.Content scrollable>
         <Section title={skills.playername}>
           <LabeledList>

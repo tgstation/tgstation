@@ -264,8 +264,7 @@ export const SkillStation = (props, context) => {
     <Window
       title="Skillsoft Station"
       width={500}
-      height={500}
-      resizable >
+      height={500}>
       <Window.Content>
         {!!error && (
           <NoticeBox>

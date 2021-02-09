@@ -12,8 +12,7 @@ export const ApcControl = (props, context) => {
     <Window
       title="APC Controller"
       width={550}
-      height={500}
-      resizable>
+      height={500}>
       {data.authenticated === 1 && (
         <ApcLoggedIn />
       )}

@@ -72,8 +72,7 @@ export const ScannerGate = (props, context) => {
   return (
     <Window
       width={400}
-      height={300}
-      resizable>
+      height={300}>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox
           onLockedStatusChange={() => act('toggle_lock')} />
