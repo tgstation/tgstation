@@ -1,0 +1,4 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - tweak: "tweaked transitional ui widgets to appear smoother"
