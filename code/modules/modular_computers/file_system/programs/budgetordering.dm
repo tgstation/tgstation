@@ -1,8 +1,9 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
-	filedesc = "Nanotrasen Internal Requisition Network (NIRN)"
+	filedesc = "NT IRN"
+	category = PROGRAM_CATEGORY_SUPL
 	program_icon_state = "request"
-	extended_desc = "A request network that utilizes the Nanotrasen Ordering network to purchase supplies using a department budget account."
+	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_HEADS
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET

@@ -1,6 +1,7 @@
 /datum/computer_file/program/shipping
 	filename = "shipping"
 	filedesc = "GrandArk Exporter"
+	category = PROGRAM_CATEGORY_SUPL
 	program_icon_state = "shipping"
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	size = 6

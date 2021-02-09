@@ -1,6 +1,7 @@
 /datum/computer_file/program/radar //generic parent that handles most of the process
 	filename = "genericfinder"
 	filedesc = "debug_finder"
+	category = PROGRAM_CATEGORY_CREW
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_icon_state = "radarntos"
 	requires_ntnet = TRUE
@@ -258,6 +259,7 @@
 /datum/computer_file/program/radar/fission360
 	filename = "fission360"
 	filedesc = "Fission360"
+	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
 	requires_ntnet = FALSE
