@@ -712,6 +712,9 @@ RLD
 /obj/item/construction/rcd/loaded
 	matter = 160
 
+/obj/item/construction/rcd/loaded/upgraded
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
 	icon_state = "ircd"
@@ -719,6 +722,7 @@ RLD
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
+	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
