@@ -69,20 +69,17 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
 	..()
 	SSaugury.register_doom(src, 2000)
-	z_original = z
+
 	destination = end
 	special_target = aimed_at
+
 	AddElement(/datum/element/point_of_interest)
 
-	var/special_target_valid = FALSE
 	if(special_target)
-		var/turf/T = get_turf(special_target)
-		if(T.z == z_original)
-			special_target_valid = TRUE
-	if(special_target_valid)
 		walk_towards(src, special_target, 1)
-	else if(end && end.z==z_original)
-		walk_towards(src, destination, 1)
+		return
+
+	walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/examine(mob/user)
 	. = ..()
@@ -105,17 +102,18 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			ghost.ManualFollow(src)
 
 /obj/effect/immovablerod/Moved()
-	if((z != z_original))
-		qdel(src)
 	if(special_target && loc == get_turf(special_target))
+		// We've reached our special target. Let's give them a warm embrace if we can.
+		if(!QDELETED(special_target))
+			Bump(special_target)
 		complete_trajectory()
 	return ..()
 
 /obj/effect/immovablerod/proc/complete_trajectory()
-	//We hit what we wanted to hit, time to go
+	//We hit what we wanted to hit, time to go.
 	special_target = null
 	destination = get_edge_target_turf(src, dir)
-	walk(src,0)
+	walk(src, 0)
 	walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/singularity_act()
@@ -129,30 +127,37 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
 
-	if(clong && prob(25))
-		x = clong.x
-		y = clong.y
-
 	if(special_target && clong == special_target)
 		complete_trajectory()
 
-	if(isturf(clong) || isobj(clong))
-		if(clong.density)
-			if(isturf(clong))
-				SSexplosions.medturf += clong
-			if(isobj(clong))
-				SSexplosions.med_mov_atom += clong
-
-	else if(isliving(clong))
-		penetrate(clong)
-	else if(istype(clong, type))
-		var/obj/effect/immovablerod/other = clong
-		visible_message("<span class='danger'>[src] collides with [other]!</span>")
+	// If rod meets rod, they collapse into a singularity. Yes, this means that if two wizard rods collide,
+	// they collapse into a singulo.
+	if(istype(clong, /obj/effect/immovablerod))
+		visible_message("<span class='danger'>[src] collides with [clong]! This cannot end well.</span>")
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(2, get_turf(src))
 		smoke.start()
-		qdel(src)
-		qdel(other)
+		var/obj/singularity/bad_luck = new(get_turf(src))
+		bad_luck.energy = 800
+		bad_luck.consume(src)
+		bad_luck.consume(clong)
+
+	// If we Bump into a turf, turf go boom.
+	if(isturf(clong))
+		SSexplosions.medturf += clong
+		return
+
+	// If we Bump into a living thing, living thing goes splat.
+	if(isliving(clong))
+		penetrate(clong)
+		return
+
+	// If we Bump into anything else, anything thing goes boom.
+	if(isatom(clong))
+		SSexplosions.med_mov_atom += clong
+		return
+
+	CRASH("[src] Bump()ed into non-atom thing [clong] ([clong.type])")
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message("<span class='danger'>[smeared_mob] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
