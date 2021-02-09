@@ -84,10 +84,10 @@ Actual Adjacent procs :
 	var/list/path
 	if(old == 1)
 		path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-	else if(old == -1)
+	else if(old == -1) // head2head
 		testing("<span class='danger'>-----------------------------------------------</span>")
 		var/time_old = world.time
-		var/list/old_path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)e
+		var/list/old_path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 		var/old_done = world.time
 
 		var/time_new = world.time
@@ -110,40 +110,54 @@ Actual Adjacent procs :
 	SSpathfinder.mobs.found(l)
 	if(!path)
 		path = list()
-	return path
+	//return path
 
-//wrapper that returns an empty list if A* failed to find a path
+/// RYLL TODO: learn how to actually profile
 /mob/living/proc/benchmark_path()
 
 	var/list/path
 	var/mob/living/caller = src
 	var/obj/item/card/id/captains_spare/id = new(src)
 	var/dist = /turf/proc/Distance_cardinal
+	var/adjacent = /turf/proc/reachableTurftest
 	var/maxnodes = 0
 	var/maxnodedepth = 120
 	var/exclude
 	var/mintargetdist = 0
 	var/simulated_only = TRUE
 
+	var/start_time = world.time
 
-	for(var/i in 1 to 1000)
+	var/turf/first_start = get_turf(src)
+	var/list/locations = list()
+	for(var/i in 1 to 500)
+		locations += get_turf(pick(GLOB.blobstart))
 
-		var/turf/end = get_turf(pick(GLOB.blobstart))
-		testing("<span class='danger'>-----------------------------------------------</span>")
-		var/time_old = world.time
-		var/list/old_path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-		var/old_done = world.time
+	var/old_time = world.time
+	var/old_nodes = 0
+	for(var/i in 1 to 499)
+		var/turf/end = locations[i]
+		old_nodes += AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+		forceMove(end)
+		if(i % 100 == 0)
+			testing("Old: [i]/499 rounds, time elapsed: [world.time - old_time] | Nodes created: [old_nodes]")
+	testing("Old Time: [world.time - old_time]")
 
-		var/time_new = world.time
+	forceMove(first_start)
+	var/new_time = world.time
+	var/new_nodes = 0
+	for(var/i in 1 to 499)
+		var/turf/end = locations[i]
 		var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
-		path = pathfind_datum.start_search()
-		var/new_done = world.time
-		testing("Old| Path len: [old_path.len] | Time taken: [old_done - time_old]")
-		testing("New| Path len: [path.len] | Time taken: [new_done - time_new]")
-
+		new_nodes += pathfind_datum.start_search()
 		qdel(pathfind_datum)
+		forceMove(end)
+		if(i % 100 == 0)
+			testing("New: [i]/499 rounds, time elapsed: [world.time - new_time] | Nodes created: [new_nodes]")
 
-		testing("<span class='danger'>-----------------------------------------------</span>")
+	testing("New Time: [world.time - new_time]")
+	testing("Done!")
+
 
 /proc/cir_get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
 	var/l = SSpathfinder.circuits.getfree(caller)
@@ -177,12 +191,14 @@ Actual Adjacent procs :
 	var/datum/pathnode/cur = new /datum/pathnode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
+	var/total_tiles = 0
 	//then run the main loop
 	while(!open.IsEmpty() && !path)
 		cur = open.Pop() //get the lower f turf in the open list
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
+		total_tiles++
 		if(mintargetdist)
 			closeenough = call(cur.source,dist)(end) <= mintargetdist
 
@@ -226,7 +242,8 @@ Actual Adjacent procs :
 			path.Swap(i,path.len-i+1)
 	openc = null
 	//cleaning after us
-	return path
+	//return path
+	return total_tiles
 
 /**
  * Returns adjacent turfs to this turf that are reachable, in all 8 directions (rather than just cardinal)

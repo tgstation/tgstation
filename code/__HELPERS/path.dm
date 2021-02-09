@@ -1,6 +1,18 @@
-#define PATH_DIST(A, B) (get_dist(A, B))
+#define PATH_DIST(A, B) (A.Distance(B))
 /// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
 #define PATH_START	-1
+
+/**
+ * This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
+ * over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions.
+ *
+ * Quick notes about current implementation:
+ * * JPS requires and allows for diagonal movement, whereas our A* only allows for cardinal movement
+ * *
+ * *
+ * *
+ */
+
 
 //JPS nodes variables
 /datum/jpsnode
@@ -121,7 +133,7 @@
 				break
 
 		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
-			lateral_scan_spec(current_turf, scan_direction)
+			diag_scan_spec(current_turf, scan_direction)
 			if(path)
 				break
 
@@ -130,11 +142,12 @@
 	if(path)
 		for(var/i = 1 to round(0.5*path.len))
 			path.Swap(i,path.len-i+1)
-	testing("*********new path done with [total_tiles] tiles popped, [openc.len] nodes added to heap")
+	//testing("*********new path done with [total_tiles] tiles popped, [openc.len] nodes added to heap")
 	openc = null
 	//cleaning after us
 	caller.calculating_path = FALSE
-	return path
+	//return path
+	return total_tiles
 
 ///
 /datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
@@ -143,51 +156,13 @@
 	var/turf/iter_turf = unwind_node.tile
 	var/turf/iter_turf2 = get_turf(unwind_node.tile)
 	path.Add(iter_turf)
-	//var/legs
-/*
-	var/list/a = list(iter_turf)
-
-
-	while(unwind_node.prevNode)
-		legs++
-
-		var/turf/goal_turf = unwind_node.prevNode.tile
-		//testing(">lega [legs] | <b>([goal_turf.x], ([goal_turf.y])</b>")
-		var/i
-		a.Add(goal_turf)
-		//goal_turf.color = COLOR_YELLOW
-/*		while(iter_turf != goal_turf)
-			i++
-			testing(">>>stepa [legs] | [i]")
-			iter_turf = get_step_towards(iter_turf, goal_turf)
-			iter_turf.color = COLOR_BLUE_LIGHT
-			path.Add(iter_turf)
-		unwind_node = unwind_node.prevNode*/
-		while(iter_turf != goal_turf)
-			i++
-			var/turf/next_turf = get_step_towards(iter_turf, goal_turf)
-			//testing(">>>stepa [legs] | [i] - ([iter_turf.x], [iter_turf.y]) -> ([next_turf.x], [next_turf.y])")
-			iter_turf = next_turf
-
-			//iter_turf.color = COLOR_ORANGE
-			//path.Add(iter_turf)
-		unwind_node = unwind_node.prevNode
-	//testing("+++++++++end of A")
-*/
-	//legs = 0
 
 	var/list/b = list(iter_turf2)
 	var/turf/goal_turf2 = sources[iter_turf2]
 	while(goal_turf2 && goal_turf2 != PATH_START)
 		b.Add(goal_turf2)
-		//legs++
-
 		while(iter_turf2 != goal_turf2)
-			//i++
-			//if(i > 150)
-				//break
 			var/turf/next_turf = get_step_towards(iter_turf2, goal_turf2)
-			//testing(">>>stepa [legs] | [i] - ([iter_turf2.x], [iter_turf2.y]) -> ([next_turf.x], [next_turf.y])")
 			iter_turf2 = next_turf
 			path.Add(iter_turf2)
 		goal_turf2 = sources[iter_turf2]
@@ -196,7 +171,6 @@
 
 /datum/pathfind/proc/can_step(turf/a, turf/next) // prolly not optimal
 	return call(a,adjacent)(caller, next, id, simulated_only)
-
 
 /datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
