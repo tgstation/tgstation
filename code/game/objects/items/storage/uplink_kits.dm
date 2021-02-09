@@ -67,7 +67,6 @@
 			new /obj/item/implanter/freedom(src)
 			new /obj/item/implanter/uplink/precharged(src)
 			new /obj/item/implanter/emp(src)
-			new /obj/item/implanter/adrenalin(src)
 			new /obj/item/implanter/explosive(src)
 			new /obj/item/implanter/storage(src)
 
@@ -134,7 +133,7 @@
 
 		if("ninja")
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
-			new /obj/item/implanter/adrenalin(src) // 8 tc
+			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src) // 5 tc
 			for(var/i in 1 to 6)
 				new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
@@ -356,12 +355,6 @@
 /obj/item/storage/box/syndie_kit/clownpins/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/firing_pin/clown/ultra(src)
-
-/obj/item/storage/box/syndie_kit/imp_adrenal
-	name = "adrenal implant box"
-
-/obj/item/storage/box/syndie_kit/imp_adrenal/PopulateContents()
-	new /obj/item/implanter/adrenalin(src)
 
 /obj/item/storage/box/syndie_kit/imp_storage
 	name = "storage implant box"
