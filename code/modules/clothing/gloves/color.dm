@@ -184,6 +184,7 @@
 	name = "infiltrator gloves"
 	desc = "Specialized combat gloves that alter your unarmed strikes to deliver empowered or nonlethal blows. You can swap between modes using Alt-Click!"
 	icon_state = "infiltrator"
+	base_icon_state = "infiltrator"
 	inhand_icon_state = "infiltrator"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.3
@@ -244,9 +245,9 @@
 
 /obj/item/clothing/gloves/color/infiltrator/update_icon_state()
 	if(currentdamage == STAMINA)
-		icon_state = "[initial(icon_state)]_stamina"
+		icon_state = "[base_icon_state]_stamina"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[base_icon_state]"
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
