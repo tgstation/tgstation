@@ -1,5 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - tweak: "Mafia/Highlander players won't breath and are fire proof."
-  - tweak: "Plasmaman won't be transformed into Humans for Mafia/Highlander"

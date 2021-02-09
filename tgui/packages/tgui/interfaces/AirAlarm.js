@@ -12,8 +12,7 @@ export const AirAlarm = (props, context) => {
   return (
     <Window
       width={440}
-      height={650}
-      resizable>
+      height={650}>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox />
         <AirAlarmStatus />

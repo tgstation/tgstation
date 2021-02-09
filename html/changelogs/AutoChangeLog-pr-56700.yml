@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "You can now right click with the hand tele to teleport to the last location you teleported to last time."
