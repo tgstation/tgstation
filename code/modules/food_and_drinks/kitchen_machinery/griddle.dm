@@ -27,6 +27,7 @@
 	grill_loop = new(list(src), FALSE)
 	if(isnum(variant))
 		variant = rand(1,3)
+	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -35,7 +36,6 @@
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
 	variant = rand(1,3)
-	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
 
 /obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume)
 	SIGNAL_HANDLER
