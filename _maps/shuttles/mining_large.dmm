@@ -458,6 +458,7 @@
 	width = 7
 	},
 /obj/structure/cable,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 

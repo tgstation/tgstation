@@ -92,6 +92,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/white,
 /area/shuttle/mining)
 "j" = (
@@ -133,6 +134,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/white,
 /area/shuttle/mining)
 "n" = (

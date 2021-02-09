@@ -42,6 +42,7 @@
 	port_direction = 4;
 	width = 7
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/mining)
 "i" = (
