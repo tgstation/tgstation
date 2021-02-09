@@ -273,7 +273,7 @@
 				if(targetTemperature > beaker.reagents.chem_temp)
 					return
 				beaker.reagents.adjust_thermal_energy((targetTemperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-		var/requiredEnergy = heatingPower * delta_time * (power_mod * 3)
+		var/requiredEnergy = heatingPower * delta_time * (power_mod * 4)
 		cell.use(requiredEnergy / efficiency)
 		beaker.reagents.handle_reactions()
 	update_icon()
