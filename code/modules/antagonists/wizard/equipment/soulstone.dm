@@ -17,7 +17,13 @@
 
 	var/old_shard = FALSE
 	var/spent = FALSE
-	var/theme = THEME_CULT //themes include cult red, holy blue, and wizard purple
+/*
+	For themes
+	THEME_CULT = red
+	THEME_HOLY = blue
+	THEME_WIZARD = purple
+ */
+	var/theme = THEME_CULT /*** *///
 
 /obj/item/soulstone/proc/was_used()
 	if(old_shard)
@@ -115,17 +121,18 @@
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
-		if(theme == THEME_HOLY)
-			icon_state = "purified_soulstone"
-			A.icon_state = "shade_angelic"
-			A.name = "Purified [initial(A.name)]"
-			A.loot = list(/obj/item/ectoplasm/angelic)
-		if(theme == THEME_WIZARD)
-			icon_state = "mystic_soulstone"
-			A.icon_state = "shade_mystic"
-			A.loot = list(/obj/item/ectoplasm/mystic)
-		else
-			icon_state = "soulstone"
+		switch(theme)
+			if(THEME_HOLY)
+				icon_state = "purified_soulstone"
+				A.icon_state = "shade_angelic"
+				A.name = "Purified [initial(A.name)]"
+				A.loot = list(/obj/item/ectoplasm/angelic)
+			if(THEME_WIZARD)
+				icon_state = "mystic_soulstone"
+				A.icon_state = "shade_mystic"
+				A.loot = list(/obj/item/ectoplasm/mystic)
+			if(THEME_CULT)
+				icon_state = "soulstone"
 		name = initial(name)
 		if(!silent)
 			if(iswizard(user) || usability)
@@ -371,12 +378,13 @@
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
-	if(theme == THEME_HOLY)
-		icon_state = "purified_soulstone2"
-	if(theme == THEME_WIZARD)
-		icon_state = "mystic_soulstone2"
-	if(theme == THEME_CULT)
-		icon_state = "soulstone2"
+	switch(theme)
+		if(THEME_HOLY)
+			icon_state = "purified_soulstone2"
+		if(THEME_WIZARD)
+			icon_state = "mystic_soulstone2"
+		if(THEME_CULT)
+			icon_state = "soulstone2"
 	if(user && (iswizard(user) || usability))
 		to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
 	else if(user && iscultist(user))
