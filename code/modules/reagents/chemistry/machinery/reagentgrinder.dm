@@ -28,7 +28,15 @@
 	. = ..()
 	holdingitems = list()
 	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
-	beaker.desc += " May contain blended dust. Don't breathe this in!"
+	warn_of_dust()
+
+/// Add a description to the current beaker warning of blended dust, if it doesn't already have that warning.
+/obj/machinery/reagentgrinder/proc/warn_of_dust()
+	if(HAS_TRAIT(beaker, TRAIT_MAY_CONTAIN_BLENDED_DUST))
+		return
+
+	beaker.desc += " May contain blended dust. Don't breathe this!"
+	ADD_TRAIT(beaker, TRAIT_MAY_CONTAIN_BLENDED_DUST, TRAIT_GENERIC)
 
 /obj/machinery/reagentgrinder/constructed/Initialize()
 	. = ..()
@@ -284,6 +292,7 @@
 	if(!beaker || machine_stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
 	operate_for(60)
+	warn_of_dust() // don't breathe this.
 	for(var/i in holdingitems)
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
