@@ -22022,7 +22022,7 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "bVm" = (
-/obj/machinery/computer/card/minor/hos,
+/obj/machinery/modular_computer/console/preset/id,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "bVy" = (
@@ -27783,7 +27783,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "dmG" = (
-/obj/machinery/computer/card/minor/cmo,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -36299,7 +36299,7 @@
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "jEL" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -51484,7 +51484,7 @@
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "uta" = (
-/obj/machinery/computer/card/minor/ce{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
 /obj/machinery/requests_console{
@@ -53632,7 +53632,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "vRS" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -55746,7 +55746,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "xpu" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -56364,7 +56364,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/computer/card/minor/rd{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /turf/open/floor/iron,
