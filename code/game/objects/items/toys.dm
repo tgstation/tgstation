@@ -1598,7 +1598,7 @@
 	usable = TRUE
 
 /obj/item/toy/intento/proc/start()
-	say("Game Starting!")
+	say("Game starting!")
 	playsound(src, 'sound/machines/synth_yes.ogg', 50, FALSE)
 	on = TRUE
 	addtimer(CALLBACK(src, .proc/start_round, 1 SECONDS))
