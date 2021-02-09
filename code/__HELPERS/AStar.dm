@@ -87,7 +87,7 @@ Actual Adjacent procs :
 	else if(old == -1)
 		testing("<span class='danger'>-----------------------------------------------</span>")
 		var/time_old = world.time
-		var/list/old_path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+		var/list/old_path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)e
 		var/old_done = world.time
 
 		var/time_new = world.time
@@ -111,6 +111,39 @@ Actual Adjacent procs :
 	if(!path)
 		path = list()
 	return path
+
+//wrapper that returns an empty list if A* failed to find a path
+/mob/living/proc/benchmark_path()
+
+	var/list/path
+	var/mob/living/caller = src
+	var/obj/item/card/id/captains_spare/id = new(src)
+	var/dist = /turf/proc/Distance_cardinal
+	var/maxnodes = 0
+	var/maxnodedepth = 120
+	var/exclude
+	var/mintargetdist = 0
+	var/simulated_only = TRUE
+
+
+	for(var/i in 1 to 1000)
+
+		var/turf/end = get_turf(pick(GLOB.blobstart))
+		testing("<span class='danger'>-----------------------------------------------</span>")
+		var/time_old = world.time
+		var/list/old_path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+		var/old_done = world.time
+
+		var/time_new = world.time
+		var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
+		path = pathfind_datum.start_search()
+		var/new_done = world.time
+		testing("Old| Path len: [old_path.len] | Time taken: [old_done - time_old]")
+		testing("New| Path len: [path.len] | Time taken: [new_done - time_new]")
+
+		qdel(pathfind_datum)
+
+		testing("<span class='danger'>-----------------------------------------------</span>")
 
 /proc/cir_get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
 	var/l = SSpathfinder.circuits.getfree(caller)
