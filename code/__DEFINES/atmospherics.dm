@@ -91,7 +91,7 @@
 /// a hack for now
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1
 /// current temperature capacity of space, used to make it cool down exposed areas, lower it to make it affect temperature less, increase to make it affect area temperature more
-#define HEAT_CAPACITY_VACUUM				700
+#define HEAT_CAPACITY_VACUUM				3500
 /// old heat capacity of space, its used to keep things that needed old vacuum heat capacity to work effectively, like heat exchangers. use it if something using old value breaks
 #define OLD_HEAT_CAPACITY_VACUUM            7000
 
