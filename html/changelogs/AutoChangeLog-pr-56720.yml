@@ -1,0 +1,7 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - tweak: "In-spect scanner is now called N-spect scanner (the N stands for Nanotrasen)"
+  - soundadd: "N-spect scanner has a better sound effect"
+  - spellcheck: "N-spect scanner description reads better"
+  - code_imp: "N-spect scanner report is now a child of paper"

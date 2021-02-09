@@ -7,6 +7,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"
 	var/open = FALSE
+	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
+	var/lipstick_trait
 
 /obj/item/lipstick/purple
 	name = "purple lipstick"
@@ -20,6 +22,10 @@
 /obj/item/lipstick/black
 	name = "black lipstick"
 	colour = "black"
+
+/obj/item/lipstick/black/death
+	name = "Kiss of Death"
+	lipstick_trait = TRAIT_KISS_OF_DEATH
 
 /obj/item/lipstick/random
 	name = "lipstick"
@@ -44,60 +50,55 @@
 		icon_state = "lipstick"
 
 /obj/item/lipstick/attack(mob/M, mob/user)
-	if(!open)
+	if(!open || !ismob(M))
 		return
 
-	if(!ismob(M))
-		return
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.is_mouth_covered())
-			to_chat(user, "<span class='warning'>Remove [ H == user ? "your" : "[H.p_their()]" ] mask!</span>")
-			return
-		if(H.lip_style)	//if they already have lipstick on
-			to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
-			return
-		if(H == user)
-			user.visible_message("<span class='notice'>[user] does [user.p_their()] lips with \the [src].</span>", \
-				"<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
-			H.lip_style = "lipstick"
-			H.lip_color = colour
-			H.update_body()
-		else
-			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
-				"<span class='notice'>You begin to apply \the [src] on [H]'s lips...</span>")
-			if(do_after(user, 20, target = H))
-				user.visible_message("<span class='notice'>[user] does [H]'s lips with \the [src].</span>", \
-					"<span class='notice'>You apply \the [src] on [H]'s lips.</span>")
-				H.lip_style = "lipstick"
-				H.lip_color = colour
-				H.update_body()
-	else
+	if(!ishuman(M))
 		to_chat(user, "<span class='warning'>Where are the lips on that?</span>")
+		return
+
+	var/mob/living/carbon/human/target = M
+	if(target.is_mouth_covered())
+		to_chat(user, "<span class='warning'>Remove [ target == user ? "your" : "[target.p_their()]" ] mask!</span>")
+		return
+	if(target.lip_style)	//if they already have lipstick on
+		to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
+		return
+
+	if(target == user)
+		user.visible_message("<span class='notice'>[user] does [user.p_their()] lips with \the [src].</span>", \
+			"<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
+		target.update_lips("lipstick", colour, lipstick_trait)
+		return
+
+	user.visible_message("<span class='warning'>[user] begins to do [target]'s lips with \the [src].</span>", \
+		"<span class='notice'>You begin to apply \the [src] on [target]'s lips...</span>")
+	if(!do_after(user, 2 SECONDS, target = target))
+		return
+	user.visible_message("<span class='notice'>[user] does [target]'s lips with \the [src].</span>", \
+		"<span class='notice'>You apply \the [src] on [target]'s lips.</span>")
+	target.update_lips("lipstick", colour, lipstick_trait)
+
 
 //you can wipe off lipstick with paper!
 /obj/item/paper/attack(mob/M, mob/user)
-	if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		if(!ismob(M))
-			return
+	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH || !ishuman(M))
+		return ..()
 
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H == user)
-				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
-				H.lip_style = null
-				H.update_body()
-			else
-				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
-					"<span class='notice'>You begin to wipe off [H]'s lipstick...</span>")
-				if(do_after(user, 10, target = H))
-					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
-						"<span class='notice'>You wipe off [H]'s lipstick.</span>")
-					H.lip_style = null
-					H.update_body()
-	else
-		..()
+	var/mob/living/carbon/human/target = M
+	if(target == user)
+		to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
+		target.update_lips(null)
+		return
+
+	user.visible_message("<span class='warning'>[user] begins to wipe [target]'s lipstick off with \the [src].</span>", \
+		"<span class='notice'>You begin to wipe off [target]'s lipstick...</span>")
+	if(!do_after(user, 10, target = target))
+		return
+	user.visible_message("<span class='notice'>[user] wipes [target]'s lipstick off with \the [src].</span>", \
+		"<span class='notice'>You wipe off [target]'s lipstick.</span>")
+	target.update_lips(null)
+
 
 /obj/item/razor
 	name = "electric razor"
