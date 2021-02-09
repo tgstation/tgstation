@@ -253,6 +253,7 @@
 #include "code\_onclick\hud\parallax.dm"
 #include "code\_onclick\hud\picture_in_picture.dm"
 #include "code\_onclick\hud\plane_master.dm"
+#include "code\_onclick\hud\plane_master_controller.dm"
 #include "code\_onclick\hud\radial.dm"
 #include "code\_onclick\hud\radial_persistent.dm"
 #include "code\_onclick\hud\revenanthud.dm"
