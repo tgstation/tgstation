@@ -378,9 +378,9 @@
 		else
 			pizza.foodtypes = nommer.dna.species.liked_food //make sure it's our favourite
 			return
-	if(pizza_preferences[nommer.ckey]) //make sure it hasn't been set to null, which happens sometimes
-		var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
-		pizza = new favourite_pizza_type
-		boxtag_set = FALSE
-		update_icon() //update our boxtag to match our new pizza
-		pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+
+	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
+	pizza = new favourite_pizza_type
+	boxtag_set = FALSE
+	update_icon() //update our boxtag to match our new pizza
+	pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
