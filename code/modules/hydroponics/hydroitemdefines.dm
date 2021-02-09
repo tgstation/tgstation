@@ -304,8 +304,9 @@
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 15
-	throw_speed = 3
-	throw_range = 4
+	throw_speed = 4
+	throw_range = 7
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	custom_materials = list(/datum/material/iron = 15000)
 	attack_verb_continuous = list("chops", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("chop", "tear", "lacerate", "cut")
