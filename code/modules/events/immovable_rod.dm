@@ -149,10 +149,12 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(destination)
 		var/turf/target_turf = get_turf(destination)
 
-		// Did we slip off the old z-level? Let's pick a new destination on the new z-level! Loops for days!
+		// Note: There is no way to detect if this is because it spawned off the primary station
+		// z-level with a destination on the primary station z-level. As a result, maps with
+		// multiple station z-levels may find their immovable rods immediately deleting themselves.
 		if(target_turf.z != z)
-			complete_trajectory()
-			return ..()
+			qdel(src)
+			return
 
 		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
@@ -192,8 +194,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		smoke.start()
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
-		qdel(src)
 		qdel(clong)
+		qdel(src)
+		return
 
 	// If we Bump into a turf, turf go boom.
 	if(isturf(clong))
