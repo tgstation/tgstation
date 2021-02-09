@@ -18,7 +18,7 @@ Also added 'exclude' turf to avoid travelling over; defaults to null
 
 Actual Adjacent procs :
 
-	/turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions (uses simulated_only)
+	/turf/proc/reachableAdjacentTurfs : returns reachable turfs in all 8 directions (uses simulated_only)
 
 	/turf/proc/reachableAdjacentAtmosTurfs : returns turfs in cardinal directions reachable via atmos
 
@@ -30,8 +30,6 @@ Actual Adjacent procs :
 //////////////////////
 #define MASK_ODD 85
 #define MASK_EVEN 170
-
-#define IS_ADJACENT(X, Y) (call(X,adjacent)(caller, Y, id, simulated_only))
 
 //A* nodes variables
 /datum/pathnode
@@ -86,23 +84,21 @@ Actual Adjacent procs :
 	var/list/path
 	if(old == 1)
 		path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-	//else if(old == 1)
-		//path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 	else if(old == -1)
 		testing("<span class='danger'>-----------------------------------------------</span>")
-		AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-		var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only, 1)
-		path = pathfind_datum.start_search()
-		testing("finished start_search(), length of path: [path ? path.len : "no path generated"]")
-		qdel(pathfind_datum)
-		testing("<span class='danger'>-----------------------------------------------</span>")
-	else if(old == -2)
-		testing("<span class='danger'>-----------------------------------------------</span>")
-		AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+		var/time_old = world.time
+		var/list/old_path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+		var/old_done = world.time
+
+		var/time_new = world.time
 		var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
 		path = pathfind_datum.start_search()
-		testing("finished start_search(), length of path: [path ? path.len : "no path generated"]")
+		var/new_done = world.time
+		testing("Old| Path len: [old_path.len] | Time taken: [old_done - time_old]")
+		testing("New| Path len: [path.len] | Time taken: [new_done - time_new]")
+
 		qdel(pathfind_datum)
+
 		testing("<span class='danger'>-----------------------------------------------</span>")
 	else
 		var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
@@ -149,12 +145,10 @@ Actual Adjacent procs :
 	open.Insert(cur)
 	openc[start] = cur
 	//then run the main loop
-	var/total_tiles
 	while(!open.IsEmpty() && !path)
 		cur = open.Pop() //get the lower f turf in the open list
 		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
-		total_tiles++
 		var/closeenough
 		if(mintargetdist)
 			closeenough = call(cur.source,dist)(end) <= mintargetdist
@@ -202,22 +196,19 @@ Actual Adjacent procs :
 	return path
 
 /**
- * Returns adjacent turfs to this turf that are reachable
+ * Returns adjacent turfs to this turf that are reachable, in all 8 directions (rather than just cardinal)
  *
  * Arguments:
  * * caller: The atom, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
- * * include_diags: If FALSE, we just do the 4 cardinals, if TRUE, we do all 8 directions
 */
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only, include_diags = FALSE)
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
 	var/list/L = new()
 	var/turf/T
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 
-	var/list/directions = (include_diags ? GLOB.alldirs : GLOB.cardinals)
-
-	for(var/iter_dir in directions)
+	for(var/iter_dir in GLOB.alldirs)
 		T = get_step(src,iter_dir)
 		if(!T || (simulated_only && space_type_cache[T.type]))
 			continue

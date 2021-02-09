@@ -1,37 +1,36 @@
-#define PATH_DIST(A, B) (A.Distance(B))
-#define PATH_ADJ(A, B) (A.reachableTurftest(B))
-
-#define PATH_REVERSE(A) ((A & MASK_ODD)<<1)|((A & MASK_EVEN)>>1)
-
-/datum/tiles
-	var/turf/dest_tile
-	var/turf/from
-	var/jumps
+#define PATH_DIST(A, B) (get_dist(A, B))
+/// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
+#define PATH_START	-1
 
 //JPS nodes variables
 /datum/jpsnode
-	var/turf/tile //turf associated with the PathNode
-	var/datum/jpsnode/prevNode //link to the parent PathNode
-	var/f		//A* Node weight (f = g + h)
-	var/h		//A* heuristic variable (distance)
-	var/nt		//count the number of Nodes traversed
-	var/jumps // how many steps it took from the last node
-	var/turf/goal
+	/// The turf associated with this node
+	var/turf/tile
+	/// The node we just came from
+	var/datum/jpsnode/prevNode
+	/// The A* node weight (f = number_of_tiles + heuristic)
+	var/f
+	/// The A* node heuristic (a rough estimate of how far we are from the goal)
+	var/h
+	/// How many steps it's taken to get here from the start (currently pulling double duty as steps taken & cost to get here, since all moves incl diagonals cost 1 rn)
+	var/nt
+	/// How many steps it took to get here from the last node
+	var/jumps
+	/// Nodes store the endgoal so they can process their heuristic without a reference to the pathfind datum
+	var/turf/node_goal
 
-//s,p,ph,pnt,*bf*,jmp
-/datum/jpsnode/New(s,p, _jumps, turf/_goal)
-	tile = s
-	prevNode = p
-	jumps = _jumps
+/datum/jpsnode/New(turf/our_tile, datum/jpsnode/previous_node, jumps_taken, turf/incoming_goal)
+	tile = our_tile
+	prevNode = previous_node
+	jumps = jumps_taken
 	if(prevNode)
 		nt = prevNode.nt + jumps
-		goal = prevNode.goal
-		dir_from = get_dir(tile, prevNode.tile)
+		node_goal = prevNode.node_goal
 	else
 		nt = 0
-		goal = _goal
+		node_goal = incoming_goal
 
-	h = PATH_DIST(tile, goal)
+	h = PATH_DIST(tile, node_goal)
 	f = nt + h//*(1+ PF_TIEBREAKER)
 
 /datum/pathfind
@@ -43,35 +42,42 @@
 	var/turf/end
 	/// The open list/stack we pop nodes out from
 	var/datum/heap/open
-	/// An associative list that matches turfs (the key) to their nodes if said turf has one
+	/// An assoc list that matches turfs (the key) to their nodes if said turf has one
 	var/list/openc
-	/// An associative list that
-	var/list/visited
-
+	/**
+	 * An assoc list that serves as the closed list & tracks what turfs came from where. Key is the turf, and the value is what turf it came from
+	 *
+	 * Nodes are only created & added to the heap/openc once a turf is found "interesting", but due to recursion, we may not know it's interesting until we finish processing its children.
+	 * Inserting to this list is cheaper than making a node datum + inserting into the heap, so everything goes in here immediately, and what we use to recreate the path at the end
+	 */
+	var/list/sources
 	/// The list we compile at the end if successful to pass back
 	var/list/path
 
-	var/id
-
+	// general pathfinding vars/args
+	/// An ID card representing what access we have and what doors we can open. Its location relative to the pathing atom is irrelevant
+	var/obj/item/card/id/id
+	/// How far away we have to get to the end target before we can call it quits
 	var/mintargetdist = 0
+	/// I don't know what this does vs maxnodes, but they limit how far we can search before giving up on a path
 	var/maxnodedepth = 150
+	/// I don't know what this does vs maxnodedepth, but they limit how far we can search before giving up on a path
 	var/maxnodes = 150
+	/// The proc we use to see which turfs are available from this one. Must be 8-dir
 	var/adjacent = /turf/proc/reachableTurftest
-	var/dist = /turf/proc/Distance
-	var/turf/exclude = null
-
+	/// The proc we use to tell the distance between two turfs. Currently ignored in favor of PATH_DIST/get_dist
+	///var/dist = /turf/proc/Distance
+	/// Do we only worry about turfs with simulated atmos, most notably things that aren't space?
 	var/simulated_only
-
-	var/done = FALSE
-
+	/// Did we succeed?
 	var/success = FALSE
 
-/datum/pathfind/New(atom/movable/caller, atom/goal, id, maxnodes, maxnodedepth, mintargetdist, simulated_only, diag=1)
+/datum/pathfind/New(atom/movable/caller, atom/goal, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
 	src.caller = caller
 	end = get_turf(goal)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	openc = new() //open list for node check
-	visited = new() //open list for node check
+	sources = new() //open list for node check
 	src.id = id
 	src.maxnodes = maxnodes
 	src.maxnodedepth = maxnodedepth
@@ -94,13 +100,11 @@
 	var/datum/jpsnode/cur = new (start,null,0,end)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
-	visited[start] = -1
+	sources[start] = PATH_START
 	//then run the main loop
 	var/total_tiles
 
 	while(!open.IsEmpty() && !path)
-		if(done)
-			break // a break here just moves on to the next node, returning will cancel the search entirely
 		if(!caller)
 			return
 		cur = open.Pop() //get the lower f turf in the open list
@@ -110,21 +114,15 @@
 			continue
 
 		var/turf/current_turf = cur.tile
-		var/dx = current_turf.x - end.x
-		var/dy = current_turf.y - end.y
-		var/list/order
 
 		for(var/scan_direction in list(NORTH, EAST, SOUTH, WEST))
 			lateral_scan_spec(current_turf, scan_direction) // this is a turf not a node, fix
-			if(done || path)
+			if(path)
 				break
-
-		if(done || path)
-			break
 
 		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
 			lateral_scan_spec(current_turf, scan_direction)
-			if(done || path)
+			if(path)
 				break
 
 		CHECK_TICK
@@ -132,20 +130,20 @@
 	if(path)
 		for(var/i = 1 to round(0.5*path.len))
 			path.Swap(i,path.len-i+1)
+	testing("*********new path done with [total_tiles] tiles popped, [openc.len] nodes added to heap")
 	openc = null
 	//cleaning after us
-	testing("*********new path done with [total_tiles] tiles popped, [iii] rounds (also the distance between a tile and null is [get_dist(start, null)] and the turf of a turf is [get_turf(start)]")
 	caller.calculating_path = FALSE
 	return path
 
-
+///
 /datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
 	success = unwind_node.tile == end
 	path = new()
 	var/turf/iter_turf = unwind_node.tile
 	var/turf/iter_turf2 = get_turf(unwind_node.tile)
 	path.Add(iter_turf)
-	var/legs
+	//var/legs
 /*
 	var/list/a = list(iter_turf)
 
@@ -176,13 +174,13 @@
 		unwind_node = unwind_node.prevNode
 	//testing("+++++++++end of A")
 */
-	legs = 0
+	//legs = 0
 
 	var/list/b = list(iter_turf2)
-	var/turf/goal_turf2 = visited[iter_turf2]
-	while(goal_turf2 && goal_turf2 != -1)
+	var/turf/goal_turf2 = sources[iter_turf2]
+	while(goal_turf2 && goal_turf2 != PATH_START)
 		b.Add(goal_turf2)
-		legs++
+		//legs++
 
 		while(iter_turf2 != goal_turf2)
 			//i++
@@ -192,11 +190,8 @@
 			//testing(">>>stepa [legs] | [i] - ([iter_turf2.x], [iter_turf2.y]) -> ([next_turf.x], [next_turf.y])")
 			iter_turf2 = next_turf
 			path.Add(iter_turf2)
-			iter_turf.color = COLOR_BLUE_LIGHT
-		goal_turf2 = visited[iter_turf2]
+		goal_turf2 = sources[iter_turf2]
 
-	for(var/turf/turff in b)
-		turff.color = COLOR_BLUE_GRAY
 	//testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goalturf2 = [goal_turf2])")
 
 /datum/pathfind/proc/can_step(turf/a, turf/next) // prolly not optimal
@@ -207,16 +202,16 @@
 	var/steps_taken = 0
 	var/datum/jpsnode/unwind_node = openc[original_turf]
 	while(!unwind_node)
-		var/turf/older = visited[original_turf]
+		var/turf/older = sources[original_turf]
 		if(!older)
-			CRASH("JPS error: Diagonal scan couldn't find a home node")
+			CRASH("JPS error: Lateral scan couldn't find a home node")
 		unwind_node = openc[older]
 
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
 	while(TRUE)
-		if(done || path) // lazy way to force out when done, do better
+		if(path) // lazy way to force out when done, do better
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
@@ -229,15 +224,15 @@
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
 			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
-			visited[current_turf] = original_turf
+			sources[current_turf] = original_turf
 			unwind_path(final_node)
 			return
-		else if(visited[current_turf])
+		else if(sources[current_turf])
 			return
 		else if(!can_step(lag_turf, current_turf))
 			return
 		else
-			visited[current_turf] = original_turf
+			sources[current_turf] = original_turf
 
 		if(unwind_node.nt + steps_taken > maxnodedepth)
 			return
@@ -279,13 +274,13 @@
 	var/turf/lag_turf = original_turf
 
 	while(!unwind_node)
-		var/turf/older = visited[original_turf]
+		var/turf/older = sources[original_turf]
 		if(!older)
 			CRASH("JPS error: Diagonal scan couldn't find a home node")
 		unwind_node = openc[older]
 
 	while(TRUE)
-		if(done || path) // lazy way to force out when done, do better
+		if(path) // lazy way to force out when done, do better
 			return
 		lag_turf = current_turf
 		current_turf = get_step(current_turf, heading)
@@ -298,15 +293,15 @@
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
 			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
-			visited[current_turf] = original_turf
+			sources[current_turf] = original_turf
 			unwind_path(final_node)
 			return
-		else if(visited[current_turf])
+		else if(sources[current_turf])
 			return
 		else if(!can_step(lag_turf, current_turf))
 			return
 		else
-			visited[current_turf] = original_turf
+			sources[current_turf] = original_turf
 
 		if(unwind_node.nt + steps_taken > maxnodedepth)
 			return
@@ -372,3 +367,6 @@
 					return
 				else
 					lateral_scan_spec(current_turf, SOUTH)
+
+#undef PATH_DIST
+#undef PATH_START
