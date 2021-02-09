@@ -1,0 +1,5 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - spellcheck: "fixed a few moodlet typos"
+  - code_imp: "cleaned up some moodlet time into defines"
