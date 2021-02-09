@@ -150,7 +150,7 @@
 	for(var/atom/A in T)
 		if(!A.CanPass(src, T)) //is anything in the turf impassable
 			make_blob = FALSE
-		if(ishuman(A) && overmind) // Make sure to inject strain-reagents with automatic attacks when needed.
+		if(ishuman(A) && overmind && !controller) // Make sure to inject strain-reagents with automatic attacks when needed.
 			overmind.blobstrain.attack_living(A)
 			continue // Don't smack them twice though
 		A.blob_act(src) //also hit everything in the turf
