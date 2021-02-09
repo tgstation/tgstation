@@ -277,6 +277,7 @@
 #include "code\controllers\subsystem\achievements.dm"
 #include "code\controllers\subsystem\adjacent_air.dm"
 #include "code\controllers\subsystem\air.dm"
+#include "code\controllers\subsystem\ambience.dm"
 #include "code\controllers\subsystem\assets.dm"
 #include "code\controllers\subsystem\atoms.dm"
 #include "code\controllers\subsystem\augury.dm"
