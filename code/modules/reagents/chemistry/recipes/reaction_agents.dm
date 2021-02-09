@@ -1,12 +1,11 @@
 /datum/chemical_reaction/basic_buffer
-	results = list(/datum/reagent/reaction_agent/basic_buffer = 5)
-	required_reagents = list(/datum/reagent/lye = 1, /datum/reagent/consumable/ethanol = 2, /datum/reagent/water = 2)
-	required_catalysts = list(/datum/reagent/toxin/acid = 1)//vagely acetic
+	results = list(/datum/reagent/reaction_agent/basic_buffer = 10)
+	required_reagents = list(/datum/reagent/ammonia = 3, /datum/reagent/consumable/ethanol = 4, /datum/reagent/water = 4) //vagely NH4OH + NH4Cl buffer
 	mix_message = "The solution fizzes in the beaker."
 	//FermiChem vars:
 	required_temp = 250
 	optimal_temp = 500
-	overheat_temp = 9999 
+	overheat_temp = 9999
 	optimal_ph_min = 0
 	optimal_ph_max = 14
 	determin_ph_range = 0
@@ -19,11 +18,11 @@
 
 /datum/chemical_reaction/acidic_buffer
 	results = list(/datum/reagent/reaction_agent/acidic_buffer = 10)
-	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/consumable/ethanol = 3, /datum/reagent/oxygen = 3, /datum/reagent/water = 3)
+	required_reagents = list(/datum/reagent/sodium = 2, /datum/reagent/chlorine = 2, /datum/reagent/consumable/ethanol = 2, /datum/reagent/water = 2)
 	mix_message = "The solution froths in the beaker."
 	required_temp = 250
 	optimal_temp = 500
-	overheat_temp = 9999 
+	overheat_temp = 9999
 	optimal_ph_min = 0
 	optimal_ph_max = 14
 	determin_ph_range = 0
@@ -46,7 +45,7 @@
 	is_cold_recipe = TRUE
 	required_temp = 800
 	optimal_temp = 300
-	overheat_temp = -1 //no overheat 
+	overheat_temp = -1 //no overheat
 	optimal_ph_min = 2
 	optimal_ph_max = 12
 	determin_ph_range = 5
@@ -65,7 +64,7 @@
 	mix_sound = 'sound/chemistry/bluespace.ogg' //Maybe use this elsewhere instead
 	required_temp = 50
 	optimal_temp = 500
-	overheat_temp = 500 
+	overheat_temp = 500
 	optimal_ph_min = 5
 	optimal_ph_max = 8
 	determin_ph_range = 5
@@ -85,7 +84,7 @@
 
 /datum/chemical_reaction/prefactor_b/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
-	explode_shockwave(holder, equilibrium) 
+	explode_shockwave(holder, equilibrium)
 	var/vol = max(20, holder.total_volume/5) //Not letting you have more than 5
 	clear_reagents(holder, vol)//Lest we explode forever
 
