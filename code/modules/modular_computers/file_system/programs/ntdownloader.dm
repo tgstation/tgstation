@@ -23,7 +23,6 @@
 	var/list/main_repo
 	var/list/antag_repo
 	var/list/show_categories = list(
-		PROGRAM_CATEGORY_ALL,
 		PROGRAM_CATEGORY_CREW,
 		PROGRAM_CATEGORY_ENGI,
 		PROGRAM_CATEGORY_ROBO,
@@ -154,54 +153,23 @@
 	var/obj/item/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
 	data["disk_size"] = hard_drive.max_capacity
 	data["disk_used"] = hard_drive.used_capacity
-	var/list/programs[0]
-	var/list/programs_incompatible[0]
-	for(var/A in main_repo)
-		var/datum/computer_file/program/P = A
-		if (check_compatibility(P))
-			programs.Add(P)
-		else
-			programs_incompatible.Add(P)
-	if(emagged) // If we are running on emagged computer we have access to some "bonus" software
-		for(var/S in antag_repo)
-			var/datum/computer_file/program/P = S
-			if (check_compatibility(P))
-				programs.Add(P)
-			else
-				programs_incompatible.Add(P)
+	data["emagged"] = emagged
+	data["categories"] = show_categories
 
-	programs = sortList(programs, /proc/cmp_program_asc)
-	programs_incompatible = sortList(programs_incompatible, /proc/cmp_program_asc)
-
-	var/categories = show_categories.Copy()
-	for(var/V in categories)
-		categories[V] = list()
-	for(var/I in programs | programs_incompatible)
+	for(var/I in main_repo | antag_repo)
 		var/datum/computer_file/program/P = I
-		for(var/C in categories)
-			if(C == P.category || C == PROGRAM_CATEGORY_ALL)
-				categories[C] += P
-	for(var/category in categories)
-		if (!LAZYLEN(categories[category]))
-			continue
-		var/list/cat = list(
-			"name" = category,
-			"items" = list())
-		for(var/I in categories[category])
-			var/datum/computer_file/program/P = I
-			cat["items"] += list(list(
-				"icon" = P.program_icon,
-				"filename" = P.filename,
-				"filedesc" = P.filedesc,
-				"fileinfo" = P.extended_desc,
-				"category" = P.category,
-				"installed" = !!hard_drive.find_file_by_name(P.filename),
-				"compatibility" = check_compatibility(P),
-				"size" = P.size,
-				"access" = emagged && P.available_on_syndinet ? TRUE : P.can_run(user,transfer = 1, access = access),
-				"verifiedsource" = P.available_on_ntnet,
-			))
-		data["categories"] += list(cat)
+		data["programs"] += list(list(
+			"icon" = P.program_icon,
+			"filename" = P.filename,
+			"filedesc" = P.filedesc,
+			"fileinfo" = P.extended_desc,
+			"category" = P.category,
+			"installed" = !!hard_drive.find_file_by_name(P.filename),
+			"compatibility" = check_compatibility(P),
+			"size" = P.size,
+			"access" = emagged && P.available_on_syndinet ? TRUE : P.can_run(user,transfer = 1, access = access),
+			"verifiedsource" = P.available_on_ntnet,
+		))
 	return data
 
 /datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)

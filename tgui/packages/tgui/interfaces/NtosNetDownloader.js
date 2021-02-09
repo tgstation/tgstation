@@ -1,7 +1,8 @@
 import { scale, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs, Flex } from '../components';
-import { FlexItem } from '../components/Flex';
+import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import { flow } from 'common/fp';
+import { filter, sortBy } from 'common/collections';
 import { NtosWindow } from '../layouts';
 
 export const NtosNetDownloader = (props, context) => {
@@ -15,19 +16,26 @@ export const NtosNetDownloader = (props, context) => {
     downloadname,
     downloadsize,
     error,
-    categories = [],
+    emagged,
+    categories,
+    programs,
   } = data;
+  const all_categories = ['All'].concat(categories);
   const downloadpercentage = toFixed(
     scale(downloadcompletion, 0, downloadsize) * 100
   );
   const [
     selectedCategory,
     setSelectedCategory,
-  ] = useLocalState(context, 'category', categories[0]?.name);
-  const items = categories
-    .find(category => category.name === selectedCategory)
-    ?.items
-    || [];
+  ] = useLocalState(context, 'category', all_categories[0]);
+  const items = flow([
+    // This filters the list to only contain programs with category
+    selectedCategory !== all_categories[0] && filter(program => program.category === selectedCategory),
+    // This filters the list to only contain verified programs
+    (!emagged && PC_device_theme === "ntos") && filter(program => program.verifiedsource === 1),
+    // This sorts all programs in the lists by name and compatibility
+    sortBy(program => [-program.compatibility, program.filedesc]),
+  ])(programs);
   const disk_free_space = downloading
     ? disk_size - toFixed(disk_used + downloadcompletion)
     : disk_size - disk_used;
@@ -81,12 +89,12 @@ export const NtosNetDownloader = (props, context) => {
         <Stack>
           <Stack.Item minWidth="105px" shrink={0} basis={0}>
             <Tabs vertical>
-              {categories.map(category => (
+              {all_categories.map(category => (
                 <Tabs.Tab
-                  key={category.name}
-                  selected={category.name === selectedCategory}
-                  onClick={() => setSelectedCategory(category.name)}>
-                  {category.name}
+                  key={category}
+                  selected={category === selectedCategory}
+                  onClick={() => setSelectedCategory(category)}>
+                  {category}
                 </Tabs.Tab>
               ))}
             </Tabs>
@@ -130,6 +138,7 @@ const Program = (props, context) => {
           {(downloading && program.filename === downloadname) && (
             <ProgressBar
               width="101px"
+              height="23px"
               color="good"
               minValue={0}
               maxValue={program.size}

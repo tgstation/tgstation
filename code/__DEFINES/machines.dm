@@ -85,7 +85,6 @@
 #define PROGRAM_STATE_BACKGROUND 1
 #define PROGRAM_STATE_ACTIVE 2
 //Program categories
-#define PROGRAM_CATEGORY_ALL "All"
 #define PROGRAM_CATEGORY_CREW "Crew"
 #define PROGRAM_CATEGORY_ENGI "Engineering"
 #define PROGRAM_CATEGORY_ROBO "Robotics"
