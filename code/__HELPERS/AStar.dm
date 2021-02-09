@@ -201,16 +201,24 @@ Actual Adjacent procs :
 	//cleaning after us
 	return path
 
-//Returns adjacent turfs in cardinal directions that are reachable
-//simulated_only controls whether only simulated turfs are considered or not
-
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+/**
+ * Returns adjacent turfs to this turf that are reachable
+ *
+ * Arguments:
+ * * caller: The atom, if one exists, being used for mobility checks to see what tiles it can reach
+ * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
+ * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+ * * include_diags: If FALSE, we just do the 4 cardinals, if TRUE, we do all 8 directions
+*/
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only, include_diags = FALSE)
 	var/list/L = new()
 	var/turf/T
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 
-	for(var/k in 1 to GLOB.alldirs.len)
-		T = get_step(src,GLOB.alldirs[k])
+	var/list/directions = (include_diags ? GLOB.alldirs : GLOB.cardinals)
+
+	for(var/iter_dir in directions)
+		T = get_step(src,iter_dir)
 		if(!T || (simulated_only && space_type_cache[T.type]))
 			continue
 		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
