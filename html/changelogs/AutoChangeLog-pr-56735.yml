@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Fixes missing sprites for the worn_icon_state for bullets and telebatons."
+  - bugfix: "Fixes dead facehuggers and bottles not having their worn_icon_state properly set up."
