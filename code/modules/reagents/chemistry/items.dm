@@ -1,7 +1,7 @@
 ///if the ph_meter gives a detailed output
-#define DETAILED_CHEM_OUTPUT 1 
+#define DETAILED_CHEM_OUTPUT 1
 ///if the pH meter gives a shorter output
-#define SHORTENED_CHEM_OUTPUT 0 
+#define SHORTENED_CHEM_OUTPUT 0
 
 /*
 * a pH booklet that contains pH paper pages that will change color depending on the pH of the reagents datum it's attacked onto
@@ -61,7 +61,7 @@
 	playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	add_fingerprint(user)
 	if(!number_of_pages)
-		icon_state = "pHbookletEmpty"		
+		icon_state = "pHbookletEmpty"
 
 /*
 * pH paper will change color depending on the pH of the reagents datum it's attacked onto
@@ -72,7 +72,7 @@
 	icon_state = "pHpaper"
 	icon = 'icons/obj/chemical.dmi'
 	item_flags = NOBLUDGEON
-	color = "#f5c352"	
+	color = "#f5c352"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	///If the paper was used, and therefore cannot change color again
@@ -127,20 +127,20 @@
 */
 /obj/item/ph_meter
 	name = "Chemistry Analyser"
-	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."
+	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays nothing."
 	icon_state = "pHmeter"
 	icon = 'icons/obj/chemical.dmi'
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	///level of detail for output for the meter
-	var/scanmode = DETAILED_CHEM_OUTPUT 
+	var/scanmode = DETAILED_CHEM_OUTPUT
 
 /obj/item/ph_meter/attack_self(mob/user)
 	if(scanmode == SHORTENED_CHEM_OUTPUT)
-		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a detailed report.</span>")
+		to_chat(user, "<span class='notice'>You switch the chemical analyzer to provide a detailed description of each reagent.</span>")
 		scanmode = DETAILED_CHEM_OUTPUT
 	else
-		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a reduced report.</span>")
+		to_chat(user, "<span class='notice'>You switch the chemical analyzer to not include reagent descriptions in it's report.</span>")
 		scanmode = SHORTENED_CHEM_OUTPUT
 
 /obj/item/ph_meter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -152,7 +152,7 @@
 		return
 	var/list/out_message = list()
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
-	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.ph, 0.01)]\n"
+	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	if(cont.reagents.is_reacting)
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
@@ -161,4 +161,4 @@
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")
-	desc = "An electrode attached to a small circuit box that will analyse a beaker. It can be toggled to give a reduced or extended report. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
+	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."

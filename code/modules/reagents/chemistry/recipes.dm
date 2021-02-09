@@ -21,7 +21,7 @@
 
 	///Determines if a chemical reaction can occur inside a mob
 	var/mob_react = TRUE
-	
+
 	///The message shown to nearby people upon mixing, if applicable
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
@@ -33,27 +33,27 @@
 	///Required temperature for the reaction to begin, for fermimechanics it defines the lower area of bell curve for determining heat based rate reactions, aka the minimum
 	var/required_temp = 100
 	/// Upper end for above (i.e. the end of the curve section defined by temp_exponent_factor)
-	var/optimal_temp = 500 
+	var/optimal_temp = 500
 	/// Temperature at which reaction explodes - If any reaction is this hot, it explodes!
 	var/overheat_temp = 900
-	/// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase) 
-	var/optimal_ph_min = 5 
+	/// Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
+	var/optimal_ph_min = 5
 	/// Higest value for above
-	var/optimal_ph_max = 9 
+	var/optimal_ph_max = 9
 	/// How far out pH wil react, giving impurity place (Exponential phase)
-	var/determin_ph_range = 4 
+	var/determin_ph_range = 4
 	/// How sharp the temperature exponential curve is (to the power of value)
-	var/temp_exponent_factor = 2 
+	var/temp_exponent_factor = 2
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
 	/// How much the temperature will change (with no intervention) (i.e. for 30u made the temperature will increase by 100, same with 300u. The final temp will always be start + this value, with the exception con beakers with different specific heats)
-	var/thermic_constant = 100
+	var/thermic_constant = 50
 	/// pH change per 1u reaction
-	var/H_ion_release = 0.01 
+	var/H_ion_release = 0.01
 	/// Optimal/max rate possible if all conditions are perfect
-	var/rate_up_lim = 30 
+	var/rate_up_lim = 30
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
-	var/purity_min = 0.15 
+	var/purity_min = 0.15
 	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
 	var/reaction_flags = NONE
 
@@ -101,12 +101,12 @@
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * created_volume - volume created per step
  * * added_purity - how pure the created volume is per step
- * 
+ *
  * Outputs:
  * * returning END_REACTION will end the associated reaction - flagging it for deletion and preventing any reaction in that timestep from happening. Make sure to set the vars in the holder to one that can't start it from starting up again.
  */
 /datum/chemical_reaction/proc/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
-	return 
+	return
 
 /**
  * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).
@@ -158,7 +158,7 @@
 	if(!reagent)//Failures can delete R
 		return
 	if(reaction_flags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
-		if(reagent.purity == 1) 
+		if(reagent.purity == 1)
 			return
 
 		var/cached_volume = reagent.volume
@@ -314,7 +314,7 @@
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
-	if(clear_products)	
+	if(clear_products)
 		clear_products(holder)
 
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
@@ -323,7 +323,7 @@
 	var/datum/effect_system/smoke_spread/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
 	var/sum_volume = 0
-	for (var/datum/reagent/reagent as anything in holder.reagent_list) 
+	for (var/datum/reagent/reagent as anything in holder.reagent_list)
 		if((reagent.type in required_reagents) || (reagent.type in results))
 			reagents.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity, no_react = TRUE)
 			holder.remove_reagent(reagent.type, reagent.volume)
@@ -333,7 +333,7 @@
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
 		clear_reactants(holder)
-	if(clear_products)	
+	if(clear_products)
 		clear_products(holder)
 
 //Pushes everything out, and damages mobs with 10 brute damage.
