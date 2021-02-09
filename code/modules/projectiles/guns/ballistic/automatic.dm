@@ -166,6 +166,7 @@
 
 /obj/item/gun/ballistic/automatic/m90/afterattack_secondary(atom/target, mob/living/user, flag, params)
 	underbarrel.afterattack(target, user, flag, params)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
