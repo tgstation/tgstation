@@ -154,10 +154,14 @@
 	data["disk_size"] = hard_drive.max_capacity
 	data["disk_used"] = hard_drive.used_capacity
 	data["emagged"] = emagged
-	data["categories"] = show_categories
 
-	for(var/I in main_repo | antag_repo)
+	var/list/repo = antag_repo | main_repo
+	var/list/program_categories = list()
+
+	for(var/I in repo)
 		var/datum/computer_file/program/P = I
+		if(!(P.category in program_categories))
+			program_categories.Add(P.category)
 		data["programs"] += list(list(
 			"icon" = P.program_icon,
 			"filename" = P.filename,
@@ -165,11 +169,14 @@
 			"fileinfo" = P.extended_desc,
 			"category" = P.category,
 			"installed" = !!hard_drive.find_file_by_name(P.filename),
-			"compatibility" = check_compatibility(P),
+			"compatible" = check_compatibility(P),
 			"size" = P.size,
 			"access" = emagged && P.available_on_syndinet ? TRUE : P.can_run(user,transfer = 1, access = access),
 			"verifiedsource" = P.available_on_ntnet,
 		))
+
+	data["categories"] = show_categories & program_categories
+
 	return data
 
 /datum/computer_file/program/ntnetdownload/proc/check_compatibility(datum/computer_file/program/P)

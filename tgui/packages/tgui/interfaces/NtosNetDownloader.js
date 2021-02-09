@@ -30,11 +30,13 @@ export const NtosNetDownloader = (props, context) => {
   ] = useLocalState(context, 'category', all_categories[0]);
   const items = flow([
     // This filters the list to only contain programs with category
-    selectedCategory !== all_categories[0] && filter(program => program.category === selectedCategory),
+    selectedCategory !== all_categories[0]
+    && filter(program => program.category === selectedCategory),
     // This filters the list to only contain verified programs
-    (!emagged && PC_device_theme === "ntos") && filter(program => program.verifiedsource === 1),
+    (!emagged && PC_device_theme === "ntos")
+    && filter(program => program.verifiedsource === 1),
     // This sorts all programs in the lists by name and compatibility
-    sortBy(program => [-program.compatibility, program.filedesc]),
+    sortBy(program => [-program.compatible, program.filedesc]),
   ])(programs);
   const disk_free_space = downloading
     ? disk_size - toFixed(disk_used + downloadcompletion)
@@ -100,7 +102,7 @@ export const NtosNetDownloader = (props, context) => {
             </Tabs>
           </Stack.Item>
           <Stack.Item grow={1} basis={0}>
-            {items.map(program => (
+            {items?.map(program => (
               <Program
                 key={program.filename}
                 program={program} />
@@ -145,7 +147,7 @@ const Program = (props, context) => {
               value={downloadcompletion} />
           ) || (
             (!program.installed
-              && program.compatibility
+              && program.compatible
               && program.access
               && program.size < disk_free) && (
               <Button
@@ -164,11 +166,11 @@ const Program = (props, context) => {
                 icon={program.installed ? 'check' : 'times'}
                 color={
                   program.installed ? 'good'
-                    : !program.compatibility ? 'bad' : 'grey'
+                    : !program.compatible ? 'bad' : 'grey'
                 }
                 content={
                   program.installed ? 'Installed'
-                    : !program.compatibility ? 'Incompatible'
+                    : !program.compatible ? 'Incompatible'
                       : !program.access ? 'No Access' : 'No Space'
                 } />
             )
