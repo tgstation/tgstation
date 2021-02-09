@@ -146,7 +146,7 @@
 	try_dispel_portal(target, user)
 	. = ..()
 
-/obj/item/hand_tele/pre_attack_alt(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/hand_tele/pre_attack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	var/portal_location = last_portal_location
 
 	if (isweakref(portal_location))
@@ -155,11 +155,11 @@
 
 	if (isnull(portal_location))
 		to_chat(user, "<span class='warning'>[src] flashes briefly. No target is locked in.</span>")
-		return ALT_ATTACK_CANCEL_ATTACK_CHAIN
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	try_create_portal_to(user, portal_location)
 
-	return ALT_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/hand_tele/attack_self(mob/user)
 	if (!can_teleport_notifies(user))
