@@ -205,7 +205,7 @@
 			if(contents.len)
 				return FALSE
 			var/mob/living/carbon/T = target
-			if(T.client == null)
+			if(T.client != null)
 				for(var/obj/item/W in T)
 					T.dropItemToGround(W)
 				init_shade(T, user)
