@@ -381,7 +381,6 @@
 	if(A)
 		on = FALSE
 //		A.update_lights()
-	UnregisterSignal(src, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(cell)
 	return ..()
 

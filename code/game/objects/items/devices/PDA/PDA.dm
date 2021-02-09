@@ -1116,7 +1116,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/Destroy()
 	GLOB.PDAs -= src
-	UnregisterSignal(src, COMSIG_LIGHT_EATER_ACT)
 	if(istype(id))
 		QDEL_NULL(id)
 	if(istype(cartridge))

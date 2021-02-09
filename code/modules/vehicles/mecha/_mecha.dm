@@ -216,7 +216,6 @@
 			var/obj/item/mecha_parts/mecha_equipment/equip = E
 			equip.detach(loc)
 			qdel(equip)
-	UnregisterSignal(src, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)
 	QDEL_NULL(capacitor)

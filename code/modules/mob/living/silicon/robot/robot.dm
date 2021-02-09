@@ -112,7 +112,6 @@
 		if(T && istype(radio) && istype(radio.keyslot))
 			radio.keyslot.forceMove(T)
 			radio.keyslot = null
-	UnregisterSignal(src, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(wires)
 	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
