@@ -146,8 +146,7 @@
 	openc = null
 	//cleaning after us
 	caller.calculating_path = FALSE
-	//return path
-	return total_tiles
+	return path
 
 ///
 /datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
@@ -280,67 +279,50 @@
 		if(unwind_node.nt + steps_taken > maxnodedepth)
 			return
 
-		switch(heading)
+		var/interesting = FALSE
+		switch(heading) // i know this is very ugly, need to neaten this up while also being efficient
 			if(NORTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
+					interesting = TRUE
 				else
 					lateral_scan_spec(current_turf, WEST)
-				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
-				else
-					lateral_scan_spec(current_turf, NORTH)
+					if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHWEST)))
+						interesting = TRUE
+					else
+						lateral_scan_spec(current_turf, NORTH)
 			if(NORTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
+
 				else
 					lateral_scan_spec(current_turf, EAST)
-				if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
-				else
-					lateral_scan_spec(current_turf, NORTH)
+					if(!can_step(current_turf, get_step(current_turf, NORTH)) && can_step(current_turf, get_step(current_turf, NORTHEAST)))
+						interesting = TRUE
+					else
+						lateral_scan_spec(current_turf, NORTH)
 			if(SOUTHWEST)
 				if(!can_step(current_turf, get_step(current_turf, WEST)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
+					interesting = TRUE
 				else
 					lateral_scan_spec(current_turf, WEST)
-				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
-				else
-					lateral_scan_spec(current_turf, SOUTH)
+					if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHWEST)))
+						interesting = TRUE
+					else
+						lateral_scan_spec(current_turf, SOUTH)
 			if(SOUTHEAST)
 				if(!can_step(current_turf, get_step(current_turf, EAST)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
+					interesting = TRUE
 				else
 					lateral_scan_spec(current_turf, EAST)
-				if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
-					openc[current_turf] = newnode
-					open.Insert(newnode)
-					return
-				else
-					lateral_scan_spec(current_turf, SOUTH)
+					if(!can_step(current_turf, get_step(current_turf, SOUTH)) && can_step(current_turf, get_step(current_turf, SOUTHEAST)))
+						interesting = TRUE
+					else
+						lateral_scan_spec(current_turf, SOUTH)
+
+		if(interesting)
+			var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+			openc[current_turf] = newnode
+			open.Insert(newnode)
+			return
 
 #undef PATH_DIST
 #undef PATH_START

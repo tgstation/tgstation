@@ -110,7 +110,7 @@ Actual Adjacent procs :
 	SSpathfinder.mobs.found(l)
 	if(!path)
 		path = list()
-	//return path
+	return path
 
 /// RYLL TODO: learn how to actually profile
 /mob/living/proc/benchmark_path()
