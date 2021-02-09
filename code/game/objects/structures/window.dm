@@ -118,10 +118,10 @@
 	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, turf/target)
-	if(istype(O) && (O.pass_flags & PASSGLASS))
+	if(istype(O) && (O.pass_flags & pass_flags_self))
 		return TRUE
-	if(get_dir(O.loc, target) == dir)
-		return FALSE
+	if(!fulltile && get_dir(O.loc, target) == dir)
+		return !density
 	return TRUE
 
 
