@@ -8,6 +8,10 @@
 		client.movingmob.client_mobs_in_contents -= src
 		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
 		client.movingmob = null
+
+	if(client)
+		client.images.Remove(frill_oval_mask)
+	frill_oval_mask = null
 	..()
 
 	if(loc)

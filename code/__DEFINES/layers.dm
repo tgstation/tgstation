@@ -24,6 +24,7 @@
 #define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
 /// Doors, windows, frill shadow.
 #define UNDER_FRILL_PLANE -3
+#define UNDER_FRILL_RENDER_TARGET "UNDER_FRILL_PLANE"
 #define FRILL_PLANE -2
 #define FRILL_PLANE_RENDER_TARGET "FRILL_PLANE"
 #define OVER_FRILL_PLANE -1
@@ -104,6 +105,9 @@
 #define POINT_PLANE 90
 
 #define RAD_TEXT_PLANE 90
+
+#define FRILL_MASK_PLANE 95
+#define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 
 
 //---------- LIGHTING -------------
