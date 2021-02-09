@@ -130,30 +130,30 @@ Actual Adjacent procs :
 
 	var/turf/first_start = get_turf(src)
 	var/list/locations = list()
-	for(var/i in 1 to 500)
+	for(var/i in 1 to 501)
 		locations += get_turf(pick(GLOB.blobstart))
 
 	var/old_time = world.time
 	var/old_nodes = 0
-	for(var/i in 1 to 499)
+	for(var/i in 1 to 500)
 		var/turf/end = locations[i]
 		old_nodes += AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 		forceMove(end)
 		if(i % 100 == 0)
-			testing("Old: [i]/499 rounds, time elapsed: [world.time - old_time] | Nodes created: [old_nodes]")
+			testing("Old: [i]/500 rounds, time elapsed: [world.time - old_time] | Nodes created: [old_nodes]")
 	testing("Old Time: [world.time - old_time]")
 
 	forceMove(first_start)
 	var/new_time = world.time
 	var/new_nodes = 0
-	for(var/i in 1 to 499)
+	for(var/i in 1 to 500)
 		var/turf/end = locations[i]
 		var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
 		new_nodes += pathfind_datum.start_search()
 		qdel(pathfind_datum)
 		forceMove(end)
 		if(i % 100 == 0)
-			testing("New: [i]/499 rounds, time elapsed: [world.time - new_time] | Nodes created: [new_nodes]")
+			testing("New: [i]/500 rounds, time elapsed: [world.time - new_time] | Nodes created: [new_nodes]")
 
 	testing("New Time: [world.time - new_time]")
 	testing("Done!")
