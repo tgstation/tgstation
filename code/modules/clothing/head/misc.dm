@@ -21,6 +21,8 @@
 	icon_state = "pwig"
 	inhand_icon_state = "pwig"
 
+#define RABBIT_CD_TIME 30 SECONDS
+
 /obj/item/clothing/head/that
 	name = "top-hat"
 	desc = "It's an amish looking hat."
@@ -28,6 +30,39 @@
 	inhand_icon_state = "that"
 	dog_fashion = /datum/dog_fashion/head
 	throwforce = 1
+	/// Cooldown for how often we can pull rabbits out of here
+	COOLDOWN_DECLARE(rabbit_cooldown)
+
+/obj/item/clothing/head/that/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/gun/magic/wand))
+		abracadabra(W, user)
+
+/obj/item/clothing/head/that/proc/abracadabra(obj/item/W, mob/magician)
+	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
+		to_chat("<span class='warning'>You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet...</span>")
+		return
+
+	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
+	playsound(get_turf(src), 'sound/weapons/emitter.ogg')
+	var/datum/effect_system/smoke_spread/quick/smoke = new
+	smoke.set_up(1, src)
+	smoke.start()
+
+	if(prob(10))
+		magician.visible_message("<span class='danger'>[magician] taps [src] with [W], then reaches in and pulls out a bu- wait, those are bees!</span>", "<span class='danger'>You tap [src] with your [W] and pull out... <b>BEES!</b></span>")
+		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
+		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
+			var/mob/living/simple_animal/hostile/poison/bees/barry = new(get_turf(magician))
+			barry.target = magician
+			if(prob(20))
+				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"))
+	else
+		magician.visible_message("<b>[magician]</b> taps [src] with [W], then reaches in and pulls out a bunny! Cute!", "<span class='notice'>You tap [src] with your [W] and pull out a cute bunny!</span>")
+		var/mob/living/simple_animal/chicken/rabbit/bunbun = new(get_turf(magician))
+		bunbun.mob_try_pickup(magician, TRUE)
+
+#undef RABBIT_CD_TIME
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
