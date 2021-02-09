@@ -183,7 +183,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/zipties,
-/obj/item/switchblade,
+/obj/item/melee/transforming/butter_fly,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,

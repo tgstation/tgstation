@@ -32,7 +32,7 @@
 	belt = /obj/item/storage/belt/security/full
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/melee/baton/loaded=1)
-	l_pocket = /obj/item/switchblade
+	l_pocket = /obj/item/melee/transforming/butter_fly
 
 /datum/outfit/centcom/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

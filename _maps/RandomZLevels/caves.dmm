@@ -1450,8 +1450,8 @@
 /area/awaymission/caves/bmp_asteroid)
 "eI" = (
 /obj/structure/closet/crate/trashcart,
-/obj/item/switchblade,
-/obj/item/switchblade,
+/obj/item/melee/transforming/butter_fly,
+/obj/item/melee/transforming/butter_fly,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eJ" = (

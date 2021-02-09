@@ -135,10 +135,10 @@
 /obj/item/melee/transforming/butter_fly/attack_alt(mob/living/victim, mob/living/user, params)
 	if(!COOLDOWN_FINISHED(src, stab_cooldown))
 		to_chat(user, "<span class='warning'>You aren't ready to backstab!</span>")
-		return ALT_ATTACK_CONTINUE_CHAIN
+		return ALT_ATTACK_CANCEL_ATTACK_CHAIN
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You are a pacifist.</span>")
-		return ALT_ATTACK_CONTINUE_CHAIN
+		return ALT_ATTACK_CANCEL_ATTACK_CHAIN
 	/// fast dir checking to check for backstab
 	if(active && (victim.dir == user.dir) && victim.density)
 		///clumsy clown might backstab himself
@@ -150,7 +150,7 @@
 		victim.apply_damage(backstab_damage, def_zone = BODY_ZONE_CHEST, wound_bonus = -5, bare_wound_bonus = 15, sharpness = SHARP_EDGED)
 	else
 	/// face strab
-		attack(victim, user)
+		return ALT_ATTACK_CALL_NORMAL
 	COOLDOWN_START(src, stab_cooldown, stab_cooldown_time)
 
 	return ALT_ATTACK_CONTINUE_CHAIN

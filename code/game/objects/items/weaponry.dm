@@ -339,52 +339,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 0
 	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
 
-/obj/item/switchblade
-	name = "switchblade"
-	icon_state = "switchblade"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	desc = "A sharp, concealable, spring-loaded knife."
-	flags_1 = CONDUCT_1
-	force = 3
-	w_class = WEIGHT_CLASS_SMALL
-	throwforce = 5
-	throw_speed = 3
-	throw_range = 6
-	custom_materials = list(/datum/material/iron=12000)
-	hitsound = 'sound/weapons/genhit.ogg'
-	attack_verb_continuous = list("stubs", "pokes")
-	attack_verb_simple = list("stub", "poke")
-	resistance_flags = FIRE_PROOF
-	///extend the blade
-	var/extended = 0
-
-/obj/item/switchblade/attack_self(mob/user)
-	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	if(extended)
-		force = 20
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
-		icon_state = "switchblade_ext"
-		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = SHARP_EDGED
-	else
-		force = 3
-		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 5
-		icon_state = "switchblade"
-		attack_verb_continuous = list("stubs", "pokes")
-		attack_verb_simple = list("stub", "poke")
-		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = SHARP_NONE
-
-/obj/item/switchblade/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (BRUTELOSS)
-
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
@@ -398,6 +352,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("calls", "rings")
 	attack_verb_simple = list("call", "ring")
 	hitsound = 'sound/weapons/ring.ogg'
+
+/obj/item/switchblade
 
 /obj/item/phone/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
