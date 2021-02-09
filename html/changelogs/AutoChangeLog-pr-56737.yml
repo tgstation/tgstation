@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Fixes some missing sprites for the Possessed Sword, Moonlight Greatsword and Chain Whip nullrods."
+  - imageadd: "Adds new sprites to the wizard ritual knife and veilrenders."
