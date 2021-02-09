@@ -90,12 +90,11 @@
 	if (DOING_INTERACTION(src, "regalrat"))
 		return
 	. = ..()
-	if (target.reagents && target.is_injectable(src, TRUE))
+	if (target.reagents && target.is_injectable(src, allowmobs = TRUE))
 		src.visible_message("<span class='warning'>[src] starts licking [target] passionately!</span>","<span class='notice'>You start licking [target]...</span>")
 		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
-		return
 	else 
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
@@ -120,7 +119,7 @@
 	INVOKE_ASYNC(src, .proc/get_player)
 	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
 	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
-	name = kingdom + " " + title
+	name = "[kingdom] [title]"
 
 
 /**
@@ -322,11 +321,11 @@
 	
 /datum/reagent/rat_spit/overdose_start(mob/living/M)
 	..()
-	var/mob/living/carbon/C = M
-	if (istype(C))
-		to_chat(C, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
-		C.faction |= "rat"
-		C.vomit()
+	var/mob/living/carbon/victim = M
+	if (istype(victim))
+		to_chat(victim, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
+		victim.faction |= "rat"
+		victim.vomit()
 	metabolization_rate = 10 * REAGENTS_METABOLISM 
 
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/C)
