@@ -2,9 +2,10 @@
 /datum/reagent/medicine/c2
 	harmful = TRUE
 	metabolization_rate = 0.2
-	impure_chem = null //NONE of these have impure effects, they're all baked in by creation_purity
-	creation_purity = 0.75//All sources by default are 0.75 - reactions are primed to resolve to 0.8 with no intervention for these.
-	purity = 0.75
+	impure_chem = null //Very few of these have impure effects, they're all baked in by creation_purity
+	inverse_chem = null //Some of these use inverse chems - we're just defining them all to null here to avoid repetition, eventually this will be moved up to parent
+	creation_purity = REAGENT_STANDARD_PUIRTY//All sources by default are 0.75 - reactions are primed to resolve to 0.8 with no intervention for these.
+	purity = REAGENT_STANDARD_PUIRTY
 	failed_chem = /datum/reagent/impurity/medicine_failure
 
 /******BRUTE******/
@@ -92,10 +93,12 @@
 	color = "#ECEC8D" // rgb: 236	236	141
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
+	chemical_flags = REAGENT_SPLITRETAINVOL
+	impure_chem = /datum/reagent/impurity/libitoil
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3*REM)
-	M.adjustBruteLoss(-3*REM)
+	M.adjustBruteLoss((-3*REM)*normalise_creation_purity)
 	..()
 	return TRUE
 
@@ -104,7 +107,11 @@
 	description = "Originally developed as a prototype-gym supliment for those looking for quick workout turnover, this oral medication quickly repairs broken muscle tissue but causes lactic acid buildup, tiring the patient. Overdosing can cause extreme drowsiness. An Influx of nutrients promotes the muscle repair even further."
 	reagent_state = SOLID
 	color = "#FFFF6B"
+	ph = 6
 	overdose_threshold = 20
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/medicine/metafactor //Seems thematically intact
+	//Todo: if/when running/workout skill is added - add inverse chem effects
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-2.25*REM, FALSE)

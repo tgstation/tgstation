@@ -8,7 +8,7 @@
 	//FermiChem vars:
 	required_temp = 250
 	optimal_temp = 1000
-	overheat_temp = 650 
+	overheat_temp = 650
 	optimal_ph_min = 5
 	optimal_ph_max = 9.5
 	determin_ph_range = 4
@@ -32,7 +32,7 @@
 			new /obj/effect/hotspot(holder.my_atom.loc)
 			holder.remove_reagent(/datum/reagent/medicine/c2/helbital, 10)
 			holder.chem_temp += 5
-			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [src] suddenly lets out a hearty burst of flame, evaporating some of the contents!</span>")	
+			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [src] suddenly lets out a hearty burst of flame, evaporating some of the contents!</span>")
 
 /datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
 	. = ..()
@@ -50,10 +50,36 @@
 /datum/chemical_reaction/medicine/libital
 	results = list(/datum/reagent/medicine/c2/libital = 3)
 	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/oxygen = 1, /datum/reagent/nitrogen = 1)
+	required_temp = 225
+	optimal_temp = 700
+	overheat_temp = 840
+	optimal_ph_min = 5
+	optimal_ph_max = 10
+	determin_ph_range = 4
+	temp_exponent_factor = 1.75
+	ph_exponent_factor = 1
+	thermic_constant = 75
+	H_ion_release = 4
+	rate_up_lim = 40
+	purity_min = 0
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 
 /datum/chemical_reaction/medicine/probital
 	results = list(/datum/reagent/medicine/c2/probital = 4)
 	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
+	required_temp = 225
+	optimal_temp = 700
+	overheat_temp = 850
+	optimal_ph_min = 5
+	optimal_ph_max = 14
+	determin_ph_range = 2
+	temp_exponent_factor = 0.75
+	ph_exponent_factor = 4
+	thermic_constant = 50
+	H_ion_release = 4
+	rate_up_lim = 30
+	purity_min = 0
+	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
 
 /*****BURN*****/
 

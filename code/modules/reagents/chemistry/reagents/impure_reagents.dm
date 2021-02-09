@@ -7,9 +7,12 @@
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
-	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT 
+	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
 	ph = 3
 	overdose_threshold = 0 //So that they're shown as a problem (?)
+	impure_chem = null
+	inverse_chem = null
+	failed_chem = null
 
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/C)
@@ -60,6 +63,8 @@
 			C.adjustToxLoss(-1)
 		if("oxy")
 			C.adjustOxyLoss(-1)
+
+////// C2 medications
 //// Helbital
 
 //Inverse:
@@ -70,7 +75,7 @@
 
 //Warns you about the impenting hands
 /datum/reagent/impurity/helgrasp/on_mob_add(mob/living/L, amount)
-	. = ..()	
+	. = ..()
 	to_chat(L, "<span class='hierophant'>You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!</span>")
 	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 
@@ -89,3 +94,28 @@
 	hand.fire()
 
 //Should I make it so that OD on this literally drags you to hell (lavaland)?
+
+////libital
+
+//Impure
+
+/datum/reagent/impurity/libitoil
+	name = "Libitoil"
+	description = "Temporarilly decreases a patient's ability to process alcohol."
+	chemical_flags = REAGENT_DONOTSPLIT
+
+/datum/reagent/impurity/libitoil/on_mob_add(mob/living/L, amount)
+	. = ..()
+	var/mob/living/carbon/carbmob = L
+	if(!carbmob)
+		return
+	var/obj/item/organ/liver/this_liver = carbmob.getorganslot(ORGAN_SLOT_LIVER)
+	this_liver.alcohol_tolerance *= 2
+
+/datum/reagent/impurity/libitoil/on_mob_delete(mob/living/L)
+	. = ..()
+	var/mob/living/carbon/carbmob = L
+	if(!carbmob)
+		return
+	var/obj/item/organ/liver/this_liver = carbmob.getorganslot(ORGAN_SLOT_LIVER)
+	this_liver.alcohol_tolerance /= 2
