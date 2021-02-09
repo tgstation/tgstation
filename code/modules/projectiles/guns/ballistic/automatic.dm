@@ -164,7 +164,7 @@
 	underbarrel = new /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_icon()
 
-/obj/item/gun/ballistic/automatic/m90/afterattack_alt(atom/target, mob/living/user, flag, params)
+/obj/item/gun/ballistic/automatic/m90/afterattack_secondary(atom/target, mob/living/user, flag, params)
 	underbarrel.afterattack(target, user, flag, params)
 
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
