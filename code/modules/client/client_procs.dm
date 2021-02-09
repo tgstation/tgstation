@@ -497,6 +497,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 		movingmob = null
 	active_mousedown_item = null
+	SSambience.ambience_listening_clients -= src
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
@@ -634,7 +635,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	qdel(query_log_connection)
 
 	SSserver_maint.UpdateHubStatus()
-	SSambience.ambience_listening_clients -= src
 
 	if(new_player)
 		player_age = -1
