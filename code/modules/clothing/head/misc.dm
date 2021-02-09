@@ -44,7 +44,7 @@
 		return
 
 	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
-	playsound(get_turf(src), 'sound/weapons/emitter.ogg')
+	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
 	var/datum/effect_system/smoke_spread/quick/smoke = new
 	smoke.set_up(1, src)
 	smoke.start()
