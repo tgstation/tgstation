@@ -8705,7 +8705,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Service Hall Maintenance";
-	req_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
