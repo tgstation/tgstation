@@ -13,6 +13,7 @@
 	desc = "It has some sort of a tube at the end of its tail."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
+	base_icon_state = "facehugger"
 	inhand_icon_state = "facehugger"
 	worn_icon_state = "facehugger"
 	w_class = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of w_class below 4
@@ -111,17 +112,17 @@
 	if(!.)
 		return
 	if(stat == CONSCIOUS)
-		icon_state = "[initial(icon_state)]_thrown"
+		icon_state = "[base_icon_state]_thrown"
 		addtimer(CALLBACK(src, .proc/clear_throw_icon_state), 15)
 
 /obj/item/clothing/mask/facehugger/proc/clear_throw_icon_state()
-	if(icon_state == "[initial(icon_state)]_thrown")
-		icon_state = "[initial(icon_state)]"
+	if(icon_state == "[base_icon_state]_thrown")
+		icon_state = "[base_icon_state]"
 
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(stat == CONSCIOUS)
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[base_icon_state]"
 		Leap(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
@@ -212,8 +213,8 @@
 								"<span class='userdanger'>[src] falls limp after violating your face!</span>")
 
 		Die()
-		icon_state = "[initial(icon_state)]_impregnated"
-		worn_icon_state = "[initial(icon_state)]_impregnated"
+		icon_state = "[base_icon_state]_impregnated"
+		worn_icon_state = "[base_icon_state]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
@@ -230,16 +231,16 @@
 		return
 
 	stat = CONSCIOUS
-	icon_state = "[initial(icon_state)]"
-	worn_icon_state = "[initial(icon_state)]"
+	icon_state = "[base_icon_state]"
+	worn_icon_state = "[base_icon_state]"
 
 /obj/item/clothing/mask/facehugger/proc/GoIdle()
 	if(stat == DEAD || stat == UNCONSCIOUS)
 		return
 
 	stat = UNCONSCIOUS
-	icon_state = "[initial(icon_state)]_inactive"
-	worn_icon_state = "[initial(icon_state)]_inactive"
+	icon_state = "[base_icon_state]_inactive"
+	worn_icon_state = "[base_icon_state]_inactive"
 
 	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
@@ -247,8 +248,8 @@
 	if(stat == DEAD)
 		return
 
-	icon_state = "[initial(icon_state)]_dead"
-	worn_icon_state = "[initial(icon_state)]_dead"
+	icon_state = "[base_icon_state]_dead"
+	worn_icon_state = "[base_icon_state]_dead"
 	inhand_icon_state = "facehugger_inactive"
 	stat = DEAD
 
