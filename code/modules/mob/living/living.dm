@@ -83,8 +83,11 @@
 		return TRUE
 
 	var/they_can_move = TRUE
+	var/their_combat_mode = FALSE
+
 	if(isliving(M))
 		var/mob/living/L = M
+		their_combat_mode = L.combat_mode
 		they_can_move = L.mobility_flags & MOBILITY_MOVE
 		//Also spread diseases
 		for(var/thing in diseases)
@@ -122,12 +125,12 @@
 				mob_swap = TRUE
 		else
 			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
+			if(M.pulledby == src && !too_strong)
 				mob_swap = TRUE
 			else if(
 				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
-				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || M.a_intent == INTENT_HELP) &&\
-				(HAS_TRAIT(src, TRAIT_RESTRAINED) || a_intent == INTENT_HELP)
+				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
+				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
 			)
 				mob_swap = TRUE
 		if(mob_swap)
@@ -168,8 +171,10 @@
 		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
 			return TRUE
 	//If they're a human, and they're not in help intent, block pushing
-	if(ishuman(M) && (M.a_intent != INTENT_HELP))
-		return TRUE
+	if(ishuman(M))
+		var/mob/living/carbon/human/human = M
+		if(human.combat_mode)
+			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
@@ -183,7 +188,7 @@
 	if(len)
 		for(var/obj/item/I in held_items)
 			if(!holding.len)
-				holding += "They are holding \a [I]"
+				holding += "[p_they(TRUE)] [p_are()] holding \a [I]"
 			else if(held_items.Find(I) == len)
 				holding += ", and \a [I]."
 			else
@@ -205,13 +210,23 @@
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
-	var/t = get_dir(src, AM)
+	var/dir_to_target = get_dir(src, AM)
+
+	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
+	// This can happen when a player is stood on the same turf as a directional window. All attempts to push
+	// the window will fail as get_dir will return 0 and the player will be unable to move the window when
+	// it should be pushable.
+	// In this scenario, we will use the facing direction of the /mob/living attempting to push the atom as
+	// a fallback.
+	if(!dir_to_target)
+		dir_to_target = dir
+
 	var/push_anchored = FALSE
 	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
-		if(move_crush(AM, move_force, t))
+		if(move_crush(AM, move_force, dir_to_target))
 			push_anchored = TRUE
 	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
-		if(force_push(AM, move_force, t, push_anchored))
+		if(force_push(AM, move_force, dir_to_target, push_anchored))
 			push_anchored = TRUE
 	if((AM.anchored && !push_anchored) || (force < (AM.move_resist * MOVE_FORCE_PUSH_RATIO)))
 		now_pushing = FALSE
@@ -219,7 +234,7 @@
 	if (istype(AM, /obj/structure/window))
 		var/obj/structure/window/W = AM
 		if(W.fulltile)
-			for(var/obj/structure/window/win in get_step(W,t))
+			for(var/obj/structure/window/win in get_step(W, dir_to_target))
 				now_pushing = FALSE
 				return
 	if(pulling == AM)
@@ -227,8 +242,8 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-	if(AM.Move(get_step(AM.loc, t), t, glide_size))
-		Move(get_step(loc, t), t)
+	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
+		Move(get_step(loc, dir_to_target), dir_to_target)
 	if(current_dir)
 		AM.setDir(current_dir)
 	now_pushing = FALSE
@@ -290,6 +305,7 @@
 			M.LAssailant = usr
 		if(isliving(M))
 			var/mob/living/L = M
+
 			SEND_SIGNAL(M, COMSIG_LIVING_GET_PULLED, src)
 			//Share diseases that are spread by touch
 			for(var/thing in diseases)
@@ -342,7 +358,7 @@
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = base_pixel_x, pixel_y = base_pixel_y, 1)
+	animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y, 1)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -352,7 +368,7 @@
 
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
-	else
+	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
 		stop_pulling()
 
 /mob/living/stop_pulling()
@@ -1890,21 +1906,24 @@
  * It is also used to process martial art attacks by nonhumans, even against humans
  * Human vs human attacks are handled in species code right now.
  */
-/mob/living/proc/apply_martial_art(mob/living/target)
+/mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab)
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
+		return FALSE
+	if(ishuman(target) && ishuman(src)) //Human vs human are handled in species code
 		return FALSE
 	var/datum/martial_art/style = mind?.martial_art
 	var/attack_result = FALSE
 	if (style)
-		switch (a_intent)
-			if (INTENT_GRAB)
-				attack_result = style.grab_act(src, target)
-			if (INTENT_HARM)
-				if (HAS_TRAIT(src, TRAIT_PACIFISM))
-					return FALSE
-				attack_result = style.harm_act(src, target)
-			if (INTENT_DISARM)
-				attack_result = style.disarm_act(src, target)
-			if (INTENT_HELP)
-				attack_result = style.help_act(src, target)
+		if (is_grab)
+			attack_result = style.grab_act(src, target)
+		if(modifiers && modifiers["right"])
+			attack_result = style.disarm_act(src, target)
+		if(combat_mode)
+			if (HAS_TRAIT(src, TRAIT_PACIFISM))
+				return FALSE
+			attack_result = style.harm_act(src, target)
+		else
+			attack_result = style.help_act(src, target)
+
+
 	return attack_result
