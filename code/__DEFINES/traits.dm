@@ -242,6 +242,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COAGULATING		"coagulating" //from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE	"antennae"
+/// Blowing kisses actually does damage to the victim
+#define TRAIT_KISS_OF_DEATH	"kiss_of_death"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
@@ -350,12 +352,21 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BADTOUCH			"bad_touch"
 #define TRAIT_EXTROVERT			"extrovert"
 #define TRAIT_INTROVERT			"introvert"
+#define TRAIT_ANXIOUS			"anxious"
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
 #define TRAIT_DRIED "trait_dried"
 //Trait for customizable reagent holder
 #define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
+
+/* Traits for ventcrawling.
+ * Both give access to ventcrawling, but *_NUDE requires the user to be
+ * wearing no clothes and holding no items. If both present, *_ALWAYS
+ * takes precedence.
+ */
+#define TRAIT_VENTCRAWLER_ALWAYS "ventcrawler_always"
+#define TRAIT_VENTCRAWLER_NUDE "ventcrawler_nude"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
@@ -407,6 +418,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LYING_DOWN_TRAIT "lying-down"
 /// Trait associated to lacking electrical power.
 #define POWER_LACK_TRAIT "power-lack"
+/// Trait associated with mafia
+#define MAFIA_TRAIT "mafia"
+/// Trait associated with highlander
+#define HIGHLANDER_TRAIT "highlander"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
@@ -479,6 +494,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ELEMENT_TRAIT "element_trait"
 /// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
 #define BERSERK_TRAIT "berserk_trait"
+/// Trait granted by lipstick
+#define LIPSTICK_TRAIT "lipstick_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
