@@ -68,7 +68,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	///How many people we've hit with clients
 	var/num_sentient_people_hit = 0
 	/// The rod levels up with each kill, increasing in size and auto-renaming itself.
-	var/dnd = TRUE
+	var/dnd_style_level_up = TRUE
 
 /obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
 	. = ..()
@@ -229,7 +229,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			num_sentient_mobs_hit++
 			if(iscarbon(smeared_mob))
 				num_sentient_people_hit++
-			if(dnd)
+			if(dnd_style_level_up)
 				transform = transform.Scale(1.005, 1.005)
 				name = "[initial(name)] of sentient slaying +[num_sentient_mobs_hit]"
 
