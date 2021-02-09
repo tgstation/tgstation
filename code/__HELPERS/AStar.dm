@@ -150,7 +150,6 @@ Actual Adjacent procs :
 	openc[start] = cur
 	//then run the main loop
 	var/total_tiles
-
 	while(!open.IsEmpty() && !path)
 		cur = open.Pop() //get the lower f turf in the open list
 		//get the lower f node on the open list
@@ -159,7 +158,7 @@ Actual Adjacent procs :
 		var/closeenough
 		if(mintargetdist)
 			closeenough = call(cur.source,dist)(end) <= mintargetdist
-		cur.source.color = COLOR_BLUE
+
 
 		//found the target turf (or close enough), let's create the path to it
 		if(cur.source == end || closeenough)
@@ -168,7 +167,6 @@ Actual Adjacent procs :
 			while(cur.prevNode)
 				cur = cur.prevNode
 				path.Add(cur.source)
-				cur.source.color = COLOR_YELLOW
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		if((!maxnodedepth)||(cur.nt <= maxnodedepth))//if too many steps, don't process that path
@@ -180,8 +178,6 @@ Actual Adjacent procs :
 						var/datum/pathnode/CN = openc[T]  //current checking turf
 						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
 						var/newg = cur.g + call(cur.source,dist)(T)
-						var/turf/next_tu = T
-						next_tu.color = COLOR_RED
 						if(CN)
 						//is already in open list, check if it's a better way from the current turf
 							CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
@@ -203,7 +199,6 @@ Actual Adjacent procs :
 			path.Swap(i,path.len-i+1)
 	openc = null
 	//cleaning after us
-	testing("Old path done with [total_tiles] tiles popped")
 	return path
 
 //Returns adjacent turfs in cardinal directions that are reachable
