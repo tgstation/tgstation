@@ -6,11 +6,14 @@
 /obj/item/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	inhand_icon_state = "knife"
-	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "bone_blade"
+	inhand_icon_state = "bone_blade"
+	worn_icon_state = "bone_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -87,7 +90,9 @@
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
-	icon_state = "clownrender"
+	icon_state = "banana_blade"
+	inhand_icon_state = "banana_blade"
+	worn_icon_state = "render"
 
 /obj/item/veilrender/honkrender/honkhulkrender
 	name = "superior honk render"
@@ -96,7 +101,6 @@
 	spawn_amt = 5
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
-	icon_state = "clownrender"
 
 #define TEAR_IN_REALITY_CONSUME_RANGE 3
 #define TEAR_IN_REALITY_SINGULARITY_SIZE STAGE_FOUR
