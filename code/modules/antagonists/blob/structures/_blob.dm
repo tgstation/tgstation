@@ -104,6 +104,9 @@
 
 /obj/structure/blob/proc/ConsumeTile()
 	for(var/atom/A in loc)
+		if(isliving(A) && overmind) // Make sure to inject strain-reagents with automatic attacks when needed.
+			overmind.blobstrain.attack_living(A)
+			continue // Don't smack them twice though
 		A.blob_act(src)
 	if(iswallturf(loc))
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
