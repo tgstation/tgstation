@@ -151,7 +151,10 @@
 			UnarmedAttack(A,1)
 	else
 		if(W)
-			W.afterattack(A,src,0,params)
+			if(modifiers["right"])
+				W.afterattack_secondary(A,src,0,params)
+			else
+				W.afterattack(A,src,0,params)
 		else
 			RangedAttack(A,params)
 
