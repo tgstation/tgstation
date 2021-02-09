@@ -50,7 +50,7 @@
 	mood_change = -6
 
 /datum/mood_event/disgusted
-	description = "<span class='boldwarning'>Oh god that's disgusting...</span>\n"
+	description = "<span class='boldwarning'>Oh god, that's disgusting...</span>\n"
 	mood_change = -8
 
 /datum/mood_event/disgust/bad_smell

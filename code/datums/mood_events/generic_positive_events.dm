@@ -102,7 +102,7 @@
 	hidden = TRUE
 
 /datum/mood_event/heretics
-	description = "<span class='nicegreen'>THE HIGHER I RISE , THE MORE I SEE.</span>\n"
+	description = "<span class='nicegreen'>THE HIGHER I RISE, THE MORE I SEE.</span>\n"
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
@@ -217,12 +217,12 @@
 /datum/mood_event/down_low
 	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
 	mood_change = 4
-	timeout = 1.5 MINUTES
+	timeout = 90 SECONDS
 
 /datum/mood_event/aquarium_positive
-	description = "<span class='nicegreen'>Watching fish in aquarium is calming.</span>\n"
+	description = "<span class='nicegreen'>Watching fish in an aquarium is calming.</span>\n"
 	mood_change = 3
-	timeout = 1.5 MINUTES
+	timeout = 90 SECONDS
 
 /datum/mood_event/kiss
 	description = "<span class='nicegreen'>Someone blew a kiss at me, I must be a real catch!</span>\n"
