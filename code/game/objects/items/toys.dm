@@ -1561,11 +1561,18 @@
 	/// Can the player use this yet?
 	var/usable = FALSE
 	/// Associated list of intents to their sounds
-	var/static/list/sound_by_intent = list(HELP = 'sound/items/intents/Help.ogg',
+	var/static/list/sound_by_intent = list(
+		HELP = 'sound/items/intents/Help.ogg',
 		DISARM = 'sound/items/intents/Disarm.ogg',
 		GRAB = 'sound/items/intents/Grab.ogg',
 		HARM = 'sound/items/intents/Harm.ogg',
 		)
+
+/obj/item/toy/intento/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, "<span class='notice'>You short-circuit [src], activating the negative feedback loop.</span>")
 
 /obj/item/toy/intento/attack_self(mob/user, modifiers) //added params to attack_self, the alternative is registering a signal on clickon but i was advised not to
 	..()
@@ -1611,9 +1618,11 @@
 	user.client.give_award(/datum/award/score/intento_score, user, award_score, TRUE)
 	say("GAME OVER. Your score was [score]!")
 	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)
+	if(obj_flags & EMAGGED)
+		retaliate(current_sequence.Copy(), user)
 	score = 0
-	current_sequence.Cut()
 	player_sequence.Cut()
+	current_sequence.Cut()
 	on = FALSE
 
 /obj/item/toy/intento/proc/render(input)
@@ -1629,6 +1638,27 @@
 		sleep(0.6 SECONDS)
 		render(input)
 	usable = TRUE
+
+/obj/item/toy/intento/proc/retaliate(list/combo_inputs, mob/living/victim)
+	ADD_TRAIT(src, TRAIT_NODROP, "intento")
+	to_chat(victim, "<span class='userdanger'>Bad mistake.</span>")
+	for(var/input in combo_inputs)
+		sleep(0.6 SECONDS)
+		render(input)
+		switch(input)
+			if(HELP)
+				to_chat(victim, "<span class='danger'>[src] hugs you to make you feel better!</span>")
+				victim.Dizzy(20)
+			if(DISARM)
+				to_chat(victim, "<span class='danger'>You're knocked down from a shove by [src]!</span>")
+				victim.Knockdown(20)
+			if(GRAB)
+				to_chat(victim, "<span class='danger'>[src] grabs you aggressively!</span>")
+				victim.Stun(20)
+			if(HARM)
+				to_chat(victim, "<span class='danger'>You're punched by [src]!</span>")
+				victim.apply_damage(rand(20, 30), BRUTE)
+	REMOVE_TRAIT(src, TRAIT_NODROP, "intento")
 
 #undef HELP
 #undef DISARM
