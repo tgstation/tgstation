@@ -91,7 +91,7 @@
 	var/area/scanned_area
 	show_written_words = FALSE
 
-/obj/item/paper/report/proc/generate_report(var/area/scan_area)
+/obj/item/paper/report/proc/generate_report(area/scan_area)
 	scanned_area = scan_area
 	icon_state = "slipfull"
 	desc = "Contains detailed information about the station's current status."
