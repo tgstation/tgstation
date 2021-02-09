@@ -34,7 +34,8 @@
 	tastes = list("cheese" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	var/rat_heal = 10	// used to determine how much health rats/regal rats recover when they eat it.
+	/// used to determine how much health rats/regal rats recover when they eat it.
+	var/rat_heal = 10
 
 /obj/item/food/cheese/Initialize()
 	. = ..()
