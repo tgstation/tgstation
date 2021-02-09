@@ -9,13 +9,61 @@
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
-	var/emagged = FALSE
+	var/emagged = FALSE ///Bool of if this app has already been emagged
+	var/list/loglist = list() ///A list to copy a borg's IC log list into
+	var/mob/living/silicon/robot/DL_source ///reference of a borg if we're downloading a log, or null if not.
+	var/DL_progress = -1 ///Progress of current download, 0 to 100, -1 for no current download
+
+/datum/computer_file/program/borg_monitor/Destroy()
+	loglist = null
+	DL_source = null
+	return ..()
+
+/datum/computer_file/program/borg_monitor/kill_program()
+	loglist = null //Not everything is saved if you close an app
+	DL_source = null
+	DL_progress = 0
+	return ..()
 
 /datum/computer_file/program/borg_monitor/run_emag()
 	if(emagged)
 		return FALSE
 	emagged = TRUE
 	return TRUE
+
+/datum/computer_file/program/borg_monitor/tap(atom/A, mob/living/user, params)
+	. = FALSE
+	var/mob/living/silicon/robot/borgo = A
+	if(!istype(borgo) || !borgo.modularInterface)
+		return
+	DL_source = borgo
+	DL_progress = 0
+	return TRUE
+
+/datum/computer_file/program/borg_monitor/process_tick()
+	if(!DL_source)
+		DL_progress = -1
+		return
+
+	if(!computer.Adjacent(DL_source))
+		DL_source = null
+		DL_progress = -1
+		return
+
+	if(DL_progress == 100)
+		if(!DL_source || !DL_source.modularInterface) //sanity check, in case the borg or their modular tablet poofs somehow
+			loglist = list("Log of unit [DL_source.name]")
+			loglist += "Error -- Download corrupted."
+		else
+			loglist = DL_source.modularInterface.borglog.Copy()
+			loglist.Insert(1,"Log of unit [DL_source.name]")
+		DL_progress = -1
+		DL_source = null
+		for(var/datum/tgui/window in SStgui.open_uis_by_src[src])
+			window.send_full_update()
+		return
+
+	DL_progress += 25
 
 /datum/computer_file/program/borg_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -48,6 +96,12 @@
 			ref = REF(R)
 		)
 		data["cyborgs"] += list(cyborg_data)
+		data["DL_progress"] = DL_progress
+	return data
+
+/datum/computer_file/program/borg_monitor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["borglog"] = loglist
 	return data
 
 /datum/computer_file/program/borg_monitor/ui_act(action, params)

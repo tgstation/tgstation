@@ -78,6 +78,11 @@
 	physical = null
 	return ..()
 
+/obj/item/modular_computer/pre_attack(atom/A, mob/living/user, params)
+	if((!user.combat_mode) && active_program?.tap(A, user, params))
+		return
+	..()
+
 /obj/item/modular_computer/AltClick(mob/user)
 	..()
 	if(issilicon(user))
