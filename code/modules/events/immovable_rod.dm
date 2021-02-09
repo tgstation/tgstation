@@ -53,6 +53,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	density = TRUE
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	generic_canpass = FALSE
 	var/mob/living/wizard
 	var/z_original = 0
 	var/destination
@@ -67,7 +68,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/num_sentient_people_hit = 0
 
 /obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
-	..()
+	. = ..()
 	SSaugury.register_doom(src, 2000)
 
 	destination = end
@@ -101,19 +102,73 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(istype(ghost))
 			ghost.ManualFollow(src)
 
+// Nothing moves the immovable rod.
+/obj/effect/immovablerod/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
+	. = ..()
+	if(.)
+		return
+
+	// Let's check if we're trying to smash through something indestructible.
+	if(isobj(blocker))
+		var/obj/blocking_obj = blocker
+		if(blocking_obj.resistance_flags & INDESTRUCTIBLE)
+			return TRUE
+
+	if(isindestructiblewall(blocker))
+		return TRUE
+
 /obj/effect/immovablerod/Moved()
-	if(special_target && loc == get_turf(special_target))
-		// We've reached our special target. Let's give them a warm embrace if we can.
-		if(!QDELETED(special_target))
-			Bump(special_target)
-		complete_trajectory()
+	// If we have a special target, we should definitely make an effort to go find them.
+	if(special_target)
+		var/turf/target_turf = get_turf(special_target)
+
+		// Did they escape the z-level? Let's see if we can chase them down!
+		var/z_diff = target_turf.z - z
+
+		if(z_diff)
+			var/direction = z_diff > 0 ? UP : DOWN
+			var/turf/target_z_turf = get_step_multiz(src, direction)
+
+			visible_message("<span class='danger'>[src] phases out of reality.</span>")
+
+			if(!do_teleport(src, target_z_turf))
+				// We failed to teleport. Might as well admit defeat.
+				qdel(src)
+				return
+
+			visible_message("<span class='danger'>[src] phases into reality.</span>")
+			walk_towards(src, special_target, 1)
+
+		if(loc == target_turf)
+			// We've reached our special target. Let's give them a warm embrace if we can.
+			if(!QDELETED(special_target))
+				Bump(special_target)
+			complete_trajectory()
+
+		return ..()
+
+	// If we have a destination turf, let's make sure it's also still valid.
+	if(destination)
+		var/turf/target_turf = get_turf(destination)
+
+		// Did an oopsie happen? Let's just get a new turf to head towards.
+		if(target_turf.z != z)
+			complete_trajectory()
+			return ..()
+
+		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
+		// Ordinarily this won't happen as the average destination is the edge of the map and
+		// the rod will auto transition to a new z-level.
+		if(loc == get_turf(destination))
+			qdel(src)
+			return
+
 	return ..()
 
 /obj/effect/immovablerod/proc/complete_trajectory()
-	//We hit what we wanted to hit, time to go.
+	// We hit what we wanted to hit, time to go.
 	special_target = null
 	destination = get_edge_target_turf(src, dir)
-	walk(src, 0)
 	walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/singularity_act()
@@ -131,7 +186,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		complete_trajectory()
 
 	// If rod meets rod, they collapse into a singularity. Yes, this means that if two wizard rods collide,
-	// they collapse into a singulo.
+	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message("<span class='danger'>[src] collides with [clong]! This cannot end well.</span>")
 		var/datum/effect_system/smoke_spread/smoke = new
@@ -145,17 +200,17 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	// If we Bump into a turf, turf go boom.
 	if(isturf(clong))
 		SSexplosions.medturf += clong
-		return
+		return ..()
 
 	// If we Bump into a living thing, living thing goes splat.
 	if(isliving(clong))
 		penetrate(clong)
-		return
+		return ..()
 
 	// If we Bump into anything else, anything thing goes boom.
 	if(isatom(clong))
 		SSexplosions.med_mov_atom += clong
-		return
+		return ..()
 
 	CRASH("[src] Bump()ed into non-atom thing [clong] ([clong.type])")
 
