@@ -12,29 +12,67 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	/// The current scan mode of the plant analyzer. STATS on left click, CHEMS on right click.
 	var/scan_mode = PLANT_SCANMODE_STATS
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
-	. += "<span class='notice'>Activate it in your hand to change \the [src] between a growth statistics mode and a chemical reagents mode.</span>"
+	. += "<span class='notice'>Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.</span>"
 
-/obj/item/plant_analyzer/attack_self(mob/user)
+/// Try to scan something we hit with left click.
+/obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
-	scan_mode = !scan_mode
-	to_chat(user, "<span class='notice'>You switch [src] to [scan_mode == PLANT_SCANMODE_CHEMICALS ? "scan for chemical reagents and traits" : "scan for plant growth statistics"].</span>")
+	scan_mode = PLANT_SCANMODE_STATS
+	return try_scan(target, user)
 
-/obj/item/plant_analyzer/attack(mob/living/M, mob/living/carbon/human/user)
+/// Set our scan mode to chemicals on right click and continue the attack chain (goes to pre_attack)
+/obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
+	scan_mode = PLANT_SCANMODE_CHEMICALS
+	return try_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/item/plant_analyzer/attack(mob/living/scanned_mob, mob/living/carbon/human/user)
 	//Checks if target is a podman
-	if(ispodperson(M))
-		user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
-							"<span class='notice'>You analyze [M]'s vitals.</span>")
-		if(scan_mode == PLANT_SCANMODE_STATS)
-			healthscan(user, M, advanced = TRUE)
-		else
-			chemscan(user, M)
-		add_fingerprint(user)
-		return
-	return ..()
+	if(!ispodperson(scanned_mob))
+		return ..()
+
+	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s vitals.</span>", \
+						"<span class='notice'>You analyze [scanned_mob]'s vitals.</span>")
+	healthscan(user, scanned_mob, advanced = TRUE)
+	add_fingerprint(user)
+	return
+
+/obj/item/plant_analyzer/attack_secondary(mob/living/scanned_mob, mob/living/user)
+	if(!ispodperson(scanned_mob))
+		return ..()
+	chemscan(user, scanned_mob)
+	add_fingerprint(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/plant_analyzer/proc/try_scan(atom/scan_target, mob/user)
+	var/mob/living/living_user = user
+	if(!isobj(scan_target) || living_user.combat_mode)
+		return FALSE
+
+	return do_scan(scan_target, user)
+
+/obj/item/plant_analyzer/proc/do_scan(atom/scan_target, mob/user)
+	if(istype(scan_target, /obj/machinery/hydroponics))
+		to_chat(user, scan_tray(scan_target))
+		return TRUE
+	if(istype(scan_target, /obj/structure/glowshroom))
+		var/obj/structure/glowshroom/shroom_plant = scan_target
+		to_chat(user, scan_plant(shroom_plant.myseed))
+		return TRUE
+	if(istype(scan_target, /obj/item/graft))
+		to_chat(user, get_graft_text(scan_target))
+		return TRUE
+	if(isitem(scan_target))
+		var/obj/item/scanned_object = scan_target
+		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
+			to_chat(user, scan_plant(scanned_object))
+			return TRUE
+
+	return FALSE
 
 /**
  * This proc is called when we scan a hydroponics tray or soil.
@@ -76,8 +114,7 @@
 	var/returned_message = "<span class='info'>*---------*\nThis is \a <span class='name'>[scanned_object]</span>.\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
-		var/obj/item/grown/scanned_plant = scanned_object
-		our_seed = scanned_plant.seed
+		our_seed = scanned_object.get_plant_seed()
 
 	switch(scan_mode)
 		if(PLANT_SCANMODE_STATS)

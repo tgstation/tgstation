@@ -596,11 +596,6 @@
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 			return
 
-	else if(istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = O
-		to_chat(user, plant_analyzer.scan_tray(src))
-		return
-
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
