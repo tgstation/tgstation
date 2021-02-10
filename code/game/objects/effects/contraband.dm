@@ -615,4 +615,10 @@
 	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
 	icon_state = "poster36_legit"
 
+/obj/structure/sign/poster/official/there_is_no_gas_giant
+	name = "There Is No Gas Giant"
+	desc = "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
+	// And yet people still believe...
+	icon_state = "poster37_legit"
+
 #undef PLACE_SPEED
