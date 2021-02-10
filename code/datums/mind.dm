@@ -85,6 +85,8 @@
 
 	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
 	var/list/addiction_points
+	///Assoc list of active addictions
+	var/list/withdrawal_cycles
 	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of cycles they have been addicted
 	var/list/withdrawal_cycles
 

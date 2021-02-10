@@ -10,4 +10,4 @@
 
 /datum/withdrawal/proc/on_gain_addiction_points(/datum/mind/victim_mind)
 	new_addiction_point_amount = victim_mind.addiction_points[src.type]
-	if(mind)
+	if(victim_mind.with)
