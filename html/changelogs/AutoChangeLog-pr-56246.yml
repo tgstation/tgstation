@@ -1,4 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "fixed the rod duplication bug using reinforced floors and disposals. disposal ejections now properly break floor reinforcement, dropping you just 1 rod."

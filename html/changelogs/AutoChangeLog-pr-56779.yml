@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - rscadd: "Chemical scan is now on right click for health analyzer, removes it as a toggle."

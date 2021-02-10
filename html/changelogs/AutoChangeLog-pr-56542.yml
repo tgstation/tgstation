@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes: 
-  - rscadd: "Added a button to select how multiple rules applied in a single Nanite program (AND, OR logic)"
