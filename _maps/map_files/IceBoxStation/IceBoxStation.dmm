@@ -20111,6 +20111,9 @@
 /area/science/test_area)
 "bIZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "bJc" = (
@@ -29533,11 +29536,11 @@
 /turf/open/floor/iron/dark,
 /area/science/genetics)
 "eGj" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 5
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/engineering/atmos)
+/area/icemoon/surface/outdoors)
 "eGU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2{
 	dir = 8
@@ -38332,6 +38335,12 @@
 	},
 /turf/open/floor/iron,
 /area/command/bridge)
+"kWf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors)
 "kWH" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -38617,6 +38626,13 @@
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron/white,
 /area/science/mixing)
+"lni" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors)
 "lnM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -39743,6 +39759,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/commons/locker)
+"mbN" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors)
 "mdh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -42160,6 +42183,13 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
 /area/service/hydroponics)
+"nIF" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors)
 "nIQ" = (
 /obj/machinery/processor/slime,
 /turf/open/floor/iron,
@@ -49056,6 +49086,12 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
+"sOq" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/engineering/atmos)
 "sOs" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -90570,7 +90606,7 @@ qnI
 nOx
 rpL
 mqM
-bHV
+mbN
 hZh
 xhX
 eeh
@@ -90827,7 +90863,7 @@ rLU
 ivF
 uYt
 vqw
-pjX
+kWf
 riF
 nVN
 mwT
@@ -91084,7 +91120,7 @@ pwx
 dpn
 jZW
 nqb
-buv
+lni
 hZh
 vfP
 eeh
@@ -91341,7 +91377,7 @@ xFV
 ivF
 rLU
 vqw
-pjX
+kWf
 ccm
 ccm
 ccm
@@ -91855,7 +91891,7 @@ pjs
 sWG
 qpg
 vqw
-pjX
+kWf
 riF
 jnK
 uqM
@@ -92369,7 +92405,7 @@ ojf
 ojf
 fsN
 ojf
-pjX
+kWf
 ccm
 ccm
 ccm
@@ -92626,7 +92662,7 @@ bAi
 ckR
 tWV
 ckR
-bAi
+nIF
 bAi
 bAi
 bAi
@@ -92883,7 +92919,7 @@ pjX
 xjx
 nxB
 xjx
-boP
+sOq
 boP
 boP
 boP
