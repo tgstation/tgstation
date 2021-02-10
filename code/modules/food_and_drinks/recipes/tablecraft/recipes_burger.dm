@@ -77,7 +77,7 @@
 	reqs = list(
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/bun = 1,
-		/obj/item/food/cheesewedge = 1
+		/obj/item/food/cheese = 1
 	)
 	result = /obj/item/food/burger/fish
 	subcategory = CAT_BURGER
@@ -222,7 +222,7 @@
 	reqs = list(
 		/obj/item/food/patty/plain = 3,
 		/obj/item/food/bun = 1,
-		/obj/item/food/cheesewedge = 2
+		/obj/item/food/cheese = 2
 	)
 	result = /obj/item/food/burger/bigbite
 	subcategory = CAT_BURGER
@@ -234,7 +234,7 @@
 		/datum/reagent/consumable/blackpepper = 5,
 		/obj/item/food/patty/plain = 5,
 		/obj/item/food/grown/tomato = 4,
-		/obj/item/food/cheesewedge = 3,
+		/obj/item/food/cheese = 3,
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/bacon = 1,
 		/obj/item/food/bun = 1
@@ -324,7 +324,7 @@
 	reqs = list(
 			/obj/item/food/patty/plain = 1,
 			/obj/item/food/bun = 1,
-			/obj/item/food/cheesewedge = 1,
+			/obj/item/food/cheese = 1,
 	)
 	result = /obj/item/food/burger/cheese
 	subcategory = CAT_BURGER
@@ -334,7 +334,7 @@
 	reqs = list(
 			/obj/item/food/soylentgreen = 1, //two full meats worth.
 			/obj/item/food/bun = 1,
-			/obj/item/food/cheesewedge = 2,
+			/obj/item/food/cheese = 2,
 	)
 	result = /obj/item/food/burger/soylent
 	subcategory = CAT_BURGER
@@ -374,7 +374,7 @@
 	reqs = list(
 			/obj/item/food/patty/plain = 2,
 			/obj/item/food/bun = 1,
-			/obj/item/food/cheesewedge = 2,
+			/obj/item/food/cheese = 2,
 			/obj/item/food/grown/chili = 1,
 			/obj/item/food/grown/cabbage = 1,
 			/obj/item/toy/crayon/green = 1,
