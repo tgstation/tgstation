@@ -1,0 +1,7 @@
+author: "eeSPee"
+delete-after: True
+changes: 
+  - rscadd: "Regal rats spawn with a unique name"
+  - rscadd: "Regal rats have a new ability, domain, to replace coffer; it spreads miasma in the air, and they passively regenerate health in miasma"
+  - rscadd: "Rat kings can lick food and glasses to add rat spit, and can rummage through trash to find coins and cheese"
+  - rscadd: "overdosing on rat spit gives you the rat faction"
