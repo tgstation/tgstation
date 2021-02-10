@@ -1,6 +1,3 @@
-#define THEME_WIZARD "wizard"
-#define THEME_CULT "cult"
-#define THEME_HOLY "holy"
 
 /obj/item/soulstone
 	name = "soulstone shard"
@@ -415,6 +412,3 @@
 	qdel(T)
 	return TRUE
 
-#undef THEME_WIZARD
-#undef THEME_CULT
-#undef THEME_HOLY

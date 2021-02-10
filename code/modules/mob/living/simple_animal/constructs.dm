@@ -1,6 +1,3 @@
-#define THEME_WIZARD "wizard"
-#define THEME_CULT "cult"
-#define THEME_HOLY "holy"
 
 /mob/living/simple_animal/hostile/construct
 	name = "Construct"
@@ -519,7 +516,3 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
-
-#undef THEME_WIZARD
-#undef THEME_CULT
-#undef THEME_HOLY
