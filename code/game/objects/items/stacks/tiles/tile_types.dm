@@ -441,3 +441,12 @@
 
 /obj/item/stack/tile/eighties/loaded
 	amount = 15
+
+/obj/item/stack/tile/bronze
+	name = "bronze tile"
+	singular_name = "bronze floor tile"
+	desc = "A clangy tile made of high-quality bronze. Clockwork construction techniques allow the clanging to be minimized."
+	icon_state = "tile_brass"
+	turf_type = /turf/open/floor/bronze
+	mats_per_unit = list(/datum/material/bronze=500)
+	merge_type = /obj/item/stack/tile/bronze
