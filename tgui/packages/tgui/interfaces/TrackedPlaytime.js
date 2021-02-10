@@ -1,6 +1,6 @@
 import { sortBy } from "common/collections";
 import { useBackend } from "../backend";
-import { Box, Flex, ProgressBar, Section, Table, Button } from "../components";
+import { Box, Button, Flex, ProgressBar, Section, Table } from "../components";
 import { Window } from "../layouts";
 
 const JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED = 1;
