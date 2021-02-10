@@ -1,4 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - refactor: "Ambience is now in a subsystem, and plays every now and then without you having to move to a new area for it to play"
