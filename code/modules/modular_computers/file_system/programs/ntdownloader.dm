@@ -22,6 +22,13 @@
 	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
+	var/list/show_categories = list(
+		PROGRAM_CATEGORY_CREW,
+		PROGRAM_CATEGORY_ENGI,
+		PROGRAM_CATEGORY_ROBO,
+		PROGRAM_CATEGORY_SUPL,
+		PROGRAM_CATEGORY_MISC,
+	)
 
 /datum/computer_file/program/ntnetdownload/run_program()
 	. = ..()
@@ -146,39 +153,29 @@
 	var/obj/item/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
 	data["disk_size"] = hard_drive.max_capacity
 	data["disk_used"] = hard_drive.used_capacity
-	var/list/all_entries[0]
-	for(var/A in main_repo)
-		var/datum/computer_file/program/P = A
-		// Only those programs our user can run will show in the list
-		if(hard_drive.find_file_by_name(P.filename))
-			continue
-		all_entries.Add(list(list(
+	data["emagged"] = emagged
+
+	var/list/repo = antag_repo | main_repo
+	var/list/program_categories = list()
+
+	for(var/I in repo)
+		var/datum/computer_file/program/P = I
+		if(!(P.category in program_categories))
+			program_categories.Add(P.category)
+		data["programs"] += list(list(
+			"icon" = P.program_icon,
 			"filename" = P.filename,
 			"filedesc" = P.filedesc,
 			"fileinfo" = P.extended_desc,
-			"compatibility" = check_compatibility(P),
+			"category" = P.category,
+			"installed" = !!hard_drive.find_file_by_name(P.filename),
+			"compatible" = check_compatibility(P),
 			"size" = P.size,
-			"access" = P.can_run(user,transfer = 1, access = access)
-		)))
-	data["hackedavailable"] = FALSE
-	if(emagged) // If we are running on emagged computer we have access to some "bonus" software
-		var/list/hacked_programs[0]
-		for(var/S in antag_repo)
-			var/datum/computer_file/program/P = S
-			if(hard_drive.find_file_by_name(P.filename))
-				continue
-			data["hackedavailable"] = TRUE
-			hacked_programs.Add(list(list(
-				"filename" = P.filename,
-				"filedesc" = P.filedesc,
-				"fileinfo" = P.extended_desc,
-				"compatibility" = check_compatibility(P),
-				"size" = P.size,
-				"access" = TRUE,
-			)))
-		data["hacked_programs"] = hacked_programs
+			"access" = emagged && P.available_on_syndinet ? TRUE : P.can_run(user,transfer = 1, access = access),
+			"verifiedsource" = P.available_on_ntnet,
+		))
 
-	data["downloadable_programs"] = all_entries
+	data["categories"] = show_categories & program_categories
 
 	return data
 
@@ -186,8 +183,8 @@
 	var/hardflag = computer.hardware_flag
 
 	if(P?.is_supported_by_hardware(hardflag,0))
-		return "Compatible"
-	return "Incompatible!"
+		return TRUE
+	return FALSE
 
 /datum/computer_file/program/ntnetdownload/kill_program(forced)
 	abort_file_download()
