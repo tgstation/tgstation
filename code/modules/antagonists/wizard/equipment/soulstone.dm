@@ -17,7 +17,7 @@
 
 	var/old_shard = FALSE
 	var/spent = FALSE
-//themes include cult red, holy blue, and wizard purple
+///this controlls the color of the soulstone as well as restrictions for who can use it. THEME_CULT is red and is the default of cultist THEME_WIZARD is purple and is the default of wizard and THEME_HOLY is for purified soul stone
 	var/theme = THEME_CULT
 
 /obj/item/soulstone/proc/was_used()
