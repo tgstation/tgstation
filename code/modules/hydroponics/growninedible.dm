@@ -47,12 +47,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!..()) //was it caught by a mob?
-		if(seed)
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_throw_impact(src, hit_atom)
-
 /obj/item/grown/microwave_act(obj/machinery/microwave/M)
 	return
 

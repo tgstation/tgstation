@@ -64,8 +64,7 @@
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption_mod ? 1 + round(max_volume / bite_consumption_mod) : bite_consumption,\
 				microwaved_type = microwaved_type,\
-				junkiness = junkiness,\
-				on_consume = CALLBACK(src, .proc/OnConsume))
+				junkiness = junkiness)
 
 
 /obj/item/food/grown/proc/make_dryable()
@@ -83,11 +82,6 @@
 	if (istype(O, /obj/item/plant_analyzer))
 		var/obj/item/plant_analyzer/plant_analyzer = O
 		to_chat(user, plant_analyzer.scan_plant(src))
-	else
-		if(seed)
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_attackby(src, O, user)
-
 
 /obj/item/food/grown/MakeLeaveTrash()
 	if(trash_type)
@@ -98,18 +92,6 @@
 /obj/item/food/grown/attack_self(mob/user)
 	SEND_SIGNAL(src, COMSIG_PLANT_SQUASH, user)
 	..()
-
-/obj/item/food/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!..()) //was it caught by a mob?
-		if(seed)
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_throw_impact(src, hit_atom)
-
-/obj/item/food/grown/proc/OnConsume(mob/living/eater, mob/living/feeder)
-	if(iscarbon(usr))
-		if(seed)
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_consume(src, usr)
 
 ///Callback for bonus behavior for generating trash of grown food.
 /obj/item/food/grown/proc/generate_trash(atom/location)

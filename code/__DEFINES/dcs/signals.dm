@@ -823,8 +823,6 @@
 ///called when a plant with slippery skin is slipped on (atom/target)
 #define COMSIG_PLANT_ON_SQUASH "plant_on_squash"
 ///called when a plant with slippery skin is slipped on (mob/eater)
-#define COMSIG_PLANT_ON_CONSUME "plant_on_consume"
-///called when a plant with slippery skin is slipped on (mob/eater)
 #define COMSIG_PLANT_ON_GROW "plant_on_grow"
 
 

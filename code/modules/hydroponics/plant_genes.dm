@@ -246,15 +246,9 @@
 // Register a signal that our plant can be squashed on add.
 /datum/plant_gene/trait/squash/on_new(obj/item/food/grown/our_plant, newloc)
 	. = ..()
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
+	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
 	RegisterSignal(our_plant, COMSIG_PLANT_SQUASH, .proc/squash_plant)
-
-// Squash the plant on slip.
-/datum/plant_gene/trait/squash/on_slip(obj/item/food/grown/our_plant, mob/living/carbon/target)
-	SEND_SIGNAL(our_plant, COMSIG_PLANT_SQUASH, target)
-
-// Squash the plant on thrown impact.
-/datum/plant_gene/trait/squash/on_throw_impact(obj/item/food/grown/our_plant, atom/target)
-	SEND_SIGNAL(our_plant, COMSIG_PLANT_SQUASH, target)
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
@@ -282,16 +276,12 @@
 		misc_smudge.color = "#82b900"
 
 	our_plant.visible_message("<span class='warning'>[our_plant] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
-	var/obj/item/seeds/seed = our_plant.get_plant_seed()
-	if(seed)
-		for(var/datum/plant_gene/trait/trait in seed.genes)
-			trait.on_squash(our_plant, target)
+	SEND_SIGNAL(our_plant, COMSIG_PLANT_ON_SQUASH, target)
 
 	our_plant.reagents?.expose(our_turf)
 	for(var/things in our_turf)
 		our_plant.reagents?.expose(things)
 
-	SEND_SIGNAL(our_plant, COMSIG_PLANT_ON_SQUASH, target)
 	qdel(our_plant)
 
 /datum/plant_gene/trait/slip
@@ -327,7 +317,7 @@
 /datum/plant_gene/trait/cell_charge/on_new(obj/item/food/grown/our_plant, newloc)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_CONSUME, .proc/recharge_cells)
+	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, .proc/recharge_cells)
 
 /datum/plant_gene/trait/cell_charge/proc/zap_target(obj/item/food/grown/our_plant, atom/target)
 	SIGNAL_HANDLER
@@ -336,7 +326,7 @@
 		var/mob/living/carbon/target_carbon = target
 		var/power = our_plant.seed.potency*rate
 		if(prob(power))
-			target_carbon.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
+			target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
 
 /datum/plant_gene/trait/cell_charge/proc/recharge_cells(obj/item/food/grown/our_plant, mob/living/carbon/target)
 	SIGNAL_HANDLER
@@ -344,7 +334,7 @@
 	if(!our_plant.reagents.total_volume)
 		var/batteries_recharged = 0
 		for(var/obj/item/stock_parts/cell/found_cell as anything in target.GetAllContents())
-			var/newcharge = min(our_plant.seed.potency*0.01*C.maxcharge, found_cell.maxcharge)
+			var/newcharge = min(our_plant.seed.potency*0.01*found_cell.maxcharge, found_cell.maxcharge)
 			if(found_cell.charge < newcharge)
 				found_cell.charge = newcharge
 				if(isobj(found_cell.loc))
@@ -442,7 +432,7 @@
 /datum/plant_gene/trait/teleport/proc/slip_teleport(obj/item/food/grown/our_plant, mob/living/carbon/target)
 	SIGNAL_HANDLER
 
-	var/teleport_radius = max(round(G.seed.potency / 10), 1)
+	var/teleport_radius = max(round(our_plant.seed.potency / 10), 1)
 	var/turf/T = get_turf(target)
 	to_chat(target, "<span class='warning'>You slip through spacetime!</span>")
 	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
@@ -472,7 +462,7 @@
 		our_plant.max_volume *= rate
 	else
 		//Grown inedibles however just use a reagents holder, so.
-		our_plant.reagents.max_volume *= rate
+		our_plant.reagents.maximum_volume *= rate
 
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
@@ -513,6 +503,7 @@
 
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
+	examine_line = "<span class='info'>It's quite prickley.</span>"
 
 /datum/plant_gene/trait/stinging/on_new(obj/item/food/grown/our_plant, newloc)
 	. = ..()
@@ -533,9 +524,11 @@
 
 /datum/plant_gene/trait/smoke/on_new(obj/item/food/grown/our_plant, newloc)
 	. = ..()
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/on_squash)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/make_smoke)
 
-/datum/plant_gene/trait/smoke/on_squash(obj/item/food/grown/our_plant, atom/target)
+/datum/plant_gene/trait/smoke/proc/make_smoke(obj/item/food/grown/our_plant, atom/target)
+	SIGNAL_HANDLER
+
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	var/splat_location = get_turf(target)
 	var/smoke_amount = round(sqrt(our_plant.seed.potency * 0.1), 1)
@@ -561,34 +554,42 @@
 
 /datum/plant_gene/trait/invasive/on_new(obj/item/food/grown/our_plant, newloc)
 	. = ..()
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_GROW, .proc/on_grow)
+	// Invasive spreading plants themselves do nothing, the seed is what does the magic
+	RegisterSignal(our_plant.seed, COMSIG_PLANT_ON_GROW, .proc/try_spread)
 
-/datum/plant_gene/trait/invasive/on_grow(obj/machinery/hydroponics/our_tray)
+/datum/plant_gene/trait/invasive/proc/try_spread(obj/item/seed/our_seed, obj/machinery/hydroponics/our_tray)
+	SIGNAL_HANDLER
+
 	for(var/step_dir in GLOB.alldirs)
 		var/obj/machinery/hydroponics/spread_tray = locate() in get_step(our_tray, step_dir)
 		if(spread_tray && prob(15))
 			if(!our_tray.Adjacent(spread_tray))
 				continue //Don't spread through things we can't go through.
 
-			if(spread_tray.myseed) // Check if there's another seed in the next tray.
-				if(spread_tray.myseed.type == our_tray.myseed.type && !spread_tray.dead)
-					continue // It should not destroy its own kind.
-				spread_tray.visible_message("<span class='warning'>The [spread_tray.myseed.plantname] is overtaken by [our_tray.myseed.plantname]!</span>")
-				QDEL_NULL(spread_tray.myseed)
-			spread_tray.myseed = our_tray.myseed.Copy()
-			spread_tray.age = 0
-			spread_tray.dead = FALSE
-			spread_tray.plant_health = spread_tray.myseed.endurance
-			spread_tray.lastcycle = world.time
-			spread_tray.harvest = FALSE
-			spread_tray.weedlevel = 0 // Reset
-			spread_tray.pestlevel = 0 // Reset
-			spread_tray.update_icon()
-			spread_tray.visible_message("<span class='warning'>The [our_tray.myseed.plantname] spreads!</span>")
-			if(spread_tray.myseed)
-				spread_tray.name = "[initial(spread_tray.name)] ([spread_tray.myseed.plantname])"
-			else
-				spread_tray.name = initial(spread_tray.name)
+			spread_seed(spread_tray, our_tray)
+
+/datum/plant_gene/trait/invasive/proc/spread_seed(obj/machinery/hydroponics/target_tray, obj/machinery/hydroponics/origin_tray)
+	if(target_tray.myseed) // Check if there's another seed in the next tray.
+		if(target_tray.myseed.type == origin_tray.myseed.type && !target_tray.dead)
+			return FALSE // It should not destroy its own kind.
+		target_tray.visible_message("<span class='warning'>The [target_tray.myseed.plantname] is overtaken by [origin_tray.myseed.plantname]!</span>")
+		QDEL_NULL(target_tray.myseed)
+	target_tray.myseed = origin_tray.myseed.Copy()
+	target_tray.age = 0
+	target_tray.dead = FALSE
+	target_tray.plant_health = target_tray.myseed.endurance
+	target_tray.lastcycle = world.time
+	target_tray.harvest = FALSE
+	target_tray.weedlevel = 0 // Reset
+	target_tray.pestlevel = 0 // Reset
+	target_tray.update_icon()
+	target_tray.visible_message("<span class='warning'>The [origin_tray.myseed.plantname] spreads!</span>")
+	if(target_tray.myseed)
+		target_tray.name = "[initial(target_tray.name)] ([target_tray.myseed.plantname])"
+	else
+		target_tray.name = initial(target_tray.name)
+
+	return TRUE
 
 /**
  * A plant trait that causes the plant's food reagents to ferment instead.
@@ -649,6 +650,7 @@
 
 /datum/plant_gene/trait/sticky
 	name = "Prickly Adhesion"
+	examine_line = "<span class='info'>It's quite sticky.</span>"
 	trait_id = THROW_IMPACT_ID
 
 /datum/plant_gene/trait/sticky/on_new(obj/item/food/grown/our_plant, newloc)
