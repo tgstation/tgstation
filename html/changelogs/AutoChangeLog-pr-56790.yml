@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - tweak: "Similarly to how moth characters with the family heirloom quirk have a 50% chance to receive an old lantern as their family heirloom instead of one of their job's normal family heirloom items, felinids with the family heirloom quirk now have a 50% chance to receive a toy mouse as their family heirloom."

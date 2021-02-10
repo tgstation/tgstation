@@ -1,0 +1,4 @@
+author: "NotRanged"
+delete-after: True
+changes: 
+  - bugfix: "Automatic blob expansion now applies proper reagent strain effects when it hurts a human"

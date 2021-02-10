@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - bugfix: "Chocolate bars can be made using regular milk again"

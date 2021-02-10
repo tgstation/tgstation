@@ -1,0 +1,4 @@
+author: "Jared-Fogle"
+delete-after: True
+changes: 
+  - bugfix: "Right clicking on your jumpsuit will now open suit sensors, rather only working if you attack it with an item."
