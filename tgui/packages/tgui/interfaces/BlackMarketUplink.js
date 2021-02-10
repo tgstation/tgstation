@@ -12,8 +12,6 @@ export const BlackMarketUplink = (props, context) => {
     money,
     viewing_market,
     viewing_category,
-    viewing_time_left,
-    viewing_max_time_left,
   } = data;
   return (
     <Window
@@ -27,11 +25,6 @@ export const BlackMarketUplink = (props, context) => {
           title="Black Market Uplink"
           buttons={(
             <Box inline bold>
-              {viewing_max_time_left > 0 && (
-                <AnimatedNumber
-                  value={viewing_time_left}
-                  format={value => ` [time left: ${formatMoney(value)}] `} />
-              )}
               <AnimatedNumber
                 value={money}
                 format={value => formatMoney(value) + ' cr'} />
