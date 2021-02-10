@@ -55,10 +55,9 @@ export const ChemReactionChamber = (props, context) => {
                 format={value => toFixed(value) + ' K'} />
             </LabeledList.Item>
             <LabeledList.Item label="pH">
-              <Flex position="relative" style={{ 'transition': 'stroke 1000ms ease-out' }}>
+              <Flex position="relative">
                 <RoundGauge
                   left={-7.5}
-                  transition="200ms ease-out"
                   position="absolute"
                   size={1.50}
                   value={ph}
