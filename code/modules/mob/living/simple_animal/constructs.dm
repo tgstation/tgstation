@@ -46,12 +46,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
-/*
-	For themes
-	THEME_CULT = red
-	THEME_HOLY = blue
-	THEME_WIZARD = purple
- */
+	//themes include cult red, holy blue, and wizard purple
 	var/theme = THEME_CULT
 
 /mob/living/simple_animal/hostile/construct/Initialize()
