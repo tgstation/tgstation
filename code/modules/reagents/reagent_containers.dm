@@ -57,14 +57,11 @@
 				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 				return
 
-/obj/item/reagent_containers/attack(mob/M, mob/living/user, def_zone)
-	if(user.combat_mode)
-		return ..()
-
 /obj/item/reagent_containers/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
 
-	if (user.combat_mode && try_splash(user, A))
+	var/list/modifiers = params2list(params)
+	if (modifiers["right"] && try_splash(user, A))
 		return TRUE
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
