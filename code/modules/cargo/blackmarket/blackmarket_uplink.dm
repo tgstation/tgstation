@@ -12,7 +12,7 @@
 	/// How much money is inserted into the uplink.
 	var/money = 0
 	/// List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
-	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket,/datum/blackmarket_market/cybernetics)
+	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
 
 /obj/item/blackmarket_uplink/Initialize()
 	. = ..()
