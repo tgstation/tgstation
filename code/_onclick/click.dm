@@ -152,7 +152,10 @@
 	else
 		if(W)
 			if(modifiers["right"])
-				W.afterattack_secondary(A,src,0,params)
+				var/after_attack_secondary_result = W.afterattack_secondary(A, src, 0, params)
+
+				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
+					W.afterattack(A,src,0,params)
 			else
 				W.afterattack(A,src,0,params)
 		else
