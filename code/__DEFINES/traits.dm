@@ -212,7 +212,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNSTABLE			"unstable"
 #define TRAIT_OIL_FRIED			"oil_fried"
 #define TRAIT_MEDICAL_HUD		"med_hud"
-#define TRAIT_SENSOR_HUD		"sensor_hud"
 #define TRAIT_SECURITY_HUD		"sec_hud"
 #define TRAIT_DIAGNOSTIC_HUD	"diag_hud" //for something granting you a diagnostic hud
 #define TRAIT_MEDIBOTCOMINGTHROUGH "medbot" //Is a medbot healing you

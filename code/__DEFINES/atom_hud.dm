@@ -65,7 +65,6 @@
 #define DATA_HUD_SENTIENT_DISEASE		8
 #define DATA_HUD_AI_DETECT				9
 #define DATA_HUD_FAN					10
-#define DATA_HUD_SENSORS		11
 
 //antag HUD defines
 #define ANTAG_HUD_CULT			12

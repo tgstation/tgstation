@@ -8,9 +8,6 @@
 	/// Amount of time before the market is repopulated
 	var/time_left = 0
 
-	/// Amount of time that time_left is set to after market is repopulated
-	var/max_time_left = 0
-
 	// Automatic vars, do not touch these.
 	/// Items available from this market, populated by SSblackmarket on initialization.
 	var/list/available_items = list()
@@ -73,12 +70,6 @@
 					SHIPPING_METHOD_LAUNCH	=10,
 					SHIPPING_METHOD_TELEPORT=75)
 
-/datum/blackmarket_market/cybernetics
-	name = "Monorail Cybernetics Auction"
-	shipping = list(SHIPPING_METHOD_LTSRBT	=100,
-					SHIPPING_METHOD_LAUNCH	=20,
-					SHIPPING_METHOD_TELEPORT=150)
-	max_time_left = 3 MINUTES
 
 
 

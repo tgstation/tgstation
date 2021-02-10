@@ -39,12 +39,6 @@
 
 /datum/atom_hud/data/human/medical/advanced
 
-/datum/atom_hud/data/human/medical/basic/sensors
-	hud_icons = list(SENSOR_HUD)
-
-/datum/atom_hud/data/human/medical/basic/sensors/update_suit_sensors(mob/living/carbon/H)
-	check_sensors(H) ? add_to_hud(H) : remove_from_hud(H)
-
 /datum/atom_hud/data/human/security
 
 /datum/atom_hud/data/human/security/basic
@@ -162,7 +156,6 @@ Medical HUD! Basic mode needs suit sensors on.
 //called when a human changes suit sensors
 /mob/living/carbon/proc/update_suit_sensors()
 	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
-	var/datum/atom_hud/data/human/medical/basic/sensors/S = GLOB.huds[DATA_HUD_SENSORS]
 	B.update_suit_sensors(src)
 	S.update_suit_sensors(src)
 

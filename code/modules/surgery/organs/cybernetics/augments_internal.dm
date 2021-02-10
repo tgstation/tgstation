@@ -161,9 +161,7 @@
 		/obj/item/autosurgeon/organ/syndicate/xray_eyes,
 		/obj/item/autosurgeon/organ/syndicate/anti_stun,
 		/obj/item/autosurgeon/organ/syndicate/reviver,
-		/obj/item/autosurgeon/organ/syndicate/ammo_counter,
 		/obj/item/autosurgeon/organ/syndicate/esword,
-		/obj/item/autosurgeon/organ/syndicate/syndie_mantis
 		)
 	var/amount = 5
 
