@@ -89,7 +89,7 @@
 		"<span class='danger'>You splash the contents of [src] onto [target][punctuation]</span>",
 		ignored_mobs = target,
 	)
-//
+
 	if (ismob(target))
 		var/mob/target_mob = target
 		target_mob.show_message(
