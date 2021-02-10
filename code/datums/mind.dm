@@ -83,6 +83,11 @@
 	/// A lazy list of statuses to add next to this mind in the traitor panel
 	var/list/special_statuses
 
+	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
+	var/list/addiction_points
+	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of cycles they have been addicted
+	var/list/withdrawal_cycles
+
 /datum/mind/New(_key)
 	key = _key
 	martial_art = default_martial_art
@@ -788,6 +793,16 @@
 	if(martial_art && martial_art.id == string)
 		return martial_art
 	return FALSE
+
+///Adds addiction points to the specified addiction
+/datum/mind/add_addiction_points(type, amount)
+	addiction_points[type] += amount
+	SSwithdrawal.all_withdrawals[type].on_change_addiction_points
+
+///Adds addiction points to the specified addiction
+/datum/mind/remove_addiction_points(type, amount)
+	addiction_points[type] -= amount
+
 
 /mob/dead/new_player/sync_mind()
 	return

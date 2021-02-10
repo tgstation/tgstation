@@ -2950,6 +2950,8 @@
 #include "code\modules\reagents\reagent_containers\pill.dm"
 #include "code\modules\reagents\reagent_containers\spray.dm"
 #include "code\modules\reagents\reagent_containers\syringes.dm"
+#include "code\modules\reagents\withdrawal\_withdrawal .dm"
+#include "code\modules\reagents\withdrawal\generic_withdrawals.dm"
 #include "code\modules\recycling\conveyor2.dm"
 #include "code\modules\recycling\sortingmachinery.dm"
 #include "code\modules\recycling\disposal\bin.dm"
