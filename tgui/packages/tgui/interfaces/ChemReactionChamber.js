@@ -56,26 +56,31 @@ export const ChemReactionChamber = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="pH">
               <Flex position="relative">
-                <RoundGauge
-                  left={-7.5}
-                  position="absolute"
-                  size={1.50}
-                  value={ph}
-                  minValue={0}
-                  maxValue={14}
-                  format={value => null}
-                  ranges={{
-                    "red": [-0.22, 1.5],
-                    "orange": [1.5, 3],
-                    "yellow": [3, 4.5],
-                    "olive": [4.5, 5],
-                    "good": [5, 6],
-                    "green": [6, 8.5],
-                    "teal": [8.5, 9.5],
-                    "blue": [9.5, 11],
-                    "purple": [11, 12.5],
-                    "violet": [12.5, 14],
-                  }} />
+                <AnimatedNumber value={ph}>
+                  {(_, value) => (
+                    <RoundGauge 
+                      value={value}
+                      minValue={0}
+                      maxValue={14}
+                      format={value => null}
+                      left={-7.5}
+                      position="absolute"
+                      size={1.50}
+                      ranges={{
+                        "red": [-0.22, 1.5],
+                        "orange": [1.5, 3],
+                        "yellow": [3, 4.5],
+                        "olive": [4.5, 5],
+                        "good": [5, 6],
+                        "green": [6, 8.5],
+                        "teal": [8.5, 9.5],
+                        "blue": [9.5, 11],
+                        "purple": [11, 12.5],
+                        "violet": [12.5, 14],
+                      }} />
+                  )}
+                </AnimatedNumber>
+                
                 <Flex position="relative"
                   top={0.2}>
                   <AnimatedNumber

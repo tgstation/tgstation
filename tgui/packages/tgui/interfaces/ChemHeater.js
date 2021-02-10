@@ -173,26 +173,30 @@ export const ChemHeater = (props, context) => {
                     format={value => 'pH: ' + round(value, 3)} />
                 </Flex.Item>
                 <Flex.Item>
-                  <RoundGauge
-                    size={1.60}
-                    value={currentpH}
-                    minValue={0}
-                    maxValue={14}
-                    alertAfter={isFlashing}
-                    content={"test"}
-                    format={value => null}
-                    ranges={{
-                      "red": [-0.22, 1.5],
-                      "orange": [1.5, 3],
-                      "yellow": [3, 4.5],
-                      "olive": [4.5, 5],
-                      "good": [5, 6],
-                      "green": [6, 8.5],
-                      "teal": [8.5, 9.5],
-                      "blue": [9.5, 11],
-                      "purple": [11, 12.5],
-                      "violet": [12.5, 14],
-                    }} />
+                  <AnimatedNumber value={currentpH}>
+                    {(_, value) => (
+                      <RoundGauge 
+                        size={1.60}
+                        value={value}
+                        minValue={0}
+                        maxValue={14}
+                        alertAfter={isFlashing}
+                        content={"test"}
+                        format={value => null}
+                        ranges={{
+                          "red": [-0.22, 1.5],
+                          "orange": [1.5, 3],
+                          "yellow": [3, 4.5],
+                          "olive": [4.5, 5],
+                          "good": [5, 6],
+                          "green": [6, 8.5],
+                          "teal": [8.5, 9.5],
+                          "blue": [9.5, 11],
+                          "purple": [11, 12.5],
+                          "violet": [12.5, 14],
+                        }} />
+                    )}
+                  </AnimatedNumber>
                 </Flex.Item>
               </Flex>
             )}>
@@ -226,21 +230,25 @@ export const ChemHeater = (props, context) => {
                           spin={reaction.danger ? false : true}
                           ml={2.5} />
                       ) || (
-                        <RoundGauge
-                          size={1.30}
-                          value={reaction.quality}
-                          minValue={0}
-                          maxValue={1}
-                          alertAfter={reaction.purityAlert}
-                          content={"test"}
-                          format={value => null}
-                          ml={5}
-                          ranges={{
-                            "red": [0, reaction.minPure],
-                            "orange": [reaction.minPure, reaction.inverse],
-                            "yellow": [reaction.inverse, 0.8],
-                            "green": [0.8, 1],
-                          }} />
+                        <AnimatedNumber value={reaction.quality}>
+                          {(_, value) => (
+                            <RoundGauge 
+                              size={1.30}
+                              value={value}
+                              minValue={0}
+                              maxValue={1}
+                              alertAfter={reaction.purityAlert}
+                              content={"test"}
+                              format={value => null}
+                              ml={5}
+                              ranges={{
+                                "red": [0, reaction.minPure],
+                                "orange": [reaction.minPure, reaction.inverse],
+                                "yellow": [reaction.inverse, 0.8],
+                                "green": [0.8, 1],
+                              }} />
+                          )}
+                        </AnimatedNumber>
                       )}
                     </TableCell>
                     <TableCell width={'70px'}>
