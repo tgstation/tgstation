@@ -80,7 +80,6 @@ export const ChemReactionChamber = (props, context) => {
                       }} />
                   )}
                 </AnimatedNumber>
-                
                 <Flex position="relative"
                   top={0.2}>
                   <AnimatedNumber
