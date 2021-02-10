@@ -449,6 +449,7 @@
 #include "code\datums\components\explodable.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forensics.dm"
+#include "code\datums\components\garrote.dm"
 #include "code\datums\components\gps.dm"
 #include "code\datums\components\grillable.dm"
 #include "code\datums\components\gunpoint.dm"

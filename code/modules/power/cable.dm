@@ -537,6 +537,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		amount += extra
 	update_icon()
 
+/obj/item/stack/cable_coil/attack_secondary(mob/living/victim, mob/living/user, params)
+	if (user == victim || amount < 5)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.AddComponent(/datum/component/garrote, victim, src, 0.5)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///////////////////////////////////////////////
 // Cable laying procedures

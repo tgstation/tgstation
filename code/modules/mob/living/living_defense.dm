@@ -132,7 +132,7 @@
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
-/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
+/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE, upgrade_time_multiplier = 1)
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
 		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
@@ -153,7 +153,7 @@
 					log_combat(user, src, "attempted to neck grab", addition="neck grab")
 				if(GRAB_NECK)
 					log_combat(user, src, "attempted to strangle", addition="kill grab")
-			if(!do_mob(user, src, grab_upgrade_time))
+			if(!do_mob(user, src, grab_upgrade_time * upgrade_time_multiplier))
 				return FALSE
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state)
 				return FALSE

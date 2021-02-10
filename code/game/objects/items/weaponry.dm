@@ -842,3 +842,46 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+
+
+/obj/item/garrote_wire
+	name = "Fiber Wire"
+	desc = "A must have tool for any self respecting hitman"
+	icon_state = "fiber_wire1"
+	inhand_icon_state = "fiber_wire1"
+	w_class = WEIGHT_CLASS_SMALL
+	var/wielded = FALSE
+
+/obj/item/garrote_wire/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/garrote_wire/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, icon_wielded="fiber_wire2")
+
+/obj/item/garrote_wire/attack(mob/living/victim, mob/living/carbon/user)
+	if(!wielded)
+		return
+	if(user == victim)
+		return
+	user.AddComponent(/datum/component/garrote, victim, src, 0.2, 15)
+	return
+
+/obj/item/garrote_wire/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = TRUE
+
+/obj/item/garrote_wire/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = FALSE
+
+/obj/item/garrote_wire/update_icon_state()
+	icon_state = "fiber_wire1"
+
+/obj/item/fireaxe/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
