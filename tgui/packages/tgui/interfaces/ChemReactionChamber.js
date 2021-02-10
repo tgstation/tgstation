@@ -55,40 +55,35 @@ export const ChemReactionChamber = (props, context) => {
                 format={value => toFixed(value) + ' K'} />
             </LabeledList.Item>
             <LabeledList.Item label="pH">
-            <Flex position="relative" style={{'transition': '2s ease-out'}}>
-                  <RoundGauge
-                    
-                    left={-7.5}
-                    transition="200ms ease-out"
-                    position="absolute"
-                    size={1.50}
-                    value={ph}
-                    minValue={0}
-                    maxValue={14}
-                    format={value => null}
-                    ranges={{
-                      "red": [-0.22, 1.5],
-                      "orange": [1.5, 3],
-                      "yellow": [3, 4.5],
-                      "olive": [4.5, 5],
-                      "good": [5, 6],
-                      "green": [6, 8.5],
-                      "teal": [8.5, 9.5],
-                      "blue": [9.5, 11],
-                      "purple": [11, 12.5],
-                      "violet": [12.5, 14],
-                    }} />
-                  <Flex position="relative"
-                  top={0.2}
-                  left={0}>
-
-                
+              <Flex position="relative" style={{ 'transition': 'stroke 1000ms ease-out' }}>
+                <RoundGauge
+                  left={-7.5}
+                  transition="200ms ease-out"
+                  position="absolute"
+                  size={1.50}
+                  value={ph}
+                  minValue={0}
+                  maxValue={14}
+                  format={value => null}
+                  ranges={{
+                    "red": [-0.22, 1.5],
+                    "orange": [1.5, 3],
+                    "yellow": [3, 4.5],
+                    "olive": [4.5, 5],
+                    "good": [5, 6],
+                    "green": [6, 8.5],
+                    "teal": [8.5, 9.5],
+                    "blue": [9.5, 11],
+                    "purple": [11, 12.5],
+                    "violet": [12.5, 14],
+                  }} />
+                <Flex position="relative"
+                  top={0.2}>
                   <AnimatedNumber
-                    
                     value={ph}
                     format={value => round(value, 3)} />
                 </Flex>
-                </Flex>
+              </Flex>
             </LabeledList.Item>
           </LabeledList>
         </Section>
