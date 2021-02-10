@@ -11,7 +11,7 @@
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(A, D, "knuckledusted (brass knuckles))")
-	D.apply_damage(20, A.get_attack_type(), affecting)
+	D.apply_damage(20, BRUTE, affecting)
 	return
 
 /obj/item/clothing/gloves/brassknuckles/equipped(mob/user, slot)
