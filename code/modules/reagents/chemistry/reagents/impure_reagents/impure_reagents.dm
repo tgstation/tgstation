@@ -1,21 +1,37 @@
 //Reagents produced by metabolising/reacting fermichems inoptimally, i.e. inverse_chems or impure_chems
 //Inverse = Splitting
 //Invert = Whole conversion
+//Failed = End reaction below purity_min
 
-//Causes slight liver damage, and that's it.
+
 /datum/reagent/impurity
-	name = "Chemical Isomers"
-	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
+	name = "Impure reagent"
+	description = "Impure reagents are created by either ingesting reagents - which will then split them, or some can be created as the result in a reaction."
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
 	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
-	ph = 3
-	overdose_threshold = 0 //So that they're shown as a problem (?)
+	//Mostly to be safe - but above flags will take care of this. Also prevents it from showing these on reagent lookups
 	impure_chem = null
 	inverse_chem = null
 	failed_chem = null
+	can_synth = FALSE //Protected by default
 
+////START SUBTYPES
 
-/datum/reagent/impurity/on_mob_life(mob/living/carbon/C)
+///We don't want these to hide - they're helpful!
+/datum/reagent/impurity/healing
+	name = "Healing impure reagent"
+	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
+	chemical_flags = REAGENT_DONOTSPLIT
+
+//// END SUBTYPES
+
+//Causes slight liver damage, and that's it.
+/datum/reagent/impurity/isomer
+	name = "Chemical Isomers"
+	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
+	ph = 3	
+
+/datum/reagent/impurity/isomer/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(!L)//Though, lets be safe
 		C.adjustToxLoss(1, FALSE)//Incase of no liver!
@@ -23,12 +39,13 @@
 	C.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.5*REM)
 	return ..()
 
-/datum/reagent/impurity/toxic
+//Does the same as above, but also causes toxin damage
+/datum/reagent/impurity/isomer/toxic
 	name = "Toxic sludge"
 	description = "Toxic chemical isomers made from impure reactions. Causes toxin damage"
 	ph = 2
 
-/datum/reagent/impurity/toxic/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impurity/isomer/toxic/on_mob_life(mob/living/carbon/C)
 	C.adjustToxLoss(1, FALSE)
 	return ..()
 
@@ -50,7 +67,9 @@
 	name = "Insolvent medicine precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
 	metabolization_rate = 1 * REM//This is fast
+	can_synth = TRUE
 
+//Random healing of the 4 main groups
 /datum/reagent/impurity/medicine_failure/on_mob_life(mob/living/carbon/C)
 	. = ..()
 	var/pick = pick("brute", "burn", "tox", "oxy")
@@ -99,10 +118,12 @@
 
 //Impure
 
+//Simply reduces your alcohol tolerance, kinda simular to prohol
 /datum/reagent/impurity/libitoil
 	name = "Libitoil"
-	description = "Temporarilly decreases a patient's ability to process alcohol."
+	description = "Temporarilly interferes a patient's ability to process alcohol."
 	chemical_flags = REAGENT_DONOTSPLIT
+	can_synth = TRUE
 
 /datum/reagent/impurity/libitoil/on_mob_add(mob/living/L, amount)
 	. = ..()
@@ -119,3 +140,45 @@
 		return
 	var/obj/item/organ/liver/this_liver = carbmob.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance /= 2
+
+
+////probital
+
+/datum/reagent/impurity/probital_failed//Basically crashed out failed metafactor
+	name = "Mitogen Metabolic Inhibition Factor"
+	description = "This enzyme catalyzes crashes the conversion of nutricious food into healing peptides."
+	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
+	reagent_state = SOLID
+	color = "#b3ff00"
+	overdose_threshold = 10
+
+/datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
+	metabolization_rate = 4  * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/nutriment/peptides_failed
+	name = "Prion peptides"
+	color = "#BBD4D9"
+	taste_description = "spearmint frosting"
+	description = "These restorative peptides slow down wound healing, but also cost nutrition as well!"
+	nutriment_factor = -10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
+	brute_heal = -1.5 //I halved it because I was concerned it might be too strong at 4 damage a tick.
+	burn_heal = -0.5
+
+
+////Multiver
+
+//Inverse
+
+//Reaction product when between 0.2 and 0.35 purity.
+/datum/reagent/impurity/healing/monover
+	name = "Monover"
+	description = "A toxin treating reagent, that only is effective if it's the only reagent present in the patient."
+
+//Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
+/datum/reagent/medicine/c2/monover/on_mob_life(mob/living/carbon/M)
+	if(M.reagents.reagent_list > 1)
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //Hey! It's everyone's favourite drawback from multiver!
+		return ..()
+	M.adjustToxLoss(-2*REM, 0)
+	..()
+	return TRUE

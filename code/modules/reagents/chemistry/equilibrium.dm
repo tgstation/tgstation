@@ -331,7 +331,6 @@
 	delta_chem_factor /= product_ratio
 	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
 
-
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
 		holder.remove_reagent(reagent, (delta_chem_factor * reaction.required_reagents[reagent]), safety = TRUE)
@@ -347,7 +346,22 @@
 	for(var/product in reaction.results)
 		//create the products
 		step_add = delta_chem_factor * reaction.results[product]
-		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+		//If we make purities in real time
+		if(reaction.reaction_flags & REACTION_REAL_TIME_SPLIT && purity < 1)
+			var/datum/reagent/product_ref = GLOB.reagent_list[product.type]
+			if(purity < reaction.purity_min && product_ref.failed_chem) //If we're failed
+				holder.add_reagent(product_ref.failed_chem, step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
+			else if(purity < product_ref.inverse_chem_val && product_ref.inverse_chem) //If we're inverse
+				holder.add_reagent(product_ref.inverse_chem, step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
+			else if(product_ref.impure_chem && product_ref.impure_chem) //if we're impure
+				holder.add_reagent(product*purity, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+				holder.add_reagent(product_ref.impure_chem*(1-purity), step_add, null, cached_temp, (1-purity), override_base_ph = TRUE)
+			else //We can get here if the flag is set, but there's no associated impure_chem assigned. In some cases this is desired (i.e. multiver only wants to real time split it's inverse chem)
+				holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)	
+		//Default handiling
+		else
+			holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+			
 		//Apply pH changes
 		var/pH_adjust
 		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)

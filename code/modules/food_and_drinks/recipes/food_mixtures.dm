@@ -169,6 +169,18 @@
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)
 	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
 
+/datum/chemical_reaction/food/failed_nutriconversion
+	results = list(/datum/reagent/consumable/nutriment/peptides/failed = 0.5)
+	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
+	required_catalysts = list(/datum/reagent/impurity/probital = 0.5)
+	thermic_constant = 100 // the tell
+
+/datum/chemical_reaction/food/failed_protein_peptide
+	results = list(/datum/reagent/consumable/nutriment/peptides/failed = 0.5)
+	required_reagents = list(/datum/reagent/consumable/nutriment/protein = 0.5)
+	required_catalysts = list(/datum/reagent/impurity/probital = 0.5)
+	thermic_constant = 100 // the tell
+
 /datum/chemical_reaction/food/bbqsauce
 	results = list(/datum/reagent/consumable/bbqsauce = 5)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)

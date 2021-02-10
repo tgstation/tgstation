@@ -818,6 +818,8 @@
 	nutriment_factor = 10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
 	brute_heal = 3
 	burn_heal = 1
+	inverse_chem = /datum/reagent/consumable/nutriment/peptides/failed//should be impossible, but it' so it appears in the chemical lookup gui
+	inverse_chem_val = 0.2
 
 /datum/reagent/consumable/caramel
 	name = "Caramel"

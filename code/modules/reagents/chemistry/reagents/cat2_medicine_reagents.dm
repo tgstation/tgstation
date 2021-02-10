@@ -91,6 +91,7 @@
 	name = "Libital"
 	description = "A bruise reliever. Does minor liver damage."
 	color = "#ECEC8D" // rgb: 236	236	141
+	ph = 8.2
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
 	chemical_flags = REAGENT_SPLITRETAINVOL
@@ -98,7 +99,7 @@
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3*REM)
-	M.adjustBruteLoss((-3*REM)*normalise_creation_purity)
+	M.adjustBruteLoss((-3*REM)*normalise_creation_purity())
 	..()
 	return TRUE
 
@@ -107,10 +108,11 @@
 	description = "Originally developed as a prototype-gym supliment for those looking for quick workout turnover, this oral medication quickly repairs broken muscle tissue but causes lactic acid buildup, tiring the patient. Overdosing can cause extreme drowsiness. An Influx of nutrients promotes the muscle repair even further."
 	reagent_state = SOLID
 	color = "#FFFF6B"
-	ph = 6
+	ph = 5.5
 	overdose_threshold = 20
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/medicine/metafactor //Seems thematically intact
+	failed_chem = /datum/reagent/impurity/probital_failed
 	//Todo: if/when running/workout skill is added - add inverse chem effects
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M)
@@ -320,6 +322,8 @@
 /datum/reagent/medicine/c2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
 	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
+	inverse_chem = /datum/reagent/medicine/c2/monover
+	failed_chem = null //Reaction uses a special method - so we don't want this for now.
 
 /datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/human/M)
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
@@ -327,6 +331,8 @@
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
+	if(creation_purity > 1) //Perfectly pure multivers gives a bonus of 2!
+		medibonus += 1
 	M.adjustToxLoss(-0.5 * min(medibonus, 3)) //not great at healing but if you have nothing else it will work
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //kills at 40u
 	for(var/r2 in M.reagents.reagent_list)
@@ -334,7 +340,7 @@
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 3
-		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) will make it not purge medicines
+		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
 	..()
@@ -343,7 +349,7 @@
 // Antitoxin binds plants pretty well. So the tox goes significantly down
 /datum/reagent/medicine/c2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
+	mytray.adjustToxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
 
 #define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 

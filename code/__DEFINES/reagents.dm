@@ -85,6 +85,8 @@
 #define REACTION_COMPETITIVE        (1<<5)
 ///Used to force pH changes to be constant regardless of volume
 #define REACTION_PH_VOL_CONSTANT    (1<<6)
+///If a reaction will generate it's impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
+#define REACTION_REAL_TIME_SPLIT    (1<<7)
 
 ///Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
 #define END_REACTION                "end_reaction"

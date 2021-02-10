@@ -360,11 +360,14 @@
 		movey.throw_at(throw_target, moving_power, 1)
 
 
-//Creates a ring of fire in a set range around the beaker location
+////////BEGIN FIRE BASED EXPLOSIONS
+
+//Calls the default explosion subsystem handiler to explode with fire (random firespots and noise)
 /datum/chemical_reaction/proc/explode_fire(datum/reagents/holder, datum/equilibrium/equilibrium, range = 3)
 	explosion(holder.my_atom, 0, 0, 0, 0, flame_range = range)
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly errupts in flames!")
 
+//Creates a ring of fire in a set range around the beaker location
 /datum/chemical_reaction/proc/explode_fire_vortex(datum/reagents/holder, datum/equilibrium/equilibrium, x_offset = 1, y_offset = 1)
 	if(!equilibrium.explosion_data)
 		equilibrium.explosion_data = list("x" = x_offset, "y" = y_offset, "tar" = "y")//I could make it so you can have multiple vortexes, but...
@@ -397,6 +400,22 @@
 	var/turf/target = locate(holder_turf.x + equilibrium.explosion_data["x"], holder_turf.y + equilibrium.explosion_data["y"], holder_turf.z)
 	new /obj/effect/hotspot(target)
 	debug_world("X: [equilibrium.explosion_data["x"]], Y: [equilibrium.explosion_data["x"]]")
+
+/*
+ * Creates a square of fire in a fire_range radius, 
+ * fire_range = 0 will be on the exact spot of the holder, 
+ * fire_range = 1 or more will be additional tiles around the holder. Every tile will be heated this way.	
+ * How clf3 works, you know!
+ */
+/datum/chemical_reaction/proc/explode_fire_square(datum/reagents/holder, datum/equilibrium/equilibrium, fire_range = 1)
+	var/turf/T = get_turf(holder.my_atom)
+	if(fire_range == 0)
+		new /obj/effect/hotspot(T)
+		return
+	for(var/turf/turf in range(fire_range,T))
+		new /obj/effect/hotspot(turf)
+
+///////////END FIRE BASED EXPLOSIONS
 
 //Clears the beaker of the reagents only
 /datum/chemical_reaction/proc/clear_reactants(datum/reagents/holder, volume = null)
