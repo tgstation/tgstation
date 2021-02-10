@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SAWN_OFF_ACC_PENALTY 25
 ///added recoil of sawn off guns
 #define SAWN_OFF_RECOIL 1
-///the value gun maintenance kits grant for malfunction protection
+///the value premium gun maintenance kits grant for malfunction protection
 #define GUN_MALFUNCTION_PROTECTION 5
 
 //ammo box sprite defines

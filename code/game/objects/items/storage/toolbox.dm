@@ -231,7 +231,7 @@
 	new /obj/item/ammo_box/a762(src)
 
 /obj/item/storage/toolbox/maint_kit
-	name = "gun maintenance kit"
+	name = "premium gun maintenance kits"
 	desc = "It contains some gun maintenance supplies"
 	icon_state = "maint_kit"
 	inhand_icon_state = "ammobox"
@@ -239,9 +239,9 @@
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 
 /obj/item/storage/toolbox/maint_kit/PopulateContents()
-	new /obj/item/gun_maintenance_supplies(src)
-	new /obj/item/gun_maintenance_supplies(src)
-	new /obj/item/gun_maintenance_supplies(src)
+	new /obj/item/gunmaintkit/premium(src)
+	new /obj/item/gunmaintkit/premium(src)
+	new /obj/item/gunmaintkit/premium(src)
 
 /obj/item/storage/toolbox/infiltrator
 	name = "insidious case"

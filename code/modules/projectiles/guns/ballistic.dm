@@ -350,8 +350,8 @@
 		if (sawoff(user, A))
 			return
 	
-	if(can_misfire || can_jam && istype(A, /obj/item/gun_maintenance_supplies))
-		var/obj/item/gun_maintenance_supplies/GM = A
+	if(can_misfire || can_jam && istype(A, /obj/item/gunmaintkit))
+		var/obj/item/gunmaintkit/GM = A
 		to_chat(user, "<span class='notice'>You set to work using \the [GM] to clean \the [src].</span>")
 		guncleaning(user, A)
 		return
@@ -608,7 +608,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		update_icon()
 		return TRUE
 
-/obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/gun_maintenance_supplies/GM)
+/obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/gunmaintkit/GM)
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>[user] begins to cleaning \the [src].</span>", "<span class='notice'>You begin to clean the internals of \the [src].</span>")
@@ -618,8 +618,9 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		if(malfunction_probability > original_malfunction_value)
 			malfunction_probability = original_malfunction_value
 			user.visible_message("<span class='notice'>[user] cleans \the [src] of any fouling.</span>", "<span class='notice'>You clean \the [src], removing any fouling, preventing malfunction.</span>")
-			malfunction_protection = GUN_MALFUNCTION_PROTECTION
-			qdel(GM)
+			if(istype(GM, /obj/item/gunmaintkit/premium))
+				malfunction_protection = GUN_MALFUNCTION_PROTECTION
+				qdel(GM)
 			return TRUE
 
 /obj/item/gun/ballistic/wrench_act(mob/living/user, obj/item/I)

@@ -164,6 +164,17 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/gunmaintkit
+	name = "Maintenance Gun 'Maintenance' Kit"
+	result = /obj/item/gunmaintkit
+	reqs = list(/obj/item/assembly/mousetrap = 1,
+				/obj/item/stack/sheet/iron = 5,
+				/obj/item/reagent_containers/glass/rag = 1,
+				/datum/reagent/fuel/oil = 10)
+	time = 50
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/advancedegun
 	name = "Advanced Energy Gun"
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)

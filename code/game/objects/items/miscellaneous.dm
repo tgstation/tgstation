@@ -414,9 +414,15 @@
 	desc = "A bouquet of roses. A bundle of love."
 	icon_state = "rosebouquet"
 
-/obj/item/gun_maintenance_supplies
-	name = "gun maintenance supplies"
-	desc = "plastic box containing gun maintenance supplies and spare parts. Use them on a Mosin Nagant to clean it."
+/obj/item/gunmaintkit
+	name = "maintenance gun 'maintenance' tools"
+	desc = "A tin full of various bits and pieces of gun 'parts', a damp rag and a tin of oil. Use it on a degradated firearm to restore it."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "plasticbox"
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/gunmaintkit/premium
+	name = "professional gun maintenance supplies"
+	desc = "Plastic box containing gun maintenance supplies and spare parts. Use them on a degradated firearm to restore it and protect it from malfunctions. Expended once used."
+	icon_state = "maintkit"
 	w_class = WEIGHT_CLASS_SMALL
