@@ -14,22 +14,6 @@
 	/// Item categories available from this market, only items which are in these categories can be gotten from this market.
 	var/list/categories	= list()
 
-/datum/blackmarket_market/New()
-	. = ..()
-	if(max_time_left)
-		START_PROCESSING(SSprocessing,src)
-
-/datum/blackmarket_market/Destroy(force, ...)
-	if(max_time_left)
-		STOP_PROCESSING(SSprocessing,src)
-	return ..()
-
-/datum/blackmarket_market/process(delta_time)
-	time_left -= delta_time
-	if(time_left <= 0)
-		time_left = max_time_left
-		SSblackmarket.repopulate_market(type)
-
 /// Adds item to the available items and add it's category if it is not in categories yet.
 /datum/blackmarket_market/proc/add_item(datum/blackmarket_item/item)
 	if(!prob(initial(item.availability_prob)))

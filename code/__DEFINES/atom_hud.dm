@@ -46,8 +46,6 @@
 #define ANTAG_HUD		"23"
 // for fans to identify pins
 #define FAN_HUD		"24"
-// for implants to let you see sensor field
-#define SENSOR_HUD		"25"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
