@@ -165,7 +165,7 @@
 					qdel(src)
 				return
 
-		if(S.sheettype != "runed" && S.sheettype != "bronze")
+		if(!S.has_unique_girder)
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
