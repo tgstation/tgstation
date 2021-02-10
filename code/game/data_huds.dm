@@ -191,10 +191,6 @@ Medical HUD! Basic mode needs suit sensors on.
 
 	else if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 
-		sensors.layer = ABOVE_BYOND_LIGHTING_LAYER
-		sensors.plane = ABOVE_BYOND_LIGHTING_PLANE
-		sensors.icon_state = "sensors"
-
 		if((key || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES))
 			holder.icon_state = "huddefib"
 		else
