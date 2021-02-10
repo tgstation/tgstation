@@ -1,6 +1,7 @@
 /datum/computer_file/program/job_management
 	filename = "plexagoncore"
 	filedesc = "Plexagon HR Core"
+	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and changing job slot avalibility."
 	transfer_access = ACCESS_HEADS
