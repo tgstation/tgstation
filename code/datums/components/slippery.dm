@@ -33,7 +33,14 @@
 
 	if((slot in list(ITEM_SLOT_ID, ITEM_SLOT_BELT)) && isliving(equipper))
 		holder = equipper
-		RegisterSignal(equipper, COMSIG_MOVABLE_CROSSED, .proc/Slip_on_wearer, TRUE)
+		RegisterSignal(holder, COMSIG_MOVABLE_CROSSED, .proc/Slip_on_wearer)
+		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
+
+/datum/component/slippery/proc/holder_deleted(datum/source, datum/possible_holder)
+	SIGNAL_HANDLER
+
+	if(possible_holder == holder)
+		holder = null
 
 ///gets called when COMSIG_ITEM_DROPPED is sent to parent
 /datum/component/slippery/proc/on_drop(datum/source, mob/user)
