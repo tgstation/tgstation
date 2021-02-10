@@ -17,13 +17,8 @@
 
 	var/old_shard = FALSE
 	var/spent = FALSE
-/*
-	For themes
-	THEME_CULT = red
-	THEME_HOLY = blue
-	THEME_WIZARD = purple
- */
-	var/theme = THEME_CULT /*** *///
+//themes include cult red, holy blue, and wizard purple
+	var/theme = THEME_CULT
 
 /obj/item/soulstone/proc/was_used()
 	if(old_shard)
