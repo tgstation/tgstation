@@ -591,7 +591,8 @@
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
 					var/is_addicted_to = addiction_list && is_type_in_list(R, addiction_list)
 					if(R.addiction_threshold)
-						if(R.volume >= R.addiction_threshold && !is_addicted_to)
+						addiction_prob = (R.volume / R.addiction_threshold) * 100
+						if(prob(addiction_prob) && !is_addicted_to)
 							var/datum/reagent/new_reagent = new R.addiction_type()
 							LAZYADD(addiction_list, new_reagent)
 							is_addicted_to = TRUE
