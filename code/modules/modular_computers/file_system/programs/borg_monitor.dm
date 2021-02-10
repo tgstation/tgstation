@@ -32,10 +32,9 @@
 	return TRUE
 
 /datum/computer_file/program/borg_monitor/tap(atom/A, mob/living/user, params)
-	. = FALSE
 	var/mob/living/silicon/robot/borgo = A
 	if(!istype(borgo) || !borgo.modularInterface)
-		return
+		return FALSE
 	DL_source = borgo
 	DL_progress = 0
 	return TRUE
@@ -45,18 +44,20 @@
 		DL_progress = -1
 		return
 
-	if(!computer.Adjacent(DL_source))
+	var/turf/here = get_turf(computer)
+	var/turf/there = get_turf(DL_source)
+	if(!here.Adjacent(there))//If someone walked away, cancel the download
 		DL_source = null
 		DL_progress = -1
 		return
 
 	if(DL_progress == 100)
 		if(!DL_source || !DL_source.modularInterface) //sanity check, in case the borg or their modular tablet poofs somehow
-			loglist = list("Log of unit [DL_source.name]")
+			loglist = list("System log of unit [DL_source.name]")
 			loglist += "Error -- Download corrupted."
 		else
 			loglist = DL_source.modularInterface.borglog.Copy()
-			loglist.Insert(1,"Log of unit [DL_source.name]")
+			loglist.Insert(1,"System log of unit [DL_source.name]")
 		DL_progress = -1
 		DL_source = null
 		for(var/datum/tgui/window in SStgui.open_uis_by_src[src])
