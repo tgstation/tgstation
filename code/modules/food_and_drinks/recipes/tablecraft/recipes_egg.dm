@@ -17,7 +17,7 @@
 	name = "Omelette"
 	reqs = list(
 		/obj/item/food/egg = 2,
-		/obj/item/food/cheesewedge = 2
+		/obj/item/food/cheese = 2
 	)
 	result = /obj/item/food/omelette
 	subcategory = CAT_EGG

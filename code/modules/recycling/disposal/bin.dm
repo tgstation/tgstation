@@ -41,6 +41,7 @@
 	air_contents = new /datum/gas_mixture()
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_icon()
+	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_rummage)
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
@@ -106,6 +107,25 @@
 		return 1 //no afterattack
 	else
 		return ..()
+
+/obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
+	king.visible_message("<span class='warning'>[king] starts rummaging through [src].</span>","<span class='notice'>You rummage through [src]...</span>")
+	if (do_mob(king, src, 2 SECONDS, interaction_key = "regalrat"))
+		var/loot = rand(1,100)
+		switch(loot)
+			if(1 to 5)
+				to_chat(king, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
+				var/pickedcoin = pick(GLOB.ratking_coins)
+				for(var/i = 1 to rand(1,3))
+					new pickedcoin(get_turf(king))
+			if(6 to 33)
+				say(pick("Treasure!","Our precious!","Cheese!"))
+				to_chat(king, "<span class='notice'>Score! You find some cheese!</span>")
+				new /obj/item/food/cheese(get_turf(king))
+			else
+				var/pickedtrash = pick(GLOB.ratking_trash)
+				to_chat(king, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
+				new pickedtrash(get_turf(king))
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
 	I.forceMove(src)
@@ -498,3 +518,10 @@
 
 /obj/machinery/disposal/delivery_chute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1
+
+
+/obj/machinery/disposal/proc/on_rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, /obj/machinery/disposal/.proc/rat_rummage, king)
+

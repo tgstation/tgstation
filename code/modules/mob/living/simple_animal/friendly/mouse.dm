@@ -80,7 +80,7 @@
 		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeak!</span>")
-	if(istype(AM, /obj/item/food/royalcheese))
+	if(istype(AM, /obj/item/food/cheese/royal))
 		evolve()
 		qdel(AM)
 	..()
@@ -102,12 +102,12 @@
 				if(powered)
 					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 
-	for(var/obj/item/food/cheesewedge/cheese in range(1, src))
+	for(var/obj/item/food/cheese/cheese in range(1, src))
 		if(prob(10))
 			be_fruitful()
 			qdel(cheese)
 			return
-	for(var/obj/item/food/royalcheese/bigcheese in range(1, src))
+	for(var/obj/item/food/cheese/royal/bigcheese in range(1, src))
 		qdel(bigcheese)
 		evolve()
 		return
@@ -116,7 +116,7 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	. = ..()
-	if(istype(A, /obj/item/food/cheesewedge) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
+	if(istype(A, /obj/item/food/cheese) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
 		if(health == maxHealth)
 			to_chat(src,"<span class='warning'>You don't need to eat or heal.</span>")
 			return

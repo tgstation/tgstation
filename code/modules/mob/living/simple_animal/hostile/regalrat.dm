@@ -1,7 +1,3 @@
-#define MINOR_HEAL 10
-#define MEDIUM_HEAL 35
-#define MAJOR_HEAL 70
-
 /mob/living/simple_animal/hostile/regalrat
 	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. It leads nearby rats with deadly efficiency to protect its kingdom. Not technically a king."
@@ -29,16 +25,16 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	unique_name = TRUE
 	faction = list("rat")
-	///The spell that the rat uses to scrounge up junk.
-	var/datum/action/cooldown/coffer
+	///The spell that the rat uses to generate miasma
+	var/datum/action/cooldown/domain
 	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/riot
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
-	coffer = new /datum/action/cooldown/coffer
+	domain = new /datum/action/cooldown/domain
 	riot = new /datum/action/cooldown/riot
-	coffer.Grant(src)
+	domain.Grant(src)
 	riot.Grant(src)
 	AddElement(/datum/element/waddling)
 
@@ -56,7 +52,7 @@
 	if(prob(20))
 		riot.Trigger()
 	else if(prob(50))
-		coffer.Trigger()
+		domain.Trigger()
 	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
@@ -83,16 +79,25 @@
 	else if(user != src && istype(user,/mob/living/simple_animal/hostile/regalrat))
 		. += "<span class='warning'>Who is this foolish false king? This will not stand!</span>"
 
-/mob/living/simple_animal/hostile/regalrat/AttackingTarget()
+/mob/living/simple_animal/hostile/regalrat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
-	if(istype(target, /obj/item/food/cheesewedge))
-		cheese_heal(target, MINOR_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
+	if(stat == DEAD || !environment || !environment.gases[/datum/gas/miasma])
+		return
+	var/miasma_percentage = environment.gases[/datum/gas/miasma][MOLES] / environment.total_moles()
+	if(miasma_percentage>=0.25)
+		heal_bodypart_damage(1)
 
-	else if(istype(target, /obj/item/food/cheesewheel))
-		cheese_heal(target, MEDIUM_HEAL, "<span class='green'>You eat [target], restoring some health.</span>")
-
-	else if(istype(target, /obj/item/food/royalcheese))
-		cheese_heal(target, MAJOR_HEAL, "<span class='green'>You eat [target], revitalizing your royal resolve completely.</span>")
+/mob/living/simple_animal/hostile/regalrat/AttackingTarget()
+	if (DOING_INTERACTION(src, "regalrat"))
+		return
+	. = ..()
+	if (target.reagents && target.is_injectable(src, allowmobs = TRUE))
+		src.visible_message("<span class='warning'>[src] starts licking [target] passionately!</span>","<span class='notice'>You start licking [target]...</span>")
+		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
+			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
+			to_chat(src, "<span class='notice'>You finish licking [target].</span>")
+	else 
+		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
@@ -110,55 +115,38 @@
 	else
 		to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 
-
-/mob/living/simple_animal/hostile/regalrat/controlled
-	name = "regal rat"
-
 /mob/living/simple_animal/hostile/regalrat/controlled/Initialize()
 	. = ..()
 	INVOKE_ASYNC(src, .proc/get_player)
+	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
+	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
+	name = "[kingdom] [title]"
 
 
 /**
- *This action creates trash, money, dirt, and cheese.
+ *Increase the rat king's domain
  */
-/datum/action/cooldown/coffer
-	name = "Fill Coffers"
-	desc = "Your newly granted regality and poise let you scavenge for lost junk, but more importantly, cheese."
+
+/datum/action/cooldown/domain
+	name = "Rat King's Domain"
+	desc = "Corrupts this area to be more suitable for your rat army."
+	cooldown_time = 60
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
-	cooldown_time = 50
 
-/datum/action/cooldown/coffer/Trigger()
+/datum/action/cooldown/domain/Trigger()
 	. = ..()
-	if(!.)
-		return
 	var/turf/T = get_turf(owner)
-	var/loot = rand(1,100)
-	switch(loot)
-		if(1 to 5)
-			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
-			new /obj/item/food/cheesewedge(T)
-		if(6 to 10)
-			var/pickedcoin = pick(GLOB.ratking_coins)
-			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
-			for(var/i = 1 to rand(1,3))
-				new pickedcoin(T)
-		if(11)
-			to_chat(owner, "<span class='notice'>You find a... Hunh. This coin doesn't look right.</span>")
-			var/rarecoin = rand(1,2)
-			if (rarecoin == 1)
-				new /obj/item/coin/twoheaded(T)
-			else
-				new /obj/item/coin/antagtoken(T)
-		if(12 to 40)
-			var/pickedtrash = pick(GLOB.ratking_trash)
-			to_chat(owner, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
-			new /obj/effect/decal/cleanable/dirt(T)
-			new pickedtrash(T)
-		if(41 to 100)
-			to_chat(owner, "<span class='notice'>Drat. Nothing.</span>")
+	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
+	switch (rand(1,10))
+		if (8)
+			new /obj/effect/decal/cleanable/vomit(T)
+		if (9)
+			new /obj/effect/decal/cleanable/vomit/old(T)
+		if (10)
+			new /obj/effect/decal/cleanable/oil/slippery(T)
+		else
 			new /obj/effect/decal/cleanable/dirt(T)
 	StartCooldown()
 
@@ -305,14 +293,50 @@
 
 /mob/living/simple_animal/hostile/rat/AttackingTarget()
 	. = ..()
-	if(istype(target, /obj/item/food/cheesewedge))
+	if(istype(target, /obj/item/food/cheese))
 		if (health >= maxHealth)
 			to_chat(src, "<span class='warning'>You feel fine, no need to eat anything!</span>")
 			return
 		to_chat(src, "<span class='green'>You eat \the [src], restoring some health.</span>")
-		heal_bodypart_damage(MINOR_HEAL)
+		heal_bodypart_damage(maxHealth)
 		qdel(target)
 
-#undef MINOR_HEAL
-#undef MEDIUM_HEAL
-#undef MAJOR_HEAL
+
+/**
+ *Spittle; harmless reagent that is added by rat king, and makes you disgusted.
+ */
+
+/datum/reagent/rat_spit
+	name = "Rat Spit"
+	description = "Something coming from a rat. Dear god! Who knows where it's been!"
+	reagent_state = LIQUID
+	color = "#C8C8C8"
+	metabolization_rate = 0.03 * REAGENTS_METABOLISM
+	taste_description = "something funny"
+	overdose_threshold = 20
+
+/datum/reagent/rat_spit/on_mob_metabolize(mob/living/L)
+	..()
+	if(HAS_TRAIT(L, TRAIT_AGEUSIA))
+		return
+	to_chat(L, "<span class='notice'>This food has a funny taste!</span>")
+	
+/datum/reagent/rat_spit/overdose_start(mob/living/M)
+	..()
+	var/mob/living/carbon/victim = M
+	if (istype(victim))
+		to_chat(victim, "<span class='userdanger'>With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!</span>")
+		victim.faction |= "rat"
+		victim.vomit()
+	metabolization_rate = 10 * REAGENTS_METABOLISM 
+
+/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/C)
+	if(prob(15))
+		to_chat(C, "<span class='notice'>You feel queasy!</span>")
+		C.adjust_disgust(3)
+	else if(prob(10))
+		to_chat(C, "<span class='warning'>That food does not sit up well!</span>")
+		C.adjust_disgust(5)
+	else if(prob(5))
+		C.vomit()
+	..()

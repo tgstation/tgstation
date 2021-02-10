@@ -1,32 +1,32 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/obj/item/food/cheesewheel
+
+/obj/item/food/cheese/wheel
 	name = "cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5) //Hard cheeses contain about 25% protein
 	w_class = WEIGHT_CLASS_NORMAL
-	tastes = list("cheese" = 1)
-	foodtypes = DAIRY
+	rat_heal = 35
 
-/obj/item/food/cheesewheel/Initialize()
+/obj/item/food/cheese/wheel/Initialize()
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
-/obj/item/food/cheesewheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheesewedge, 5, 30)
+/obj/item/food/cheese/wheel/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
 
-/obj/item/food/royalcheese
+/obj/item/food/cheese/royal
 	name = "royal cheese"
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
 	icon_state = "royalcheese"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
 	w_class = WEIGHT_CLASS_BULKY
-	tastes = list("cheese" = 4, "royalty" = 1)
-	foodtypes = DAIRY
+	tastes = list("cheese" = 4, "royalty" = 1)	
+	rat_heal = 70
 
-/obj/item/food/cheesewedge
+/obj/item/food/cheese
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
@@ -34,6 +34,17 @@
 	tastes = list("cheese" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	/// used to determine how much health rats/regal rats recover when they eat it.
+	var/rat_heal = 10
+
+/obj/item/food/cheese/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
+
+/obj/item/food/cheese/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
+	SIGNAL_HANDLER
+
+	king.cheese_heal(src, rat_heal, "<span class='green'>You eat [src], restoring some health.</span>")
 
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
