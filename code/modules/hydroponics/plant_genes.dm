@@ -200,7 +200,7 @@
 
 /// Traits that affect the grown product.
 /datum/plant_gene/trait
-	/// The rate at which this trait affects something
+	/// The rate at which this trait affects something.
 	var/rate = 0.05
 	/// Bonus lines displayed on examine.
 	var/examine_line = ""
@@ -209,13 +209,18 @@
 	/// Flags that modify the final product.
 	var/trait_flags
 	/// A blacklist of seeds that a trait cannot be attached to.
-	var/list/obj/item/seeds/seed_blacklist
+	var/list/obj/item/seeds/seed_blacklist = list()
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
 	G.rate = rate
 	return G
 
+/*
+ * Checks if we can add the trait to the seed in question.
+ *
+ * source_seed - the seed genes we're adding the trait too
+ */
 /datum/plant_gene/trait/can_add(obj/item/seeds/source_seed)
 	if(!..())
 		return FALSE
@@ -232,20 +237,29 @@
 			return FALSE
 	return TRUE
 
-/datum/plant_gene/trait/proc/on_new(obj/item/food/grown/G, newloc)
-	return
+/*
+ * on_new is called for every trait a plant has when it is initialized.
+ *
+ * our_plant - the source plant being created
+ * newloc - the loc of the plant
+ */
+/datum/plant_gene/trait/proc/on_new(obj/item/our_plant, newloc)
+	// Plants should always have seeds, but if a non-plant sneaks in or a plant with nulled seed, cut it out
+	if(isnull(our_plant.get_plant_seed()))
+		return FALSE
+	return TRUE
 
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
-	// Also splashes everything in target turf with reagents and applies other trait effects (teleporting, etc) to the target by on_squash.
-	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	trait_id = THROW_IMPACT_ID
 
 // Register a signal that our plant can be squashed on add.
 /datum/plant_gene/trait/squash/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
+	if(!..())
+		return
+
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
 	RegisterSignal(our_plant, COMSIG_PLANT_SQUASH, .proc/squash_plant)
@@ -291,12 +305,16 @@
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
-/datum/plant_gene/trait/slip/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
-	if(istype(our_plant) && ispath(our_plant.trash_type, /obj/item/grown))
+/datum/plant_gene/trait/slip/on_new(obj/item/our_plant, newloc)
+	if(!..())
 		return
-	var/obj/item/seeds/seed = our_plant.get_plant_seed()
-	var/stun_len = seed.potency * rate
+
+	var/obj/item/food/grown/grown_plant = our_plant
+	if(istype(grown_plant) && ispath(grown_plant.trash_type, /obj/item/grown))
+		return
+
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	var/stun_len = our_seed.potency * rate
 
 	if(!istype(our_plant, /obj/item/grown/bananapeel) && (!our_plant.reagents || !our_plant.reagents.has_reagent(/datum/reagent/lube)))
 		stun_len /= 3
@@ -314,27 +332,32 @@
 	name = "Electrical Activity"
 	rate = 0.2
 
-/datum/plant_gene/trait/cell_charge/on_new(obj/item/food/grown/our_plant, newloc)
+/datum/plant_gene/trait/cell_charge/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
 	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, .proc/recharge_cells)
 
-/datum/plant_gene/trait/cell_charge/proc/zap_target(obj/item/food/grown/our_plant, atom/target)
+/datum/plant_gene/trait/cell_charge/proc/zap_target(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
 	if(iscarbon(target))
 		var/mob/living/carbon/target_carbon = target
-		var/power = our_plant.seed.potency*rate
+		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+		var/power = our_seed.potency*rate
 		if(prob(power))
 			target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
 
-/datum/plant_gene/trait/cell_charge/proc/recharge_cells(obj/item/food/grown/our_plant, mob/living/carbon/target)
+/datum/plant_gene/trait/cell_charge/proc/recharge_cells(obj/item/our_plant, mob/living/carbon/target)
 	SIGNAL_HANDLER
 
 	if(!our_plant.reagents.total_volume)
 		var/batteries_recharged = 0
+		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 		for(var/obj/item/stock_parts/cell/found_cell as anything in target.GetAllContents())
-			var/newcharge = min(our_plant.seed.potency*0.01*found_cell.maxcharge, found_cell.maxcharge)
+			var/newcharge = min(our_seed.potency*0.01*found_cell.maxcharge, found_cell.maxcharge)
 			if(found_cell.charge < newcharge)
 				found_cell.charge = newcharge
 				if(isobj(found_cell.loc))
@@ -354,16 +377,19 @@
 	trait_id = GLOW_ID
 	var/glow_color = "#C3E381"
 
-/datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
-	return 1.4 + S.potency*rate
+/datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/seed)
+	return 1.4 + seed.potency*rate
 
-/datum/plant_gene/trait/glow/proc/glow_power(obj/item/seeds/S)
-	return max(S.potency*(rate + 0.01), 0.1)
+/datum/plant_gene/trait/glow/proc/glow_power(obj/item/seeds/seed)
+	return max(seed.potency*(rate + 0.01), 0.1)
 
-/datum/plant_gene/trait/glow/on_new(obj/item/food/grown/G, newloc)
-	. = ..()
-	G.light_system = MOVABLE_LIGHT
-	G.AddComponent(/datum/component/overlay_lighting, glow_range(G.seed), glow_power(G.seed), glow_color)
+/datum/plant_gene/trait/glow/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	our_plant.light_system = MOVABLE_LIGHT
+	our_plant.AddComponent(/datum/component/overlay_lighting, glow_range(our_seed), glow_power(our_seed), glow_color)
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
@@ -372,8 +398,8 @@
 	rate = 0.04
 	glow_color = "#AAD84B"
 
-/datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
-	return -max(S.potency*(rate*0.2), 0.2)
+/datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/seed)
+	return -max(seed.potency*(rate*0.2), 0.2)
 
 /datum/plant_gene/trait/glow/white
 	name = "White Bioluminescence"
@@ -415,24 +441,28 @@
 	name = "Bluespace Activity"
 	rate = 0.1
 
-/datum/plant_gene/trait/teleport/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
+/datum/plant_gene/trait/teleport/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/slip_teleport)
 
-/datum/plant_gene/trait/teleport/proc/squash_teleport(obj/item/food/grown/our_plant, atom/target)
+/datum/plant_gene/trait/teleport/proc/squash_teleport(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
 	if(isliving(target))
-		var/teleport_radius = max(round(our_plant.seed.potency / 10), 1)
+		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+		var/teleport_radius = max(round(our_seed.potency / 10), 1)
 		var/turf/T = get_turf(target)
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/datum/plant_gene/trait/teleport/proc/slip_teleport(obj/item/food/grown/our_plant, mob/living/carbon/target)
+/datum/plant_gene/trait/teleport/proc/slip_teleport(obj/item/our_plant, mob/living/carbon/target)
 	SIGNAL_HANDLER
 
-	var/teleport_radius = max(round(our_plant.seed.potency / 10), 1)
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	var/teleport_radius = max(round(our_seed.potency / 10), 1)
 	var/turf/T = get_turf(target)
 	to_chat(target, "<span class='warning'>You slip through spacetime!</span>")
 	do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
@@ -454,15 +484,17 @@
 	rate = 2
 	trait_flags = TRAIT_HALVES_YIELD
 
-/datum/plant_gene/trait/maxchem/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
+/datum/plant_gene/trait/maxchem/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
 
-	if(istype(our_plant, /obj/item/food/grown))
+	var/obj/item/food/grown/grown_plant = our_plant
+	if(istype(grown_plant, /obj/item/food/grown))
 		//Grown foods use the edible component so we need to change their max_volume var
-		our_plant.max_volume *= rate
+		grown_plant.max_volume *= rate
 	else
 		//Grown inedibles however just use a reagents holder, so.
-		our_plant.reagents.maximum_volume *= rate
+		our_plant.reagents?.maximum_volume *= rate
 
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
@@ -471,23 +503,26 @@
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
 
-/datum/plant_gene/trait/battery/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
+/datum/plant_gene/trait/battery/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
 
-/datum/plant_gene/trait/battery/proc/make_battery(obj/item/food/grown/our_plant, obj/item/hit_item, mob/user)
+/datum/plant_gene/trait/battery/proc/make_battery(obj/item/our_plant, obj/item/hit_item, mob/user)
 	if(!istype(hit_item, /obj/item/stack/cable_coil))
 		return
 
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/obj/item/stack/cable_coil/cabling = hit_item
 	if(cabling.use(5))
 		to_chat(user, "<span class='notice'>You add some cable to [our_plant] and slide it inside the battery encasing.</span>")
 		var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
 		pocell.icon_state = our_plant.icon_state
-		pocell.maxcharge = our_plant.seed.potency * 20
+		pocell.maxcharge = our_seed.potency * 20
 
 		// The secret of potato supercells!
-		var/datum/plant_gene/trait/cell_charge/electrical_gene = our_plant.seed.get_gene(/datum/plant_gene/trait/cell_charge)
+		var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
 		if(electrical_gene) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace power cells)
 			pocell.maxcharge *= electrical_gene.rate*100
 		pocell.charge = pocell.maxcharge
@@ -505,16 +540,19 @@
 	name = "Hypodermic Prickles"
 	examine_line = "<span class='info'>It's quite prickley.</span>"
 
-/datum/plant_gene/trait/stinging/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
+/datum/plant_gene/trait/stinging/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/prickles_inject)
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/prickles_inject)
 
-/datum/plant_gene/trait/stinging/proc/prickles_inject(obj/item/food/grown/our_plant, atom/target)
+/datum/plant_gene/trait/stinging/proc/prickles_inject(obj/item/our_plant, atom/target)
 	if(isliving(target) && our_plant.reagents && our_plant.reagents.total_volume)
 		var/mob/living/living_target = target
+		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 		if(living_target.reagents && living_target.can_inject(null, 0))
-			var/injecting_amount = max(1, our_plant.seed.potency*0.2) // Minimum of 1, max of 20
+			var/injecting_amount = max(1, our_seed.potency*0.2) // Minimum of 1, max of 20
 			our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [our_plant]!</span>")
 			log_combat(our_plant, living_target, "pricked and attempted to inject reagents from [our_plant] to [living_target]. Last touched by: [our_plant.fingerprintslast].")
@@ -522,16 +560,19 @@
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
 
-/datum/plant_gene/trait/smoke/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
+/datum/plant_gene/trait/smoke/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/make_smoke)
 
-/datum/plant_gene/trait/smoke/proc/make_smoke(obj/item/food/grown/our_plant, atom/target)
+/datum/plant_gene/trait/smoke/proc/make_smoke(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
 	var/datum/effect_system/smoke_spread/chem/smoke = new
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/splat_location = get_turf(target)
-	var/smoke_amount = round(sqrt(our_plant.seed.potency * 0.1), 1)
+	var/smoke_amount = round(sqrt(our_seed.potency * 0.1), 1)
 	smoke.attach(splat_location)
 	smoke.set_up(our_plant.reagents, smoke_amount, splat_location, 0)
 	smoke.start()
@@ -544,7 +585,10 @@
 	if(!(seed.resistance_flags & FIRE_PROOF))
 		seed.resistance_flags |= FIRE_PROOF
 
-/datum/plant_gene/trait/fire_resistance/on_new(obj/item/food/grown/our_plant, newloc)
+/datum/plant_gene/trait/fire_resistance/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
 	if(!(our_plant.resistance_flags & FIRE_PROOF))
 		our_plant.resistance_flags |= FIRE_PROOF
 
@@ -552,12 +596,14 @@
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
 
-/datum/plant_gene/trait/invasive/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
-	// Invasive spreading plants themselves do nothing, the seed is what does the magic
-	RegisterSignal(our_plant.seed, COMSIG_PLANT_ON_GROW, .proc/try_spread)
+/datum/plant_gene/trait/invasive/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
 
-/datum/plant_gene/trait/invasive/proc/try_spread(obj/item/seed/our_seed, obj/machinery/hydroponics/our_tray)
+	// Invasive spreading plants themselves do nothing, the seed is what does the magic
+	RegisterSignal(our_plant.get_plant_seed(), COMSIG_PLANT_ON_GROW, .proc/try_spread)
+
+/datum/plant_gene/trait/invasive/proc/try_spread(obj/item/seeds/our_seed, obj/machinery/hydroponics/our_tray)
 	SIGNAL_HANDLER
 
 	for(var/step_dir in GLOB.alldirs)
@@ -622,14 +668,17 @@
 	/// Sounds that play when this trait triggers
 	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
 
-/datum/plant_gene/trait/plant_laughter/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
-	if(istype(our_plant) && ispath(our_plant.trash_type, /obj/item/grown))
+/datum/plant_gene/trait/plant_laughter/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
+	var/obj/item/food/grown/grown_plant = our_plant
+	if(istype(grown_plant) && ispath(grown_plant.trash_type, /obj/item/grown))
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/laughter)
 
-/datum/plant_gene/trait/plant_laughter/proc/laughter(obj/item/food/grown/our_plant, atom/target)
+/datum/plant_gene/trait/plant_laughter/proc/laughter(obj/item/our_plant, atom/target)
 	our_plant.audible_message("<span_class='notice'>[our_plant] lets out burst of laughter.</span>")
 	playsound(our_plant, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
@@ -642,8 +691,10 @@
 	name = "Oculary Mimicry"
 	var/mutable_appearance/googly
 
-/datum/plant_gene/trait/eyes/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
+/datum/plant_gene/trait/eyes/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
 	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
 	googly.appearance_flags = RESET_COLOR
 	our_plant.add_overlay(googly)
@@ -653,14 +704,17 @@
 	examine_line = "<span class='info'>It's quite sticky.</span>"
 	trait_id = THROW_IMPACT_ID
 
-/datum/plant_gene/trait/sticky/on_new(obj/item/food/grown/our_plant, newloc)
-	. = ..()
-	if(our_plant.seed.get_gene(/datum/plant_gene/trait/stinging))
+/datum/plant_gene/trait/sticky/on_new(obj/item/our_plant, newloc)
+	if(!..())
+		return
+
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
 		our_plant.embedding = EMBED_POINTY
 	else
 		our_plant.embedding = EMBED_HARMLESS
 	our_plant.updateEmbedding()
-	our_plant.throwforce = (our_plant.seed.potency/20)
+	our_plant.throwforce = (our_seed.potency/20)
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.
