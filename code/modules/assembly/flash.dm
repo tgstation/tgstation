@@ -230,19 +230,23 @@
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
 	if(!try_use_flash(user))
 		return FALSE
+
+	. = TRUE
 	if(iscarbon(M))
-		flash_carbon(M, user, 5, 1)
-		return TRUE
-	else if(issilicon(M))
-		var/mob/living/silicon/robot/R = M
-		log_combat(user, R, "flashed", src)
-		update_icon(1)
-		R.Paralyze(rand(80,120))
+		flash_carbon(M, user, 5, TRUE)
+		return
+	if(issilicon(M))
+		var/mob/living/silicon/robot/flashed_borgo = M
+		log_combat(user, flashed_borgo, "flashed", src)
+		update_icon(TRUE)
+		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
+			user.visible_message("<span class='warning'>[user] fails to blind [flashed_borgo] with the flash!</span>", "<span class='warning'>You fail to blind [flashed_borgo] with the flash!</span>")
+			return
+		flashed_borgo.Paralyze(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-		R.add_confusion(min(5, diff))
-		R.flash_act(affect_silicon = 1)
-		user.visible_message("<span class='warning'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
-		return TRUE
+		flashed_borgo.add_confusion(min(5, diff))
+		user.visible_message("<span class='warning'>[user] overloads [flashed_borgo]'s sensors with the flash!</span>", "<span class='danger'>You overload [flashed_borgo]'s sensors with the flash!</span>")
+		return
 
 	user.visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
