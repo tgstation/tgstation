@@ -1,5 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "Oversized tgui windows will now resize to fit usable screen area (relevant for small laptop screens)."
-  - tweak: "All tgui windows are now resizable, unconditionally."
