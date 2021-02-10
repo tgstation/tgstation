@@ -10,8 +10,7 @@ export const TachyonArray = (props, context) => {
   return (
     <Window
       width={500}
-      height={225}
-      resizable>
+      height={225}>
       <Window.Content scrollable>
         {!records.length ? (
           <NoticeBox>

@@ -2226,25 +2226,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "css-loader@npm:5.0.1"
+"css-loader@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "css-loader@npm:5.0.2"
   dependencies:
     camelcase: ^6.2.0
     cssesc: ^3.0.0
-    icss-utils: ^5.0.0
+    icss-utils: ^5.1.0
     loader-utils: ^2.0.0
-    postcss: ^8.1.4
+    postcss: ^8.2.4
     postcss-modules-extract-imports: ^3.0.0
     postcss-modules-local-by-default: ^4.0.0
     postcss-modules-scope: ^3.0.0
     postcss-modules-values: ^4.0.0
     postcss-value-parser: ^4.1.0
     schema-utils: ^3.0.0
-    semver: ^7.3.2
+    semver: ^7.3.4
   peerDependencies:
     webpack: ^4.27.0 || ^5.0.0
-  checksum: 5c257ac08dcc8c3b52175d4fbd3154c331c5784a48b24c2d432505daf5ee9a10504ef85171bc41f32fe1c3f491e9c4f60949927cbb8ed0ebcd3c5d67161484e4
+  checksum: 522ec665a9f32e749b9014562bbbce5291fbc6f21c0ce630570fed809638d848a9f640ff90dbb90cbdb9f9d442b93b9fc90266f5edf485480fd33258706ccaa3
   languageName: node
   linkType: hard
 
@@ -3278,7 +3278,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"icss-utils@npm:^5.0.0":
+"icss-utils@npm:^5.0.0, icss-utils@npm:^5.1.0":
   version: 5.1.0
   resolution: "icss-utils@npm:5.1.0"
   peerDependencies:
@@ -3879,12 +3879,12 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"marked@npm:^1.2.9":
-  version: 1.2.9
-  resolution: "marked@npm:1.2.9"
+"marked@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "marked@npm:2.0.0"
   bin:
     marked: bin/marked
-  checksum: d6cce03ea4a069e31d8e3c6ef99a2aee62aa6b309462a380c1f57caaec6aad0d9d62f1195e45230b838a301484a7a94d2bc70ba07bfddb003f8685710708874d
+  checksum: 5b3b13b9b68beb126284d04fedeacee37c847618c091cf575eaa32746cf0af2d65b1ed25b2cc9269b0cdffa2e8dc5aa2daacff81ead68c59a7a6a1656f1d28ed
   languageName: node
   linkType: hard
 
@@ -3941,16 +3941,16 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"mini-css-extract-plugin@npm:^1.3.5":
-  version: 1.3.5
-  resolution: "mini-css-extract-plugin@npm:1.3.5"
+"mini-css-extract-plugin@npm:^1.3.6":
+  version: 1.3.6
+  resolution: "mini-css-extract-plugin@npm:1.3.6"
   dependencies:
     loader-utils: ^2.0.0
     schema-utils: ^3.0.0
     webpack-sources: ^1.1.0
   peerDependencies:
     webpack: ^4.4.0 || ^5.0.0
-  checksum: b090fc7c19de63a7e7c216565af90ac449e11dbc2dd1efee6276f38b394d69322949e62fcba2129fea8dc868b49b4a2110667897609c9b8598ffca85fa89580e
+  checksum: b5ab207776e5b3babfe5cc0813eb349b5b77ed003d1070910d424869fc7bd24fc3cb7e84c32db4818847c8b1950fef8701ec60ea910c60e2761631823027ec5f
   languageName: node
   linkType: hard
 
@@ -4762,14 +4762,14 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.4":
-  version: 8.2.4
-  resolution: "postcss@npm:8.2.4"
+"postcss@npm:^8.2.4":
+  version: 8.2.5
+  resolution: "postcss@npm:8.2.5"
   dependencies:
     colorette: ^1.2.1
     nanoid: ^3.1.20
     source-map: ^0.6.1
-  checksum: fb06b52d515c6768f5e372b3cec3d902cc0f37dd5128657739ab524ccc155655a6b2adf2f44cf670ad38cbccddae79d72d21093aecd1a7b023609ef548d71d6d
+  checksum: dbd8281a32abdbb68be53a7022f405f25207cfadf86cd603bc47e29579432d6fe970fb4189af6ddbd81170c9f226ae36413970bed5bfcd6d04544c86374547be
   languageName: node
   linkType: hard
 
@@ -5094,9 +5094,9 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "sass-loader@npm:11.0.0"
+"sass-loader@npm:^11.0.1":
+  version: 11.0.1
+  resolution: "sass-loader@npm:11.0.1"
   dependencies:
     klona: ^2.0.4
     neo-async: ^2.6.2
@@ -5112,7 +5112,7 @@ fsevents@~2.3.1:
       optional: true
     sass:
       optional: true
-  checksum: 19a9831d89ee7d2fdd5c03c6b98ce2a45707898d81ecc7c30e8e78a0f832030bdb8ced5504cfe43899c63b01c0c5616fbed66110cef20d693eb0271166475ee2
+  checksum: fdd50c6c65b4c912564e799a1a21a235ece179531ddf705ebd4b2671990118ee768da73b60ac7fe5089e9e2d1d0a2ede9b87da2c153a8d1147c2144e605093de
   languageName: node
   linkType: hard
 
@@ -5183,7 +5183,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.2.1, semver@npm:^7.3.2":
+"semver@npm:^7.2.1, semver@npm:^7.3.2, semver@npm:^7.3.4":
   version: 7.3.4
   resolution: "semver@npm:7.3.4"
   dependencies:
@@ -5674,19 +5674,19 @@ fsevents@~2.3.1:
     babel-plugin-inferno: ^6.1.1
     babel-plugin-transform-remove-console: ^6.9.4
     common: "workspace:*"
-    css-loader: ^5.0.1
+    css-loader: ^5.0.2
     cssnano: ^4.1.10
     eslint: ^7.19.0
     eslint-plugin-react: ^7.22.0
     file-loader: ^6.2.0
     inferno: ^7.4.7
-    mini-css-extract-plugin: ^1.3.5
+    mini-css-extract-plugin: ^1.3.6
     sass: ^1.32.6
-    sass-loader: ^11.0.0
+    sass-loader: ^11.0.1
     style-loader: ^2.0.0
     terser-webpack-plugin: ^5.1.1
     url-loader: ^4.1.1
-    webpack: ^5.21.1
+    webpack: ^5.21.2
     webpack-bundle-analyzer: ^4.4.0
     webpack-cli: ^4.5.0
   languageName: unknown
@@ -5700,7 +5700,7 @@ fsevents@~2.3.1:
     dompurify: ^2.2.6
     inferno: ^7.4.7
     inferno-vnode-flags: ^7.4.7
-    marked: ^1.2.9
+    marked: ^2.0.0
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
@@ -6019,9 +6019,9 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.21.1":
-  version: 5.21.1
-  resolution: "webpack@npm:5.21.1"
+"webpack@npm:^5.21.2":
+  version: 5.21.2
+  resolution: "webpack@npm:5.21.2"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.46
@@ -6051,7 +6051,7 @@ fsevents@~2.3.1:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 8f2dcd43d359451d4fba313f23f52ab79df82fd191a3540e8ecc8ca38bb27c8cc44d285a324dcfa7656a5b2ec6c41bc372423e3c9d5b87fccf5bc2f1ad673ffc
+  checksum: 0f8ec63a22a9c6a347e97e6a511f87d00f0f20abf7b62b8147de84325396f5192202e3c83f8fbad95fa7f9c35604e5a3cb5264f7ae58009ba5d9520dce04a76b
   languageName: node
   linkType: hard
 

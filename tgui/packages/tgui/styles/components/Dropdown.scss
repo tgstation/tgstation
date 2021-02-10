@@ -58,7 +58,7 @@
   font-family: Verdana, sans-serif;
   font-size: base.em(12px);
   line-height: base.em(17px);
-  transition: background-color 100ms;
+  transition: background-color 100ms ease-out;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.2);
