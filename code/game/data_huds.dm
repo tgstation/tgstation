@@ -196,7 +196,6 @@ Medical HUD! Basic mode needs suit sensors on.
 			holder.icon_state = "huddead"
 	else
 
-		sensors.icon_state = null
 		switch(virus_threat)
 			if(DISEASE_SEVERITY_BIOHAZARD)
 				holder.icon_state = "hudill5"
