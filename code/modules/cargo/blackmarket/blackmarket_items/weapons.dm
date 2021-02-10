@@ -1,6 +1,5 @@
 /datum/blackmarket_item/weapon
 	category = "Weapons"
-	root = /datum/blackmarket_item/weapon
 
 /datum/blackmarket_item/weapon/bear_trap
 	name = "Bear Trap"

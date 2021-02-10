@@ -1,6 +1,5 @@
 /datum/blackmarket_item/consumable
 	category = "Consumables"
-	root = /datum/blackmarket_item/consumable
 
 /datum/blackmarket_item/consumable/clown_tears
 	name = "Bowl of Clown's Tears"

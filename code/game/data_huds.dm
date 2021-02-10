@@ -157,7 +157,6 @@ Medical HUD! Basic mode needs suit sensors on.
 /mob/living/carbon/proc/update_suit_sensors()
 	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
-	S.update_suit_sensors(src)
 
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()

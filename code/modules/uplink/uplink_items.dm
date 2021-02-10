@@ -171,13 +171,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/bundles_tc/mantis_kit
-	name = "A.R.A.S.A.K.A. Mantis Blades Kit"
-	desc = "Comes with 2 A.R.A.S.A.K.A. Mantis blades and a syndicate cyberlink. All packaged with autosurgeons."
-	item = /obj/item/storage/briefcase/syndie_mantis
-	cost = 20
-	include_modes = list(/datum/game_mode/nuclear)
-
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a tactical medkit, \

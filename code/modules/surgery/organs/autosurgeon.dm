@@ -111,6 +111,9 @@
 /obj/item/autosurgeon/organ/syndicate/reviver
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver/syndicate
 
+/obj/item/autosurgeon/organ/syndicate/esword
+	starting_organ = /obj/item/organ/cyberimp/arm/item_set/esword
+
 /obj/item/autosurgeon/skillchip
 	name = "skillchip autosurgeon"
 	desc = "A device that automatically inserts a skillchip into the user's brain without the hassle of extensive surgery. \
