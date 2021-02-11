@@ -525,7 +525,7 @@
 	if(is_currently_ejecting)
 		return
 	var/list/modifiers = params2list(params)
-	if(isAI(user) == !LAZYLIST(modifiers, MIDDLE_CLICK])//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
+	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
 		return
 	if(phasing)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to interact with objects while phasing.</span>")

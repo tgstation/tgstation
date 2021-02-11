@@ -27,7 +27,7 @@
 		return
 	var/mob/living/carbon/human/dollie = object
 
-	if(LAZYLIST(modifiers, LEFT_CLICK))
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(isnull(dressuptime))
 			to_chat(c, "<span class='warning'>Pick an outfit first.</span>")
 			return
@@ -37,6 +37,6 @@
 		if(dressuptime != "Naked")
 			dollie.equipOutfit(dressuptime)
 
-	if(LAZYLIST(modifiers, RIGHT_CLICK))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		for (var/item in dollie.get_equipped_items(TRUE))
 			qdel(item)

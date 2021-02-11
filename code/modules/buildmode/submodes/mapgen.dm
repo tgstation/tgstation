@@ -33,7 +33,7 @@
 /datum/buildmode_mode/mapgen/handle_selected_area(client/c, params)
 	var/list/modifiers = params2list(params)
 	
-	if(LAZYLIST(modifiers, LEFT_CLICK))
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		var/datum/map_generator/G = new generator_path
 		if(istype(G, /datum/map_generator/repair/reload_station_map))
 			if(GLOB.reloading_map)

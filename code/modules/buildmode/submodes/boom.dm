@@ -33,6 +33,6 @@
 /datum/buildmode_mode/boom/handle_click(client/c, params, obj/object)
 	var/list/modifiers = params2list(params)
 
-	if(LAZYLIST(modifiers, LEFT_CLICK))
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		explosion(object, devastation, heavy, light, flash, FALSE, TRUE, flames)
 		log_admin("Build Mode: [key_name(c)] caused an explosion(dev=[devastation], hvy=[heavy], lgt=[light], flash=[flash], flames=[flames]) at [AREACOORD(object)]")

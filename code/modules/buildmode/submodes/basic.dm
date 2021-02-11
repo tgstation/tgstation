@@ -15,10 +15,10 @@
 /datum/buildmode_mode/basic/handle_click(client/c, params, obj/object)
 	var/list/modifiers = params2list(params)
 	
-	var/left_click = LAZYLIST(modifiers, LEFT_CLICK)
-	var/right_click = LAZYLIST(modifiers, RIGHT_CLICK)
-	var/alt_click = LAZYLIST(modifiers, ALT_CLICK)
-	var/ctrl_click = LAZYLIST(modifiers, CTRL_CLICK)
+	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
+	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
+	var/ctrl_click = LAZYACCESS(modifiers, CTRL_CLICK)
 
 	if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
 		var/turf/T = object

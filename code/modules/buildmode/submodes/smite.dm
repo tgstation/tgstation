@@ -21,13 +21,13 @@
 		return
 	selected_smite = picking_smite
 
-/datum/buildmode_mode/smite/handle_click(client/user, params_string, object)
+/datum/buildmode_mode/smite/handle_click(client/user, params, object)
 	var/list/modifiers = params2list(params)
 
 	if (!check_rights(R_ADMIN | R_FUN))
 		return
 
-	if (!LAZYLIST(modifiers, LEFT_CLICK))
+	if (!LAZYACCESS(modifiers, LEFT_CLICK))
 		return
 
 	if (!isliving(object))

@@ -19,9 +19,9 @@
 
 /atom/movable/screen/buildmode/mode/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYLIST(modifiers, LEFT_CLICK))
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		bd.toggle_modeswitch()
-	else if(LAZYLIST(modifiers, RIGHT_CLICK))
+	else if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		bd.mode.change_settings(usr.client)
 		
 	update_icon()

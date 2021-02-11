@@ -458,7 +458,7 @@
 
 /mob/dead/observer/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYLIST(modifiers, SHIFT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		var/view = 0
 		if(delta_y > 0)
 			view = -1

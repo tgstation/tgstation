@@ -727,7 +727,7 @@ so as to remain in compliance with the most up-to-date laws."
 	if(!usr || !usr.client)
 		return
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, SHIFT_CLICK) // screen objects don't do the normal Click() stuff so we'll cheat
+	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
 	if(usr != owner)

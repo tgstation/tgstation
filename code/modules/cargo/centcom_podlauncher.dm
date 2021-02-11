@@ -579,7 +579,7 @@
 /datum/centcom_podlauncher/proc/InterceptClickOn(user,params,atom/target) //Click Intercept so we know where to send pods where the user clicks
 	var/list/modifiers = params2list(params)
 	
-	var/left_click = LAZYLIST(modifiers, LEFT_CLICK)
+	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
 
 	if (launcherActivated)
 		//Clicking on UI elements shouldn't launch a pod
