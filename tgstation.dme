@@ -1438,7 +1438,7 @@
 #include "code\modules\admin\whitelist.dm"
 #include "code\modules\admin\callproc\callproc.dm"
 #include "code\modules\admin\smites\bad_luck.dm"
-#include "code\modules\admin\smites\berforate.dm"
+#include "code\modules\admin\smites\perforate.dm"
 #include "code\modules\admin\smites\bloodless.dm"
 #include "code\modules\admin\smites\boneless.dm"
 #include "code\modules\admin\smites\brain_damage.dm"
