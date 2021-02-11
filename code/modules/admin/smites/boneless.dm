@@ -1,6 +1,6 @@
 /// Gives the target critically bad wounds
 /datum/smite/boneless
-	name = "How I lost my medical license"
+	name = "I'm going to saw through your bones"
 
 /datum/smite/boneless/effect(client/user, mob/living/target)
 	. = ..()
