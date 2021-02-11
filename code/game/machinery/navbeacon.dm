@@ -120,7 +120,7 @@
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user, 1)
 
-/obj/machinery/navbeacon/attack_paw()
+/obj/machinery/navbeacon/attack_paw(mob/user, list/modifiers)
 	return
 
 /obj/machinery/navbeacon/ui_interact(mob/user)

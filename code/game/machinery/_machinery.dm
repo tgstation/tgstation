@@ -420,7 +420,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/machinery/attack_paw(mob/living/user)
+/obj/machinery/attack_paw(mob/living/user, list/modifiers)
 	if(!user.combat_mode)
 		return attack_hand(user)
 	else

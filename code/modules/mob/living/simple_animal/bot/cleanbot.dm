@@ -311,7 +311,7 @@
 
 	target_types = typecacheof(target_types)
 
-/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(ismopable(A))

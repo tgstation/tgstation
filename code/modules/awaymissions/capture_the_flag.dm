@@ -63,7 +63,7 @@
 	return TRUE //so if called by a signal, it doesn't delete
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
-/obj/item/ctf/attack_hand(mob/living/user)
+/obj/item/ctf/attack_hand(mob/living/user, list/modifiers)
 	//pre normal check item stuff, this is for our special flag checks
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
@@ -710,7 +710,7 @@
 /obj/machinery/control_point/attackby(mob/user, params)
 	capture(user)
 
-/obj/machinery/control_point/attack_hand(mob/user)
+/obj/machinery/control_point/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

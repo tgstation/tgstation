@@ -41,12 +41,12 @@
 	update_icon()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/reagent_containers/syringe/attack_hand()
+/obj/item/reagent_containers/syringe/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	update_icon()
 
-/obj/item/reagent_containers/syringe/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/reagent_containers/syringe/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return

@@ -415,7 +415,7 @@
 /obj/machinery/bot_core/floorbot
 	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
 
-/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(isturf(A))

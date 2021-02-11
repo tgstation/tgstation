@@ -103,7 +103,7 @@
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
 	obj_break()
 
-/obj/machinery/pdapainter/attack_hand(mob/user)
+/obj/machinery/pdapainter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

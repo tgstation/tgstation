@@ -76,10 +76,10 @@
 	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
 	var/obj/effect/rune/parent_rune
 
-/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user, modifiers)
+/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user, list/modifiers)
 	parent_rune.attack_hand(user, modifiers)
 
-/obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user)
+/obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(iscultist(user))
 		parent_rune.attack_animal(user)
 	else

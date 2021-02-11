@@ -59,10 +59,10 @@
 	qdel(src)
 	new /obj/structure/table/wood(A)
 
-/obj/structure/table/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/table/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/table/attack_hand(mob/living/user)
+/obj/structure/table/attack_hand(mob/living/user, list/modifiers)
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
@@ -642,10 +642,10 @@
 	if(user.transferItemToLoc(W, drop_location()))
 		return 1
 
-/obj/structure/rack/attack_paw(mob/living/user)
-	attack_hand(user)
+/obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
+	attack_hand(user, modifiers)
 
-/obj/structure/rack/attack_hand(mob/living/user)
+/obj/structure/rack/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

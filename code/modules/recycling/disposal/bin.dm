@@ -189,7 +189,7 @@
 	update_icon()
 
 // clumsy monkeys and xenos can only pull the flush lever
-/obj/machinery/disposal/attack_paw(mob/user)
+/obj/machinery/disposal/attack_paw(mob/user, list/modifiers)
 	if(ISADVANCEDTOOLUSER(user))
 		return ..()
 	if(machine_stat & BROKEN)

@@ -133,7 +133,7 @@
 				return ..()
 
 
-/obj/structure/bookcase/attack_hand(mob/living/user)
+/obj/structure/bookcase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

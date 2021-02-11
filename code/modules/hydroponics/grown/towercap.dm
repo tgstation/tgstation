@@ -210,7 +210,7 @@
 			return ..()
 
 
-/obj/structure/bonfire/attack_hand(mob/user)
+/obj/structure/bonfire/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

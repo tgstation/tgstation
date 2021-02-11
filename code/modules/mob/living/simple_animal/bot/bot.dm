@@ -291,9 +291,9 @@
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
-	if(!H.combat_mode)
-		interact(H)
+/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(!user.combat_mode)
+		interact(user)
 	else
 		return ..()
 
