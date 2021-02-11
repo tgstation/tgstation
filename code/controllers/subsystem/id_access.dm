@@ -50,6 +50,7 @@ SUBSYSTEM_DEF(id_access)
 	wildcard_flags_by_wildcard[WILDCARD_NAME_SYNDICATE] = WILDCARD_FLAG_SYNDICATE
 	wildcard_flags_by_wildcard[WILDCARD_NAME_AWAY] = WILDCARD_FLAG_AWAY
 	wildcard_flags_by_wildcard[WILDCARD_NAME_SPECIAL] = WILDCARD_FLAG_SPECIAL
+	wildcard_flags_by_wildcard[WILDCARD_NAME_FORCED] = WILDCARD_FLAG_FORCED
 
 /datum/controller/subsystem/id_access/proc/get_access_flag(access)
 	return flags_by_access["[access]"] ? text2num(flags_by_access["[access]"]) : ACCESS_FLAG_SPECIAL
@@ -84,4 +85,3 @@ SUBSYSTEM_DEF(id_access)
 		id_card.assignment = trim.assignment
 
 	// We'll let the chameleon action update the card's label as necessary instead of doing it here.
-

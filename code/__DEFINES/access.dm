@@ -190,6 +190,9 @@
 /// Access flags that can be applied to super special weird wildcard slots.
 #define WILDCARD_FLAG_SPECIAL		ACCESS_FLAG_SPECIAL
 #define WILDCARD_NAME_SPECIAL		"special"
+/// Access flag that indicates a wildcard was forced onto an ID card.
+#define WILDCARD_FLAG_FORCED		ALL
+#define WILDCARD_NAME_FORCED		"forced"
 
 /// Departmental/general/common area accesses
 #define COMMON_ACCESS 			list(ACCESS_MECH_MINING, ACCESS_MECH_MEDICAL, ACCESS_MECH_SECURITY, ACCESS_MECH_SCIENCE, \

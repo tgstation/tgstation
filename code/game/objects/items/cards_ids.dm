@@ -92,7 +92,7 @@
 	/// Access levels held by this card.
 	var/list/timberpoes_access = list()
 
-	/// List of wildcard slot datums as keys with the number of wildcard slots as values.
+	/// List of wildcard slot names as keys with lists of wildcard data as values.
 	var/list/wildcard_slots = list()
 
 /obj/item/card/id/Initialize(mapload)
@@ -113,20 +113,24 @@
 	return ..()
 
 /obj/item/card/id/proc/can_add_wildcards(list/wildcard_list)
-	var/list/new_limits = wildcard_slots.Copy()
+	var/list/new_wildcard_limits = list()
+
+	for(var/flag_name in wildcard_slots)
+		var/list/wildcard_info = wildcard_slots[flag_name]
+		new_wildcard_limits[flag_name] = wildcard_info["limit"] - length(wildcard_info["usage"])
 
 	var/wildcard_allocated
 	for(var/wildcard in wildcard_list)
 		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
-		for(var/flag_name in new_limits)
+		for(var/flag_name in new_wildcard_limits)
 			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
 			if(!(wildcard_flag & limit_flags))
 				continue
 			// Negative limits mean infinite slots. Positive limits mean limited slots still available. 0 slots means no slots.
-			if(new_limits[flag_name] == 0)
+			if(new_wildcard_limits[flag_name] == 0)
 				continue
-			new_limits[flag_name]--
+			new_wildcard_limits[flag_name]--
 			wildcard_allocated = TRUE
 			break
 		if(!wildcard_allocated)
@@ -136,30 +140,146 @@
 
 /obj/item/card/id/proc/add_wildcards(list/wildcard_list, force = FALSE)
 	var/wildcard_allocated
+	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
 	for(var/wildcard in wildcard_list)
 		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/flag_name in wildcard_slots)
+			if(flag_name == WILDCARD_NAME_FORCED)
+				continue
+
 			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
+
 			if(!(wildcard_flag & limit_flags))
 				continue
+
+			var/list/wildcard_info = wildcard_slots[flag_name]
+			var/wildcard_limit = wildcard_info["limit"]
+			var/list/wildcard_usage = wildcard_info["usage"]
+
+			var/wildcard_count = wildcard_limit - length(wildcard_usage)
+
 			// Negative limits mean infinite slots. Positive limits mean limited slots still available. 0 slots means no slots.
-			if(wildcard_slots[flag_name] == 0)
+			if(wildcard_count == 0)
 				continue
-			wildcard_slots[flag_name]--
+
+			wildcard_usage |= wildcard
 			timberpoes_access |= wildcard
 			wildcard_allocated = TRUE
 			break
+		// Fallback for if we couldn't allocate the wildcard for some reason. This ordinarily should not happen without force = TRUE.
 		if(!wildcard_allocated)
 			if(!force)
 				stack_trace("Wildcard could not be added to [src]. Use force = TRUE to force wildcard addition anyway.")
 				continue
-			wildcard_slots[wildcard_flag]--
-			timberpoes_access += wildcard
 
-/obj/item/card/id/proc/add_access()
-/obj/item/card/id/proc/remove_access()
-/obj/item/card/id/proc/set_access()
+			// If the card has no info for historic forced wildcards, create the list.
+			if(!wildcard_slots[WILDCARD_NAME_FORCED])
+				wildcard_slots[WILDCARD_NAME_FORCED] = list(count = 0, usage = list())
+
+			var/list/wildcard_info = wildcard_slots[WILDCARD_NAME_FORCED]
+			var/list/wildcard_usage = wildcard_info["usage"]
+			wildcard_usage |= wildcard
+			timberpoes_access |= wildcard
+
+/obj/item/card/id/proc/remove_wildcards(list/wildcard_list)
+	var/wildcard_removed
+	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to remove it.
+	for(var/wildcard in wildcard_list)
+		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
+		wildcard_removed = FALSE
+		for(var/flag_name in wildcard_slots)
+			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
+			if(!(wildcard_flag & limit_flags))
+				continue
+
+			var/list/wildcard_info = wildcard_slots[flag_name]
+			var/wildcard_usage = wildcard_info["usage"]
+
+			wildcard_usage -= wildcard
+			timberpoes_access -= wildcard
+			wildcard_removed = TRUE
+			break
+		// Fallback to see if this was a force-added wildcard.
+		if(!wildcard_removed)
+			// If the card has no info for historic forced wildcards, that's an error state.
+			if(!wildcard_slots[WILDCARD_NAME_FORCED])
+				stack_trace("Wildcard ([wildcard]) could not be removed from [src]. This card has no forced wildcard data.")
+
+			var/list/wildcard_info = wildcard_slots[WILDCARD_NAME_FORCED]
+			var/wildcard_usage = wildcard_info["usage"]
+			wildcard_usage -= wildcard
+			timberpoes_access -= wildcard
+
+/obj/item/card/id/proc/add_access(list/add_accesses, force = FALSE)
+	var/list/wildcard_access = list()
+	var/list/normal_access = list()
+
+	build_access_lists(add_accesses, normal_access, wildcard_access)
+
+	// Check if we can add the wildcards.
+	if(!can_add_wildcards(wildcard_access))
+		return FALSE
+
+	// All clear to add the accesses.
+	timberpoes_access |= normal_access
+	add_wildcards(wildcard_access, force)
+
+	return TRUE
+
+/obj/item/card/id/proc/remove_access(list/rem_accesses)
+	var/list/wildcard_access = list()
+	var/list/normal_access = list()
+
+	build_access_lists(rem_accesses, normal_access, wildcard_access)
+
+	timberpoes_access -= normal_access
+	remove_wildcards(wildcard_access, force)
+
+/obj/item/card/id/proc/set_access(list/new_access_list)
+	var/list/wildcard_access = list()
+	var/list/normal_access = list()
+
+	build_access_lists(new_access_list, normal_access, wildcard_access)
+
+	// Check if we can add the wildcards.
+	if(!can_add_wildcards(wildcard_access))
+		return FALSE
+
+	// Doing this, we overwrite the old access.
+	timberpoes_access = normal_access.Copy()
+
+	// We have to go through the wildcards and reset them too.
+	for(var/flag_name in wildcard_slots)
+		var/list/wildcard_info = wildcard_slots[flag_name]
+		wildcard_info["usage"].Cut()
+
+	add_wildcards(wildcard_access, force)
+
+	return TRUE
+
+/obj/item/card/id/proc/clear_access()
+	// Go through the wildcards and reset them.
+	for(var/flag_name in wildcard_slots)
+		var/list/wildcard_info = wildcard_slots[flag_name]
+		wildcard_info["usage"].Cut()
+
+	// Hard reset access
+	timberpoes_access.Cut()
+
+/obj/item/card/id/proc/build_access_lists(list/accesses, list/basic_access_list, list/wildcard_access_list)
+	if(!length(accesses) || isnull(basic_access_list) || isnull(wildcard_access_list))
+		CRASH("Invalid parameters passed to build_access_lists")
+
+	var/list/trim_accesses = timberpoes_trim?.access
+
+	// Populate the lists.
+	for(var/new_access in accesses)
+		if(new_access in trim_accesses)
+			basic_access_list |= new_access
+			continue
+
+		wildcard_access_list |= new_access
 
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
@@ -715,7 +835,8 @@
 	if(!proximity)
 		return
 	if(istype(O, /obj/item/card/id))
-		// TIMBERTODO - Opening TGUI interface goes here
+		// TIMBERTODO - Implement TGUI.
+		ui_interact(user)
 		return
 
 	return ..()

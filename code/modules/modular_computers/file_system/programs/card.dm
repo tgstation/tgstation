@@ -269,8 +269,7 @@
 		if("PRG_denyall")
 			if(!computer || !authenticated || minor)
 				return
-			// TIMBERTODO - IMPLEMENT WAY TO REMOVE ALL ACCESSES FROM A CARD BETTER THAN THIS
-			//target_id_card.access.Cut()
+			target_id_card.clear_access()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_grantregion")
@@ -345,7 +344,7 @@
 	var/list/regions = list()
 	if(is_centcom)
 		var/list/accesses = list()
-		for(var/access in get_all_centcom_access())
+		for(var/access in CENTCOM_ACCESS)
 			if (get_centcom_access_desc(access))
 				accesses += list(list(
 					"desc" = replacetext(get_centcom_access_desc(access), "&nbsp", " "),
@@ -408,7 +407,13 @@
 		data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
 		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
 		data["access_on_card"] = id_card.timberpoes_access
+		data["wildcardSlots"] = id_card.wildcard_slots
 		data["id_age"] = id_card.registered_age
+
+		if(id_card.timberpoes_trim)
+			var/datum/id_trim/card_trim = id_card.timberpoes_trim
+			data["trimAssignment"] = card_trim.assignment
+			data["trimAccess"] = card_trim.access
 
 	return data
 
