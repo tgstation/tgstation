@@ -66,16 +66,8 @@
 				microwaved_type = microwaved_type,\
 				junkiness = junkiness)
 
-
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
-
-/obj/item/food/grown/examine(user)
-	. = ..()
-	if(seed)
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			if(T.examine_line)
-				. += T.examine_line
 
 /obj/item/food/grown/attackby(obj/item/O, mob/user, params)
 	..()

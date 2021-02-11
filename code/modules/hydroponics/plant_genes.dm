@@ -235,6 +235,7 @@
 			return FALSE
 		if(type == trait.type)
 			return FALSE
+
 	return TRUE
 
 /*
@@ -244,13 +245,26 @@
  * newloc - the loc of the plant
  */
 /datum/plant_gene/trait/proc/on_new(obj/item/our_plant, newloc)
+	SHOULD_CALL_PARENT(TRUE) // Child should call parent to make sure that the seed is not NULLED, otherwise runtime city
+
 	// Plants should always have seeds, but if a non-plant sneaks in or a plant with nulled seed, cut it out
 	if(isnull(our_plant.get_plant_seed()))
 		return FALSE
+
+	// Add on any bonus lines on examine
+	if(examine_line)
+		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
+
 	return TRUE
 
+/// Add on any unique examine text to the plant's examine text.
+/datum/plant_gene/trait/proc/examine(obj/item/our_plant, mob/examiner, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += examine_line
+
+/// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 /datum/plant_gene/trait/squash
-	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	trait_id = THROW_IMPACT_ID
@@ -298,9 +312,10 @@
 
 	qdel(our_plant)
 
+/// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
+/// Applies other trait effects (teleporting, etc) to the target by signal.
 /datum/plant_gene/trait/slip
-	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
-	// Applies other trait effects (teleporting, etc) to the target by on_slip.
+
 	name = "Slippery Skin"
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
@@ -324,11 +339,14 @@
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/food/grown/our_plant, mob/slipped_target)
 	SEND_SIGNAL(our_plant, COMSIG_PLANT_ON_SLIP, slipped_target)
 
+/*
+ * Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
+ * Generates sparks on squash.
+ * Small (potency*rate*5) chance to shock squish or slip target for (potency*rate*5) damage.
+ * Also affects plant batteries see capatative cell production datum
+ */
 /datum/plant_gene/trait/cell_charge
-	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
-	// Generates sparks on squash.
-	// Small (potency*rate*5) chance to shock squish or slip target for (potency*rate*5) damage.
-	// Also affects plant batteries see capatative cell production datum
+
 	name = "Electrical Activity"
 	rate = 0.2
 
@@ -368,9 +386,10 @@
 	if(batteries_recharged)
 		to_chat(eater, "<span class='notice'>Your batteries are recharged!</span>")
 
+/// Makes the plant glow. Makes the plant in tray glow, too.
+/// Adds 1 + potency*rate light range and potency*(rate + 0.01) light_power to products.
 /datum/plant_gene/trait/glow
-	// Makes plant glow. Makes plant in tray glow too.
-	// Adds 1 + potency*rate light range and potency*(rate + 0.01) light_power to products.
+
 	name = "Bioluminescence"
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
@@ -391,9 +410,10 @@
 	our_plant.light_system = MOVABLE_LIGHT
 	our_plant.AddComponent(/datum/component/overlay_lighting, glow_range(our_seed), glow_power(our_seed), glow_color)
 
+/// Makes plant emit darkness. (Purple-ish shadows)
+/// Adds -potency*(rate*0.2) light power to products.
 /datum/plant_gene/trait/glow/shadow
-	//makes plant emit slightly purple shadows
-	//adds -potency*(rate*0.2) light power to products
+
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = "#AAD84B"
@@ -401,43 +421,47 @@
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/seed)
 	return -max(seed.potency*(rate*0.2), 0.2)
 
+/// Colored versions of bioluminescence.
+
+/// White
 /datum/plant_gene/trait/glow/white
 	name = "White Bioluminescence"
 	glow_color = "#FFFFFF"
 
+/// Red
 /datum/plant_gene/trait/glow/red
-	//Colored versions of bioluminescence.
 	name = "Red Bioluminescence"
 	glow_color = "#FF3333"
 
+/// Yellow (not the disgusting glowshroom yellow hopefully)
 /datum/plant_gene/trait/glow/yellow
-	//not the disgusting glowshroom yellow hopefully
 	name = "Yellow Bioluminescence"
 	glow_color = "#FFFF66"
 
+/// Green (oh no, now i'm radioactive)
 /datum/plant_gene/trait/glow/green
-	//oh no, now i'm radioactive
 	name = "Green Bioluminescence"
 	glow_color = "#99FF99"
 
+/// Blue (the best one)
 /datum/plant_gene/trait/glow/blue
-	//the best one
 	name = "Blue Bioluminescence"
 	glow_color = "#6699FF"
 
+/// Purple (did you know that notepad++ doesnt think bioluminescence is a word) (was the person who wrote this using notepad++ for dm?)
 /datum/plant_gene/trait/glow/purple
-	//did you know that notepad++ doesnt think bioluminescence is a word
 	name = "Purple Bioluminescence"
 	glow_color = "#D966FF"
 
+// Pink (gay tide station pride)
 /datum/plant_gene/trait/glow/pink
-	//gay tide station pride
 	name = "Pink Bioluminescence"
 	glow_color = "#FFB3DA"
 
+/// Makes plant teleport people when squashed or slipped on.
+/// Teleport radius is calculated as max(round(potency*rate), 1)
 /datum/plant_gene/trait/teleport
-	// Makes plant teleport people when squashed or slipped on.
-	// Teleport radius is calculated as max(round(potency*rate), 1)
+
 	name = "Bluespace Activity"
 	rate = 0.1
 
@@ -448,6 +472,12 @@
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/slip_teleport)
 
+/*
+ * When squashed, makes the target teleport.
+ *
+ * our_plant - our plant, being squashed, and teleporting the target
+ * target - the atom targeted by the squash
+ */
 /datum/plant_gene/trait/teleport/proc/squash_teleport(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
@@ -458,6 +488,12 @@
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 
+/*
+ * When slipped on, makes the target teleport and either teleport the source again or delete it.
+ *
+ * our_plant - our plant being slipped on
+ * target - the carbon targeted that was slipped and was teleported
+ */
 /datum/plant_gene/trait/teleport/proc/slip_teleport(obj/item/our_plant, mob/living/carbon/target)
 	SIGNAL_HANDLER
 
@@ -496,10 +532,13 @@
 		//Grown inedibles however just use a reagents holder, so.
 		our_plant.reagents?.maximum_volume *= rate
 
+/// Allows a plant to be harvested multiple times.
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
+	/// Don't allow replica pods to be multi harvested please.
 	seed_blacklist = list(/obj/item/seeds/replicapod)
 
+/// Allows a plant to be turned into a battery when cabling is applied.
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
 
@@ -509,7 +548,16 @@
 
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
 
+/*
+ * When a plant with this gene is hit (attackby) with cables, we turn it into a battery.
+ *
+ * our_plant - our plant being hit
+ * hit_item - the item we're hitting the plant with
+ * user - the person hitting the plant with an item
+ */
 /datum/plant_gene/trait/battery/proc/make_battery(obj/item/our_plant, obj/item/hit_item, mob/user)
+	SIGNAL_HANDLER
+
 	if(!istype(hit_item, /obj/item/stack/cable_coil))
 		return
 
@@ -536,6 +584,7 @@
 	else
 		to_chat(user, "<span class='warning'>You need five lengths of cable to make a [our_plant] battery!</span>")
 
+/// Injects a number of chemicals from the plant when you throw it at someone or they slip on it.
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
 	examine_line = "<span class='info'>It's quite prickley.</span>"
@@ -547,6 +596,12 @@
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/prickles_inject)
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/prickles_inject)
 
+/*
+ * Injects a target with a number of reagents from our plant.
+ *
+ * our_plant - our plant that's injecting someone
+ * target - the atom being hit on thrown or slipping on our plant
+ */
 /datum/plant_gene/trait/stinging/proc/prickles_inject(obj/item/our_plant, atom/target)
 	if(isliving(target) && our_plant.reagents && our_plant.reagents.total_volume)
 		var/mob/living/living_target = target
@@ -557,6 +612,7 @@
 			to_chat(target, "<span class='danger'>You are pricked by [our_plant]!</span>")
 			log_combat(our_plant, living_target, "pricked and attempted to inject reagents from [our_plant] to [living_target]. Last touched by: [our_plant.fingerprintslast].")
 
+/// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
 
@@ -566,6 +622,12 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/make_smoke)
 
+/*
+ * Makes a cloud of reagent smoke.
+ *
+ * our_plant - our plant being squashed and smoked
+ * target - the atom the plant was squashed on
+ */
 /datum/plant_gene/trait/smoke/proc/make_smoke(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
@@ -578,7 +640,8 @@
 	smoke.start()
 	our_plant.reagents.clear_reagents()
 
-/datum/plant_gene/trait/fire_resistance // Lavaland
+/// Makes the plant and its seeds fireproof. From lavaland plants.
+/datum/plant_gene/trait/fire_resistance
 	name = "Fire Resistance"
 
 /datum/plant_gene/trait/fire_resistance/apply_vars(obj/item/seeds/seed)
@@ -592,7 +655,7 @@
 	if(!(our_plant.resistance_flags & FIRE_PROOF))
 		our_plant.resistance_flags |= FIRE_PROOF
 
-///Invasive spreading lets the plant jump to other trays, the spreading plant won't replace plants of the same type.
+/// Invasive spreading lets the plant jump to other trays, and the spreading plant won't replace plants of the same type.
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
 
@@ -603,6 +666,12 @@
 	// Invasive spreading plants themselves do nothing, the seed is what does the magic
 	RegisterSignal(our_plant.get_plant_seed(), COMSIG_PLANT_ON_GROW, .proc/try_spread)
 
+/*
+ * Attempt to find an adjacent tray we can spread to.
+ *
+ * our_seed - our plant's seed, what spreads to other trays
+ * our_tray - the hydroponics tray we're currently in
+ */
 /datum/plant_gene/trait/invasive/proc/try_spread(obj/item/seeds/our_seed, obj/machinery/hydroponics/our_tray)
 	SIGNAL_HANDLER
 
@@ -614,6 +683,12 @@
 
 			spread_seed(spread_tray, our_tray)
 
+/*
+ * Actually spread the plant to the tray we found in try_spread.
+ *
+ * target_tray - the tray we're spreading to
+ * origin_tray - the tray we're currently in
+ */
 /datum/plant_gene/trait/invasive/proc/spread_seed(obj/machinery/hydroponics/target_tray, obj/machinery/hydroponics/origin_tray)
 	if(target_tray.myseed) // Check if there's another seed in the next tray.
 		if(target_tray.myseed.type == origin_tray.myseed.type && !target_tray.dead)
@@ -678,6 +753,12 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/laughter)
 
+/*
+ * Play a sound effect from our plant.
+ *
+ * our_plant - the source plant that was slipped on
+ * target - the atom that slipped on the plant
+ */
 /datum/plant_gene/trait/plant_laughter/proc/laughter(obj/item/our_plant, atom/target)
 	our_plant.audible_message("<span_class='notice'>[our_plant] lets out burst of laughter.</span>")
 	playsound(our_plant, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -699,6 +780,7 @@
 	googly.appearance_flags = RESET_COLOR
 	our_plant.add_overlay(googly)
 
+/// Makes the plant embed on thrown impact.
 /datum/plant_gene/trait/sticky
 	name = "Prickly Adhesion"
 	examine_line = "<span class='info'>It's quite sticky.</span>"
@@ -734,19 +816,23 @@
 	trait_id = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
 
+/// Plant types
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"
 	trait_id = PLANT_TYPE_ID
 
+/// Weeds don't get annoyed by weeds in their tray.
 /datum/plant_gene/trait/plant_type/weed_hardy
 	name = "Weed Adaptation"
 
+/// Mushrooms need less light and have a minimum yield.
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"
 
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
 
+/// Plant doesn't get annoyed by pests in their tray.
 /datum/plant_gene/trait/plant_type/carnivory
 	name = "Obligate Carnivory"
 
