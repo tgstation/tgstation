@@ -515,6 +515,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
 				delete_pocket = TRUE
 
+	if(CONFIG_GET(flag/enforce_human_authority) && H.dna.species.id != "human")
+		if(alert("Selected mob is non-human, replace with backup human?", "Robust quick dress shop", "Yes", "No") == "Yes")
+			var/client/preference_source
+			H.set_species(/datum/species/human)
+			H.apply_pref_name("human", preference_source)
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in H.get_equipped_items(delete_pocket))
 		qdel(I)
