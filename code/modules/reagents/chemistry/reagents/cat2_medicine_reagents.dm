@@ -156,24 +156,25 @@
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#6171FF"
+	impure_chem = /datum/reagent/impurity/lentslurri
+	failed_chem = /datum/reagent/impure/ichiyuri //I do hope cobby won't take this personally
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 
+/datum/reagent/medicine/c2/lenturi/on_mob_add(mob/living/L, amount)
+	. = ..()
+	if(creation_purity == 1)
+		for(var/addiction in addiction_list) //maybe worth adding a has_addiction() check?
+			if(addiction == /datum/reagent/impurity/lentslurri)
+				to_chat(M, "<span class='notice'>Something was off about that dose, it doesn't quite hit the spot. You still want more!</span>")//impure chem free!
+
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss((-3 * REM)normalise_creation_purity())
+	M.adjustFireLoss((-3 * REM*normalise_creation_purity())
 	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
 	..()
 	return TRUE
 
 //lenturi side effects are now part of the impure type made from it
-
-/datum/reagent/medicine/c2/lenturi/on_mob_metabolize(mob/living/carbon/M)
-	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-	return ..()
-
-/datum/reagent/medicine/c2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
-	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
-	return ..()
 
 /datum/reagent/medicine/c2/aiuri
 	name = "Aiuri"
@@ -184,7 +185,7 @@
 	var/message_cd = 0
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM)
+	M.adjustFireLoss((-2*REM)*normalise_creation_purity())
 	M.adjustOrganLoss(ORGAN_SLOT_EYES,0.25*REM)
 	..()
 	return TRUE

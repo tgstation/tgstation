@@ -152,18 +152,78 @@
 	color = "#b3ff00"
 	overdose_threshold = 10
 
-/datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
+/datum/reagent/impurity/probital_failed/overdose_start(mob/living/carbon/M)
 	metabolization_rate = 4  * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/nutriment/peptides_failed
 	name = "Prion peptides"
-	color = "#BBD4D9"
 	taste_description = "spearmint frosting"
-	description = "These restorative peptides slow down wound healing, but also cost nutrition as well!"
-	nutriment_factor = -10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
+	description = "These inhibitory peptides slow down wound healing and also cost nutrition as well!"
+	nutriment_factor = -10 * REAGENTS_METABOLISM 
 	brute_heal = -1.5 //I halved it because I was concerned it might be too strong at 4 damage a tick.
 	burn_heal = -0.5
 
+////Lenturi
+
+//impure
+/datum/reagent/impurity/lentslurri //Okay maybe I should outsource names for these
+	name = "lentslurri"//This is a really bad name please replace
+	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong."
+	addiction_threshold = 7.5 //30u of 0.75 purity
+	metabolization_rate = 0.25 * REM //25% as fast so 0.75 is normal function
+
+/datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
+/datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
+/datum/reagent/impurity/lentslurri/addiction_act_stage1(mob/living/M)
+	. = ..()
+	to_chat(M, "<span class='notice'>Your muscles feel sore.... And that Lenturi was really moreish though. You should really get some more.</span>")
+	addiction_stage = 10//So we jump right to stage 2
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+
+/datum/reagent/impurity/lentslurri/addiction_act_stage4(mob/living/M)
+	. = ..()
+	if(addiction_stage == 40)
+		M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+		to_chat(M, "<span class='notice'>Your muscles feel normal again.</span>")
+
+//failed
+/datum/reagent/impure/ichiyuri
+	name = "Ichiyuri"
+	description = "Prolonged exposure to this chemical can cause an overwhelming urge to itch oneself."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	var/resetting_probability = 0
+	var/spammer = 0
+
+//Just the removed itching mechanism - omage to it's origins.
+/datum/reagent/impure/ichiyuri/on_mob_life(mob/living/carbon/M)
+	if(prob(resetting_probability) && !(M.restrained() || M.incapacitated()))
+		if(spammer < world.time)
+			to_chat(M,"<span class='warning'>You can't help but itch yourself.</span>")
+			spammer = world.time + (10 SECONDS)
+		var/scab = rand(1,7)
+		M.adjustBruteLoss(scab*REM)
+		M.bleed(scab)
+		resetting_probability = 0
+	resetting_probability += (5*(current_cycle/10)) // 10 iterations = >51% to itch
+	..()
+	return TRUE
+
+////Aiuri
+
+//inverse
+/datum/reagent/impurity/Aburi
+	//sweat?
+
+
+	new /datum/hallucination/fire(C, TRUE)
+	C.adjust
 
 ////Multiver
 

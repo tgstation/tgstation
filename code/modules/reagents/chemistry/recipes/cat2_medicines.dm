@@ -86,26 +86,40 @@
 //These are all endothermic!
 
 //This is a relatively simple demonstration have splitting negatives/having purity based negatives
+//Since it requires silver - I don't want to make it too hard
 /datum/chemical_reaction/medicine/lenturi
 	results = list(/datum/reagent/medicine/c2/lenturi = 5)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 	required_temp = 200
 	optimal_temp = 300
 	overheat_temp = 500
-	optimal_ph_min = 5
-	optimal_ph_max = 10
-	determin_ph_range = 1
-	temp_exponent_factor = 4
-	ph_exponent_factor = 1
-	thermic_constant = 25
-	H_ion_release = 0
+	optimal_ph_min = 6
+	optimal_ph_max = 11
+	determin_ph_range = 6
+	temp_exponent_factor = 1
+	ph_exponent_factor = 2
+	thermic_constant = -250 //Though, it is a test in endothermicity
+	H_ion_release = -3
 	rate_up_lim = 30
 	purity_min = 0
-	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 
 /datum/chemical_reaction/medicine/aiuri
 	results = list(/datum/reagent/medicine/c2/aiuri = 4)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/hydrogen = 2)
+	required_temp = 250
+	optimal_temp = 300
+	overheat_temp = 350
+	optimal_ph_min = 6
+	optimal_ph_max = 11
+	determin_ph_range = 1
+	temp_exponent_factor = 1
+	ph_exponent_factor = 2
+	thermic_constant = -150
+	H_ion_release = -3
+	rate_up_lim = 30
+	purity_min = 0
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 
 /datum/chemical_reaction/medicine/hercuri
 	results = list(/datum/reagent/medicine/c2/hercuri = 5)
