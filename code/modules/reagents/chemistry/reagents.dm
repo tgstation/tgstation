@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/list/reagent_removal_skip_list = list()
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
-	///Type of addiction this reagent feeds
+	///Assoc list with key type of addiction this reagent feeds, and value amount of addiction points added per unit of reagent metabolzied (which means * REAGENTS_METABOLISM every life())
 	var/list/addiction_types = null
 
 /datum/reagent/New()

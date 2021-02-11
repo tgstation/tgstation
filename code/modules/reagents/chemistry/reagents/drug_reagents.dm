@@ -75,6 +75,7 @@
 	reagent_state = LIQUID
 	color = "#FA00C8"
 	overdose_threshold = 20
+	addiction_types = list(/datum/addiction/stimulants = 100) //40 per 2 seconds
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))

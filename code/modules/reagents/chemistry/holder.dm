@@ -583,7 +583,7 @@
 							need_mob_update += R.overdose_start(C)
 							log_game("[key_name(C)] has started overdosing on [R.name] at [R.volume] units.")
 					for(var/addiction in R.addiction_types)
-						C.mind.add_addiction_points(addiction, R.addiction_types[addiction])
+						C.mind?.add_addiction_points(addiction, R.addiction_types[addiction] * REAGENTS_METABOLISM)
 
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
