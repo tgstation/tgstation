@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "When an admin makes a cyborg flash immune by giving it TRAIT_NOFLASH, that cyborg is now actually immune to flash."
