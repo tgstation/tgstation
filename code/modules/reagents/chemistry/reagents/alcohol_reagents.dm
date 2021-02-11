@@ -476,12 +476,49 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 25
-	quality = DRINK_VERYGOOD
+	quality = DRINK_NICE
 	taste_description = "burning cinnamon"
 	glass_icon_state = "goldschlagerglass"
 	glass_name = "glass of goldschlager"
 	glass_desc = "100% proof that teen girls will drink anything with gold in it."
 	shot_glass_icon_state = "shotglassgold"
+
+	/// Ratio of gold that the goldschlager recipe contains
+	var/static/gold_ratio
+
+	// This drink is really popular with a certain demographic.
+	var/teenage_girl_quality = DRINK_VERYGOOD
+
+/datum/reagent/consumable/ethanol/goldschlager/New()
+	. = ..()
+	if(!gold_ratio)
+		// Calculate the amount of gold that goldschlager is made from
+		var/datum/chemical_reaction/goldschlager/goldschlager_reaction = new
+		var/vodka_amount = goldschlager_reaction.required_reagents[/datum/reagent/consumable/ethanol/vodka]
+		var/gold_amount = goldschlager_reaction.required_reagents[/datum/reagent/gold]
+		gold_ratio = gold_amount / (gold_amount + vodka_amount)
+		qdel(goldschlager_reaction)
+
+/datum/reagent/consumable/ethanol/goldschlager/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	// Reset quality each time, since the bottle can be shared
+	quality = initial(quality)
+
+	if(ishuman(exposed_mob))
+		var/mob/living/carbon/human/human = exposed_mob
+		// tgstation13 does not endorse underage drinking. laws may vary by your jurisdiction.
+		if(human.age >= 13 && human.age <= 19 && human.gender == FEMALE)
+			quality = teenage_girl_quality
+
+	return ..()
+
+/datum/reagent/consumable/ethanol/goldschlager/on_transfer(atom/A, methods = TOUCH, trans_volume)
+	if(!(methods & INGEST))
+		return ..()
+
+	var/convert_amount = trans_volume * gold_ratio
+	A.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
+	A.reagents.add_reagent(/datum/reagent/gold, convert_amount)
+	return ..()
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
