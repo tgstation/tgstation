@@ -30,26 +30,6 @@
 	scan_mode = PLANT_SCANMODE_CHEMICALS
 	return try_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/// We can scan podpeople for vitals. (But not wounds...)
-/obj/item/plant_analyzer/attack(mob/living/scanned_mob, mob/living/carbon/human/user)
-	//Checks if target is a podman
-	if(!ispodperson(scanned_mob))
-		return ..()
-
-	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s vitals.</span>", \
-						"<span class='notice'>You analyze [scanned_mob]'s vitals.</span>")
-	healthscan(user, scanned_mob, advanced = TRUE)
-	add_fingerprint(user)
-	return
-
-/// We can scan podpeople for chemicals.
-/obj/item/plant_analyzer/attack_secondary(mob/living/scanned_mob, mob/living/user)
-	if(!ispodperson(scanned_mob))
-		return ..()
-	chemscan(user, scanned_mob)
-	add_fingerprint(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /*
  * Try to scan the atom target.
  *
@@ -61,7 +41,7 @@
  */
 /obj/item/plant_analyzer/proc/try_scan(atom/scan_target, mob/user)
 	var/mob/living/living_user = user
-	if(!isobj(scan_target) || living_user.combat_mode)
+	if(living_user.combat_mode)
 		return FALSE
 
 	return do_scan(scan_target, user)
@@ -91,8 +71,28 @@
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
 			to_chat(user, scan_plant(scanned_object))
 			return TRUE
+	if(ispodperson(scan_target))
+		pod_person_scan(scan_target, user)
+		return TRUE
 
 	return FALSE
+
+/*
+ * Scan a podperson on either chemical mode or health mode (but not wounds mode)
+ *
+ * scanned_mob - the podperson being scanned
+ * user - the person doing the scanning
+ */
+/obj/item/plant_analyzer/proc/pod_person_scan(mob/living/carbon/human/scanned_mob, mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s vitals.</span>", \
+						"<span class='notice'>You analyze [scanned_mob]'s vitals.</span>")
+	switch(scan_mode)
+		if(PLANT_SCANMODE_STATS)
+			healthscan(user, scanned_mob, advanced = TRUE)
+		if(PLANT_SCANMODE_CHEMICALS)
+			chemscan(user, scanned_mob)
+
+	add_fingerprint(user)
 
 /**
  * This proc is called when we scan a hydroponics tray or soil.
