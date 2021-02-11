@@ -116,8 +116,8 @@
 	air.merge(parent_pipeline.air)
 	for(var/obj/machinery/atmospherics/components/reference_component in parent_pipeline.other_atmosmch)
 		reference_component.replacePipenet(parent_pipeline, src)
-	other_atmosmch.Add(parent_pipeline.other_atmosmch)
-	other_airs.Add(parent_pipeline.other_airs)
+	other_atmosmch |= parent_pipeline.other_atmosmch
+	other_airs |= parent_pipeline.other_airs
 	parent_pipeline.members.Cut()
 	parent_pipeline.other_atmosmch.Cut()
 	update = TRUE
