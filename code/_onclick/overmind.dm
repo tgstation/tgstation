@@ -12,7 +12,7 @@
 	if(LAZYACCESS(modifiers, "alt"))
 		AltClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, "ctrl"))
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
 	var/turf/T = get_turf(A)

@@ -25,7 +25,7 @@
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
 			return
-		if(LAZYACCESS(modifiers, "ctrl"))
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
 			return
 		ShiftClickOn(A)
@@ -36,7 +36,7 @@
 	if(LAZYACCESS(modifiers, "alt"))
 		AltClickNoInteract(src, A)
 		return
-	if(LAZYACCESS(modifiers, "ctrl"))
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
 

@@ -1810,7 +1810,7 @@
 	if(href_list["statpanel_item_shiftclick"])
 		paramslist["shift"] = "1"
 	if(href_list["statpanel_item_ctrlclick"])
-		paramslist["ctrl"] = "1"
+		paramslist[CTRL_CLICK] = "1"
 	if(href_list["statpanel_item_altclick"])
 		paramslist["alt"] = "1"
 	if(href_list["statpanel_item_click"])

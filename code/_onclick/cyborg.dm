@@ -19,7 +19,7 @@
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, "shift"))
-		if(LAZYACCESS(modifiers, "ctrl"))
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
 			return
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
@@ -33,7 +33,7 @@
 	if(LAZYACCESS(modifiers, "alt")) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, "ctrl"))
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)
 		return
 
