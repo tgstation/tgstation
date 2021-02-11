@@ -1,7 +1,7 @@
 
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
 	var/list/modifiers = params2list(params)
-	if(LAZYLIST(modifiers, "shift"))
+	if(LAZYLIST(modifiers, SHIFT_CLICK))
 		ShiftClickOn(A)
 		return
 	if(LAZYLIST(modifiers, ALT_CLICK)
