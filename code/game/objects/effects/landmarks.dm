@@ -41,7 +41,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	GLOB.start_landmarks_list += src
 	if(jobspawn_override)
-		LAZYADDASSOC(GLOB.jobspawn_overrides, name, src)
+		LAZYADDASSOCLIST(GLOB.jobspawn_overrides, name, src)
 	if(name != "start")
 		tag = "start*[name]"
 

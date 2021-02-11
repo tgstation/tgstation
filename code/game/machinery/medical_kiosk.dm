@@ -250,6 +250,7 @@
 					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
 	for(var/datum/addiction/addiction_type in altPatient.mind.active_addictions)
 		addict_list += list(list("name" = initial(addiction_type.name)))
+
 	if (altPatient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
