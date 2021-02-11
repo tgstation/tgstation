@@ -557,7 +557,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
  * Bronze
  */
 
-GLOBAL_LIST_INIT(bronze_recipes, list ( \
+GLOBAL_LIST_INIT(, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
 	new/datum/stack_recipe("directional bronze window", /obj/structure/window/bronze/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
@@ -598,7 +598,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 
 /obj/item/stack/tile/bronze/get_main_recipes()
 	. = ..()
-	. += GLOB.bronze_recipes
+	. += GLOB.
 
 /obj/item/stack/sheet/paperframes/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
