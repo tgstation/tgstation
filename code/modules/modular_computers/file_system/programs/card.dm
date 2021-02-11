@@ -203,44 +203,8 @@
 		if("PRG_assign")
 			if(!computer || !authenticated || !target_id_card)
 				return
-			var/target = params["assign_target"]
-			if(!target)
-				return
-
-			if(target == "Custom")
-				var/custom_name = params["custom_name"]
-				if(custom_name)
-					target_id_card.assignment = custom_name
-					target_id_card.update_label()
-			else
-				if(minor && !(target in head_subordinates))
-					return
-				var/list/new_access = list()
-				// TIMBERTODO - TRIMMING GOES BRRRRR CODE MACHINE
-				/*if(is_centcom)
-					new_access = get_centcom_access(target)
-				else
-					var/datum/job/job
-					for(var/jobtype in subtypesof(/datum/job))
-						var/datum/job/J = new jobtype
-						if(J.title == target)
-							job = J
-							break
-					if(!job)
-						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
-						return
-					new_access = job.get_access()
-					for(var/logged_access in ACCESS_ALERT_ADMINS)
-						if(logged_access in new_access)
-							message_admins("[ADMIN_LOOKUPFLW(user)] assigned the job [job.title] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
-							break
-					LOG_ID_ACCESS_CHANGE(usr, target_id_card, "assigned the job [job.title]")*/
-				// TIMBERTODO - UNFUCK THIS SHIT TOO? ELEGANT SOLUTION INCOMING?
-				target_id_card.remove_access(CENTCOM_ACCESS + ALL_ACCESS_STATION)
-				target_id_card.add_access(new_access)
-				target_id_card.assignment = target
-				target_id_card.update_label()
-			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			target_id_card.assignment = params["assignment"]
+			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
 		if("PRG_access")
 			if(!computer || !authenticated)

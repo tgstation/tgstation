@@ -88,81 +88,30 @@ export const NtosCardContent = (props, context) => {
           icon="eject"
           content={id_name}
           onClick={() => act('PRG_eject')} />
+        <Input
+          fluid
+          mt={1}
+          value={id_rank}
+          onInput={(e, value) => act('PRG_assign', {
+            assignment: value,
+          })} />
       </Section>
       {(!!has_id && !!authenticated) && (
         <Box>
-          <Tabs>
-            <Tabs.Tab
-              selected={tab === 1}
-              onClick={() => setTab(1)}>
-              Access
-            </Tabs.Tab>
-            <Tabs.Tab
-              selected={tab === 2}
-              onClick={() => setTab(2)}>
-              Jobs
-            </Tabs.Tab>
-          </Tabs>
-          {tab === 1 && (
-            <AccessList
-              accesses={regions}
-              selectedList={access_on_card}
-              accessMod={ref => act('PRG_access', {
-                access_target: ref,
-              })}
-              grantAll={() => act('PRG_grantall')}
-              denyAll={() => act('PRG_denyall')}
-              grantDep={dep => act('PRG_grantregion', {
-                region: dep,
-              })}
-              denyDep={dep => act('PRG_denyregion', {
-                region: dep,
-              })} />
-          )}
-          {tab === 2 && (
-            <Section
-              title={id_rank}
-              buttons={(
-                <Button.Confirm
-                  icon="exclamation-triangle"
-                  content="Terminate"
-                  color="bad"
-                  onClick={() => act('PRG_terminate')} />
-              )}>
-              <Button.Input
-                fluid
-                content="Custom..."
-                onCommit={(e, value) => act('PRG_assign', {
-                  assign_target: 'Custom',
-                  custom_name: value,
-                })} />
-              <Flex>
-                <Flex.Item>
-                  <Tabs vertical>
-                    {Object.keys(jobs).map(department => (
-                      <Tabs.Tab
-                        key={department}
-                        selected={department === selectedDepartment}
-                        onClick={() => setSelectedDepartment(department)}>
-                        {department}
-                      </Tabs.Tab>
-                    ))}
-                  </Tabs>
-                </Flex.Item>
-                <Flex.Item grow={1}>
-                  {departmentJobs.map(job => (
-                    <Button
-                      fluid
-                      key={job.job}
-                      content={job.display_name}
-                      onClick={() => act('PRG_assign', {
-                        assign_target: job.job,
-                      })} />
-                  ))}
-                </Flex.Item>
-              </Flex>
-            </Section>
-          )}
+          <AccessList
+            accesses={regions}
+            selectedList={access_on_card}
+            accessMod={ref => act('PRG_access', {
+              access_target: ref,
+            })}
+            grantAll={() => act('PRG_grantall')}
+            denyAll={() => act('PRG_denyall')}
+            grantDep={dep => act('PRG_grantregion', {
+              region: dep,
+            })}
+            denyDep={dep => act('PRG_denyregion', {
+              region: dep,
+            })} />
         </Box>
       )}
     </>

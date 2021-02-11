@@ -78,7 +78,9 @@ export const AccessList = (props, context) => {
       )}>
       <Flex>
         <Flex.Item>
-          <Tabs vertical>
+          <Tabs
+            vertical
+            width="100%">
             {accesses.map(access => {
               const entries = access.accesses || [];
               const icon = diffMap[checkAccessIcon(entries)].icon;
