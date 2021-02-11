@@ -14,7 +14,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
-			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(target_zone = def_zone, injection_flags = piercing ? INJECT_CHECK_PENETRATE_THICK : null)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				reagents.trans_to(M, reagents.total_volume, methods = INJECT)
 				return BULLET_ACT_HIT

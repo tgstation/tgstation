@@ -619,7 +619,7 @@
 	if(isliving(target) && our_plant.reagents && our_plant.reagents.total_volume)
 		var/mob/living/living_target = target
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-		if(living_target.reagents && living_target.can_inject(null, 0))
+		if(living_target.reagents && living_target.can_inject())
 			var/injecting_amount = max(1, our_seed.potency*0.2) // Minimum of 1, max of 20
 			our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [our_plant]!</span>")
