@@ -226,7 +226,7 @@
 		return FALSE
 
 	if(seed_blacklist.len)
-		for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
+		for(var/obj/item/seeds/found_seed in seed_blacklist)
 			if(istype(source_seed, found_seed))
 				return FALSE
 
@@ -350,23 +350,23 @@
 		if(prob(power))
 			target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
 
-/datum/plant_gene/trait/cell_charge/proc/recharge_cells(obj/item/our_plant, mob/living/carbon/target)
+/datum/plant_gene/trait/cell_charge/proc/recharge_cells(obj/item/our_plant, mob/living/eater, mob/feeder)
 	SIGNAL_HANDLER
 
-	if(!our_plant.reagents.total_volume)
-		var/batteries_recharged = 0
-		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-		for(var/obj/item/stock_parts/cell/found_cell as anything in target.GetAllContents())
-			var/newcharge = min(our_seed.potency*0.01*found_cell.maxcharge, found_cell.maxcharge)
-			if(found_cell.charge < newcharge)
-				found_cell.charge = newcharge
-				if(isobj(found_cell.loc))
-					var/obj/O = found_cell.loc
-					O.update_icon() //update power meters and such
-				found_cell.update_icon()
-				batteries_recharged = 1
-		if(batteries_recharged)
-			to_chat(target, "<span class='notice'>Your batteries are recharged!</span>")
+	to_chat(eater, "<span class='notice'>You feel energized as you bite into [our_plant].</span>")
+	var/batteries_recharged = FALSE
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	for(var/obj/item/stock_parts/cell/found_cell in eater.GetAllContents())
+		var/newcharge = min(our_seed.potency*0.01*found_cell.maxcharge, found_cell.maxcharge)
+		if(found_cell.charge < newcharge)
+			found_cell.charge = newcharge
+			if(isobj(found_cell.loc))
+				var/obj/cell_location = found_cell.loc
+				cell_location.update_icon() //update power meters and such
+			found_cell.update_icon()
+			batteries_recharged = TRUE
+	if(batteries_recharged)
+		to_chat(eater, "<span class='notice'>Your batteries are recharged!</span>")
 
 /datum/plant_gene/trait/glow
 	// Makes plant glow. Makes plant in tray glow too.
