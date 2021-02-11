@@ -214,6 +214,7 @@ RLD
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	var/mode = RCD_FLOORWALL
+	var/constructionmode = RCD_FLOORWALL
 	var/ranged = FALSE
 	var/computer_dir = 1
 	var/airlock_type = /obj/machinery/door/airlock
@@ -563,7 +564,6 @@ RLD
 	..()
 	var/list/choices = list(
 		"Airlock" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlock"),
-		"Deconstruct" = image(icon= 'icons/hud/radial.dmi', icon_state = "delete"),
 		"Grilles & Windows" = image(icon = 'icons/hud/radial.dmi', icon_state = "grillewindow"),
 		"Floors & Walls" = image(icon = 'icons/hud/radial.dmi', icon_state = "wallfloor")
 	)
@@ -580,17 +580,17 @@ RLD
 		choices += list(
 		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
-	if(mode == RCD_AIRLOCK)
+	if(constructionmode == RCD_AIRLOCK)
 		choices += list(
 		"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
 		"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
 		)
-	else if(mode == RCD_WINDOWGRILLE)
+	else if(constructionmode == RCD_WINDOWGRILLE)
 		choices += list(
 		"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
 		"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
 		)
-	else if(mode == RCD_FURNISHING)
+	else if(constructionmode == RCD_FURNISHING)
 		choices += list(
 		"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
@@ -599,19 +599,17 @@ RLD
 		return
 	switch(choice)
 		if("Floors & Walls")
-			mode = RCD_FLOORWALL
+			constructionmode = RCD_FLOORWALL
 		if("Airlock")
-			mode = RCD_AIRLOCK
-		if("Deconstruct")
-			mode = RCD_DECONSTRUCT
+			constructionmode = RCD_AIRLOCK
 		if("Grilles & Windows")
-			mode = RCD_WINDOWGRILLE
+			constructionmode = RCD_WINDOWGRILLE
 		if("Machine Frames")
-			mode = RCD_MACHINE
+			constructionmode = RCD_MACHINE
 		if("Furnishing")
-			mode = RCD_FURNISHING
+			constructionmode = RCD_FURNISHING
 		if("Computer Frames")
-			mode = RCD_COMPUTER
+			constructionmode = RCD_COMPUTER
 			change_computer_dir(user)
 			return
 		if("Change Access")
@@ -643,11 +641,18 @@ RLD
 	else
 		return FALSE
 
-/obj/item/construction/rcd/afterattack(atom/A, mob/user, proximity)
+/obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
 	. = ..()
-	if(!prox_check(proximity))
-		return
+	mode = constructionmode
 	rcd_create(A, user)
+	return FALSE
+
+/obj/item/construction/rcd/pre_attack_secondary(atom/A, mob/user, params)
+	. = ..()
+	mode = RCD_DECONSTRUCT
+	rcd_create(A, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -766,9 +771,19 @@ RLD
 	. = ..()
 	if(!range_check(A,user))
 		return
-	if(target_check(A,user))
-		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
-	rcd_create(A,user)
+	pre_attack(A, user)
+
+/obj/item/construction/rcd/arcd/afterattack_secondary(atom/A, mob/user)
+	if(!range_check(A,user))
+		return
+	pre_attack_secondary(A, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+
+/obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
+	. = ..()
+	user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
+	return
 
 
 
