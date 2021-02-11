@@ -189,9 +189,3 @@
 	icon_state = "internplasma"
 	inhand_icon_state = "internplasma"
 
-/obj/item/clothing/gloves/brassknuckles
-	name = "Brass Knuckles"
-	desc = "a contraband item meant to prove weapons are for pussies. Perfect for any bloodthirsty soldier or lunatics wearing tiger masks."
-	icon_state = "brassknuckles"
-	inhand_icon_state = "brassknuckles"
-
