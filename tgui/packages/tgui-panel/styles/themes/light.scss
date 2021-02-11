@@ -36,13 +36,7 @@
     'text-color': rgba(0, 0, 0, 0.5),
     'color-default': rgba(0, 0, 0, 1),
   ));
-  @include meta.load-css('~tgui/styles/components/Section.scss', $with: (
-    // 'background-color': rgba(0, 0, 0, 0.1),
-    'shadow-color': rgba(0, 0, 0, 0.1),
-    'shadow-size': 1em,
-    'shadow-type': outset,
-    'shadow-offset': 0 0.2em,
-  ));
+  @include meta.load-css('~tgui/styles/components/Section.scss');
   @include meta.load-css('~tgui/styles/components/Button.scss', $with: (
     'color-default': #bbbbbb,
     'color-disabled': #363636,
