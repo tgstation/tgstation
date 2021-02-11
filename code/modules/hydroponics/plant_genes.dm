@@ -516,7 +516,7 @@
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/food/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
 		var/mob/living/L = target
-		if(L.reagents && L.can_inject(null, 0))
+		if(L.reagents && L.can_inject())
 			var/injecting_amount = max(1, G.seed.potency*0.2) // Minimum of 1, max of 20
 			G.reagents.trans_to(L, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")

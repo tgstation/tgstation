@@ -11,7 +11,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100)
-			if(M.can_inject(null, FALSE, def_zone, FALSE))
+			if(M.can_inject(target_zone = def_zone))
 				if(injector.inject(M, firer))
 					QDEL_NULL(injector)
 					return BULLET_ACT_HIT
