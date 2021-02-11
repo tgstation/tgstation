@@ -407,7 +407,7 @@
 "Hx" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/rank/cargo/miner,
-/obj/item/clothing/suit/hooded/wintercoat/cargo/miner,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/card/id/mining,
 /obj/effect/decal/cleanable/dirt,

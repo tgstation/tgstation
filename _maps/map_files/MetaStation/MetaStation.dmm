@@ -66071,7 +66071,7 @@
 /area/engineering/break_room)
 "rDg" = (
 /obj/structure/closet/secure_closet/miner,
-/obj/item/clothing/suit/hooded/wintercoat/cargo/miner,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},

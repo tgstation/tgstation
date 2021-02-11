@@ -853,16 +853,16 @@
 	desc = "A dark brown winter hood"
 	icon_state = "winterhood_qm"
 
-/obj/item/clothing/suit/hooded/wintercoat/cargo/miner
+/obj/item/clothing/suit/hooded/wintercoat/miner
 	name = "mining winter coat"
 	desc = "A dusty button up winter coat. The zipper tab looks like a tiny pickaxe."
 	icon_state = "coatminer"
 	inhand_icon_state = "coatminer"
 	allowed = list(/obj/item/pickaxe, /obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
-	hoodtype = /obj/item/clothing/head/hooded/winterhood/cargo/miner
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
-/obj/item/clothing/head/hooded/winterhood/cargo/miner
+/obj/item/clothing/head/hooded/winterhood/miner
 	desc = "A dusty winter coat hood."
 	icon_state = "winterhood_miner"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)

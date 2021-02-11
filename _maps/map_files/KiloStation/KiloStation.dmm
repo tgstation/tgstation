@@ -72736,9 +72736,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/clothing/suit/hooded/wintercoat/cargo/miner,
-/obj/item/clothing/suit/hooded/wintercoat/cargo/miner,
-/obj/item/clothing/suit/hooded/wintercoat/cargo/miner,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
 /turf/open/floor/iron/dark,
