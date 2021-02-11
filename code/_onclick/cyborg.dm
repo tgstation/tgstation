@@ -30,7 +30,7 @@
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
-	if(LAZYACCESS(modifiers, "alt")) // alt and alt-gr (rightalt)
+	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))

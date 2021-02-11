@@ -108,7 +108,7 @@
 		if(id && usr.client) //try to (un)remember position
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
-	if(LAZYACCESS(modifiers, "alt"))
+	if(LAZYACCESS(modifiers, ALT_CLICK))
 		for(var/V in usr.actions)
 			var/datum/action/A = V
 			var/atom/movable/screen/movable/action_button/B = A.button
