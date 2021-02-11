@@ -19,17 +19,18 @@
 	. = ..()
 	. += "<span class='notice'>Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.</span>"
 
-/// Try to scan something we hit with left click.
+/// When we attack something, first - try to scan something we hit with left click. Left-clicking uses SCANMODE_STATS.
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
 	scan_mode = PLANT_SCANMODE_STATS
 	return try_scan(target, user)
 
-/// Set our scan mode to chemicals on right click and continue the attack chain (goes to pre_attack)
+/// Same as above, but with right click. Right-clicking uses SCANMODE_CHEMICALS.
 /obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
 	scan_mode = PLANT_SCANMODE_CHEMICALS
 	return try_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
 
+/// We can scan podpeople for vitals. (But not wounds...)
 /obj/item/plant_analyzer/attack(mob/living/scanned_mob, mob/living/carbon/human/user)
 	//Checks if target is a podman
 	if(!ispodperson(scanned_mob))
@@ -41,6 +42,7 @@
 	add_fingerprint(user)
 	return
 
+/// We can scan podpeople for chemicals.
 /obj/item/plant_analyzer/attack_secondary(mob/living/scanned_mob, mob/living/user)
 	if(!ispodperson(scanned_mob))
 		return ..()
@@ -48,6 +50,15 @@
 	add_fingerprint(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/*
+ * Try to scan the atom target.
+ *
+ * scan_target - the atom we're scanning
+ * user - the user doing the scanning.
+ *
+ * returns FALSE if it's something we can't scan.
+ * returns do_scan if it's something we CAN scan.
+ */
 /obj/item/plant_analyzer/proc/try_scan(atom/scan_target, mob/user)
 	var/mob/living/living_user = user
 	if(!isobj(scan_target) || living_user.combat_mode)
@@ -55,6 +66,15 @@
 
 	return do_scan(scan_target, user)
 
+/*
+ * Actually scan the atom target.
+ *
+ * scan_target - the atom we're scanning
+ * user - the user doing the scanning.
+ *
+ * returns FALSE if it's not an object or item that does something when we scan it.
+ * returns TRUE if we can scan the object, and outputs the message to the USER.
+ */
 /obj/item/plant_analyzer/proc/do_scan(atom/scan_target, mob/user)
 	if(istype(scan_target, /obj/machinery/hydroponics))
 		to_chat(user, scan_tray(scan_target))
