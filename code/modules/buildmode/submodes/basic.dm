@@ -13,11 +13,12 @@
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/basic/handle_click(client/c, params, obj/object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
-	var/right_click = pa.Find("right")
-	var/ctrl_click = pa.Find("ctrl")
-	var/alt_click = pa.Find("alt")
+	var/list/modifers = params2list(params)
+	
+	var/left_click = LAZYLIST(modifiers, LEFT_CLICK)
+	var/right_click = LAZYLIST(modifiers, RIGHT_CLICK)
+	var/alt_click = LAZYLIST(modifiers, ALT_CLICK)
+	var/ctrl_click = LAZYLIST(modifiers, CTRL_CLICK)
 
 	if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
 		var/turf/T = object

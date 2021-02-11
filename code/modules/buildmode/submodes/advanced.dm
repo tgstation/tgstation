@@ -30,10 +30,10 @@
 			return
 
 /datum/buildmode_mode/advanced/handle_click(client/c, params, obj/object)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
-	var/right_click = pa.Find("right")
-	var/alt_click = pa.Find("alt")
+	var/list/modifers = params2list(params)
+	var/left_click = LAZYLIST(modifiers, LEFT_CLICK)
+	var/right_click = LAZYLIST(modifiers, RIGHT_CLICK)
+	var/alt_click = LAZYLIST(modifiers, ALT_CLICK)
 
 	if(left_click && alt_click)
 		if (istype(object, /turf) || istype(object, /obj) || istype(object, /mob))
