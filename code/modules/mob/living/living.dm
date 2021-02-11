@@ -1916,7 +1916,7 @@
 	if (style)
 		if (is_grab)
 			attack_result = style.grab_act(src, target)
-		if(modifiers && modifiers["right"])
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			attack_result = style.disarm_act(src, target)
 		if(combat_mode)
 			if (HAS_TRAIT(src, TRAIT_PACIFISM))

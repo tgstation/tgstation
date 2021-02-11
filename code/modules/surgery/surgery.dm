@@ -100,7 +100,7 @@
 		return TRUE
 
 	var/try_to_fail = FALSE
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/S = get_surgery_step()

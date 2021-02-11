@@ -151,7 +151,7 @@
 			UnarmedAttack(A,1,modifiers)
 	else
 		if(W)
-			if(LAZYACCESS(modifiers, "right"))
+			if(LAZYACCESS(modifiers, RIGHT_CLICK))
 				W.afterattack_secondary(A,src,0,params)
 			else
 				W.afterattack(A,src,0,params)
