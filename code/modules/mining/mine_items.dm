@@ -37,6 +37,9 @@
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo/miner(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo/miner(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo/miner(src)
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
