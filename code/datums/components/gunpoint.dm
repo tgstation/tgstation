@@ -85,10 +85,10 @@
 	qdel(src)
 
 ///If the shooter shoves or grabs the target, cancel the holdup to avoid cheesing and forcing the charged shot
-/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T)
+/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T, datum/martial_art/attacker_style, modifiers)
 	SIGNAL_HANDLER
 
-	if(T != target || shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB)
+	if(T != target || (modifiers && modifiers["right"]))
 		return
 	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
 		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)

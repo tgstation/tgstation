@@ -1,8 +1,9 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
-	filedesc = "Nanotrasen Internal Requisition Network (NIRN)"
+	filedesc = "NT IRN"
+	category = PROGRAM_CATEGORY_SUPL
 	program_icon_state = "request"
-	extended_desc = "A request network that utilizes the Nanotrasen Ordering network to purchase supplies using a department budget account."
+	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_HEADS
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
@@ -90,7 +91,7 @@
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
-			"cost" = P.cost,
+			"cost" = P.get_cost(),
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
@@ -117,7 +118,7 @@
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
+			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
 			"paid" = !isnull(SO.paying_account) //paid by requester
@@ -127,7 +128,7 @@
 	for(var/datum/supply_order/SO in SSshuttle.requestlist)
 		data["requests"] += list(list(
 			"object" = SO.pack.name,
-			"cost" = SO.pack.cost,
+			"cost" = SO.pack.get_cost(),
 			"orderer" = SO.orderer,
 			"reason" = SO.reason,
 			"id" = SO.id

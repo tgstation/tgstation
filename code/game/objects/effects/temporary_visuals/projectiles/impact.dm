@@ -36,3 +36,7 @@
 
 /obj/effect/projectile/impact/wormhole
 	icon_state = "wormhole_g"
+
+/obj/effect/projectile/impact/laser/emitter
+	name = "emitter impact"
+	icon_state = "impact_emitter"

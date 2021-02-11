@@ -316,7 +316,7 @@
 
 		if(src != user)
 			if(HAS_TRAIT(user, TRAIT_EMPATH))
-				if (a_intent != INTENT_HELP)
+				if (combat_mode)
 					msg += "[t_He] seem[p_s()] to be on guard.\n"
 				if (getOxyLoss() >= 10)
 					msg += "[t_He] seem[p_s()] winded.\n"

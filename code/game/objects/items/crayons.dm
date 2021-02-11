@@ -632,6 +632,8 @@
 	if(contents.len > 0)
 		to_chat(user, "<span class='warning'>You can't fold down [src] with crayons inside!</span>")
 		return
+	if(flags_1 & HOLOGRAM_1)
+		return
 
 	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
 	to_chat(user, "<span class='notice'>You fold the [src] into cardboard.</span>")
@@ -685,9 +687,7 @@
 			paint_color = "#C0C0C0"
 		update_icon()
 		if(actually_paints)
-			H.lip_style = "spray_face"
-			H.lip_color = paint_color
-			H.update_body()
+			H.update_lips("spray_face", paint_color)
 		var/used = use_charges(user, 10, FALSE)
 		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
 
@@ -738,10 +738,7 @@
 			flash_color(C, flash_color=paint_color, flash_time=40)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
-			H.lip_style = "spray_face"
-			H.lip_color = paint_color
-			H.update_body()
-
+			H.update_lips("spray_face", paint_color)
 		. = use_charges(user, 10, FALSE)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.expose(C, VAPOR, fraction * volume_multiplier)

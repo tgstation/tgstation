@@ -1,6 +1,6 @@
 /* Diffrent misc types of sheets
  * Contains:
- * Metal
+ * Iron
  * Plasteel
  * Wood
  * Cloth
@@ -12,7 +12,7 @@
  */
 
 /*
- * Metal
+ * Iron
  */
 GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = TRUE, on_floor = TRUE), \
@@ -62,8 +62,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("canister frame", /obj/structure/canister_frame/machine/frame_tier_0, 5, time = 8, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
-	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20), \
-	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
+	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron, 1, 4, 20), \
+	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 40, one_per_turf = TRUE, on_floor = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75), \
 	null, \
@@ -114,46 +114,46 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time= 2 SECONDS)
 ))
 
-/obj/item/stack/sheet/metal
-	name = "metal"
-	desc = "Sheets made out of metal."
-	singular_name = "metal sheet"
+/obj/item/stack/sheet/iron
+	name = "iron"
+	desc = "Sheets made out of iron."
+	singular_name = "iron sheet"
 	icon_state = "sheet-metal"
 	inhand_icon_state = "sheet-metal"
 	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF
-	merge_type = /obj/item/stack/sheet/metal
+	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
 	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 	matter_amount = 4
 	cost = 500
-	source = /datum/robot_energy_storage/metal
+	source = /datum/robot_energy_storage/iron
 
-/obj/item/stack/sheet/metal/narsie_act()
+/obj/item/stack/sheet/iron/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
 	qdel(src)
 
-/obj/item/stack/sheet/metal/fifty
+/obj/item/stack/sheet/iron/fifty
 	amount = 50
 
-/obj/item/stack/sheet/metal/twenty
+/obj/item/stack/sheet/iron/twenty
 	amount = 20
 
-/obj/item/stack/sheet/metal/ten
+/obj/item/stack/sheet/iron/ten
 	amount = 10
 
-/obj/item/stack/sheet/metal/five
+/obj/item/stack/sheet/iron/five
 	amount = 5
 
-/obj/item/stack/sheet/metal/get_main_recipes()
+/obj/item/stack/sheet/iron/get_main_recipes()
 	. = ..()
 	. += GLOB.metal_recipes
 
-/obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/iron/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
@@ -206,7 +206,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 10), \
-	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 40), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -446,8 +445,12 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags),				\
 		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses),	\
 		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens),					\
+		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank),	\
+		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank),	\
 		null,																					\
 
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival),				\
+		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer),					\
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks),						\
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes),			\
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs),			\
@@ -525,6 +528,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	novariants = TRUE
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
 	material_type = /datum/material/runedmetal
+	has_unique_girder = TRUE
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -561,6 +565,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("fulltile bronze window", /obj/structure/window/bronze/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze pinion airlock assembly", /obj/structure/door_assembly/door_assembly_bronze/seethru, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("bronze floor tile", /obj/item/stack/tile/bronze, 1, 4, 20), \
 	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/bronze), \
 	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/bronze), \
 	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze), \
@@ -568,8 +573,8 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 ))
 
-/obj/item/stack/tile/bronze
-	name = "brass"
+/obj/item/stack/sheet/bronze
+	name = "bronze"
 	desc = "On closer inspection, what appears to be wholly-unsuitable-for-building brass is actually more structurally stable bronze."
 	singular_name = "bronze sheet"
 	icon_state = "sheet-brass"
@@ -579,19 +584,21 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	sheettype = "bronze"
 	force = 5
 	throwforce = 10
 	max_amount = 50
 	throw_speed = 1
 	throw_range = 3
-	turf_type = /turf/open/floor/bronze
 	novariants = FALSE
-	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
-	merge_type = /obj/item/stack/tile/bronze
+	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/copper = 12) //we have no "tin" reagent so this is the closest thing
+	merge_type = /obj/item/stack/sheet/bronze
 	tableVariant = /obj/structure/table/bronze
 	material_type = /datum/material/bronze
+	walltype = /turf/closed/wall/mineral/bronze
+	has_unique_girder = TRUE
 
-/obj/item/stack/tile/bronze/get_main_recipes()
+/obj/item/stack/sheet/bronze/get_main_recipes()
 	. = ..()
 	. += GLOB.bronze_recipes
 
@@ -752,4 +759,23 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 /obj/item/stack/sheet/sandblock/twenty
 	amount = 20
 /obj/item/stack/sheet/sandblock/five
+	amount = 5
+
+
+/obj/item/stack/sheet/hauntium
+	name = "haunted sheets"
+	desc = "These sheets seem cursed."
+	singular_name = "haunted sheet"
+	icon_state = "sheet-meat"
+	material_flags = MATERIAL_COLOR
+	mats_per_unit = list(/datum/material/hauntium = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/hauntium
+	material_type = /datum/material/hauntium
+	material_modifier = 1 //None of that wussy stuff
+
+/obj/item/stack/sheet/hauntium/fifty
+	amount = 50
+/obj/item/stack/sheet/hauntium/twenty
+	amount = 20
+/obj/item/stack/sheet/hauntium/five
 	amount = 5

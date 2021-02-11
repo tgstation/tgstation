@@ -162,6 +162,7 @@
 	name = "chief engineer's envirogloves"
 	icon_state = "ceplasma"
 	inhand_icon_state = "ceplasma"
+	siemens_coefficient = 0
 
 /obj/item/clothing/gloves/color/plasmaman/chief_medical_officer
 	name = "chief medical officer's envirogloves"

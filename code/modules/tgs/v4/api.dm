@@ -92,7 +92,7 @@
 	var/list/json = cached_json["testMerges"]
 	for(var/entry in json)
 		var/datum/tgs_revision_information/test_merge/tm = new
-		tm.time_merged = text2num(entry["timeMerged"])
+		tm.timestamp = text2num(entry["timeMerged"])
 
 		var/list/revInfo = entry["revision"]
 		if(revInfo)
@@ -104,7 +104,7 @@
 		tm.url = entry["url"]
 		tm.author = entry["author"]
 		tm.number = entry["number"]
-		tm.pull_request_commit = entry["pullRequestRevision"]
+		tm.head_commit = entry["pullRequestRevision"]
 		tm.comment = entry["comment"]
 
 		cached_test_merges += tm
