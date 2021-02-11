@@ -110,7 +110,6 @@
 	parents[i] = null
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
-	//return airs[parents.Find(reference)]
 	var/list/returned_air = new()
 	for (var/i in 1 to parents.len)
 		if (parents[i] == reference)
