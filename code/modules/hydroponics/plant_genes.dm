@@ -358,6 +358,12 @@
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
 	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, .proc/recharge_cells)
 
+/*
+ * Zaps the target with a stunning shock.
+ *
+ * our_plant - our source plant, shocking the target
+ * target - the atom being zapped by our plant
+ */
 /datum/plant_gene/trait/cell_charge/proc/zap_target(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
@@ -368,6 +374,13 @@
 		if(prob(power))
 			target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
 
+/*
+ * Recharges every cell the person is holding for a bit based on plant potency.
+ *
+ * our_plant - our source plant, that we consumed to charge the cells
+ * eater - the mob that bit the plant
+ * feeder - the mob that feed the eater the plant
+ */
 /datum/plant_gene/trait/cell_charge/proc/recharge_cells(obj/item/our_plant, mob/living/eater, mob/feeder)
 	SIGNAL_HANDLER
 
