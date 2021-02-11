@@ -63,7 +63,7 @@
 		if(!living_target.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 			return
 		if(living_target != user)
-			living_target.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
+			living_target.visible_message("<span class='danger'>[user] is trying to inject [living_target]!</span>", \
 									"<span class='userdanger'>[user] is trying to inject you!</span>")
 			if(!do_mob(user, living_target, extra_checks=CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
 				return
