@@ -232,11 +232,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define REFLECT_NORMAL 				(1<<0)
 #define REFLECT_FAKEPROJECTILE		(1<<1)
 
-//Object/Item sharpness
-#define SHARP_NONE			0
-#define SHARP_EDGED			1
-#define SHARP_POINTY		2
-
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
 #define HIS_GRACE_PECKISH 20 //Slightly hungry.
