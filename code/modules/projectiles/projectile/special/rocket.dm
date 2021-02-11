@@ -83,8 +83,7 @@
 	/turf/closed,
 	/obj/vehicle/sealed/mecha,
 	/obj/machinery/door,
-	/obj/machinery/door/poddoor/shutters,
-	/obj/structure/window/,
+	/obj/structure/window,
 	/obj/structure/grille
 	)
 
