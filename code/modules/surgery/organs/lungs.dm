@@ -21,6 +21,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/salbutamol = 5)
 
 	//Breath damage
+	//These numbers are roughly equivilant to molar count at room temperature, they scale up and down with temp tho
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_oxygen_max = 0
@@ -34,6 +35,7 @@
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
+	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
 	var/gas_stimulation_min = 0.002 //Nitryl, Stimulum and Freon
 	///Minimum amount of healium to make you unconscious for 4 seconds
 	var/healium_para_min = 3
@@ -286,13 +288,8 @@
 		if(bz_pp > BZ_trip_balls_min)
 			H.hallucination += 10
 			H.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
-			if(prob(33))
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
-
-		else if(bz_pp > 0.01)
-			H.hallucination += 5
-			H.reagents.add_reagent(/datum/reagent/bz_metabolites,1)
-
+		if(bz_pp > BZ_brain_damage_min && prob(33))
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
 	// Tritium
 		var/trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
