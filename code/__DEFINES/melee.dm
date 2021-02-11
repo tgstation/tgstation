@@ -1,5 +1,6 @@
 //Martial arts defines
 
+#define MARTIALART_BRASSKNUCKLES "brass knuckles"
 #define MARTIALART_BOXING "boxing"
 #define MARTIALART_WRESTLING "wrestling"
 #define MARTIALART_SLEEPINGCARP "sleeping carp"
