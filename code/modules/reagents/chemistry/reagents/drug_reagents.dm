@@ -38,7 +38,6 @@
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	addiction_threshold = 10
 	taste_description = "smoke"
 	trippy = FALSE
 	overdose_threshold=15
@@ -76,7 +75,6 @@
 	reagent_state = LIQUID
 	color = "#FA00C8"
 	overdose_threshold = 20
-	addiction_threshold = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -90,42 +88,12 @@
 	M.AdjustParalyzed(-20)
 	..()
 	. = 1
-
-/datum/reagent/drug/crank/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REM)
-	..()
-
-/datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
-
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
 	color = "#0064B4"
 	overdose_threshold = 20
-	addiction_threshold = 15
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
@@ -141,34 +109,7 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
-	M.adjustToxLoss(2*REM, 0)
-	..()
-	. = 1
 
-/datum/reagent/drug/krokodil/addiction_act_stage2(mob/living/M)
-	if(prob(25))
-		to_chat(M, "<span class='danger'>Your skin feels loose...</span>")
-	..()
-
-/datum/reagent/drug/krokodil/addiction_act_stage3(mob/living/M)
-	if(prob(25))
-		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
-	M.adjustBruteLoss(3*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
-	CHECK_DNA_AND_SPECIES(M)
-	if(!istype(M.dna.species, /datum/species/krokodil_addict))
-		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
-		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
-		M.set_species(/datum/species/krokodil_addict)
-	else
-		M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
@@ -176,7 +117,6 @@
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
-	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
@@ -218,49 +158,12 @@
 	M.adjustToxLoss(1, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	. = 1
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
-	M.Jitter(5)
-	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage2(mob/living/M)
-	M.Jitter(10)
-	M.Dizzy(10)
-	if(prob(30))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 4, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(15)
-	M.Dizzy(15)
-	if(prob(40))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(20)
-	M.Dizzy(20)
-	M.adjustToxLoss(5, 0)
-	if(prob(50))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-	. = 1
-
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
-	addiction_threshold = 10
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
@@ -305,55 +208,6 @@
 		M.drop_all_held_items()
 	..()
 
-/datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
-	M.hallucination += 10
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(5)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
-	if(prob(20))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
-	M.hallucination += 20
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 8, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(10)
-	M.Dizzy(10)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
-	if(prob(30))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
-	M.hallucination += 30
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 12, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(15)
-	M.Dizzy(15)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
-	if(prob(40))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-
-/datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
-	M.hallucination += 30
-	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
-		for(var/i = 0, i < 16, i++)
-			step(M, pick(GLOB.cardinals))
-	M.Jitter(50)
-	M.Dizzy(50)
-	M.adjustToxLoss(5, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
-	if(prob(50))
-		M.emote(pick("twitch","drool","moan"))
-	..()
-	. = 1
-
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
 	description = "Amps you up, gets you going, and rapidly restores stamina damage. Side effects include breathlessness and toxicity."
@@ -377,7 +231,6 @@
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
 	color = "#EE35FF"
-	addiction_threshold = 10
 	overdose_threshold = 20
 	taste_description = "paint thinner"
 
@@ -413,39 +266,6 @@
 				M.emote("frown")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
-	..()
-	. = 1
-
-/datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood?.setSanity(min(mood.sanity, SANITY_DISTURBED))
-	M.Jitter(5)
-	if(prob(20))
-		M.emote(pick("twitch","laugh","frown"))
-	..()
-
-/datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood?.setSanity(min(mood.sanity, SANITY_UNSTABLE))
-	M.Jitter(10)
-	if(prob(30))
-		M.emote(pick("twitch","laugh","frown"))
-	..()
-
-/datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood?.setSanity(min(mood.sanity, SANITY_CRAZY))
-	M.Jitter(15)
-	if(prob(40))
-		M.emote(pick("twitch","laugh","frown"))
-	..()
-
-/datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood?.setSanity(SANITY_INSANE)
-	M.Jitter(20)
-	if(prob(50))
-		M.emote(pick("twitch","laugh","frown"))
 	..()
 	. = 1
 
@@ -494,36 +314,8 @@
 
 /datum/reagent/drug/maint
 	name = "Maintenance Drugs"
-	addiction_type = /datum/reagent/drug/maint
 	can_synth = FALSE
 
-/datum/reagent/drug/maint/addiction_act_stage1(mob/living/M)
-	. = ..()
-	M.Jitter(1)
-
-/datum/reagent/drug/maint/addiction_act_stage2(mob/living/M)
-	. = ..()
-	M.Jitter(2)
-	if(prob(15))
-		M.emote(pick("twitch","drool"))
-
-/datum/reagent/drug/maint/addiction_act_stage3(mob/living/M)
-	. = ..()
-	M.Jitter(1)
-	M.adjustToxLoss(2)
-	if(prob(5))
-		M.drop_all_held_items()
-	if(prob(15))
-		M.emote(pick("twitch","drool"))
-
-/datum/reagent/drug/maint/addiction_act_stage4(mob/living/M)
-	. = ..()
-	M.Jitter(2)
-	M.adjustToxLoss(3)
-	if(prob(10))
-		M.drop_all_held_items()
-	if(prob(30))
-		M.emote(pick("twitch","drool"))
 
 /datum/reagent/drug/maint/powder
 	name = "Maintenance Powder"
@@ -532,7 +324,6 @@
 	color = "#ffffff"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
-	addiction_threshold = 6
 	can_synth = TRUE
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
@@ -559,7 +350,6 @@
 	color = "#203d2c"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 25
-	addiction_threshold = 10
 	can_synth = TRUE
 
 /datum/reagent/drug/maint/sludge/on_mob_metabolize(mob/living/L)
@@ -592,7 +382,6 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	overdose_threshold = 30
-	addiction_threshold = 10
 	can_synth = TRUE
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/M)
