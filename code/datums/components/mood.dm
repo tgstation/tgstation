@@ -194,6 +194,15 @@
 			setSanity(sanity+0.6*delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
 
+	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
+	// mood runtime, so 50% average uptime across the hour.
+	if(HAS_TRAIT(parent, TRAIT_DEPRESSION) && DT_PROB(0.416, delta_time))
+		add_event(null, "depression_mild", /datum/mood_event/depression_mild)
+
+	if(HAS_TRAIT(parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
+		add_event(null, "jolly", /datum/mood_event/jolly)
+
+
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7

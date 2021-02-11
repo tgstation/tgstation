@@ -126,10 +126,6 @@
 	mood_quirk = TRUE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 
-/datum/quirk/jolly/on_process(delta_time)
-	if(DT_PROB(0.05, delta_time))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "jolly", /datum/mood_event/jolly)
-
 /datum/quirk/light_step
 	name = "Light Step"
 	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful."
