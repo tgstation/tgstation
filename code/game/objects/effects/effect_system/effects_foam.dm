@@ -91,7 +91,7 @@
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
-	create_reagents(1000) //limited by the size of the reagent holder anyway.
+	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 
@@ -224,7 +224,7 @@
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new /obj()
-	var/datum/reagents/R = new/datum/reagents(1000)
+	var/datum/reagents/R = new/datum/reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //same as above
 	chemholder.reagents = R
 	R.my_atom = chemholder
 

@@ -235,6 +235,8 @@
 	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
 		for(var/r in altPatient.reagents.reagent_list)
 			var/datum/reagent/reagent = r
+			if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+				continue
 			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
 			if(reagent.overdosed)
 				overdose_list += list(list("name" = reagent.name))
@@ -242,6 +244,8 @@
 	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile
+			if(bit.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+				continue
 			if(!belly.food_reagents[bit.type])
 				chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
 			else
