@@ -899,7 +899,6 @@
 #include "code\game\machinery\computer\buildandrepair.dm"
 #include "code\game\machinery\computer\camera.dm"
 #include "code\game\machinery\computer\camera_advanced.dm"
-#include "code\game\machinery\computer\card.dm"
 #include "code\game\machinery\computer\communications.dm"
 #include "code\game\machinery\computer\crew.dm"
 #include "code\game\machinery\computer\dna_console.dm"

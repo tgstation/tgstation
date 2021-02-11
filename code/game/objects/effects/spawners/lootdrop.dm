@@ -505,8 +505,7 @@
 	name = "secure command circuit board spawner"
 	loot = list(
 				/obj/item/circuitboard/computer/crew,
-				/obj/item/circuitboard/computer/communications,
-				/obj/item/circuitboard/computer/card
+				/obj/item/circuitboard/computer/communications
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/rnd_secure

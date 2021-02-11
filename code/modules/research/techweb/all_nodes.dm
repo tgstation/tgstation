@@ -358,7 +358,7 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcard","idcardconsole", "seccamera")
+	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcard", "seccamera")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/computer_hardware_basic				//Modular computers are shitty and nearly useless so until someone makes them actually useful this can be easy to get.
