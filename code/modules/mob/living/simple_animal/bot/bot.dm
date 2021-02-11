@@ -741,10 +741,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			auto_patrol = TRUE
 
 		if("summon")
-			for(var/mob/living/simple_animal/iter_anim in GLOB.mob_living_list)
-				if(iter_anim == src)
-					continue
-				qdel(iter_anim)
 			bot_reset()
 			summon_target = get_turf(user)
 			if(user_access.len != 0)
