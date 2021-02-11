@@ -47,16 +47,6 @@
 			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>", confidential = TRUE)
 			return
 		cmd_show_exp_panel(M.client)
-
-	else if(href_list["toggleexempt"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
-		if(!C)
-			to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>", confidential = TRUE)
-			return
-		toggle_exempt_status(C)
-
 	else if(href_list["makeAntag"])
 		if(!check_rights(R_ADMIN))
 			return

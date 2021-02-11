@@ -17,6 +17,13 @@
 		ui = new(user, src, "TrackedPlaytime")
 		ui.open()
 
+/datum/job_report_menu/ui_data(mob/user)
+	var/list/data = list()
+
+	data["exemptStatus"] = (owner.prefs?.db_flags & DB_FLAG_EXEMPT)
+
+	return data
+
 /datum/job_report_menu/ui_static_data()
 	if (!CONFIG_GET(flag/use_exp_tracking))
 		return list("failReason" = JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED)
@@ -43,7 +50,39 @@
 	data["livingTime"] = play_records[EXP_TYPE_LIVING]
 	data["ghostTime"] = play_records[EXP_TYPE_GHOST]
 
+	data["isAdmin"] = check_rights(R_ADMIN)
+
 	return data
+
+/datum/job_report_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("toggle_exempt")
+			if(!check_rights(R_ADMIN))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] attempted to toggle job playtime exempt status without admin rights.")
+				log_admin("[ADMIN_LOOKUPFLW(usr)] attempted to toggle job playtime exempt status without admin rights.")
+				to_chat(usr, "<span class='danger'>ERROR: Insufficient admin rights.</span>", confidential = TRUE)
+				return TRUE
+
+			var/datum/admins/viewer_admin_datum = GLOB.admin_datums[usr.ckey]
+
+			if(!viewer_admin_datum)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] attempted to toggle job playtime exempt status without admin datum for their ckey.")
+				log_admin("[ADMIN_LOOKUPFLW(usr)] attempted to toggle job playtime exempt status without admin datum for their ckey.")
+				to_chat(usr, "<span class='danger'>ERROR: Insufficient admin rights.</span>", confidential = TRUE)
+				return TRUE
+
+			var/client/owner_client = locate(owner) in GLOB.clients
+
+			if(!owner_client)
+				to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>", confidential = TRUE)
+				return TRUE
+
+			viewer_admin_datum.toggle_exempt_status(owner_client)
+			return TRUE
 
 #undef JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED
 #undef JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS
