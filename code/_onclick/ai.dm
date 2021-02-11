@@ -64,7 +64,7 @@
 	if(LAZYACCESS(modifiers, "ctrl"))
 		CtrlClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, "middle"))
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
 

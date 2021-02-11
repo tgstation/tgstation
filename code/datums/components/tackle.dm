@@ -100,7 +100,7 @@
 	user.face_atom(A)
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["alt"] || modifiers["shift"] || modifiers["ctrl"] || modifiers["middle"])
+	if(LAZYACCESS(modifiers, "alt") || LAZYACCESS(modifiers, "shift") || LAZYACCESS(modifiers, "ctrl") || LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 
 	tackling = TRUE

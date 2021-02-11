@@ -102,7 +102,7 @@
 
 	/// Basically, we only proceed if we're in throw mode with a tailed carbon in our grasp with at least a neck grab and we're not restrained in some way
 	var/list/modifiers = params2list(params)
-	if(modifiers["alt"] || modifiers["shift"] || modifiers["ctrl"] || modifiers["middle"])
+	if(LAZYACCESS(modifiers, "alt") || LAZYACCESS(modifiers, "shift") || LAZYACCESS(modifiers, "ctrl") || LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
 	if(!user.in_throw_mode || user.get_active_held_item() || user.zone_selected != BODY_ZONE_PRECISE_GROIN)
 		return

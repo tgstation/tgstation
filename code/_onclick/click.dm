@@ -80,7 +80,7 @@
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, "shift"))
-		if(LAZYACCESS(modifiers, "middle"))
+		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
 			return
 		if(LAZYACCESS(modifiers, "ctrl"))
@@ -88,7 +88,7 @@
 			return
 		ShiftClickOn(A)
 		return
-	if(LAZYACCESS(modifiers, "middle"))
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, "alt")) // alt and alt-gr (rightalt)
@@ -442,7 +442,7 @@
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, "middle") && iscarbon(usr))
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
