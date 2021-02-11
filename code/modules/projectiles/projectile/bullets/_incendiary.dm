@@ -22,7 +22,7 @@
 	range = 10 // actually overwritten in the backblast element
 	alpha = 0
 	pass_flags = PASSTABLE | PASSMOB
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	shrapnel_type = null
 	embedding = null
 	ricochet_chance = 10000
