@@ -1,14 +1,14 @@
 /datum/addiction/opiod
-	name = "opiod addiction"
+	name = "opiod"
 
 /datum/addiction/stimulants
-	name = "stimulation addiction"
+	name = "stimulation"
 
 /datum/addiction/alcohol
-	name = "alcohol addiction"
+	name = "alcohol"
 
 /datum/addiction/hallucinogen
-	name = "hallucinogen addiction"
+	name = "hallucinogen"
 
 /datum/addiction/maintenance
-	name = "maintenance drug addiction"
+	name = "maintenance drug"

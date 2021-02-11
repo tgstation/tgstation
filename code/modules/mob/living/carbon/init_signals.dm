@@ -34,11 +34,14 @@
 /mob/living/carbon/proc/on_nometabolism_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
+
+
 	if(reagents.addiction_list)
+
+
 		to_chat(source, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
 		for(var/a in reagents.addiction_list)
 			var/datum/reagent/R = a
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-			LAZYREMOVE(reagents.addiction_list, R)
-			qdel(R)
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_addiction")
+
 	reagents.end_metabolization(keep_liverless = TRUE)

@@ -610,14 +610,6 @@
 			R.metabolizing = FALSE
 			R.on_mob_end_metabolize(C)
 
-/// Removes addiction to a specific reagent on [/datum/reagents/var/my_atom]
-/datum/reagents/proc/remove_addiction(datum/reagent/R)
-	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-	LAZYREMOVE(addiction_list, R)
-	qdel(R)
-
-
 /**
  * Calls [/datum/reagent/proc/on_move] on every reagent in this holder
  *

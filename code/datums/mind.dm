@@ -796,7 +796,7 @@
 
 ///Adds addiction points to the specified addiction
 /datum/mind/add_addiction_points(type, amount)
-	LAZYSET(addiction_points, type, min(LAZYACCESS[addiction_points, type] + amount, 1000))
+	LAZYSET(addiction_points, type, min(LAZYACCESS[addiction_points, type] + amount, MAX_ADDICTION_POINTS))
 	SSwithdrawal.all_withdrawals[type].on_gain_addiction_points(src)
 
 ///Adds addiction points to the specified addiction

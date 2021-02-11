@@ -1,7 +1,7 @@
 ///base class for addiction, handles when you become addicted and what the effects of that are. By default you become addicted when you hit a certain threshold, and stop being addicted once you go below another one.
 /datum/addiction
 	///Name of this addiction
-	var/name = "cringe code addiction"
+	var/name = "cringe code"
 	///Higher threshold, when you start being addicted
 	var/addiction_gain_threshold = 600
 	///Lower threshold, when you stop being addicted
@@ -33,7 +33,8 @@
 	lose_addiction(victim_mind)
 
 /datum/addiction/proc/lose_addiction(/datum/mind/victim_mind)
-	SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_addiction")
+	SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
+	to_chat(source, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
 /datum/addiction/proc/process_addiction(var/mob/living/carbon/affected_carbon)

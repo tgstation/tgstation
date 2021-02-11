@@ -46,3 +46,4 @@
 
 ///Minimum requirement for addiction buzz to be met
 #define MIN_ADDICTION_REAGENT_AMOUNT 3
+#define MAX_ADDICTION_POINTS 1000

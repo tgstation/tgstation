@@ -248,7 +248,7 @@
 				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 				if(bit_vol > 0)
 					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
-	for(var/datum/addiction/addiction_type in altPatient.mind.active_addictions)
+	for(var/datum/addiction/addiction_type as anything in altPatient.mind.active_addictions)
 		addict_list += list(list("name" = initial(addiction_type.name)))
 
 	if (altPatient.hallucinating())
