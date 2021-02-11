@@ -5934,8 +5934,11 @@
 	dir = 8;
 	volume_rate = 200
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating{
+	baseturfs = /turf/open/lava/smooth/lava_land_surface;
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/unpowered/syndicate_lava_base/main)
 "xn" = (
 /turf/open/floor/engine/n2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
