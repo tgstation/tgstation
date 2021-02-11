@@ -206,6 +206,12 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	singular_name = "wolf sinew"
 	merge_type = /obj/item/stack/sheet/sinew/wolf
 
+/obj/item/stack/sinew/attack_secondary(mob/living/victim, mob/living/user, params)
+	if (user == victim)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.AddComponent(/datum/component/garrote, victim, src, 0.5)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1), \
 ))

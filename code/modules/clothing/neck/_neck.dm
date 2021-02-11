@@ -81,6 +81,12 @@
 			return
 	return ..(M,user)
 
+/obj/item/stack/sinew/attack_secondary(mob/living/victim, mob/living/user, params)
+	if (user == victim)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.AddComponent(/datum/component/garrote, victim, src, 0.8)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 ///////////
 //SCARVES//
 ///////////
