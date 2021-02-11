@@ -18,7 +18,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
-	var/blood = 0
+	var/blood = 1
 	var/trash = 0
 	var/pests = 0
 	var/drawn = 0

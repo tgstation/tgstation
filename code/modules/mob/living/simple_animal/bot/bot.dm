@@ -817,14 +817,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 				addtimer(CALLBACK(src, .proc/summon_step_not_moved), 2)
 
 	else	// no path, so calculate new one
-		//calc_summon_path()
-		speak("stuck")
+		calc_summon_path()
 
 /mob/living/simple_animal/bot/proc/summon_step_not_moved()
-	//calc_summon_path()
-	speak("Summon command failed, destination unreachable.",radio_channel)
-	//bot_reset()
-	//tries = 0
+	calc_summon_path()
+	tries = 0
 
 /mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
 	. = ..()
