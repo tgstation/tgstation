@@ -127,6 +127,14 @@
 /obj/item/organ/liver/get_availability(datum/species/S)
 	return !(TRAIT_NOMETABOLISM in S.inherent_traits)
 
+/obj/item/organ/liver/check_damage_thresholds(M)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
+		if(organ_flags & ORGAN_FAILING)
+			name = "deader" //dad joke
+		else
+			name = initial(name)
+
 /obj/item/organ/liver/plasmaman
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
