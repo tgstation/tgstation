@@ -155,7 +155,7 @@
 	// Give bots a fancy new ID card that can hold any access.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
 	// This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
-	access_card.add_access(ACCESS_ROBOTICS)
+	access_card.set_access(list(ACCESS_ROBOTICS))
 	set_custom_texts()
 	Radio = new/obj/item/radio(src)
 	if(radio_key)

@@ -181,7 +181,7 @@
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced/centcom
-	id_trim = /datum/id_trim/centcom/corpse/private_security
+	id_trim = /datum/id_trim/centcom/corpse/private_security/tradepost_officer
 
 /obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier
 	name = "Nanotrasen Private Security Officer"

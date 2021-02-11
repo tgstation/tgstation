@@ -52,6 +52,9 @@
 	assignment = "Private Security Force"
 	access = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
 
+/datum/id_trim/centcom/corpse/private_security/tradepost_officer
+	assignment = "Tradepost Officer"
+
 /datum/id_trim/centcom/corpse/assault
 	assignment = "Nanotrasen Assault Force"
 	access = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
@@ -60,3 +63,6 @@
 	assignment = "Senior Station Engineer"
 	trim_state = "trim_stationengineer"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MAINT_TUNNELS)
+
+/datum/id_trim/job/station_engineer/gunner
+	assignment = "Gunner"

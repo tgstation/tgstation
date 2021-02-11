@@ -129,8 +129,7 @@
 
 	// Doing this hurts my soul, but simple_animal access reworks are for another day.
 	var/datum/id_trim/job/cap_trim = SSid_access.get_trim(/datum/id_trim/job/captain)
-	access_card.add_access(cap_trim.access)
-	access_card.add_access(cap_trim.wildcard_access)
+	access_card.add_access(cap_trim.access + cap_trim.wildcard_access)
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)

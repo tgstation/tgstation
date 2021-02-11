@@ -145,7 +145,7 @@
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.add_access(ACCESS_CENT_BAR)
+	access_card.add_access(list(ACCESS_CENT_BAR))
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
 	check_barstaff_godmode()
 
@@ -165,9 +165,7 @@
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
 
 	var/datum/id_trim/job/cap_trim = SSid_access.get_trim(/datum/id_trim/job/captain)
-	access_card.add_access(cap_trim.access)
-	access_card.add_access(cap_trim.wildcard_access)
-	access_card.add_access(ACCESS_CENT_BAR)
+	access_card.add_access(cap_trim.access + cap_trim.wildcard_access + list(ACCESS_CENT_BAR))
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)

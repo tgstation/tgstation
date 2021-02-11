@@ -324,6 +324,11 @@
 	outfit = /datum/outfit/job/doctor
 	icon_state = "corpsedoctor"
 
+/obj/effect/mob_spawn/human/geneticist
+	name = "Geneticist"
+	outfit = /datum/outfit/job/geneticist
+	icon_state = "corpsescientist"
+
 /obj/effect/mob_spawn/human/engineer
 	name = "Engineer"
 	outfit = /datum/outfit/job/engineer/gloved
@@ -331,6 +336,9 @@
 
 /obj/effect/mob_spawn/human/engineer/rig
 	outfit = /datum/outfit/job/engineer/gloved/rig
+
+/obj/effect/mob_spawn/human/engineer/rig/gunner
+	outfit = /datum/outfit/job/engineer/gloved/rig/gunner
 
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"

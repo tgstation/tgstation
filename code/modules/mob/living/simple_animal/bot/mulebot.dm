@@ -67,8 +67,7 @@
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/cargo_trim = SSid_access.get_trim(/datum/id_trim/job/cargo_technician)
-	access_card.add_access(cargo_trim.access)
-	access_card.add_access(cargo_trim.wildcard_access)
+	access_card.add_access(cargo_trim.access + cargo_trim.wildcard_access)
 	prev_access = access_card.timberpoes_access
 
 	cell = new /obj/item/stock_parts/cell/upgraded(src, 2000)

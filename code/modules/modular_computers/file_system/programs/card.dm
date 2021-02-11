@@ -412,8 +412,14 @@
 
 		if(id_card.timberpoes_trim)
 			var/datum/id_trim/card_trim = id_card.timberpoes_trim
-			data["trimAssignment"] = card_trim.assignment
-			data["trimAccess"] = card_trim.access
+			data["hasTrim"] = TRUE
+			data["trimAssignment"] = card_trim.assignment ? card_trim.assignment : ""
+			data["trimAccess"] = card_trim.access ? card_trim.access : null
+		else
+			data["hasTrim"] = FALSE
+			data["trimAssignment"] = ""
+			data["trimAccess"] = null
+
 
 	return data
 
