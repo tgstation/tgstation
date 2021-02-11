@@ -6,6 +6,8 @@
 	var/addiction_gain_threshold = 600
 	///Lower threshold, when you stop being addicted
 	var/addiction_loss_threshold = 400
+	///Messages for each stage of addictions.
+	var/list/withdrawal_stage_messages = list()
 
 ///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind)
@@ -56,23 +58,22 @@
 
 
 /// Called when addiction hits stage1, see
-/datum/addiction/proc/addiction_act_stage1(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_stage_1(var/mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_light, name)
 	if(prob(30))
-		to_chat(affected_carbon, "<span class='notice'>You feel like having some [name] right about now.</span>")
+		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[1]]</span>")
 	return
 
 /// Called when addiction hits stage2,
-/datum/addiction/proc/addiction_act_stage2(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_stage_2(var/mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_medium, name)
 	if(prob(30))
-		to_chat(affected_carbon, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
+		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
 	return
 
 /// Called when addiction hits stage3,
-/datum/addiction/proc/addiction_act_stage3(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_stage_3(var/mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_severe, name)
 	if(prob(30))
-		to_chat(affected_carbon, "<span class='danger'>You have an intense craving for [name].</span>")
+		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[3]]</span>")
 	return
-
