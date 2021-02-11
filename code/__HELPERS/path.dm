@@ -1,4 +1,3 @@
-#define PATH_DIST(A, B) (get_dist(A, B))
 #define CAN_STEP(cur_turf, next) (next && !next.density && cur_turf.Adjacent(next) && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id))
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -45,8 +44,8 @@
 		number_tiles = 0
 		node_goal = incoming_goal
 
-	heuristic = PATH_DIST(tile, node_goal)
-	f_value = number_tiles + heuristic//*(1+ PF_TIEBREAKER)
+	heuristic = get_dist(tile, node_goal)
+	f_value = number_tiles + heuristic
 
 /datum/pathfind
 	/// The thing that we're actually trying to path for
@@ -80,7 +79,7 @@
 	var/maxnodes = 150
 	/// The proc we use to see which turfs are available from this one. Must be 8-dir
 	var/adjacent = /turf/proc/reachableTurftest
-	/// The proc we use to tell the distance between two turfs. Currently ignored in favor of PATH_DIST/get_dist
+	/// The proc we use to tell the distance between two turfs. Currently ignored in favor of get_dist/get_dist
 	///var/dist = /turf/proc/Distance
 	/// Do we only worry about turfs with simulated atmos, most notably things that aren't space?
 	var/simulated_only
@@ -117,14 +116,11 @@
 	openc[start] = cur
 	sources[start] = PATH_START
 	//then run the main loop
-	var/total_tiles
-
 	while(!open.IsEmpty() && !path)
 		if(!caller)
 			return
 		cur = open.Pop() //get the lower f_value turf in the open list
 
-		total_tiles++
 		if((maxnodedepth)&&(cur.number_tiles > maxnodedepth))//if too many steps, don't process that path
 			continue
 
@@ -162,8 +158,6 @@
 			path.Add(iter_turf)
 		goal_turf = sources[iter_turf]
 
-
-
 /datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
 	var/datum/jps_node/unwind_node = openc[original_turf]
@@ -185,13 +179,12 @@
 		if(!current_turf)
 			return
 
-
 		if(!CAN_STEP(lag_turf, current_turf))
 			return
 		// you have to tak ethe steps directly into walls to see if they reveal a jump point
 		var/closeenough
 		if(mintargetdist)
-			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
+			closeenough = (get_dist(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
 			var/datum/jps_node/final_node = new(current_turf,unwind_node, steps_taken)
 			sources[current_turf] = original_turf
@@ -253,7 +246,7 @@
 
 		var/closeenough
 		if(mintargetdist)
-			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
+			closeenough = (get_dist(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
 			var/datum/jps_node/final_node = new(current_turf,unwind_node, steps_taken)
 			sources[current_turf] = original_turf
@@ -286,7 +279,6 @@
 				else
 					lateral_scan_spec(current_turf, EAST)
 					lateral_scan_spec(current_turf, NORTH)
-					//cardinal scan north
 			if(SOUTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
 					var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
@@ -296,7 +288,6 @@
 				else
 					lateral_scan_spec(current_turf, SOUTH)
 					lateral_scan_spec(current_turf, WEST)
-					//cardinal scan north
 			if(SOUTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST))
 					var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
@@ -306,10 +297,7 @@
 				else
 					lateral_scan_spec(current_turf, SOUTH)
 					lateral_scan_spec(current_turf, EAST)
-					//cardinal scan north
 
-
-#undef PATH_DIST
 #undef PATH_START
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE

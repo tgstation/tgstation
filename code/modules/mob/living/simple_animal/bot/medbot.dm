@@ -377,7 +377,7 @@
 		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			path = get_path_to(src, get_turf(patient), 0, 30,1,id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 

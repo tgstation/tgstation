@@ -23,7 +23,6 @@ Actual Adjacent procs :
 	/turf/proc/reachableAdjacentAtmosTurfs : returns turfs in cardinal directions reachable via atmos
 
 */
-#define PF_TIEBREAKER 0.005
 //tiebreker weight.To help to choose between equal paths
 //////////////////////
 //datum/pathnode object
@@ -31,43 +30,12 @@ Actual Adjacent procs :
 #define MASK_ODD 85
 #define MASK_EVEN 170
 
-//A* nodes variables
-/datum/pathnode
-	var/turf/source //turf associated with the PathNode
-	var/datum/pathnode/previous_node //link to the parent PathNode
-	var/f		//A* Node weight (f = g + h)
-	var/g		//A* movement cost variable
-	var/h		//A* heuristic variable
-	var/nt		//count the number of Nodes traversed
-	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
-
-/datum/pathnode/New(s,p,pg,ph,pnt,_bf)
-	source = s
-	previous_node = p
-	g = pg
-	h = ph
-	f = g + h*(1+ PF_TIEBREAKER)
-	nt = pnt
-	bf = _bf
-
-/datum/pathnode/proc/setp(p,pg,ph,pnt)
-	previous_node = p
-	g = pg
-	h = ph
-	f = g + h*(1+ PF_TIEBREAKER)
-	nt = pnt
-
-/datum/pathnode/proc/calc_f()
-	f = g + h
-
-
-
 //////////////////////
 //A* procs
 //////////////////////
 
 //wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE, old=FALSE)
+/proc/get_path_to(caller, end, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE, old=FALSE)
 	var/l = SSpathfinder.mobs.getfree(caller)
 	while(!l)
 		stoplag(3)
@@ -79,20 +47,6 @@ Actual Adjacent procs :
 	qdel(pathfind_datum)
 
 	SSpathfinder.mobs.found(l)
-	if(!path)
-		path = list()
-	return path
-
-/proc/cir_get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
-	var/l = SSpathfinder.circuits.getfree(caller)
-	while(!l)
-		stoplag(3)
-		l = SSpathfinder.circuits.getfree(caller)
-	var/list/path
-	var/datum/pathfind/pathfind_datum = new(caller, end, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
-	path = pathfind_datum.start_search()
-	qdel(pathfind_datum)
-	SSpathfinder.circuits.found(l)
 	if(!path)
 		path = list()
 	return path
