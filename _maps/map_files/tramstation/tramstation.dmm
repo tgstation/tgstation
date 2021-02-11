@@ -20775,7 +20775,7 @@
 /obj/structure/fluff/paper/stack,
 /obj/item/paper,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/cheesewheel,
+/obj/item/food/cheese/wheel,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "ckL" = (
@@ -21779,12 +21779,12 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "cKE" = (
-/obj/machinery/computer/card/minor/ce{
-	dir = 1
-	},
 /obj/machinery/light,
 /obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
+/obj/machinery/modular_computer/console/preset/engineering{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "cKK" = (
@@ -26819,9 +26819,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
 "eTg" = (
-/obj/machinery/computer/card{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/light,
 /obj/structure/sign/nanotrasen{
@@ -28739,9 +28736,6 @@
 /turf/open/floor/plating,
 /area/commons/lounge)
 "fEG" = (
-/obj/machinery/computer/card/minor/rd{
-	dir = 1
-	},
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -34500,9 +34494,6 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "ipK" = (
-/obj/machinery/computer/card{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
@@ -49986,9 +49977,6 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "pwh" = (
-/obj/machinery/computer/card{
-	dir = 8
-	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Captain's Desk";
@@ -53343,10 +53331,10 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "qWH" = (
-/obj/machinery/computer/card{
+/obj/machinery/light,
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 4
 	},
-/obj/machinery/light,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "qXo" = (
@@ -62934,12 +62922,6 @@
 	},
 /turf/open/floor/circuit/green,
 /area/science/nanite)
-"vfq" = (
-/obj/machinery/computer/card/minor/hos{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/command/heads_quarters/hos)
 "vfx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 10
@@ -64516,9 +64498,6 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "vRN" = (
-/obj/machinery/computer/card/minor/cmo{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
@@ -169119,7 +169098,7 @@ agn
 jgt
 mNh
 aot
-vfq
+vWh
 ajp
 ajx
 snY

@@ -465,7 +465,6 @@ GLOBAL_LIST_EMPTY(lifts)
 		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 		return PROCESS_KILL
 	else
-		check_tick
 		travel_distance--
 		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 
