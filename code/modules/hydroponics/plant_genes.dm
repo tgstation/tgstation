@@ -209,7 +209,7 @@
 	/// Flags that modify the final product.
 	var/trait_flags
 	/// A blacklist of seeds that a trait cannot be attached to.
-	var/list/obj/item/seeds/seed_blacklist = list()
+	var/list/obj/item/seeds/seed_blacklist
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
@@ -225,7 +225,7 @@
 	if(!..())
 		return FALSE
 
-	if(seed_blacklist.len)
+	if(LAZYLEN(seed_blacklist))
 		for(var/obj/item/seeds/found_seed in seed_blacklist)
 			if(istype(source_seed, found_seed))
 				return FALSE
@@ -245,10 +245,10 @@
  * newloc - the loc of the plant
  */
 /datum/plant_gene/trait/proc/on_new(obj/item/our_plant, newloc)
-	SHOULD_CALL_PARENT(TRUE) // Child should call parent to make sure that the seed is not NULLED, otherwise runtime city
 
 	// Plants should always have seeds, but if a non-plant sneaks in or a plant with nulled seed, cut it out
 	if(isnull(our_plant.get_plant_seed()))
+		stack_trace("[our_plant] ([our_plant.type]) has a nulled seed value")
 		return FALSE
 
 	// Add on any bonus lines on examine
