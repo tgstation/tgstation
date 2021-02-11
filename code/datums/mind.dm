@@ -85,10 +85,8 @@
 
 	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of addiction points (as number)
 	var/list/addiction_points
-	///Assoc list of active addictions
-	var/list/withdrawal_cycles
-	///Assoc list of addiction values, key is the type of withdrawal (as singleton type), and the value is the amount of cycles they have been addicted
-	var/list/withdrawal_cycles
+	///Assoc list of key active addictions and value amount of cycles that it has been active.
+	var/list/active_addictions
 
 /datum/mind/New(_key)
 	key = _key
@@ -798,13 +796,13 @@
 
 ///Adds addiction points to the specified addiction
 /datum/mind/add_addiction_points(type, amount)
-	addiction_points[type] += amount
-	SSwithdrawal.all_withdrawals[type].on_change_addiction_points
+	LAZYSET(addiction_points, type, min(LAZYACCESS[addiction_points, type] + amount, 1000))
+	SSwithdrawal.all_withdrawals[type].on_gain_addiction_points(src)
 
 ///Adds addiction points to the specified addiction
 /datum/mind/remove_addiction_points(type, amount)
-	addiction_points[type] -= amount
-
+	LAZYSET(addiction_points, type, max(LAZYACCESS[addiction_points, type] - amount, 0))
+	SSwithdrawal.all_withdrawals[type].on_lose_addiction_points(src)
 
 /mob/dead/new_player/sync_mind()
 	return

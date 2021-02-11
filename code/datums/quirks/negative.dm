@@ -575,7 +575,8 @@
 	if (!reagent_type)
 		reagent_type = pick(drug_list)
 	reagent_instance = new reagent_type()
-	LAZYADD(H.reagents.addiction_list, reagent_instance)
+	for(var/addiction in reagent_instance.addiction_types)
+		H.mind.add_addiction_points(addiction, 1000) ///Max that shit out
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle

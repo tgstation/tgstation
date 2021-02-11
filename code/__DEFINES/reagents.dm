@@ -43,3 +43,6 @@
 #define CONDIMASTER_STYLE_FALLBACK "_"
 
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
+
+///Minimum requirement for addiction buzz to be met
+#define MIN_ADDICTION_REAGENT_AMOUNT 3

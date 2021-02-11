@@ -39,6 +39,10 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
+	for(var/key in mind.active_addictions)
+		var/datum/addiction/addiction = SSaddiction.all_addictions[key]
+		addiction.process_addiction(src)
+
 	if(stat != DEAD)
 		return 1
 
