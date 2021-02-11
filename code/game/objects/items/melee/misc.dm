@@ -286,7 +286,7 @@
 		return
 	var/list/modifiers = params2list(params)
 
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, "right"))
 		..()
 		return
 	if(cooldown_check > world.time)

@@ -79,22 +79,22 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"] && modifiers["middle"])
+	if(LAZYACCESS(modifiers, "shift") && LAZYACCESS(modifiers, "middle"))
 		ShiftMiddleClickOn(A)
 		return
-	if(modifiers["shift"] && modifiers["ctrl"])
+	if(LAZYACCESS(modifiers, "shift") && LAZYACCESS(modifiers, "ctrl"))
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
+	if(LAZYACCESS(modifiers, "middle"))
 		MiddleClickOn(A, params)
 		return
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, "shift"))
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(LAZYACCESS(modifiers, "alt")) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(LAZYACCESS(modifiers, "ctrl"))
 		CtrlClickOn(A)
 		return
 
@@ -106,7 +106,7 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(!modifiers["catcher"] && A.IsObscured())
+	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
 		return
 
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
@@ -151,7 +151,7 @@
 			UnarmedAttack(A,1,modifiers)
 	else
 		if(W)
-			if(modifiers["right"])
+			if(LAZYACCESS(modifiers, "right"))
 				W.afterattack_secondary(A,src,0,params)
 			else
 				W.afterattack(A,src,0,params)
@@ -442,11 +442,11 @@
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && iscarbon(usr))
+	if(LAZYACCESS(modifiers, "middle") && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr), usr.client)
+		var/turf/T = params2turf(LAZYACCESS(modifiers, "screen-loc"), get_turf(usr.client ? usr.client.eye : usr), usr.client)
 		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
