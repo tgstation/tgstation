@@ -1,4 +1,0 @@
-author: "Fhaxaris"
-delete-after: True
-changes: 
-  - bugfix: "Modular ID console will no longer insert/eject ID card for AI or to telekinesis players."

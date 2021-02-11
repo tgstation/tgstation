@@ -51,6 +51,58 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">11 February 2021</h2>
+			<h3 class="author">ATHATH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Similarly to how moth characters with the family heirloom quirk have a 50% chance to receive an old lantern as their family heirloom instead of one of their job's normal family heirloom items, felinids with the family heirloom quirk now have a 50% chance to receive a toy mouse as their family heirloom.</li>
+			</ul>
+			<h3 class="author">CRITAWAKETS updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Bronze now properly works within the materials system. Consistency issue where despite being a glass material, you cannot use it on grilles is fixed. You can no longer use bronze on a girder and then weld the resulting wall to turn it into a wall gear.</li>
+				<li class="code_imp">Bronze is now regarded as a sheet instead of a tile.</li>
+				<li class="code_imp">Checking for if a sheet type requires a unique girder is now a variable called "has_unique_girder". This is used on bronze and runed metal.</li>
+			</ul>
+			<h3 class="author">Fhaxaris updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Modular ID console will no longer insert/eject ID card for AI or to telekinesis players.</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Chemical scan is now on right click for health analyzer, removes it as a toggle.</li>
+				<li class="bugfix">Right clicking on your jumpsuit will now open suit sensors, rather only working if you attack it with an item.</li>
+			</ul>
+			<h3 class="author">NamelessFairy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Chocolate bars can be made using regular milk again</li>
+			</ul>
+			<h3 class="author">NotRanged updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Automatic blob expansion now applies proper reagent strain effects when it hurts a human</li>
+			</ul>
+			<h3 class="author">Timberpoes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">When an admin makes a cyborg flash immune by giving it TRAIT_NOFLASH, that cyborg is now actually immune to flash.</li>
+				<li class="bugfix">Random corpses spawned in offstation ruins will no longer report as having suit sensors when their sensors are disabled.</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Bounty cube announces creation over Supply with its creator and area</li>
+				<li class="rscadd">Bounty cube speedy delivery bonus of 20% for cargo if it's sent within five minutes</li>
+				<li class="rscadd">Bounty cube personal handling tip of 10% if you scan it with an export scanner while on the cargo shuttle (paid on sale)</li>
+				<li class="rscadd">Bounty cubes nag over Supply with their area, starting at five minutes with time increasing between each</li>
+			</ul>
+			<h3 class="author">deranging updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">added missing "a" in the description for the Bluespace Artillery Fusor</li>
+			</ul>
+			<h3 class="author">eeSPee updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Regal rats spawn with a unique name</li>
+				<li class="rscadd">Regal rats have a new ability, domain, to replace coffer; it spreads miasma in the air, and they passively regenerate health in miasma</li>
+				<li class="rscadd">Rat kings can lick food and glasses to add rat spit, and can rummage through trash to find coins and cheese</li>
+				<li class="rscadd">overdosing on rat spit gives you the rat faction</li>
+			</ul>
+
 			<h2 class="date">10 February 2021</h2>
 			<h3 class="author">EikoBiko updated:</h3>
 			<ul class="changes bgimages16">
@@ -2648,48 +2700,6 @@
 			<h3 class="author">nightred updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="balance">Changed the size of the xray gun</li>
-			</ul>
-
-			<h2 class="date">10 December 2020</h2>
-			<h3 class="author">Ghilker updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">only anchored windows call move_update_turf()</li>
-				<li class="tweak">singularities from stage 2 and over will unanchor windows</li>
-				<li class="rscdel">removed atmos SM room</li>
-				<li class="rscadd">added atmos testing facility</li>
-				<li class="rscadd">added SM to replace the hole left by singulo/tesla engines</li>
-			</ul>
-			<h3 class="author">Ghommie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">jitteriness, melee attack animations and resting/standing up should no longer momentarily remove the floating movement type.</li>
-			</ul>
-			<h3 class="author">Maurukas updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The NanoDrug vendor in Medbay is now property of the medical department and will handle payments correctly.</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Added the persistent photo gallery for distinguished employees to Metastation and Deltastation showrooms</li>
-			</ul>
-			<h3 class="author">Paxilmaniac, Maurukas and Cartographer-D updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds Kilostation</li>
-				<li class="rscdel">Removes Pubbystation</li>
-			</ul>
-			<h3 class="author">silicons updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">projectiles now use a new hit detection system that doesn't rely on quirks in movement code to work, and is easier(?) to work with</li>
-				<li class="refactor">pass_flags_self now handles determining if something with specific pass_flags can cross something, by default.</li>
-				<li class="bugfix">piercing projectiles (see: penetrating snipers) work again</li>
-				<li class="tweak">projectile permutated/impacted list is reset on ricochets, meaning reflected projectiles can potentially hit something again if it pierced it the first time.</li>
-			</ul>
-			<h3 class="author">tf-4 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">removes stray lightswitch from icebox mining base</li>
-			</ul>
-			<h3 class="author">zxaber updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Vehicles no longer open firelocks when bumped into them.</li>
 			</ul>
 		</div>
 
