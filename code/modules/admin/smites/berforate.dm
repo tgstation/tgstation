@@ -1,15 +1,15 @@
 /// Fires an absurd amount of bullets at the target
-/datum/smite/berforate
-	name = ":B:erforate"
+/datum/smite/perforate
+	name = "Perforate"
 
 	/// Determines how fucked the target is
 	var/hatred
 
-/datum/smite/berforate/configure(client/user)
+/datum/smite/perforate/configure(client/user)
 	var/static/list/how_fucked_is_this_dude = list("A little", "A lot", "So fucking much", "FUCK THIS DUDE")
 	hatred = input(user, "How much do you hate this guy?") in how_fucked_is_this_dude
 
-/datum/smite/berforate/effect(client/user, mob/living/target)
+/datum/smite/perforate/effect(client/user, mob/living/target)
 	. = ..()
 	if (!iscarbon(target))
 		to_chat(user, "<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
