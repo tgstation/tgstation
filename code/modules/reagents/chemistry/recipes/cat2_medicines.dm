@@ -36,7 +36,7 @@
 			holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The impurity of the reacting helbital is too great causing the [src] to let out a hearty burst of flame, evaporating part of the product!</span>")
 
 /datum/chemical_reaction/medicine/helbital/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
-	. = ..()
+	. = ..()//drains product
 	overly_impure(holder, equilibrium)//faster vortex
 
 /datum/chemical_reaction/medicine/helbital/reaction_finish(datum/reagents/holder, react_vol)
@@ -44,7 +44,7 @@
 	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
 		return
-	if(helbital.purity <= 0.15) //So people don't ezmode this by keeping it at min
+	if(helbital.purity <= 0.1) //So people don't ezmode this by keeping it at min
 		explode_fire(holder, null, 3)
 		clear_products(holder)
 
@@ -85,6 +85,7 @@
 /*****BURN*****/
 //These are all endothermic!
 
+//This is a relatively simple demonstration have splitting negatives/having purity based negatives
 /datum/chemical_reaction/medicine/lenturi
 	results = list(/datum/reagent/medicine/c2/lenturi = 5)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
@@ -152,7 +153,7 @@
 	H_ion_release = 0
 	rate_up_lim = 25
 	purity_min = 0 //Fire is our worry for now
-	reaction_flags = REACTION_REAL_TIME_SPLIT | REACTION_PH_VOL_CONSTANT 
+	reaction_flags = REACTION_REAL_TIME_SPLIT | REACTION_PH_VOL_CONSTANT
 
 //You get nothing! I'm serious about staying under the heating requirements!
 /datum/chemical_reaction/medicine/multiver/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)

@@ -116,7 +116,7 @@
 	//Todo: if/when running/workout skill is added - add inverse chem effects
 
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2.25*REM, FALSE)
+	M.adjustBruteLoss((-2.25*REM*normalise_creation_purity()), FALSE)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(M.getStaminaLoss()))
 		if(10 to 40)
@@ -156,14 +156,16 @@
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#6171FF"
-	var/resetting_probability = 0
+	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-3 * REM)
+	M.adjustFireLoss((-3 * REM)normalise_creation_purity())
 	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
 	..()
 	return TRUE
+
+//lenturi side effects are now part of the impure type made from it
 
 /datum/reagent/medicine/c2/lenturi/on_mob_metabolize(mob/living/carbon/M)
 	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
@@ -178,7 +180,7 @@
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
 	color = "#8C93FF"
-	var/resetting_probability = 0
+	var/resetting_probability = 0 //same with this? Old legacy vars that should be removed?
 	var/message_cd = 0
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/M)
