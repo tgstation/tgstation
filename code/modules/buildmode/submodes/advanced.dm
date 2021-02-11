@@ -30,7 +30,7 @@
 			return
 
 /datum/buildmode_mode/advanced/handle_click(client/c, params, obj/object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 	var/left_click = LAZYLIST(modifiers, LEFT_CLICK)
 	var/right_click = LAZYLIST(modifiers, RIGHT_CLICK)
 	var/alt_click = LAZYLIST(modifiers, ALT_CLICK)

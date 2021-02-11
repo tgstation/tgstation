@@ -14,7 +14,7 @@
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/throwing/handle_click(client/c, params, obj/object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if(LAZYLIST(modifiers, LEFT_CLICK))
 		if(isturf(object))

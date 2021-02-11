@@ -31,7 +31,7 @@
 	..()
 
 /datum/buildmode_mode/mapgen/handle_selected_area(client/c, params)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 	
 	if(LAZYLIST(modifiers, LEFT_CLICK))
 		var/datum/map_generator/G = new generator_path

@@ -21,7 +21,7 @@
 	dressuptime = c.robust_dress_shop()
 
 /datum/buildmode_mode/outfit/handle_click(client/c, params, object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if(!ishuman(object))
 		return

@@ -35,7 +35,7 @@
 	valueholder = temp_value["value"]
 
 /datum/buildmode_mode/varedit/handle_click(client/c, params, obj/object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if(isnull(varholder))
 		to_chat(c, "<span class='warning'>Choose a variable to modify first.</span>")

@@ -8,7 +8,7 @@
 		***********************************************************</span>")
 
 /datum/buildmode_mode/delete/handle_click(client/c, params, object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if(LAZYLIST(modifiers, LEFT_CLICK))
 		if(isturf(object))

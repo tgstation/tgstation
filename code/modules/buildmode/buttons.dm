@@ -18,7 +18,7 @@
 	screen_loc = "NORTH,WEST"
 
 /atom/movable/screen/buildmode/mode/Click(location, control, params)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 	if(LAZYLIST(modifiers, LEFT_CLICK))
 		bd.toggle_modeswitch()
 	else if(LAZYLIST(modifiers, RIGHT_CLICK))

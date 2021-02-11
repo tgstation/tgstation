@@ -70,9 +70,9 @@
 	cornerB = null
 
 /datum/buildmode_mode/proc/handle_click(client/c, params, object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 	if(use_corner_selection)
-		if(LAZYACCESS(modifers, LEFT_CLICK))
+		if(LAZYACCESS(modifiers, LEFT_CLICK))
 			if(!cornerA)
 				cornerA = select_tile(get_turf(object), AREASELECT_CORNERA)
 				return

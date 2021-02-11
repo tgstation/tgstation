@@ -43,7 +43,7 @@
 		areaimage.loc = storedarea // color our area
 
 /datum/buildmode_mode/area_edit/handle_click(client/c, params, object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if(LAZYLIST(modifiers, LEFT_CLICK))
 		if(!storedarea)

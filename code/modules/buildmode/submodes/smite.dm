@@ -22,7 +22,7 @@
 	selected_smite = picking_smite
 
 /datum/buildmode_mode/smite/handle_click(client/user, params_string, object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if (!check_rights(R_ADMIN | R_FUN))
 		return

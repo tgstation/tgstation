@@ -13,7 +13,7 @@
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/copy/handle_click(client/c, params, obj/object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if(LAZYLIST(modifiers, LEFT_CLICK))
 		var/turf/T = get_turf(object)

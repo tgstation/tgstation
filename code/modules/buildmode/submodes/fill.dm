@@ -33,7 +33,7 @@
 	..()
 
 /datum/buildmode_mode/fill/handle_selected_area(client/c, params)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 	
 	if(LAZYLIST(modifiers, LEFT_CLICK)) //rectangular
 		if(LAZYLIST(modifiers, ALT_CLICK))

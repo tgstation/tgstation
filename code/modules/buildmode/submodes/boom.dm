@@ -31,7 +31,7 @@
 		flames = -1
 
 /datum/buildmode_mode/boom/handle_click(client/c, params, obj/object)
-	var/list/modifers = params2list(params)
+	var/list/modifiers = params2list(params)
 
 	if(LAZYLIST(modifiers, LEFT_CLICK))
 		explosion(object, devastation, heavy, light, flash, FALSE, TRUE, flames)
