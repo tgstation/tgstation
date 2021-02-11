@@ -280,6 +280,8 @@
 
 	// people with the social anxiety quirk have a 50% chance to get flustered when hit with a kiss
 	if(HAS_TRAIT(target_living, TRAIT_ANXIOUS) && (target_living.stat > SOFT_CRIT) && prob(50)))
+		if(HAS_TRAIT(target_living, TRAIT_FEARLESS)) //immune while on meds
+			return
 		var/other_msg
 		var/self_msg
 		var/roll = rand(1, 3)
