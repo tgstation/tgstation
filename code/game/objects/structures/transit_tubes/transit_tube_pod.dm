@@ -1,3 +1,7 @@
+#define MOVE_ANIMATION_STAGE_ONE 1
+#define MOVE_ANIMATION_STAGE_TWO 2
+#define MOVE_ANIMATION_STAGE_THREE 3
+
 /obj/structure/transit_tube_pod
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
@@ -116,13 +120,13 @@
 			break
 
 	while(current_tube)
-		next_dir = current_tube.get_exit(dir)
+		//next_dir = current_tube.get_exit(dir)
 
-		if(!next_dir)
-			break
+		//if(!next_dir)
+			//break
 
-		exit_delay = current_tube.exit_delay(src, dir)
-		last_delay += exit_delay
+		//exit_delay = current_tube.exit_delay(src, dir)
+		//last_delay += exit_delay
 
 		sleep(exit_delay)
 
@@ -149,13 +153,25 @@
 		if(current_tube?.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
 			break
-
+				///FUTURE KYLER: USE LAST_DELAY FOR BOTH TIMES WHEN REPLACING
 	density = TRUE
 	moving = FALSE
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
 	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
 		outside_tube()
+
+/obj/structure/transit_tube_pod/proc/move_animation(stage = MOVE_ANIMATION_STAGE_ONE)
+	switch(stage)
+		if(MOVE_ANIMATION_STAGE_ONE)
+			next_dir = current_tube.get_exit(dir)
+
+			if(!next_dir)
+				break
+
+			exit_delay = current_tube.exit_delay(src, dir)
+			last_delay += exit_delay
+
 
 /obj/structure/transit_tube_pod/proc/outside_tube()
 	var/list/savedcontents = contents.Copy()
@@ -220,3 +236,7 @@
 
 /obj/structure/transit_tube_pod/dispensed/outside_tube()
 	qdel(src)
+
+#undef MOVE_ANIMATION_STAGE_ONE
+#undef MOVE_ANIMATION_STAGE_TWO
+#undef MOVE_ANIMATION_STAGE_THREE
