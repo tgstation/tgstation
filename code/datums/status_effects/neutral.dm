@@ -111,7 +111,7 @@
 		rewarded.adjustCloneLoss(-25)
 
 // heldup is for the person being aimed at
-/datum/status_effect/heldup
+/datum/status_effect/grouped/heldup
 	id = "heldup"
 	duration = -1
 	tick_interval = -1
@@ -123,11 +123,11 @@
 	desc = "Making any sudden moves would probably be a bad idea!"
 	icon_state = "aimed"
 
-/datum/status_effect/heldup/on_apply()
+/datum/status_effect/grouped/heldup/on_apply()
 	owner.apply_status_effect(STATUS_EFFECT_SURRENDER)
 	return ..()
 
-/datum/status_effect/heldup/on_remove()
+/datum/status_effect/grouped/heldup/on_remove()
 	owner.remove_status_effect(STATUS_EFFECT_SURRENDER)
 	return ..()
 
@@ -302,7 +302,7 @@
 	slap_item = null
 
 //this effect gives the user an alert they can use to surrender quickly
-/datum/status_effect/surrender
+/datum/status_effect/grouped/surrender
 	id = "surrender"
 	duration = -1
 	tick_interval = -1
