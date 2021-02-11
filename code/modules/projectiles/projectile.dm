@@ -160,7 +160,7 @@
 	var/hit_stunned_targets = FALSE
 
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
-	var/sharpness = SHARP_NONE
+	var/sharpness = NONE
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
@@ -703,7 +703,7 @@
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
 		last_angle_set_hitscan_store = loc
 		var/datum/point/pcache = new (src)
-		var/list/coordinates = trajectory.return_coordinates() 
+		var/list/coordinates = trajectory.return_coordinates()
 		pcache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile, so it looks good on reflector boxes and the like
 		trajectory.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Sets the trajectory to it as well, to prevent a strange visual bug
 		store_hitscan_collision(pcache)

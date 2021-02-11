@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Random corpses spawned in offstation ruins will no longer report as having suit sensors when their sensors are disabled."
