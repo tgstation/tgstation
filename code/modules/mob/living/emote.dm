@@ -110,6 +110,9 @@
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
+		if(L.status_flags & GODMODE) //this will permasleep them due to how GODMODE works, I have never in all my days seen why anyone would want this
+			to_chat(user, "<span class='warning'>Your current invincibility also makes you invincible to waking up, ever. Like, forever and ever. Serious. So let's not faint, OK?</span>")
+			return
 		L.SetSleeping(200)
 
 /datum/emote/living/flap
