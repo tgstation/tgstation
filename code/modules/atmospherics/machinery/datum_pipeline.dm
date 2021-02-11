@@ -85,11 +85,7 @@
 
 /datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/considered_component)
 	other_atmosmch |= considered_component
-	var/datum/gas_mixture/component_mixture = considered_component.returnPipenetAir(src)
-	if(!component_mixture)
-		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [considered_component] \
-		which is of type [considered_component.type]. Nearby: ([considered_component.x], [considered_component.y], [considered_component.z])")
-	other_airs |= component_mixture
+	other_airs |= considered_component.returnPipenetAir(src)
 
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/reference_device, obj/machinery/atmospherics/device_to_add)
 	if(!istype(reference_device, /obj/machinery/atmospherics/pipe))
