@@ -111,22 +111,25 @@
 	else
 		returned_message += "<span class='info'><B>No plant found.</B></span>\n"
 
+	returned_message += "<span class='info'>"
 	switch(scan_mode)
 		if(PLANT_SCANMODE_STATS)
-			returned_message += "<span class='info'>- Weed level: <span class='notice'>[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]</span>\n"
+			returned_message += "- Weed level: <span class='notice'>[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]</span>\n"
 			returned_message += "- Pest level: <span class='notice'>[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]</span>\n"
 			returned_message += "- Toxicity level: <span class='notice'>[scanned_tray.toxic] / [MAX_TRAY_TOXINS]</span>\n"
 			returned_message += "- Water level: <span class='notice'>[scanned_tray.waterlevel] / [scanned_tray.maxwater]</span>\n"
 			returned_message += "- Nutrition level: <span class='notice'>[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]</span>\n"
 			if(scanned_tray.yieldmod != 1)
 				returned_message += "- Yield modifier on harvest: <span class='notice'>[scanned_tray.yieldmod]x</span>\n"
-			returned_message += "*---------*</span>"
 		if(PLANT_SCANMODE_CHEMICALS)
-			returned_message += "<span class='info'>- Tray contains:\n"
-			for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
-				returned_message += "- <span class='notice'>[reagent_id.volume] units of [reagent_id]</span>\n"
-			returned_message += "*---------*</span>"
+			returned_message += "- Tray contains:\n"
+			if(scanned_tray.reagents.reagent_list.len)
+				for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
+					returned_message += "- <span class='notice'>[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]</span>\n"
+			else
+				returned_message += "<span class='notice'>No reagents found.</span>\n"
 
+	returned_message += "*---------*</span>"
 	return returned_message
 
 /**
