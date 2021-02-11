@@ -813,7 +813,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/ab = FALSE
 	var/list/modifers = params2list(params)
 
-	var/dragged = LAZYACCESS(modifers, "drag")
+	var/dragged = LAZYACCESS(modifers, DRAG)
 	if(dragged && !L[dragged])
 		return
 
