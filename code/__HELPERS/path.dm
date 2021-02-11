@@ -1,4 +1,7 @@
 #define PATH_DIST(A, B) (get_dist(A, B))
+#define CAN_STEP(cur_turf, next) (next && !next.density && cur_turf.Adjacent(next) && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id))
+#define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
+
 /// Enumerator for the starting turf's sources value, so we know when we've hit the beginning when unwinding at the end
 #define PATH_START	-1
 
@@ -15,36 +18,35 @@
 
 
 //JPS nodes variables
-/datum/jpsnode
+/datum/jps_node
 	/// The turf associated with this node
 	var/turf/tile
 	/// The node we just came from
-	var/datum/jpsnode/prevNode
-	/// The A* node weight (f = number_of_tiles + heuristic)
-	var/f
+	var/datum/jps_node/previous_node
+	/// The A* node weight (f_value = number_of_tiles + heuristic)
+	var/f_value
 	/// The A* node heuristic (a rough estimate of how far we are from the goal)
-	var/h
+	var/heuristic
 	/// How many steps it's taken to get here from the start (currently pulling double duty as steps taken & cost to get here, since all moves incl diagonals cost 1 rn)
-	var/nt
+	var/number_tiles
 	/// How many steps it took to get here from the last node
 	var/jumps
 	/// Nodes store the endgoal so they can process their heuristic without a reference to the pathfind datum
 	var/turf/node_goal
 
-/datum/jpsnode/New(turf/our_tile, datum/jpsnode/previous_node, jumps_taken, turf/incoming_goal)
+/datum/jps_node/New(turf/our_tile, datum/jps_node/previous_node, jumps_taken, turf/incoming_goal)
 	tile = our_tile
-	prevNode = previous_node
+	previous_node = previous_node
 	jumps = jumps_taken
-	if(prevNode)
-		nt = prevNode.nt + jumps
-		node_goal = prevNode.node_goal
+	if(previous_node)
+		number_tiles = previous_node.number_tiles + jumps
+		node_goal = previous_node.node_goal
 	else
-		nt = 0
+		number_tiles = 0
 		node_goal = incoming_goal
 
-	h = PATH_DIST(tile, node_goal)
-	f = nt + h//*(1+ PF_TIEBREAKER)
-	tile.color = COLOR_BLUE
+	heuristic = PATH_DIST(tile, node_goal)
+	f_value = number_tiles + heuristic//*(1+ PF_TIEBREAKER)
 
 /datum/pathfind
 	/// The thing that we're actually trying to path for
@@ -54,7 +56,7 @@
 	/// The turf we're trying to path to (note that this won't track a moving target)
 	var/turf/end
 	/// The open list/stack we pop nodes out from
-	var/datum/heap/open
+	var/datum/heap/path/open
 	/// An assoc list that matches turfs (the key) to their nodes if said turf has one
 	var/list/openc
 	/**
@@ -88,7 +90,7 @@
 /datum/pathfind/New(atom/movable/caller, atom/goal, id, maxnodes, maxnodedepth, mintargetdist, simulated_only)
 	src.caller = caller
 	end = get_turf(goal)
-	open = new /datum/heap(/proc/HeapPathWeightCompare)
+	open = new()
 	openc = new() //open list for node check
 	sources = new() //open list for node check
 	src.id = id
@@ -99,8 +101,6 @@
 
 //datum/pathfind/proc/generate_node(turf/the_tile, )
 /datum/pathfind/proc/start_search()
-	for(var/turf/t in world)
-		t.color = null
 	caller.calculating_path = TRUE
 	start = get_turf(caller)
 	if(!start || !end)
@@ -112,7 +112,7 @@
 		maxnodedepth = maxnodes
 
 	//initialization
-	var/datum/jpsnode/cur = new (start,null,0,end)//current processed turf
+	var/datum/jps_node/cur = new (start,null,0,end)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
 	sources[start] = PATH_START
@@ -122,37 +122,31 @@
 	while(!open.IsEmpty() && !path)
 		if(!caller)
 			return
-		cur = open.Pop() //get the lower f turf in the open list
+		cur = open.Pop() //get the lower f_value turf in the open list
 
 		total_tiles++
-		if((maxnodedepth)&&(cur.nt > maxnodedepth))//if too many steps, don't process that path
+		if((maxnodedepth)&&(cur.number_tiles > maxnodedepth))//if too many steps, don't process that path
 			continue
 
 		var/turf/current_turf = cur.tile
 		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
 			lateral_scan_spec(current_turf, scan_direction)
-			//if(path)
-				//break
 
 		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
 			diag_scan_spec(current_turf, scan_direction)
-			//if(path)
-				//break
 
-			current_turf.color = COLOR_YELLOW
 		CHECK_TICK
 	//reverse the path to get it from start to finish
 	if(path)
 		for(var/i = 1 to round(0.5*path.len))
-			path.Swap(i,path.len-i+1)
-	openc = null
-	//cleaning after us
-	testing("total popped [total_tiles]")
+			path.Swap(i,length(path)-i+1)
+	openc = null //cleaning after us
+	sources = null
 	caller.calculating_path = FALSE
 	return path
 
 ///
-/datum/pathfind/proc/unwind_path(datum/jpsnode/unwind_node)
+/datum/pathfind/proc/unwind_path(datum/jps_node/unwind_node)
 	success = unwind_node.tile == end
 	path = new()
 	var/turf/iter_turf = unwind_node.tile
@@ -168,19 +162,11 @@
 			path.Add(iter_turf)
 		goal_turf = sources[iter_turf]
 
-	//testing("LENGTHS OF 2 LISTS| A: [a.len] B: [b.len] (final goalturf2 = [goal_turf2])")
 
-/datum/pathfind/proc/can_step(turf/cur_turf, turf/next)
-	if(next && !next.density && cur_turf.Adjacent(next) && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next,caller, id))
-		return TRUE
-
-/datum/pathfind/proc/not_here_but_there(turf/cur_turf, dirA, dirB)
-	if(!can_step(cur_turf, get_step(cur_turf, dirA)) && can_step(cur_turf, get_step(cur_turf, dirB)))
-		return TRUE
 
 /datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
-	var/datum/jpsnode/unwind_node = openc[original_turf]
+	var/datum/jps_node/unwind_node = openc[original_turf]
 	while(!unwind_node)
 		var/turf/older = sources[original_turf]
 		if(!older)
@@ -200,14 +186,14 @@
 			return
 
 
-		if(!can_step(lag_turf, current_turf))
+		if(!CAN_STEP(lag_turf, current_turf))
 			return
 		// you have to tak ethe steps directly into walls to see if they reveal a jump point
 		var/closeenough
 		if(mintargetdist)
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
-			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
+			var/datum/jps_node/final_node = new(current_turf,unwind_node, steps_taken)
 			sources[current_turf] = original_turf
 			unwind_path(final_node)
 			return
@@ -216,35 +202,34 @@
 		else
 			sources[current_turf] = original_turf
 
-		if(unwind_node.nt + steps_taken > maxnodedepth)
+		if(unwind_node.number_tiles + steps_taken > maxnodedepth)
 			return
 
-		current_turf.color = COLOR_PINK
 		var/interesting = FALSE // set to TRUE if we're cool enough to get a node and added to the open list
 
 		switch(heading)
 			if(NORTH)
-				if(not_here_but_there(current_turf, WEST, NORTHWEST) || not_here_but_there(current_turf, EAST, NORTHEAST))
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST))
 					interesting = TRUE
 			if(SOUTH)
-				if(not_here_but_there(current_turf, WEST, SOUTHWEST) || not_here_but_there(current_turf, EAST, SOUTHEAST))
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST))
 					interesting = TRUE
 			if(EAST)
-				if(not_here_but_there(current_turf, NORTH, NORTHEAST) || not_here_but_there(current_turf, SOUTH, SOUTHEAST))
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
 					interesting = TRUE
 			if(WEST)
-				if(not_here_but_there(current_turf, NORTH, NORTHWEST) || not_here_but_there(current_turf, SOUTH, SOUTHWEST))
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHWEST))
 					interesting = TRUE
 
 		if(interesting)
-			var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+			var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
 			openc[current_turf] = newnode
 			open.Insert(newnode)
 			return
 
 /datum/pathfind/proc/diag_scan_spec(turf/original_turf, heading)
 	var/steps_taken = 0
-	var/datum/jpsnode/unwind_node = openc[original_turf]
+	var/datum/jps_node/unwind_node = openc[original_turf]
 	var/turf/current_turf = original_turf
 	var/turf/lag_turf = original_turf
 
@@ -263,14 +248,14 @@
 		steps_taken++
 		if(!current_turf)
 			return
-		if(!can_step(lag_turf, current_turf))
-			current_turf.color = COLOR_PURPLE
+		if(!CAN_STEP(lag_turf, current_turf))
 			return
+
 		var/closeenough
 		if(mintargetdist)
 			closeenough = (PATH_DIST(current_turf, end) <= mintargetdist)
 		if(current_turf == end || closeenough)
-			var/datum/jpsnode/final_node = new(current_turf,unwind_node, steps_taken)
+			var/datum/jps_node/final_node = new(current_turf,unwind_node, steps_taken)
 			sources[current_turf] = original_turf
 			unwind_path(final_node)
 			return
@@ -279,15 +264,13 @@
 		else
 			sources[current_turf] = original_turf
 
-
-		current_turf.color = COLOR_RED
-		if(unwind_node.nt + steps_taken > maxnodedepth)
+		if(unwind_node.number_tiles + steps_taken > maxnodedepth)
 			return
 
 		switch(heading)
 			if(NORTHWEST)
-				if(not_here_but_there(current_turf, EAST, NORTHEAST) || not_here_but_there(current_turf, SOUTH, SOUTHWEST))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHWEST))
+					var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
 					openc[current_turf] = newnode
 					open.Insert(newnode)
 					return
@@ -295,8 +278,8 @@
 					lateral_scan_spec(current_turf, WEST)
 					lateral_scan_spec(current_turf, NORTH)
 			if(NORTHEAST)
-				if(not_here_but_there(current_turf, WEST, NORTHWEST) || not_here_but_there(current_turf, SOUTH, SOUTHEAST))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
+					var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
 					openc[current_turf] = newnode
 					open.Insert(newnode)
 					return
@@ -305,8 +288,8 @@
 					lateral_scan_spec(current_turf, NORTH)
 					//cardinal scan north
 			if(SOUTHWEST)
-				if(not_here_but_there(current_turf, WEST, SOUTHEAST) || not_here_but_there(current_turf, NORTH, NORTHWEST))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
+					var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
 					openc[current_turf] = newnode
 					open.Insert(newnode)
 					return
@@ -315,8 +298,8 @@
 					lateral_scan_spec(current_turf, WEST)
 					//cardinal scan north
 			if(SOUTHEAST)
-				if(not_here_but_there(current_turf, WEST, SOUTHWEST) || not_here_but_there(current_turf, NORTH, NORTHEAST))
-					var/datum/jpsnode/newnode = new(current_turf, unwind_node, steps_taken)
+				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST))
+					var/datum/jps_node/newnode = new(current_turf, unwind_node, steps_taken)
 					openc[current_turf] = newnode
 					open.Insert(newnode)
 					return
@@ -328,3 +311,5 @@
 
 #undef PATH_DIST
 #undef PATH_START
+#undef CAN_STEP
+#undef STEP_NOT_HERE_BUT_THERE
