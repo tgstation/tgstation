@@ -124,9 +124,6 @@
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
 	can_jam = FALSE
-	jamming_chance = 0
-	unjam_chance = 0
-	jamming_increment = 0
 
 /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	name = "Mosin Nagant"
