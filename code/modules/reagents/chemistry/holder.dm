@@ -1644,7 +1644,7 @@
 	data["selectedBitflags"] = ui_tags_selected
 	data["currentReagents"] = previous_reagent_list //This keeps the string of reagents that's updated when handle_reactions() is called
 	data["beakerSync"] = ui_beaker_sync
-	data["linkedBeaker"] = holder.name //To solidify the fact that the UI is linked to a beaker - not a machine.
+	data["linkedBeaker"] = my_atom.name //To solidify the fact that the UI is linked to a beaker - not a machine.
 
 	//First we check to see if reactions are synced with the beaker
 	if(ui_beaker_sync)

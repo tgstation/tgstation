@@ -1,8 +1,70 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section, Table, Icon, Chart, Flex, Stack } from '../components';
-import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 import { map } from 'common/collections';
+
+const BRUTE = 1 << 0;
+const BURN = 1 << 1;
+const TOXIN = 1 << 2;
+const OXY = 1 << 3;
+const CLONE = 1 << 4;
+const HEALING = 1 << 5;
+const DAMAGING = 1 << 6;
+const EXPLOSIVE = 1 << 7;
+const OTHER = 1 << 8;
+const DANGEROUS = 1 << 9;
+const EASY = 1 << 10;
+const MODERATE = 1 << 11;
+const HARD = 1 << 12;
+const ORGAN = 1 << 13;
+const DRINK = 1 << 14;
+const FOOD = 1 << 15;
+const SLIME = 1 << 16;
+const DRUG = 1 << 17;
+const UNIQUE = 1 << 18;
+const CHEMICAL = 1 << 19;
+const PLANT = 1 << 20;
+const COMPETITIVE = 1 << 21;
+const flagsObject = {
+  "gavel": BRUTE,
+  "burn": BURN,
+  "biohazard": TOXIN,
+  "wind": OXY,
+  "male": CLONE,
+  "medkit": HEALING,
+  "skull-crossbones": DAMAGING,
+  "bomb": EXPLOSIVE,
+  "question": OTHER,
+  "exclamation-triangle": DANGEROUS,
+  "chess-pawn": EASY,
+  "chess-knight": MODERATE,
+  "chess-queen": HARD,
+  "brain": ORGAN,
+  "cocktail": DRINK,
+  "drumstick-bite": FOOD,
+  "microscope": SLIME,
+  "pills": DRUG,
+  "puzzle-piece": UNIQUE,
+  "flask": CHEMICAL,
+  "seedling": PLANT,
+  "recycle": COMPETITIVE,
+};
+/* functions */
+const matchBitflag = (a, b) => {
+  if(a & b === b){
+    return true;
+  };
+};
+
+const hasReagentType = (currentReagents, reagent) => {
+  if (currentReagents === null) {
+    return false;
+  }
+  if (currentReagents.includes(reagent)) {
+    return true;
+  }
+  return false;
+};
 
 export const Reagents = (props, context) => {
   const { act, data } = useBackend(context);
@@ -18,107 +80,24 @@ export const Reagents = (props, context) => {
     currentReagents = [],
     master_reaction_list = [],
   } = data;
+
   const [reagentFilter, setReagentFilter] = useLocalState(
     context, 'reagentFilter', true);
-  const BRUTE = 1 << 0;
-  const BURN = 1 << 1;
-  const TOXIN = 1 << 2;
-  const OXY = 1 << 3;
-  const CLONE = 1 << 4;
-  const HEALING = 1 << 5;
-  const DAMAGING = 1 << 6;
-  const EXPLOSIVE = 1 << 7;
-  const OTHER = 1 << 8;
-  const DANGEROUS = 1 << 9;
-  const EASY = 1 << 10;
-  const MODERATE = 1 << 11;
-  const HARD = 1 << 12;
-  const ORGAN = 1 << 13;
-  const DRINK = 1 << 14;
-  const FOOD = 1 << 15;
-  const SLIME = 1 << 16;
-  const DRUG = 1 << 17;
-  const UNIQUE = 1 << 18;
-  const CHEMICAL = 1 << 19;
-  const PLANT = 1 << 20;
-  const COMPETITIVE = 1 << 21;
-  const flagsObject = {
-    "gavel": BRUTE,
-    "burn": BURN,
-    "biohazard": TOXIN,
-    "wind": OXY,
-    "male": CLONE,
-    "medkit": HEALING,
-    "skull-crossbones": DAMAGING,
-    "bomb": EXPLOSIVE,
-    "question": OTHER,
-    "exclamation-triangle": DANGEROUS,
-    "chess-pawn": EASY,
-    "chess-knight": MODERATE,
-    "chess-queen": HARD,
-    "brain": ORGAN,
-    "cocktail": DRINK,
-    "drumstick-bite": FOOD,
-    "microscope": SLIME,
-    "pills": DRUG,
-    "puzzle-piece": UNIQUE,
-    "flask": CHEMICAL,
-    "seedling": PLANT,
-    "recycle": COMPETITIVE,
-  };
+
   const visibleReactions = master_reaction_list.filter(reaction => (
     matchBitflag(selectedBitflags, reaction.bitflags)
     && matchReagents(reaction)
   ));
 
-  /* es-lint please */
-  function matchBitflag(flag1, flag2) {
-    if (flag1 === 0) {
+  const matchReagents = reaction => {
+    if (!reagentFilter || currentReagents === null) {
       return true;
     }
-    let merge = flag1 | flag2;
-    if (flag1 & flag2)
-    {
-      if ((merge ^ flag2))
-      {
-        return false;
-      }
-      return true;
-    }
-    return false;
-  }
-
-  function matchReagents(reaction) {
-    if (!reagentFilter) {
-      return true;
-    }
-    if (currentReagents === null) {
-      return true;
-    }
-    let matches = 0;
-    for (var index = 0; index < currentReagents.length; ++index) {
-      reaction.reactants.map(reactant => {
-        if (reactant.id === currentReagents[index]) {
-          ++matches;
-        } });
-    }
-    if (matches === currentReagents.length) {
-      return true;
-    }
-    return false;
-  }
-
-  function hasReagentType(reagent) {
-    if (currentReagents === null) {
-      return false;
-    }
-    for (let index = 0; index < currentReagents.length; ++index) {
-      if (reagent === currentReagents[index]) {
-        return true;
-      }
-    }
-    return false;
-  }
+    let matches = reaction.reactants
+      .filter(reactant => currentReagents.includes(reactant.id))
+      .length;
+    return matches === currentReagents.length;
+  };
 
   return (
     <Window resizable
@@ -149,11 +128,11 @@ export const Reagents = (props, context) => {
                   )}>
                   {!!hasReaction && (
                     <Table>
-                      <TableRow>
-                        <TableCell bold color="label">
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           Recipe:
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           <Icon name="circle" mr={1} color={reagent_mode_recipe.reagentCol} />
                           {reagent_mode_recipe.name}
                           <Button
@@ -175,14 +154,14 @@ export const Reagents = (props, context) => {
                             onClick={() => act('increment_index', {
                               id: reagent_mode_recipe.name,
                             })} />
-                        </TableCell>
-                      </TableRow>
+                        </Table.Cell>
+                      </Table.Row>
                       {reagent_mode_recipe.products && (
-                        <TableRow>
-                          <TableCell bold color="label">
+                        <Table.Row>
+                          <Table.Cell bold color="label">
                             Products:
-                          </TableCell>
-                          <TableCell>
+                          </Table.Cell>
+                          <Table.Cell>
                             {reagent_mode_recipe.products.map(product => (
                               <Button
                                 key={product.name}
@@ -193,14 +172,14 @@ export const Reagents = (props, context) => {
                                   id: product.id,
                                 })} />
                             ))}
-                          </TableCell>
-                        </TableRow>
+                          </Table.Cell>
+                        </Table.Row>
                       )}
-                      <TableRow>
-                        <TableCell bold color="label">
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           Reactants:
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           {reagent_mode_recipe.reactants.map(reactant => (
                             <Box key={reactant.id}>
                               {reactant.tooltipBool && (
@@ -226,14 +205,14 @@ export const Reagents = (props, context) => {
                               )}
                             </Box>
                           ))}
-                        </TableCell>
-                      </TableRow>
+                        </Table.Cell>
+                      </Table.Row>
                       {reagent_mode_recipe.catalysts && (
-                        <TableRow>
-                          <TableCell bold color="label">
+                        <Table.Row>
+                          <Table.Cell bold color="label">
                             Catalysts:
-                          </TableCell>
-                          <TableCell>
+                          </Table.Cell>
+                          <Table.Cell>
                             {reagent_mode_recipe.catalysts.map(catalyst => (
                               <Box key={catalyst.id}>
                                 {catalyst.tooltipBool && (
@@ -259,22 +238,22 @@ export const Reagents = (props, context) => {
                                 )}
                               </Box>
                             ))}
-                          </TableCell>
-                        </TableRow>
+                          </Table.Cell>
+                        </Table.Row>
                       )}
                       {reagent_mode_recipe.reqContainer && (
-                        <TableRow>
-                          <TableCell bold color="label" width="100px">
+                        <Table.Row>
+                          <Table.Cell bold color="label" width="100px">
                             Required
                             Container:
-                          </TableCell>
-                          <TableCell>
+                          </Table.Cell>
+                          <Table.Cell>
                             {reagent_mode_recipe.reqContainer}
-                          </TableCell>
-                        </TableRow>
+                          </Table.Cell>
+                        </Table.Row>
                       )}
-                      <TableRow>
-                        <TableCell bold color="label">
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           Purity:
                           <Flex bold
                             style={{
@@ -286,8 +265,8 @@ export const Reagents = (props, context) => {
                             }}>
                             Rate vs temperature profile:
                           </Flex>
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           <LabeledList>
                             <LabeledList.Item label="Optimal pH range" >
                               <Button
@@ -314,16 +293,16 @@ export const Reagents = (props, context) => {
                                 tooltip="If your purity is below this at any point during the reaction, it will cause negative effects, and if it remains below this value on completion it will convert into the product's associated Failed reagent." />
                             </LabeledList.Item>
                           </LabeledList>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell bold color="label">
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           <Box position="relative" width="20px">
                             Thermo
                             dynamics:
                           </Box>
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           <Flex
                             height="50px"
                             width="225px"
@@ -348,7 +327,7 @@ export const Reagents = (props, context) => {
                                 fillColor={"#d92727"} />
                             )}
                           </Flex>
-                          <TableRow>
+                          <Table.Row>
                             <Flex position="relative" top="5px" left="-12px">
                               <Button
                                 color="transparent"
@@ -367,8 +346,8 @@ export const Reagents = (props, context) => {
                                 </Flex>
                               )}
                             </Flex>
-                          </TableRow>
-                          <TableRow>
+                          </Table.Row>
+                          <Table.Row>
                             <LabeledList.Item label="Optimal rate">
                               <Button
                                 color="transparent"
@@ -385,9 +364,9 @@ export const Reagents = (props, context) => {
                                 tooltip="The heat generated by a reaction - exothermic produces heat, endothermic consumes heat."
                                 tooltipPosition="right" />
                             </Flex>
-                          </TableRow>
-                        </TableCell>
-                      </TableRow>
+                          </Table.Row>
+                        </Table.Cell>
+                      </Table.Row>
                     </Table>
                   ) || (
                     <Box>
@@ -407,11 +386,11 @@ export const Reagents = (props, context) => {
                   )}>
                   {!!hasReagent && (
                     <Table>
-                      <TableRow>
-                        <TableCell bold color="label">
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           Reagent:
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           <Icon name="circle" mr={1} color={reagent_mode_reagent.reagentCol} />
                           {reagent_mode_reagent.name}
                           <Button
@@ -422,30 +401,30 @@ export const Reagents = (props, context) => {
                             tooltip="Open the associated wikipage for this reagent."
                             tooltipPosition="left"
                             onClick={() => act(Byond.command(`wiki Guide_to_chemistry#${reagent_mode_reagent.name}`))} />
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell bold color="label">
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           Description:
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           {reagent_mode_reagent.desc}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell bold color="label">
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           pH:
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           <Icon name="circle" mr={1} color={reagent_mode_reagent.pHCol} />
                           {reagent_mode_reagent.pH}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell bold color="label">
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell bold color="label">
                           Properties:
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           <LabeledList>
                             <LabeledList.Item label="Overdose">
                               {reagent_mode_reagent.OD}u
@@ -457,13 +436,13 @@ export const Reagents = (props, context) => {
                               {reagent_mode_reagent.metaRate}u/s
                             </LabeledList.Item>
                           </LabeledList>
-                        </TableCell>
-                      </TableRow>
-                      <TableRow mt={2}>
-                        <TableCell bold color="label">
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row mt={2}>
+                        <Table.Cell bold color="label">
                           Impurities:
-                        </TableCell>
-                        <TableCell>
+                        </Table.Cell>
+                        <Table.Cell>
                           {!isImpure && (
                             <LabeledList>
                               {reagent_mode_reagent.impureReagent && (
@@ -516,11 +495,11 @@ export const Reagents = (props, context) => {
                               This reagent is an impure reagent.
                             </Box>
                           )}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell />
-                        <TableCell>
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell />
+                        <Table.Cell>
                           <Button
                             key={reagent_mode_reagent.id}
                             icon="flask"
@@ -530,8 +509,8 @@ export const Reagents = (props, context) => {
                             onClick={() => act('find_reagent_reaction', {
                               id: reagent_mode_reagent.id,
                             })} />
-                        </TableCell>
-                      </TableRow>
+                        </Table.Cell>
+                      </Table.Row>
                     </Table>
                   ) || (
                     <Box>
@@ -547,106 +526,106 @@ export const Reagents = (props, context) => {
               <LabeledList>
                 <LabeledList.Item label="Affects">
                   <Button
-                    color={selectedBitflags & Number(BRUTE) ? "green" : "red"}
+                    color={selectedBitflags & BRUTE ? "green" : "red"}
                     icon="gavel"
                     onClick={() => { act('toggle_tag_brute'); }}>
                     Brute
                   </Button>
                   <Button
-                    color={selectedBitflags & Number(BURN) ? "green" : "red"}
+                    color={selectedBitflags & BURN ? "green" : "red"}
                     icon="burn"
                     onClick={() => { act('toggle_tag_burn'); }}>
                     Burn
                   </Button>
                   <Button
-                    color={selectedBitflags & Number(TOXIN) ? "green" : "red"}
+                    color={selectedBitflags & TOXIN ? "green" : "red"}
                     icon="biohazard"
                     onClick={() => { act('toggle_tag_toxin'); }}>
                     Toxin
                   </Button>
                   <Button
-                    color={selectedBitflags & Number(OXY) ? "green" : "red"}
+                    color={selectedBitflags & OXY ? "green" : "red"}
                     icon="wind"
                     onClick={() => { act('toggle_tag_oxy'); }}>
                     Suffocation
                   </Button>
                   <Button
-                    color={selectedBitflags & Number(CLONE) ? "green" : "red"}
+                    color={selectedBitflags & CLONE ? "green" : "red"}
                     icon="male"
                     onClick={() => { act('toggle_tag_clone'); }}>
                     Clone
                   </Button>
                   <Button
-                    color={selectedBitflags & Number(ORGAN) ? "green" : "red"}
+                    color={selectedBitflags & ORGAN ? "green" : "red"}
                     icon="brain"
                     onClick={() => { act('toggle_tag_organ'); }}>
                     Organ
                   </Button>
                   <Button
                     icon="flask"
-                    color={selectedBitflags & Number(CHEMICAL) ? "green" : "red"}
+                    color={selectedBitflags & CHEMICAL ? "green" : "red"}
                     onClick={() => { act('toggle_tag_chemical'); }}>
                     Chemical
                   </Button>
                   <Button
                     icon="seedling"
-                    color={selectedBitflags & Number(PLANT) ? "green" : "red"}
+                    color={selectedBitflags & PLANT ? "green" : "red"}
                     onClick={() => { act('toggle_tag_plant'); }}>
                     Plants
                   </Button>
                   <Button
                     icon="question"
-                    color={selectedBitflags & Number(OTHER) ? "green" : "red"}
+                    color={selectedBitflags & OTHER ? "green" : "red"}
                     onClick={() => { act('toggle_tag_other'); }}>
                     Other
                   </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Type">
                   <Button
-                    color={selectedBitflags & Number(DRINK) ? "green" : "red"}
+                    color={selectedBitflags & DRINK ? "green" : "red"}
                     icon="cocktail"
                     onClick={() => { act('toggle_tag_drink'); }}>
                     Drink
                   </Button>
                   <Button
-                    color={selectedBitflags & Number(FOOD) ? "green" : "red"}
+                    color={selectedBitflags & FOOD ? "green" : "red"}
                     icon="drumstick-bite"
                     onClick={() => { act('toggle_tag_food'); }}>
                     Food
                   </Button>
                   <Button
-                    color={selectedBitflags & Number(HEALING) ? "green" : "red"}
+                    color={selectedBitflags & HEALING ? "green" : "red"}
                     icon="medkit"
                     onClick={() => { act('toggle_tag_healing'); }}>
                     Healing
                   </Button>
                   <Button
                     icon="skull-crossbones"
-                    color={selectedBitflags & Number(DAMAGING) ? "green" : "red"}
+                    color={selectedBitflags & DAMAGING ? "green" : "red"}
                     onClick={() => { act('toggle_tag_damaging'); }}>
                     Toxic
                   </Button>
                   <Button
                     icon="pills"
-                    color={selectedBitflags & Number(DRUG) ? "green" : "red"}
+                    color={selectedBitflags & DRUG ? "green" : "red"}
                     onClick={() => { act('toggle_tag_drug'); }}>
                     Drugs
                   </Button>
                   <Button
                     icon="microscope"
-                    color={selectedBitflags & Number(SLIME) ? "green" : "red"}
+                    color={selectedBitflags & SLIME ? "green" : "red"}
                     onClick={() => { act('toggle_tag_slime'); }}>
                     Slime
                   </Button>
                   <Button
                     icon="bomb"
-                    color={selectedBitflags & Number(EXPLOSIVE) ? "green" : "red"}
+                    color={selectedBitflags & EXPLOSIVE ? "green" : "red"}
                     onClick={() => { act('toggle_tag_explosive'); }}>
                     Explosive
                   </Button>
                   <Button
                     icon="puzzle-piece"
-                    color={selectedBitflags & Number(UNIQUE) ? "green" : "red"}
+                    color={selectedBitflags & UNIQUE ? "green" : "red"}
                     onClick={() => { act('toggle_tag_unique'); }}>
                     Unique
                   </Button>
@@ -654,31 +633,31 @@ export const Reagents = (props, context) => {
                 <LabeledList.Item label="Difficulty">
                   <Button
                     icon="chess-pawn"
-                    color={selectedBitflags & Number(EASY) ? "green" : "red"}
+                    color={selectedBitflags & EASY ? "green" : "red"}
                     onClick={() => { act('toggle_tag_easy'); }}>
                     Easy
                   </Button>
                   <Button
                     icon="chess-knight"
-                    color={selectedBitflags & Number(MODERATE) ? "green" : "red"}
+                    color={selectedBitflags & MODERATE ? "green" : "red"}
                     onClick={() => { act('toggle_tag_moderate'); }}>
                     Moderate
                   </Button>
                   <Button
                     icon="chess-queen"
-                    color={selectedBitflags & Number(HARD) ? "green" : "red"}
+                    color={selectedBitflags & HARD ? "green" : "red"}
                     onClick={() => { act('toggle_tag_hard'); }}>
                     Hard
                   </Button>
                   <Button
                     icon="exclamation-triangle"
-                    color={selectedBitflags & Number(DANGEROUS) ? "green" : "red"}
+                    color={selectedBitflags & DANGEROUS ? "green" : "red"}
                     onClick={() => { act('toggle_tag_dangerous'); }}>
                     Dangerous
                   </Button>
                   <Button
                     icon="recycle"
-                    color={selectedBitflags & Number(COMPETITIVE) ? "green" : "red"}
+                    color={selectedBitflags & COMPETITIVE ? "green" : "red"}
                     onClick={() => { act('toggle_tag_competitive'); }}>
                     Competitive
                   </Button>
@@ -699,21 +678,21 @@ export const Reagents = (props, context) => {
                 </>
               )}>
               <Table>
-                <TableRow>
-                  <TableCell bold color="label">
+                <Table.Row>
+                  <Table.Cell bold color="label">
                     Reaction
-                  </TableCell>
-                  <TableCell bold color="label">
+                  </Table.Cell>
+                  <Table.Cell bold color="label">
                     Required reagents
-                  </TableCell>
-                  <TableCell bold color="label">
+                  </Table.Cell>
+                  <Table.Cell bold color="label">
                     Tags
-                  </TableCell>
-                </TableRow>
+                  </Table.Cell>
+                </Table.Row>
                 {visibleReactions.map(reaction => (
-                  <TableRow key={reaction.id}>
+                  <Table.Row key={reaction.id}>
                     <>
-                      <TableCell bold color="label">
+                      <Table.Cell bold color="label">
                         <Button
                           mt={1.2}
                           key={reaction.id}
@@ -723,30 +702,28 @@ export const Reagents = (props, context) => {
                           onClick={() => act('recipe_click', {
                             id: reaction.id,
                           })} />
-                      </TableCell>
-                      <TableCell>
+                      </Table.Cell>
+                      <Table.Cell>
                         {reaction.reactants.map(reactant => (
                           <Button
                             mt={0.1}
                             key={reactant.id}
                             icon="vial"
-                            color={hasReagentType(reactant.id) ? "green" : "default"}
+                            color={hasReagentType(currentReagents, reactant.id) ? "green" : "default"}
                             content={reactant.name}
                             onClick={() => act('reagent_click', {
                               id: reactant.id,
                             })} />
                         ))}
-                      </TableCell>
-                      <TableCell width="60px">
+                      </Table.Cell>
+                      <Table.Cell width="60px">
                         {map((flag, icon) =>
-                          (reaction.bitflags & Number(flag)) && (
+                          Boolean(reaction.bitflags & flag) && (
                             <Icon name={icon} mr={1} color={"white"} />
-                          ) || (
-                            null
                           ))(flagsObject)}
-                      </TableCell>
+                      </Table.Cell>
                     </>
-                  </TableRow>
+                  </Table.Row>
                 ))}
               </Table>
             </Section>

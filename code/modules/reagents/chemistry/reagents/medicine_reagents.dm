@@ -379,7 +379,6 @@
 	overdose_threshold = 30
 	var/healing = 0.5
 	ph = 2
-	
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(-healing*REM, 0)
