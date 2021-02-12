@@ -808,7 +808,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
 		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
-		new_human.see_in_dark = 2
 		ADD_TRAIT(new_human, TRAIT_CULT_GHOST, "spirit realm rune") //cult ghosts can't summon more ghosts and really don't like holy water
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
