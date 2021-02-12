@@ -10,6 +10,7 @@ export const Reagents = (props, context) => {
     hasReagent,
     hasReaction,
     isImpure,
+    beakerSync,
     reagent_mode_recipe,
     reagent_mode_reagent,
     selectedBitflags,
@@ -175,11 +176,19 @@ export const Reagents = (props, context) => {
                   title="Recipe lookup"
                   minWidth="353px"
                   buttons={(
-                    <Button
-                      content="Search recipes"
-                      icon="search"
-                      color="purple"
-                      onClick={() => act('search_recipe')} />
+                    <>
+                      <Button
+                        content="Beaker Sync"
+                        icon="atom"
+                        color={beakerSync ? "green" : "red"}
+                        tooltip="When enabled the displayed reaction will automatically display ongoing reactions in the associated beaker."
+                        onClick={() => act('beaker_sync')} />
+                      <Button
+                        content="Search recipes"
+                        icon="search"
+                        color="purple"
+                        onClick={() => act('search_recipe')} />
+                    </>
                   )}>
                   {!!hasReaction && (
                     <Table>
@@ -387,16 +396,15 @@ export const Reagents = (props, context) => {
                               <Button
                                 color="transparent"
                                 textColor={reagent_mode_recipe.isColdRecipe ? "red" : "white"}
-                                content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.explodeTemp === 99999 ? "No overheat" : reagent_mode_recipe.explodeTemp+"K" : reagent_mode_recipe.tempMin+"K"}
+                                content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.explodeTemp+"K" : reagent_mode_recipe.tempMin+"K"}
                                 tooltip={reagent_mode_recipe.isColdRecipe ? "The temperature at which it is underheated, causing negative effects on the reaction." : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."}
                                 tooltipPosition="right" />
-
                               {reagent_mode_recipe.explosive && (
                                 <Flex width="190px" position="relative" top="0px" left="155px" >
                                   <Button
                                     color="transparent"
                                     textColor={reagent_mode_recipe.isColdRecipe ? "white" : "red"}
-                                    content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.tempMin+"K" : reagent_mode_recipe.explodeTemp === 99999 ? "No overheat" : reagent_mode_recipe.explodeTemp+"K"}
+                                    content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.tempMin+"K" : reagent_mode_recipe.explodeTemp+"K"}
                                     tooltip={reagent_mode_recipe.isColdRecipe ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate." : "The temperature at which it is overheated, causing negative effects on the reaction."}
                                     tooltipPosition="right" />
                                 </Flex>
@@ -719,7 +727,7 @@ export const Reagents = (props, context) => {
                 <Button
                   content="Filter by reagents in beaker"
                   icon="search"
-                  color={reagentFilter ? "green" : "default"}
+                  color={reagentFilter ? "green" : "red"}
                   onClick={() => setReagentFilter(!reagentFilter)} />
               )}>
               <Table>

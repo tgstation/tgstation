@@ -124,6 +124,8 @@
 	var/ui_tags_selected = NONE
 	///What index we're at if we have multiple reactions for a reagent product
 	var/ui_reaction_index = 1
+	///If we're syncing with the beaker - so return reactions that are actively happening
+	var/ui_beaker_sync = FALSE
 
 /datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
@@ -1596,7 +1598,7 @@
 	coords += list(list(reaction.overheat_temp, 1))
 	if(reaction.is_cold_recipe)
 		coords += list(list(reaction.overheat_temp-50, 1))
-		coords += list(list(reaction.overheat_temp-50, 0))	
+		coords += list(list(reaction.overheat_temp-50, 0))
 	else
 		coords += list(list(reaction.overheat_temp+50, 1))
 		coords += list(list(reaction.overheat_temp+50, 0))
@@ -1642,6 +1644,14 @@
 	data["hasReaction"] = ui_reaction_id ? TRUE : FALSE
 	data["selectedBitflags"] = ui_tags_selected
 	data["currentReagents"] = previous_reagent_list //This keeps the string of reagents that's updated when handle_reactions() is called
+
+	//First we check to see if reactions are synced with the beaker
+	if(ui_beaker_sync)
+		if(reaction_list)//But we don't want to null the previously displayed if there are none
+			//makes sure we're within bounds
+			if(ui_reaction_index > reaction_list.len)
+				ui_reaction_index = reaction_list.len
+			ui_reaction_id = reaction_list[ui_reaction_index].reaction.type
 
 	//reagent lookup data
 	if(ui_reagent_id)
@@ -1690,12 +1700,20 @@
 			var/list/names = splittext("[reaction.type]", "/")
 			var/product_name = names[names.len]
 			data["reagent_mode_recipe"] = list("name" = product_name, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = 1, "subReactIndex" = 1)
-		
+
 		//If we do have a product then we find it
 		else
 			//Find out if we have multiple reactions for the same product
 			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])//We use the first product - though it might be worth changing this
-			var/list/sub_reactions = get_recipe_from_reagent_product(primary_reagent.type)
+			//If we're syncing from the beaker
+			var/list/sub_reactions
+			if(ui_beaker_sync && reaction_list)
+				for(var/_ongoing_eq in reaction_list)
+					var/datum/equilibrium/ongoing_eq = _ongoing_eq
+					var/ongoing_r = get_chemical_reaction(ongoing_eq.reaction.type)
+					sub_reactions += ongoing_r
+			else
+				sub_reactions = get_recipe_from_reagent_product(primary_reagent.type)
 			var/sub_reaction_length = length(sub_reactions)
 			var/i = 1
 			for(var/datum/chemical_reaction/sub_reaction in sub_reactions)
@@ -1704,15 +1722,15 @@
 					break
 				i += 1
 			data["reagent_mode_recipe"] = list("name" = primary_reagent.name, "hasProduct" = has_product, "reagentCol" = primary_reagent.color, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = primary_reagent.inverse_chem_val, "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = sub_reaction_length, "subReactIndex" = ui_reaction_index)
-		
-		//Results sweep 
+
+		//Results sweep
 		var/has_reagent = "default"
 		for(var/_reagent in reaction.results)
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
 			if(has_reagent(_reagent))
 				has_reagent = "green"
 			data["reagent_mode_recipe"]["products"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.results[reagent.type], "hasReagentCol" = has_reagent))
-		
+
 		//Reactant sweep
 		for(var/_reagent in reaction.required_reagents)
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
@@ -1730,7 +1748,7 @@
 					tooltip += "[sub_reaction.required_reagents[_sub_reagent]]u [sub_reagent.name]\n" //I forgot the better way of doing this - fix this after this works
 					tooltip_bool = TRUE
 			data["reagent_mode_recipe"]["reactants"] += list(list("name" = reagent.name, "id" = reagent.type, "ratio" = reaction.required_reagents[reagent.type], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
-		
+
 		//Catalyst sweep
 		for(var/_reagent in reaction.required_catalysts)
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
@@ -1754,7 +1772,7 @@
 
 /datum/reagents/ui_static_data(mob/user)
 	var/data = list()
-	//Use GLOB list - saves processing 
+	//Use GLOB list - saves processing
 	data["master_reaction_list"] = GLOB.chemical_reactions_results_lookup_list
 
 	return data
@@ -1816,6 +1834,9 @@
 				return
 			ui_reaction_index -= 1
 			ui_reaction_id = get_reaction_from_indexed_possibilities(get_reagent_type_from_product_string(params["id"]))
+			return TRUE
+		if("beaker_sync")
+			ui_beaker_sync != ui_beaker_sync
 			return TRUE
 		if("toggle_tag_brute")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_BRUTE
