@@ -641,6 +641,7 @@
 	rate_up_lim = 50
 	purity_min = 0
 	mix_message = "The solution freezes up into ice!"
+	reaction_flags = REACTION_COMPETITIVE
 
 /datum/chemical_reaction/water
 	results = list(/datum/reagent/water = 0.92)//rough density excahnge
