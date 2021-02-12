@@ -238,7 +238,7 @@
 	return TRUE
 
 /*
- * on_new is called for every trait a plant has when it is initialized.
+ * on_new is called for every trait on a plant has when it is initialized.
  *
  * our_plant - the source plant being created
  * newloc - the loc of the plant
@@ -312,8 +312,10 @@
 
 	qdel(our_plant)
 
-/// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
-/// Applies other trait effects (teleporting, etc) to the target by signal.
+/*
+ * Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
+ * Applies other trait effects (teleporting, etc) to the target by signal.
+ */
 /datum/plant_gene/trait/slip
 
 	name = "Slippery Skin"
@@ -337,13 +339,14 @@
 
 	our_plant.AddComponent(/datum/component/slippery, min(stun_len, 140), NONE, CALLBACK(src, .proc/handle_slip, our_plant))
 
+/// On slip, sends a signal that our plant was slipped on out.
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/food/grown/our_plant, mob/slipped_target)
 	SEND_SIGNAL(our_plant, COMSIG_PLANT_ON_SLIP, slipped_target)
 
 /*
  * Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
  * Generates sparks on squash.
- * Small (potency*rate*5) chance to shock squish or slip target for (potency*rate*5) damage.
+ * Small (potency * rate) chance to shock squish or slip target for (potency * rate) damage.
  * Also affects plant batteries see capatative cell production datum
  */
 /datum/plant_gene/trait/cell_charge
@@ -372,7 +375,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/target_carbon = target
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-		var/power = our_seed.potency*rate
+		var/power = our_seed.potency * rate
 		if(prob(power))
 			target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
 
@@ -401,8 +404,10 @@
 	if(batteries_recharged)
 		to_chat(eater, "<span class='notice'>Your batteries are recharged!</span>")
 
-/// Makes the plant glow. Makes the plant in tray glow, too.
-/// Adds 1 + potency*rate light range and potency*(rate + 0.01) light_power to products.
+/*
+ * Makes the plant glow. Makes the plant in tray glow, too.
+ * Adds (1.4 + potency * rate) light range and (potency * (rate + 0.01)) light_power to products.
+ */
 /datum/plant_gene/trait/glow
 
 	name = "Bioluminescence"
@@ -412,10 +417,10 @@
 	var/glow_color = "#C3E381"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/seed)
-	return 1.4 + seed.potency*rate
+	return 1.4 + seed.potency * rate
 
 /datum/plant_gene/trait/glow/proc/glow_power(obj/item/seeds/seed)
-	return max(seed.potency*(rate + 0.01), 0.1)
+	return max(seed.potency * (rate + 0.01), 0.1)
 
 /datum/plant_gene/trait/glow/on_new(obj/item/our_plant, newloc)
 	. = ..()
@@ -426,8 +431,10 @@
 	our_plant.light_system = MOVABLE_LIGHT
 	our_plant.AddComponent(/datum/component/overlay_lighting, glow_range(our_seed), glow_power(our_seed), glow_color)
 
-/// Makes plant emit darkness. (Purple-ish shadows)
-/// Adds -potency*(rate*0.2) light power to products.
+/*
+ * Makes plant emit darkness. (Purple-ish shadows)
+ * Adds - (potency * (rate * 0.2)) light power to products.
+ */
 /datum/plant_gene/trait/glow/shadow
 
 	name = "Shadow Emission"
@@ -474,8 +481,10 @@
 	name = "Pink Bioluminescence"
 	glow_color = "#FFB3DA"
 
-/// Makes plant teleport people when squashed or slipped on.
-/// Teleport radius is calculated as max(round(potency*rate), 1)
+/*
+ * Makes plant teleport people when squashed or slipped on.
+ * Teleport radius is roughly potency / 10.
+ */
 /datum/plant_gene/trait/teleport
 
 	name = "Bluespace Activity"
@@ -529,7 +538,7 @@
  * A plant trait that causes the plant's capacity to double.
  *
  * When harvested, the plant's individual capacity is set to double it's default.
- * However, the plant is also going to be limited to half as many products from yield, so 2 yield will only produce 1 plant as a result.
+ * However, the plant's maximum yield is also halved, only up to 5.
  */
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
@@ -553,10 +562,14 @@
 /// Allows a plant to be harvested multiple times.
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
-	/// Don't allow replica pods to be multi harvested please.
+	/// Don't allow replica pods to be multi harvested, please.
 	seed_blacklist = list(/obj/item/seeds/replicapod)
 
-/// Allows a plant to be turned into a battery when cabling is applied.
+/*
+ * Allows a plant to be turned into a battery when cabling is applied.
+ * 100 potency plants are made into 2 mj batteries.
+ * Plants with electrical activity has their capacities massively increased (up to 40 mj at 100 potency)
+ */
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
 
@@ -594,7 +607,7 @@
 	// The secret of potato supercells!
 	var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
 	if(electrical_gene) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace power cells)
-		pocell.maxcharge *= electrical_gene.rate*100
+		pocell.maxcharge *= (electrical_gene.rate * 100)
 	pocell.charge = pocell.maxcharge
 	pocell.name = "[our_plant.name] battery"
 	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
@@ -604,7 +617,10 @@
 
 	qdel(our_plant)
 
-/// Injects a number of chemicals from the plant when you throw it at someone or they slip on it.
+/*
+ * Injects a number of chemicals from the plant when you throw it at someone or they slip on it.
+ * At 0 potency it can inject 1 unit of its chemicals, while at 100 potency it can inject 20 units.
+ */
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
 	examine_line = "<span class='info'>It's quite prickley.</span>"
@@ -628,7 +644,7 @@
 		var/mob/living/living_target = target
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 		if(living_target.reagents && living_target.can_inject())
-			var/injecting_amount = max(1, our_seed.potency*0.2) // Minimum of 1, max of 20
+			var/injecting_amount = max(1, our_seed.potency * 0.2) // Minimum of 1, max of 20
 			our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
 			to_chat(target, "<span class='danger'>You are pricked by [our_plant]!</span>")
 			log_combat(our_plant, living_target, "pricked and attempted to inject reagents from [our_plant] to [living_target]. Last touched by: [our_plant.fingerprintslast].")
@@ -843,7 +859,7 @@
 	trait_id = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
 
-/// Plant types
+/// Plant type traits. Incompatible with one another.
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"
 	trait_id = PLANT_TYPE_ID
@@ -856,6 +872,7 @@
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"
 
+/// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
 
