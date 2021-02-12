@@ -17,10 +17,14 @@
 		COOLDOWN_START(src, retaliate_cooldown, 2.5 SECONDS) // 2.5 seconds before auto-retaliate can whack everything within 1 tile again
 		B.visible_message("<span class='boldwarning'>The blob retaliates, lashing out!</span>")
 		for(var/atom/A in range(1, B))
-			if(isliving(A) && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed.
+			var/attacked_turf = get_turf(A)
+			if(isliving(A) && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed. 
+				B.blob_attack_animation(attacked_turf, overmind)
 				attack_living(A)
-			else
-				A.blob_act(B)
+
+			else if(A.blob_act(B)) // After checking for mobs, whack everything else with the standard attack
+				B.blob_attack_animation(attacked_turf, overmind) // Only play the animation if the attack did something meaningful
+				
 	return ..()
 
 /datum/reagent/blob/reactive_spines
