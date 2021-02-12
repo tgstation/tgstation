@@ -82,8 +82,9 @@
 	var/sturdy = list(
 	/turf/closed,
 	/obj/vehicle/sealed/mecha,
-	/obj/machinery/door/,
-	/obj/machinery/door/poddoor/shutters
+	/obj/machinery/door,
+	/obj/structure/window,
+	/obj/structure/grille
 	)
 
 /obj/item/broken_missile
