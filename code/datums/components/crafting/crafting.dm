@@ -114,29 +114,37 @@
 		. += AM
 
 
-/datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
+/datum/component/personal_crafting/proc/get_surroundings#(atom/a, list/blacklist=null)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
 	.["instances"] = list()
-	for(var/obj/item/I in get_environment(a,blacklist))
-		if(.["instances"][I.type])
-			.["instances"][I.type] += I
-		else
-			.["instances"][I.type] = list(I)
-		if(istype(I, /obj/item/stack))
-			var/obj/item/stack/S = I
-			.["other"][I.type] += S.amount
-		else if(I.tool_behaviour)
-			.["tool_behaviour"] += I.tool_behaviour
-			.["other"][I.type] += 1
-		else
-			if(istype(I, /obj/item/reagent_containers))
-				var/obj/item/reagent_containers/RC = I
-				if(RC.is_drainable())
-					for(var/datum/reagent/A in RC.reagents.reagent_list)
-						.["other"][A.type] += A.volume
-			.["other"][I.type] += 1
+	.["machinery"] = list()
+	for(var/obj/I in get_environment(a,blacklist))
+		if(istype(I /obj/item))
+			if(.["instances"][I.type])
+				.["instances"][I.type] += I
+			else
+				.["instances"][I.type] = list(I)
+			if(istype(I, /obj/item/stack))
+				var/obj/item/stack/S = I
+				.["other"][I.type] += S.amount
+			else if(I.tool_behaviour)
+				.["tool_behaviour"] += I.tool_behaviour
+				.["other"][I.type] += 1
+			else
+				if(istype(I, /obj/item/reagent_containers))
+					var/obj/item/reagent_containers/RC = I
+					if(RC.is_drainable())
+						for(var/datum/reagent/A in RC.reagents.reagent_list)
+							.["other"][A.type] += A.volume
+				.["other"][I.type] += 1
+		else if (istype(I /obj/machinery))
+			if(.["machinery"][I.type])
+				.["machinery"][I.type] += I
+			else
+				.["machinery"][I.type] = list(I)
+
 
 /datum/component/personal_crafting/proc/check_tools(atom/a, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)

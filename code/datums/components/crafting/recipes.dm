@@ -1243,6 +1243,8 @@
 
 /datum/crafting_recipe/improvised_chem_heater/check_requirements(mob/user, list/collected_requirements)
 	. = ..()
+	contents = get_surroundings(a)
+	if(!check_contents(a, R, contents))
 	var/obj/machinery/space_heater/s_heater = locate(/obj/machinery/space_heater) in orange(user, 1)
 	if(!s_heater)
 		return FALSE
