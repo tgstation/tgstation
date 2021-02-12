@@ -35,8 +35,8 @@
 
 /obj/machinery/chem_heater/Initialize(mapload)
 	. = ..()
+	create_reagents(200, NO_REACT)//Lets save some calculations here
 	if(mapload)
-		create_reagents(200, NO_REACT)//Lets save some calculations here
 		reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
 		reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
