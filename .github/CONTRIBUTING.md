@@ -504,7 +504,7 @@ Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid
 for (var/datum/reagent/R as anything in reagents)
 
 // Good
-for (var/datum/reagent/reagent as anything in reagents)
+for (var/datum/reagent/deadly_reagent as anything in reagents)
 
 // Allowed, but still has the potential to not be clear. What does `i` refer to?
 for (var/i in 1 to 12)
