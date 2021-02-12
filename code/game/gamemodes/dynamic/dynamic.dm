@@ -324,6 +324,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	mid_round_budget = threat_level - round_start_budget
 
 /datum/game_mode/dynamic/can_start()
+	return TRUE
+
+/datum/game_mode/dynamic/proc/setup_parameters()
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit].")
@@ -354,6 +357,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
 						continue
 					vars[variable] = configuration["Dynamic"][variable]
+
+	setup_parameters()
 
 	var/valid_roundstart_ruleset = 0
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))

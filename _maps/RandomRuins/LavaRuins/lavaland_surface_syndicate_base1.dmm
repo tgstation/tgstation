@@ -2662,20 +2662,14 @@
 	dir = 9
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "ih" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "ii" = (
 /obj/structure/table,
@@ -2807,18 +2801,12 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "iv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "iw" = (
 /obj/structure/chair{
@@ -2977,10 +2965,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "iN" = (
 /turf/closed/wall/mineral/plastitanium/explosive,
@@ -3191,10 +3176,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "jf" = (
 /obj/machinery/door/airlock{
@@ -3241,10 +3223,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jk" = (
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "jl" = (
 /obj/effect/turf_decal/tile/red{
@@ -4147,10 +4126,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "lf" = (
 /obj/machinery/light/small{
@@ -4316,18 +4292,12 @@
 	dir = 10
 	},
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "lw" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/no_lava,
-/turf/open/floor/plating{
-	baseturfs = /turf/open/lava/smooth/lava_land_surface;
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "lx" = (
 /obj/structure/bookcase/random,
@@ -5934,8 +5904,8 @@
 	dir = 8;
 	volume_rate = 200
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/unpowered/syndicate_lava_base/main)
 "xn" = (
 /turf/open/floor/engine/n2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)

@@ -1,6 +1,0 @@
-author: "CRITAWAKETS"
-delete-after: True
-changes: 
-  - bugfix: "Bronze now properly works within the materials system. Consistency issue where despite being a glass material, you cannot use it on grilles is fixed. You can no longer use bronze on a girder and then weld the resulting wall to turn it into a wall gear."
-  - code_imp: "Bronze is now regarded as a sheet instead of a tile."
-  - code_imp: "Checking for if a sheet type requires a unique girder is now a variable called \"has_unique_girder\". This is used on bronze and runed metal."

@@ -1,7 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "Bounty cube announces creation over Supply with its creator and area"
-  - rscadd: "Bounty cube speedy delivery bonus of 20% for cargo if it's sent within five minutes"
-  - rscadd: "Bounty cube personal handling tip of 10% if you scan it with an export scanner while on the cargo shuttle (paid on sale)"
-  - rscadd: "Bounty cubes nag over Supply with their area, starting at five minutes with time increasing between each"
