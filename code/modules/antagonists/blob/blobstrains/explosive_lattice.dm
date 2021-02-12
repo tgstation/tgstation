@@ -35,7 +35,7 @@
 	. = ..()
 	var/brute_loss = 0
 	var/burn_loss = 0
-	var/bomb_armor = 
+	var/bomb_armor = 0
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 
 	if(reac_volume >= 10) // If it's not coming from a sporecloud, AOE 'explosion' damage
