@@ -157,7 +157,7 @@
 	if(cont.reagents.is_reacting)
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
 	for(var/datum/reagent/R in cont.reagents.reagent_list)
-		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")][(R.addiction_threshold?"<b>Addiction:</b> [R.addiction_threshold]u, ":"")]<b>Base pH:</b> [initial(R.ph)], <b>Current pH:</b> [R.ph].":"<b>Current pH:</b> [R.ph].")]\n"
+		out_message += "<b>[round(R.volume, 0.01)]u of [R.name]</b>, <b>Purity:</b> [round(R.purity, 0.01)], [(scanmode?"[(R.overdose_threshold?"<b>Overdose:</b> [R.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(R.ph)], <b>Current pH:</b> [R.ph].":"<b>Current pH:</b> [R.ph].")]\n"
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")

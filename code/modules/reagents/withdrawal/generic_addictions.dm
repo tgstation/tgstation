@@ -9,14 +9,17 @@
 		affected_carbon.emote("yawn")
 
 /datum/addiction/opiods/withdrawal_enters_stage_2(var/mob/living/carbon/affected_carbon)
+	. = ..()
 	affected_carbon.apply_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
 
 /datum/addiction/opiods/withdrawal_stage_3_process(var/mob/living/carbon/affected_carbon)
+	. = ..()
 	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED)
 		affected_carbon.adjust_disgust(5)
 
 
 /datum/addiction/opiods/lose_addiction(var/mob/living/carbon/affected_carbon)
+	. = ..()
 	affected_carbon.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
 
 ///Stimulants
@@ -49,13 +52,16 @@
 	withdrawal_stage_messages = list("I could use a drink...", "I hope the bar is still open...", "God I need a drink!")
 
 /datum/addiction/alcohol/withdrawal_stage_1_process(var/mob/living/carbon/affected_carbon)
+	. = ..()
 	affected_carbon.Jitter(10)
 
 /datum/addiction/alcohol/withdrawal_stage_2_process(var/mob/living/carbon/affected_carbon)
+	. = ..()
 	affected_carbon.Jitter(10)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 
 /datum/addiction/alcohol/withdrawal_stage_3_process(var/mob/living/carbon/affected_carbon)
+	. = ..()
 	affected_carbon.Jitter(10)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 	if(prob(5)) // Once every 40 seconds in theory
@@ -66,11 +72,20 @@
 	withdrawal_stage_messages = list("I feel so empty...", "I havn't seen the little elves in so long...", "I need to see the beautiful colors again!!")
 
 /datum/addiction/hallucinogens/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
-
+	. = ..()
+	var/atom/movable/plane_master_controller/game_plane_master_controller = affected_carbon.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.add_filter("hallucinogen_radial", 10, wave_filter(200, 200, 10, 0, WAVE_SIDEWAYS))
+	game_plane_master_controller.add_filter("hallucinogen_wave", 10, radial_blur_filter(size = 0.02))
 
 /datum/addiction/hallucinogens/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.apply_status_effect(/datum/status_effect/trance, 40 SECONDS, TRUE)
+
+/datum/addiction/hallucinogens/lose_addiction(mob/living/carbon/affected_carbon)
+	. = ..()
+	var/atom/movable/plane_master_controller/game_plane_master_controller = affected_carbon.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter("hallucinogen_radial")
+	game_plane_master_controller.remove_filter("hallucinogen_wave")
 
 /datum/addiction/maintenance_drugs
 	name = "maintenance drug"
