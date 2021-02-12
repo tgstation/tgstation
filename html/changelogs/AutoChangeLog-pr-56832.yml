@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscdel: "BZ will no longer cause hallucinations or kill changelings at hyper low percentages of the gasmix, put some effort into your ling murder why don't you."
-  - tweak: "BZ now only causes brain damage when it's greater then 10 kpa of the mix, its hallucinations and effects on lings are still locked to 1 kpa or above."

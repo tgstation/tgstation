@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - code_imp: "slight performance improvement to clown pdas"

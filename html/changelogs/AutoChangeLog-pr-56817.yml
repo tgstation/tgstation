@@ -1,4 +1,0 @@
-author: "SparkezelPL"
-delete-after: True
-changes: 
-  - refactor: "Sharpness now uses bitfield"

@@ -1,6 +1,0 @@
-author: "TJatPBnJ"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer hold yourself up with a gun"
-  - bugfix: "Holding someone up with a gun will no longer cause a runtime when two people hold up the same person."
-  - bugfix: "Having multiple people hold up the same person will no longer cause the victim's alerts to disappear when just one of the perpetrators stops holding them up."

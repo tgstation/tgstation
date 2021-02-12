@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Fixes harpoon guns jamming because they're a child of the mosin nagant."

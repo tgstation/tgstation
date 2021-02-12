@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Shift start messes in cargo can now include package scraps, the
-same sort of stuff you get when opening packages."

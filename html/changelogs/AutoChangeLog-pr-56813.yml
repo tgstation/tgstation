@@ -1,5 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - rscadd: "You can now right click to splash reagent containers, instead of switching to combat mode."
-  - rscadd: "Splashing reagent containers is now a part of any reagent container you can spill, rather than just beakers and drinking glasses."

@@ -1,4 +1,0 @@
-author: "TJatPBnJ"
-delete-after: True
-changes: 
-  - bugfix: "Right clicks on a ranged attack will now call afterattack when it's supposed to."
