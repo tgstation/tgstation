@@ -35,26 +35,26 @@
 	. = ..()
 	var/brute_loss = 0
 	var/burn_loss = 0
-	var/bomb_armor = 0
+	var/bomb_armor = 
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 
 	if(reac_volume >= 10) // If it's not coming from a sporecloud, AOE 'explosion' damage
+		var/epicenter_turf = get_turf(exposed_mob)
 		var/obj/effect/temp_visual/explosion/fast/ex_effect = new /obj/effect/temp_visual/explosion/fast(get_turf(exposed_mob))
 		ex_effect.alpha = 150
 
-		if(exposed_mob)
-			// Total damage to epicenter mob of 0.7*reac_volume, like a mid-tier strain
-			brute_loss = reac_volume*0.35
+		// Total damage to epicenter mob of 0.7*reac_volume, like a mid-tier strain
+		brute_loss = reac_volume*0.35
+		burn_loss = brute_loss
+
+		bomb_armor = exposed_mob.getarmor(null, BOMB)
+		if(bomb_armor) // Same calculation and proc that ex_act uses on mobs
+			brute_loss = brute_loss*(2 - round(bomb_armor*0.01, 0.05))
 			burn_loss = brute_loss
+			
+		exposed_mob.take_overall_damage(brute_loss, burn_loss)
 
-			bomb_armor = exposed_mob.getarmor(null, BOMB)
-			if(bomb_armor) // Same calculation and proc that ex_act uses on mobs
-				brute_loss = brute_loss*(2 - round(bomb_armor*0.01, 0.05))
-				burn_loss = brute_loss
-
-			exposed_mob.take_overall_damage(brute_loss, burn_loss)
-
-		for(var/mob/living/nearby_mob in orange(get_turf(exposed_mob), 1))
+		for(var/mob/living/nearby_mob in orange(epicenter_turf, 1))
 			if(ROLE_BLOB in nearby_mob.faction) // No friendly fire.
 				continue
 			if(nearby_mob == exposed_mob) // We've already hit the epicenter mob
