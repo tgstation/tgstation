@@ -1217,7 +1217,7 @@
 
 /datum/crafting_recipe/dropper //Maybe make a glass pipette icon?
 	name = "Dropper"
-	result = /obj/item/reagent_containers/dropper 
+	result = /obj/item/reagent_containers/dropper
 	tools = list(TOOL_WELDER)
 	time = 5 SECONDS
 	reqs = list(
@@ -1234,7 +1234,7 @@
 	reqs = list(
 				/obj/item/stack/cable_coil = 2,
 				/obj/item/stack/sheet/glass = 2,
-				/obj/item/stack/sheet/metal = 2,
+				/obj/item/stack/sheet/iron = 2,
 				/datum/reagent/water = 50,
 				/obj/item/thermometer = 1
 				)
@@ -1254,15 +1254,15 @@
 	qdel(cached_heater, TRUE)//So the battery is amde to delete right after
 	//qdelling makes a battery
 	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in location
-	qdel(cell)	
+	qdel(cell)
 	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
 	heater.forceMove(location)
-	
+
 
 /datum/crafting_recipe/improvised_coolant
 	name = "Improvised cooling spray"
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	result = /obj/item/extinguisher/crafted	
+	result = /obj/item/extinguisher/crafted
 	time = 10 SECONDS
 	reqs = list(
 			/obj/item/toy/crayon/spraycan = 1,

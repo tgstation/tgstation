@@ -335,7 +335,7 @@
 	var/bonus_junk = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2,
-		/obj/item/stack/sheet/metal = 2,
+		/obj/item/stack/sheet/iron = 2,
 		/obj/item/thermometer = 1
 		)
 	for(var/item in bonus_junk)
