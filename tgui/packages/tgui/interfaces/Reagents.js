@@ -11,56 +11,13 @@ export const Reagents = (props, context) => {
     hasReaction,
     isImpure,
     beakerSync,
+    linkedBeaker,
     reagent_mode_recipe,
     reagent_mode_reagent,
     selectedBitflags,
     currentReagents = [],
     master_reaction_list = [],
   } = data;
-  const [brute, setBrute] = useLocalState(
-    context, 'brute', false);
-  const [burn, setBurn] = useLocalState(
-    context, 'burn', false);
-  const [toxin, setToxin] = useLocalState(
-    context, 'toxin', false);
-  const [oxy, setOxy] = useLocalState(
-    context, 'oxy', false);
-  const [clone, setClone] = useLocalState(
-    context, 'clone', false);
-  const [organ, setOrgan] = useLocalState(
-    context, 'organ', false);
-  const [healing, setHealing] = useLocalState(
-    context, 'healing', false);
-  const [drink, setDrink] = useLocalState(
-    context, 'drink', false);
-  const [food, setFood] = useLocalState(
-    context, 'food', false);
-  const [damaging, setDamaging] = useLocalState(
-    context, 'damaging', false);
-  const [slime, setSlime] = useLocalState(
-    context, 'slime', false);
-  const [drug, setDrug] = useLocalState(
-    context, 'drug', false);
-  const [explosive, setExplosive] = useLocalState(
-    context, 'explosive', false);
-  const [other, setOther] = useLocalState(
-    context, 'other', false);
-  const [easy, setEasy] = useLocalState(
-    context, 'easy', false);
-  const [moderate, setModerate] = useLocalState(
-    context, 'moderate', false);
-  const [hard, setHard] = useLocalState(
-    context, 'hard', false);
-  const [dangerous, setDangerous] = useLocalState(
-    context, 'dangerous', false);
-  const [unique, setUnique] = useLocalState(
-    context, 'unique', false);
-  const [chemical, setChemical] = useLocalState(
-    context, 'chemical', false);
-  const [plant, setPlant] = useLocalState(
-    context, 'plant', false);
-  const [competitive, setCompetitive] = useLocalState(
-    context, 'competitive', false);
   const [reagentFilter, setReagentFilter] = useLocalState(
     context, 'reagentFilter', true);
   const BRUTE = 1 << 0;
@@ -194,7 +151,7 @@ export const Reagents = (props, context) => {
                     <Table>
                       <TableRow>
                         <TableCell bold color="label">
-                          Recipie:
+                          Recipe:
                         </TableCell>
                         <TableCell>
                           <Icon name="circle" mr={1} color={reagent_mode_recipe.reagentCol} />
@@ -590,139 +547,139 @@ export const Reagents = (props, context) => {
               <LabeledList>
                 <LabeledList.Item label="Affects">
                   <Button
-                    color={brute ? "green" : "red"}
+                    color={selectedBitflags & Number(BRUTE) ? "green" : "red"}
                     icon="gavel"
-                    onClick={() => { act('toggle_tag_brute'); setBrute(!brute); }}>
+                    onClick={() => { act('toggle_tag_brute'); }}>
                     Brute
                   </Button>
                   <Button
-                    color={burn ? "green" : "red"}
+                    color={selectedBitflags & Number(BURN) ? "green" : "red"}
                     icon="burn"
-                    onClick={() => { act('toggle_tag_burn'); setBurn(!burn); }}>
+                    onClick={() => { act('toggle_tag_burn'); }}>
                     Burn
                   </Button>
                   <Button
-                    color={toxin ? "green" : "red"}
+                    color={selectedBitflags & Number(TOXIN) ? "green" : "red"}
                     icon="biohazard"
-                    onClick={() => { act('toggle_tag_toxin'); setToxin(!toxin); }}>
+                    onClick={() => { act('toggle_tag_toxin'); }}>
                     Toxin
                   </Button>
                   <Button
-                    color={oxy ? "green" : "red"}
+                    color={selectedBitflags & Number(OXY) ? "green" : "red"}
                     icon="wind"
-                    onClick={() => { act('toggle_tag_oxy'); setOxy(!oxy); }}>
+                    onClick={() => { act('toggle_tag_oxy'); }}>
                     Suffocation
                   </Button>
                   <Button
-                    color={clone ? "green" : "red"}
+                    color={selectedBitflags & Number(CLONE) ? "green" : "red"}
                     icon="male"
-                    onClick={() => { act('toggle_tag_clone'); setClone(!clone); }}>
+                    onClick={() => { act('toggle_tag_clone'); }}>
                     Clone
                   </Button>
                   <Button
-                    color={organ ? "green" : "red"}
+                    color={selectedBitflags & Number(ORGAN) ? "green" : "red"}
                     icon="brain"
-                    onClick={() => { act('toggle_tag_organ'); setOrgan(!organ); }}>
+                    onClick={() => { act('toggle_tag_organ'); }}>
                     Organ
                   </Button>
                   <Button
                     icon="flask"
-                    color={chemical ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_chemical'); setChemical(!chemical); }}>
+                    color={selectedBitflags & Number(CHEMICAL) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_chemical'); }}>
                     Chemical
                   </Button>
                   <Button
                     icon="seedling"
-                    color={plant ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_plant'); setPlant(!plant); }}>
+                    color={selectedBitflags & Number(PLANT) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_plant'); }}>
                     Plants
                   </Button>
                   <Button
                     icon="question"
-                    color={other ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_other'); setOther(!other); }}>
+                    color={selectedBitflags & Number(OTHER) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_other'); }}>
                     Other
                   </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Type">
                   <Button
-                    color={drink ? "green" : "red"}
+                    color={selectedBitflags & Number(DRINK) ? "green" : "red"}
                     icon="cocktail"
-                    onClick={() => { act('toggle_tag_drink'); setDrink(!drink); }}>
+                    onClick={() => { act('toggle_tag_drink'); }}>
                     Drink
                   </Button>
                   <Button
-                    color={food ? "green" : "red"}
+                    color={selectedBitflags & Number(FOOD) ? "green" : "red"}
                     icon="drumstick-bite"
-                    onClick={() => { act('toggle_tag_food'); setFood(!food); }}>
+                    onClick={() => { act('toggle_tag_food'); }}>
                     Food
                   </Button>
                   <Button
-                    color={healing ? "green" : "red"}
+                    color={selectedBitflags & Number(HEALING) ? "green" : "red"}
                     icon="medkit"
-                    onClick={() => { act('toggle_tag_healing'); setHealing(!healing); }}>
+                    onClick={() => { act('toggle_tag_healing'); }}>
                     Healing
                   </Button>
                   <Button
                     icon="skull-crossbones"
-                    color={damaging ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_damaging'); setDamaging(!damaging); }}>
+                    color={selectedBitflags & Number(DAMAGING) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_damaging'); }}>
                     Toxic
                   </Button>
                   <Button
                     icon="pills"
-                    color={drug ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_drug'); setDrug(!drug); }}>
+                    color={selectedBitflags & Number(DRUG) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_drug'); }}>
                     Drugs
                   </Button>
                   <Button
                     icon="microscope"
-                    color={slime ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_slime'); setSlime(!slime); }}>
+                    color={selectedBitflags & Number(SLIME) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_slime'); }}>
                     Slime
                   </Button>
                   <Button
                     icon="bomb"
-                    color={explosive ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_explosive'); setExplosive(!explosive); }}>
+                    color={selectedBitflags & Number(EXPLOSIVE) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_explosive'); }}>
                     Explosive
                   </Button>
                   <Button
                     icon="puzzle-piece"
-                    color={unique ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_unique'); setUnique(!unique); }}>
+                    color={selectedBitflags & Number(UNIQUE) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_unique'); }}>
                     Unique
                   </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Difficulty">
                   <Button
                     icon="chess-pawn"
-                    color={easy ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_easy'); setEasy(!easy); }}>
+                    color={selectedBitflags & Number(EASY) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_easy'); }}>
                     Easy
                   </Button>
                   <Button
                     icon="chess-knight"
-                    color={moderate ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_moderate'); setModerate(!moderate); }}>
+                    color={selectedBitflags & Number(MODERATE) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_moderate'); }}>
                     Moderate
                   </Button>
                   <Button
                     icon="chess-queen"
-                    color={hard ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_hard'); setHard(!hard); }}>
+                    color={selectedBitflags & Number(HARD) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_hard'); }}>
                     Hard
                   </Button>
                   <Button
                     icon="exclamation-triangle"
-                    color={dangerous ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_dangerous'); setDangerous(!dangerous); }}>
+                    color={selectedBitflags & Number(DANGEROUS) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_dangerous'); }}>
                     Dangerous
                   </Button>
                   <Button
                     icon="recycle"
-                    color={competitive ? "green" : "red"}
-                    onClick={() => { act('toggle_tag_competitive'); setCompetitive(!competitive); }}>
+                    color={selectedBitflags & Number(COMPETITIVE) ? "green" : "red"}
+                    onClick={() => { act('toggle_tag_competitive'); }}>
                     Competitive
                   </Button>
                 </LabeledList.Item>
@@ -730,13 +687,16 @@ export const Reagents = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={2} basis={0}>
-            <Section scrollable fill title="Possible recipies"
+            <Section scrollable fill title="Possible recipes"
               buttons={(
-                <Button
-                  content="Filter by reagents in beaker"
-                  icon="search"
-                  color={reagentFilter ? "green" : "red"}
-                  onClick={() => setReagentFilter(!reagentFilter)} />
+                <>
+                  Linked beaker:{linkedBeaker+"  "}
+                  <Button
+                    content="Filter by reagents in beaker"
+                    icon="search"
+                    color={reagentFilter ? "green" : "red"}
+                    onClick={() => setReagentFilter(!reagentFilter)} />
+                </>
               )}>
               <Table>
                 <TableRow>
