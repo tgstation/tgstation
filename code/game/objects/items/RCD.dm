@@ -782,7 +782,6 @@ RLD
 	. = ..()
 	if(.)
 		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
-	return .
 
 
 
