@@ -90,7 +90,7 @@
 	for(var/mob/M in viewers(5, location))
 		to_chat(M, notification)
 
-#define COVERT_PH_TO_COLOR(pH, color) \
+#define CONVERT_PH_TO_COLOR(pH, color) \
 	switch(pH) {\
 		if(14 to INFINITY)\
 			{ color = "#462c83" }\

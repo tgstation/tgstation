@@ -2457,4 +2457,6 @@
 /datum/reagent/universal_indicator/expose_atom(atom/exposed_atom, reac_volume)
 	. = ..()
 	if(exposed_atom.reagents)
-		exposed_atom.add_atom_colour(convert_pH_to_color(exposed_atom.reagents.ph), WASHABLE_COLOUR_PRIORITY)
+		var/color
+		CONVERT_PH_TO_COLOR(exposed_atom.reagents.ph, color)
+		exposed_atom.add_atom_colour(color, WASHABLE_COLOUR_PRIORITY)
