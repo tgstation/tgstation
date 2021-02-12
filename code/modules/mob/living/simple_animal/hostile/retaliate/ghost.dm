@@ -9,7 +9,7 @@
 	turns_per_move = 5
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	healable = 0
 	speed = 0
 	maxHealth = 40

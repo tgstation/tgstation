@@ -1,4 +1,8 @@
 /proc/chem_recipes_do_conflict(datum/chemical_reaction/r1, datum/chemical_reaction/r2)
+	//We have to check to see if either is competitive so can ignore it (competitive reagents are supposed to conflict)
+	if((r1.reaction_flags & REACTION_COMPETITIVE) || (r2.reaction_flags & REACTION_COMPETITIVE))
+		return FALSE
+	
 	//do the non-list tests first, because they are cheaper
 	if(r1.required_container != r2.required_container)
 		return FALSE

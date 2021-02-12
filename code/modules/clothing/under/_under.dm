@@ -42,6 +42,10 @@
 	if(!attach_accessory(I, user))
 		return ..()
 
+/obj/item/clothing/under/attack_hand_secondary(mob/user, params)
+	toggle()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/clothing/under/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
 	if(ismob(loc))

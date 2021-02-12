@@ -1,6 +1,24 @@
 //traits with no real impact that can be taken freely
 //MAKE SURE THESE DO NOT MAJORLY IMPACT GAMEPLAY. those should be positive or negative traits.
 
+/datum/quirk/extrovert
+	name = "Extrovert"
+	desc = "You are energized by talking to others, and enjoy spending your free time in the bar."
+	value = 0
+	mob_trait = TRAIT_EXTROVERT
+	gain_text = "<span class='notice'>You feel like hanging out with other people.</span>"
+	lose_text = "<span class='danger'>You feel like you're over the bar scene.</span>"
+	medical_record_text = "Patient will not shut the hell up."
+
+/datum/quirk/introvert
+	name = "Introvert"
+	desc = "You are energized by having time to yourself, and enjoy spending your free time in the library."
+	value = 0
+	mob_trait = TRAIT_INTROVERT
+	gain_text = "<span class='notice'>You feel like reading a good book quietly.</span>"
+	lose_text = "<span class='danger'>You feel like libraries are boring.</span>"
+	medical_record_text = "Patient doesn't seem to say much."
+
 /datum/quirk/no_taste
 	name = "Ageusia"
 	desc = "You can't taste anything! Toxic food will still poison you."

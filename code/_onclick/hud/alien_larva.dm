@@ -5,11 +5,11 @@
 	..()
 	var/atom/movable/screen/using
 
-	using = new /atom/movable/screen/act_intent/alien()
-	using.icon_state = mymob.a_intent
-	using.hud = src
-	static_inventory += using
-	action_intent = using
+	action_intent = new /atom/movable/screen/combattoggle/flashy()
+	action_intent.hud = src
+	action_intent.icon = ui_style
+	action_intent.screen_loc = ui_combat_toggle
+	static_inventory += action_intent
 
 	healths = new /atom/movable/screen/healths/alien()
 	healths.hud = src

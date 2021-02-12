@@ -258,8 +258,13 @@
  */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
 	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
-	if(QDELETED(I) || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
+	if(!I || limb.body_zone != user.zone_selected)
 		return FALSE
+
+	if(isliving(user))
+		var/mob/living/tendee = user
+		if(I.force && tendee.combat_mode)
+			return FALSE
 
 	var/allowed = FALSE
 
@@ -291,7 +296,7 @@
 	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
 	if(ishuman(victim))
 		var/mob/living/carbon/human/victim_human = victim
-		if(!victim_human.can_inject(user, TRUE, ignore_species = TRUE))
+		if(!victim_human.try_inject(user, injection_flags = INJECT_CHECK_IGNORE_SPECIES | INJECT_TRY_SHOW_ERROR_MESSAGE))
 			return TRUE
 
 	// lastly, treat them

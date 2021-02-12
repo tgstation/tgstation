@@ -19,7 +19,7 @@
 /obj/structure/reagent_dispensers/examine(mob/user)
 	. = ..()
 	if(can_be_tanked)
-		. += "<span class='notice'>Use a sheet of metal to convert this into a plumbing-compatible tank.</span>"
+		. += "<span class='notice'>Use a sheet of iron to convert this into a plumbing-compatible tank.</span>"
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -30,8 +30,8 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
-	if(istype(W, /obj/item/stack/sheet/metal) && can_be_tanked)
-		var/obj/item/stack/sheet/metal/metal_stack = W
+	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
+		var/obj/item/stack/sheet/iron/metal_stack = W
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume

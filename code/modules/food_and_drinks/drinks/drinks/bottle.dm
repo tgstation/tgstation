@@ -8,6 +8,7 @@
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottle"
+	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
 	custom_price = PAYCHECK_EASY * 1.1
 	amount_per_transfer_from_this = 10
@@ -68,7 +69,7 @@
 	if(!target)
 		return
 
-	if(user.a_intent != INTENT_HARM || !isGlass)
+	if(!user.combat_mode || !isGlass)
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
