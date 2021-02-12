@@ -115,7 +115,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(loc.density)
 		Bump(loc)
 
-	// So, we're phasing as will harmlessly glide through things. Let's noogie everything in our loc's contents.
+	// So, we're phasing and will harmlessly glide through things. Let's noogie everything in our loc's contents.
 	for(var/clong in loc.contents)
 		if(clong == src)
 			continue
@@ -176,8 +176,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/proc/complete_trajectory()
 	// We hit what we wanted to hit, time to go.
 	special_target = null
-	destination = get_edge_target_turf(src, dir)
-	walk_towards(src, destination, 1)
+	walk_in_direction(dir)
 
 /obj/effect/immovablerod/singularity_act()
 	return
@@ -278,3 +277,40 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		qdel(src)
 
 	return TRUE
+
+/* Below are a couple of admin helper procs when dealing with immovable rod memes. */
+/**
+ * Stops your rod's automated movement. Sit... Stay... Good rod!
+ */
+/obj/effect/immovablerod/proc/stay_good_rod()
+	walk(src, 0)
+
+/**
+ * Allows your rod to release restraint level zero and go for a walk.
+ *
+ * If walkies_location is set, rod will walk_towards the location, chasing it across z-levels if necessary.
+ * If walkies_location is not set, rod will call complete_trajectory() and follow the logic from that proc.
+ *
+ * Arguments:
+ * * walkies_location - Any atom that the immovable rod will now chase down as a special target.
+ */
+/obj/effect/immovablerod/proc/go_for_a_walk(walkies_location = null)
+	if(walkies_location)
+		special_target = walkies_location
+		walk_towards(src, special_target, 1)
+		return
+
+	complete_trajectory()
+
+/obj/effect/immovablerod/deadchat_plays(mode = DEMOCRACY_MODE, cooldown = 6 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/immovable_rod, mode, list(), cooldown)
+
+/**
+ * Rod will walk towards edge turf in the specified direction.
+ *
+ * Arguments:
+ * * direction - The direction to walk the rod towards: NORTH, SOUTH, EAST, WEST.
+ */
+/obj/effect/immovablerod/proc/walk_in_direction(direction)
+	destination = get_edge_target_turf(src, direction)
+	walk_towards(src, destination, 1)
