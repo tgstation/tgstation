@@ -230,7 +230,7 @@
 			if(istype(source_seed, found_seed))
 				return FALSE
 
-	for(var/datum/plant_gene/trait/trait as anything in source_seed.genes)
+	for(var/datum/plant_gene/trait/trait in source_seed.genes)
 		if(trait_id && trait.trait_id == trait_id)
 			return FALSE
 		if(type == trait.type)
