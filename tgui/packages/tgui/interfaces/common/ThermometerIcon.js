@@ -48,7 +48,7 @@ export const ThermometerIcon = props => {
           'border-index': '1',
           'border-bottom': '0.1',
           'box-shadow': '4px 4px #000000',
-          'z-index': '2',
+          'z-index': '0',
         }} >
         {temperature}K
       </Box>
