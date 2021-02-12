@@ -768,12 +768,10 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
 				}
 				break;
-			case 'rsctweak':
-			case 'tweaks':
-			case 'tweak':
-				if($item != 'tweaked a few things') {
-					$tags[] = 'Tweak';
-					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+			case 'qol':
+				if($item != 'made something easier to use') {
+					$tags[] = 'Quality of Life';
+					$currentchangelogblock[] = array('type' => 'qol', 'body' => $item);
 				}
 				break;
 			case 'soundadd':
