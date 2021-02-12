@@ -112,7 +112,7 @@ export const Reagents = (props, context) => {
     matchBitflag(selectedBitflags, reaction.bitflags)
     && matchReagents(reaction)
   ));
-  
+
   /* es-lint please */
   function matchBitflag(flag1, flag2) {
     if (flag1 === 0) {
@@ -120,16 +120,16 @@ export const Reagents = (props, context) => {
     }
     let merge = flag1 | flag2;
     if (flag1 & flag2)
-    { 
-      if ((merge ^ flag2)) 
+    {
+      if ((merge ^ flag2))
       {
-        return false; 
+        return false;
       }
       return true;
     }
     return false;
   }
-  
+
   function matchReagents(reaction) {
     if (!reagentFilter) {
       return true;
@@ -171,7 +171,7 @@ export const Reagents = (props, context) => {
           <Stack.Item >
             <Stack fill>
               <Stack.Item grow basis={0}>
-                <Section 
+                <Section
                   title="Recipe lookup"
                   minWidth="353px"
                   buttons={(
@@ -194,7 +194,7 @@ export const Reagents = (props, context) => {
                             key={"reduce_index"}
                             icon="arrow-left"
                             ml={3}
-                            disabled={reagent_mode_recipe.subReactIndex 
+                            disabled={reagent_mode_recipe.subReactIndex
                               === 1 ? true : false}
                             content={null}
                             onClick={() => act('reduce_index', {
@@ -203,7 +203,7 @@ export const Reagents = (props, context) => {
                           <Button
                             key={"increment_index"}
                             icon="arrow-right"
-                            disabled={reagent_mode_recipe.subReactIndex 
+                            disabled={reagent_mode_recipe.subReactIndex
                               === reagent_mode_recipe.subReactLen?true:false}
                             content={null}
                             onClick={() => act('increment_index', {
@@ -237,7 +237,7 @@ export const Reagents = (props, context) => {
                         <TableCell>
                           {reagent_mode_recipe.reactants.map(reactant => (
                             <Box key={reactant.id}>
-                              {reactant.tooltipBool && (                    
+                              {reactant.tooltipBool && (
                                 <Button
                                   key={reactant.name}
                                   icon="vial"
@@ -270,7 +270,7 @@ export const Reagents = (props, context) => {
                           <TableCell>
                             {reagent_mode_recipe.catalysts.map(catalyst => (
                               <Box key={catalyst.id}>
-                                {catalyst.tooltipBool && (                    
+                                {catalyst.tooltipBool && (
                                   <Button
                                     key={catalyst.name}
                                     icon="vial"
@@ -299,7 +299,7 @@ export const Reagents = (props, context) => {
                       {reagent_mode_recipe.reqContainer && (
                         <TableRow>
                           <TableCell bold color="label" width="100px">
-                            Required 
+                            Required
                             Container:
                           </TableCell>
                           <TableCell>
@@ -324,27 +324,27 @@ export const Reagents = (props, context) => {
                         <TableCell>
                           <LabeledList>
                             <LabeledList.Item label="Optimal pH range" >
-                              <Button 
-                                color="transparent" 
-                                textColor="white" 
-                                tooltipPosition="right" 
-                                content={reagent_mode_recipe.lowerpH + "-" + reagent_mode_recipe.upperpH} 
+                              <Button
+                                color="transparent"
+                                textColor="white"
+                                tooltipPosition="right"
+                                content={reagent_mode_recipe.lowerpH + "-" + reagent_mode_recipe.upperpH}
                                 tooltip="If your reaction is kept within these bounds then the purity of your product will be 100%" />
                             </LabeledList.Item>
                             <LabeledList.Item label="Inverse purity">
-                              <Button 
-                                color="transparent" 
-                                textColor="white" 
-                                tooltipPosition="right" 
-                                content={reagent_mode_recipe.inversePurity} 
+                              <Button
+                                color="transparent"
+                                textColor="white"
+                                tooltipPosition="right"
+                                content={reagent_mode_recipe.inversePurity}
                                 tooltip="If your purity is below this it will 100% convert into the product's associated Inverse reagent on consumption." />
                             </LabeledList.Item>
                             <LabeledList.Item label="Minimum purity">
-                              <Button 
-                                color="transparent" 
-                                tooltipPosition="right" 
-                                textColor="white" 
-                                content={reagent_mode_recipe.minPurity} 
+                              <Button
+                                color="transparent"
+                                tooltipPosition="right"
+                                textColor="white"
+                                content={reagent_mode_recipe.minPurity}
                                 tooltip="If your purity is below this at any point during the reaction, it will cause negative effects, and if it remains below this value on completion it will convert into the product's associated Failed reagent." />
                             </LabeledList.Item>
                           </LabeledList>
@@ -358,9 +358,9 @@ export const Reagents = (props, context) => {
                           </Box>
                         </TableCell>
                         <TableCell>
-                          <Flex 
-                            height="50px" 
-                            width="225px" 
+                          <Flex
+                            height="50px"
+                            width="225px"
                             position="relative"
                             style={{
                               'background-color': 'black',
@@ -384,38 +384,38 @@ export const Reagents = (props, context) => {
                           </Flex>
                           <TableRow>
                             <Flex position="relative" top="5px" left="-12px">
-                              <Button 
-                                color="transparent" 
+                              <Button
+                                color="transparent"
                                 textColor={reagent_mode_recipe.isColdRecipe ? "red" : "white"}
-                                content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.explodeTemp+"K" : reagent_mode_recipe.tempMin+"K"} 
-                                tooltip={reagent_mode_recipe.isColdRecipe ? "The temperature at which it is underheated, causing negative effects on the reaction." : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."} 
+                                content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.explodeTemp === 99999 ? "No overheat" : reagent_mode_recipe.explodeTemp+"K" : reagent_mode_recipe.tempMin+"K"}
+                                tooltip={reagent_mode_recipe.isColdRecipe ? "The temperature at which it is underheated, causing negative effects on the reaction." : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."}
                                 tooltipPosition="right" />
-                            
+
                               {reagent_mode_recipe.explosive && (
                                 <Flex width="190px" position="relative" top="0px" left="155px" >
-                                  <Button 
-                                    color="transparent" 
+                                  <Button
+                                    color="transparent"
                                     textColor={reagent_mode_recipe.isColdRecipe ? "white" : "red"}
-                                    content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.tempMin+"K" : reagent_mode_recipe.explodeTemp+"K"} 
-                                    tooltip={reagent_mode_recipe.isColdRecipe ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate." : "The temperature at which it is overheated, causing negative effects on the reaction."} 
+                                    content={reagent_mode_recipe.isColdRecipe ? reagent_mode_recipe.tempMin+"K" : reagent_mode_recipe.explodeTemp === 99999 ? "No overheat" : reagent_mode_recipe.explodeTemp+"K"}
+                                    tooltip={reagent_mode_recipe.isColdRecipe ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate." : "The temperature at which it is overheated, causing negative effects on the reaction."}
                                     tooltipPosition="right" />
-                                </Flex> 
+                                </Flex>
                               )}
                             </Flex>
                           </TableRow>
                           <TableRow>
                             <LabeledList.Item label="Optimal rate">
-                              <Button 
+                              <Button
                                 color="transparent"
-                                textColor="white" 
+                                textColor="white"
                                 content={reagent_mode_recipe.thermoUpper+"u/s"}
                                 tooltip="The fastest rate the reaction can go, in units per second. This is the plateu region shown in the rate profile above."
                                 tooltipPosition="right" />
                             </LabeledList.Item>
                             <Flex>
-                              <Button 
+                              <Button
                                 color="transparent"
-                                textColor="white" 
+                                textColor="white"
                                 content={reagent_mode_recipe.thermics}
                                 tooltip="The heat generated by a reaction - exothermic produces heat, endothermic consumes heat."
                                 tooltipPosition="right" />
@@ -532,9 +532,9 @@ export const Reagents = (props, context) => {
                                     })} />
                                 </LabeledList.Item>
                               )}
-                              {!reagent_mode_reagent.failedReagent 
-                              &&!reagent_mode_reagent.inverseReagent 
-                              &&!reagent_mode_reagent.impureReagent && ( 
+                              {!reagent_mode_reagent.failedReagent
+                              &&!reagent_mode_reagent.inverseReagent
+                              &&!reagent_mode_reagent.impureReagent && (
                                 <Box>This reagent has no impure reagents.</Box>
                               )}
                             </LabeledList>
@@ -569,7 +569,7 @@ export const Reagents = (props, context) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Item>       
+          <Stack.Item>
             <Section title="Tags">
               <LabeledList>
                 <LabeledList.Item label="Affects">
@@ -746,7 +746,7 @@ export const Reagents = (props, context) => {
                           content={reaction.name}
                           onClick={() => act('recipe_click', {
                             id: reaction.id,
-                          })} />  
+                          })} />
                       </TableCell>
                       <TableCell>
                         {reaction.reactants.map(reactant => (
@@ -758,19 +758,19 @@ export const Reagents = (props, context) => {
                             content={reactant.name}
                             onClick={() => act('reagent_click', {
                               id: reactant.id,
-                            })} />                    
+                            })} />
                         ))}
                       </TableCell>
                       <TableCell width="60px">
-                        {map((flag, icon) => 
+                        {map((flag, icon) =>
                           (reaction.bitflags & Number(flag)) && (
                             <Icon name={icon} mr={1} color={"white"} />
                           ) || (
                             null
                           ))(flagsObject)}
-                      </TableCell>                         
+                      </TableCell>
                     </>
-                  </TableRow>           
+                  </TableRow>
                 ))}
               </Table>
             </Section>
