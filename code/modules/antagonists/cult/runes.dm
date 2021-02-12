@@ -769,11 +769,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
 		return list()
-	if(HAS_TRAIT(user, TRAIT_CULT_GHOST))
-		to_chat(user, "<span class='cult italic'>Ghosts can't summon more ghosts!</span>")
-		fail_invoke()
-		log_game("Manifest rune failed - user is a ghost")
-		return list()
 	return ..()
 
 /obj/effect/rune/manifest/invoke(list/invokers)
@@ -782,9 +777,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/T = get_turf(src)
 	var/choice = alert(user,"You tear open a connection to the spirit realm...",,"Summon a Cult Ghost","Ascend as a Dark Spirit","Cancel")
 	if(choice == "Summon a Cult Ghost")
+		if(HAS_TRAIT(user, TRAIT_CULT_GHOST))
+			to_chat(user, "<span class='cult italic'>Ghosts can't summon more ghosts!</span>")
+			fail_invoke()
+			log_game("Manifest rune failed - user is a ghost")
+			return list()
 		if(!is_station_level(T.z))
 			to_chat(user, "<span class='cultitalic'><b>The veil is not weak enough here to manifest spirits, you must be on the station!</b></span>")
-			return
+			fail_invoke()
+			log_game("Manifest rune failed - rune is not on the station's z-level")
+			return list()
 		if(ghosts >= ghost_limit)
 			to_chat(user, "<span class='cultitalic'>You are sustaining too many ghosts to summon more!</span>")
 			fail_invoke()
@@ -810,7 +812,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		ADD_TRAIT(new_human, TRAIT_CULT_GHOST, "spirit realm rune") //cult ghosts can't summon more ghosts and really don't like holy water
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
-		visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a humanoid.</span>")
+		switch(new_human.gender)
+			if(MALE)
+				visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
+			if(FEMALE)
+				visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a woman.</span>")
+			else
+				visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a humanoid.</span>")
 		to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
 		new_human.key = ghost_to_spawn.key
