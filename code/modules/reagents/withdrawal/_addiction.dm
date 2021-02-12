@@ -52,7 +52,7 @@
 				return
 
 	if(!fulfilling_addiction)
-		if(on_lose_addiction_points(type, addiction_loss)) //If true was returned, we lost the addiction!
+		if(victim_mind.remove_addiction_points(type, addiction_loss)) //If true was returned, we lost the addiction!
 			return
 
 	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type)
@@ -75,8 +75,6 @@
 			withdrawal_stage_3_process(affected_carbon)
 
 	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1) //Next cycle!
-
-
 
 /// Called when addiction enters stage 1
 /datum/addiction/proc/withdrawal_enters_stage_1(var/mob/living/carbon/affected_carbon)

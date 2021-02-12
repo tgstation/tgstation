@@ -96,6 +96,13 @@
 ///Raises click cooldowns for everything you do.
 #define STATUS_EFFECT_WOOZY /datum/status_effect/woozy
 
+///Makes you bleed harder
+#define STATUS_EFFECT_HIGHBLOODPRESSURE /datum/status_effect/high_blood_pressure
+
+
+/// https://www.youtube.com/watch?v=wvkHIZg_954
+#define STATUS_EFFECT_SEIZURE /datum/status_effect/seizure
+
 
 /// Makes the mob move randomly.
 /// Read the documentation for /datum/status_effect/confusion for more information.

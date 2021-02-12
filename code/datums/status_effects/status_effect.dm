@@ -12,6 +12,8 @@
 	var/examine_text //If defined, this text will appear when the mob is examined - to use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
 	var/alert_type = /atom/movable/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 	var/atom/movable/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
+	///How much this status effect affect bleeding. Defaults to 1 (1 * 1 = 1)
+	var/bleed_rate_multiplier = 1
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
