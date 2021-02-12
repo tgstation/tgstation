@@ -275,7 +275,7 @@
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
 	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
-	RegisterSignal(our_plant, COMSIG_PLANT_SQUASH, .proc/squash_plant)
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,

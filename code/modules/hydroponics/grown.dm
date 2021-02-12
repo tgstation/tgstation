@@ -80,11 +80,6 @@
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
 	return
 
-// Various gene procs
-/obj/item/food/grown/attack_self(mob/user)
-	SEND_SIGNAL(src, COMSIG_PLANT_SQUASH, user)
-	..()
-
 ///Callback for bonus behavior for generating trash of grown food.
 /obj/item/food/grown/proc/generate_trash(atom/location)
 	return new trash_type(location, seed)
