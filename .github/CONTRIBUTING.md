@@ -463,6 +463,36 @@ When adding new signals to root level procs, eg;
 ```
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
+### Use descriptive and obvious names
+Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing.
+
+#### Don't use abbreviations
+Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
+
+```dm
+// What is M? The user? The target?
+// What is A? The target? The item?
+/proc/use_item(mob/M, atom/A)
+
+// Much better!
+/proc/use_item(mob/user, atom/target)
+```
+
+Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
+
+When typecasting, keep your descriptive names to be similar to:
+```dm
+var/mob/living/living_target = target
+```
+
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+
+#### Name things as directly as possible
+`was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
+
+#### Put statements and expressions in positive form
+`is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
