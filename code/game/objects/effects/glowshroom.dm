@@ -112,6 +112,9 @@
 	//We could be deleted at any point and the timers might not be cleaned up
 	if(QDELETED(src))
 		return
+	// If its at the third generation we want it to stop spreading.
+	if(generation>2)
+		return
 
 	var/turf/ownturf = get_turf(src)
 	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
