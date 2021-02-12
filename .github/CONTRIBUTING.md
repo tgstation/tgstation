@@ -464,7 +464,7 @@ When adding new signals to root level procs, eg;
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
 ### Use descriptive and obvious names
-Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing.
+Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
 #### Don't use abbreviations
 Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
@@ -480,9 +480,10 @@ Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", 
 
 Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
 
-When typecasting, keep your descriptive names to be similar to:
+When typecasting, keep your names descriptive:
 ```dm
 var/mob/living/living_target = target
+var/mob/living/carbon/carbon_target = living_target
 ```
 
 #### Name things as directly as possible
@@ -499,7 +500,7 @@ Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid
 
 ```dm
 // Bad
-for (var/datum/reagent/R in reagents)
+for (var/datum/reagent/R as anything in reagents)
 
 // Good
 for (var/datum/reagent/reagent as anything in reagents)
