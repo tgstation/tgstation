@@ -692,7 +692,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1, FALSE)	//move it now!
 
-/obj/projectile/proc/setAngle(new_angle) //wrapper for overrides.
+/obj/projectile/proc/setAngle(new_angle, center_reflect = FALSE) //wrapper for overrides.
 	Angle = new_angle
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -704,8 +704,11 @@
 		last_angle_set_hitscan_store = loc
 		var/datum/point/pcache = new (src)
 		var/list/coordinates = trajectory.return_coordinates()
-		pcache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile, so it looks good on reflector boxes and the like
-		trajectory.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Sets the trajectory to it as well, to prevent a strange visual bug
+		if(center_reflect) // Makes the beam reflect at the center of the object - used by reflectors, looks better
+			pcache.initialize_location(coordinates[1], coordinates[2], coordinates[3]) // Take the center of the hitscan collision tile
+			trajectory.set_location(coordinates[1], coordinates[2], coordinates[3]) // Sets the trajectory to it as well, to prevent a strange visual bug
+		else // Beam reflects off of the side of the object
+			pcache = trajectory.copy_to()
 		store_hitscan_collision(pcache)
 	return TRUE
 

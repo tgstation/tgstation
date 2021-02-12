@@ -195,7 +195,7 @@
 	if(abs(incidence) > 90 && abs(incidence) < 270)
 		return FALSE
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.setAngle(new_angle)
+	P.setAngle(new_angle, TRUE)
 	return ..()
 
 //DOUBLE
@@ -219,7 +219,7 @@
 /obj/structure/reflector/double/auto_reflect(obj/projectile/P, pdir, turf/ploc, pangle)
 	var/incidence = GET_ANGLE_OF_INCIDENCE(rotation_angle, (P.Angle + 180))
 	var/new_angle = SIMPLIFY_DEGREES(rotation_angle + incidence)
-	P.setAngle(new_angle)
+	P.setAngle(new_angle, TRUE)
 	return ..()
 
 //BOX
@@ -241,7 +241,7 @@
 	anchored = TRUE
 
 /obj/structure/reflector/box/auto_reflect(obj/projectile/P)
-	P.setAngle(rotation_angle)
+	P.setAngle(rotation_angle, TRUE)
 	return ..()
 
 /obj/structure/reflector/ex_act()
