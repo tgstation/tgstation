@@ -196,7 +196,7 @@
 			time_deficit = 0
 		else	
 			delta_time += 0.25
-			time_deficit -= 0.25
+			time_deficit = 0.25
 	return delta_time
 
 /*

@@ -1,7 +1,3 @@
-///If the machine is used/deleted in the crafting process
-#define CRAFTING_MACHINERY_CONSUME 1
-///If the machine is only "used" i.e. it checks to see if it's nearby and allows crafting, but doesn't delete it
-#define CRAFTING_MACHINERY_USE 0
 
 /datum/crafting_recipe
 	var/name = "" //in-game display name
@@ -17,8 +13,6 @@
 	var/always_available = TRUE //Set to FALSE if it needs to be learned first.
 	/// Additonal requirements text shown in UI
 	var/additional_req_text
-	///Required machines for the craft, set the assigned value of the typepath to CRAFTING_MACHINERY_CONSUME or CRAFTING_MACHINERY_USE
-	var/machinery
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
@@ -1244,11 +1238,9 @@
 				/datum/reagent/water = 50,
 				/obj/item/thermometer = 1
 				)
-	machinery = list(/obj/machinery/space_heater = CRAFTING_MACHINERY_CONSUME)
 	category = CAT_CHEMISTRY
 	var/obj/cached_heater
 
-/*
 /datum/crafting_recipe/improvised_chem_heater/check_requirements(mob/user, list/collected_requirements)
 	. = ..()
 	contents = get_surroundings(a)
@@ -1267,7 +1259,7 @@
 	qdel(cell)
 	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
 	heater.forceMove(location)
-*/
+
 
 /datum/crafting_recipe/improvised_coolant
 	name = "Improvised cooling spray"

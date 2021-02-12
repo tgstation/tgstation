@@ -68,9 +68,7 @@
  */
 /datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
 	var/list/item_instances = contents["instances"]
-	var/list/machines = contents["machinery"]
 	contents = contents["other"]
-	
 
 	var/list/requirements_list = list()
 
@@ -102,10 +100,6 @@
 		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
 			return FALSE
 
-	for(var/machinery_path in R.machinery)
-		if(!machines[machinery_path])//We don't care for volume with machines, just if one is there or not
-			return FALSE
-
 	return R.check_requirements(a, requirements_list)
 
 /datum/component/personal_crafting/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)
@@ -120,33 +114,32 @@
 		. += AM
 
 
-/datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
+/datum/component/personal_crafting/proc/get_surroundings#(atom/a, list/blacklist=null)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
 	.["instances"] = list()
 	.["machinery"] = list()
 	for(var/obj/I in get_environment(a,blacklist))
-		if(istype(I, /obj/item))
-			var/obj/item/item = I
-			if(.["instances"][item.type])
-				.["instances"][item.type] += item
+		if(istype(I /obj/item))
+			if(.["instances"][I.type])
+				.["instances"][I.type] += I
 			else
-				.["instances"][item.type] = list(item)
-			if(istype(item, /obj/item/stack))
-				var/obj/item/stack/S = item
-				.["other"][item.type] += S.amount
-			else if(item.tool_behaviour)
-				.["tool_behaviour"] += item.tool_behaviour
-				.["other"][item.type] += 1
+				.["instances"][I.type] = list(I)
+			if(istype(I, /obj/item/stack))
+				var/obj/item/stack/S = I
+				.["other"][I.type] += S.amount
+			else if(I.tool_behaviour)
+				.["tool_behaviour"] += I.tool_behaviour
+				.["other"][I.type] += 1
 			else
-				if(istype(item, /obj/item/reagent_containers))
-					var/obj/item/reagent_containers/RC = item
+				if(istype(I, /obj/item/reagent_containers))
+					var/obj/item/reagent_containers/RC = I
 					if(RC.is_drainable())
 						for(var/datum/reagent/A in RC.reagents.reagent_list)
 							.["other"][A.type] += A.volume
 				.["other"][I.type] += 1
-		else if (istype(I, /obj/machinery))
+		else if (istype(I /obj/machinery))
 			if(.["machinery"][I.type])
 				.["machinery"][I.type] += I
 			else
@@ -238,10 +231,8 @@
 	var/data
 	var/amt
 	main_loop:
-		for(var/A in R.reqs && R.machinery)
-			amt = R.reqs[A] || R.machinery[A]
-			if(!amt)//since machinery can have 0 - i.e. don't consume it
-				continue
+		for(var/A in R.reqs)
+			amt = R.reqs[A]
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
 			if(ispath(A, /datum/reagent))
@@ -450,7 +441,6 @@
 	var/req_text = ""
 	var/tool_text = ""
 	var/catalyst_text = ""
-	var/machinery_text = ""
 
 	for(var/a in R.reqs)
 		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
@@ -476,15 +466,6 @@
 			tool_text += " [a],"
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
-
-	for(var/a in R.machinery)
-		if(ispath(a, /obj/machinery))
-			var/obj/machinery/m = a
-			machinery_text += " [initial(m.name)],"
-		else
-			machinery_text += " [a],"
-	machinery_text = replacetext(machinery_text,",","",-1)
-	data["machinery_text"] = machinery_text
 
 	return data
 

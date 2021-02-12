@@ -87,7 +87,7 @@
 		return
 	if(!LAZYLEN(cont.reagents.reagent_list))
 		return
-	CONVERT_PH_TO_COLOR(round(cont.reagents.ph, 1), color)
+	color = convert_pH_to_color(round(cont.reagents.ph, 1))
 	desc += " The paper looks to be around a pH of [round(cont.reagents.ph, 1)]"
 	name = "used [name]"
 	used = TRUE
@@ -290,7 +290,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
-	grind_results = list(/datum/reagent/mercury = 5)
 	var/obj/item/reagent_containers/attached_beaker
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
