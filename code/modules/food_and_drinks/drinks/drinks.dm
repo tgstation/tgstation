@@ -119,17 +119,17 @@
 
 	//Cooling method
 	if(istype(I, /obj/item/extinguisher))
-		var/obj/item/extinguisher/extin = I
-		if(extin.safety)
+		var/obj/item/extinguisher/extinguisher = I
+		if(extinguisher.safety)
 			return
-		if (extin.reagents.total_volume < 1)
-			to_chat(user, "<span class='warning'>\The [extin] is empty!</span>")
+		if(extinguisher.reagents.total_volume < 1)
+			to_chat(user, "<span class='warning'>\The [extinguisher] is empty!</span>")
 			return
-		var/cooling = (0 - reagents.chem_temp)*(extin.cooling_power*2)
+		var/cooling = (0 - reagents.chem_temp) * (extinguisher.cooling_power * 2)
 		reagents.expose_temperature(cooling)
 		to_chat(user, "<span class='notice'>You cool the [name] with the [I]!</span>")
-		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
-		extin.reagents.remove_all(1)
+		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
+		extinguisher.reagents.remove_all(1)
 	..()
 
 /obj/item/reagent_containers/food/drinks/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
