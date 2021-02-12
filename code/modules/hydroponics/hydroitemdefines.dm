@@ -1,4 +1,10 @@
 
+/// -- Plant analyzer scanning modes. --
+/// Stats mode - displays a plant's growth statistics (potency, yield, traits, etc.).
+#define PLANT_SCANMODE_STATS		0
+/// Chemical mode - displays a plant's reagents (either reagent genes or chemical contents).
+#define PLANT_SCANMODE_CHEMICALS 	1
+
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
@@ -12,8 +18,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
-	/// The current scan mode of the plant analyzer. STATS on left click, CHEMS on right click.
-	var/scan_mode = PLANT_SCANMODE_STATS
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
@@ -22,13 +26,11 @@
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses SCANMODE_STATS.
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
-	scan_mode = PLANT_SCANMODE_STATS
-	return try_scan(target, user)
+	return try_scan(target, user, PLANT_SCANMODE_STATS)
 
 /// Same as above, but with right click. Right-clicking uses SCANMODE_CHEMICALS.
 /obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
-	scan_mode = PLANT_SCANMODE_CHEMICALS
-	return try_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
+	return try_scan(target, user, PLANT_SCANMODE_CHEMICALS) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /*
  * Try to scan the atom target.
@@ -39,12 +41,12 @@
  * returns FALSE if it's something we can't scan.
  * returns do_scan if it's something we CAN scan.
  */
-/obj/item/plant_analyzer/proc/try_scan(atom/scan_target, mob/user)
+/obj/item/plant_analyzer/proc/try_scan(atom/scan_target, mob/user, mode)
 	var/mob/living/living_user = user
 	if(living_user.combat_mode)
 		return FALSE
 
-	return do_scan(scan_target, user)
+	return do_scan(scan_target, user, mode)
 
 /*
  * Actually scan the atom target.
@@ -55,13 +57,13 @@
  * returns FALSE if it's not an object or item that does something when we scan it.
  * returns TRUE if we can scan the object, and outputs the message to the USER.
  */
-/obj/item/plant_analyzer/proc/do_scan(atom/scan_target, mob/user)
+/obj/item/plant_analyzer/proc/do_scan(atom/scan_target, mob/user, mode)
 	if(istype(scan_target, /obj/machinery/hydroponics))
-		to_chat(user, scan_tray(scan_target))
+		to_chat(user, scan_tray(scan_target, mode))
 		return TRUE
 	if(istype(scan_target, /obj/structure/glowshroom))
 		var/obj/structure/glowshroom/shroom_plant = scan_target
-		to_chat(user, scan_plant(shroom_plant.myseed))
+		to_chat(user, scan_plant(shroom_plant.myseed, mode))
 		return TRUE
 	if(istype(scan_target, /obj/item/graft))
 		to_chat(user, get_graft_text(scan_target))
@@ -69,10 +71,10 @@
 	if(isitem(scan_target))
 		var/obj/item/scanned_object = scan_target
 		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
-			to_chat(user, scan_plant(scanned_object))
+			to_chat(user, scan_plant(scanned_object, mode))
 			return TRUE
 	if(ispodperson(scan_target))
-		pod_person_scan(scan_target, user)
+		pod_person_scan(scan_target, user, mode)
 		return TRUE
 
 	return FALSE
@@ -83,10 +85,10 @@
  * scanned_mob - the podperson being scanned
  * user - the person doing the scanning
  */
-/obj/item/plant_analyzer/proc/pod_person_scan(mob/living/carbon/human/scanned_mob, mob/living/carbon/human/user)
+/obj/item/plant_analyzer/proc/pod_person_scan(mob/living/carbon/human/scanned_mob, mob/living/carbon/human/user, mode)
 	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s vitals.</span>", \
 						"<span class='notice'>You analyze [scanned_mob]'s vitals.</span>")
-	switch(scan_mode)
+	switch(mode)
 		if(PLANT_SCANMODE_STATS)
 			healthscan(user, scanned_mob, advanced = TRUE)
 		if(PLANT_SCANMODE_CHEMICALS)
@@ -102,7 +104,7 @@
  *
  * Returns the formatted message as text.
  */
-/obj/item/plant_analyzer/proc/scan_tray(obj/machinery/hydroponics/scanned_tray)
+/obj/item/plant_analyzer/proc/scan_tray(obj/machinery/hydroponics/scanned_tray, mode)
 	var/returned_message = "<span class='info'>*---------*\n"
 	if(scanned_tray.myseed)
 		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
@@ -112,7 +114,7 @@
 		returned_message += "<span class='info'><B>No plant found.</B></span>\n"
 
 	returned_message += "<span class='info'>"
-	switch(scan_mode)
+	switch(mode)
 		if(PLANT_SCANMODE_STATS)
 			returned_message += "- Weed level: <span class='notice'>[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]</span>\n"
 			returned_message += "- Pest level: <span class='notice'>[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]</span>\n"
@@ -140,13 +142,13 @@
  *
  * Returns the formatted output as text.
  */
-/obj/item/plant_analyzer/proc/scan_plant(obj/item/scanned_object)
+/obj/item/plant_analyzer/proc/scan_plant(obj/item/scanned_object, mode)
 	var/returned_message = "<span class='info'>*---------*\nThis is \a <span class='name'>[scanned_object]</span>.\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
 		our_seed = scanned_object.get_plant_seed()
 
-	switch(scan_mode)
+	switch(mode)
 		if(PLANT_SCANMODE_STATS)
 			if(our_seed && istype(our_seed))
 				returned_message += get_analyzer_text_traits(our_seed)
@@ -532,3 +534,6 @@
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 30)
+
+#undef PLANT_SCANMODE_STATS
+#undef PLANT_SCANMODE_CHEMICALS
