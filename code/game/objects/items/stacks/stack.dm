@@ -39,6 +39,8 @@
 	var/absorption_rate
 	/// Amount of matter for RCD
 	var/matter_amount = 0
+	/// Does this stack require a unique girder in order to make a wall?
+	var/has_unique_girder = FALSE
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(new_amount != null)
@@ -83,7 +85,7 @@
  * - multiplier: The amount to multiply the mats per unit by. Defaults to 1.
  */
 /obj/item/stack/proc/set_mats_per_unit(list/mats, multiplier=1)
-	mats_per_unit = LAZYLEN(mats) ? SSmaterials.FindOrCreateMaterialCombo(mats, multiplier) : mats
+	mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats, multiplier)
 	update_custom_materials()
 
 /** Updates the custom materials list of this stack.

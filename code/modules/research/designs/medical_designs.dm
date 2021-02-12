@@ -72,7 +72,7 @@
 	category = list("Medical Designs")
 
 /datum/design/ph_meter
-	name = "pH Scanner"
+	name = "Chemical analyser"
 	id = "ph_meter"
 	build_type = PROTOLATHE
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

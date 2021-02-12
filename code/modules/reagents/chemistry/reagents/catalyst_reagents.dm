@@ -21,6 +21,7 @@
 	. = ..()
 	if(.)
 		equilibrium.speed_mod = creation_purity*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse modifier. For this we don't want a negative speed_mod (I have no idea what happens if we do)
+		equilibrium.time_deficit += (creation_purity)*(0.05 * modifier) //give the reaction a little boost too (40% faster)
 
 /datum/reagent/catalyst_agent/ph
 	name ="pH catalyst agent"

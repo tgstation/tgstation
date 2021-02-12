@@ -9,7 +9,7 @@
 /atom/movable/emissive_blocker
 	name = ""
 	plane = EMISSIVE_BLOCKER_PLANE
-	layer = EMISSIVE_LAYER
+	layer = EMISSIVE_BLOCKER_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	//Why?
 	//render_targets copy the transform of the target as well, but vis_contents also applies the transform
@@ -17,12 +17,11 @@
 	//Since only render_target handles transform we don't get any applied transform "stacking"
 	appearance_flags = RESET_TRANSFORM
 
-/atom/movable/emissive_blocker/Initialize(mapload, source, render_plane = EMISSIVE_BLOCKER_PLANE)
+/atom/movable/emissive_blocker/Initialize(mapload, source)
 	. = ..()
 	verbs.Cut() //Cargo culting from lighting object, this maybe affects memory usage?
 
 	render_source = source
-	plane = render_plane
 
 /atom/movable/emissive_blocker/ex_act(severity)
 	return FALSE

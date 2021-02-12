@@ -5,7 +5,7 @@
 	optimal_ph_max = 10
 	temp_exponent_factor = 1.2
 	ph_exponent_factor = 0.8
-	purity_min = 0.25
+	purity_min = 0.1
 	rate_up_lim = 35
 	reaction_tags = REACTION_TAG_HEALING | REACTION_TAG_EASY
 

@@ -391,6 +391,18 @@
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
+/obj/effect/temp_visual/annoyed
+	name = "annoyed"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "annoyed"
+	duration = 25
+
+/obj/effect/temp_visual/annoyed/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-4,0)
+	pixel_y = rand(8,12)
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
+
 /obj/effect/temp_visual/love_heart
 	name = "love heart"
 	icon = 'icons/effects/effects.dmi'

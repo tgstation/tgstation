@@ -1,6 +1,7 @@
+import { resolveAsset } from '../assets';
 import { round, toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table, RoundGauge, Flex, Icon } from '../components';
+import { AnimatedNumber, Box, Button, NumberInput, Section, ProgressBar, Table, RoundGauge, Flex, Icon, TextArea } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 import { BeakerContents } from './common/BeakerContents';
@@ -21,23 +22,32 @@ export const ChemHeater = (props, context) => {
     basicBufferVol,
     dispenseVolume,
     upgradeLevel,
+    tutorialMessage,
     beakerContents = [],
     activeReactions = [],
   } = data;
-  return (
+  return (  
     <Window
       width={330}
-      height={350}
-      resizable>
+      height={tutorialMessage ? 680 : 350}>
       <Window.Content scrollable>
         <Section
           title="Controls"
           buttons={(
-            <Button
-              icon={isActive ? 'power-off' : 'times'}
-              selected={isActive}
-              content={isActive ? 'On' : 'Off'}
-              onClick={() => act('power')} />
+            <Flex>
+              <Button
+                icon={"question"}
+                selected={tutorialMessage}
+                content={"Help"}
+                left={-2}
+                tooltip={"Guides you through a tutorial reaction!"}
+                onClick={() => act('help')} />
+              <Button
+                icon={isActive ? 'power-off' : 'times'}
+                selected={isActive}
+                content={isActive ? 'On' : 'Off'}
+                onClick={() => act('power')} />
+            </Flex>
           )}>
           <Table>
             <Table.Row>
@@ -103,9 +113,9 @@ export const ChemHeater = (props, context) => {
                   icon={'upload'}
                   tooltip={'Draw all'}
                   tooltipPosition={"top"}
-                  disabled={acidicBufferVol === 50}
+                  disabled={acidicBufferVol === 100}
                   onClick={() => act('acidBuffer', {
-                    target: -50,
+                    target: -100,
                   })} />
               </TableCell>
             </TableRow>
@@ -144,9 +154,9 @@ export const ChemHeater = (props, context) => {
                 <Button
                   icon={'upload'}
                   tooltip={'Draw all'}
-                  disabled={basicBufferVol === 50}
+                  disabled={basicBufferVol === 100}
                   onClick={() => act('basicBuffer', {
-                    target: -50,
+                    target: -100,
                   })} />
               </TableCell>
             </TableRow>
@@ -164,26 +174,30 @@ export const ChemHeater = (props, context) => {
                     format={value => 'pH: ' + round(value, 3)} />
                 </Flex.Item>
                 <Flex.Item>
-                  <RoundGauge
-                    size={1.60}
-                    value={currentpH}
-                    minValue={0}
-                    maxValue={14}
-                    alertAfter={isFlashing}
-                    content={"test"}
-                    format={value => null}
-                    ranges={{
-                      "red": [-0.22, 1.5],
-                      "orange": [1.5, 3],
-                      "yellow": [3, 4.5],
-                      "olive": [4.5, 5],
-                      "good": [5, 6],
-                      "green": [6, 8.5],
-                      "teal": [8.5, 9.5],
-                      "blue": [9.5, 11],
-                      "purple": [11, 12.5],
-                      "violet": [12.5, 14],
-                    }} />
+                  <AnimatedNumber value={currentpH}>
+                    {(_, value) => (
+                      <RoundGauge 
+                        size={1.60}
+                        value={value}
+                        minValue={0}
+                        maxValue={14}
+                        alertAfter={isFlashing}
+                        content={"test"}
+                        format={value => null}
+                        ranges={{
+                          "red": [-0.22, 1.5],
+                          "orange": [1.5, 3],
+                          "yellow": [3, 4.5],
+                          "olive": [4.5, 5],
+                          "good": [5, 6],
+                          "green": [6, 8.5],
+                          "teal": [8.5, 9.5],
+                          "blue": [9.5, 11],
+                          "purple": [11, 12.5],
+                          "violet": [12.5, 14],
+                        }} />
+                    )}
+                  </AnimatedNumber>
                 </Flex.Item>
               </Flex>
             )}>
@@ -217,21 +231,25 @@ export const ChemHeater = (props, context) => {
                           spin={reaction.danger ? false : true}
                           ml={2.5} />
                       ) || (
-                        <RoundGauge
-                          size={1.30}
-                          value={reaction.quality}
-                          minValue={0}
-                          maxValue={1}
-                          alertAfter={reaction.purityAlert}
-                          content={"test"}
-                          format={value => null}
-                          ml={5}
-                          ranges={{
-                            "red": [0, reaction.minPure],
-                            "orange": [reaction.minPure, reaction.inverse],
-                            "yellow": [reaction.inverse, 0.8],
-                            "green": [0.8, 1],
-                          }} />
+                        <AnimatedNumber value={reaction.quality}>
+                          {(_, value) => (
+                            <RoundGauge 
+                              size={1.30}
+                              value={value}
+                              minValue={0}
+                              maxValue={1}
+                              alertAfter={reaction.purityAlert}
+                              content={"test"}
+                              format={value => null}
+                              ml={5}
+                              ranges={{
+                                "red": [0, reaction.minPure],
+                                "orange": [reaction.minPure, reaction.inverse],
+                                "yellow": [reaction.inverse, 0.8],
+                                "green": [0.8, 1],
+                              }} />
+                          )}
+                        </AnimatedNumber>
                       )}
                     </TableCell>
                     <TableCell width={'70px'}>
@@ -259,6 +277,16 @@ export const ChemHeater = (props, context) => {
                 <TableRow />
               </Table>
             )}
+          </Section>
+        )}
+        {tutorialMessage && (
+          <Section 
+            title="Tutorial" 
+            style={{
+              'white-space': 'pre-wrap',
+            }}>
+            <img left={-1} mx={-1} src={resolveAsset("chem_help_advisor.gif")} width={"30px"} />
+            {tutorialMessage} 
           </Section>
         )}
         <Section

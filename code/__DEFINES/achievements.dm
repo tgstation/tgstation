@@ -31,6 +31,7 @@
 #define MEDAL_RUST_ASCENSION	"Rust"
 #define MEDAL_VOID_ASCENSION	"Void"
 #define MEDAL_TOOLBOX_SOUL		"Toolsoul"
+#define MEDAL_CHEM_TUT          "Beginner Chemist"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER		"Legendary Miner"
@@ -41,8 +42,11 @@
 #define MAFIA_MEDAL_PSYCHOLOGIST	"Psychologist"
 #define MAFIA_MEDAL_CHAPLAIN		"Chaplain"
 #define MAFIA_MEDAL_MD				"Medical Doctor"
+#define MAFIA_MEDAL_OFFICER			"Security Officer"
 #define MAFIA_MEDAL_LAWYER			"Lawyer"
 #define MAFIA_MEDAL_HOP				"Head of Personnel"
+#define MAFIA_MEDAL_HOS				"Head of Security"
+#define MAFIA_MEDAL_WARDEN			"Warden"
 #define MAFIA_MEDAL_CHANGELING		"CHANGELING"
 #define MAFIA_MEDAL_THOUGHTFEEDER	"Thoughtfeeder"
 #define MAFIA_MEDAL_TRAITOR			"Traitor"
@@ -53,6 +57,8 @@
 
 //Mafia medal hub IDs (misc stuff)
 #define MAFIA_MEDAL_HATED		"Universally Hated"
+#define MAFIA_MEDAL_CHARISMATIC	"Charismatic"
+#define MAFIA_MEDAL_VIP			"VIP"
 
 //Boss medals
 

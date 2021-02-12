@@ -156,7 +156,7 @@
  * * no_react - prevents reactions being triggered by this addition
  * * added_purity - override to force a purity when added
  * * added_ph - override to force a pH when added
- * * override_base_ph - bypass the pH update when adding a reagent, causing it to retain the pH of the solution it's being added to
+ * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
  */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, added_purity = null, added_ph, no_react = 0, override_base_ph = FALSE)
 	if(!isnum(amount) || !amount)
@@ -957,6 +957,7 @@
 		finish_reacting()
 	else
 		update_total()
+		handle_reactions()
 
 /*
 * This ends a single instance of an ongoing reaction

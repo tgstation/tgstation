@@ -47,58 +47,60 @@
 
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 ///stops floating point errors causing issues with checking reagent amounts
-#define CHEMICAL_QUANTISATION_LEVEL 0.0001 
+#define CHEMICAL_QUANTISATION_LEVEL 0.0001
 ///The smallest amount of volume allowed - prevents tiny numbers
-#define CHEMICAL_VOLUME_MINIMUM 0.001 
+#define CHEMICAL_VOLUME_MINIMUM 0.001
 ///Round to this, to prevent extreme decimal magic and to keep reagent volumes in line with perceived values.
-#define CHEMICAL_VOLUME_ROUNDING 0.01 
+#define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
-#define CHEMICAL_NORMAL_PH 7.000 
+#define CHEMICAL_NORMAL_PH 7.000
 
 //reagent bitflags, used for altering how they works
 ///allows on_mob_dead() if present in a dead body
-#define REAGENT_DEAD_PROCESS		(1<<0)	
+#define REAGENT_DEAD_PROCESS		(1<<0)
 ///Do not split the chem at all during processing - ignores all purity effects
-#define REAGENT_DONOTSPLIT			(1<<1)	
+#define REAGENT_DONOTSPLIT			(1<<1)
 ///Doesn't appear on handheld health analyzers.
-#define REAGENT_INVISIBLE			(1<<2)	
+#define REAGENT_INVISIBLE			(1<<2)
 ///When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SNEAKYNAME          (1<<3)  
+#define REAGENT_SNEAKYNAME          (1<<3)
 ///Retains initial volume of chem when splitting for purity effects
 #define REAGENT_SPLITRETAINVOL      (1<<4)
 ///If this reagent is made by impure effects - used in UI
-  
+
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
-#define REACTION_CLEAR_IMPURE       (1<<0)  
+#define REACTION_CLEAR_IMPURE       (1<<0)
 ///Convert into inverse on reaction completion when purity is low enough
-#define REACTION_CLEAR_INVERSE      (1<<1)  
+#define REACTION_CLEAR_INVERSE      (1<<1)
 ///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
-#define REACTION_CLEAR_RETAIN		(1<<2)	
+#define REACTION_CLEAR_RETAIN		(1<<2)
 ///Used to create instant reactions
-#define REACTION_INSTANT            (1<<3) 
+#define REACTION_INSTANT            (1<<3)
 ///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
-#define REACTION_HEAT_ARBITARY      (1<<4) 
+#define REACTION_HEAT_ARBITARY      (1<<4)
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
 #define REACTION_COMPETITIVE        (1<<5)
 
-//Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
+///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
 #define NO_OVERHEAT 99999
+////Used to force an equlibrium to end a reaction in reaction_step() (i.e. in a reaction_step() proc return END_REACTION to end it)
+#define END_REACTION                "end_reaction"
 
 ///reagent tags - used to look up reagents for specific effects. Feel free to add to but comment it
 /// This reagent does brute effects (BOTH damaging and healing)
-#define REACTION_TAG_BRUTE (1<<0) 
+#define REACTION_TAG_BRUTE (1<<0)
 /// This reagent does burn effects (BOTH damaging and healing)
-#define REACTION_TAG_BURN (1<<1) 
+#define REACTION_TAG_BURN (1<<1)
 /// This reagent does toxin effects (BOTH damaging and healing)
-#define REACTION_TAG_TOXIN (1<<2) 
+#define REACTION_TAG_TOXIN (1<<2)
 /// This reagent does oxy effects (BOTH damaging and healing)
 #define REACTION_TAG_OXY (1<<3)
 /// This reagent does clone effects (BOTH damaging and healing)
 #define REACTION_TAG_CLONE (1<<4)
 /// This reagent primarily heals, or it's supposed to be used for healing (in the case of c2 - they are healing)
-#define REACTION_TAG_HEALING (1<<5)   
+#define REACTION_TAG_HEALING (1<<5)
 /// This reagent primarily damages
 #define REACTION_TAG_DAMAGING (1<<6)
 /// This reagent explodes as a part of it's intended effect (i.e. not overheated/impure)
@@ -106,13 +108,13 @@
 /// This reagent does things that are unique and special
 #define REACTION_TAG_OTHER (1<<8)
 /// This reagent's reaction is dangerous to create (i.e. explodes if you fail it)
-#define REACTION_TAG_DANGEROUS (1<<9)   
+#define REACTION_TAG_DANGEROUS (1<<9)
 /// This reagent's reaction is easy
-#define REACTION_TAG_EASY (1<<10)  
+#define REACTION_TAG_EASY (1<<10)
 /// This reagent's reaction is difficult/involved
 #define REACTION_TAG_MODERATE (1<<11)
 /// This reagent's reaction is hard
-#define REACTION_TAG_HARD (1<<12)   
+#define REACTION_TAG_HARD (1<<12)
 /// This reagent affects organs
 #define REACTION_TAG_ORGAN (1<<13)
 /// This reaction creates a drink reagent

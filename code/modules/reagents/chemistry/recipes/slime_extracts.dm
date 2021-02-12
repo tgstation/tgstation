@@ -72,7 +72,7 @@
 /datum/chemical_reaction/slime/slimemetal/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/turf/location = get_turf(holder.my_atom)
 	new /obj/item/stack/sheet/plasteel(location, 5)
-	new /obj/item/stack/sheet/metal(location, 15)
+	new /obj/item/stack/sheet/iron(location, 15)
 	..()
 
 /datum/chemical_reaction/slime/slimeglass

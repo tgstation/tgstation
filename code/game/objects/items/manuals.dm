@@ -97,10 +97,10 @@
 				<li>Secure the mainboard with a screwdriver.</li>
 				<li>Install the peripherals control module (Not included. Use supplied datadisk to create one).</li>
 				<li>Secure the peripherals control module with a screwdriver</li>
-				<li>Install the internal armor plating (Not included due to Nanotrasen regulations. Can be made using 5 metal sheets.)</li>
+				<li>Install the internal armor plating (Not included due to Nanotrasen regulations. Can be made using 5 iron sheets.)</li>
 				<li>Secure the internal armor plating with a wrench</li>
 				<li>Weld the internal armor plating to the chassis</li>
-				<li>Install the external reinforced armor plating (Not included due to Nanotrasen regulations. Can be made using 5 reinforced metal sheets.)</li>
+				<li>Install the external reinforced armor plating (Not included due to Nanotrasen regulations. Can be made using 5 reinforced iron sheets.)</li>
 				<li>Secure the external reinforced armor plating with a wrench</li>
 				<li>Weld the external reinforced armor plating to the chassis</li>
 				</ol>
@@ -280,15 +280,6 @@
 	author = "Nanotrasen"
 	title = "Chemistry Textbook"
 	page_link = "Guide_to_chemistry"
-
-///TEMPORARY ONLY - REMOVE BEFORE FINAL COMMIT - just a way to get players aware of the changes since I can't edit the wiki directly
-/obj/item/book/manual/wiki/chemistry/fermichem_update
-	name = "Journal of the Nanotrasen Chemical Society: Vol 2"
-	icon_state ="chemistrybook"
-	color = "#ff5588" //make it look different
-	author = "Nanotrasen"
-	title = "Journal of the Nanotrasen Chemical Society"
-	page_link = "User:Thalpy"
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"

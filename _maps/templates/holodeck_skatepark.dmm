@@ -1,0 +1,129 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"l" = (
+/obj/vehicle/ridden/scooter/skateboard/pro/holodeck{
+	dir = 8;
+	icon_state = "skateboard2"
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"t" = (
+/obj/structure/table,
+/obj/structure/table,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"H" = (
+/obj/structure/table,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+H
+H
+a
+a
+a
+a
+a
+a
+l
+"}
+(3,1,1) = {"
+a
+H
+H
+H
+H
+a
+H
+H
+a
+l
+"}
+(4,1,1) = {"
+a
+a
+H
+H
+H
+H
+H
+a
+a
+l
+"}
+(5,1,1) = {"
+a
+a
+H
+t
+a
+H
+H
+a
+a
+l
+"}
+(6,1,1) = {"
+a
+a
+H
+H
+H
+H
+a
+a
+a
+l
+"}
+(7,1,1) = {"
+a
+H
+H
+H
+H
+a
+H
+H
+a
+l
+"}
+(8,1,1) = {"
+a
+H
+a
+a
+a
+a
+H
+H
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
