@@ -34,12 +34,16 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/seizure
 
-/datum/status_effect/seizure/on_creation(mob/living/new_owner, ...)
-	. = ..()
+/datum/status_effect/seizure/on_apply()
+	if(!iscarbon(owner))
+		return FALSE
 	var/amplitude = rand(1 SECONDS, 3 SECONDS)
 	duration = amplitude
-	new_owner.Paralyze(amplitude)
-	new_owner.jitter(50)
+	owner.Jitter(50)
+	owner.Paralyze(duration)
+	owner.visible_message("<span class='warning'>[owner] drops to the ground as [owner.p_they()] start seizing up.</span>", \
+	"<span class='warning'>[pick("You can't collect your thoughts...", "You suddenly feel extremely dizzy...", "You cant think straight...","You can't move your face properly anymore...")]</span>")
+	return TRUE
 
 /atom/movable/screen/alert/status_effect/seizure
 	name = "Seizure"

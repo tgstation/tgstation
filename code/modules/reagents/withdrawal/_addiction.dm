@@ -52,7 +52,7 @@
 				return
 
 	if(!fulfilling_addiction)
-		if(victim_mind.remove_addiction_points(type, addiction_loss)) //If true was returned, we lost the addiction!
+		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss)) //If true was returned, we lost the addiction!
 			return
 
 	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type)

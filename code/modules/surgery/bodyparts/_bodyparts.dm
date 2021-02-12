@@ -926,7 +926,7 @@
 	if(!bleed_rate)
 		QDEL_NULL(grasped_by)
 
-	for(var/datum/status_effect/status_effect as anything in status_effects)
+	for(var/datum/status_effect/status_effect as anything in owner.status_effects)
 		bleed_rate *= status_effect.bleed_rate_multiplier
 
 	return bleed_rate
