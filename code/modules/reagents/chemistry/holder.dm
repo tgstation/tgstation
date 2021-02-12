@@ -1570,7 +1570,6 @@
 			coords += list(list(x_temp, y))
 			x_temp += increment
 	else
-		//coords += list(list(reaction.required_temp+25, 0))
 		coords += list(list(reaction.required_temp, 0))
 		x_temp = reaction.required_temp
 		increment = (reaction.required_temp - reaction.optimal_temp)/10
