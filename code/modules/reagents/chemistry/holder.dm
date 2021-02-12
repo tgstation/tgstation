@@ -1570,7 +1570,7 @@
 			coords += list(list(x_temp, y))
 			x_temp += increment
 	else
-		coords += list(list(reaction.required_temp+25, 0))
+		//coords += list(list(reaction.required_temp+25, 0))
 		coords += list(list(reaction.required_temp, 0))
 		x_temp = reaction.required_temp
 		increment = (reaction.required_temp - reaction.optimal_temp)/10
@@ -1644,6 +1644,7 @@
 	data["hasReaction"] = ui_reaction_id ? TRUE : FALSE
 	data["selectedBitflags"] = ui_tags_selected
 	data["currentReagents"] = previous_reagent_list //This keeps the string of reagents that's updated when handle_reactions() is called
+	data["beakerSync"] = ui_beaker_sync
 
 	//First we check to see if reactions are synced with the beaker
 	if(ui_beaker_sync)
@@ -1706,11 +1707,11 @@
 			//Find out if we have multiple reactions for the same product
 			var/datum/reagent/primary_reagent = find_reagent_object_from_type(reaction.results[1])//We use the first product - though it might be worth changing this
 			//If we're syncing from the beaker
-			var/list/sub_reactions
+			var/list/sub_reactions = list()
 			if(ui_beaker_sync && reaction_list)
 				for(var/_ongoing_eq in reaction_list)
 					var/datum/equilibrium/ongoing_eq = _ongoing_eq
-					var/ongoing_r = get_chemical_reaction(ongoing_eq.reaction.type)
+					var/ongoing_r = ongoing_eq.reaction
 					sub_reactions += ongoing_r
 			else
 				sub_reactions = get_recipe_from_reagent_product(primary_reagent.type)

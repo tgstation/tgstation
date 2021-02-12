@@ -457,6 +457,14 @@ export const Reagents = (props, context) => {
                         <TableCell>
                           <Icon name="circle" mr={1} color={reagent_mode_reagent.reagentCol} />
                           {reagent_mode_reagent.name}
+                          <Button
+                            ml={1}
+                            content={reagent_mode_reagent.name}
+                            icon="wifi"
+                            color="teal"
+                            tooltip="Open the associated wikipage for this reagent."
+                            tooltipPosition="left"
+                            onClick={() => act(Byond.command(`wiki Guide_to_chemistry#${reagent_mode_reagent.name}`))} />
                         </TableCell>
                       </TableRow>
                       <TableRow>
