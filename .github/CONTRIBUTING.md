@@ -489,8 +489,9 @@ var/mob/living/carbon/carbon_target = living_target
 #### Name things as directly as possible
 `was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
 
-#### Put statements and expressions in positive form
+#### Avoid negative variable names
 `is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
 
 #### Exceptions to variable names
 
