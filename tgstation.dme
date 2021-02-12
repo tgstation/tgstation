@@ -1725,6 +1725,8 @@
 #include "code\modules\atmospherics\machinery\components\binary_devices\valve.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\volume_pump.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hypertorus.dm"
+#include "code\modules\atmospherics\machinery\components\machines\atmos_machines_recipes.dm"
+#include "code\modules\atmospherics\machinery\components\machines\crystallizer.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\filter.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\mixer.dm"
 #include "code\modules\atmospherics\machinery\components\trinary_devices\trinary_devices.dm"

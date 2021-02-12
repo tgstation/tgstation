@@ -490,3 +490,29 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 /obj/item/stack/sheet/mineral/metal_hydrogen/get_main_recipes()
 	. = ..()
 	. += GLOB.metalhydrogen_recipes
+
+GLOBAL_LIST_INIT(zaukerite_recipes, list(
+	new /datum/stack_recipe("floor tile", /obj/item/stack/tile/material, 1, 4, 20),
+	new /datum/stack_recipe("chair", /obj/structure/chair/greyscale, 1, one_per_turf = TRUE, on_floor = TRUE),
+	new /datum/stack_recipe("table", /obj/structure/table/greyscale, 1, one_per_turf = TRUE, on_floor = TRUE),
+	new /datum/stack_recipe("toilet", /obj/structure/toilet/greyscale, 1, one_per_turf = TRUE, on_floor = TRUE),
+	new /datum/stack_recipe("carving block", /obj/structure/carving_block, req_amount = 15, res_amount = 1),
+	new /datum/stack_recipe("dark elder atmosian helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 5, res_amount = 1),
+	new /datum/stack_recipe("dark elder atmosian armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 15, res_amount = 1),
+	))
+
+/obj/item/stack/sheet/mineral/zaukerite
+	name = "zaukerite"
+	icon_state = "zaukerite"
+	inhand_icon_state = "sheet-zaukerite"
+	singular_name = "zaukerite crystal"
+	w_class = WEIGHT_CLASS_NORMAL
+	point_value = 120
+	mats_per_unit = list(/datum/material/zaukerite = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/zaukerite
+	material_type = /datum/material/zaukerite
+	walltype = /turf/closed/wall/material
+
+/obj/item/stack/sheet/mineral/zaukerite/get_main_recipes()
+	. = ..()
+	. += GLOB.zaukerite_recipes
