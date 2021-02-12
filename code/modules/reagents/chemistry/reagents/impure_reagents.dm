@@ -23,7 +23,6 @@
 	name = "Toxic sludge"
 	description = "Toxic chemical isomers made from impure reactions. Causes toxin damage"
 	ph = 2
-	chemical_flags = REAGENT_CANSYNTH
 
 /datum/reagent/impurity/toxic/on_mob_life(mob/living/carbon/C)
 	C.adjustToxLoss(1, FALSE)
@@ -38,4 +37,3 @@
 	ph = 1.5
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
-	chemical_flags = REAGENT_CANSYNTH
