@@ -50,11 +50,8 @@ const flagsObject = {
   "recycle": COMPETITIVE,
 };
 /* functions */
-const matchBitflag = (a, b) => {
-  if(a & b === b){
-    return true;
-  };
-};
+
+const matchBitflag = (a, b) => (a & b) && (a | b) === b;
 
 const hasReagentType = (currentReagents, reagent) => {
   if (currentReagents === null) {
@@ -84,11 +81,6 @@ export const Reagents = (props, context) => {
   const [reagentFilter, setReagentFilter] = useLocalState(
     context, 'reagentFilter', true);
 
-  const visibleReactions = master_reaction_list.filter(reaction => (
-    matchBitflag(selectedBitflags, reaction.bitflags)
-    && matchReagents(reaction)
-  ));
-
   const matchReagents = reaction => {
     if (!reagentFilter || currentReagents === null) {
       return true;
@@ -98,6 +90,11 @@ export const Reagents = (props, context) => {
       .length;
     return matches === currentReagents.length;
   };
+
+  const visibleReactions = master_reaction_list.filter(reaction => (
+     matchBitflag(selectedBitflags, reaction.bitflags)
+    && matchReagents(reaction)
+  ));
 
   return (
     <Window resizable
