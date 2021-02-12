@@ -218,12 +218,16 @@
 	glass_icon_state  = "glass_clear"
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
+	metabolization_rate = 0.4 //a fixed consumption rate to prevent balancing going out of whack
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
+	var/seizure = FALSE //has Nar'Sie chewed you out during this deconversion process yet?
 	ph = 7.5 //God is alkaline
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_HOLY, type)
+	if(iscultist(L) && !HAS_TRAIT(L, TRAIT_CULT_GHOST))
+		to_chat(L, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!</span>")
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, type)
@@ -231,41 +235,56 @@
 
 /datum/reagent/water/holywater/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
-	if(iscultist(exposed_mob))
-		to_chat(exposed_mob, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!</span>")
+	if(HAS_TRAIT(exposed_mob, TRAIT_CULT_GHOST))
+		exposed_mob.adjustFireLoss(reac_volume, 0) //a bit extreme, perhaps, but cult ghosts are meant to be expendable and their bodies are MADE of unholy magic
+		to_chat(exposed_mob, "<span class='userdanger'>IT BURNS! IT BUUUUUURNS!</span>")
+		if(reac_volume >= 70 && exposed_mob.health <= exposed_mob.crit_threshold) //yo holy shit he dead
+			exposed_mob.say("AAAHHH! YOU CURSED BRAT! LOOK WHAT YOU'VE DONE! I'm MELTING! Melting! Ohhh, what a world, what a world! Who would have thought a good little spaceman like you could destroy my beautiful wickedness?! AUUUUGH! I'm gone! I'm gone! I'm going... Augh... Aaauuggghhh...", forced = /datum/reagent/water/holywater) //you can theoretically say this and live using something that lets you avoid falling into crit, but eh, I'm not gonna bother to add a bunch of code for those edge cases for such a niche occurrence
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
-	if(M.blood_volume)
-		M.blood_volume += 0.1 // water is good for you!
-	if(!data)
-		data = list("misc" = 1)
-	data["misc"]++
-	M.jitteriness = min(M.jitteriness+4,10)
+	. = ..() //includes the increased blood (re)generation rate from normal water
+
+	if(M.jitteriness < 10)
+		M.jitteriness = min(M.jitteriness+4,10)
+
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
-	if(data["misc"] >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+
+	if(HAS_TRAIT(M, TRAIT_CULT_GHOST)) //it would be really awkward if summoned cult ghosts could be deconverted
+		exposed_mob.adjustFireLoss(5, 0) //and it burns, burns, burns~
+		return //note to self for a future PR: maybe add some heavy damage over time here, since most of a cult ghost's body is made of nar'sie's magic?
+	
+	if(current_cycle >= 25 && current_cycle < 60)		// ~10u or more of holy water is required to reach this point
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
 		if(iscultist(M) && prob(20))
-			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
-			if(prob(10))
+			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Nar'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
+			if(prob(20) && !seizure) //4% chance/tick for Nar'Sie to roast you
 				M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
-				M.Unconscious(120)
-				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
-				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data["misc"] >= 60)	// 30 units, 135 seconds
+				seizure = TRUE
+				M.Paralyze(60)
+				if(M.jitteriness < 40)
+					M.jitteriness = min(M.jitteriness+25,40)
+				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are NOTHING without it.", "Do not forget your place, servant.", \
+				"I gave you all that power, and you still managed to fail me? Pathetic.", "I would normally be furious at you for this, but your continued inability to perform basic tasks that I had previously believed were idiot-proof quite honestly amuses me at this point.", "You'll be back.", "If you cannot scour this poison, I shall scour your meager life, insect!", "Just have a cultist use a ritual dagger on you, you imbecile!", "I gave you magic, friends, a PURPOSE! What have THEY ever done for you?!")].</span>")
+
+	if(current_cycle >= 60)	// ~24u or more of holy water is required to reach this point
 		if(iscultist(M))
 			SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 		M.jitteriness = 0
 		M.stuttering = 0
-		holder.remove_reagent(type, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+		if(iscarbon(M)) //copy+pasted (and then modified) from ritual dagger code
+			var/mob/living/carbon/carboy = M
+			var/obj/item/organ/stomach/belly = carboy.getorganslot(ORGAN_SLOT_STOMACH)
+			if(belly)
+				belly.reagents.del_reagent(/datum/reagent/water/holywater)
+		holder.remove_reagent(type, volume)
 		return
-	holder.remove_reagent(type, 0.4)	//fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()

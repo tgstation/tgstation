@@ -244,6 +244,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANTENNAE	"antennae"
 /// Blowing kisses actually does damage to the victim
 #define TRAIT_KISS_OF_DEATH	"kiss_of_death"
+/// This trait is applied to cult ghosts from the Spirit Realm rune to make them take loads of damage from (but not be deconverted by) holy water and to make them unable to activate Spirit Realm runes themselves.
+#define TRAIT_CULT_GHOST "cult_ghost"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 
