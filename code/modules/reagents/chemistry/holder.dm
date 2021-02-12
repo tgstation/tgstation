@@ -1836,7 +1836,7 @@
 			ui_reaction_id = get_reaction_from_indexed_possibilities(get_reagent_type_from_product_string(params["id"]))
 			return TRUE
 		if("beaker_sync")
-			ui_beaker_sync != ui_beaker_sync
+			ui_beaker_sync = !ui_beaker_sync
 			return TRUE
 		if("toggle_tag_brute")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_BRUTE
