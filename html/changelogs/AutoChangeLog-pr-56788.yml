@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Windows are now much less stubborn when you accidentally find yourself inside them (*blushes*) and will let you step off their turf to the South when you were prevented from doing so before."

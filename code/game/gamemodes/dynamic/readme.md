@@ -37,7 +37,7 @@ this value is then added to `world.time` and assigned to the injection cooldown 
 
 [rigged_roundstart][/datum/game_mode/dynamic/proc/rigged_roundstart] is called instead if there are forced rules (an admin set the mode)
 
-1. [can_start][/datum/game_mode/proc/can_start]\()
+1. [setup_parameters][/datum/game_mode/proc/setup_parameters]\()
 2. [pre_setup][/datum/game_mode/proc/pre_setup]\()
 3. [roundstart][/datum/game_mode/dynamic/proc/roundstart]\() OR [rigged_roundstart][/datum/game_mode/dynamic/proc/rigged_roundstart]\()
 4. [picking_roundstart_rule][/datum/game_mode/dynamic/proc/picking_roundstart_rule]\(drafted_rules)

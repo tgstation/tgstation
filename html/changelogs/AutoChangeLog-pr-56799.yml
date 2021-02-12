@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - admin: "Re-added the button to the player playtime panel that lets admins toggle a player's job playtime exemption status."

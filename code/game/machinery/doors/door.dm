@@ -213,6 +213,10 @@
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
 
+/// Called when the user right-clicks on the door with a welding tool.
+/obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
+	return
+
 /obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	return
 
@@ -225,12 +229,18 @@
 		try_to_crowbar(I, user, forced_open)
 		return TRUE
 	else if(I.tool_behaviour == TOOL_WELDER)
-		try_to_weld(I, user)
+		try_to_weld(I, user, params)
 		return TRUE
 	else if(!(I.item_flags & NOBLUDGEON) && !user.combat_mode)
 		try_to_activate_door(user)
 		return TRUE
 	return ..()
+
+/obj/machinery/door/attackby_secondary(obj/item/weapon, mob/user, params)
+	if (weapon.tool_behaviour == TOOL_WELDER)
+		try_to_weld_secondary(weapon, user)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()

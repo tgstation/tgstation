@@ -224,6 +224,10 @@
 	mood_change = 3
 	timeout = 90 SECONDS
 
+/datum/mood_event/gondola
+	description = "<span class='nicegreen'>I feel at peace and feel no need to make any sudden or rash actions.</span>\n"
+	mood_change = 6
+
 /datum/mood_event/kiss
 	description = "<span class='nicegreen'>Someone blew a kiss at me, I must be a real catch!</span>\n"
 	mood_change = 1.5

@@ -336,3 +336,8 @@
 
 /turf/open/floor/plating/sandy_dirt/setup_broken_states()
 	return list("sand_damaged")
+
+/turf/open/floor/plating/lavaland_atmos
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

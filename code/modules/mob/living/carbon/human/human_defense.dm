@@ -249,7 +249,7 @@
 	if(user.limb_destroyer)
 		dismembering_strike(user, affecting.body_zone)
 
-	if(can_inject(user, 1, affecting))//Thick suits can stop monkey bites.
+	if(try_inject(user, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 			if(!damage)

@@ -116,11 +116,7 @@
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
-	hardcore_value = 1
-
-/datum/quirk/depression/on_process(delta_time)
-	if(DT_PROB(0.05, delta_time))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	hardcore_value = 2
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
@@ -197,7 +193,7 @@
 			if("Psychologist")
 				heirloom_type = /obj/item/storage/pill_bottle
 			if("Chemist")
-				heirloom_type = /obj/item/book/manual/wiki/chemistry
+				heirloom_type = pick(/obj/item/book/manual/wiki/chemistry, /obj/item/ph_booklet)
 			if("Virologist")
 				heirloom_type = /obj/item/reagent_containers/syringe
 			//Engineering
