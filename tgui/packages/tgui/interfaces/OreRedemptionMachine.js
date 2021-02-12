@@ -16,8 +16,7 @@ export const OreRedemptionMachine = (props, context) => {
     <Window
       title="Ore Redemption Machine"
       width={440}
-      height={550}
-      resizable>
+      height={550}>
       <Window.Content scrollable>
         <Section>
           <BlockQuote mb={1}>

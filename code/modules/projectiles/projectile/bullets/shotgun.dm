@@ -11,7 +11,7 @@
 
 /obj/projectile/bullet/shotgun_slug/pulverizer
 	name = "pulverizer slug" // admin only, can crush bones
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	wound_bonus = 80
 
 /obj/projectile/bullet/shotgun_beanbag
@@ -19,7 +19,7 @@
 	damage = 10
 	stamina = 55
 	wound_bonus = 20
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	embedding = null
 
 /obj/projectile/bullet/incendiary/shotgun
@@ -86,7 +86,7 @@
 	name = "rubbershot pellet"
 	damage = 3
 	stamina = 11
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	embedding = null
 
 /obj/projectile/bullet/pellet/shotgun_incapacitate

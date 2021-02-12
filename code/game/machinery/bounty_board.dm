@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(request_list)
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			if(machine_stat & BROKEN)
 				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
-				new /obj/item/stack/sheet/metal(loc, 3)
+				new /obj/item/stack/sheet/iron(loc, 3)
 				new /obj/item/shard(loc)
 			else
 				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")

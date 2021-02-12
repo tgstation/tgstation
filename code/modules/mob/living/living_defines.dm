@@ -75,7 +75,6 @@
 	var/on_fire = FALSE ///The "Are we on fire?" var
 	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
-	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
@@ -158,6 +157,9 @@
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
 	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
+
+	///If combat mode is on or not
+	var/combat_mode = FALSE
 
 	/// Is this mob allowed to be buckled/unbuckled to/from things?
 	var/can_buckle_to = TRUE

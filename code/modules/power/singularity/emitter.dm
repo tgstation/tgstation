@@ -26,7 +26,7 @@
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
-	var/projectile_type = /obj/projectile/beam/emitter
+	var/projectile_type = /obj/projectile/beam/emitter/hitscan
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	var/datum/effect_system/spark_spread/sparks
 

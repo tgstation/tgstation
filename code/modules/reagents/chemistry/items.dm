@@ -18,7 +18,7 @@
 	var/number_of_pages = 50
 
 //A little janky with pockets
-/obj/item/ph_booklet/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/ph_booklet/attack_hand(mob/user)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(number_of_pages == 50)
 			icon_state = "pHbooklet_open"
@@ -97,7 +97,7 @@
 */
 /obj/item/ph_meter
 	name = "Chemistry Analyser"
-	desc = "A a electrode attached to a small circuit box that will tell you the pH of a solution. The screen currently displays nothing."
+	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays nothing."
 	icon_state = "pHmeter"
 	icon = 'icons/obj/chemical.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -106,10 +106,10 @@
 
 /obj/item/ph_meter/attack_self(mob/user)
 	if(scanmode == SHORTENED_CHEM_OUTPUT)
-		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a detailed report.</span>")
+		to_chat(user, "<span class='notice'>You switch the chemical analyzer to provide a detailed description of each reagent.</span>")
 		scanmode = DETAILED_CHEM_OUTPUT
 	else
-		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a reduced report.</span>")
+		to_chat(user, "<span class='notice'>You switch the chemical analyzer to not include reagent descriptions in it's report.</span>")
 		scanmode = SHORTENED_CHEM_OUTPUT
 
 /obj/item/ph_meter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -121,7 +121,7 @@
 		return
 	var/list/out_message = list()
 	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
-	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Total pH: [round(cont.reagents.ph, 0.01)]\n"
+	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	if(cont.reagents.is_reacting)
 		out_message += "<span class='warning'>A reaction appears to be occuring currently.<span class='notice'>\n"
@@ -130,7 +130,7 @@
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [R.description]\n"
 	to_chat(user, "[out_message.Join()]</span>")
-	desc = "An electrode attached to a small circuit box that will analyse a beaker. It can be toggled to give a reduced or extended report. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
+	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
 
 /obj/item/burner
 	name = "Alcohol burner"

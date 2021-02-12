@@ -16,6 +16,9 @@
 	//Current layer for the visual object
 	var/base_layer
 
+	//If flopping animation was applied to parent, tracked to stop it on removal/destroy
+	var/flopping = FALSE
+
 /datum/component/aquarium_content/Initialize(property_type)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -28,6 +31,11 @@
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/enter_aquarium)
 
+	//If component is added to something already in aquarium at the time initialize it properly.
+	var/atom/movable/movable_parent = parent
+	if(istype(movable_parent.loc, /obj/structure/aquarium))
+		on_inserted(movable_parent.loc)
+
 /datum/component/aquarium_content/PreTransfer()
 	. = ..()
 	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
@@ -35,6 +43,7 @@
 /datum/component/aquarium_content/Destroy(force, silent)
 	if(current_aquarium)
 		remove_from_aquarium()
+	stop_flopping()
 	QDEL_NULL(vc_obj)
 	QDEL_NULL(properties)
 	return ..()
@@ -77,7 +86,6 @@
 	//Finally add it to to objects vis_contents
 	current_aquarium.vis_contents |= vc_obj
 
-
 /// Aquarium surface changed in some way, we need to recalculate base position and aninmation
 /datum/component/aquarium_content/proc/on_surface_changed()
 	SIGNAL_HANDLER
@@ -102,7 +110,6 @@
 	current_aquarium.vis_contents -= vc_obj
 	if(base_layer)
 		current_aquarium.free_layer(base_layer)
-
 
 /// Generates common visual object, propeties that don't depend on aquarium surface
 /datum/component/aquarium_content/proc/generate_base_vc()
@@ -167,11 +174,57 @@
 	base_py = py_min
 	animate(vc_obj, pixel_y = py_min, time = 1) //flop to bottom and end current animation.
 
+#define PAUSE_BETWEEN_PHASES 15
+#define PAUSE_BETWEEN_FLOPS 2
+#define FLOP_COUNT 2
+#define FLOP_DEGREE 20
+#define FLOP_SINGLE_MOVE_TIME 1.5
+#define JUMP_X_DISTANCE 5
+#define JUMP_Y_DISTANCE 6
+/// This animation should be applied to actual parent atom instead of vc_object.
+/proc/flop_animation(atom/movable/animation_target)
+	var/pause_between = PAUSE_BETWEEN_PHASES + rand(1, 5) //randomized a bit so fish are not in sync
+	animate(animation_target, time = pause_between, loop = -1)
+	//move nose down and up
+	for(var/_ in 1 to FLOP_COUNT)
+		var/matrix/up_matrix = matrix()
+		up_matrix.Turn(FLOP_DEGREE)
+		var/matrix/down_matrix = matrix()
+		down_matrix.Turn(-FLOP_DEGREE)
+		animate(transform = down_matrix, time = FLOP_SINGLE_MOVE_TIME, loop = -1)
+		animate(transform = up_matrix, time = FLOP_SINGLE_MOVE_TIME, loop = -1)
+		animate(transform = matrix(), time = FLOP_SINGLE_MOVE_TIME, loop = -1, easing = BOUNCE_EASING | EASE_IN)
+		animate(time = PAUSE_BETWEEN_FLOPS, loop = -1)
+	//bounce up and down
+	animate(time = pause_between, loop = -1, flags = ANIMATION_PARALLEL)
+	var/jumping_right = FALSE
+	var/up_time = 3 * FLOP_SINGLE_MOVE_TIME / 2
+	for(var/_ in 1 to FLOP_COUNT)
+		jumping_right = !jumping_right
+		var/x_step = jumping_right ? JUMP_X_DISTANCE/2 : -JUMP_X_DISTANCE/2
+		animate(time = up_time, pixel_y = JUMP_Y_DISTANCE , pixel_x=x_step, loop = -1, flags= ANIMATION_RELATIVE, easing = BOUNCE_EASING | EASE_IN)
+		animate(time = up_time, pixel_y = -JUMP_Y_DISTANCE, pixel_x=x_step, loop = -1, flags= ANIMATION_RELATIVE, easing = BOUNCE_EASING | EASE_OUT)
+		animate(time = PAUSE_BETWEEN_FLOPS, loop = -1)
+#undef PAUSE_BETWEEN_PHASES
+#undef PAUSE_BETWEEN_FLOPS
+#undef FLOP_COUNT
+#undef FLOP_DEGREE
+#undef FLOP_SINGLE_MOVE_TIME
+#undef JUMP_X_DISTANCE
+#undef JUMP_Y_DISTANCE
 
-/// Floating to top animation.
-/datum/component/aquarium_content/proc/float_animation()
-	return
 
+/// Starts flopping animation
+/datum/component/aquarium_content/proc/start_flopping()
+	if(!flopping && istype(parent,/obj/item/fish)) //Requires update_transform/animate_wrappers to be less restrictive.
+		flopping = TRUE
+		flop_animation(parent)
+
+/// Stops flopping animation
+/datum/component/aquarium_content/proc/stop_flopping()
+	if(flopping)
+		flopping = FALSE
+		animate(parent, transform = matrix()) //stop animation
 
 /datum/component/aquarium_content/proc/set_vc_base_position()
 	var/list/aq_properties = current_aquarium.get_surface_properties()
@@ -205,8 +258,8 @@
 	UnregisterSignal(current_aquarium, list(COMSIG_AQUARIUM_SURFACE_CHANGED, COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_EXITED))
 	remove_visual_from_aquarium()
 	current_aquarium = null
-	//We do not stop processing properties here. We want fish to die outside of aquariums after first insert. We only stop processing in properties.death or destroy
 
 /datum/component/aquarium_content/proc/on_tank_stasis()
 	// Stop processing until inserted into aquarium again.
+	stop_flopping()
 	STOP_PROCESSING(SSobj, properties)

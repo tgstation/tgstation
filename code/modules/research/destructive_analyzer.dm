@@ -25,8 +25,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
-	if(user.a_intent != INTENT_HARM)
+/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/living/user)
+	if(!user.combat_mode)
 		. = 1
 		if(!is_insertion_ready(user))
 			return

@@ -14,10 +14,12 @@
 	integrity_failure = 0.3
 
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
-	var/fluid_temp = MIN_AQUARIUM_TEMP
+	var/fluid_temp = DEFAULT_AQUARIUM_TEMP
 	var/min_fluid_temp = MIN_AQUARIUM_TEMP
 	var/max_fluid_temp = MAX_AQUARIUM_TEMP
-	var/lamp = FALSE
+
+	/// Can fish reproduce in this quarium.
+	var/allow_breeding = FALSE
 
 	var/glass_icon_state = "aquarium_glass"
 	var/broken_glass_icon_state = "aquarium_glass_broken"
@@ -134,7 +136,7 @@
 	return NONE
 
 /obj/structure/aquarium/interact(mob/user)
-	if(!broken && user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(!broken && user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
 		SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
 		var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
@@ -147,7 +149,7 @@
 
 /// Tries to put mob pulled by the user in the aquarium after a delay
 /obj/structure/aquarium/proc/try_to_put_mob_in(mob/user)
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
 		if(living_pulled.buckled || living_pulled.has_buckled_mobs())
 			to_chat(user, "<span class='warning'>[living_pulled] is attached to something!</span>")
@@ -180,6 +182,7 @@
 	. = ..()
 	.["fluid_type"] = fluid_type
 	.["temperature"] = fluid_temp
+	.["allow_breeding"] = allow_breeding
 	var/list/content_data = list()
 	for(var/atom/movable/fish in contents)
 		content_data += list(list("name"=fish.name,"ref"=ref(fish)))
@@ -208,6 +211,9 @@
 				fluid_type = params["fluid"]
 				SEND_SIGNAL(src, COMSIG_AQUARIUM_FLUID_CHANGED, fluid_type)
 				. = TRUE
+		if("allow_breeding")
+			allow_breeding = !allow_breeding
+			. = TRUE
 		if("remove")
 			var/atom/movable/inside = locate(params["ref"]) in contents
 			if(inside)
