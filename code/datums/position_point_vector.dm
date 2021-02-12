@@ -11,8 +11,8 @@
 
 /proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
 	var/datum/point/P = new
-	P.x = a.x + (b.x - a.x) / 2
-	P.y = a.y + (b.y - a.y) / 2
+	P.x = a.x + (b.x - a.x) * 0.5
+	P.y = a.y + (b.y - a.y) * 0.5
 	P.z = a.z
 	return P
 
@@ -99,9 +99,9 @@
 
 /datum/point/proc/initialize_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0)
 	if(!isnull(tile_x))
-		x = ((tile_x - 1) * world.icon_size) + world.icon_size / 2 + p_x + 1
+		x = ((tile_x - 1) * world.icon_size) + world.icon_size * 0.5 + p_x + 1
 	if(!isnull(tile_y))
-		y = ((tile_y - 1) * world.icon_size) + world.icon_size / 2 + p_y + 1
+		y = ((tile_y - 1) * world.icon_size) + world.icon_size * 0.5 + p_y + 1
 	if(!isnull(tile_z))
 		z = tile_z
 
@@ -153,9 +153,9 @@
 
 /datum/point/vector/proc/set_location(tile_x, tile_y, tile_z, p_x = 0, p_y = 0) // initialize_location of /datum/point/, doesn't set starting_x/y/z
 	if(!isnull(tile_x))
-		x = ((tile_x - 1) * world.icon_size) + world.icon_size / 2 + p_x + 1
+		x = ((tile_x - 1) * world.icon_size) + world.icon_size * 0.5 + p_x + 1
 	if(!isnull(tile_y))
-		y = ((tile_y - 1) * world.icon_size) + world.icon_size / 2 + p_y + 1
+		y = ((tile_y - 1) * world.icon_size) + world.icon_size * 0.5 + p_y + 1
 	if(!isnull(tile_z))
 		z = tile_z
 
