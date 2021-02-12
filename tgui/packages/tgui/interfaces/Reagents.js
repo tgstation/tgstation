@@ -92,7 +92,7 @@ export const Reagents = (props, context) => {
   };
 
   const visibleReactions = master_reaction_list.filter(reaction => (
-     matchBitflag(selectedBitflags, reaction.bitflags)
+    matchBitflag(selectedBitflags, reaction.bitflags)
     && matchReagents(reaction)
   ));
 
@@ -397,7 +397,8 @@ export const Reagents = (props, context) => {
                             color="teal"
                             tooltip="Open the associated wikipage for this reagent."
                             tooltipPosition="left"
-                            onClick={() => act(Byond.command(`wiki Guide_to_chemistry#${reagent_mode_reagent.name}`))} />
+                            onClick={() => act(Byond.command(`wiki Guide_to_chemistry#${reagent_mode_reagent.name}`) /* this is too long but breaking it up makes eslint angrier */
+                            )} />
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
@@ -460,7 +461,8 @@ export const Reagents = (props, context) => {
                                   <Button
                                     key={reagent_mode_reagent.inverseReagent}
                                     icon="vial"
-                                    content={reagent_mode_reagent.inverseReagent}
+                                    content={reagent_mode_reagent
+                                      .inverseReagent}
                                     tooltip="This reagent will convert into this when the purity is below the Inverse purity on consumption."
                                     tooltipPosition="left"
                                     onClick={() => act('reagent_click', {
@@ -666,7 +668,7 @@ export const Reagents = (props, context) => {
             <Section scrollable fill title="Possible recipes"
               buttons={(
                 <>
-                  Linked beaker:{linkedBeaker+"  "}
+                  Linked beaker: {linkedBeaker+"  "}
                   <Button
                     content="Filter by reagents in beaker"
                     icon="search"
