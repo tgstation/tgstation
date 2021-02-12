@@ -647,7 +647,7 @@ RLD
 	rcd_create(A, user)
 	return FALSE
 
-/obj/item/construction/rcd/pre_attack_secondary(atom/A, mob/user, params)
+/obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
 	mode = RCD_DECONSTRUCT
 	rcd_create(A, user)
@@ -773,7 +773,7 @@ RLD
 		return
 	pre_attack(A, user)
 
-/obj/item/construction/rcd/arcd/afterattack_secondary(atom/A, mob/user)
+/obj/item/construction/rcd/arcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!range_check(A,user))
 		return
 	pre_attack_secondary(A, user)
