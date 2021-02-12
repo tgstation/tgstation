@@ -485,13 +485,34 @@ When typecasting, keep your descriptive names to be similar to:
 var/mob/living/living_target = target
 ```
 
-Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
-
 #### Name things as directly as possible
 `was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
 
 #### Put statements and expressions in positive form
 `is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+
+#### Exceptions
+
+Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
+
+Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid unnecessary type checks and obscuring nulls in lists](#avoid-unnecessary-type-checks-and-obscuring-nulls-in-lists), and making more descriptive variables is always encouraged.
+
+```dm
+// Bad
+for (var/datum/reagent/R in reagents)
+
+// Good
+for (var/datum/reagent/reagent as anything in reagents)
+
+// Allowed, but still has the potential to not be clear. What does `i` refer to?
+for (var/i in 1 to 12)
+
+// Better
+for (var/month in 1 to 12)
+
+// Bad, only use `i` for numeral loops
+for (var/i in reagents)
+```
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
