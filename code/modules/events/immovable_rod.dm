@@ -13,17 +13,20 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	min_players = 15
 	max_occurrences = 5
 	var/atom/special_target
-
+	var/force_looping = FALSE
 
 /datum/round_event_control/immovable_rod/admin_setup()
 	if(!check_rights(R_FUN))
 		return
 
-	var/aimed = alert("Aimed at current location?","Sniperod", "Yes", "No")
+	var/aimed = alert("Aimed at current location?", "Sniperod", "Yes", "No")
 	if(aimed == "Yes")
 		special_target = get_turf(usr)
-	message_admins("[key_name_admin(usr)] has aimed an immovable rod at [AREACOORD(special_target)].")
-	log_admin("[key_name_admin(usr)] has aimed an immovable rod at [AREACOORD(special_target)].")
+	var/looper = alert("Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", "Yes", "No")
+	if(looper == "Yes")
+		force_looping = TRUE
+	message_admins("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
+	log_admin("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
 
 /datum/round_event/immovable_rod
 	announceWhen = 5
@@ -36,7 +39,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/startside = pick(GLOB.cardinals)
 	var/turf/endT = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
 	var/turf/startT = spaceDebrisStartLoc(startside, endT.z)
-	var/atom/rod = new /obj/effect/immovablerod(startT, endT, C.special_target)
+	var/atom/rod = new /obj/effect/immovablerod(startT, endT, C.special_target, C.force_looping)
 	C.special_target = null //Cleanup for future event rolls.
 	announce_to_ghosts(rod)
 
@@ -68,13 +71,16 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/num_sentient_people_hit = 0
 	/// The rod levels up with each kill, increasing in size and auto-renaming itself.
 	var/dnd_style_level_up = TRUE
+	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
+	var/loopy_rod = FALSE
 
-/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
+/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at, force_looping)
 	. = ..()
 	SSaugury.register_doom(src, 2000)
 
 	destination = end
 	special_target = aimed_at
+	loopy_rod = force_looping
 
 	AddElement(/datum/element/point_of_interest)
 
@@ -148,10 +154,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(destination)
 		var/turf/target_turf = get_turf(destination)
 
-		// Note: There is no way to detect if this is because it spawned off the primary station
-		// z-level with a destination on the primary station z-level. As a result, maps with
-		// multiple station z-levels may find their immovable rods immediately deleting themselves.
+		// If the rod is a loopy_rod, run complete_trajectory() to get a new edge turf to fly to.
+		// Otherwise, qdel the rod.
 		if(target_turf.z != z)
+			if(loopy_rod)
+				complete_trajectory()
+				return
+
 			qdel(src)
 			return
 
