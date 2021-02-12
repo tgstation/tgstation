@@ -282,7 +282,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /**
  * Stops your rod's automated movement. Sit... Stay... Good rod!
  */
-/obj/effect/immovablerod/proc/stay_good_rod()
+/obj/effect/immovablerod/proc/sit_stay_good_rod()
 	walk(src, 0)
 
 /**
