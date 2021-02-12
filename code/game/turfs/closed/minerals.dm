@@ -109,7 +109,7 @@
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	to_chat(user, "<span class='notice'>You start digging into the rock...</span>")
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
-	if(do_after(user, 40, target = src))
+	if(do_after(user, 4 SECONDS, target = src))
 		to_chat(user, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(user)
 

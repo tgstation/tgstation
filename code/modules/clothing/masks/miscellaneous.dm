@@ -10,8 +10,8 @@
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)
 	if(iscarbon(user))
-		var/mob/living/carbon/lad = user
-		if(src == lad.wear_mask)
+		var/mob/living/carbon/carbon_user = user
+		if(src == carbon_user.wear_mask)
 			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()

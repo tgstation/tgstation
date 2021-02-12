@@ -22,7 +22,7 @@
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(faction_check(faction, user.faction, FALSE) && !user.client)
 		return
-	..() //wonder if this is intended
+	return ..()
 
 
 /obj/structure/spawner/syndicate
