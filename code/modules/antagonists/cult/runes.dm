@@ -817,7 +817,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(FEMALE)
 				visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a woman.</span>")
 			else
-				visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a humanoid.</span>")
+				visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a person.</span>")
 		to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
 		new_human.key = ghost_to_spawn.key
