@@ -650,7 +650,7 @@ RLD
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
 	mode = RCD_DECONSTRUCT
-	rcd_create(A, user)
+	rcd_create(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 
@@ -769,21 +769,20 @@ RLD
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	. = ..()
-	if(!range_check(A,user))
-		return
-	pre_attack(A, user)
+	if(range_check(A,user))
+		pre_attack(A, user)
 
 /obj/item/construction/rcd/arcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!range_check(A,user))
-		return
-	pre_attack_secondary(A, user)
+	if(range_check(target,user))
+		pre_attack_secondary(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 
 /obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
 	. = ..()
-	user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
-	return
+	if(.)
+		user.Beam(A,icon_state="rped_upgrade", time = 3 SECONDS)
+	return .
 
 
 
