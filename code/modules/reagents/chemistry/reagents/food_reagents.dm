@@ -50,7 +50,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	var/brute_heal = 1
 	var/burn_heal = 0
@@ -107,7 +107,7 @@
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	brute_heal = 1
 	burn_heal = 1
@@ -123,13 +123,13 @@
 	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 * REAGENTS_METABOLISM //45% as calorie dense as corn oil.
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/nutriment/organ_tissue
 	name = "Organ Tissue"
 	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
 	taste_description = "rich earthy pungent"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
@@ -141,7 +141,7 @@
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	penetrates_skin = NONE
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -196,7 +196,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -221,7 +221,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	// Compost for EVERYTHING
 /datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -235,7 +235,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -243,7 +243,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "ketchup"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
 /datum/reagent/consumable/capsaicin
@@ -252,7 +252,7 @@
 	color = "#B31008" // rgb: 179, 16, 8
 	taste_description = "hot peppers"
 	taste_mult = 1.5
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M)
 	var/heating = 0
@@ -284,7 +284,7 @@
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
 	ph = 13 //HMM! I wonder
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
 	var/cooling = 0
@@ -334,7 +334,7 @@
 	taste_description = "scorching agony"
 	penetrates_skin = NONE
 	ph = 7.4
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/condensedcapsaicin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -381,7 +381,7 @@
 	color = "#FFFFFF" // rgb: 255,255,255
 	taste_description = "salt"
 	penetrates_skin = NONE
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/salt/expose_turf(turf/exposed_turf, reac_volume) //Creates an umbra-blocking salt pile
 	. = ..()
@@ -396,7 +396,7 @@
 	reagent_state = SOLID
 	// no color (ie, black)
 	taste_description = "pepper"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
@@ -405,7 +405,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
@@ -414,7 +414,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
 	ph = 11
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
 	if(!M.slurring)
@@ -445,7 +445,7 @@
 	color = "#FEFEFE"
 	taste_description = "garlic"
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
@@ -466,7 +466,7 @@
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
@@ -481,7 +481,7 @@
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "slime"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -501,7 +501,7 @@
 	description = "A universal enzyme used in the preparation of certain chemicals and foods."
 	color = "#365E30" // rgb: 54, 94, 48
 	taste_description = "sweetness"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
@@ -509,7 +509,7 @@
 	reagent_state = SOLID
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "dry and cheap noodles"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
@@ -517,7 +517,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/nutraslop
 	name = "Nutraslop"
@@ -525,7 +525,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#3E4A00" // rgb: 62, 74, 0
 	taste_description = "your imprisonment"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
@@ -537,7 +537,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles on fire"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob)
 	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
@@ -549,7 +549,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "chalky wheat"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/flour/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -566,7 +566,7 @@
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_description = "cherry"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/bluecherryjelly
 	name = "Blue Cherry Jelly"
@@ -581,7 +581,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "rice"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vanilla
 	name = "Vanilla Powder"
@@ -590,7 +590,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#FFFACD"
 	taste_description = "vanilla"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
@@ -598,7 +598,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFB500"
 	taste_description = "egg"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/corn_starch
 	name = "Corn Starch"
@@ -612,7 +612,7 @@
 	color = "#DBCE95"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3)
@@ -625,7 +625,7 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
 /datum/reagent/consumable/honey/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -661,14 +661,14 @@
 	description = "A white and oily mixture of mixed egg yolks."
 	color = "#DFDFDF"
 	taste_description = "mayonnaise"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/mold // yeah, ok, togopal, I guess you could call that a condiment
 	name = "Mold"
 	description = "This condiment will make any food break the mold. Or your stomach."
 	color ="#708a88"
 	taste_description = "rancid fungus"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"
@@ -676,7 +676,7 @@
 	color = "#c0c9a0"
 	taste_description = "bitterness"
 	ph = 5
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/tearjuice/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -706,7 +706,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
@@ -722,7 +722,7 @@
 	color = "#1d043d"
 	taste_description = "bitter mushroom"
 	ph = 12
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
@@ -744,7 +744,7 @@
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
 	ph = 11.2
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	//Lazy list of mobs affected by the luminosity of this reagent.
 	var/list/mobs_affected
 
@@ -779,7 +779,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
 	ph = 10.4
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
@@ -795,7 +795,7 @@
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
 	ph = 9.2
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
 /datum/reagent/consumable/liquidelectricity
@@ -804,7 +804,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#97ee63"
 	taste_description = "pure electricity"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
@@ -832,7 +832,7 @@
 	taste_mult = 8
 	taste_description = "sweetness"
 	overdose_threshold = 17
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M)
 	if(M.disgust < 80)
@@ -858,7 +858,7 @@
 	nutriment_factor = 10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
 	brute_heal = 3
 	burn_heal = 1
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/caramel
 	name = "Caramel"
@@ -868,7 +868,7 @@
 	taste_mult = 2
 	taste_description = "caramel"
 	reagent_state = SOLID
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/char
 	name = "Char"
@@ -879,7 +879,7 @@
 	taste_mult = 6
 	taste_description = "smoke"
 	overdose_threshold = 15
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/char/overdose_process(mob/living/M)
 	if(prob(25))
@@ -894,7 +894,7 @@
 	color = "#78280A" // rgb: 120 40, 10
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
 	taste_description = "smokey sweetness"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/chocolatepudding
 	name = "Chocolate Pudding"
@@ -906,7 +906,7 @@
 	glass_icon_state = "chocolatepudding"
 	glass_name = "chocolate pudding"
 	glass_desc = "Tasty."
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vanillapudding
 	name = "Vanilla Pudding"
@@ -918,7 +918,7 @@
 	glass_icon_state = "vanillapudding"
 	glass_name = "vanilla pudding"
 	glass_desc = "Tasty."
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/laughsyrup
 	name = "Laughin' Syrup"
@@ -927,7 +927,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	taste_mult = 2
 	taste_description = "fizzy sweetness"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/gravy
 	name = "Gravy"
@@ -935,11 +935,11 @@
 	taste_description = "gravy"
 	color = "#623301"
 	taste_mult = 1.2
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/pancakebatter
 	name = "pancake batter"
 	description = "A very milky batter. 5 units of this on the griddle makes a mean pancake."
 	taste_description = "milky batter"
 	color = "#fccc98"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

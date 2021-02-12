@@ -14,7 +14,7 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
 	ph = 9
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
@@ -46,7 +46,7 @@
 	overdose_threshold=15
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -82,7 +82,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	ph = 10
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -133,7 +133,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 15
 	ph = 9
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
@@ -187,7 +187,7 @@
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 5
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
@@ -274,7 +274,7 @@
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 	ph = 8.2
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()
@@ -371,7 +371,7 @@
 	description = "Amps you up, gets you going, and rapidly restores stamina damage. Side effects include breathlessness and toxicity."
 	reagent_state = LIQUID
 	color = "#78FFF0"
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
@@ -392,7 +392,7 @@
 	color = "#EE35FF"
 	addiction_threshold = 10
 	overdose_threshold = 20
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	taste_description = "paint thinner"
 
 /datum/reagent/drug/happiness/on_mob_metabolize(mob/living/L)
@@ -470,7 +470,7 @@
 	color = "#e38e44"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 30
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
@@ -547,7 +547,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
 	addiction_threshold = 6
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
 	. = ..()
@@ -574,7 +574,7 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 	addiction_threshold = 10
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/maint/sludge/on_mob_metabolize(mob/living/L)
 
@@ -607,7 +607,7 @@
 	color = "#000000"
 	overdose_threshold = 30
 	addiction_threshold = 10
-	chemical_flags = REAGENT_CANSYNTH
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/M)
 	. = ..()
