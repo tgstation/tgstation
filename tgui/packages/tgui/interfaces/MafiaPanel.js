@@ -18,8 +18,7 @@ export const MafiaPanel = (props, context) => {
       title="Mafia"
       theme={role_theme}
       width={650}
-      height={580}
-      resizable>
+      height={580}>
       <Window.Content>
         <Stack fill vertical>
           {!roleinfo && (

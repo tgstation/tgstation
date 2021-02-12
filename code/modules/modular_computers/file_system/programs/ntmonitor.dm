@@ -1,6 +1,7 @@
 /datum/computer_file/program/ntnetmonitor
 	filename = "wirecarp"
 	filedesc = "WireCarp"
+	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "comm_monitor"
 	extended_desc = "This program monitors stationwide NTNet network, provides access to logging systems, and allows for configuration changes"
 	size = 12

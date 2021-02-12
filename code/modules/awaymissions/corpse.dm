@@ -237,6 +237,7 @@
 			var/obj/item/clothing/under/C = H.w_uniform
 			if(istype(C))
 				C.sensor_mode = NO_SENSORS
+				H.update_suit_sensors()
 
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
