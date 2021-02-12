@@ -480,9 +480,28 @@ Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", 
 
 Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
 
+#### Naming things when typecasting
 When typecasting, keep your descriptive names to be similar to:
 ```dm
 var/mob/living/living_target = target
+```
+
+Of course, if you have a variable name that better describes the situation when typecasting, feel free to use it.
+
+Note that it's okay, semantically, to use the same variable name as the type, e.g.:
+```dm
+var/atom/atom
+var/client/client
+var/mob/mob
+```
+
+Your editor may highlight the variable names, but BYOND, and we, accept these as variable names:
+
+```dm
+// This functions properly!
+var/client/client = CLIENT_FROM_VAR(usr)
+// vvv this may be highlighted, but it's fine!
+client << browse(...)
 ```
 
 #### Name things as directly as possible
