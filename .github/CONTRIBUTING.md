@@ -491,7 +491,7 @@ var/mob/living/living_target = target
 #### Put statements and expressions in positive form
 `is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
 
-#### Exceptions
+#### Exceptions to variable names
 
 Exceptions can be made in the case of inheriting existing procs, as it makes it so you can use named parameters, but *new* variable names must follow these standards. It is also welcome, and encouraged, to refactor existing procs to use clearer variable names.
 
