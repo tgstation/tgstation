@@ -1,6 +1,7 @@
 #define HEATER_MODE_STANDBY	"standby"
 #define HEATER_MODE_HEAT	"heat"
 #define HEATER_MODE_COOL	"cool"
+#define HEATER_MODE_AUTO	"auto"
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -18,7 +19,7 @@
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
-	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
+	var/setMode = HEATER_MODE_AUTO // Anything other than "heat" or "cool" is considered auto.
 	var/targetTemperature = T20C
 	var/heatingPower = 20000
 	var/efficiency = 20000
@@ -261,7 +262,7 @@
 	if(beaker?.reagents.total_volume)
 		var/power_mod = 0.1 * chem_heating_power
 		switch(setMode)
-			if("auto")
+			if(HEATER_MODE_AUTO)
 				power_mod *= 0.5
 				beaker.reagents.adjust_thermal_energy((targetTemperature - beaker.reagents.chem_temp) * power_mod * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 				beaker.reagents.handle_reactions()
@@ -391,3 +392,4 @@
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
 #undef HEATER_MODE_COOL
+#undef HEATER_MODE_AUTO
