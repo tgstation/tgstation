@@ -43,17 +43,22 @@
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
 /datum/addiction/proc/process_addiction(var/mob/living/carbon/affected_carbon)
-	var/fulfilling_addiction = FALSE
+	var/currently_addicted = LAZYACCESS(victim_mind.active_addictions, type)
+	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
 		for(var/addiction in possible_drug.addiction_types) //And check all of their addiction types
 			if(addiction == type && possible_drug.volume >= MIN_ADDICTION_REAGENT_AMOUNT) //If one of them matches, and we have enough of it in our system, we're good.
-				LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
-				fulfilling_addiction = TRUE
+				if(currently_addicted)
+					LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
+				on_drug_of_this_addiction = TRUE
 				return
 
-	if(!fulfilling_addiction)
+	if(!on_drug_of_this_addiction)
 		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss)) //If true was returned, we lost the addiction!
 			return
+
+	if(!currently_addicted) //Dont do the effects if were not on drugs
+		return FALSE
 
 	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type)
 
