@@ -189,8 +189,11 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		map_id = offline_program
 		force = TRUE
 
-	if ((!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force) || spawning_simulation)
+	if (!force && (!COOLDOWN_FINISHED(src, holodeck_cooldown) || spawning_simulation))
 		say("ERROR. Recalibrating projection apparatus.")
+		return
+
+	if(spawning_simulation)
 		return
 
 	if (add_delay)
@@ -225,6 +228,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
 	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
+	spawned += null
 
 	if(istype(template, /datum/map_template/holodeck/thunderdome1218) && !SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_MEDISIM])
 		say("Special note from \"1218 AD\" developer: I see you too are interested in the REAL dark ages of humanity! I've made this program also unlock some interesting shuttle designs on any communication console around. Have fun!")
@@ -242,12 +246,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	for (var/_atom in spawned)
 		var/atom/atoms = _atom
 
-		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis)) //ssatoms
+		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis) || !atoms)
 			spawned -= atoms
 			continue
 
-		atoms.flags_1 |= HOLOGRAM_1
 		RegisterSignal(atoms, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+		atoms.flags_1 |= HOLOGRAM_1
 
 		if (isholoeffect(atoms))//activates holo effects and transfers them from the spawned list into the effects list
 			var/obj/effect/holodeck_effect/holo_effect = atoms
@@ -278,10 +282,9 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 ///this qdels holoitems that should no longer exist for whatever reason
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
+	spawned -= object
 	if(!object)
 		return
-
-	spawned -= object
 	UnregisterSignal(object, COMSIG_PARENT_PREQDELETED)
 	var/turf/target_turf = get_turf(object)
 	for(var/c in object) //make sure that things inside of a holoitem are moved outside before destroying it
