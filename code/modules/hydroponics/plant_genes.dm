@@ -317,7 +317,6 @@
  * Applies other trait effects (teleporting, etc) to the target by signal.
  */
 /datum/plant_gene/trait/slip
-
 	name = "Slippery Skin"
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
