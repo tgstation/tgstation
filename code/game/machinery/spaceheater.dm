@@ -248,13 +248,16 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/process(delta_time)
 	if(!on)
+		update_icon()
 		return PROCESS_KILL
 
 	if(!is_operational || !cell || cell.charge <= 0)
 		on = FALSE
+		update_icon()
 		return PROCESS_KILL
 
 	if(!beaker)//No beaker to heat
+		update_icon()
 		return
 
 	if(beaker.reagents.total_volume)
@@ -357,7 +360,7 @@
 	replace_beaker(user)
 
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
-	if(!on || !beaker)
+	if(!on || !beaker || !cell)
 		icon_state = "sheater-off"
 		return
 	if(targetTemperature < beaker.reagents.chem_temp)

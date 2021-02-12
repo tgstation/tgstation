@@ -237,11 +237,12 @@
 	. = list()
 	var/data
 	var/amt
+	var/list/requirements = R.reqs + R.machinery
 	main_loop:
-		for(var/A in R.reqs && R.machinery)
+		for(var/A in requirements)
 			amt = R.reqs[A] || R.machinery[A]
-			if(!amt)//since machinery can have 0 - i.e. don't consume it
-				continue
+			if(!amt)//since machinery can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
+				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
 			if(ispath(A, /datum/reagent))
@@ -455,6 +456,9 @@
 	for(var/a in R.reqs)
 		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
 		//Also these are typepaths so sadly we can't just do "[a]"
+		var/atom/A = a
+		req_text += " [R.reqs[A]] [initial(A.name)],"
+	for(var/a in R.machinery)
 		var/atom/A = a
 		req_text += " [R.reqs[A]] [initial(A.name)],"
 	if(R.additional_req_text)
