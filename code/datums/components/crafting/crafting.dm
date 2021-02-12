@@ -319,6 +319,9 @@
 		else if(istype(DL, /obj/item/storage))
 			var/obj/item/storage/container = DL
 			container.emptyStorage()
+		else if (istype(DL, /obj/machinery))
+			var/obj/machinery/machine = DL
+			machine.component_parts = null //No free loot today
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)
