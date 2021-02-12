@@ -16,6 +16,7 @@
 		/obj/effect/dummy/chameleon,
 		/obj/effect/wisp,
 		/obj/effect/mob_spawn,
+		/obj/effect/immovablerod,
 		))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)

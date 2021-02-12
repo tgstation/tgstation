@@ -13,6 +13,11 @@
 	///our reagent goal has been reached, so now we lock our inputs and start emptying
 	var/emptying = FALSE
 
+	///towards which temperature do we build (except during draining)?
+	var/target_temperature = 300
+	///cool/heat power
+	var/heater_coefficient = 0.05 //same lvl as acclimator
+
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt)
 	. = ..()
 	AddComponent(/datum/component/plumbing/reaction_chamber, bolt)
@@ -37,6 +42,11 @@
 		holder.flags |= NO_REACT
 	return NONE
 
+/obj/machinery/plumbing/reaction_chamber/process(delta_time)
+	if(!emptying) //suspend heating/cooling during emptying phase
+		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		reagents.handle_reactions()
+
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	. = ..()
 	if(use_power != NO_POWER_USE)
@@ -59,6 +69,10 @@
 
 	data["reagents"] = text_reagents
 	data["emptying"] = emptying
+	data["temperature"] = round(reagents.chem_temp, 0.1)
+	data["ph"] = round(reagents.ph, 0.01)
+	data["targetTemp"] = target_temperature
+	data["isReacting"] = reagents.is_reacting
 	return data
 
 /obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
@@ -77,3 +91,10 @@
 				var/input_amount = text2num(params["amount"])
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
+		if("temperature")
+			var/target = params["target"]
+			if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target_temperature = clamp(target, 0, 1000)
