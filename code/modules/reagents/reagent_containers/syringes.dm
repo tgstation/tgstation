@@ -8,7 +8,7 @@
 	icon_state = "0"
 	worn_icon_state = "pen"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
 	var/busy = FALSE		// needed for delayed drawing of blood
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
@@ -220,12 +220,14 @@
 	name = "bluespace syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals."
 	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(10, 20, 30, 40, 50, 60)
 	volume = 60
 
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
+	possible_transfer_amounts = list(5, 10)
 	proj_piercing = 1
 
 /obj/item/reagent_containers/syringe/spider_extract
