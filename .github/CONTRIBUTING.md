@@ -464,7 +464,7 @@ When adding new signals to root level procs, eg;
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
 ### Use descriptive and obvious names
-Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing.
+Optimize for readability, not writability. While it is certainly easier to write `M` than `victim`, it will cause issues down the line for other developers to figure out what exactly your code is doing, even if you think the variable's purpose is obvious.
 
 #### Don't use abbreviations
 Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", etc.
@@ -481,9 +481,10 @@ Avoid variables like C, M, and H. Prefer names like "user", "victim", "weapon", 
 Unless it is otherwise obvious, try to avoid just extending variables like "C" to "carbon"--this is slightly more helpful, but does not describe the *context* of the use of the variable.
 
 #### Naming things when typecasting
-When typecasting, keep your descriptive names to be similar to:
+When typecasting, keep your names descriptive:
 ```dm
 var/mob/living/living_target = target
+var/mob/living/carbon/carbon_target = living_target
 ```
 
 Of course, if you have a variable name that better describes the situation when typecasting, feel free to use it.
@@ -507,8 +508,9 @@ client << browse(...)
 #### Name things as directly as possible
 `was_called` is better than `has_been_called`. `notify` is better than `do_notification`.
 
-#### Put statements and expressions in positive form
+#### Avoid negative variable names
 `is_flying` is better than `is_not_flying`. `late` is better than `not_on_time`.
+This prevents double-negatives (such as `if (!is_not_flying)` which can make complex checks more difficult to parse.
 
 #### Exceptions to variable names
 
@@ -518,10 +520,10 @@ Naming numeral iterator variables `i` is also allowed, but do remember to [Avoid
 
 ```dm
 // Bad
-for (var/datum/reagent/R in reagents)
+for (var/datum/reagent/R as anything in reagents)
 
 // Good
-for (var/datum/reagent/reagent as anything in reagents)
+for (var/datum/reagent/deadly_reagent as anything in reagents)
 
 // Allowed, but still has the potential to not be clear. What does `i` refer to?
 for (var/i in 1 to 12)
