@@ -24,8 +24,8 @@
 	description = "shouldn't exist and you should adminhelp immediately."
 	color = "#FFFFFF"
 	taste_description = "bad code and slime"
-	can_synth = FALSE
 	penetrates_skin = NONE
+	chemical_flags = NONE
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.
 /datum/reagent/blob/proc/return_mob_expose_reac_volume(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)

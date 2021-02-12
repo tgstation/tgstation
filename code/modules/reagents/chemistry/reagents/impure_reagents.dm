@@ -7,7 +7,7 @@
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
-	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT 
+	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT | REAGENT_CANSYNTH
 	ph = 3
 	overdose_threshold = 0 //So that they're shown as a problem (?)
 
@@ -23,6 +23,7 @@
 	name = "Toxic sludge"
 	description = "Toxic chemical isomers made from impure reactions. Causes toxin damage"
 	ph = 2
+	chemical_flags = REAGENT_CANSYNTH
 
 /datum/reagent/impurity/toxic/on_mob_life(mob/living/carbon/C)
 	C.adjustToxLoss(1, FALSE)
@@ -37,3 +38,4 @@
 	ph = 1.5
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
+	chemical_flags = REAGENT_CANSYNTH
