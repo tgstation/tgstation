@@ -2,7 +2,17 @@
 	name = "Brass Knuckles"
 	id = MARTIALART_BRASSKNUCKLES
 
+/datum/martial_art/brassknuckles/proc/check_streak(mob/living/A, mob/living/D)
+	switch(streak)
+		if("harm_act")
+			streak = ""
+			harm_act(A,D)
+			return TRUE
+	return FALSE
+
 /datum/martial_art/brassknuckles/harm_act(mob/living/A, mob/living/D)
+	if(check_streak(A,D))
+		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/armor_block = D.run_armor_check(affecting, MELEE)
 	var/picked_hit_type = pick("punch", "smoke", "knuck", "knuckledust")
@@ -14,9 +24,6 @@
 	log_combat(A, D, "punched")
 	D.apply_damage(rand(5,10), BRUTE, affecting, armor_block, wound_bonus = 15)
 	return TRUE
-
-/obj/item/clothing/gloves/brassknuckles
-	var/datum/martial_art/brassknuckles/style = new
 
 /obj/item/clothing/gloves/brassknuckles/equipped(mob/user, slot)
 	. = ..()
@@ -33,3 +40,4 @@
 	desc = "A contraband item meant to prove that weapons are for pussies. Perfect for any bloodthirsty soldier or lunatics wearing tiger masks."
 	icon_state = "brassknuckles"
 	inhand_icon_state = "brassknuckles"
+	var/datum/martial_art/brassknuckles/style = new
