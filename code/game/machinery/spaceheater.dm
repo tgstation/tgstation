@@ -356,13 +356,14 @@
 	replace_beaker(user)
 
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
-	if(on && beaker)
-		if(targetTemperature < beaker.reagents.chem_temp)
-			icon_state = "sheater-cool"
-		else if(targetTemperature > beaker.reagents.chem_temp)
-			icon_state = "sheater-heat"
-	else
+	if(!on || !beaker)
 		icon_state = "sheater-off"
+		return
+	if(targetTemperature < beaker.reagents.chem_temp)
+		icon_state = "sheater-cool"
+		return
+	if(targetTemperature > beaker.reagents.chem_temp)
+		icon_state = "sheater-heat"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
 	var/laser = 0
