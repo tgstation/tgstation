@@ -30,7 +30,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout.
-	//updated to UTF-8, 12.02.2021
 	// Location
 	"к" = MODE_R_HAND,
 	"л" = MODE_L_HAND,
