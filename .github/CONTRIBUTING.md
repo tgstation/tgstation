@@ -470,8 +470,6 @@ The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/chi
 
 * You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
 
-* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
-
 * If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
 * Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
