@@ -238,7 +238,7 @@
 	if(HAS_TRAIT(exposed_mob, TRAIT_CULT_GHOST))
 		exposed_mob.adjustFireLoss(reac_volume, 0) //a bit extreme, perhaps, but cult ghosts are meant to be expendable and their bodies are MADE of unholy magic
 		to_chat(exposed_mob, "<span class='userdanger'>IT BURNS! IT BUUUUUURNS!</span>")
-		if(reac_volume >= 70 && exposed_mob.health <= exposed_mob.crit_threshold) //yo holy shit he dead
+		if((methods & TOUCH) && reac_volume >= 70 && exposed_mob.health <= exposed_mob.crit_threshold) //yo holy shit he dead
 			exposed_mob.say("AAAHHH! YOU CURSED BRAT! LOOK WHAT YOU'VE DONE! I'm MELTING! Melting! Ohhh, what a world, what a world! Who would have thought a good little spaceman like you could destroy my beautiful wickedness?! AUUUUGH! I'm gone! I'm gone! I'm going... Augh... Aaauuggghhh...", forced = "holy water") //you can theoretically say this and live using something that lets you avoid falling into crit, but eh, I'm not gonna bother to add a bunch of code for those edge cases for such a niche occurrence
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
@@ -255,7 +255,7 @@
 
 	if(HAS_TRAIT(M, TRAIT_CULT_GHOST)) //it would be really awkward if summoned cult ghosts could be deconverted
 		exposed_mob.adjustFireLoss(5, 0) //and it burns, burns, burns~
-		return //note to self for a future PR: maybe add some heavy damage over time here, since most of a cult ghost's body is made of nar'sie's magic?
+		return
 	
 	if(current_cycle >= 25 && current_cycle < 60)		// ~10u or more of holy water is required to reach this point
 		if(!M.stuttering)
