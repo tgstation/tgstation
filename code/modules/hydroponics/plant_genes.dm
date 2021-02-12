@@ -226,11 +226,11 @@
 		return FALSE
 
 	if(LAZYLEN(seed_blacklist))
-		for(var/obj/item/seeds/found_seed in seed_blacklist)
+		for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
 			if(istype(source_seed, found_seed))
 				return FALSE
 
-	for(var/datum/plant_gene/trait/trait in source_seed.genes)
+	for(var/datum/plant_gene/trait/trait as anything in source_seed.genes)
 		if(trait_id && trait.trait_id == trait_id)
 			return FALSE
 		if(type == trait.type)
@@ -387,7 +387,7 @@
 	to_chat(eater, "<span class='notice'>You feel energized as you bite into [our_plant].</span>")
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	for(var/obj/item/stock_parts/cell/found_cell in eater.GetAllContents())
+	for(var/obj/item/stock_parts/cell/found_cell as anything in eater.GetAllContents())
 		var/newcharge = min(our_seed.potency*0.01*found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge
