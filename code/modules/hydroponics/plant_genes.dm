@@ -225,10 +225,9 @@
 	if(!..())
 		return FALSE
 
-	if(LAZYLEN(seed_blacklist))
-		for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
-			if(istype(source_seed, found_seed))
-				return FALSE
+	for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
+		if(istype(source_seed, found_seed))
+			return FALSE
 
 	for(var/datum/plant_gene/trait/trait in source_seed.genes)
 		if(trait_id && trait.trait_id == trait_id)
@@ -271,7 +270,8 @@
 
 // Register a signal that our plant can be squashed on add.
 /datum/plant_gene/trait/squash/on_new(obj/item/food/grown/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
@@ -321,7 +321,8 @@
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
 /datum/plant_gene/trait/slip/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	var/obj/item/food/grown/grown_plant = our_plant
@@ -351,7 +352,8 @@
 	rate = 0.2
 
 /datum/plant_gene/trait/cell_charge/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
@@ -388,7 +390,7 @@
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	for(var/obj/item/stock_parts/cell/found_cell as anything in eater.GetAllContents())
-		var/newcharge = min(our_seed.potency*0.01*found_cell.maxcharge, found_cell.maxcharge)
+		var/newcharge = min(our_seed.potency * 0.01 * found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge
 			if(isobj(found_cell.loc))
@@ -416,7 +418,8 @@
 	return max(seed.potency*(rate + 0.01), 0.1)
 
 /datum/plant_gene/trait/glow/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
@@ -479,7 +482,8 @@
 	rate = 0.1
 
 /datum/plant_gene/trait/teleport/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
@@ -534,7 +538,8 @@
 	trait_flags = TRAIT_HALVES_YIELD
 
 /datum/plant_gene/trait/maxchem/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	var/obj/item/food/grown/grown_plant = our_plant
@@ -556,7 +561,8 @@
 	name = "Capacitive Cell Production"
 
 /datum/plant_gene/trait/battery/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
@@ -576,26 +582,27 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/obj/item/stack/cable_coil/cabling = hit_item
-	if(cabling.use(5))
-		to_chat(user, "<span class='notice'>You add some cable to [our_plant] and slide it inside the battery encasing.</span>")
-		var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
-		pocell.icon_state = our_plant.icon_state
-		pocell.maxcharge = our_seed.potency * 20
-
-		// The secret of potato supercells!
-		var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
-		if(electrical_gene) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace power cells)
-			pocell.maxcharge *= electrical_gene.rate*100
-		pocell.charge = pocell.maxcharge
-		pocell.name = "[our_plant.name] battery"
-		pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
-
-		if(our_plant.reagents.has_reagent(/datum/reagent/toxin/plasma, 2))
-			pocell.rigged = TRUE
-
-		qdel(our_plant)
-	else
+	if(!cabling.use(5))
 		to_chat(user, "<span class='warning'>You need five lengths of cable to make a [our_plant] battery!</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You add some cable to [our_plant] and slide it inside the battery encasing.</span>")
+	var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
+	pocell.icon_state = our_plant.icon_state
+	pocell.maxcharge = our_seed.potency * 20
+
+	// The secret of potato supercells!
+	var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
+	if(electrical_gene) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace power cells)
+		pocell.maxcharge *= electrical_gene.rate*100
+	pocell.charge = pocell.maxcharge
+	pocell.name = "[our_plant.name] battery"
+	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
+
+	if(our_plant.reagents.has_reagent(/datum/reagent/toxin/plasma, 2))
+		pocell.rigged = TRUE
+
+	qdel(our_plant)
 
 /// Injects a number of chemicals from the plant when you throw it at someone or they slip on it.
 /datum/plant_gene/trait/stinging
@@ -603,7 +610,8 @@
 	examine_line = "<span class='info'>It's quite prickley.</span>"
 
 /datum/plant_gene/trait/stinging/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/prickles_inject)
@@ -616,7 +624,7 @@
  * target - the atom being hit on thrown or slipping on our plant
  */
 /datum/plant_gene/trait/stinging/proc/prickles_inject(obj/item/our_plant, atom/target)
-	if(isliving(target) && our_plant.reagents && our_plant.reagents.total_volume)
+	if(isliving(target) && our_plant.reagents?.total_volume)
 		var/mob/living/living_target = target
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 		if(living_target.reagents && living_target.can_inject())
@@ -630,7 +638,8 @@
 	name = "Gaseous Decomposition"
 
 /datum/plant_gene/trait/smoke/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/make_smoke)
@@ -644,7 +653,7 @@
 /datum/plant_gene/trait/smoke/proc/make_smoke(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
-	var/datum/effect_system/smoke_spread/chem/smoke = new
+	var/datum/effect_system/smoke_spread/chem/smoke = new ()
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/splat_location = get_turf(target)
 	var/smoke_amount = round(sqrt(our_seed.potency * 0.1), 1)
@@ -662,7 +671,8 @@
 		seed.resistance_flags |= FIRE_PROOF
 
 /datum/plant_gene/trait/fire_resistance/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	if(!(our_plant.resistance_flags & FIRE_PROOF))
@@ -673,7 +683,8 @@
 	name = "Invasive Spreading"
 
 /datum/plant_gene/trait/invasive/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	// Invasive spreading plants themselves do nothing, the seed is what does the magic
@@ -757,7 +768,8 @@
 	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
 
 /datum/plant_gene/trait/plant_laughter/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	var/obj/item/food/grown/grown_plant = our_plant
@@ -786,7 +798,8 @@
 	var/mutable_appearance/googly
 
 /datum/plant_gene/trait/eyes/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
@@ -800,7 +813,8 @@
 	trait_id = THROW_IMPACT_ID
 
 /datum/plant_gene/trait/sticky/on_new(obj/item/our_plant, newloc)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
