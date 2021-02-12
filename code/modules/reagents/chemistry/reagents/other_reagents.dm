@@ -239,7 +239,7 @@
 		exposed_mob.adjustFireLoss(reac_volume, 0) //a bit extreme, perhaps, but cult ghosts are meant to be expendable and their bodies are MADE of unholy magic
 		to_chat(exposed_mob, "<span class='userdanger'>IT BURNS! IT BUUUUUURNS!</span>")
 		if(reac_volume >= 70 && exposed_mob.health <= exposed_mob.crit_threshold) //yo holy shit he dead
-			exposed_mob.say("AAAHHH! YOU CURSED BRAT! LOOK WHAT YOU'VE DONE! I'm MELTING! Melting! Ohhh, what a world, what a world! Who would have thought a good little spaceman like you could destroy my beautiful wickedness?! AUUUUGH! I'm gone! I'm gone! I'm going... Augh... Aaauuggghhh...", forced = /datum/reagent/water/holywater) //you can theoretically say this and live using something that lets you avoid falling into crit, but eh, I'm not gonna bother to add a bunch of code for those edge cases for such a niche occurrence
+			exposed_mob.say("AAAHHH! YOU CURSED BRAT! LOOK WHAT YOU'VE DONE! I'm MELTING! Melting! Ohhh, what a world, what a world! Who would have thought a good little spaceman like you could destroy my beautiful wickedness?! AUUUUGH! I'm gone! I'm gone! I'm going... Augh... Aaauuggghhh...", forced = "holy water") //you can theoretically say this and live using something that lets you avoid falling into crit, but eh, I'm not gonna bother to add a bunch of code for those edge cases for such a niche occurrence
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	. = ..() //includes the increased blood (re)generation rate from normal water
