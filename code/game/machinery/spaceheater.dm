@@ -247,19 +247,17 @@
 	var/chem_heating_power = 1
 
 /obj/machinery/space_heater/improvised_chem_heater/process(delta_time)
-	if(!on || !is_operational)
-		if (on) // If it's broken, turn it off too
-			on = FALSE
+	if(!on)
 		return PROCESS_KILL
 
-	if(!cell || cell.charge < 0)
+	if(!is_operational || !cell || cell.charge <= 0)
 		on = FALSE
 		return PROCESS_KILL
 
 	if(!beaker)//No beaker to heat
 		return
 
-	if(beaker?.reagents.total_volume)
+	if(beaker.reagents.total_volume)
 		var/power_mod = 0.1 * chem_heating_power
 		switch(setMode)
 			if(HEATER_MODE_AUTO)
@@ -284,7 +282,6 @@
 	.["chemHacked"] = TRUE
 	.["beaker"] = beaker
 	.["currentTemp"] = beaker ? (round(beaker.reagents.chem_temp - T0C)) : "N/A"
-	return .
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_act(action, params)
 	. = ..()
@@ -315,25 +312,24 @@
 	//reagent containers
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/B = I
-		if(!user.transferItemToLoc(B, src))
+		var/obj/item/reagent_containers/container = I
+		if(!user.transferItemToLoc(container, src))
 			return
-		replace_beaker(user, B)
-		to_chat(user, "<span class='notice'>You add [B] to [src]'s water bath.</span>")
+		replace_beaker(user, container)
+		to_chat(user, "<span class='notice'>You add [container] to [src]'s water bath.</span>")
 		updateUsrDialog()
 		return
 	//Dropper tools
 	if(beaker)
 		if(is_type_in_list(I, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
 			I.afterattack(beaker, user, 1)
-			return
-
-	else if(default_deconstruction_crowbar(I))
 		return
+		
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/space_heater/improvised_chem_heater/on_deconstruction()
 	. = ..()
-	var/bonus_junk = list(
+	var/static/bonus_junk = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/stack/sheet/iron = 2,
@@ -342,7 +338,6 @@
 	for(var/item in bonus_junk)
 		if(prob(80))
 			new item(get_turf(loc))
-	return
 
 /obj/machinery/space_heater/improvised_chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
@@ -362,13 +357,14 @@
 	replace_beaker(user)
 
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
-	if(on && beaker)
-		if(targetTemperature < beaker.reagents.chem_temp)
-			icon_state = "sheater-cool"
-		else if(targetTemperature > beaker.reagents.chem_temp)
-			icon_state = "sheater-heat"
-	else
+	if(!on || !beaker)
 		icon_state = "sheater-off"
+		return
+	if(targetTemperature < beaker.reagents.chem_temp)
+		icon_state = "sheater-cool"
+		return
+	if(targetTemperature > beaker.reagents.chem_temp)
+		icon_state = "sheater-heat"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
 	var/laser = 0

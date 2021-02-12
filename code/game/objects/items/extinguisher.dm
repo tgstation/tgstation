@@ -63,9 +63,8 @@
 
 /obj/item/extinguisher/crafted/attack_self(mob/user)
 	safety = !safety
-	src.icon_state = "[sprite_name][!safety]"
+	icon_state = "[sprite_name][!safety]"
 	to_chat(user, "[safety ? "You remove the straw and put it on the side of the cool canister" : "You insert the straw, readying it for use"].")
-	return
 
 /obj/item/extinguisher/proc/refill()
 	if(!chem)
