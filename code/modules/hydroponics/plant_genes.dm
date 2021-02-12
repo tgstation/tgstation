@@ -391,7 +391,7 @@
 	to_chat(eater, "<span class='notice'>You feel energized as you bite into [our_plant].</span>")
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	for(var/obj/item/stock_parts/cell/found_cell as anything in eater.GetAllContents())
+	for(var/obj/item/stock_parts/cell/found_cell in eater.GetAllContents())
 		var/newcharge = min(our_seed.potency * 0.01 * found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge
