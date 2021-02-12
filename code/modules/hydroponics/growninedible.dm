@@ -38,6 +38,10 @@
 		to_chat(user, plant_analyzer.scan_plant(src))
 		return
 
+/obj/item/grown/attack_self(mob/user)
+	SEND_SIGNAL(src, COMSIG_PLANT_SQUASH, user)
+	..()
+
 /obj/item/grown/proc/add_juice()
 	if(reagents)
 		return TRUE

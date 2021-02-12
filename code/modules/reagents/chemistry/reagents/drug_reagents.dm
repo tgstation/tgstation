@@ -13,6 +13,7 @@
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
+	ph = 9
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(15)
@@ -42,6 +43,7 @@
 	trippy = FALSE
 	overdose_threshold=15
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	ph = 8
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -75,6 +77,7 @@
 	reagent_state = LIQUID
 	color = "#FA00C8"
 	overdose_threshold = 20
+	ph = 10
 	addiction_types = list(/datum/addiction/stimulants = 100) //40 per 2 seconds
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
@@ -95,6 +98,7 @@
 	reagent_state = LIQUID
 	color = "#0064B4"
 	overdose_threshold = 20
+	ph = 9
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
@@ -119,6 +123,7 @@
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	ph = 5
 
 /datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
 	..()
@@ -167,6 +172,7 @@
 	overdose_threshold = 20
 	taste_description = "salt" // because they're bathsalts?
 	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
+	ph = 8.2
 
 /datum/reagent/drug/bath_salts/on_mob_metabolize(mob/living/L)
 	..()

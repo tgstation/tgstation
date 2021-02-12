@@ -58,8 +58,9 @@
 			update_icon()
 
 /obj/item/inspector
-	name = "in-spect scanner"
-	desc = "Cental commmand issued inspection device. Does company grade station inspection protocols when activated, and prints encripted sheets of paper regarding the mainenance of the station. Hard to Replace."
+	name = "\improper N-spect scanner"
+	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then \
+			prints an encrypted report regarding the maintenance of the station. Hard to replace."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
@@ -77,23 +78,40 @@
 ///Prints out a report for bounty purposes, and plays a short audio blip.
 /obj/item/inspector/proc/print_report()
 	// Create our report
-	var/obj/item/report/slip = new(get_turf(src))
-	slip.scanned_area = get_area(src)
-	playsound(src, 'sound/items/biddledeep.ogg', 50, FALSE)
+	var/obj/item/paper/report/slip = new(get_turf(src))
+	slip.generate_report(get_area(src))
+	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 
-/obj/item/report
+/obj/item/paper/report
 	name = "encrypted station inspection"
-	desc = "Contains detailed information about the station's current status, too bad you can't really read it."
+	desc = "Contains no information about the station's current status."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "slipfull"
+	icon_state = "slip"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
+	show_written_words = FALSE
 
-/obj/item/report/examine(mob/user)
+/obj/item/paper/report/proc/generate_report(area/scan_area)
+	scanned_area = scan_area
+	icon_state = "slipfull"
+	desc = "Contains detailed information about the station's current status."
+
+	var/list/characters = list()
+	characters += GLOB.alphabet
+	characters += GLOB.alphabet_upper
+	characters += GLOB.numerals
+
+	info = random_string(rand(180,220), characters)
+	info += "[prob(50) ? "=" : "=="]" //Based64 encoding
+
+/obj/item/paper/report/examine(mob/user)
 	. = ..()
 	if(scanned_area?.name)
 		. += "<span class='notice'>\The [src] contains data on [scanned_area.name].</span>"
 	else if(scanned_area)
 		. += "<span class='notice'>\The [src] contains data on a vague area on station, you should throw it away.</span>"
+	else if(info)
+		icon_state = "slipfull"
+		. += "<span class='notice'>Wait a minute, this isn't an encrypted inspection report! You should throw it away.</span>"
 	else
 		. += "<span class='notice'>Wait a minute, this thing's blank! You should throw it away.</span>"

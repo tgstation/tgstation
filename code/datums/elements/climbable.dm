@@ -31,7 +31,7 @@
 	SIGNAL_HANDLER
 
 	if(can_climb(source, user))
-		examine_texts += "<span class='notice'>[source] looks climbable</span>"
+		examine_texts += "<span class='notice'>[source] looks climbable.</span>"
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
 	return TRUE
@@ -46,7 +46,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(climbed_thing)
 		structure_climber.Paralyze(40)
-		structure_climber.visible_message("<span class='warning'>[structure_climber] is knocked off [climbed_thing].</span>", "<span class='warning'>You're knocked off [climbed_thing]!</span>", "<span class='warning'>You see [structure_climber] get knocked off [climbed_thing].</span>")
+		structure_climber.visible_message("<span class='warning'>[structure_climber] is knocked off [climbed_thing].</span>", "<span class='warning'>You're knocked off [climbed_thing]!</span>", "<span class='hear'>You hear a cry from [structure_climber], followed by a slam.</span>")
 
 
 /datum/element/climbable/proc/climb_structure(atom/climbed_thing, mob/living/user)
