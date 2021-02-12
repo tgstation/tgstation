@@ -244,7 +244,6 @@
  * newloc - the loc of the plant
  */
 /datum/plant_gene/trait/proc/on_new(obj/item/our_plant, newloc)
-
 	// Plants should always have seeds, but if a non-plant sneaks in or a plant with nulled seed, cut it out
 	if(isnull(our_plant.get_plant_seed()))
 		stack_trace("[our_plant] ([our_plant.type]) has a nulled seed value")
@@ -349,7 +348,6 @@
  * Also affects plant batteries see capatative cell production datum
  */
 /datum/plant_gene/trait/cell_charge
-
 	name = "Electrical Activity"
 	rate = 0.2
 
@@ -358,8 +356,13 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	if(our_seed.get_gene(/datum/plant_gene/trait/squash))
+		// If we have the squash gene, let that handle slipping
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
+	else
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
+
 	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, .proc/recharge_cells)
 
 /*
@@ -485,7 +488,6 @@
  * Teleport radius is roughly potency / 10.
  */
 /datum/plant_gene/trait/teleport
-
 	name = "Bluespace Activity"
 	rate = 0.1
 
@@ -494,8 +496,12 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/slip_teleport)
+	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
+	if(our_seed.get_gene(/datum/plant_gene/trait/squash))
+		// If we have the squash gene, let that handle slipping
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
+	else
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/slip_teleport)
 
 /*
  * When squashed, makes the target teleport.
@@ -540,7 +546,6 @@
  * However, the plant's maximum yield is also halved, only up to 5.
  */
 /datum/plant_gene/trait/maxchem
-	// 2x to max reagents volume.
 	name = "Densified Chemicals"
 	rate = 2
 	trait_flags = TRAIT_HALVES_YIELD
