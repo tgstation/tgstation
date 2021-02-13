@@ -79,9 +79,9 @@
 	var/used = FALSE
 
 /obj/item/ph_paper/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	var/obj/item/reagent_containers/cont = target
-	if(!istype(cont))
+	if(!is_reagent_container(target))
 		return
+	var/obj/item/reagent_containers/cont = target
 	if(used == TRUE)
 		to_chat(user, "<span class='warning'>[src] has already been used!</span>")
 		return
@@ -281,7 +281,7 @@
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(istype(target, /obj/item/reagent_containers))
+	if(is_reagent_container(target))
 		attached_beaker = target
 		if(!user.transferItemToLoc(src, target))
 			return

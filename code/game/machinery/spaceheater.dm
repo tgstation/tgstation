@@ -302,25 +302,25 @@
 			. = TRUE
 
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
-/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/I, mob/user, params)
+/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, params)
 	add_fingerprint(user)
-	if(default_unfasten_wrench(user, I))
+	if(default_unfasten_wrench(user, item))
 		return
-	else if(istype(I, /obj/item/stock_parts/cell))
+	else if(istype(item, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
 			return
-		else if(!user.transferItemToLoc(I, src))
+		else if(!user.transferItemToLoc(item, src))
 			return
-		cell = I
-		I.add_fingerprint(usr)
+		cell = item
+		item.add_fingerprint(usr)
 
 		user.visible_message("<span class='notice'>\The [user] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
 		SStgui.update_uis(src)
 	//reagent containers
-	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
 		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/container = I
+		var/obj/item/reagent_containers/container = item
 		if(!user.transferItemToLoc(container, src))
 			return
 		replace_beaker(user, container)
@@ -329,11 +329,11 @@
 		return
 	//Dropper tools
 	if(beaker)
-		if(is_type_in_list(I, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
-			I.afterattack(beaker, user, 1)
+		if(is_type_in_list(item, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
+			item.afterattack(beaker, user, 1)
 		return
 
-	default_deconstruction_crowbar(I)
+	default_deconstruction_crowbar(item)
 
 /obj/machinery/space_heater/improvised_chem_heater/on_deconstruction()
 	. = ..()

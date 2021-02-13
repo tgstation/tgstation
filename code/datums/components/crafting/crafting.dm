@@ -137,7 +137,7 @@
 				.["tool_behaviour"] += item.tool_behaviour
 				.["other"][item.type] += 1
 			else
-				if(istype(item, /obj/item/reagent_containers))
+				if(is_reagent_container(item))
 					var/obj/item/reagent_containers/container = item
 					if(container.is_drainable())
 						for(var/datum/reagent/reagent in container.reagents.reagent_list)
