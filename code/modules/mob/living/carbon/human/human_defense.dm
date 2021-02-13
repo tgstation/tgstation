@@ -220,7 +220,7 @@
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 
 
-	if(modifiers && modifiers["right"]) //Always drop item in hand, if no item, get stunned instead.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
@@ -249,7 +249,7 @@
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
 
-	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
+	if(try_inject(M, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 			if(!damage)
@@ -270,7 +270,7 @@
 	if(!.)
 		return
 
-	if(modifiers && modifiers["right"]) //Always drop item in hand, if no item, get stun instead.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stun instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)

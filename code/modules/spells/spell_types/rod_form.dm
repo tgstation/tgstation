@@ -34,6 +34,7 @@
 	var/damage_bonus = 0
 	var/turf/start_turf
 	notify = FALSE
+	dnd_style_level_up = FALSE
 
 /obj/effect/immovablerod/wizard/Move()
 	if(get_dist(start_turf, get_turf(src)) >= max_distance)
