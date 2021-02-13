@@ -245,7 +245,7 @@
 
 	if (M.apply_martial_art(src, modifiers))
 		return TRUE
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if (M != src)
 			M.disarm(src)
 			return TRUE
@@ -298,7 +298,7 @@
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
 	if(M.combat_mode)
