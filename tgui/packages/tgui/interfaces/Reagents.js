@@ -75,7 +75,7 @@ export const Reagents = (props, context) => {
   };
 
   const visibleReactions = master_reaction_list.filter(reaction => (
-    (selectedBitflags ? matchBitflag(selectedBitflags, reaction.bitflags) : true)
+    (selectedBitflags ? matchBitflag(selectedBitflags,reaction.bitflags) : true)
     && matchReagents(reaction)
   ));
 
@@ -278,7 +278,7 @@ export const Reagents = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={2} basis={0}>
-            <Section scrollable fill 
+            <Section scrollable fill
               title={bookmarkMode ? "Bookmarked recipes" : "Possible recipes"}
               buttons={(
                 <>
@@ -350,7 +350,7 @@ export const Reagents = (props, context) => {
                             icon="book"
                             color="green"
                             content={null}
-                            disabled={bookmarkedReactions.has(reaction) 
+                            disabled={bookmarkedReactions.has(reaction)
                               ? true : false}
                             onClick={() => addBookmark(reaction)} />
                         </Table.Cell>
