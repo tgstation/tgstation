@@ -4,6 +4,7 @@ import { Window } from '../layouts';
 import { map } from 'common/collections';
 import { RecipeLookup } from './common/RecipeLookup';
 import { ReagentLookup } from './common/ReagentLookup';
+import { TableCell } from '../components/Table';
 
 /* functions */
 
@@ -79,7 +80,7 @@ export const Reagents = (props, context) => {
     && matchReagents(reaction)
   ));
 
-  const bookmarkArray = [bookmarkedReactions];
+  const bookmarkArray = Array.from(bookmarkedReactions);
 
   const addBookmark = bookmark => {
     bookmarkedReactions.add(bookmark);
@@ -278,7 +279,8 @@ export const Reagents = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={2} basis={0}>
-            <Section scrollable fill title="Possible recipes"
+            <Section scrollable fill 
+              title={bookmarkMode ? "Bookmarked recipes" : "Possible recipes"}
               buttons={(
                 <>
                   Linked beaker: {linkedBeaker+"  "}
@@ -306,6 +308,9 @@ export const Reagents = (props, context) => {
                   <Table.Cell bold color="label">
                     Tags
                   </Table.Cell>
+                  <Table.Cell bold color="label" width="20px">
+                    {!bookmarkMode ? "Save" : "Del"}
+                  </Table.Cell>
                 </Table.Row>
                 {!bookmarkMode && (
                   visibleReactions.map(reaction => (
@@ -321,13 +326,6 @@ export const Reagents = (props, context) => {
                             onClick={() => act('recipe_click', {
                               id: reaction.id,
                             })} />
-                          <Button
-                            key={reaction.id}
-                            icon="book"
-                            color="green"
-                            content={null}
-                            disabled={bookmarkedReactions.has(reaction) ? true : false}
-                            onClick={() => addBookmark(reaction)} />
                         </Table.Cell>
                         <Table.Cell>
                           {reaction.reactants.map(reactant => (
@@ -347,6 +345,15 @@ export const Reagents = (props, context) => {
                             Boolean(reaction.bitflags & flag) && (
                               <Icon name={icon} mr={1} color={"white"} />
                             ))(flagsObject)}
+                        </Table.Cell>
+                        <Table.Cell width="20px">
+                        <Button
+                            key={reaction.id}
+                            icon="book"
+                            color="green"
+                            content={null}
+                            disabled={bookmarkedReactions.has(reaction) ? true : false}
+                            onClick={() => addBookmark(reaction)} />
                         </Table.Cell>
                       </>
                     </Table.Row>
@@ -365,12 +372,6 @@ export const Reagents = (props, context) => {
                             onClick={() => act('recipe_click', {
                               id: reaction.id,
                             })} />
-                          <Button
-                            key={reaction.id}
-                            icon="trash"
-                            color="red"
-                            content={null}
-                            onClick={() => removeBookmark(reaction) }/>
                         </Table.Cell>
                         <Table.Cell>
                           {reaction.reactants.map(reactant => (
@@ -390,6 +391,14 @@ export const Reagents = (props, context) => {
                             Boolean(reaction.bitflags & flag) && (
                               <Icon name={icon} mr={1} color={"white"} />
                             ))(flagsObject)}
+                        </Table.Cell>
+                        <Table.Cell width="20px">
+                        <Button
+                            key={reaction.id}
+                            icon="trash"
+                            color="red"
+                            content={null}
+                            onClick={() => removeBookmark(reaction) }/>
                         </Table.Cell>
                       </>
                     </Table.Row>
