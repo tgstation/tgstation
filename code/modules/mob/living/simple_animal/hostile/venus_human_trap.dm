@@ -62,7 +62,6 @@
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
 	qdel(src)
 
-
 /obj/structure/alien/resin/flower_bud/proc/progress_growth()
 	growth_icon++
 	icon_state = "bud[growth_icon]"
