@@ -347,12 +347,13 @@ export const Reagents = (props, context) => {
                             ))(flagsObject)}
                         </Table.Cell>
                         <Table.Cell width="20px">
-                        <Button
+                          <Button
                             key={reaction.id}
                             icon="book"
                             color="green"
                             content={null}
-                            disabled={bookmarkedReactions.has(reaction) ? true : false}
+                            disabled={bookmarkedReactions.has(reaction) 
+                              ? true : false}
                             onClick={() => addBookmark(reaction)} />
                         </Table.Cell>
                       </>
@@ -393,12 +394,12 @@ export const Reagents = (props, context) => {
                             ))(flagsObject)}
                         </Table.Cell>
                         <Table.Cell width="20px">
-                        <Button
+                          <Button
                             key={reaction.id}
                             icon="trash"
                             color="red"
                             content={null}
-                            onClick={() => removeBookmark(reaction) }/>
+                            onClick={() => removeBookmark(reaction)} />
                         </Table.Cell>
                       </>
                     </Table.Row>
