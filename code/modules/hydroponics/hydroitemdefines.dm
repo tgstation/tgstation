@@ -26,33 +26,17 @@
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses SCANMODE_STATS.
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
-	return try_scan(target, user, PLANT_SCANMODE_STATS)
+	if(user.combat_mode)
+		return
+
+	return do_plant_stats_scan(target, user)
 
 /// Same as above, but with right click. Right-clicking uses SCANMODE_CHEMICALS.
 /obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
-	return try_scan(target, user, PLANT_SCANMODE_CHEMICALS) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(user.combat_mode)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/*
- * Try to scan the atom target using whatever mode we were passed.
- *
- * scan_target - the atom we're scanning
- * user - the user doing the scanning.
- *
- * returns FALSE if it's something we can't scan.
- * returns do_scan if it's something we CAN scan.
- */
-/obj/item/plant_analyzer/proc/try_scan(atom/scan_target, mob/user, mode)
-	var/mob/living/living_user = user
-	if(living_user.combat_mode)
-		return FALSE
-
-	switch(mode)
-		if(PLANT_SCANMODE_STATS)
-			return do_plant_stats_scan(scan_target, user, mode)
-		if(PLANT_SCANMODE_CHEMICALS)
-			return do_plant_chem_scan(scan_target, user, mode)
-		else
-			CRASH("Plant Analyzer: try_scan() called without a set mode.")
+	return do_plant_chem_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /*
  * Scan the target on plant scan mode. This prints traits and stats to the user.
