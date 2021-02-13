@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes: 
-  - bugfix: "Nanite programs based on triggers don't ignore rules now"

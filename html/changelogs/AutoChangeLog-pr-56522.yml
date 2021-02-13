@@ -1,4 +1,0 @@
-author: "Useroth"
-delete-after: True
-changes: 
-  - bugfix: "scaling coefficients for security and antagonists in the game_options.txt will now respect being disabled by being set to 0, instead of having 1 as their minimal possible value"

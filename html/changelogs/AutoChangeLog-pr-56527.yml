@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Plasmemes and ethereals will no longer have their head or torso disappear after being augmented with a robotic replacement."

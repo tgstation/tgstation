@@ -355,6 +355,33 @@ This is good:
 	getter_turned_into_variable = condition ? VALUE_C : VALUE_D
 ```
 
+### Avoid unnecessary type checks and obscuring nulls in lists
+Typecasting in `for` loops carries an implied `istype()` check that filters non-matching types, nulls included. The `as anything` key can be used to skip the check.
+
+If we know the list is supposed to only contain the desired type then we want to skip the check not only for the small optimization it offers, but also to catch any null entries that may creep into the list.
+
+Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
+
+This is bad:
+```DM
+var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
+
+This is good:
+```DM
+var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
+var/highest_alpha = 0
+for(var/atom/thing as anything in bag_of_atoms)
+	if(thing.alpha <= highest_alpha)
+		continue
+	highest_alpha = thing.alpha
+```
+
 ### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind
@@ -496,38 +523,6 @@ The former is faster than the latter, as shown by the following profile results:
 https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
-
-
-#### For loops without `istype`
-A name for a differing syntax for writing for-each style loops in DM. It's NOT DM's standard syntax, hence why this is considered a quirk. Take a look at this:
-```DM
-var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
-var/obj/item/sword/best_sword
-for(var/obj/item/sword/S in bag_of_items)
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-The above is a simple proc for checking all swords in a container and returning the one with the highest damage, and it uses DM's standard syntax for a for-loop by specifying a type in the variable of the for's header that DM interprets as a type to filter by. It performs this filter using `istype()` (or some internal-magic similar to `istype()` - this is BYOND, after all). This is fine in its current state for `bag_of_items`, but if `bag_of_items` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient. For example:
-```DM
-var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword
-for(var/obj/item/sword/S in bag_of_swords)
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-specifies a type for DM to filter by.
-
-With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
-you can circumvent DM's filtering and automatic `istype()` checks by writing the loop as such:
-```DM
-var/list/bag_of_swords = list(sword, sword, sword, sword)
-var/obj/item/sword/best_sword
-for(var/s in bag_of_swords)
-	var/obj/item/sword/S = s
-	if(!best_sword || S.damage > best_sword.damage)
-		best_sword = S
-```
-Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type, causing runtime errors.
 
 #### Dot variable
 Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.

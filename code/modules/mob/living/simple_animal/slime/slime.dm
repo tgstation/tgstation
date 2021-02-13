@@ -3,7 +3,6 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE | PASSGRILLE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
@@ -104,6 +103,8 @@
 	set_nutrition(700)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 	add_cell_sample()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -269,7 +270,7 @@
 /mob/living/simple_animal/slime/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
-/mob/living/simple_animal/slime/attack_ui(slot)
+/mob/living/simple_animal/slime/attack_ui(slot, params)
 	return
 
 /mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M)
@@ -309,7 +310,7 @@
 		return
 	discipline_slime(user)
 
-/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M, modifiers)
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
@@ -339,9 +340,9 @@
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(M.a_intent == INTENT_HELP || M.a_intent == INTENT_DISARM)
+			if(!M.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M,M.a_intent))
+					if(S.next_step(M, modifiers))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -354,9 +355,10 @@
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+		var/list/modifiers = params2list(params)
+		if(!user.combat_mode || (LAZYACCESS(modifiers, RIGHT_CLICK)))
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user,user.a_intent))
+				if(S.next_step(user, modifiers))
 					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)

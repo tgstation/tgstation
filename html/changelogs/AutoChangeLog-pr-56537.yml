@@ -1,5 +1,0 @@
-author: "AdipemDragon"
-delete-after: True
-changes: 
-  - imageadd: "Cooks have become better at baking breads."
-  - bugfix: "Spiderbread slice is now visually distinct from the Xenobread one."

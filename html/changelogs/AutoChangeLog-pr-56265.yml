@@ -1,5 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "tritium and h2 now uses burned_fuel for o2 consumption."
-  - code_imp: "moved the burned_fuel amount around so its tidier."

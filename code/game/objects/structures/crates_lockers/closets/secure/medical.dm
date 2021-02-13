@@ -42,6 +42,7 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/storage/box/skillchips/quick(src)
 	return
 
 /obj/structure/closet/secure_closet/psychology
@@ -95,6 +96,8 @@
 	new /obj/item/wallframe/defib_mount(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
+	new /obj/item/storage/box/skillchips/quicker(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
@@ -118,6 +121,9 @@
 	new /obj/item/storage/box/pillbottles(src)
 	new /obj/item/storage/box/medigels(src)
 	new /obj/item/storage/box/medigels(src)
+	new /obj/item/ph_booklet(src)
+	new /obj/item/reagent_containers/dropper(src)
+	new /obj/item/reagent_containers/glass/bottle/acidic_buffer(src) //hopefully they get the hint
 
 /obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
 	name = "advanced chemical closet"

@@ -577,8 +577,10 @@
 		holder_mob?.update_mouse_pointer() //set the moues icons to null, then call update_moues_pointer() which resets them to the correct values based on what the mob is doing (in a mech, holding a spell, etc)()
 
 /datum/centcom_podlauncher/proc/InterceptClickOn(user,params,atom/target) //Click Intercept so we know where to send pods where the user clicks
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
+	var/list/modifiers = params2list(params)
+	
+	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
+
 	if (launcherActivated)
 		//Clicking on UI elements shouldn't launch a pod
 		if(istype(target,/atom/movable/screen))
@@ -773,7 +775,7 @@
 		qdel(M)
 	for (var/bayturf in bay)
 		var/turf/turf_to_clear = bayturf
-		turf_to_clear.ChangeTurf(/turf/open/floor/plasteel)
+		turf_to_clear.ChangeTurf(/turf/open/floor/iron)
 
 /datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game
 	updateCursor(TRUE) //Make sure our moues cursor resets to default. False means we are not in launch mode

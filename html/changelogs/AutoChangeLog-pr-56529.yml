@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Research points produced by BZ formation are now properly rate limited to a sane level."
