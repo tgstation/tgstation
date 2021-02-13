@@ -40,20 +40,29 @@
 			foodtypes = RAW | MEAT | GROSS,\
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, .proc/OnEatFrom))
-
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/*
+ * Insert the organ into the select mob.
+ *
+ * M - the mob who will get our organ
+ * special - for auto-surgeons and such, to prevent dying from having organs removed
+ * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
+ * organ_init - if this organ is being inserted on initialization / species gain vs in game (ex - via surgery)
+ */
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, organ_init = FALSE)
 	if(!iscarbon(M) || owner == M)
 		return
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = TRUE)
+		replaced.Remove(M, TRUE, organ_init)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
 			qdel(replaced)
 
-	SEND_SIGNAL(M, COMSIG_CARBON_GAIN_ORGAN, src)
+	// Only send these signals if we're not on initialization
+	if(!organ_init)
+		SEND_SIGNAL(M, COMSIG_CARBON_GAIN_ORGAN, src)
 
 	owner = M
 	M.internal_organs |= src
@@ -64,8 +73,14 @@
 		A.Grant(M)
 	STOP_PROCESSING(SSobj, src)
 
-//Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+/*
+ * Remove the organ from the select mob.
+ *
+ * M - the mob who owns our organ, that we're removing the organ from.
+ * special - for auto-surgeons and such, to prevent dying from having organs removed
+ * organ_init - if this organ is being removed on initialization / species gain
+ */
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, organ_init = FALSE)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -77,10 +92,11 @@
 		var/datum/action/A = X
 		A.Remove(M)
 
-	SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src)
+	// Only send these signals if we're not on initialization
+	if(!organ_init)
+		SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src)
 
 	START_PROCESSING(SSobj, src)
-
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return

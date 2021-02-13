@@ -53,12 +53,12 @@
 				H.dna.features["ears"] = "Cat"
 		if(H.dna.features["ears"] == "Cat")
 			var/obj/item/organ/ears/cat/ears = new
-			ears.Insert(H, drop_if_replaced = FALSE)
+			ears.Insert(H, drop_if_replaced = FALSE, organ_init = TRUE)
 		else
 			mutantears = /obj/item/organ/ears
 		if(H.dna.features["tail_human"] == "Cat")
 			var/obj/item/organ/tail/cat/tail = new
-			tail.Insert(H, drop_if_replaced = FALSE)
+			tail.Insert(H, drop_if_replaced = FALSE, organ_init = TRUE)
 		else
 			mutant_organs = list()
 	return ..()
@@ -95,8 +95,8 @@
 	else
 		var/obj/item/organ/ears/cat/kitty_ears = new
 		var/obj/item/organ/tail/cat/kitty_tail = new
-		kitty_ears.Insert(H, TRUE, FALSE) //Gives nonhumans cat tail and ears
-		kitty_tail.Insert(H, TRUE, FALSE)
+		kitty_ears.Insert(H, TRUE, FALSE, TRUE) //Gives nonhumans cat tail and ears
+		kitty_tail.Insert(H, TRUE, FALSE, TRUE)
 	if(!silent)
 		to_chat(H, "<span class='boldnotice'>Something is nya~t right.</span>")
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)

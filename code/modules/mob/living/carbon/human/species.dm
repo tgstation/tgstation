@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					oldorgan = null //now deleted
 			else
 				oldorgan.before_organ_replacement(neworgan)
-				oldorgan.Remove(C,TRUE)
+				oldorgan.Remove(C, TRUE, TRUE)
 				QDEL_NULL(oldorgan) //we cannot just tab this out because we need to skip the deleting if it is a decoy brain.
 
 
@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			oldorgan.setOrganDamage(0)
 		else if(should_have && !(initial(neworgan.zone) in excluded_zones))
 			used_neworgan = TRUE
-			neworgan.Insert(C, TRUE, FALSE)
+			neworgan.Insert(C, TRUE, FALSE, TRUE)
 
 		if(!used_neworgan)
 			qdel(neworgan)
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				continue
 			var/obj/item/organ/I = C.getorgan(mutantorgan)
 			if(I)
-				I.Remove(C)
+				I.Remove(C, organ_init = TRUE)
 				QDEL_NULL(I)
 
 	for(var/organ_path in mutant_organs)
@@ -336,7 +336,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
-			replacement.Insert(C, TRUE, FALSE)
+			replacement.Insert(C, TRUE, FALSE, TRUE)
 
 /**
  * Proc called when a carbon becomes this species.
@@ -2025,6 +2025,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
 	return FALSE
+
+/datum/species/proc/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/tail/lost_tail)
+	stop_wagging_tail(tail_owner)
+	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
+	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
+	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "right_tail_regained")
+	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
+
+/datum/species/proc/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/tail/found_tail)
+	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
+	if(found_tail.type in mutant_organs)
+		SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
+		SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "right_tail_regained", /datum/mood_event/tail_regained_right)
+	else
+		SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
 
