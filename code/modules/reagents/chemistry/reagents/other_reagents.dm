@@ -269,7 +269,7 @@
 				seizure = TRUE
 				M.Paralyze(60)
 				if(M.jitteriness < 40)
-					M.jitteriness = min(M.jitteriness+25,40)
+					M.jitteriness = min(M.jitteriness + 25, 40)
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are NOTHING without it.", "Do not forget your place, servant.", \
 				"I gave you all that power, and you still managed to fail me? Pathetic.", "I would normally be furious at you for this, but your continued inability to perform basic tasks that I had previously believed were idiot-proof quite honestly amuses me at this point.", "You'll be back.", "If you cannot scour this poison, I shall scour your meager life, insect!", "Just have a cultist use a ritual dagger on you, you imbecile!", "I gave you magic, friends, a PURPOSE! What have THEY ever done for you?!")].</span>")
 
