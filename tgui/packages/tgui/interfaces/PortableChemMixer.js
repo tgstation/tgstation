@@ -20,7 +20,7 @@ export const PortableChemMixer = (props, context) => {
   const chemicals = sortBy(chem => chem.title)(data.chemicals);
   return (
     <Window
-      width={645}
+      width={465}
       height={550}>
       <Window.Content scrollable>
         <Section
@@ -42,9 +42,10 @@ export const PortableChemMixer = (props, context) => {
               <Button
                 key={chemical.id}
                 icon="tint"
-                width="150px"
-                lineHeight="21px"
+                width="425px"
+                lineHeight={1.75}
                 content={`(${chemical.volume}) ${chemical.title}`}
+                tooltip={"pH: " + chemical.pH}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />
@@ -103,6 +104,13 @@ export const PortableChemMixer = (props, context) => {
                   units of {chemical.name}
                 </Box>
               ))}
+              {((beakerContents.length > 0 && !!data.showpH) && (
+                <Box>
+                  pH:
+                  <AnimatedNumber
+                    value={data.beakerCurrentpH} />
+                </Box>)
+              )}
             </LabeledList.Item>
           </LabeledList>
         </Section>
