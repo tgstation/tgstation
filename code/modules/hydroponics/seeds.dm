@@ -503,11 +503,6 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = O
-		to_chat(user, plant_analyzer.scan_plant(src))
-		return
-
 	if(istype(O, /obj/item/pen))
 		var/choice = input("What would you like to change?") in list("Plant Name", "Seed Description", "Product Description", "Cancel")
 		if(!user.canUseTopic(src, BE_CLOSE))

@@ -70,12 +70,6 @@
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
-/obj/item/food/grown/attackby(obj/item/O, mob/user, params)
-	..()
-	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = O
-		to_chat(user, plant_analyzer.scan_plant(src))
-
 /obj/item/food/grown/MakeLeaveTrash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)

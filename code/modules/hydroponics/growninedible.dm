@@ -32,13 +32,6 @@
 		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5
 		add_juice()
 
-/obj/item/grown/attackby(obj/item/O, mob/user, params)
-	..()
-	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = O
-		to_chat(user, plant_analyzer.scan_plant(src))
-		return
-
 /obj/item/grown/proc/add_juice()
 	if(reagents)
 		return TRUE
