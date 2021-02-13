@@ -92,6 +92,13 @@
 /turf/open/return_analyzable_air()
 	return return_air()
 
+/turf/open/proc/has_gas(datum/gas, mole_amount)
+	if(air && air.total_moles())
+		var/loc_gases = air.gases
+		if(loc_gases[gas] && loc_gases[gas][MOLES] >= mole_amount)
+			return TRUE
+	return FALSE
+
 /turf/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature >= heat_capacity || to_be_destroyed)
 
