@@ -157,12 +157,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
-	if(!lit && smoketime > 0)
-		var/lighting_text = W.ignition_effect(src, user)
-		if(lighting_text)
-			light(lighting_text)
-	else
+	if(lit || smoketime <= 0)
 		return ..()
+	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen to burn
+		var/turf/open/O = get_turf(src)
+		if(!isopenturf(O) || !O.has_gas(/datum/gas/oxygen, 1)) // no oxygen on tile
+			return ..()
+	var/lighting_text = W.ignition_effect(src, user)
+	if(lighting_text)
+		light(lighting_text)
 
 /obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/glass/glass, mob/user, proximity)
 	. = ..()
@@ -176,7 +179,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				to_chat(user, "<span class='warning'>[glass] is empty!</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is full!</span>")
-
 
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
