@@ -15,8 +15,10 @@
 
 /obj/item/organ/tail/Remove(mob/living/carbon/human/tail_owner, special = FALSE, organ_init = FALSE)
 	. = ..()
-	if(!organ_init && tail_owner?.dna?.species)
-		tail_owner.dna.species.on_tail_lost(tail_owner, src)
+	if(tail_owner?.dna?.species)
+		tail_owner.dna.species.stop_wagging_tail(tail_owner)
+		if(!organ_init)
+			tail_owner.dna.species.on_tail_lost(tail_owner, src)
 
 /obj/item/organ/tail/cat
 	name = "cat tail"

@@ -2026,14 +2026,33 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
 	return FALSE
 
+/*
+ * This proc is called when a mob loses their tail via ingame means (ie, not on species change / initialization)
+ *
+ * tail_owner - the owner of the tail (who holds our species datum)
+ * lost_tail - the tail that was removed
+ */
 /datum/species/proc/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/tail/lost_tail)
-	stop_wagging_tail(tail_owner)
+	// If we don't have a set tail, don't bother
+	if(!mutant_organs.len)
+		return
+
 	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
 	SEND_SIGNAL(tail_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "right_tail_regained")
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
 
+/*
+ * This proc is called when a mob gains a tail via ingame means (ie, not on species change / initialization)
+ *
+ * tail_owner - the owner of the tail (who holds our species datum)
+ * lost_tail - the tail that was added
+ */
 /datum/species/proc/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/tail/found_tail)
+	// If we don't have a set tail, don't bother
+	if(!mutant_organs.len)
+		return
+
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
 	if(found_tail.type in mutant_organs)
 		SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")

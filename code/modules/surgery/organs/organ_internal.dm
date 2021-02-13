@@ -76,7 +76,7 @@
  *
  * M - the mob who owns our organ, that we're removing the organ from.
  * special - for auto-surgeons and such, to prevent dying from having organs removed
- * organ_init - if this organ is being removed on initialization / species gain
+ * organ_init - if this organ is being removed on initialization / species gain vs in game (ex - via surgery)
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, organ_init = FALSE)
 	owner = null
