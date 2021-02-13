@@ -812,8 +812,12 @@
 
 //Plants / Plant Traits
 
-///called when an action causes a plant to be squashed - slipping, throwing, attack_self.
-#define COMSIG_PLANT_SQUASH "plant_squash"
+///called when a plant with slippery skin is slipped on (mob/victim)
+#define COMSIG_PLANT_ON_SLIP "plant_on_slip"
+///called when a plant with liquid contents is squashed on (atom/target)
+#define COMSIG_PLANT_ON_SQUASH "plant_on_squash"
+///called when a plant grows in a tray (obj/machinery/hydroponics)
+#define COMSIG_PLANT_ON_GROW "plant_on_grow"
 
 //Gibs
 

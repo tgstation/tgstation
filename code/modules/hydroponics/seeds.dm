@@ -62,7 +62,7 @@
 	///Determines if the plant should be allowed to mutate early at 30+ instability.
 	var/seed_flags = MUTATE_EARLY
 
-/obj/item/seeds/Initialize(mapload, nogenes = 0)
+/obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-8, 8)
 	pixel_y = base_pixel_y + rand(-8, 8)
@@ -88,10 +88,14 @@
 			genes += new /datum/plant_gene/core/potency(potency)
 			genes += new /datum/plant_gene/core/instability(instability)
 
-		for(var/p in genes)
-			if(ispath(p))
-				genes -= p
-				genes += new p
+		for(var/plant_gene in genes)
+			if(ispath(plant_gene))
+				genes -= plant_gene
+				genes += new plant_gene
+
+		// Go through all traits in their genes and call on_new_seed from them.
+		for(var/datum/plant_gene/trait/traits in genes)
+			traits.on_new_seed(src)
 
 		for(var/reag_id in reagents_add)
 			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
@@ -106,27 +110,29 @@
 			. += "<span class='notice'>- [G.get_name()] -</span>"
 
 /obj/item/seeds/proc/Copy()
-	var/obj/item/seeds/S = new type(null, 1)
+	var/obj/item/seeds/copy_seed = new type(null, TRUE)
 	// Copy all the stats
-	S.lifespan = lifespan
-	S.endurance = endurance
-	S.maturation = maturation
-	S.production = production
-	S.yield = yield
-	S.potency = potency
-	S.instability = instability
-	S.weed_rate = weed_rate
-	S.weed_chance = weed_chance
-	S.name = name
-	S.plantname = plantname
-	S.desc = desc
-	S.productdesc = productdesc
-	S.genes = list()
-	for(var/g in genes)
-		var/datum/plant_gene/G = g
-		S.genes += G.Copy()
-	S.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
-	return S
+	copy_seed.lifespan = lifespan
+	copy_seed.endurance = endurance
+	copy_seed.maturation = maturation
+	copy_seed.production = production
+	copy_seed.yield = yield
+	copy_seed.potency = potency
+	copy_seed.instability = instability
+	copy_seed.weed_rate = weed_rate
+	copy_seed.weed_chance = weed_chance
+	copy_seed.name = name
+	copy_seed.plantname = plantname
+	copy_seed.desc = desc
+	copy_seed.productdesc = productdesc
+	copy_seed.genes = list()
+	for(var/datum/plant_gene/plant_genes in genes)
+		copy_seed.genes += plant_genes.Copy()
+	for(var/datum/plant_gene/trait/traits in genes)
+		traits.on_new_seed(copy_seed)
+
+	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
+	return copy_seed
 
 /obj/item/seeds/proc/get_gene(typepath)
 	return (locate(typepath) in genes)
