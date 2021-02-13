@@ -411,9 +411,9 @@
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
 	is_cold_recipe = TRUE //This is kind of a strange reaction that I will come back to tweak later
 	required_temp = 1000
-	optimal_temp = 20
-	overheat_temp = 1
-	thermic_constant = -250
+	optimal_temp = 800
+	overheat_temp = 0 //Replace with NO_OVERHEAT when part 2 is in
+	thermic_constant = 0
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // cools the fuck down
@@ -423,7 +423,7 @@
 	results = list(/datum/reagent/cryostylane = 1)
 	required_reagents = list(/datum/reagent/cryostylane = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
-	thermic_constant = -1
+	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
@@ -432,6 +432,7 @@
 	results = list(/datum/reagent/pyrosium = 1)
 	required_reagents = list(/datum/reagent/pyrosium = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	holder.chem_temp += 10*created_volume
@@ -439,6 +440,11 @@
 /datum/chemical_reaction/pyrosium
 	results = list(/datum/reagent/pyrosium = 3)
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/phosphorus = 1)
+	required_temp = 0
+	optimal_temp = 20
+	overheat_temp = 9999//Replace with NO_OVERHEAT when part 2 is in
+	temp_exponent_factor = 10
+	thermic_constant = 0
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // also cools the fuck down
