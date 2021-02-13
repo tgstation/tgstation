@@ -1807,15 +1807,15 @@
 	. = ..()
 
 	var/list/pizza_types = list(
-		/obj/item/food/pizza/margherita = 1,
-		/obj/item/food/pizza/meat = 1,
-		/obj/item/food/pizza/mushroom = 1,
-		/obj/item/food/pizza/vegetable = 1,
-		/obj/item/food/pizza/donkpocket = 1,
-		/obj/item/food/pizza/dank = 0.7,
-		/obj/item/food/pizza/sassysage = 1,
-		/obj/item/food/pizza/pineapple = 1,
-		/obj/item/food/pizza/arnold = 0.3
+		/obj/item/food/pizza/margherita = 10,
+		/obj/item/food/pizza/meat = 10,
+		/obj/item/food/pizza/mushroom = 10,
+		/obj/item/food/pizza/vegetable = 10,
+		/obj/item/food/pizza/donkpocket = 10,
+		/obj/item/food/pizza/dank = 7,
+		/obj/item/food/pizza/sassysage = 10,
+		/obj/item/food/pizza/pineapple = 10,
+		/obj/item/food/pizza/arnold = 3
 	) //weighted by chance to disrupt eaters' rounds
 
 	for(var/obj/item/pizzabox/P in C)
