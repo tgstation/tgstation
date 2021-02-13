@@ -34,7 +34,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
-  	update_icon()
+	update_icon()
 
 /obj/machinery/space_heater/on_construction()
 	qdel(cell)
