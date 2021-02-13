@@ -26,7 +26,7 @@ $color-bg-section: base.$color-bg-section !default;
   vertical-align: middle;
   background-color: crimson;
   border-radius: 10px;
-  transition: font-size 200ms;
+  transition: font-size 200ms ease-out;
 
   &:before {
     content: 'x';

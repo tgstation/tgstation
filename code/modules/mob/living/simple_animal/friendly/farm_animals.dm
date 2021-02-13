@@ -178,8 +178,8 @@
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
+/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M, modifiers)
+	if(!stat && LAZYACCESS(modifiers, RIGHT_CLICK) && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
@@ -222,7 +222,7 @@
 
 ///Give intense wisdom to the attacker if they're being friendly about it
 /mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
-	if(!stat && M.a_intent == INTENT_HELP)
+	if(!stat && !M.combat_mode)
 		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
 		M.mind?.adjust_experience(pick(GLOB.skill_types), 500)
 		do_smoke(1, get_turf(src))
@@ -258,7 +258,6 @@
 	attack_verb_simple = "kick"
 	health = 3
 	maxHealth = 3
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -273,6 +272,7 @@
 	pixel_x = base_pixel_x + rand(-6, 6)
 	pixel_y = base_pixel_y + rand(0, 10)
 	add_cell_sample()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/chick/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -319,7 +319,6 @@
 	attack_verb_simple = "kick"
 	health = 15
 	maxHealth = 15
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/eggsleft = 0
 	var/eggsFertile = TRUE
 	var/body_color
@@ -345,6 +344,8 @@
 	pixel_y = base_pixel_y + rand(0, 10)
 	++chicken_count
 	add_cell_sample()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/chicken/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

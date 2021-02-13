@@ -110,7 +110,7 @@
 			var/announce_text = "The new independent state of [nation_name] has formed from the ashes of the [department] department!"
 			if(department == "Uprising of Assistants") //the text didn't really work otherwise
 				announce_text = "The assistants of the station have risen to form the new independent state of [nation_name]!"
-			priority_announce(announce_text, "Secession from [GLOB.station_name]")
+			priority_announce(announce_text, "Secession from [GLOB.station_name]",  has_important_message = TRUE)
 	else
 		message_admins("The nation of [nation_name] did not have enough potential members to be created.")
 		qdel(nation)

@@ -153,7 +153,16 @@
 			var/obj/machinery/power/apc/target = locate(ref) in GLOB.apcs_list
 			if(!target)
 				return
-			target.vars[type] = target.setsubsystem(text2num(value))
+
+			value = target.setsubsystem(text2num(value))
+			switch(type) // Sanity check
+				if("equipment", "lighting", "environ")
+					target.vars[type] = value
+				else
+					message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set [type] on [target] to [value]")
+					log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set [type] on [target] to [value]")
+					return
+
 			target.update_icon()
 			target.update()
 			var/setTo = ""

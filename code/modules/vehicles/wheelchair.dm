@@ -24,7 +24,7 @@
 
 /obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
 	new /obj/item/stack/rods(drop_location(), 1)
-	new /obj/item/stack/sheet/metal(drop_location(), 1)
+	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	..()
 
 /obj/vehicle/ridden/wheelchair/Destroy()
@@ -59,7 +59,7 @@
 	if(I.use_tool(src, user, 40, volume=50))
 		to_chat(user, "<span class='notice'>You detach the wheels and deconstruct the chair.</span>")
 		new /obj/item/stack/rods(drop_location(), 6)
-		new /obj/item/stack/sheet/metal(drop_location(), 4)
+		new /obj/item/stack/sheet/iron(drop_location(), 4)
 		qdel(src)
 	return TRUE
 
