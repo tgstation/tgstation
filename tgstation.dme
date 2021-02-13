@@ -1807,6 +1807,7 @@
 #include "code\modules\cargo\order.dm"
 #include "code\modules\cargo\orderconsole.dm"
 #include "code\modules\cargo\packs.dm"
+#include "code\modules\cargo\sm_beacon.dm"
 #include "code\modules\cargo\supplypod.dm"
 #include "code\modules\cargo\supplypod_beacon.dm"
 #include "code\modules\cargo\blackmarket\blackmarket_item.dm"
