@@ -28,6 +28,14 @@
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
 	undyeable = TRUE
 
+/obj/item/clothing/gloves/blackleather
+	name = "black leather gloves"
+	desc = "Slick black gloves, perfect for any lover of business card artistry."
+	icon_state = "blackleather"
+	inhand_icon_state = "blackleather"
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	undyeable = TRUE
+
 /obj/item/clothing/gloves/frenchmaid
 	name = "maid gloves"
 	desc = "Elbow length gloves. Perfect for dusting."

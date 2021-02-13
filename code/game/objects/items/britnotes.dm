@@ -142,3 +142,33 @@
 	name = "grainy polaroid"
 	desc = "A photo of a security camera's view in what appears to be a loungue of some sort. A supermatter crystal is visible in the center, surrounded by a red glow."
 	icon_state = "photo"
+
+/obj/item/britevidence/soul
+	name = "soul jar"
+	desc = "A jar with a soul submerged in liquid. It pulsates quietly."
+	icon_state = "soul1"
+
+/obj/item/britevidence/soul/botanist
+	name = "green soul jar"
+	desc = "A jar with a soul submerged in green liquid. It writhes against its glass casing."
+	icon_state = "soul1"
+
+/obj/item/britevidence/soul/hos
+	name = "orange soul jar"
+	desc = "A jar with a soul submerged in orange liquid. It shudders under its own weight."
+	icon_state = "soul2"
+
+/obj/item/britevidence/soul/scientist
+	name = "blue soul jar"
+	desc = "A jar with a soul submerged in blue liquid. It recoils from the bright lights."
+	icon_state = "soul4"
+
+/obj/item/britevidence/soul/brown
+	name = "brown soul jar"
+	desc = "A jar with a soul submerged in brown liquid. It has sprung a continuous leak."
+	icon_state = "soul3"
+
+/obj/item/britevidence/soul/yellow
+	name = "yellow soul jar"
+	desc = "A jar with a soul submerged in yellow liquid. It looks oddly familiar."
+	icon_state = "soul5"

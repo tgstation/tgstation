@@ -486,3 +486,10 @@
 	shoes = /obj/item/clothing/shoes/prince
 	ears = /obj/item/radio/headset/headset_cent/commander
 	back = /obj/item/storage/backpack/invis
+
+/datum/outfit/demon
+	name = "Demon"
+	uniform = /obj/item/clothing/under/suit/red/female
+	shoes = /obj/item/clothing/shoes/laceup
+	gloves = /obj/item/clothing/gloves/blackleather
+	ears = /obj/item/radio/headset/headset_cent/commander/earpiece

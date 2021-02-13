@@ -107,7 +107,7 @@
 		if(istype(user.loc, /obj/effect/dummy/phased_mob/slaughter/))
 			if(valid_location(user))
 				to_chat(user, "<span class='warning'>You are now phasing in.</span>")
-				if(do_mob(user,user,150))
+				if(do_mob(user,user,20))
 					if(valid_location(user))
 						user.infernalphasein()
 					else
@@ -115,13 +115,12 @@
 
 			else
 				to_chat(user, "<span class='warning'>You can only re-appear near a potential signer.</span>")
-				revert_cast()
 				return ..()
 		else
 			user.notransform = TRUE
 			user.fakefire()
 			to_chat(src, "<span class='warning'>You begin to phase back into sinful flames.</span>")
-			if(do_mob(user,user,150))
+			if(do_mob(user,user,20))
 				user.infernalphaseout()
 			else
 				to_chat(user, "<span class='warning'>You must remain still while exiting.</span>")
@@ -135,7 +134,7 @@
 	if(istype(get_area(user), /area/shuttle/)) // Can always phase in in a shuttle.
 		return TRUE
 	else
-		for(var/mob/living/C in orange(2, get_turf(user))) //Can also phase in when nearby a potential buyer.
+		for(var/mob/living/C in orange(16, get_turf(user))) //Can also phase in when nearby a potential buyer.
 			if (C.owns_soul())
 				return TRUE
 	return FALSE

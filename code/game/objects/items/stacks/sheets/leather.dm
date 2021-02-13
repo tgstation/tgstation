@@ -154,6 +154,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1), \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2), \
 	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3), \
+	new/datum/stack_recipe("business gloves", /obj/item/clothing/gloves/blackleather, 2), \
 	new/datum/stack_recipe("toolbelt", /obj/item/storage/belt/utility, 4), \
 	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5), \
 	new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
