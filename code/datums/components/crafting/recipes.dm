@@ -1236,7 +1236,6 @@
 	result = /obj/machinery/space_heater/improvised_chem_heater
 	tools = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER)
 	time = 15 SECONDS
-	additional_req_text = " 1 adjacent space heater"
 	reqs = list(
 				/obj/item/stack/cable_coil = 2,
 				/obj/item/stack/sheet/glass = 2,
@@ -1246,28 +1245,13 @@
 				)
 	machinery = list(/obj/machinery/space_heater = CRAFTING_MACHINERY_CONSUME)
 	category = CAT_CHEMISTRY
-	var/obj/cached_heater
-
-/*
-/datum/crafting_recipe/improvised_chem_heater/check_requirements(mob/user, list/collected_requirements)
-	. = ..()
-	contents = get_surroundings(a)
-	if(!check_contents(a, R, contents))
-	var/obj/machinery/space_heater/s_heater = locate(/obj/machinery/space_heater) in orange(user, 1)
-	if(!s_heater)
-		return FALSE
-	cached_heater = s_heater
-	return TRUE
 
 /datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
-	var/location = cached_heater.loc
-	qdel(cached_heater, TRUE)//So the battery is amde to delete right after
-	//qdelling makes a battery
-	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in location
-	qdel(cell)
+	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in range(1)
+	var/turf/turf = get_turf(cell)
 	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
-	heater.forceMove(location)
-*/
+	heater.forceMove(cell)
+	heater.attackby(cell, user) //puts it into the heater
 
 /datum/crafting_recipe/improvised_coolant
 	name = "Improvised cooling spray"

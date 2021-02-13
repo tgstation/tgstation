@@ -31,9 +31,10 @@
 	return cell
 
 /obj/machinery/space_heater/Initialize()
-	. = ..()
-	cell = new(src)
-	update_icon()
+ 	 . = ..()
+  	if(ispath(cell))
+    	cell = new cell(src)
+  	update_icon()
 
 /obj/machinery/space_heater/on_construction()
 	qdel(cell)
@@ -243,6 +244,8 @@
 	name = "Improvised chem heater"
 	desc = "A space heater hacked to reroute heating to a water bath on the top."
 	panel_open = TRUE //This is always open - since we've injected wires in the panel
+	//We inherit the cell from the heater prior
+	cell = null
 	///The beaker within the heater
 	var/obj/item/reagent_containers/beaker = null
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
