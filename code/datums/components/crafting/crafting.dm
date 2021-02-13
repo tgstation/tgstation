@@ -126,31 +126,25 @@
 	.["other"] = list()
 	.["instances"] = list()
 	.["machinery"] = list()
-	for(var/obj/I in get_environment(a,blacklist))
-		if(istype(I, /obj/item))
-			var/obj/item/item = I
-			if(.["instances"][item.type])
-				.["instances"][item.type] += item
-			else
-				.["instances"][item.type] = list(item)
-			if(istype(item, /obj/item/stack))
-				var/obj/item/stack/S = item
-				.["other"][item.type] += S.amount
+	for(var/obj/object in get_environment(a, blacklist))
+		if(isitem(object))
+			var/obj/item/item = object
+			LAZYADDASSOC(.["instances"], [item.type], item)
+			if(isstack(item))
+				var/obj/item/stack/stack = item
+				.["other"][item.type] += stack.amount
 			else if(item.tool_behaviour)
 				.["tool_behaviour"] += item.tool_behaviour
 				.["other"][item.type] += 1
 			else
 				if(istype(item, /obj/item/reagent_containers))
-					var/obj/item/reagent_containers/RC = item
+					var/obj/item/reagent_containers/container = item
 					if(RC.is_drainable())
-						for(var/datum/reagent/A in RC.reagents.reagent_list)
-							.["other"][A.type] += A.volume
+						for(var/datum/reagent/reagent in container.reagents.reagent_list)
+							.["other"][reagent.type] += reagent.volume
 				.["other"][I.type] += 1
-		else if (istype(I, /obj/machinery))
-			if(.["machinery"][I.type])
-				.["machinery"][I.type] += I
-			else
-				.["machinery"][I.type] = list(I)
+		else if (ismachinery(object))
+			LAZYADDASSOC(.["machinery"], [object.type], object)
 
 
 /datum/component/personal_crafting/proc/check_tools(atom/a, datum/crafting_recipe/R, list/contents)
@@ -239,8 +233,8 @@
 	var/amt
 	var/list/requirements = R.reqs + R.machinery
 	main_loop:
-		for(var/A in requirements)
-			amt = R.reqs[A] || R.machinery[A]
+		for(var/path_key in requirements)
+			amt = R.reqs[path_key] || R.machinery[path_key]
 			if(!amt)//since machinery can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
@@ -461,9 +455,8 @@
 		//Also these are typepaths so sadly we can't just do "[a]"
 		var/atom/A = a
 		req_text += " [R.reqs[A]] [initial(A.name)],"
-	for(var/a in R.machinery)
-		var/atom/A = a
-		req_text += " [R.reqs[A]] [initial(A.name)],"
+	for(var/atom/movable/content as anything in R.machinery)
+		req_text += " [R.reqs[content]] [initial(content.name)],"
 	if(R.additional_req_text)
 		req_text += R.additional_req_text
 	req_text = replacetext(req_text,",","",-1)
@@ -484,12 +477,12 @@
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
 
-	for(var/a in R.machinery)
-		if(ispath(a, /obj/machinery))
-			var/obj/machinery/m = a
-			machinery_text += " [initial(m.name)],"
+	for(var/path_or_instance in R.machinery)
+		if(ispath(path_or_instance, /obj/machinery))
+			var/obj/machinery/path = path_or_instance
+			machinery_text += " [initial(path.name)],"
 		else
-			machinery_text += " [a],"
+			machinery_text += " [path_or_instance],"
 	machinery_text = replacetext(machinery_text,",","",-1)
 	data["machinery_text"] = machinery_text
 

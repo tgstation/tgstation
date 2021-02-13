@@ -186,7 +186,7 @@
 			to_chat(user, "<span class='notice'>You heat up the [src].</span>")
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
 			return
-	else if(istype(target, /obj/item))
+	else if(isitem(target))
 		var/obj/item/item = target
 		if(item.heat > 1000)
 			set_lit(TRUE)
@@ -220,12 +220,12 @@
 	set_lit(FALSE)
 
 /obj/item/burner/attack_self(mob/living/user)
-	if(user.is_holding(src))
-		if(lit)
-			set_lit(FALSE)
-			user.visible_message("<span class='notice'>[user] snuffs out [src]'s flame.</span>")
-	else
-		. = ..()
+	. = ..()
+	if(.)
+		return
+	if(lit)
+		set_lit(FALSE)
+		user.visible_message("<span class='notice'>[user] snuffs out [src]'s flame.</span>")
 
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(lit && M.IgniteMob())
@@ -236,8 +236,7 @@
 /obj/item/burner/process()
 	var/current_heat = 0
 	var/number_of_burning_reagents = 0
-	for(var/_reagent in reagents.reagent_list)
-		var/datum/reagent/reagent = _reagent
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		if(istype(reagent, /datum/reagent/consumable/ethanol))
 			current_heat += 2193//ethanol burns at 1970C (at it's peak)
 			number_of_burning_reagents += 1

@@ -15,7 +15,7 @@
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
-	if(chems.has_reagent(src.type, 1))
+	if(chems.has_reagent(type, 1))
 		mytray.adjustPests(rand(2,3))
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
@@ -229,11 +229,11 @@
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	if(chems.has_reagent(src.type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
 		if(myseed)
-			myseed.adjust_instability(round(chems.get_reagent_amount(src.type) * 0.15))
+			myseed.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()

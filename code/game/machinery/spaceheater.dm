@@ -370,17 +370,17 @@
 		icon_state = "sheater-heat"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
-	var/laser = 0
-	var/cap = 0
-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		laser += M.rating
-	for(var/obj/item/stock_parts/capacitor/M in component_parts)
-		cap += M.rating
+	var/lasers_rating = 0
+	var/capacitors_rating = 0
+	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
+		lasers_rating += laser.rating
+	for(var/obj/item/stock_parts/capacitor/capacitor in component_parts)
+		capacitors_rating += capacitor.rating
 
-	heatingPower = laser * 20000
+	heatingPower = lasers_rating * 20000
 
-	settableTemperatureRange = cap * 50 //-20 - 80 at base
-	efficiency = (cap + 1) * 10000
+	settableTemperatureRange = capacitors_rating * 50 //-20 - 80 at base
+	efficiency = (capacitors_rating + 1) * 10000
 
 	targetTemperature = clamp(targetTemperature,
 		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
