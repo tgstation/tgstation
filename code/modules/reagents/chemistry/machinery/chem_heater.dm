@@ -476,13 +476,13 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/debug/Initialize()
 	. = ..()
 	reagents.maximum_volume = 2000
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 980)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 980)
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 1000)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 1000)
 	heater_coefficient = 0.4 //hack way to upgrade
 
 //map load types
 /obj/machinery/chem_heater/withbuffer
-	desc = "This [name] comes with a bit of buffer to help get you started."
+	desc = "This Reaction Chamber comes with a bit of buffer to help get you started."
 
 /obj/machinery/chem_heater/withbuffer/Initialize()
 	. = ..()
