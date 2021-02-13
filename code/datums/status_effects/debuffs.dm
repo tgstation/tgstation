@@ -634,16 +634,17 @@
 	alert_type = null
 
 /datum/status_effect/gonbola_pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
-	ADD_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
-	ADD_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
+	ADD_TRAIT(owner, TRAIT_MUTE, type)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, type, /datum/mood_event/gondola)
 	to_chat(owner, "<span class='notice'>You suddenly feel at peace and feel no need to make any sudden or rash actions...</span>")
-	return ..()
 
 /datum/status_effect/gonbola_pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "gonbolaPacify")
-	REMOVE_TRAIT(owner, TRAIT_MUTE, "gonbolaMute")
-	REMOVE_TRAIT(owner, TRAIT_JOLLY, "gonbolaJolly")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, type)
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, type)
+	return ..()
 
 /datum/status_effect/trance
 	id = "trance"

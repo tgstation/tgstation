@@ -8,7 +8,8 @@
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	var/is_right_clicking = params2list(params)["right"]
+
+	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
 
 	if(tool_behaviour && target.tool_act(user, src, tool_behaviour))
 		return TRUE
@@ -17,7 +18,7 @@
 	if (is_right_clicking)
 		switch (pre_attack_secondary(target, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
-				pre_attack_result = pre_attack(src, user, params)
+				pre_attack_result = pre_attack(target, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
@@ -25,7 +26,7 @@
 			else
 				CRASH("pre_attack_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 	else
-		pre_attack_result = pre_attack(src, user, params)
+		pre_attack_result = pre_attack(target, user, params)
 
 	if(pre_attack_result)
 		return TRUE
@@ -38,7 +39,7 @@
 				attackby_result = target.attackby(src, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return TRUE
-			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
 				// Normal behavior
 			else
 				CRASH("attackby_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
