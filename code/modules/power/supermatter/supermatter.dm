@@ -1051,6 +1051,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	moveable = TRUE
 	psyOverlay = /obj/overlay/psy/shard
 
+//Specifically for the beacon, starts wrenched but can be unwrenched
+/obj/machinery/power/supermatter_crystal/shard/anchored
+	anchored = TRUE
+
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
 	is_main_engine = TRUE
