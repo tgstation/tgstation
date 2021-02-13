@@ -67,9 +67,9 @@
 		cooldown_activation(owner)
 		return FALSE
 	if(bad_effect)
-		. = emp_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+		return emp_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 	else
-		. = reactive_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+		return reactive_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 
 /**
  * A proc for doing cooldown effects (like the sparks on the tesla armor, or the semi-stealth on stealth armor)
@@ -144,10 +144,10 @@
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out jets of flame!</span>")
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
-	for(var/mob/living/carbon/C in range(6, owner))
-		if(C != owner)
-			C.adjust_fire_stacks(8)
-			C.IgniteMob()
+	for(var/mob/living/carbon/carbon_victim in range(6, owner))
+		if(carbon_victim != owner)
+			carbon_victim.adjust_fire_stacks(8)
+			carbon_victim.IgniteMob()
 	owner.set_fire_stacks(-20)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
@@ -167,13 +167,21 @@
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 	cooldown_message = "<span class='danger'>The reactive stealth system activates, but is not charged enough to fully cloak!</span>"
 	emp_message = "<span class='warning'>The reactive stealth armor's threat assessment system crashes...</span>"
+	///when triggering while on cooldown will only flicker the alpha slightly. this is how much it removes.
+	var/cooldown_alpha_removal = 50
+	///cooldown alpha flicker- how long it takes to return to the original alpha
+	var/cooldown_animation_time = 3 SECONDS
+	///how long they will be fully stealthed
+	var/stealth_time = 4 SECONDS
+	///how long it will animate back the alpha to the original
+	var/animation_time = 2 SECONDS
 	var/in_stealth = FALSE
 
 /obj/item/clothing/suit/armor/reactive/stealth/cooldown_activation(mob/living/carbon/human/owner)
 	if(in_stealth)
 		return //we don't want the cooldown message either)
-	owner.alpha = max(0, owner.alpha - 50)
-	animate(owner, alpha = initial(owner.alpha), time = 3 SECONDS)
+	owner.alpha = max(0, owner.alpha - cooldown_alpha_removal)
+	animate(owner, alpha = initial(owner.alpha), time = cooldown_animation_time)
 	..()
 
 /obj/item/clothing/suit/armor/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -184,13 +192,13 @@
 	owner.alpha = 0
 	in_stealth = TRUE
 	owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
-	addtimer(CALLBACK(src, .proc/end_stealth, owner), 4 SECONDS)
+	addtimer(CALLBACK(src, .proc/end_stealth, owner), stealth_time)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/stealth/proc/end_stealth(mob/living/carbon/human/owner)
 	in_stealth = FALSE
-	animate(owner, alpha = initial(owner.alpha), time = 2 SECONDS)
+	animate(owner, alpha = initial(owner.alpha), time = animation_time)
 
 /obj/item/clothing/suit/armor/reactive/stealth/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!isliving(hitby))
