@@ -1266,3 +1266,6 @@
 			/datum/reagent/consumable/ice = 10
 			)
 	category = CAT_CHEMISTRY
+
+#undef CRAFTING_MACHINERY_CONSUME
+#undef CRAFTING_MACHINERY_USE
