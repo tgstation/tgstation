@@ -3,6 +3,7 @@
 	roundend_category = "valentines"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	soft_antag = TRUE
 
 
 /datum/antagonist/heartbreaker/proc/forge_objectives()
