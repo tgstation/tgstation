@@ -31,9 +31,9 @@
 	return cell
 
 /obj/machinery/space_heater/Initialize()
- 	 . = ..()
-  	if(ispath(cell))
-    	cell = new cell(src)
+	. = ..()
+	if(ispath(cell))
+		cell = new cell(src)
   	update_icon()
 
 /obj/machinery/space_heater/on_construction()
