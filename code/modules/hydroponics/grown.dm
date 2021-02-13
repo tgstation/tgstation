@@ -45,8 +45,9 @@
 
 	make_dryable()
 
-	for(var/datum/plant_gene/trait/T in seed.genes)
-		T.on_new(src, loc)
+	// Go through all traits in their genes and call on_new_plant from them.
+	for(var/datum/plant_gene/trait/trait in seed.genes)
+		trait.on_new_plant(src, loc)
 
 	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
 

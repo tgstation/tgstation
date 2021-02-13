@@ -238,12 +238,12 @@
 	return TRUE
 
 /*
- * on_new is called for every trait on a plant has when it is initialized.
+ * on_new_plant is called for every plant trait on an /obj/item/grown or /obj/item/food/grown when initialized.
  *
  * our_plant - the source plant being created
  * newloc - the loc of the plant
  */
-/datum/plant_gene/trait/proc/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/proc/on_new_plant(obj/item/our_plant, newloc)
 	// Plants should always have seeds, but if a non-plant sneaks in or a plant with nulled seed, cut it out
 	if(isnull(our_plant.get_plant_seed()))
 		stack_trace("[our_plant] ([our_plant.type]) has a nulled seed value")
@@ -253,6 +253,14 @@
 	if(examine_line)
 		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
 
+	return TRUE
+
+/*
+ * on_new_seed is called when seed genes are initialized on the /obj/seed.
+ *
+ * new_seed - the seed being created
+ */
+/datum/plant_gene/trait/proc/on_new_seed(obj/item/seeds/new_seed)
 	return TRUE
 
 /// Add on any unique examine text to the plant's examine text.
@@ -268,7 +276,7 @@
 	trait_id = THROW_IMPACT_ID
 
 // Register a signal that our plant can be squashed on add.
-/datum/plant_gene/trait/squash/on_new(obj/item/food/grown/our_plant, newloc)
+/datum/plant_gene/trait/squash/on_new_plant(obj/item/food/grown/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -320,7 +328,7 @@
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
-/datum/plant_gene/trait/slip/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/slip/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -351,7 +359,7 @@
 	name = "Electrical Activity"
 	rate = 0.2
 
-/datum/plant_gene/trait/cell_charge/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/cell_charge/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -424,7 +432,7 @@
 /datum/plant_gene/trait/glow/proc/glow_power(obj/item/seeds/seed)
 	return max(seed.potency * (rate + 0.01), 0.1)
 
-/datum/plant_gene/trait/glow/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/glow/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -491,7 +499,7 @@
 	name = "Bluespace Activity"
 	rate = 0.1
 
-/datum/plant_gene/trait/teleport/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/teleport/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -550,7 +558,7 @@
 	rate = 2
 	trait_flags = TRAIT_HALVES_YIELD
 
-/datum/plant_gene/trait/maxchem/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/maxchem/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -577,7 +585,7 @@
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
 
-/datum/plant_gene/trait/battery/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/battery/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -629,7 +637,7 @@
 	name = "Hypodermic Prickles"
 	examine_line = "<span class='info'>It's quite prickley.</span>"
 
-/datum/plant_gene/trait/stinging/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/stinging/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -657,7 +665,7 @@
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
 
-/datum/plant_gene/trait/smoke/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/smoke/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -690,7 +698,7 @@
 	if(!(seed.resistance_flags & FIRE_PROOF))
 		seed.resistance_flags |= FIRE_PROOF
 
-/datum/plant_gene/trait/fire_resistance/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/fire_resistance/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -702,14 +710,14 @@
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
 
-/datum/plant_gene/trait/invasive/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
-	// Invasive spreading plants themselves do nothing, the seed is what does the magic
-	RegisterSignal(our_plant.get_plant_seed(), COMSIG_PLANT_ON_GROW, .proc/try_spread)
+	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_spread)
 
+	return TRUE
 /*
  * Attempt to find an adjacent tray we can spread to.
  *
@@ -787,7 +795,7 @@
 	/// Sounds that play when this trait triggers
 	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
 
-/datum/plant_gene/trait/plant_laughter/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/plant_laughter/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -817,7 +825,7 @@
 	name = "Oculary Mimicry"
 	var/mutable_appearance/googly
 
-/datum/plant_gene/trait/eyes/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/eyes/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
@@ -832,7 +840,7 @@
 	examine_line = "<span class='info'>It's quite sticky.</span>"
 	trait_id = THROW_IMPACT_ID
 
-/datum/plant_gene/trait/sticky/on_new(obj/item/our_plant, newloc)
+/datum/plant_gene/trait/sticky/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
