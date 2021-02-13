@@ -33,7 +33,7 @@
 	desc = "A weird suit. Why does it sound like a clock is ticking?"
 	icon_state = "ratvar_suit"
 	inhand_icon_state = "ratvar_suit"
-	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/under/suit/blacktwopiece
@@ -162,7 +162,7 @@
 	desc = "A peculiar suit, made from an unknown material. Are they hiding something?"
 	icon_state = "valor_suit"
 	inhand_icon_state = "black_suit"
-	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /obj/item/clothing/under/suit/henchmen
@@ -225,7 +225,7 @@
 	desc = "A formal uniform fit for your position, specially made with four sleeves."
 	icon_state = "prince"
 	inhand_icon_state = "prince"
-	resistance_flags = FIRE_PROOF |  ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	body_parts_covered = CHEST|GROIN|LEGS
 
 /obj/item/clothing/under/suit/redlady
@@ -236,4 +236,27 @@
 	inhand_icon_state = "redlady"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACE|HIDEFACIALHAIR
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/handled = FALSE
+
+/obj/item/clothing/under/suit/redlady/equipped(mob/user, slot)
+	if(slot != ITEM_SLOT_ICLOTHING)
+		return
+	if(iscarbon(user) && !handled)
+		handled = TRUE
+		ADD_TRAIT(user, TRAIT_HOLY, "suit")
+		to_chat(user, "<span class='notice'>Your skin seems to glow.</span.?>")
+		user.AddElement(/datum/element/holy_light)
+
+/obj/item/clothing/under/suit/redlady/dropped(mob/user)
+	if(handled)
+		handled = FALSE
+		REMOVE_TRAIT(user, TRAIT_HOLY, "cape")
+		user.RemoveElement(/datum/element/holy_light)
+
+/obj/item/clothing/under/suit/red/female
+	name = "deep-red suit"
+	desc = "A deep-red suit, cut perfectly for the abyssal demon wearing it."
+	icon_state = "red_suit_fem"
+	inhand_icon_state = "red_suit_fem"
+	resistance_flags = FIRE_PROOF | ACID_PROOF

@@ -189,7 +189,7 @@
 
 /datum/crafting_recipe/knife_bat
 	name = "Knife Bat"
-	result = /obj/item/melee/baseball_bat/bluespace
+	result = /obj/item/melee/baseball_bat/knife
 	reqs = list(/obj/item/melee/baseball_bat = 1,
 				/obj/item/kitchen/knife = 1,
 				/obj/item/stack/sticky_tape = 1,)

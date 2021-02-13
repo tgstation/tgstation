@@ -273,6 +273,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/headset_cent/commander
 	keyslot = new /obj/item/encryptionkey/heads/captain
 
+/obj/item/radio/headset/headset_cent/commander/earpiece
+	name = "earpiece"
+	desc = "An earpiece that fits snugly in the ear, without any need for messy wiring."
+	icon_state = "invis"
+	strip_delay = 99180
+
 /obj/item/radio/headset/headset_cent/alt
 	name = "\improper CentCom bowman headset"
 	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs."

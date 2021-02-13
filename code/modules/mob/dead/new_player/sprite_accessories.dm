@@ -207,6 +207,10 @@
 	name = "Bun (Tight)"
 	icon_state = "hair_tightbun"
 
+/datum/sprite_accessory/hair/businessbun
+	name = "Bun (Business)"
+	icon_state = "hair_demon"
+
 /datum/sprite_accessory/hair/business
 	name = "Business Hair"
 	icon_state = "hair_business"
