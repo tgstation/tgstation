@@ -155,6 +155,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//general preferences
 	READ_FILE(S["asaycolor"], asaycolor)
+	READ_FILE(S["brief_outfit"], brief_outfit)
 	READ_FILE(S["ooccolor"], ooccolor)
 	READ_FILE(S["lastchangelog"], lastchangelog)
 	READ_FILE(S["UI_style"], UI_style)
@@ -245,6 +246,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
+	brief_outfit	= sanitize_inlist(brief_outfit, subtypesof(/datum/outfit), null)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_keybindings(key_bindings)
@@ -281,6 +283,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//general preferences
 	WRITE_FILE(S["asaycolor"], asaycolor)
+	WRITE_FILE(S["brief_outfit"], brief_outfit)
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["UI_style"], UI_style)

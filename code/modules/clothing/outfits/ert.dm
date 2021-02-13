@@ -346,6 +346,13 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
+/datum/outfit/centcom/centcom_intern/unarmed
+	name = "CentCom Intern (Unarmed)"
+	belt = null
+	l_hand = null
+	l_pocket = null
+	r_pocket = null
+
 /datum/outfit/centcom/centcom_intern/leader
 	name = "CentCom Head Intern"
 	belt = /obj/item/melee/baton/loaded
@@ -353,6 +360,12 @@
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
 	l_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
+
+/datum/outfit/centcom/centcom_intern/leader/unarmed // i'll be nice and let the leader keep their baton and vest
+	name = "CentCom Head Intern (Unarmed)"
+	suit_store = null
+	l_pocket = null
+	r_pocket = null
 
 /datum/outfit/centcom/ert/janitor/party
 	name = "ERP Cleaning Service"

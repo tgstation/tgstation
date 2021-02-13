@@ -1646,7 +1646,6 @@
 #include "code\modules\antagonists\nukeop\equipment\nuclear_challenge.dm"
 #include "code\modules\antagonists\nukeop\equipment\nuclearbomb.dm"
 #include "code\modules\antagonists\nukeop\equipment\pinpointer.dm"
-#include "code\modules\antagonists\official\official.dm"
 #include "code\modules\antagonists\pirate\pirate.dm"
 #include "code\modules\antagonists\revenant\revenant.dm"
 #include "code\modules\antagonists\revenant\revenant_abilities.dm"
