@@ -37,12 +37,12 @@ export const PortableChemMixer = (props, context) => {
                 })} />
             ))
           )}>
-          <Box mr={-1}>
+          <Box>
             {chemicals.map(chemical => (
               <Button
                 key={chemical.id}
                 icon="tint"
-                width="425px"
+                fluid
                 lineHeight={1.75}
                 content={`(${chemical.volume}) ${chemical.title}`}
                 tooltip={"pH: " + chemical.pH}
