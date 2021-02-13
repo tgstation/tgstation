@@ -3,7 +3,6 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE | PASSGRILLE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
@@ -104,6 +103,8 @@
 	set_nutrition(700)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 0)
 	add_cell_sample()
+
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -339,7 +340,7 @@
 				discipline_slime(M)
 	else
 		if(stat == DEAD && surgeries.len)
-			if(!M.combat_mode || (modifiers && modifiers["right"]))
+			if(!M.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(M, modifiers))
 						return 1
@@ -355,7 +356,7 @@
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
 		var/list/modifiers = params2list(params)
-		if(!user.combat_mode || (modifiers && modifiers["right"]))
+		if(!user.combat_mode || (LAZYACCESS(modifiers, RIGHT_CLICK)))
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user, modifiers))
 					return 1

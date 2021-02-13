@@ -136,11 +136,14 @@
 /obj/item/kitchen/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "render"
-	worn_icon_state = "render"
-	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "bone_blade"
+	inhand_icon_state = "bone_blade"
+	worn_icon_state = "bone_blade"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/kitchen/knife/bloodletter

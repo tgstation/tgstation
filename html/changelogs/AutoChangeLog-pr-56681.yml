@@ -1,4 +1,0 @@
-author: "Gamer025 & nightred"
-delete-after: True
-changes: 
-  - bugfix: "CTF no longer tries to dust the same mob multiple times which caused a lot of runtimes"

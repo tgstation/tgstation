@@ -181,10 +181,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/run_dynamic_simulations,
 	#endif
 	/datum/admins/proc/create_or_modify_area,
-#ifdef REFERENCE_TRACKING
-	/datum/admins/proc/view_refs,
-	/datum/admins/proc/view_del_failures,
-#endif
 	/client/proc/check_timer_sources,
 	/client/proc/toggle_cdn
 	)
