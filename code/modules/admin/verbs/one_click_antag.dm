@@ -1,3 +1,6 @@
+/// If we spawn an ERT with the "choose experienced leader" option, select the leader from the top X playtimes
+#define ERT_EXPERIENCED_LEADER_CHOOSE_TOP	3
+
 /client/proc/one_click_antag()
 	set name = "Create Antagonist"
 	set desc = "Auto-create an antagonist of your choice"
@@ -353,16 +356,16 @@
 		var/index = 0
 
 		if(ertemplate.spawn_admin)
-			if(!isobserver(usr))
-				to_chat(usr, "<span class='warning'>Could not spawn you in as briefing officer as you are not a ghost!</spawn>")
-			else
+			if(isobserver(usr))
 				var/mob/living/carbon/human/admin_officer = new (spawnpoints[1])
-				var/chosen_outfit = usr.client?.prefs.brief_outfit || null
+				var/chosen_outfit = usr.client?.prefs?.brief_outfit
 				usr.client.prefs.copy_to(admin_officer)
 				admin_officer.equipOutfit(chosen_outfit)
 				admin_officer.key = usr.key
+			else
+				to_chat(usr, "<span class='warning'>Could not spawn you in as briefing officer as you are not a ghost!</spawn>")
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad", null)
+		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
 		var/teamSpawned = FALSE
 
 		if(candidates.len == 0)
@@ -376,7 +379,7 @@
 		if(ertemplate.rename_team)
 			ert_team.name = ertemplate.rename_team
 
-		//Asign team objective
+		//Assign team objective
 		var/datum/objective/missionobj = new ()
 		missionobj.team = ert_team
 		missionobj.explanation_text = ertemplate.mission
@@ -394,8 +397,8 @@
 				candidate_living_exps[potential_leader] = potential_leader.client?.get_exp_living(TRUE)
 
 			candidate_living_exps = sortList(candidate_living_exps, cmp=/proc/cmp_numeric_dsc)
-			if(candidate_living_exps.len >= 4)
-				candidate_living_exps = candidate_living_exps.Cut(4) // pick from the top 3 contendors in playtime
+			if(candidate_living_exps.len > ERT_EXPERIENCED_LEADER_CHOOSE_TOP)
+				candidate_living_exps = candidate_living_exps.Cut(ERT_EXPERIENCED_LEADER_CHOOSE_TOP+1) // pick from the top ERT_EXPERIENCED_LEADER_CHOOSE_TOP contenders in playtime
 			earmarked_leader = pick(candidate_living_exps)
 		else
 			earmarked_leader = pick(candidates)
@@ -410,12 +413,12 @@
 				continue
 
 			//Spawn the body
-			var/mob/living/carbon/human/ERTOperative = new ertemplate.mobtype(spawnloc)
-			chosen_candidate.client.prefs.copy_to(ERTOperative)
-			ERTOperative.key = chosen_candidate.key
+			var/mob/living/carbon/human/ert_operative = new ertemplate.mobtype(spawnloc)
+			chosen_candidate.client.prefs.copy_to(ert_operative)
+			ert_operative.key = chosen_candidate.key
 
-			if(ertemplate.enforce_human || !ERTOperative.dna.species.changesource_flags & ERT_SPAWN) // Don't want any exploding plasmemes
-				ERTOperative.set_species(/datum/species/human)
+			if(ertemplate.enforce_human || !ert_operative.dna.species.changesource_flags & ERT_SPAWN) // Don't want any exploding plasmemes
+				ert_operative.set_species(/datum/species/human)
 
 			//Give antag datum
 			var/datum/antagonist/ert/ert_antag
@@ -429,11 +432,11 @@
 				ert_antag = new ert_antag ()
 			ert_antag.random_names = ertemplate.random_names
 
-			ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
-			ERTOperative.mind.assigned_role = ert_antag.name
+			ert_operative.mind.add_antag_datum(ert_antag,ert_team)
+			ert_operative.mind.assigned_role = ert_antag.name
 
 			//Logging and cleanup
-			log_game("[key_name(ERTOperative)] has been selected as an [ert_antag.name]")
+			log_game("[key_name(ert_operative)] has been selected as an [ert_antag.name]")
 			numagents--
 			teamSpawned++
 

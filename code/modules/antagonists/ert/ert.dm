@@ -56,13 +56,14 @@
 /datum/antagonist/ert/official/forge_objectives()
 	if (ert_team)
 		return ..()
-	if (!mission)
-		var/datum/objective/missionobj = new ()
-		missionobj.owner = owner
-		missionobj.explanation_text = "Conduct a routine performance review of [station_name()] and its Captain."
-		missionobj.completed = 1
-		mission = missionobj
-		objectives |= mission
+	if(mission)
+		return
+	var/datum/objective/missionobj = new ()
+	missionobj.owner = owner
+	missionobj.explanation_text = "Conduct a routine performance review of [station_name()] and its Captain."
+	missionobj.completed = TRUE
+	mission = missionobj
+	objectives |= mission
 
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
