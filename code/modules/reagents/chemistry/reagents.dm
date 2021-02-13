@@ -94,9 +94,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 	var/failed_chem = /datum/reagent/consumable/failed_reaction
 	///Thermodynamic vars
-	///How hot this reagent burns when it's on fire - null means it can't burnt
+	///How hot this reagent burns when it's on fire - null means it can't burn
 	var/burning_temperature = null
-	///How much is consumed when it is burnt
+	///How much is consumed when it is burnt per second
 	var/burning_volume = 0.5
 
 /datum/reagent/New()
@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_TURF, exposed_turf, reac_volume)
 
-///Called whenever a reagent is on fire, or is in a holder that is on fire.
+///Called whenever a reagent is on fire, or is in a holder that is on fire. (WIP)
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
