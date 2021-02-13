@@ -245,7 +245,7 @@
 	. = ..() //includes the increased blood (re)generation rate from normal water
 
 	if(M.jitteriness < 10)
-		M.jitteriness = min(M.jitteriness+4,10)
+		M.jitteriness = min(M.jitteriness + 4, 10)
 
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
