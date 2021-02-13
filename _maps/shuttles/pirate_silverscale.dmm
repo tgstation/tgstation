@@ -621,8 +621,8 @@
 "Mo" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 8;
-	x_offset = -3;
-	y_offset = 4
+	x_offset = 10;
+	y_offset = 5
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
