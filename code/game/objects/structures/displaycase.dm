@@ -113,14 +113,14 @@
 	else if(!open)
 		. += "[initial(icon_state)]_closed"
 
-/obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
+/obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID() && !broken && openable)
 		if(allowed(user))
 			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 			toggle_lock(user)
 		else
 			to_chat(user,  "<span class='alert'>Access denied.</span>")
-	else if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
+	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
@@ -177,7 +177,7 @@
 /obj/structure/displaycase/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/displaycase/attack_hand(mob/user)
+/obj/structure/displaycase/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
@@ -192,7 +192,7 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		if (user.a_intent == INTENT_HELP)
+		if (!user.combat_mode)
 			if(!user.is_blind())
 				user.examinate(src)
 			return
@@ -293,11 +293,11 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/user, params)
+/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
 
 	if(!user.Adjacent(src)) //no TK museology
 		return
-	if(user.a_intent == INTENT_HARM)
+	if(user.combat_mode)
 		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
@@ -389,6 +389,7 @@
 	req_access = null
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
 	glass_fix = FALSE //Fixable with tools instead.
+	pass_flags = PASSTABLE ///Can be placed and moved onto a table.
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
@@ -538,7 +539,7 @@
 
 /obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(open && user.a_intent == INTENT_HELP )
+	if(open && !user.combat_mode)
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
 		else
@@ -552,7 +553,7 @@
 				to_chat(user, "<span class='notice'>You secure [src].</span>")
 			set_anchored(!anchored)
 			return
-	else if(!open && user.a_intent == INTENT_HELP)
+	else if(!open && !user.combat_mode)
 		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
 		return
 

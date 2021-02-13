@@ -60,11 +60,11 @@
 // For base materials, see materials.dm
 
 /datum/export/stack/plasteel
-	cost = CARGO_CRATE_VALUE * 0.41 // 2000u of plasma + 2000u of metal.
+	cost = CARGO_CRATE_VALUE * 0.41 // 2000u of plasma + 2000u of iron.
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
-// 1 glass + 0.5 metal, cost is rounded up.
+// 1 glass + 0.5 iron, cost is rounded up.
 /datum/export/stack/rglass
 	cost = CARGO_CRATE_VALUE * 0.02
 	message = "of reinforced glass"

@@ -57,10 +57,6 @@
 		date = love_interest
 		linked_alert.desc = "You're in love with [date.real_name]! How lovely."
 
-/datum/status_effect/in_love/tick()
-	if(date)
-		new /obj/effect/temp_visual/love_heart/invisible(date.drop_location(), owner)
-
 /datum/status_effect/throat_soothed
 	id = "throat_soothed"
 	duration = 60 SECONDS
@@ -111,7 +107,7 @@
 		rewarded.adjustCloneLoss(-25)
 
 // heldup is for the person being aimed at
-/datum/status_effect/heldup
+/datum/status_effect/grouped/heldup
 	id = "heldup"
 	duration = -1
 	tick_interval = -1
@@ -122,6 +118,14 @@
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
 	icon_state = "aimed"
+
+/datum/status_effect/grouped/heldup/on_apply()
+	owner.apply_status_effect(STATUS_EFFECT_SURRENDER)
+	return ..()
+
+/datum/status_effect/grouped/heldup/on_remove()
+	owner.remove_status_effect(STATUS_EFFECT_SURRENDER)
+	return ..()
 
 // holdup is for the person aiming
 /datum/status_effect/holdup
@@ -292,6 +296,23 @@
 /// Something fishy is going on here...
 /datum/status_effect/high_fiving/proc/dropped_slap(obj/item/source)
 	slap_item = null
+
+//this effect gives the user an alert they can use to surrender quickly
+/datum/status_effect/grouped/surrender
+	id = "surrender"
+	duration = -1
+	tick_interval = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/surrender
+
+/atom/movable/screen/alert/status_effect/surrender
+	name = "Surrender"
+	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
+	icon_state = "surrender"
+
+/atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)
+	. = ..()
+	owner.emote("surrender")
 
 /*
  * A status effect used for preventing caltrop message spam

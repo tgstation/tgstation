@@ -67,7 +67,7 @@
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
 	max_ammo = 1
 	start_empty = TRUE
-	caliber = "arrow"
+	caliber = CALIBER_ARROW
 
 /obj/item/ammo_casing/caseless/arrow
 	name = "arrow"
@@ -77,7 +77,7 @@
 	throwforce = 1
 	projectile_type = /obj/projectile/bullet/reusable/arrow
 	firing_effect_type = null
-	caliber = "arrow"
+	caliber = CALIBER_ARROW
 	heavy_metal = FALSE
 
 /obj/item/ammo_casing/caseless/arrow/despawning/dropped()

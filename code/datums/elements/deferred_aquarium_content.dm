@@ -14,7 +14,13 @@
 	if(!aquarium_content_type)
 		CRASH("Deferred aquarium content missing behaviour type.")
 	src.aquarium_content_type = aquarium_content_type
-	RegisterSignal(target, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK, .proc/create_aquarium_component)
+
+	//If element is added to something already in aquarium, just create the component.
+	var/atom/movable/movable_target = target
+	if(istype(movable_target.loc, /obj/structure/aquarium))
+		create_aquarium_component(movable_target)
+	else //otherwise the component will be created when trying to insert the thing.
+		RegisterSignal(target, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK, .proc/create_aquarium_component)
 
 /datum/element/deferred_aquarium_content/Detach(datum/target)
 	. = ..()

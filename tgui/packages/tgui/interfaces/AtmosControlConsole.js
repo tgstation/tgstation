@@ -10,8 +10,7 @@ export const AtmosControlConsole = (props, context) => {
   return (
     <Window
       width={500}
-      height={315}
-      resizable>
+      height={315}>
       <Window.Content scrollable>
         <Section
           title={!!data.tank && sensors[0]?.long_name}>

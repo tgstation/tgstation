@@ -65,12 +65,12 @@
 	else
 		myseed = new myseed(src)
 	if(spread)
-		myseed.potency -= round(myseed.potency * 0.25) // Reduce potency of the little mushie if it's spreading
+		myseed.adjust_potency(-round(myseed.potency * 0.25)) // Reduce potency of the little mushie if it's spreading
 	if(mutate_stats) //baby mushrooms have different stats :3
 		myseed.adjust_potency(rand(-4,3))
 		myseed.adjust_yield(rand(-3,2))
 		myseed.adjust_production(rand(-3,3))
-		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
+		myseed.adjust_endurance(myseed.endurance + rand(-3,2))
 	if(myseed.production >= 1) //In case production is varedited to -1 or less which would cause unlimited or negative delay.
 		delay_spread = delay_spread - (11 - myseed.production) * 100 //Because lower production speed stat gives faster production speed, which should give faster mushroom spread. Range 200-1100 deciseconds.
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
@@ -225,13 +225,13 @@
  */
 /obj/structure/glowshroom/proc/Decay(spread, amount)
 	if (spread) // Decay due to spread
-		myseed.endurance -= amount
+		myseed.adjust_endurance(-amount)
 	else // Timed decay
-		myseed.endurance -= 1
-		if (myseed.endurance > 0)
+		myseed.adjust_endurance(-1)
+		if (myseed.endurance > MIN_PLANT_ENDURANCE)
 			addtimer(CALLBACK(src, .proc/Decay), delay_decay, TIMER_UNIQUE|TIMER_NO_HASH_WAIT) // Recall decay timer
 			return
-	if (myseed.endurance < 1) // Plant is gone
+	if (myseed.endurance <= MIN_PLANT_ENDURANCE) // Plant is gone
 		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -250,8 +250,3 @@
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
 	return TRUE
-
-/obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
-	if (istype(I, /obj/item/plant_analyzer))
-		return myseed.attackby(I, user, params) // Hacky I guess
-	return ..() // Attack normally

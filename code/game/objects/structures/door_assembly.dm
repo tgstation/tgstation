@@ -17,7 +17,7 @@
 	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
 	var/previous_assembly = /obj/structure/door_assembly
 	var/noglass = FALSE //airlocks with no glass version, also cannot be modified with sheets
-	var/material_type = /obj/item/stack/sheet/metal
+	var/material_type = /obj/item/stack/sheet/iron
 	var/material_amt = 4
 
 /obj/structure/door_assembly/Initialize()

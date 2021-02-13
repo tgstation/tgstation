@@ -72,10 +72,7 @@
 	syringe.volume = meth.addiction_threshold
 	syringe.amount_per_transfer_from_this = meth.addiction_threshold
 	syringe.reagents.add_reagent(meth.type, meth.addiction_threshold)
-
-	syringe.mode = SYRINGE_INJECT
-	syringe_user.a_intent = INTENT_HARM
-	syringe.afterattack(syringe_user, syringe_user, TRUE)
+	syringe.melee_attack_chain(syringe_user, syringe_user)
 
 	syringe_user.Life()
 
@@ -90,10 +87,7 @@
 	// One half pill
 	pill_two.reagents.add_reagent(meth.type, (meth.addiction_threshold * 0.5) + 1)
 	pill_two.attack(pill_syringe_user, pill_syringe_user)
-
-	pill_syringe_user.a_intent = INTENT_HARM
-	syringe.mode = SYRINGE_INJECT
-	syringe.afterattack(pill_syringe_user, pill_syringe_user, TRUE)
+	syringe.melee_attack_chain(pill_syringe_user, pill_syringe_user)
 
 	// Set the metabolism efficiency to 1.0 so it transfers all reagents to the body in one go.
 	pill_belly = pill_syringe_user.getorganslot(ORGAN_SLOT_STOMACH)
