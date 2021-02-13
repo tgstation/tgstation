@@ -8,6 +8,8 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
 	var/obj/item/food/pizzaslice/slice_type
+	///What label pizza boxes use if this pizza spawns in them.
+	var/boxtag = ""
 
 /obj/item/food/pizza/MakeProcessable()
 	if (slice_type)
@@ -32,9 +34,9 @@
 	icon_state = "pizzamargherita"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/margherita
+	boxtag = "Margherita Deluxe"
 
 /obj/item/food/pizza/margherita/robo
 	food_reagents = list(/datum/reagent/nanomachines = 70, /datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
@@ -57,6 +59,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 8)
 	foodtypes = GRAIN | VEGETABLES| DAIRY | MEAT
 	slice_type = /obj/item/food/pizzaslice/meat
+	boxtag = "Meatlovers' Supreme"
 
 /obj/item/food/pizzaslice/meat
 	name = "meatpizza slice"
@@ -74,6 +77,7 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/mushroom
+	boxtag = "Mushroom Special"
 
 /obj/item/food/pizzaslice/mushroom
 	name = "mushroom pizza slice"
@@ -91,6 +95,7 @@
 	tastes = list("crust" = 1, "tomato" = 2, "cheese" = 1, "carrot" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/vegetable
+	boxtag = "Gourmet Vegetable"
 
 /obj/item/food/pizzaslice/vegetable
 	name = "vegetable pizza slice"
@@ -108,6 +113,7 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
 	slice_type = /obj/item/food/pizzaslice/donkpocket
+	boxtag = "Bangin' Donk"
 
 /obj/item/food/pizzaslice/donkpocket
 	name = "donkpocket pizza slice"
@@ -125,6 +131,7 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/dank
+	boxtag = "Fresh Herb"
 
 /obj/item/food/pizzaslice/dank
 	name = "dank pizza slice"
@@ -136,12 +143,13 @@
 
 /obj/item/food/pizza/sassysage
 	name = "sassysage pizza"
-	desc = "You can really smell the sassiness."
+	desc = "You can almost taste the sassiness."
 	icon_state = "sassysagepizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/sassysage
+	boxtag = "Sausage Lovers"
 
 /obj/item/food/pizzaslice/sassysage
 	name = "sassysage pizza slice"
@@ -159,6 +167,7 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
 	slice_type = /obj/item/food/pizzaslice/pineapple
+	boxtag = "Honolulu Chew"
 
 /obj/item/food/pizzaslice/pineapple
 	name = "\improper Hawaiian pizza slice"
@@ -192,6 +201,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/iron = 10, /datum/reagent/medicine/omnizine = 30)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 	slice_type = /obj/item/food/pizzaslice/arnold
+	boxtag = "9mm Pepperoni"
 
 //fuck it, i will leave this at the food level for now.
 /obj/item/food/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm
