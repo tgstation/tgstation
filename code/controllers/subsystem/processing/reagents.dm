@@ -17,7 +17,7 @@ PROCESSING_SUBSYSTEM_DEF(reagents)
 	//Build GLOB lists - see holder.dm
 	build_chemical_reagent_list()
 	build_chemical_reactions_lists()
-	return ..()
+	return 
 
 /datum/controller/subsystem/processing/reagents/fire(resumed = FALSE)
 	if (!resumed)

@@ -169,7 +169,6 @@ export const ChemHeater = (props, context) => {
               <Flex>
                 <Flex.Item color="label">
                   <AnimatedNumber
-                    textAlign="left"
                     value={currentpH}
                     format={value => 'pH: ' + round(value, 3)} />
                 </Flex.Item>

@@ -75,7 +75,7 @@ export const Reagents = (props, context) => {
   };
 
   const visibleReactions = master_reaction_list.filter(reaction => (
-    selectedBitflags ? matchBitflag(selectedBitflags, reaction.bitflags) : true
+    (selectedBitflags ? matchBitflag(selectedBitflags, reaction.bitflags) : true)
     && matchReagents(reaction)
   ));
 
