@@ -1639,8 +1639,6 @@
 
 /datum/reagents/ui_data(mob/user)
 	var/data = list()
-	data["hasReagent"] = ui_reagent_id ? TRUE : FALSE
-	data["hasReaction"] = ui_reaction_id ? TRUE : FALSE
 	data["selectedBitflags"] = ui_tags_selected
 	data["currentReagents"] = previous_reagent_list //This keeps the string of reagents that's updated when handle_reactions() is called
 	data["beakerSync"] = ui_beaker_sync
@@ -1674,6 +1672,9 @@
 			var/datum/reagent/failed_reagent = GLOB.chemical_reagents_list[reagent.failed_chem]
 			if(failed_reagent)
 				data["reagent_mode_reagent"] += list("failedReagent" = failed_reagent.name, "failedId" = failed_reagent.type)
+
+			if(istype(reagent, /datum/reagent/impurity))
+				data["reagent_mode_reagent"] += list("isImpure" = TRUE)
 
 			if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 				data["reagent_mode_reagent"] += list("deadProcess" = TRUE)
@@ -1775,6 +1776,29 @@
 	var/data = list()
 	//Use GLOB list - saves processing
 	data["master_reaction_list"] = GLOB.chemical_reactions_results_lookup_list
+	data["bitflags"] = list()
+	data["bitflags"]["BRUTE"] = REACTION_TAG_BRUTE
+	data["bitflags"]["BURN"] = REACTION_TAG_BURN
+	data["bitflags"]["TOXIN"] = REACTION_TAG_TOXIN
+	data["bitflags"]["OXY"] = REACTION_TAG_OXY
+	data["bitflags"]["CLONE"] = REACTION_TAG_CLONE
+	data["bitflags"]["HEALING"] = REACTION_TAG_HEALING
+	data["bitflags"]["DAMAGING"] = REACTION_TAG_DAMAGING
+	data["bitflags"]["EXPLOSIVE"] = REACTION_TAG_EXPLOSIVE
+	data["bitflags"]["OTHER"] = REACTION_TAG_OTHER
+	data["bitflags"]["DANGEROUS"] = REACTION_TAG_DANGEROUS
+	data["bitflags"]["EASY"] = REACTION_TAG_EASY
+	data["bitflags"]["MODERATE"] = REACTION_TAG_MODERATE
+	data["bitflags"]["HARD"] = REACTION_TAG_HARD
+	data["bitflags"]["ORGAN"] = REACTION_TAG_ORGAN
+	data["bitflags"]["DRINK"] = REACTION_TAG_DRINK
+	data["bitflags"]["FOOD"] = REACTION_TAG_FOOD
+	data["bitflags"]["SLIME"] = REACTION_TAG_SLIME
+	data["bitflags"]["DRUG"] = REACTION_TAG_DRUG
+	data["bitflags"]["UNIQUE"] = REACTION_TAG_UNIQUE
+	data["bitflags"]["CHEMICAL"] = REACTION_TAG_CHEMICAL
+	data["bitflags"]["PLANT"] = REACTION_TAG_PLANT
+	data["bitflags"]["COMPETITIVE"] = REACTION_TAG_COMPETITIVE
 
 	return data
 
@@ -1828,14 +1852,14 @@
 			return TRUE
 		if("increment_index")
 			ui_reaction_index += 1
-			if(!ui_beaker_sync && reaction_list)
+			if(!ui_beaker_sync || !reaction_list)
 				ui_reaction_id = get_reaction_from_indexed_possibilities(get_reagent_type_from_product_string(params["id"]))
 			return TRUE
 		if("reduce_index")
 			if(ui_reaction_index == 1)
 				return
 			ui_reaction_index -= 1
-			if(!ui_beaker_sync && reaction_list)
+			if(!ui_beaker_sync || !reaction_list)
 				ui_reaction_id = get_reaction_from_indexed_possibilities(get_reagent_type_from_product_string(params["id"]))
 			return TRUE
 		if("beaker_sync")

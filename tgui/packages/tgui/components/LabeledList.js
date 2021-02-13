@@ -29,6 +29,7 @@ export const LabeledListItem = props => {
     buttons,
     content,
     children,
+    lableBold,
   } = props;
   return (
     <tr
@@ -39,6 +40,7 @@ export const LabeledListItem = props => {
       <Box
         as="td"
         color={labelColor}
+        bold={lableBold}
         className={classes([
           'LabeledList__cell',
           'LabeledList__label',
