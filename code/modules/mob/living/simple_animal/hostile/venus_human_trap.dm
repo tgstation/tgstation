@@ -39,7 +39,6 @@
 	anchors += locate(x-2,y-2,z)
 	anchors += locate(x+2,y-2,z)
 
-
 	for(var/turf/T in anchors)
 		vines += Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 	finish_time = world.time + growth_time
@@ -50,7 +49,6 @@
 /obj/structure/alien/resin/flower_bud/Destroy()
 	QDEL_LIST(vines)
 	return ..()
-
 
 /**
  * Spawns a venus human trap, then qdels itself.
