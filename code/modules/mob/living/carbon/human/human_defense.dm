@@ -220,7 +220,7 @@
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 
 
-	if(modifiers && modifiers["right"]) //Always drop item in hand, if no item, get stunned instead.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
@@ -270,7 +270,7 @@
 	if(!.)
 		return
 
-	if(modifiers && modifiers["right"]) //Always drop item in hand, if no item, get stun instead.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stun instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)

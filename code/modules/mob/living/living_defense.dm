@@ -245,30 +245,31 @@
 
 	if (user.apply_martial_art(src, modifiers))
 		return TRUE
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if (user != src)
 			user.disarm(src)
 			return TRUE
-	if (user.combat_mode)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, "<span class='warning'>You don't want to hurt anyone!</span>")
-			return FALSE
+	if (!user.combat_mode)
+		return FALSE
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to hurt anyone!</span>")
+		return FALSE
 
-		if(user.is_muzzled() || user.is_mouth_covered(FALSE, TRUE))
-			to_chat(user, "<span class='warning'>You can't bite with your mouth covered!</span>")
-			return FALSE
-		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
-		if (prob(75))
-			log_combat(user, src, "attacked")
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-			visible_message("<span class='danger'>[user.name] bites [src]!</span>", \
-							"<span class='userdanger'>[user.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='danger'>You bite [src]!</span>")
-			return TRUE
-		else
-			visible_message("<span class='danger'>[user.name]'s bite misses [src]!</span>", \
-							"<span class='danger'>You avoid [user.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, "<span class='warning'>Your bite misses [src]!</span>")
+	if(user.is_muzzled() || user.is_mouth_covered(FALSE, TRUE))
+		to_chat(user, "<span class='warning'>You can't bite with your mouth covered!</span>")
+		return FALSE
+	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
+	if (prob(75))
+		log_combat(user, src, "attacked")
+		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
+		visible_message("<span class='danger'>[user.name] bites [src]!</span>", \
+						"<span class='userdanger'>[user.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='danger'>You bite [src]!</span>")
+		return TRUE
+	else
+		visible_message("<span class='danger'>[user.name]'s bite misses [src]!</span>", \
+						"<span class='danger'>You avoid [user.name]'s bite!</span>", "<span class='hear'>You hear the sound of jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your bite misses [src]!</span>")
 
 	return FALSE
 
@@ -298,7 +299,7 @@
 	return FALSE
 
 /mob/living/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		return TRUE
 	if(user.combat_mode)

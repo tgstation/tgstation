@@ -250,11 +250,3 @@
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
 	return TRUE
-
-/obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
-	if (istype(I, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = I
-		to_chat(user, plant_analyzer.scan_plant(myseed))
-		return
-
-	return ..() // Attack normally

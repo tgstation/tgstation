@@ -32,7 +32,7 @@
 	if(dna?.species?.spec_unarmedattack(src, A, modifiers)) //Because species like monkeys dont use attack hand
 		return
 
-	if (modifiers["right"])
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		var/secondary_result = A.attack_hand_secondary(src, modifiers)
 
 		if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
