@@ -70,7 +70,7 @@
 	var/list/item_instances = contents["instances"]
 	var/list/machines = contents["machinery"]
 	contents = contents["other"]
-	
+
 
 	var/list/requirements_list = list()
 
@@ -129,7 +129,7 @@
 	for(var/obj/object in get_environment(a, blacklist))
 		if(isitem(object))
 			var/obj/item/item = object
-			LAZYADDASSOC(.["instances"], [item.type], item)
+			LAZYADDASSOC(.["instances"], item.type, item)
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
@@ -139,12 +139,12 @@
 			else
 				if(istype(item, /obj/item/reagent_containers))
 					var/obj/item/reagent_containers/container = item
-					if(RC.is_drainable())
+					if(container.is_drainable())
 						for(var/datum/reagent/reagent in container.reagents.reagent_list)
 							.["other"][reagent.type] += reagent.volume
-				.["other"][I.type] += 1
+				.["other"][item.type] += 1
 		else if (ismachinery(object))
-			LAZYADDASSOC(.["machinery"], [object.type], object)
+			LAZYADDASSOC(.["machinery"], object.type, object)
 
 
 /datum/component/personal_crafting/proc/check_tools(atom/a, datum/crafting_recipe/R, list/contents)
@@ -231,7 +231,11 @@
 	. = list()
 	var/data
 	var/amt
-	var/list/requirements = R.reqs + R.machinery
+	var/list/requirements = list()
+	if(R.reqs)
+		requirements += R.reqs
+	if(R.machinery)
+		requirements += R.machinery
 	main_loop:
 		for(var/path_key in requirements)
 			amt = R.reqs[path_key] || R.machinery[path_key]
@@ -239,12 +243,12 @@
 				continue main_loop
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
-			if(ispath(A, /datum/reagent))
-				var/datum/reagent/RG = new A
+			if(ispath(path_key, /datum/reagent))
+				var/datum/reagent/RG = new path_key
 				var/datum/reagent/RGNT
 				while(amt > 0)
 					var/obj/item/reagent_containers/RC = locate() in surroundings
-					RG = RC.reagents.get_reagent(A)
+					RG = RC.reagents.get_reagent(path_key)
 					if(RG)
 						if(!locate(RG.type) in Deletion)
 							Deletion += new RG.type()
@@ -268,11 +272,11 @@
 						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
-			else if(ispath(A, /obj/item/stack))
+			else if(ispath(path_key, /obj/item/stack))
 				var/obj/item/stack/S
 				var/obj/item/stack/SD
 				while(amt > 0)
-					S = locate(A) in surroundings
+					S = locate(path_key) in surroundings
 					if(S.amount >= amt)
 						if(!locate(S.type) in Deletion)
 							SD = new S.type()
@@ -293,34 +297,34 @@
 			else
 				var/atom/movable/I
 				while(amt > 0)
-					I = locate(A) in surroundings
+					I = locate(path_key) in surroundings
 					Deletion += I
 					surroundings -= I
 					amt--
 	var/list/partlist = list(R.parts.len)
 	for(var/M in R.parts)
 		partlist[M] = R.parts[M]
-	for(var/A in R.parts)
-		if(istype(A, /datum/reagent))
-			var/datum/reagent/RG = locate(A) in Deletion
-			if(RG.volume > partlist[A])
-				RG.volume = partlist[A]
+	for(var/part in R.parts)
+		if(istype(part, /datum/reagent))
+			var/datum/reagent/RG = locate(part) in Deletion
+			if(RG.volume > partlist[part])
+				RG.volume = partlist[part]
 			. += RG
 			Deletion -= RG
 			continue
-		else if(istype(A, /obj/item/stack))
-			var/obj/item/stack/ST = locate(A) in Deletion
-			if(ST.amount > partlist[A])
-				ST.amount = partlist[A]
+		else if(istype(part, /obj/item/stack))
+			var/obj/item/stack/ST = locate(part) in Deletion
+			if(ST.amount > partlist[part])
+				ST.amount = partlist[part]
 			. += ST
 			Deletion -= ST
 			continue
 		else
-			while(partlist[A] > 0)
-				var/atom/movable/AM = locate(A) in Deletion
+			while(partlist[part] > 0)
+				var/atom/movable/AM = locate(part) in Deletion
 				. += AM
 				Deletion -= AM
-				partlist[A] -= 1
+				partlist[part] -= 1
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)

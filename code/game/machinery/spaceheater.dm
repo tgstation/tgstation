@@ -242,8 +242,10 @@
 	icon_state = "sheater-off"
 	name = "Improvised chem heater"
 	desc = "A space heater hacked to reroute heating to a water bath on the top."
-	panel_open = TRUE //This is always open
+	panel_open = TRUE //This is always open - since we've injected wires in the panel
+	///The beaker within the heater
 	var/obj/item/reagent_containers/beaker = null
+	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
 	var/chem_heating_power = 1
 
 /obj/machinery/space_heater/improvised_chem_heater/process(delta_time)
@@ -327,7 +329,7 @@
 		if(is_type_in_list(I, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
 			I.afterattack(beaker, user, 1)
 		return
-		
+
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/space_heater/improvised_chem_heater/on_deconstruction()
@@ -368,6 +370,9 @@
 		return
 	if(targetTemperature > beaker.reagents.chem_temp)
 		icon_state = "sheater-heat"
+		return
+	else
+		icon_state = "sheater-off"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
 	var/lasers_rating = 0

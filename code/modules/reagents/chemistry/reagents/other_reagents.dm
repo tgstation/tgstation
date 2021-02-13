@@ -1066,6 +1066,8 @@
 	glass_desc = "Unless you're an industrial tool, this is probably not safe for consumption."
 	penetrates_skin = NONE
 	ph = 4
+	burning_temperature = 1725 //more refined than oil
+	burning_volume = 0.2
 
 /datum/reagent/fuel/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	. = ..()
@@ -1636,6 +1638,8 @@
 	reagent_state = LIQUID
 	color = "#2D2D2D"
 	taste_description = "oil"
+	burning_temperature = 1200//Oil is crude
+	burning_volume = 0.05 //but has a lot of hydrocarbons
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"

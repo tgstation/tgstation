@@ -89,10 +89,15 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/impure_chem = /datum/reagent/impurity
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
-	/// What chem is metabolised when purity is below inverse_chem_val						
+	/// What chem is metabolised when purity is below inverse_chem_val
 	var/inverse_chem = /datum/reagent/impurity/toxic
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 	var/failed_chem = /datum/reagent/consumable/failed_reaction
+	///Thermodynamic vars
+	///How hot this reagent burns when it's on fire - null means it can't burnt
+	var/burning_temperature = null
+	///How much is consumed when it is burnt
+	var/burning_volume = 0.5
 
 /datum/reagent/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -137,6 +142,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	SHOULD_CALL_PARENT(TRUE)
 
 	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_TURF, exposed_turf, reac_volume)
+
+///Called whenever a reagent is on fire, or is in a holder that is on fire.
+/datum/reagent/proc/burn(datum/reagents/holder)
+	return
 
 /// Called from [/datum/reagents/proc/metabolize]
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)

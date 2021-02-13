@@ -114,7 +114,7 @@
 
 /obj/item/ph_meter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!istype(target, /obj/item/reagent_containers))
+	if(!is_reagent_container(target))
 		return
 	var/obj/item/reagent_containers/cont = target
 	if(LAZYLEN(cont.reagents.reagent_list) == null)
@@ -142,18 +142,21 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	heat = 2000
+	///If the flame is lit - i.e. if we're processing and burning
 	var/lit = FALSE
+	///total reagent volume
 	var/max_volume = 50
+	///What the creation reagent is
 	var/reagent_type = /datum/reagent/consumable/ethanol
 
 /obj/item/burner/Initialize()
 	. = ..()
-	create_reagents(max_volume, TRANSPARENT)//WE have our own refillable - since we want to heat and pour
+	create_reagents(max_volume, TRANSPARENT)//We have our own refillable - since we want to heat and pour
 	reagents.add_reagent(reagent_type, 15)
 
 /obj/item/burner/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(istype(I, /obj/item/reagent_containers))
+	if(is_reagent_container(I))
 		if(lit)
 			var/obj/item/reagent_containers/container = I
 			container.reagents.expose_temperature(get_temperature())
@@ -180,7 +183,7 @@
 /obj/item/burner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(lit)
-		if(istype(target, /obj/item/reagent_containers))
+		if(is_reagent_container(target))
 			var/obj/item/reagent_containers/container = target
 			container.reagents.expose_temperature(get_temperature())
 			to_chat(user, "<span class='notice'>You heat up the [src].</span>")
@@ -237,28 +240,11 @@
 	var/current_heat = 0
 	var/number_of_burning_reagents = 0
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		if(istype(reagent, /datum/reagent/consumable/ethanol))
-			current_heat += 2193//ethanol burns at 1970C (at it's peak)
+		reagent.burn(reagents) //burn can set temperatures of reagents
+		if(!isnull(reagent.burning_temperature))
+			current_heat += reagent.burning_temperature
 			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/consumable/ethanol, 0.05)
-			continue
-
-		if(ispath(reagent, /datum/reagent/fuel))
-			current_heat += 1725//Refined slightly
-			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/fuel, 0.1)
-			continue
-
-		if(istype(reagent, /datum/reagent/fuel/oil))
-			current_heat += 1200//Oil is crude
-			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/fuel/oil, 0.025)//But lasts longer
-			continue
-
-		if(istype(reagent, /datum/reagent/toxin/plasma))//For fun
-			current_heat += 4500//plasma is hot!!
-			number_of_burning_reagents += 1
-			reagents.remove_reagent(/datum/reagent/toxin/plasma, 0.15)//But burns fast
+			reagents.remove_reagent(reagent.type, reagent.burning_volume)
 			continue
 
 	if(!number_of_burning_reagents)
@@ -290,6 +276,7 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	grind_results = list(/datum/reagent/mercury = 5)
+	///The beaker that this object is attached to, so we know where we are when it's added to something.
 	var/obj/item/reagent_containers/attached_beaker
 
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
