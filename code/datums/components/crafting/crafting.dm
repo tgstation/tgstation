@@ -196,7 +196,6 @@
 			I.CheckParts(parts, R)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
-			R.on_craft_completion(a, I)
 			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 		return ", missing tool."
 	return ", missing component."
@@ -428,6 +427,7 @@
 				else
 					result.forceMove(user.drop_location())
 				to_chat(user, "<span class='notice'>[TR.name] constructed.</span>")
+				TR.on_craft_completion(user, result)
 			else
 				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
 			busy = FALSE
