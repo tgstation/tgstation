@@ -27,8 +27,6 @@
 	light_range = 3
 	light_power = 0.9
 
-	var/old_path = FALSE
-
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
