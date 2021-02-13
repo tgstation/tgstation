@@ -48,8 +48,7 @@
 	countdown.start()
 
 /obj/structure/alien/resin/flower_bud/Destroy()
-	for(var/datum/beam/B in vines)
-		B.Destroy()
+	QDEL_LIST(vines)
 	return ..()
 
 
@@ -61,7 +60,7 @@
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
 	visible_message("<span class='danger'>The plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
-	src.Destroy()
+	qdel(src)
 
 
 /obj/structure/alien/resin/flower_bud/proc/progress_growth()
