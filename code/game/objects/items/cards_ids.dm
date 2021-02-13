@@ -186,15 +186,13 @@
 	var/wildcard_removed
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to remove it.
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_removed = FALSE
 		for(var/flag_name in wildcard_slots)
-			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
-			if(!(wildcard_flag & limit_flags))
-				continue
-
 			var/list/wildcard_info = wildcard_slots[flag_name]
 			var/wildcard_usage = wildcard_info["usage"]
+
+			if(!(wildcard in wildcard_usage))
+				continue
 
 			wildcard_usage -= wildcard
 			timberpoes_access -= wildcard
@@ -208,6 +206,10 @@
 
 			var/list/wildcard_info = wildcard_slots[WILDCARD_NAME_FORCED]
 			var/wildcard_usage = wildcard_info["usage"]
+
+			if(!wildcard in wildcard_usage)
+				stack_trace("Wildcard ([wildcard]) could not be removed from [src]. This access is not a wildcard on this card.")
+
 			wildcard_usage -= wildcard
 			timberpoes_access -= wildcard
 
@@ -252,7 +254,8 @@
 	// We have to go through the wildcards and reset them too.
 	for(var/flag_name in wildcard_slots)
 		var/list/wildcard_info = wildcard_slots[flag_name]
-		wildcard_info["usage"].Cut()
+		var/list/wildcard_usage = wildcard_info["usage"]
+		wildcard_usage.Cut()
 
 	add_wildcards(wildcard_access, force)
 
@@ -262,7 +265,8 @@
 	// Go through the wildcards and reset them.
 	for(var/flag_name in wildcard_slots)
 		var/list/wildcard_info = wildcard_slots[flag_name]
-		wildcard_info["usage"].Cut()
+		var/list/wildcard_usage = wildcard_info["usage"]
+		wildcard_usage.Cut()
 
 	// Hard reset access
 	timberpoes_access.Cut()

@@ -151,48 +151,56 @@
 	user.investigate_log("([key_name(user)]) [change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", INVESTIGATE_ACCESSCHANGES); \
 	user.log_message("[change_description] to an ID card [(id_card.registered_name) ? "belonging to [id_card.registered_name]." : "with no registered name."]", LOG_GAME); \
 
-#define ACCESS_FLAG_COMMON 		(1 << 0)
-#define ACCESS_FLAG_COMMAND		(1 << 1)
-#define ACCESS_FLAG_PRV_COMMAND	(1 << 2)
-#define ACCESS_FLAG_CAPTAIN		(1 << 3)
-#define ACCESS_FLAG_CENTCOM		(1 << 4)
+#define ACCESS_FLAG_COMMON 				(1 << 0)
+#define ACCESS_FLAG_COMMON_NAME 		"Common"
+#define ACCESS_FLAG_COMMAND				(1 << 1)
+#define ACCESS_FLAG_COMMAND_NAME		"Command"
+#define ACCESS_FLAG_PRV_COMMAND			(1 << 2)
+#define ACCESS_FLAG_PRV_COMMAND_NAME	"Private Command"
+#define ACCESS_FLAG_CAPTAIN				(1 << 3)
+#define ACCESS_FLAG_CAPTAIN_NAME		"Captain"
+#define ACCESS_FLAG_CENTCOM				(1 << 4)
+#define ACCESS_FLAG_CENTCOM_NAME		"Centcom"
 /// Flag for syndicate wildcard accesses.
-#define ACCESS_FLAG_SYNDICATE	(1 << 5)
+#define ACCESS_FLAG_SYNDICATE			(1 << 5)
+#define ACCESS_FLAG_SYNDICATE_NAME		"Syndicate"
 /// Flag for away mission wildcard accesses.
-#define ACCESS_FLAG_AWAY		(1 << 6)
+#define ACCESS_FLAG_AWAY				(1 << 6)
+#define ACCESS_FLAG_AWAY_NAME			"Offstation"
 /// Flag for special accesses that should not ordinarily go on ID cards.
-#define ACCESS_FLAG_SPECIAL		(1 << 7)
+#define ACCESS_FLAG_SPECIAL				(1 << 7)
+#define ACCESS_FLAG_SPECIAL_NAME		"Special"
 
 /// This wildcraft flag accepts any access level.
 #define WILDCARD_FLAG_ALL			ALL
-#define WILDCARD_NAME_ALL			"all"
+#define WILDCARD_NAME_ALL			"All"
 /// Access flags that can be applied to common wildcard slots.
 #define WILDCARD_FLAG_COMMON 		ACCESS_FLAG_COMMON
-#define WILDCARD_NAME_COMMON		"common"
+#define WILDCARD_NAME_COMMON		"Common"
 /// Access flags that can be applied to command wildcard slots.
 #define WILDCARD_FLAG_COMMAND		ACCESS_FLAG_COMMON | ACCESS_FLAG_COMMAND
-#define WILDCARD_NAME_COMMAND		"command"
+#define WILDCARD_NAME_COMMAND		"Command"
 /// Access flags that can be applied to private command wildcard slots.
 #define WILDCARD_FLAG_PRV_COMMAND	ACCESS_FLAG_COMMON | ACCESS_FLAG_COMMAND | ACCESS_FLAG_PRV_COMMAND
-#define WILDCARD_NAME_PRV_COMMAND	"private_command"
+#define WILDCARD_NAME_PRV_COMMAND	"Private Command"
 /// Access flags that can be applied to captain wildcard slots.
 #define WILDCARD_FLAG_CAPTAIN		ACCESS_FLAG_COMMON | ACCESS_FLAG_COMMAND | ACCESS_FLAG_PRV_COMMAND | ACCESS_FLAG_CAPTAIN
-#define WILDCARD_NAME_CAPTAIN		"captain"
+#define WILDCARD_NAME_CAPTAIN		"Captain"
 /// Access flags that can be applied to cemtcom wildcard slots.
 #define WILDCARD_FLAG_CENTCOM		ACCESS_FLAG_COMMON | ACCESS_FLAG_COMMAND | ACCESS_FLAG_PRV_COMMAND | ACCESS_FLAG_CAPTAIN | ACCESS_FLAG_CENTCOM
-#define WILDCARD_NAME_CENTCOM		"centcom"
+#define WILDCARD_NAME_CENTCOM		"Centcom"
 /// Access flags that can be applied to syndicate wildcard slots.
 #define WILDCARD_FLAG_SYNDICATE		ACCESS_FLAG_COMMON | ACCESS_FLAG_COMMAND | ACCESS_FLAG_PRV_COMMAND | ACCESS_FLAG_CAPTAIN | ACCESS_FLAG_SYNDICATE
-#define WILDCARD_NAME_SYNDICATE		"syndicate"
+#define WILDCARD_NAME_SYNDICATE		"Syndicate"
 /// Access flags that can be applied to offstation wildcard slots.
 #define WILDCARD_FLAG_AWAY			ACCESS_FLAG_AWAY
-#define WILDCARD_NAME_AWAY			"away"
+#define WILDCARD_NAME_AWAY			"Away"
 /// Access flags that can be applied to super special weird wildcard slots.
 #define WILDCARD_FLAG_SPECIAL		ACCESS_FLAG_SPECIAL
-#define WILDCARD_NAME_SPECIAL		"special"
+#define WILDCARD_NAME_SPECIAL		"Special"
 /// Access flag that indicates a wildcard was forced onto an ID card.
 #define WILDCARD_FLAG_FORCED		ALL
-#define WILDCARD_NAME_FORCED		"forced"
+#define WILDCARD_NAME_FORCED		"Hacked"
 
 /// Departmental/general/common area accesses
 #define COMMON_ACCESS 			list(ACCESS_MECH_MINING, ACCESS_MECH_MEDICAL, ACCESS_MECH_SECURITY, ACCESS_MECH_SCIENCE, \

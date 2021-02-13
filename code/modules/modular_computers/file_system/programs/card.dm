@@ -20,7 +20,8 @@
 
 	var/is_centcom = FALSE
 	var/minor = FALSE
-	var/authenticated = FALSE
+	/// The name/assignment combo of the ID card used to authenticate.
+	var/authenticated_user
 	var/list/region_access
 	var/list/head_subordinates
 	///Which departments this computer has access to. Defined as access regions. null = all departments
@@ -66,7 +67,7 @@
 	region_access = list()
 	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.timberpoes_access))
 		minor = FALSE
-		authenticated = TRUE
+		authenticated_user = "[id_card.name]"
 		update_static_data(user)
 		return TRUE
 
@@ -89,7 +90,7 @@
 
 	if(length(region_access))
 		minor = TRUE
-		authenticated = TRUE
+		authenticated_user = "[id_card.name] \[LIMITED ACCESS\]"
 		update_static_data(user)
 		return TRUE
 
@@ -112,26 +113,28 @@
 
 	var/mob/user = usr
 	var/obj/item/card/id/user_id_card = card_slot.stored_card
-
 	var/obj/item/card/id/target_id_card = card_slot2.stored_card
 
 	switch(action)
+		// Log in.
 		if("PRG_authenticate")
 			if(!computer || !user_id_card)
 				playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
-				return
+				return TRUE
 			if(authenticate(user, user_id_card))
 				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				return TRUE
+		// Log out.
 		if("PRG_logout")
-			authenticated = FALSE
+			authenticated_user = null
 			playsound(computer, 'sound/machines/terminal_off.ogg', 50, FALSE)
 			return TRUE
+		// Print a report.
 		if("PRG_print")
 			if(!computer || !printer)
-				return
-			if(!authenticated)
-				return
+				return TRUE
+			if(!authenticated_user)
+				return TRUE
 			var/contents = {"<h4>Access Report</h4>
 						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
@@ -147,14 +150,25 @@
 
 			if(!printer.print_text(contents,"access report"))
 				to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
-				return
+				return TRUE
 			else
 				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
 				computer.visible_message("<span class='notice'>\The [computer] prints out a paper.</span>")
 			return TRUE
-		if("PRG_eject")
+		// Eject the ID used to log on to the ID app.
+		if("PRG_ejectauthid")
+			if(!computer || !card_slot)
+				return TRUE
+			if(user_id_card)
+				return card_slot.try_eject(user)
+			else
+				var/obj/item/I = user.get_active_held_item()
+				if(istype(I, /obj/item/card/id))
+					return card_slot.try_insert(I, user)
+		// Eject the ID being modified.
+		if("PRG_ejectmodid")
 			if(!computer || !card_slot2)
-				return
+				return TRUE
 			if(target_id_card)
 				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment)
 				return card_slot2.try_eject(user)
@@ -162,23 +176,25 @@
 				var/obj/item/I = user.get_active_held_item()
 				if(istype(I, /obj/item/card/id))
 					return card_slot2.try_insert(I, user)
-			return FALSE
+			return TRUE
+		// Used to fire someone. Wipes all access from their card and modifies their assignment.
 		if("PRG_terminate")
-			if(!computer || !authenticated)
-				return
+			if(!computer || !authenticated_user)
+				return TRUE
 			if(minor)
 				if(!(target_id_card.assignment in head_subordinates) && target_id_card.assignment != "Assistant")
-					return
+					return TRUE
 
 			// TIMBERTODO - DON'T FORGOT ABOUT THIS SHIT. MORE ELEGANT SOLUTION?
-			target_id_card.remove_access(CENTCOM_ACCESS + ALL_ACCESS_STATION)
-			target_id_card.assignment = "Unassigned"
+			target_id_card.clear_access()
+			target_id_card.assignment = "Unassigned (Employment Terminated)"
 			target_id_card.update_label()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
+		// Change ID card assigned name.
 		if("PRG_edit")
-			if(!computer || !authenticated || !target_id_card)
-				return
+			if(!computer || !authenticated_user || !target_id_card)
+				return TRUE
 
 			// Sanitize the name first. We're not using the full sanitize_name proc as ID cards can have a wider variety of things on them that
 			// would not pass as a formal character name, but would still be valid on an ID card created by a player.
@@ -188,89 +204,48 @@
 
 			if(!new_name)
 				to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new name as it contains prohibited characters.</span>")
-				return
+				return TRUE
 
 			target_id_card.registered_name = new_name
 			target_id_card.update_label()
 			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
+		// Change age
 		if("PRG_age")
-			if(!computer || !authenticated || !target_id_card)
-				return
+			if(!computer || !authenticated_user || !target_id_card)
+				return TRUE
 			target_id_card.registered_age = params["id_age"]
 			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
+		// Change assignment
 		if("PRG_assign")
-			if(!computer || !authenticated || !target_id_card)
-				return
+			if(!computer || !authenticated_user || !target_id_card)
+				return TRUE
 			target_id_card.assignment = params["assignment"]
 			playsound(computer, "terminal_type", 50, FALSE)
 			return TRUE
+		// Add/remove access.
 		if("PRG_access")
-			if(!computer || !authenticated)
-				return
-			var/access_type = text2num(params["access_target"])
+			if(!computer || !authenticated_user)
+				return TRUE
+			playsound(computer, "terminal_type", 50, FALSE)
+			var/access_type = params["access_target"]
 			if(access_type in (is_centcom ? CENTCOM_ACCESS : ALL_ACCESS_STATION))
 				if(access_type in target_id_card.timberpoes_access)
-					target_id_card.remove_access(access_type)
-				else
-					target_id_card.add_access(access_type)
-					if(access_type in ACCESS_ALERT_ADMINS)
-						message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
-					LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_access_desc(access_type)]")
-				playsound(computer, "terminal_type", 50, FALSE)
-				return TRUE
-		if("PRG_grantall")
-			if(!computer || !authenticated || minor)
-				return
-			target_id_card.add_access(is_centcom ? CENTCOM_ACCESS : ALL_ACCESS_STATION)
+					target_id_card.remove_access(list(access_type))
+					LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [get_access_desc(access_type)]")
+					return TRUE
 
-			message_admins("[ADMIN_LOOKUPFLW(user)] just added All Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
-			LOG_ID_ACCESS_CHANGE(user, target_id_card, "added All Access")
+				if(!target_id_card.add_access(list(access_type)))
+					to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access.</span>")
+					LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [get_access_desc(access_type)]")
+					return TRUE
 
-			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+				if(access_type in ACCESS_ALERT_ADMINS)
+					message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_access_desc(access_type)]")
 			return TRUE
-		if("PRG_denyall")
-			if(!computer || !authenticated || minor)
-				return
-			target_id_card.clear_access()
-			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
-			return TRUE
-		if("PRG_grantregion")
-			if(!computer || !authenticated)
-				return
-			var/region = text2num(params["region"])
-			if(isnull(region))
-				return
 
-			if(is_centcom)
-				target_id_card.add_access(CENTCOM_ACCESS)
-				message_admins("[ADMIN_LOOKUPFLW(user)] just added CentCom Access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
-				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added CentCom access")
-			else
-				var/list/region_accesses = get_region_accesses(region)
-				target_id_card.add_access(region_accesses)
-
-				for(var/logged_access in ACCESS_ALERT_ADMINS)
-					if(logged_access in region_accesses)
-						message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_region_accesses_name(region)] region access to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
-
-				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_region_accesses_name(region)] region access")
-
-
-			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-			return TRUE
-		if("PRG_denyregion")
-			if(!computer || !authenticated)
-				return
-			var/region = text2num(params["region"])
-			if(isnull(region))
-				return
-			if(is_centcom)
-				target_id_card.remove_access(CENTCOM_ACCESS)
-			target_id_card.remove_access(get_region_accesses(region))
-			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
-			return TRUE
 
 /datum/computer_file/program/card_mod/ui_static_data(mob/user)
 	var/list/data = list()
@@ -291,19 +266,6 @@
 			CARDCON_DEPARTMENT_SUPPLY = GLOB.supply_positions,
 			CARDCON_DEPARTMENT_SERVICE = GLOB.service_positions
 		)
-	data["jobs"] = list()
-	for(var/department in departments)
-		var/list/job_list = departments[department]
-		var/list/department_jobs = list()
-		for(var/job in job_list)
-			if(minor && !(job in head_subordinates))
-				continue
-			department_jobs += list(list(
-				"display_name" = replacetext(job, "&nbsp", " "),
-				"job" = job
-			))
-		if(length(department_jobs))
-			data["jobs"][department] = department_jobs
 
 	var/list/regions = list()
 	if(is_centcom)
@@ -341,6 +303,10 @@
 
 	data["regions"] = regions
 
+	data["accessFlags"] = SSid_access.flags_by_access
+	data["wildcardFlags"] = SSid_access.wildcard_flags_by_wildcard
+	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
+
 	return data
 
 /datum/computer_file/program/card_mod/ui_data(mob/user)
@@ -348,21 +314,29 @@
 
 	data["station_name"] = station_name()
 
+	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/computer_hardware/card_slot/card_slot2
 	var/obj/item/computer_hardware/printer/printer
 
 	if(computer)
+		card_slot = computer.all_components[MC_CARD]
 		card_slot2 = computer.all_components[MC_CARD2]
 		printer = computer.all_components[MC_PRINT]
+		data["have_auth_card"] = !!(card_slot)
 		data["have_id_slot"] = !!(card_slot2)
 		data["have_printer"] = !!(printer)
 	else
 		data["have_id_slot"] = FALSE
 		data["have_printer"] = FALSE
 
-	data["authenticated"] = authenticated
 	if(!card_slot2)
 		return data //We're just gonna error out on the js side at this point anyway
+
+	var/obj/item/card/id/auth_card = card_slot.stored_card
+	data["hasAuthID"] = !!auth_card
+	data["authIDName"] = auth_card ? auth_card.name : "-----"
+
+	data["authenticatedUser"] = authenticated_user
 
 	var/obj/item/card/id/id_card = card_slot2.stored_card
 	data["has_id"] = !!id_card
@@ -384,10 +358,7 @@
 			data["trimAssignment"] = ""
 			data["trimAccess"] = null
 
-
 	return data
-
-
 
 #undef CARDCON_DEPARTMENT_SERVICE
 #undef CARDCON_DEPARTMENT_SECURITY

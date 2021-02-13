@@ -1,6 +1,9 @@
 import { sortBy } from 'common/collections';
 import { useLocalState } from '../../backend';
-import { Button, Flex, Grid, Section, Tabs } from '../../components';
+import { Box, Button, Flex, Section, Tabs } from '../../components';
+import { createLogger } from '../../logging';
+
+const logger = createLogger("Ass")
 
 const diffMap = {
   0: {
@@ -22,10 +25,12 @@ export const AccessList = (props, context) => {
     accesses = [],
     selectedList = [],
     accessMod,
-    grantAll,
-    denyAll,
-    grantDep,
-    denyDep,
+    terminateEmployment,
+    wildcardSlots = {},
+    wildcardFlags = {},
+    trimAccess = [],
+    accessFlags = {},
+    accessFlagNames = {},
   } = props;
   const [
     selectedAccessName,
@@ -59,28 +64,36 @@ export const AccessList = (props, context) => {
     }
   };
 
+  const allWildcards = Object.keys(wildcardSlots)
+  let wildcardUsage = {}
+  let combinedWildcardBitflags = 0
+  allWildcards.forEach(wildcard => {
+    if((wildcardSlots[wildcard].limit - wildcardSlots[wildcard].usage.length) != 0) {
+      combinedWildcardBitflags |= wildcardFlags[wildcard]
+    }
+    wildcardSlots[wildcard].usage.forEach(access => {
+      wildcardUsage[access] = wildcard
+    })
+  })
+
   return (
     <Section
       title="Access"
-      buttons={(
-        <>
-          <Button
-            icon="check-double"
-            content="Grant All"
-            color="good"
-            onClick={() => grantAll()} />
-          <Button
-            icon="undo"
-            content="Deny All"
-            color="bad"
-            onClick={() => denyAll()} />
-        </>
-      )}>
-      <Flex>
+      buttons={
+        <Button.Confirm
+          content="Terminate Employment"
+          confirmContent="Fire Employee?"
+          color="bad"
+          onClick={() => terminateEmployment()}/>
+      }>
+      <Flex wrap="wrap">
+        <Flex.Item width="100%">
+          <FormatWildcards
+            wildcardSlots={wildcardSlots} />
+        </Flex.Item>
         <Flex.Item>
           <Tabs
-            vertical
-            width="100%">
+            vertical>
             {accesses.map(access => {
               const entries = access.accesses || [];
               const icon = diffMap[checkAccessIcon(entries)].icon;
@@ -88,6 +101,7 @@ export const AccessList = (props, context) => {
               return (
                 <Tabs.Tab
                   key={access.name}
+                  minWidth={"100%"}
                   altSelection
                   color={color}
                   icon={icon}
@@ -100,34 +114,61 @@ export const AccessList = (props, context) => {
           </Tabs>
         </Flex.Item>
         <Flex.Item grow={1}>
-          <Grid>
-            <Grid.Column mr={0}>
-              <Button
-                fluid
-                icon="check"
-                content="Grant Region"
-                color="good"
-                onClick={() => grantDep(selectedAccess.regid)} />
-            </Grid.Column>
-            <Grid.Column ml={0}>
-              <Button
-                fluid
-                icon="times"
-                content="Deny Region"
-                color="bad"
-                onClick={() => denyDep(selectedAccess.regid)} />
-            </Grid.Column>
-          </Grid>
-          {selectedAccessEntries.map(entry => (
-            <Button.Checkbox
-              fluid
-              key={entry.desc}
-              content={entry.desc}
-              checked={selectedList.includes(entry.ref)}
-              onClick={() => accessMod(entry.ref)} />
-          ))}
+          {selectedAccessEntries.map(entry => {
+            if (selectedList.includes(entry.ref) || trimAccess.includes(entry.ref)) {
+              return (
+                <Button.Checkbox
+                  ml={1}
+                  fluid
+                  key={entry.desc}
+                  content={wildcardUsage[entry.ref] ? entry.desc + " (W " + wildcardUsage[entry.ref] + ")" : entry.desc}
+                  checked={selectedList.includes(entry.ref)}
+                  onClick={() => accessMod(entry.ref)} />
+              )
+            } else if((accessFlags[entry.ref] & combinedWildcardBitflags)) {
+              return (
+                <Button.Checkbox
+                  ml={1}
+                  fluid
+                  color="average"
+                  key={entry.desc}
+                  content={wildcardUsage[entry.ref] ? entry.desc : entry.desc + " (W " + accessFlagNames[accessFlags[entry.ref]] + ")"}
+                  checked={selectedList.includes(entry.ref)}
+                  onClick={() => accessMod(entry.ref)} />
+              )}
+              else {
+                return (
+                  <Button.Checkbox
+                    ml={1}
+                    fluid
+                    disabled
+                    key={entry.desc}
+                    content={wildcardUsage[entry.ref] ? entry.desc : entry.desc + " (W " + accessFlagNames[accessFlags[entry.ref]] + ")"}
+                    checked={selectedList.includes(entry.ref)}
+                    onClick={() => accessMod(entry.ref)} />
+                )
+              }
+          })}
         </Flex.Item>
       </Flex>
+    </Section>
+  );
+};
+
+export const FormatWildcards = (props, context) => {
+  const {
+    wildcardSlots = {},
+  } = props;
+
+  return (
+    <Section title="Wildcards">
+        {Object.keys(wildcardSlots).map(wildcard => (
+          <Box>
+            {wildcard + ": " +
+              (((wildcardSlots[wildcard].limit - wildcardSlots[wildcard].usage.length) >= 0 && (wildcardSlots[wildcard].limit - wildcardSlots[wildcard].usage.length).toString())
+              || "Infinite")}
+          </Box>
+        ))}
     </Section>
   );
 };

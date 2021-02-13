@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, NoticeBox, NumberInput, Section, Tabs } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Input, NoticeBox, NumberInput, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
@@ -7,7 +7,7 @@ export const NtosCard = (props, context) => {
   return (
     <NtosWindow
       width={500}
-      height={520}>
+      height={620}>
       <NtosWindow.Content scrollable>
         <NtosCardContent />
       </NtosWindow.Content>
@@ -17,12 +17,10 @@ export const NtosCard = (props, context) => {
 
 export const NtosCardContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const [tab, setTab] = useLocalState(context, 'tab', 1);
   const {
-    authenticated,
+    authenticatedUser,
     regions = [],
     access_on_card = [],
-    jobs = {},
     id_rank,
     id_owner,
     has_id,
@@ -30,11 +28,14 @@ export const NtosCardContent = (props, context) => {
     have_id_slot,
     id_name,
     id_age,
+    authIDName,
+    hasAuthID,
+    wildcardSlots,
+    wildcardFlags,
+    trimAccess,
+    accessFlags,
+    accessFlagNames,
   } = data;
-  const [
-    selectedDepartment,
-    setSelectedDepartment,
-  ] = useLocalState(context, 'department', Object.keys(jobs)[0]);
   if (!have_id_slot) {
     return (
       <NoticeBox>
@@ -42,19 +43,61 @@ export const NtosCardContent = (props, context) => {
       </NoticeBox>
     );
   }
-  const departmentJobs = jobs[selectedDepartment] || [];
   return (
     <>
       <Section
-        title={has_id && authenticated
-          ? (
-            <>
-              <Input
-                value={id_owner}
-                width="200px"
-                onInput={(e, value) => act('PRG_edit', {
-                  name: value,
-                })} />
+        title="Authentication"
+        buttons={(
+          <>
+            <Button
+              icon="print"
+              content="Print"
+              disabled={!have_printer || !has_id}
+              onClick={() => act('PRG_print')} />
+            <Button
+              icon={authenticatedUser ? "sign-out-alt" : "sign-in-alt"}
+              content={authenticatedUser ? "Log Out" : "Log In"}
+              color={authenticatedUser ? "bad" : "good"}
+              onClick={() => {
+                act(authenticatedUser ? 'PRG_logout' : 'PRG_authenticate');
+              }} />
+          </>
+        )}>
+        <Flex wrap="wrap">
+          <Flex.Item width="100%">
+            Authorisation: {authenticatedUser || "-----"}
+          </Flex.Item>
+          <Flex.Item width="100%">
+            <Button
+              mt={1}
+              fluid
+              icon="eject"
+              content={authIDName}
+              onClick={() => act('PRG_ejectauthid')} />
+          </Flex.Item>
+        </Flex>
+      </Section>
+      <Section title="Modify ID">
+        <Button
+          fluid
+          icon="eject"
+          content={id_name}
+          onClick={() => act('PRG_ejectmodid')} />
+        {(has_id && authenticatedUser) && (
+          <>
+            <Flex mt={1}>
+              <Flex.Item align="center">
+                Details:
+              </Flex.Item>
+              <Flex.Item grow={1} mr={1} ml={1}>
+                <Input
+                  width="100%"
+                  value={id_owner}
+                  onInput={(e, value) => act('PRG_edit', {
+                    name: value,
+                  })} />
+              </Flex.Item>
+              <Flex.Item>
               <NumberInput
                 value={id_age}
                 unit="Years"
@@ -64,53 +107,38 @@ export const NtosCardContent = (props, context) => {
                   id_age: value,
                 });
                 }} />
-            </>
-          )
-          : (id_owner || 'No Card Inserted')}
-        buttons={(
-          <>
-            <Button
-              icon="print"
-              content="Print"
-              disabled={!have_printer || !has_id}
-              onClick={() => act('PRG_print')} />
-            <Button
-              icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
-              content={authenticated ? "Log Out" : "Log In"}
-              color={authenticated ? "bad" : "good"}
-              onClick={() => {
-                act(authenticated ? 'PRG_logout' : 'PRG_authenticate');
-              }} />
+              </Flex.Item>
+            </Flex>
+            <Flex>
+              <Flex.Item align="center">
+                Assignment:
+              </Flex.Item>
+              <Flex.Item grow={1} ml={1}>
+                <Input
+                  fluid
+                  mt={1}
+                  value={id_rank}
+                  onInput={(e, value) => act('PRG_assign', {
+                    assignment: value,
+                  })} />
+              </Flex.Item>
+            </Flex>
           </>
-        )}>
-        <Button
-          fluid
-          icon="eject"
-          content={id_name}
-          onClick={() => act('PRG_eject')} />
-        <Input
-          fluid
-          mt={1}
-          value={id_rank}
-          onInput={(e, value) => act('PRG_assign', {
-            assignment: value,
-          })} />
+        ) || false}
       </Section>
-      {(!!has_id && !!authenticated) && (
+      {(!!has_id && !!authenticatedUser) && (
         <Box>
           <AccessList
             accesses={regions}
             selectedList={access_on_card}
+            wildcardFlags={wildcardFlags}
+            wildcardSlots={wildcardSlots}
+            trimAccess={trimAccess}
+            accessFlags={accessFlags}
+            accessFlagNames={accessFlagNames}
+            terminateEmployment={() => act('PRG_terminate')}
             accessMod={ref => act('PRG_access', {
               access_target: ref,
-            })}
-            grantAll={() => act('PRG_grantall')}
-            denyAll={() => act('PRG_denyall')}
-            grantDep={dep => act('PRG_grantregion', {
-              region: dep,
-            })}
-            denyDep={dep => act('PRG_denyregion', {
-              region: dep,
             })} />
         </Box>
       )}

@@ -5,6 +5,8 @@ SUBSYSTEM_DEF(id_access)
 
 	/// Dictionary of access flags. Keys are accesses. Values are their associated bitflags.
 	var/list/flags_by_access = list()
+	/// Dictionary of access flag string representations. Keys are bitflags. Values are their associated names.
+	var/list/access_flag_string_by_flag = list()
 	/// Dictionary of trim singletons. Keys are paths. Values are their associated singletons.
 	var/list/trim_singletons_by_path = list()
 	/// Dictionary of wildcard compatibility flags. Keys are strings for the wildcards. Values are their associated flags.
@@ -35,6 +37,15 @@ SUBSYSTEM_DEF(id_access)
 		flags_by_access |= list("[access]" = ACCESS_FLAG_AWAY)
 	for(var/access in CULT_ACCESS)
 		flags_by_access |= list("[access]" = ACCESS_FLAG_SPECIAL)
+
+	access_flag_string_by_flag["[ACCESS_FLAG_COMMON]"] = ACCESS_FLAG_COMMON_NAME
+	access_flag_string_by_flag["[ACCESS_FLAG_COMMAND]"] = ACCESS_FLAG_COMMAND_NAME
+	access_flag_string_by_flag["[ACCESS_FLAG_PRV_COMMAND]"] = ACCESS_FLAG_PRV_COMMAND_NAME
+	access_flag_string_by_flag["[ACCESS_FLAG_CAPTAIN]"] = ACCESS_FLAG_CAPTAIN_NAME
+	access_flag_string_by_flag["[ACCESS_FLAG_CENTCOM]"] = ACCESS_FLAG_CENTCOM_NAME
+	access_flag_string_by_flag["[ACCESS_FLAG_SYNDICATE]"] = ACCESS_FLAG_SYNDICATE_NAME
+	access_flag_string_by_flag["[ACCESS_FLAG_AWAY]"] = ACCESS_FLAG_AWAY_NAME
+	access_flag_string_by_flag["[ACCESS_FLAG_SPECIAL]"] = ACCESS_FLAG_SPECIAL_NAME
 
 /datum/controller/subsystem/id_access/proc/setup_trim_singletons()
 	for(var/trim in typesof(/datum/id_trim))
