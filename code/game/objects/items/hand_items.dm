@@ -278,9 +278,9 @@
 	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "kiss", /datum/mood_event/kiss, firer)
 	var/mob/living/target_living = target
 
-	// people with the social anxiety quirk have a 50% chance to get flustered when hit with a kiss
-	if(HAS_TRAIT(target_living, TRAIT_ANXIOUS) && (target_living.stat > SOFT_CRIT) && prob(50)))
-		if(HAS_TRAIT(target_living, TRAIT_FEARLESS)) //immune while on meds
+	// people with the social anxiety quirk can get flustered when hit by a kiss
+	if(HAS_TRAIT(target_living, TRAIT_ANXIOUS) && (target_living.stat > SOFT_CRIT))
+		if(prob(50) || HAS_TRAIT(target_living, TRAIT_FEARLESS)) // 50% chance for it to apply, also immune while on meds
 			return
 		var/other_msg
 		var/self_msg
