@@ -36,8 +36,9 @@
 	return ..()
 
 /obj/item/reagent_containers/attack(mob/living/M, mob/living/user, params)
-	if (user.combat_mode)
-		return ..()
+	if (!user.combat_mode)
+		return
+	return ..()
 
 /obj/item/reagent_containers/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
