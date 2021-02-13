@@ -1,10 +1,9 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Dimmer, Button, LabeledList, Section, Table, Icon, Chart, Flex, Stack } from '../components';
+import { Button, LabeledList, Section, Table, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 import { map } from 'common/collections';
 import { RecipeLookup } from './common/RecipeLookup';
 import { ReagentLookup } from './common/ReagentLookup';
-import { TableCell } from '../components/Table';
 
 /* functions */
 
@@ -296,7 +295,6 @@ export const Reagents = (props, context) => {
                     onClick={() => setBookmarkMode(!bookmarkMode)} />
                 </>
               )}>
-              
               <Table>
                 <Table.Row>
                   <Table.Cell bold color="label">

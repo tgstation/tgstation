@@ -109,10 +109,8 @@ export const RecipeLookup = (props, context) => {
               tooltipPosition="right"
               content={recipe.reqContainer}
               tooltip="The required container for this reaction to occur in." />
-                        
           </LabeledList.Item>
         )}
-                
         <LabeledList.Item bold label="Purity">
           <LabeledList>
             <LabeledList.Item label="Optimal pH range" >
