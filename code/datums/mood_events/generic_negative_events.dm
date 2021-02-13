@@ -312,6 +312,6 @@
 	timeout = 90 SECONDS
 
 /datum/mood_event/burnt_wings
-	description = "<span class='boldwarning'>My wings were RUINED!!</span>\n"
+	description = "<span class='boldwarning'>MY PRECIOUS WINGS!!</span>\n"
 	mood_change = -10
 	timeout = 10 MINUTES
