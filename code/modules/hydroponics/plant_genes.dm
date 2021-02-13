@@ -33,9 +33,6 @@
 	G.mutability_flags = mutability_flags
 	return G
 
-/datum/plant_gene/proc/apply_vars(obj/item/seeds/S) // currently used for fire resist, can prob. be further refactored
-	return
-
 // Core plant genes store 5 main variables: lifespan, endurance, production, yield, potency
 /datum/plant_gene/core
 	var/value
@@ -694,9 +691,9 @@
 /datum/plant_gene/trait/fire_resistance
 	name = "Fire Resistance"
 
-/datum/plant_gene/trait/fire_resistance/apply_vars(obj/item/seeds/seed)
-	if(!(seed.resistance_flags & FIRE_PROOF))
-		seed.resistance_flags |= FIRE_PROOF
+/datum/plant_gene/trait/fire_resistance/on_new_seed(obj/item/seeds/new_seed)
+	if(!(new_seed.resistance_flags & FIRE_PROOF))
+		new_seed.resistance_flags |= FIRE_PROOF
 
 /datum/plant_gene/trait/fire_resistance/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
