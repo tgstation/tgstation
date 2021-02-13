@@ -1,10 +1,3 @@
-
-/// -- Plant analyzer scanning modes. --
-/// Stats mode - displays a plant's growth statistics (potency, yield, traits, etc.).
-#define PLANT_SCANMODE_STATS		0
-/// Chemical mode - displays a plant's reagents (either reagent genes or chemical contents).
-#define PLANT_SCANMODE_CHEMICALS 	1
-
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
@@ -598,6 +591,3 @@
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 30)
-
-#undef PLANT_SCANMODE_STATS
-#undef PLANT_SCANMODE_CHEMICALS
