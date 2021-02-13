@@ -203,6 +203,7 @@
 //2. Gets a number between 1 and that total
 //3. For each element in the list, subtracts its weighting from that number
 //4. If that makes the number 0 or less, return that element.
+//Will output null sometimes if you use decimals (e.g. 0.1 instead of 10) as rand() uses integers, not floats
 /proc/pickweight(list/L)
 	var/total = 0
 	var/item
