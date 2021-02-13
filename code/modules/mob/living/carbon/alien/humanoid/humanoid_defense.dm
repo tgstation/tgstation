@@ -17,7 +17,7 @@
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M, modifiers)
 	if(..())
 		if(M.combat_mode)
-			if(modifiers && modifiers["right"])
+			if(LAZYACCESS(modifiers, RIGHT_CLICK))
 				if (body_position == STANDING_UP)
 					if (prob(5))
 						Unconscious(40)

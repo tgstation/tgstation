@@ -187,7 +187,7 @@
 	required_candidates = 1
 	weight = 2
 	cost = 20
-	requirements = list(90,90,70,40,30,20,10,10,10,10)
+	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)

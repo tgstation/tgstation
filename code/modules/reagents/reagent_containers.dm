@@ -35,6 +35,11 @@
 /obj/item/reagent_containers/Destroy()
 	return ..()
 
+/obj/item/reagent_containers/attack(mob/living/M, mob/living/user, params)
+	if (!user.combat_mode)
+		return
+	return ..()
+
 /obj/item/reagent_containers/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
 	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))

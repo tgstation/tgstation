@@ -24,7 +24,8 @@
 	colour = "black"
 
 /obj/item/lipstick/black/death
-	name = "Kiss of Death"
+	name = "\improper Kiss of Death"
+	desc = "An incredibly potent tube of lipstick made from the venom of the dreaded Yellow Spotted Space Lizard, as deadly as it is chic. Try not to smear it!"
 	lipstick_trait = TRAIT_KISS_OF_DEATH
 
 /obj/item/lipstick/random
