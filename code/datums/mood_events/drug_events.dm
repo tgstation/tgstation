@@ -78,3 +78,16 @@
 	description = "<span class='nicegreen'>Eh ah AAAAH! HA HA HA HA HAA! Uuuh.</span>\n"
 	mood_change = 6
 	timeout = 3 MINUTES
+
+/datum/mood_event/eigentrip
+	description = "<span class='nicegreen'>I swapped places with an alternate reality version of myself!</span>\n"
+	mood_change = 0
+	timeout = 10 MINUTES
+
+/datum/mood_event/eigentrip/add_effects(param)
+	var/value = rand(-10,10)
+	mood_change = value
+	if(value < 0)
+		description = "<span class='warning'>I swapped places with an alternate reality version of myself! I want to go home!</span>\n"
+	else
+		description = "<span class='nicegreen'>I swapped places with an alternate reality version of myself! Though, this place is much better than my old life.</span>\n"

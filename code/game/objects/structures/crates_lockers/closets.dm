@@ -39,6 +39,8 @@
 	var/icon_welded = "welded"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
+	/// If this locker has it's eigenstate set to collapse to another linked locker on closure
+	var/eigen_target = null //Hello Mr Tumnus
 
 
 /obj/structure/closet/Initialize(mapload)

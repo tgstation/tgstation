@@ -390,3 +390,23 @@
 	if(!holder)
 		return FALSE
 	holder.remove_all(volume)
+
+/*
+* Applys a cooldown to the reaction
+* Returns false if time is below required, true if it's above required
+* Time is kept in eqilibrium data
+*
+* Arguments:
+* * seconds - the amount of time in server seconds to delay between true returns
+* * id - a string phrase so that multiple cooldowns can be applied if needed
+*/
+/datum/chemical_reaction/proc/off_cooldown(datum/reagents/holder, datum/equilibrium/equilibrium, seconds = 1, id = "default")
+	id = id+"_cooldown"
+	if(!equilibrium.data[id])
+		equilibrium.data[id] = 0
+		return TRUE//first time we know we can go
+	equilibrium.data[id] += equilibrium.time_deficit ? 0.5 : 0.25
+	if(equilibrium.data[id] >= seconds)
+		return TRUE
+	return FALSE
+
