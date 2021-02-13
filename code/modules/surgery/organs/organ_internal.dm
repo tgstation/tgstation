@@ -60,9 +60,7 @@
 		else
 			qdel(replaced)
 
-	// Only send these signals if we're not on initialization
-	if(!organ_init)
-		SEND_SIGNAL(M, COMSIG_CARBON_GAIN_ORGAN, src)
+	SEND_SIGNAL(M, COMSIG_CARBON_GAIN_ORGAN, src)
 
 	owner = M
 	M.internal_organs |= src
@@ -92,9 +90,7 @@
 		var/datum/action/A = X
 		A.Remove(M)
 
-	// Only send these signals if we're not on initialization
-	if(!organ_init)
-		SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src)
+	SEND_SIGNAL(M, COMSIG_CARBON_LOSE_ORGAN, src)
 
 	START_PROCESSING(SSobj, src)
 
