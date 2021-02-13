@@ -16,7 +16,7 @@
 	. = ..()
 	. += "<span class='notice'>Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.</span>"
 
-/// When we attack something, first - try to scan something we hit with left click. Left-clicking uses SCANMODE_STATS.
+/// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
 	if(user.combat_mode)
@@ -24,7 +24,7 @@
 
 	return do_plant_stats_scan(target, user)
 
-/// Same as above, but with right click. Right-clicking uses SCANMODE_CHEMICALS.
+/// Same as above, but with right click. Right-clicking scans for chemicals.
 /obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
 	if(user.combat_mode)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
