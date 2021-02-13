@@ -16,7 +16,7 @@
 	circuit = /obj/item/circuitboard/machine/space_heater
 	/// We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
 	var/setMode = HEATER_MODE_AUTO // Anything other than "heat" or "cool" is considered auto.

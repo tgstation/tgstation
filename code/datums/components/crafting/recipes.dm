@@ -1248,8 +1248,11 @@
 
 /datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
 	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in range(1)
+	if(!cell)
+		return
 	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
-	heater.forceMove(cell)
+	var/turf/turf = get_turf(cell)
+	heater.forceMove(turf)
 	heater.attackby(cell, user) //puts it into the heater
 
 /datum/crafting_recipe/improvised_coolant
