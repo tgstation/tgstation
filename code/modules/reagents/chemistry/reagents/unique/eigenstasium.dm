@@ -14,8 +14,8 @@
 	description = "A strange mixture formed from a controlled reaction of bluespace with plasma, that causes localised eigenstate fluxuations within the patient"
 	taste_description = "wiggly cosmic dust."
 	color = "#5020F4"
-	overdose_threshold = 15
-	addiction_threshold = 15
+	overdose_threshold = 16
+	addiction_threshold = 16
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	ph = 3.7
 	///The creation point assigned during the reaction
@@ -135,7 +135,7 @@
 	..()
 
 /datum/reagent/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermichem's wild ride. Mild jitter and player buggery.
-	if(addiction_stage == 42)
+	if(addiction_stage == 32)
 		do_sparks(5,FALSE,M)
 		do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 		do_sparks(5,FALSE,M)
