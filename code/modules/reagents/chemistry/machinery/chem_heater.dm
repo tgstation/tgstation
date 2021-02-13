@@ -33,12 +33,9 @@
 	///What state we're at in the tutorial
 	var/tutorial_state = 0
 
-/obj/machinery/chem_heater/Initialize(mapload)
+/obj/machinery/chem_heater/Initialize()
 	. = ..()
-	create_reagents(200, NO_REACT)//Lets save some calculations here
-	if(mapload)
-		reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
-		reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
+	create_reagents(200, NO_REACT)//Lets save some calculations here		
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
 	
 /obj/machinery/chem_heater/Destroy()
@@ -482,3 +479,12 @@ To continue set your target temperature to 390K."}
 	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 980)
 	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 980)
 	heater_coefficient = 0.4 //hack way to upgrade
+
+//map load types
+/obj/machinery/chem_heater/withbuffer
+	desc = "This [name] comes with a bit of buffer to help get you started."
+
+/obj/machinery/chem_heater/withbuffer/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
