@@ -20,11 +20,13 @@
 	ph = 3.7
 	impure_chem = /datum/reagent/impurity/eigenswap
 	inverse_chem = null
-	failed_chem = /datum/reagent/bluespace //crashes out 
+	failed_chem = /datum/reagent/bluespace //crashes out
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
-	data = list("location_created" = null)//So we retain the target location between reagent instances
+	data = list("location_created" = null, "creator" = null)//So we retain the target location and creator between reagent instances
 	///The creation point assigned during the reaction
 	var/turf/location_created
+	///The mob that initial teleport is linked to
+	var/mob/living/carbon/creator
 	///The return point indicator
 	var/obj/effect/overlay/holo_pad_hologram/eigenstate
 	///The point you're returning to after the reagent is removed
@@ -36,6 +38,7 @@
 
 /datum/reagent/eigenstate/on_new(list/data)
 	location_created = data["location_created"]
+	creator = data["creator"]
 
 //Main functions
 /datum/reagent/eigenstate/on_mob_life(mob/living/living_mob) //Teleports to creation!
@@ -54,6 +57,8 @@
 		location_return = get_turf(living_mob)	//sets up return point
 		to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
+			if(!creator || !(creator == living_mob))
+				return
 			do_sparks(5,FALSE,living_mob)
 			do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,living_mob)
@@ -170,7 +175,7 @@
 	if(alt_clone)//catch any stragilers
 		var/mob/living/carbon/clone = alt_clone
 		do_sparks(5,FALSE,clone)
-		qdel(clone) 
+		qdel(clone)
 		living_mob.visible_message("[living_mob] is snapped across to a different alternative reality!")
 		alt_clone = null
 	if(addiction_stage == 31)

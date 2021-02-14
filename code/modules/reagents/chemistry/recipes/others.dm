@@ -650,10 +650,15 @@
 	var/datum/reagent/eigenstate/eigen = holder.has_reagent(/datum/reagent/eigenstate)
 	if(!eigen)
 		return
+	var/datum/reagent/blood = holder.has_reagent(/datum/reagent/blood)
+	if(!blood)
+		return
 	var/turf/open/location = get_turf(holder.my_atom)
 	if(location)
 		eigen.location_created = location
 		eigen.data["location_created"] = location
+		eigen.creator = blood.data["donor"]
+		eigen.data["creator"] = eigen.creator
 		do_sparks(5,FALSE,location)
 		playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
 
@@ -665,7 +670,7 @@
 	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
 	var/lets_not_go_crazy = 5 //Teleport 10 items at max
 	for(var/obj/item in orange(location, 3))//so we don't teleport the thing itself causing even more havock
-		do_teleport(item, location, 2, no_effects=TRUE)	
+		do_teleport(item, location, 2, no_effects=TRUE)
 		lets_not_go_crazy -= 1
 		item.add_atom_colour("#ad94fd", WASHABLE_COLOUR_PRIORITY)
 		if(!lets_not_go_crazy)
@@ -690,3 +695,4 @@
 		to_chat()
 		do_sparks(3,FALSE,nearby_mob)
 	clear_products(holder, step_volume_added)
+
