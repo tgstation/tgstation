@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "updated and doc'd a bunch of procs and vars for plant genes"
-  - refactor: "Plant gene traits now use signals instead of looping proc-calls"

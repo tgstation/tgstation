@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Plant analyzers can now read out the reagent contents of a tray."
-  - tweak: "The chemical scan mode of plant analyzers was moved to right click, and is no longer a toggle."

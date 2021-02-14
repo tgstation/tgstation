@@ -469,7 +469,7 @@
 		return FALSE
 	to_chat(user, "[icon2html(src, user)]<span class='notice'>Analyzing reagents...</span>")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
-		if(R.can_synth && add_known_reagent(R.type,R.name))
+		if((R.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED) && add_known_reagent(R.type,R.name))
 			to_chat(user, "[icon2html(src, user)]<span class='notice'>Reagent analyzed, identified as [R.name] and added to database.</span>")
 			send_byjax(chassis.occupants,"msyringegun.browser","reagents_form",get_reagents_form())
 	to_chat(user, "[icon2html(src, user)]<span class='notice'>Analysis complete.</span>")

@@ -19,6 +19,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hijack_speed = 0
 	var/antag_hud_type
 	var/antag_hud_name
+	/// If set to true, the antag will not be added to the living antag list.
+	var/soft_antag = FALSE
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
@@ -58,10 +60,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)
-	if(old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
+	if(!soft_antag && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
 	apply_innate_effects(new_body)
-	if(new_body.stat != DEAD)
+	if(!soft_antag && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
 
 //This handles the application of antag huds/special abilities
@@ -115,7 +117,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(owner.current.stat != DEAD)
+	if(!soft_antag && owner.current.stat != DEAD)
 		owner.current.add_to_current_living_antags()
 
 /datum/antagonist/proc/is_banned(mob/M)
@@ -143,7 +145,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	clear_antag_moodies()
 	LAZYREMOVE(owner.antag_datums, src)
-	if(!LAZYLEN(owner.antag_datums))
+	if(!LAZYLEN(owner.antag_datums) && !soft_antag)
 		owner.current.remove_from_current_living_antags()
 	if(!silent && owner.current)
 		farewell()
