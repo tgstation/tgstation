@@ -85,7 +85,7 @@
 	// One half syringe
 	syringe.reagents.remove_all()
 	syringe.volume = 5
-	syringe.amount_per_transfer_from_this 5
+	syringe.amount_per_transfer_from_this = 5
 	syringe.reagents.add_reagent(meth.type, (5 * 0.5) + 1)
 
 	// One half pill
