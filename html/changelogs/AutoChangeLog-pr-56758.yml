@@ -1,5 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - rscadd: "Wizards now have unique construct and soulstone sprites"
-  - bugfix: "fixed some shades dropping the wrong ectoplasm"
