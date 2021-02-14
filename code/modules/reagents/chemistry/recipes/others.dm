@@ -686,9 +686,11 @@
 	holder.chem_temp += 10
 	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
 	var/lets_not_go_crazy = 20 //Teleport 10 items at max
-	var/list/items = range(location, 3)
+	var/list/items = list()
+	for(var/obj/item/item in range(location, 3))
+		items += item
 	shuffle(items)
-	for(var/obj/item/item in items)
+	for(var/obj/item/item as anything in items)
 		do_teleport(item, location, 3, no_effects=TRUE)
 		lets_not_go_crazy -= 1
 		item.add_atom_colour("#c4b3fd", WASHABLE_COLOUR_PRIORITY)
