@@ -1,0 +1,4 @@
+author: "Hadza"
+delete-after: True
+changes: 
+  - bugfix: "Thorny vines now get deleted after their venus human trap bud is removed."
