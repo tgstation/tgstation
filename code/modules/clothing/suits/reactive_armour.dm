@@ -77,9 +77,9 @@
 		cooldown_activation(owner)
 		return FALSE
 	if(bad_effect)
-		. = emp_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+		return emp_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 	else
-		. = reactive_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+		return reactive_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 
 /**
  * Small proc for effects that happen when you activate the armor.
@@ -94,43 +94,6 @@
  */
 /obj/item/clothing/suit/armor/reactive/proc/deactivate_effect(mob/living/carbon/human/owner)
 	return TRUE
-
-/**
- * A proc for doing cooldown effects (like the sparks on the tesla armor, or the semi-stealth on stealth armor)
- * Called from the suit activating whilst on cooldown.
- * You should be calling ..()
- */
-/obj/item/clothing/suit/armor/reactive/proc/cooldown_activation(mob/living/carbon/human/owner)
-	owner.visible_message(cooldown_message)
-
-/**
- * A proc for doing reactive armor effects.
- * Called from the suit activating while off cooldown, with no emp.
- * Returning TRUE will block the attack that triggered this
- */
-/obj/item/clothing/suit/armor/reactive/proc/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>The reactive armor doesn't do much! No surprises here.</span>")
-	return TRUE
-
-/**
- * A proc for doing owner unfriendly reactive armor effects.
- * Called from the suit activating while off cooldown, while the armor is still suffering from the effect of an EMP.
- * Returning TRUE will block the attack that triggered this
- */
-/obj/item/clothing/suit/armor/reactive/proc/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>The reactive armor doesn't do much, despite being emp'd! Besides giving off a special message, of course.</span>")
-	return TRUE
-
-/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
-	if(!active || !prob(hit_reaction_chance))
-		return FALSE
-	if(world.time < reactivearmor_cooldown)
-		cooldown_activation(owner)
-		return FALSE
-	if(bad_effect)
-		return emp_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
-	else
-		return reactive_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 
 /**
  * A proc for doing cooldown effects (like the sparks on the tesla armor, or the semi-stealth on stealth armor)
@@ -298,7 +261,7 @@
 		return
 	connected_armor.attack_self(user) //disengage the gloves.
 
-/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/flame_jets
+/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/flame_jets
 	name = "active flame jets"
 	desc = "Taking \"reactive armor\" into your own hands."
 	fire_sound = 'sound/magic/fireball.ogg'
