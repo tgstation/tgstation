@@ -113,7 +113,7 @@
 	if(QDELETED(src))
 		return
 	// If its at the third generation we want it to stop spreading.
-	if(generation>2)
+	if(generation>=GLOWCAP_MAX_GENERATIONS)
 		return
 
 	var/turf/ownturf = get_turf(src)
