@@ -580,20 +580,21 @@ RLD
 		choices += list(
 		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
-	if(construction_mode == RCD_AIRLOCK)
-		choices += list(
-		"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
-		"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
-		)
-	else if(construction_mode == RCD_WINDOWGRILLE)
-		choices += list(
-		"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
-		"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
-		)
-	else if(construction_mode == RCD_FURNISHING)
-		choices += list(
-		"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
-		)
+	switch(construction_mode)
+		if(RCD_AIRLOCK)
+			choices += list(
+			"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
+			"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
+			)
+		if(RCD_WINDOWGRILLE)
+			choices += list(
+			"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
+			"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
+			)
+		if(RCD_FURNISHING)
+			choices += list(
+			"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
+			)
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
