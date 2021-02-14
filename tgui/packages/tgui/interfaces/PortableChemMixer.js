@@ -1,8 +1,8 @@
+import { sortBy } from 'common/collections';
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
-import { sortBy } from 'common/collections';
 
 export const PortableChemMixer = (props, context) => {
   const { act, data } = useBackend(context);
