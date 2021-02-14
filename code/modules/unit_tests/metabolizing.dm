@@ -52,7 +52,7 @@
 	pill_mind.active = TRUE
 	pill_mind.transfer_to(pill_user)
 
-	/datum/mind/syringe_mind = new /datum/mind("Mothcocks")
+	var/datum/mind/syringe_mind = new /datum/mind("Mothcocks")
 	syringe_mind.active = TRUE
 	syringe_mind.transfer_to(syringe_user)
 
