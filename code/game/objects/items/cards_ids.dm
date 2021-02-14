@@ -874,26 +874,15 @@
 
 	data["showBasic"] = FALSE
 
-	var/list/region_accesses = list()
+	var/list/regions = list()
 
 	var/obj/item/card/id/target_card = theft_target.resolve()
 	if(target_card)
-		for(var/i in 1 to 7)
-			var/list/accesses = list()
-			for(var/access in get_region_accesses(i))
-				if (get_access_desc(access))
-					accesses += list(list(
-						"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
-						"ref" = access,
-					))
+		var/list/tgui_region_data = SSid_access.all_region_access_tgui
+		for(var/region in REGION_AREA_STATION)
+			regions += tgui_region_data[region]
 
-			region_accesses += list(list(
-				"name" = get_region_accesses_name(i),
-				"regid" = i,
-				"accesses" = accesses
-			))
-
-	data["accesses"] = region_accesses
+	data["accesses"] = regions
 	data["ourAccess"] = timberpoes_access
 	data["ourTrimAccess"] = timberpoes_trim ? timberpoes_trim.access : list()
 	data["theftAccess"] = target_card.timberpoes_access
@@ -928,27 +917,27 @@
 			var/try_wildcard = params["access_wildcard"]
 			if(access_type in timberpoes_access)
 				remove_access(list(access_type))
-				LOG_ID_ACCESS_CHANGE(usr, src, "removed [get_access_desc(access_type)]")
+				LOG_ID_ACCESS_CHANGE(usr, src, "removed [SSid_access.get_access_desc(access_type)]")
 				return TRUE
 
 			if(!(access_type in target_card.timberpoes_access))
 				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
-				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 
 			if(!can_add_wildcards(list(access_type), try_wildcard))
 				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
-				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 
 			if(!add_access(list(access_type), try_wildcard))
 				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
-				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 
 			if(access_type in ACCESS_ALERT_ADMINS)
-				message_admins("[ADMIN_LOOKUPFLW(usr)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(src)] [(registered_name) ? "belonging to [registered_name]." : "with no registered name."]")
-			LOG_ID_ACCESS_CHANGE(usr, src, "added [get_access_desc(access_type)]")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] just added [SSid_access.get_access_desc(access_type)] to an ID card [ADMIN_VV(src)] [(registered_name) ? "belonging to [registered_name]." : "with no registered name."]")
+			LOG_ID_ACCESS_CHANGE(usr, src, "added [SSid_access.get_access_desc(access_type)]")
 			return TRUE
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)

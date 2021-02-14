@@ -1,11 +1,3 @@
-#define CARDCON_DEPARTMENT_SERVICE "Service"
-#define CARDCON_DEPARTMENT_SECURITY "Security"
-#define CARDCON_DEPARTMENT_MEDICAL "Medical"
-#define CARDCON_DEPARTMENT_SUPPLY "Supply"
-#define CARDCON_DEPARTMENT_SCIENCE "Science"
-#define CARDCON_DEPARTMENT_ENGINEERING "Engineering"
-#define CARDCON_DEPARTMENT_COMMAND "Command"
-
 /datum/computer_file/program/card_mod
 	filename = "plexagonidwriter"
 	filedesc = "Plexagon Access Management"
@@ -22,40 +14,39 @@
 	var/minor = FALSE
 	/// The name/assignment combo of the ID card used to authenticate.
 	var/authenticated_user
-	var/list/region_access
-	var/list/head_subordinates
+	var/list/region_access = list()
+	var/list/head_subordinates = list()
 	///Which departments this computer has access to. Defined as access regions. null = all departments
 	var/target_dept
 
-	//For some reason everything was exploding if this was static.
+	/// A list of key access levels to value lists of info to which regions the access level unlocks on the ID app and the job title of their Head of Staff.
 	var/list/sub_managers
 
 /datum/computer_file/program/card_mod/New(obj/item/modular_computer/comp)
 	. = ..()
 	sub_managers = list(
+		"[ACCESS_CAPTAIN]" = list(
+			"regions" = list(REGION_COMMAND),
+			"head" = "Captain"
+		),
 		"[ACCESS_HOP]" = list(
-			"department" = list(CARDCON_DEPARTMENT_SERVICE, CARDCON_DEPARTMENT_COMMAND),
-			"region" = 1,
+			"regions" = list(REGION_GENERAL, REGION_SUPPLY),
 			"head" = "Head of Personnel"
 		),
 		"[ACCESS_HOS]" = list(
-			"department" = CARDCON_DEPARTMENT_SECURITY,
-			"region" = 2,
+			"regions" = list(REGION_SECURITY),
 			"head" = "Head of Security"
 		),
 		"[ACCESS_CMO]" = list(
-			"department" = CARDCON_DEPARTMENT_MEDICAL,
-			"region" = 3,
+			"regions" = list(REGION_MEDBAY),
 			"head" = "Chief Medical Officer"
 		),
 		"[ACCESS_RD]" = list(
-			"department" = CARDCON_DEPARTMENT_SCIENCE,
-			"region" = 4,
+			"regions" = list(REGION_RESEARCH),
 			"head" = "Research Director"
 		),
 		"[ACCESS_CE]" = list(
-			"department" = CARDCON_DEPARTMENT_ENGINEERING,
-			"region" = 5,
+			"regions" = list(REGION_ENGINEERING),
 			"head" = "Chief Engineer"
 		)
 	)
@@ -64,27 +55,28 @@
 	if(!id_card)
 		return
 
-	region_access = list()
+	region_access.Cut()
+	// If the console isn't locked to a specific department and we have ACCESS_CHANGE_IDS in our auth card, we're not minor.
 	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.timberpoes_access))
 		minor = FALSE
 		authenticated_user = "[id_card.name]"
 		update_static_data(user)
 		return TRUE
 
+	// Otherwise, we're minor and now we have to build a list of restricted departments we can change access for.
 	var/list/head_types = list()
-	for(var/access_text in sub_managers)
-		var/list/info = sub_managers[access_text]
-		var/access = text2num(access_text)
-		if((access in id_card.timberpoes_access) && ((info["region"] in target_dept) || !length(target_dept)))
-			region_access += info["region"]
-			//I don't even know what I'm doing anymore
+	for(var/access_as_text in sub_managers)
+		var/list/info = sub_managers[access_as_text]
+		var/access = text2num(access_as_text)
+		if((access in id_card.timberpoes_access) && ((target_dept in info["regions"]) || !target_dept))
+			region_access += info["regions"]
 			head_types += info["head"]
 
-	head_subordinates = list()
+	head_subordinates.Cut()
 	if(length(head_types))
-		for(var/j in SSjob.occupations)
-			var/datum/job/job = j
-			for(var/head in head_types)//god why
+		for(var/occupation in SSjob.occupations)
+			var/datum/job/job = occupation
+			for(var/head in head_types)
 				if(head in job.department_head)
 					head_subordinates += job.title
 
@@ -143,10 +135,10 @@
 						<u>Access:</u><br>
 						"}
 
-			var/known_access_rights = ALL_ACCESS_STATION
+			var/known_access_rights = REGION_ACCESS_ALL_STATION
 			for(var/A in target_id_card.timberpoes_access)
 				if(A in known_access_rights)
-					contents += "  [get_access_desc(A)]"
+					contents += "  [SSid_access.get_access_desc(A)]"
 
 			if(!printer.print_text(contents,"access report"))
 				to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
@@ -232,20 +224,20 @@
 			playsound(computer, "terminal_type", 50, FALSE)
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
-			if(access_type in (is_centcom ? CENTCOM_ACCESS : ALL_ACCESS_STATION))
+			if(access_type in (is_centcom ? REGION_ACCESS_CENTCOM : REGION_ACCESS_ALL_STATION))
 				if(access_type in target_id_card.timberpoes_access)
 					target_id_card.remove_access(list(access_type))
-					LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [get_access_desc(access_type)]")
+					LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [SSid_access.get_access_desc(access_type)]")
 					return TRUE
 
 				if(!target_id_card.add_access(list(access_type), try_wildcard))
 					to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
-					LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+					LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 					return TRUE
 
 				if(access_type in ACCESS_ALERT_ADMINS)
-					message_admins("[ADMIN_LOOKUPFLW(user)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
-				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [get_access_desc(access_type)]")
+					message_admins("[ADMIN_LOOKUPFLW(user)] just added [SSid_access.get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
+				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [SSid_access.get_access_desc(access_type)]")
 			return TRUE
 
 
@@ -255,53 +247,32 @@
 	data["centcom_access"] = is_centcom
 	data["minor"] = target_dept || minor ? TRUE : FALSE
 
+	// TIMBERTODO - OLD CODE ABOUT JOBS AND STUFF. CHANGE TO TRIMS
+	/*
 	var/list/departments = target_dept
 	if(is_centcom)
 		departments = list("CentCom" = ALL_CENTCOM_JOBS_LIST)
 	else if(isnull(departments))
 		departments = list(
-			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
-			CARDCON_DEPARTMENT_ENGINEERING = GLOB.engineering_positions,
-			CARDCON_DEPARTMENT_MEDICAL = GLOB.medical_positions,
-			CARDCON_DEPARTMENT_SCIENCE = GLOB.science_positions,
-			CARDCON_DEPARTMENT_SECURITY = GLOB.security_positions,
-			CARDCON_DEPARTMENT_SUPPLY = GLOB.supply_positions,
-			CARDCON_DEPARTMENT_SERVICE = GLOB.service_positions
+			REGION_COMMAND = list("Captain"),//lol
+			REGION_ENGINEERING = GLOB.engineering_positions,
+			REGION_MEDICAL = GLOB.medical_positions,
+			REGION_SCIENCE = GLOB.science_positions,
+			REGION_SECURITY = GLOB.security_positions,
+			REGION_SUPPLY = GLOB.supply_positions,
+			"Service" = GLOB.service_positions
 		)
+	*/
 
 	var/list/regions = list()
+	var/list/tgui_region_data = SSid_access.all_region_access_tgui
 	if(is_centcom)
-		var/list/accesses = list()
-		for(var/access in CENTCOM_ACCESS)
-			if (get_centcom_access_desc(access))
-				accesses += list(list(
-					"desc" = replacetext(get_centcom_access_desc(access), "&nbsp", " "),
-					"ref" = access,
-				))
-
-		regions += list(list(
-			"name" = "CentCom",
-			"regid" = 0,
-			"accesses" = accesses
-		))
+		regions += list(tgui_region_data[REGION_CENTCOM])
 	else
-		for(var/i in 1 to 7)
-			if((minor || target_dept) && !(i in region_access))
+		for(var/region in REGION_AREA_STATION)
+			if((minor || target_dept) && !(region in region_access))
 				continue
-
-			var/list/accesses = list()
-			for(var/access in get_region_accesses(i))
-				if (get_access_desc(access))
-					accesses += list(list(
-						"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
-						"ref" = access,
-					))
-
-			regions += list(list(
-				"name" = get_region_accesses_name(i),
-				"regid" = i,
-				"accesses" = accesses
-			))
+			regions += tgui_region_data[region]
 
 	data["regions"] = regions
 
@@ -361,11 +332,3 @@
 			data["trimAccess"] = list()
 
 	return data
-
-#undef CARDCON_DEPARTMENT_SERVICE
-#undef CARDCON_DEPARTMENT_SECURITY
-#undef CARDCON_DEPARTMENT_MEDICAL
-#undef CARDCON_DEPARTMENT_SCIENCE
-#undef CARDCON_DEPARTMENT_SUPPLY
-#undef CARDCON_DEPARTMENT_ENGINEERING
-#undef CARDCON_DEPARTMENT_COMMAND

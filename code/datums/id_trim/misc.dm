@@ -4,7 +4,7 @@
 
 /datum/id_trim/admin/New()
 	. = ..()
-	access = ALL_ACCESS_STATION + CENTCOM_ACCESS + SYNDICATE_ACCESS + AWAY_ACCESS + CULT_ACCESS
+	access = REGION_ACCESS_ALL_GLOBAL
 
 /datum/id_trim/highlander
 	assignment = "Highlander"
@@ -12,7 +12,7 @@
 
 /datum/id_trim/highlander/New()
 	. = ..()
-	access = ALL_ACCESS_STATION + CENTCOM_ACCESS
+	access = REGION_ACCESS_CENTCOM + REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/reaper_assassin
 	assignment = "Reaper"
@@ -20,7 +20,7 @@
 
 /datum/id_trim/highlander/New()
 	. = ..()
-	access = ALL_ACCESS_STATION
+	access = REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/mobster
 	assignment = "Mobster"
@@ -31,7 +31,7 @@
 
 /datum/id_trim/vr/New()
 	. = ..()
-	access |= ALL_ACCESS_STATION
+	access |= REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/vr/operative
 	assignment = "Syndicate VR Operative"

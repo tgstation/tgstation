@@ -11,6 +11,12 @@ SUBSYSTEM_DEF(id_access)
 	var/list/trim_singletons_by_path = list()
 	/// Dictionary of wildcard compatibility flags. Keys are strings for the wildcards. Values are their associated flags.
 	var/list/wildcard_flags_by_wildcard = list()
+	/// Dictionary of accesses based on station region. Keys are region strings. Values are lists of accesses.
+	var/list/accesses_by_region = list()
+	/// Specially formatted list for sending access levels to tgui interfaces.
+	var/list/all_region_access_tgui = list()
+	/// Dictionary of access names. Keys are access levels. Values are their associated names.
+	var/list/desc_by_access = list()
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -18,6 +24,8 @@ SUBSYSTEM_DEF(id_access)
 	setup_access_flags()
 	setup_trim_singletons()
 	setup_wildcard_dict()
+	setup_access_descriptions()
+	setup_tgui_lists()
 	return ..()
 
 /datum/controller/subsystem/id_access/proc/setup_access_flags()
@@ -51,6 +59,39 @@ SUBSYSTEM_DEF(id_access)
 	for(var/trim in typesof(/datum/id_trim))
 		trim_singletons_by_path[trim] = new trim()
 
+/// Creates various data structures that get fed to tgui interfaces.
+/datum/controller/subsystem/id_access/proc/setup_tgui_lists()
+	accesses_by_region[REGION_ALL_STATION] = REGION_ACCESS_ALL_STATION
+	accesses_by_region[REGION_ALL_GLOBAL] = REGION_ACCESS_ALL_GLOBAL
+	accesses_by_region[REGION_GENERAL] = REGION_ACCESS_GENERAL
+	accesses_by_region[REGION_SECURITY] = REGION_ACCESS_SECURITY
+	accesses_by_region[REGION_MEDBAY] = REGION_ACCESS_MEDBAY
+	accesses_by_region[REGION_RESEARCH] = REGION_ACCESS_RESEARCH
+	accesses_by_region[REGION_ENGINEERING] = REGION_ACCESS_ENGINEERING
+	accesses_by_region[REGION_SUPPLY] = REGION_ACCESS_SUPPLY
+	accesses_by_region[REGION_COMMAND] = REGION_ACCESS_COMMAND
+	accesses_by_region[REGION_CENTCOM] = REGION_ACCESS_CENTCOM
+
+	for(var/region in accesses_by_region)
+		var/list/region_access = accesses_by_region[region]
+
+		var/parsed_accesses = list()
+
+		for(var/access in region_access)
+			var/access_desc = get_access_desc(access)
+			if(!access_desc)
+				continue
+
+			parsed_accesses += list(list(
+				"desc" = replacetext(access_desc, "&nbsp", " "),
+				"ref" = access,
+			))
+
+		all_region_access_tgui[region] = list(list(
+			"name" = region,
+			"accesses" = parsed_accesses,
+		))
+
 /datum/controller/subsystem/id_access/proc/setup_wildcard_dict()
 	wildcard_flags_by_wildcard[WILDCARD_NAME_ALL] = WILDCARD_FLAG_ALL
 	wildcard_flags_by_wildcard[WILDCARD_NAME_COMMON] = WILDCARD_FLAG_COMMON
@@ -63,14 +104,96 @@ SUBSYSTEM_DEF(id_access)
 	wildcard_flags_by_wildcard[WILDCARD_NAME_SPECIAL] = WILDCARD_FLAG_SPECIAL
 	wildcard_flags_by_wildcard[WILDCARD_NAME_FORCED] = WILDCARD_FLAG_FORCED
 
+/datum/controller/subsystem/id_access/proc/setup_access_descriptions()
+	desc_by_access["[ACCESS_CARGO]"] = "Cargo Bay"
+	desc_by_access["[ACCESS_SECURITY]"] = "Security"
+	desc_by_access["[ACCESS_BRIG]"] = "Holding Cells"
+	desc_by_access["[ACCESS_COURT]"] = "Courtroom"
+	desc_by_access["[ACCESS_FORENSICS_LOCKERS]"] = "Forensics"
+	desc_by_access["[ACCESS_MEDICAL]"] = "Medical"
+	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
+	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
+	desc_by_access["[ACCESS_RND]"] = "R&D Lab"
+	desc_by_access["[ACCESS_TOXINS]"] = "Toxins Lab"
+	desc_by_access["[ACCESS_TOXINS_STORAGE]"] = "Toxins Storage"
+	desc_by_access["[ACCESS_CHEMISTRY]"] = "Chemistry Lab"
+	desc_by_access["[ACCESS_RD]"] = "RD Office"
+	desc_by_access["[ACCESS_BAR]"] = "Bar"
+	desc_by_access["[ACCESS_JANITOR]"] = "Custodial Closet"
+	desc_by_access["[ACCESS_ENGINE]"] = "Engineering"
+	desc_by_access["[ACCESS_ENGINE_EQUIP]"] = "Power and Engineering Equipment"
+	desc_by_access["[ACCESS_MAINT_TUNNELS]"] = "Maintenance"
+	desc_by_access["[ACCESS_EXTERNAL_AIRLOCKS]"] = "External Airlocks"
+	desc_by_access["[ACCESS_CHANGE_IDS]"] = "ID Console"
+	desc_by_access["[ACCESS_AI_UPLOAD]"] = "AI Chambers"
+	desc_by_access["[ACCESS_TELEPORTER]"] = "Teleporter"
+	desc_by_access["[ACCESS_EVA]"] = "EVA"
+	desc_by_access["[ACCESS_HEADS]"] = "Bridge"
+	desc_by_access["[ACCESS_CAPTAIN]"] = "Captain"
+	desc_by_access["[ACCESS_ALL_PERSONAL_LOCKERS]"] = "Personal Lockers"
+	desc_by_access["[ACCESS_CHAPEL_OFFICE]"] = "Chapel Office"
+	desc_by_access["[ACCESS_TECH_STORAGE]"] = "Technical Storage"
+	desc_by_access["[ACCESS_ATMOSPHERICS]"] = "Atmospherics"
+	desc_by_access["[ACCESS_CREMATORIUM]"] = "Crematorium"
+	desc_by_access["[ACCESS_ARMORY]"] = "Armory"
+	desc_by_access["[ACCESS_CONSTRUCTION]"] = "Construction"
+	desc_by_access["[ACCESS_KITCHEN]"] = "Kitchen"
+	desc_by_access["[ACCESS_HYDROPONICS]"] = "Hydroponics"
+	desc_by_access["[ACCESS_LIBRARY]"] = "Library"
+	desc_by_access["[ACCESS_LAWYER]"] = "Law Office"
+	desc_by_access["[ACCESS_ROBOTICS]"] = "Robotics"
+	desc_by_access["[ACCESS_VIROLOGY]"] = "Virology"
+	desc_by_access["[ACCESS_PSYCHOLOGY]"] = "Psychology"
+	desc_by_access["[ACCESS_CMO]"] = "CMO Office"
+	desc_by_access["[ACCESS_QM]"] = "Quartermaster"
+	desc_by_access["[ACCESS_SURGERY]"] = "Surgery"
+	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
+	desc_by_access["[ACCESS_RESEARCH]"] = "Science"
+	desc_by_access["[ACCESS_MINING]"] = "Mining"
+	desc_by_access["[ACCESS_MAILSORTING]"] = "Cargo Office"
+	desc_by_access["[ACCESS_VAULT]"] = "Main Vault"
+	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining EVA"
+	desc_by_access["[ACCESS_XENOBIOLOGY]"] = "Xenobiology Lab"
+	desc_by_access["[ACCESS_HOP]"] = "HoP Office"
+	desc_by_access["[ACCESS_HOS]"] = "HoS Office"
+	desc_by_access["[ACCESS_CE]"] = "CE Office"
+	desc_by_access["[ACCESS_PHARMACY]"] = "Pharmacy"
+	desc_by_access["[ACCESS_RC_ANNOUNCE]"] = "RC Announcements"
+	desc_by_access["[ACCESS_KEYCARD_AUTH]"] = "Keycode Auth."
+	desc_by_access["[ACCESS_TCOMSAT]"] = "Telecommunications"
+	desc_by_access["[ACCESS_GATEWAY]"] = "Gateway"
+	desc_by_access["[ACCESS_SEC_DOORS]"] = "Brig"
+	desc_by_access["[ACCESS_MINERAL_STOREROOM]"] = "Mineral Storage"
+	desc_by_access["[ACCESS_MINISAT]"] = "AI Satellite"
+	desc_by_access["[ACCESS_WEAPONS]"] = "Weapon Permit"
+	desc_by_access["[ACCESS_NETWORK]"] = "Network Access"
+	desc_by_access["[ACCESS_MECH_MINING]"] = "Mining Mech Access"
+	desc_by_access["[ACCESS_MECH_MEDICAL]"] = "Medical Mech Access"
+	desc_by_access["[ACCESS_MECH_SECURITY]"] = "Security Mech Access"
+	desc_by_access["[ACCESS_MECH_SCIENCE]"] = "Science Mech Access"
+	desc_by_access["[ACCESS_MECH_ENGINE]"] = "Engineering Mech Access"
+	desc_by_access["[ACCESS_AUX_BASE]"] = "Auxiliary Base"
+	desc_by_access["[ACCESS_CENT_GENERAL]"] = "Code Grey"
+	desc_by_access["[ACCESS_CENT_THUNDER]"] = "Code Yellow"
+	desc_by_access["[ACCESS_CENT_STORAGE]"] = "Code Orange"
+	desc_by_access["[ACCESS_CENT_LIVING]"] = "Code Green"
+	desc_by_access["[ACCESS_CENT_MEDICAL]"] = "Code White"
+	desc_by_access["[ACCESS_CENT_TELEPORTER]"] = "Code Blue"
+	desc_by_access["[ACCESS_CENT_SPECOPS]"] = "Code Black"
+	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "Code Gold"
+	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
+
 /datum/controller/subsystem/id_access/proc/get_access_flag(access)
-	return flags_by_access["[access]"] ? text2num(flags_by_access["[access]"]) : ACCESS_FLAG_SPECIAL
+	return flags_by_access["[access]"]
 
 /datum/controller/subsystem/id_access/proc/get_trim(trim)
 	return trim_singletons_by_path[trim]
 
 /datum/controller/subsystem/id_access/proc/get_wildcard_flags(name)
 	return wildcard_flags_by_wildcard[name]
+
+/datum/controller/subsystem/id_access/proc/get_access_desc(access)
+	return desc_by_access["[access]"]
 
 /datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path)
 	var/datum/id_trim/trim = get_trim(trim_path)

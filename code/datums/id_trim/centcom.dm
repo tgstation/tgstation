@@ -49,7 +49,7 @@
 /datum/id_trim/centcom/specops_officer/New()
 	. = ..()
 
-	access = CENTCOM_ACCESS + ALL_ACCESS_STATION
+	access = REGION_ACCESS_CENTCOM + REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/centcom/admiral
 	assignment = "Admiral"
@@ -57,7 +57,7 @@
 /datum/id_trim/centcom/admiral/New()
 	. = ..()
 
-	access = CENTCOM_ACCESS + ALL_ACCESS_STATION
+	access = REGION_ACCESS_CENTCOM + REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/centcom/commander
 	assignment = "CentCom Commander"
@@ -65,7 +65,7 @@
 /datum/id_trim/centcom/commander/New()
 	. = ..()
 
-	access = CENTCOM_ACCESS + ALL_ACCESS_STATION
+	access = REGION_ACCESS_CENTCOM + REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/centcom/deathsquad
 	assignment = "Death Commando"
@@ -74,7 +74,7 @@
 /datum/id_trim/centcom/deathsquad/New()
 	. = ..()
 
-	access = CENTCOM_ACCESS + ALL_ACCESS_STATION
+	access = REGION_ACCESS_CENTCOM + REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/centcom/ert
 	assignment = "Emergency Response Team Intern"
@@ -82,7 +82,7 @@
 /datum/id_trim/centcom/ert/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL) + ALL_ACCESS_STATION - ACCESS_CHANGE_IDS
+	access = list(ACCESS_CENT_GENERAL) + REGION_ACCESS_ALL_STATION - ACCESS_CHANGE_IDS
 
 /datum/id_trim/centcom/ert/commander
 	assignment = "Emergency Response Team Commander"
@@ -91,7 +91,7 @@
 /datum/id_trim/centcom/ert/commander/New()
 	. = ..()
 
-	access = CENTCOM_ACCESS + ALL_ACCESS_STATION
+	access = REGION_ACCESS_CENTCOM + REGION_ACCESS_ALL_STATION
 
 /datum/id_trim/centcom/ert/security
 	assignment = "Security Response Officer"
@@ -100,7 +100,7 @@
 /datum/id_trim/centcom/ert/security/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING) + ALL_ACCESS_STATION - ACCESS_CHANGE_IDS
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING) + REGION_ACCESS_ALL_STATION - ACCESS_CHANGE_IDS
 
 /datum/id_trim/centcom/ert/engineer
 	assignment = "Engineering Response Officer"
@@ -109,7 +109,7 @@
 /datum/id_trim/centcom/ert/engineer/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE) + ALL_ACCESS_STATION - ACCESS_CHANGE_IDS
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE) + REGION_ACCESS_ALL_STATION - ACCESS_CHANGE_IDS
 
 /datum/id_trim/centcom/ert/medical
 	assignment = "Medical Response Officer"
@@ -118,7 +118,7 @@
 /datum/id_trim/centcom/ert/medical/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING) + ALL_ACCESS_STATION - ACCESS_CHANGE_IDS
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_LIVING) + REGION_ACCESS_ALL_STATION - ACCESS_CHANGE_IDS
 
 /datum/id_trim/centcom/ert/chaplain
 	assignment = "Religious Response Officer"
@@ -127,7 +127,7 @@
 /datum/id_trim/centcom/ert/chaplain/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING) + ALL_ACCESS_STATION - ACCESS_CHANGE_IDS
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING) + REGION_ACCESS_ALL_STATION - ACCESS_CHANGE_IDS
 
 /datum/id_trim/centcom/ert/janitor
 	assignment = "Janitorial Response Officer"
@@ -136,7 +136,7 @@
 /datum/id_trim/centcom/ert/janitor/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) + ALL_ACCESS_STATION - ACCESS_CHANGE_IDS
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) + REGION_ACCESS_ALL_STATION - ACCESS_CHANGE_IDS
 
 /datum/id_trim/centcom/ert/clown
 	assignment = "Entertainment Response Officer"
@@ -145,4 +145,4 @@
 /datum/id_trim/centcom/ert/clown/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) + ALL_ACCESS_STATION - ACCESS_CHANGE_IDS
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) + REGION_ACCESS_ALL_STATION - ACCESS_CHANGE_IDS

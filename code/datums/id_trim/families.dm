@@ -4,4 +4,4 @@
 
 /datum/id_trim/space_police/New()
 	. = ..()
-	access = ALL_ACCESS_STATION
+	access = REGION_ACCESS_ALL_STATION

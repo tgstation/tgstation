@@ -306,4 +306,4 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /datum/id_trim/sandbox/New()
 	. = ..()
-	access = ALL_ACCESS_STATION
+	access = REGION_ACCESS_ALL_STATION
