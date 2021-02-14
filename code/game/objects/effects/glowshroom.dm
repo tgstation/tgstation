@@ -112,7 +112,7 @@
 	//We could be deleted at any point and the timers might not be cleaned up
 	if(QDELETED(src))
 		return
-	// If its at the third generation we want it to stop spreading.
+	// If its at X amount of generations , we want it to stop spreading .
 	if(generation>=GLOWCAP_MAX_GENERATIONS)
 		return
 
