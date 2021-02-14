@@ -159,9 +159,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
 	if(lit || smoketime <= 0)
 		return ..()
-	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen to burn
+	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/turf/open/O = get_turf(src)
-		if(!isopenturf(O) || !O.has_gas(/datum/gas/oxygen, 1)) // no oxygen on tile
+		if(!isopenturf(O) || !O.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+			to_chat(M, "<span class='notice'>Your [name] needs a source of oxygen to burn.</span>")
 			return ..()
 	var/lighting_text = W.ignition_effect(src, user)
 	if(lighting_text)
