@@ -189,8 +189,11 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		map_id = offline_program
 		force = TRUE
 
-	if ((!COOLDOWN_FINISHED(src, holodeck_cooldown) && !force) || spawning_simulation)
+	if (!force && (!COOLDOWN_FINISHED(src, holodeck_cooldown) || spawning_simulation))
 		say("ERROR. Recalibrating projection apparatus.")
+		return
+
+	if(spawning_simulation)
 		return
 
 	if (add_delay)
@@ -239,15 +242,13 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	//holo effects are taken out of the spawned list and added to the effects list
 	//turfs and overlay objects are taken out of the spawned list
 	//objects get resistance flags added to them
-	for (var/_atom in spawned)
-		var/atom/atoms = _atom
-
-		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis)) //ssatoms
+	for (var/atom/atoms in spawned)
+		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis))
 			spawned -= atoms
 			continue
 
-		atoms.flags_1 |= HOLOGRAM_1
 		RegisterSignal(atoms, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+		atoms.flags_1 |= HOLOGRAM_1
 
 		if (isholoeffect(atoms))//activates holo effects and transfers them from the spawned list into the effects list
 			var/obj/effect/holodeck_effect/holo_effect = atoms
@@ -278,10 +279,9 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 ///this qdels holoitems that should no longer exist for whatever reason
 /obj/machinery/computer/holodeck/proc/derez(obj/object, silent = TRUE, forced = FALSE)
+	spawned -= object
 	if(!object)
 		return
-
-	spawned -= object
 	UnregisterSignal(object, COMSIG_PARENT_PREQDELETED)
 	var/turf/target_turf = get_turf(object)
 	for(var/c in object) //make sure that things inside of a holoitem are moved outside before destroying it
