@@ -1,8 +1,0 @@
-author: "nightred"
-delete-after: True
-changes: 
-  - bugfix: "ICEBOX: fixed Double wiring"
-  - bugfix: "ICEBOX: fixed mining mecha bay camera name"
-  - bugfix: "ICEBOX: fixed mining eva camera name"
-  - bugfix: "ICEBOX: Atmos waste line vent was moved to prevent the melting of atmos"
-  - tweak: "ICEBOX: plating outside the station is a bit snow covered now"

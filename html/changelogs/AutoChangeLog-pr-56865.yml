@@ -1,5 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - tweak: "Syringe toggle has been replaced with left-click to inject, right-click to draw."
-  - rscadd: "Syringes can now change transfer amount like other reagent containers."
