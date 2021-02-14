@@ -12,6 +12,7 @@ a img {border:none;}
 .bugfix {background-image:url(bug-minus.png)}
 .wip {background-image:url(hard-hat-exclamation.png)}
 .tweak {background-image:url(wrench-screwdriver.png)}
+.qol {background-image:url(wrench-screwdriver.png)}
 .soundadd {background-image:url(music-plus.png)}
 .sounddel {background-image:url(music-minus.png)}
 .rscdel {background-image:url(cross-circle.png)}
@@ -29,7 +30,7 @@ a img {border:none;}
 .sansserif {font-family:Tahoma,sans-serif;font-size:12px;}
 .commit {margin-bottom:20px;font-size:100%;font-weight:normal;}
 .changes {list-style:none;margin:5px 0;padding:0 0 0 25px;font-size:0.8em;}
-.date {margin:10px 0;color:blue;border-bottom:2px solid #00f;width:60%;padding:2px 0;font-size:1em;font-weight:bold;}	
+.date {margin:10px 0;color:blue;border-bottom:2px solid #00f;width:60%;padding:2px 0;font-size:1em;font-weight:bold;}
 .author {padding-left:10px;margin:0;font-weight:bold;font-size:0.9em;}
 .drop {cursor:pointer;border:1px solid #999;display:inline;font-size:0.9em;padding:1px 20px 1px 5px;line-height:16px;}
 .hidden {display:none;}
