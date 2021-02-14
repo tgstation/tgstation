@@ -171,7 +171,7 @@
 		if(WP.owner != user.real_name)
 			itsmypinpointer = FALSE
 
-		if(synth_acc.has_money(refund_amt) && (WP.owner != user.real_name || !(WP.roundstart))) //can it afford to refund and is the pinpointer either not from the quirk or not yours
+		if(synth_acc.has_money(refund_amt) && !(itsmypinpointer && WP.roundstart)) //can it afford to refund you, and is the pinpointer either not from the quirk or not yours?
 			refundiscredits = TRUE
 			qdel(WP)
 			synth_acc._adjust_money(-refund_amt)
