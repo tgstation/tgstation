@@ -322,7 +322,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 // Cigarette brands.
 
 /obj/item/clothing/mask/cigarette/space_cigarette
-	desc = "A Space Cigarette brand cigarette. On the back it advertises to be the only brand that can be smoked in space."
+	desc = "A Space brand cigarette that can be smoked anywhere."
 	list_reagents = list(/datum/reagent/drug/nicotine = 13, /datum/reagent/oxygen = 15)
 
 /obj/item/clothing/mask/cigarette/dromedary
