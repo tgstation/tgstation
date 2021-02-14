@@ -77,6 +77,11 @@
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
 
+/datum/species/moth/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	var/wings = pick(GLOB.moth_wings_list)
+	mutant_bodyparts["wings"] = wings
+	human_mob.dna.features["wings"] = wings
+	human_mob.update_body()
 
 /datum/species/moth/spec_fully_heal(mob/living/carbon/human/H)
 	. = ..()

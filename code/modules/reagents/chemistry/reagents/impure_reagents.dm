@@ -44,11 +44,12 @@
 	name = "Eigenswap"
 	description = "This reagent is known to swap the handedness of a patient."
 	ph = 3.3
+	chemical_flags = REAGENT_DONOTSPLIT
 
-/datum/reagent/impurity/eigenswap/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impurity/eigenswap/on_mob_life(mob/living/carbon/carbon_mob)
 	. = ..()
 	if(prob(creation_purity*100))
-		var/list/cached_hand_items = C.held_items
+		var/list/cached_hand_items = carbon_mob.held_items
 		var/index = 1
 		for(var/thing in cached_hand_items)
 			index++
@@ -56,6 +57,6 @@
 				index = 1
 			if(!thing)
 				continue
-			C.put_in_hand(thing, index, TRUE, TRUE)
-			playsound(C, 'sound/effects/phasein.ogg', 20, TRUE)
+			carbon_mob.put_in_hand(thing, index, TRUE, TRUE)
+			playsound(carbon_mob, 'sound/effects/phasein.ogg', 20, TRUE)
 
