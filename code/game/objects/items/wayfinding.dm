@@ -1,4 +1,5 @@
 #define COOLDOWN_SPAWN 3 MINUTES
+#define COOLDOWN_RETURN 2 MINUTES
 #define COOLDOWN_INTERACT 6 SECONDS
 #define COOLDOWN_SLOGAN 5 MINUTES
 #define COOLDOWN_SPEW 5 MINUTES
@@ -17,6 +18,8 @@
 	var/list/user_spawn_cooldowns = list()
 	///List of user-specific cooldowns to prevent message spam.
 	var/list/user_interact_cooldowns = list()
+	///List of user-specific cooldowns to prevent abusing it for costumes.
+	var/list/user_return_cooldowns = list()
 	///How many credits the dispenser account starts with to cover wayfinder refunds.
 	var/start_bal = 400
 	///How many credits recycling a pinpointer rewards you.
@@ -29,7 +32,7 @@
 	///List of slogans used by the dispenser to attract customers.
 	var/list/slogan_list = list("Find a wayfinding pinpointer? Give it to me! I'll make it worth your while. Please. Daddy needs his medicine.", //last sentence is a reference to Sealab 2021
 								"See a wayfinding pinpointer? Don't let it go to the crusher! Recycle it with me instead. I'll pay you!", //I see these things heading for disposals through cargo all the time
-								"Need the disk? Can't get a pinpointer? Buy a wayfinding pinpointer and find the captain's office today!",
+								"Can't find the disk? Need a pinpointer? Buy a wayfinding pinpointer and find the captain's office today!",
 								"Bleeding to death? Can't read? Find your way to medbay today!", //there are signs that point to medbay but you need basic literacy to get the most out of them
 								"Voted tenth best pinpointer in the universe in 2560!", //there were no more than ten pinpointers in the game in 2020
 								"Helping assistants find the departments they tide since 2560.", //not really but it's advertising
@@ -152,45 +155,62 @@
 		say("<span class='robot'>Here's your pinpointer!</span>")
 		var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(get_turf(src))
 		user_spawn_cooldowns[user.real_name] = world.time + COOLDOWN_SPAWN
+		user_return_cooldowns[user.real_name] = world.time + COOLDOWN_RETURN
 		user.put_in_hands(P)
 		P.owner = user.real_name
 
-/obj/machinery/pinpointer_dispenser/attackby(obj/item/I, mob/user, params)
+/obj/machinery/pinpointer_dispenser/attackby(obj/item/I, mob/living/user, params)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return ..()
 
 	if(istype(I, /obj/item/pinpointer/wayfinding))
 		var/obj/item/pinpointer/wayfinding/WP = I
 
-		to_chat(user, "<span class='notice'>You put \the [WP] in the return slot.</span>")
-
-		var/refundiscredits = FALSE
 		var/itsmypinpointer = TRUE
-
-		//Will they meet the conditions to get a credit reward for recycling?
 		if(WP.owner != user.real_name)
 			itsmypinpointer = FALSE
 
-			if(synth_acc.has_money(refund_amt) && !WP.roundstart) //can it afford to refund and is the pinpointer not from the quirk
-				refundiscredits = TRUE
-				qdel(WP)
-				synth_acc._adjust_money(-refund_amt)
-				var/obj/item/holochip/holochip = new (loc)
-				holochip.credits = refund_amt
-				holochip.name = "[holochip.credits] credit holochip"
-				if(ishuman(user))
-					var/mob/living/carbon/human/customer = user
-					customer.put_in_hands(holochip)
+		if(itsmypinpointer && world.time < user_return_cooldowns[user.real_name])
+
+			set_expression("sad", 2 SECONDS)
+
+			if(world.time < user_interact_cooldowns[user.real_name])
+				to_chat(user, "<span class='warning'>The return slot closes before you can insert [WP]!</span>")
+				return
+
+			user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
+
+			if(prob(50))
+				user.apply_damage(5, BRUTE, user.get_active_hand())
+				user.visible_message("<span class='danger'>[src]'s return slot closes on [user]'s hand!</span>",\
+								"<span class='userdanger'>The return slot closes on your hand!</span>", null, COMBAT_MESSAGE_RANGE, user)
+				playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
+				user.emote("scream")
+				user.dropItemToGround(WP)
+				say("<span class='robot'>Sorry, [user.first_name()]! But you just bought that!</span>")
+			else
+				to_chat(user, "<span class='warning'>The return slot closes before you can insert [WP]!</span>")
+				say("<span class='robot'>You just bought that!</span>")
+			return
+
+		to_chat(user, "<span class='notice'>You put \the [WP] in the return slot.</span>")
+		qdel(WP)
+
+		var/refundiscredits = FALSE
+		var/is_a_thing = "are [refund_amt] credit\s."
+		if(!itsmypinpointer && synth_acc.has_money(refund_amt) && !WP.roundstart)
+			refundiscredits = TRUE
+			synth_acc._adjust_money(-refund_amt)
+			var/obj/item/holochip/holochip = new (user.loc)
+			holochip.credits = refund_amt
+			holochip.name = "[holochip.credits] credit holochip"
+			if(ishuman(user))
+				var/mob/living/carbon/human/customer = user
+				customer.put_in_hands(holochip)
 
 		if(!refundiscredits)
-			qdel(WP)
 			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
 			new costume(user.loc)
-
-		set_expression("veryhappy", 2 SECONDS)
-
-		var/is_a_thing = "are [refund_amt] credit\s."
-		if(!refundiscredits)
 			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))
 				is_a_thing = "is a pulse rifle! Just kidding it's a costume."
@@ -199,13 +219,12 @@
 		if(prob(funnyprob))
 			recycling = "feeding me"
 
-		//To imply they got a costume instead of money because it was their pinpointer they recycled
-		var/the_pinpointer = "your pinpointer"
+		var/the_pinpointer = "your pinpointer" //To imply they got a costume because it was their pinpointer
 		if(!itsmypinpointer)
 			the_pinpointer = "that pinpointer"
 
+		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]</span>")
-
 		return
 
 	else if(istype(I, /obj/item/pinpointer))
