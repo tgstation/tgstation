@@ -12,11 +12,9 @@ export const RecipeLookup = (props, context) => {
           <Icon name="circle" mr={1} color={recipe.reagentCol} />
           {recipe.name}
           <Button
-            key={"reduce_index"}
             icon="arrow-left"
             ml={3}
-            disabled={recipe.subReactIndex
-                            === 1 ? true : false}
+            disabled={recipe.subReactIndex === 1}
             content={null}
             onClick={() => act('reduce_index', {
               id: recipe.name,
@@ -24,8 +22,7 @@ export const RecipeLookup = (props, context) => {
           <Button
             key={"increment_index"}
             icon="arrow-right"
-            disabled={recipe.subReactIndex
-                            === recipe.subReactLen?true:false}
+            disabled={recipe.subReactIndex === recipe.subReactLen}
             content={null}
             onClick={() => act('increment_index', {
               id: recipe.name,

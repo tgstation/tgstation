@@ -18,8 +18,9 @@ export const ReagentLookup = (props, context) => {
             color="teal"
             tooltip="Open the associated wikipage for this reagent."
             tooltipPosition="left"
-            onClick={() => 
-              Byond.command(`wiki Guide_to_chemistry#${reagent.name}`)} />
+            onClick={() => {
+              Byond.command(`wiki Guide_to_chemistry#${reagent.name}`);
+            }} />
         </LabeledList.Item>
         <LabeledList.Item label="Description">
           {reagent.desc}
@@ -61,8 +62,7 @@ export const ReagentLookup = (props, context) => {
                 <Button
                   key={reagent.inverseReagent}
                   icon="vial"
-                  content={reagent
-                    .inverseReagent}
+                  content={reagent.inverseReagent}
                   tooltip="This reagent will convert into this when the purity is below the Inverse purity on consumption."
                   tooltipPosition="left"
                   onClick={() => act('reagent_click', {
