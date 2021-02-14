@@ -82,7 +82,7 @@
 	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1) //Next cycle!
 
 /// Called when addiction enters stage 1
-/datum/addiction/proc/withdrawal_enters_stage_1(/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_light, name)
 
 /// Called when addiction enters stage 2
