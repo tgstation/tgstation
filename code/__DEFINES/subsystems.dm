@@ -119,6 +119,7 @@
 #define INIT_ORDER_QUIRKS			60
 #define INIT_ORDER_TICKER			55
 #define INIT_ORDER_TCG				55
+#define INIT_ORDER_REAGENTS 		55 //HAS to be before mapping - mapping creates objects, which creates reagents, which relies on lists made in this subsystem
 #define INIT_ORDER_MAPPING			50
 #define INIT_ORDER_TIMETRACK		47
 #define INIT_ORDER_NETWORKS			45
@@ -154,12 +155,14 @@
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
 #define FIRE_PRIORITY_VIS			10
+#define FIRE_PRIORITY_AMBIENCE		10
 #define FIRE_PRIORITY_GARBAGE		15
 #define FIRE_PRIORITY_WET_FLOORS	20
 #define FIRE_PRIORITY_AIR			20
 #define FIRE_PRIORITY_NPC			20
 #define FIRE_PRIORITY_PROCESS		25
 #define FIRE_PRIORITY_THROWING		25
+#define FIRE_PRIORITY_REAGENTS		26
 #define FIRE_PRIORITY_SPACEDRIFT	30
 #define FIRE_PRIORITY_FIELDS		30
 #define FIRE_PRIOTITY_SMOOTHING		35
