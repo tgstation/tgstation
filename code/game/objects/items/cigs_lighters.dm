@@ -160,8 +160,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit || smoketime <= 0)
 		return ..()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
-		var/turf/open/O = get_turf(src)
-		if(!isopenturf(O) || !O.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		var/turf/open/location = get_turf(src)
+		if(!isopenturf(location) || !location.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
 			to_chat(user, "<span class='notice'>Your [name] needs a source of oxygen to burn.</span>")
 			return ..()
 	var/lighting_text = W.ignition_effect(src, user)
@@ -268,17 +268,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.remove_any(to_smoke)
 
 /obj/item/clothing/mask/cigarette/process(delta_time)
-	var/turf/open/O = get_turf(src)
+	var/turf/open/location = get_turf(src)
 	var/mob/living/M = loc
 	if(isliving(loc))
 		M.IgniteMob()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
-		if(!isopenturf(O) || !O.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		if(!isopenturf(location) || !location.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
 			extinguish()
 			return
 	smoketime -= delta_time
 	if(smoketime <= 0)
-		new type_butt(O)
+		new type_butt(location)
 		if(ismob(loc))
 			to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		qdel(src)
