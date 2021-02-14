@@ -663,36 +663,37 @@
 		playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
 
 /datum/chemical_reaction/eigenstate/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
-	if(!off_cooldown(holder, equilibrium, 1, "eigen"))
-		return
-	var/turf/location = get_turf(holder.my_atom)
-	do_sparks(3,FALSE,location)
-	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
-	var/lets_not_go_crazy = 5 //Teleport 10 items at max
-	for(var/obj/item in orange(location, 3))//so we don't teleport the thing itself causing even more havock
-		do_teleport(item, location, 2, no_effects=TRUE)
-		lets_not_go_crazy -= 1
-		item.add_atom_colour("#ad94fd", WASHABLE_COLOUR_PRIORITY)
-		if(!lets_not_go_crazy)
-			clear_products(holder, step_volume_added)
-			return
-	clear_products(holder, step_volume_added)
-	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The reaction gives out a fizz, teleporting items everywhere!</span>")
-
-
-/datum/chemical_reaction/eigenstate/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
 	if(!off_cooldown(holder, equilibrium, 0.5, "eigen"))
 		return
 	var/turf/location = get_turf(holder.my_atom)
 	do_sparks(3,FALSE,location)
 	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
-	for(var/mob/living/nearby_mob in orange(location, 3))
+	for(var/mob/living/nearby_mob in range(location, 3))
 		do_sparks(3,FALSE,nearby_mob)
-		do_teleport(nearby_mob, get_turf(holder.my_atom), 2, no_effects=TRUE)
+		do_teleport(nearby_mob, get_turf(holder.my_atom), 3, no_effects=TRUE)
 		nearby_mob.Knockdown(20, TRUE)
-		nearby_mob.add_atom_colour("#ad94fd", WASHABLE_COLOUR_PRIORITY)
+		nearby_mob.add_atom_colour("#cebfff", WASHABLE_COLOUR_PRIORITY)
 		to_chat()
 		do_sparks(3,FALSE,nearby_mob)
 	clear_products(holder, step_volume_added)
 
+/datum/chemical_reaction/eigenstate/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
+	if(!off_cooldown(holder, equilibrium, 1, "eigen"))
+		return
+	var/turf/location = get_turf(holder.my_atom)
+	do_sparks(3,FALSE,location)
+	holder.chem_temp += 10
+	playsound(location, 'sound/effects/phasein.ogg', 80, TRUE)
+	var/lets_not_go_crazy = 20 //Teleport 10 items at max
+	var/list/items = range(location, 3)
+	shuffle(items)
+	for(var/obj/item/item in items)
+		do_teleport(item, location, 3, no_effects=TRUE)
+		lets_not_go_crazy -= 1
+		item.add_atom_colour("#c4b3fd", WASHABLE_COLOUR_PRIORITY)
+		if(!lets_not_go_crazy)
+			clear_products(holder, step_volume_added)
+			return
+	clear_products(holder, step_volume_added)
+	holder.my_atom.audible_message("<span class='notice'>[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The reaction gives out a fizz, teleporting items everywhere!</span>")

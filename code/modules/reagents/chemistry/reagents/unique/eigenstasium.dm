@@ -41,31 +41,30 @@
 	creator = data["creator"]
 
 //Main functions
-/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob) //Teleports to creation!
-	if(current_cycle == 0)
-		//make hologram at return point
-		eigenstate = new (living_mob.loc)
-		eigenstate.appearance = living_mob.appearance
-		eigenstate.alpha = 170
-		eigenstate.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
-		eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
-		eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-		eigenstate.anchored = 1//So space wind cannot drag it.
-		eigenstate.name = "[living_mob]'s' eigenstate"//If someone decides to right click.
-		eigenstate.set_light(2)	//hologram lighting
+/datum/reagent/eigenstate/on_mob_add(mob/living/living_mob, amount)
+	. = ..()
+	//make hologram at return point
+	eigenstate = new (living_mob.loc)
+	eigenstate.appearance = living_mob.appearance
+	eigenstate.alpha = 170
+	eigenstate.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
+	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
+	eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	eigenstate.anchored = 1//So space wind cannot drag it.
+	eigenstate.name = "[living_mob]'s' eigenstate"//If someone decides to right click.
+	eigenstate.set_light(2)	//hologram lighting
 
-		location_return = get_turf(living_mob)	//sets up return point
-		to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
-		if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
-			if(!creator || !(creator == living_mob))
-				return ..()
-			do_sparks(5,FALSE,living_mob)
-			do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
-			do_sparks(5,FALSE,living_mob)
+	location_return = get_turf(living_mob)	//sets up return point
+	to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
+	if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
+		if(!creator || !(creator == living_mob))//Abuse please go
+			return
+		do_sparks(5,FALSE,living_mob)
+		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
+		do_sparks(5,FALSE,living_mob)
 
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
-	..()
 
 /datum/reagent/eigenstate/on_mob_delete(mob/living/living_mob) //returns back to original location
 	do_sparks(5,FALSE,living_mob)
