@@ -1,0 +1,5 @@
+author: "Elli-Skala"
+delete-after: True
+changes: 
+  - rscadd: "Added leafy mushrooms as a plant useable to make torches"
+  - balance: "rebalanced the size of torches to be tiny and not bulky"
