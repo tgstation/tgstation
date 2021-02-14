@@ -434,7 +434,6 @@
 /obj/structure/chair/mime
 	name = "invisible chair"
 	desc = "The mime needs to sit down and shut up."
-	anchored = FALSE
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
