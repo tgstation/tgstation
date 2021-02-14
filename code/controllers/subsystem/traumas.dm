@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(traumas)
 			/obj/item/clothing/suit/space/hardsuit/ert, /obj/item/clothing/suit/space/hardsuit/ert/sec,
 			/obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
 			/obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
-			/obj/machinery/door/airlock/centcom,
+			/obj/machinery/door/airlock/centcom, /obj/machinery/atmospherics/miner,
 		)),
 
 		"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module, /obj/machinery/recharge_station,
