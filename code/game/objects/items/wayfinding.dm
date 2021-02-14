@@ -1,5 +1,4 @@
 #define COOLDOWN_SPAWN 3 MINUTES
-#define COOLDOWN_RETURN 2 MINUTES
 #define COOLDOWN_INTERACT 6 SECONDS
 #define COOLDOWN_SLOGAN 5 MINUTES
 #define COOLDOWN_SPEW 5 MINUTES
@@ -18,12 +17,10 @@
 	var/list/user_spawn_cooldowns = list()
 	///List of user-specific cooldowns to prevent message spam.
 	var/list/user_interact_cooldowns = list()
-	///List of user-specific cooldowns to prevent abusing it for costumes.
-	var/list/user_return_cooldowns = list()
 	///How many credits the dispenser account starts with to cover wayfinder refunds.
 	var/start_bal = 400
-	///How many credits recycling a pinpointer rewards you.
-	var/refund_amt = 40
+	///How many credits recycling a pinpointer rewards you. Set to 2/3 of cost in Initialize().
+	var/refund_amt = 0
 	var/datum/bank_account/synth_acc = new /datum/bank_account/remote
 	var/ppt_cost = 0 //Jan 9 '21: 2560 had its difficulties for NT as well
 	var/expression_timer
@@ -63,6 +60,8 @@
 
 	COOLDOWN_START(src, next_slogan_tick, COOLDOWN_SLOGAN)
 	slogan_list = shuffle(slogan_list) //minimise repetition
+
+	refund_amt = round(ppt_cost * 2/3)
 
 /obj/machinery/pinpointer_dispenser/power_change()
 	. = ..()
@@ -155,7 +154,6 @@
 		say("<span class='robot'>Here's your pinpointer!</span>")
 		var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(get_turf(src))
 		user_spawn_cooldowns[user.real_name] = world.time + COOLDOWN_SPAWN
-		user_return_cooldowns[user.real_name] = world.time + COOLDOWN_RETURN
 		user.put_in_hands(P)
 		P.owner = user.real_name
 
@@ -170,36 +168,8 @@
 		if(WP.owner != user.real_name)
 			itsmypinpointer = FALSE
 
-		if(itsmypinpointer && world.time < user_return_cooldowns[user.real_name])
-
-			set_expression("sad", 2 SECONDS)
-
-			if(world.time < user_interact_cooldowns[user.real_name])
-				to_chat(user, "<span class='warning'>The return slot closes before you can insert [WP]!</span>")
-				return
-
-			user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
-
-			if(prob(50))
-				user.apply_damage(5, BRUTE, user.get_active_hand())
-				user.visible_message("<span class='danger'>[src]'s return slot closes on [user]'s hand!</span>",\
-								"<span class='userdanger'>The return slot closes on your hand!</span>", null, COMBAT_MESSAGE_RANGE, user)
-				playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
-				user.emote("scream")
-				user.dropItemToGround(WP)
-				say("<span class='robot'>Sorry, [user.first_name()]! But you just bought that!</span>")
-			else
-				to_chat(user, "<span class='warning'>The return slot closes before you can insert [WP]!</span>")
-				say("<span class='robot'>You just bought that!</span>")
-			return
-
-		to_chat(user, "<span class='notice'>You put \the [WP] in the return slot.</span>")
-		qdel(WP)
-
-		var/refundiscredits = FALSE
 		var/is_a_thing = "are [refund_amt] credit\s."
-		if(!itsmypinpointer && synth_acc.has_money(refund_amt) && !WP.roundstart)
-			refundiscredits = TRUE
+		if(refund_amt > 0 && synth_acc.has_money(refund_amt) && !WP.roundstart)
 			synth_acc._adjust_money(-refund_amt)
 			var/obj/item/holochip/holochip = new (user.loc)
 			holochip.credits = refund_amt
@@ -207,13 +177,14 @@
 			if(ishuman(user))
 				var/mob/living/carbon/human/customer = user
 				customer.put_in_hands(holochip)
-
-		if(!refundiscredits)
+		else if(!itsmypinpointer)
 			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
 			new costume(user.loc)
 			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))
 				is_a_thing = "is a pulse rifle! Just kidding it's a costume."
+		else
+			is_a_thing = "is a smile!"
 
 		var/recycling = "recycling"
 		if(prob(funnyprob))
@@ -222,6 +193,9 @@
 		var/the_pinpointer = "your pinpointer" //To imply they got a costume because it was their pinpointer
 		if(!itsmypinpointer)
 			the_pinpointer = "that pinpointer"
+
+		to_chat(user, "<span class='notice'>You put \the [WP] in the return slot.</span>")
+		qdel(WP)
 
 		set_expression("veryhappy", 2 SECONDS)
 		say("<span class='robot'>Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]</span>")
