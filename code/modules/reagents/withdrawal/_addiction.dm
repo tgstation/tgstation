@@ -42,7 +42,7 @@
 	to_chat(victim_mind.current, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
-/datum/addiction/proc/process_addiction(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/process_addiction(mob/living/carbon/affected_carbon)
 	var/currently_addicted = LAZYACCESS(affected_carbon.mind.active_addictions, type)
 	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
@@ -82,30 +82,30 @@
 	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1) //Next cycle!
 
 /// Called when addiction enters stage 1
-/datum/addiction/proc/withdrawal_enters_stage_1(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_enters_stage_1(/mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_light, name)
 
 /// Called when addiction enters stage 2
-/datum/addiction/proc/withdrawal_enters_stage_2(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_medium, name)
 
 /// Called when addiction enters stage 3
-/datum/addiction/proc/withdrawal_enters_stage_3(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	SEND_SIGNAL(affected_carbon, COMSIG_ADD_MOOD_EVENT, "[type]_addiction", /datum/mood_event/withdrawal_severe, name)
 
 
 /// Called when addiction is in stage 1 every process
-/datum/addiction/proc/withdrawal_stage_1_process(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
 	if(prob(30))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[1]]</span>")
 
 /// Called when addiction is in stage 2 every process
-/datum/addiction/proc/withdrawal_stage_2_process(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
 	if(prob(30))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
 
 
 /// Called when addiction is in stage 3 every process
-/datum/addiction/proc/withdrawal_stage_3_process(var/mob/living/carbon/affected_carbon)
+/datum/addiction/proc/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
 	if(prob(30))
 		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[3]]</span>")

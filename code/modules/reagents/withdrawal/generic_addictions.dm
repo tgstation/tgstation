@@ -8,11 +8,11 @@
 	if(prob(40))
 		affected_carbon.emote("yawn")
 
-/datum/addiction/opiods/withdrawal_enters_stage_2(var/mob/living/carbon/affected_carbon)
+/datum/addiction/opiods/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.apply_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
 
-/datum/addiction/opiods/withdrawal_stage_3_process(var/mob/living/carbon/affected_carbon)
+/datum/addiction/opiods/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
 	. = ..()
 	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED)
 		affected_carbon.adjust_disgust(5)
@@ -28,15 +28,15 @@
 	name = "stimulant"
 	withdrawal_stage_messages = list("You feel a bit tired...You could really use a pick me up.", "You are getting a bit woozy...", "So...Tired...")
 
-/datum/addiction/stimulants/withdrawal_enters_stage_1(var/mob/living/carbon/affected_carbon)
+/datum/addiction/stimulants/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.add_actionspeed_modifier(/datum/actionspeed_modifier/stimulants)
 
-/datum/addiction/stimulants/withdrawal_enters_stage_2(var/mob/living/carbon/affected_carbon)
+/datum/addiction/stimulants/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.apply_status_effect(STATUS_EFFECT_WOOZY)
 
-/datum/addiction/stimulants/withdrawal_enters_stage_3(var/mob/living/carbon/affected_carbon)
+/datum/addiction/stimulants/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.add_movespeed_modifier(/datum/movespeed_modifier/stimulants)
 
@@ -51,16 +51,16 @@
 	name = "alcohol"
 	withdrawal_stage_messages = list("I could use a drink...", "I hope the bar is still open...", "God I need a drink!")
 
-/datum/addiction/alcohol/withdrawal_stage_1_process(var/mob/living/carbon/affected_carbon)
+/datum/addiction/alcohol/withdrawal_stage_1_process(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.Jitter(10)
 
-/datum/addiction/alcohol/withdrawal_stage_2_process(var/mob/living/carbon/affected_carbon)
+/datum/addiction/alcohol/withdrawal_stage_2_process(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.Jitter(10)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 
-/datum/addiction/alcohol/withdrawal_stage_3_process(var/mob/living/carbon/affected_carbon)
+/datum/addiction/alcohol/withdrawal_stage_3_process(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.Jitter(10)
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
