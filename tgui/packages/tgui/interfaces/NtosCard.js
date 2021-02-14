@@ -1,7 +1,6 @@
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button,  Input, NoticeBox, NumberInput, Section, Tabs, Stack } from '../components';
 import { NtosWindow } from '../layouts';
-import { logger } from '../logging';
 import { AccessList } from './common/AccessList';
 
 export const NtosCard = (props, context) => {
