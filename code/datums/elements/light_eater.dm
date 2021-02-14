@@ -23,18 +23,13 @@
 	return ..()
 
 /datum/element/light_eater/Detach(datum/source, force)
-	if(isatom(source))
-		if(ismovable(source))
-			UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
-			if(isitem(source))
-				UnregisterSignal(source, list(
-					COMSIG_ITEM_AFTERATTACK,
-					COMSIG_ITEM_HIT_REACT,
-				))
-			else if(isprojectile(source))
-				UnregisterSignal(source, COMSIG_PROJECTILE_ON_HIT)
-	else if(istype(source, /datum/reagent))
-		UnregisterSignal(source, COMSIG_REAGENT_EXPOSE_ATOM)
+	UnregisterSignal(source, list(
+		COMSIG_MOVABLE_IMPACT,
+		COMSIG_ITEM_AFTERATTACK,
+		COMSIG_ITEM_HIT_REACT,
+		COMSIG_PROJECTILE_ON_HIT,
+		COMSIG_REAGENT_EXPOSE_ATOM,
+	))
 	return ..()
 
 /**

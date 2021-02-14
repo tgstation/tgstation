@@ -9,11 +9,20 @@
 		return ELEMENT_INCOMPATIBLE
 
 	. = ..()
-	RegisterSignal(target, COMSIG_ATOM_SET_LIGHT_POWER, .proc/block_light_power)
-	RegisterSignal(target, COMSIG_ATOM_SET_LIGHT_RANGE, .proc/block_light_range)
-	RegisterSignal(target, COMSIG_ATOM_SET_LIGHT_ON, .proc/block_light_on)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	target.set_light(0, 0, null, FALSE)
+	var/atom/atom_target = target
+	RegisterSignal(atom_target, COMSIG_ATOM_SET_LIGHT_POWER, .proc/block_light_power)
+	RegisterSignal(atom_target, COMSIG_ATOM_SET_LIGHT_RANGE, .proc/block_light_range)
+	RegisterSignal(atom_target, COMSIG_ATOM_SET_LIGHT_ON, .proc/block_light_on)
+	RegisterSignal(atom_target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+
+	/// Because the lighting system does not like movable lights getting set_light() called.
+	switch(atom_target.light_system)
+		if(STATIC_LIGHT)
+			target.set_light(0, 0, null, FALSE)
+		else
+			target.set_light_power(0)
+			target.set_light_range(0)
+			target.set_light_on(FALSE)
 
 /datum/element/light_eaten/Detach(datum/source, force)
 	UnregisterSignal(source, list(
