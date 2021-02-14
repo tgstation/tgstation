@@ -227,25 +227,3 @@
 	first.visible_message("The lockers' eigenstates spilt and merge, linking each of their contents together.")
 
 //eigenstate END
-
-//delete me
-/datum/reagent/test
-	name = "testeig"
-
-/datum/reagent/test/on_mob_add(mob/living/carbon/living_mob, amount)
-	. = ..()
-	var/mob/living/carbon/human/human_mob = living_mob
-	if(!human_mob)
-		return
-	//new you new stuff
-	living_mob.reagents.remove_all(1000)
-	var/datum/component/mood/mood = living_mob.GetComponent(/datum/component/mood)
-	mood.remove_temp_moods() //New you, new moods. Little tempted to randomize traits but maybe not
-	if(!human_mob)
-		return
-	if(prob(1))//low chance of the alternative reality returning to monkey
-		var/obj/item/organ/tail/monkey/monkey_tail = new ()
-		monkey_tail.Insert(human_mob)
-	human_mob.dna?.species?.randomize_main_appearance_element(human_mob)
-	human_mob.dna?.species?.randomize_active_underwear(human_mob)
-	SEND_SIGNAL(living_mob, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip, creation_purity)
