@@ -242,10 +242,8 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	//holo effects are taken out of the spawned list and added to the effects list
 	//turfs and overlay objects are taken out of the spawned list
 	//objects get resistance flags added to them
-	for (var/_atom in spawned)
-		var/atom/atoms = _atom
-
-		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis) || !atoms)
+	for (var/atom/atoms in spawned)
+		if (isturf(atoms) || istype(atoms, /obj/effect/overlay/vis))
 			spawned -= atoms
 			continue
 
