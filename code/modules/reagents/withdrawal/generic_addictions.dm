@@ -20,7 +20,7 @@
 
 /datum/addiction/opiods/lose_addiction(datum/mind/victim_mind)
 	. = ..()
-	 victim_mind.current.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
+	victim_mind.current.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
 
 ///Stimulants
 
