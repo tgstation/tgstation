@@ -141,7 +141,7 @@
  * * reagent - the target reagent to convert
  */
 /datum/chemical_reaction/proc/convert_into_failed(datum/reagent/reagent, datum/reagents/holder)
-	if(reagent.purity < purity_min)
+	if(reagent.purity < purity_min && reagent.failed_chem)
 		var/cached_volume = reagent.volume
 		holder.remove_reagent(reagent.type, cached_volume, FALSE)
 		holder.add_reagent(reagent.failed_chem, cached_volume, FALSE, added_purity = 1)
@@ -399,16 +399,17 @@
 * Time is kept in eqilibrium data
 *
 * Arguments:
-* * seconds - the amount of time in server seconds to delay between true returns
+* * seconds - the amount of time in server seconds to delay between true returns, will ceiling to the nearest 0.25
 * * id - a string phrase so that multiple cooldowns can be applied if needed
 */
 /datum/chemical_reaction/proc/off_cooldown(datum/reagents/holder, datum/equilibrium/equilibrium, seconds = 1, id = "default")
 	id = id+"_cooldown"
-	if(!equilibrium.data[id])
+	if(isnull(equilibrium.data[id]))
 		equilibrium.data[id] = 0
 		return TRUE//first time we know we can go
-	equilibrium.data[id] += equilibrium.time_deficit ? 0.5 : 0.25
+	equilibrium.data[id] += equilibrium.time_deficit ? 0.5 : 0.25 //sync to lag compensator
 	if(equilibrium.data[id] >= seconds)
+		equilibrium.data[id] = 0
 		return TRUE
 	return FALSE
 

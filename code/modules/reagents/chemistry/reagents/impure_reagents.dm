@@ -57,5 +57,5 @@
 			if(!thing)
 				continue
 			C.put_in_hand(thing, index, TRUE, TRUE)
-			playsound(C, 'sound/effects/phasein.ogg')
+			playsound(C, 'sound/effects/phasein.ogg', 20, TRUE)
 

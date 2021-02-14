@@ -20,8 +20,9 @@
 	ph = 3.7
 	impure_chem = /datum/reagent/impurity/eigenswap
 	inverse_chem = null
-	failed_chem = null
+	failed_chem = /datum/reagent/bluespace //crashes out 
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
+	data = list("location_created" = null)//So we retain the target location between reagent instances
 	///The creation point assigned during the reaction
 	var/turf/location_created
 	///The return point indicator
@@ -112,7 +113,7 @@
 	switch(addictCyc3) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 		if(0)
 			M.Jitter(100)
-			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, causing a localised collapsed field as you're ripped from alternative universes, trapped around the densisty of the event horizon.</span>")
+			to_chat(M, "<span class='userdanger'>Your eigenstate starts to rip apart, drawing in alternative reality versions of yourself!</span>")
 		if(1)
 			var/typepath = M.type
 			alt_clone = new typepath(M.loc)
@@ -124,7 +125,7 @@
 			do_sparks(5,FALSE,clone)
 			clone.emote("spin")
 			M.emote("spin")
-			var/list/say_phrases = list(
+			var/static/list/say_phrases = list(
 				"Bugger me, whats all this then?",
 				"Sacre bleu! Ou suis-je?!",
 				"I knew powering the station using a singularity engine would lead to something like this...",
@@ -133,7 +134,7 @@
 				"YOU'VE CREATED A TIME PARADOX!",
 				"You trying to steal my job?",
 				"So that's what I'd look like if I was ugly...",
-				"So, two alternate universe twins walk into a bar..."
+				"So, two alternate universe twins walk into a bar...",
 				"YOU'VE DOOMED THE TIMELINE!",
 				"Ruffle a cat once in a while!",
 				"Why haven't you gotten around to starting that band?!",
@@ -156,7 +157,7 @@
 		if(2)
 			var/mob/living/carbon/clone = alt_clone
 			do_sparks(5,FALSE,clone)
-			qdel(clone) //Deletes CLONE, or at least I hope it is.
+			qdel(clone) //Deletes CLONE, or was that you?
 			M.visible_message("[M] is snapped across to a different alternative reality!")
 			addictCyc3 = 0 //counter
 			alt_clone = null
@@ -166,13 +167,19 @@
 	..()
 
 /datum/reagent/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermichem's wild ride. Mild jitter and player buggery.
+	if(alt_clone)//catch any stragilers
+		var/mob/living/carbon/clone = alt_clone
+		do_sparks(5,FALSE,clone)
+		qdel(clone) 
+		M.visible_message("[M] is snapped across to a different alternative reality!")
+		alt_clone = null
 	if(addiction_stage == 31)
 		do_sparks(5,FALSE,M)
 		do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 		do_sparks(5,FALSE,M)
-		M.Stun(100, 0)
+		M.Sleeping(100)
 		M.Jitter(50)
-		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself.</span>")
+		to_chat(M, "<span class='warning'>You feel your eigenstate settle, snapping an alternative version of yourself into reality.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 		log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
 		M.reagents.remove_all(1000)
@@ -188,7 +195,7 @@
 ///Lets you link lockers together
 /datum/reagent/eigenstate/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	if(creation_purity < 0.85)
+	if(creation_purity < 0.8)
 		return
 	var/obj/structure/closet/first
 	var/obj/structure/closet/previous
