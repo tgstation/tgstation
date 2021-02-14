@@ -1744,6 +1744,8 @@
 			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
 			if(length(sub_reactions))
 				var/datum/chemical_reaction/sub_reaction = sub_reactions[1]
+				if(sub_reaction.required_container)//So we don't have slime reactions confusing things
+					continue
 				//Subreactions sweep (if any)
 				for(var/_sub_reagent in sub_reaction.required_reagents)
 					var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)

@@ -48,24 +48,23 @@ export const RecipeLookup = (props, context) => {
         <LabeledList.Item bold label="Reactants">
           {recipe.reactants.map(reactant => (
             <Box key={reactant.id}>
-              {reactant.tooltipBool && (
-                <Button
+              <Button
                   key={reactant.name}
                   icon="vial"
                   color={reactant.color}
                   content={reactant.ratio + "u " + reactant.name}
-                  tooltip={reactant.tooltip}
-                  tooltipPosition={"right"}
                   onClick={() => act('reagent_click', {
                     id: reactant.id,
                   })} />
-              ) || (
+              {!!reactant.tooltipBool && (
                 <Button
                   key={reactant.name}
-                  icon="vial"
-                  color={reactant.color}
-                  content={reactant.ratio + "u " + reactant.name}
-                  onClick={() => act('reagent_click', {
+                  icon="flask"
+                  color={"purple"}
+                  content={null}
+                  tooltip={reactant.tooltip}
+                  tooltipPosition={"right"}
+                  onClick={() => act('find_reagent_reaction', {
                     id: reactant.id,
                   })} />
               )}
