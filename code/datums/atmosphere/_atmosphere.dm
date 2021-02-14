@@ -43,7 +43,7 @@
 		else
 			gastype = pick(spicy_gas)
 			amount = spicy_gas[gastype]
-			spicy_gas -= gastype //You can only pick each resricted gas once
+			spicy_gas -= gastype //You can only pick each restricted gas once
 
 		amount *= rand(50, 200) / 100	// Randomly modifes the amount from half to double the base for some variety
 		amount *= pressure_scalar		// If we pick a really small target pressure we want roughly the same mix but less of it all
