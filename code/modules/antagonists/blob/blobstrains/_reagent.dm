@@ -24,7 +24,7 @@
 	description = "shouldn't exist and you should adminhelp immediately."
 	color = "#FFFFFF"
 	taste_description = "bad code and slime"
-	can_synth = FALSE
+	chemical_flags = NONE
 	penetrates_skin = NONE
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.
