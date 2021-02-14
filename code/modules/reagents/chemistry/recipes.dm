@@ -86,7 +86,7 @@
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * created_volume - volume created when this is mixed. look at 'var/list/results'.
  */
-/datum/chemical_reaction/proc/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
+/datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
@@ -105,7 +105,7 @@
  * Outputs:
  * * returning END_REACTION will end the associated reaction - flagging it for deletion and preventing any reaction in that timestep from happening. Make sure to set the vars in the holder to one that can't start it from starting up again.
  */
-/datum/chemical_reaction/proc/reaction_step(datum/equilibrium/reaction, datum/reagents/holder, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/proc/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	return
 
 /**
@@ -122,7 +122,7 @@
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * react_volume - volume created across the whole reaction
  */
-/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, react_vol)
+/datum/chemical_reaction/proc/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	//failed_chem handler
 	var/cached_temp = holder.chem_temp
 	for(var/id in results)
@@ -184,8 +184,9 @@
  * Arguments:
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
+ * * step_volume_added - how much product (across all products) was added for this single step
  */
-/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	for(var/id in results)
 		var/datum/reagent/reagent = holder.get_reagent(id)
 		if(!reagent)
@@ -202,8 +203,9 @@
  * Arguments:
  * * holder - the datum that holds this reagent, be it a beaker or anything else
  * * equilibrium - the equilibrium datum that contains the equilibrium reaction properties and methods
+ * * step_volume_added - how much product (across all products) was added for this single step
  */
-/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium)
+/datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	var/affected_list = results + required_reagents
 	for(var/_reagent in affected_list)
 		var/datum/reagent/reagent = holder.get_reagent(_reagent)

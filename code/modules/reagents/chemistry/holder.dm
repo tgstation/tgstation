@@ -70,7 +70,7 @@
 	var/list/datum/equilibrium/reaction_list
 	///cached list of reagents typepaths (not object references), this is a lazylist for optimisation
 	var/list/datum/reagent/previous_reagent_list
-	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled. 
+	///If a reaction fails due to temperature or pH, this tracks the required temperature or pH for it to be enabled.
 	var/list/failed_but_capable_reactions
 	///Hard check to see if the reagents is presently reacting
 	var/is_reacting = FALSE
@@ -490,7 +490,7 @@
 		return
 	if(amount < 0)
 		return
-	
+
 	var/cached_amount = amount
 	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
@@ -820,7 +820,7 @@
 
 			if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
 				meets_temp_requirement = TRUE
-			
+
 			if(((ph >= (reaction.optimal_ph_min - reaction.determin_ph_range)) && (ph <= (reaction.optimal_ph_max + reaction.determin_ph_range))))
 				meets_ph_requirement = TRUE
 
@@ -844,7 +844,7 @@
 			for(var/_equilibrium in reaction_list)
 				var/datum/equilibrium/E_exist = _equilibrium
 				if(ispath(E_exist.reaction.type, selected_reaction.type)) //Don't add duplicates
-					exists = TRUE 
+					exists = TRUE
 
 			//Add it if it doesn't exist in the list
 			if(!exists)
@@ -854,7 +854,7 @@
 					qdel(equilibrium)
 				else
 					//Adding is done in new(), deletion is in qdel
-					equilibrium.reaction.on_reaction(equilibrium, src, equilibrium.multiplier)
+					equilibrium.reaction.on_reaction(src, equilibrium, equilibrium.multiplier)
 					equilibrium.react_timestep(1)//Get an initial step going so there's not a delay between setup and start - DO NOT ADD THIS TO equilibrium.NEW()
 
 	if(LAZYLEN(reaction_list))
@@ -896,7 +896,7 @@
 				mix_message += temp_mix_message
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
-	
+
 	if(num_reactions)
 		SEND_SIGNAL(src, COMSIG_REAGENTS_REACTION_STEP, num_reactions, delta_time)
 
@@ -918,6 +918,7 @@
 * * mix_message - the associated mix message of a reaction
 */
 /datum/reagents/proc/end_reaction(datum/equilibrium/equilibrium)
+	equilibrium.reaction.reaction_finish(src, equilibrium, equilibrium.reacted_vol)
 	if(!equilibrium.holder || !equilibrium.reaction) //Somehow I'm getting empty equilibrium. This is here to handle them
 		LAZYREMOVE(reaction_list, equilibrium)
 		qdel(equilibrium)
@@ -926,11 +927,11 @@
 	if(equilibrium.holder != src) //When called from Destroy() eqs are nulled in smoke. This is very strange. This is probably causing it to spam smoke because of the runtime interupting the removal.
 		stack_trace("The equilibrium datum currently processing in this reagents datum had a desynced holder to the ending reaction. src holder:[my_atom] | equilibrium holder:[equilibrium.holder.my_atom] || src type:[my_atom.type] | equilibrium holder:[equilibrium.holder.my_atom.type]")
 		LAZYREMOVE(reaction_list, equilibrium)
-	equilibrium.reaction.reaction_finish(src, equilibrium.reacted_vol)
+
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
-	qdel(equilibrium)	
+	qdel(equilibrium)
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message
@@ -1005,7 +1006,7 @@
 		var/exists = FALSE
 		for(var/reaction2 in target.reaction_list) //Don't add duplicates
 			var/datum/equilibrium/reaction_target = reaction2
-			if(reaction_source.reaction.type == reaction_target.reaction.type) 
+			if(reaction_source.reaction.type == reaction_target.reaction.type)
 				exists = TRUE
 		if(exists)
 			continue
@@ -1018,7 +1019,7 @@
 
 	target.previous_reagent_list = LAZYLISTDUPLICATE(previous_reagent_list)
 	target.is_reacting = is_reacting
-	
+
 
 ///Checks to see if the reagents has a difference in reagents_list and previous_reagent_list (I.e. if there's a difference between the previous call and the last)
 ///Also checks to see if the saved reactions in failed_but_capable_reactions can start as a result of temp/pH change
@@ -1030,7 +1031,7 @@
 			total_matching_reagents++
 	if(total_matching_reagents != reagent_list.len)
 		return TRUE
-	
+
 	//Check our last reactions
 	for(var/_reaction in failed_but_capable_reactions)
 		var/datum/chemical_reaction/reaction = _reaction
@@ -1092,7 +1093,7 @@
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
-	selected_reaction.on_reaction(null, src, multiplier)
+	selected_reaction.on_reaction(src, null, multiplier)
 
 ///Possibly remove - see if multiple instant reactions is okay (Though, this "sorts" reactions by temp decending)
 ///Presently unused
@@ -1225,7 +1226,7 @@
 		var/datum/reagent/R = _reagent
 		if (R.type == reagent)
 			return round(R.purity, 0.01)
-	return 0 
+	return 0
 
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()

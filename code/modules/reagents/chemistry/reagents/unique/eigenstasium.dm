@@ -18,6 +18,10 @@
 	addiction_threshold = 16
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	ph = 3.7
+	impure_chem = /datum/reagent/impurity/eigenswap
+	inverse_chem = null
+	failed_chem = null
+	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
 	///The creation point assigned during the reaction
 	var/turf/location_created
 	///The return point indicator
@@ -29,7 +33,7 @@
 	///Your clone from another reality
 	var/mob/living/carbon/alt_clone = null
 
-/datum/reagent/fermi/eigenstate/on_new(list/data)
+/datum/reagent/eigenstate/on_new(list/data)
 	location_created = data["location_created"]
 
 //Main functions
@@ -120,8 +124,35 @@
 			do_sparks(5,FALSE,clone)
 			clone.emote("spin")
 			M.emote("spin")
-			clone.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
-			clone.emote("me",1,"[pick("says", "cries", "mewls", "giggles", "shouts", "screams", "gasps", "moans", "whispers", "announces")], \"[pick("Bugger me, whats all this then?", "Hot damn, where is this?", "sacre bleu! Ou suis-je?!", "Yee haw! This is one hell of a hootenanny!", "WHAT IS HAPPENING?!", "Picnic!", "Das ist nicht deutschland. Das ist nicht akzeptabel!!!", "I've come from the future to warn you to not take eigenstasium! Oh no! I'm too late!", "You fool! You took too much eigenstasium! You've doomed us all!", "What...what's with these teleports? It's like one of my Japanese animes...!", "Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?", "This must be the will of Stein's gate.", "Fermichem was a mistake", "This is one hell of a beepsky smash.", "Now neither of us will be virgins!")]\"")
+			var/list/say_phrases = list(
+				"Bugger me, whats all this then?",
+				"Sacre bleu! Ou suis-je?!",
+				"I knew powering the station using a singularity engine would lead to something like this...",
+				"Wow, I can't believe in your universe Cencomm got rid of cloning.",
+				"WHAT IS HAPPENING?!",
+				"YOU'VE CREATED A TIME PARADOX!",
+				"You trying to steal my job?",
+				"So that's what I'd look like if I was ugly...",
+				"So, two alternate universe twins walk into a bar..."
+				"YOU'VE DOOMED THE TIMELINE!",
+				"Ruffle a cat once in a while!",
+				"Why haven't you gotten around to starting that band?!",
+				"I bet we can finally take the clown now.",
+				"LING DISGUISED AS ME!",
+				"At long last! My evil twin!",
+				"Keep going lets see if more of us show up.",
+				"No! Dark spirits, do not torment me with these visions of my future self! It's horrible!",
+				"Good. Now that the council is assembled the meeting can begin.",
+				"Listen! I only have so much time before I'm ripped away. The secret behind the gas giants are...",
+				"Das ist nicht deutschland. Das ist nicht akzeptabel!!!",
+				"I've come from the future to warn you about eigenstasium! Oh no! I'm too late!",
+				"You fool! You took too much eigenstasium! You've doomed us all!",
+				"What...what's with these teleports? It's like one of my Japanese animes...!",
+				"Ik stond op het punt om mehki op tafel te zetten, en nu, waar ben ik?",
+				"Wake the fuck up spaceman we have a gas giant to burn",
+				"This is one hell of a beepsky smash.",
+				"Now neither of us will be virgins!")
+			clone.say(pick(say_phrases))
 		if(2)
 			var/mob/living/carbon/clone = alt_clone
 			do_sparks(5,FALSE,clone)
@@ -135,7 +166,7 @@
 	..()
 
 /datum/reagent/eigenstate/addiction_act_stage4(mob/living/M) //Thanks for riding Fermichem's wild ride. Mild jitter and player buggery.
-	if(addiction_stage == 32)
+	if(addiction_stage == 31)
 		do_sparks(5,FALSE,M)
 		do_teleport(M, get_turf(M), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 		do_sparks(5,FALSE,M)
@@ -144,7 +175,7 @@
 		to_chat(M, "<span class='userdanger'>You feel your eigenstate settle, snapping an alternative version of yourself into reality. All your previous memories are lost and replaced with the alternative version of yourself.</span>")
 		M.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 		log_game("FERMICHEM: [M] ckey: [M.key] has become an alternative universe version of themselves.")
-		M.reagents.remove_all_type(/datum/reagent, 100, 0, 1)
+		M.reagents.remove_all(1000)
 		var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 		mood.remove_temp_moods() //New you, new moods. Little tempted to randomize traits but maybe not
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip, creation_purity)
@@ -169,19 +200,13 @@
 			first = closet
 			previous = closet
 			continue
-		closet.eigen_target = previous
-		closet.color = "#9999FF" //Tint the locker slightly.
-		closet.alpha = 200
-		do_sparks(5,FALSE,closet)
+		closet.convert_to_eigenlocker(previous)
 		previous = closet
 	if(!first)
 		return
 	if(previous == first)
 		return
-	first.eigen_target = previous
-	first.color = "#9999FF"
-	first.alpha = 200
-	do_sparks(5,FALSE,first)
+	first.convert_to_eigenlocker(previous)
 	first.visible_message("The lockers' eigenstates spilt and merge, linking each of their contents together.")
 
 //eigenstate END

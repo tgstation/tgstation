@@ -40,7 +40,7 @@
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// If this locker has it's eigenstate set to collapse to another linked locker on closure
-	var/eigen_target = null //Hello Mr Tumnus
+	var/obj/structure/closet/eigen_target = null //Hello Mr Tumnus
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -182,6 +182,11 @@
 	if(contents.len >= storage_capacity)
 		return -1
 	if(insertion_allowed(AM))
+		if(eigen_target) // For teleporting people with linked lockers.
+			do_teleport(AM, get_turf(eigen_target), 0)
+			if(!eigen_target.opened)
+				eigen_target.bust_open()
+			return FALSE
 		AM.forceMove(src)
 		return TRUE
 	else
@@ -260,6 +265,9 @@
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
+	if(eigen_target)
+		to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to use the [W] on it!</span>")
+		return
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(W.tool_behaviour == TOOL_WELDER)
@@ -516,6 +524,12 @@
 				SSexplosions.med_mov_atom += thing
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += thing
+
+/obj/structure/closet/proc/convert_to_eigenlocker(obj/structure/closet/target)
+	eigen_target = target
+	color = "#9999FF" //Tint the locker slightly.
+	alpha = 200
+	do_sparks(5,FALSE,src)
 
 /obj/structure/closet/singularity_act()
 	dump_contents()

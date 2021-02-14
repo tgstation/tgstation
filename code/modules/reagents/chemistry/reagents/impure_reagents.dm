@@ -7,7 +7,7 @@
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
 	//by default, it will stay hidden on splitting, but take the name of the source on inverting. Cannot be fractioned down either if the reagent is somehow isolated.
-	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT 
+	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT
 	ph = 3
 	overdose_threshold = 0 //So that they're shown as a problem (?)
 
@@ -37,3 +37,25 @@
 	ph = 1.5
 	taste_description = "an awful, strongly chemical taste"
 	color = "#270d03"
+
+/////////Unique
+
+/datum/reagent/impurity/eigenswap
+	name = "Eigenswap"
+	description = "This reagent is known to swap the handedness of a patient."
+	ph = 3.3
+
+/datum/reagent/impurity/eigenswap/on_mob_life(mob/living/carbon/C)
+	. = ..()
+	if(prob(creation_purity*100))
+		var/list/cached_hand_items = C.held_items
+		var/index = 1
+		for(var/thing in cached_hand_items)
+			index++
+			if(index > length(cached_hand_items))//If we're past the end of the list, go back to start
+				index = 1
+			if(!thing)
+				continue
+			C.put_in_hand(thing, index, TRUE, TRUE)
+			playsound(C, 'sound/effects/phasein.ogg')
+
