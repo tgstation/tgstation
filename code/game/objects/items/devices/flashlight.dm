@@ -340,7 +340,7 @@
 /obj/item/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_SMALL
 	light_range = 4
 	icon_state = "torch"
 	inhand_icon_state = "torch"
