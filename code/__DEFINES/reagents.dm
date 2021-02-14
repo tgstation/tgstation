@@ -65,9 +65,9 @@
 ///When inverted, the inverted chem uses the name of the original chem
 #define REAGENT_SNEAKYNAME          (1<<3)
 ///Retains initial volume of chem when splitting for purity effects
-#define REAGENT_SPLITRETAINVOL      (1<<4)
-///If this reagent is made by impure effects - used in UI
-
+#define REAGENT_SPLITRETAINVOL      (1<<4)  
+//Lets a given reagent be synthesized important for random reagents and things like the odysseus syringe gun(Replaces the old can_synth variable)
+#define REAGENT_CAN_BE_SYNTHESIZED  (1<<5)  
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion

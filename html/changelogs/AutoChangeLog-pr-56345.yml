@@ -1,8 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - tweak: "Admins can now spawn an unarmed horde of interns in addition to the old armed horde"
-  - tweak: "Admins can toggle name randomization for ERT's, as well as if they'd like to be spawned in the briefing room at the time of creation"
-  - tweak: "Admins can now force ERT's to pick the leader role from the most experienced candidates in terms of playtime"
-  - tweak: "Menus like Create Response Team and Create Portal Storm now toggle boolean options when clicked, rather than open a popup window to select one of the two options"
-  - refactor: "Centcom Officials are now a full subtype of ERT, rather than being a separate antagonist type with duplicated functionality"
