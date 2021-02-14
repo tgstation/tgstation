@@ -821,7 +821,7 @@
 					var/turf/current_position = get_turf(user)
 					qdel(src)
 					var/datum/action/innate/cult/halberd/halberd_act_granted = new(user)
-					var/obj/item/melee/cultblade/halbard/rite = new(current_position)
+					var/obj/item/melee/cultblade/halberd/rite = new(current_position)
 					halberd_act_granted.Grant(user, rite)
 					rite.halberd_act = halberd_act_granted
 					if(user.put_in_hands(rite))

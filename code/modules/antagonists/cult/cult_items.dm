@@ -635,7 +635,7 @@
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
 
-/obj/item/melee/cultblade/halbard
+/obj/item/melee/cultblade/halberd
 	name = "bloody halberd"
 	desc = "A halberd with a volatile axehead made from crystallized blood. It seems linked to its creator. And, admittedly, more of a poleaxe than a halberd."
 	icon_state = "occultpoleaxe0"
@@ -655,29 +655,29 @@
 	var/datum/action/innate/cult/halberd/halberd_act
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/melee/cultblade/halbard/Initialize()
+/obj/item/melee/cultblade/halberd/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
-/obj/item/melee/cultblade/halbard/ComponentInitialize()
+/obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
 	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
 
 /// triggered on wield of two handed item
-/obj/item/melee/cultblade/halbard/proc/on_wield(obj/item/source, mob/user)
+/obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
-/obj/item/melee/cultblade/halbard/proc/on_unwield(obj/item/source, mob/user)
+/obj/item/melee/cultblade/halberd/proc/on_unwield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
 	wielded = FALSE
 
-/obj/item/melee/cultblade/halbard/update_icon_state()
+/obj/item/melee/cultblade/halberd/update_icon_state()
 	if(wielded)
 		icon_state = "occultpoleaxe1"
 		inhand_icon_state = "occultpoleaxe1"
@@ -685,12 +685,12 @@
 		icon_state = "[base_icon_state]"
 		inhand_icon_state = "[base_icon_state]"
 
-/obj/item/melee/cultblade/halbard/Destroy()
+/obj/item/melee/cultblade/halberd/Destroy()
 	if(halberd_act)
 		qdel(halberd_act)
 	..()
 
-/obj/item/melee/cultblade/halbard/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/melee/cultblade/halberd/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
@@ -707,7 +707,7 @@
 	else
 		..()
 
-/obj/item/melee/cultblade/halbard/proc/break_halberd(turf/T)
+/obj/item/melee/cultblade/halberd/proc/break_halberd(turf/T)
 	if(src)
 		if(!T)
 			T = get_turf(src)
@@ -718,7 +718,7 @@
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/melee/cultblade/halbard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/melee/cultblade/halberd/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
@@ -737,7 +737,7 @@
 	desc = "Call the bloody halberd back to your hand!"
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
-	var/obj/item/melee/cultblade/halbard/halberd
+	var/obj/item/melee/cultblade/halberd/halberd
 	var/cooldown = 0
 
 /datum/action/innate/cult/halberd/Grant(mob/user, obj/blood_halberd)
