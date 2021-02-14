@@ -1009,18 +1009,20 @@ RLD
 	/obj/machinery/plumbing/input = 5,
 	/obj/machinery/plumbing/output = 5,
 	/obj/machinery/plumbing/tank = 20,
+	/obj/machinery/plumbing/synthesizer = 15,
+	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/acclimator = 10,
+	/obj/machinery/plumbing/pill_press = 20,
+	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line
 	/obj/machinery/plumbing/bottler = 50,
 	/obj/machinery/plumbing/disposer = 10,
 	/obj/machinery/plumbing/fermenter = 30,
 	/obj/machinery/plumbing/filter = 5,
 	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/pill_press = 20,
 	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/reaction_chamber = 15,
 	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/sender = 20
+	/obj/machinery/plumbing/sender = 20,
+	/obj/machinery/iv_drip/plumbing = 20
 )
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
