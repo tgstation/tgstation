@@ -182,13 +182,14 @@
 			if(!computer || !authenticated_user)
 				return TRUE
 			if(minor)
-				if(!(target_id_card.assignment in head_subordinates) && target_id_card.assignment != "Assistant")
+				if(!(target_id_card.timberpoes_trim?.assignment in head_subordinates) && target_id_card.timberpoes_trim?.assignment != "Assistant")
+					to_chat(usr, "<span class='notice'>Software error: You do not have the necessary permissions to demote this card.</span>")
 					return TRUE
 
-			// TIMBERTODO - DON'T FORGOT ABOUT THIS SHIT. MORE ELEGANT SOLUTION?
-			target_id_card.clear_access()
-			target_id_card.assignment = "Unassigned (Employment Terminated)"
-			target_id_card.update_label()
+			// Set the new assignment then remove the trim.
+			target_id_card.assignment = "Demoted"
+			SSid_access.remove_trim_from_card(target_id_card)
+
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return TRUE
 		// Change ID card assigned name.
@@ -230,15 +231,16 @@
 				return TRUE
 			playsound(computer, "terminal_type", 50, FALSE)
 			var/access_type = params["access_target"]
+			var/try_wildcard = params["access_wildcard"]
 			if(access_type in (is_centcom ? CENTCOM_ACCESS : ALL_ACCESS_STATION))
 				if(access_type in target_id_card.timberpoes_access)
 					target_id_card.remove_access(list(access_type))
 					LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [get_access_desc(access_type)]")
 					return TRUE
 
-				if(!target_id_card.add_access(list(access_type)))
-					to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access.</span>")
-					LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [get_access_desc(access_type)]")
+				if(!target_id_card.add_access(list(access_type), try_wildcard))
+					to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
+					LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 					return TRUE
 
 				if(access_type in ACCESS_ALERT_ADMINS)
@@ -306,6 +308,7 @@
 	data["accessFlags"] = SSid_access.flags_by_access
 	data["wildcardFlags"] = SSid_access.wildcard_flags_by_wildcard
 	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
+	data["showBasic"] = TRUE
 
 	return data
 
@@ -333,7 +336,6 @@
 		return data //We're just gonna error out on the js side at this point anyway
 
 	var/obj/item/card/id/auth_card = card_slot.stored_card
-	data["hasAuthID"] = !!auth_card
 	data["authIDName"] = auth_card ? auth_card.name : "-----"
 
 	data["authenticatedUser"] = authenticated_user
@@ -352,11 +354,11 @@
 			var/datum/id_trim/card_trim = id_card.timberpoes_trim
 			data["hasTrim"] = TRUE
 			data["trimAssignment"] = card_trim.assignment ? card_trim.assignment : ""
-			data["trimAccess"] = card_trim.access ? card_trim.access : null
+			data["trimAccess"] = card_trim.access ? card_trim.access : list()
 		else
 			data["hasTrim"] = FALSE
 			data["trimAssignment"] = ""
-			data["trimAccess"] = null
+			data["trimAccess"] = list()
 
 	return data
 

@@ -112,12 +112,20 @@
 		my_store.my_card = null
 	return ..()
 
-/obj/item/card/id/proc/can_add_wildcards(list/wildcard_list)
+/obj/item/card/id/proc/can_add_wildcards(list/wildcard_list, try_wildcard = null)
+	if(!length(wildcard_list))
+		return TRUE
+
 	var/list/new_wildcard_limits = list()
 
 	for(var/flag_name in wildcard_slots)
+		if(try_wildcard && !(flag_name == try_wildcard))
+			continue
 		var/list/wildcard_info = wildcard_slots[flag_name]
 		new_wildcard_limits[flag_name] = wildcard_info["limit"] - length(wildcard_info["usage"])
+
+	if(!length(new_wildcard_limits))
+		return FALSE
 
 	var/wildcard_allocated
 	for(var/wildcard in wildcard_list)
@@ -138,7 +146,7 @@
 
 	return TRUE
 
-/obj/item/card/id/proc/add_wildcards(list/wildcard_list, force = FALSE)
+/obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, force = FALSE)
 	var/wildcard_allocated
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
 	for(var/wildcard in wildcard_list)
@@ -146,6 +154,9 @@
 		wildcard_allocated = FALSE
 		for(var/flag_name in wildcard_slots)
 			if(flag_name == WILDCARD_NAME_FORCED)
+				continue
+
+			if(try_wildcard && !(flag_name == try_wildcard))
 				continue
 
 			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
@@ -207,25 +218,25 @@
 			var/list/wildcard_info = wildcard_slots[WILDCARD_NAME_FORCED]
 			var/wildcard_usage = wildcard_info["usage"]
 
-			if(!wildcard in wildcard_usage)
+			if(!(wildcard in wildcard_usage))
 				stack_trace("Wildcard ([wildcard]) could not be removed from [src]. This access is not a wildcard on this card.")
 
 			wildcard_usage -= wildcard
 			timberpoes_access -= wildcard
 
-/obj/item/card/id/proc/add_access(list/add_accesses, force = FALSE)
+/obj/item/card/id/proc/add_access(list/add_accesses, try_wildcard = null, force = FALSE)
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
 	build_access_lists(add_accesses, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
-	if(!can_add_wildcards(wildcard_access))
+	if(!force && !can_add_wildcards(wildcard_access, try_wildcard))
 		return FALSE
 
 	// All clear to add the accesses.
 	timberpoes_access |= normal_access
-	add_wildcards(wildcard_access, force)
+	add_wildcards(wildcard_access, try_wildcard, force)
 
 	return TRUE
 
@@ -238,14 +249,14 @@
 	timberpoes_access -= normal_access
 	remove_wildcards(wildcard_access, force)
 
-/obj/item/card/id/proc/set_access(list/new_access_list)
+/obj/item/card/id/proc/set_access(list/new_access_list, force = FALSE)
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
 	build_access_lists(new_access_list, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
-	if(!can_add_wildcards(wildcard_access))
+	if(!force && !can_add_wildcards(wildcard_access))
 		return FALSE
 
 	// Doing this, we overwrite the old access.
@@ -812,7 +823,6 @@
 	timberpoes_trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
-// TIMBERTODO - TGUI INTERFACE FOR CHAMELEON CARDS
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card to choose which accesses to copy."
@@ -822,6 +832,8 @@
 	var/forged = FALSE
 	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
 	var/anyone = FALSE
+	/// Weak ref to the ID card we're currently attempting to steal access from.
+	var/datum/weakref/theft_target
 
 /obj/item/card/id/advanced/chameleon/Initialize()
 	. = ..()
@@ -830,24 +842,117 @@
 	chameleon_card_action.chameleon_name = "ID Card"
 	chameleon_card_action.initialize_disguises()
 
-	var/datum/action/item_action/chameleon/change/id_trim/chameleon_trim_action = new(src)
-	chameleon_trim_action.chameleon_type = /datum/id_trim
-	chameleon_trim_action.chameleon_name = "ID Card Trim"
-	chameleon_trim_action.initialize_disguises()
+/obj/item/card/id/advanced/chameleon/Destroy()
+	theft_target = null
+	. = ..()
 
 /obj/item/card/id/advanced/chameleon/afterattack(obj/item/O, mob/user, proximity)
 	if(!proximity)
 		return
 	if(istype(O, /obj/item/card/id))
-		// TIMBERTODO - Implement TGUI.
+		theft_target = WEAKREF(O)
 		ui_interact(user)
 		return
 
 	return ..()
 
+/obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ChameleonCard", name)
+		ui.open()
+
+/obj/item/card/id/advanced/chameleon/ui_static_data(mob/user)
+	var/list/data = list()
+	data["wildcardFlags"] = SSid_access.wildcard_flags_by_wildcard
+	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
+	data["accessFlags"] = SSid_access.flags_by_access
+	return data
+
+/obj/item/card/id/advanced/chameleon/ui_data(mob/user)
+	var/list/data = list()
+
+	data["showBasic"] = FALSE
+
+	var/list/region_accesses = list()
+
+	var/obj/item/card/id/target_card = theft_target.resolve()
+	if(target_card)
+		for(var/i in 1 to 7)
+			var/list/accesses = list()
+			for(var/access in get_region_accesses(i))
+				if (get_access_desc(access))
+					accesses += list(list(
+						"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
+						"ref" = access,
+					))
+
+			region_accesses += list(list(
+				"name" = get_region_accesses_name(i),
+				"regid" = i,
+				"accesses" = accesses
+			))
+
+	data["accesses"] = region_accesses
+	data["ourAccess"] = timberpoes_access
+	data["ourTrimAccess"] = timberpoes_trim ? timberpoes_trim.access : list()
+	data["theftAccess"] = target_card.timberpoes_access
+	data["wildcardSlots"] = wildcard_slots
+	data["selectedList"] = timberpoes_access
+	data["trimAccess"] = list()
+
+	return data
+
+/obj/item/card/id/advanced/chameleon/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+
+	var/obj/item/card/id/target_card = theft_target?.resolve()
+	if(QDELETED(target_card))
+		to_chat(usr, "<span class='notice'>The ID card you were attempting to scan is no longer in range.</span>")
+		target_card = null
+		return TRUE
+
+	// Wireless ID theft!
+	var/turf/our_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target_card)
+	if(!our_turf.Adjacent(target_turf))
+		to_chat(usr, "<span class='notice'>The ID card you were attempting to scan is no longer in range.</span>")
+		target_card = null
+		return TRUE
+
+	switch(action)
+		if("mod_access")
+			var/access_type = params["access_target"]
+			var/try_wildcard = params["access_wildcard"]
+			if(access_type in timberpoes_access)
+				remove_access(list(access_type))
+				LOG_ID_ACCESS_CHANGE(usr, src, "removed [get_access_desc(access_type)]")
+				return TRUE
+
+			if(!(access_type in target_card.timberpoes_access))
+				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
+				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+				return TRUE
+
+			if(!can_add_wildcards(list(access_type), try_wildcard))
+				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
+				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+				return TRUE
+
+			if(!add_access(list(access_type), try_wildcard))
+				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
+				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
+				return TRUE
+
+			if(access_type in ACCESS_ALERT_ADMINS)
+				message_admins("[ADMIN_LOOKUPFLW(usr)] just added [get_access_desc(access_type)] to an ID card [ADMIN_VV(src)] [(registered_name) ? "belonging to [registered_name]." : "with no registered name."]")
+			LOG_ID_ACCESS_CHANGE(usr, src, "added [get_access_desc(access_type)]")
+			return TRUE
+
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
-		// TIMBERTODO - put forged trim selection here instead?
 		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
 		if(user.incapacitated())
 			return
@@ -866,20 +971,39 @@
 					else
 						input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
+				registered_name = input_name
+
+				var/change_trim = alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", "Yes", "No")
+				if(change_trim == "Yes")
+					var/list/blacklist = typecacheof(type)
+					var/list/trim_list = list()
+					for(var/trim_path in typesof(/datum/id_trim))
+						if(blacklist[trim_path])
+							continue
+
+						var/datum/id_trim/trim = SSid_access.get_trim(trim_path)
+
+						if(trim && trim.trim_state && trim.assignment)
+							var/fake_trim_name = "[trim.assignment] ([trim.trim_state])"
+							trim_list[fake_trim_name] = trim_path
+
+					var/selected_trim_path
+					selected_trim_path = input("Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", selected_trim_path) as null|anything in sortList(trim_list, /proc/cmp_typepaths_asc)
+					if(selected_trim_path)
+						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
+
 				var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
-				if(!target_occupation)
-					return
+				if(target_occupation)
+					assignment = target_occupation
 
 				var/new_age = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
 				if(new_age)
 					registered_age = max(round(text2num(new_age)), 0)
 
-				registered_name = input_name
-				assignment = target_occupation
 				update_label()
 				forged = TRUE
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
+				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[timberpoes_trim?.assignment]\".")
 
 				if(!registered_account)
 					if(ishuman(user))
@@ -894,6 +1018,7 @@
 			if(forged)
 				registered_name = initial(registered_name)
 				assignment = initial(assignment)
+				SSid_access.remove_trim_from_card(src)
 				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
 				update_label()
 				forged = FALSE

@@ -87,6 +87,11 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.update_label()
 
+/datum/controller/subsystem/id_access/proc/remove_trim_from_card(obj/item/card/id/id_card)
+	id_card.timberpoes_trim = null
+	id_card.clear_access()
+	id_card.update_label()
+
 /datum/controller/subsystem/id_access/proc/apply_trim_to_chameleon_card(obj/item/card/id/advanced/chameleon/id_card, trim_path, check_forged = TRUE)
 	var/datum/id_trim/trim = get_trim(trim_path)
 	id_card.trim_icon_override = trim.trim_icon
@@ -96,3 +101,7 @@ SUBSYSTEM_DEF(id_access)
 		id_card.assignment = trim.assignment
 
 	// We'll let the chameleon action update the card's label as necessary instead of doing it here.
+
+/datum/controller/subsystem/id_access/proc/remove_trim_from_chameleon_card(obj/item/card/id/advanced/chameleon/id_card)
+	id_card.trim_icon_override = null
+	id_card.trim_state_override = null
