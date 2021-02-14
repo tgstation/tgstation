@@ -535,7 +535,7 @@
 /area/medical/chemistry)
 "bR" = (
 /obj/machinery/camera/autoname,
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /obj/machinery/power/apc{
 	dir = 1;
 	pixel_y = 23

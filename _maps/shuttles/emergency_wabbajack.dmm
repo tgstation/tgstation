@@ -278,7 +278,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aQ" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aR" = (
