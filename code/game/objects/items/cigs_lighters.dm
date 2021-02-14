@@ -322,7 +322,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 // Cigarette brands.
 
 /obj/item/clothing/mask/cigarette/space_cigarette
-	desc = "A Space Cigarette brand cigarette."
+	desc = "A Space Cigarette brand cigarette. On the back it advertises to be the only brand that can be smoked in space."
+	list_reagents = list(/datum/reagent/drug/nicotine = 13, /datum/reagent/oxygen = 15)
 
 /obj/item/clothing/mask/cigarette/dromedary
 	desc = "A DromedaryCo brand cigarette. Contrary to popular belief, does not contain Calomel, but is reported to have a watery taste."
