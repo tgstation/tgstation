@@ -37,7 +37,7 @@
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
 		reagents.trans_to(new_tank, reagents.total_volume)
 		new_tank.name = "stationary [name]"
-		new_tank.update_overlays()
+		new_tank.update_appearance(UPDATE_OVERLAYS)
 		new_tank.anchored = anchored
 		qdel(src)
 		return FALSE
