@@ -1,0 +1,4 @@
+author: "spessbro"
+delete-after: True
+changes: 
+  - refactor: "refactored can_synth into chemical_flags"

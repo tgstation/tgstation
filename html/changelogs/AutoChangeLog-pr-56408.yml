@@ -1,0 +1,6 @@
+author: "Bazelart at TGI Friday's"
+delete-after: True
+changes: 
+  - rscadd: "Reactive armor is now vulnerable to EMPs while on, instead of just turning off."
+  - rscadd: "Table armor is now more representative of getting pushed onto a table in current year"
+  - balance: "It's a balance thing, I guess!"
