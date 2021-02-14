@@ -32438,7 +32438,7 @@
 	name = "Xenobiology Lockdown"
 	},
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "dUA" = (
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
@@ -39170,6 +39170,15 @@
 	},
 /turf/open/floor/wood,
 /area/cargo/qm)
+"gDh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio1";
+	name = "Xenobio Pen 1 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "gDo" = (
 /obj/structure/table,
 /obj/item/clothing/mask/gas/sechailer{
@@ -39932,7 +39941,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -51701,6 +51709,10 @@
 "lQN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio8";
+	name = "Xenobio Pen 8 Blast Door"
+	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "lQP" = (
@@ -60122,7 +60134,7 @@
 /obj/machinery/smartfridge/extract/preloaded,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "pjE" = (
 /obj/machinery/recharger,
 /obj/item/storage/secure/safe{
@@ -60550,7 +60562,7 @@
 	name = "Xenobiology Lockdown"
 	},
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "pui" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -60700,7 +60712,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "pwt" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -62936,7 +62948,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "qrc" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
@@ -63657,6 +63669,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/office)
+"qCL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/sign/warning/electricshock,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio8";
+	name = "Xenobio Pen 8 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "qCO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
@@ -65304,7 +65326,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio8";
-	name = "Xenobio Pen 7 Blast Door"
+	name = "Xenobio Pen 8 Blast Door"
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
@@ -73158,7 +73180,7 @@
 /obj/structure/cable,
 /obj/machinery/monkey_recycler,
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "uxP" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -76124,6 +76146,16 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"vIl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/sign/warning/electricshock,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio1";
+	name = "Xenobio Pen 1 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "vIA" = (
 /obj/machinery/light{
 	dir = 1
@@ -79305,7 +79337,7 @@
 /obj/machinery/processor/slime,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "wZw" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -80105,7 +80137,7 @@
 /obj/structure/cable,
 /obj/machinery/smartfridge/organ,
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "xpZ" = (
 /turf/closed/wall,
 /area/medical/abandoned)
@@ -80671,7 +80703,7 @@
 	name = "Xenobiology Lockdown"
 	},
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "xDd" = (
 /obj/machinery/light{
 	dir = 4
@@ -81374,7 +81406,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/science/cytology)
+/area/science/xenobiology)
 "xSC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -81436,7 +81468,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "xTK" = (
 /obj/machinery/button/door{
@@ -125840,7 +125872,7 @@ qKh
 cSn
 omN
 tQb
-lQN
+gDh
 xpX
 qie
 hSD
@@ -126097,13 +126129,13 @@ qKh
 cSn
 cSy
 cSn
-wXQ
+vIl
 pjC
 mTR
 xey
 dEM
 wZr
-wXQ
+qCL
 cSn
 cSy
 cSn
@@ -126354,7 +126386,7 @@ cRi
 ltH
 xNj
 ltH
-lQN
+gDh
 xSB
 gYm
 tlO
