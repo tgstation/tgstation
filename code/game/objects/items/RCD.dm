@@ -214,7 +214,7 @@ RLD
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
 	var/mode = RCD_FLOORWALL
-	var/constructionmode = RCD_FLOORWALL
+	var/construction_mode = RCD_FLOORWALL
 	var/ranged = FALSE
 	var/computer_dir = 1
 	var/airlock_type = /obj/machinery/door/airlock
@@ -580,17 +580,17 @@ RLD
 		choices += list(
 		"Furnishing" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
-	if(constructionmode == RCD_AIRLOCK)
+	if(construction_mode == RCD_AIRLOCK)
 		choices += list(
 		"Change Access" = image(icon = 'icons/hud/radial.dmi', icon_state = "access"),
 		"Change Airlock Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "airlocktype")
 		)
-	else if(constructionmode == RCD_WINDOWGRILLE)
+	else if(construction_mode == RCD_WINDOWGRILLE)
 		choices += list(
 		"Change Window Glass" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowtype"),
 		"Change Window Size" = image(icon = 'icons/hud/radial.dmi', icon_state = "windowsize")
 		)
-	else if(constructionmode == RCD_FURNISHING)
+	else if(construction_mode == RCD_FURNISHING)
 		choices += list(
 		"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 		)
@@ -599,17 +599,17 @@ RLD
 		return
 	switch(choice)
 		if("Floors & Walls")
-			constructionmode = RCD_FLOORWALL
+			construction_mode = RCD_FLOORWALL
 		if("Airlock")
-			constructionmode = RCD_AIRLOCK
+			construction_mode = RCD_AIRLOCK
 		if("Grilles & Windows")
-			constructionmode = RCD_WINDOWGRILLE
+			construction_mode = RCD_WINDOWGRILLE
 		if("Machine Frames")
-			constructionmode = RCD_MACHINE
+			construction_mode = RCD_MACHINE
 		if("Furnishing")
-			constructionmode = RCD_FURNISHING
+			construction_mode = RCD_FURNISHING
 		if("Computer Frames")
-			constructionmode = RCD_COMPUTER
+			construction_mode = RCD_COMPUTER
 			change_computer_dir(user)
 			return
 		if("Change Access")
@@ -643,7 +643,7 @@ RLD
 
 /obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
 	. = ..()
-	mode = constructionmode
+	mode = construction_mode
 	rcd_create(A, user)
 	return FALSE
 
