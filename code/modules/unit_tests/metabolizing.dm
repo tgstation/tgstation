@@ -55,9 +55,13 @@
 
 	var/datum/reagent/drug/methamphetamine/meth = allocate(/datum/reagent/drug/methamphetamine)
 
+	var/addiction_type_to_check
+
+	for(var/key in meth.addiction_types)
+		addiction_type_to_check = key //idk how to do this otherwise
 
 	// Let's start with stomach metabolism
-	pill.reagents.add_reagent(meth.type, meth.addiction_threshold)
+	pill.reagents.add_reagent(meth.type, 5)
 	pill.attack(pill_user, pill_user)
 
 	// Set the metabolism efficiency to 1.0 so it transfers all reagents to the body in one go.
@@ -66,26 +70,26 @@
 
 	pill_user.Life()
 
-	TEST_ASSERT(pill_user.reagents.addiction_list && is_type_in_list(meth, pill_user.reagents.addiction_list), "User is not addicted to meth after ingesting the addiction threshold")
+	TEST_ASSERT(pill_user.mind.addiction_points[addiction_type_to_check]), "User did not gain addiction points after metabolizing meth")
 
 	// Then injected metabolism
-	syringe.volume = meth.addiction_threshold
-	syringe.amount_per_transfer_from_this = meth.addiction_threshold
-	syringe.reagents.add_reagent(meth.type, meth.addiction_threshold)
+	syringe.volume = 5
+	syringe.amount_per_transfer_from_this = 5
+	syringe.reagents.add_reagent(meth.type, 5)
 	syringe.melee_attack_chain(syringe_user, syringe_user)
 
 	syringe_user.Life()
 
-	TEST_ASSERT(syringe_user.reagents.addiction_list && is_type_in_list(meth, syringe_user.reagents.addiction_list), "User is not addicted to meth after injecting the addiction threshold")
+	TEST_ASSERT(syringe_user.mind.addiction_points[addiction_type_to_check]), "User did not gain addiction points after metabolizing meth")
 
 	// One half syringe
 	syringe.reagents.remove_all()
-	syringe.volume = meth.addiction_threshold
-	syringe.amount_per_transfer_from_this = meth.addiction_threshold
-	syringe.reagents.add_reagent(meth.type, (meth.addiction_threshold * 0.5) + 1)
+	syringe.volume = 5
+	syringe.amount_per_transfer_from_this 5
+	syringe.reagents.add_reagent(meth.type, (5 * 0.5) + 1)
 
 	// One half pill
-	pill_two.reagents.add_reagent(meth.type, (meth.addiction_threshold * 0.5) + 1)
+	pill_two.reagents.add_reagent(meth.type, (5 * 0.5) + 1)
 	pill_two.attack(pill_syringe_user, pill_syringe_user)
 	syringe.melee_attack_chain(pill_syringe_user, pill_syringe_user)
 
@@ -95,7 +99,7 @@
 
 	pill_syringe_user.Life()
 
-	TEST_ASSERT(pill_syringe_user.reagents.addiction_list && is_type_in_list(meth, pill_syringe_user.reagents.addiction_list), "User is not addicted to meth after injecting and ingesting half the addiction threshold each")
+	TEST_ASSERT(pill_syringe_user.mind.addiction_points[addiction_type_to_check]), "User did not gain addiction points after metabolizing meth")
 
 /datum/unit_test/addictions/Destroy()
 	SSmobs.ignite()
