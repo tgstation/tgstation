@@ -11,24 +11,24 @@
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
+///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
+//#define REFERENCE_TRACKING
+#ifdef REFERENCE_TRACKING
+
 /*
-* Enables extools-powered reference tracking system, letting you see what is referencing objects that refuse to hard delete.
+* Enables debug messages for every single reaction step. This is 1 message per 0.5s for a SINGLE reaction. Useful for tracking down bugs/asking me for help in the main reaction handiler (equilibrium.dm).
 *
 * * Requires TESTING to be defined to work.
 */
-//#define REFERENCE_TRACKING
+//#define REAGENTS_TESTING
 
-///Method of tracking references without using extools. Slower, kept to avoid over-reliance on extools.
-//#define LEGACY_REFERENCE_TRACKING
-#ifdef LEGACY_REFERENCE_TRACKING
-
-///Use the legacy reference on things hard deleting by default.
+///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
 #define FIND_REF_NO_CHECK_TICK
 #endif //ifdef GC_FAILURE_HARD_LOOKUP
 
-#endif //ifdef LEGACY_REFERENCE_TRACKING
+#endif //ifdef REFERENCE_TRACKING
 
 #define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #define TRACK_MAX_SHARE	//Allows max share tracking, for use in the atmos debugging ui
@@ -52,6 +52,11 @@
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
 #error You need version 513.1514 or higher
+#endif
+
+//Don't load extools on 514
+#if DM_VERSION < 514
+#define USE_EXTOOLS
 #endif
 
 //Additional code for the above flags.

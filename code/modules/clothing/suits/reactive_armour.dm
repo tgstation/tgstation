@@ -37,7 +37,7 @@
 	///Message sent when the armor is still on cooldown, but activates.
 	var/cooldown_message = "<span class='danger'>The reactive armor fails to do much, as it is recharging! From what? Only the reactive armor knows.</span>"
 	///Duration of the cooldown specific to reactive armor for when it can activate again.
-	var/reactivearmor_cooldown_duration = 0
+	var/reactivearmor_cooldown_duration = 10 SECONDS
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 	///And what the icon is set to when the reactive armor is on
@@ -121,6 +121,43 @@
 	owner.visible_message("<span class='danger'>The reactive armor doesn't do much, despite being emp'd! Besides giving off a special message, of course.</span>")
 	return TRUE
 
+/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+	if(!active || !prob(hit_reaction_chance))
+		return FALSE
+	if(world.time < reactivearmor_cooldown)
+		cooldown_activation(owner)
+		return FALSE
+	if(bad_effect)
+		return emp_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+	else
+		return reactive_activation(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+
+/**
+ * A proc for doing cooldown effects (like the sparks on the tesla armor, or the semi-stealth on stealth armor)
+ * Called from the suit activating whilst on cooldown.
+ * You should be calling ..()
+ */
+/obj/item/clothing/suit/armor/reactive/proc/cooldown_activation(mob/living/carbon/human/owner)
+	owner.visible_message(cooldown_message)
+
+/**
+ * A proc for doing reactive armor effects.
+ * Called from the suit activating while off cooldown, with no emp.
+ * Returning TRUE will block the attack that triggered this
+ */
+/obj/item/clothing/suit/armor/reactive/proc/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message("<span class='danger'>The reactive armor doesn't do much! No surprises here.</span>")
+	return TRUE
+
+/**
+ * A proc for doing owner unfriendly reactive armor effects.
+ * Called from the suit activating while off cooldown, while the armor is still suffering from the effect of an EMP.
+ * Returning TRUE will block the attack that triggered this
+ */
+/obj/item/clothing/suit/armor/reactive/proc/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message("<span class='danger'>The reactive armor doesn't do much, despite being emp'd! Besides giving off a special message, of course.</span>")
+	return TRUE
+
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF || bad_effect || !active) //didn't get hit or already emp'd, or off
@@ -148,20 +185,14 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/teleport/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message("<span class='danger'>The reactive teleport system ALMOST flings [owner] clear of [attack_text], leaving something behind in the process!</span>")
-	var/drop_organ = prob(50)
-	if(drop_organ)
-		owner.spew_organ(0)
-	else
-		var/obj/item/bodypart/body_part = owner.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-		if(body_part)
-			body_part.drop_limb(FALSE, TRUE)
+	owner.visible_message("<span class='danger'>The reactive teleport system flings itself clear of [attack_text], leaving someone behind in the process!</span>")
+	owner.dropItemToGround(src, TRUE, TRUE)
 	playsound(get_turf(owner),'sound/machines/buzz-sigh.ogg', 50, TRUE)
 	playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
-	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
+	do_teleport(src, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	owner.rad_act(rad_amount)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-	return TRUE
+	return FALSE //you didn't actually evade the attack now did you
 
 //Fire
 
@@ -309,13 +340,21 @@
 	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 	cooldown_message = "<span class='danger'>The reactive stealth system activates, but is not charged enough to fully cloak!</span>"
 	emp_message = "<span class='warning'>The reactive stealth armor's threat assessment system crashes...</span>"
+	///when triggering while on cooldown will only flicker the alpha slightly. this is how much it removes.
+	var/cooldown_alpha_removal = 50
+	///cooldown alpha flicker- how long it takes to return to the original alpha
+	var/cooldown_animation_time = 3 SECONDS
+	///how long they will be fully stealthed
+	var/stealth_time = 4 SECONDS
+	///how long it will animate back the alpha to the original
+	var/animation_time = 2 SECONDS
 	var/in_stealth = FALSE
 
 /obj/item/clothing/suit/armor/reactive/stealth/cooldown_activation(mob/living/carbon/human/owner)
 	if(in_stealth)
 		return //we don't want the cooldown message either)
-	owner.alpha = max(0, owner.alpha - 50)
-	animate(owner, alpha = initial(owner.alpha), time = 3 SECONDS)
+	owner.alpha = max(0, owner.alpha - cooldown_alpha_removal)
+	animate(owner, alpha = initial(owner.alpha), time = cooldown_animation_time)
 	..()
 
 /obj/item/clothing/suit/armor/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -326,13 +365,13 @@
 	owner.alpha = 0
 	in_stealth = TRUE
 	owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
-	addtimer(CALLBACK(src, .proc/end_stealth, owner), 4 SECONDS)
+	addtimer(CALLBACK(src, .proc/end_stealth, owner), stealth_time)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/stealth/proc/end_stealth(mob/living/carbon/human/owner)
 	in_stealth = FALSE
-	animate(owner, alpha = initial(owner.alpha), time = 2 SECONDS)
+	animate(owner, alpha = initial(owner.alpha), time = animation_time)
 
 /obj/item/clothing/suit/armor/reactive/stealth/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!isliving(hitby))
@@ -412,7 +451,7 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
-	owner.visible_message("<span class='danger'>[src] does not block [attack_text], instead generating an attracting force!</span>")
+	owner.visible_message("<span class='danger'>[src] does not block [attack_text], and instead generates an attracting force!</span>")
 	var/turf/owner_turf = get_turf(owner)
 	var/list/thrown_items = list()
 	for(var/atom/movable/repulsed in range(owner_turf, 7))
@@ -453,5 +492,4 @@
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
-
 

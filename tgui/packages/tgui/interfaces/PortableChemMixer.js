@@ -21,8 +21,7 @@ export const PortableChemMixer = (props, context) => {
   return (
     <Window
       width={645}
-      height={550}
-      resizable>
+      height={550}>
       <Window.Content scrollable>
         <Section
           title="Dispense"
