@@ -454,7 +454,7 @@
 		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
 		return
 
-	if(modifiers && modifiers["right"] && mode != BOT_TIPPED)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && mode != BOT_TIPPED)
 		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
 		if(world.time > last_tipping_action_voice + 15 SECONDS)

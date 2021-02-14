@@ -53,7 +53,7 @@ In all, this is a lot like the monkey code. /N
 		return FALSE
 
 	if(M.combat_mode)
-		if(modifiers && modifiers["right"])
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			return TRUE
 		M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
