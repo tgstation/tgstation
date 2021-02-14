@@ -51,6 +51,304 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">13 February 2021</h2>
+			<h3 class="author">Fikou updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">people with conspiracy phobias are scared of gas miners</li>
+			</ul>
+			<h3 class="author">LemonInTheDark updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">N2O is no longer toxic</li>
+				<li class="bugfix">Fixes the Pick Up option in the shift + right click menu not working</li>
+			</ul>
+			<h3 class="author">SgtHunk updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The lavaland syndicate base air injector now functions as intended.</li>
+			</ul>
+			<h3 class="author">Tlaltecuhtli updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">breaching missile works on windows with low bomb resistance</li>
+			</ul>
+			<h3 class="author">itseasytosee updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">it is now harder for prone people to break out of grabs as originally intended</li>
+			</ul>
+			<h3 class="author">spessbro updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Removes useless defines in codex gigas code</li>
+			</ul>
+			<h3 class="author">tf-4 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Thirteen more winter coats covering all departments and most jobs.</li>
+			</ul>
+
+			<h2 class="date">12 February 2021</h2>
+			<h3 class="author">Fikou updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">every mob can climb on ladders</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">You can now right click to splash reagent containers, instead of switching to combat mode.</li>
+				<li class="rscadd">Splashing reagent containers is now a part of any reagent container you can spill, rather than just beakers and drinking glasses.</li>
+				<li class="rscadd">You can now right click an airlock with a welding tool to weld it while not in combat mode.</li>
+				<li class="rscdel">Removes older ID consoles completely. You will no longer be able to find the circuitboard or research it. Consider creating a computer and installing the Plexagon Crew Management app instead.</li>
+				<li class="bugfix">Fixed dynamic parameters not checking the configuration. This means that Manuel will now have slower midrounds, as was intended.</li>
+			</ul>
+			<h3 class="author">Kylerace updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">slight performance improvement to clown pdas</li>
+			</ul>
+			<h3 class="author">LemonInTheDark updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">BZ will no longer cause hallucinations or kill changelings at hyper low percentages of the gasmix, put some effort into your ling murder why don't you.</li>
+				<li class="tweak">BZ now only causes brain damage when it's greater then 10 kpa of the mix, its hallucinations and effects on lings are still locked to 1 kpa or above.</li>
+			</ul>
+			<h3 class="author">Sparkezel updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">Spellblade was crafted with laziness and bloodlust, not boodlust</li>
+			</ul>
+			<h3 class="author">SparkezelPL updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Sharpness now uses bitfield</li>
+			</ul>
+			<h3 class="author">TJatPBnJ updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Right clicks on a ranged attack will now call afterattack when it's supposed to.</li>
+				<li class="bugfix">You can no longer hold yourself up with a gun</li>
+				<li class="bugfix">Holding someone up with a gun will no longer cause a runtime when two people hold up the same person.</li>
+				<li class="bugfix">Having multiple people hold up the same person will no longer cause the victim's alerts to disappear when just one of the perpetrators stops holding them up.</li>
+			</ul>
+			<h3 class="author">Thalpy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds a new reaction mechanic that allows reaction to occur in an incremental fashion. This uses temperature to determine reaction rate and pH to determine purity. The hotter it is, the faster it reacts. Keeping your pH within the range (default 5-9) will keep it pure, with the further out you are affecting your purity. Reactions are also H+ consuming/producing and exo/endothermic.</li>
+				<li class="rscadd">Adds purity mechanics for reactions - if a purity extremely low at the end of a reaction then it will convert into viscous sludge or a failed chem. When a reagent is consumed; If a reagent is very impure it will inverse into another chem. This inversion will remove all of the original chem and take its place instead. If it's slightly impure then it will split into an impure chem with respect to purity. The ratio of original to impure is determined by the purity of the original when consumed.</li>
+				<li class="rscadd">Adds the following basic impure reagents to accommodate the changes above: Chemical isomers, Toxic sludge and Viscous sludge.</li>
+				<li class="rscadd">Acidic and basic buffers. These will self-consume when added to a reagent holder will other reagents in it, and alter the pH towards their respective extreme. Thereby altering the pH without affecting the volume. adds; Optional catalysts - these reagents will speed up the reaction of a certain type. Presently Palladium synthate catalyst exists and works on medicine reagents only.</li>
+				<li class="rscadd">Competitive reactions - Tempomyocin and Purity tester are reactions that compete based off temperature. Tempomyocin is a reagent that will instantly speed up a reaction based off its purity and the purity tester reagent will fizzle if the solution it is added to has anything impure in it.</li>
+				<li class="rscadd">Adds an overheat/impure mechanic during reactions - overheating your reaction past it's overheat point will reduce the yield of your product by 2% per tick, with some reactions having special explosions instead. If overly impure it will reduce the purity of all reagents present in the beaker.</li>
+				<li class="rscadd">1 dropper and 1 bottle of acidic buffer (you can make this) to the chemist's locker. Gives chemists a starting dropper and random buffer. Added pH booklets to the chemists chemdrobe - these can tell you the pH of a beaker by ripping a sheet out of them and using it on a beaker or reagent holder</li>
+				<li class="rscadd">Adds a pH meter than can be researched and printed from the med lathe. When used on a reagent holder it will tell you a detailed breakdown of the reagents in the beaker, including pH, volume and purity. It will also detect ongoing reactions.</li>
+				<li class="rscadd">Adds pH to all reagents - the pH of a beaker/holder will be the sum of all reagents with respect to volume. pH is an abstracted potential of hydrogen that affects reactions.</li>
+				<li class="tweak">heavily edited the chem heater into a reaction chamber, showing multiple details on a reaction, edited chem master and chem dispenser’s UI to show pH.</li>
+				<li class="tweak">You can now use droppers and syringes directly on heaters to affect the beaker inside of it (provided there’s a beaker in there)</li>
+				<li class="tweak">Tweaks most reagents to use a default handler. The ones omitted are ones that rely on being instant. This default has a minimum reaction temperature of 100, an optimal temperature of 500 and an overheat temperature of 900+. Their optimal pH range is 5-9; which will result in a purity 1 reagent when kept within this window. If the reaction is within a pH window of 1-4 or 9-13 the resulting purity will be dependent on the deviation from 5 or 9. <1 or >14 will create impure chems for every step. If your final purity on the end of a reaction is less than 0.15, then it will collapse into Viscous sludge. The reaction is mildly exothermic and H+ consuming.</li>
+				<li class="tweak">tweaks chocolate milk, firefighting foam and hercuri reactions to work better with the new mechanics. These inherit the same pH windows as above but are cold reactions instead.</li>
+				<li class="soundadd">added several sound effects for chemistry</li>
+				<li class="imageadd">added melting beaker icons, pHbooklets and pHmeters</li>
+				<li class="code_imp">changed reagents code, created equilibrium.dm</li>
+				<li class="refactor">refactored main chemistry mechanics to use reaction rates, pH and purity mechanics</li>
+			</ul>
+			<h3 class="author">Timberpoes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Windows are now much less stubborn when you accidentally find yourself inside them (*blushes*) and will let you step off their turf to the South when you were prevented from doing so before.</li>
+				<li class="admin">Re-added the button to the player playtime panel that lets admins toggle a player's job playtime exemption status.</li>
+				<li class="bugfix">The wizard's immovable rod form no longer deals variable damage depending on the number of objects on the turfs it's passing through. It instead deals full damage to everything it hits and hits everything on the turf at the same time.</li>
+				<li class="balance">The wizard's immovable rod from can now impact with any other immovable rod to create a singularity. This probably kills the wizard. This definitely kills the rod.</li>
+				<li class="balance">The wizard's immovable rod from can now hit mobs that are lying on the floor.</li>
+				<li class="balance">The wizard's immovable rod form is now incorporeal and flying.</li>
+				<li class="balance">The wizard's immovable rod form is now much, must faster - Especially when hitting multiple targets.</li>
+				<li class="balance">The wizard's immovable rod form deals a LOT more damage to non-mobs that it passes through.</li>
+				<li class="bugfix">The immovable rod no longer deals variable damage depending on the number of objects on the turfs it's passing through. It instead deals full damage to everything it hits and hits everything on the turf at the same time.</li>
+				<li class="balance">The immovable rod can now impact with any other immovable rod to create a singularity. This definitely kills the rod.</li>
+				<li class="balance">The immovable rod can now hit mobs that are lying on the floor.</li>
+				<li class="balance">The immovable rod is now incorporeal and flying.</li>
+				<li class="balance">The immovable rod is now much, must faster - Especially when hitting multiple targets.</li>
+				<li class="balance">The immovable rod deals a LOT more damage to non-mobs that it passes through. feature: The immovable rod can now traverse z-level to chase its targets down when used as both a targetted smite and as an option from the admin event menu. feature: The immovable rod will subtly grow as it consumes the souls of sentients it hits.</li>
+				<li class="bugfix">The immovable rod no longer stalls on Icebox and will now spawn on the same z-level as its destination.</li>
+			</ul>
+			<h3 class="author">coiax updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Shift start messes in cargo can now include package scraps, the same sort of stuff you get when opening packages.</li>
+				<li class="tweak">The Jolly and Depression quirks are much more active. You can expect the positive/negative moodlets to affect you around 50% of the time.</li>
+				<li class="tweak">Goldschlager will have the same effect of gold when drunk; it is around 9% gold in SS13.</li>
+				<li class="tweak">Goldschlager is now only really enjoyed by teenage girls, others will think it's not bad, but not great.</li>
+			</ul>
+			<h3 class="author">necromanceranne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes harpoon guns jamming because they're a child of the mosin nagant.</li>
+				<li class="bugfix">You can print more than a single sheet of tape at a time.</li>
+			</ul>
+
+			<h2 class="date">11 February 2021</h2>
+			<h3 class="author">ATHATH updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Similarly to how moth characters with the family heirloom quirk have a 50% chance to receive an old lantern as their family heirloom instead of one of their job's normal family heirloom items, felinids with the family heirloom quirk now have a 50% chance to receive a toy mouse as their family heirloom.</li>
+			</ul>
+			<h3 class="author">CRITAWAKETS updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Bronze now properly works within the materials system. Consistency issue where despite being a glass material, you cannot use it on grilles is fixed. You can no longer use bronze on a girder and then weld the resulting wall to turn it into a wall gear.</li>
+				<li class="code_imp">Bronze is now regarded as a sheet instead of a tile.</li>
+				<li class="code_imp">Checking for if a sheet type requires a unique girder is now a variable called "has_unique_girder". This is used on bronze and runed metal.</li>
+			</ul>
+			<h3 class="author">Fhaxaris updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Modular ID console will no longer insert/eject ID card for AI or to telekinesis players.</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed pre_attack, fixing RPEDs and similar.</li>
+				<li class="rscadd">Chemical scan is now on right click for health analyzer, removes it as a toggle.</li>
+				<li class="bugfix">Right clicking on your jumpsuit will now open suit sensors, rather only working if you attack it with an item.</li>
+			</ul>
+			<h3 class="author">NamelessFairy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Chocolate bars can be made using regular milk again</li>
+			</ul>
+			<h3 class="author">NotRanged updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Automatic blob expansion now applies proper reagent strain effects when it hurts a human</li>
+			</ul>
+			<h3 class="author">Timberpoes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">When an admin makes a cyborg flash immune by giving it TRAIT_NOFLASH, that cyborg is now actually immune to flash.</li>
+				<li class="bugfix">Random corpses spawned in offstation ruins will no longer report as having suit sensors when their sensors are disabled.</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Bounty cube announces creation over Supply with its creator and area</li>
+				<li class="rscadd">Bounty cube speedy delivery bonus of 20% for cargo if it's sent within five minutes</li>
+				<li class="rscadd">Bounty cube personal handling tip of 10% if you scan it with an export scanner while on the cargo shuttle (paid on sale)</li>
+				<li class="rscadd">Bounty cubes nag over Supply with their area, starting at five minutes with time increasing between each</li>
+			</ul>
+			<h3 class="author">deranging updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">added missing "a" in the description for the Bluespace Artillery Fusor</li>
+			</ul>
+			<h3 class="author">eeSPee updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Regal rats spawn with a unique name</li>
+				<li class="rscadd">Regal rats have a new ability, domain, to replace coffer; it spreads miasma in the air, and they passively regenerate health in miasma</li>
+				<li class="rscadd">Rat kings can lick food and glasses to add rat spit, and can rummage through trash to find coins and cheese</li>
+				<li class="rscadd">overdosing on rat spit gives you the rat faction</li>
+			</ul>
+
+			<h2 class="date">10 February 2021</h2>
+			<h3 class="author">EikoBiko updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">altered the wagging cat tail sprite.</li>
+			</ul>
+			<h3 class="author">Guillaume Prata updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Some jumpskirts/dresses have new Object icons</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">You can now right click with the hand tele to teleport to the last location you teleported to last time.</li>
+			</ul>
+			<h3 class="author">MTandi updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Software Downloader program UI revamp</li>
+			</ul>
+			<h3 class="author">Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="refactor">Ambience is now in a subsystem, and plays every now and then without you having to move to a new area for it to play</li>
+			</ul>
+			<h3 class="author">RaveRadbury updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">fixed a few moodlet typos</li>
+				<li class="code_imp">cleaned up some moodlet time into defines</li>
+			</ul>
+			<h3 class="author">SparkezelPL updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Hatchets have longer throw range and can embed</li>
+			</ul>
+			<h3 class="author">TJatPBnJ updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The M90 now uses right click to fire it's grenade launcher.</li>
+				<li class="balance">40mm grenades are now bought in ammo boxes for 6tc rather than individually for 2tc</li>
+			</ul>
+			<h3 class="author">Thalpy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes necropolis curse's stage 4 grabby hands</li>
+				<li class="tweak">tweaked transitional ui widgets to appear smoother</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">In-spect scanner is now called N-spect scanner (the N stands for Nanotrasen)</li>
+				<li class="soundadd">N-spect scanner has a better sound effect</li>
+				<li class="spellcheck">N-spect scanner description reads better</li>
+				<li class="code_imp">N-spect scanner report is now a child of paper</li>
+			</ul>
+			<h3 class="author">coiax updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">All beakers, bottles and containers that have been used in the All-in-One Grinder will have a warning not to inhale the dust on examine.</li>
+			</ul>
+			<h3 class="author">necromanceranne updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes pancakes not being able to be made on the griddle.</li>
+				<li class="bugfix">Fixes missing sprites for the worn_icon_state for bullets and telebatons.</li>
+				<li class="bugfix">Fixes dead facehuggers and bottles not having their worn_icon_state properly set up.</li>
+				<li class="bugfix">Fixes some missing sprites for the Possessed Sword, Moonlight Greatsword and Chain Whip nullrods.</li>
+				<li class="imageadd">Adds new sprites to the wizard ritual knife and veilrenders.</li>
+			</ul>
+			<h3 class="author">stylemistake updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Oversized tgui windows will now resize to fit usable screen area (relevant for small laptop screens).</li>
+				<li class="tweak">All tgui windows are now resizable, unconditionally.</li>
+			</ul>
+			<h3 class="author">vincentiusvin updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">cryo now inject reagents more consistently i.e. more often and in smaller amounts.</li>
+			</ul>
+
+			<h2 class="date">09 February 2021</h2>
+			<h3 class="author">Elli-Skala updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed space bat's damage numbers</li>
+				<li class="bugfix">Sergeant Araneus spawning already hurt</li>
+			</ul>
+			<h3 class="author">Jared-Fogle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Forcing roundstart rulesets should now work properly.</li>
+			</ul>
+			<h3 class="author">Melbert updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">Added missing punctuation and removed a bad blind message from climbable things</li>
+			</ul>
+			<h3 class="author">NotRanged updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Engi ERT now gets power tools, upgraded RCDs, and pipe dispensers.</li>
+			</ul>
+			<h3 class="author">Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Makes station traits less common</li>
+			</ul>
+			<h3 class="author">Son of Space, Fikou updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">A RIPLEY variant with its own set of sprites.</li>
+				<li class="balance">Mules on Meta have been replaced by a cargo hauler and a few pairs of rollerskates</li>
+			</ul>
+			<h3 class="author">Timberpoes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The Metastation Nanite Lab now requires general Science departmental access to enter instead of Xenobiology access.</li>
+			</ul>
+			<h3 class="author">Urumasi updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">You can now wear xenobio pressure-proofed jumpsuits in space.</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Clown and mime pin mob sprites now appear correctly from all angles</li>
+			</ul>
+			<h3 class="author">coiax updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Space heaters are now purchasable from Cargo.</li>
+			</ul>
+			<h3 class="author">stylemistake updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed scrolling bug with ExoFab</li>
+			</ul>
+			<h3 class="author">timothymtorres updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Venus Flytraps now take burn and cold damage.</li>
+			</ul>
+			<h3 class="author">zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">RoboTact will now show borgs their logs again.</li>
+				<li class="bugfix">Fixed a hotkey conflict that by default prevents borgs from toggling combat mode using '4'.</li>
+			</ul>
+
 			<h2 class="date">08 February 2021</h2>
 			<h3 class="author">CRITAWAKETS updated:</h3>
 			<ul class="changes bgimages16">
@@ -2451,165 +2749,6 @@
 			<ul class="changes bgimages16">
 				<li class="bugfix">Demon portals can now drop soul stones, but will no longer drop activated anomaly cores.</li>
 				<li class="bugfix">Bluespace anomaly cores obtained from ice demons are now raw cores. No more BoH farms!</li>
-			</ul>
-
-			<h2 class="date">12 December 2020</h2>
-			<h3 class="author">Azarak updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Shoes get checked for whether they actually cover your feet for purposes of caltrops and footsteps</li>
-			</ul>
-			<h3 class="author">Joe Berry updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Planetary turfs now act more like they are on a planet and return to a normal level much faster.</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes lava spawning when you mine rocks</li>
-			</ul>
-			<h3 class="author">prodirus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Lizards will now be correctly disgusted by donuts.</li>
-			</ul>
-			<h3 class="author">wesoda25 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Ash walkers no longer know galactic common</li>
-			</ul>
-
-			<h2 class="date">11 December 2020</h2>
-			<h3 class="author">ArcaneMusic updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Civilian Bounty Cubes now pay out 30% of the value of the cube, up from 10%.</li>
-				<li class="balance">Cargo Crates are now worth 200 credits each. Cargo crate prices have seen some tweaks as well for more uncommonly ordered crates as well.</li>
-				<li class="bugfix">You can no longer cheat the bounty system by slapping a new price tag over a bounty cube.</li>
-				<li class="refactor">The values of cargo crates you can order are now scaled in terms of the value of cargo crates.</li>
-			</ul>
-			<h3 class="author">CRITAWAKETS updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">There now exists an admin outfit, better than the debug outfit for messing with things. There is also now a box with every single stabilized slime extract.</li>
-			</ul>
-			<h3 class="author">CoffeeDragon16 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Two new binds for targeting eyes and mouth, number pad 7 and number pad 9.</li>
-			</ul>
-			<h3 class="author">Harimoto updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">fixed a spelling error with a heretic spell message</li>
-			</ul>
-			<h3 class="author">Jared-Fogle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">More UI elements will now be displayed in a non-blurry font.</li>
-				<li class="code_imp">Points of interest now use an element.</li>
-				<li class="admin">Added a smite option to build mode.</li>
-				<li class="bugfix">Clothes now consume themselves properly.</li>
-			</ul>
-			<h3 class="author">LemonInTheDark updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Drying racks have feedback for dried things now</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">changed the description of painting frames to better explain how to remove paintings and whether the frame is persistent</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Lavaland is no longer generated in broken diagonals, instead utilizing  a map_generator datum.</li>
-				<li class="code_imp">Bunch of unused turf paths removed</li>
-			</ul>
-			<h3 class="author">TemporalOroboros updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You can no longer recycle metalgen</li>
-			</ul>
-			<h3 class="author">nightred updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Changed the size of the xray gun</li>
-			</ul>
-
-			<h2 class="date">10 December 2020</h2>
-			<h3 class="author">Ghilker updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">only anchored windows call move_update_turf()</li>
-				<li class="tweak">singularities from stage 2 and over will unanchor windows</li>
-				<li class="rscdel">removed atmos SM room</li>
-				<li class="rscadd">added atmos testing facility</li>
-				<li class="rscadd">added SM to replace the hole left by singulo/tesla engines</li>
-			</ul>
-			<h3 class="author">Ghommie updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">jitteriness, melee attack animations and resting/standing up should no longer momentarily remove the floating movement type.</li>
-			</ul>
-			<h3 class="author">Maurukas updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The NanoDrug vendor in Medbay is now property of the medical department and will handle payments correctly.</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Added the persistent photo gallery for distinguished employees to Metastation and Deltastation showrooms</li>
-			</ul>
-			<h3 class="author">Paxilmaniac, Maurukas and Cartographer-D updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds Kilostation</li>
-				<li class="rscdel">Removes Pubbystation</li>
-			</ul>
-			<h3 class="author">silicons updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">projectiles now use a new hit detection system that doesn't rely on quirks in movement code to work, and is easier(?) to work with</li>
-				<li class="refactor">pass_flags_self now handles determining if something with specific pass_flags can cross something, by default.</li>
-				<li class="bugfix">piercing projectiles (see: penetrating snipers) work again</li>
-				<li class="tweak">projectile permutated/impacted list is reset on ricochets, meaning reflected projectiles can potentially hit something again if it pierced it the first time.</li>
-			</ul>
-			<h3 class="author">tf-4 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">removes stray lightswitch from icebox mining base</li>
-			</ul>
-			<h3 class="author">zxaber updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Vehicles no longer open firelocks when bumped into them.</li>
-			</ul>
-
-			<h2 class="date">09 December 2020</h2>
-			<h3 class="author">Timberpoes updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The roulette wheel now actually works and no longer just crashes every time you try to place a bet on a single.</li>
-			</ul>
-			<h3 class="author">Time-Green updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Acclimator will now idle when emptying, to prevent overcooking in laggy and sensitive situations</li>
-			</ul>
-
-			<h2 class="date">08 December 2020</h2>
-			<h3 class="author">Cornelius Bogfrollup Fitzgerald updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">new jukebox sprites</li>
-			</ul>
-			<h3 class="author">Fikou updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes hiero staff recall message not working</li>
-				<li class="balance">Champion's hardsuit has been reworked. spriteadd: fixes spears on suit storages not having icons</li>
-			</ul>
-			<h3 class="author">IndieanaJones updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Dynamic abductors should no longer be split up between two different ships.</li>
-			</ul>
-			<h3 class="author">Jared-Fogle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">The singularity, tesla, Nar'Sie, and similar have been refactored to separate behavior.</li>
-				<li class="tweak">The alerts for singularities being loose are now handled by the singularity itself, meaning the icon will no longer be the containment field.</li>
-			</ul>
-			<h3 class="author">Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">Refactors now keep an assoc list to keep track of how much specific do afters are running at once</li>
-			</ul>
-			<h3 class="author">Timberpoes updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">ClF3 can no longer melt through walls.</li>
-			</ul>
-			<h3 class="author">itseasytosee updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Jaunting nightmares should heal at a consistent rate weather they are moving or not</li>
-			</ul>
-			<h3 class="author">thatREALLYgoodsodaflavor, StyleMistake, Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Implements sound environments into the game. Reverb time.</li>
 			</ul>
 		</div>
 

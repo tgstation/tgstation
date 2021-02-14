@@ -208,6 +208,8 @@
 #define COMSIG_REAGENTS_TEMP_CHANGE		"reagents_temp_change"
 ///from base of [/datum/reagents/proc/handle_reactions]: (num_reactions)
 #define COMSIG_REAGENTS_REACTED			"reagents_reacted"
+///from base of [/datum/reagents/proc/process]: (num_reactions)
+#define COMSIG_REAGENTS_REACTION_STEP	"reagents_time_step"
 ///from base of [/atom/proc/expose_reagents]: (/atom, /list, methods, volume_modifier, show_message)
 #define COMSIG_REAGENTS_EXPOSE_ATOM		"reagents_expose_atom"
 ///from base of [/obj/proc/expose_reagents]: (/obj, /list, methods, volume_modifier, show_message)
@@ -527,6 +529,8 @@
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
 	#define COMPONENT_HOSTILE_NO_ATTACK (1<<0)
+///from base of mob/living/simple_animal/hostile/regalrat: (mob/living/simple_animal/hostile/regalrat/king)
+#define COMSIG_RAT_INTERACT "rat_interaction"
 
 // /obj signals
 
@@ -553,6 +557,10 @@
 #define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"
 ///from /obj/machinery/set_occupant(atom/movable/O): (new_occupant)
 #define COMSIG_MACHINERY_SET_OCCUPANT "machinery_set_occupant"
+
+// /obj/machinery/computer/teleporter
+/// from /obj/machinery/computer/teleporter/proc/set_target(target, old_target)
+#define COMSIG_TELEPORTER_NEW_TARGET "teleporter_new_target"
 
 // /obj/machinery/power/supermatter_crystal signals
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
@@ -597,8 +605,6 @@
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
-///called on item when crossed by something (): (/atom/movable, mob/living/crossed)
-#define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"
 ///called on item when microwaved (): (obj/machinery/microwave/M)
 #define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
 	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
@@ -810,8 +816,12 @@
 
 //Plants / Plant Traits
 
-///called when an action causes a plant to be squashed - slipping, throwing, attack_self.
-#define COMSIG_PLANT_SQUASH "plant_squash"
+///called when a plant with slippery skin is slipped on (mob/victim)
+#define COMSIG_PLANT_ON_SLIP "plant_on_slip"
+///called when a plant with liquid contents is squashed on (atom/target)
+#define COMSIG_PLANT_ON_SQUASH "plant_on_squash"
+///called when a plant grows in a tray (obj/machinery/hydroponics)
+#define COMSIG_PLANT_ON_GROW "plant_on_grow"
 
 //Gibs
 

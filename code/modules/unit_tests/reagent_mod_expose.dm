@@ -50,8 +50,7 @@
 
 	// INJECT
 	syringe.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
-	syringe.mode = SYRINGE_INJECT
-	syringe.afterattack(human, human, TRUE)
+	syringe.melee_attack_chain(human, human)
 	TEST_ASSERT_EQUAL(human.health, 80, "Human health did not update after injection from syringe")
 
 /datum/unit_test/reagent_mob_expose/Destroy()

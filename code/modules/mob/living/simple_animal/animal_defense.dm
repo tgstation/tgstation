@@ -5,7 +5,7 @@
 	if (..())
 		return TRUE
 
-	if(modifiers && modifiers["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		var/shove_dir = get_dir(M, src)
@@ -80,7 +80,7 @@
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M, modifiers)
 	if(..()) //if harm or disarm intent.
-		if(modifiers && modifiers["right"])
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M] [response_disarm_continuous] [name]!</span>", \
 							"<span class='userdanger'>[M] [response_disarm_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
