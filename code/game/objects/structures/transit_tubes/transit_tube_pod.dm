@@ -1,6 +1,5 @@
 #define MOVE_ANIMATION_STAGE_ONE 1
 #define MOVE_ANIMATION_STAGE_TWO 2
-#define MOVE_ANIMATION_STAGE_THREE 3
 
 /obj/structure/transit_tube_pod
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
@@ -234,6 +233,3 @@
 
 #undef MOVE_ANIMATION_STAGE_ONE
 #undef MOVE_ANIMATION_STAGE_TWO
-#undef MOVE_ANIMATION_STAGE_THREE
-
-//currently transit tubes use two different sleeps for two different delays for every tube tile it goes through until it stops. i have a timer version working but is there a way to make it use delta_time as a process without getting rid of the two different delays?
