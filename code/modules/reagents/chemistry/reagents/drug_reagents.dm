@@ -104,7 +104,7 @@
 	overdose_threshold = 20
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opioids = 18) //7.2 per 2 seconds
+	addiction_types = list(/datum/addiction/opiods = 18) //7.2 per 2 seconds
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M)
@@ -337,9 +337,7 @@
 
 /datum/reagent/drug/maint
 	name = "Maintenance Drugs"
-	addiction_type = /datum/reagent/drug/maint
-	can_synth = FALSE
-
+	chemical_flags = NONE
 
 /datum/reagent/drug/maint/powder
 	name = "Maintenance Powder"
@@ -349,7 +347,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	can_synth = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 14)
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M)
@@ -376,9 +374,7 @@
 	color = "#203d2c"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 25
-	addiction_threshold = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	can_synth = TRUE
 	addiction_types = list(/datum/addiction/maintenance_drugs = 8)
 
 /datum/reagent/drug/maint/sludge/on_mob_metabolize(mob/living/L)
@@ -411,9 +407,7 @@
 	reagent_state = LIQUID
 	color = "#000000"
 	overdose_threshold = 30
-	addiction_threshold = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	can_synth = TRUE
 	addiction_types = list(/datum/addiction/maintenance_drugs = 5)
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/M)

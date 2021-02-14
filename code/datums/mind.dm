@@ -802,7 +802,7 @@
 ///Adds addiction points to the specified addiction
 /datum/mind/proc/remove_addiction_points(type, amount)
 	LAZYSET(addiction_points, type, max(LAZYACCESS(addiction_points, type) - amount, 0))
-	SSaddiction.all_addictions[type].on_lose_addiction_points(src)
+	return SSaddiction.all_addictions[type].on_lose_addiction_points(src)
 
 /mob/dead/new_player/sync_mind()
 	return

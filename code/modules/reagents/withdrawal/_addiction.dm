@@ -8,8 +8,8 @@
 	var/addiction_loss_threshold = 400
 	///Messages for each stage of addictions.
 	var/list/withdrawal_stage_messages = list()
-	///Rate at which you lose addiction if you are not on the drug at that time
-	var/addiction_loss = 5
+	///Rate at which you lose addiction (in units/tick) if you are not on the drug at that time
+	var/addiction_loss = 2
 
 ///Called when you gain addiction points somehow. Takes a mind as argument and sees if you gained the addiction
 /datum/addiction/proc/on_gain_addiction_points(datum/mind/victim_mind)
@@ -43,11 +43,11 @@
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
 /datum/addiction/proc/process_addiction(var/mob/living/carbon/affected_carbon)
-	var/currently_addicted = LAZYACCESS(victim_mind.active_addictions, type)
+	var/currently_addicted = LAZYACCESS(affected_carbon.mind.active_addictions, type)
 	var/on_drug_of_this_addiction = FALSE
 	for(var/datum/reagent/possible_drug as anything in affected_carbon.reagents.reagent_list) //Go through the drugs in our system
 		for(var/addiction in possible_drug.addiction_types) //And check all of their addiction types
-			if(addiction == type && possible_drug.volume >= MIN_ADDICTION_REAGENT_AMOUNT) //If one of them matches, and we have enough of it in our system, we're good.
+			if(addiction == type && possible_drug.volume >= MIN_ADDICTION_REAGENT_AMOUNT) //If one of them matches, and we have enough of it in our system, we're not losing addiction
 				if(currently_addicted)
 					LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
 				on_drug_of_this_addiction = TRUE
@@ -63,20 +63,20 @@
 	var/current_addiction_cycle = LAZYACCESS(affected_carbon.mind.active_addictions, type)
 
 	switch(current_addiction_cycle)
-		if(1)
+		if(WITHDRAWAL_STAGE1_START_CYCLE)
 			withdrawal_enters_stage_1(affected_carbon)
-		if(10)
+		if(WITHDRAWAL_STAGE2_START_CYCLE)
 			withdrawal_enters_stage_2(affected_carbon)
-		if(20)
+		if(WITHDRAWAL_STAGE3_START_CYCLE)
 			withdrawal_enters_stage_3(affected_carbon)
 
 	///One cycle is 2 seconds
 	switch(current_addiction_cycle)
-		if(1 to 10)
+		if(WITHDRAWAL_STAGE1_START_CYCLE to WITHDRAWAL_STAGE1_END_CYCLE)
 			withdrawal_stage_1_process(affected_carbon)
-		if(10 to 20)
+		if(WITHDRAWAL_STAGE2_START_CYCLE to WITHDRAWAL_STAGE2_END_CYCLE)
 			withdrawal_stage_2_process(affected_carbon)
-		if(20 to 30)
+		if(WITHDRAWAL_STAGE3_START_CYCLE to WITHDRAWAL_STAGE3_END_CYCLE)
 			withdrawal_stage_3_process(affected_carbon)
 
 	LAZYADDASSOC(affected_carbon.mind.active_addictions, type, 1) //Next cycle!

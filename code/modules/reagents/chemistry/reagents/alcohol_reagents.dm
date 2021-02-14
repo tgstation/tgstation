@@ -15,7 +15,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 7.33
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
-	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
+
 /*
 Boozepwr Chart
 Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
@@ -34,6 +34,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 81-90: Extremely high alcohol content - heavy toxin damage, passing out
 91-100: Dangerously toxic - swift death
 */
+
+/datum/reagent/consumable/ethanol/New()
+	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
+	return ..()
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
 	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
