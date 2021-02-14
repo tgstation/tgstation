@@ -2022,7 +2022,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hL" = (
-/obj/effect/mob_spawn/human/engineer/gunner{
+/obj/effect/mob_spawn/human/engineer/rig/gunner{
 	mob_name = "William Gannon";
 	name = "William Gannon"
 	},
