@@ -111,7 +111,7 @@
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	if(reagent)
-		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount, methods = methods)
+		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
 	else
 		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
