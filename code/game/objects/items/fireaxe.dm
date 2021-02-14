@@ -98,7 +98,7 @@
 /obj/item/fireaxe/elder_atmosian_fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=25, icon_wielded="elder_axe1")
-	AddComponent(/datum/component/lifesteal, (wielded ? 25 : 7))
+	AddComponent(/datum/component/lifesteal, 15)
 
 /obj/item/fireaxe/elder_atmosian_fireaxe/update_icon_state()
 	icon_state = "elder_axe0"
