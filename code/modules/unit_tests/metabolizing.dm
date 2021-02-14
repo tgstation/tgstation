@@ -99,7 +99,7 @@
 
 	pill_syringe_user.Life()
 
-	TEST_ASSERT(pill_syringe_user.mind.addiction_points[addiction_type_to_check]), "User did not gain addiction points after metabolizing meth")
+	TEST_ASSERT(pill_syringe_user.mind.addiction_points[addiction_type_to_check], "User did not gain addiction points after metabolizing meth")
 
 /datum/unit_test/addictions/Destroy()
 	SSmobs.ignite()
