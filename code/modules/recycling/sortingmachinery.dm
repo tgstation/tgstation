@@ -106,12 +106,12 @@
 		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = tagger.payments_acc //new tag gets the tagger's current account.
-		sticker.percent_cut = tagger.percent_cut //same, but for the percentage taken.
+		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
+		sticker.cut_multiplier = tagger.cut_multiplier	//same, but for the percentage taken.
 
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -130,7 +130,7 @@
 		sticker = stickerA
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -289,12 +289,12 @@
 		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = tagger.payments_acc //new tag gets the tagger's current account.
-		sticker.percent_cut = tagger.percent_cut //as above, as before.
+		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
+		sticker.cut_multiplier = tagger.cut_multiplier	//as above, as before.
 
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -314,7 +314,7 @@
 		sticker = stickerA
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.percent_cut)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -396,13 +396,13 @@
 	var/datum/bank_account/payments_acc = null
 	var/paper_count = 10
 	var/max_paper_count = 20
-	///Details the percentage the scanned account receives off the final sale.
-	var/percent_cut = 20
+	///Multiplier of the sale's value the scanned account receives.
+	var/cut_multiplier = 0.2
 
 /obj/item/sales_tagger/examine(mob/user)
 	. = ..()
 	. += "[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper."
-	. += "Profit split on sale is currently set to [percent_cut]%."
+	. += "Profit split on sale is currently set to [cut_multiplier*100]%."
 
 /obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -445,8 +445,8 @@
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
-	new_barcode.payments_acc = payments_acc // The sticker gets the scanner's registered account.
-	new_barcode.percent_cut = percent_cut // Also the registered percent cut.
+	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
+	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
 	user.put_in_hands(new_barcode)
 
 /obj/item/sales_tagger/CtrlClick(mob/user)
@@ -458,9 +458,9 @@
 	. = ..()
 	var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
 	if(!potential_cut)
-		percent_cut = 50
-	percent_cut = clamp(round(potential_cut, 1), 1, 50)
-	to_chat(user, "<span class='notice'>[percent_cut]% profit will be received if a package with a barcode is sold.</span>")
+		cut_multiplier = 0.2
+	cut_multiplier = clamp(round(potential_cut, 1), 1, 50) / 100
+	to_chat(user, "<span class='notice'>[cut_multiplier*100]% profit will be received if a package with a barcode is sold.</span>")
 
 /obj/item/barcode
 	name = "Barcode tag"
@@ -470,4 +470,4 @@
 	w_class = WEIGHT_CLASS_TINY
 	///All values inheirited from the sales tagger it came from.
 	var/datum/bank_account/payments_acc = null
-	var/percent_cut = 5
+	var/cut_multiplier = 0.2
