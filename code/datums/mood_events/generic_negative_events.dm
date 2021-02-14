@@ -310,3 +310,8 @@
 	description = "<span class='warning'>All the fish are dead...</span>\n"
 	mood_change = -3
 	timeout = 90 SECONDS
+
+/datum/mood_event/burnt_wings
+	description = "<span class='boldwarning'>MY PRECIOUS WINGS!!</span>\n"
+	mood_change = -10
+	timeout = 10 MINUTES
