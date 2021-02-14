@@ -1,13 +1,26 @@
 import { toFixed } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
+import { map } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
+const getReagentColour = (recipeReagents, reagent) => {
+  if (recipeReagents === null) {
+    return false;
+  }
+  
+  if (recipeReagents.includes(reagent)) {
+    return "white";
+  }
+  return false;
+};
+
 export const ChemDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   const recording = !!data.recordingRecipe;
+  const {recipeReagents = []} = data;
   const [hasCol, setHasCol] = useLocalState(
     context, 'has_col', false);
   // TODO: Change how this piece of shit is built on server side
@@ -33,7 +46,7 @@ export const ChemDispenser = (props, context) => {
       height={620}>
       <Window.Content scrollable>
         <Section
-          title="Status"
+          title="Status ARGH"
           buttons={(
             <Fragment>          
               {recording && (
@@ -145,7 +158,7 @@ export const ChemDispenser = (props, context) => {
                 lineHeight={1.75}
                 content={chemical.title}
                 tooltip={"pH: " + chemical.pH}
-                backgroundColor={hasCol ? chemical.pHCol : "primary"}
+                backgroundColor={recipeReagents.includes(chemical.name) ? "white" : hasCol ? chemical.pHCol : "default"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />

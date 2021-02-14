@@ -229,6 +229,11 @@
 	data["recipes"] = saved_recipes
 
 	data["recordingRecipe"] = recording_recipe
+	if(beaker?.reagents.ui_reaction_id)
+		var/datum/chemical_reaction/reaction = get_chemical_reaction(beaker.reagents.ui_reaction_id)
+		for(var/_reagent in reaction.required_reagents)
+			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
+			data["recipeReagents"] += list(list("name" = reagent.name)) 
 	return data
 
 /obj/machinery/chem_dispenser/ui_act(action, params)
