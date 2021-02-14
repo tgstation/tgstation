@@ -304,8 +304,7 @@
 		bounty_holder_account.bank_card_talk("[nag_message]")
 
 		//if someone has registered for the handling tip, nag them
-		if(bounty_handler_account)
-			bounty_handler_account.bank_card_talk("[nag_message]")
+		bounty_handler_account?.bank_card_talk(nag_message)
 
 		//increase our cooldown length and start it again
 		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
