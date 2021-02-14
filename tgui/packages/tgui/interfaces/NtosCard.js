@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button,  Input, NoticeBox, NumberInput, Section, Tabs, Stack } from '../components';
+import { Box, Button, Input, NoticeBox, NumberInput, Section, Tabs, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
@@ -47,14 +47,14 @@ export const NtosCardContent = (props, context) => {
     <>
       <Stack wrap="wrap">
         <Stack.Item>
-         <IDCardTabs />
+          <IDCardTabs />
         </Stack.Item>
         <Stack.Item grow>
-        {(selectedTab === "login") && (
-          <IDCardLogin />
-        ) || (selectedTab === "modify") && (
-          <IDCardTarget />
-        )}
+          {(selectedTab === "login") && (
+            <IDCardLogin />
+          ) || (selectedTab === "modify") && (
+            <IDCardTarget />
+          )}
         </Stack.Item>
       </Stack>
       <Stack mt={1}>
@@ -75,7 +75,8 @@ export const NtosCardContent = (props, context) => {
                     content="Terminate Employment"
                     confirmContent="Fire Employee?"
                     color="bad"
-                    onClick={() => act('PRG_terminate')} />}
+                    onClick={() => act('PRG_terminate')} />
+                }
                 accessMod={(ref, wildcard) => act('PRG_access', {
                   access_target: ref,
                   access_wildcard: wildcard,
@@ -114,7 +115,7 @@ const IDCardTabs = (props, context) => {
       </Tabs.Tab>
     </Tabs>
   );
-}
+};
 
 export const IDCardLogin = (props, context) => {
   const { act, data } = useBackend(context);
@@ -159,7 +160,7 @@ export const IDCardLogin = (props, context) => {
       </Stack>
     </Section>
   );
-}
+};
 
 const IDCardTarget = (props, context) => {
   const { act, data } = useBackend(context);
@@ -194,15 +195,15 @@ const IDCardTarget = (props, context) => {
                 })} />
             </Stack.Item>
             <Stack.Item>
-            <NumberInput
-              value={id_age}
-              unit="Years"
-              minValue={17}
-              maxValue={85}
-              onChange={(e, value) => { act('PRG_age', {
-                id_age: value,
-              });
-              }} />
+              <NumberInput
+                value={id_age}
+                unit="Years"
+                minValue={17}
+                maxValue={85}
+                onChange={(e, value) => { act('PRG_age', {
+                  id_age: value,
+                });
+                }} />
             </Stack.Item>
           </Stack>
           <Stack>
@@ -223,4 +224,4 @@ const IDCardTarget = (props, context) => {
       ) || false}
     </Section>
   );
-}
+};

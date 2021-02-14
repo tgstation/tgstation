@@ -15,34 +15,34 @@ export const ChameleonCard = (props, context) => {
     accessFlagNames,
     showBasic,
     ourAccess,
-	  theftAccess,
+    theftAccess,
     ourTrimAccess,
   } = data;
 
   const parsedAccess = accesses.flatMap(region => {
-    const regionName = region.name
-    const regionAccess = region.accesses
+    const regionName = region.name;
+    const regionAccess = region.accesses;
     const parsedRegion = {
-      name : regionName,
-      accesses : []
-    }
+      name: regionName,
+      accesses: [],
+    };
     parsedRegion.accesses = regionAccess.filter(access => {
       // Snip everything that's part of our trim.
-      if(ourTrimAccess.includes(access.ref)) {
-        return false
+      if (ourTrimAccess.includes(access.ref)) {
+        return false;
       }
       // Add anything not part of our trim that's an access (assumed wildcard)
       // Also add any access on the ID card we're stealing from.
-      if(ourAccess.includes(access.ref) || theftAccess.includes(access.ref)) {
-        return true
+      if (ourAccess.includes(access.ref) || theftAccess.includes(access.ref)) {
+        return true;
       }
-      return false
-    })
-    if(parsedRegion.accesses.length) {
-      return parsedRegion
+      return false;
+    });
+    if (parsedRegion.accesses.length) {
+      return parsedRegion;
     }
-    return []
-  })
+    return [];
+  });
 
   return (
     <Window
