@@ -41,7 +41,7 @@
 	creator = data["creator"]
 
 //Main functions
-/datum/reagent/eigenstate/on_mob_life(mob/living/living_mob) //Teleports to creation!
+/datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob) //Teleports to creation!
 	if(current_cycle == 0)
 		//make hologram at return point
 		eigenstate = new (living_mob.loc)
@@ -58,7 +58,7 @@
 		to_chat(living_mob, "<span class='userdanger'>You feel your wavefunction split!</span>")
 		if(creation_purity > 0.9 && location_created) //Teleports you home if it's pure enough
 			if(!creator || !(creator == living_mob))
-				return
+				return ..()
 			do_sparks(5,FALSE,living_mob)
 			do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 			do_sparks(5,FALSE,living_mob)
