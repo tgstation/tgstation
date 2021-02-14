@@ -70,7 +70,7 @@
 
 	pill_user.Life()
 
-	TEST_ASSERT(pill_user.mind.addiction_points[addiction_type_to_check]), "User did not gain addiction points after metabolizing meth")
+	TEST_ASSERT(pill_user.mind.addiction_points[addiction_type_to_check], "User did not gain addiction points after metabolizing meth")
 
 	// Then injected metabolism
 	syringe.volume = 5
@@ -80,7 +80,7 @@
 
 	syringe_user.Life()
 
-	TEST_ASSERT(syringe_user.mind.addiction_points[addiction_type_to_check]), "User did not gain addiction points after metabolizing meth")
+	TEST_ASSERT(syringe_user.mind.addiction_points[addiction_type_to_check], "User did not gain addiction points after metabolizing meth")
 
 	// One half syringe
 	syringe.reagents.remove_all()
