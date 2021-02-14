@@ -1742,10 +1742,16 @@
 			var/tooltip
 			var/tooltip_bool = FALSE
 			var/list/sub_reactions = get_recipe_from_reagent_product(reagent.type)
-			if(length(sub_reactions))
-				var/datum/chemical_reaction/sub_reaction = sub_reactions[1]
+			//Get sub reaction possibilities, but ignore ones that need a specific holder atom
+			var/sub_index = 0
+			for(var/datum/chemical_reaction/sub_reaction as anything in sub_reactions)
 				if(sub_reaction.required_container)//So we don't have slime reactions confusing things
+					sub_index++
 					continue
+				sub_index++
+				break
+			if(sub_index)
+				var/datum/chemical_reaction/sub_reaction = sub_reactions[sub_index]
 				//Subreactions sweep (if any)
 				for(var/_sub_reagent in sub_reaction.required_reagents)
 					var/datum/reagent/sub_reagent = find_reagent_object_from_type(_sub_reagent)

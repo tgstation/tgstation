@@ -36,14 +36,14 @@ export const ChemDispenser = (props, context) => {
         <Section
           title="Status"
           buttons={(
-            <Fragment>          
+            <Fragment>
               {recording && (
                 <Box inline mx={1} color="red">
                   <Icon name="circle" mr={1} />
                   Recording
                 </Box>
               )}
-              <Button      
+              <Button
                 key="Recipe lookup"
                 icon="book"
                 disabled={!data.isBeakerLoaded}
@@ -51,7 +51,7 @@ export const ChemDispenser = (props, context) => {
                 tooltip={data.isBeakerLoaded ? "Look up recipes and reagents!" : "Please insert a beaker!"}
                 tooltipPosition="bottom-left"
                 onClick={() => act('reaction_lookup')} />
-              <Button      
+              <Button
                 key="colorButton"
                 icon="cog"
                 tooltip="Color code the reagents by pH"
@@ -146,7 +146,9 @@ export const ChemDispenser = (props, context) => {
                 lineHeight={1.75}
                 content={chemical.title}
                 tooltip={"pH: " + chemical.pH}
-                backgroundColor={recipeReagents.includes(chemical.id) ? "black" : hasCol ? chemical.pHCol : "default"}
+                backgroundColor={recipeReagents.includes(chemical.id)
+                  ? hasCol ? "black" : "green"
+                  : hasCol ? chemical.pHCol : "default"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />
