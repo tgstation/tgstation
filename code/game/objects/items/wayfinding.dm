@@ -171,16 +171,16 @@
 		if(WP.owner != user.real_name)
 			itsmypinpointer = FALSE
 
-			if(synth_acc.has_money(refund_amt) && !WP.roundstart) //can it afford to refund and is the pinpointer not from the quirk
-				refundiscredits = TRUE
-				qdel(WP)
-				synth_acc._adjust_money(-refund_amt)
-				var/obj/item/holochip/holochip = new (loc)
-				holochip.credits = refund_amt
-				holochip.name = "[holochip.credits] credit holochip"
-				if(ishuman(user))
-					var/mob/living/carbon/human/customer = user
-					customer.put_in_hands(holochip)
+		if(synth_acc.has_money(refund_amt) && (WP.owner != user.real_name || !(WP.roundstart))) //can it afford to refund and is the pinpointer either not from the quirk or not yours
+			refundiscredits = TRUE
+			qdel(WP)
+			synth_acc._adjust_money(-refund_amt)
+			var/obj/item/holochip/holochip = new (loc)
+			holochip.credits = refund_amt
+			holochip.name = "[holochip.credits] credit holochip"
+			if(ishuman(user))
+				var/mob/living/carbon/human/customer = user
+				customer.put_in_hands(holochip)
 
 		if(!refundiscredits)
 			qdel(WP)
