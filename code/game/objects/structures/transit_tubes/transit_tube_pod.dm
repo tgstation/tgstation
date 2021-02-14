@@ -14,7 +14,7 @@
 	var/obj/structure/transit_tube/current_tube = null
 	var/next_dir
 	var/next_loc
-	var/last_delay = 0
+	var/enter_delay = 0
 	var/exit_delay
 	var/moving_time = 0
 
@@ -119,9 +119,9 @@
 			current_tube = tube
 			break
 
-	//move_animation()
-	START_PROCESSING(SSfastprocess, src)
+	move_animation(MOVE_ANIMATION_STAGE_ONE)
 
+///timer loop that handles the pod moving from tube to tube
 /obj/structure/transit_tube_pod/proc/move_animation(stage = MOVE_ANIMATION_STAGE_ONE)
 	switch(stage)
 		if(MOVE_ANIMATION_STAGE_ONE)
@@ -144,12 +144,15 @@
 				Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
 				return
 
-			last_delay = current_tube.enter_delay(src, next_dir)
-			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_TWO), last_delay)
-			return
+			enter_delay = current_tube.enter_delay(src, next_dir)
+			if(enter_delay > 0)
+				addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_TWO), enter_delay)
+				return
+			else
+				return .(MOVE_ANIMATION_STAGE_TWO)
 		if(MOVE_ANIMATION_STAGE_TWO)
 			setDir(next_dir)
-			set_glide_size(DELAY_TO_GLIDE_SIZE(last_delay + exit_delay))
+			set_glide_size(DELAY_TO_GLIDE_SIZE(enter_delay + exit_delay))
 			forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 			density = current_tube.density
 
@@ -164,54 +167,6 @@
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
 	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
 		outside_tube()
-
-/obj/structure/transit_tube_pod/process(delta_time)
-	moving_time += delta_time * 10 //we want deciseconds
-	next_dir = current_tube.get_exit(dir)
-
-	if(!next_dir)
-		return
-
-	exit_delay = current_tube.exit_delay(src, dir)
-	next_loc = get_step(loc, next_dir)
-
-	current_tube = null
-	for(var/obj/structure/transit_tube/tube in next_loc)
-		if(tube.has_entrance(next_dir))
-			current_tube = tube
-			break
-	switch(moving_time)
-		if(0 to exit_delay)
-
-
-			if(current_tube == null)
-				message_admins("null current tube")
-				setDir(next_dir)
-				Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
-				return
-
-			last_delay = current_tube.enter_delay(src, next_dir)
-			//addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_TWO), last_delay)
-
-			return
-		if(last_delay to INFINITY)
-			setDir(next_dir)
-			set_glide_size(DELAY_TO_GLIDE_SIZE(last_delay + exit_delay))
-			forceMove(next_loc) // When moving from one tube to another, skip collision and such.
-			density = current_tube.density
-			moving_time = 0
-			if(current_tube?.should_stop_pod(src, next_dir))
-				current_tube.pod_stopped(src, dir)
-			else
-				//addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_ONE), exit_delay)
-				return
-	density = TRUE
-	moving = FALSE
-
-	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
-	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
-		outside_tube()
-	return PROCESS_KILL
 
 /obj/structure/transit_tube_pod/proc/outside_tube()
 	var/list/savedcontents = contents.Copy()
