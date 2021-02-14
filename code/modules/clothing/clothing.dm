@@ -9,11 +9,11 @@
 
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
-	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
-	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
-	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
-	var/visor_flags_cover = 0	//same as above, but for flags_cover
+	var/tint = 0 //Sets the item's level of visual impairment tint, normally set to the same as flash_protect
+	var/up = 0 //but separated to allow items to protect but not impair vision, like space helmets
+	var/visor_flags = 0 //flags that are added/removed when an item is adjusted up/down
+	var/visor_flags_inv = 0 //same as visor_flags, but for flags_inv
+	var/visor_flags_cover = 0 //same as above, but for flags_cover
 //what to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
@@ -171,7 +171,7 @@
 /**
  * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]
  *
- *	This proc only matters when a bodypart that this clothing is covering is harmed by a direct attack (being on fire or in space need not apply), and only if this clothing covers
+ * This proc only matters when a bodypart that this clothing is covering is harmed by a direct attack (being on fire or in space need not apply), and only if this clothing covers
  * more than one bodypart to begin with. No point in tracking damage by zone for a hat, and I'm not cruel enough to let you fully break them in a few shots.
  * Also if limb_integrity is 0, then this clothing doesn't have bodypart damage enabled so skip it.
  *
@@ -416,8 +416,8 @@
 		var/static/list/damaged_clothes_icons = list()
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 		if(!damaged_clothes_icon)
-			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
-			damaged_clothes_icon.Blend("#fff", ICON_ADD) 	//fills the icon_state with white (except where it's transparent)
+			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1) //we only want to apply damaged effect to the initial icon_state for each object
+			damaged_clothes_icon.Blend("#fff", ICON_ADD) //fills the icon_state with white (except where it's transparent)
 			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
 			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
 			damaged_clothes_icons[index] = damaged_clothes_icon
@@ -434,10 +434,10 @@ BLIND     // can't see anything
 */
 
 /proc/generate_female_clothing(index,t_color,icon,type)
-	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s				= icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
+	var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
-	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
+	female_clothing_icon = fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.

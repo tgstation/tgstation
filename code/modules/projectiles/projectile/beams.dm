@@ -13,7 +13,7 @@
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_SOFT_RED
-	ricochets_max = 50	//Honk!
+	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
 	wound_bonus = -20

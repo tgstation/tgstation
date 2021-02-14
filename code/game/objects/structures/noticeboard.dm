@@ -58,7 +58,7 @@
 	..()
 	usr.set_machine(src)
 	if(href_list["remove"])
-		if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))	//For when a player is handcuffed while they have the notice window open
+		if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED)) //For when a player is handcuffed while they have the notice window open
 			return
 		var/obj/item/I = locate(href_list["remove"]) in contents
 		if(istype(I) && I.loc == src)

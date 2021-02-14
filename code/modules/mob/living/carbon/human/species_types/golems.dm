@@ -863,7 +863,7 @@
 /datum/species/golem/bronze/proc/gong(mob/living/carbon/human/H)
 	last_gong_time = world.time
 	for(var/mob/living/M in get_hearers_in_view(7,H))
-		if(M.stat == DEAD)	//F
+		if(M.stat == DEAD) //F
 			continue
 		if(M == H)
 			H.show_message("<span class='narsiesmall'>You cringe with pain as your body rings around you!</span>", MSG_AUDIBLE)

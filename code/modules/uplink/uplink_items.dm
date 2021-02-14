@@ -30,8 +30,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			sale_items += I
 	if(allow_sales)
 		var/datum/team/nuclear/nuclear_team
-		if (gamemode == /datum/game_mode/nuclear) 					// uplink code kind of needs a redesign
-			nuclear_team = locate() in GLOB.antagonist_teams	// the team discounts could be in a GLOB with this design but it would make sense for them to be team specific...
+		if (gamemode == /datum/game_mode/nuclear) // uplink code kind of needs a redesign
+			nuclear_team = locate() in GLOB.antagonist_teams // the team discounts could be in a GLOB with this design but it would make sense for them to be team specific...
 		if (!nuclear_team)
 			create_uplink_sales(3, "Discounted Gear", 1, sale_items, filtered_uplink_items)
 		else
@@ -1760,7 +1760,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			blast wave \"projectile\". Aspiring scientists may find this highly useful, as forcing the pressure shockwave into a narrow angle seems to be able to bypass whatever quirk of physics \
 			disallows explosive ranges above a certain distance, allowing for the device to use the theoretical yield of a transfer valve bomb, instead of the factual yield. It's simple design makes it easy to conceal."
 	item = /obj/item/gun/blastcannon
-	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled scientist.
+	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list("Research Director", "Scientist")
 
 /datum/uplink_item/role_restricted/gorillacubes

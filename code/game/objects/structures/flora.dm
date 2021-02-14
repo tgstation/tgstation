@@ -145,7 +145,7 @@
 	name = "grass"
 	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
-	gender = PLURAL	//"this is grass" not "this is a grass"
+	gender = PLURAL //"this is grass" not "this is a grass"
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"

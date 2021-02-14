@@ -1,8 +1,8 @@
 /*
  * Contains:
- *		Lasertag
- *		Costume
- *		Misc
+ * Lasertag
+ * Costume
+ * Misc
  */
 
 /*
@@ -251,7 +251,7 @@
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
-	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT //Space carp like space, so you should too
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/rifle/boltaction/harpoon)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
@@ -274,7 +274,7 @@
 	if (user.head == src)
 		user.faction -= "carp"
 
-/obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
+/obj/item/clothing/suit/hooded/ian_costume //It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
 	icon_state = "ian"
@@ -313,7 +313,7 @@
 	flags_inv = HIDEHAIR|HIDEEARS
 	dynamic_hair_suffix = ""
 
-/obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
+/obj/item/clothing/suit/hooded/bloated_human //OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
 	desc = "A horribly bloated suit made from human skins."
 	icon_state = "lingspacesuit"
