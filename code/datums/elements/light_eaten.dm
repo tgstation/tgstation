@@ -25,16 +25,16 @@
 	return ..()
 
 /// Prevents the light power of the target atom from exceeding 0 or increasing.
-/datum/element/light_eaten/proc/block_light_power(atom/eaten_light, new_power, old_power)
+/datum/element/light_eaten/proc/block_light_power(atom/eaten_light, new_power)
 	SIGNAL_HANDLER
-	if(new_power > 0 && (new_power <= old_power))
+	if(new_power > 0)
 		return COMPONENT_BLOCK_LIGHT_UPDATE
-	if(new_power > old_power)
+	if(new_power > eaten_light.light_power)
 		return COMPONENT_BLOCK_LIGHT_UPDATE
 	return NONE
 
 /// Prevents the light range of the target atom from exceeding 0 while the light power is greater than 0.
-/datum/element/light_eaten/proc/block_light_range(atom/eaten_light, new_range, old_range)
+/datum/element/light_eaten/proc/block_light_range(atom/eaten_light, new_range)
 	SIGNAL_HANDLER
 	if(new_range <= 0)
 		return NONE
@@ -43,7 +43,7 @@
 	return COMPONENT_BLOCK_LIGHT_UPDATE
 
 /// Prevents the light from turning on while the light power is greater than 0.
-/datum/element/light_eaten/proc/block_light_on(atom/eaten_light, new_on, old_on)
+/datum/element/light_eaten/proc/block_light_on(atom/eaten_light, new_on)
 	SIGNAL_HANDLER
 	if(!new_on)
 		return NONE

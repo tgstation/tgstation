@@ -118,9 +118,9 @@
 /atom/proc/set_light_power(new_power)
 	if(new_power == light_power)
 		return
-	. = light_power
-	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power, .) & COMPONENT_BLOCK_LIGHT_UPDATE)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_POWER, new_power) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
+	. = light_power
 	light_power = new_power
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_POWER, new_power, .)
 
@@ -128,9 +128,9 @@
 /atom/proc/set_light_range(new_range)
 	if(new_range == light_range)
 		return
-	. = light_range
-	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range, .) & COMPONENT_BLOCK_LIGHT_UPDATE)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_RANGE, new_range) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
+	. = light_range
 	light_range = new_range
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, new_range, .)
 
@@ -138,9 +138,9 @@
 /atom/proc/set_light_color(new_color)
 	if(new_color == light_color)
 		return
-	. = light_color
-	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color, .) & COMPONENT_BLOCK_LIGHT_UPDATE)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_COLOR, new_color) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
+	. = light_color
 	light_color = new_color
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, new_color, .)
 
@@ -148,9 +148,9 @@
 /atom/proc/set_light_on(new_value)
 	if(new_value == light_on)
 		return
-	. = light_on
-	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value, .) & COMPONENT_BLOCK_LIGHT_UPDATE)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_ON, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
+	. = light_on
 	light_on = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, new_value, .)
 
@@ -158,8 +158,8 @@
 /atom/proc/set_light_flags(new_value)
 	if(new_value == light_flags)
 		return
-	. = light_flags
-	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value, .) & COMPONENT_BLOCK_LIGHT_UPDATE)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_SET_LIGHT_FLAGS, new_value) & COMPONENT_BLOCK_LIGHT_UPDATE)
 		return
+	. = light_flags
 	light_flags = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, new_value, .)
