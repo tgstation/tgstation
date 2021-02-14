@@ -194,6 +194,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
+#define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
+
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
 
@@ -228,7 +230,3 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
 	/obj/item/storage/book)))
-
-//Datums
-
-#define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
