@@ -1,13 +1,13 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-#define MEDBOT_PANIC_NONE	0
-#define MEDBOT_PANIC_LOW	15
-#define MEDBOT_PANIC_MED	35
-#define MEDBOT_PANIC_HIGH	55
-#define MEDBOT_PANIC_FUCK	70
-#define MEDBOT_PANIC_ENDING	90
-#define MEDBOT_PANIC_END	100
+#define MEDBOT_PANIC_NONE 0
+#define MEDBOT_PANIC_LOW 15
+#define MEDBOT_PANIC_MED 35
+#define MEDBOT_PANIC_HIGH 55
+#define MEDBOT_PANIC_FUCK 70
+#define MEDBOT_PANIC_ENDING 90
+#define MEDBOT_PANIC_END 100
 
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
@@ -405,7 +405,7 @@
 	if(stationary_mode && !Adjacent(C)) //YOU come to ME, BRO
 		return FALSE
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
-		return FALSE	//welp too late for them!
+		return FALSE //welp too late for them!
 
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE

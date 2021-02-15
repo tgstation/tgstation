@@ -1,13 +1,13 @@
 /* Kitchen tools
  * Contains:
- *		Fork
- *		Kitchen knives
- *		Ritual Knife
- *		Bloodletter
- *		Butcher's cleaver
- *		Combat Knife
- *		Rolling Pins
- *		Plastic Utensils
+ * Fork
+ * Kitchen knives
+ * Ritual Knife
+ * Bloodletter
+ * Butcher's cleaver
+ * Combat Knife
+ * Rolling Pins
+ * Plastic Utensils
  */
 
 /obj/item/kitchen
@@ -92,7 +92,7 @@
 	sharpness = SHARP_EDGED
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	item_flags = EYE_STAB
-	var/bayonet = FALSE	//Can this be attached to a gun?
+	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = -5
 	bare_wound_bonus = 10
 	tool_behaviour = TOOL_KNIFE

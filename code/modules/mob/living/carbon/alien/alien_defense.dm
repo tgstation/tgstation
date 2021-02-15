@@ -49,7 +49,7 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M, modifiers)
 	. = ..()
-	if(.)	//to allow surgery to return properly.
+	if(.) //to allow surgery to return properly.
 		return FALSE
 
 	if(M.combat_mode)

@@ -344,7 +344,7 @@
 		else
 			if(istype(R, reagent_type))
 				matches = 1
-		// We found a match, proceed to remove the reagent.	Keep looping, we might find other reagents of the same type.
+		// We found a match, proceed to remove the reagent. Keep looping, we might find other reagents of the same type.
 		if(matches)
 			// Have our other proc handle removement
 			has_removed_reagent = remove_reagent(R.type, amount, safety)
@@ -1377,7 +1377,7 @@
 /// Returns the total heat capacity for all of the reagents currently in this holder.
 /datum/reagents/proc/heat_capacity()
 	. = 0
-	var/list/cached_reagents = reagent_list		//cache reagents
+	var/list/cached_reagents = reagent_list //cache reagents
 	for(var/I in cached_reagents)
 		var/datum/reagent/R = I
 		. += R.specific_heat * R.volume
@@ -1392,7 +1392,7 @@
 /datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000)
 	var/heat_capacity = heat_capacity()
 	if(!heat_capacity)
-		return	// no div/0 please
+		return // no div/0 please
 	set_temperature(clamp(chem_temp + (delta_energy / heat_capacity), min_temp, max_temp))
 
 /// Applies heat to this holder

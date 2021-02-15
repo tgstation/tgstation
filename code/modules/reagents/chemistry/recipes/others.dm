@@ -2,22 +2,22 @@
 /datum/chemical_reaction/sterilizine
 	results = list(/datum/reagent/space_cleaner/sterilizine = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/c2/multiver = 1, /datum/reagent/chlorine = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER 
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/lube
 	results = list(/datum/reagent/lube = 4)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER 
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/spraytan
 	results = list(/datum/reagent/spraytan = 2)
 	required_reagents = list(/datum/reagent/consumable/orangejuice = 1, /datum/reagent/fuel/oil = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER 
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/spraytan2
 	results = list(/datum/reagent/spraytan = 2)
 	required_reagents = list(/datum/reagent/consumable/orangejuice = 1, /datum/reagent/consumable/cornoil = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER 
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/impedrezene
 	results = list(/datum/reagent/impedrezene = 2)
@@ -48,7 +48,7 @@
 /datum/chemical_reaction/plasma_solidification
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -59,7 +59,7 @@
 /datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/gold_solidification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -70,7 +70,7 @@
 /datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/uranium_solidification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -87,7 +87,7 @@
 	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/lye  = 10) // requires two scooped gib tiles
 	required_temp = 374
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/soapification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -101,7 +101,7 @@
 	optimal_temp = 999
 	overheat_temp = 1200
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/omegasoapification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -113,7 +113,7 @@
 	required_reagents = list(/datum/reagent/liquidgibs = 5, /datum/reagent/oxygen  = 5) //
 	required_temp = 374
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/candlefication/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -124,7 +124,7 @@
 /datum/chemical_reaction/meatification
 	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/consumable/nutriment = 10, /datum/reagent/carbon = 10)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/meatification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -143,7 +143,7 @@
 	results = list(/datum/reagent/nitrous_oxide = 5)
 	required_reagents = list(/datum/reagent/ammonia = 2, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 2)
 	required_temp = 525
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL 
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 //Technically a mutation toxin
 /datum/chemical_reaction/mulligan
@@ -204,7 +204,7 @@
 	required_catalysts = list(/datum/reagent/blood = 1)
 	var/level_min = 1
 	var/level_max = 2
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/mix_virus/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
@@ -299,13 +299,13 @@
 /datum/chemical_reaction/surfactant
 	results = list(/datum/reagent/fluorosurfactant = 5)
 	required_reagents = list(/datum/reagent/fluorine = 2, /datum/reagent/carbon = 2, /datum/reagent/toxin/acid = 1)
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/foam
 	required_reagents = list(/datum/reagent/fluorosurfactant = 1, /datum/reagent/water = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/foam/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
 	holder.create_foam(/datum/effect_system/foam_spread,2*created_volume,notification="<span class='danger'>The solution spews out foam!</span>")
@@ -314,7 +314,7 @@
 /datum/chemical_reaction/metalfoam
 	required_reagents = list(/datum/reagent/aluminium = 3, /datum/reagent/foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -323,7 +323,7 @@
 /datum/chemical_reaction/smart_foam
 	required_reagents = list(/datum/reagent/aluminium = 3, /datum/reagent/smart_foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = TRUE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/smart_foam/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -332,7 +332,7 @@
 /datum/chemical_reaction/ironfoam
 	required_reagents = list(/datum/reagent/iron = 3, /datum/reagent/foaming_agent = 1, /datum/reagent/toxin/acid/fluacid = 1)
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -356,7 +356,7 @@
 	results = list(/datum/reagent/ammonia = 3)
 	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
 	optimal_ph_min = 1  // Lets increase our range for this basic chem
-	optimal_ph_max = 12	
+	optimal_ph_max = 12
 	H_ion_release = -0.02 //handmade is more neutral
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT
 
@@ -467,7 +467,7 @@
 /datum/chemical_reaction/life
 	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
 	required_temp = 374
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/life/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -476,7 +476,7 @@
 /datum/chemical_reaction/life_friendly
 	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/consumable/sugar = 1)
 	required_temp = 374
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/life_friendly/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -485,7 +485,7 @@
 /datum/chemical_reaction/corgium
 	required_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/colorful_reagent = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/blood = 1)
 	required_temp = 374
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/corgium/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -498,7 +498,7 @@
 /datum/chemical_reaction/monkey_powder
 	results = list(/datum/reagent/monkey_powder = 5)
 	required_reagents = list(/datum/reagent/consumable/banana = 1, /datum/reagent/consumable/nutriment=2, /datum/reagent/liquidgibs = 1)
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/monkey
@@ -524,7 +524,7 @@
 //butterflium
 /datum/chemical_reaction/butterflium
 	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/nutriment = 1)
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/butterflium/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -534,9 +534,9 @@
 	..()
 //scream powder
 /datum/chemical_reaction/scream
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/ethanol/lizardwine = 5	)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/ethanol/lizardwine = 5 )
 	required_temp = 374
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/scream/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -592,7 +592,7 @@
 /datum/chemical_reaction/plastic_polymers
 	required_reagents = list(/datum/reagent/fuel/oil = 5, /datum/reagent/toxin/acid = 2, /datum/reagent/ash = 3)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -622,7 +622,7 @@
 /datum/chemical_reaction/slime_extractification
 	required_reagents = list(/datum/reagent/toxin/slimejelly = 30, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 5)
 	mix_message = "The mixture condenses into a ball."
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_SLIME
 
 /datum/chemical_reaction/slime_extractification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -632,7 +632,7 @@
 /datum/chemical_reaction/metalgen_imprint
 	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
 	results = list(/datum/reagent/metalgen = 1)
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalgen_imprint/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)
@@ -689,7 +689,7 @@
 	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
 	required_temp = 630
 	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT 
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/silver_solidification/on_reaction(datum/equilibrium/reaction, datum/reagents/holder, created_volume)

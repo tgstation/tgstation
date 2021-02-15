@@ -1,6 +1,6 @@
 /datum/component/storage/concrete/bluespace/bag_of_holding/handle_item_insertion(obj/item/W, prevent_warning = FALSE, mob/living/user)
 	var/atom/A = parent
-	if(A == W)		//don't put yourself into yourself.
+	if(A == W) //don't put yourself into yourself.
 		return
 	var/list/obj/item/storage/backpack/holding/matching = typecache_filter_list(W.GetAllContents(), typecacheof(/obj/item/storage/backpack/holding))
 	matching -= A
