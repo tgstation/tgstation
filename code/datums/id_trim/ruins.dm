@@ -66,3 +66,4 @@
 
 /datum/id_trim/job/station_engineer/gunner
 	assignment = "Gunner"
+	template_access = null

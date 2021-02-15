@@ -283,6 +283,7 @@
 			agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
 
 		agent_card.update_label()
+		agent_card.update_icon()
 
 /datum/action/item_action/chameleon/change/id/apply_job_data(datum/job/job_datum)
 	..()
@@ -314,6 +315,7 @@
 			agent_card.assigned_icon_state = initial(copied_advanced_card.assigned_icon_state)
 
 		agent_card.update_label()
+		agent_card.update_icon()
 
 /datum/action/item_action/chameleon/change/id_trim/initialize_disguises()
 	if(button)
@@ -325,7 +327,7 @@
 			if(chameleon_blacklist[trim_path])
 				continue
 
-			var/datum/id_trim/trim = SSid_access.get_trim(trim_path)
+			var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
 
 			if(trim && trim.trim_state && trim.assignment)
 				var/chameleon_item_name = "[trim.assignment] ([trim.trim_state])"
@@ -338,6 +340,7 @@
 		SSid_access.apply_trim_to_chameleon_card(agent_card, picked_trim_path, TRUE)
 
 	agent_card.update_label()
+	agent_card.update_icon()
 
 /datum/action/item_action/chameleon/change/pda/update_item(obj/item/picked_item)
 	..()

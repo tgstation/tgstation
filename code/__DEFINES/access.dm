@@ -265,3 +265,12 @@
 
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not.
 #define REGION_AREA_STATION			list(REGION_GENERAL, REGION_SECURITY, REGION_MEDBAY, REGION_RESEARCH, REGION_ENGINEERING, REGION_SUPPLY, REGION_COMMAND)
+
+/// Used in ID card access adding procs. Will try to add all accesses and utilises free wildcards, skipping over any accesses it can't add.
+#define TRY_ADD_ALL 0
+/// Used in ID card access adding procs. Will try to add all accesses and does not utilise wildcards, skipping anything requiring a wildcard.
+#define TRY_ADD_ALL_NO_WILDCARD 1
+/// Used in ID card access adding procs. Will forcefully add all accesses.
+#define FORCE_ADD_ALL 2
+/// Used in ID card access adding procs. Will stack trace on fail.
+#define ERROR_ON_FAIL 3

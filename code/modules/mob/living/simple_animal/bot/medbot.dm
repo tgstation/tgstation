@@ -108,9 +108,9 @@
 	. = ..()
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/para_trim = SSid_access.get_trim(/datum/id_trim/job/paramedic)
+	var/datum/id_trim/job/para_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/paramedic]
 	access_card.add_access(para_trim.access + para_trim.wildcard_access)
-	prev_access = access_card.timberpoes_access
+	prev_access = access_card.timberpoes_access.Copy()
 
 	skin = new_skin
 	update_icon()

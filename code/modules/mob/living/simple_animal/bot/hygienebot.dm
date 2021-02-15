@@ -42,9 +42,9 @@
 	update_icon()
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/jani_trim = SSid_access.get_trim(/datum/id_trim/job/janitor)
+	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
 	access_card.add_access(jani_trim.access + jani_trim.wildcard_access)
-	prev_access = access_card.timberpoes_access
+	prev_access = access_card.timberpoes_access.Copy()
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	walk_to(src,0)

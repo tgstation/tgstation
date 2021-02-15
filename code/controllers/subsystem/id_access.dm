@@ -17,6 +17,10 @@ SUBSYSTEM_DEF(id_access)
 	var/list/all_region_access_tgui = list()
 	/// Dictionary of access names. Keys are access levels. Values are their associated names.
 	var/list/desc_by_access = list()
+	/// List of accesses for the Heads of each sub-department alongside the regions they control and their job name.
+	var/list/sub_department_managers_tgui = list()
+	/// Helper list containing all trim paths that can be used as job templates. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
+	var/list/station_job_templates = list()
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -91,6 +95,55 @@ SUBSYSTEM_DEF(id_access)
 			"name" = region,
 			"accesses" = parsed_accesses,
 		))
+
+	sub_department_managers_tgui = list(
+		"[ACCESS_CAPTAIN]" = list(
+			"regions" = list(REGION_COMMAND),
+			"head" = "Captain",
+			"templates" = list(),
+		),
+		"[ACCESS_HOP]" = list(
+			"regions" = list(REGION_GENERAL, REGION_SUPPLY),
+			"head" = "Head of Personnel",
+			"templates" = list(),
+		),
+		"[ACCESS_HOS]" = list(
+			"regions" = list(REGION_SECURITY),
+			"head" = "Head of Security",
+			"templates" = list(),
+		),
+		"[ACCESS_CMO]" = list(
+			"regions" = list(REGION_MEDBAY),
+			"head" = "Chief Medical Officer",
+			"templates" = list(),
+		),
+		"[ACCESS_RD]" = list(
+			"regions" = list(REGION_RESEARCH),
+			"head" = "Research Director",
+			"templates" = list(),
+		),
+		"[ACCESS_CE]" = list(
+			"regions" = list(REGION_ENGINEERING),
+			"head" = "Chief Engineer",
+			"templates" = list(),
+		),
+	)
+
+	var/list/station_job_trims = subtypesof(/datum/id_trim/job)
+	for(var/trim_path in station_job_trims)
+		var/datum/id_trim/job/trim = trim_singletons_by_path[trim_path]
+		if(!length(trim.template_access))
+			continue
+
+		station_job_templates[trim_path] = trim.assignment
+		for(var/access in trim.template_access)
+			var/list/manager = sub_department_managers_tgui["[access]"]
+			if(!manager)
+				if(access != ACCESS_CHANGE_IDS)
+					WARNING("Invalid template access access \[[access]\] registered with [trim_path]. Template added to global list anyway.")
+				continue
+			var/list/templates = manager["templates"]
+			templates[trim_path] = trim.assignment
 
 /datum/controller/subsystem/id_access/proc/setup_wildcard_dict()
 	wildcard_flags_by_wildcard[WILDCARD_NAME_ALL] = WILDCARD_FLAG_ALL
@@ -184,19 +237,16 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
 
 /datum/controller/subsystem/id_access/proc/get_access_flag(access)
-	return flags_by_access["[access]"]
-
-/datum/controller/subsystem/id_access/proc/get_trim(trim)
-	return trim_singletons_by_path[trim]
-
-/datum/controller/subsystem/id_access/proc/get_wildcard_flags(name)
-	return wildcard_flags_by_wildcard[name]
+	var/flag = flags_by_access["[access]"]
+	if(!flag)
+		CRASH("Bad.")
+	return flag
 
 /datum/controller/subsystem/id_access/proc/get_access_desc(access)
 	return desc_by_access["[access]"]
 
 /datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path)
-	var/datum/id_trim/trim = get_trim(trim_path)
+	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 
 	if(!id_card.can_add_wildcards(trim.wildcard_access))
 		return FALSE
@@ -209,14 +259,16 @@ SUBSYSTEM_DEF(id_access)
 		id_card.assignment = trim.assignment
 
 	id_card.update_label()
+	id_card.update_icon()
 
 /datum/controller/subsystem/id_access/proc/remove_trim_from_card(obj/item/card/id/id_card)
 	id_card.timberpoes_trim = null
 	id_card.clear_access()
 	id_card.update_label()
+	id_card.update_icon()
 
 /datum/controller/subsystem/id_access/proc/apply_trim_to_chameleon_card(obj/item/card/id/advanced/chameleon/id_card, trim_path, check_forged = TRUE)
-	var/datum/id_trim/trim = get_trim(trim_path)
+	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 	id_card.trim_icon_override = trim.trim_icon
 	id_card.trim_state_override = trim.trim_state
 
@@ -228,3 +280,11 @@ SUBSYSTEM_DEF(id_access)
 /datum/controller/subsystem/id_access/proc/remove_trim_from_chameleon_card(obj/item/card/id/advanced/chameleon/id_card)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
+
+/datum/controller/subsystem/id_access/proc/add_trim_access_to_card(obj/item/card/id/id_card, trim_path)
+	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+
+	id_card.clear_access()
+
+	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
+	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)

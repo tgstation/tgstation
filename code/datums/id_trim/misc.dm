@@ -39,3 +39,11 @@
 /datum/id_trim/vr/operative/New()
 	. = ..()
 	access |= list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS)
+
+/datum/id_trim/tunnel_clown
+	assignment = "Tunnel Clown!"
+	trim_state = "trim_clown"
+
+/datum/id_trim/tunnel_clown/New()
+	. = ..()
+	access |= REGION_ACCESS_ALL_STATION

@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Input, NoticeBox, NumberInput, Section, Tabs, Stack } from '../components';
+import { Box, Button, Dropdown, Input, NoticeBox, NumberInput, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
@@ -28,8 +28,10 @@ export const NtosCardContent = (props, context) => {
     trimAccess,
     accessFlags,
     accessFlagNames,
-    showBasic = true,
+    showBasic,
   } = data;
+
+  const { templates } = data || {};
 
   if (!have_id_slot) {
     return (
@@ -45,11 +47,11 @@ export const NtosCardContent = (props, context) => {
 
   return (
     <>
-      <Stack wrap="wrap">
+      <Stack>
         <Stack.Item>
           <IDCardTabs />
         </Stack.Item>
-        <Stack.Item grow>
+        <Stack.Item width="100%">
           {(selectedTab === "login") && (
             <IDCardLogin />
           ) || (selectedTab === "modify") && (
@@ -57,6 +59,20 @@ export const NtosCardContent = (props, context) => {
           )}
         </Stack.Item>
       </Stack>
+      <Section
+        title="Templates"
+        mt={1}
+        buttons={
+          <Button
+            icon="question-circle"
+            tooltip={
+              "Will attempt to apply all access for the template to the ID card.\n"
+            + "Does not use wildcards unless the template specifies them."
+            }
+            tooltipPosition="left" />
+        } >
+        <TemplateDropdown templates={templates} />
+      </Section>
       <Stack mt={1}>
         <Stack.Item grow>
           {(!!has_id && !!authenticatedUser) && (
@@ -146,10 +162,10 @@ export const IDCardLogin = (props, context) => {
         </>
       )}>
       <Stack wrap="wrap">
-        <Stack.Item grow>
+        <Stack.Item width="100%">
           <Button
-            minWidth={"100%"}
             fluid
+            ellipsis
             icon="eject"
             content={authIDName}
             onClick={() => act('PRG_ejectauthid')} />
@@ -176,7 +192,8 @@ const IDCardTarget = (props, context) => {
   return (
     <Section title="Modify ID">
       <Button
-        fluid
+        width="100%"
+        ellipsis
         icon="eject"
         content={id_name}
         onClick={() => act('PRG_ejectmodid')} />
@@ -223,5 +240,35 @@ const IDCardTarget = (props, context) => {
         </>
       ) || false}
     </Section>
+  );
+};
+
+const TemplateDropdown = (props, context) => {
+  const { act } = useBackend(context);
+  const {
+    templates,
+  } = props;
+
+  const templateKeys = Object.keys(templates);
+
+  if (!templateKeys.length)
+  { return; }
+
+  return (
+    <Stack>
+      <Stack.Item grow>
+        <Dropdown
+          width="100%"
+          displayText={"Select a template..."}
+          options={
+            templateKeys.map(path => {
+              return templates[path];
+            })
+          }
+          onSelected={sel => act("PRG_template", {
+            name: sel,
+          })} />
+      </Stack.Item>
+    </Stack>
   );
 };

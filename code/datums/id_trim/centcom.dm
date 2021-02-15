@@ -16,11 +16,11 @@
 	assignment = "Thunderdome Overseer"
 
 /datum/id_trim/centcom/official
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_WEAPONS)
 	assignment = "CentCom Official"
 
 /datum/id_trim/centcom/intern
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_WEAPONS)
 	assignment = "CentCom Intern"
 
 /datum/id_trim/centcom/intern/head
@@ -29,7 +29,7 @@
 /datum/id_trim/centcom/intern/head/New()
 	. = ..()
 
-	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) + COMMON_ACCESS
+	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_WEAPONS) + COMMON_ACCESS
 
 /datum/id_trim/centcom/bartender
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)

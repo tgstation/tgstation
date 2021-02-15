@@ -147,7 +147,7 @@
 	if(id_slot)
 		var/obj/item/card/id/card = id_slot.GetID()
 		if(istype(card))
-			card.add_access(stored_access, force = TRUE)
+			card.add_access(stored_access, mode = FORCE_ADD_ALL)
 		if(update_id_name)
 			card.registered_name = H.real_name
 			card.update_label()

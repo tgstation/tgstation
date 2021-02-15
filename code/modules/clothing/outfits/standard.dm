@@ -159,16 +159,15 @@
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	l_pocket = /obj/item/food/grown/banana
 	r_pocket = /obj/item/bikehorn
-	id = /obj/item/card/id/advanced
+	id = /obj/item/card/id/advanced/gold
 	l_hand = /obj/item/fireaxe
+	id_trim = /datum/id_trim/tunnel_clown
 
 /datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	//W.access = get_all_accesses()
-	//W.trim = "Tunnel Clown!"
 	W.registered_name = H.real_name
 	W.update_label()
 

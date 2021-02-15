@@ -16,40 +16,9 @@
 	var/authenticated_user
 	var/list/region_access = list()
 	var/list/head_subordinates = list()
+	var/list/job_templates = list()
 	///Which departments this computer has access to. Defined as access regions. null = all departments
 	var/target_dept
-
-	/// A list of key access levels to value lists of info to which regions the access level unlocks on the ID app and the job title of their Head of Staff.
-	var/list/sub_managers
-
-/datum/computer_file/program/card_mod/New(obj/item/modular_computer/comp)
-	. = ..()
-	sub_managers = list(
-		"[ACCESS_CAPTAIN]" = list(
-			"regions" = list(REGION_COMMAND),
-			"head" = "Captain"
-		),
-		"[ACCESS_HOP]" = list(
-			"regions" = list(REGION_GENERAL, REGION_SUPPLY),
-			"head" = "Head of Personnel"
-		),
-		"[ACCESS_HOS]" = list(
-			"regions" = list(REGION_SECURITY),
-			"head" = "Head of Security"
-		),
-		"[ACCESS_CMO]" = list(
-			"regions" = list(REGION_MEDBAY),
-			"head" = "Chief Medical Officer"
-		),
-		"[ACCESS_RD]" = list(
-			"regions" = list(REGION_RESEARCH),
-			"head" = "Research Director"
-		),
-		"[ACCESS_CE]" = list(
-			"regions" = list(REGION_ENGINEERING),
-			"head" = "Chief Engineer"
-		)
-	)
 
 /datum/computer_file/program/card_mod/proc/authenticate(mob/user, obj/item/card/id/id_card)
 	if(!id_card)
@@ -60,17 +29,21 @@
 	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.timberpoes_access))
 		minor = FALSE
 		authenticated_user = "[id_card.name]"
+		job_templates = SSid_access.station_job_templates.Copy()
 		update_static_data(user)
 		return TRUE
 
 	// Otherwise, we're minor and now we have to build a list of restricted departments we can change access for.
+	job_templates.Cut()
 	var/list/head_types = list()
-	for(var/access_as_text in sub_managers)
-		var/list/info = sub_managers[access_as_text]
+	var/list/managers = SSid_access.sub_department_managers_tgui
+	for(var/access_as_text in managers)
+		var/list/info = managers[access_as_text]
 		var/access = text2num(access_as_text)
 		if((access in id_card.timberpoes_access) && ((target_dept in info["regions"]) || !target_dept))
-			region_access += info["regions"]
-			head_types += info["head"]
+			region_access |= info["regions"]
+			head_types |= info["head"]
+			job_templates |= info["templates"]
 
 	head_subordinates.Cut()
 	if(length(head_types))
@@ -200,8 +173,8 @@
 				return TRUE
 
 			target_id_card.registered_name = new_name
-			target_id_card.update_label()
 			playsound(computer, "terminal_type", 50, FALSE)
+			target_id_card.update_label()
 			return TRUE
 		// Change age
 		if("PRG_age")
@@ -216,10 +189,11 @@
 				return TRUE
 			target_id_card.assignment = params["assignment"]
 			playsound(computer, "terminal_type", 50, FALSE)
+			target_id_card.update_label()
 			return TRUE
 		// Add/remove access.
 		if("PRG_access")
-			if(!computer || !authenticated_user)
+			if(!computer || !authenticated_user || !target_id_card)
 				return TRUE
 			playsound(computer, "terminal_type", 50, FALSE)
 			var/access_type = params["access_target"]
@@ -239,6 +213,26 @@
 					message_admins("[ADMIN_LOOKUPFLW(user)] just added [SSid_access.get_access_desc(access_type)] to an ID card [ADMIN_VV(target_id_card)] [(target_id_card.registered_name) ? "belonging to [target_id_card.registered_name]." : "with no registered name."]")
 				LOG_ID_ACCESS_CHANGE(user, target_id_card, "added [SSid_access.get_access_desc(access_type)]")
 			return TRUE
+		if("PRG_template")
+			if(!computer || !authenticated_user || !target_id_card)
+				return TRUE
+
+			playsound(computer, "terminal_type", 50, FALSE)
+			var/template_name = params["name"]
+
+			if(!template_name)
+				return TRUE
+
+			for(var/trim_path in job_templates)
+				var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
+				if(trim.assignment != template_name)
+					continue
+
+				SSid_access.add_trim_access_to_card(target_id_card, trim_path)
+				return TRUE
+
+			return TRUE
+
 
 
 /datum/computer_file/program/card_mod/ui_static_data(mob/user)
@@ -246,23 +240,6 @@
 	data["station_name"] = station_name()
 	data["centcom_access"] = is_centcom
 	data["minor"] = target_dept || minor ? TRUE : FALSE
-
-	// TIMBERTODO - OLD CODE ABOUT JOBS AND STUFF. CHANGE TO TRIMS
-	/*
-	var/list/departments = target_dept
-	if(is_centcom)
-		departments = list("CentCom" = ALL_CENTCOM_JOBS_LIST)
-	else if(isnull(departments))
-		departments = list(
-			REGION_COMMAND = list("Captain"),//lol
-			REGION_ENGINEERING = GLOB.engineering_positions,
-			REGION_MEDICAL = GLOB.medical_positions,
-			REGION_SCIENCE = GLOB.science_positions,
-			REGION_SECURITY = GLOB.security_positions,
-			REGION_SUPPLY = GLOB.supply_positions,
-			"Service" = GLOB.service_positions
-		)
-	*/
 
 	var/list/regions = list()
 	var/list/tgui_region_data = SSid_access.all_region_access_tgui
@@ -276,10 +253,12 @@
 
 	data["regions"] = regions
 
+
 	data["accessFlags"] = SSid_access.flags_by_access
 	data["wildcardFlags"] = SSid_access.wildcard_flags_by_wildcard
 	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
 	data["showBasic"] = TRUE
+	data["templates"] = job_templates
 
 	return data
 

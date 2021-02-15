@@ -311,7 +311,7 @@
 				var/obj/item/card/id/id_card = L.get_idcard(hand_first = TRUE)
 				if (check_access(id_card))
 					authenticated = TRUE
-					authorize_access = id_card.timberpoes_access
+					authorize_access = id_card.timberpoes_access.Copy()
 					authorize_name = "[id_card.registered_name] - [id_card.assignment]"
 
 			state = STATE_MAIN

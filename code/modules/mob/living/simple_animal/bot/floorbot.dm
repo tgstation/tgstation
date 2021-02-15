@@ -46,9 +46,9 @@
 	update_icon()
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
-	var/datum/id_trim/job/engi_trim = SSid_access.get_trim(/datum/id_trim/job/station_engineer)
+	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
 	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
-	prev_access = access_card.timberpoes_access
+	prev_access = access_card.timberpoes_access.Copy()
 
 	if(toolbox_color == "s")
 		health = 100

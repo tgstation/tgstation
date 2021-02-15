@@ -98,10 +98,12 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
+	// Applying the trim updates the label, so we don't need to do it twice.
 	if(ispath(timberpoes_trim))
 		SSid_access.apply_trim_to_card(src, timberpoes_trim)
-
-	update_label()
+		update_icon()
+	else
+		update_label()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
@@ -132,7 +134,7 @@
 		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/flag_name in new_wildcard_limits)
-			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
+			var/limit_flags = SSid_access.wildcard_flags_by_wildcard[flag_name]
 			if(!(wildcard_flag & limit_flags))
 				continue
 			// Negative limits mean infinite slots. Positive limits mean limited slots still available. 0 slots means no slots.
@@ -146,7 +148,7 @@
 
 	return TRUE
 
-/obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, force = FALSE)
+/obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/wildcard_allocated
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
 	for(var/wildcard in wildcard_list)
@@ -159,7 +161,7 @@
 			if(try_wildcard && !(flag_name == try_wildcard))
 				continue
 
-			var/limit_flags = SSid_access.get_wildcard_flags(flag_name)
+			var/limit_flags = SSid_access.wildcard_flags_by_wildcard[flag_name]
 
 			if(!(wildcard_flag & limit_flags))
 				continue
@@ -178,10 +180,12 @@
 			timberpoes_access |= wildcard
 			wildcard_allocated = TRUE
 			break
-		// Fallback for if we couldn't allocate the wildcard for some reason. This ordinarily should not happen without force = TRUE.
+		// Fallback for if we couldn't allocate the wildcard for some reason.
 		if(!wildcard_allocated)
-			if(!force)
-				stack_trace("Wildcard could not be added to [src]. Use force = TRUE to force wildcard addition anyway.")
+			if(mode == ERROR_ON_FAIL)
+				CRASH("Wildcard ([wildcard]) could not be added to [src].")
+
+			if(mode == TRY_ADD_ALL)
 				continue
 
 			// If the card has no info for historic forced wildcards, create the list.
@@ -224,19 +228,21 @@
 			wildcard_usage -= wildcard
 			timberpoes_access -= wildcard
 
-/obj/item/card/id/proc/add_access(list/add_accesses, try_wildcard = null, force = FALSE)
+/obj/item/card/id/proc/add_access(list/add_accesses, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
 	build_access_lists(add_accesses, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
-	if(!force && !can_add_wildcards(wildcard_access, try_wildcard))
-		return FALSE
+	if(mode == ERROR_ON_FAIL)
+		if(!can_add_wildcards(wildcard_access, try_wildcard))
+			CRASH("Cannot add wildcards from \[[add_accesses.Join(",")]\] to [src]")
 
 	// All clear to add the accesses.
 	timberpoes_access |= normal_access
-	add_wildcards(wildcard_access, try_wildcard, force)
+	if(mode != TRY_ADD_ALL_NO_WILDCARD)
+		add_wildcards(wildcard_access, try_wildcard, mode = mode)
 
 	return TRUE
 
@@ -247,28 +253,25 @@
 	build_access_lists(rem_accesses, normal_access, wildcard_access)
 
 	timberpoes_access -= normal_access
-	remove_wildcards(wildcard_access, force)
+	remove_wildcards(wildcard_access)
 
-/obj/item/card/id/proc/set_access(list/new_access_list, force = FALSE)
+/obj/item/card/id/proc/set_access(list/new_access_list, mode = ERROR_ON_FAIL)
 	var/list/wildcard_access = list()
 	var/list/normal_access = list()
 
 	build_access_lists(new_access_list, normal_access, wildcard_access)
 
 	// Check if we can add the wildcards.
-	if(!force && !can_add_wildcards(wildcard_access))
-		return FALSE
+	if(mode == ERROR_ON_FAIL)
+		if(!can_add_wildcards(wildcard_access))
+			CRASH("Cannot add wildcards from \[[new_access_list.Join(",")]\] to [src]")
 
-	// Doing this, we overwrite the old access.
+	clear_access()
+
 	timberpoes_access = normal_access.Copy()
 
-	// We have to go through the wildcards and reset them too.
-	for(var/flag_name in wildcard_slots)
-		var/list/wildcard_info = wildcard_slots[flag_name]
-		var/list/wildcard_usage = wildcard_info["usage"]
-		wildcard_usage.Cut()
-
-	add_wildcards(wildcard_access, force)
+	if(mode != TRY_ADD_ALL_NO_WILDCARD)
+		add_wildcards(wildcard_access, mode = mode)
 
 	return TRUE
 
@@ -497,7 +500,7 @@
 			powergaming.update_label()
 			powergaming.update_icon()
 
-/obj/item/card/id/proc/update_label()
+/obj/item/card/id/proc/update_label(update_icon = FALSE)
 	var/blank = !registered_name
 	name = "[blank ? initial(name) : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
@@ -619,10 +622,6 @@
 		return
 
 	. += mutable_appearance(trim_icon_file, trim_icon_state)
-
-/obj/item/card/id/advanced/update_label()
-	. = ..()
-	update_icon()
 
 /obj/item/card/id/advanced/silver
 	name = "silver identification card"
@@ -885,7 +884,7 @@
 	data["accesses"] = regions
 	data["ourAccess"] = timberpoes_access
 	data["ourTrimAccess"] = timberpoes_trim ? timberpoes_trim.access : list()
-	data["theftAccess"] = target_card.timberpoes_access
+	data["theftAccess"] = target_card.timberpoes_access.Copy()
 	data["wildcardSlots"] = wildcard_slots
 	data["selectedList"] = timberpoes_access
 	data["trimAccess"] = list()
@@ -970,7 +969,7 @@
 						if(blacklist[trim_path])
 							continue
 
-						var/datum/id_trim/trim = SSid_access.get_trim(trim_path)
+						var/datum/id_trim/trim = SSid_access.trim_singletons_by_path[trim_path]
 
 						if(trim && trim.trim_state && trim.assignment)
 							var/fake_trim_name = "[trim.assignment] ([trim.trim_state])"
@@ -990,6 +989,7 @@
 					registered_age = max(round(text2num(new_age)), 0)
 
 				update_label()
+				update_icon()
 				forged = TRUE
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[timberpoes_trim?.assignment]\".")
@@ -1010,6 +1010,7 @@
 				SSid_access.remove_trim_from_card(src)
 				log_game("[key_name(user)] has reset \the [initial(name)] named \"[src]\" to default.")
 				update_label()
+				update_icon()
 				forged = FALSE
 				to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
 				return
