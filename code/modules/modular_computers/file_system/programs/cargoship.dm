@@ -10,7 +10,7 @@
 	///Account used for creating barcodes.
 	var/datum/bank_account/payments_acc
 	///The person who tagged this will receive the sale value multiplied by this number.
-	var/cut_multiplier = 0.2
+	var/cut_multiplier = 0.5
 
 /datum/computer_file/program/shipping/ui_data(mob/user)
 	var/list/data = get_header_data()

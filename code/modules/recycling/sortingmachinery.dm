@@ -397,7 +397,7 @@
 	var/paper_count = 10
 	var/max_paper_count = 20
 	///Multiplier of the sale's value the scanned account receives.
-	var/cut_multiplier = 0.2
+	var/cut_multiplier = 0.5
 
 /obj/item/sales_tagger/examine(mob/user)
 	. = ..()
@@ -458,7 +458,7 @@
 	. = ..()
 	var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
 	if(!potential_cut)
-		cut_multiplier = 0.2
+		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut, 1), 1, 50) / 100
 	to_chat(user, "<span class='notice'>[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold.</span>")
 
@@ -470,4 +470,4 @@
 	w_class = WEIGHT_CLASS_TINY
 	///All values inheirited from the sales tagger it came from.
 	var/datum/bank_account/payments_acc = null
-	var/cut_multiplier = 0.2
+	var/cut_multiplier = 0.5
