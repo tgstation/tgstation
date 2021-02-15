@@ -7,16 +7,24 @@
 	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
+	COOLDOWN_DECLARE(dropkick_cooldown)
+	COOLDOWN_DECLARE(launchkick_cooldown)
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,LAUNCH_KICK_COMBO))
 		streak = ""
-		launchKick(A,D)
-		return TRUE
+		if(COOLDOWN_FINISHED(src, launchkick_cooldown))
+			launchKick(A,D)
+			return TRUE
+		else
+			return FALSE
 	if(findtext(streak,DROP_KICK_COMBO))
 		streak = ""
-		dropKick(A,D)
-		return TRUE
+		if(COOLDOWN_FINISHED(src, dropkick_cooldown))
+			dropKick(A,D)
+			return TRUE
+		else
+			return FALSE
 	return FALSE
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -28,6 +36,7 @@
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 7, 14, A)
 	D.apply_damage(15, A.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+	COOLDOWN_START(src, launchkick_cooldown, 1.4 SECONDS)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return
 
@@ -47,12 +56,11 @@
 		D.drop_all_held_items()
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+	COOLDOWN_START(src, dropkick_cooldown, 1.4 SECONDS)
 	log_combat(A, D, "dropkicked (Sleeping Carp)")
 	return
 
 /datum/martial_art/the_sleeping_carp/grab_act(mob/living/A, mob/living/D)
-	if(check_streak(A,D))
-		return TRUE
 	log_combat(A, D, "grabbed (Sleeping Carp)")
 	return ..()
 
