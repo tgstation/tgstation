@@ -12,7 +12,7 @@
 	attack_verb_simple = list("attack", "slap", "whack")
 
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
-	decay_factor = STANDARD_ORGAN_DECAY	* 0.5		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
+	decay_factor = STANDARD_ORGAN_DECAY * 0.5 //30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 
 	maxHealth = BRAIN_DAMAGE_DEATH
 	low_threshold = 45
@@ -20,7 +20,7 @@
 
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
-	var/decoy_override = FALSE	//if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
+	var/decoy_override = FALSE //if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
 	//two variables necessary for calculating whether we get a brain trauma or not
 	var/damage_delta = 0
 
@@ -39,7 +39,7 @@
 
 	name = "brain"
 
-	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
+	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, "<span class= danger>You can't feel your body! You're still just a brain!</span>")
 		forceMove(C)
@@ -130,7 +130,7 @@
 
 		user.visible_message("<span class='notice'>[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
 		var/healby = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
-		setOrganDamage(damage - healby*2)	//heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
+		setOrganDamage(damage - healby*2) //heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
 		O.reagents.clear_reagents()
 		return
 
@@ -213,7 +213,7 @@
 			to_chat(C, "<span class='notice'>[user] inserts [src] into your head.</span>")
 			to_chat(user, "<span class='notice'>You insert [src] into [C]'s head.</span>")
 		else
-			to_chat(user, "<span class='notice'>You insert [src] into your head.</span>"	)
+			to_chat(user, "<span class='notice'>You insert [src] into your head.</span>" )
 
 		Insert(C)
 	else
@@ -225,7 +225,7 @@
 	QDEL_LIST(traumas)
 
 	destroy_all_skillchips()
-	if(owner?.mind)	//You aren't allowed to return to brains that don't exist
+	if(owner?.mind) //You aren't allowed to return to brains that don't exist
 		owner.mind.current = null
 	return ..()
 

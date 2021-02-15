@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	if(is_type_in_typecache(the_target, sharedWanted)) //always eat
 		return TRUE
 
-	return ..()	//else, have a nibble, see if it's food
+	return ..() //else, have a nibble, see if it's food
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/OpenFire(atom/A)

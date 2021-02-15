@@ -76,7 +76,7 @@
 
 /obj/item/organ/liver/on_life(delta_time, times_fired)
 	var/mob/living/carbon/C = owner
-	..()	//perform general on_life()
+	..() //perform general on_life()
 	if(istype(C))
 		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(C, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 
@@ -150,7 +150,7 @@
 	toxLethality = 1.1 * LIVER_DEFAULT_TOX_LETHALITY
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/liver/cybernetic/tier2
 	name = "cybernetic liver"

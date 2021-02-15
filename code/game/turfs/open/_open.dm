@@ -245,7 +245,7 @@
 		else if(lube&SLIDE_ICE)
 			if(C.force_moving) //If we're already slipping extend it
 				qdel(C.force_moving)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE) //spinning would be bad for ice, fucks up the next dir
 		return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
