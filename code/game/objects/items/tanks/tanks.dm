@@ -1,5 +1,5 @@
 /// How much time is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
-#define ASSUME_AIR_DT_FACTOR	1
+#define ASSUME_AIR_DT_FACTOR 1
 
 /**
  * # Gas Tank

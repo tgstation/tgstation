@@ -125,10 +125,10 @@
 		inserted_core = null
 		say("Transfer valve resulted in negligible explosive power. Items ejected.")
 		return FALSE
-	mix.react()		// build more pressure
+	mix.react() // build more pressure
 
 	var/range = (mix.return_pressure() - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-	QDEL_NULL(inserted_bomb)	// bomb goes poof
+	QDEL_NULL(inserted_bomb) // bomb goes poof
 	if(range < required_radius)
 		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
 		inserted_core.forceMove(drop_location())
