@@ -309,8 +309,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/_M in GLOB.player_list)
 			var/mob/M = _M
-			if(QDELETED(M))	//Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
-				continue	//Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+			if(QDELETED(M)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
+				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
 			if(M.stat != DEAD) //not dead, not important
 				continue
 			if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing

@@ -45,8 +45,8 @@
 			if(!HAS_TRAIT(SSstation, STATION_TRAIT_UNNATURAL_ATMOSPHERE) && gaslist[gastype])
 				continue
 
-		amount *= rand(50, 200) / 100	// Randomly modifes the amount from half to double the base for some variety
-		amount *= pressure_scalar		// If we pick a really small target pressure we want roughly the same mix but less of it all
+		amount *= rand(50, 200) / 100 // Randomly modifes the amount from half to double the base for some variety
+		amount *= pressure_scalar // If we pick a really small target pressure we want roughly the same mix but less of it all
 		amount = CEILING(amount, 0.1)
 
 		ASSERT_GAS(gastype, gasmix)

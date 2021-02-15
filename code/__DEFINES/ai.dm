@@ -1,8 +1,8 @@
 #define GET_AI_BEHAVIOR(behavior_type) SSai_controllers.ai_behaviors[behavior_type]
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
-#define AI_STATUS_ON		1
-#define AI_STATUS_OFF		2
+#define AI_STATUS_ON 1
+#define AI_STATUS_OFF 2
 
 
 ///Monkey checks

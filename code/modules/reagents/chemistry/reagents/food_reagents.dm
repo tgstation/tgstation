@@ -4,7 +4,7 @@
 
 
 // Part of the food code. Also is where all the food
-// 	condiments, additives, and such go.
+// condiments, additives, and such go.
 
 
 /datum/reagent/consumable
@@ -12,7 +12,7 @@
 	taste_description = "generic food"
 	taste_mult = 4
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
-	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
+	var/quality = 0 //affects mood, typically higher for mixed drinks with more complex recipes
 	impure_chem = /datum/reagent/water
 	inverse_chem_val = 0.1
 	inverse_chem = /datum/reagent/water
@@ -683,7 +683,7 @@
 	if(!(methods & INGEST) || !((methods & (TOUCH|PATCH|VAPOR)) && (exposed_mob.is_mouth_covered() || exposed_mob.is_eyes_covered())))
 		return
 
-	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES))	//can't blind somebody with no eyes
+	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES)) //can't blind somebody with no eyes
 		to_chat(exposed_mob, "<span class='notice'>Your eye sockets feel wet.</span>")
 	else
 		if(!exposed_mob.eye_blurry)
@@ -693,7 +693,7 @@
 
 /datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M)
 	..()
-	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
+	if(M.eye_blurry) //Don't worsen vision if it was otherwise fine
 		M.blur_eyes(4)
 		if(prob(10))
 			to_chat(M, "<span class='warning'>Your eyes sting!</span>")

@@ -213,7 +213,7 @@
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
 	var/overlayicon = 'icons/obj/lighting_overlay.dmi'
-	var/base_state = "tube"		// base description and icon_state
+	var/base_state = "tube" // base description and icon_state
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
@@ -222,36 +222,36 @@
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = AREA_USAGE_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
-	var/on = FALSE					// 1 if on, 0 if off
+	var/on = FALSE // 1 if on, 0 if off
 	var/on_gs = FALSE
 	var/static_power_used = 0
-	var/brightness = 8			// luminosity when on, also used in power calculation
-	var/bulb_power = 1			// basically the alpha of the emitted light source
-	var/bulb_colour = "#f3fffa"	// befault colour of the light.
-	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
+	var/brightness = 8 // luminosity when on, also used in power calculation
+	var/bulb_power = 1 // basically the alpha of the emitted light source
+	var/bulb_colour = "#f3fffa" // befault colour of the light.
+	var/status = LIGHT_OK // LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = FALSE
-	var/light_type = /obj/item/light/tube		// the type of light item
+	var/light_type = /obj/item/light/tube // the type of light item
 	var/fitting = "tube"
-	var/switchcount = 0			// count of number of times switched on/off
+	var/switchcount = 0 // count of number of times switched on/off
 								// this is used to calc the probability the light burns out
 
-	var/rigged = FALSE			// true if rigged to explode
+	var/rigged = FALSE // true if rigged to explode
 
 	var/obj/item/stock_parts/cell/cell
-	var/start_with_cell = TRUE	// if true, this fixture generates a very weak cell at roundstart
+	var/start_with_cell = TRUE // if true, this fixture generates a very weak cell at roundstart
 
-	var/nightshift_enabled = FALSE	//Currently in night shift mode?
-	var/nightshift_allowed = TRUE	//Set to FALSE to never let this light get switched to night mode.
+	var/nightshift_enabled = FALSE //Currently in night shift mode?
+	var/nightshift_allowed = TRUE //Set to FALSE to never let this light get switched to night mode.
 	var/nightshift_brightness = 8
 	var/nightshift_light_power = 0.45
 	var/nightshift_light_color = "#FFDDCC"
 
-	var/emergency_mode = FALSE	// if true, the light is in emergency mode
-	var/no_emergency = FALSE	// if true, this light cannot ever have an emergency mode
-	var/bulb_emergency_brightness_mul = 0.25	// multiplier for this light's base brightness in emergency power mode
-	var/bulb_emergency_colour = "#FF3232"	// determines the colour of the light while it's in emergency mode
-	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
-	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
+	var/emergency_mode = FALSE // if true, the light is in emergency mode
+	var/no_emergency = FALSE // if true, this light cannot ever have an emergency mode
+	var/bulb_emergency_brightness_mul = 0.25 // multiplier for this light's base brightness in emergency power mode
+	var/bulb_emergency_colour = "#FF3232" // determines the colour of the light while it's in emergency mode
+	var/bulb_emergency_pow_mul = 0.75 // the multiplier for determining the light's power in emergency mode
+	var/bulb_emergency_pow_min = 0.5 // the minimum value for the light's power in emergency mode
 
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
@@ -379,12 +379,12 @@
 	var/area/A = get_area(src)
 	if(A)
 		on = FALSE
-//		A.update_lights()
+// A.update_lights()
 	QDEL_NULL(cell)
 	return ..()
 
 /obj/machinery/light/update_icon_state()
-	switch(status)		// set icon_states
+	switch(status) // set icon_states
 		if(LIGHT_OK)
 			var/area/A = get_area(src)
 			if(emergency_mode || (A?.fire))
@@ -737,13 +737,13 @@
 			to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
 		else
 			var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-			if(affecting?.receive_damage( 0, 5 ))			// 5 burn damage
+			if(affecting?.receive_damage( 0, 5 )) // 5 burn damage
 				H.update_damage_overlays()
 			if(HAS_TRAIT(user, TRAIT_LIGHTBULB_REMOVER))
 				to_chat(user, "<span class='notice'>You feel like you're burning, but you can push through.</span>")
 				if(!do_after(user, 5 SECONDS, target = src))
 					return
-				if(affecting?.receive_damage( 0, 10 ))		// 10 more burn damage
+				if(affecting?.receive_damage( 0, 10 )) // 10 more burn damage
 					H.update_damage_overlays()
 				to_chat(user, "<span class='notice'>You manage to remove the light [fitting], shattering it in process.</span>")
 				break_light_tube()
@@ -837,7 +837,7 @@
 /obj/machinery/light/proc/explode()
 	set waitfor = 0
 	var/turf/T = get_turf(src.loc)
-	break_light_tube()	// break it first to give a warning
+	break_light_tube() // break it first to give a warning
 	sleep(2)
 	explosion(T, 0, 0, 2, 2)
 	sleep(1)
@@ -852,12 +852,12 @@
 	force = 2
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
+	var/status = LIGHT_OK // LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/switchcount = 0	// number of times switched
+	var/switchcount = 0 // number of times switched
 	custom_materials = list(/datum/material/glass=100)
 	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
-	var/rigged = FALSE		// true if rigged to explode
+	var/rigged = FALSE // true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
 /obj/item/light/suicide_act(mob/living/carbon/user)
@@ -980,7 +980,7 @@
 /obj/machinery/light/floor
 	name = "floor light"
 	icon = 'icons/obj/lighting.dmi'
-	base_state = "floor"		// base description and icon_state
+	base_state = "floor" // base description and icon_state
 	icon_state = "floor"
 	brightness = 4
 	layer = 2.5

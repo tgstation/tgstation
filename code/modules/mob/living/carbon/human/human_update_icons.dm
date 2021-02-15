@@ -6,7 +6,7 @@ This system allows you to update individual mob-overlays, without regenerating t
 When we generate overlays we generate the standing version and then rotate the mob as necessary..
 
 As of the time of writing there are 20 layers within this list. Please try to keep this from increasing. //22 and counting, good job guys
-	var/overlays_standing[20]		//For the standing stance
+	var/overlays_standing[20] //For the standing stance
 
 Most of the time we only wish to update one overlay:
 	e.g. - we dropped the fireaxe out of our left hand and need to remove its icon from our mob
@@ -28,7 +28,7 @@ Note: The defines for layer numbers is now kept exclusvely in __DEFINES/misc.dm 
 All of this means that this code is more maintainable, faster and still fairly easy to use.
 
 There are several things that need to be remembered:
->	Whenever we do something that should cause an overlay to update (which doesn't use standard procs
+> Whenever we do something that should cause an overlay to update (which doesn't use standard procs
 	( i.e. you do something like l_hand = /obj/item/something new(src), rather than using the helper procs)
 	You will need to call the relevant update_inv_* proc
 
@@ -37,12 +37,12 @@ There are several things that need to be remembered:
 	slime etc. Instead, it'll just return without doing any work. So no harm in calling it for slimes and such.
 
 
->	There are also these special cases:
-		update_damage_overlays()	//handles damage overlays for brute/burn damage
-		update_body()				//Handles updating your mob's body layer and mutant bodyparts
+> There are also these special cases:
+		update_damage_overlays() //handles damage overlays for brute/burn damage
+		update_body() //Handles updating your mob's body layer and mutant bodyparts
 									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, socks, lips, eyes)
 									//NOTE: update_mutantrace() is now merged into this!
-		update_hair()				//Handles updating your hair overlay (used to be update_face, but mouth and
+		update_hair() //Handles updating your hair overlay (used to be update_face, but mouth and
 									eyes were merged into update_body())
 
 
@@ -210,10 +210,10 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(glasses)
-		glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
+		glasses.screen_loc = ui_glasses //...draw the item in the inventory screen
 		if(client && hud_used?.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open ...
-				client.screen += glasses				//Either way, add the item to the HUD
+			if(hud_used.inventory_shown) //if the inventory is open ...
+				client.screen += glasses //Either way, add the item to the HUD
 		update_observer_view(glasses,1)
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/clothing/eyes.dmi')
@@ -238,10 +238,10 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(ears)
-		ears.screen_loc = ui_ears	//move the item to the appropriate screen loc
+		ears.screen_loc = ui_ears //move the item to the appropriate screen loc
 		if(client && hud_used?.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open
-				client.screen += ears					//add it to the client's screen
+			if(hud_used.inventory_shown) //if the inventory is open
+				client.screen += ears //add it to the client's screen
 		update_observer_view(ears,1)
 		overlays_standing[EARS_LAYER] = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = 'icons/mob/clothing/ears.dmi')
 		var/mutable_appearance/ears_overlay = overlays_standing[EARS_LAYER]
@@ -263,10 +263,10 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(shoes)
-		shoes.screen_loc = ui_shoes					//move the item to the appropriate screen loc
+		shoes.screen_loc = ui_shoes //move the item to the appropriate screen loc
 		if(client && hud_used?.hud_shown)
-			if(hud_used.inventory_shown)			//if the inventory is open
-				client.screen += shoes					//add it to client's screen
+			if(hud_used.inventory_shown) //if the inventory is open
+				client.screen += shoes //add it to client's screen
 		update_observer_view(shoes,1)
 		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/clothing/feet.dmi')
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
@@ -290,7 +290,7 @@ There are several things that need to be remembered:
 		if(client && hud_used?.hud_shown)
 			client.screen += s_store
 		update_observer_view(s_store)
-		overlays_standing[SUIT_STORE_LAYER]	= s_store.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+		overlays_standing[SUIT_STORE_LAYER] = s_store.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
 		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_STORE_LAYER]
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
@@ -416,7 +416,7 @@ There are several things that need to be remembered:
 /proc/wear_female_version(t_color, icon, layer, type)
 	var/index = t_color
 	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
-	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
+	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
 		generate_female_clothing(index,t_color,icon,type)
 	return mutable_appearance(GLOB.female_clothing_icons[t_color], layer = -layer)
 

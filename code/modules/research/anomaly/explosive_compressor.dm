@@ -1,5 +1,5 @@
-#define MAX_RADIUS_REQUIRED 20		//maxcap
-#define MIN_RADIUS_REQUIRED 4		//1, 2, 4
+#define MAX_RADIUS_REQUIRED 20 //maxcap
+#define MIN_RADIUS_REQUIRED 4 //1, 2, 4
 /**
  * # Explosive compressor machines
  *
@@ -72,7 +72,7 @@
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
 	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
 	if(already_made >= hard_limit)
-		return		//return null
+		return //return null
 	// my crappy autoscale formula
 	// linear scaling.
 	var/radius_span = MAX_RADIUS_REQUIRED - MIN_RADIUS_REQUIRED
