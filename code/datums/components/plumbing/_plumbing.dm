@@ -200,8 +200,8 @@
 	active = TRUE
 
 	var/atom/movable/AM = parent
-	for(var/obj/machinery/duct/D in AM.loc)	//Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
-		if(D.anchored)								//that should cover everything
+	for(var/obj/machinery/duct/D in AM.loc) //Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
+		if(D.anchored) //that should cover everything
 			D.disconnect_duct()
 
 	if(demand_connects)

@@ -106,8 +106,8 @@
 		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.percent_cut = tagger.percent_cut	//same, but for the percentage taken.
+		sticker.payments_acc = tagger.payments_acc //new tag gets the tagger's current account.
+		sticker.percent_cut = tagger.percent_cut //same, but for the percentage taken.
 
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
@@ -289,8 +289,8 @@
 		user.visible_message("<span class='notice'>[user] attaches a barcode to [src].</span>", "<span class='notice'>You attach a barcode to [src].</span>")
 		tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.percent_cut = tagger.percent_cut	//as above, as before.
+		sticker.payments_acc = tagger.payments_acc //new tag gets the tagger's current account.
+		sticker.percent_cut = tagger.percent_cut //as above, as before.
 
 		var/list/wrap_contents = src.GetAllContents()
 		for(var/obj/I in wrap_contents)
@@ -445,8 +445,8 @@
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
-	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
-	new_barcode.percent_cut = percent_cut		// Also the registered percent cut.
+	new_barcode.payments_acc = payments_acc // The sticker gets the scanner's registered account.
+	new_barcode.percent_cut = percent_cut // Also the registered percent cut.
 	user.put_in_hands(new_barcode)
 
 /obj/item/sales_tagger/CtrlClick(mob/user)

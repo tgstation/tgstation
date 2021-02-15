@@ -63,7 +63,7 @@
 /datum/world_topic/pr_announce
 	keyword = "announce"
 	require_comms_key = TRUE
-	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
+	var/static/list/PRcounts = list() //PR id -> number of times announced this round
 
 /datum/world_topic/pr_announce/Run(list/input)
 	var/list/payload = json_decode(input["payload"])

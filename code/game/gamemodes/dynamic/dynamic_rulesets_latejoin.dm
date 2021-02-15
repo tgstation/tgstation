@@ -78,7 +78,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 2
-	delay = 1 MINUTES	// Prevents rule start while head is offstation.
+	delay = 1 MINUTES // Prevents rule start while head is offstation.
 	cost = 20
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	flags = HIGH_IMPACT_RULESET
@@ -101,8 +101,8 @@
 	return (head_check >= required_heads_of_staff)
 
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
-	var/mob/M = pick(candidates)	// This should contain a single player, but in case.
-	if(check_eligible(M.mind))	// Didnt die/run off z-level/get implanted since leaving shuttle.
+	var/mob/M = pick(candidates) // This should contain a single player, but in case.
+	if(check_eligible(M.mind)) // Didnt die/run off z-level/get implanted since leaving shuttle.
 		assigned += M.mind
 		M.mind.special_role = antag_flag
 		revolution = new()
@@ -140,7 +140,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//           HERETIC SMUGGLER          		//
+//           HERETIC SMUGGLER //
 //                                          //
 //////////////////////////////////////////////
 
