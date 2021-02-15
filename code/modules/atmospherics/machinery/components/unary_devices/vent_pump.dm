@@ -1,9 +1,9 @@
-#define EXT_BOUND	1
-#define INT_BOUND	2
-#define NO_BOUND	3
+#define EXT_BOUND 1
+#define INT_BOUND 2
+#define NO_BOUND 3
 
-#define SIPHONING	0
-#define RELEASING	1
+#define SIPHONING 0
+#define RELEASING 1
 
 /obj/machinery/atmospherics/components/unary/vent_pump
 	icon_state = "vent_map-3"

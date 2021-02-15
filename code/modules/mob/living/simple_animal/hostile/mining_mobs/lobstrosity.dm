@@ -1,5 +1,5 @@
 /**
- *	Lobstrosities, the poster boy of charging AI mobs. Drops crab meat and bones.
+ * Lobstrosities, the poster boy of charging AI mobs. Drops crab meat and bones.
  * Outside of charging, it's intended behavior is that it is generally slow moving, but makes up for that with a knockdown attack to score additional hits.
  */
 /mob/living/simple_animal/hostile/asteroid/lobstrosity

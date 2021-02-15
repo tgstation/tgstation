@@ -146,9 +146,9 @@
 
 	attack_self(usr)
 
-// 		WIRE_SIGNAL = 1
-//		WIRE_RECEIVE = 2
-//		WIRE_TRANSMIT = 4
+// WIRE_SIGNAL = 1
+// WIRE_RECEIVE = 2
+// WIRE_TRANSMIT = 4
 
 /obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	pai = personality

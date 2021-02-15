@@ -18,8 +18,7 @@ export const AtmosControlPanel = (props, context) => {
     <Window
       title="SSAir Control Panel"
       width={900}
-      height={500}
-      resizable>
+      height={500}>
       <Section m={1}>
         <Flex
           justify="space-between"

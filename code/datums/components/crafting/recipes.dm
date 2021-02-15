@@ -341,7 +341,7 @@
 	name = "Floorbot"
 	result = /mob/living/simple_animal/bot/floorbot
 	reqs = list(/obj/item/storage/toolbox = 1,
-				/obj/item/stack/tile/plasteel = 10,
+				/obj/item/stack/tile/iron = 10,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	time = 40
@@ -706,13 +706,13 @@
 
 /datum/crafting_recipe/curtain
 	name = "Curtains"
-	reqs = 	list(/obj/item/stack/sheet/cloth = 4, /obj/item/stack/rods = 1)
+	reqs = list(/obj/item/stack/sheet/cloth = 4, /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain/cloth
 	category = CAT_MISC
 
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
-	reqs = 	list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
+	reqs = list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
 	result = /obj/structure/curtain
 	category = CAT_MISC
 
@@ -913,7 +913,7 @@
 	result = /obj/item/pressure_plate
 	time = 5
 	reqs = list(/obj/item/stack/sheet/iron = 1,
-				/obj/item/stack/tile/plasteel = 1,
+				/obj/item/stack/tile/iron = 1,
 				/obj/item/stack/cable_coil = 2,
 				/obj/item/assembly/igniter = 1)
 	category = CAT_MISC

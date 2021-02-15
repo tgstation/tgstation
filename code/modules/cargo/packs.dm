@@ -718,7 +718,7 @@
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Contains three insulated gloves."
-	cost = CARGO_CRATE_VALUE * 8	//Made of pure-grade bullshittinium
+	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow,
@@ -802,6 +802,14 @@
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
 	crate_name = "huge portable scrubber crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/engineering/space_heater
+	name = "Space Heater Crate"
+	desc = "A dual purpose heater/cooler for when things are too chilly/toasty."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/machinery/space_heater)
+	crate_name = "space heater crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/engineering/bsa
@@ -1777,7 +1785,8 @@
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
-	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
+	desc = "Why visit the kitchen when you can have five random pizzas in a fraction of the time? \
+			Best prices this side of the galaxy! All deliveries are guaranteed to be 99% anomaly-free."
 	cost = CARGO_CRATE_VALUE * 10 // Best prices this side of the galaxy.
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
@@ -1785,15 +1794,37 @@
 					/obj/item/pizzabox/vegetable,
 					/obj/item/pizzabox/pineapple)
 	crate_name = "pizza crate"
+	///Whether we've provided an infinite pizza box already this shift or not.
 	var/static/anomalous_box_provided = FALSE
+	///The percentage chance (per pizza) of this supply pack to spawn an anomalous pizza box.
+	var/anna_molly_box_chance = 1
+	///Total tickets in our figurative lottery (per pizza) to decide if we create a bomb box, and if so what type. 1 to 3 create a bomb. The rest do nothing.
+	var/boombox_tickets = 100
+	///Whether we've provided a bomb pizza box already this shift or not.
+	var/boombox_provided = FALSE
 
 /datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/C)
 	. = ..()
-	if(!anomalous_box_provided)
-		for(var/obj/item/pizzabox/P in C)
-			if(prob(1)) //1% chance for each box, so 4% total chance per order
+
+	var/list/pizza_types = list(
+		/obj/item/food/pizza/margherita = 10,
+		/obj/item/food/pizza/meat = 10,
+		/obj/item/food/pizza/mushroom = 10,
+		/obj/item/food/pizza/vegetable = 10,
+		/obj/item/food/pizza/donkpocket = 10,
+		/obj/item/food/pizza/dank = 7,
+		/obj/item/food/pizza/sassysage = 10,
+		/obj/item/food/pizza/pineapple = 10,
+		/obj/item/food/pizza/arnold = 3
+	) //weighted by chance to disrupt eaters' rounds
+
+	for(var/obj/item/pizzabox/P in C)
+		if(!anomalous_box_provided)
+			if(prob(anna_molly_box_chance)) //1% chance for each box, so 4% total chance per order
 				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
 				fourfiveeight.boxtag = P.boxtag
+				fourfiveeight.boxtag_set = TRUE
+				fourfiveeight.update_icon()
 				qdel(P)
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
@@ -1801,7 +1832,34 @@
 					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
 				else
 					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
-				break
+				continue
+
+		if(!boombox_provided)
+			var/boombox_lottery = rand(1,boombox_tickets)
+			var/boombox_type
+			switch(boombox_lottery)
+				if(1 to 2)
+					boombox_type = /obj/item/pizzabox/bomb/armed //explodes after opening
+				if(3)
+					boombox_type = /obj/item/pizzabox/bomb //free bomb
+
+			if(boombox_type)
+				new boombox_type(C)
+				qdel(P)
+				boombox_provided = TRUE
+				log_game("A bomb pizza box was created by a pizza crate delivery.")
+				message_admins("A bomb pizza box has arrived in a pizza crate delivery.")
+				continue
+
+		//here we randomly replace our pizzas for a chance at the full range
+		var/obj/item/food/pizza/replacement_type = pickweight(pizza_types)
+		pizza_types -= replacement_type
+		if(replacement_type && !istype(P.pizza, replacement_type))
+			QDEL_NULL(P.pizza)
+			P.pizza = new replacement_type
+			P.boxtag = P.pizza.boxtag
+			P.boxtag_set = TRUE
+			P.update_icon()
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
@@ -2118,8 +2176,8 @@
 	desc = "Psst.. hey bud... remember those old foam force pistols that got discontinued for being too cool? Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/gun/ballistic/automatic/toy/pistol,
-					/obj/item/gun/ballistic/automatic/toy/pistol,
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/toy,
+					/obj/item/gun/ballistic/automatic/pistol/toy,
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
@@ -2298,7 +2356,7 @@
 		if(prob(30)) //Not all mafioso have mustaches, some people also find this item annoying.
 			new /obj/item/clothing/mask/fakemoustache/italian(C)
 	if(prob(10)) //A little extra sugar every now and then to shake things up.
-		new	/obj/item/switchblade(C)
+		new /obj/item/switchblade(C)
 
 /datum/supply_pack/costumes_toys/randomised/tcg
 	name = "Big-Ass Booster Pack Pack"
@@ -2461,7 +2519,7 @@
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = CARGO_CRATE_VALUE * 6	// it costs so much because the Space Church needs funding to build a cathedral
+	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,
@@ -2730,8 +2788,9 @@
 
 /datum/supply_pack/vending/wardrobes/security
 	name = "Security Wardrobe Supply Crate"
-	desc = "This crate contains refills for the SecDrobe and LawDrobe."
-	cost = CARGO_CRATE_VALUE * 3
+	desc = "This crate contains refills for the SecDrobe, DetDrobe and LawDrobe."
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
+					/obj/item/vending_refill/wardrobe/det_wardrobe,
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"

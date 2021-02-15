@@ -23,7 +23,7 @@
 
  .ListInput__LoaderProgress {
    position: absolute;
-   transition: background-color 500ms, width 500ms;
+   transition: background-color 500ms ease-out, width 500ms ease-out;
    background-color: colors.bg(colors.$primary);
    height: 100%;
  }

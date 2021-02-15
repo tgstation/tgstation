@@ -24,11 +24,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = 0	//for preventing explosion dodging
+	var/explosion_level = 0 //for preventing explosion dodging
 	var/explosion_id = 0
 	var/list/explosion_throw_details
 
-	var/requires_activation	//add to air processing after initialize?
+	var/requires_activation //add to air processing after initialize?
 	var/changing_turf = FALSE
 
 	var/bullet_bounce_sound = 'sound/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
@@ -292,12 +292,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/i in contents)
 			if(QDELETED(mover))
-				return FALSE		//We were deleted, do not attempt to proceed with movement.
+				return FALSE //We were deleted, do not attempt to proceed with movement.
 			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			var/atom/movable/thing = i
 			if(!thing.Cross(mover))
-				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
+				if(QDELETED(mover)) //Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
 				if((mover.movement_type & PHASING))
 					mover.Bump(thing)
@@ -305,9 +305,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				else
 					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
 						firstbump = thing
-	if(QDELETED(mover))					//Mover deleted from Cross/CanPass/Bump, do not proceed.
+	if(QDELETED(mover)) //Mover deleted from Cross/CanPass/Bump, do not proceed.
 		return FALSE
-	if(!canPassSelf)	//Even if mover is unstoppable they need to bump us.
+	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
 		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)
@@ -328,7 +328,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(!(mover.movement_type & PHASING))
 				return FALSE
 		if(QDELETED(mover))
-			return FALSE		//We were deleted.
+			return FALSE //We were deleted.
 
 
 /turf/open/Entered(atom/movable/AM)
@@ -515,7 +515,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
-		if(AM.layer == WIRE_LAYER)	//wires connect to adjacent positions after its parent init, meaning we need to wait (in this case, until smoothing) to take its image
+		if(AM.layer == WIRE_LAYER) //wires connect to adjacent positions after its parent init, meaning we need to wait (in this case, until smoothing) to take its image
 			SSicon_smooth.blueprint_queue += AM
 		else
 			add_blueprints(AM)

@@ -15,6 +15,8 @@
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
 	var/extended_desc = "N/A"
+	/// Category in the NTDownloader.
+	var/category = PROGRAM_CATEGORY_MISC
 	/// Program-specific screen icon state
 	var/program_icon_state = null
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
@@ -109,7 +111,7 @@
 	if(!access_to_check) // No required_access, allow it.
 		return TRUE
 
-	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && (computer.obj_flags & EMAGGED)) //emags can bypass the execution locks but not the download ones.
 		return TRUE
 
 	if(isAdminGhostAI(user))

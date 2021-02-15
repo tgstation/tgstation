@@ -269,7 +269,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		for(var/i in SSstation.station_traits)
 			var/datum/station_trait/station_trait_iterator = i
 			if(!station_trait_iterator.show_in_report)
-				return
+				continue
 			. += "[station_trait_iterator.get_report()]<BR>"
 
 
@@ -324,6 +324,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	mid_round_budget = threat_level - round_start_budget
 
 /datum/game_mode/dynamic/can_start()
+	return TRUE
+
+/datum/game_mode/dynamic/proc/setup_parameters()
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit].")
@@ -354,6 +357,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
 						continue
 					vars[variable] = configuration["Dynamic"][variable]
+
+	setup_parameters()
 
 	var/valid_roundstart_ruleset = 0
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
@@ -415,13 +420,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
-		rule.acceptable(roundstart_pop_ready, threat_level)	// Assigns some vars in the modes, running it here for consistency
+		rule.acceptable(roundstart_pop_ready, threat_level) // Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(roundstart_pop_ready, TRUE))
 			var/cost = rule.cost
 			var/scaled_times = 0
-			if (!(rule.flags & LONE_RULESET))
+			if (rule.scaling_cost)
 				scaled_times = round(max(round_start_budget - cost, 0) / rule.scaling_cost)
 				cost += rule.scaling_cost * scaled_times
 
@@ -435,7 +440,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
 		if (!rule.weight)
 			continue
-		if (rule.acceptable(roundstart_pop_ready, threat_level) && round_start_budget >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(roundstart_pop_ready, threat_level) && round_start_budget >= rule.cost) // If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready(roundstart_pop_ready) && rule.candidates.len > 0)
@@ -509,7 +514,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			current_rules += rule
 		new_snapshot(rule)
 		return TRUE
-	rule.clean_up()	// Refund threat, delete teams and so on.
+	rule.clean_up() // Refund threat, delete teams and so on.
 	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE

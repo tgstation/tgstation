@@ -35,9 +35,9 @@
 		return
 	if(!user.transferItemToLoc(I, drop_location(), silent = FALSE))
 		return
-	var/list/click_params = params2list(params)
-	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+	var/list/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
-	I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-	I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+	I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+	I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 	return TRUE

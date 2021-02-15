@@ -6,8 +6,7 @@ export const NaniteRemote = (props, context) => {
   return (
     <Window
       width={420}
-      height={500}
-      resizable>
+      height={500}>
       <Window.Content scrollable>
         <NaniteRemoteContent />
       </Window.Content>

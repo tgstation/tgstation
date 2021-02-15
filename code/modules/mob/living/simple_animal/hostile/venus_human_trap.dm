@@ -28,6 +28,8 @@
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
 
+	var/list/vines = list()
+
 /obj/structure/alien/resin/flower_bud/Initialize()
 	. = ..()
 	countdown = new(src)
@@ -38,11 +40,15 @@
 	anchors += locate(x+2,y-2,z)
 
 	for(var/turf/T in anchors)
-		Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
+		vines += Beam(T, "vine", maxdistance=5, beam_type=/obj/effect/ebeam/vine)
 	finish_time = world.time + growth_time
 	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
 	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
 	countdown.start()
+
+/obj/structure/alien/resin/flower_bud/Destroy()
+	QDEL_LIST(vines)
+	return ..()
 
 /**
  * Spawns a venus human trap, then qdels itself.
@@ -106,6 +112,8 @@
 	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
 	deathsound = 'sound/creatures/venus_trap_death.ogg'
 	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
+	unsuitable_cold_damage = 5
+	unsuitable_heat_damage = 10
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation

@@ -31,13 +31,13 @@
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = ""
 
-	#define HULL_BREACH		1
-	#define LINE_SPACE_MODE		2
-	#define FIX_TILE		3
-	#define AUTO_TILE		4
-	#define PLACE_TILE		5
-	#define REPLACE_TILE		6
-	#define TILE_EMAG		7
+	#define HULL_BREACH 1
+	#define LINE_SPACE_MODE 2
+	#define FIX_TILE 3
+	#define AUTO_TILE 4
+	#define PLACE_TILE 5
+	#define REPLACE_TILE 6
+	#define TILE_EMAG 7
 
 /mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
@@ -113,7 +113,7 @@
 	return dat
 
 /mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user, params)
-	if(istype(W, /obj/item/stack/tile/plasteel))
+	if(istype(W, /obj/item/stack/tile/iron))
 		to_chat(user, "<span class='notice'>The floorbot can produce normal tiles itself.</span>")
 		return
 	if(istype(W, /obj/item/stack/tile))
@@ -242,9 +242,9 @@
 
 	if(target)
 		if(loc == target || loc == get_turf(target))
-			if(check_bot(target))	//Target is not defined at the parent
+			if(check_bot(target)) //Target is not defined at the parent
 				shuffle = TRUE
-				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
+				if(prob(50)) //50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
 					path = list()
 					return
@@ -317,7 +317,7 @@
 			F = scan_target
 			if(isfloorturf(F) && !isplatingturf(F)) //The floor must already have a tile.
 				result = F
-		if(FIX_TILE)	//Selects only damaged floors.
+		if(FIX_TILE) //Selects only damaged floors.
 			F = scan_target
 			if(istype(F) && (F.broken || F.burnt))
 				result = F
@@ -353,7 +353,7 @@
 					if(!tilestack)
 						speak("Requesting refill of custom floor tiles to continue replacing.")
 				else
-					target_turf.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+					target_turf.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 			else //Build a hull plating without a floor tile.
 				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
@@ -383,7 +383,7 @@
 				if(!tilestack)
 					speak("Requesting refill of custom floor tiles to continue replacing.")
 			else
-				F.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+				F.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 
 	if(!QDELETED(src))
 		go_idle()
@@ -407,7 +407,7 @@
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
 
-	new /obj/item/stack/tile/plasteel(Tsec, 1)
+	new /obj/item/stack/tile/iron(Tsec, 1)
 
 	do_sparks(3, TRUE, src)
 	..()

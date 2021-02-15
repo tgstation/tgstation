@@ -1,8 +1,8 @@
 /* Backpacks
  * Contains:
- *		Backpack
- *		Backpack Types
- *		Satchel Types
+ * Backpack
+ * Backpack Types
+ * Satchel Types
  */
 
 /*
@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK	//ERROOOOO
+	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
 
@@ -330,7 +330,7 @@
 	qdel(C)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
-	new /obj/item/stack/tile/plasteel(src)
+	new /obj/item/stack/tile/iron(src)
 	new /obj/item/crowbar(src)
 
 	..()
@@ -363,7 +363,7 @@
 
 /obj/item/storage/backpack/duffelbag/cursed/examine(mob/user)
 	. = ..()
-	
+
 	if(hunger > 25)
 		. += "<span class='danger'>The bag is growling for food...</span>"
 

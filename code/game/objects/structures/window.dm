@@ -24,7 +24,7 @@
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
-	var/real_explosion_block	//ignore this, just use explosion_block
+	var/real_explosion_block //ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/knocksound = 'sound/effects/Glassknock.ogg'
 	var/bashsound = 'sound/effects/Glassbash.ogg'
@@ -118,10 +118,10 @@
 	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, turf/target)
-	if(istype(O) && (O.pass_flags & PASSGLASS))
+	if(istype(O) && (O.pass_flags & pass_flags_self))
 		return TRUE
-	if(get_dir(O.loc, target) == dir)
-		return FALSE
+	if(!fulltile && get_dir(O.loc, target) == dir)
+		return !density
 	return TRUE
 
 
@@ -158,7 +158,7 @@
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
 	..()
