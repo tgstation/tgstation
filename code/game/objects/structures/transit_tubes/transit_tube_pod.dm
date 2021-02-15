@@ -122,44 +122,43 @@
 
 ///timer loop that handles the pod moving from tube to tube
 /obj/structure/transit_tube_pod/proc/move_animation(stage = MOVE_ANIMATION_STAGE_ONE)
-	switch(stage)
-		if(MOVE_ANIMATION_STAGE_ONE)
-			next_dir = current_tube.get_exit(dir)
+	if(stage == MOVE_ANIMATION_STAGE_ONE)
+		next_dir = current_tube.get_exit(dir)
 
-			if(!next_dir)
-				return
+		if(!next_dir)
+			return
 
-			exit_delay = current_tube.exit_delay(src, dir)
-			next_loc = get_step(loc, next_dir)
+		exit_delay = current_tube.exit_delay(src, dir)
+		next_loc = get_step(loc, next_dir)
 
-			current_tube = null
-			for(var/obj/structure/transit_tube/tube in next_loc)
-				if(tube.has_entrance(next_dir))
-					current_tube = tube
-					break
+		current_tube = null
+		for(var/obj/structure/transit_tube/tube in next_loc)
+			if(tube.has_entrance(next_dir))
+				current_tube = tube
+				break
 
-			if(current_tube == null)
-				setDir(next_dir)
-				Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
-				return
-
-			enter_delay = current_tube.enter_delay(src, next_dir)
-			if(enter_delay > 0)
-				addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_TWO), enter_delay)
-				return
-			else
-				return .(MOVE_ANIMATION_STAGE_TWO)
-		if(MOVE_ANIMATION_STAGE_TWO)
+		if(current_tube == null)
 			setDir(next_dir)
-			set_glide_size(DELAY_TO_GLIDE_SIZE(enter_delay + exit_delay))
-			forceMove(next_loc) // When moving from one tube to another, skip collision and such.
-			density = current_tube.density
+			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
+			return
 
-			if(current_tube?.should_stop_pod(src, next_dir))
-				current_tube.pod_stopped(src, dir)
-			else
-				addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_ONE), exit_delay)
-				return
+		enter_delay = current_tube.enter_delay(src, next_dir)
+		if(enter_delay > 0)
+			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_TWO), enter_delay)
+			return
+		else
+			stage = MOVE_ANIMATION_STAGE_TWO
+	if(stage == MOVE_ANIMATION_STAGE_TWO)
+		setDir(next_dir)
+		set_glide_size(DELAY_TO_GLIDE_SIZE(enter_delay + exit_delay))
+		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
+		density = current_tube.density
+
+		if(current_tube?.should_stop_pod(src, next_dir))
+			current_tube.pod_stopped(src, dir)
+		else
+			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_ONE), exit_delay)
+			return
 	density = TRUE
 	moving = FALSE
 
