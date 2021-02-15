@@ -49,13 +49,23 @@
 	duration = -1
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/in_love
-	var/mob/living/date
+	var/hearts
 
-/datum/status_effect/in_love/on_creation(mob/living/new_owner, mob/living/love_interest)
+/datum/status_effect/in_love/on_creation(mob/living/new_owner, mob/living/date)
 	. = ..()
-	if(.)
-		date = love_interest
-		linked_alert.desc = "You're in love with [date.real_name]! How lovely."
+	if(!.)
+		return
+
+	linked_alert.desc = "You're in love with [date.real_name]! How lovely."
+	hearts = WEAKREF(date.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/one_person,
+		"in_love",
+		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		new_owner,
+	))
+
+/datum/status_effect/in_love/on_remove()
+	QDEL_NULL(hearts)
 
 /datum/status_effect/throat_soothed
 	id = "throat_soothed"
