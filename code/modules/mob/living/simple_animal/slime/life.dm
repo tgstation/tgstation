@@ -199,8 +199,8 @@
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.adjustCloneLoss(rand(1 * delta_time, 2 * delta_time))
-		C.adjustToxLoss(rand(0.5 * delta_time, 1 * delta_time))
+		C.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
+		C.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
 
 		if(DT_PROB(5, delta_time) && C.client)
 			to_chat(C, "<span class='userdanger'>[pick("You can feel your body becoming weak!", \
@@ -215,8 +215,8 @@
 		var/mob/living/simple_animal/SA = M
 
 		var/totaldamage = 0 //total damage done to this unfortunate animal
-		totaldamage += SA.adjustCloneLoss(rand(1 * delta_time, 2 * delta_time))
-		totaldamage += SA.adjustToxLoss(rand(0.5 * delta_time, 1 * delta_time))
+		totaldamage += SA.adjustCloneLoss(rand(2, 4) * 0.5 * delta_time)
+		totaldamage += SA.adjustToxLoss(rand(1, 2) * 0.5 * delta_time)
 
 		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
 			Feedstop(0, 0)
@@ -226,7 +226,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition((rand(3.5 * delta_time, 7.5 * delta_time) * CONFIG_GET(number/damage_multiplier)))
+	add_nutrition((rand(7, 15) * 0.5 * delta_time * CONFIG_GET(number/damage_multiplier)))
 
 	//Heal yourself.
 	adjustBruteLoss(-1.5 * delta_time)

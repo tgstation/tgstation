@@ -116,7 +116,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/M, delta_time, times_fired)
-	M.adjustStaminaLoss(6 * REM * delta_time, 0)
+	M.adjustStaminaLoss(3 * REM * delta_time, 0)
 	if(M.getStaminaLoss() >= 80)
 		M.drowsyness += 1 * REM * delta_time
 	if(M.getStaminaLoss() >= 100)
@@ -376,14 +376,14 @@
 		M.reagents.remove_reagent(R.type, 0.4 * REM * delta_time)
 
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/c2/syriniver/overdose_process(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time)
 	M.adjust_disgust(3 * REM * delta_time)
 	M.reagents.add_reagent(/datum/reagent/medicine/c2/musiver, 0.225 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/c2/musiver //MUScles
 	name = "Musiver"
@@ -403,7 +403,7 @@
 			continue
 		M.reagents.remove_reagent(R.type, 0.2 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/c2/musiver/overdose_start(mob/living/carbon/M)
 	U = new()
@@ -419,7 +419,7 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time)
 	M.adjust_disgust(3 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 #undef issyrinormusc
 /******COMBOS******/

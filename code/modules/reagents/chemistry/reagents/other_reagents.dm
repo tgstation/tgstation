@@ -337,21 +337,21 @@
 
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(iscultist(M))
-		M.drowsyness = max(M.drowsyness - (2.5*delta_time), 0)
-		M.AdjustAllImmobility(-20*delta_time)
-		M.adjustStaminaLoss(-5*delta_time, 0)
-		M.adjustToxLoss(-1*delta_time, 0)
-		M.adjustOxyLoss(-1*delta_time, 0)
-		M.adjustBruteLoss(-1*delta_time, 0)
-		M.adjustFireLoss(-1*delta_time, 0)
+		M.drowsyness = max(M.drowsyness - (5* REM * delta_time), 0)
+		M.AdjustAllImmobility(-40 *REM* REM * delta_time)
+		M.adjustStaminaLoss(-10 * REM * delta_time, 0)
+		M.adjustToxLoss(-2 * REM * delta_time, 0)
+		M.adjustOxyLoss(-2 * REM * delta_time, 0)
+		M.adjustBruteLoss(-2 * REM * delta_time, 0)
+		M.adjustFireLoss(-2 * REM * delta_time, 0)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 1.5*delta_time
+			M.blood_volume += 3 * REM * delta_time
 	else  // Will deal about 90 damage when 50 units are thrown
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1.5*delta_time, 150)
-		M.adjustToxLoss(1*delta_time, 0)
-		M.adjustFireLoss(1*delta_time, 0)
-		M.adjustOxyLoss(1*delta_time, 0)
-		M.adjustBruteLoss(1*delta_time, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
+		M.adjustToxLoss(1 * REM * delta_time, 0)
+		M.adjustFireLoss(1 * REM * delta_time, 0)
+		M.adjustOxyLoss(1 * REM * delta_time, 0)
+		M.adjustBruteLoss(1 * REM * delta_time, 0)
 	..()
 
 /datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
@@ -871,7 +871,7 @@
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.take_bodypart_damage(0.5*REM*delta_time, 0, 0, 0)
-	. = 1
+	. = TRUE
 	..()
 
 /datum/reagent/fluorine
@@ -894,7 +894,7 @@
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustToxLoss(0.5*REM*delta_time, 0)
-	. = 1
+	. = TRUE
 	..()
 
 /datum/reagent/sodium
@@ -1628,7 +1628,7 @@
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(tox_prob, delta_time))
 		M.adjustToxLoss(1, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/plantnutriment/eznutriment

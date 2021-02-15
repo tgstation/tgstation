@@ -9,7 +9,7 @@
 
 /datum/unit_test/metabolization/proc/test_reagent(mob/living/carbon/C, reagent_type)
 	C.reagents.add_reagent(reagent_type, 10)
-	C.reagents.metabolize(C, 2, 0, can_overdose = TRUE)
+	C.reagents.metabolize(C, SSMOBS_DT, 0, can_overdose = TRUE)
 	C.reagents.clear_reagents()
 
 /datum/unit_test/metabolization/Destroy()

@@ -32,7 +32,7 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	///Limits how often cats can spam chasing mice.
-	var/emote_cooldown = 0
+	COOLDOWN_DECLARE(emote_cooldown)
 	///Can this cat catch special mice?
 	var/inept_hunter = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -224,10 +224,10 @@
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
-					if(emote_cooldown < (world.time - 600))
+					if(COOLDOWN_FINISHED(src, emote_cooldown))
 						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
 						step(M, pick(GLOB.cardinals))
-						emote_cooldown = world.time
+						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 					break
 				if(!M.stat && Adjacent(M))
 					manual_emote("splats \the [M]!")

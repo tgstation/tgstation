@@ -18,7 +18,7 @@
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getOxyLoss() && DT_PROB(16, delta_time))
 		M.adjustOxyLoss(-1, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/tomatojuice
@@ -34,7 +34,7 @@
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getFireLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(0, 1, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/limejuice
@@ -51,7 +51,7 @@
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-1, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/carrotjuice
@@ -107,7 +107,7 @@
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustToxLoss(1 * REM * delta_time, 0)
-	. = 1
+	. = TRUE
 	..()
 
 /datum/reagent/consumable/watermelonjuice
@@ -162,7 +162,7 @@
 	if(ishuman(M) && M.mind?.miming)
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/laughter
@@ -233,7 +233,7 @@
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1,0, 0)
-		. = 1
+		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 1 * delta_time)
 	..()
@@ -251,7 +251,7 @@
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1, 0, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/cream
@@ -267,7 +267,7 @@
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1, 0, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/coffee
@@ -295,7 +295,7 @@
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/tea
 	name = "Tea"
@@ -317,7 +317,7 @@
 		M.adjustToxLoss(-1, 0)
 	M.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/lemonade
 	name = "Lemonade"
@@ -335,7 +335,7 @@
 	description = "Encourages the patient to go golfing."
 	color = "#FFB766"
 	quality = DRINK_NICE
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	taste_description = "bitter tea"
 	glass_icon_state = "arnold_palmer"
 	glass_name = "Arnold Palmer"
@@ -346,7 +346,7 @@
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, "<span class='notice'>[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>")
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/icecoffee
 	name = "Iced Coffee"
@@ -366,7 +366,7 @@
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.Jitter(5 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/hot_ice_coffee
 	name = "Hot Ice Coffee"
@@ -408,7 +408,7 @@
 		M.adjustToxLoss(-1, 0)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/space_cola
 	name = "Cola"
@@ -452,7 +452,7 @@
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/grey_bull
 	name = "Grey Bull"
@@ -497,7 +497,7 @@
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.Jitter(5 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
@@ -623,7 +623,7 @@
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/monkey_energy
 	name = "Monkey Energy"
@@ -693,7 +693,7 @@
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1,0, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/cafe_latte
 	name = "Cafe Latte"
@@ -715,7 +715,7 @@
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1, 0, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/doctor_delight
 	name = "The Doctor's Delight"
@@ -739,7 +739,7 @@
 			// Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.adjust_nutrition(-2 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
@@ -850,7 +850,7 @@
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1, 0, 0)
-		. = 1
+		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2 * REM * delta_time)
 	..()

@@ -245,9 +245,8 @@
 	name = "heart of freedom"
 	desc = "This heart pumps with the passion to give... something freedom."
 	organ_flags = ORGAN_SYNTHETIC //the power of freedom prevents heart attacks
-	///
+	/// The cooldown until the next time this heart can give the host an adrenaline boost.
 	COOLDOWN_DECLARE(adrenaline_cooldown)
-	var/min_next_adrenaline = 0
 
 /obj/item/organ/heart/freedom/on_life(delta_time, times_fired)
 	. = ..()

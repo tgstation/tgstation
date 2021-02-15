@@ -64,13 +64,13 @@
 	M.AdjustParalyzed(-50 * REM * delta_time)
 	M.AdjustImmobilized(-50 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/nicotine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(0.1 * REM * delta_time, 0)
 	M.adjustOxyLoss(1.1 * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/crank
 	name = "Crank"
@@ -93,14 +93,14 @@
 	M.AdjustImmobilized(-20 * REM * delta_time)
 	M.AdjustParalyzed(-20 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time)
 	M.adjustToxLoss(2 * REM * delta_time, 0)
 	M.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REM)
@@ -109,19 +109,19 @@
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
 	M.adjustToxLoss(5*REM, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
 	M.adjustBruteLoss(5*REM, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
 	M.adjustToxLoss(5*REM, 0)
 	M.adjustBruteLoss(5*REM, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
@@ -145,13 +145,13 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * REM * delta_time)
 	M.adjustToxLoss(0.25 * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 	M.adjustToxLoss(2*REM, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/krokodil/addiction_act_stage2(mob/living/M)
 	if(prob(25))
@@ -163,7 +163,7 @@
 		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
 	M.adjustBruteLoss(3*REM, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
 	CHECK_DNA_AND_SPECIES(M)
@@ -174,7 +174,7 @@
 	else
 		M.adjustBruteLoss(5*REM, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
@@ -211,7 +211,7 @@
 	if(DT_PROB(2.5, delta_time))
 		M.emote(pick("twitch", "shiver"))
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M, delta_time, times_fired)
 	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
@@ -224,8 +224,8 @@
 		M.drop_all_held_items()
 	..()
 	M.adjustToxLoss(1 * REM * delta_time, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 100) * REM * delta_time)
-	. = 1
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, (rand(5, 10) / 10) * REM * delta_time)
+	. = TRUE
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
 	M.Jitter(5)
@@ -260,7 +260,7 @@
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
@@ -302,7 +302,7 @@
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M, delta_time, times_fired)
 	M.hallucination += 5 * REM * delta_time
@@ -362,7 +362,7 @@
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
@@ -381,7 +381,7 @@
 		M.losebreath++
 		M.adjustOxyLoss(1, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/happiness
 	name = "Happiness"
@@ -409,7 +409,7 @@
 	M.disgust = 0
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/happiness/overdose_process(mob/living/M, delta_time, times_fired)
 	if(DT_PROB(16, delta_time))
@@ -426,7 +426,7 @@
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
@@ -459,7 +459,7 @@
 	if(prob(50))
 		M.emote(pick("twitch","laugh","frown"))
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/pumpup
 	name = "Pump-Up"
@@ -487,7 +487,7 @@
 		M.losebreath++
 		M.adjustToxLoss(2, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You can't stop shaking, your heart beats faster and faster...</span>")

@@ -177,10 +177,10 @@
 	if(DT_PROB(5, delta_time))
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
 		M.adjustToxLoss(rand(20, 60), 0)
-		. = 1
+		. = TRUE
 	else if(DT_PROB(23, delta_time))
 		M.heal_bodypart_damage(5)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/toxin/minttoxin
@@ -279,7 +279,7 @@
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustOxyLoss(1 * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
@@ -429,11 +429,11 @@
 			M.drowsyness += 2 * REM * delta_time
 		if(10 to 50)
 			M.Sleeping(40 * REM * delta_time)
-			. = 1
+			. = TRUE
 		if(51 to INFINITY)
 			M.Sleeping(40 * REM * delta_time)
 			M.adjustToxLoss(1 * (current_cycle - 50) * REM * delta_time, 0)
-			. = 1
+			. = TRUE
 	..()
 
 /datum/reagent/toxin/fakebeer //disguised as normal beer for use by emagged brobots
@@ -503,7 +503,7 @@
 	M.adjustStaminaLoss(data * REM * delta_time, 0)
 	data = max(data - 1, 3)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/toxin/polonium
 	name = "Polonium"
@@ -543,7 +543,7 @@
 				if(prob(75))
 					to_chat(M, "<span class='danger'>You scratch at an itch.</span>")
 					M.adjustBruteLoss(2*REM, 0)
-					. = 1
+					. = TRUE
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M, delta_time, times_fired)
@@ -551,7 +551,7 @@
 	M.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(2 * REM * delta_time, FALSE)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
@@ -582,7 +582,7 @@
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	toxpwr = 0.1 * volume
 	M.adjustBruteLoss((0.3 * volume) * REM * delta_time, 0)
-	. = 1
+	. = TRUE
 	if(DT_PROB(8, delta_time))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5, 10))
 		holder.remove_reagent(/datum/reagent/toxin/venom, 1.1)
@@ -652,15 +652,15 @@
 	if(DT_PROB(8, delta_time))
 		to_chat(M, "<span class='danger'>You scratch at your head.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
-		. = 1
+		. = TRUE
 	if(DT_PROB(8, delta_time))
 		to_chat(M, "<span class='danger'>You scratch at your leg.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
-		. = 1
+		. = TRUE
 	if(DT_PROB(8, delta_time))
 		to_chat(M, "<span class='danger'>You scratch at your arm.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
-		. = 1
+		. = TRUE
 	if(DT_PROB(1.5, delta_time))
 		holder.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
 		holder.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
@@ -836,7 +836,7 @@
 	if(current_cycle >= 11)
 		M.Paralyze(60 * REM * delta_time)
 	M.adjustOxyLoss(0.5*REM*delta_time, 0)
-	. = 1
+	. = TRUE
 	..()
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
@@ -971,7 +971,7 @@
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustFireLoss((current_cycle/15) * REM * delta_time, 0)
-	. = 1
+	. = TRUE
 	..()
 
 /datum/reagent/toxin/acid/nitracid
@@ -993,7 +993,7 @@
 	description = "Causes heavy toxin damage after a brief time of inactivity."
 	reagent_state = LIQUID
 	metabolization_rate = 0 //stays in the system until active.
-	var/actual_metaboliztion_rate = 0.5 * REAGENTS_METABOLISM
+	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
 	toxpwr = 0
 	var/actual_toxpwr = 5
 	var/delay = 30
@@ -1005,7 +1005,7 @@
 		M.adjustToxLoss(actual_toxpwr * REM * delta_time, 0)
 		if(DT_PROB(5, delta_time))
 			M.Paralyze(20)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/toxin/mimesbane
@@ -1079,7 +1079,7 @@
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
 		to_chat(M, "<span class='notice'>[tox_message]</span>")
-	. = 1
+	. = TRUE
 	..()
 
 /datum/reagent/toxin/leadacetate

@@ -1857,7 +1857,7 @@
 
 	// Trait removal if obese
 	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY))
-		if(overeatduration >= (20 SECONDS))
+		if(overeatduration >= (200 SECONDS))
 			to_chat(src, "<span class='notice'>Your transformation restores your body's natural fitness!</span>")
 
 		REMOVE_TRAIT(src, TRAIT_FAT, OBESITY)

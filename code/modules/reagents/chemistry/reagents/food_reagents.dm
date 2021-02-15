@@ -64,7 +64,7 @@
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(30, delta_time))
 		M.heal_bodypart_damage(brute = brute_heal, burn = burn_heal)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
@@ -209,12 +209,12 @@
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
 	M.AdjustSleeping(600)
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M, delta_time, times_fired)
 	M.AdjustSleeping(40 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -473,7 +473,7 @@
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/consumable/cornoil
@@ -728,7 +728,7 @@
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 10)
 		M.Unconscious(40 * REM * delta_time, FALSE)
-		. = 1
+		. = TRUE
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
@@ -839,7 +839,7 @@
 	if(M.disgust < 80)
 		M.adjust_disgust(10 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/secretsauce
 	name = "Secret Sauce"

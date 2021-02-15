@@ -102,7 +102,7 @@
 			continue
 		D.cure()
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/adminordrazine/quantum_heal
 	name = "Quantum Medicine"
@@ -128,7 +128,7 @@
 	M.hallucination = max(M.hallucination - (10 * REM * delta_time), 0)
 	if(DT_PROB(16, delta_time))
 		M.adjustToxLoss(1, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/synaphydramine
@@ -147,7 +147,7 @@
 	M.hallucination = max(M.hallucination - (10 * REM * delta_time), 0)
 	if(DT_PROB(16, delta_time))
 		M.adjustToxLoss(1, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/cryoxadone
@@ -170,7 +170,7 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
-		. = 1
+		. = TRUE
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
 
@@ -192,7 +192,7 @@
 	if(M.bodytemperature < T0C)
 		M.adjustCloneLoss((0.00006 * (M.bodytemperature ** 2) - 6) * REM * delta_time, 0)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		. = 1
+		. = TRUE
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
 
@@ -226,7 +226,7 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/rezadone
@@ -244,14 +244,14 @@
 	M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 	REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(1 * REM * delta_time, 0)
 	M.Dizzy(5 * REM * delta_time)
 	M.Jitter(5 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/rezadone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -289,12 +289,12 @@
 	else
 		M.adjustFireLoss(-0.5 * REM * delta_time, 0) //But only a quarter as effective for more minor ones
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M, delta_time, times_fired)
 	if(M.getFireLoss()) //It only makes existing burns worse
 		M.adjustFireLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/salglu_solution
@@ -399,7 +399,7 @@
 	M.adjustBruteLoss(-healing * REM * delta_time, 0)
 	M.adjustFireLoss(-healing * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/omnizine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(1.5 * REM * delta_time, FALSE)
@@ -407,7 +407,7 @@
 	M.adjustBruteLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustFireLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/omnizine/protozine
 	name = "Protozine"
@@ -431,7 +431,7 @@
 		M.reagents.remove_reagent(R.type, 3 * REM * delta_time)
 	if(M.health > 20)
 		M.adjustToxLoss(1 * REM * delta_time, 0)
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/potass_iodide
@@ -464,7 +464,7 @@
 		if(R != src)
 			M.reagents.remove_reagent(R.type, 2 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/sal_acid
 	name = "Salicylic Acid"
@@ -482,12 +482,12 @@
 	else
 		M.adjustBruteLoss(-0.5 * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M, delta_time, times_fired)
 	if(M.getBruteLoss()) //It only makes existing bruises worse
 		M.adjustBruteLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/salbutamol
@@ -504,7 +504,7 @@
 	if(M.losebreath >= 4)
 		M.losebreath -= 2 * REM * delta_time
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
@@ -552,7 +552,7 @@
 	if(DT_PROB(18, delta_time))
 		M.adjustToxLoss(1, 0)
 		M.losebreath++
-		. = 1
+		. = TRUE
 	return TRUE
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
@@ -564,7 +564,7 @@
 	if(prob(33))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
@@ -576,7 +576,7 @@
 	if(prob(33))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
@@ -588,7 +588,7 @@
 	if(prob(33))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
@@ -600,7 +600,7 @@
 	if(prob(33))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/diphenhydramine
@@ -648,7 +648,7 @@
 			M.drowsyness += 1 * REM * delta_time
 		if(24 to INFINITY)
 			M.Sleeping(40 * REM * delta_time)
-			. = 1
+			. = TRUE
 	..()
 
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M, delta_time, times_fired)
@@ -668,7 +668,7 @@
 	if(prob(33))
 		M.drop_all_held_items()
 		M.adjustToxLoss(1*REM, 0)
-		. = 1
+		. = TRUE
 		M.Dizzy(3)
 		M.Jitter(3)
 	..()
@@ -677,7 +677,7 @@
 	if(prob(33))
 		M.drop_all_held_items()
 		M.adjustToxLoss(2*REM, 0)
-		. = 1
+		. = TRUE
 		M.Dizzy(4)
 		M.Jitter(4)
 	..()
@@ -686,7 +686,7 @@
 	if(prob(33))
 		M.drop_all_held_items()
 		M.adjustToxLoss(3*REM, 0)
-		. = 1
+		. = TRUE
 		M.Dizzy(5)
 		M.Jitter(5)
 	..()
@@ -717,7 +717,7 @@
 	else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
-		M.blur_eyes(5)
+		M.blur_eyes(10)
 	..()
 
 /datum/reagent/medicine/inacusiate
@@ -748,7 +748,7 @@
 		M.adjustBruteLoss(-2* REM * delta_time, 0)
 		M.adjustFireLoss(-2 * REM * delta_time, 0)
 		M.adjustOxyLoss(-5 * REM * delta_time, 0)
-		. = 1
+		. = TRUE
 	M.losebreath = 0
 	if(DT_PROB(10, delta_time))
 		M.Dizzy(5)
@@ -757,7 +757,7 @@
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(0.5 * REM * delta_time, 0)
-	. = 1
+	. = TRUE
 	M.Dizzy(1 * REM * delta_time)
 	M.Jitter(1 * REM * delta_time)
 	..()
@@ -804,11 +804,11 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(18, delta_time))
+	if(DT_PROB(18, REM * delta_time))
 		M.adjustStaminaLoss(2.5, 0)
 		M.adjustToxLoss(1, 0)
 		M.losebreath++
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/strange_reagent
@@ -925,7 +925,7 @@
 		var/mob/living/carbon/human/H = M
 		H.drunkenness = max(H.drunkenness - (10 * REM * delta_time), 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
@@ -952,17 +952,17 @@
 		M.adjustToxLoss(-1 * REM * delta_time, 0)
 		M.adjustBruteLoss(-1 * REM * delta_time, 0)
 		M.adjustFireLoss(-1 * REM * delta_time, 0)
-	M.AdjustAllImmobility(-40  * REM * delta_time)
+	M.AdjustAllImmobility(-60  * REM * delta_time)
 	M.adjustStaminaLoss(-5 * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/M, delta_time, times_fired)
 	if(DT_PROB(18, delta_time))
 		M.adjustStaminaLoss(2.5, 0)
 		M.adjustToxLoss(1, 0)
 		M.losebreath++
-		. = 1
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/insulin
@@ -976,8 +976,8 @@
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.AdjustSleeping(-20 * REM * delta_time))
-		. = 1
-	holder.remove_reagent(/datum/reagent/consumable/sugar, 1.5*delta_time)
+		. = TRUE
+	holder.remove_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
 	..()
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
@@ -1019,7 +1019,7 @@
 	M.adjustOxyLoss(-1.5 * REM * delta_time, 0)
 	M.adjustToxLoss(-1.5 * REM * delta_time, 0, TRUE) //heals TOXINLOVERs
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
@@ -1038,14 +1038,14 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -15 * REM * delta_time)
 	M.adjustCloneLoss(-3 * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/carbon/M, delta_time, times_fired) //wtb flavortext messages that hint that you're vomitting up robots
 	if(DT_PROB(13, delta_time))
 		M.reagents.remove_reagent(type, metabolization_rate*15) // ~5 units at a rate of 0.4 but i wanted a nice number in code
 		M.vomit(20) // nanite safety protocols make your body expel them to prevent harmies
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
@@ -1078,7 +1078,7 @@
 			M.say(pick("Yeah, well, you know, that's just, like, uh, your opinion, man.", "Am I glad he's frozen in there and that we're out here, and that he's the sheriff and that we're frozen out here, and that we're in there, and I just remembered, we're out here. What I wanna know is: Where's the caveman?", "It ain't me, it ain't me...", "Make love, not war!", "Stop, hey, what's that sound? Everybody look what's going down...", "Do you believe in magic in a young girl's heart?"), forced = /datum/reagent/medicine/earthsblood)
 	M.druggy = clamp(M.druggy + (10 * REM * delta_time), 0, 15 * REM * delta_time) //See above
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/earthsblood/on_mob_metabolize(mob/living/L)
 	..()
@@ -1098,7 +1098,7 @@
 		var/mob/living/carbon/hippie = M
 		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"
@@ -1249,13 +1249,13 @@
 		M.AdjustAllImmobility(-5 * REM * delta_time)
 		M.adjustStaminaLoss(-0.5 * REM * delta_time, 0)
 		M.Jitter(1)
-		metabolization_rate = 0.005 * REAGENTS_METABOLISM * rand(5, 20) // randomizes metabolism between 0.02 and 0.08 per tick
+		metabolization_rate = 0.005 * REAGENTS_METABOLISM * rand(5, 20) // randomizes metabolism between 0.02 and 0.08 per second
 		. = TRUE
 	..()
 
 /datum/reagent/medicine/modafinil/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel awfully out of breath and jittery!</span>")
-	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.01 per tick on overdose
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.005 per second on overdose
 
 /datum/reagent/medicine/modafinil/overdose_process(mob/living/M, delta_time, times_fired)
 	overdose_progress++
@@ -1316,13 +1316,13 @@
 	if(mood != null && mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
 		mood.setSanity(min(mood.sanity + (5 * REM * delta_time), SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/psicodine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.hallucination = clamp(M.hallucination + (5 * REM * delta_time), 0, 60)
 	M.adjustToxLoss(1 * REM * delta_time, 0)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/metafactor
 	name = "Mitogen Metabolism Factor"
@@ -1352,7 +1352,7 @@
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2 * REM * delta_time)//Add a chance to cure liver trauma once implemented.
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
 	name = "Polypyrylium Oligomers"
@@ -1381,7 +1381,7 @@
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * REM * delta_time)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/medicine/granibitaluri
 	name = "Granibitaluri" //achieve "GRANular" amounts of C2

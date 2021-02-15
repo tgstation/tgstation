@@ -159,7 +159,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -230,7 +230,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	name = "Thirteen Loko"
 	description = "A potent mixture of caffeine and alcohol."
 	color = "#102000" // rgb: 16, 32, 0
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 80
 	quality = DRINK_GOOD
 	overdose_threshold = 60
@@ -322,7 +322,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(5, delta_time))
 		M.heal_bodypart_damage(brute = 1)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/threemileisland
@@ -620,7 +620,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustFireLoss(-1 * REM * delta_time, 0)
 		M.adjustToxLoss(-1 * REM * delta_time, 0)
 		M.adjustOxyLoss(-5 * REM * delta_time, 0)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/whiskey_cola
@@ -826,7 +826,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(DT_PROB(5, delta_time))
 			new /datum/hallucination/stray_bullet(M)
 	..()
-	. = 1
+	. = TRUE
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_end_metabolize(mob/living/carbon/M)
 	if(B)
@@ -1030,7 +1030,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/mob/living/carbon/human/H = M
 		if(!H.shoes)
 			H.adjustBruteLoss(-3 * REM * delta_time, 0)
-			. = 1
+			. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/snowwhite
@@ -1370,7 +1370,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M) && M.mind?.miming)
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/drunkenblumpkin
@@ -1450,7 +1450,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustCloneLoss(-5 * REM * delta_time, 0)
 		M.adjustOxyLoss(-4 * REM * delta_time, 0)
 		M.adjustToxLoss(-3 * REM * delta_time, 0)
-		. = 1
+		. = TRUE
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/bacchus_blessing //An EXTREMELY powerful drink. Smashed in seconds, dead in minutes.
@@ -1489,11 +1489,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	switch(current_cycle)
 		if(51 to 200)
 			M.Sleeping(100 * REM * delta_time)
-			. = 1
+			. = TRUE
 		if(201 to INFINITY)
 			M.AdjustSleeping(40 * REM * delta_time)
 			M.adjustToxLoss(2 * REM * delta_time, 0)
-			. = 1
+			. = TRUE
 	..()
 
 /datum/reagent/consumable/ethanol/gargle_blaster
@@ -1522,7 +1522,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			M.set_drugginess(55 * REM * delta_time)
 		if(200 to INFINITY)
 			M.adjustToxLoss(2 * REM * delta_time, 0)
-			. = 1
+			. = TRUE
 	..()
 
 /datum/reagent/consumable/ethanol/neurotoxin
@@ -1561,7 +1561,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					M.set_heartattack(TRUE)
 					if(M.stat == CONSCIOUS)
 						M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!</span>")
-	. = 1
+	. = TRUE
 	..()
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_end_metabolize(mob/living/carbon/M)
@@ -1615,7 +1615,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				M.emote(pick("twitch","giggle"))
 			if(DT_PROB(16, delta_time))
 				M.adjustToxLoss(2, 0)
-				. = 1
+				. = TRUE
 	..()
 
 /datum/reagent/consumable/ethanol/eggnog
@@ -1711,7 +1711,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		M.adjustBruteLoss(-2 * REM * delta_time, 0)
-		. = 1
+		. = TRUE
 	return ..()
 
 /datum/reagent/consumable/ethanol/quintuple_sec
@@ -1735,7 +1735,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.adjustOxyLoss(-5 * REM * delta_time, 0)
 		M.adjustFireLoss(-5 * REM * delta_time, 0)
 		M.adjustToxLoss(-5 * REM * delta_time, 0)
-		. = 1
+		. = TRUE
 	return ..()
 
 /datum/reagent/consumable/ethanol/grasshopper
@@ -2111,7 +2111,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M) && M.mind?.miming)
 		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		. = 1
+		. = TRUE
 	return ..()
 
 /datum/reagent/consumable/ethanol/fruit_wine

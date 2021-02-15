@@ -1160,14 +1160,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(H, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(H.overeatduration < (20 SECONDS))
+		if(H.overeatduration < (200 SECONDS))
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
-		if(H.overeatduration >= (20 SECONDS))
+		if(H.overeatduration >= (200 SECONDS))
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
 			H.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
@@ -1196,13 +1196,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		hunger_rate *= H.physiology.hunger_mod
 		H.adjust_nutrition(-hunger_rate * delta_time)
 
-
 	if(H.nutrition > NUTRITION_LEVEL_FULL)
-		if(H.overeatduration < 2 MINUTES) //capped so people don't take forever to unfat
-			H.overeatduration = min(H.overeatduration + (1 * delta_time), 2 MINUTES)
+		if(H.overeatduration < 20 MINUTES) //capped so people don't take forever to unfat
+			H.overeatduration = min(H.overeatduration + (1 SECONDS * delta_time), 20 MINUTES)
 	else
 		if(H.overeatduration > 0)
-			H.overeatduration = max(H.overeatduration - (2 * delta_time), 0) //doubled the unfat rate
+			H.overeatduration = max(H.overeatduration - (2 SECONDS * delta_time), 0) //doubled the unfat rate
 
 	//metabolism change
 	if(H.nutrition > NUTRITION_LEVEL_FAT)
@@ -1715,7 +1714,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
-		// change rate of 0.1 as area temp has large impact on the surface
+		// change rate of 0.05 as area temp has large impact on the surface
 		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.05 * delta_time)
 
 		// We need to apply the thermal protection of the clothing when applying area to surface change
@@ -1734,7 +1733,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
-		// change rate of 0.09 to reflect temp back to the skin at the slight higher rate then core to skin
+		// change rate of 0.045 to reflect temp back to the skin at the slight higher rate then core to skin
 		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.045 * delta_time)
 
 		// We do not want to over shoot after using protection
