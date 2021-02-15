@@ -618,7 +618,7 @@ nobiliumsuppression = INFINITY
 			air.temperature = max(((air.temperature * old_heat_capacity + energy_produced) / new_heat_capacity), TCMB)
 
 
-/datum/gas_reaction/miaster	//dry heat sterilization: clears out pathogens in the air
+/datum/gas_reaction/miaster //dry heat sterilization: clears out pathogens in the air
 	priority = -10 //after all the heating from fires etc. is done
 	name = "Dry Heat Sterilization"
 	id = "sterilization"

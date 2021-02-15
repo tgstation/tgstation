@@ -10,6 +10,12 @@
 	var/mission = "Assist the station."
 	var/teamsize = 5
 	var/polldesc
+	/// If TRUE, gives the team members "[role] [random last name]" style names
+	var/random_names = TRUE
+	/// If TRUE, the admin who created the response team will be spawned in the briefing room in their preferred briefing outfit (assuming they're a ghost)
+	var/spawn_admin = FALSE
+	/// If TRUE, we try and pick one of the most experienced players who volunteered to fill the leader slot
+	var/leader_experience = TRUE
 
 /datum/ert/New()
 	if (!polldesc)
@@ -39,10 +45,12 @@
 	code = "Green"
 	teamsize = 1
 	opendoors = FALSE
-	leader_role = /datum/antagonist/official
-	roles = list(/datum/antagonist/official)
+	leader_role = /datum/antagonist/ert/official
+	roles = list(/datum/antagonist/ert/official)
 	rename_team = "CentCom Officials"
 	polldesc = "a CentCom Official"
+	random_names = FALSE
+	leader_experience = FALSE
 
 /datum/ert/centcom_official/New()
 	mission = "Conduct a routine performance review of [station_name()] and its Captain."
@@ -71,6 +79,12 @@
 	rename_team = "Horde of Interns"
 	mission = "Assist in conflict resolution."
 	polldesc = "an unpaid internship opportunity with Nanotrasen"
+	random_names = FALSE
+
+/datum/ert/intern/unarmed
+	roles = list(/datum/antagonist/ert/intern/unarmed)
+	leader_role = /datum/antagonist/ert/intern/leader/unarmed
+	rename_team = "Unarmed Horde of Interns"
 
 /datum/ert/erp
 	roles = list(/datum/antagonist/ert/security/party, /datum/antagonist/ert/clown/party, /datum/antagonist/ert/engineer/party, /datum/antagonist/ert/janitor/party)

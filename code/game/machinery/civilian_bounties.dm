@@ -262,10 +262,10 @@
 	var/bounty_holder_job
 	///What the bounty was for.
 	var/bounty_name
-	///Bank account of the person who receives the handling tip.
-	var/datum/bank_account/bounty_handler_account
 	///Bank account of the person who completed the bounty.
 	var/datum/bank_account/bounty_holder_account
+	///Bank account of the person who receives the handling tip.
+	var/datum/bank_account/bounty_handler_account
 	///Our internal radio.
 	var/obj/item/radio/radio
 	///The key our internal radio uses.
@@ -290,13 +290,23 @@
 		. += "<span class='notice'>Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.</span>"
 
 /obj/item/bounty_cube/process(delta_time)
-	if(COOLDOWN_FINISHED(src, next_nag_time))
-		if(!is_centcom_level(z) && !is_reserved_level(z)) //don't send message if we're on Centcom or in transit
-			radio.talk_into(src, "Unsent in [get_area(src)].[speed_bonus ? " Speedy delivery bonus of [bounty_value * speed_bonus] credit\s lost." : ""]", RADIO_CHANNEL_SUPPLY)
-			speed_bonus = 0
-			bounty_holder_account.bank_card_talk("\The [src] is unsent in <b>[get_area(src)]</b>.")
-			if(bounty_handler_account)
-				bounty_handler_account.bank_card_talk("\The [src] is unsent in <b>[get_area(src)]</b>.")
+	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
+	if(COOLDOWN_FINISHED(src, next_nag_time) && !is_centcom_level(z) && !is_reserved_level(z))
+		//set up our nag message
+		var/nag_message = "[src] is unsent in [get_area(src)]."
+
+		//nag on Supply channel and reduce the speed bonus multiplier to nothing
+		var/speed_bonus_lost = "[speed_bonus ? " Speedy delivery bonus of [bounty_value * speed_bonus] credit\s lost." : ""]"
+		radio.talk_into(src, "[nag_message][speed_bonus_lost]", RADIO_CHANNEL_SUPPLY)
+		speed_bonus = 0
+
+		//alert the holder
+		bounty_holder_account.bank_card_talk("[nag_message]")
+
+		//if someone has registered for the handling tip, nag them
+		bounty_handler_account?.bank_card_talk(nag_message)
+
+		//increase our cooldown length and start it again
 		nag_cooldown = nag_cooldown * nag_cooldown_multiplier
 		COOLDOWN_START(src, next_nag_time, nag_cooldown)
 
@@ -309,18 +319,19 @@
 	name = "\improper [bounty_value] cr [name]"
 	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
 	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut)
+	AddComponent(/datum/component/gps, "[src]")
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
 	radio.talk_into(src,"Created in [get_area(src)] by [bounty_holder] ([bounty_holder_job]). Speedy delivery bonus lost in [time2text(next_nag_time - world.time,"mm:ss")].", RADIO_CHANNEL_SUPPLY)
 
 //for when you need a REAL bounty cube to test with and don't want to do a bounty each time your code changes
-/obj/item/bounty_cube/test_cube
+/obj/item/bounty_cube/debug_cube
 	name = "debug bounty cube"
 	desc = "Use in-hand to set it up with a random bounty. Requires an ID it can detect with a bank account attached. \
-	This will alert Supply over the radio with your name and location, and cargo techs will be dispatched to your location with kill on sight clearance."
+	This will alert Supply over the radio with your name and location, and cargo techs will be dispatched with kill on sight clearance."
 	var/set_up = FALSE
 
-/obj/item/bounty_cube/test_cube/attack_self(mob/user)
+/obj/item/bounty_cube/debug_cube/attack_self(mob/user)
 	if(!isliving(user))
 		to_chat(user, "<span class='warning'>You aren't eligible to use this!</span>")
 		return ..()

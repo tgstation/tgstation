@@ -232,10 +232,10 @@
 
 
 /datum/ntnet/station_root
-	var/list/services_by_path = list()					//type = datum/ntnet_service
-	var/list/services_by_id = list()					//id = datum/ntnet_service
+	var/list/services_by_path = list() //type = datum/ntnet_service
+	var/list/services_by_id = list() //id = datum/ntnet_service
 
-	var/list/autoinit_service_paths = list()			//typepaths
+	var/list/autoinit_service_paths = list() //typepaths
 
 
 	var/list/available_station_software = list()
@@ -248,10 +248,10 @@
 	var/setting_peertopeer = TRUE
 	var/setting_communication = TRUE
 	var/setting_systemcontrol = TRUE
-	var/setting_disabled = FALSE					// Setting to 1 will disable all wireless, independently on relays status.
+	var/setting_disabled = FALSE // Setting to 1 will disable all wireless, independently on relays status.
 
-	var/intrusion_detection_enabled = TRUE 		// Whether the IDS warning system is enabled
-	var/intrusion_detection_alarm = FALSE			// Set when there is an IDS warning due to malicious (antag) software.
+	var/intrusion_detection_enabled = TRUE // Whether the IDS warning system is enabled
+	var/intrusion_detection_alarm = FALSE // Set when there is an IDS warning due to malicious (antag) software.
 
 // If new NTNet datum is spawned, it replaces the old one.
 /datum/ntnet/station_root/New(root_name)
@@ -398,7 +398,7 @@
 
 
 
-/datum/ntnet/station_root/proc/register_map_supremecy()					//called at map init to make this what station networks use.
+/datum/ntnet/station_root/proc/register_map_supremecy() //called at map init to make this what station networks use.
 	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
 		SSnetworks.relays.Add(R)
 		R.NTNet = src

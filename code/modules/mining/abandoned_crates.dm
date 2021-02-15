@@ -221,7 +221,7 @@
 			for(var/i in 1 to 4)
 				new /obj/item/clothing/mask/balaclava(src)
 			new /obj/item/gun/ballistic/shotgun/toy(src)
-			new /obj/item/gun/ballistic/automatic/toy/pistol/unrestricted(src)
+			new /obj/item/gun/ballistic/automatic/pistol/toy(src)
 			new /obj/item/gun/ballistic/automatic/toy/unrestricted(src)
 			new /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted(src)
 			new /obj/item/ammo_box/foambox(src)
