@@ -82,7 +82,7 @@
 /datum/reagent/medicine/c2/libital //messes with your liber
 	name = "Libital"
 	description = "A bruise reliever. Does minor liver damage."
-	color = "#ECEC8D" // rgb: 236	236	141
+	color = "#ECEC8D" // rgb: 236 236 141
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -218,7 +218,7 @@
 
 /******OXY******/
 /*Suffix: -mol*/
-#define	CONVERMOL_RATIO 5		//# Oxygen damage to result in 1 tox
+#define CONVERMOL_RATIO 5 //# Oxygen damage to result in 1 tox
 
 /datum/reagent/medicine/c2/convermol
 	name = "Convermol"
@@ -244,7 +244,7 @@
 	..()
 	return TRUE
 
-#undef	CONVERMOL_RATIO
+#undef CONVERMOL_RATIO
 
 /datum/reagent/medicine/c2/tirimol
 	name = "Tirimol"
@@ -340,7 +340,7 @@
 	. = ..()
 	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
 
-#define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
+#define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
 /datum/reagent/medicine/c2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
@@ -357,7 +357,7 @@
 		return
 	var/mob/living/carbon/C = A
 	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)	  //This is to promote iv pole use for that chemotherapy feel.
+		C.adjustToxLoss(-1.5 * min(2, trans_volume) * REM, 0)   //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/liver/L = C.internal_organs_slot[ORGAN_SLOT_LIVER]
 	if((L.organ_flags & ORGAN_FAILING) || !L)
 		return

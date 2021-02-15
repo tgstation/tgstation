@@ -29,7 +29,7 @@
 					continue
 				if(HAS_TRAIT(item, TRAIT_NODROP))
 					message += "Though it feels redundant, "
-				marked_item = 		item
+				marked_item = item
 				message += "You mark [item] for recall.</span>"
 				name = "Recall [item]"
 				break
@@ -43,14 +43,14 @@
 		else if(marked_item && (marked_item in hand_items)) //unlinking item to the spell
 			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
 			name = "Instant Summons"
-			marked_item = 		null
+			marked_item = null
 
 		else if(marked_item && QDELETED(marked_item)) //the item was destroyed at some point
 			message = "<span class='warning'>You sense your marked item has been destroyed!</span>"
 			name = "Instant Summons"
-			marked_item = 		null
+			marked_item = null
 
-		else	//Getting previously marked item
+		else //Getting previously marked item
 			var/obj/item_to_retrieve = marked_item
 			var/infinite_recursion = 0 //I don't want to know how someone could put something inside itself but these are wizards so let's be safe
 

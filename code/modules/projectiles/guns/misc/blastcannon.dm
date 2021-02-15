@@ -137,7 +137,7 @@
 	damage = 0
 	nodamage = FALSE
 	movement_type = FLYING
-	projectile_phasing = ALL		// just blows up the turfs lmao
+	projectile_phasing = ALL // just blows up the turfs lmao
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavyr = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]

@@ -1,4 +1,0 @@
-author: "Thalpy"
-delete-after: True
-changes: 
-  - bugfix: "fixes reaction chambers giving free buffer on deconstruct/reconstruct"

@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "AIs can no longer shunt while activating the Doomsday Device and still expect it to finish setup on its own."

@@ -1,7 +1,7 @@
 /* Code for the Wild West map by Brotemis
  * Contains:
- *		Wish Granter
- *		Meat Grinder
+ * Wish Granter
+ * Meat Grinder
  */
 
 //Areas
