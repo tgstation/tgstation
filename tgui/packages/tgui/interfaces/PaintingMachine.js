@@ -1,7 +1,6 @@
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { Button, Dropdown, Section, Stack } from '../components';
-import { logger } from '../logging';
 
 export const PaintingMachine = (props, context) => {
   const { act, data } = useBackend(context);
@@ -114,8 +113,6 @@ export const PainterDropdown = (props, context) => {
     selectedOption,
     setSelectedOption,
   ] = useSharedState(context, stateKey, options[0]);
-
-  logger.log(JSON.stringify(selectedOption));
 
   return (
     <Dropdown
