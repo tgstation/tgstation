@@ -46,7 +46,3 @@
 /// -- Flags for traits. --
 /// Caps the plant's yield at 5 instead of 10.
 #define TRAIT_HALVES_YIELD (1<<0)
-
-/// -- Defines for specific plants. --
-/// Sets how many generations glowcaps can spread.
-#define GLOWCAP_MAX_GENERATIONS 3

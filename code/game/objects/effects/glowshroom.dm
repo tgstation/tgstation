@@ -112,9 +112,6 @@
 	//We could be deleted at any point and the timers might not be cleaned up
 	if(QDELETED(src))
 		return
-	// If its at X amount of generations , we want it to stop spreading .
-	if(generation>=GLOWCAP_MAX_GENERATIONS)
-		return
 
 	var/turf/ownturf = get_turf(src)
 	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
@@ -171,7 +168,7 @@
 			if(shroomCount >= placeCount)
 				continue
 
-			Decay(TRUE, 2) // Decay before spawning new mushrooms to reduce their endurance
+			Decay(TRUE, 20) // Decay before spawning new mushrooms to reduce their endurance
 			if(QDELETED(src))	//Decay can end us
 				return
 			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
