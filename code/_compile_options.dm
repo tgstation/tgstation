@@ -1,7 +1,7 @@
-//#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
+//#define TESTING //By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
-//#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
+//#define DATUMVAR_DEBUGGING_MODE //Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
 
 // Comment this out if you are debugging problems that might be obscured by custom error handling in world/Error
 #ifdef DEBUG
@@ -15,6 +15,13 @@
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
+/*
+* Enables debug messages for every single reaction step. This is 1 message per 0.5s for a SINGLE reaction. Useful for tracking down bugs/asking me for help in the main reaction handiler (equilibrium.dm).
+*
+* * Requires TESTING to be defined to work.
+*/
+//#define REAGENTS_TESTING
+
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -23,16 +30,16 @@
 
 #endif //ifdef REFERENCE_TRACKING
 
-#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
-#define TRACK_MAX_SHARE	//Allows max share tracking, for use in the atmos debugging ui
+#define VISUALIZE_ACTIVE_TURFS //Highlights atmos active turfs in green
+#define TRACK_MAX_SHARE //Allows max share tracking, for use in the atmos debugging ui
 #endif //ifdef TESTING
 
-//#define UNIT_TESTS			//If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
+//#define UNIT_TESTS //If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 
-#ifndef PRELOAD_RSC				//set to:
-#define PRELOAD_RSC	2			//	0 to allow using external resources or on-demand behaviour;
-#endif							//	1 to use the default behaviour;
-								//	2 for preloading absolutely everything;
+#ifndef PRELOAD_RSC //set to:
+#define PRELOAD_RSC 2 // 0 to allow using external resources or on-demand behaviour;
+#endif // 1 to use the default behaviour;
+								// 2 for preloading absolutely everything;
 
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "_maps/runtimestation.json"

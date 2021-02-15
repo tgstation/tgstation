@@ -23,7 +23,7 @@
 		list(/datum/reagent/medicine/c2/multiver, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
 		list(/datum/reagent/medicine/omnizine)
 	)
-	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: mutadone -> morphine
+	var/list/chem_buttons //Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
@@ -202,6 +202,8 @@
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
+				if(R.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+					continue
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
 

@@ -1,8 +1,8 @@
 /* Stack type objects!
  * Contains:
- * 		Stacks
- * 		Recipe datum
- * 		Recipe list datum
+ * Stacks
+ * Recipe datum
+ * Recipe list datum
  */
 
 /*
@@ -39,6 +39,8 @@
 	var/absorption_rate
 	/// Amount of matter for RCD
 	var/matter_amount = 0
+	/// Does this stack require a unique girder in order to make a wall?
+	var/has_unique_girder = FALSE
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(new_amount != null)
@@ -413,7 +415,7 @@
 		return FALSE
 	if(mats_per_unit != check.mats_per_unit)
 		return FALSE
-	if(is_cyborg)	// No merging cyborg stacks into other stacks
+	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
 	return TRUE
 

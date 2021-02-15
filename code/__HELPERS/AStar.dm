@@ -36,11 +36,11 @@ Actual Adjacent procs :
 /datum/pathnode
 	var/turf/source //turf associated with the PathNode
 	var/datum/pathnode/prevNode //link to the parent PathNode
-	var/f		//A* Node weight (f = g + h)
-	var/g		//A* movement cost variable
-	var/h		//A* heuristic variable
-	var/nt		//count the number of Nodes traversed
-	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
+	var/f //A* Node weight (f = g + h)
+	var/g //A* movement cost variable
+	var/h //A* heuristic variable
+	var/nt //count the number of Nodes traversed
+	var/bf //bitflag for dir to expand.Some sufficiently advanced motherfuckery
 
 /datum/pathnode/New(s,p,pg,ph,pnt,_bf)
 	source = s

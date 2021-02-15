@@ -49,17 +49,23 @@
 	duration = -1
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/in_love
-	var/mob/living/date
+	var/hearts
 
-/datum/status_effect/in_love/on_creation(mob/living/new_owner, mob/living/love_interest)
+/datum/status_effect/in_love/on_creation(mob/living/new_owner, mob/living/date)
 	. = ..()
-	if(.)
-		date = love_interest
-		linked_alert.desc = "You're in love with [date.real_name]! How lovely."
+	if(!.)
+		return
 
-/datum/status_effect/in_love/tick()
-	if(date)
-		new /obj/effect/temp_visual/love_heart/invisible(date.drop_location(), owner)
+	linked_alert.desc = "You're in love with [date.real_name]! How lovely."
+	hearts = WEAKREF(date.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/one_person,
+		"in_love",
+		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),
+		new_owner,
+	))
+
+/datum/status_effect/in_love/on_remove()
+	QDEL_NULL(hearts)
 
 /datum/status_effect/throat_soothed
 	id = "throat_soothed"
@@ -111,7 +117,7 @@
 		rewarded.adjustCloneLoss(-25)
 
 // heldup is for the person being aimed at
-/datum/status_effect/heldup
+/datum/status_effect/grouped/heldup
 	id = "heldup"
 	duration = -1
 	tick_interval = -1
@@ -123,11 +129,11 @@
 	desc = "Making any sudden moves would probably be a bad idea!"
 	icon_state = "aimed"
 
-/datum/status_effect/heldup/on_apply()
+/datum/status_effect/grouped/heldup/on_apply()
 	owner.apply_status_effect(STATUS_EFFECT_SURRENDER)
 	return ..()
 
-/datum/status_effect/heldup/on_remove()
+/datum/status_effect/grouped/heldup/on_remove()
 	owner.remove_status_effect(STATUS_EFFECT_SURRENDER)
 	return ..()
 
@@ -302,7 +308,7 @@
 	slap_item = null
 
 //this effect gives the user an alert they can use to surrender quickly
-/datum/status_effect/surrender
+/datum/status_effect/grouped/surrender
 	id = "surrender"
 	duration = -1
 	tick_interval = -1

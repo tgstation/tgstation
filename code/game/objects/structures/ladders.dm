@@ -66,7 +66,7 @@
 		icon_state = "ladder10"
 	else if(down)
 		icon_state = "ladder01"
-	else	//wtf make your ladders properly assholes
+	else //wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
 /obj/structure/ladder/singularity_pull()
@@ -136,6 +136,15 @@
 	return use(user)
 
 /obj/structure/ladder/attack_alien(mob/user)
+	return use(user)
+
+/obj/structure/ladder/attack_larva(mob/user)
+	return use(user)
+
+/obj/structure/ladder/attack_animal(mob/user)
+	return use(user)
+
+/obj/structure/ladder/attack_slime(mob/user)
 	return use(user)
 
 /obj/structure/ladder/attackby(obj/item/W, mob/user, params)

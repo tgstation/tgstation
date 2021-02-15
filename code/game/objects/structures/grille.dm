@@ -159,7 +159,7 @@
 			return
 
 //window placing begin
-	else if(is_glass_sheet(W))
+	else if(is_glass_sheet(W) || istype(W, /obj/item/stack/sheet/bronze))
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
@@ -189,6 +189,8 @@
 					WD = new/obj/structure/window/shuttle(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
 					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location())
+				else if(istype(W, /obj/item/stack/sheet/bronze))
+					WD = new/obj/structure/window/bronze/fulltile(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
@@ -234,7 +236,7 @@
 // returns 1 if shocked, 0 otherwise
 
 /obj/structure/grille/proc/shock(mob/user, prb)
-	if(!anchored || broken)		// anchored/broken grilles are never connected
+	if(!anchored || broken) // anchored/broken grilles are never connected
 		return FALSE
 	if(!prob(prb))
 		return FALSE

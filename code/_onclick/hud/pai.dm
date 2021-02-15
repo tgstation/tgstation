@@ -82,13 +82,17 @@
 	icon_state = "host_monitor"
 	required_software = "host scan"
 
-/atom/movable/screen/pai/host_monitor/Click()
+/atom/movable/screen/pai/host_monitor/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/silicon/pai/pAI = usr
+	var/list/modifiers = params2list(params)
 	if(iscarbon(pAI.card.loc))
-		pAI.hostscan.attack(pAI.card.loc, pAI)
+		if (LAZYACCESS(modifiers, RIGHT_CLICK))
+			pAI.hostscan.attack_secondary(pAI.card.loc, pAI)
+		else
+			pAI.hostscan.attack(pAI.card.loc, pAI)
 	else
 		to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
 		return FALSE

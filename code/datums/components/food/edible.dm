@@ -286,7 +286,7 @@ Behavior that's still missing from this component that original food items had t
 			eater.visible_message("<span class='notice'>[eater] [eatverb]s \the [parent].</span>", "<span class='notice'>You [eatverb] \the [parent].</span>")
 		else if(fullness > 500 && fullness < 600)
 			eater.visible_message("<span class='notice'>[eater] unwillingly [eatverb]s a bit of \the [parent].</span>", "<span class='notice'>You unwillingly [eatverb] a bit of \the [parent].</span>")
-		else if(fullness > (600 * (1 + eater.overeatduration / 2000)))	// The more you eat - the more you can eat
+		else if(fullness > (600 * (1 + eater.overeatduration / 2000))) // The more you eat - the more you can eat
 			eater.visible_message("<span class='warning'>[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [parent] to go down your throat!</span>")
 			return
 	else //If you're feeding it to someone else.

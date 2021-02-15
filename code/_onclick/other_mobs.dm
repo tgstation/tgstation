@@ -31,6 +31,15 @@
 
 	if(dna?.species?.spec_unarmedattack(src, A, modifiers)) //Because species like monkeys dont use attack hand
 		return
+
+	if (LAZYACCESS(modifiers, RIGHT_CLICK))
+		var/secondary_result = A.attack_hand_secondary(src, modifiers)
+
+		if (secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
+			return
+		else if (secondary_result != SECONDARY_ATTACK_CALL_NORMAL)
+			CRASH("attack_hand_secondary did not return a SECONDARY_ATTACK_* define.")
+
 	A.attack_hand(src, modifiers)
 
 /// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
@@ -43,9 +52,14 @@
 	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
 		. = _try_interact(user)
 
+/// When the user uses their hand on an item while holding right-click
+/// Returns a SECONDARY_ATTACK_* value.
+/atom/proc/attack_hand_secondary(mob/user, modifiers)
+	return SECONDARY_ATTACK_CALL_NORMAL
+
 //Return a non FALSE value to cancel whatever called this from propagating, if it respects it.
 /atom/proc/_try_interact(mob/user)
-	if(isAdminGhostAI(user))		//admin abuse
+	if(isAdminGhostAI(user)) //admin abuse
 		return interact(user)
 	if(can_interact(user))
 		return interact(user)
