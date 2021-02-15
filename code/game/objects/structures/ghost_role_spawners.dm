@@ -648,7 +648,7 @@
 			first_name = pick(GLOB.lizard_names_male)
 		if(FEMALE)
 			first_name = pick(GLOB.lizard_names_female)
-		if(NEUTER)
+		else
 			first_name = pick(GLOB.lizard_names_male + GLOB.lizard_names_female)
 
 	return "[rank] [first_name]-Silverscale"
