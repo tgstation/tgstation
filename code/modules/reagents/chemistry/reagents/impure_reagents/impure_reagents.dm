@@ -29,7 +29,7 @@
 /datum/reagent/impurity/isomer
 	name = "Chemical Isomers"
 	description = "Impure chemical isomers made from inoptimal reactions. Causes mild liver damage"
-	ph = 3	
+	ph = 3
 
 /datum/reagent/impurity/isomer/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
@@ -159,7 +159,7 @@
 	name = "Prion peptides"
 	taste_description = "spearmint frosting"
 	description = "These inhibitory peptides slow down wound healing and also cost nutrition as well!"
-	nutriment_factor = -10 * REAGENTS_METABOLISM 
+	nutriment_factor = -10 * REAGENTS_METABOLISM
 	brute_heal = -1.5 //I halved it because I was concerned it might be too strong at 4 damage a tick.
 	burn_heal = -0.5
 

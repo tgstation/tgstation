@@ -98,7 +98,7 @@
 	determin_ph_range = 6
 	temp_exponent_factor = 1
 	ph_exponent_factor = 2
-	thermic_constant = -250 //Though, it is a test in endothermicity
+	thermic_constant = -350 //Though, it is a test in endothermicity
 	H_ion_release = -3
 	rate_up_lim = 30
 	purity_min = 0
@@ -115,7 +115,7 @@
 	determin_ph_range = 1
 	temp_exponent_factor = 1
 	ph_exponent_factor = 2
-	thermic_constant = -150
+	thermic_constant = -250
 	H_ion_release = -3
 	rate_up_lim = 30
 	purity_min = 0
