@@ -29875,6 +29875,10 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/item/storage/box/silver_ids{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /obj/item/storage/box/ids,
 /turf/open/floor/iron,
 /area/command/bridge)
