@@ -11,12 +11,12 @@
 	available_on_ntnet = 1
 	tgui_id = "NtosNetChat"
 	program_icon = "comment-alt"
-	var/last_message				// Used to generate the toolbar icon
+	var/last_message // Used to generate the toolbar icon
 	var/username
 	var/active_channel
 	var/list/channel_history = list()
-	var/operator_mode = FALSE		// Channel operator mode
-	var/netadmin_mode = FALSE		// Administrator mode (invisible to other users + bypasses passwords)
+	var/operator_mode = FALSE // Channel operator mode
+	var/netadmin_mode = FALSE // Administrator mode (invisible to other users + bypasses passwords)
 
 /datum/computer_file/program/chatclient/New()
 	username = "DefaultUser[rand(100, 999)]"
@@ -119,7 +119,7 @@
 					CRASH("Var computer is null!")
 				if(!hard_drive)
 					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.</span>")
-				else	// In 99.9% cases this will mean our HDD is full
+				else // In 99.9% cases this will mean our HDD is full
 					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning.</span>")
 			return TRUE
 		if("PRG_renamechannel")

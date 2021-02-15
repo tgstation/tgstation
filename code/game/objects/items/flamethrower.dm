@@ -18,7 +18,7 @@
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
 	var/status = FALSE
-	var/lit = FALSE	//on or off
+	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
 	var/obj/item/weldingtool/weldtool = null
 	var/obj/item/assembly/igniter/igniter = null
@@ -195,7 +195,7 @@
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/T in turflist)
 		if(T == previousturf)
-			continue	//so we don't burn the tile we be standin on
+			continue //so we don't burn the tile we be standin on
 		var/list/turfs_sharing_with_prev = previousturf.GetAtmosAdjacentTurfs(alldir=1)
 		if(!(T in turfs_sharing_with_prev))
 			break

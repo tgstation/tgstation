@@ -10,13 +10,13 @@
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/organ_flags = ORGAN_EDIBLE
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
-	var/damage = 0		//total damage this organ has sustained
+	var/damage = 0 //total damage this organ has sustained
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
-	var/healing_factor 	= 0										//fraction of maxhealth healed per on_life(), set to 0 for generic organs
-	var/decay_factor 	= 0										//same as above but when without a living owner, set to 0 for generic organs
-	var/high_threshold	= STANDARD_ORGAN_THRESHOLD * 0.45		//when severe organ damage occurs
-	var/low_threshold	= STANDARD_ORGAN_THRESHOLD * 0.1		//when minor organ damage occurs
-	var/severe_cooldown	//cooldown for severe effects, used for synthetic organ emp effects.
+	var/healing_factor = 0 //fraction of maxhealth healed per on_life(), set to 0 for generic organs
+	var/decay_factor = 0 //same as above but when without a living owner, set to 0 for generic organs
+	var/high_threshold = STANDARD_ORGAN_THRESHOLD * 0.45 //when severe organ damage occurs
+	var/low_threshold = STANDARD_ORGAN_THRESHOLD * 0.1 //when minor organ damage occurs
+	var/severe_cooldown //cooldown for severe effects, used for synthetic organ emp effects.
 	///Organ variables for determining what we alert the owner with when they pass/clear the damage thresholds
 	var/prev_damage = 0
 	var/low_threshold_passed
@@ -88,12 +88,12 @@
 /obj/item/organ/process(delta_time)
 	on_death(delta_time) //Kinda hate doing it like this, but I really don't want to call process directly.
 
-/obj/item/organ/proc/on_death(delta_time = 2)	//runs decay when outside of a person
+/obj/item/organ/proc/on_death(delta_time = 2) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
 		return
 	applyOrganDamage(maxHealth * decay_factor * 0.5 * delta_time)
 
-/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
+/obj/item/organ/proc/on_life() //repair organ damage if the organ is not failing
 	if(organ_flags & ORGAN_FAILING)
 		return
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
@@ -140,7 +140,7 @@
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
-/obj/item/organ/proc/applyOrganDamage(d, maximum = maxHealth)	//use for damaging effects
+/obj/item/organ/proc/applyOrganDamage(d, maximum = maxHealth) //use for damaging effects
 	if(!d) //Micro-optimization.
 		return
 	if(maximum < damage)
@@ -152,14 +152,14 @@
 		to_chat(owner, mess)
 
 ///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
-/obj/item/organ/proc/setOrganDamage(d)	//use mostly for admin heals
+/obj/item/organ/proc/setOrganDamage(d) //use mostly for admin heals
 	applyOrganDamage(d - damage)
 
 /** check_damage_thresholds
  * input: M (a mob, the owner of the organ we call the proc on)
  * output: returns a message should get displayed.
  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
- *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
+ *  If we have, send the corresponding threshold message to the owner, if such a message exists.
  */
 /obj/item/organ/proc/check_damage_thresholds(M)
 	if(damage == prev_damage)
