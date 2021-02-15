@@ -54,7 +54,7 @@
 		switch(rand(100))
 			if(66  to 100)
 				mytray.mutatespecie()
-			if(33	to 65)
+			if(33 to 65)
 				mytray.mutateweed()
 			if(1   to 32)
 				mytray.mutatepest(user)
@@ -303,7 +303,7 @@
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
 	var/last_added = 0
-	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
+	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10 //So that normal blood regeneration can continue with salglu active
 	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add this much to their actual blood per tick
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -312,7 +312,7 @@
 	if(last_added)
 		M.blood_volume -= last_added
 		last_added = 0
-	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
+	if(M.blood_volume < maximum_reachable) //Can only up to double your effective blood level.
 		var/amount_to_add = min(M.blood_volume, volume*5)
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume

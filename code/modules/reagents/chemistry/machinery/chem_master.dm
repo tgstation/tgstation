@@ -484,18 +484,18 @@
  * Uses typelist() for styles storage after initialization.
  * For fallback style must provide style with key (const) CONDIMASTER_STYLE_FALLBACK
  * Returns list(
- * 	<key> = list(
- * 		"icon_state" = <bottle icon_state>,
- * 		"name" = <bottle name>,
- * 		"desc" = <bottle desc>,
- * 		?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
- * 		?"icon_empty" = <icon_state when empty>,
- * 		?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
- * 		?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
- * 		?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
- * 		?"righthand_file" = <same as "lefthand_file" but for right hand>,
- * 	),
- * 	..
+ * <key> = list(
+ * "icon_state" = <bottle icon_state>,
+ * "name" = <bottle name>,
+ * "desc" = <bottle desc>,
+ * ?"generate_name" = <if truthy, autogenerates default name from reagents instead of using "name">,
+ * ?"icon_empty" = <icon_state when empty>,
+ * ?"fill_icon_thresholds" = <list of thresholds for reagentfillings, no tresholds if not provided or falsy>,
+ * ?"inhand_icon_state" = <inhand icon_state, falsy - no icon, not provided - whatever is initial (currently "beer")>,
+ * ?"lefthand_file" = <file for inhand icon for left hand, ignored if "inhand_icon_state" not provided>,
+ * ?"righthand_file" = <same as "lefthand_file" but for right hand>,
+ * ),
+ * ..
  * )
  *
  */

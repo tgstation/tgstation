@@ -1,7 +1,7 @@
 /turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
 	name = "mech bay recharge station"                      //        Recharging turfs
 	desc = "Parking a mech on this station will recharge its internal power cell."
-	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
+	icon = 'icons/turf/floors.dmi'                          //   That are set in stone to check the west turf for recharge port
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
 /turf/open/floor/mech_bay_recharge_floor/break_tile()
