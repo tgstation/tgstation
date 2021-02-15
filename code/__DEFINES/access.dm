@@ -263,6 +263,43 @@
 #define REGION_COMMAND				"Command"
 #define REGION_CENTCOM				"Central Command"
 
+/**
+ * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
+ * If a PDA is not in this list, it cannot be painted using the PDA & ID Painter.
+ * If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
+ */
+ #define PDA_PAINTING_REGIONS list( \
+	/obj/item/pda = list(REGION_GENERAL), \
+	/obj/item/pda/clown = list(REGION_GENERAL), \
+	/obj/item/pda/mime = list(REGION_GENERAL), \
+	/obj/item/pda/medical = list(REGION_MEDBAY), \
+	/obj/item/pda/viro = list(REGION_MEDBAY), \
+	/obj/item/pda/engineering = list(REGION_ENGINEERING), \
+	/obj/item/pda/security = list(REGION_SECURITY), \
+	/obj/item/pda/detective = list(REGION_SECURITY), \
+	/obj/item/pda/warden = list(REGION_SECURITY), \
+	/obj/item/pda/janitor = list(REGION_GENERAL), \
+	/obj/item/pda/toxins = list(REGION_RESEARCH), \
+	/obj/item/pda/heads/hop = list(REGION_COMMAND), \
+	/obj/item/pda/heads/hos = list(REGION_COMMAND), \
+	/obj/item/pda/heads/cmo = list(REGION_COMMAND), \
+	/obj/item/pda/heads/ce = list(REGION_COMMAND), \
+	/obj/item/pda/heads/rd = list(REGION_COMMAND), \
+	/obj/item/pda/captain = list(REGION_COMMAND), \
+	/obj/item/pda/cargo = list(REGION_SUPPLY), \
+	/obj/item/pda/quartermaster = list(REGION_SUPPLY), \
+	/obj/item/pda/shaftminer = list(REGION_SUPPLY), \
+	/obj/item/pda/chaplain = list(REGION_GENERAL), \
+	/obj/item/pda/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
+	/obj/item/pda/botanist = list(REGION_GENERAL), \
+	/obj/item/pda/roboticist = list(REGION_RESEARCH), \
+	/obj/item/pda/curator = list(REGION_GENERAL), \
+	/obj/item/pda/cook = list(REGION_GENERAL), \
+	/obj/item/pda/bar = list(REGION_GENERAL), \
+	/obj/item/pda/atmos = list(REGION_ENGINEERING), \
+	/obj/item/pda/chemist = list(REGION_MEDBAY), \
+	/obj/item/pda/geneticist = list(REGION_RESEARCH), )
+
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not.
 #define REGION_AREA_STATION			list(REGION_GENERAL, REGION_SECURITY, REGION_MEDBAY, REGION_RESEARCH, REGION_ENGINEERING, REGION_SUPPLY, REGION_COMMAND)
 

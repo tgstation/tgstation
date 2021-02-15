@@ -7,7 +7,7 @@ export const NtosCard = (props, context) => {
   return (
     <NtosWindow
       width={500}
-      height={620}>
+      height={670}>
       <NtosWindow.Content scrollable>
         <NtosCardContent />
       </NtosWindow.Content>
@@ -59,20 +59,21 @@ export const NtosCardContent = (props, context) => {
           )}
         </Stack.Item>
       </Stack>
-      <Section
-        title="Templates"
-        mt={1}
-        buttons={
-          <Button
-            icon="question-circle"
-            tooltip={
-              "Will attempt to apply all access for the template to the ID card.\n"
-            + "Does not use wildcards unless the template specifies them."
-            }
-            tooltipPosition="left" />
-        } >
-        <TemplateDropdown templates={templates} />
-      </Section>
+      {(!!has_id && !!authenticatedUser) && (
+        <Section
+          title="Templates"
+          mt={1}
+          buttons={
+            <Button
+              icon="question-circle"
+              tooltip={
+                "Will attempt to apply all access for the template to the ID card.\n"
+              + "Does not use wildcards unless the template specifies them."
+              }
+              tooltipPosition="left" />
+          } >
+          <TemplateDropdown templates={templates} />
+        </Section>)}
       <Stack mt={1}>
         <Stack.Item grow>
           {(!!has_id && !!authenticatedUser) && (

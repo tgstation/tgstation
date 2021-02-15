@@ -21,6 +21,8 @@ SUBSYSTEM_DEF(id_access)
 	var/list/sub_department_managers_tgui = list()
 	/// Helper list containing all trim paths that can be used as job templates. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
 	var/list/station_job_templates = list()
+	/// Helper list containing all PDA paths that can be painted by station machines. Intended to be used alongside logic for ACCESS_CHANGE_IDS. Grab templates from sub_department_managers_tgui for Head of Staff restrictions.
+	var/list/station_pda_templates = list()
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -101,31 +103,37 @@ SUBSYSTEM_DEF(id_access)
 			"regions" = list(REGION_COMMAND),
 			"head" = "Captain",
 			"templates" = list(),
+			"pdas" = list(),
 		),
 		"[ACCESS_HOP]" = list(
 			"regions" = list(REGION_GENERAL, REGION_SUPPLY),
 			"head" = "Head of Personnel",
 			"templates" = list(),
+			"pdas" = list(),
 		),
 		"[ACCESS_HOS]" = list(
 			"regions" = list(REGION_SECURITY),
 			"head" = "Head of Security",
 			"templates" = list(),
+			"pdas" = list(),
 		),
 		"[ACCESS_CMO]" = list(
 			"regions" = list(REGION_MEDBAY),
 			"head" = "Chief Medical Officer",
 			"templates" = list(),
+			"pdas" = list(),
 		),
 		"[ACCESS_RD]" = list(
 			"regions" = list(REGION_RESEARCH),
 			"head" = "Research Director",
 			"templates" = list(),
+			"pdas" = list(),
 		),
 		"[ACCESS_CE]" = list(
 			"regions" = list(REGION_ENGINEERING),
 			"head" = "Chief Engineer",
 			"templates" = list(),
+			"pdas" = list(),
 		),
 	)
 
@@ -144,6 +152,24 @@ SUBSYSTEM_DEF(id_access)
 				continue
 			var/list/templates = manager["templates"]
 			templates[trim_path] = trim.assignment
+
+	var/list/all_pda_paths = typesof(/obj/item/pda)
+	var/list/pda_regions = PDA_PAINTING_REGIONS
+	for(var/pda_path in all_pda_paths)
+		if(!(pda_path in pda_regions))
+			continue
+
+		var/list/region_whitelist = pda_regions[pda_path]
+		for(var/access_txt in sub_department_managers_tgui)
+			var/list/manager_info = sub_department_managers_tgui[access_txt]
+			var/list/manager_regions = manager_info["regions"]
+			for(var/whitelisted_region in region_whitelist)
+				if(!(whitelisted_region in manager_regions))
+					continue
+				var/list/manager_pdas = manager_info["pdas"]
+				var/obj/item/pda/fake_pda = pda_path
+				manager_pdas[pda_path] = initial(fake_pda.name)
+				station_pda_templates[pda_path] = initial(fake_pda.name)
 
 /datum/controller/subsystem/id_access/proc/setup_wildcard_dict()
 	wildcard_flags_by_wildcard[WILDCARD_NAME_ALL] = WILDCARD_FLAG_ALL
@@ -245,21 +271,27 @@ SUBSYSTEM_DEF(id_access)
 /datum/controller/subsystem/id_access/proc/get_access_desc(access)
 	return desc_by_access["[access]"]
 
-/datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path)
+/datum/controller/subsystem/id_access/proc/apply_trim_to_card(obj/item/card/id/id_card, trim_path, copy_access = TRUE)
 	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 
 	if(!id_card.can_add_wildcards(trim.wildcard_access))
 		return FALSE
 
+	id_card.clear_access()
 	id_card.timberpoes_trim = trim
-	id_card.timberpoes_access = trim.access.Copy()
-	id_card.add_wildcards(trim.wildcard_access)
+
+	if(copy_access)
+		id_card.timberpoes_access = trim.access.Copy()
+		id_card.add_wildcards(trim.wildcard_access)
+
 
 	if(trim.assignment)
 		id_card.assignment = trim.assignment
 
 	id_card.update_label()
 	id_card.update_icon()
+
+	return TRUE
 
 /datum/controller/subsystem/id_access/proc/remove_trim_from_card(obj/item/card/id/id_card)
 	id_card.timberpoes_trim = null
