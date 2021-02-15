@@ -43,6 +43,8 @@
 /obj/machinery/atmospherics/pipe/simple/proc/check_pressure()
 	var/datum/gas_mixture/int_air = return_air()
 	var/internal_pressure = int_air.return_pressure()
+	if(int_air.total_moles() < 50)
+		return
 	if(internal_pressure > max_pressure && prob(1))
 		burst()
 	if(internal_pressure > dangerous_pressure && prob(1))
@@ -64,7 +66,6 @@
 		if(!found)
 			continue
 
-		var/obj/machinery/atmospherics/components/unary/burstpipe/burst = new burst_type(loc, direction, piping_layer)
-		SSair.add_to_rebuild_queue(burst)
+		new burst_type(loc, direction, piping_layer)
 
 	qdel(src)

@@ -11,15 +11,22 @@
 	. = ..()
 	dir = set_dir
 	piping_layer = set_piping_layer
-	var/datum/gas_mixture/air1 = airs[1]
-	air1.volume = 4000
 	PIPING_LAYER_SHIFT(src, piping_layer)
+	initialize_directions = dir
+	var/obj/machinery/atmospherics/node = nodes[1]
+	atmosinit()
+	if(node)
+		node.atmosinit()
+		node.addMember(src)
+	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/components/unary/burstpipe/process_atmos()
+	if(!parents)
+		return
 	var/datum/gas_mixture/external = loc.return_air()
-	var/datum/gas_mixture/internal = airs[1]
+	var/datum/gas_mixture/internal = parents[1].air
 
-	if(internal.release_gas_to(external, internal.return_pressure()))
+	if(internal.release_gas_to(external, INFINITY))
 		air_update_turf(FALSE, FALSE)
 		update_parents()
 
