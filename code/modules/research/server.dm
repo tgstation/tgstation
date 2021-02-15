@@ -5,7 +5,7 @@
 	icon_state = "RD-server-on"
 	var/heat_health = 100
 	//Code for point mining here.
-	var/working = TRUE			//temperature should break it.
+	var/working = TRUE //temperature should break it.
 	var/research_disabled = FALSE
 	var/server_id = 0
 	var/base_mining_income = 2
@@ -15,7 +15,7 @@
 	var/delay = 5
 	var/temp_tolerance_low = 0
 	var/temp_tolerance_high = T20C
-	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
+	var/temp_penalty_coefficient = 0.5 //1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
 	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
 /obj/machinery/rnd/server/Initialize()

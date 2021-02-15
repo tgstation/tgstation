@@ -205,7 +205,7 @@
 	if(mat in allowed_materials)
 		return TRUE
 	if(istype(mat) && ((mat.id in allowed_materials) || (mat.type in allowed_materials)))
-		allowed_materials += mat	// This could get messy with passing lists by ref... but if you're doing that the list expansion is probably being taken care of elsewhere anyway...
+		allowed_materials += mat // This could get messy with passing lists by ref... but if you're doing that the list expansion is probably being taken care of elsewhere anyway...
 		return TRUE
 	if(insertion_check?.Invoke(mat))
 		allowed_materials += mat

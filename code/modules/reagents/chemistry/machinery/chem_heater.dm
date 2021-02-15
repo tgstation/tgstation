@@ -109,7 +109,7 @@
 				if(beaker?.reagents.chem_temp > 374)//If they heated it up as asked
 					tutorial_state = TUT_IS_ACTIVE
 					target_temperature = 375
-					beaker.reagents.chem_temp = 375					
+					beaker.reagents.chem_temp = 375 
 			
 			if(TUT_IS_ACTIVE)
 				if(!(beaker?.reagents.has_reagent(/datum/reagent/mercury)) || !(beaker?.reagents.has_reagent(/datum/reagent/chlorine))) //Slightly concerned that people might take ages to read and it'll react anyways
@@ -299,12 +299,12 @@
 			if(TUT_NO_BUFFER)//missing buffer
 				data["tutorialMessage"] = {"It looks like you’re a little low on buffers, here’s how to make more:
 
-Acidic buffer:	2 parts Sodium
+Acidic buffer: 2 parts Sodium
 			2 parts Hydrogen
 			2 parts Ethanol
 			2 parts Water
 
-Basic buffer:	3 parts Ammonia
+Basic buffer: 3 parts Ammonia
 			2 parts Chlorine
 			2 parts Hydrogen
 			2 parts Oxygen

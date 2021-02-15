@@ -208,7 +208,7 @@
 	if (bolt_type == BOLT_TYPE_NO_BOLT) //If there's no bolt, nothing to rack
 		return
 	if (bolt_type == BOLT_TYPE_OPEN)
-		if(!bolt_locked)	//If it's an open bolt, racking again would do nothing
+		if(!bolt_locked) //If it's an open bolt, racking again would do nothing
 			if (user)
 				to_chat(user, "<span class='notice'>\The [src]'s [bolt_wording] is already cocked!</span>")
 			return
@@ -543,8 +543,8 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		w_class = WEIGHT_CLASS_NORMAL
 		inhand_icon_state = "gun"
 		worn_icon_state = "gun"
-		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
-		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+		slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		recoil = SAWN_OFF_RECOIL
 		sawn_off = TRUE
 		update_icon()
@@ -574,7 +574,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		return
 	
 	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo())	
+		if(get_ammo()) 
 			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
 			return
 		
