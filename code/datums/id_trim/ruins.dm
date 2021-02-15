@@ -67,3 +67,11 @@
 /datum/id_trim/job/station_engineer/gunner
 	assignment = "Gunner"
 	template_access = null
+
+/datum/id_trim/pirate/silverscale
+	assignment = "Silver Scale Member"
+	trim_state = "trim_unknown"
+
+/datum/id_trim/pirate/silverscale/captain
+	assignment = "Silver Scale VIP"
+	trim_state = "trim_captain"
