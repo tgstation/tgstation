@@ -93,7 +93,7 @@
 /obj/item/fireaxe/elder_atmosian_fireaxe
 	icon_state = "elder_axe0"
 	name = "eldest fireaxe"
-	desc = "Upgrade of the metallic hydrogen axe; created by some madman with misterious powers"
+	desc = "Upgrade of the metallic hydrogen axe; created by some madman with mysterious powers"
 
 /obj/item/fireaxe/elder_atmosian_fireaxe/ComponentInitialize()
 	. = ..()
