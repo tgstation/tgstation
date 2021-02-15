@@ -17,7 +17,7 @@
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
 
-// Reagent exposure methods.s
+// Reagent exposure methods.
 /// Used for splashing.
 #define TOUCH (1<<0)
 /// Used for ingesting the reagents. Food, drinks, inhaling smoke.
