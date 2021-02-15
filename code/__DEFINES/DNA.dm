@@ -161,10 +161,10 @@
 #define ORGAN_SLOT_XENO_EGGSAC "eggsac"
 
 //organ defines
-#define STANDARD_ORGAN_THRESHOLD 	100
-#define STANDARD_ORGAN_HEALING 		0.0005
+#define STANDARD_ORGAN_THRESHOLD 100
+#define STANDARD_ORGAN_HEALING 0.0005
 /// designed to fail organs when left to decay for ~15 minutes
-#define STANDARD_ORGAN_DECAY		0.00111
+#define STANDARD_ORGAN_DECAY 0.00111
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0

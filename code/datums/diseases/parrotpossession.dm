@@ -25,7 +25,7 @@
 		cure()
 		return FALSE
 
-	if(length(parrot.speech_buffer) && DT_PROB(parrot.speak_chance, delta_time))	// I'm not going to dive into polycode trying to adjust that probability. Enjoy doubled ghost parrot speach
+	if(length(parrot.speech_buffer) && DT_PROB(parrot.speak_chance, delta_time)) // I'm not going to dive into polycode trying to adjust that probability. Enjoy doubled ghost parrot speach
 		affected_mob.say(pick(parrot.speech_buffer), forced = "parrot possession")
 
 

@@ -447,7 +447,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			var/oldsrc = src
 			var/amplitude = dizziness*(sin(dizziness * world.time) + 1) // This shit is annoying at high strength
 			src = null
-			spawn(0)	// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			spawn(0) // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 				if(C)
 					temp = amplitude * sin(saved_dizz * world.time)
 					pixel_x_diff += temp

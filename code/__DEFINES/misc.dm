@@ -465,9 +465,9 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 /// The gravity strength threshold for high gravity damage.
 #define GRAVITY_DAMAGE_THRESHOLD 3
 /// The scaling factor for high gravity damage.
-#define GRAVITY_DAMAGE_SCALING	0.5
+#define GRAVITY_DAMAGE_SCALING 0.5
 /// The maximum [BRUTE] damage a mob can take from high gravity per second.
-#define GRAVITY_DAMAGE_MAXIMUM	1.5
+#define GRAVITY_DAMAGE_MAXIMUM 1.5
 
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1

@@ -35,48 +35,55 @@
 	if(stat || resting || buckled)
 		return
 
-				if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					var/turf/T = get_turf(movement_target)
-					if(!T)
-						return
-					if (T.x < src.x)
-						setDir(WEST)
-					else if (T.x > src.x)
-						setDir(EAST)
-					else if (T.y < src.y)
-						setDir(SOUTH)
-					else if (T.y > src.y)
-						setDir(NORTH)
-					else
-						setDir(SOUTH)
+	turns_since_scan++
+	if(turns_since_scan > 5)
+		turns_since_scan = 0
+		if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc)))
+			movement_target = null
+			stop_automated_movement = FALSE
+		if(!movement_target || !(movement_target.loc in oview(src, 3)))
+			movement_target = null
+			stop_automated_movement = FALSE
+			for(var/obj/item/potential_snack in oview(src,3))
+				if(IS_EDIBLE(potential_snack) && (isturf(potential_snack.loc) || ishuman(potential_snack.loc)))
+					movement_target = potential_snack
+					break
 
-			if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-				var/turf/T = get_turf(movement_target)
-				if(!T)
-					return
-				if (T.x < src.x)
-					setDir(WEST)
-				else if (T.x > src.x)
-					setDir(EAST)
-				else if (T.y < src.y)
-					setDir(SOUTH)
-				else if (T.y > src.y)
-					setDir(NORTH)
-				else
-					setDir(SOUTH)
+	if(movement_target)
+		stop_automated_movement = TRUE
+		step_to(src, movement_target, 1)
+		sleep(3)
+		step_to(src, movement_target, 1)
+		sleep(3)
+		step_to(src, movement_target, 1)
 
-				if(!Adjacent(movement_target)) //can't reach food through windows.
-					return
+		if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
+			var/turf/T = get_turf(movement_target)
+			if(!T)
+				return
+			if(T.x < src.x)
+				setDir(WEST)
+			else if (T.x > src.x)
+				setDir(EAST)
+			else if (T.y < src.y)
+				setDir(SOUTH)
+			else if (T.y > src.y)
+				setDir(NORTH)
+			else
+				setDir(SOUTH)
 
-				if(isturf(movement_target.loc))
-					movement_target.attack_animal(src)
-				else if(ishuman(movement_target.loc) )
-					if(prob(20))
-						manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+			if(!Adjacent(movement_target)) //can't reach food through windows.
+				return
 
-	if(DT_PROB(0.5, delta_time))
-		manual_emote(pick("dances around.","chases its tail!"))
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
+			if(isturf(movement_target.loc))
+				movement_target.attack_animal(src)
+			else if(ishuman(movement_target.loc))
+				if(DT_PROB(10, delta_time))
+					manual_emote("stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+
+		if(DT_PROB(0.5, delta_time))
+			manual_emote(pick("dances around.","chases its tail!"))
+			INVOKE_ASYNC(GLOBAL_PROC, .proc/dance_rotate, src)
 
 //Corgis and pugs are now under one dog subtype
 

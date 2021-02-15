@@ -29,7 +29,7 @@
 #define BLOOD_VOLUME_SURVIVE 122
 
 /// How efficiently humans regenerate blood.
-#define BLOOD_REGEN_FACTOR			0.25
+#define BLOOD_REGEN_FACTOR 0.25
 
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
@@ -298,10 +298,10 @@
 #define POCKET_STRIP_DELAY 40 //time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
-#define	HUNGER_FACTOR		0.05	//factor at which mob nutrition decreases
-#define	ETHEREAL_CHARGE_FACTOR	0.8 //factor at which ethereal's charge decreases per second
-#define	REAGENTS_METABOLISM 0.2	//How many units of reagent are consumed per second, by default.
-#define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+#define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
+#define ETHEREAL_CHARGE_FACTOR 0.8 //factor at which ethereal's charge decreases per second
+#define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
+#define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4) // By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
 // Eye protection
 #define FLASH_PROTECTION_SENSITIVE -1

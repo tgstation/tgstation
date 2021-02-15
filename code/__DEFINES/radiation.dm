@@ -14,8 +14,8 @@ Ask ninjanomnom if they're around
 #define RAD_LOSS_PER_SECOND 0.25
 /// Toxin damage per second coefficient
 #define RAD_TOX_COEFFICIENT 0.04
-#define RAD_OVERDOSE_REDUCTION 0.000001				// Coefficient to the reduction in applied rads once the thing, usualy mob, has too much radiation
-													// WARNING: This number is highly sensitive to change, graph is first for best results
+#define RAD_OVERDOSE_REDUCTION 0.000001 // Coefficient to the reduction in applied rads once the thing, usualy mob, has too much radiation
+										// WARNING: This number is highly sensitive to change, graph is first for best results
 #define RAD_BURN_THRESHOLD 1000 // Applied radiation must be over this to burn
 //Holy shit test after you tweak anything it's said like 6 times in here
 //You probably want to plot any tweaks you make so you can see the curves visually
@@ -29,12 +29,12 @@ Ask ninjanomnom if they're around
 /// How much stored radiation to check for hair loss
 #define RAD_MOB_HAIRLOSS 800
 /// Chance of you hair starting to fall out every second when over threshold
-#define RAD_MOB_HAIRLOSS_PROB	7.5
+#define RAD_MOB_HAIRLOSS_PROB 7.5
 
 /// How much stored radiation to check for mutation
 #define RAD_MOB_MUTATE 1250
 /// Chance of randomly mutating every second when over threshold
-#define RAD_MOB_MUTATE_PROB	0.5
+#define RAD_MOB_MUTATE_PROB 0.5
 
 /// The amount of radiation to check for vomitting
 #define RAD_MOB_VOMIT 2000

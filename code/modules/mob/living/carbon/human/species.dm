@@ -1288,7 +1288,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * - [target][/mob/living/carbon/human]: The mob to make go bald.
  */
 /datum/species/proc/go_bald(mob/living/carbon/human/target)
-	if(QDELETED(target))	//may be called from a timer
+	if(QDELETED(target)) //may be called from a timer
 		return
 	target.facial_hairstyle = "Shaved"
 	target.hairstyle = "Bald"
@@ -1836,7 +1836,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/cold_damage_limit = bodytemp_cold_damage_limit + (is_hulk ? BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER : 0)
 
 	if(humi.coretemperature < cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
-		var/damage_type = is_hulk ? BRUTE : BURN	// Why?
+		var/damage_type = is_hulk ? BRUTE : BURN // Why?
 		var/damage_mod = coldmod * humi.physiology.cold_mod * (is_hulk ? HULK_COLD_DAMAGE_MOD : 1)
 		switch(humi.coretemperature)
 			if(201 to cold_damage_limit)

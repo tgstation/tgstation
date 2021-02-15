@@ -268,7 +268,7 @@
 		M.stuttering = 0
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
-	holder.remove_reagent(type, 0.2 * delta_time)	//fixed consumption to prevent balancing going out of whack
+	holder.remove_reagent(type, 0.2 * delta_time) //fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -363,9 +363,9 @@
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.set_fire_stacks(min(M.fire_stacks + (1.5 * delta_time), 5))
-	M.IgniteMob()			//Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
+	M.IgniteMob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	M.adjustToxLoss(0.5*delta_time, 0)
-	M.adjustFireLoss(0.5*delta_time, 0)		//Hence the other damages... ain't I a bastard?
+	M.adjustFireLoss(0.5*delta_time, 0) //Hence the other damages... ain't I a bastard?
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*delta_time, 150)
 	holder.remove_reagent(type, 0.5*delta_time)
 
@@ -2332,8 +2332,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
-	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+	var/healthcomp = (100 - M.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	if(M.getStaminaLoss() < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10 * REM * delta_time)
 	if(DT_PROB(16, delta_time))
 		to_chat(M, "You should sit down and take a rest...")
@@ -2376,8 +2376,8 @@
 	if(HAS_TRAIT(L, TRAIT_NOHUNGER)) //they can't puke
 		holder.del_reagent(type)
 
-#define YUCK_PUKE_CYCLES 3 		// every X cycle is a puke
-#define YUCK_PUKES_TO_STUN 3 	// hit this amount of pukes in a row to start stunning
+#define YUCK_PUKE_CYCLES 3 // every X cycle is a puke
+#define YUCK_PUKES_TO_STUN 3 // hit this amount of pukes in a row to start stunning
 /datum/reagent/yuck/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	if(!yuck_cycle)
 		if(DT_PROB(4, delta_time))

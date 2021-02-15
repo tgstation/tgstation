@@ -52,7 +52,7 @@
 					owner.adjustToxLoss(1)
 		if(6)
 			to_chat(owner, "<span class='danger'>You feel something tearing its way out of your chest...</span>")
-			owner.adjustToxLoss(5 * delta_time)	// Why is this [TOX]?
+			owner.adjustToxLoss(5 * delta_time) // Why is this [TOX]?
 
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
