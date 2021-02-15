@@ -303,7 +303,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	complete_trajectory()
 
 /obj/effect/immovablerod/deadchat_plays(mode = DEMOCRACY_MODE, cooldown = 6 SECONDS)
-	. = AddComponent(/datum/component/deadchat_control/immovable_rod, mode, list(), cooldown)
+	return AddComponent(/datum/component/deadchat_control/immovable_rod, mode, list(), cooldown)
 
 /**
  * Rod will walk towards edge turf in the specified direction.
