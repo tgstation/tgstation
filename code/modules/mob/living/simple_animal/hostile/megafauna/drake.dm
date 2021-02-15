@@ -227,7 +227,7 @@
 				var/mob/living/L = a
 				if(!QDELETED(L) && L.client)
 					return FALSE
-			return TRUE 
+			return TRUE
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
@@ -244,12 +244,12 @@
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2
-	light_range = 10
+	set_light_range(10)
 	SLEEP_CHECK_DEATH(10) // run.
 	mass_fire(20, 15, 3)
 	move_to_delay = initial(move_to_delay)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	light_range = initial(light_range)
+	set_light_range(initial(light_range))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(atom/at = target, meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
