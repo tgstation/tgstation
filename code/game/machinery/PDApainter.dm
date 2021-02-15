@@ -108,6 +108,15 @@
 		power_change()
 		return
 
+	// Chameleon checks first so they can exit the logic early if they're detected.
+	if(istype(O, /obj/item/card/id/advanced/chameleon))
+		to_chat(user, "<span class='warning'>The machine rejects your [src]. It's clearly not a compatible ID card.</span>")
+		return
+
+	if(istype(O, /obj/item/pda/chameleon))
+		to_chat(user, "<span class='warning'>The machine rejects your [src]. It's clearly not a compatible PDA.</span>")
+		return
+
 	if(istype(O, /obj/item/pda))
 		insert_pda(O, user)
 		return

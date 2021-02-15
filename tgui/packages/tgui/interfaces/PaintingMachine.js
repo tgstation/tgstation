@@ -112,7 +112,7 @@ export const PainterDropdown = (props, context) => {
   const [
     selectedOption,
     setSelectedOption,
-  ] = useSharedState(context, stateKey, options[0]);
+  ] = useSharedState(context, stateKey, options[Object.keys(options)[0]]);
 
   return (
     <Dropdown
