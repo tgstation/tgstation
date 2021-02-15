@@ -383,7 +383,7 @@
 
 /obj/item/sales_tagger
 	name = "sales tagger"
-	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo. Ctrl-Click to clear the registered account."
+	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "salestagger"
 	worn_icon_state = "salestagger"
@@ -401,8 +401,10 @@
 
 /obj/item/sales_tagger/examine(mob/user)
 	. = ..()
-	. += "[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper."
-	. += "Profit split on sale is currently set to [round(cut_multiplier*100)]%."
+	. += "<span class='notice'>[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper.</span>"
+	. += "<span class='notice'>Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.</span>"
+	if(payments_acc)
+		. += "<span class='notice'><b>Ctrl-click</b> to clear the registered account.</span>"
 
 /obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
