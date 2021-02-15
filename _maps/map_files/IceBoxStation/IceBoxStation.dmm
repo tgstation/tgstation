@@ -8693,15 +8693,15 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/door/airlock{
-	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Service Hall Maintenance";
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -31624,10 +31624,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock{
-	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
@@ -31635,6 +31631,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock{
+	name = "Theater Backstage Service Hall";
+	req_access_txt = "46"
+	},
 /turf/open/floor/plastic,
 /area/hallway/secondary/service)
 "giT" = (
