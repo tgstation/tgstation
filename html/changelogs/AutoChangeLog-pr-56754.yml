@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Adds a suppressor sprite to the sniper rifle so that it no longer shows the dreaded pink sprite of missing file."
+  - bugfix: "Repaths toy pistols to be a child of the actual makarov and not the saber smg toy. Toy overlays are handled in the parent and not for each individual toy gun."

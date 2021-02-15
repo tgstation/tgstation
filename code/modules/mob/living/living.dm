@@ -225,7 +225,7 @@
 	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
 		if(move_crush(AM, move_force, dir_to_target))
 			push_anchored = TRUE
-	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
+	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force) //trigger move_crush and/or force_push regardless of if we can push it normally
 		if(force_push(AM, move_force, dir_to_target, push_anchored))
 			push_anchored = TRUE
 	if((AM.anchored && !push_anchored) || (force < (AM.move_resist * MOVE_FORCE_PUSH_RATIO)))
@@ -571,11 +571,11 @@
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
 	var/list/ret = list()
-	ret |= contents						//add our contents
-	for(var/i in ret.Copy())			//iterate storage objects
+	ret |= contents //add our contents
+	for(var/i in ret.Copy()) //iterate storage objects
 		var/atom/A = i
 		SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
-	for(var/obj/item/folder/F in ret.Copy())		//very snowflakey-ly iterate folders
+	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
 
@@ -813,7 +813,7 @@
 		return
 
 	var/bleed_amount = bleedDragAmount()
-	blood_volume = max(blood_volume - bleed_amount, 0) 					//that depends on our brute damage.
+	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
 	var/newdir = get_dir(target_turf, start)
 	if(newdir != direction)
 		newdir = newdir | direction
@@ -922,9 +922,9 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	if(pulledby.grab_state || resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
 		var/altered_grab_state = pulledby.grab_state
-		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
+		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
 		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
@@ -1931,7 +1931,7 @@
 	if (style)
 		if (is_grab)
 			attack_result = style.grab_act(src, target)
-		if(modifiers && modifiers["right"])
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			attack_result = style.disarm_act(src, target)
 		if(combat_mode)
 			if (HAS_TRAIT(src, TRAIT_PACIFISM))

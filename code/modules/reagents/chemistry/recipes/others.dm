@@ -327,7 +327,7 @@
 	results = list(/datum/reagent/ammonia = 3)
 	required_reagents = list(/datum/reagent/hydrogen = 3, /datum/reagent/nitrogen = 1)
 	optimal_ph_min = 1  // Lets increase our range for this basic chem
-	optimal_ph_max = 12	
+	optimal_ph_max = 12 
 	H_ion_release = -0.02 //handmade is more neutral
 
 /datum/chemical_reaction/diethylamine
@@ -346,7 +346,7 @@
 /datum/chemical_reaction/weedkiller
 	results = list(/datum/reagent/toxin/plantbgone/weedkiller = 5)
 	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/ammonia = 4)
-	H_ion_release = -0.05		// Push towards acidic
+	H_ion_release = -0.05 // Push towards acidic
 
 /datum/chemical_reaction/pestkiller
 	results = list(/datum/reagent/toxin/pestkiller = 5)
@@ -487,7 +487,7 @@
 	..()
 //scream powder
 /datum/chemical_reaction/scream
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/ethanol/lizardwine = 5	)
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/ethanol/lizardwine = 5 )
 	required_temp = 374
 	reaction_flags = REACTION_INSTANT 
 

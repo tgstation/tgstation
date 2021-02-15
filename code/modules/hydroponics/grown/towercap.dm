@@ -49,6 +49,7 @@
 	var/plank_name = "wooden planks"
 	var/static/list/accepted = typecacheof(list(/obj/item/food/grown/tobacco,
 	/obj/item/food/grown/tea,
+	/obj/item/food/grown/ash_flora/mushroom_leaf,
 	/obj/item/food/grown/ambrosia/vulgaris,
 	/obj/item/food/grown/ambrosia/deus,
 	/obj/item/food/grown/wheat))
@@ -199,13 +200,13 @@
 		if(!user.combat_mode && !(W.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(W))
 				W.forceMove(get_turf(src))
-				var/list/click_params = params2list(params)
+				var/list/modifiers = params2list(params)
 				//Center the icon where the user clicked.
-				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+				if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = W.base_pixel_x + clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = W.base_pixel_y + clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = W.base_pixel_x + clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = W.base_pixel_y + clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 		else
 			return ..()
 

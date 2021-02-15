@@ -488,7 +488,7 @@
 		var/mob/living/occupant = b
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
-			mob_exit(occupant)	//bye bye
+			mob_exit(occupant) //bye bye
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()
@@ -524,8 +524,8 @@
 		return
 	if(is_currently_ejecting)
 		return
-	var/list/mouse_control = params2list(params)
-	if(isAI(user) == !mouse_control["middle"])//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
+	var/list/modifiers = params2list(params)
+	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
 		return
 	if(phasing)
 		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to interact with objects while phasing.</span>")

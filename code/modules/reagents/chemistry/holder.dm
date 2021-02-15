@@ -292,7 +292,7 @@
 		else
 			if(istype(R, reagent_type))
 				matches = 1
-		// We found a match, proceed to remove the reagent.	Keep looping, we might find other reagents of the same type.
+		// We found a match, proceed to remove the reagent. Keep looping, we might find other reagents of the same type.
 		if(matches)
 			// Have our other proc handle removement
 			has_removed_reagent = remove_reagent(R.type, amount, safety)
@@ -378,7 +378,7 @@
  * * preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
  * * no_react - passed through to [/datum/reagents/proc/add_reagent]
  * * mob/transfered_by - used for logging
- * * remove_blacklisted - skips transferring of reagents with can_synth = FALSE
+ * * remove_blacklisted - skips transferring of reagents without REAGENT_CAN_BE_SYNTHESIZED in chemical_flags
  * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
  * * show_message - passed through to [/datum/reagents/proc/expose_single]
  * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
@@ -423,7 +423,7 @@
 		var/part = amount / src.total_volume
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/T = reagent
-			if(remove_blacklisted && !T.can_synth)
+			if(remove_blacklisted && !(T.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 				continue
 			var/transfer_amount = T.volume * part
 			if(preserve_data)
@@ -447,7 +447,7 @@
 			if(!to_transfer)
 				break
 			var/datum/reagent/T = reagent
-			if(remove_blacklisted && !T.can_synth)
+			if(remove_blacklisted && !(T.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
 				continue
 			if(preserve_data)
 				trans_data = copy_data(T)
@@ -930,7 +930,7 @@
 	var/reaction_message = equilibrium.reaction.mix_message
 	if(equilibrium.reaction.mix_sound)
 		playsound(get_turf(my_atom), equilibrium.reaction.mix_sound, 80, TRUE)
-	qdel(equilibrium)	
+	qdel(equilibrium) 
 	update_total()
 	SEND_SIGNAL(src, COMSIG_REAGENTS_REACTED, .)
 	return reaction_message
@@ -1325,7 +1325,7 @@
 /// Returns the total heat capacity for all of the reagents currently in this holder.
 /datum/reagents/proc/heat_capacity()
 	. = 0
-	var/list/cached_reagents = reagent_list		//cache reagents
+	var/list/cached_reagents = reagent_list //cache reagents
 	for(var/I in cached_reagents)
 		var/datum/reagent/R = I
 		. += R.specific_heat * R.volume
@@ -1340,7 +1340,7 @@
 /datum/reagents/proc/adjust_thermal_energy(delta_energy, min_temp = 2.7, max_temp = 1000)
 	var/heat_capacity = heat_capacity()
 	if(!heat_capacity)
-		return	// no div/0 please
+		return // no div/0 please
 	set_temperature(clamp(chem_temp + (delta_energy / heat_capacity), min_temp, max_temp))
 
 /// Applies heat to this holder
@@ -1469,12 +1469,12 @@
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
 
-/proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents
+/proc/get_random_reagent_id() // Returns a random reagent ID minus blacklisted reagents
 	var/static/list/random_reagents = list()
 	if(!random_reagents.len)
 		for(var/thing in subtypesof(/datum/reagent))
 			var/datum/reagent/R = thing
-			if(initial(R.can_synth))
+			if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
 				random_reagents += R
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent

@@ -1,5 +1,5 @@
 /obj/item/computer_hardware/card_slot
-	name = "primary RFID card module"	// \improper breaks the find_hardware_by_name proc
+	name = "primary RFID card module" // \improper breaks the find_hardware_by_name proc
 	desc = "A module allowing this computer to read or write data on ID cards. Necessary for some programs to run properly."
 	power_usage = 10 //W
 	icon_state = "card_mini"

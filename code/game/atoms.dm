@@ -1811,11 +1811,11 @@
 	var/client/usr_client = usr.client
 	var/list/paramslist = list()
 	if(href_list["statpanel_item_shiftclick"])
-		paramslist["shift"] = "1"
+		paramslist[SHIFT_CLICK] = "1"
 	if(href_list["statpanel_item_ctrlclick"])
-		paramslist["ctrl"] = "1"
+		paramslist[CTRL_CLICK] = "1"
 	if(href_list["statpanel_item_altclick"])
-		paramslist["alt"] = "1"
+		paramslist[ALT_CLICK] = "1"
 	if(href_list["statpanel_item_click"])
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
