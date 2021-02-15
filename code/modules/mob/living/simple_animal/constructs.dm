@@ -173,7 +173,7 @@
 				P.yo = new_y - curloc.y
 				P.xo = new_x - curloc.x
 				var/new_angle_s = P.Angle + rand(120,240)
-				while(new_angle_s > 180)	// Translate to regular projectile degrees
+				while(new_angle_s > 180) // Translate to regular projectile degrees
 					new_angle_s -= 360
 				P.setAngle(new_angle_s)
 
@@ -377,7 +377,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
-			return ..()		//ATTACK!
+			return ..() //ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0
 		for(var/X in C.bodyparts)

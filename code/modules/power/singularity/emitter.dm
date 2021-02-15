@@ -452,7 +452,7 @@
 				if(U.dropItemToGround(I))
 					var/obj/item/turret_control/TC = new /obj/item/turret_control()
 					U.put_in_hands(TC)
-			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				var/obj/item/turret_control/TC = new /obj/item/turret_control()
 				U.put_in_hands(TC)
 		UpdateButtonIcon()

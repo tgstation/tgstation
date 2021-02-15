@@ -147,25 +147,25 @@ Turf and target are separate in case you want to teleport some distance from a t
  * Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
  */
 /proc/getline(atom/M,atom/N)
-	var/px=M.x		//starting x
+	var/px=M.x //starting x
 	var/py=M.y
 	var/line[] = list(locate(px,py,M.z))
-	var/dx=N.x-px	//x distance
+	var/dx=N.x-px //x distance
 	var/dy=N.y-py
 	var/dxabs = abs(dx)//Absolute value of x distance
 	var/dyabs = abs(dy)
-	var/sdx = SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdx = SIGN(dx) //Sign of x distance (+ or -)
 	var/sdy = SIGN(dy)
-	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
-	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
-	var/j			//Generic integer for counting
-	if(dxabs>=dyabs)	//x distance is greater than y
+	var/x=dxabs>>1 //Counters for steps taken, setting to distance/2
+	var/y=dyabs>>1 //Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+	var/j //Generic integer for counting
+	if(dxabs>=dyabs) //x distance is greater than y
 		for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
 			y+=dyabs
-			if(y>=dxabs)	//Every dyabs steps, step once in y direction
+			if(y>=dxabs) //Every dyabs steps, step once in y direction
 				y-=dxabs
 				py+=sdy
-			px+=sdx		//Step on in x direction
+			px+=sdx //Step on in x direction
 			line+=locate(px,py,M.z)//Add the turf to the list
 	else
 		for(j=0;j<dyabs;j++)
@@ -718,7 +718,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 			living_player_count += 1
 	return living_player_count
 
-/proc/randomColor(mode = 0)	//if 1 it doesn't pick white, black or gray
+/proc/randomColor(mode = 0) //if 1 it doesn't pick white, black or gray
 	switch(mode)
 		if(0)
 			return pick("white","black","gray","red","green","blue","brown","yellow","orange","darkred",
@@ -1255,12 +1255,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //in constant time and memory!
 /proc/BitCount(bitfield)
 	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
-	temp = ((temp + (temp>>3))&29127) % 63	//070707
+	temp = ((temp + (temp>>3))&29127) % 63 //070707
 	return temp
 
 //returns a GUID like identifier (using a mostly made up record format)
 //guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
-//	(But may make a nice salt to one)
+// (But may make a nice salt to one)
 /proc/GUID()
 	var/const/GUID_VERSION = "b"
 	var/const/GUID_VARIANT = "d"
@@ -1314,12 +1314,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		return
 	var/datum/D = list_or_datum
 	if(IsAdminAdvancedProcCall())
-		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+		D.vv_edit_var(var_name, var_value) //same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
 
-#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
-#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+#define TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
+#define TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
 
 ///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
 /proc/___TraitAdd(target,trait,source)

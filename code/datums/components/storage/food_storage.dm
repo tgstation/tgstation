@@ -41,8 +41,8 @@
  * Clicking on the food storage with an item will begin a do_after, which if successful inserts the item.
  *
  * Arguments
- *	inserted_item - the item being placed into the food
- *	user - the person inserting the item
+ * inserted_item - the item being placed into the food
+ * user - the person inserting the item
  */
 /datum/component/food_storage/proc/try_inserting_item(datum/source, obj/item/inserted_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -78,7 +78,7 @@
  * Clicking on food storage on grab intent will begin a do_after, which if successful removes the stored_item.
  *
  * Arguments
- *	user - the person removing the item.
+ * user - the person removing the item.
  */
 /datum/component/food_storage/proc/try_removing_item(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -99,7 +99,7 @@
  *
  * Arguments
  * inserted_item - The item being inserted.
- *	user - the person inserting the item.
+ * user - the person inserting the item.
  */
 /datum/component/food_storage/proc/insert_item(obj/item/inserted_item, mob/user)
 	if(do_after(user, 1.5 SECONDS, target = parent))

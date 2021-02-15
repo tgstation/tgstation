@@ -30,7 +30,7 @@ LINEN BINS
 	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
 
 /obj/item/bedsheet/attack_self(mob/user)
-	if(!user.CanReach(src))		//No telekenetic grabbing.
+	if(!user.CanReach(src)) //No telekenetic grabbing.
 		return
 	if(!user.dropItemToGround(src))
 		return
@@ -355,7 +355,7 @@ LINEN BINS
 			new /obj/item/stack/rods(loc, 2)
 			qdel(src)
 
-	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
 			return

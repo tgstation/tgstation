@@ -39,7 +39,7 @@
 	if(!candrain || draining)
 		return FALSE
 	if(!ishuman(loc))
-		return FALSE	//Only works while worn
+		return FALSE //Only works while worn
 
 	var/mob/living/carbon/human/wearer = loc
 
@@ -64,7 +64,7 @@
 		else
 			to_chat(wearer, "<span class='danger'>\The [A] has run dry of energy, you must find another source!</span>")
 	else
-		. = FALSE	//as to not cancel attack_hand()
+		. = FALSE //as to not cancel attack_hand()
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	. = ..()

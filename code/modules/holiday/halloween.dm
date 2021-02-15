@@ -25,9 +25,9 @@
 
 #define SPOOKY_SKELETON 1
 #define ANGRY_FAITHLESS 2
-#define SCARY_BATS 		3
-#define INSANE_CLOWN	4
-#define HOWLING_GHOST	5
+#define SCARY_BATS 3
+#define INSANE_CLOWN 4
+#define HOWLING_GHOST 5
 
 //Spookoween variables
 /obj/structure/closet

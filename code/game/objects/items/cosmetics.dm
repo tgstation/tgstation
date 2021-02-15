@@ -61,7 +61,7 @@
 	if(target.is_mouth_covered())
 		to_chat(user, "<span class='warning'>Remove [ target == user ? "your" : "[target.p_their()]" ] mask!</span>")
 		return
-	if(target.lip_style)	//if they already have lipstick on
+	if(target.lip_style) //if they already have lipstick on
 		to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
 		return
 

@@ -1,11 +1,11 @@
 /datum/surgery_step
 	var/name
-	var/list/implements = list()	//format is path = probability of success. alternatively
-	var/implement_type = null		//the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
-	var/accept_hand = FALSE				//does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
-	var/accept_any_item = FALSE			//does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
-	var/time = 10					//how long does the step take?
-	var/repeatable = FALSE				//can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
+	var/list/implements = list() //format is path = probability of success. alternatively
+	var/implement_type = null //the current type of implement used. This has to be stored, as the actual typepath of the tool may not match the list type.
+	var/accept_hand = FALSE //does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
+	var/accept_any_item = FALSE //does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
+	var/time = 10 //how long does the step take?
+	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
@@ -43,7 +43,7 @@
 				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
 				to_chat(user, "<span class='warning'>You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!</span>")
-			return TRUE	//returns TRUE so we don't stab the guy in the dick or wherever.
+			return TRUE //returns TRUE so we don't stab the guy in the dick or wherever.
 
 	if(repeatable)
 		var/datum/surgery_step/next_step = surgery.get_surgery_next_step()
@@ -75,7 +75,7 @@
 		speed_mod = tool.toolspeed
 
 	var/implement_speed_mod = 1
-	if(implement_type)	//this means it isn't a require hand or any item step.
+	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
 
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)

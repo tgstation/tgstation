@@ -15,11 +15,11 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	var/charge = 0	// note %age conveted to actual charge in New
+	var/charge = 0 // note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
-	var/rigged = FALSE	/// If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
+	var/rigged = FALSE /// If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
 	var/corrupted = FALSE /// If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/ratingdesc = TRUE
@@ -60,7 +60,7 @@
 	else
 		. += mutable_appearance('icons/obj/power.dmi', "cell-o1")
 
-/obj/item/stock_parts/cell/proc/percent()		// return % charge of cell
+/obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100*charge/maxcharge
 
 // use power from a cell
@@ -219,7 +219,7 @@
 
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
-	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	maxcharge = 600 //600 max charge / 100 charge per shot = six shots
 	custom_materials = list(/datum/material/glass=40)
 
 /obj/item/stock_parts/cell/secborg/empty/Initialize()
@@ -364,7 +364,7 @@
 	name = "beam rifle capacitor"
 	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
 	maxcharge = 50000
-	chargerate = 5000	//Extremely energy intensive
+	chargerate = 5000 //Extremely energy intensive
 
 /obj/item/stock_parts/cell/beam_rifle/corrupt()
 	return

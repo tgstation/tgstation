@@ -9,7 +9,7 @@
 	use_power = IDLE_POWER_USE
 	var/busy = FALSE
 	var/hacked = FALSE
-	var/console_link = TRUE		//allow console link.
+	var/console_link = TRUE //allow console link.
 	var/disabled = FALSE
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 	/// Ref to global science techweb.
@@ -29,7 +29,7 @@
 	return ..()
 
 /obj/machinery/rnd/proc/shock(mob/user, prb)
-	if(machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

@@ -148,7 +148,7 @@ Auto Patrol: []"},
 "<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	return	dat
+	return dat
 
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	if(..())
@@ -312,14 +312,14 @@ Auto Patrol: []"},
 
 	switch(mode)
 
-		if(BOT_IDLE)		// idle
+		if(BOT_IDLE) // idle
 
 			walk_to(src,0)
-			look_for_perp()	// see if any criminals are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
-				mode = BOT_START_PATROL	// switch to patrol mode
+			look_for_perp() // see if any criminals are in range
+			if(!mode && auto_patrol) // still idle, and set to patrol
+				mode = BOT_START_PATROL // switch to patrol mode
 
-		if(BOT_HUNT)		// hunting for perp
+		if(BOT_HUNT) // hunting for perp
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
@@ -327,8 +327,8 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if(target)		// make sure target exists
-				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
+			if(target) // make sure target exists
+				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
 					if(!check_nap_violations())
 						stun_attack(target, TRUE)
 					else
@@ -339,7 +339,7 @@ Auto Patrol: []"},
 					target_lastloc = target.loc
 					return
 
-				else								// not next to perp
+				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
 					if((get_dist(src, target)) >= (olddist))
@@ -349,7 +349,7 @@ Auto Patrol: []"},
 			else
 				back_to_idle()
 
-		if(BOT_PREP_ARREST)		// preparing to arrest target
+		if(BOT_PREP_ARREST) // preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
 			if( !Adjacent(target) || !isturf(target.loc) ||  target.AmountParalyzed() < 40)

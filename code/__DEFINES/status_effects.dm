@@ -70,10 +70,10 @@
 #define STATUS_EFFECT_CONVULSING /datum/status_effect/convulsing
 
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
-#define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
-#define CURSE_SPAWNING	2 //spawns creatures that attack the target only
-#define CURSE_WASTING	4 //causes gradual damage
-#define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
+#define CURSE_BLINDING 1 //makes the edges of the target's screen obscured
+#define CURSE_SPAWNING 2 //spawns creatures that attack the target only
+#define CURSE_WASTING 4 //causes gradual damage
+#define CURSE_GRASPING 8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
 #define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbola_pacify //Gives the user gondola traits while the gonbola is attached to them.
 

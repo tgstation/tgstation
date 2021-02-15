@@ -105,7 +105,7 @@
 		qdel(src)
 
 /obj/projectile/bullet/pellet/shotgun_improvised
-	tile_dropoff = 0.35		//Come on it does 6 damage don't be like that.
+	tile_dropoff = 0.35 //Come on it does 6 damage don't be like that.
 	damage = 6
 	wound_bonus = 0
 	bare_wound_bonus = 7.5

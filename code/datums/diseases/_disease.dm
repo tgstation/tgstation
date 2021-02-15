@@ -164,7 +164,7 @@
 	return "[type]"
 
 /datum/disease/proc/remove_disease()
-	LAZYREMOVE(affected_mob.diseases, src)	//remove the datum from the list
+	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
 

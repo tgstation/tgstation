@@ -65,7 +65,7 @@
 /datum/techweb_node/biotech
 	id = "biotech"
 	display_name = "Biological Technology"
-	description = "What makes us tick."	//the MC, silly!
+	description = "What makes us tick." //the MC, silly!
 	prereq_ids = list("base")
 	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack", "medical_kiosk", "crewpinpointerprox", "medipen_refiller", "biopsy_tool", "plumbing_rcd_sci")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -336,7 +336,7 @@
 
 /datum/techweb_node/emp_super
 	id = "emp_super"
-	display_name = "Quantum Electromagnetic Technology"	//bs
+	display_name = "Quantum Electromagnetic Technology" //bs
 	description = "Even better electromagnetic technology."
 	prereq_ids = list("emp_adv")
 	design_ids = list("quadultra_micro_laser")
@@ -361,7 +361,7 @@
 	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcard", "seccamera")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
-/datum/techweb_node/computer_hardware_basic				//Modular computers are shitty and nearly useless so until someone makes them actually useful this can be easy to get.
+/datum/techweb_node/computer_hardware_basic //Modular computers are shitty and nearly useless so until someone makes them actually useful this can be easy to get.
 	id = "computer_hardware_basic"
 	display_name = "Computer Hardware"
 	description = "How computer hardware are made."
@@ -490,7 +490,7 @@
 /datum/techweb_node/adv_mining
 	id = "adv_mining"
 	display_name = "Advanced Mining Technology"
-	description = "Efficiency Level 127"	//dumb mc references
+	description = "Efficiency Level 127" //dumb mc references
 	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
 	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter_adv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -958,14 +958,14 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	hidden = TRUE
 
-/datum/techweb_node/syndicate_basic/New()		//Crappy way of making syndicate gear decon supported until there's another way.
+/datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	boost_item_paths = list()
 	for(var/path in GLOB.uplink_items)
 		var/datum/uplink_item/UI = new path
 		if(!UI.item || !UI.illegal_tech)
 			continue
-		boost_item_paths |= UI.item	//allows deconning to unlock.
+		boost_item_paths |= UI.item //allows deconning to unlock.
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////

@@ -30,7 +30,7 @@
 	var/activation_time = 0
 	var/timer_duration = 0
 
-	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/timing = FALSE // boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
 	var/obj/item/radio/Radio //needed to send messages to sec radio
 

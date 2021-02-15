@@ -60,7 +60,7 @@
  *     If receiving object don't know right key, it must ignore encrypted signal in its receive_signal.
  *
  */
-/*	the radio controller is a confusing piece of shit and didnt work
+/* the radio controller is a confusing piece of shit and didnt work
 	so i made radios not use the radio controller.
 */
 GLOBAL_LIST_EMPTY(all_radios)

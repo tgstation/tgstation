@@ -3,8 +3,8 @@
 
 /* Teleportation devices.
  * Contains:
- *		Locator
- *		Hand-tele
+ * Locator
+ * Hand-tele
  */
 
 /*
@@ -194,7 +194,7 @@
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
 
-	active_portal_pairs -= P	//If this portal pair is made by us it'll be erased along with the other portal by the portal.
+	active_portal_pairs -= P //If this portal pair is made by us it'll be erased along with the other portal by the portal.
 
 /obj/item/hand_tele/proc/is_parent_of_portal(obj/effect/portal/P)
 	if(!istype(P))

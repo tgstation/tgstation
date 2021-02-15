@@ -99,8 +99,8 @@
 			return
 
 		//oh boy, so basically, because of a bug in byond, sometimes stickyban matches don't trigger here, so we can't exempt admins.
-		//	Whitelisting the ckey with the byond whitelist field doesn't work.
-		//	So we instead have to remove every stickyban than later re-add them.
+		// Whitelisting the ckey with the byond whitelist field doesn't work.
+		// So we instead have to remove every stickyban than later re-add them.
 		if (!length(GLOB.stickybanadminexemptions))
 			for (var/banned_ckey in world.GetConfig("ban"))
 				GLOB.stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
@@ -111,7 +111,7 @@
 		stoplag() // sleep a byond tick
 		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
 		return
-	var/list/ban = ..()	//default pager ban stuff
+	var/list/ban = ..() //default pager ban stuff
 
 	if (ban)
 		if (!admin)

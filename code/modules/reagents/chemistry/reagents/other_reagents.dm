@@ -146,7 +146,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /*
- *	Water reaction to turf
+ * Water reaction to turf
  */
 
 /datum/reagent/water/expose_turf(turf/open/exposed_turf, reac_volume)
@@ -170,7 +170,7 @@
 			qdel(hotspot)
 
 /*
- *	Water reaction to an object
+ * Water reaction to an object
  */
 
 /datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume)
@@ -193,7 +193,7 @@
 		qdel(HH)
 
 /*
- *	Water reaction to a mob
+ * Water reaction to a mob
  */
 
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with water can help put them out!
@@ -249,7 +249,7 @@
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
-	if(data["misc"] >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(data["misc"] >= 25) // 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
@@ -261,14 +261,14 @@
 				M.Unconscious(120)
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data["misc"] >= 60)	// 30 units, 135 seconds
+	if(data["misc"] >= 60) // 30 units, 135 seconds
 		if(iscultist(M))
 			SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 		M.jitteriness = 0
 		M.stuttering = 0
-		holder.remove_reagent(type, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
-	holder.remove_reagent(type, 0.4)	//fixed consumption to prevent balancing going out of whack
+	holder.remove_reagent(type, 0.4) //fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -308,7 +308,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /*
- *	Water reaction to turf
+ * Water reaction to turf
  */
 
 /datum/reagent/hydrogen_peroxide/expose_turf(turf/open/exposed_turf, reac_volume)
@@ -318,7 +318,7 @@
 	if(reac_volume >= 5)
 		exposed_turf.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
 /*
- *	Water reaction to a mob
+ * Water reaction to a mob
  */
 
 /datum/reagent/hydrogen_peroxide/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
@@ -326,7 +326,7 @@
 	if(methods & TOUCH)
 		exposed_mob.adjustFireLoss(2, 0) // burns
 
-/datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
+/datum/reagent/fuel/unholywater //if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	description = "Something that shouldn't exist on this plane of existence."
 	taste_description = "suffering"
@@ -354,7 +354,7 @@
 		M.adjustBruteLoss(2, 0)
 	..()
 
-/datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
+/datum/reagent/hellwater //if someone has this in their system they've really pissed off an eldrich god
 	name = "Hell Water"
 	description = "YOUR FLESH! IT BURNS!"
 	taste_description = "burning"
@@ -363,9 +363,9 @@
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M)
 	M.set_fire_stacks(min(5, M.fire_stacks + 3))
-	M.IgniteMob()			//Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
+	M.IgniteMob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	M.adjustToxLoss(1, 0)
-	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
+	M.adjustFireLoss(1, 0) //Hence the other damages... ain't I a bastard?
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 150)
 	holder.remove_reagent(type, 1)
 
@@ -451,15 +451,15 @@
 						if(48)
 							newcolor += "0"
 						if(49 to 57)
-							newcolor += ascii2text(ascii-1)	//numbers 1 to 9
+							newcolor += ascii2text(ascii-1) //numbers 1 to 9
 						if(97)
 							newcolor += "9"
 						if(98 to 102)
-							newcolor += ascii2text(ascii-1)	//letters b to f lowercase
+							newcolor += ascii2text(ascii-1) //letters b to f lowercase
 						if(65)
 							newcolor += "9"
 						if(66 to 70)
-							newcolor += ascii2text(ascii+31)	//letters B to F - translates to lowercase
+							newcolor += ascii2text(ascii+31) //letters B to F - translates to lowercase
 						else
 							break
 				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
@@ -1554,14 +1554,14 @@
 	name = "Invisible Powder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
-	random_color_list = list(null)	//because using the powder color turns things invisible
+	random_color_list = list(null) //because using the powder color turns things invisible
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/black
 	name = "Black Powder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
-	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
+	random_color_list = list("#8D8D8D") //more grey than black, not enough to hide your true colors
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/colorful_reagent/powder/white
@@ -2075,7 +2075,7 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS)		//50 deciseconds per unit
+	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS) //50 deciseconds per unit
 
 /datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2332,8 +2332,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/peaceborg/tire/on_mob_life(mob/living/carbon/M)
-	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
-	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+	var/healthcomp = (100 - M.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	if(M.getStaminaLoss() < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		to_chat(M, "You should sit down and take a rest...")
@@ -2376,8 +2376,8 @@
 	if(HAS_TRAIT(L, TRAIT_NOHUNGER)) //they can't puke
 		holder.del_reagent(type)
 
-#define YUCK_PUKE_CYCLES 3 		// every X cycle is a puke
-#define YUCK_PUKES_TO_STUN 3 	// hit this amount of pukes in a row to start stunning
+#define YUCK_PUKE_CYCLES 3 // every X cycle is a puke
+#define YUCK_PUKES_TO_STUN 3 // hit this amount of pukes in a row to start stunning
 /datum/reagent/yuck/on_mob_life(mob/living/carbon/C)
 	if(!yuck_cycle)
 		if(prob(8))

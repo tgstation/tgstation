@@ -27,7 +27,7 @@
 	var/pictures_left = 10
 	var/on = TRUE
 	var/cooldown = 64
-	var/blending = FALSE		//lets not take pictures while the previous is still processing!
+	var/blending = FALSE //lets not take pictures while the previous is still processing!
 	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
 	var/obj/item/disk/holodisk/disk
 	var/sound/custom_sound
@@ -116,7 +116,7 @@
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
-	else					//user is an atom
+	else //user is an atom
 		if(!(get_turf(target) in view(world.view, user)))
 			return FALSE
 	return TRUE

@@ -36,7 +36,7 @@
 		else
 			icon_state = "[soft_type]soft"
 			to_chat(user, "<span class='notice'>You flip the hat back in normal position.</span>")
-		usr.update_inv_head()	//so our mob-overlays update
+		usr.update_inv_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()

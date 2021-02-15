@@ -1,11 +1,11 @@
 /// The carp rift is currently charging.
-#define CHARGE_ONGOING			0
+#define CHARGE_ONGOING 0
 /// The carp rift is currently charging and has output a final warning.
-#define CHARGE_FINALWARNING		1
+#define CHARGE_FINALWARNING 1
 /// The carp rift is now fully charged.
-#define CHARGE_COMPLETED		2
+#define CHARGE_COMPLETED 2
 /// The darkness threshold for space dragon when choosing a color
-#define DARKNESS_THRESHOLD		50
+#define DARKNESS_THRESHOLD 50
 
 /**
  * # Space Dragon

@@ -107,7 +107,7 @@
 /datum/netdata/proc/data_to_json()
 	return json_encode(data)
 
-/datum/netdata/proc/json_list_generation_admin()	//for admin logs and such.
+/datum/netdata/proc/json_list_generation_admin() //for admin logs and such.
 	. = list()
 	. |= json_list_generation()
 

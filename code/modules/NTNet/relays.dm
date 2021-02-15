@@ -15,14 +15,14 @@
 	var/relay_enabled = TRUE
 	///(D)DoS-attack-related failure causing it not to be operational any longer.
 	var/dos_failure = FALSE
-	var/list/dos_sources = list()	// Backwards reference for qdel() stuff
+	var/list/dos_sources = list() // Backwards reference for qdel() stuff
 	var/uid
 	var/static/gl_uid = 1
 
 	// Denial of Service attack variables
-	var/dos_overload = 0		// Amount of DoS "packets" in this relay's buffer
-	var/dos_capacity = 500		// Amount of DoS "packets" in buffer required to crash the relay
-	var/dos_dissipate = 0.5		// Amount of DoS "packets" dissipated over time.
+	var/dos_overload = 0 // Amount of DoS "packets" in this relay's buffer
+	var/dos_capacity = 500 // Amount of DoS "packets" in buffer required to crash the relay
+	var/dos_dissipate = 0.5 // Amount of DoS "packets" dissipated over time.
 
 
 ///Proc called to change the value of the `relay_enabled` variable and append behavior related to its change.

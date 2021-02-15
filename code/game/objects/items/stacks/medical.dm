@@ -280,7 +280,7 @@
 
 /obj/item/stack/medical/mesh/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	if(amount == max_amount)	 //only seal full mesh packs
+	if(amount == max_amount)  //only seal full mesh packs
 		is_open = FALSE
 		update_icon()
 

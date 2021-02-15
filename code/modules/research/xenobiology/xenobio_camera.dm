@@ -261,7 +261,7 @@
 			if (!QDELETED(food))
 				food.LAssailant = C
 				X.monkeys--
-				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+				X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
 				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
 		else
 			to_chat(owner, "<span class='warning'>[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.</span>")
@@ -293,7 +293,7 @@
 				M.visible_message("<span class='notice'>[M] vanishes as [M.p_theyre()] reclaimed for recycling!</span>")
 				recycler.use_power(500)
 				X.monkeys += recycler.cube_production
-				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+				X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
 				qdel(M)
 				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")
 	else
@@ -460,7 +460,7 @@
 			if (!QDELETED(food))
 				food.LAssailant = C
 				X.monkeys--
-				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+				X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
 				to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
 		else
 			to_chat(C, "<span class='warning'>[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.</span>")
@@ -485,6 +485,6 @@
 		M.visible_message("<span class='notice'>[M] vanishes as [p_theyre()] reclaimed for recycling!</span>")
 		X.connected_recycler.use_power(500)
 		X.monkeys += connected_recycler.cube_production
-		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+		X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
 		qdel(M)
 		to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")

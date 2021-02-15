@@ -1,8 +1,8 @@
 /* First aid storage
  * Contains:
- *		First Aid Kits
- * 		Pill Bottles
- *		Dice Pack (in a pill bottle)
+ * First Aid Kits
+ * Pill Bottles
+ * Dice Pack (in a pill bottle)
  */
 
 /*

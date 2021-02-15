@@ -1,10 +1,10 @@
 ///Mining Base////
 
-#define ZONE_SET	0
-#define BAD_ZLEVEL	1
-#define BAD_AREA	2
-#define BAD_COORDS	3
-#define BAD_TURF	4
+#define ZONE_SET 0
+#define BAD_ZLEVEL 1
+#define BAD_AREA 2
+#define BAD_COORDS 3
+#define BAD_TURF 4
 
 /area/shuttle/auxiliary_base
 	name = "Auxiliary Base"

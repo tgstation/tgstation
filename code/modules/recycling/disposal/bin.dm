@@ -12,12 +12,12 @@
 	obj_flags = CAN_BE_HIT | USES_TGUI
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 
-	var/datum/gas_mixture/air_contents	// internal reservoir
+	var/datum/gas_mixture/air_contents // internal reservoir
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
-	var/flush = 0	// true if flush handle is pulled
+	var/flush = 0 // true if flush handle is pulled
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
-	var/flushing = 0	// true if flushing in progress
+	var/flushing = 0 // true if flushing in progress
 	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
@@ -282,7 +282,7 @@
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
+	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
 		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
@@ -466,7 +466,7 @@
 	. = ..()
 	trunk = locate() in loc
 	if(trunk)
-		trunk.linked = src	// link the pipe trunk to self
+		trunk.linked = src // link the pipe trunk to self
 
 /obj/machinery/disposal/delivery_chute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.CanEnterDisposals())

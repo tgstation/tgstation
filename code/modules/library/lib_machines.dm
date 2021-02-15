@@ -1,12 +1,12 @@
 /* Library Machines
  *
  * Contains:
- *		Borrowbook datum
- *		Library Public Computer
- *		Cachedbook datum
- *		Library Computer
- *		Library Scanner
- *		Book Binder
+ * Borrowbook datum
+ * Library Public Computer
+ * Cachedbook datum
+ * Library Computer
+ * Library Scanner
+ * Book Binder
  */
 
 
@@ -185,7 +185,7 @@
 	var/list/inventory = list()
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
-	var/page = 1	//current page of the external archives
+	var/page = 1 //current page of the external archives
 	var/printer_cooldown = 0
 	COOLDOWN_DECLARE(library_console_topic_cooldown)
 
@@ -517,7 +517,7 @@
 	icon_state = "bigscanner"
 	desc = "It servers the purpose of scanning stuff."
 	density = TRUE
-	var/obj/item/book/cache		// Last scanned book
+	var/obj/item/book/cache // Last scanned book
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/book))

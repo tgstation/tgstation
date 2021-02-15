@@ -42,7 +42,7 @@
 			. += "teg-oc[lastcirc]"
 
 
-#define GENRATE 800		// generator output coefficient from Q
+#define GENRATE 800 // generator output coefficient from Q
 
 /obj/machinery/power/generator/process_atmos()
 

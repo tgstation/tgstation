@@ -30,8 +30,8 @@ RLD
 	var/matter = 0
 	var/max_matter = 100
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
-	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
-	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
+	var/has_ammobar = FALSE //controls whether or not does update_icon apply ammo indicator overlays
+	var/ammo_sections = 10 //amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	/// Bitflags for upgrades
 	var/upgrade = NONE
 	/// Bitflags for banned upgrades
@@ -111,7 +111,7 @@ RLD
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
-		update_icon()	//ensures that ammo counters (if present) get updated
+		update_icon() //ensures that ammo counters (if present) get updated
 	return loaded
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/S, mob/user)
@@ -178,7 +178,7 @@ RLD
 	if(!. && user)
 		to_chat(user, no_ammo_message)
 		if(has_ammobar)
-			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
+			flick("[icon_state]_empty", src) //somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)

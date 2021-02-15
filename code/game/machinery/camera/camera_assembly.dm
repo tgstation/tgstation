@@ -17,7 +17,7 @@
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera_assembly"
 	max_integrity = 150
-	//	Motion, EMP-Proof, X-ray
+	// Motion, EMP-Proof, X-ray
 	var/obj/item/analyzer/xray_module
 	var/malf_xray_firmware_active //used to keep from revealing malf AI upgrades for user facing isXRay() checks when they use Upgrade Camera Network ability
 								//will be false if the camera is upgraded with the proper parts.
@@ -149,7 +149,7 @@
 					set_anchored(TRUE)
 				return
 
-		if(STATE_WIRED)	// Upgrades!
+		if(STATE_WIRED) // Upgrades!
 			if(istype(W, /obj/item/stack/sheet/mineral/plasma)) //emp upgrade
 				if(emp_module)
 					to_chat(user, "<span class='warning'>[src] already contains a [emp_module]!</span>")

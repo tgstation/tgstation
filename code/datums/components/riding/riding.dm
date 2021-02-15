@@ -91,7 +91,7 @@
 	. = defaults["[dir]"]
 	if(directional_vehicle_layers["[dir]"])
 		. = directional_vehicle_layers["[dir]"]
-	if(isnull(.))	//you can set it to null to not change it.
+	if(isnull(.)) //you can set it to null to not change it.
 		. = AM.layer
 	AM.layer = .
 

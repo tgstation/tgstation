@@ -1,8 +1,8 @@
 /* Holograms!
  * Contains:
- *		Holopad
- *		Hologram
- *		Other stuff
+ * Holopad
+ * Hologram
+ * Other stuff
  */
 
 /*
@@ -377,7 +377,7 @@ Possible to do for anyone motivated enough:
 			if(outgoing_call)
 				HC.Disconnect(src)//can't answer calls while calling
 			else
-				playsound(src, 'sound/machines/twobeep.ogg', 100)	//bring, bring!
+				playsound(src, 'sound/machines/twobeep.ogg', 100) //bring, bring!
 				ringing = TRUE
 
 	update_icon()
@@ -395,7 +395,7 @@ Possible to do for anyone motivated enough:
 		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
 		if(AI)
 			Hologram.icon = AI.holo_icon
-		else	//make it like real life
+		else //make it like real life
 			Hologram.icon = user.icon
 			Hologram.icon_state = user.icon_state
 			Hologram.copy_overlays(user, TRUE)
@@ -408,7 +408,7 @@ Possible to do for anyone motivated enough:
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
-		Hologram.set_light(2)	//hologram lighting
+		Hologram.set_light(2) //hologram lighting
 		move_hologram()
 
 		set_holo(user, Hologram)
@@ -566,7 +566,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
-	Hologram.set_light(2)	//hologram lighting
+	Hologram.set_light(2) //hologram lighting
 	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before your eyes!</span>")
 	return Hologram
 

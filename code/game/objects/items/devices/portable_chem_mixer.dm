@@ -10,10 +10,10 @@
 	custom_price = PAYCHECK_MEDIUM * 10
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-	var/obj/item/reagent_containers/beaker = null	///Creating an empty slot for a beaker that can be added to dispense into
-	var/amount = 30	///The amount of reagent that is to be dispensed currently
+	var/obj/item/reagent_containers/beaker = null ///Creating an empty slot for a beaker that can be added to dispense into
+	var/amount = 30 ///The amount of reagent that is to be dispensed currently
 
-	var/list/dispensable_reagents = list()	///List in which all currently dispensable reagents go
+	var/list/dispensable_reagents = list() ///List in which all currently dispensable reagents go
 
 /obj/item/storage/portable_chem_mixer/ComponentInitialize()
 	. = ..()
@@ -97,9 +97,9 @@
  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
  *
  * Checks if a valid user and a valid new beaker exist and attempts to replace the current beaker in the portable chemical mixer with the one in hand. Simply places the new beaker in if no beaker is currently loaded
- *	Arguments:
- * * mob/living/user							-	The user who is trying to exchange beakers
- *	* obj/item/reagent_containers/new_beaker	-	The new beaker that the user wants to put into the device
+ * Arguments:
+ * * mob/living/user - The user who is trying to exchange beakers
+ * * obj/item/reagent_containers/new_beaker - The new beaker that the user wants to put into the device
  */
 /obj/item/storage/portable_chem_mixer/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)

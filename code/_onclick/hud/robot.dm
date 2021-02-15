@@ -202,7 +202,7 @@
 
 	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
 		//Modules display is shown
-		screenmob.client.screen += module_store_icon	//"store" icon
+		screenmob.client.screen += module_store_icon //"store" icon
 
 		if(!R.model.modules)
 			to_chat(usr, "<span class='warning'>Selected model has no modules to select!</span>")
@@ -215,7 +215,7 @@
 		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
 		screenmob.client.screen += R.robot_modules_background
 
-		var/x = -4	//Start at CENTER-4,SOUTH+1
+		var/x = -4 //Start at CENTER-4,SOUTH+1
 		var/y = 1
 
 		for(var/atom/movable/A in R.model.get_inactive_modules())
@@ -235,7 +235,7 @@
 
 	else
 		//Modules display is hidden
-		screenmob.client.screen -= module_store_icon	//"store" icon
+		screenmob.client.screen -= module_store_icon //"store" icon
 
 		for(var/atom/A in R.model.get_inactive_modules())
 			//Module is not currently active

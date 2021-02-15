@@ -59,7 +59,7 @@
 		return
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(C.stat)	// Lets not prevent dragging unconscious/dead people.
+		if(C.stat) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
 			return TRUE
@@ -74,7 +74,7 @@
 	. = ..()
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(C.stat)	// Lets not prevent dragging unconscious/dead people.
+		if(C.stat) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && C.m_intent != MOVE_INTENT_WALK)
 			return FALSE
@@ -114,11 +114,11 @@
 	allow_walk = FALSE
 
 /obj/structure/holosign/barrier/cyborg/bullet_act(obj/projectile/P)
-	take_damage((P.damage / 5) , BRUTE, MELEE, 1)	//Doesn't really matter what damage flag it is.
+	take_damage((P.damage / 5) , BRUTE, MELEE, 1) //Doesn't really matter what damage flag it is.
 	if(istype(P, /obj/projectile/energy/electrode))
-		take_damage(10, BRUTE, MELEE, 1)	//Tasers aren't harmful.
+		take_damage(10, BRUTE, MELEE, 1) //Tasers aren't harmful.
 	if(istype(P, /obj/projectile/beam/disabler))
-		take_damage(5, BRUTE, MELEE, 1)	//Disablers aren't harmful.
+		take_damage(5, BRUTE, MELEE, 1) //Disablers aren't harmful.
 	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/medical
@@ -175,7 +175,7 @@
 	var/shockcd = 0
 
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/projectile/P)
-	take_damage(P.damage, BRUTE, MELEE, 1)	//Yeah no this doesn't get projectile resistance.
+	take_damage(P.damage, BRUTE, MELEE, 1) //Yeah no this doesn't get projectile resistance.
 	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()

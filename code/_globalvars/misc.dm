@@ -16,9 +16,9 @@ GLOBAL_VAR_INIT(CHARGELEVEL, 0.001) // Cap for how fast cells charge, as a perce
 
 GLOBAL_LIST_EMPTY(powernets)
 
-GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
+GLOBAL_VAR_INIT(bsa_unlock, FALSE) //BSA unlocked by head ID swipes
 
-GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
+GLOBAL_LIST_EMPTY(player_details) // ckey -> /datum/player_details
 
 ///All currently running polls held as datums
 GLOBAL_LIST_EMPTY(polls)

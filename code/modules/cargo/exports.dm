@@ -21,10 +21,10 @@ Then the player gets the profit from selling his own wasted time.
 
 // Simple holder datum to pass export results around
 /datum/export_report
-	var/list/exported_atoms = list()	//names of atoms sold/deleted by export
-	var/list/total_amount = list()		//export instance => total count of sold objects of its type, only exists if any were sold
-	var/list/total_value = list()		//export instance => total value of sold objects
-	var/list/exported_atoms_ref = list()	//if they're not deleted they go in here for use.
+	var/list/exported_atoms = list() //names of atoms sold/deleted by export
+	var/list/total_amount = list() //export instance => total count of sold objects of its type, only exists if any were sold
+	var/list/total_value = list() //export instance => total value of sold objects
+	var/list/exported_atoms_ref = list() //if they're not deleted they go in here for use.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
@@ -64,13 +64,13 @@ Then the player gets the profit from selling his own wasted time.
 	return report
 
 /datum/export
-	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
+	var/unit_name = "" // Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
-	var/cost = 1					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
-	var/k_elasticity = 1/30			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
-	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
-	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
-	var/list/exclude_types = list()	// Types excluded from export
+	var/cost = 1 // Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
+	var/k_elasticity = 1/30 //coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
+	var/list/export_types = list() // Type of the exported object. If none, the export datum is considered base type.
+	var/include_subtypes = TRUE // Set to FALSE to make the datum apply only to a strict type.
+	var/list/exclude_types = list() // Types excluded from export
 
 	//cost includes elasticity, this does not.
 	var/init_cost
@@ -99,9 +99,9 @@ Then the player gets the profit from selling his own wasted time.
 	var/amount = get_amount(O)
 	if(apply_elastic)
 		if(k_elasticity!=0)
-			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
+			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount))) //anti-derivative of the marginal cost function
 		else
-			return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
+			return round(cost * amount) //alternative form derived from L'Hopital to avoid division by 0
 	else
 		return round(init_cost * amount)
 
@@ -156,7 +156,7 @@ Then the player gets the profit from selling his own wasted time.
 
 	if(!dry_run)
 		if(apply_elastic)
-			cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
+			cost *= NUM_E**(-1*k_elasticity*amount) //marginal cost modifier
 		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
 	return TRUE
 

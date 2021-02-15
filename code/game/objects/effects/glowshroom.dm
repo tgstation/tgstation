@@ -49,7 +49,7 @@
 	. += "This is a [generation]\th generation [name]!"
 
 /**
- *	Creates a new glowshroom structure.
+ * Creates a new glowshroom structure.
  *
  * Arguments:
  * * newseed - Seed of the shroom
@@ -169,7 +169,7 @@
 				continue
 
 			Decay(TRUE, 2) // Decay before spawning new mushrooms to reduce their endurance
-			if(QDELETED(src))	//Decay can end us
+			if(QDELETED(src)) //Decay can end us
 				return
 			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
 			child.generation = generation + 1

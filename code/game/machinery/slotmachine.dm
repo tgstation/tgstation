@@ -1,7 +1,7 @@
 /*******************************\
-|		  Slot Machines		  	|
-|	  Original code by Glloyd	|
-|	  Tgstation port by Miauw	|
+|   Slot Machines |
+|   Original code by Glloyd |
+|   Tgstation port by Miauw |
 \*******************************/
 
 #define SPIN_PRICE 5

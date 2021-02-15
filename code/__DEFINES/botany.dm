@@ -41,7 +41,7 @@
 
 /// -- Flags for seeds. --
 /// Allows a plant to wild mutate (mutate on haravest) at a certain instability.
-#define MUTATE_EARLY	(1<<0)
+#define MUTATE_EARLY (1<<0)
 
 /// -- Flags for traits. --
 /// Caps the plant's yield at 5 instead of 10.

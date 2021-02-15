@@ -1,8 +1,8 @@
 /* Stack type objects!
  * Contains:
- * 		Stacks
- * 		Recipe datum
- * 		Recipe list datum
+ * Stacks
+ * Recipe datum
+ * Recipe list datum
  */
 
 /*
@@ -415,7 +415,7 @@
 		return FALSE
 	if(mats_per_unit != check.mats_per_unit)
 		return FALSE
-	if(is_cyborg)	// No merging cyborg stacks into other stacks
+	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
 	return TRUE
 

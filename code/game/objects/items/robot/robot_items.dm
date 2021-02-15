@@ -362,7 +362,7 @@
 	. = ..()
 	check_amount()
 
-/obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
+/obj/item/borg/lollipop/proc/check_amount() //Doesn't even use processing ticks.
 	if(charging)
 		return
 	if(candy < candymax)
@@ -430,7 +430,7 @@
 	user.visible_message("<span class='warning'>[user] blasts a flying lollipop at [target]!</span>")
 	check_amount()
 
-/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)	//Most certainly a good idea.
+/obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params) //Most certainly a good idea.
 	if(candy <= 0)
 		to_chat(user, "<span class='warning'>Not enough gumballs left!</span>")
 		return FALSE
@@ -517,7 +517,7 @@
 		S.color = color
 		dropped = TRUE
 
-/obj/item/ammo_casing/caseless/lollipop	//NEEDS RANDOMIZED COLOR LOGIC.
+/obj/item/ammo_casing/caseless/lollipop //NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
 	desc = "Why are you seeing this?!"
 	projectile_type = /obj/projectile/bullet/reusable/lollipop
@@ -589,7 +589,7 @@
 	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
-	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
+	var/projectile_speed_coefficient = 1.5 //Higher the coefficient slower the projectile.
 	/// Energy cost per tracked projectile per second
 	var/projectile_tick_speed_ecost = 75
 	var/list/obj/projectile/tracked
@@ -692,7 +692,7 @@
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/projectile/P = I
-		if(!P.stun && P.nodamage)	//No damage
+		if(!P.stun && P.nodamage) //No damage
 			continue
 		usage += projectile_tick_speed_ecost * delta_time
 		usage += tracked[I] * projectile_damage_tick_ecost_coefficient * delta_time

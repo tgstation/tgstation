@@ -1,8 +1,8 @@
 /*
  * Contains:
- *		Security
- *		Detective
- *		Navy uniforms
+ * Security
+ * Detective
+ * Navy uniforms
  */
 
 /*

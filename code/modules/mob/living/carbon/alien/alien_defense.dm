@@ -55,7 +55,7 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
 	. = ..()
-	if(.)	//to allow surgery to return properly.
+	if(.) //to allow surgery to return properly.
 		return FALSE
 
 	switch(M.a_intent)

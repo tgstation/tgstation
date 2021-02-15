@@ -17,7 +17,7 @@
 	var/mech_flags = NONE
 	var/salvageable = 1
 	var/detachable = TRUE // Set to FALSE for built-in equipment that cannot be removed
-	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
+	var/selectable = 1 // Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
 
@@ -102,7 +102,7 @@
 	var/C = chassis.loc
 	chassis.use_power(energy_drain)
 	. = do_after(user, equip_cooldown, target=target, interaction_key = interaction_key)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
+	if(!chassis || chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
 		return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
@@ -110,7 +110,7 @@
 		return
 	var/C = chassis.loc
 	. = do_after(user, delay, target=target)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
+	if(!chassis || chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
 		return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M)

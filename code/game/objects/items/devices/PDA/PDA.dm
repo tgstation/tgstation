@@ -3,13 +3,13 @@
 
 GLOBAL_LIST_EMPTY(PDAs)
 
-#define PDA_SCANNER_NONE		0
-#define PDA_SCANNER_MEDICAL		1
-#define PDA_SCANNER_FORENSICS	2 //unused
-#define PDA_SCANNER_REAGENT		3
-#define PDA_SCANNER_HALOGEN		4
-#define PDA_SCANNER_GAS			5
-#define PDA_SPAM_DELAY		    2 MINUTES
+#define PDA_SCANNER_NONE 0
+#define PDA_SCANNER_MEDICAL 1
+#define PDA_SCANNER_FORENSICS 2 //unused
+#define PDA_SCANNER_REAGENT 3
+#define PDA_SCANNER_HALOGEN 4
+#define PDA_SCANNER_GAS 5
+#define PDA_SPAM_DELAY     2 MINUTES
 
 /obj/item/pda
 	name = "\improper PDA"
@@ -74,13 +74,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
 
-	var/obj/item/paicard/pai = null	// A slot for a personal AI device
+	var/obj/item/paicard/pai = null // A slot for a personal AI device
 
 	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-	var/overlays_x_offset = 0	//x offset to use for certain overlays
+	var/overlays_x_offset = 0 //x offset to use for certain overlays
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(inserted_item)
 		inserted_item = new inserted_item(src)
 	else
-		inserted_item =	new /obj/item/pen(src)
+		inserted_item = new /obj/item/pen(src)
 	update_icon()
 
 /obj/item/pda/equipped(mob/user, slot)
@@ -640,9 +640,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			if("pai")
 				switch(href_list["option"])
-					if("1")		// Configure pAI device
+					if("1") // Configure pAI device
 						pai.attack_self(U)
-					if("2")		// Eject pAI device
+					if("2") // Eject pAI device
 						usr.put_in_hands(pai)
 						to_chat(usr, "<span class='notice'>You remove the pAI from the [name].</span>")
 
@@ -1007,7 +1007,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 			updateSelfDialog()//Update self dialog on success.
 
-			return	//Return in case of failed check or when successful.
+			return //Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/paicard) && !pai)
 		if(!user.transferItemToLoc(C, src))

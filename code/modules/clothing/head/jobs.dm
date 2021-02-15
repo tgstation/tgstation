@@ -1,8 +1,8 @@
 //defines the drill hat's yelling setting
-#define DRILL_DEFAULT	"default"
-#define DRILL_SHOUTING	"shouting"
-#define DRILL_YELLING	"yelling"
-#define DRILL_CANADIAN	"canadian"
+#define DRILL_DEFAULT "default"
+#define DRILL_SHOUTING "shouting"
+#define DRILL_YELLING "yelling"
+#define DRILL_CANADIAN "canadian"
 
 //Chef
 /obj/item/clothing/head/chefhat

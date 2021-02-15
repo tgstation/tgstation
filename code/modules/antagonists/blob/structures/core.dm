@@ -11,7 +11,7 @@
 	resistance_flags = LAVA_PROOF
 	strong_reinforce_range = BLOB_CORE_STRONG_REINFORCE_RANGE
 	reflector_reinforce_range = BLOB_CORE_REFLECTOR_REINFORCE_RANGE
-	claim_range	= BLOB_CORE_CLAIM_RANGE
+	claim_range = BLOB_CORE_CLAIM_RANGE
 	pulse_range = BLOB_CORE_PULSE_RANGE
 	expand_range = BLOB_CORE_EXPAND_RANGE
 	max_spores = BLOB_CORE_MAX_SPORES

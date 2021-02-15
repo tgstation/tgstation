@@ -75,7 +75,7 @@
 		to_chat(user, "<span class='warning'>You should unfold [src] before changing it!</span>")
 		return
 
-	else if(istype(P, /obj/item/stamp)) 	//we don't randomize stamps on a paperplane
+	else if(istype(P, /obj/item/stamp)) //we don't randomize stamps on a paperplane
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
 		update_icon()
 		add_fingerprint(user)

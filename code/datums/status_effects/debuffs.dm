@@ -762,7 +762,7 @@
 
 /datum/status_effect/convulsing
 	id = "convulsing"
-	duration = 	150
+	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/convulsing
 

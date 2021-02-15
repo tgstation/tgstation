@@ -154,7 +154,7 @@
 	moving = FALSE
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
-	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
+	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs))) //landed on a turf without transit tube or not in our direction
 		outside_tube()
 
 /obj/structure/transit_tube_pod/proc/outside_tube()

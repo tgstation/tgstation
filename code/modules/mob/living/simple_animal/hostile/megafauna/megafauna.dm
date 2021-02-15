@@ -91,7 +91,7 @@
 		var/tab = "megafauna_kills"
 		if(crusher_kill)
 			tab = "megafauna_kills_crusher"
-		if(!elimination)	//used so the achievment only occurs for the last legion to die.
+		if(!elimination) //used so the achievment only occurs for the last legion to die.
 			grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
 			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 	return ..()

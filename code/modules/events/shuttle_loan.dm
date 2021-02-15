@@ -135,7 +135,7 @@
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged) //drops a mateba
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
 				if(prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)

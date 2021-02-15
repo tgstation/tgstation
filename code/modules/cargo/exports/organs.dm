@@ -1,5 +1,5 @@
 /datum/export/organ
-	include_subtypes = FALSE	//CentCom doesn't need organs from non-humans.
+	include_subtypes = FALSE //CentCom doesn't need organs from non-humans.
 
 /datum/export/organ/heart
 	cost = CARGO_CRATE_VALUE * 0.2 //For the man who has everything and nothing.

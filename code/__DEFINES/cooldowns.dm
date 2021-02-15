@@ -26,7 +26,7 @@
 */
 
 //INDEXES
-#define COOLDOWN_BORG_SELF_REPAIR	"borg_self_repair"
+#define COOLDOWN_BORG_SELF_REPAIR "borg_self_repair"
 #define COOLDOWN_EXPRESSPOD_CONSOLE "expresspod_console"
 
 //Mecha cooldowns

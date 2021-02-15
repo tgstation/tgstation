@@ -14,7 +14,7 @@
 	var/bare_wound_bonus = 0
 
 	var/datum/armor/armor
-	var/obj_integrity	//defaults to max_integrity
+	var/obj_integrity //defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
 	///Damage under this value will be completely ignored
@@ -125,8 +125,8 @@
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
-	//		null if object handles breathing logic for lifeform
-	//		datum/air_group to tell lifeform to process using that breath return
+	// null if object handles breathing logic for lifeform
+	// datum/air_group to tell lifeform to process using that breath return
 	//DEFAULT: Take air from turf to give to have mob process
 
 	if(breath_request>0)

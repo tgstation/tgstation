@@ -34,7 +34,7 @@ effective or pretty fucking useless.
 
 
 /obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
-	if(!user) 	return
+	if(!user) return
 	if(times_used >= max_uses)
 		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
 		return

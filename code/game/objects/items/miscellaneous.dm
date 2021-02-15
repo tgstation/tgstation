@@ -345,7 +345,7 @@
 	///List of mobs that have already been mobbed.
 	var/static/list/mob_mobs = list()
 
-#define NICKNAME_CAP	(MAX_NAME_LEN/2)
+#define NICKNAME_CAP (MAX_NAME_LEN/2)
 /obj/item/virgin_mary/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(resistance_flags & ON_FIRE)

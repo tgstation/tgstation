@@ -56,8 +56,8 @@
 	add_fingerprint(user)
 	if(istype(M) && on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)))
 
-		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
-			return ..()	//just hit them in the head
+		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50)) //too dumb to use flashlight properly
+			return ..() //just hit them in the head
 
 		if(!ISADVANCEDTOOLUSER(user))
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -82,7 +82,7 @@
 					to_chat(user, "<span class='warning'>[M] doesn't have any eyes!</span>")
 					return
 
-				if(M == user)	//they're using it on themselves
+				if(M == user) //they're using it on themselves
 					if(M.flash_act(visual = 1))
 						M.visible_message("<span class='notice'>[M] directs [src] to [M.p_their()] eyes.</span>", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 					else
@@ -92,7 +92,7 @@
 						"<span class='danger'>You direct [src] to [M]'s eyes.</span>")
 					if(M.stat == DEAD || (M.is_blind()) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
-					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-ray vision
+					else if(M.dna && M.dna.check_mutation(XRAY)) //mob has X-ray vision
 						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
 					else //they're okay!
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
@@ -357,7 +357,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	desc = "A mining lantern."
-	light_range = 6			// luminosity when on
+	light_range = 6 // luminosity when on
 	light_system = MOVABLE_LIGHT
 
 /obj/item/flashlight/lantern/heirloom_moth

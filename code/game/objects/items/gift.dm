@@ -1,7 +1,7 @@
 /* Gifts and wrapping paper
  * Contains:
- *		Gifts
- *		Wrapping Paper
+ * Gifts
+ * Wrapping Paper
  */
 
 /*

@@ -165,7 +165,7 @@
 			var/gas = gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
-				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
+				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
 			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()

@@ -36,7 +36,7 @@
 	on = !( on )
 	update_icon()
 
-/obj/machinery/igniter/process()	//ugh why is this even in process()?
+/obj/machinery/igniter/process() //ugh why is this even in process()?
 	if (on && !(machine_stat & NOPOWER) )
 		var/turf/location = loc
 		if (isturf(location))

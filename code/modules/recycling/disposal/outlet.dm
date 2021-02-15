@@ -8,7 +8,7 @@
 	anchored = TRUE
 	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/active = FALSE
-	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/turf/target // this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
 	var/obj/structure/disposalconstruct/stored
 	var/start_eject = 0
@@ -29,7 +29,7 @@
 
 	trunk = locate() in loc
 	if(trunk)
-		trunk.linked = src	// link the pipe trunk to self
+		trunk.linked = src // link the pipe trunk to self
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)

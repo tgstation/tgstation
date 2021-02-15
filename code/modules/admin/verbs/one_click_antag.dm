@@ -1,5 +1,5 @@
 /// If we spawn an ERT with the "choose experienced leader" option, select the leader from the top X playtimes
-#define ERT_EXPERIENCED_LEADER_CHOOSE_TOP	3
+#define ERT_EXPERIENCED_LEADER_CHOOSE_TOP 3
 
 /client/proc/one_click_antag()
 	set name = "Create Antagonist"

@@ -1,8 +1,8 @@
-#define CLOSING			1
-#define OPENING			2
-#define CYCLE			3
-#define CYCLE_EXTERIOR	4
-#define CYCLE_INTERIOR	5
+#define CLOSING 1
+#define OPENING 2
+#define CYCLE 3
+#define CYCLE_EXTERIOR 4
+#define CYCLE_INTERIOR 5
 
 /obj/machinery/door_buttons
 	power_channel = AREA_USAGE_ENVIRON

@@ -76,7 +76,7 @@
 
 /obj/machinery/camera/proc/upgradeEmpProof(malf_upgrade, ignore_malf_upgrades)
 	if(isEmpProof(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf module with the normal one
-		return							//that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
+		return //that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 	if(malf_upgrade)
 		assembly.malf_emp_firmware_active = TRUE //don't add parts to drop, update icon, ect. reconstructing it will also retain the upgrade.
@@ -102,7 +102,7 @@
 
 /obj/machinery/camera/proc/upgradeXRay(malf_upgrade, ignore_malf_upgrades)
 	if(isXRay(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf upgrade with the normal one
-		return						//that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
+		return //that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
 	if(malf_upgrade)
 		assembly.malf_xray_firmware_active = TRUE //don't add parts to drop, update icon, ect. reconstructing it will also retain the upgrade.
 		assembly.malf_xray_firmware_present = TRUE //so the upgrade is retained after incompatible parts are removed.

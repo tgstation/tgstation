@@ -9,7 +9,7 @@
 #define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
 #define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
 
-/proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
+/proc/point_midpoint_points(datum/point/a, datum/point/b) //Obviously will not support multiZ calculations! Same for the two below.
 	var/datum/point/P = new
 	P.x = a.x + (b.x - a.x) / 2
 	P.y = a.y + (b.y - a.y) / 2
@@ -22,7 +22,7 @@
 /proc/angle_between_points(datum/point/a, datum/point/b)
 	return ATAN2((b.y - a.y), (b.x - a.x))
 
-/datum/position			//For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
+/datum/position //For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -32,7 +32,7 @@
 /datum/position/proc/valid()
 	return x && y && z && !isnull(pixel_x) && !isnull(pixel_y)
 
-/datum/position/New(_x = 0, _y = 0, _z = 0, _pixel_x = 0, _pixel_y = 0)	//first argument can also be a /datum/point.
+/datum/position/New(_x = 0, _y = 0, _z = 0, _pixel_x = 0, _pixel_y = 0) //first argument can also be a /datum/point.
 	if(istype(_x, /datum/point))
 		var/datum/point/P = _x
 		var/turf/T = P.return_turf()
@@ -66,7 +66,7 @@
 /datum/position/proc/return_point()
 	return new /datum/point(src)
 
-/datum/point		//A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
+/datum/point //A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
 	var/x = 0
 	var/y = 0
 	var/z = 0
@@ -80,7 +80,7 @@
 	p.z = z
 	return p
 
-/datum/point/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0)	//first argument can also be a /datum/position or /atom.
+/datum/point/New(_x, _y, _z, _pixel_x = 0, _pixel_y = 0) //first argument can also be a /datum/position or /atom.
 	if(istype(_x, /datum/position))
 		var/datum/position/P = _x
 		_x = P.x
@@ -117,7 +117,7 @@
 /datum/point/proc/return_turf()
 	return locate(CEILING(x / world.icon_size, 1), CEILING(y / world.icon_size, 1), z)
 
-/datum/point/proc/return_coordinates()		//[turf_x, turf_y, z]
+/datum/point/proc/return_coordinates() //[turf_x, turf_y, z]
 	return list(CEILING(x / world.icon_size, 1), CEILING(y / world.icon_size, 1), z)
 
 /datum/point/proc/return_position()
@@ -130,12 +130,12 @@
 	return MODULUS(y, world.icon_size) - 16 - 1
 
 /datum/point/vector
-	var/speed = 32				//pixels per iteration
+	var/speed = 32 //pixels per iteration
 	var/iteration = 0
 	var/angle = 0
-	var/mpx = 0					//calculated x/y movement amounts to prevent having to do trig every step.
+	var/mpx = 0 //calculated x/y movement amounts to prevent having to do trig every step.
 	var/mpy = 0
-	var/starting_x = 0			//just like before, pixels from EDGE of map! This is set in initialize_location().
+	var/starting_x = 0 //just like before, pixels from EDGE of map! This is set in initialize_location().
 	var/starting_y = 0
 	var/starting_z = 0
 
@@ -168,7 +168,7 @@
 		speed = pixel_speed
 	set_angle(new_angle)
 
-/datum/point/vector/proc/set_angle(new_angle)		//calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
+/datum/point/vector/proc/set_angle(new_angle) //calculations use "byond angle" where north is 0 instead of 90, and south is 180 instead of 270.
 	if(isnull(angle))
 		return
 	angle = new_angle
@@ -201,7 +201,7 @@
 /datum/point/vector/proc/on_z_change()
 	return
 
-/datum/point/vector/processed		//pixel_speed is per decisecond.
+/datum/point/vector/processed //pixel_speed is per decisecond.
 	var/last_process = 0
 	var/last_move = 0
 	var/paused = FALSE

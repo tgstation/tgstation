@@ -15,11 +15,11 @@
 	var/obj/item/toy/plush/lover
 	var/obj/item/toy/plush/partner
 	var/obj/item/toy/plush/plush_child
-	var/obj/item/toy/plush/paternal_parent	//who initiated creation
-	var/obj/item/toy/plush/maternal_parent	//who owns, see love()
+	var/obj/item/toy/plush/paternal_parent //who initiated creation
+	var/obj/item/toy/plush/maternal_parent //who owns, see love()
 	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp) // you cannot have sexual relations with this plush
-	var/list/scorned	= list()	//who the plush hates
-	var/list/scorned_by	= list()	//who hates the plush, to remove external references on Destroy()
+	var/list/scorned = list() //who the plush hates
+	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
@@ -46,11 +46,11 @@
 		else
 			gender = MALE
 
-	love_message		= list("\n[src] is so happy, \he could rip a seam!")
-	partner_message		= list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
-	heartbroken_message	= list("\n[src] looks so sad.")
-	vowbroken_message	= list("\n[src] lost \his ring...")
-	parent_message		= list("\n[src] can't remember what sleep is.")
+	love_message = list("\n[src] is so happy, \he could rip a seam!")
+	partner_message = list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
+	heartbroken_message = list("\n[src] looks so sad.")
+	vowbroken_message = list("\n[src] lost \his ring...")
+	parent_message = list("\n[src] can't remember what sleep is.")
 
 	normal_desc = desc
 
@@ -165,11 +165,11 @@
 		return
 	return ..()
 
-/obj/item/toy/plush/proc/love(obj/item/toy/plush/Kisser, mob/living/user)	//~<3
-	var/chance = 100	//to steal a kiss, surely there's a 100% chance no-one would reject a plush such as I?
-	var/concern = 20	//perhaps something might cloud true love with doubt
-	var/loyalty = 30	//why should another get between us?
-	var/duty = 50		//conquering another's is what I live for
+/obj/item/toy/plush/proc/love(obj/item/toy/plush/Kisser, mob/living/user) //~<3
+	var/chance = 100 //to steal a kiss, surely there's a 100% chance no-one would reject a plush such as I?
+	var/concern = 20 //perhaps something might cloud true love with doubt
+	var/loyalty = 30 //why should another get between us?
+	var/duty = 50 //conquering another's is what I live for
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
@@ -188,19 +188,19 @@
 			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
 
 	//first comes love
-	else if(Kisser.lover != src && Kisser.partner != src)	//cannot be lovers or married
-		if(Kisser.lover)	//if the initiator has a lover
-			Kisser.lover.heartbreak(Kisser)	//the old lover can get over the kiss-and-run whilst the kisser has some fun
-			chance -= concern	//one heart already broken, what does another mean?
-		if(lover)	//if the recipient has a lover
-			chance -= loyalty	//mustn't... but those lips
-		if(partner)	//if the recipient has a partner
-			chance -= duty	//do we mate for life?
+	else if(Kisser.lover != src && Kisser.partner != src) //cannot be lovers or married
+		if(Kisser.lover) //if the initiator has a lover
+			Kisser.lover.heartbreak(Kisser) //the old lover can get over the kiss-and-run whilst the kisser has some fun
+			chance -= concern //one heart already broken, what does another mean?
+		if(lover) //if the recipient has a lover
+			chance -= loyalty //mustn't... but those lips
+		if(partner) //if the recipient has a partner
+			chance -= duty //do we mate for life?
 
-		if(prob(chance))	//did we bag a date?
+		if(prob(chance)) //did we bag a date?
 			user.visible_message("<span class='notice'>[user] makes [Kisser] kiss [src]!</span>",
 									"<span class='notice'>You make [Kisser] kiss [src]!</span>")
-			if(lover)	//who cares for the past, we live in the present
+			if(lover) //who cares for the past, we live in the present
 				lover.heartbreak(src)
 			new_lover(Kisser)
 			Kisser.new_lover(src)
@@ -209,14 +209,14 @@
 								"<span class='notice'>That didn't feel like it worked, this time.</span>", NONE)
 
 	//then comes marriage
-	else if(Kisser.lover == src && Kisser.partner != src)	//need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
+	else if(Kisser.lover == src && Kisser.partner != src) //need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
 		user.visible_message("<span class='notice'>[user] pronounces [Kisser] and [src] married! D'aw.</span>",
 									"<span class='notice'>You pronounce [Kisser] and [src] married!</span>")
 		new_partner(Kisser)
 		Kisser.new_partner(src)
 
 	//then comes a baby in a baby's carriage, or an adoption in an adoption's orphanage
-	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
+	else if(Kisser.partner == src && !plush_child) //the one advancing does not take ownership of the child and we have a one child policy in the toyshop
 		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
 									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
 		user.client.give_award(/datum/award/achievement/misc/rule8, user)
@@ -236,20 +236,20 @@
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
 		to_chat(world, "lover != Brutus")
-		return	//why are we considering someone we don't love?
+		return //why are we considering someone we don't love?
 
 	scorned.Add(Brutus)
 	Brutus.scorned_by(src)
 
 	lover = null
-	Brutus.lover = null	//feeling's mutual
+	Brutus.lover = null //feeling's mutual
 
 	heartbroken = TRUE
 	mood_message = pick(heartbroken_message)
 
-	if(partner == Brutus)	//oh dear...
+	if(partner == Brutus) //oh dear...
 		partner = null
-		Brutus.partner = null	//it'd be weird otherwise
+		Brutus.partner = null //it'd be weird otherwise
 		vowbroken = TRUE
 		mood_message = pick(vowbroken_message)
 
@@ -260,7 +260,7 @@
 
 /obj/item/toy/plush/proc/new_lover(obj/item/toy/plush/Juliet)
 	if(lover == Juliet)
-		return	//nice try
+		return //nice try
 	lover = Juliet
 
 	cheer_up()
@@ -269,14 +269,14 @@
 	mood_message = pick(love_message)
 	update_desc()
 
-	if(partner)	//who?
-		partner = null	//more like who cares
+	if(partner) //who?
+		partner = null //more like who cares
 
 /obj/item/toy/plush/proc/new_partner(obj/item/toy/plush/Apple_of_my_eye)
 	if(partner == Apple_of_my_eye)
-		return	//double marriage is just insecurity
+		return //double marriage is just insecurity
 	if(lover != Apple_of_my_eye)
-		return	//union not born out of love will falter
+		return //union not born out of love will falter
 
 	partner = Apple_of_my_eye
 
@@ -288,27 +288,27 @@
 
 /obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
 	if(partner != Daddy)
-		return	FALSE //we do not have bastards in our toyshop
+		return FALSE //we do not have bastards in our toyshop
 
 	if(is_type_in_typecache(Daddy, breeding_blacklist))
 		return FALSE // some love is forbidden
 
-	if(prob(50))	//it has my eyes
+	if(prob(50)) //it has my eyes
 		plush_child = new type(get_turf(loc))
-	else	//it has your eyes
+	else //it has your eyes
 		plush_child = new Daddy.type(get_turf(loc))
 
 	plush_child.make_young(src, Daddy)
 
 /obj/item/toy/plush/proc/make_young(obj/item/toy/plush/Mama, obj/item/toy/plush/Dada)
 	if(Mama == Dada)
-		return	//cloning is reserved for plants and spacemen
+		return //cloning is reserved for plants and spacemen
 
 	maternal_parent = Mama
 	paternal_parent = Dada
 	young = TRUE
-	name = "[Mama] Jr"	//Icelandic naming convention pending
-	normal_desc = "[src] is a little baby of [maternal_parent] and [paternal_parent]!"	//original desc won't be used so the child can have moods
+	name = "[Mama] Jr" //Icelandic naming convention pending
+	normal_desc = "[src] is a little baby of [maternal_parent] and [paternal_parent]!" //original desc won't be used so the child can have moods
 	update_desc()
 
 	Mama.mood_message = pick(Mama.parent_message)
@@ -316,13 +316,13 @@
 	Dada.mood_message = pick(Dada.parent_message)
 	Dada.update_desc()
 
-/obj/item/toy/plush/proc/bad_news(obj/item/toy/plush/Deceased)	//cotton to cotton, sawdust to sawdust
+/obj/item/toy/plush/proc/bad_news(obj/item/toy/plush/Deceased) //cotton to cotton, sawdust to sawdust
 	var/is_that_letter_for_me = FALSE
-	if(partner == Deceased)	//covers marriage
+	if(partner == Deceased) //covers marriage
 		is_that_letter_for_me = TRUE
 		partner = null
 		lover = null
-	else if(lover == Deceased)	//covers lovers
+	else if(lover == Deceased) //covers lovers
 		is_that_letter_for_me = TRUE
 		lover = null
 
@@ -343,7 +343,7 @@
 	//covers bad memories
 	if(Deceased in scorned)
 		scorned.Remove(Deceased)
-		cheer_up()	//what cold button eyes you have
+		cheer_up() //what cold button eyes you have
 
 	if(Deceased in scorned_by)
 		scorned_by.Remove(Deceased)
@@ -355,11 +355,11 @@
 		mood_message = pick(heartbroken_message)
 		update_desc()
 
-/obj/item/toy/plush/proc/cheer_up()	//it'll be all right
+/obj/item/toy/plush/proc/cheer_up() //it'll be all right
 	if(!heartbroken)
-		return	//you cannot make smile what is already
+		return //you cannot make smile what is already
 	if(vowbroken)
-		return	//it's a pretty big deal
+		return //it's a pretty big deal
 
 	heartbroken = !heartbroken
 
@@ -367,7 +367,7 @@
 		mood_message = null
 	update_desc()
 
-/obj/item/toy/plush/proc/heal_memories()	//time fixes all wounds
+/obj/item/toy/plush/proc/heal_memories() //time fixes all wounds
 	if(!vowbroken)
 		vowbroken = !vowbroken
 		if(mood_message in vowbroken_message)
@@ -402,7 +402,7 @@
 	icon_state = "plushvar"
 	divine = TRUE
 	var/obj/item/toy/plush/narplush/clash_target
-	gender = MALE	//he's a boy, right?
+	gender = MALE //he's a boy, right?
 
 /obj/item/toy/plush/ratplush/Moved()
 	. = ..()
@@ -489,7 +489,7 @@
 	icon_state = "narplush"
 	divine = TRUE
 	var/clashing
-	gender = FEMALE	//it's canon if the toy is
+	gender = FEMALE //it's canon if the toy is
 
 /obj/item/toy/plush/narplush/Moved()
 	. = ..()
@@ -547,7 +547,7 @@
 	attack_verb_continuous = list("blorbles", "slimes", "absorbs")
 	attack_verb_simple = list("blorble", "slime", "absorb")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
-	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+	gender = FEMALE //given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"

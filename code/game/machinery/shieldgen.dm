@@ -270,7 +270,7 @@
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
 
-/obj/machinery/power/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
+/obj/machinery/power/shieldwallgen/xenobiologyaccess //use in xenobiology containment
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
 	req_access = list(ACCESS_XENOBIOLOGY)

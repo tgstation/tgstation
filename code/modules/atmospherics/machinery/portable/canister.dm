@@ -1,9 +1,9 @@
-#define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
+#define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
 ///Used when setting the mode of the canisters, enabling us to switch the overlays
 //These are used as icon states later down the line for tier overlays
-#define CANISTER_TIER_1					1
-#define CANISTER_TIER_2					2
-#define CANISTER_TIER_3					3
+#define CANISTER_TIER_1 1
+#define CANISTER_TIER_2 2
+#define CANISTER_TIER_3 3
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"

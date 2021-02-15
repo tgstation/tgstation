@@ -85,16 +85,16 @@
 	if(!use_power)
 		return TRUE
 
-	var/area/A = get_area(src)		// make sure it's in an area
+	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
-		return FALSE					// if not, then not powered
+		return FALSE // if not, then not powered
 	if(chan == -1)
 		chan = power_channel
-	return A.powered(chan)	// return power status of the area
+	return A.powered(chan) // return power status of the area
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
-	var/area/A = get_area(src)		// make sure it's in an area
+	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
 		return
 	if(chan == -1)
@@ -313,7 +313,7 @@
 		return
 
 	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
-	if(net1.cables.len < net2.cables.len)	//net2 is larger than net1. Let's switch them around
+	if(net1.cables.len < net2.cables.len) //net2 is larger than net1. Let's switch them around
 		var/temp = net1
 		net1 = net2
 		net2 = temp

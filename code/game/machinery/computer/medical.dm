@@ -158,9 +158,9 @@
 					var/bdat = null
 					for(var/mob/living/simple_animal/bot/medbot/M in GLOB.alive_mob_list)
 						if(M.z != z)
-							continue	//only find medibots on the same z-level as the computer
+							continue //only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
-						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
+						if(bl) //if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
@@ -545,7 +545,7 @@
 						else
 							R.fields["name"] = random_unique_name(R.fields["gender"],1)
 					if(2)
-						R.fields["gender"]	= pick("Male", "Female", "Other")
+						R.fields["gender"] = pick("Male", "Female", "Other")
 					if(3)
 						R.fields["age"] = rand(AGE_MIN, AGE_MAX)
 					if(4)

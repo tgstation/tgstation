@@ -9,13 +9,13 @@
 #define DRONE_NET_DISCONNECT "<span class='danger'>DRONE NETWORK: [name] is not responding.</span>"
 
 /// Maintenance Drone icon_state (multiple colors)
-#define MAINTDRONE	"drone_maint"
+#define MAINTDRONE "drone_maint"
 /// Repair Drone icon_state
-#define REPAIRDRONE	"drone_repair"
+#define REPAIRDRONE "drone_repair"
 /// Scout Drone icon_state
-#define SCOUTDRONE	"drone_scout"
+#define SCOUTDRONE "drone_scout"
 /// Clockwork Drone icon_state
-#define CLOCKDRONE	"drone_clock"
+#define CLOCKDRONE "drone_clock"
 
 /// [MAINTDRONE] hacked icon_state
 #define MAINTDRONE_HACKED "drone_maint_red"

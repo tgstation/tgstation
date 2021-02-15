@@ -12,11 +12,11 @@
 //
 // - Numbers
 //
-// Example setup	 S - sparker
-//					 B - Blast doors into space for venting
-// *BBB****BBB*		 C - Compressor
-// S    CT    *		 T - Turbine
-// * ^ *  * V *		 D - Doors with firedoor
+// Example setup  S - sparker
+//  B - Blast doors into space for venting
+// *BBB****BBB*  C - Compressor
+// S    CT    *  T - Turbine
+// * ^ *  * V *  D - Doors with firedoor
 // **|***D**|**      ^ - Fuel feed (Not vent, but a gas outlet)
 //   |      |        V - Suction vent (Like the ones in atmos
 //

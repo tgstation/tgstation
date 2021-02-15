@@ -1,6 +1,6 @@
 /obj/item/organ/lungs
 	var/failed = FALSE
-	var/operated = FALSE	//whether we can still have our damages fixed through surgery
+	var/operated = FALSE //whether we can still have our damages fixed through surgery
 	name = "lungs"
 	icon_state = "lungs"
 	zone = BODY_ZONE_CHEST
@@ -256,7 +256,7 @@
 
 	//-- TRACES --//
 
-	if(breath)	// If there's some other shit in the air lets deal with it here.
+	if(breath) // If there's some other shit in the air lets deal with it here.
 
 	// N2O
 
@@ -536,7 +536,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -567,5 +567,5 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

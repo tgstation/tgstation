@@ -65,14 +65,14 @@
 	add_fingerprint(user)
 	return
 
-/obj/item/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
+/obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	sleep(10)
 	if(QDELETED(src))
 		return
 	if(status)
-		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+		bombtank.ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
 
@@ -128,20 +128,20 @@
 	user.transferItemToLoc(src, bomb)
 	user.transferItemToLoc(assembly, bomb)
 
-	bomb.bombassembly = assembly	//Tell the bomb about its assembly part
-	assembly.master = bomb			//Tell the assembly about its new owner
+	bomb.bombassembly = assembly //Tell the bomb about its assembly part
+	assembly.master = bomb //Tell the assembly about its new owner
 
-	bomb.bombtank = src	//Same for tank
+	bomb.bombtank = src //Same for tank
 	master = bomb
 
 	forceMove(bomb)
 	bomb.update_icon()
 
-	user.put_in_hands(bomb)		//Equips the bomb if possible, or puts it on the floor.
+	user.put_in_hands(bomb) //Equips the bomb if possible, or puts it on the floor.
 	to_chat(user, "<span class='notice'>You attach [assembly] to [src].</span>")
 	return
 
-/obj/item/tank/proc/ignite()	//This happens when a bomb is told to explode
+/obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
 	air_contents.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 	var/fuel_moles = air_contents.gases[/datum/gas/plasma][MOLES] + air_contents.gases[/datum/gas/oxygen][MOLES]/6
 	air_contents.garbage_collect()
@@ -195,7 +195,7 @@
 
 	ground_zero.air_update_turf(FALSE, FALSE)
 
-/obj/item/tank/proc/release()	//This happens when the bomb is not welded. Tank contents are just spat out.
+/obj/item/tank/proc/release() //This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
 	var/turf/T = get_turf(src)
 	if(!T)

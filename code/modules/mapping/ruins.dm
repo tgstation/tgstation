@@ -71,8 +71,8 @@
 
 	var/list/ruins = potentialRuins.Copy()
 
-	var/list/forced_ruins = list()		//These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
-	var/list/ruins_available = list()	//we can try these in the current pass
+	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
+	var/list/ruins_available = list() //we can try these in the current pass
 
 	//Set up the starting ruin list
 	for(var/key in ruins)
@@ -87,7 +87,7 @@
 	while(budget > 0 && (ruins_available.len || forced_ruins.len))
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
-		var/forced_z	//If set we won't pick z level and use this one instead.
+		var/forced_z //If set we won't pick z level and use this one instead.
 		var/forced_turf //If set we place the ruin centered on the given turf
 		if(forced_ruins.len) //We have something we need to load right now, so just pick it
 			for(var/ruin in forced_ruins)

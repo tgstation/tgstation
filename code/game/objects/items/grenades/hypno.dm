@@ -21,7 +21,7 @@
 	qdel(src)
 
 /obj/item/grenade/hypnotic/proc/bang(turf/T, mob/living/M)
-	if(M.stat == DEAD)	//They're dead!
+	if(M.stat == DEAD) //They're dead!
 		return
 	var/distance = max(0,get_dist(get_turf(src),T))
 

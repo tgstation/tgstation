@@ -93,7 +93,7 @@
 	if(rotation_type == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
-			if(ISDIAGONALDIR(dir))	// Fix RPD-induced diagonal turning
+			if(ISDIAGONALDIR(dir)) // Fix RPD-induced diagonal turning
 				setDir(turn(dir, 45))
 			pipe_type = initial(temp.flip_type)
 	update_icon()
@@ -134,7 +134,7 @@
 					to_chat(user, "<span class='warning'>There is already a disposal pipe at that location!</span>")
 					return TRUE
 
-		else	// Disposal or outlet
+		else // Disposal or outlet
 			var/found_trunk = locate(/obj/structure/disposalpipe/trunk) in T
 
 			if(!found_trunk)

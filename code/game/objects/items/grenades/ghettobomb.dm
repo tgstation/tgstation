@@ -66,7 +66,7 @@
 /obj/item/grenade/iedcasing/detonate(mob/living/lanced_by) //Blowing that can up
 	. = ..()
 	update_mob()
-	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
+	explosion(src.loc,-1,-1,2, flame_range = 4) // small explosion, plus a very large fireball.
 	qdel(src)
 
 /obj/item/grenade/iedcasing/change_det_time()

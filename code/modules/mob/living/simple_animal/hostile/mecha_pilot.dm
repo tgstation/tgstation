@@ -219,7 +219,7 @@
 			exit_mecha(mecha)
 			return
 
-		//Smoke if there's too many targets	- Smoke Power
+		//Smoke if there's too many targets - Smoke Power
 		if(threat_count >= threat_use_mecha_smoke && prob(smoke_chance))
 			if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_smoke) && !mecha.smoke_charges)
 				var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_smoke]
@@ -263,7 +263,7 @@
 	if(ismecha(the_target))
 		var/obj/vehicle/sealed/mecha/M = the_target
 		if(mecha)
-			if(M == mecha)	//Dont kill yourself
+			if(M == mecha) //Dont kill yourself
 				return FALSE
 		else //we're not in a mecha, so we check if we can steal it instead.
 			if(is_valid_mecha(M))

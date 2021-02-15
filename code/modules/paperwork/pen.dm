@@ -1,9 +1,9 @@
-/*	Pens!
- *	Contains:
- *		Pens
- *		Sleepy Pens
- *		Parapens
- *		Edaggers
+/* Pens!
+ * Contains:
+ * Pens
+ * Sleepy Pens
+ * Parapens
+ * Edaggers
  */
 
 
@@ -25,7 +25,7 @@
 	custom_materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black" //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
 	embedding = list()

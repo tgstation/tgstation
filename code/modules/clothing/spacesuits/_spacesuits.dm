@@ -61,7 +61,7 @@
 	. = ..()
 	if(slot == ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
-		update_hud_icon(user)		// update the hud
+		update_hud_icon(user) // update the hud
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/user)

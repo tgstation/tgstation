@@ -11,12 +11,12 @@
 	max_integrity = 500
 	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
 
-	var/open = FALSE		// true if cover is open
-	var/locked = TRUE		// true if controls are locked
+	var/open = FALSE // true if cover is open
+	var/locked = TRUE // true if controls are locked
 	var/freq = FREQ_NAV_BEACON
-	var/location = ""	// location response text
-	var/list/codes		// assoc. list of transponder codes
-	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
+	var/location = "" // location response text
+	var/list/codes // assoc. list of transponder codes
+	var/codes_txt = "" // codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/wayfinding = FALSE
 
 	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
@@ -57,10 +57,10 @@
 
 	codes = new()
 
-	var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
+	var/list/entries = splittext(codes_txt, ";") // entries are separated by semicolons
 
 	for(var/e in entries)
-		var/index = findtext(e, "=")		// format is "key=value"
+		var/index = findtext(e, "=") // format is "key=value"
 		if(index)
 			var/key = copytext(e, 1, index)
 			var/val = copytext(e, index + length(e[index]))
@@ -95,7 +95,7 @@
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc
 	if(T.intact)
-		return		// prevent intraction when T-scanner revealed
+		return // prevent intraction when T-scanner revealed
 
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open = !open
@@ -128,9 +128,9 @@
 	var/ai = isAI(user)
 	var/turf/T = loc
 	if(T.intact)
-		return		// prevent intraction when T-scanner revealed
+		return // prevent intraction when T-scanner revealed
 
-	if(!open && !ai)	// can't alter controls if not open, unless you're an AI
+	if(!open && !ai) // can't alter controls if not open, unless you're an AI
 		to_chat(user, "<span class='warning'>The beacon's control cover is closed!</span>")
 		return
 
@@ -158,9 +158,9 @@ Transponder Codes:<UL>"}
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
-			t += "	<A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
-			t += "	<A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
-		t += "	<A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
+			t += " <A href='byond://?src=[REF(src)];edit=1;code=[key]'>Edit</A>"
+			t += " <A href='byond://?src=[REF(src)];delete=1;code=[key]'>Delete</A><BR>"
+		t += " <A href='byond://?src=[REF(src)];add=1;'>Add New</A><BR>"
 		t+= "<UL></TT>"
 
 	var/datum/browser/popup = new(user, "navbeacon", "Navigation Beacon", 300, 400)

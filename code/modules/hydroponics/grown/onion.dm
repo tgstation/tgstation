@@ -50,8 +50,8 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15)
 
 /obj/item/food/grown/onion/UsedforProcessing(mob/living/user, obj/item/I, list/chosen_option)
-	var/datum/effect_system/smoke_spread/chem/S = new	//Since the onion is destroyed when it's sliced,
-	var/splat_location = get_turf(src)	//we need to set up the smoke beforehand
+	var/datum/effect_system/smoke_spread/chem/S = new //Since the onion is destroyed when it's sliced,
+	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
 	S.attach(splat_location)
 	S.set_up(reagents, 0, splat_location, 0)
 	S.start()

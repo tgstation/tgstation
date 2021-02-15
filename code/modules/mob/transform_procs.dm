@@ -138,7 +138,7 @@
 	if(client)
 		R.updatename(client)
 
-	if(mind)		//TODO //TODO WHAT
+	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)
 			mind.active = FALSE
 		mind.transfer_to(R)
@@ -208,7 +208,7 @@
 
 	var/mob/living/simple_animal/slime/new_slime
 	if(reproduce)
-		var/number = pick(14;2,3,4)	//reproduce (has a small chance of producing 3 or 4 offspring)
+		var/number = pick(14;2,3,4) //reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
 			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
@@ -242,7 +242,7 @@
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	for(var/t in bodyparts)	//this really should not be necessary
+	for(var/t in bodyparts) //this really should not be necessary
 		qdel(t)
 
 	var/mob/living/simple_animal/pet/dog/corgi/new_corgi = new /mob/living/simple_animal/pet/dog/corgi (loc)
@@ -340,7 +340,7 @@
 
 //Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
-		return FALSE	//Sanity, this should never happen.
+		return FALSE //Sanity, this should never happen.
 
 	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
 		return FALSE //Verbs do not appear for players.

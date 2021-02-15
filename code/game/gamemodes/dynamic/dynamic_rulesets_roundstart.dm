@@ -15,7 +15,7 @@
 	restricted_roles = list("Cyborg")
 	required_candidates = 1
 	weight = 5
-	cost = 8	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
+	cost = 8 // Avoid raising traitor threat above 10, as it is the default low cost ruleset.
 	scaling_cost = 9
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	antag_cap = list("denominator" = 24)
@@ -57,7 +57,7 @@
 	cost = 15
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
-	antag_cap = 2	// Can pick 3 per team, but rare enough it doesn't matter.
+	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2
 
@@ -358,7 +358,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//               REVS		                //
+//               REVS                 //
 //                                          //
 //////////////////////////////////////////////
 

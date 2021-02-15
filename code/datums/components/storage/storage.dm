@@ -4,54 +4,54 @@
 
 /datum/component/storage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/datum/component/storage/concrete/master		//If not null, all actions act on master and this is just an access point.
+	var/datum/component/storage/concrete/master //If not null, all actions act on master and this is just an access point.
 
-	var/list/can_hold								//if this is set, only items, and their children, will fit
-	var/list/cant_hold								//if this is set, items, and their children, won't fit
-	var/list/exception_hold							//if set, these items will be the exception to the max size of object that can fit.
+	var/list/can_hold //if this is set, only items, and their children, will fit
+	var/list/cant_hold //if this is set, items, and their children, won't fit
+	var/list/exception_hold //if set, these items will be the exception to the max size of object that can fit.
 	/// If set can only contain stuff with this single trait present.
 	var/list/can_hold_trait
 
 	var/can_hold_description
 
-	var/list/mob/is_using							//lazy list of mobs looking at the contents of this storage.
+	var/list/mob/is_using //lazy list of mobs looking at the contents of this storage.
 
-	var/locked = FALSE								//when locked nothing can see inside or use it.
+	var/locked = FALSE //when locked nothing can see inside or use it.
 
-	var/max_w_class = WEIGHT_CLASS_SMALL			//max size of objects that will fit.
-	var/max_combined_w_class = 14					//max combined sizes of objects that will fit.
-	var/max_items = 7								//max number of objects that will fit.
+	var/max_w_class = WEIGHT_CLASS_SMALL //max size of objects that will fit.
+	var/max_combined_w_class = 14 //max combined sizes of objects that will fit.
+	var/max_items = 7 //max number of objects that will fit.
 
 	var/emp_shielded = FALSE
 
-	var/silent = FALSE								//whether this makes a message when things are put in.
-	var/click_gather = FALSE						//whether this can be clicked on items to pick it up rather than the other way around.
-	var/rustle_sound = TRUE							//play rustle sound on interact.
-	var/allow_quick_empty = FALSE					//allow empty verb which allows dumping on the floor of everything inside quickly.
-	var/allow_quick_gather = FALSE					//allow toggle mob verb which toggles collecting all items from a tile.
+	var/silent = FALSE //whether this makes a message when things are put in.
+	var/click_gather = FALSE //whether this can be clicked on items to pick it up rather than the other way around.
+	var/rustle_sound = TRUE //play rustle sound on interact.
+	var/allow_quick_empty = FALSE //allow empty verb which allows dumping on the floor of everything inside quickly.
+	var/allow_quick_gather = FALSE //allow toggle mob verb which toggles collecting all items from a tile.
 
 	var/collection_mode = COLLECT_EVERYTHING
 
-	var/insert_preposition = "in"					//you put things "in" a bag, but "on" a tray.
+	var/insert_preposition = "in" //you put things "in" a bag, but "on" a tray.
 
-	var/display_numerical_stacking = FALSE			//stack things of the same type and show as a single object with a number.
+	var/display_numerical_stacking = FALSE //stack things of the same type and show as a single object with a number.
 
-	var/atom/movable/screen/storage/boxes					//storage display object
-	var/atom/movable/screen/close/closer						//close button object
+	var/atom/movable/screen/storage/boxes //storage display object
+	var/atom/movable/screen/close/closer //close button object
 
-	var/allow_big_nesting = FALSE					//allow storage objects of the same or greater size.
+	var/allow_big_nesting = FALSE //allow storage objects of the same or greater size.
 
-	var/attack_hand_interact = TRUE					//interact on attack hand.
-	var/quickdraw = FALSE							//altclick interact
+	var/attack_hand_interact = TRUE //interact on attack hand.
+	var/quickdraw = FALSE //altclick interact
 
 	var/datum/action/item_action/storage_gather_mode/modeswitch_action
 
 	//Screen variables: Do not mess with these vars unless you know what you're doing. They're not defines so storage that isn't in the same location can be supported in the future.
-	var/screen_max_columns = 7							//These two determine maximum screen sizes.
+	var/screen_max_columns = 7 //These two determine maximum screen sizes.
 	var/screen_max_rows = INFINITY
-	var/screen_pixel_x = 16								//These two are pixel values for screen loc of boxes and closer
+	var/screen_pixel_x = 16 //These two are pixel values for screen loc of boxes and closer
 	var/screen_pixel_y = 16
-	var/screen_start_x = 4								//These two are where the storage starts being rendered, screen_loc wise.
+	var/screen_start_x = 4 //These two are where the storage starts being rendered, screen_loc wise.
 	var/screen_start_y = 2
 	//End
 
@@ -157,7 +157,7 @@
 
 /datum/component/storage/proc/master()
 	if(master == src)
-		return			//infinite loops yo.
+		return //infinite loops yo.
 	return master
 
 /datum/component/storage/proc/real_location()
@@ -249,13 +249,13 @@
 			continue
 		if(I.type in rejections) // To limit bag spamming: any given type only complains once
 			continue
-		if(!can_be_inserted(I, stop_messages = TRUE))	// Note can_be_inserted still makes noise when the answer is no
+		if(!can_be_inserted(I, stop_messages = TRUE)) // Note can_be_inserted still makes noise when the answer is no
 			if(real_location.contents.len >= max_items)
 				break
-			rejections += I.type	// therefore full bags are still a little spammy
+			rejections += I.type // therefore full bags are still a little spammy
 			continue
 
-		handle_item_insertion(I, TRUE)	//The TRUE stops the "You put the [parent] into [S]" insertion message from being displayed.
+		handle_item_insertion(I, TRUE) //The TRUE stops the "You put the [parent] into [S]" insertion message from being displayed.
 
 		if (TICK_CHECK)
 			progress.update(progress.goal - things.len)
@@ -530,7 +530,7 @@
 			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
 	return ret
 
-/datum/component/storage/proc/contents()			//ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
+/datum/component/storage/proc/contents() //ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
 	var/atom/real_location = real_location()
 	return real_location.contents.Copy()
 
@@ -601,7 +601,7 @@
 		if(iscarbon(M) || isdrone(M))
 			var/mob/living/L = M
 			if(!L.incapacitated() && I == L.get_active_held_item())
-				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE))	//If it has storage it should be trying to dump, not insert.
+				if(!SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) && can_be_inserted(I, FALSE)) //If it has storage it should be trying to dump, not insert.
 					handle_item_insertion(I, FALSE, L)
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
@@ -610,7 +610,7 @@
 	if(!istype(I) || (I.item_flags & ABSTRACT))
 		return FALSE //Not an item
 	if(I == parent)
-		return FALSE	//no paradoxes for you
+		return FALSE //no paradoxes for you
 	var/atom/real_location = real_location()
 	var/atom/host = parent
 	if(real_location == I.loc)
@@ -742,7 +742,7 @@
 	var/list/taking = typecache_filter_list(contents(), typecacheof(type))
 	if(taking.len > amount)
 		taking.len = amount
-	if(inserted)			//duplicated code for performance, don't bother checking retval/checking for list every item.
+	if(inserted) //duplicated code for performance, don't bother checking retval/checking for list every item.
 		for(var/i in taking)
 			if(remove_from_storage(i, destination))
 				inserted |= i
@@ -787,7 +787,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.l_store == A && !H.get_active_held_item())	//Prevents opening if it's in a pocket.
+		if(H.l_store == A && !H.get_active_held_item()) //Prevents opening if it's in a pocket.
 			. = COMPONENT_CANCEL_ATTACK_CHAIN
 			INVOKE_ASYNC(H, /mob.proc/put_in_hands, A)
 			H.l_store = null

@@ -47,7 +47,7 @@
 // Pickup loot
 /mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	. = ..()
-	if(mapload)	//eat shit
+	if(mapload) //eat shit
 		for(var/obj/item/I in loc)
 			I.forceMove(src)
 

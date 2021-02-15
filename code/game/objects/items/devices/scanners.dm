@@ -114,7 +114,7 @@ GENE SCANNER
 			to_chat(user, "<span class='notice'>You switch the health analyzer to report extra info on wounds.</span>")
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
-	flick("[icon_state]-scan", src)	//makes it so that it plays the scan animation upon scanning, including clumsy scanning
+	flick("[icon_state]-scan", src) //makes it so that it plays the scan animation upon scanning, including clumsy scanning
 
 	// Clumsiness/brain damage check
 	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
@@ -922,7 +922,7 @@ GENE SCANNER
 	var/selected_target = null
 
 /obj/item/scanner_wand/attack(mob/living/M, mob/living/carbon/human/user)
-	flick("[icon_state]_active", src)	//nice little visual flash when scanning someone else.
+	flick("[icon_state]_active", src) //nice little visual flash when scanning someone else.
 
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(25))
 		user.visible_message("<span class='warning'>[user] targets himself for scanning.</span>", \

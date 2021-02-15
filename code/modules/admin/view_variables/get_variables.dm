@@ -205,7 +205,7 @@
 		if(VV_PROCCALL_RETVAL)
 			var/list/get_retval = list()
 			callproc_blocking(get_retval)
-			.["value"] = get_retval[1]		//should have been set in proccall!
+			.["value"] = get_retval[1] //should have been set in proccall!
 			if(.["value"] == null)
 				.["class"] = null
 				return

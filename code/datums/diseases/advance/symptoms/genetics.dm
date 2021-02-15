@@ -43,7 +43,7 @@ Bonus
 	if(A.properties["stealth"] >= 5) //only give them bad mutations
 		excludemuts = POSITIVE
 	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often at around 1.5x the pace
-		symptom_delay_min = 20		
+		symptom_delay_min = 20 
 		symptom_delay_max = 40
 	if(A.properties["resistance"] >= 8) //mutadone won't save you now
 		mutadone_proof = (NEGATIVE | MINOR_NEGATIVE)

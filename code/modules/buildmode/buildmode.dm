@@ -1,6 +1,6 @@
-#define BM_SWITCHSTATE_NONE	0
-#define BM_SWITCHSTATE_MODE	1
-#define BM_SWITCHSTATE_DIR	2
+#define BM_SWITCHSTATE_NONE 0
+#define BM_SWITCHSTATE_MODE 1
+#define BM_SWITCHSTATE_DIR 2
 
 /datum/buildmode
 	var/build_dir = SOUTH

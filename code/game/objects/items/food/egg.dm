@@ -103,7 +103,7 @@
 	foodtypes = MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/omelette	//FUCK THIS
+/obj/item/food/omelette //FUCK THIS
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
 	icon_state = "omelette"

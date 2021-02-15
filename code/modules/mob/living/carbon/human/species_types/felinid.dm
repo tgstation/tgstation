@@ -46,7 +46,7 @@
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(!pref_load)			//Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
+		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
 			if(H.dna.features["tail_human"] == "None")
 				H.dna.features["tail_human"] = "Cat"
 			if(H.dna.features["ears"] == "None")

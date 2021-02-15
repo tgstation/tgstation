@@ -31,10 +31,10 @@
 		var/turf/other = (O.loc == src ? T : src)
 		if(!(vertical? (CANVERTICALATMOSPASS(O, other)) : (CANATMOSPASS(O, other))))
 			R = TRUE
-			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
+			if(O.BlockSuperconductivity()) //the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
 				atmos_supeconductivity |= dir
 				T.atmos_supeconductivity |= opp
-				return FALSE						//no need to keep going, we got all we asked
+				return FALSE //no need to keep going, we got all we asked
 
 	atmos_supeconductivity &= ~dir
 	T.atmos_supeconductivity &= ~opp
@@ -67,7 +67,7 @@
 
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
-//	air with both of the related adjacent cardinal tiles
+// air with both of the related adjacent cardinal tiles
 /turf/proc/GetAtmosAdjacentTurfs(alldir = 0)
 	var/adjacent_turfs
 	if (atmos_adjacent_turfs)

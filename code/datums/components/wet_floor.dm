@@ -2,8 +2,8 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	can_transfer = TRUE
 	var/highest_strength = TURF_DRY
-	var/lube_flags = NONE			//why do we have this?
-	var/list/time_left_list			//In deciseconds.
+	var/lube_flags = NONE //why do we have this?
+	var/list/time_left_list //In deciseconds.
 	var/static/mutable_appearance/permafrost_overlay = mutable_appearance('icons/effects/water.dmi', "ice_floor")
 	var/static/mutable_appearance/ice_overlay = mutable_appearance('icons/turf/overlays.dmi', "snowfloor")
 	var/static/mutable_appearance/water_overlay = mutable_appearance('icons/effects/water.dmi', "wet_floor_static")
@@ -13,11 +13,11 @@
 	var/last_process = 0
 
 /datum/component/wet_floor/InheritComponent(datum/newcomp, orig, strength, duration_minimum, duration_add, duration_maximum, _permanent)
-	if(!newcomp)	//We are getting passed the arguments of a would-be new component, but not a new component
+	if(!newcomp) //We are getting passed the arguments of a would-be new component, but not a new component
 		add_wet(arglist(args.Copy(3)))
-	else			//We are being passed in a full blown component
-		var/datum/component/wet_floor/WF = newcomp			//Lets make an assumption
-		if(WF.gc())						//See if it's even valid, still. Also does LAZYLEN and stuff for us.
+	else //We are being passed in a full blown component
+		var/datum/component/wet_floor/WF = newcomp //Lets make an assumption
+		if(WF.gc()) //See if it's even valid, still. Also does LAZYLEN and stuff for us.
 			CRASH("Wet floor component tried to inherit another, but the other was able to garbage collect while being inherited! What a waste of time!")
 		for(var/i in WF.time_left_list)
 			add_wet(text2num(i), WF.time_left_list[i])
@@ -29,7 +29,7 @@
 	permanent = _permanent
 	if(!permanent)
 		START_PROCESSING(SSwet_floors, src)
-	addtimer(CALLBACK(src, .proc/gc, TRUE), 1)		//GC after initialization.
+	addtimer(CALLBACK(src, .proc/gc, TRUE), 1) //GC after initialization.
 	last_process = world.time
 
 /datum/component/wet_floor/RegisterWithParent()
@@ -43,7 +43,7 @@
 	STOP_PROCESSING(SSwet_floors, src)
 	var/turf/T = parent
 	qdel(T.GetComponent(/datum/component/slippery))
-	if(istype(T))		//If this is false there is so many things wrong with it.
+	if(istype(T)) //If this is false there is so many things wrong with it.
 		T.cut_overlay(current_overlay)
 	else
 		stack_trace("Warning: Wet floor component wasn't on a turf when being destroyed! This is really bad!")
@@ -117,13 +117,13 @@
 	var/t = T.GetTemperature()
 	switch(t)
 		if(-INFINITY to T0C)
-			add_wet(TURF_WET_ICE, max_time_left())			//Water freezes into ice!
+			add_wet(TURF_WET_ICE, max_time_left()) //Water freezes into ice!
 		if(T0C to T0C + 100)
 			decrease = ((T.air.temperature - T0C) / SSwet_floors.temperature_coeff) * (diff / SSwet_floors.time_ratio)
 		if(T0C + 100 to INFINITY)
 			decrease = INFINITY
 	decrease = max(0, decrease)
-	if((is_wet() & TURF_WET_ICE) && t > T0C)		//Ice melts into water!
+	if((is_wet() & TURF_WET_ICE) && t > T0C) //Ice melts into water!
 		for(var/obj/O in T.contents)
 			if(O.obj_flags & FROZEN)
 				O.make_unfrozen()
@@ -134,7 +134,7 @@
 	last_process = world.time
 
 /datum/component/wet_floor/proc/update_strength()
-	highest_strength = 0			//Not bitflag.
+	highest_strength = 0 //Not bitflag.
 	for(var/i in time_left_list)
 		highest_strength = max(highest_strength, text2num(i))
 

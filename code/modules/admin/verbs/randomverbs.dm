@@ -287,13 +287,13 @@
 		var/list/candidates = list()
 		for(var/mob/M in GLOB.player_list)
 			if(M.stat != DEAD)
-				continue	//we are not dead!
+				continue //we are not dead!
 			if(!(ROLE_ALIEN in M.client.prefs.be_special))
-				continue	//we don't want to be an alium
+				continue //we don't want to be an alium
 			if(M.client.is_afk())
-				continue	//we are afk
+				continue //we are afk
 			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)
-				continue	//we have a live body we are tied to
+				continue //we have a live body we are tied to
 			candidates += M.ckey
 		if(candidates.len)
 			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in sortKey(candidates)
@@ -355,7 +355,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "<font color='red'>There is no active key like that in the game or the person is not currently a ghost.</font>", confidential = TRUE)
 		return
 
-	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
+	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
 		//Check if they were an alien
 		if(G_found.mind.assigned_role == ROLE_ALIEN)
 			if(alert("This character appears to have been an alien. Would you like to respawn them as such?",,"Yes","No")=="Yes")
@@ -383,34 +383,34 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					SSjob.SendToLateJoin(new_xeno, FALSE)
 
 				//Now to give them their mind back.
-				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
+				G_found.mind.transfer_to(new_xeno) //be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_xeno.key = G_found.key
 				to_chat(new_xeno, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>"
 				message_admins(msg)
 				admin_ticket_log(new_xeno, msg)
-				return	//all done. The ghost is auto-deleted
+				return //all done. The ghost is auto-deleted
 
 		//check if they were a monkey
 		else if(findtext(G_found.real_name,"monkey"))
 			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
 				var/mob/living/carbon/human/species/monkey/new_monkey = new
 				SSjob.SendToLateJoin(new_monkey)
-				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
+				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy monkey.</span>"
 				message_admins(msg)
 				admin_ticket_log(new_monkey, msg)
-				return	//all done. The ghost is auto-deleted
+				return //all done. The ghost is auto-deleted
 
 
 	//Ok, it's not a xeno or a monkey. So, spawn a human.
 	var/mob/living/carbon/human/new_character = new//The mob being spawned.
 	SSjob.SendToLateJoin(new_character)
 
-	var/datum/data/record/record_found			//Referenced to later to either randomize or not randomize the character.
-	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
+	var/datum/data/record/record_found //Referenced to later to either randomize or not randomize the character.
+	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
 		/*Try and locate a record for the person being respawned through GLOB.data_core.
 		This isn't an exact science but it does the trick more often than not.*/
 		var/id = md5("[G_found.real_name][G_found.mind.assigned_role]")
@@ -431,7 +431,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	new_character.name = new_character.real_name
 
 	if(G_found.mind && !G_found.mind.active)
-		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
+		G_found.mind.transfer_to(new_character) //be careful when doing stuff like this! I've already checked the mind isn't in use
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
@@ -728,7 +728,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		view_size.resetToDefault(getScreenSize(prefs.widescreenpref))
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
-	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
+	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].") //why? removed by order of XSI
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Change View Range", "[view]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -1177,7 +1177,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
-/client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
+/client/proc/cmd_admin_check_player_exp() //Allows admins to determine who the newer players are.
 	set category = "Admin"
 	set name = "Player Playtime"
 	if(!check_rights(R_ADMIN))

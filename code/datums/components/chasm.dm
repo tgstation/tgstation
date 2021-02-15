@@ -74,7 +74,7 @@
 	//Flies right over the chasm
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.buckled)		//middle statement to prevent infinite loops just in case!
+		if(M.buckled) //middle statement to prevent infinite loops just in case!
 			var/mob/buckled_to = M.buckled
 			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
 				return FALSE
@@ -139,7 +139,7 @@
 
 		falling_atoms -= AM
 		qdel(AM)
-		if(AM && !QDELETED(AM))	//It's indestructible
+		if(AM && !QDELETED(AM)) //It's indestructible
 			var/atom/parent = src.parent
 			parent.visible_message("<span class='boldwarning'>[parent] spits out [AM]!</span>")
 			AM.alpha = oldalpha

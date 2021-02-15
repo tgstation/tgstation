@@ -423,7 +423,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/syndicate_empty
-	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
+	assignedrole = "Space Syndicate" //I know this is really dumb, but Syndicate operative is nuke ops
 
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
@@ -830,7 +830,7 @@
 
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/mouse
+	mob_type = /mob/living/simple_animal/mouse
 	death = FALSE
 	roundstart = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
@@ -838,7 +838,7 @@
 
 /obj/effect/mob_spawn/cow
 	name = "sleeper"
-	mob_type = 	/mob/living/simple_animal/cow
+	mob_type = /mob/living/simple_animal/cow
 	death = FALSE
 	roundstart = FALSE
 	mob_gender = FEMALE

@@ -20,9 +20,9 @@
 	circuit = /obj/item/circuitboard/machine/bepis
 
 	var/banking_amount = 100
-	var/banked_cash = 0					//stored player cash
-	var/datum/bank_account/account		//payer's account.
-	var/account_name					//name of the payer's account.
+	var/banked_cash = 0 //stored player cash
+	var/datum/bank_account/account //payer's account.
+	var/account_name //name of the payer's account.
 	var/error_cause = null
 	//Vars related to probability and chance of success for testing
 	var/major_threshold = MAJOR_THRESHOLD
@@ -127,7 +127,7 @@
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
-	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))		//NO MORE DISCS IN WINDOWS
+	var/list/turfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z)) //NO MORE DISCS IN WINDOWS
 	while(length(turfs))
 		var/turf/T = pick_n_take(turfs)
 		if(T.is_blocked_turf(TRUE))
@@ -137,9 +137,9 @@
 			break
 	if (!dropturf)
 		dropturf = drop_location()
-	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
-	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
-	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset)	//this is the randomized profit value that your experiment expects to give.
+	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset) //This is the randomized profit value that this experiment has to surpass to unlock a tech.
+	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset) //And this is the threshold to instead get a minor prize.
+	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset) //this is the randomized profit value that your experiment expects to give.
 	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
 	flick("chamber_flash",src)
 	update_icon()
@@ -155,7 +155,7 @@
 		new reward(dropturf)
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
 		return
-	if(gauss_real <= -1)	//Critical Failure
+	if(gauss_real <= -1) //Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
 		new /mob/living/simple_animal/deer(dropturf, 1)
 		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.

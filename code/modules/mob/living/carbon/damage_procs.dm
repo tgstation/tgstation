@@ -128,7 +128,7 @@
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the set damage proc on that organ, which can
- *	set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
+ * set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
@@ -245,7 +245,7 @@
 /// damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	if(status_flags & GODMODE)
-		return	//godmode
+		return //godmode
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)
 	var/update = 0
@@ -262,8 +262,8 @@
 
 		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, required_status, wound_bonus = CANT_WOUND) // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
 
-		brute	= round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
-		burn	= round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)
+		brute = round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
+		burn = round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)
 		stamina = round(stamina - (picked.stamina_dam - stamina_was), DAMAGE_PRECISION)
 
 		parts -= picked

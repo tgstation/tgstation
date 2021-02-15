@@ -28,15 +28,15 @@
 	var/static/next_mob_id = 0
 
 	/// List of movement speed modifiers applying to this mob
-	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
+	var/list/movespeed_modification //Lazy list, see mob_movespeed.dm
 	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
-	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	var/list/movespeed_mod_immunities //Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
 	/// List of action speed modifiers applying to this mob
-	var/list/actionspeed_modification				//Lazy list, see mob_movespeed.dm
+	var/list/actionspeed_modification //Lazy list, see mob_movespeed.dm
 	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
-	var/list/actionspeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	var/list/actionspeed_mod_immunities //Lazy list, see mob_movespeed.dm
 	/// The calculated mob action speed slowdown based on the modifiers list
 	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
@@ -74,12 +74,12 @@
 	  * Set when you're being turned into something else and also used in a bunch of places
 	  * it probably shouldn't really be
 	  */
-	var/notransform = null	//Carbon
+	var/notransform = null //Carbon
 
 	/// Is the mob blind
-	var/eye_blind = 0		//Carbon
+	var/eye_blind = 0 //Carbon
 	/// Does the mob have blurry sight
-	var/eye_blurry = 0		//Carbon
+	var/eye_blurry = 0 //Carbon
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
@@ -93,7 +93,7 @@
 	var/name_archive //For admin things like possession
 
 	/// Default body temperature
-	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
+	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
 	/// Drowsyness level of the mob
 	var/drowsyness = 0//Carbon
 	/// Dizziness level of the mob
@@ -106,7 +106,7 @@
 	var/satiety = 0//Carbon
 
 	/// How many ticks this mob has been over reating
-	var/overeatduration = 0		// How long this guy is overeating //Carbon
+	var/overeatduration = 0 // How long this guy is overeating //Carbon
 
 	/// The current intent of the mob
 	var/a_intent = INTENT_HELP//Living
@@ -196,7 +196,7 @@
 	var/list/observers = null
 
 	///List of progress bars this mob is currently seeing for actions
-	var/list/progressbars = null	//for stacking do_after bars
+	var/list/progressbars = null //for stacking do_after bars
 
 	///For storing what do_after's someone has, key = string, value = amount of interactions of that type happening.
 	var/list/do_afters

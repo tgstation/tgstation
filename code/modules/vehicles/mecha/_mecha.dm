@@ -488,7 +488,7 @@
 		var/mob/living/occupant = b
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			visible_message("<span class='warning'>[occupant] tumbles out of the cockpit!</span>")
-			mob_exit(occupant)	//bye bye
+			mob_exit(occupant) //bye bye
 
 //Diagnostic HUD updates
 	diag_hud_set_mechhealth()

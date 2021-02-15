@@ -62,7 +62,7 @@
 /obj/item/soulstone/proc/hot_potato(mob/living/user)
 	to_chat(user, "<span class='userdanger'>Holy magics residing in \the [src] burn your hand!</span>")
 	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-	affecting.receive_damage( 0, 10 )	// 10 burn damage
+	affecting.receive_damage( 0, 10 ) // 10 burn damage
 	user.emote("scream")
 	user.update_damage_overlays()
 	user.dropItemToGround(src)
@@ -187,7 +187,7 @@
 /obj/item/soulstone/proc/transfer_soul(choice as text, target, mob/user)
 	switch(choice)
 		if("FORCE")
-			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
+			if(!iscarbon(target)) //TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
 				return FALSE
 			if(contents.len)
 				return FALSE
@@ -340,7 +340,7 @@
 	if(user)
 		S.copy_languages(user, LANGUAGE_MASTER)
 	S.update_atom_languages()
-	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
+	grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
 	if(user)
 		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(user && iscultist(user))
@@ -364,7 +364,7 @@
 
 	chosen_ghost = T.get_ghost(TRUE,TRUE) //Try to grab original owner's ghost first
 
-	if(!chosen_ghost || !chosen_ghost.client)	//Failing that, we grab a ghosts
+	if(!chosen_ghost || !chosen_ghost.client) //Failing that, we grab a ghosts
 		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, 50, POLL_IGNORE_SHADE)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)

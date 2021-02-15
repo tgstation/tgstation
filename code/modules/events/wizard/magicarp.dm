@@ -6,7 +6,7 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/magicarp
-	announceWhen	= 3
+	announceWhen = 3
 	startWhen = 50
 
 /datum/round_event/wizard/magicarp/setup()

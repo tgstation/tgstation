@@ -146,7 +146,7 @@
 			var/potential_payout = chosen_bet_amount * potential_payout_mult
 
 			if(!check_bartender_funds(potential_payout))
-				return FALSE	 //bartender is too poor
+				return FALSE  //bartender is too poor
 
 			if(last_anti_spam > world.time) //do not cheat me
 				return FALSE
@@ -379,7 +379,7 @@
 			icon_state = "open"
 
 /obj/machinery/roulette/proc/shock(mob/user, prb)
-	if(!on)		// unpowered, no shock
+	if(!on) // unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you

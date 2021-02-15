@@ -43,7 +43,7 @@
 	var/list/launched_items
 
 /// we only try to knock back the first 6 items per tile
-#define BACKBLAST_MAX_ITEM_KNOCKBACK	6
+#define BACKBLAST_MAX_ITEM_KNOCKBACK 6
 
 /obj/projectile/bullet/incendiary/backblast/Move()
 	. = ..()

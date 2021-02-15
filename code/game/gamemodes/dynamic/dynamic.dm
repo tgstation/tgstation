@@ -420,7 +420,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
-		rule.acceptable(roundstart_pop_ready, threat_level)	// Assigns some vars in the modes, running it here for consistency
+		rule.acceptable(roundstart_pop_ready, threat_level) // Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(roundstart_pop_ready, TRUE))
@@ -440,7 +440,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
 		if (!rule.weight)
 			continue
-		if (rule.acceptable(roundstart_pop_ready, threat_level) && round_start_budget >= rule.cost)	// If we got the population and threat required
+		if (rule.acceptable(roundstart_pop_ready, threat_level) && round_start_budget >= rule.cost) // If we got the population and threat required
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready(roundstart_pop_ready) && rule.candidates.len > 0)
@@ -514,7 +514,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			current_rules += rule
 		new_snapshot(rule)
 		return TRUE
-	rule.clean_up()	// Refund threat, delete teams and so on.
+	rule.clean_up() // Refund threat, delete teams and so on.
 	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE

@@ -59,13 +59,13 @@
 	if(!on)
 		return
 	switch(mode)
-		if(BOT_IDLE)		// idle
+		if(BOT_IDLE) // idle
 			update_icon()
 			walk_to(src,0)
-			look_for_perp()	// see if any criminals are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
-				mode = BOT_START_PATROL	// switch to patrol mode
-		if(BOT_HUNT)		// hunting for perp
+			look_for_perp() // see if any criminals are in range
+			if(!mode && auto_patrol) // still idle, and set to patrol
+				mode = BOT_START_PATROL // switch to patrol mode
+		if(BOT_HUNT) // hunting for perp
 			update_icon()
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
@@ -73,13 +73,13 @@
 				walk_to(src,0)
 				back_to_idle()
 				return
-			if(target)		// make sure target exists
-				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
+			if(target) // make sure target exists
+				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
 					target_lastloc = target.loc //stun_attack() can clear the target if they're dead, so this needs to be set first
 					stun_attack(target)
 					set_anchored(TRUE)
 					return
-				else								// not next to perp
+				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
 					if((get_dist(src, target)) >= (olddist))

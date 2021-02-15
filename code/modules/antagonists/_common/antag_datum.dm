@@ -2,13 +2,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	var/name = "Antagonist"
-	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
-	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
-	var/prevent_roundtype_conversion = TRUE		//If false, the roundtype will still convert with this antag active
-	var/datum/mind/owner						//Mind that owns this datum
-	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
-	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
-	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
+	var/roundend_category = "other antagonists" //Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/show_in_roundend = TRUE //Set to false to hide the antagonists from roundend report
+	var/prevent_roundtype_conversion = TRUE //If false, the roundtype will still convert with this antag active
+	var/datum/mind/owner //Mind that owns this datum
+	var/silent = FALSE //Silent will prevent the gain/lose texts to show
+	var/can_coexist_with_others = TRUE //Whether or not the person will be able to have more than one datum
+	var/list/typecache_datum_blacklist = list() //List of datums this type can't coexist with
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbanned player with ghosts if granted.
 	var/list/objectives = list()
@@ -23,8 +23,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/soft_antag = FALSE
 
 	//Antag panel properties
-	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
-	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
+	var/show_in_antagpanel = TRUE //This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
+	var/antagpanel_category = "Uncategorized" //Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 
@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //Displayed at the start of roundend_category section, default to roundend_category header
 /datum/antagonist/proc/roundend_report_header()
-	return 	"<span class='header'>The [roundend_category] were:</span><br>"
+	return "<span class='header'>The [roundend_category] were:</span><br>"
 
 //Displayed at the end of roundend_category section
 /datum/antagonist/proc/roundend_report_footer()

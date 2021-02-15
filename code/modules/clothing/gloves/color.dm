@@ -65,7 +65,7 @@
 	name = "budget insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
-	siemens_coefficient = 1			//Set to a default of 1, gets overridden in Initialize()
+	siemens_coefficient = 1 //Set to a default of 1, gets overridden in Initialize()
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut

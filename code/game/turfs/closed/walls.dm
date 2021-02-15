@@ -184,11 +184,11 @@
 
 	//get the user's location
 	if(!isturf(user.loc))
-		return	//can't do this stuff whilst inside objects and such
+		return //can't do this stuff whilst inside objects and such
 
 	add_fingerprint(user)
 
-	var/turf/T = user.loc	//get user's location for delay checks
+	var/turf/T = user.loc //get user's location for delay checks
 
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))

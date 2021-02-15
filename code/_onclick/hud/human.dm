@@ -255,7 +255,7 @@
 	inv_box.name = "belt"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
-//	inv_box.icon_full = "template_small"
+// inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_belt
 	inv_box.slot_id = ITEM_SLOT_BELT
 	inv_box.hud = src
@@ -371,15 +371,15 @@
 			H.head.screen_loc = ui_head
 			screenmob.client.screen += H.head
 	else
-		if(H.shoes)		screenmob.client.screen -= H.shoes
-		if(H.gloves)	screenmob.client.screen -= H.gloves
-		if(H.ears)		screenmob.client.screen -= H.ears
-		if(H.glasses)	screenmob.client.screen -= H.glasses
-		if(H.w_uniform)	screenmob.client.screen -= H.w_uniform
-		if(H.wear_suit)	screenmob.client.screen -= H.wear_suit
-		if(H.wear_mask)	screenmob.client.screen -= H.wear_mask
-		if(H.wear_neck)	screenmob.client.screen -= H.wear_neck
-		if(H.head)		screenmob.client.screen -= H.head
+		if(H.shoes) screenmob.client.screen -= H.shoes
+		if(H.gloves) screenmob.client.screen -= H.gloves
+		if(H.ears) screenmob.client.screen -= H.ears
+		if(H.glasses) screenmob.client.screen -= H.glasses
+		if(H.w_uniform) screenmob.client.screen -= H.w_uniform
+		if(H.wear_suit) screenmob.client.screen -= H.wear_suit
+		if(H.wear_mask) screenmob.client.screen -= H.wear_mask
+		if(H.wear_neck) screenmob.client.screen -= H.wear_neck
+		if(H.head) screenmob.client.screen -= H.head
 
 
 

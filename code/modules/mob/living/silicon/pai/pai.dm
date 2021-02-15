@@ -26,45 +26,45 @@
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
-	var/ram = 100	// Used as currency to purchase different abilities
+	var/ram = 100 // Used as currency to purchase different abilities
 	var/list/software = list()
-	var/userDNA		// The DNA string of our assigned user
-	var/obj/item/paicard/card	// The card we inhabit
-	var/hacking = FALSE		//Are we hacking a door?
+	var/userDNA // The DNA string of our assigned user
+	var/obj/item/paicard/card // The card we inhabit
+	var/hacking = FALSE //Are we hacking a door?
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
 
-	var/obj/item/pai_cable/hacking_cable		// The cable we produce when hacking a door
+	var/obj/item/pai_cable/hacking_cable // The cable we produce when hacking a door
 
-	var/master				// Name of the one who commands us
-	var/master_dna			// DNA string for owner verification
+	var/master // Name of the one who commands us
+	var/master_dna // DNA string for owner verification
 
 // Various software-specific vars
 
-	var/temp				// General error reporting text contained here will typically be shown once and cleared
-	var/screen				// Which screen our main window displays
-	var/subscreen			// Which specific function of the main screen is being displayed
+	var/temp // General error reporting text contained here will typically be shown once and cleared
+	var/screen // Which screen our main window displays
+	var/subscreen // Which specific function of the main screen is being displayed
 
-	var/secHUD = 0			// Toggles whether the Security HUD is active or not
-	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
+	var/secHUD = 0 // Toggles whether the Security HUD is active or not
+	var/medHUD = 0 // Toggles whether the Medical  HUD is active or not
 
-	var/datum/data/record/medicalActive1		// Datacore record declarations for record software
+	var/datum/data/record/medicalActive1 // Datacore record declarations for record software
 	var/datum/data/record/medicalActive2
 
-	var/datum/data/record/securityActive1		// Could probably just combine all these into one
+	var/datum/data/record/securityActive1 // Could probably just combine all these into one
 	var/datum/data/record/securityActive2
 
-	var/obj/machinery/door/hackdoor		// The airlock being hacked
-	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/obj/machinery/door/hackdoor // The airlock being hacked
+	var/hackprogress = 0 // Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
 	var/obj/item/instrument/piano_synth/internal_instrument
-	var/obj/machinery/newscaster			//pAI Newscaster
-	var/obj/item/healthanalyzer/hostscan				//pAI healthanalyzer
+	var/obj/machinery/newscaster //pAI Newscaster
+	var/obj/item/healthanalyzer/hostscan //pAI healthanalyzer
 
 	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
 	var/obj/item/gps/pai/internal_gps = null
@@ -75,7 +75,7 @@
 	var/can_transmit = TRUE
 	var/can_receive = TRUE
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "bat" = FALSE, "butterfly" = FALSE, "hawk" = FALSE, "lizard" = FALSE, "duffel" = TRUE)		//assoc value is whether it can be picked up.
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "bat" = FALSE, "butterfly" = FALSE, "hawk" = FALSE, "lizard" = FALSE, "duffel" = TRUE) //assoc value is whether it can be picked up.
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
@@ -85,7 +85,7 @@
 	var/emittersemicd = FALSE
 
 	var/overload_ventcrawl = 0
-	var/overload_bulletblock = 0	//Why is this a good idea?
+	var/overload_bulletblock = 0 //Why is this a good idea?
 	var/overload_maxhealth = 0
 	var/silent = FALSE
 	var/brightness_power = 5

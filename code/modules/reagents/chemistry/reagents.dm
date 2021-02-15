@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/impure_chem = /datum/reagent/impurity
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
-	/// What chem is metabolised when purity is below inverse_chem_val						
+	/// What chem is metabolised when purity is below inverse_chem_val 
 	var/inverse_chem = /datum/reagent/impurity/toxic
 	///what chem is made at the end of a reaction IF the purity is below the recipies purity_min at the END of a reaction only
 	var/failed_chem = /datum/reagent/consumable/failed_reaction

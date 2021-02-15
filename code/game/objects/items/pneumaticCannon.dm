@@ -23,11 +23,11 @@
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 	var/checktank = TRUE
 	var/range_multiplier = 1
-	var/throw_amount = 1	//How many items to throw per fire
+	var/throw_amount = 1 //How many items to throw per fire
 	var/fire_mode = PCANNON_FIFO
 	var/automatic = FALSE
 	var/clumsyCheck = TRUE
-	var/list/allowed_typecache		//Leave as null to allow all.
+	var/list/allowed_typecache //Leave as null to allow all.
 	var/charge_amount = 1
 	var/charge_ticks = 1
 	var/charge_tick = 0
@@ -43,7 +43,7 @@
 	if(selfcharge)
 		init_charge()
 
-/obj/item/pneumatic_cannon/proc/init_charge()	//wrapper so it can be vv'd easier
+/obj/item/pneumatic_cannon/proc/init_charge() //wrapper so it can be vv'd easier
 	START_PROCESSING(SSobj, src)
 
 /obj/item/pneumatic_cannon/process()
@@ -101,13 +101,13 @@
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
-	if(!istype(I))			//Players can't load non items, this allows for admin varedit inserts.
+	if(!istype(I)) //Players can't load non items, this allows for admin varedit inserts.
 		return TRUE
 	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
 		if(user)
 			to_chat(user, "<span class='warning'>[I] won't fit into [src]!</span>")
 		return
-	if((loadedWeightClass + I.w_class) > maxWeightClass)	//Only make messages if there's a user
+	if((loadedWeightClass + I.w_class) > maxWeightClass) //Only make messages if there's a user
 		if(user)
 			to_chat(user, "<span class='warning'>\The [I] won't fit into \the [src]!</span>")
 		return FALSE
@@ -120,7 +120,7 @@
 /obj/item/pneumatic_cannon/proc/load_item(obj/item/I, mob/user)
 	if(!can_load_item(I, user))
 		return FALSE
-	if(user)		//Only use transfer proc if there's a user, otherwise just set loc.
+	if(user) //Only use transfer proc if there's a user, otherwise just set loc.
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You load \the [I] into \the [src].</span>")
@@ -286,7 +286,7 @@
 	range_multiplier = 3
 	fire_mode = PCANNON_FIFO
 	throw_amount = 1
-	maxWeightClass = 150	//50 pies. :^)
+	maxWeightClass = 150 //50 pies. :^)
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
@@ -298,11 +298,11 @@
 	automatic = TRUE
 	selfcharge = TRUE
 	charge_type = /obj/item/food/pie/cream
-	maxWeightClass = 60	//20 pies.
+	maxWeightClass = 60 //20 pies.
 
 /obj/item/pneumatic_cannon/pie/selfcharge/cyborg
 	name = "low velocity pie cannon"
 	automatic = FALSE
 	charge_type = /obj/item/food/pie/cream/nostun
-	maxWeightClass = 6		//2 pies
-	charge_ticks = 2		//4 second/pie
+	maxWeightClass = 6 //2 pies
+	charge_ticks = 2 //4 second/pie

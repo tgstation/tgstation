@@ -1,7 +1,7 @@
 #define VAT_GROWTH_RATE 4
 
 ////////////////////////////////
-//// 		VERTEBRATES		////
+//// VERTEBRATES ////
 ////////////////////////////////
 
 /datum/micro_organism/cell_line/mouse //nuisance cell line designed to complicate the growing of animal type cell lines.
@@ -201,7 +201,7 @@
 
 
 ///////////////////////////////////////////
-/// 		SLIMES, OOZES & BLOBS  		///
+/// SLIMES, OOZES & BLOBS ///
 //////////////////////////////////////////
 
 /datum/micro_organism/cell_line/slime
@@ -316,7 +316,7 @@
 	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/grapes = 1)
 
 ////////////////////
-////	MISC	////
+//// MISC ////
 ////////////////////
 /datum/micro_organism/cell_line/cockroach //nuisance cell line designed to complicate the growing of slime type cell lines.
 	desc = "Blattodeoid anthropod cells"

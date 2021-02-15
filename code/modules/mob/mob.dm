@@ -116,8 +116,8 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/t =	"<span class='notice'>Coordinates: [x],[y] </span>\n"
-	t +=	"<span class='danger'>Temperature: [environment.temperature] </span>\n"
+	var/t = "<span class='notice'>Coordinates: [x],[y] </span>\n"
+	t += "<span class='danger'>Temperature: [environment.temperature] </span>\n"
 	for(var/id in environment.gases)
 		var/gas = environment.gases[id]
 		if(gas[MOLES])
@@ -533,7 +533,7 @@
  *
  * Note that if either party has their face obscured, the other won't get the notice about the eye contact
  * Also note that examine_more() doesn't proc this or extend the timer, just because it's simpler this way and doesn't lose much.
- *	The nice part about relying on examining is that we don't bother checking visibility, because we already know they were both visible to each other within the last second, and the one who triggers it is currently seeing them
+ * The nice part about relying on examining is that we don't bother checking visibility, because we already know they were both visible to each other within the last second, and the one who triggers it is currently seeing them
  */
 /mob/proc/handle_eye_contact(mob/living/examined_mob)
 	return
@@ -592,7 +592,7 @@
 
 ///Can this mob resist (default FALSE)
 /mob/proc/can_resist()
-	return FALSE		//overridden in living.dm
+	return FALSE //overridden in living.dm
 
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)

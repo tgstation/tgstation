@@ -29,11 +29,11 @@ SUBSYSTEM_DEF(garbage)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
 
-	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS) // deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
-	var/delslasttick = 0			// number of del()'s we've done this tick
-	var/gcedlasttick = 0			// number of things that gc'ed last tick
+	var/delslasttick = 0 // number of del()'s we've done this tick
+	var/gcedlasttick = 0 // number of things that gc'ed last tick
 	var/totaldels = 0
 	var/totalgcs = 0
 
@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(garbage)
 	var/list/pass_counts
 	var/list/fail_counts
 
-	var/list/items = list()			// Holds our qdel_item statistics datums
+	var/list/items = list() // Holds our qdel_item statistics datums
 
 	//Queue
 	var/list/queues
@@ -162,7 +162,7 @@ SUBSYSTEM_DEF(garbage)
 			++totalgcs
 			pass_counts[level]++
 			#ifdef REFERENCE_TRACKING
-			reference_find_on_fail -= refID	//It's deleted we don't care anymore.
+			reference_find_on_fail -= refID //It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
 				return
@@ -261,14 +261,14 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/qdel_item
 	var/name = ""
-	var/qdels = 0			//Total number of times it's passed thru qdel.
-	var/destroy_time = 0	//Total amount of milliseconds spent processing this type's Destroy()
-	var/failures = 0		//Times it was queued for soft deletion but failed to soft delete.
-	var/hard_deletes = 0 	//Different from failures because it also includes QDEL_HINT_HARDDEL deletions
+	var/qdels = 0 //Total number of times it's passed thru qdel.
+	var/destroy_time = 0 //Total amount of milliseconds spent processing this type's Destroy()
+	var/failures = 0 //Times it was queued for soft deletion but failed to soft delete.
+	var/hard_deletes = 0 //Different from failures because it also includes QDEL_HINT_HARDDEL deletions
 	var/hard_delete_time = 0//Total amount of milliseconds spent hard deleting this type.
 	var/no_respect_force = 0//Number of times it's not respected force=TRUE
-	var/no_hint = 0			//Number of times it's not even bother to give a qdel hint
-	var/slept_destroy = 0	//Number of times it's slept in its destroy
+	var/no_hint = 0 //Number of times it's not even bother to give a qdel hint
+	var/slept_destroy = 0 //Number of times it's slept in its destroy
 
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
@@ -302,12 +302,12 @@ SUBSYSTEM_DEF(garbage)
 		if(!D)
 			return
 		switch(hint)
-			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
+			if (QDEL_HINT_QUEUE) //qdel should queue the object for deletion.
 				SSgarbage.Queue(D)
 			if (QDEL_HINT_IWILLGC)
 				D.gc_destroyed = world.time
 				return
-			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
+			if (QDEL_HINT_LETMELIVE) //qdel should let the object live after calling destory.
 				if(!force)
 					D.gc_destroyed = null //clear the gc variable (important!)
 					return
@@ -324,9 +324,9 @@ SUBSYSTEM_DEF(garbage)
 				I.no_respect_force++
 
 				SSgarbage.Queue(D)
-			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete
+			if (QDEL_HINT_HARDDEL) //qdel should assume this object won't gc, and queue a hard delete
 				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
-			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
+			if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
 				SSgarbage.HardDelete(D)
 			#ifdef REFERENCE_TRACKING
 			if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.

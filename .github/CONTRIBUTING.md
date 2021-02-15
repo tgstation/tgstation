@@ -212,7 +212,19 @@ While DM allows other ways of declaring variables, this one should be used for c
 ### Tabs, not spaces
 You must use tabs to indent your code, NOT SPACES.
 
-You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces.
+Do not use tabs/spaces for indentation in the middle of a code line. Not only is this inconsistent because the size of a tab is undefined, but it means that, should the line you're aligning to change size at all, we have to adjust a ton of other code. Plus, it often time hurts readability.
+
+```dm
+// Bad
+#define SPECIES_MOTH			"moth"
+#define SPECIES_LIZARDMAN		"lizardman"
+#define SPECIES_FELINID			"felinid"
+
+// Good
+#define SPECIES_MOTH "moth"
+#define SPECIES_LIZARDMAN "lizardman"
+#define SPECIES_FELINID "felinid"
+```
 
 ### No hacky code
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)

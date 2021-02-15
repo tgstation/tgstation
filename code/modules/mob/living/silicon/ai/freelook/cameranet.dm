@@ -106,7 +106,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 					if(USE_STATIC_OPAQUE)
 						client.images -= GLOB.cameranet.obscured
 
-// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.
+// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or when doors open.
 
 /datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
 	if(!SSticker || (opacity_check && !A.opacity))

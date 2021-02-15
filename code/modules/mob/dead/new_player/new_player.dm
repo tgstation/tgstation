@@ -12,7 +12,7 @@
 	stat = DEAD
 	hud_possible = list()
 
-	var/mob/living/new_character	//for instant transfer once the round is set up
+	var/mob/living/new_character //for instant transfer once the round is set up
 
 	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
@@ -300,7 +300,7 @@
 
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
-		close_spawn_windows()	//In case we get held up
+		close_spawn_windows() //In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
@@ -315,9 +315,9 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
+	var/mob/living/character = create_character(TRUE) //creates the human and transfers vars and mind
 	var/equip = SSjob.EquipRank(character, rank, TRUE)
-	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
+	if(isliving(equip)) //Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -335,9 +335,9 @@
 	character.client.init_verbs() // init verbs for the late join
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
-		humanc = character	//Let's retypecast the var to be human,
+		humanc = character //Let's retypecast the var to be human,
 
-	if(humanc)	//These procs all expect humans
+	if(humanc) //These procs all expect humans
 		GLOB.data_core.manifest_inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
@@ -362,7 +362,7 @@
 
 	GLOB.joined_player_list += character.ckey
 
-	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc) //Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
@@ -459,9 +459,9 @@
 	if(mind)
 		if(transfer_after)
 			mind.late_joiner = TRUE
-		mind.active = FALSE					//we wish to transfer the key manually
+		mind.active = FALSE //we wish to transfer the key manually
 		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.transfer_to(H) //won't transfer key since the mind is not active
 		mind.original_character = H
 
 	H.name = real_name
@@ -474,7 +474,7 @@
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
-		new_character.key = key		//Manually transfer the key to log them in,
+		new_character.key = key //Manually transfer the key to log them in,
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 		new_character = null
 		qdel(src)

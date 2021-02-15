@@ -357,7 +357,7 @@
 		return
 	emped++ //There's been an EMP; better count it
 	var/curremp = emped //Remember which EMP this was
-	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
+	if (listening && ismob(loc)) // if the radio is turned on and on someone's person they notice
 		to_chat(loc, "<span class='warning'>\The [src] overloads.</span>")
 	broadcasting = FALSE
 	listening = FALSE
@@ -434,6 +434,6 @@
 		recalculateChannels()
 
 
-/obj/item/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
-	listening = 0			// And it's nice to have a subtype too for future features.
+/obj/item/radio/off // Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
+	listening = 0 // And it's nice to have a subtype too for future features.
 	dog_fashion = /datum/dog_fashion/back

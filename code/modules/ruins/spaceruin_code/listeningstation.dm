@@ -1,4 +1,4 @@
-///////////	listening station
+/////////// listening station
 
 /obj/item/paper/fluff/ruins/listeningstation/reports
 	info = "Nothing of interest to report."

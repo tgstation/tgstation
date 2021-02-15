@@ -1,7 +1,7 @@
 
-#define BUGMODE_LIST	0
-#define BUGMODE_MONITOR	1
-#define BUGMODE_TRACK	2
+#define BUGMODE_LIST 0
+#define BUGMODE_MONITOR 1
+#define BUGMODE_TRACK 2
 
 
 
@@ -9,11 +9,11 @@
 	name = "camera bug"
 	desc = "For illicit snooping through the camera network."
 	icon = 'icons/obj/device.dmi'
-	icon_state	= "camera_bug"
-	w_class		= WEIGHT_CLASS_TINY
-	inhand_icon_state	= "camera_bug"
-	throw_speed	= 4
-	throw_range	= 20
+	icon_state = "camera_bug"
+	w_class = WEIGHT_CLASS_TINY
+	inhand_icon_state = "camera_bug"
+	throw_speed = 4
+	throw_range = 20
 	item_flags = NOBLUDGEON
 
 	var/obj/machinery/camera/current = null

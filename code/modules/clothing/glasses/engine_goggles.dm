@@ -101,7 +101,7 @@
 
 	for(var/i in rad_places)
 		var/turf/place = i
-		if(get_dist(user, place) >= range*5)	//Rads are easier to see than wires under the floor
+		if(get_dist(user, place) >= range*5) //Rads are easier to see than wires under the floor
 			continue
 		var/strength = round(rad_places[i] / 1000, 0.1)
 		var/image/pic = image(loc = place)

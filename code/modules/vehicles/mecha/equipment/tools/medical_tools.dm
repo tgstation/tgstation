@@ -253,8 +253,8 @@
 
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
 
-#define FIRE_SYRINGE_MODE		0
-#define ANALYZE_SYRINGE_MODE	1
+#define FIRE_SYRINGE_MODE 0
+#define ANALYZE_SYRINGE_MODE 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
 	name = "exosuit syringe gun"

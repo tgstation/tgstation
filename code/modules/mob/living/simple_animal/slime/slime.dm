@@ -187,7 +187,7 @@
 	. = ..()
 	var/mod = 0
 	if(bodytemperature >= 330.23) // 135 F or 57.08 C
-		mod = -1	// slimes become supercharged at high temperatures
+		mod = -1 // slimes become supercharged at high temperatures
 	else if(bodytemperature < 283.222)
 		mod = ((283.222 - bodytemperature) / 10) * 1.75
 	if(mod)

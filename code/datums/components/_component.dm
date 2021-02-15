@@ -93,14 +93,14 @@
 	var/our_type = type
 	for(var/I in _GetInverseTypeList(our_type))
 		var/test = dc[I]
-		if(test)	//already another component of this type here
+		if(test) //already another component of this type here
 			var/list/components_of_type
 			if(!length(test))
 				components_of_type = list(test)
 				dc[I] = components_of_type
 			else
 				components_of_type = test
-			if(I == our_type)	//exact match, take priority
+			if(I == our_type) //exact match, take priority
 				var/inserted = FALSE
 				for(var/J in 1 to components_of_type.len)
 					var/datum/component/C = components_of_type[J]
@@ -110,9 +110,9 @@
 						break
 				if(!inserted)
 					components_of_type += src
-			else	//indirect match, back of the line with ya
+			else //indirect match, back of the line with ya
 				components_of_type += src
-		else	//only component of this type, no list
+		else //only component of this type, no list
 			dc[I] = src
 
 	RegisterWithParent()
@@ -125,13 +125,13 @@
 	var/list/dc = P.datum_components
 	for(var/I in _GetInverseTypeList())
 		var/list/components_of_type = dc[I]
-		if(length(components_of_type))	//
+		if(length(components_of_type)) //
 			var/list/subtracted = components_of_type - src
-			if(subtracted.len == 1)	//only 1 guy left
-				dc[I] = subtracted[1]	//make him special
+			if(subtracted.len == 1) //only 1 guy left
+				dc[I] = subtracted[1] //make him special
 			else
 				dc[I] = subtracted
-		else	//just us
+		else //just us
 			dc -= I
 	if(!dc.len)
 		P.datum_components = null

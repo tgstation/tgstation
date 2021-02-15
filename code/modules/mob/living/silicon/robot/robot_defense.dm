@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>The wires seem fine, there's no need to fix them.</span>")
 		return
 
-	if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
+	if(W.tool_behaviour == TOOL_CROWBAR) // crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
 			opened = FALSE
@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				update_icons()
 		return
 
-	if(istype(W, /obj/item/stock_parts/cell) && opened)	// trying to put a cell inside
+	if(istype(W, /obj/item/stock_parts/cell) && opened) // trying to put a cell inside
 		if(wiresexposed)
 			to_chat(user, "<span class='warning'>Close the cover first!</span>")
 		else if(cell)
@@ -74,13 +74,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 		return
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened)	// wire hacking or radio management
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && opened) // wire hacking or radio management
 		if(!cell) //haxing
 			wiresexposed = !wiresexposed
 			to_chat(user, "<span class='notice'>The wires have been [wiresexposed ? "exposed" : "unexposed"].</span>")
 		else //radio
 			if(shell)
-				to_chat(user, "<span class='warning'>You cannot seem to open the radio compartment!</span>")	//Prevent AI radio key theft
+				to_chat(user, "<span class='warning'>You cannot seem to open the radio compartment!</span>") //Prevent AI radio key theft
 			else if(radio)
 				radio.attackby(W,user)//Push it to the radio to let it handle everything
 			else
@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		return
 
-	if (W.GetID())			// trying to unlock the interface with an ID card
+	if (W.GetID()) // trying to unlock the interface with an ID card
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else

@@ -16,7 +16,7 @@
 
 
 /datum/round_event/carp_migration
-	announceWhen	= 3
+	announceWhen = 3
 	startWhen = 50
 	var/hasAnnounced = FALSE
 

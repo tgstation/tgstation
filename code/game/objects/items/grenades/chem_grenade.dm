@@ -27,7 +27,7 @@
 	wires = new /datum/wires/explosive/chem_grenade(src)
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
-	display_timer = (stage == GRENADE_READY)	//show/hide the timer based on assembly state
+	display_timer = (stage == GRENADE_READY) //show/hide the timer based on assembly state
 	. = ..()
 	if(user.can_see_reagents())
 		if(beakers.len)
@@ -66,7 +66,7 @@
 		else if(stage == GRENADE_READY)
 			det_time = det_time == 50 ? 30 : 50 //toggle between 30 and 50
 			if(landminemode)
-				landminemode.time = det_time * 0.1	//overwrites the proxy sensor activation timer
+				landminemode.time = det_time * 0.1 //overwrites the proxy sensor activation timer
 
 			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else
@@ -194,7 +194,7 @@
 		stage_change(GRENADE_EMPTY)
 		active = FALSE
 		return
-//	logs from custom assemblies priming are handled by the wire component
+// logs from custom assemblies priming are handled by the wire component
 	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
 	update_mob()
@@ -211,7 +211,7 @@
 	banned_containers = list()
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
-	threatscale = 1.1	// 10% more effective.
+	threatscale = 1.1 // 10% more effective.
 
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY)

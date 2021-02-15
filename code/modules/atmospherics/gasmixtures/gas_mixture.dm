@@ -3,8 +3,8 @@ What are the archived variables for?
 Calculations are done using the archived variables with the results merged into the regular variables.
 This prevents race conditions that arise based on the order of tile processing.
 */
-#define MINIMUM_HEAT_CAPACITY	0.0003
-#define MINIMUM_MOLE_COUNT		0.01
+#define MINIMUM_HEAT_CAPACITY 0.0003
+#define MINIMUM_MOLE_COUNT 0.01
 #define MOLAR_ACCURACY  1E-7
 /**
  *I feel the need to document what happens here. Basically this is used
@@ -347,10 +347,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			else
 				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
-		gas[MOLES]			-= delta
-		sharergas[MOLES]	+= delta
-		moved_moles			+= delta
-		abs_moved_moles		+= abs(delta)
+		gas[MOLES] -= delta
+		sharergas[MOLES] += delta
+		moved_moles += delta
+		abs_moved_moles += abs(delta)
 
 	last_share = abs_moved_moles
 
@@ -458,7 +458,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements
-			if(	(min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
+			if( (min_reqs["TEMP"] && temp < min_reqs["TEMP"]) || \
 				(min_reqs["ENER"] && ener < min_reqs["ENER"]) || \
 				(min_reqs["MAX_TEMP"] && temp > min_reqs["MAX_TEMP"])
 			)

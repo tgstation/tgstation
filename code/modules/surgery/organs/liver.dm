@@ -74,7 +74,7 @@
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
-	..()	//perform general on_life()
+	..() //perform general on_life()
 	if(istype(C))
 		if(!(organ_flags & ORGAN_FAILING) && !HAS_TRAIT(C, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
 
@@ -99,7 +99,7 @@
 			if(provide_pain_message && damage > 10 && prob(damage/3))//the higher the damage the higher the probability
 				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
-		else	//for when our liver's failing
+		else //for when our liver's failing
 			C.liver_failure()
 
 	if(damage > maxHealth)//cap liver damage
@@ -148,7 +148,7 @@
 	toxLethality = 0.011
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 
-	var/emp_vulnerability = 80	//Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/liver/cybernetic/tier2
 	name = "cybernetic liver"

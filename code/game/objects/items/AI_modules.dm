@@ -479,7 +479,7 @@ AI MODULES
 	..()
 
 /obj/item/ai_module/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-//	..()    //We don't want this module reporting to the AI who dun it. --NEO
+// ..()    //We don't want this module reporting to the AI who dun it. --NEO
 	if(law_datum.owner)
 		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
 		if(!overflow)

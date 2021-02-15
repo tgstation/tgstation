@@ -1,6 +1,6 @@
 
-#define MOVES_HITSCAN -1		//Not actually hitscan but close as we get without actual hitscan.
-#define MUZZLE_EFFECT_PIXEL_INCREMENT 17	//How many pixels to move the muzzle flash up so your character doesn't look like they're shitting out lasers.
+#define MOVES_HITSCAN -1 //Not actually hitscan but close as we get without actual hitscan.
+#define MUZZLE_EFFECT_PIXEL_INCREMENT 17 //How many pixels to move the muzzle flash up so your character doesn't look like they're shitting out lasers.
 
 /obj/projectile
 	name = "projectile"
@@ -17,25 +17,25 @@
 	var/hitsound_wall = ""
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/def_zone = ""	//Aiming at
+	var/def_zone = "" //Aiming at
 	var/atom/movable/firer = null//Who shot it
 	var/atom/fired_from = null // the atom that the projectile was fired from (gun, turret)
-	var/suppressed = FALSE	//Attack message
+	var/suppressed = FALSE //Attack message
 	var/yo = null
 	var/xo = null
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/p_x = 16
-	var/p_y = 16			// the pixel location of the tile that the player clicked. Default is the center
+	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
 	//Fired processing vars
-	var/fired = FALSE	//Have we been fired yet
-	var/paused = FALSE	//for suspending the projectile midair
+	var/fired = FALSE //Have we been fired yet
+	var/paused = FALSE //for suspending the projectile midair
 	var/last_projectile_move = 0
 	var/last_process = 0
 	var/time_offset = 0
 	var/datum/point/vector/trajectory
-	var/trajectory_ignore_forcemove = FALSE	//instructs forceMove to NOT reset our trajectory to the new location!
+	var/trajectory_ignore_forcemove = FALSE //instructs forceMove to NOT reset our trajectory to the new location!
 	/// We already impacted these things, do not impact them again. Used to make sure we can pierce things we want to pierce. Lazylist, typecache style (object = TRUE) for performance.
 	var/list/impacted
 	/// If TRUE, we can hit our firer.
@@ -66,12 +66,12 @@
 	/// number of times we've pierced something. Incremented BEFORE bullet_act and on_hit proc!
 	var/pierces = 0
 
-	var/speed = 0.8			//Amount of deciseconds it takes for projectile to travel
+	var/speed = 0.8 //Amount of deciseconds it takes for projectile to travel
 	var/Angle = 0
-	var/original_angle = 0		//Angle at firing
+	var/original_angle = 0 //Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
-	var/spread = 0			//amount (in degrees) of projectile spread
-	animate_movement = NO_STEPS	//Use SLIDE_STEPS in conjunction with legacy
+	var/spread = 0 //amount (in degrees) of projectile spread
+	animate_movement = NO_STEPS //Use SLIDE_STEPS in conjunction with legacy
 	/// how many times we've ricochet'd so far (instance variable, not a stat)
 	var/ricochets = 0
 	/// how many times we can ricochet max
@@ -93,12 +93,12 @@
 	var/force_hit = FALSE
 
 	//Hitscan
-	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.
-	var/list/beam_segments	//assoc list of datum/point or datum/point/vector, start = end. Used for hitscan effect generation.
+	var/hitscan = FALSE //Whether this is hitscan. If it is, speed is basically ignored.
+	var/list/beam_segments //assoc list of datum/point or datum/point/vector, start = end. Used for hitscan effect generation.
 	/// Last turf an angle was changed in for hitscan projectiles.
 	var/turf/last_angle_set_hitscan_store
 	var/datum/point/beam_index
-	var/turf/hitscan_last	//last turf touched during hitscanning.
+	var/turf/hitscan_last //last turf touched during hitscanning.
 	var/tracer_type
 	var/muzzle_type
 	var/impact_type
@@ -117,8 +117,8 @@
 	//Homing
 	var/homing = FALSE
 	var/atom/homing_target
-	var/homing_turn_speed = 10		//Angle per tick.
-	var/homing_inaccuracy_min = 0		//in pixels for these. offsets are set once when setting target.
+	var/homing_turn_speed = 10 //Angle per tick.
+	var/homing_inaccuracy_min = 0 //in pixels for these. offsets are set once when setting target.
 	var/homing_inaccuracy_max = 0
 	var/homing_offset_x = 0
 	var/homing_offset_y = 0
@@ -131,8 +131,8 @@
 	var/armour_penetration = 0
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
-	var/decayedRange			//stores original range
-	var/reflect_range_decrease = 5			//amount of original range that falls off when reflecting, so it doesn't go forever
+	var/decayedRange //stores original range
+	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
@@ -345,7 +345,7 @@
 	if(!trajectory)
 		qdel(src)
 		return FALSE
-	if(impacted[A])		// NEVER doublehit
+	if(impacted[A]) // NEVER doublehit
 		return FALSE
 	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
@@ -366,7 +366,7 @@
 	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
-	return process_hit(T, select_target(T, A, A), A)		// SELECT TARGET FIRST!
+	return process_hit(T, select_target(T, A, A), A) // SELECT TARGET FIRST!
 
 /**
  * The primary workhorse proc of projectile impacts.
@@ -386,7 +386,7 @@
  * T - Turf we're on/supposedly hitting
  * target - target we're hitting
  * bumped - target we originally bumped. it's here to ensure that if something blocks our projectile by means of Cross() failure, we hit it
- * 		even if it is not dense.
+ * even if it is not dense.
  * hit_something - only should be set by recursive calling by this proc - tracks if we hit something already
  *
  * Returns if we hit something.
@@ -396,7 +396,7 @@
 	if(QDELETED(src) || !T || !target)
 		return
 	// 2.
-	impacted[target] = TRUE		//hash lookup > in for performance in hit-checking
+	impacted[target] = TRUE //hash lookup > in for performance in hit-checking
 	// 3.
 	var/mode = prehit_pierce(target)
 	if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
@@ -406,7 +406,7 @@
 		if(!(movement_type & PHASING))
 			temporary_unstoppable_movement = TRUE
 			movement_type |= PHASING
-		return process_hit(T, select_target(T, target, bumped), bumped, hit_something)	// try to hit something else
+		return process_hit(T, select_target(T, target, bumped), bumped, hit_something) // try to hit something else
 	// at this point we are going to hit the thing
 	// in which case send signal to it
 	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
@@ -433,8 +433,8 @@
  *
  * Priority:
  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
- * 	Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
- *		FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
+ * Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
+ * FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
  * 1. The thing originally aimed at/clicked on
  * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
  * 3. Objs
@@ -445,10 +445,10 @@
 	// 1. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
-	var/list/atom/possible = list()		// let's define these ONCE
+	var/list/atom/possible = list() // let's define these ONCE
 	var/list/atom/considering = list()
 	// 2. mobs
-	possible = typecache_filter_list(T, GLOB.typecache_living)	// living only
+	possible = typecache_filter_list(T, GLOB.typecache_living) // living only
 	for(var/i in possible)
 		if(!can_hit_target(i, i == original, TRUE, i == bumped))
 			continue
@@ -484,14 +484,14 @@
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
 			return FALSE
-	if(target.density || cross_failed)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
+	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
-		if(isturf(target))		// non dense turfs
+		if(isturf(target)) // non dense turfs
 			return FALSE
 		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
 			return FALSE
-		else if(!direct_target)		// non dense objects do not get hit unless specifically clicked
+		else if(!direct_target) // non dense objects do not get hit unless specifically clicked
 			return FALSE
 	else
 		var/mob/living/L = target
@@ -533,10 +533,10 @@
 	// and hope projectiles get refactored again in the future to have a less stupid impact detection system
 	// that hopefully won't also involve a ton of overhead
 	if(can_hit_target(original, TRUE, FALSE))
-		Impact(original)		// try to hit thing clicked on
+		Impact(original) // try to hit thing clicked on
 	// else, try to hit mobs
-	else		// because if we impacted original and pierced we'll already have select target'd and hit everything else we should be hitting
-		for(var/mob/M in loc)		// so I guess we're STILL doing a for loop of mobs because living movement would otherwise have snowflake code for projectile CanPass
+	else // because if we impacted original and pierced we'll already have select target'd and hit everything else we should be hitting
+		for(var/mob/M in loc) // so I guess we're STILL doing a for loop of mobs because living movement would otherwise have snowflake code for projectile CanPass
 			// so the snowflake vs performance is pretty arguable here
 			if(can_hit_target(M, M == original, TRUE))
 				Impact(M)
@@ -572,7 +572,7 @@
 	if(temporary_unstoppable_movement)
 		temporary_unstoppable_movement = FALSE
 		movement_type &= ~PHASING
-	scan_moved_turf()		//mostly used for making sure we can hit a non-dense object the user directly clicked on, and for penetrating projectiles that don't bump
+	scan_moved_turf() //mostly used for making sure we can hit a non-dense object the user directly clicked on, and for penetrating projectiles that don't bump
 
 /**
  * Checks if we should pierce something.
@@ -608,7 +608,7 @@
 
 	return FALSE
 
-/obj/projectile/proc/return_predicted_turf_after_moves(moves, forced_angle)		//I say predicted because there's no telling that the projectile won't change direction/location in flight.
+/obj/projectile/proc/return_predicted_turf_after_moves(moves, forced_angle) //I say predicted because there's no telling that the projectile won't change direction/location in flight.
 	if(!trajectory && isnull(forced_angle) && isnull(Angle))
 		return FALSE
 	var/datum/point/vector/current = trajectory
@@ -624,7 +624,7 @@
 	return getline(current, ending)
 
 /obj/projectile/Process_Spacemove(movement_dir = 0)
-	return TRUE	//Bullets don't drift in space
+	return TRUE //Bullets don't drift in space
 
 /obj/projectile/process()
 	last_process = world.time
@@ -632,11 +632,11 @@
 		fired = FALSE
 		return PROCESS_KILL
 	if(paused || !isturf(loc))
-		last_projectile_move += world.time - last_process		//Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
+		last_projectile_move += world.time - last_process //Compensates for pausing, so it doesn't become a hitscan projectile when unpaused from charged up ticks.
 		return
 	var/elapsed_time_deciseconds = (world.time - last_projectile_move) + time_offset
 	time_offset = 0
-	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN			//Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
+	var/required_moves = speed > 0? FLOOR(elapsed_time_deciseconds / speed, 1) : MOVES_HITSCAN //Would be better if a 0 speed made hitscan but everyone hates those so I can't make it a universal system :<
 	if(required_moves == MOVES_HITSCAN)
 		required_moves = SSprojectiles.global_max_tick_moves
 	else
@@ -658,7 +658,7 @@
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
-	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1))		// point blank shots
+	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))
 			return
@@ -667,7 +667,7 @@
 	if(spread)
 		setAngle(Angle + ((rand() - 0.5) * spread))
 	var/turf/starting = get_turf(src)
-	if(isnull(Angle))	//Try to resolve through offsets if there's no angle set.
+	if(isnull(Angle)) //Try to resolve through offsets if there's no angle set.
 		if(isnull(xo) || isnull(yo))
 			stack_trace("WARNING: Projectile [type] deleted due to being unable to resolve a target after angle was null!")
 			qdel(src)
@@ -690,7 +690,7 @@
 		process_hitscan()
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
-	pixel_move(1, FALSE)	//move it now!
+	pixel_move(1, FALSE) //move it now!
 
 /obj/projectile/proc/setAngle(new_angle) //wrapper for overrides.
 	Angle = new_angle
@@ -717,7 +717,7 @@
 	if(zc)
 		before_z_change(old, target)
 	. = ..()
-	if(QDELETED(src))		// we coulda bumped something
+	if(QDELETED(src)) // we coulda bumped something
 		return
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
 		if(hitscan)
@@ -750,7 +750,7 @@
 	if(pcache)
 		beam_segments = list()
 		beam_index = pcache
-		beam_segments[beam_index] = null	//record start.
+		beam_segments[beam_index] = null //record start.
 
 /obj/projectile/proc/process_hitscan()
 	var/safety = range * 10
@@ -764,7 +764,7 @@
 				Bump(loc)
 			if(!QDELETED(src))
 				qdel(src)
-			return	//Kill!
+			return //Kill!
 		pixel_move(1, TRUE)
 
 /obj/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
@@ -807,7 +807,7 @@
 		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
 	Range()
 
-/obj/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
+/obj/projectile/proc/process_homing() //may need speeding up in the future performance wise.
 	if(!homing_target)
 		return FALSE
 	var/datum/point/PT = RETURN_PRECISE_POINT(homing_target)

@@ -15,7 +15,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
 	var/defcon = 5
 	//the world.time of the last check, so the mc can restart US if we hang.
-	//	(Real friends look out for *eachother*)
+	// (Real friends look out for *eachother*)
 	var/lasttick = 0
 
 	// Track the MC iteration to make sure its still on track.
