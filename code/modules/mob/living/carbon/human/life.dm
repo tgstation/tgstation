@@ -306,7 +306,7 @@
 	//Puke if toxloss is too high
 	if(stat)
 		return
-	if(getToxLoss() < 45 || nutrition < 20)
+	if(getToxLoss() < 45 || nutrition <= 20)
 		return
 
 	lastpuke += DT_PROB(30, delta_time)

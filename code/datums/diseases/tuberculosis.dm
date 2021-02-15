@@ -54,7 +54,7 @@
 				affected_mob.vomit(20)
 			if(DT_PROB(1.5, delta_time))
 				to_chat(affected_mob, "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>")
-				affected_mob.overeatduration = max(affected_mob.overeatduration - (10 SECONDS), 0)
+				affected_mob.overeatduration = max(affected_mob.overeatduration - (20 SECONDS), 0)
 				affected_mob.adjust_nutrition(-100)
 			if(DT_PROB(7.5, delta_time))
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit...", "You feel like taking off some clothes...")]</span>")

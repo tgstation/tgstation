@@ -286,14 +286,14 @@ Behavior that's still missing from this component that original food items had t
 			eater.visible_message("<span class='notice'>[eater] [eatverb]s \the [parent].</span>", "<span class='notice'>You [eatverb] \the [parent].</span>")
 		else if(fullness > 500 && fullness < 600)
 			eater.visible_message("<span class='notice'>[eater] unwillingly [eatverb]s a bit of \the [parent].</span>", "<span class='notice'>You unwillingly [eatverb] a bit of \the [parent].</span>")
-		else if(fullness > (600 * (1 + eater.overeatduration / (200 SECONDS)))) // The more you eat - the more you can eat
+		else if(fullness > (600 * (1 + eater.overeatduration / (400 SECONDS)))) // The more you eat - the more you can eat
 			eater.visible_message("<span class='warning'>[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [parent] to go down your throat!</span>")
 			return
 	else //If you're feeding it to someone else.
 		if(isbrain(eater))
 			to_chat(feeder, "<span class='warning'>[eater] doesn't seem to have a mouth!</span>")
 			return
-		if(fullness <= (600 * (1 + eater.overeatduration / (100 SECONDS))))
+		if(fullness <= (600 * (1 + eater.overeatduration / (200 SECONDS))))
 			eater.visible_message("<span class='danger'>[feeder] attempts to feed [eater] [parent].</span>", \
 									"<span class='userdanger'>[feeder] attempts to feed you [parent].</span>")
 		else

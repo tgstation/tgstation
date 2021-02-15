@@ -1160,14 +1160,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(H, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(H.overeatduration < (10 SECONDS))
+		if(H.overeatduration < (20 SECONDS))
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/obesity)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
-		if(H.overeatduration >= (10 SECONDS))
+		if(H.overeatduration >= (20 SECONDS))
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
 			H.add_movespeed_modifier(/datum/movespeed_modifier/obesity)
@@ -1197,12 +1197,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.adjust_nutrition(-hunger_rate * delta_time)
 
 
-	if (H.nutrition > NUTRITION_LEVEL_FULL)
+	if(H.nutrition > NUTRITION_LEVEL_FULL)
 		if(H.overeatduration < 2 MINUTES) //capped so people don't take forever to unfat
-			H.overeatduration += delta_time
+			H.overeatduration = min(H.overeatduration + (1 * delta_time), 2 MINUTES)
 	else
 		if(H.overeatduration > 0)
-			H.overeatduration -= 2 * delta_time //doubled the unfat rate
+			H.overeatduration = max(H.overeatduration - (2 * delta_time), 0) //doubled the unfat rate
 
 	//metabolism change
 	if(H.nutrition > NUTRITION_LEVEL_FAT)
