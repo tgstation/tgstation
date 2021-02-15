@@ -1,0 +1,5 @@
+author: "Thalpy"
+delete-after: True
+changes: 
+  - bugfix: "fixes N2O to make it less difficult to react.
+tweak: N2O will now produce N2O gas when below 30% purity during a reaction."
