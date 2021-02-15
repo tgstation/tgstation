@@ -1,0 +1,6 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Admins can now create special z-level looping rods through the Trigger Event and Smite menus."
+  - admin: "Added a unqiue deadchat_control component for immovable rods. This is easily applied through the VV dropdown menu. This lets deadchat control the immovable rod by voting on its trajectory every 6 seconds. This does not make the rod loop and if admins want a deadchat controlled rod to traverse z-levels, they should var edit it to allow that to happen,"
+  - admin: "There's a new pair of helper procs, sit_stay_good_rod() and go_for_a_walk() which allow admins to stop a rod or send it at a specific target respectively. This was possible before with enough knowledge, but has been condensed into two helper procs for ease of access."
