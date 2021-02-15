@@ -1,3 +1,6 @@
+#define MOVE_ANIMATION_STAGE_ONE 1
+#define MOVE_ANIMATION_STAGE_TWO 2
+
 /obj/structure/transit_tube_pod
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
@@ -7,6 +10,12 @@
 	var/moving = FALSE
 	var/datum/gas_mixture/air_contents = new()
 	var/occupied_icon_state = "pod_occupied"
+	var/obj/structure/transit_tube/current_tube = null
+	var/next_dir
+	var/next_loc
+	var/enter_delay = 0
+	var/exit_delay
+	var/moving_time = 0
 
 
 /obj/structure/transit_tube_pod/Initialize()
@@ -104,28 +113,22 @@
 
 	moving = TRUE
 
-	var/obj/structure/transit_tube/current_tube = null
-	var/next_dir
-	var/next_loc
-	var/last_delay = 0
-	var/exit_delay
-
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
 			current_tube = tube
 			break
 
-	while(current_tube)
+	move_animation(MOVE_ANIMATION_STAGE_ONE)
+
+///timer loop that handles the pod moving from tube to tube
+/obj/structure/transit_tube_pod/proc/move_animation(stage = MOVE_ANIMATION_STAGE_ONE)
+	if(stage == MOVE_ANIMATION_STAGE_ONE)
 		next_dir = current_tube.get_exit(dir)
 
 		if(!next_dir)
-			break
+			return
 
 		exit_delay = current_tube.exit_delay(src, dir)
-		last_delay += exit_delay
-
-		sleep(exit_delay)
-
 		next_loc = get_step(loc, next_dir)
 
 		current_tube = null
@@ -137,19 +140,25 @@
 		if(current_tube == null)
 			setDir(next_dir)
 			Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay)) // Allow collisions when leaving the tubes.
-			break
+			return
 
-		last_delay = current_tube.enter_delay(src, next_dir)
-		sleep(last_delay)
+		enter_delay = current_tube.enter_delay(src, next_dir)
+		if(enter_delay > 0)
+			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_TWO), enter_delay)
+			return
+		else
+			stage = MOVE_ANIMATION_STAGE_TWO
+	if(stage == MOVE_ANIMATION_STAGE_TWO)
 		setDir(next_dir)
-		set_glide_size(DELAY_TO_GLIDE_SIZE(last_delay + exit_delay))
+		set_glide_size(DELAY_TO_GLIDE_SIZE(enter_delay + exit_delay))
 		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
 		if(current_tube?.should_stop_pod(src, next_dir))
 			current_tube.pod_stopped(src, dir)
-			break
-
+		else
+			addtimer(CALLBACK(src, .proc/move_animation, MOVE_ANIMATION_STAGE_ONE), exit_delay)
+			return
 	density = TRUE
 	moving = FALSE
 
@@ -220,3 +229,6 @@
 
 /obj/structure/transit_tube_pod/dispensed/outside_tube()
 	qdel(src)
+
+#undef MOVE_ANIMATION_STAGE_ONE
+#undef MOVE_ANIMATION_STAGE_TWO
