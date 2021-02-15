@@ -8064,8 +8064,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/meter,
 /obj/structure/cable,
+/obj/machinery/meter/atmos/layer4{
+	name = "gas flow meter"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aqF" = (
@@ -9936,6 +9938,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/meter/atmos/layer2{
+	name = "gas flow meter"
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -44143,6 +44148,9 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/machinery/meter/atmos/layer2{
+	name = "gas flow meter"
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -45295,9 +45303,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/meter/atmos/layer4{
+	name = "gas flow meter"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cnf" = (
@@ -51257,8 +51267,10 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4,
+/obj/machinery/meter/atmos/layer4{
+	name = "gas flow meter"
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -53376,7 +53388,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter,
+/obj/machinery/meter/atmos/layer4{
+	name = "gas flow meter"
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -55562,10 +55576,12 @@
 /area/security/office)
 "dZr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer2,
+/obj/machinery/meter/atmos/layer4{
+	name = "gas flow meter"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dZP" = (
@@ -63894,13 +63910,15 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer4{
 	dir = 8
 	},
-/obj/machinery/meter,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/meter/atmos/layer4{
+	name = "gas flow meter"
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -66538,9 +66556,6 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "keV" = (
@@ -70295,7 +70310,6 @@
 /area/maintenance/port)
 "mcc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter,
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer4{
@@ -70303,6 +70317,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2{
 	dir = 8
+	},
+/obj/machinery/meter/atmos/layer2{
+	name = "gas flow meter"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -83008,9 +83025,11 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
-/obj/machinery/airalarm,
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -88031,6 +88050,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "vTz" = (
