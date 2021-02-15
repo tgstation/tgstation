@@ -402,7 +402,7 @@
 /obj/item/sales_tagger/examine(mob/user)
 	. = ..()
 	. += "[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper."
-	. += "Profit split on sale is currently set to [cut_multiplier*100]%."
+	. += "Profit split on sale is currently set to [round(cut_multiplier*100)]%."
 
 /obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -463,7 +463,7 @@
 	to_chat(user, "<span class='notice'>[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold.</span>")
 
 /obj/item/barcode
-	name = "Barcode tag"
+	name = "barcode tag"
 	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "barcode"
