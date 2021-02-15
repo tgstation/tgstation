@@ -122,7 +122,7 @@
 		return
 	. = light_power
 	light_power = new_power
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_POWER, new_power, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_POWER, .)
 
 /// Setter for the light range of this atom.
 /atom/proc/set_light_range(new_range)
@@ -132,7 +132,7 @@
 		return
 	. = light_range
 	light_range = new_range
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, new_range, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .)
 
 /// Setter for the light color of this atom.
 /atom/proc/set_light_color(new_color)
@@ -142,7 +142,7 @@
 		return
 	. = light_color
 	light_color = new_color
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, new_color, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
 
 /// Setter for whether or not this atom's light is on.
 /atom/proc/set_light_on(new_value)
@@ -152,7 +152,7 @@
 		return
 	. = light_on
 	light_on = new_value
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, new_value, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
 
 /// Setter for the light flags of this atom.
 /atom/proc/set_light_flags(new_value)
@@ -162,4 +162,4 @@
 		return
 	. = light_flags
 	light_flags = new_value
-	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, new_value, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .)

@@ -315,8 +315,9 @@
 
 
 ///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
-/datum/component/overlay_lighting/proc/set_range(atom/source, new_range)
+/datum/component/overlay_lighting/proc/set_range(atom/source, old_range)
 	SIGNAL_HANDLER
+	var/new_range = source.light_range
 	if(range == new_range)
 		return
 	if(range == 0)
@@ -339,8 +340,9 @@
 
 
 ///Changes the intensity/brightness of the light by altering the visual object's alpha.
-/datum/component/overlay_lighting/proc/set_power(atom/source, new_power)
+/datum/component/overlay_lighting/proc/set_power(atom/source, old_power)
 	SIGNAL_HANDLER
+	var/new_power = source.light_power
 	set_lum_power(new_power >= 0 ? 0.5 : -0.5)
 	set_alpha = min(230, (abs(new_power) * 120) + 30)
 	visible_mask.alpha = set_alpha
@@ -349,16 +351,18 @@
 
 
 ///Changes the light's color, pretty straightforward.
-/datum/component/overlay_lighting/proc/set_color(atom/source, new_color)
+/datum/component/overlay_lighting/proc/set_color(atom/source, old_color)
 	SIGNAL_HANDLER
+	var/new_color = source.light_color
 	visible_mask.color = new_color
 	if(directional)
 		cone.color = new_color
 
 
 ///Toggles the light on and off.
-/datum/component/overlay_lighting/proc/on_toggle(atom/source, new_value)
+/datum/component/overlay_lighting/proc/on_toggle(atom/source, old_value)
 	SIGNAL_HANDLER
+	var/new_value = source.light_on
 	if(new_value) //Truthy value input, turn on.
 		turn_on()
 		return
@@ -366,10 +370,11 @@
 
 
 ///Triggered right before the parent light flags change.
-/datum/component/overlay_lighting/proc/on_light_flags_change(atom/source, new_value)
+/datum/component/overlay_lighting/proc/on_light_flags_change(atom/source, old_flags)
 	SIGNAL_HANDLER
+	var/new_flags = source.light_flags
 	var/atom/movable/movable_parent = parent
-	if(new_value & LIGHT_ATTACHED)
+	if(new_flags & LIGHT_ATTACHED)
 		if(!(movable_parent.light_flags & LIGHT_ATTACHED)) //Gained the LIGHT_ATTACHED property.
 			overlay_lighting_flags |= LIGHTING_ATTACHED
 			if(ismovable(movable_parent.loc))
