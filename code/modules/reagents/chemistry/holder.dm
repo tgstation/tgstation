@@ -214,16 +214,16 @@
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if (reagent.type == reagent)
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		if(cached_reagent.type == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = clamp(amount, 0, reagent.volume)
-			reagent.volume -= amount
+			amount = clamp(amount, 0, cached_reagent.volume)
+			cached_reagent.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : reagent, amount)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(R) ? reagent : cached_reagent, amount)
 
 			return TRUE
 	return FALSE
@@ -281,36 +281,36 @@
 		var/matches = 0
 		// Switch between how we check the reagent type
 		if(strict)
-			if(R.type == reagent_type)
+			if(reagent.type == reagent_type)
 				matches = 1
 		else
-			if(istype(R, reagent_type))
+			if(istype((reagent, reagent_type))
 				matches = 1
 		// We found a match, proceed to remove the reagent. Keep looping, we might find other reagents of the same type.
 		if(matches)
 			// Have our other proc handle removement
-			has_removed_reagent = remove_reagent(R.type, amount, safety)
+			has_removed_reagent = remove_reagent(reagent.type, amount, safety)
 
 	return has_removed_reagent
 
 /// Fuck this one reagent
 /datum/reagents/proc/del_reagent(reagent)
 	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(reagent.type == reagent)
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		if(cached_reagent.type == reagent)
 			if(isliving(my_atom))
-				if(reagent.metabolizing)
-					reagent.metabolizing = FALSE
-					reagent.on_mob_end_metabolize(my_atom)
-				reagent.on_mob_delete(my_atom)
+				if(cached_reagent.metabolizing)
+					cached_reagent.metabolizing = FALSE
+					cached_reagent.on_mob_end_metabolize(my_atom)
+				cached_reagent.on_mob_delete(my_atom)
 
 			//Clear from relevant lists
-			LAZYREMOVE(addiction_list, reagent)
-			reagent_list -= reagent
-			LAZYREMOVE(previous_reagent_list, reagent.type)
-			qdel(reagent)
+			LAZYREMOVE(addiction_list, cached_reagent)
+			reagent_list -= cached_reagent
+			LAZYREMOVE(previous_reagent_list, cached_reagent.type)
+			qdel(cached_reagent)
 			update_total()
-			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
+			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, cached_reagent)
 	return TRUE
 
 //Converts the creation_purity to purity
@@ -349,12 +349,12 @@
 			if(!amount)
 				if(needs_metabolizing && !holder_reagent.metabolizing)
 					return FALSE
-				return R
+				return holder_reagent
 			else
 				if(round(holder_reagent.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					if(needs_metabolizing && !holder_reagent.metabolizing)
 						return FALSE
-					return R
+					return holder_reagent
 	return FALSE
 
 
@@ -422,9 +422,9 @@
 			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transfered.
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
-					R.expose_single(T, target, methods, part, show_message)
+					R.expose_single(reagent, target, methods, part, show_message)
 				else
-					R.expose_single(T, target_atom, methods, part, show_message)
+					R.expose_single(reagent, target_atom, methods, part, show_message)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
 			transfer_log[reagent.type] = transfer_amount
