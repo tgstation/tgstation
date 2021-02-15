@@ -251,6 +251,10 @@
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
 	var/chem_heating_power = 1
 
+/obj/machinery/space_heater/improvised_chem_heater/Destroy()
+	. = ..()
+	QDEL_NULL(beaker)
+
 /obj/machinery/space_heater/improvised_chem_heater/process(delta_time)
 	if(!on)
 		update_icon()
@@ -306,7 +310,9 @@
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, item))
 		return
-	else if(istype(item, /obj/item/stock_parts/cell))
+	if(default_deconstruction_crowbar(item))
+		return
+	if(istype(item, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
 			return
@@ -333,10 +339,12 @@
 			item.afterattack(beaker, user, 1)
 		return
 
-	default_deconstruction_crowbar(item)
 
-/obj/machinery/space_heater/improvised_chem_heater/on_deconstruction()
+/obj/machinery/space_heater/improvised_chem_heater/on_deconstruction(disassembled = TRUE)
 	. = ..()
+	if(disassembled)
+		beaker?.forceMove(drop_location())
+		beaker = null
 	var/static/bonus_junk = list(
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2,

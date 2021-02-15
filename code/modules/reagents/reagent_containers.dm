@@ -33,6 +33,9 @@
 	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
 
 /obj/item/reagent_containers/Destroy()
+	for(var/atom/movable/item as anything in contents)
+		item.forceMove(drop_location())
+	contents = null
 	return ..()
 
 /obj/item/reagent_containers/attack(mob/living/M, mob/living/user, params)

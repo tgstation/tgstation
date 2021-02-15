@@ -446,45 +446,31 @@
 	var/list/data = list()
 	data["name"] = R.name
 	data["ref"] = "[REF(R)]"
-	var/req_text = ""
-	var/tool_text = ""
-	var/catalyst_text = ""
-	var/list/machinery_text = list()
+	var/list/req_text = list()
+	var/list/tool_text = list()
+	var/list/catalyst_text = list()
 
-	for(var/a in R.reqs)
+	for(var/atom/req_atom as anything in R.reqs)
 		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
 		//Also these are typepaths so sadly we can't just do "[a]"
-		var/atom/A = a
-		req_text += " [R.reqs[A]] [initial(A.name)],"
+		req_text += "[R.reqs[req_atom]] [initial(req_atom.name)]"
 	for(var/obj/machinery/content as anything in R.machinery)
-		req_text += " [R.reqs[content]] [initial(content.name)],"
+		req_text += "[R.reqs[content]] [initial(content.name)]"
 	if(R.additional_req_text)
 		req_text += R.additional_req_text
-	req_text = replacetext(req_text,",","",-1)
-	data["req_text"] = req_text
+	data["req_text"] = req_text.Join(", ")
 
-	for(var/a in R.chem_catalysts)
-		var/atom/A = a //cheat-typecast
-		catalyst_text += " [R.chem_catalysts[A]] [initial(A.name)],"
-	catalyst_text = replacetext(catalyst_text,",","",-1)
-	data["catalyst_text"] = catalyst_text
+	for(var/atom/req_catalyst as anything in R.chem_catalysts)
+		catalyst_text += "[R.chem_catalysts[req_catalyst]] [initial(req_catalyst.name)]"
+	data["catalyst_text"] = catalyst_text.Join(", ")
 
-	for(var/a in R.tools)
-		if(ispath(a, /obj/item))
-			var/obj/item/b = a
-			tool_text += " [initial(b.name)],"
+	for(var/path_or_text in R.tools)
+		if(ispath(path_or_text, /obj/item))
+			var/obj/item/tool = path_or_text
+			tool_text += "[initial(tool.name)]"
 		else
-			tool_text += " [a],"
-	tool_text = replacetext(tool_text,",","",-1)
-	data["tool_text"] = tool_text
-
-	for(var/path_or_instance in R.machinery)
-		if(ispath(path_or_instance, /obj/machinery))
-			var/obj/machinery/path = path_or_instance
-			machinery_text += " [initial(path.name)]"
-		else
-			machinery_text += " [path_or_instance.name]"
-	data["machinery_text"] = machinery_text.Join(", ")
+			tool_text += "[path_or_text]"
+	data["tool_text"] = tool_text.Join(", ")
 
 	return data
 

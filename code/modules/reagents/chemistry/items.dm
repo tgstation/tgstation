@@ -280,6 +280,10 @@
 	///The beaker that this object is attached to, so we know where we are when it's added to something.
 	var/obj/item/reagent_containers/attached_beaker
 
+/obj/item/thermometer/Destroy()
+	. = ..()
+	QDEL_NULL(attached_beaker) //I have no idea how you can destroy this, but not the beaker, but here we go
+
 /obj/item/thermometer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(is_reagent_container(target))
