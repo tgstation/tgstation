@@ -349,6 +349,9 @@
 /area/shuttle/pirate)
 "aD" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aF" = (
@@ -428,6 +431,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aO" = (
@@ -789,15 +795,16 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bX" = (
@@ -913,6 +920,9 @@
 	},
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
+	},
+/obj/structure/sign/poster/contraband/bountyhunters{
+	pixel_y = 32
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
@@ -1087,10 +1097,25 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
-"Gk" = (
+"ED" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/suit_storage_unit/pirate,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Gk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/shower{
+	name = "decontamination shower";
+	pixel_y = 12
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/window{
+	dir = 4
+	},
+/obj/machinery/door/window{
+	name = "Decontamination"
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "JT" = (
@@ -1111,6 +1136,14 @@
 	pixel_y = -1
 	},
 /turf/open/floor/pod/light,
+/area/shuttle/pirate)
+"Ni" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "Oe" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -1274,7 +1307,7 @@ yi
 aj
 aj
 Gk
-aS
+Ni
 aF
 aI
 aJ
@@ -1381,7 +1414,7 @@ aj
 yi
 aj
 aj
-Gk
+ED
 aS
 bZ
 bo

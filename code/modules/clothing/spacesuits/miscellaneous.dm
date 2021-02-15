@@ -131,28 +131,23 @@ Contains:
 
 	//Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
-	name = "pirate hat"
-	desc = "Yarr."
-	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	name = "modified EVA helmet"
+	desc = "A modified helmet to allow space pirates to intimidate their customers whilst staying safe from the void. Comes with some additional protection."
+	icon_state = "spacepirate"
+	inhand_icon_state = "spacepiratehelmet"
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
-	flags_inv = HIDEHAIR
 	strip_delay = 40
 	equip_delay_other = 20
-	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
-	name = "pirate bandana"
-	icon_state = "bandana"
-	inhand_icon_state = "bandana"
+	icon_state = "spacebandana"
+	inhand_icon_state = "spacepiratehelmet"
 
 /obj/item/clothing/suit/space/pirate
-	name = "pirate coat"
-	desc = "Yarr."
-	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	name = "modified EVA suit"
+	desc = "A modified suit to allow space pirates to board shuttles and stations while avoiding the maw of the void. Comes with additional protection, and is lighter to move in."
+	icon_state = "spacepirate"
 	w_class = WEIGHT_CLASS_NORMAL
-	flags_inv = 0
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/melee/transforming/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
 	slowdown = 0
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)

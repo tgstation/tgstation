@@ -152,6 +152,11 @@
 		user.remove_language(/datum/language/piratespeak/, TRUE, TRUE, LANGUAGE_HAT)
 		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
+/obj/item/clothing/head/pirate/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
+
 /obj/item/clothing/head/pirate/captain
 	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
@@ -163,6 +168,11 @@
 	icon_state = "bandana"
 	inhand_icon_state = "bandana"
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/bandana/armored
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	strip_delay = 40
+	equip_delay_other = 20
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"

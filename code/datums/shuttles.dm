@@ -648,6 +648,14 @@
 	suffix = "default"
 	name = "pirate ship (Default)"
 
+/datum/map_template/shuttle/pirate/silverscale
+	suffix = "silverscale"
+	name = "pirate ship (Silver Scales)"
+
+/datum/map_template/shuttle/pirate/dutchman
+	suffix = "dutchman"
+	name = "pirate ship (Flying Dutchman)"
+
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"

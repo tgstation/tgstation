@@ -81,6 +81,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
+//statistically similar to e-cutlasses
+/obj/item/claymore/cutlass
+	name = "cutlass"
+	desc = "A piratey sword used by buckaneers to \"negotiate\" the transfer of treasure."
+	icon_state = "cutlass"
+	inhand_icon_state = "cutlass"
+	worn_icon_state = "cutlass"
+	slot_flags = ITEM_SLOT_BACK
+	force = 30
+	throwforce = 20
+	throw_speed = 3
+	throw_range = 5
+	armour_penetration = 35
+
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	flags_1 = CONDUCT_1
