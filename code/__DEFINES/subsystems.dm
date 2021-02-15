@@ -129,6 +129,7 @@
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
 #define INIT_ORDER_SKILLS 15
+#define INIT_ORDER_ADDICTION 14
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
@@ -147,7 +148,6 @@
 #define INIT_ORDER_STATPANELS -98
 #define INIT_ORDER_DEMO -99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT -100 //Should be last to ensure chat remains smooth during init.
-#define INIT_ORDER_ADDICTION		14
 
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
