@@ -34,7 +34,7 @@
 	return syringes.len
 
 /obj/item/gun/syringe/process_chamber()
-	if(chambered && !chambered.BB) //we just fired
+	if(chambered && !chambered.loaded_projectile) //we just fired
 		recharge_newshot()
 	update_icon()
 

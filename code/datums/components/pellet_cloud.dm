@@ -106,9 +106,9 @@
 		zone_override = shooter.zone_selected
 
 	// things like mouth executions and gunpoints can multiply the damage and wounds of projectiles, so this makes sure those effects are applied to each pellet instead of just one
-	var/original_damage = shell.BB.damage
-	var/original_wb = shell.BB.wound_bonus
-	var/original_bwb = shell.BB.bare_wound_bonus
+	var/original_damage = shell.loaded_projectile.damage
+	var/original_wb = shell.loaded_projectile.wound_bonus
+	var/original_bwb = shell.loaded_projectile.bare_wound_bonus
 
 	for(var/i in 1 to num_pellets)
 		shell.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
@@ -118,12 +118,12 @@
 			else //Smart spread
 				spread = round((i / num_pellets - 0.5) * distro)
 
-		RegisterSignal(shell.BB, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
-		RegisterSignal(shell.BB, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
-		shell.BB.damage = original_damage
-		shell.BB.wound_bonus = original_wb
-		shell.BB.bare_wound_bonus = original_bwb
-		pellets += shell.BB
+		RegisterSignal(shell.loaded_projectile, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+		RegisterSignal(shell.loaded_projectile, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
+		shell.loaded_projectile.damage = original_damage
+		shell.loaded_projectile.wound_bonus = original_wb
+		shell.loaded_projectile.bare_wound_bonus = original_bwb
+		pellets += shell.loaded_projectile
 		if(!shell.throw_proj(target, targloc, shooter, params, spread))
 			return
 		if(i != num_pellets)

@@ -65,7 +65,7 @@
 
 /obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
 	..()
-	if(chambered && !chambered.BB)
+	if(chambered && !chambered.loaded_projectile)
 		qdel(chambered)
 
 /obj/item/gun/ballistic/shotgun/toy/unrestricted

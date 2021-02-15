@@ -443,7 +443,7 @@
 	else
 		A = new /obj/item/ammo_casing/caseless/gumball(src)
 
-	A.BB.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	A.loaded_projectile.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/weapons/bulletflyby3.ogg', 50, TRUE)
 	A.fire_casing(target, user, params, 0, 0, null, 0, src)
 	user.visible_message("<span class='warning'>[user] shoots a high-velocity gumball at [target]!</span>")

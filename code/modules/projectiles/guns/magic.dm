@@ -40,11 +40,11 @@
 	return charges
 
 /obj/item/gun/magic/recharge_newshot()
-	if (charges && chambered && !chambered.BB)
+	if (charges && chambered && !chambered.loaded_projectile)
 		chambered.newshot()
 
 /obj/item/gun/magic/process_chamber()
-	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
+	if(chambered && !chambered.loaded_projectile) //if loaded_projectile is null, i.e the shot has been fired...
 		charges--//... drain a charge
 		recharge_newshot()
 
