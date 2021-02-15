@@ -991,33 +991,35 @@
 		if(seal)
 			to_chat(user, "<span class='warning'>[src] is blocked by a seal!</span>")
 			return
-		if(user.combat_mode)
+
+		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=0))
 				return
-			user.visible_message("<span class='notice'>[user] begins [welded ? "unwelding":"welding"] the airlock.</span>", \
-							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
+			user.visible_message("<span class='notice'>[user] begins welding the airlock.</span>", \
+							"<span class='notice'>You begin repairing the airlock...</span>", \
 							"<span class='hear'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-				welded = !welded
-				user.visible_message("<span class='notice'>[user] [welded? "welds shut":"unwelds"] [src].</span>", \
-									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
-				log_game("[key_name(user)] [welded ? "welded":"unwelded"] airlock [src] with [W] at [AREACOORD(src)]")
+				obj_integrity = max_integrity
+				set_machine_stat(machine_stat & ~BROKEN)
+				user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
+									"<span class='notice'>You finish repairing the airlock.</span>")
 				update_icon()
 		else
-			if(obj_integrity < max_integrity)
-				if(!W.tool_start_check(user, amount=0))
-					return
-				user.visible_message("<span class='notice'>[user] begins welding the airlock.</span>", \
-								"<span class='notice'>You begin repairing the airlock...</span>", \
-								"<span class='hear'>You hear welding.</span>")
-				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-					obj_integrity = max_integrity
-					set_machine_stat(machine_stat & ~BROKEN)
-					user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
-										"<span class='notice'>You finish repairing the airlock.</span>")
-					update_icon()
-			else
-				to_chat(user, "<span class='notice'>The airlock doesn't need repairing.</span>")
+			to_chat(user, "<span class='notice'>The airlock doesn't need repairing.</span>")
+
+/obj/machinery/door/airlock/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
+	if(!tool.tool_start_check(user, amount=0))
+		return
+	user.visible_message("<span class='notice'>[user] begins [welded ? "unwelding":"welding"] the airlock.</span>", \
+		"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
+		"<span class='hear'>You hear welding.</span>")
+	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, tool, user)))
+		return
+	welded = !welded
+	user.visible_message("<span class='notice'>[user] [welded? "welds shut":"unwelds"] [src].</span>", \
+		"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
+	log_game("[key_name(user)] [welded ? "welded":"unwelded"] airlock [src] with [tool] at [AREACOORD(src)]")
+	update_icon()
 
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weldingtool/W, mob/user)
 	return !operating && density

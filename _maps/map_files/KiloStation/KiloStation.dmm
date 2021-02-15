@@ -18022,7 +18022,7 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/port)
 "aRN" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -23981,7 +23981,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/medical/pharmacy)
 "bdr" = (
-/obj/machinery/chem_heater{
+/obj/machinery/chem_heater/withbuffer{
 	pixel_x = 6
 	},
 /obj/effect/turf_decal/bot,
@@ -26081,7 +26081,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bgM" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -62324,7 +62324,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "hJV" = (
-/obj/machinery/computer/card/minor/cmo{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -72894,7 +72894,7 @@
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "nEA" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -74109,7 +74109,7 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "ohM" = (
-/obj/machinery/computer/card/minor/rd{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -76868,7 +76868,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "pIq" = (
-/obj/machinery/computer/card/minor/hos{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -87029,7 +87029,7 @@
 /turf/open/floor/engine,
 /area/engineering/main)
 "voc" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -89281,7 +89281,7 @@
 /turf/open/floor/iron/dark,
 /area/security/office)
 "wIl" = (
-/obj/machinery/computer/card/minor/ce,
+/obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/security/telescreen/ce{
 	pixel_y = 28
@@ -89524,7 +89524,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/main)
 "wQe" = (
-/obj/machinery/computer/card{
+/obj/machinery/modular_computer/console/preset/id{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{

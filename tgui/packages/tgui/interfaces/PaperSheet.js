@@ -604,8 +604,7 @@ export const PaperSheet = (props, context) => {
       title={name}
       theme="paper"
       width={sizeX || 400}
-      height={sizeY || 500}
-      resizable>
+      height={sizeY || 500}>
       <Window.Content
         backgroundColor={paper_color}
         scrollable>
