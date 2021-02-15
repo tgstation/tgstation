@@ -550,7 +550,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Toy Pistol with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
-	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
+	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	cost = 2
 	surplus = 10
 
