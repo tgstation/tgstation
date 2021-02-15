@@ -68,11 +68,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 /datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user, bonus_points = 0)
 	var/bonus_quirks = max((length(user.roundstart_quirks) + rand(-3,3)), 3)
-	var/added_quirk_count = 0
-	var/list/quirks_to_add = list()
-	var/loop_preventer = 10
-	var/good_count = 0
-	var/score
+	var/added_quirk_count = 0 //How many we've added
+	var/list/quirks_to_add = list() //Quirks we're adding
+	var/loop_preventer = 10 // Makes sure we don't get stuck
+	var/good_count = 0 //Maximum of 6 good perks
+	var/score //What point score we're at
 	//Create a random list of stuff to start with
 	while(bonus_quirks > added_quirk_count)
 		if(!loop_preventer)//Lets not get stuck
@@ -108,6 +108,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		good_count++
 		score += quirk_points[quirk]
 		quirks_to_add += quirk
+
 	//And have benefits too
 	loop_preventer = 10
 	while(score < 0 && good_count <= 6)
@@ -133,4 +134,4 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		user.remove_quirk(quirk.type) //these quirks are objects
 
 	for(var/datum/quirk/quirk as anything in quirks_to_add)
-		user.add_quirk(quirks[quirk], TRUE)//these are typepaths
+		user.add_quirk(quirks[quirk], TRUE)//these are typepaths converted from string
