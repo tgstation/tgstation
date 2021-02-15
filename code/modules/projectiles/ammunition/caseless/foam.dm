@@ -30,7 +30,7 @@
 		FD.modified = TRUE
 		FD.damage_type = BRUTE
 		to_chat(user, "<span class='notice'>You pop the safety cap off [src].</span>")
-		update_icon()
+		update_appearance()
 	else if (istype(A, /obj/item/pen))
 		if(modified)
 			if(!FD.pen)

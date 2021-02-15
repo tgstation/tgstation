@@ -268,4 +268,4 @@
 		ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)
 	else
 		ptank = new /obj/item/tank/internals/plasma/full(src)
-	update_icon()
+	update_appearance()

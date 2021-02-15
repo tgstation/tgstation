@@ -212,7 +212,7 @@
 			else
 				last = null
 		loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
-		loaded.update_icon()
+		loaded.update_appearance()
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
 	update_appearance()
@@ -286,7 +286,7 @@
 		return
 
 	loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
-	loaded.update_icon()
+	loaded.update_appearance()
 
 	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
@@ -320,7 +320,7 @@
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
 			loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
-			loaded.update_icon()
+			loaded.update_appearance()
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
 	else if(istype(action, /datum/action/item_action/rcl_gui))

@@ -136,7 +136,7 @@
 	if(!triggered)
 		triggered = TRUE
 		myarea.triggered_firealarms += 1
-		update_icon()
+		update_appearance()
 	alarm()
 
 /obj/machinery/firealarm/atmos_end(datum/gas_mixture/air, exposed_temperature)
@@ -145,7 +145,7 @@
 	if(triggered)
 		triggered = FALSE
 		myarea.triggered_firealarms -= 1
-		update_icon()
+		update_appearance()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational || !COOLDOWN_FINISHED(src, last_alarm))

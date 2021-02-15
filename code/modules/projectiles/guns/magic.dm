@@ -94,4 +94,4 @@
 /obj/item/gun/magic/proc/instant_recharge()
 	charges = max_charges
 	recharge_newshot()
-	update_icon()
+	update_appearance()

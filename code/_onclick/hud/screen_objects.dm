@@ -273,13 +273,13 @@
 
 /atom/movable/screen/combattoggle/New(loc, ...)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /atom/movable/screen/combattoggle/Click()
 	if(isliving(usr))
 		var/mob/living/owner = usr
 		owner.set_combat_mode(!owner.combat_mode, FALSE)
-		update_icon()
+		update_appearance()
 
 /atom/movable/screen/combattoggle/update_icon_state()
 	var/mob/living/user = hud?.mymob

@@ -29,28 +29,27 @@
 		update_appearance()
 	. = ..()
 
+/obj/structure/blob/special/core/Destroy()
+	GLOB.blob_cores -= src
+	if(overmind)
+		overmind.blob_core = null
+		overmind = null
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/structure/blob/special/core/scannerreport()
 	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
 
-/obj/structure/blob/core/update_overlays()
+/obj/structure/blob/special/core/update_overlays()
 	. = ..()
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
 		blob_overlay.color = overmind.blobstrain.color
 	. += blob_overlay
-	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
+	. += mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay")
 
-
-/obj/structure/blob/core/update_icon()
+/obj/structure/blob/special/core/update_icon()
 	color = null
-	return ..()
-
-/obj/structure/blob/core/Destroy()
-	GLOB.blob_cores -= src
-	if(overmind)
-		overmind.blob_core = null
-	overmind = null
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/blob/special/core/ex_act(severity, target)

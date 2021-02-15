@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /// Used to eat args
 /obj/machinery/gravity_generator/part/proc/on_update_icon(obj/machinery/gravity_generator/source, updates, updated)
 	SIGNAL_HANDLER
-	return update_icon(updates)
+	return update_appearance(updates)
 
 //
 // Generator which spawns with the station.

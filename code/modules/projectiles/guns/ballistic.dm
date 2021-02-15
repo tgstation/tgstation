@@ -582,7 +582,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		return
 
 	if(bolt_type == BOLT_TYPE_STANDARD)
-		if(get_ammo()) 
+		if(get_ammo())
 			to_chat(user, "<span class='notice'>You can't get at the internals while the gun has a bullet in it!</span>")
 			return
 
@@ -629,7 +629,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 			return
 		magazine = new mag_type(src)
 	chamber_round()
-	update_icon()
+	update_appearance()
 
 /obj/item/suppressor
 	name = "suppressor"

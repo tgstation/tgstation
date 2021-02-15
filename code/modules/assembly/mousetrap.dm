@@ -30,9 +30,9 @@
 	icon_state = "mousetrap[armed ? "armed" : ""]"
 	return ..()
 
-/obj/item/assembly/mousetrap/update_icon()
+/obj/item/assembly/mousetrap/update_icon(updates=ALL)
 	. = ..()
-	holder?.update_icon()
+	holder?.update_icon(updates)
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

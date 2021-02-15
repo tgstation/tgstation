@@ -23,11 +23,11 @@
 /obj/structure/blob/special/node/scannerreport()
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."
 
-/obj/structure/blob/node/update_icon()
+/obj/structure/blob/special/node/update_icon()
 	color = null
 	return ..()
 
-/obj/structure/blob/node/update_overlays()
+/obj/structure/blob/special/node/update_overlays()
 	. = ..()
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)

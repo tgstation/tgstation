@@ -96,7 +96,7 @@
 		update_contents()
 	if (locked)
 		replace_beaker(user)
-	update_icon()
+	update_appearance()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
 	return
 

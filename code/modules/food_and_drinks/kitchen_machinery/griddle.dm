@@ -72,7 +72,7 @@
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 		to_chat(user, "<span class='notice'>You place [I] on [src].</span>")
 		AddToGrill(I, user)
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
@@ -83,7 +83,7 @@
 		begin_processing()
 	else
 		end_processing()
-	update_icon()
+	update_appearance()
 	update_grill_audio()
 
 

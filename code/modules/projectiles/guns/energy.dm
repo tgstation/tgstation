@@ -254,4 +254,4 @@
 		return
 	cell.charge = cell.maxcharge
 	recharge_newshot(no_cyborg_drain = TRUE)
-	update_icon()
+	update_appearance()

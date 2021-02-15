@@ -29,7 +29,7 @@
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
-	update_icon()
+	update_appearance()
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
@@ -53,6 +53,9 @@
 
 /obj/item/spear/explosive
 	name = "explosive lance"
+	icon_state = "spearbomb0"
+	base_icon_state = "spearbomb"
+	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
 	var/wielded = FALSE // track wielded status on item
 
@@ -64,7 +67,7 @@
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="spearbomb1")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
 
 /// triggered on wield of two handed item
 /obj/item/spear/explosive/proc/on_wield(obj/item/source, mob/user)
@@ -77,10 +80,6 @@
 	SIGNAL_HANDLER
 
 	wielded = FALSE
-
-/obj/item/spear/explosive/update_icon_state()
-	icon_state = "spearbomb0"
-	return ..()
 
 /obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
 	if(explosive)
@@ -169,6 +168,8 @@
  */
 /obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
+	base_icon_state = "bone_spear0"
+	icon_prefix = "bone_spear"
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 12
@@ -177,8 +178,4 @@
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="bone_spear1")
-
-/obj/item/spear/bonespear/update_icon_state()
-	icon_state = "bone_spear0"
-	return ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="[icon_prefix]1")

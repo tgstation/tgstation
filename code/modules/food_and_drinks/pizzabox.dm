@@ -390,5 +390,5 @@
 	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
 	pizza = new favourite_pizza_type
 	boxtag_set = FALSE
-	update_icon() //update our boxtag to match our new pizza
+	update_appearance() //update our boxtag to match our new pizza
 	pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!

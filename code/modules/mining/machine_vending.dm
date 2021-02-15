@@ -84,7 +84,7 @@
 		GLOB.vending_products[M.equipment_path] = 1
 
 /obj/machinery/mineral/equipment_vendor/update_icon_state()
-	icon_state = "[initial(icon_state)]-[powered() ? null : "off"]"
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/ui_assets(mob/user)

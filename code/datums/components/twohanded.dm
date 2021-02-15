@@ -260,14 +260,14 @@
  *
  * Updates the icon using icon_wielded if set
  */
-/datum/component/two_handed/proc/on_update_icon(datum/source)
+/datum/component/two_handed/proc/on_update_icon(obj/item/source)
 	SIGNAL_HANDLER
-
-	if(icon_wielded && wielded)
-		var/obj/item/parent_item = parent
-		if(parent_item)
-			parent_item.icon_state = icon_wielded
-			return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	if(!wielded)
+		return NONE
+	if(!icon_wielded)
+		return NONE
+	source.icon_state = icon_wielded
+	return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
 /**
  * on_moved Triggers on item moved

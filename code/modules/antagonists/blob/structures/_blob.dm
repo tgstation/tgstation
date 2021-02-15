@@ -324,7 +324,7 @@
 
 /obj/structure/blob/normal/update_name()
 	. = ..()
-	name = "[(obj_integrity <= 15) ? "fragile " : null][overmind ? null : "dead "][initial(name)]"
+	name = "[(obj_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
 
 /obj/structure/blob/normal/update_desc()
 	. = ..()
@@ -336,7 +336,7 @@
 		desc = "A thick wall of lifeless tendrils."
 
 /obj/structure/blob/normal/update_icon_state()
-	icon_state = "blob[(obj_integrity <= 15) ? "_damaged" : ""]"
+	icon_state = "blob[(obj_integrity <= 15) ? "_damaged" : null]"
 
 	/// - [] TODO: Move this elsewhere
 	if(obj_integrity <= 15)
@@ -358,7 +358,7 @@
 
 	// Spore production vars: for core, factories, and nodes (with strains)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
-	var/max_spores = 0 
+	var/max_spores = 0
 	var/list/spores = list()
 	COOLDOWN_DECLARE(spore_delay)
 	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
@@ -394,7 +394,7 @@
 		var/obj/structure/blob/B = L
 		if(!B.overmind && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
-			B.update_icon()
+			B.update_appearance()
 		var/distance = get_dist(get_turf(src), get_turf(B))
 		var/expand_probablity = max(20 - distance * 8, 1)
 		if(B.Adjacent(src))
