@@ -67,24 +67,26 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		user.add_quirk(/datum/quirk/needswayfinder, TRUE)
 
 /datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user, bonus_points = 0)
-	var/list/quirk_list = subtypesof(/datum/quirk)
 	var/bonus_quirks = max((length(user.roundstart_quirks) + rand(-3,3)), 3)
-	var/added_quirk_count
+	var/added_quirk_count = 0
 	var/list/quirks_to_add = list()
 	var/loop_preventer = 10
 	var/good_count = 0
 	var/score
 	//Create a random list of stuff to start with
-	while(bonus_quirks < added_quirk_count)
+	while(bonus_quirks > added_quirk_count)
 		if(!loop_preventer)//Lets not get stuck
 			break
-		var/datum/quirk/quirk = pick(quirk_list)
-		if((quirk.name in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+		var/quirk = pick(quirks) //quirk is a string
+		if((quirk in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
 			loop_preventer--
 			continue
-		if(quirk.value > 0)
+		if(quirk in quirks_to_add)
+			loop_preventer--
+			continue
+		if(quirk_points[quirk] > 0)
 			good_count++
-		score += quirk.value
+		score += quirk_points[quirk]
 		quirks_to_add += quirk
 		added_quirk_count++
 
@@ -93,36 +95,42 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	while(score > 0)
 		if(!loop_preventer)//Lets not get stuck
 			break
-		var/datum/quirk/quirk = pick(quirk_list)
-		if((quirk.name in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+		var/quirk = pick(quirks)
+		if((quirk in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
 			loop_preventer--
 			continue
-		if(!quirk.value > 0)
+		if(quirk in quirks_to_add)
+			loop_preventer--
+			continue
+		if(!quirk_points[quirk] < 0)//negative only
 			loop_preventer--
 			continue
 		good_count++
-		score += quirk.value
+		score += quirk_points[quirk]
 		quirks_to_add += quirk
 	//And have benefits too
 	loop_preventer = 10
 	while(score < 0 && good_count <= 6)
 		if(!loop_preventer)//Lets not get stuck
 			break
-		var/datum/quirk/quirk = pick(quirk_list)
-		if((quirk.name in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
+		var/quirk = pick(quirks)
+		if((quirk in quirk_blacklist) && !(quirk == quirk)) //prevent blacklisted
 			loop_preventer--
 			continue
-		if(!quirk.value > 0)
+		if(quirk in quirks_to_add)
+			loop_preventer--
+			continue
+		if(!quirk_points[quirk] > 0) //positive only
 			loop_preventer--
 			continue
 		good_count++
-		score += quirk.value
+		score += quirk_points[quirk]
 		quirks_to_add += quirk
 
 	for(var/datum/quirk/quirk as anything in user.roundstart_quirks)
-		if(quirk in quirks_to_add)//Don't delete ones we keep
+		if(quirk.name in quirks_to_add)//Don't delete ones we keep
 			continue
-		user.remove_quirk(quirk)
+		user.remove_quirk(quirk.type) //these quirks are objects
 
 	for(var/datum/quirk/quirk as anything in quirks_to_add)
-		user.add_quirk(quirk)
+		user.add_quirk(quirks[quirk], TRUE)//these are typepaths
