@@ -140,7 +140,7 @@
 	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
 		return
 
-	B.naut = TRUE	//temporary placeholder to prevent creation of more than one per factory.
+	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
 	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.

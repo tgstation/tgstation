@@ -1,7 +1,7 @@
 /* Beds... get your mind out of the gutter, they're for sleeping!
  * Contains:
- * 		Beds
- *		Roller beds
+ * Beds
+ * Roller beds
  */
 
 /*

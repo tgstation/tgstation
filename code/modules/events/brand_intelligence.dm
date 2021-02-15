@@ -7,8 +7,8 @@
 	max_occurrences = 1
 
 /datum/round_event/brand_intelligence
-	announceWhen	= 21
-	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
+	announceWhen = 21
+	endWhen = 1000 //Ends when all vending machines are subverted anyway.
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedMachines = list()
 	var/obj/machinery/vending/originMachine
@@ -46,7 +46,7 @@
 	announce_to_ghosts(originMachine)
 
 /datum/round_event/brand_intelligence/tick()
-	if(!originMachine || QDELETED(originMachine) || originMachine.shut_up || originMachine.wires.is_all_cut())	//if the original vending machine is missing or has it's voice switch flipped
+	if(!originMachine || QDELETED(originMachine) || originMachine.shut_up || originMachine.wires.is_all_cut()) //if the original vending machine is missing or has it's voice switch flipped
 		for(var/obj/machinery/vending/saved in infectedMachines)
 			saved.shoot_inventory = 0
 		if(originMachine)
@@ -55,7 +55,7 @@
 		kill()
 		return
 	vendingMachines = removeNullsFromList(vendingMachines)
-	if(!vendingMachines.len)	//if every machine is infected
+	if(!vendingMachines.len) //if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
 			if(prob(70) && !QDELETED(upriser))
 				upriser.ai_controller = new /datum/ai_controller/vending_machine(upriser)

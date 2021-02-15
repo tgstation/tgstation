@@ -1,8 +1,8 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT		524288	//Restricts client uploads to the server to 0.5MB
-#define UPLOAD_LIMIT_ADMIN	2621440	//Restricts admin client uploads to the server to 2.5MB
+#define UPLOAD_LIMIT 524288 //Restricts client uploads to the server to 0.5MB
+#define UPLOAD_LIMIT_ADMIN 2621440 //Restricts admin client uploads to the server to 2.5MB
 
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
@@ -11,12 +11,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	))
 
-#define LIMITER_SIZE	5
-#define CURRENT_SECOND	1
-#define SECOND_COUNT	2
-#define CURRENT_MINUTE	3
-#define MINUTE_COUNT	4
-#define ADMINSWARNED_AT	5
+#define LIMITER_SIZE 5
+#define CURRENT_SECOND 1
+#define SECOND_COUNT 2
+#define CURRENT_MINUTE 3
+#define MINUTE_COUNT 4
+#define ADMINSWARNED_AT 5
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	*/
 
 /client/Topic(href, href_list, hsrc)
-	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
+	if(!usr || usr != mob) //stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
 	// asset_cache
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(QDELETED(real_src))
 			return
 
-	..()	//redirect to hsrc.Topic()
+	..() //redirect to hsrc.Topic()
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
-	TopicData = null							//Prevent calls to client.Topic from connect
+	TopicData = null //Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
@@ -248,8 +248,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	prefs.last_ip = address				//these are gonna be used for banning
-	prefs.last_id = computer_id			//these are gonna be used for banning
+	prefs.last_ip = address //these are gonna be used for banning
+	prefs.last_id = computer_id //these are gonna be used for banning
 	fps = (prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
 
 	if(fexists(roundend_report_file()))
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		GLOB.player_details[ckey] = player_details
 
 
-	. = ..()	//calls mob.Login()
+	. = ..() //calls mob.Login()
 	if (length(GLOB.stickybanadminexemptions))
 		GLOB.stickybanadminexemptions -= ckey
 		if (!length(GLOB.stickybanadminexemptions))
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/cev = CONFIG_GET(number/client_error_version)
 	var/ceb = CONFIG_GET(number/client_error_build)
 	var/cwv = CONFIG_GET(number/client_warn_version)
-	if (byond_version < cev || (byond_version == cev && byond_build < ceb))		//Out of date client.
+	if (byond_version < cev || (byond_version == cev && byond_build < ceb)) //Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
 		to_chat(src, "Your version: [byond_version].[byond_build]")
@@ -348,7 +348,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		else
 			qdel(src)
 			return
-	else if (byond_version < cwv)	//We have words for this client.
+	else if (byond_version < cwv) //We have words for this client.
 		if(CONFIG_GET(flag/client_warn_popup))
 			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
 			msg += CONFIG_GET(string/client_warn_message) + "<br><br>"
@@ -1016,11 +1016,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 ///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
 /client/proc/give_award(achievement_type, mob/user, value = 1)
-	return	player_details.achievements.unlock(achievement_type, user, value)
+	return player_details.achievements.unlock(achievement_type, user, value)
 
 ///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
 /client/proc/get_award_status(achievement_type, mob/user, value = 1)
-	return	player_details.achievements.get_achievement_status(achievement_type)
+	return player_details.achievements.get_achievement_status(achievement_type)
 
 ///Gives someone hearted status for OOC, from behavior commendations
 /client/proc/adjust_heart(duration = 24 HOURS)

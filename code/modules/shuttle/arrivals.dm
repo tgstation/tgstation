@@ -14,18 +14,18 @@
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/sound_played
-	var/damaged	//too damaged to undock?
-	var/list/areas	//areas in our shuttle
-	var/list/queued_announces	//people coming in that we have to announce
+	var/damaged //too damaged to undock?
+	var/list/areas //areas in our shuttle
+	var/list/queued_announces //people coming in that we have to announce
 	var/obj/machinery/requests_console/console
 	var/force_depart = FALSE
-	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
+	var/perma_docked = FALSE //highlander with RESPAWN??? OH GOD!!!
 	var/obj/docking_port/stationary/target_dock  // for badminry
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
 	. = ..()
 	preferred_direction = dir
-	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+	return INITIALIZE_HINT_LATELOAD //for latejoin list
 
 /obj/docking_port/mobile/arrivals/register()
 	..()
@@ -108,7 +108,7 @@
 	for(var/I in SSjob.latejoin_trackers)
 		var/turf/open/T = get_turf(I)
 		var/pressure = T.air.return_pressure()
-		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE)	//simple safety check
+		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE) //simple safety check
 			return TRUE
 	return FALSE
 
@@ -134,13 +134,13 @@
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
 			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
-		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
+		hyperspace_sound(HYPERSPACE_LAUNCH, areas) //for the new guy
 		setTimer(dockTime)
 
 /obj/docking_port/mobile/arrivals/initiate_docking(obj/docking_port/stationary/S1, force=FALSE)
 	var/docked = S1 == assigned_transit
 	sound_played = FALSE
-	if(docked)	//about to launch
+	if(docked) //about to launch
 		if(!force_depart)
 			var/cancel_reason
 			if(PersonCheck())
@@ -182,7 +182,7 @@
 		var/obj/docking_port/stationary/target = target_dock
 		if(QDELETED(target))
 			target = SSshuttle.getDock("arrivals_stationary")
-		request(target)		//we will intentionally never return SHUTTLE_ALREADY_DOCKED
+		request(target) //we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
 	if(mode == SHUTTLE_CALL || damaged)

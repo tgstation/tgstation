@@ -1,8 +1,8 @@
 //Acts like a normal vent, but has an input AND output.
 
-#define EXT_BOUND	1
-#define INPUT_MIN	2
-#define OUTPUT_MAX	4
+#define EXT_BOUND 1
+#define INPUT_MIN 2
+#define OUTPUT_MAX 4
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi' //We reuse the normal vent icons!

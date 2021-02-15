@@ -12,7 +12,7 @@
 	grind_results = list(/datum/reagent/iodine = 4)
 	material_flags = MATERIAL_NO_EFFECTS
 	var/datum/picture/picture
-	var/scribble		//Scribble on the back.
+	var/scribble //Scribble on the back.
 
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)

@@ -480,7 +480,7 @@
 	if(created_volume >= 40)
 		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T2), added_delay)
 		added_delay += 1.5 SECONDS
-	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
+	if(created_volume >= 10) //10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		addtimer(CALLBACK(src, .proc/zappy_zappy, holder, T3), added_delay)
 	addtimer(CALLBACK(src, .proc/explode, holder, created_volume), added_delay)
 
@@ -516,7 +516,7 @@
 	required_reagents = list(/datum/reagent/stabilizing_agent = 1,/datum/reagent/fluorosurfactant = 1,/datum/reagent/carbon = 1)
 	required_temp = 200
 	is_cold_recipe = 1
-	optimal_temp	= 50
+	optimal_temp = 50
 	overheat_temp = 5
 	thermic_constant= -1
 	H_ion_release = -0.02

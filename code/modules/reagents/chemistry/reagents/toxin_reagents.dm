@@ -65,7 +65,7 @@
 	if(chems.has_reagent(type, 1))
 		mytray.adjustToxic(3) //It is still toxic, mind you, but not to the same degree.
 
-#define	LIQUID_PLASMA_BP (50+T0C)
+#define LIQUID_PLASMA_BP (50+T0C)
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -436,7 +436,7 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/fakebeer	//disguised as normal beer for use by emagged brobots
+/datum/reagent/toxin/fakebeer //disguised as normal beer for use by emagged brobots
 	name = "Beer"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
