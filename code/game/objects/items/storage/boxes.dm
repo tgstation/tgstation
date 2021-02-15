@@ -538,7 +538,7 @@
 
 /obj/item/storage/box/ids/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/card/id(src)
+		new /obj/item/card/id/advanced(src)
 
 //Some spare PDAs in a box
 /obj/item/storage/box/pdas
@@ -1327,7 +1327,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
-		
+
 /obj/item/storage/box/emergencytank
 	name = "emergency oxygen tank box"
 	desc = "A box of emergency oxygen tanks."
@@ -1337,7 +1337,7 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/tank/internals/emergency_oxygen(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
-		
+
 /obj/item/storage/box/engitank
 	name = "extended-capacity emergency oxygen tank box"
 	desc = "A box of extended-capacity emergency oxygen tanks."
