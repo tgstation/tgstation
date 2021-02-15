@@ -1,0 +1,4 @@
+author: "Potato Masher"
+delete-after: True
+changes: 
+  - bugfix: "The entire service department can no longer access the Theater Backstage from the Service Hall. Can't a clown get some privacy?"
