@@ -156,6 +156,10 @@
 
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"
+	
+	if(gun_flags & TOY_FIREARM_OVERLAY)
+		. += "[icon_state]_toy"
+
 
 	if(!magazine || internal_magazine)
 		return
