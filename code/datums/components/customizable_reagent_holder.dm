@@ -123,6 +123,10 @@
 		return
 	if (replacement)
 		var/atom/replacement_parent = new replacement(atom_parent.loc)
+		if(atom_parent.loc == attacker && isitem(replacement_parent))
+			var/obj/item/I = replacement_parent
+			if(attacker.is_holding(atom_parent))
+				attacker.put_in_hands(I)
 		ingredient.forceMove(replacement_parent)
 		replacement = null
 		RemoveComponent()
