@@ -7,6 +7,10 @@
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 
+#define PIRATES_ROGUES "Rogues"
+#define PIRATES_SILVERSCALES "Silverscales"
+#define PIRATES_DUTCHMAN "Flying Dutchman"
+
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
 		return EVENT_CANT_RUN
@@ -19,11 +23,20 @@
 	var/payoff = 0
 	var/payoff_min = 20000
 	var/paid_off = FALSE
+	var/pirate_type
+	var/ship_template
 	var/ship_name = "Space Privateers Association"
 	var/shuttle_spawned = FALSE
 
 /datum/round_event/pirates/setup()
-	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
+	pirate_type = pick(PIRATES_ROGUES, PIRATES_SILVERSCALES, PIRATES_DUTCHMAN)
+	switch(pirate_type)
+		if(PIRATES_ROGUES)
+			ship_name = pick(strings(PIRATE_NAMES_FILE, "rogue_names"))
+		if(PIRATES_SILVERSCALES)
+			ship_name = pick(strings(PIRATE_NAMES_FILE, "silverscale_names"))
+		if(PIRATES_DUTCHMAN)
+			ship_name = "Flying Dutchman"
 
 /datum/round_event/pirates/announce(fake)
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
@@ -33,9 +46,22 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
-	threat.title = "Business proposition"
-	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
-	threat.possible_answers = list("We'll pay.","No way.")
+	switch(pirate_type)
+		if(PIRATES_ROGUES)
+			ship_template = /datum/map_template/shuttle/pirate/default
+			threat.title = "Sector protection offer"
+			threat.content = "Greetings from the [ship_name]. Your sector needs protection, how about you pay us [payoff] credits, or else you may be left wide open to an attack."
+			threat.possible_answers = list("We'll pay.","That sounds like a scam.")
+		if(PIRATES_SILVERSCALES)
+			ship_template = /datum/map_template/shuttle/pirate/silverscale
+			threat.title = "Tribute to high society"
+			threat.content = "This is the [ship_name]. The Silver Scales wish for some tribute from your plebeian lizards. [payoff] credits should do the trick."
+			threat.possible_answers = list("We'll pay.","Tribute? Really? Go away.")
+		if(PIRATES_DUTCHMAN)
+			ship_template = /datum/map_template/shuttle/pirate/dutchman
+			threat.title = "Business proposition"
+			threat.content = "Ahoy! This be the [ship_name]. Cough up [payoff] credits or you'll walk the plank."
+			threat.possible_answers = list("We'll pay.","We will not be extorted.")
 	threat.answer_callback = CALLBACK(src,.proc/answered)
 	SScommunications.send_message(threat,unique = TRUE)
 
@@ -67,7 +93,7 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
-	var/datum/map_template/shuttle/pirate/default/ship = new
+	var/datum/map_template/shuttle/pirate/ship = new ship_template
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value

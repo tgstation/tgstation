@@ -124,12 +124,13 @@
 /obj/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
 	icon_state = "pulse1_bl"
-	var/life = 20
+	projectile_piercing = ALL
+	var/pierce_hits = 2
 
 /obj/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
-	life -= 10
-	if(life > 0)
-		. = BULLET_ACT_FORCE_PIERCE
+	if(pierce_hits <= 0)
+		projectile_piercing = NONE
+	pierce_hits -= 1
 	..()
 
 /obj/projectile/beam/emitter
