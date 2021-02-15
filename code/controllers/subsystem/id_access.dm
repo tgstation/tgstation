@@ -278,10 +278,10 @@ SUBSYSTEM_DEF(id_access)
 		return FALSE
 
 	id_card.clear_access()
-	id_card.timberpoes_trim = trim
+	id_card.trim = trim
 
 	if(copy_access)
-		id_card.timberpoes_access = trim.access.Copy()
+		id_card.access = trim.access.Copy()
 		id_card.add_wildcards(trim.wildcard_access)
 
 
@@ -294,7 +294,7 @@ SUBSYSTEM_DEF(id_access)
 	return TRUE
 
 /datum/controller/subsystem/id_access/proc/remove_trim_from_card(obj/item/card/id/id_card)
-	id_card.timberpoes_trim = null
+	id_card.trim = null
 	id_card.clear_access()
 	id_card.update_label()
 	id_card.update_icon()

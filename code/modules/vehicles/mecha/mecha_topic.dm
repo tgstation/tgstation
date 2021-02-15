@@ -175,7 +175,7 @@
 	for(var/a in operation_req_access)
 		. += "[SSid_access.get_access_desc(a)] - <a href='?src=[REF(src)];del_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Delete</a><br>"
 	. += "<hr><h1>Following keycodes were detected on portable device:</h1>"
-	for(var/a in id_card.timberpoes_access)
+	for(var/a in id_card.access)
 		if(a in operation_req_access)
 			continue
 		var/a_name = SSid_access.get_access_desc(a)

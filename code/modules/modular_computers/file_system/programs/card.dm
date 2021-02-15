@@ -26,7 +26,7 @@
 
 	region_access.Cut()
 	// If the console isn't locked to a specific department and we have ACCESS_CHANGE_IDS in our auth card, we're not minor.
-	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.timberpoes_access))
+	if(!target_dept && (ACCESS_CHANGE_IDS in id_card.access))
 		minor = FALSE
 		authenticated_user = "[id_card.name]"
 		job_templates = SSid_access.station_job_templates.Copy()
@@ -40,7 +40,7 @@
 	for(var/access_as_text in managers)
 		var/list/info = managers[access_as_text]
 		var/access = text2num(access_as_text)
-		if((access in id_card.timberpoes_access) && ((target_dept in info["regions"]) || !target_dept))
+		if((access in id_card.access) && ((target_dept in info["regions"]) || !target_dept))
 			region_access |= info["regions"]
 			head_types |= info["head"]
 			job_templates |= info["templates"]
@@ -109,7 +109,7 @@
 						"}
 
 			var/known_access_rights = REGION_ACCESS_ALL_STATION
-			for(var/A in target_id_card.timberpoes_access)
+			for(var/A in target_id_card.access)
 				if(A in known_access_rights)
 					contents += "  [SSid_access.get_access_desc(A)]"
 
@@ -147,7 +147,7 @@
 			if(!computer || !authenticated_user)
 				return TRUE
 			if(minor)
-				if(!(target_id_card.timberpoes_trim?.assignment in head_subordinates) && target_id_card.timberpoes_trim?.assignment != "Assistant")
+				if(!(target_id_card.trim?.assignment in head_subordinates) && target_id_card.trim?.assignment != "Assistant")
 					to_chat(usr, "<span class='notice'>Software error: You do not have the necessary permissions to demote this card.</span>")
 					return TRUE
 
@@ -199,7 +199,7 @@
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
 			if(access_type in (is_centcom ? REGION_ACCESS_CENTCOM : REGION_ACCESS_ALL_STATION))
-				if(access_type in target_id_card.timberpoes_access)
+				if(access_type in target_id_card.access)
 					target_id_card.remove_access(list(access_type))
 					LOG_ID_ACCESS_CHANGE(user, target_id_card, "removed [SSid_access.get_access_desc(access_type)]")
 					return TRUE
@@ -296,12 +296,12 @@
 	if(id_card)
 		data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
 		data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
-		data["access_on_card"] = id_card.timberpoes_access
+		data["access_on_card"] = id_card.access
 		data["wildcardSlots"] = id_card.wildcard_slots
 		data["id_age"] = id_card.registered_age
 
-		if(id_card.timberpoes_trim)
-			var/datum/id_trim/card_trim = id_card.timberpoes_trim
+		if(id_card.trim)
+			var/datum/id_trim/card_trim = id_card.trim
 			data["hasTrim"] = TRUE
 			data["trimAssignment"] = card_trim.assignment ? card_trim.assignment : ""
 			data["trimAccess"] = card_trim.access ? card_trim.access : list()

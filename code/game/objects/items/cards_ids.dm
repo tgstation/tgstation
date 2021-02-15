@@ -87,10 +87,10 @@
 	var/assignment
 
 	/// Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.
-	var/datum/id_trim/timberpoes_trim
+	var/datum/id_trim/trim
 
 	/// Access levels held by this card.
-	var/list/timberpoes_access = list()
+	var/list/access = list()
 
 	/// List of wildcard slot names as keys with lists of wildcard data as values.
 	var/list/wildcard_slots = list()
@@ -99,8 +99,8 @@
 	. = ..()
 
 	// Applying the trim updates the label, so we don't need to do it twice.
-	if(ispath(timberpoes_trim))
-		SSid_access.apply_trim_to_card(src, timberpoes_trim)
+	if(ispath(trim))
+		SSid_access.apply_trim_to_card(src, trim)
 		update_icon()
 	else
 		update_label()
@@ -177,7 +177,7 @@
 				continue
 
 			wildcard_usage |= wildcard
-			timberpoes_access |= wildcard
+			access |= wildcard
 			wildcard_allocated = TRUE
 			break
 		// Fallback for if we couldn't allocate the wildcard for some reason.
@@ -195,7 +195,7 @@
 			var/list/wildcard_info = wildcard_slots[WILDCARD_NAME_FORCED]
 			var/list/wildcard_usage = wildcard_info["usage"]
 			wildcard_usage |= wildcard
-			timberpoes_access |= wildcard
+			access |= wildcard
 
 /obj/item/card/id/proc/remove_wildcards(list/wildcard_list)
 	var/wildcard_removed
@@ -210,7 +210,7 @@
 				continue
 
 			wildcard_usage -= wildcard
-			timberpoes_access -= wildcard
+			access -= wildcard
 			wildcard_removed = TRUE
 			break
 		// Fallback to see if this was a force-added wildcard.
@@ -226,7 +226,7 @@
 				stack_trace("Wildcard ([wildcard]) could not be removed from [src]. This access is not a wildcard on this card.")
 
 			wildcard_usage -= wildcard
-			timberpoes_access -= wildcard
+			access -= wildcard
 
 /obj/item/card/id/proc/add_access(list/add_accesses, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/list/wildcard_access = list()
@@ -240,7 +240,7 @@
 			CRASH("Cannot add wildcards from \[[add_accesses.Join(",")]\] to [src]")
 
 	// All clear to add the accesses.
-	timberpoes_access |= normal_access
+	access |= normal_access
 	if(mode != TRY_ADD_ALL_NO_WILDCARD)
 		add_wildcards(wildcard_access, try_wildcard, mode = mode)
 
@@ -252,7 +252,7 @@
 
 	build_access_lists(rem_accesses, normal_access, wildcard_access)
 
-	timberpoes_access -= normal_access
+	access -= normal_access
 	remove_wildcards(wildcard_access)
 
 /obj/item/card/id/proc/set_access(list/new_access_list, mode = ERROR_ON_FAIL)
@@ -268,7 +268,7 @@
 
 	clear_access()
 
-	timberpoes_access = normal_access.Copy()
+	access = normal_access.Copy()
 
 	if(mode != TRY_ADD_ALL_NO_WILDCARD)
 		add_wildcards(wildcard_access, mode = mode)
@@ -283,13 +283,13 @@
 		wildcard_usage.Cut()
 
 	// Hard reset access
-	timberpoes_access.Cut()
+	access.Cut()
 
 /obj/item/card/id/proc/build_access_lists(list/accesses, list/basic_access_list, list/wildcard_access_list)
 	if(!length(accesses) || isnull(basic_access_list) || isnull(wildcard_access_list))
 		CRASH("Invalid parameters passed to build_access_lists")
 
-	var/list/trim_accesses = timberpoes_trim?.access
+	var/list/trim_accesses = trim?.access
 
 	// Populate the lists.
 	for(var/new_access in accesses)
@@ -313,9 +313,9 @@
 		switch(var_name)
 			if(NAMEOF(src, assignment), NAMEOF(src, registered_name), NAMEOF(src, registered_age))
 				update_label()
-			if(NAMEOF(src, timberpoes_trim))
-				if(ispath(timberpoes_trim))
-					SSid_access.apply_trim_to_card(src, timberpoes_trim)
+			if(NAMEOF(src, trim))
+				if(ispath(trim))
+					SSid_access.apply_trim_to_card(src, trim)
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/holochip))
@@ -483,7 +483,7 @@
 	return msg
 
 /obj/item/card/id/GetAccess()
-	return timberpoes_access
+	return access
 
 /obj/item/card/id/GetID()
 	return src
@@ -507,18 +507,18 @@
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
-	timberpoes_trim = /datum/id_trim/away
+	trim = /datum/id_trim/away
 	icon_state = "retro"
 	registered_age = null
 
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
 	desc = "A staff ID used to access the hotel's doors."
-	timberpoes_trim = /datum/id_trim/away/hotel
+	trim = /datum/id_trim/away/hotel
 
 /obj/item/card/id/away/hotel/securty
 	name = "Officer ID"
-	timberpoes_trim = /datum/id_trim/away/hotel/security
+	trim = /datum/id_trim/away/hotel/security
 
 /obj/item/card/id/away/old
 	name = "\proper a perfectly generic identification card"
@@ -527,22 +527,22 @@
 /obj/item/card/id/away/old/sec
 	name = "Charlie Station Security Officer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Security Officer\"."
-	timberpoes_trim = /datum/id_trim/away/old/sec
+	trim = /datum/id_trim/away/old/sec
 
 /obj/item/card/id/away/old/sci
 	name = "Charlie Station Scientist's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Scientist\"."
-	timberpoes_trim = /datum/id_trim/away/old/sci
+	trim = /datum/id_trim/away/old/sci
 
 /obj/item/card/id/away/old/eng
 	name = "Charlie Station Engineer's ID card"
 	desc = "A faded Charlie Station ID card. You can make out the rank \"Station Engineer\"."
-	timberpoes_trim = /datum/id_trim/away/old/eng
+	trim = /datum/id_trim/away/old/eng
 
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
-	timberpoes_trim = /datum/id_trim/away/old/apc
+	trim = /datum/id_trim/away/old/apc
 
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
@@ -615,8 +615,8 @@
 	if(registered_name && registered_name != "Captain")
 		. += mutable_appearance(icon, assigned_icon_state)
 
-	var/trim_icon_file = trim_icon_override ? trim_icon_override : timberpoes_trim?.trim_icon
-	var/trim_icon_state = trim_state_override ? trim_state_override : timberpoes_trim?.trim_state
+	var/trim_icon_file = trim_icon_override ? trim_icon_override : trim?.trim_icon
+	var/trim_icon_state = trim_state_override ? trim_state_override : trim?.trim_state
 
 	if(!trim_icon_file || !trim_icon_state)
 		return
@@ -637,7 +637,7 @@
 
 /obj/item/card/id/advanced/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
-	timberpoes_trim = /datum/id_trim/maint_reaper
+	trim = /datum/id_trim/maint_reaper
 	registered_name = "Thirteen"
 
 /obj/item/card/id/advanced/gold
@@ -651,7 +651,7 @@
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	registered_name = "Captain"
-	timberpoes_trim = /datum/id_trim/job/captain
+	trim = /datum/id_trim/job/captain
 	registered_age = null
 
 /obj/item/card/id/advanced/gold/captains_spare/update_label() //so it doesn't change to Captain's ID card (Captain) on a sneeze
@@ -668,7 +668,7 @@
 	assigned_icon_state = "assigned_centcom"
 	registered_name = "Central Command"
 	registered_age = null
-	timberpoes_trim = /datum/id_trim/centcom
+	trim = /datum/id_trim/centcom
 	wildcard_slots = WILDCARD_LIMIT_CENTCOM
 
 /obj/item/card/id/advanced/centcom/ert
@@ -676,35 +676,35 @@
 	desc = "An ERT ID card."
 	registered_age = null
 	registered_name = "Emergency Response Intern"
-	timberpoes_trim = /datum/id_trim/centcom/ert
+	trim = /datum/id_trim/centcom/ert
 
 /obj/item/card/id/advanced/centcom/ert
 	registered_name = "Emergency Response Team Commander"
-	timberpoes_trim = /datum/id_trim/centcom/ert/commander
+	trim = /datum/id_trim/centcom/ert/commander
 
 /obj/item/card/id/advanced/centcom/ert/security
 	registered_name = "Security Response Officer"
-	timberpoes_trim = /datum/id_trim/centcom/ert/security
+	trim = /datum/id_trim/centcom/ert/security
 
 /obj/item/card/id/advanced/centcom/ert/engineer
 	registered_name = "Engineering Response Officer"
-	timberpoes_trim = /datum/id_trim/centcom/ert/engineer
+	trim = /datum/id_trim/centcom/ert/engineer
 
 /obj/item/card/id/advanced/centcom/ert/medical
 	registered_name = "Medical Response Officer"
-	timberpoes_trim = /datum/id_trim/centcom/ert/medical
+	trim = /datum/id_trim/centcom/ert/medical
 
 /obj/item/card/id/advanced/centcom/ert/chaplain
 	registered_name = "Religious Response Officer"
-	timberpoes_trim = /datum/id_trim/centcom/ert/chaplain
+	trim = /datum/id_trim/centcom/ert/chaplain
 
 /obj/item/card/id/advanced/centcom/ert/janitor
 	registered_name = "Janitorial Response Officer"
-	timberpoes_trim = /datum/id_trim/centcom/ert/janitor
+	trim = /datum/id_trim/centcom/ert/janitor
 
 /obj/item/card/id/advanced/centcom/ert/clown
 	registered_name = "Entertainment Response Officer"
-	timberpoes_trim = /datum/id_trim/centcom/ert/clown
+	trim = /datum/id_trim/centcom/ert/clown
 
 /obj/item/card/id/advanced/black
 	name = "black identification card"
@@ -717,7 +717,7 @@
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
 	registered_name = "Death Commando"
-	timberpoes_trim = /datum/id_trim/centcom/deathsquad
+	trim = /datum/id_trim/centcom/deathsquad
 	wildcard_slots = WILDCARD_LIMIT_DEATHSQUAD
 
 /obj/item/card/id/advanced/black/syndicate_command
@@ -726,27 +726,27 @@
 	registered_name = "Syndicate"
 	icon_state = "card_black"
 	registered_age = null
-	timberpoes_trim = /datum/id_trim/syndicom
+	trim = /datum/id_trim/syndicom
 	wildcard_slots = WILDCARD_LIMIT_SYNDICATE
 
 /obj/item/card/id/advanced/black/syndicate_command/crew_id
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	timberpoes_trim = /datum/id_trim/syndicom/crew
+	trim = /datum/id_trim/syndicom/crew
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	name = "syndicate captain ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	timberpoes_trim = /datum/id_trim/syndicom/captain
+	trim = /datum/id_trim/syndicom/captain
 
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
 	icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
-	timberpoes_trim = /datum/id_trim/admin
+	trim = /datum/id_trim/admin
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
 /obj/item/card/id/advanced/debug/Initialize()
@@ -762,7 +762,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Scum"
 	registered_age = null
-	timberpoes_trim = /datum/id_trim/job/prisoner
+	trim = /datum/id_trim/job/prisoner
 
 	wildcard_slots = WILDCARD_LIMIT_PRISONER
 
@@ -777,41 +777,41 @@
 /obj/item/card/id/advanced/prisoner/one
 	name = "Prisoner #13-001"
 	registered_name = "Prisoner #13-001"
-	timberpoes_trim = /datum/id_trim/job/prisoner/one
+	trim = /datum/id_trim/job/prisoner/one
 
 /obj/item/card/id/advanced/prisoner/two
 	name = "Prisoner #13-002"
 	registered_name = "Prisoner #13-002"
-	timberpoes_trim = /datum/id_trim/job/prisoner/two
+	trim = /datum/id_trim/job/prisoner/two
 
 /obj/item/card/id/advanced/prisoner/three
 	name = "Prisoner #13-003"
 	registered_name = "Prisoner #13-003"
-	timberpoes_trim = /datum/id_trim/job/prisoner/three
+	trim = /datum/id_trim/job/prisoner/three
 
 /obj/item/card/id/advanced/prisoner/four
 	name = "Prisoner #13-004"
 	registered_name = "Prisoner #13-004"
-	timberpoes_trim = /datum/id_trim/job/prisoner/four
+	trim = /datum/id_trim/job/prisoner/four
 
 /obj/item/card/id/advanced/prisoner/five
 	name = "Prisoner #13-005"
 	registered_name = "Prisoner #13-005"
-	timberpoes_trim = /datum/id_trim/job/prisoner/five
+	trim = /datum/id_trim/job/prisoner/five
 
 /obj/item/card/id/advanced/prisoner/six
 	name = "Prisoner #13-006"
 	registered_name = "Prisoner #13-006"
-	timberpoes_trim = /datum/id_trim/job/prisoner/six
+	trim = /datum/id_trim/job/prisoner/six
 
 /obj/item/card/id/advanced/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
-	timberpoes_trim = /datum/id_trim/job/prisoner/seven
+	trim = /datum/id_trim/job/prisoner/seven
 
 /obj/item/card/id/advanced/mining
 	name = "mining ID"
-	timberpoes_trim = /datum/id_trim/job/shaft_miner/spare
+	trim = /datum/id_trim/job/shaft_miner/spare
 
 /obj/item/card/id/advanced/highlander
 	name = "highlander ID"
@@ -819,7 +819,7 @@
 	desc = "There can be only one!"
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
-	timberpoes_trim = /datum/id_trim/highlander
+	trim = /datum/id_trim/highlander
 	wildcard_slots = WILDCARD_LIMIT_ADMIN
 
 /obj/item/card/id/advanced/chameleon
@@ -882,11 +882,11 @@
 			regions += tgui_region_data[region]
 
 	data["accesses"] = regions
-	data["ourAccess"] = timberpoes_access
-	data["ourTrimAccess"] = timberpoes_trim ? timberpoes_trim.access : list()
-	data["theftAccess"] = target_card.timberpoes_access.Copy()
+	data["ourAccess"] = access
+	data["ourTrimAccess"] = trim ? trim.access : list()
+	data["theftAccess"] = target_card.access.Copy()
 	data["wildcardSlots"] = wildcard_slots
-	data["selectedList"] = timberpoes_access
+	data["selectedList"] = access
 	data["trimAccess"] = list()
 
 	return data
@@ -914,12 +914,12 @@
 		if("mod_access")
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
-			if(access_type in timberpoes_access)
+			if(access_type in access)
 				remove_access(list(access_type))
 				LOG_ID_ACCESS_CHANGE(usr, src, "removed [SSid_access.get_access_desc(access_type)]")
 				return TRUE
 
-			if(!(access_type in target_card.timberpoes_access))
+			if(!(access_type in target_card.access))
 				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
 				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
@@ -963,7 +963,7 @@
 
 				var/change_trim = alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", "Yes", "No")
 				if(change_trim == "Yes")
-					var/list/blacklist = typecacheof(type)
+					var/list/blacklist = typecacheof(type) + typecacheof(/obj/item/card/id/advanced/simple_bot)
 					var/list/trim_list = list()
 					for(var/trim_path in typesof(/datum/id_trim))
 						if(blacklist[trim_path])
@@ -992,7 +992,7 @@
 				update_icon()
 				forged = TRUE
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
-				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[timberpoes_trim?.assignment]\".")
+				log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".")
 
 				if(!registered_account)
 					if(ishuman(user))
@@ -1028,7 +1028,7 @@
 /obj/item/card/id/advanced/engioutpost
 	registered_name = "George 'Plastic' Miller"
 	desc = "A card used to provide ID and determine access across the station. There's blood dripping from the corner. Ew."
-	timberpoes_trim = /datum/id_trim/engioutpost
+	trim = /datum/id_trim/engioutpost
 	registered_age = 47
 
 /obj/item/card/id/advanced/simple_bot

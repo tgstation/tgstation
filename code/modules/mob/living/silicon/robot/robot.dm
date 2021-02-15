@@ -318,10 +318,10 @@
 	if(!istype(I, /obj/item/card/id) && isitem(I))
 		I = I.GetID()
 
-	if(!I || !I.timberpoes_access) //not ID or no access
+	if(!I || !I.access) //not ID or no access
 		return FALSE
 	for(var/req in req_access)
-		if(!(req in I.timberpoes_access)) //doesn't have this access
+		if(!(req in I.access)) //doesn't have this access
 			return FALSE
 	return TRUE
 

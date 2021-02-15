@@ -263,7 +263,7 @@
 		var/obj/item/card/id/copied_card = picked_item
 
 		// If the outfit comes with a special trim override, we'll steal some stuff from that.
-		var/new_trim = initial(copied_card.timberpoes_trim)
+		var/new_trim = initial(copied_card.trim)
 
 		if(new_trim)
 			SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, TRUE)
@@ -302,7 +302,7 @@
 			return
 
 		// If the outfit comes with a special trim override, we'll use that. Otherwise, use the card's default trim. Failing that, no trim at all.
-		var/new_trim = initial(job_outfit.id_trim) ? initial(job_outfit.id_trim) : initial(copied_card.timberpoes_trim)
+		var/new_trim = initial(job_outfit.id_trim) ? initial(job_outfit.id_trim) : initial(copied_card.trim)
 
 		if(new_trim)
 			SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, FALSE)

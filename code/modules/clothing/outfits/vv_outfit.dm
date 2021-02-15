@@ -87,8 +87,8 @@
 		if(ID)
 			if(ID.registered_name == real_name)
 				O.update_id_name = TRUE
-			if(ID.timberpoes_trim)
-				O.id_trim = ID.timberpoes_trim.type
+			if(ID.trim)
+				O.id_trim = ID.trim.type
 	//Copy hands
 	if(held_items.len >= 2) //Not in the mood to let outfits transfer amputees
 		var/obj/item/left_hand = held_items[1]
