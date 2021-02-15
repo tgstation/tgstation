@@ -88,7 +88,7 @@
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
 					var/new_angle_s = P.Angle + rand(120,240)
-					while(new_angle_s > 180)	// Translate to regular projectile degrees
+					while(new_angle_s > 180) // Translate to regular projectile degrees
 						new_angle_s -= 360
 					P.setAngle(new_angle_s)
 
@@ -207,7 +207,7 @@
 	apply_damage(15, BRUTE, wound_bonus=10)
 
 /mob/living/carbon/human/attack_hand(mob/user, modifiers)
-	if(..())	//to allow surgery to return properly.
+	if(..()) //to allow surgery to return properly.
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -220,7 +220,7 @@
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 
 
-	if(modifiers && modifiers["right"]) //Always drop item in hand, if no item, get stunned instead.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
@@ -249,7 +249,7 @@
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
 
-	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
+	if(try_inject(M, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 			if(!damage)
@@ -270,7 +270,7 @@
 	if(!.)
 		return
 
-	if(modifiers && modifiers["right"]) //Always drop item in hand, if no item, get stun instead.
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stun instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
@@ -411,12 +411,12 @@
 			burn_loss = 60
 			if(bomb_armor)
 				brute_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
-				burn_loss = brute_loss				//damage gets reduced from 120 to up to 60 combined brute+burn
+				burn_loss = brute_loss //damage gets reduced from 120 to up to 60 combined brute+burn
 			damage_clothes(200 - bomb_armor, BRUTE, BOMB)
 			if (ears && !HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
 				ears.adjustEarDamage(30, 120)
-			Unconscious(20)							//short amount of time for follow up attacks against elusive enemies like wizards
-			Knockdown(200 - (bomb_armor * 1.6)) 	//between ~4 and ~20 seconds of knockdown depending on bomb armor
+			Unconscious(20) //short amount of time for follow up attacks against elusive enemies like wizards
+			Knockdown(200 - (bomb_armor * 1.6)) //between ~4 and ~20 seconds of knockdown depending on bomb armor
 
 		if(EXPLODE_LIGHT)
 			brute_loss = 30
@@ -425,7 +425,7 @@
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, BOMB)
 			if (ears && !HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
 				ears.adjustEarDamage(15,60)
-			Knockdown(160 - (bomb_armor * 1.6))		//100 bomb armor will prevent knockdown altogether
+			Knockdown(160 - (bomb_armor * 1.6)) //100 bomb armor will prevent knockdown altogether
 
 	take_overall_damage(brute_loss,burn_loss)
 
@@ -840,7 +840,7 @@
 			broken.Insert(broken.len, "and ")
 			broken_plural = TRUE
 		else
-			var/holder = broken[1]	//our one and only element
+			var/holder = broken[1] //our one and only element
 			if(holder[length(holder)] == "s")
 				broken_plural = TRUE
 		//Put the items in that list into a string of text

@@ -1,4 +1,4 @@
-#define RAD_GEIGER_LOW 100							// Geiger counter sound thresholds
+#define RAD_GEIGER_LOW 100 // Geiger counter sound thresholds
 #define RAD_GEIGER_MEDIUM 500
 #define RAD_GEIGER_HIGH 1000
 

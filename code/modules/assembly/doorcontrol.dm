@@ -59,7 +59,7 @@
 	id = "badmin" // Set it to null for MEGAFUN.
 	var/specialfunctions = OPEN
 	/*
-	Bitflag, 	1= open (OPEN)
+	Bitflag, 1= open (OPEN)
 				2= idscan (IDSCAN)
 				4= bolts (BOLTS)
 				8= shock (SHOCK)

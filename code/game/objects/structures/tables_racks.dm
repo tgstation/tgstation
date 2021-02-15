@@ -1,11 +1,11 @@
 /* Tables and Racks
  * Contains:
- *		Tables
- *		Glass Tables
- *		Wooden Tables
- *		Reinforced Tables
- *		Racks
- *		Rack Parts
+ * Tables
+ * Glass Tables
+ * Wooden Tables
+ * Reinforced Tables
+ * Racks
+ * Rack Parts
  */
 
 /*
@@ -164,7 +164,7 @@
 
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(!(flags_1 & NODECONSTRUCT_1) && modifiers && modifiers["right"])
+	if(!(flags_1 & NODECONSTRUCT_1) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(I.use_tool(src, user, 20, volume=50))
@@ -215,13 +215,12 @@
 
 	if(!user.combat_mode && !(I.item_flags & ABSTRACT))
 		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 			AfterPutItemOnTable(I, user)
 			return TRUE
 	else
@@ -511,7 +510,7 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(W.tool_behaviour == TOOL_WELDER && modifiers && modifiers["right"])
+	if(W.tool_behaviour == TOOL_WELDER && LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -633,7 +632,7 @@
 
 /obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && modifiers && modifiers["right"])
+	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return

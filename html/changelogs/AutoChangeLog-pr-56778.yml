@@ -1,4 +1,0 @@
-author: "Jared-Fogle"
-delete-after: True
-changes: 
-  - bugfix: "Fixed dynamic parameters not checking the configuration. This means that Manuel will now have slower midrounds, as was intended."

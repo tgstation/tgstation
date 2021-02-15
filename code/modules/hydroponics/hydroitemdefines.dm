@@ -1,4 +1,3 @@
-
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
@@ -12,86 +11,213 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
-	var/scan_mode = PLANT_SCANMODE_STATS
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
-	. += "<span class='notice'>Activate it in your hand to change \the [src] between a growth statistics mode and a chemical reagents mode.</span>"
+	. += "<span class='notice'>Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.</span>"
 
-/obj/item/plant_analyzer/attack_self(mob/user)
+/// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
+/obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
 	. = ..()
-	scan_mode = !scan_mode
-	to_chat(user, "<span class='notice'>You switch [src] to [scan_mode == PLANT_SCANMODE_CHEMICALS ? "scan for chemical reagents and traits" : "scan for plant growth statistics"].</span>")
-
-/obj/item/plant_analyzer/attack(mob/living/M, mob/living/carbon/human/user)
-	//Checks if target is a podman
-	if(ispodperson(M))
-		user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
-							"<span class='notice'>You analyze [M]'s vitals.</span>")
-		if(scan_mode == PLANT_SCANMODE_STATS)
-			healthscan(user, M, advanced = TRUE)
-		else
-			chemscan(user, M)
-		add_fingerprint(user)
+	if(user.combat_mode)
 		return
-	return ..()
+
+	return do_plant_stats_scan(target, user)
+
+/// Same as above, but with right click. Right-clicking scans for chemicals.
+/obj/item/plant_analyzer/pre_attack_secondary(atom/target, mob/living/user)
+	if(user.combat_mode)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+	return do_plant_chem_scan(target, user) ? SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN : SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/*
+ * Scan the target on plant scan mode. This prints traits and stats to the user.
+ *
+ * scan_target - the atom we're scanning
+ * user - the user doing the scanning.
+ *
+ * returns FALSE if it's not an object or item that does something when we scan it.
+ * returns TRUE if we can scan the object, and outputs the message to the USER.
+ */
+/obj/item/plant_analyzer/proc/do_plant_stats_scan(atom/scan_target, mob/user)
+	if(istype(scan_target, /obj/machinery/hydroponics))
+		to_chat(user, scan_tray_stats(scan_target))
+		return TRUE
+	if(istype(scan_target, /obj/structure/glowshroom))
+		var/obj/structure/glowshroom/shroom_plant = scan_target
+		to_chat(user, scan_plant_stats(shroom_plant.myseed))
+		return TRUE
+	if(istype(scan_target, /obj/item/graft))
+		to_chat(user, get_graft_text(scan_target))
+		return TRUE
+	if(isitem(scan_target))
+		var/obj/item/scanned_object = scan_target
+		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
+			to_chat(user, scan_plant_stats(scanned_object))
+			return TRUE
+	if(ispodperson(scan_target))
+		pod_person_health_scan(scan_target, user)
+		return TRUE
+
+	return FALSE
+
+/*
+ * Scan the target on chemical scan mode. This prints chemical genes and reagents to the user.
+ *
+ * scan_target - the atom we're scanning
+ * user - the user doing the scanning.
+ *
+ * returns FALSE if it's not an object or item that does something when we scan it.
+ * returns TRUE if we can scan the object, and outputs the message to the USER.
+ */
+/obj/item/plant_analyzer/proc/do_plant_chem_scan(atom/scan_target, mob/user)
+	if(istype(scan_target, /obj/machinery/hydroponics))
+		to_chat(user, scan_tray_chems(scan_target))
+		return TRUE
+	if(istype(scan_target, /obj/structure/glowshroom))
+		var/obj/structure/glowshroom/shroom_plant = scan_target
+		to_chat(user, scan_plant_chems(shroom_plant.myseed))
+		return TRUE
+	if(istype(scan_target, /obj/item/graft))
+		to_chat(user, get_graft_text(scan_target))
+		return TRUE
+	if(isitem(scan_target))
+		var/obj/item/scanned_object = scan_target
+		if(scanned_object.get_plant_seed() || istype(scanned_object, /obj/item/seeds))
+			to_chat(user, scan_plant_chems(scanned_object))
+			return TRUE
+	if(ispodperson(scan_target))
+		pod_person_chem_scan(scan_target, user)
+		return TRUE
+
+	return FALSE
+
+/*
+ * Scan a podperson's health with the plant analyzer. No wound scanning, though.
+ *
+ * scanned_mob - the podperson being scanned
+ * user - the person doing the scanning
+ */
+/obj/item/plant_analyzer/proc/pod_person_health_scan(mob/living/carbon/human/scanned_mob, mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s vitals.</span>", \
+						"<span class='notice'>You analyze [scanned_mob]'s vitals.</span>")
+
+	healthscan(user, scanned_mob, advanced = TRUE)
+	add_fingerprint(user)
+
+/*
+ * Scan a podperson's chemical contents with the plant analyzer.
+ *
+ * scanned_mob - the podperson being scanned
+ * user - the person doing the scanning
+ */
+/obj/item/plant_analyzer/proc/pod_person_chem_scan(mob/living/carbon/human/scanned_mob, mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] analyzes [scanned_mob]'s bloodstream.</span>", \
+						"<span class='notice'>You analyze [scanned_mob]'s bloodstream.</span>")
+	chemscan(user, scanned_mob)
+	add_fingerprint(user)
 
 /**
- * This proc is called when we scan a hydroponics tray or soil.
+ * This proc is called when we scan a hydroponics tray or soil on left click (stats mode)
  * It formats the plant name, it's age, the plant's stats, and the tray's stats.
  *
  * - scanned_tray - the tray or soil we are scanning.
  *
  * Returns the formatted message as text.
  */
-/obj/item/plant_analyzer/proc/scan_tray(obj/machinery/hydroponics/scanned_tray)
+/obj/item/plant_analyzer/proc/scan_tray_stats(obj/machinery/hydroponics/scanned_tray)
 	var/returned_message = "<span class='info'>*---------*\n"
 	if(scanned_tray.myseed)
 		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
 		returned_message += "- Plant Age: <span class='notice'>[scanned_tray.age]</span></span>\n"
-		returned_message += scan_plant(scanned_tray.myseed)
+		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
 		returned_message += "<span class='info'><B>No plant found.</B></span>\n"
 
-	returned_message += "<span class='info'>- Weed level: <span class='notice'>[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]</span>\n"
+	returned_message += "<span class='info'>"
+	returned_message += "- Weed level: <span class='notice'>[scanned_tray.weedlevel] / [MAX_TRAY_WEEDS]</span>\n"
 	returned_message += "- Pest level: <span class='notice'>[scanned_tray.pestlevel] / [MAX_TRAY_PESTS]</span>\n"
 	returned_message += "- Toxicity level: <span class='notice'>[scanned_tray.toxic] / [MAX_TRAY_TOXINS]</span>\n"
 	returned_message += "- Water level: <span class='notice'>[scanned_tray.waterlevel] / [scanned_tray.maxwater]</span>\n"
 	returned_message += "- Nutrition level: <span class='notice'>[scanned_tray.reagents.total_volume] / [scanned_tray.maxnutri]</span>\n"
 	if(scanned_tray.yieldmod != 1)
 		returned_message += "- Yield modifier on harvest: <span class='notice'>[scanned_tray.yieldmod]x</span>\n"
-	returned_message += "*---------*</span>"
 
+	returned_message += "*---------*</span>"
 	return returned_message
 
 /**
- * This proc is called when a seed or any grown plant is scanned.
- * It formats the plant name as well as either its traits or its chemical contents.
+ * This proc is called when we scan a hydroponics tray or soil on right click (chemicals mode)
+ * It formats the plant name and age, as well as the plant's chemical genes and the tray's contents.
+ *
+ * - scanned_tray - the tray or soil we are scanning.
+ *
+ * Returns the formatted message as text.
+ */
+/obj/item/plant_analyzer/proc/scan_tray_chems(obj/machinery/hydroponics/scanned_tray)
+	var/returned_message = "<span class='info'>*---------*\n"
+	if(scanned_tray.myseed)
+		returned_message += "*** <B>[scanned_tray.myseed.plantname]</B> ***\n"
+		returned_message += "- Plant Age: <span class='notice'>[scanned_tray.age]</span></span>\n"
+		returned_message += scan_plant_chems(scanned_tray.myseed)
+	else
+		returned_message += "<span class='info'><B>No plant found.</B></span>\n"
+
+	returned_message += "<span class='info'>"
+
+	returned_message += "- Tray contains:\n"
+	if(scanned_tray.reagents.reagent_list.len)
+		for(var/datum/reagent/reagent_id in scanned_tray.reagents.reagent_list)
+			returned_message += "- <span class='notice'>[reagent_id.volume] / [scanned_tray.maxnutri] units of [reagent_id]</span>\n"
+	else
+		returned_message += "<span class='notice'>No reagents found.</span>\n"
+
+	returned_message += "*---------*</span>"
+	return returned_message
+
+/**
+ * This proc is called when a seed or any grown plant is scanned on left click (stats mode).
+ * It formats the plant name as well as either its traits and stats.
  *
  * - scanned_object - the source objecte for what we are scanning. This can be a grown food, a grown inedible, or a seed.
  *
  * Returns the formatted output as text.
  */
-/obj/item/plant_analyzer/proc/scan_plant(obj/item/scanned_object)
+/obj/item/plant_analyzer/proc/scan_plant_stats(obj/item/scanned_object)
 	var/returned_message = "<span class='info'>*---------*\nThis is \a <span class='name'>[scanned_object]</span>.\n"
 	var/obj/item/seeds/our_seed = scanned_object
 	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
-		var/obj/item/grown/scanned_plant = scanned_object
-		our_seed = scanned_plant.seed
+		our_seed = scanned_object.get_plant_seed()
 
-	switch(scan_mode)
-		if(PLANT_SCANMODE_STATS)
-			if(our_seed && istype(our_seed))
-				returned_message += get_analyzer_text_traits(our_seed)
-			else
-				returned_message += "*---------*\nNo genes found.\n*---------*"
-		if(PLANT_SCANMODE_CHEMICALS)
-			if(scanned_object.reagents) //we have reagents contents
-				returned_message += get_analyzer_text_chem_contents(scanned_object)
-			else if (our_seed.reagents_add?.len) //we have a seed with reagent genes
-				returned_message += get_analyzer_text_chem_genes(our_seed)
-			else
-				returned_message += "*---------*\nNo reagents found.\n*---------*"
+	if(our_seed && istype(our_seed))
+		returned_message += get_analyzer_text_traits(our_seed)
+	else
+		returned_message += "*---------*\nNo genes found.\n*---------*"
+
+	returned_message += "</span>\n"
+	return returned_message
+
+/**
+ * This proc is called when a seed or any grown plant is scanned on right click (chemical mode).
+ * It formats the plant name as well as its chemical contents.
+ *
+ * - scanned_object - the source objecte for what we are scanning. This can be a grown food, a grown inedible, or a seed.
+ *
+ * Returns the formatted output as text.
+ */
+/obj/item/plant_analyzer/proc/scan_plant_chems(obj/item/scanned_object)
+	var/returned_message = "<span class='info'>*---------*\nThis is \a <span class='name'>[scanned_object]</span>.\n"
+	var/obj/item/seeds/our_seed = scanned_object
+	if(!istype(our_seed)) //if we weren't passed a seed, we were passed a plant with a seed
+		our_seed = scanned_object.get_plant_seed()
+
+	if(scanned_object.reagents) //we have reagents contents
+		returned_message += get_analyzer_text_chem_contents(scanned_object)
+	else if (our_seed.reagents_add?.len) //we have a seed with reagent genes
+		returned_message += get_analyzer_text_chem_genes(our_seed)
+	else
+		returned_message += "*---------*\nNo reagents found.\n*---------*"
 
 	returned_message += "</span>\n"
 	return returned_message

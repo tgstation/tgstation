@@ -14,13 +14,13 @@
 	var/obj/item/scanner_wand
 	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
 	var/active_price = 15           //Change by using a multitool on the board.
-	var/pandemonium = FALSE			//AKA: Emag mode.
+	var/pandemonium = FALSE //AKA: Emag mode.
 
 	var/scan_active_1 = FALSE       //Shows if the machine is being used for a general scan.
-	var/scan_active_2 = FALSE 		//as above, symptom scan
-	var/scan_active_3 = FALSE    	//as above, radiological scan
-	var/scan_active_4 = FALSE		//as above, chemical/hallucinations.
-	var/paying_customer = FALSE		//Ticked yes if passing inuse()
+	var/scan_active_2 = FALSE //as above, symptom scan
+	var/scan_active_3 = FALSE //as above, radiological scan
+	var/scan_active_4 = FALSE //as above, chemical/hallucinations.
+	var/paying_customer = FALSE //Ticked yes if passing inuse()
 
 	var/datum/bank_account/account  //payer's account.
 	var/mob/living/carbon/human/H   //The person using the console in each instance. Used for paying for the kiosk.
@@ -232,9 +232,11 @@
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
+	if(altPatient.reagents.reagent_list.len) //Chemical Analysis details.
 		for(var/r in altPatient.reagents.reagent_list)
 			var/datum/reagent/reagent = r
+			if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+				continue
 			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
 			if(reagent.overdosed)
 				overdose_list += list(list("name" = reagent.name))
@@ -242,6 +244,8 @@
 	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile
+			if(bit.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
+				continue
 			if(!belly.food_reagents[bit.type])
 				chemical_list += list(list("name" = bit.name, "volume" = round(bit.volume, 0.01)))
 			else
@@ -297,10 +301,10 @@
 	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
 	data["patient_health"] = round(((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100, 0.001)
-	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001)		//To break this down for easy reading, all health values are rounded to the .001 place
-	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001)		//then a random number is added, which is multiplied by chaos modifier.
-	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001)		//That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
-	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001)	//It's not the cleanest but it does make for a colorful window.
+	data["brute_health"] = round(brute_loss+(chaos_modifier * (rand(1,30))),0.001) //To break this down for easy reading, all health values are rounded to the .001 place
+	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001) //then a random number is added, which is multiplied by chaos modifier.
+	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001) //That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
+	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001) //It's not the cleanest but it does make for a colorful window.
 	data["clone_health"] = round(clone_loss+(chaos_modifier * (rand(1,30))),0.001)
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))
@@ -321,9 +325,9 @@
 	data["hallucinating_status"] = hallucination_status
 
 	data["active_status_1"] = scan_active_1 // General Scan Check
-	data["active_status_2"] = scan_active_2	// Symptom Scan Check
-	data["active_status_3"] = scan_active_3	// Radio-Neuro Scan Check
-	data["active_status_4"] = scan_active_4	// Radio-Neuro Scan Check
+	data["active_status_2"] = scan_active_2 // Symptom Scan Check
+	data["active_status_3"] = scan_active_3 // Radio-Neuro Scan Check
+	data["active_status_4"] = scan_active_4 // Radio-Neuro Scan Check
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)

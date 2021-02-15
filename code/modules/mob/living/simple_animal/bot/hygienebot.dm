@@ -107,13 +107,13 @@
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 	switch(mode)
-		if(BOT_IDLE)		// idle
+		if(BOT_IDLE) // idle
 			walk_to(src,0)
-			look_for_lowhygiene()	// see if any disgusting fucks are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
-				mode = BOT_START_PATROL	// switch to patrol mode
+			look_for_lowhygiene() // see if any disgusting fucks are in range
+			if(!mode && auto_patrol) // still idle, and set to patrol
+				mode = BOT_START_PATROL // switch to patrol mode
 
-		if(BOT_HUNT)		// hunting for stinkman
+		if(BOT_HUNT) // hunting for stinkman
 			if(emagged) //lol fuck em up
 				currentspeed = 3.5
 				start_washing()
@@ -224,7 +224,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
 
-	return	dat.Join("")
+	return dat.Join("")
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
 	if((emagged == 2) && L.stat != DEAD)

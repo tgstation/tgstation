@@ -17,7 +17,7 @@
 	// as a wise man once wrote: "pull over that ass too fat"
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/carbon/alien/humanoid/royal/can_inject()
+/mob/living/carbon/alien/humanoid/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen
@@ -36,7 +36,7 @@
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			name = "alien princess ([rand(1, 999)])" //if this is too cutesy feel free to change it/remove it.
 			break
 
 	real_name = src.name
