@@ -110,10 +110,10 @@
 	parents[i] = null
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
-	var/list/returned_air = new()
+	var/list/returned_air = list()
 	for (var/i in 1 to parents.len)
 		if (parents[i] == reference)
-			returned_air.Add(airs[i])
+			returned_air += airs[i]
 	return returned_air
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
