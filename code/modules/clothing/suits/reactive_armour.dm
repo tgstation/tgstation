@@ -8,9 +8,9 @@
 /obj/item/reactive_armour_shell/attackby(obj/item/I, mob/user, params)
 	..()
 	var/static/list/anomaly_armour_types = list(
-		/obj/effect/anomaly/grav	                = /obj/item/clothing/suit/armor/reactive/repulse,
-		/obj/effect/anomaly/flux 	           		= /obj/item/clothing/suit/armor/reactive/tesla,
-		/obj/effect/anomaly/bluespace 	            = /obj/item/clothing/suit/armor/reactive/teleport
+		/obj/effect/anomaly/grav                 = /obj/item/clothing/suit/armor/reactive/repulse,
+		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
+		/obj/effect/anomaly/bluespace             = /obj/item/clothing/suit/armor/reactive/teleport
 		)
 
 	if(istype(I, /obj/item/assembly/signaler/anomaly))

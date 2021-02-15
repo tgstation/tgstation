@@ -9,8 +9,8 @@
 	var/mutable_appearance/lock_appearance
 	var/list/image/lock_images
 	var/list/target_typecache
-	var/list/immune_weakrefs				//list(weakref = TRUE)
-	var/mob_stat_check = TRUE				//if a potential target is a mob make sure it's conscious!
+	var/list/immune_weakrefs //list(weakref = TRUE)
+	var/mob_stat_check = TRUE //if a potential target is a mob make sure it's conscious!
 	var/lock_amount = 1
 	var/lock_cursor_range = 5
 	var/list/locked_weakrefs
@@ -33,7 +33,7 @@
 		target_typecache = typecache
 	if(amount)
 		lock_amount = amount
-	immune_weakrefs = list(WEAKREF(parent) = TRUE)			//Manually take this out if you want..
+	immune_weakrefs = list(WEAKREF(parent) = TRUE) //Manually take this out if you want..
 	if(immune)
 		for(var/i in immune)
 			if(isweakref(i))
@@ -63,7 +63,7 @@
 		var/datum/weakref/R = i
 		var/atom/A = R.resolve()
 		if(!A)
-			continue			//It'll be cleared by processing.
+			continue //It'll be cleared by processing.
 		var/image/I = new
 		I.appearance = lock_appearance
 		I.loc = A
@@ -112,7 +112,7 @@
 	LAZYSET(immune_weakrefs, R, TRUE)
 
 /datum/component/lockon_aiming/proc/remove_immune_atom(atom/A)
-	if(!A.weak_reference || !immune_weakrefs)		//if A doesn't have a weakref how did it get on the immunity list?
+	if(!A.weak_reference || !immune_weakrefs) //if A doesn't have a weakref how did it get on the immunity list?
 		return
 	LAZYREMOVE(immune_weakrefs, A.weak_reference)
 

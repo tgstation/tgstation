@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(traumas)
 		"birds"            = construct_phobia_regex("birds"),
 		"falling"          = construct_phobia_regex("falling"),
 		"anime"            = construct_phobia_regex("anime"),
-		"insects"			 = construct_phobia_regex("insects"),
+		"insects"  = construct_phobia_regex("insects"),
 	)
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),

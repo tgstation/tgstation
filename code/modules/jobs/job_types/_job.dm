@@ -110,7 +110,7 @@
 	if(!ishuman(H))
 		return
 
-	if(!config)	//Needed for robots.
+	if(!config) //Needed for robots.
 		roundstart_experience = minimal_skills
 
 	if(CONFIG_GET(flag/jobs_have_minimal_access))
@@ -127,7 +127,7 @@
 	if(head_announce)
 		announce_head(H, head_announce)
 
-/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H)		//Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
+/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H) //Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
 	return FALSE
 
 //Used for a special check of whether to allow a client to latejoin as this job.
@@ -171,7 +171,7 @@
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	if(available_in_days(C) == 0)
-		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+		return TRUE //Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
 

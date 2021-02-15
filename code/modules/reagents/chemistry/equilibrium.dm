@@ -194,7 +194,7 @@
 		if(time_deficit < 0.25)
 			delta_time += time_deficit
 			time_deficit = 0
-		else	
+		else 
 			delta_time += 0.25
 			time_deficit = 0.25
 	return delta_time
@@ -250,7 +250,7 @@
 		return
 	if(!calculate_yield())//So that this can detect if we're missing reagents
 		to_delete = TRUE
-		return	
+		return 
 	delta_time = deal_with_time(delta_time)
 
 	delta_t = 0 //how far off optimal temp we care
@@ -267,7 +267,7 @@
 	//Lower range
 	else if (cached_ph < reaction.optimal_ph_min) //If we're outside of the optimal lower bound
 		if (cached_ph < (reaction.optimal_ph_min - reaction.determin_ph_range)) //If we're outside of the deterministic bound
-			delta_ph = 0 //0% purity			
+			delta_ph = 0 //0% purity 
 		else //We're in the deterministic phase
 			delta_ph = (((cached_ph - (reaction.optimal_ph_min - reaction.determin_ph_range))**reaction.ph_exponent_factor)/((reaction.determin_ph_range**reaction.ph_exponent_factor))) //main pH calculation
 	//Upper range

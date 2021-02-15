@@ -35,9 +35,7 @@
 
 /obj/machinery/chem_heater/Initialize()
 	. = ..()
-	create_reagents(200, NO_REACT)//Lets save some calculations here
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)
+	create_reagents(200, NO_REACT)//Lets save some calculations here		
 	//TODO: comsig reaction_start and reaction_end to enable/disable the UI autoupdater - this doesn't work presently as there's a hard divide between instant and processed reactions
 	
 /obj/machinery/chem_heater/Destroy()
@@ -111,7 +109,7 @@
 				if(beaker?.reagents.chem_temp > 374)//If they heated it up as asked
 					tutorial_state = TUT_IS_ACTIVE
 					target_temperature = 375
-					beaker.reagents.chem_temp = 375					
+					beaker.reagents.chem_temp = 375 
 			
 			if(TUT_IS_ACTIVE)
 				if(!(beaker?.reagents.has_reagent(/datum/reagent/mercury)) || !(beaker?.reagents.has_reagent(/datum/reagent/chlorine))) //Slightly concerned that people might take ages to read and it'll react anyways
@@ -301,12 +299,12 @@
 			if(TUT_NO_BUFFER)//missing buffer
 				data["tutorialMessage"] = {"It looks like you’re a little low on buffers, here’s how to make more:
 
-Acidic buffer:	2 parts Sodium
+Acidic buffer: 2 parts Sodium
 			2 parts Hydrogen
 			2 parts Ethanol
 			2 parts Water
 
-Basic buffer:	3 parts Ammonia
+Basic buffer: 3 parts Ammonia
 			2 parts Chlorine
 			2 parts Hydrogen
 			2 parts Oxygen
@@ -478,6 +476,15 @@ To continue set your target temperature to 390K."}
 /obj/machinery/chem_heater/debug/Initialize()
 	. = ..()
 	reagents.maximum_volume = 2000
-	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 980)
-	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 980)
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 1000)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 1000)
 	heater_coefficient = 0.4 //hack way to upgrade
+
+//map load types
+/obj/machinery/chem_heater/withbuffer
+	desc = "This Reaction Chamber comes with a bit of buffer to help get you started."
+
+/obj/machinery/chem_heater/withbuffer/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 20)
+	reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 20)

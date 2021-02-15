@@ -7,7 +7,7 @@
 	if(issilicon(M))
 		if(ispAI(M))
 			return FALSE
-		return TRUE	//AI can do whatever it wants
+		return TRUE //AI can do whatever it wants
 	if(isAdminGhostAI(M))
 		//Access can't stop the abuse
 		return TRUE

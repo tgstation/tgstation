@@ -64,7 +64,7 @@
 		tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
 		tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
 		cabin_pressure = round(return_pressure(),0.01)
-	. =	{"[report_internal_damage()]
+	. = {"[report_internal_damage()]
 		[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
 		<b>Integrity: </b> [integrity]%<br>
 		<b>Power cell charge: </b>[isnull(cell_charge)?"No power cell installed":"[cell.percent()]%"]<br>

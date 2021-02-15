@@ -61,7 +61,7 @@
 	var/datum/netdata/data = new(list("data" = mode,"data_secondary" = "toggle"))
 	data.receiver_id = target_interface.hardware_id
 	data.passkey = access_list
-	data.user = user	// for responce message
+	data.user = user // for responce message
 
 	ntnet_send(data)
 

@@ -1,19 +1,19 @@
 
 /// For use with the `color_mode` var. Photos will be printed in greyscale while the var has this value.
-#define PHOTO_GREYSCALE	"Greyscale"
+#define PHOTO_GREYSCALE "Greyscale"
 /// For use with the `color_mode` var. Photos will be printed in full color while the var has this value.
-#define PHOTO_COLOR		"Color"
+#define PHOTO_COLOR "Color"
 
 /// How much toner is used for making a copy of a paper.
-#define PAPER_TONER_USE		0.125
+#define PAPER_TONER_USE 0.125
 /// How much toner is used for making a copy of a photo.
-#define PHOTO_TONER_USE		0.625
+#define PHOTO_TONER_USE 0.625
 /// How much toner is used for making a copy of a document.
-#define DOCUMENT_TONER_USE	0.75
+#define DOCUMENT_TONER_USE 0.75
 /// How much toner is used for making a copy of an ass.
-#define ASS_TONER_USE		0.625
+#define ASS_TONER_USE 0.625
 /// The maximum amount of copies you can make with one press of the copy button.
-#define MAX_COPIES_AT_ONCE	10
+#define MAX_COPIES_AT_ONCE 10
 
 /obj/machinery/photocopier
 	name = "photocopier"
@@ -238,8 +238,8 @@
 		copied_paper.info = "<font color = #808080>"
 
 	var/copied_info = paper_copy.info
-	copied_info = replacetext(copied_info, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
-	copied_info = replacetext(copied_info, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	copied_info = replacetext(copied_info, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=") //state of the art techniques in action
+	copied_info = replacetext(copied_info, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=") //This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 	copied_paper.info += copied_info
 	copied_paper.info += "</font>"
 	copied_paper.name = paper_copy.name
