@@ -127,7 +127,7 @@
 			var/obj/item/old_item = atom_parent
 			if(attacker.is_holding(old_item))
 				var/obj/item/replacement_item = replacement_parent
-				attacker.put_in_hands(replacement_item)
+				attacker.put_in_hand(replacement_item, attacker.get_held_index_of_item(old_item), TRUE)
 		ingredient.forceMove(replacement_parent)
 		replacement = null
 		RemoveComponent()
