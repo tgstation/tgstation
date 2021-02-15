@@ -449,14 +449,14 @@
 	var/req_text = ""
 	var/tool_text = ""
 	var/catalyst_text = ""
-	var/machinery_text = ""
+	var/list/machinery_text = list()
 
 	for(var/a in R.reqs)
 		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
 		//Also these are typepaths so sadly we can't just do "[a]"
 		var/atom/A = a
 		req_text += " [R.reqs[A]] [initial(A.name)],"
-	for(var/atom/movable/content as anything in R.machinery)
+	for(var/obj/machinery/content as anything in R.machinery)
 		req_text += " [R.reqs[content]] [initial(content.name)],"
 	if(R.additional_req_text)
 		req_text += R.additional_req_text
@@ -481,11 +481,10 @@
 	for(var/path_or_instance in R.machinery)
 		if(ispath(path_or_instance, /obj/machinery))
 			var/obj/machinery/path = path_or_instance
-			machinery_text += " [initial(path.name)],"
+			machinery_text += " [initial(path.name)]"
 		else
-			machinery_text += " [path_or_instance],"
-	machinery_text = replacetext(machinery_text,",","",-1)
-	data["machinery_text"] = machinery_text
+			machinery_text += " [path_or_instance.name]"
+	data["machinery_text"] = machinery_text.Join(", ")
 
 	return data
 

@@ -152,7 +152,8 @@
 /obj/item/burner/Initialize()
 	. = ..()
 	create_reagents(max_volume, TRANSPARENT)//We have our own refillable - since we want to heat and pour
-	reagents.add_reagent(reagent_type, 15)
+	if(reagent_type)
+		reagents.add_reagent(reagent_type, 15)
 
 /obj/item/burner/attackby(obj/item/I, mob/living/user, params)
 	. = ..()

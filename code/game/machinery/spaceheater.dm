@@ -374,8 +374,7 @@
 	if(targetTemperature > beaker.reagents.chem_temp)
 		icon_state = "sheater-heat"
 		return
-	else
-		icon_state = "sheater-off"
+	icon_state = "sheater-off"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
 	var/lasers_rating = 0
