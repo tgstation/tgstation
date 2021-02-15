@@ -16,9 +16,9 @@
 	create_reagents(charge_size)
 
 /obj/structure/cannon/proc/fire()
-	for(var/mob/M in urange(10, src))
-		if(!M.stat)
-			shake_camera(M, 3, 1)
+	for(var/mob/shaken_mob in urange(10, src))
+		if(shaken_mob.stat == CONSCIOUS)
+			shake_camera(shaken_mob, 3, 1)
 
 		playsound(src, fire_sound, 50, TRUE)
 	if(loaded_cannonball)
@@ -39,14 +39,13 @@
 	if(istype(W, /obj/item/stack/cannonball))
 		if(loaded_cannonball)
 			to_chat(user, "<span class='warning'>[src] is already loaded!</span>")
-			return
 		else
 			var/obj/item/stack/cannonball/cannoneers_balls = W
 			loaded_cannonball = new cannoneers_balls.type(src, 1)
 			loaded_cannonball.copy_evidences(cannoneers_balls)
 			to_chat(user, "<span class='notice'>You load a [cannoneers_balls.singular_name] into [src].</span>")
 			cannoneers_balls.use(1, transfer = TRUE)
-			return
+		return
 
 	else if(ignition_message)
 		if(!reagents.has_reagent(/datum/reagent/gunpowder,15))

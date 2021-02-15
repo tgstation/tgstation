@@ -101,12 +101,13 @@
 /datum/action/item_action/organ_action/statue
 	name = "Become Statue"
 	desc = "Become an elegant silver statue. Its durability and yours are directly tied together, so make sure you're careful."
-	var/ability_cooldown = 0
+	COOLDOWN_DECLARE(ability_cooldown)
+
 	var/obj/structure/statue/custom/statue
 
 /datum/action/item_action/organ_action/statue/New(Target)
 	. = ..()
-	statue = new(null)
+	statue = new
 	RegisterSignal(statue, COMSIG_PARENT_QDELETING, .proc/statue_destroyed)
 
 /datum/action/item_action/organ_action/statue/Destroy()
@@ -123,16 +124,16 @@
 	if(becoming_statue.health < 1)
 		to_chat(becoming_statue, "<span class='danger'>You are too weak to become a statue!</span>")
 		return
-	if(ability_cooldown >= world.time)
+	if(!COOLDOWN_FINISHED(src, ability_cooldown))
 		to_chat(becoming_statue, "<span class='warning'>You just used the ability, wait a little bit!</span>")
 		return
 	var/is_statue = becoming_statue.loc == statue
 	to_chat(becoming_statue, "<span class='notice'>You begin to [is_statue ? "break free from the statue" : "make a glorious pose as you become a statue"]!</span>")
 	if(!do_after(becoming_statue, (is_statue ? 5 : 30), target = get_turf(becoming_statue)))
 		to_chat(becoming_statue, "<span class='warning'>Your transformation is interrupted!</span>")
-		ability_cooldown = world.time + 3 SECONDS
+		COOLDOWN_START(src, ability_cooldown, 3 SECONDS)
 		return
-	ability_cooldown = world.time + 10 SECONDS
+	COOLDOWN_START(src, ability_cooldown, 10 SECONDS)
 
 	if(statue.name == initial(statue.name)) //statue has not been set up
 		statue.name = "statue of [becoming_statue.real_name]"
@@ -164,9 +165,9 @@
 	if(iscarbon(owner))
 		//drop everything, just in case
 		var/mob/living/carbon/dying_carbon = owner
-		for(var/obj/item/W in dying_carbon)
-			if(!dying_carbon.dropItemToGround(W))
-				qdel(W)
+		for(var/obj/item/dropped in dying_carbon)
+			if(!dying_carbon.dropItemToGround(dropped))
+				qdel(dropped)
 	qdel(owner)
 
 /obj/item/organ/tongue/fly

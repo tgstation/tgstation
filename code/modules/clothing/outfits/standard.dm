@@ -126,6 +126,19 @@
 	ears = /obj/item/radio/headset/syndicate
 	glasses = /obj/item/clothing/glasses/eyepatch
 
+/datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
+	equipped.faction |= "pirate"
+
+	var/obj/item/radio/outfit_radio = equipped.ears
+	if(outfit_radio)
+		outfit_radio.set_frequency(FREQ_SYNDICATE)
+		outfit_radio.freqlock = TRUE
+
+	var/obj/item/card/id/outfit_id = equipped.wear_id
+	if(outfit_id)
+		outfit_id.registered_name = equipped.real_name
+		outfit_id.update_label()
+
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
 
@@ -156,14 +169,15 @@
 
 	id = /obj/item/card/id/silver
 
+	///special fluff for the ID's job
 	var/scale_assignment = "Silver Scale Member"
 
-/datum/outfit/pirate/silverscale/post_equip(mob/living/carbon/human/H)
+/datum/outfit/pirate/silverscale/post_equip(mob/living/carbon/human/equipped)
 	..()
-	var/obj/item/card/id/W = H.wear_id
-	if(W)
-		W.assignment = scale_assignment
-		W.update_label()
+	var/obj/item/card/id/outfit_id = equipped.wear_id
+	if(outfit_id)
+		outfit_id.assignment = scale_assignment
+		outfit_id.update_label()
 
 /datum/outfit/pirate/silverscale/captain
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
@@ -171,19 +185,6 @@
 	head = /obj/item/clothing/head/crown
 
 	scale_assignment = "Silver Scale VIP"
-
-/datum/outfit/pirate/post_equip(mob/living/carbon/human/H)
-	H.faction |= "pirate"
-
-	var/obj/item/radio/R = H.ears
-	if(R)
-		R.set_frequency(FREQ_SYNDICATE)
-		R.freqlock = TRUE
-
-	var/obj/item/card/id/W = H.wear_id
-	if(W)
-		W.registered_name = H.real_name
-		W.update_label()
 
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"

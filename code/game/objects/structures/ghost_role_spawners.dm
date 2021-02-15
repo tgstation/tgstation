@@ -584,14 +584,16 @@
 	short_desc = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot."
 	assignedrole = "Space Pirate"
+	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
+	///Whether or not it will spawn a fluff structure upon opening.
 	var/spawn_oldpod = TRUE
 
 /obj/effect/mob_spawn/human/pirate/special(mob/living/new_spawn)
-	new_spawn.fully_replace_character_name(new_spawn.real_name,generate_pirate_name())
+	new_spawn.fully_replace_character_name(new_spawn.real_name, generate_pirate_name(new_spawn.gender))
 	new_spawn.mind.add_antag_datum(/datum/antagonist/pirate)
 
-/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name()
+/obj/effect/mob_spawn/human/pirate/proc/generate_pirate_name(spawn_gender)
 	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
 	var/endings = strings(PIRATE_NAMES_FILE, "endings")
 	return "[rank] [pick(beggings)][pick(endings)]"
@@ -639,12 +641,15 @@
 	outfit = /datum/outfit/pirate/silverscale
 	rank = "High-born"
 
-/obj/effect/mob_spawn/human/pirate/silverscale/generate_pirate_name()
+/obj/effect/mob_spawn/human/pirate/silverscale/generate_pirate_name(spawn_gender)
 	var/first_name
-	if(gender == MALE)
-		first_name = pick(GLOB.lizard_names_male)
-	else
-		first_name = pick(GLOB.lizard_names_female)
+	switch(gender)
+		if(MALE)
+			first_name = pick(GLOB.lizard_names_male)
+		if(FEMALE)
+			first_name = pick(GLOB.lizard_names_female)
+		if(NEUTER)
+			first_name = pick(GLOB.lizard_names_male + GLOB.lizard_names_female)
 
 	return "[rank] [first_name]-Silverscale"
 
