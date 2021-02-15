@@ -16,7 +16,7 @@
 	pipe_flags = PIPING_ONE_PER_TURF
 
 	///Base icon state for the machine to be used in update_icon()
-	var/base_icon_state = "crystallizer"
+	var/base_icon = "crystallizer"
 	///Internal Gas mix used for processing the gases that have been put in
 	var/datum/gas_mixture/internal
 	///Var that controls how much gas gets injected
@@ -38,7 +38,7 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
 	if(!on)
-		if(default_deconstruction_screwdriver(user, icon_state_open, icon_state_off, I))
+		if(default_deconstruction_screwdriver(user, "[base_icon]-open", "[base_icon]-off", I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
@@ -83,11 +83,11 @@
 	cut_overlays()
 
 	if(panel_open)
-		icon_state = "[base_icon_state]-open"
+		icon_state = "[base_icon]-open"
 	else if(on && is_operational)
-		icon_state = "[base_icon_state]-on"
+		icon_state = "[base_icon]-on"
 	else
-		icon_state = "[base_icon_state]-off"
+		icon_state = "[base_icon]-off"
 
 	add_overlay(getpipeimage(icon, "pipe", dir, COLOR_LIME, piping_layer))
 	add_overlay(getpipeimage(icon, "pipe", turn(dir, 180), COLOR_MOSTLY_PURE_RED, piping_layer))
