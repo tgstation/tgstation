@@ -403,29 +403,6 @@
 	pixel_y = rand(8,12)
 	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)
 
-/obj/effect/temp_visual/love_heart
-	name = "love heart"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "heart"
-	duration = 25
-
-/obj/effect/temp_visual/love_heart/Initialize(mapload)
-	. = ..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
-	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = duration)
-
-/obj/effect/temp_visual/love_heart/invisible
-	icon_state = null
-
-/obj/effect/temp_visual/love_heart/invisible/Initialize(mapload, mob/seer)
-	. = ..()
-	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "heart", layer = ABOVE_MOB_LAYER, loc = src)
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "heart", I, seer)
-	I.alpha = 255
-	I.appearance_flags = RESET_ALPHA
-	animate(I, alpha = 0, time = duration)
-
 /obj/effect/temp_visual/bleed
 	name = "bleed"
 	icon = 'icons/effects/bleed.dmi'
