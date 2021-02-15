@@ -317,7 +317,7 @@
 	else if (!disk_rescued && evacuation)
 		return NUKE_RESULT_DISK_STOLEN
 	else
-		return	//Undefined result
+		return //Undefined result
 
 /datum/team/nuclear/roundend_report()
 	var/list/parts = list()

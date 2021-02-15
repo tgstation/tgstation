@@ -234,7 +234,7 @@
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "thunderdome suit"
-	desc = "Pukish armor."	//classy.
+	desc = "Pukish armor." //classy.
 	icon_state = "tdgreen"
 	inhand_icon_state = "tdgreen"
 

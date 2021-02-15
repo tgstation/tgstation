@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(overlays)
 	if(NOT_QUEUED_ALREADY && fa_len != a_len)
 		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_old)	//copys our_overlays from another atom
+/atom/proc/copy_overlays(atom/other, cut_old) //copys our_overlays from another atom
 	if(!other)
 		if(cut_old)
 			cut_overlays()

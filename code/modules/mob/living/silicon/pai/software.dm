@@ -1,6 +1,6 @@
 // TODO:
-//	- Potentially roll HUDs and Records into one
-//	- Shock collar/lock system for prisoner pAIs?
+// - Potentially roll HUDs and Records into one
+// - Shock collar/lock system for prisoner pAIs?
 
 
 /mob/living/silicon/pai/var/list/available_software = list(
@@ -36,12 +36,12 @@
 
 	if(temp)
 		left_part = temp
-	else if(stat == DEAD)						// Show some flavor text if the pAI is dead
+	else if(stat == DEAD) // Show some flavor text if the pAI is dead
 		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
-		switch(screen)							// Determine which interface to show here
+		switch(screen) // Determine which interface to show here
 			if("main")
 				left_part = ""
 			if("directives")
@@ -76,7 +76,7 @@
 				left_part = softwareHostScan()
 
 
-	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
+	//usr << browse_rsc('windowbak.png') // This has been moved to the mob's Login() proc
 
 
 												// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
@@ -255,7 +255,7 @@
 					radio.subspace_transmission = TRUE
 
 			if("translator")
-				if(href_list["toggle"])	//This is permanent.
+				if(href_list["toggle"]) //This is permanent.
 					grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 
 			if("doorjack")
@@ -293,7 +293,7 @@
 
 // MENUS
 
-/mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
+/mob/living/silicon/pai/proc/softwareMenu() // Populate the right menu
 	var/dat = ""
 
 	dat += "<A href='byond://?src=[REF(src)];software=refresh'>Refresh</A><br>"

@@ -40280,7 +40280,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "dcP" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -43273,7 +43273,7 @@
 /turf/open/floor/iron,
 /area/medical/pharmacy)
 "dkh" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /obj/machinery/requests_console{
 	department = "Pharmacy";
 	name = "Pharmacy RC";
@@ -44427,7 +44427,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "dnr" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/withbuffer,
 /obj/item/radio/intercom{
 	dir = 8;
 	pixel_x = 28

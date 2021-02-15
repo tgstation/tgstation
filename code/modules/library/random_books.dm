@@ -59,12 +59,12 @@
 		while(query_get_random_books.NextRow())
 			var/obj/item/book/B
 			B = existing_book ? existing_book : new(location)
-			B.author	=	query_get_random_books.item[1]
-			B.title		=	query_get_random_books.item[2]
-			B.dat		=	query_get_random_books.item[3]
-			B.name		=	"Book: [B.title]"
+			B.author = query_get_random_books.item[1]
+			B.title = query_get_random_books.item[2]
+			B.dat = query_get_random_books.item[3]
+			B.name = "Book: [B.title]"
 			if(!existing_book)
-				B.icon_state=	"book[rand(1,8)]"
+				B.icon_state= "book[rand(1,8)]"
 	qdel(query_get_random_books)
 
 /obj/structure/bookcase/random/fiction
