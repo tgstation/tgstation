@@ -380,11 +380,11 @@
 	var/content = parts.Join()
 	//Log the rendered HTML in the round log directory
 	fdel(roundend_file)
-	WRITE_FILE(content, roundend_file)
+	WRITE_FILE(roundend_file, content)
 	//Place a copy in the root folder, to be overwritten each round.
 	roundend_file = file("data/server_last_roundend_report.html")
 	fdel(roundend_file)
-	WRITE_FILE(content, roundend_file)
+	WRITE_FILE(roundend_file, content)
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, report_type = null)
 	var/datum/browser/roundend_report = new(C, "roundend")
