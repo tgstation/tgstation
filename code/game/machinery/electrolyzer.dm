@@ -1,5 +1,5 @@
-#define ELECTROLYZER_MODE_STANDBY	"standby"
-#define ELECTROLYZER_MODE_WORKING	"working"
+#define ELECTROLYZER_MODE_STANDBY "standby"
+#define ELECTROLYZER_MODE_WORKING "working"
 
 /obj/machinery/electrolyzer
 	anchored = FALSE

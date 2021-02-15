@@ -1,7 +1,7 @@
-#define HEATER_MODE_STANDBY	"standby"
-#define HEATER_MODE_HEAT	"heat"
-#define HEATER_MODE_COOL	"cool"
-#define HEATER_MODE_AUTO	"auto"
+#define HEATER_MODE_STANDBY "standby"
+#define HEATER_MODE_HEAT "heat"
+#define HEATER_MODE_COOL "cool"
+#define HEATER_MODE_AUTO "auto"
 
 /obj/machinery/space_heater
 	anchored = FALSE

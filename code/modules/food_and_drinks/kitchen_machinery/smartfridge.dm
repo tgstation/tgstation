@@ -179,9 +179,9 @@
 
 		var/atom/movable/O = I
 		if (!QDELETED(O))
-			var/md5name = md5(O.name)				// This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
-			if (listofitems[md5name])				// which is fixed in a version we cannot use due to ie8 incompatibility
-				listofitems[md5name]["amount"]++	// The good news is, #30519 made smartfridge UIs non-auto-updating
+			var/md5name = md5(O.name) // This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
+			if (listofitems[md5name]) // which is fixed in a version we cannot use due to ie8 incompatibility
+				listofitems[md5name]["amount"]++ // The good news is, #30519 made smartfridge UIs non-auto-updating
 			else
 				listofitems[md5name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
@@ -419,7 +419,7 @@
 /obj/machinery/smartfridge/organ
 	name = "smart organ storage"
 	desc = "A refrigerated storage unit for organ storage."
-	max_n_of_items = 20	//vastly lower to prevent processing too long
+	max_n_of_items = 20 //vastly lower to prevent processing too long
 	base_build_path = /obj/machinery/smartfridge/organ
 	var/repair_rate = 0
 
@@ -430,7 +430,7 @@
 
 /obj/machinery/smartfridge/organ/load(obj/item/O)
 	. = ..()
-	if(!.)	//if the item loads, clear can_decompose
+	if(!.) //if the item loads, clear can_decompose
 		return
 	if(isorgan(O))
 		var/obj/item/organ/organ = O

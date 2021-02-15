@@ -1,0 +1,7 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - bugfix: "Kilo's Engi/Atmos access's air alarm is now attached to a wall"
+  - bugfix: "Kilo's maintenance gas flow meters are now attached to pipes
+tweak: Two additional gas flow meters in Kilo maintenance have been added
+tweak: An air alarm in Kilo atmospheric access has been moved one tile to the right"

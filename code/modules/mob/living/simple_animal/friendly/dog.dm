@@ -54,7 +54,7 @@
 				sleep(3)
 				step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+				if(movement_target) //Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					var/turf/T = get_turf(movement_target)
 					if(!T)
 						return
@@ -100,7 +100,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/shaved = FALSE
-	var/nofur = FALSE 		//Corgis that have risen past the material plane of existence.
+	var/nofur = FALSE //Corgis that have risen past the material plane of existence.
 
 /mob/living/simple_animal/pet/dog/corgi/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -413,7 +413,7 @@
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/ian
 	name = "Ian"
-	real_name = "Ian"	//Intended to hold the name without altering it.
+	real_name = "Ian" //Intended to hold the name without altering it.
 	gender = MALE
 	desc = "It's the HoP's beloved corgi."
 	response_help_continuous = "pets"
@@ -462,8 +462,8 @@
 /mob/living/simple_animal/pet/dog/corgi/ian/proc/Read_Memory()
 	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
 		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
-		S["age"] 		>> age
-		S["record_age"]	>> record_age
+		S["age"] >> age
+		S["record_age"] >> record_age
 		S["saved_head"] >> saved_head
 		fdel("data/npc_saves/Ian.sav")
 	else
@@ -612,7 +612,7 @@
 	desc = "It's the HoP's beloved corgi puppy."
 
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
+/mob/living/simple_animal/pet/dog/corgi/puppy/void //Tribute to the corgis born in nullspace
 	name = "\improper void puppy"
 	real_name = "voidy"
 	desc = "A corgi puppy that has been infused with deep space energy. It's staring back..."
@@ -626,7 +626,7 @@
 	held_state = "void_puppy"
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
-	return 1	//Void puppies can navigate space.
+	return 1 //Void puppies can navigate space.
 
 
 //LISA! SQUEEEEEEEEE~

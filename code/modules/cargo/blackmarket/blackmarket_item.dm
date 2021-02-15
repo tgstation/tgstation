@@ -17,13 +17,13 @@
 	var/item
 
 	/// Minimum price for the item if generated randomly.
-	var/price_min	= 0
+	var/price_min = 0
 	/// Maximum price for the item if generated randomly.
-	var/price_max	= 0
+	var/price_max = 0
 	/// Minimum amount that there should be of this item in the market if generated randomly. This defaults to 1 as most items will have it as 1.
-	var/stock_min	= 1
+	var/stock_min = 1
 	/// Maximum amount that there should be of this item in the market if generated randomly.
-	var/stock_max	= 0
+	var/stock_max = 0
 	/// Probability for this item to be available. Used by SSblackmarket on init.
 	var/availability_prob = 0
 
