@@ -460,7 +460,7 @@
 	if(!potential_cut)
 		cut_multiplier = 0.2
 	cut_multiplier = clamp(round(potential_cut, 1), 1, 50) / 100
-	to_chat(user, "<span class='notice'>[cut_multiplier*100]% profit will be received if a package with a barcode is sold.</span>")
+	to_chat(user, "<span class='notice'>[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold.</span>")
 
 /obj/item/barcode
 	name = "Barcode tag"
