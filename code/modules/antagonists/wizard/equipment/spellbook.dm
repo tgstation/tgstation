@@ -608,6 +608,8 @@
 	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
 	return TRUE
 
+hands_state
+
 /obj/item/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
@@ -671,6 +673,65 @@
 				if(!isnull(BB.limit))
 					BB.limit++
 		qdel(O)
+
+/obj/item/spellbook/ui_state(mob/user)
+	return GLOB.admin_state
+
+/datum/ghost_pool_menu/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Spellbook")
+		ui.open()
+
+/datum/ghost_pool_menu/ui_data(mob/user)
+	var/list/data = list()
+	data["events_or_midrounds"] = (new_role_flags & GHOSTROLE_MIDROUND_EVENT)
+	data["spawners"] = (new_role_flags & GHOSTROLE_SPAWNER)
+	data["station_sentience"] = (new_role_flags & GHOSTROLE_STATION_SENTIENCE)
+	data["silicons"] = (new_role_flags & GHOSTROLE_SILICONS)
+	data["minigames"] = (new_role_flags & GHOSTROLE_MINIGAME)
+	return data
+
+/datum/ghost_pool_menu/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("toggle_events_or_midrounds")
+			new_role_flags ^= GHOSTROLE_MIDROUND_EVENT
+		if("toggle_spawners")
+			new_role_flags ^= GHOSTROLE_SPAWNER
+		if("toggle_station_sentience")
+			new_role_flags ^= GHOSTROLE_STATION_SENTIENCE
+		if("toggle_silicons")
+			new_role_flags ^= GHOSTROLE_SILICONS
+		if("toggle_minigames")
+			new_role_flags ^= GHOSTROLE_MINIGAME
+		if("all_roles")
+			new_role_flags = ALL
+		if("no_roles")
+			new_role_flags = NONE
+		if("apply_settings")
+			to_chat(usr, "Settings Applied!")
+			var/msg
+			switch(new_role_flags)
+				if(ALL)
+					msg = "enabled all of"
+				if(NONE)
+					msg = "disabled all of"
+				else
+					msg = "modified"
+			message_admins("[key_name_admin(holder)] has [msg] this round's allowed ghost roles.")
+			GLOB.ghost_role_flags = new_role_flags
+
+
+
+
+
+
+
+
+
 
 /obj/item/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""
